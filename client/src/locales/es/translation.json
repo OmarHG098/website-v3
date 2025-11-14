@@ -13,11 +13,18 @@
   },
   "logo": {
     "forbesTitle": "Forbes",
+    "forbesDescription": "4Geeks está incluido por Forbes en \"5 Bootcamps de programación a considerar\"",
     "forbesLink": "Ver artículos",
-    "clarkTitle": "Universidad Clark",
-    "clarkSubtitle": "Socio Certificado",
+    "clarkTitle": "UNIVERSIDAD CLARK",
+    "clarkSubtitle": "Estamos certificados por las universidades más reconocidas",
     "awardsTitle": "Premios y Reconocimientos",
-    "awardsText": "Mejor Plataforma de Aprendizaje IA 2024"
+    "awardsText": "Reconocidos en 2024 y 2025 por SwitchUp, Course Report y Forbes. Continuando nuestro legado como uno de los mejores bootcamps de programación del mundo.",
+    "badge1Year": "2025",
+    "badge1Top": "TOP",
+    "badge1Name": "BOOTCAMPS",
+    "badge2Best": "MEJOR",
+    "badge2Coding": "BOOTCAMP",
+    "badge2Bootcamp": "PROGRAMACIÓN"
   },
   "stats": {
     "students": {

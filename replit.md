@@ -14,6 +14,7 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - **Styling**: Tailwind CSS, shadcn UI components
 - **Routing**: wouter
 - **State Management**: TanStack Query
+- **Internationalization**: react-i18next with browser language detection
 - **Backend**: Express (currently in-memory storage, will integrate with 4geeks Breathecode API)
 - **Typography**: Lato font family
 
@@ -67,6 +68,26 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - Card border radius: 0.8rem throughout the platform
 - Testing: NEVER use playwright for testing - user prefers manual verification or alternative testing approaches
 - Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
+
+## Internationalization (i18n)
+The platform supports multiple languages using react-i18next:
+
+### Supported Languages
+- **English (en)**: Default language
+- **Spanish (es)**: Full translation coverage
+
+### Implementation Details
+- **Language Detection**: Automatically detects browser language, falls back to English
+- **Storage**: Language preference saved to localStorage for persistence
+- **Language Switcher**: Globe icon button in header allows easy language switching
+- **Translation Files**: Located in `client/src/locales/{lang}/translation.json`
+- **Coverage**: All user-facing text including navigation, hero section, features, testimonials, and course content
+
+### Adding New Languages
+1. Create new directory in `client/src/locales/{language-code}/`
+2. Add `translation.json` with complete translations
+3. Update `client/src/i18n.ts` to include new language in resources
+4. Add language option to `client/src/components/LanguageSwitcher.tsx`
 
 ## SEO & Performance Optimizations
 

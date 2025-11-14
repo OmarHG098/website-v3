@@ -11,7 +11,7 @@ export default function LogoSection() {
           <div className="text-center md:text-left">
             <h3 className="text-5xl font-bold font-serif mb-4">{t('logo.forbesTitle')}</h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0">
-              4Geeks is included by Forbes in "5 Coding bootcamps to consider"
+              {t('logo.forbesDescription')}
             </p>
             <a 
               href="#" 
@@ -25,9 +25,12 @@ export default function LogoSection() {
           {/* Clark University Section */}
           <div className="text-center">
             <h3 className="text-3xl font-bold tracking-wider mb-4">
-              CLARK
-              <br />
-              UNIVERSITY
+              {t('logo.clarkTitle').split(' ').map((word, i) => (
+                <span key={i}>
+                  {word}
+                  {i === 0 && <br />}
+                </span>
+              ))}
             </h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto">
               {t('logo.clarkSubtitle')}
@@ -47,20 +50,20 @@ export default function LogoSection() {
               {/* Badge placeholders - can be replaced with actual badge images */}
               <div className="w-20 h-24 border-2 border-primary/20 rounded-lg flex items-center justify-center bg-background">
                 <div className="text-xs font-bold text-center px-2">
-                  2025
+                  {t('logo.badge1Year')}
                   <br />
-                  TOP
+                  {t('logo.badge1Top')}
                   <br />
-                  BOOTCAMPS
+                  {t('logo.badge1Name')}
                 </div>
               </div>
               <div className="w-24 h-24 border-2 border-chart-2/20 rounded-full flex items-center justify-center bg-background">
                 <div className="text-xs font-bold text-center">
-                  BEST
+                  {t('logo.badge2Best')}
                   <br />
-                  CODING
+                  {t('logo.badge2Coding')}
                   <br />
-                  BOOTCAMP
+                  {t('logo.badge2Bootcamp')}
                 </div>
               </div>
             </div>

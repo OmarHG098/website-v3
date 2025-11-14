@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' }
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Español' }
 ];
 
 export default function LanguageSwitcher() {
@@ -43,10 +43,10 @@ export default function LanguageSwitcher() {
             data-testid={`menu-item-language-${language.code}`}
             className="cursor-pointer"
           >
-            <span className="mr-2">{language.flag}</span>
-            <span>{language.name}</span>
+            <span className="font-medium">{language.code.toUpperCase()}</span>
+            <span className="ml-2">{language.name}</span>
             {currentLanguage.code === language.code && (
-              <span className="ml-auto text-primary">✓</span>
+              <span className="ml-auto text-primary font-bold">✓</span>
             )}
           </DropdownMenuItem>
         ))}
