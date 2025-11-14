@@ -7,23 +7,29 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/">
-          <a className="flex items-center gap-2 hover-elevate rounded-md px-3 py-2" data-testid="link-home">
-            <IconBook className="h-6 w-6 text-primary" />
-            <span className="text-xl font-semibold">The AI Reskilling Platform</span>
-          </a>
+        <Link 
+          href="/" 
+          className="flex items-center gap-2 hover-elevate rounded-md px-3 py-2" 
+          data-testid="link-home"
+        >
+          <IconBook className="h-6 w-6 text-primary" />
+          <span className="text-xl font-semibold">The AI Reskilling Platform</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/courses">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2" data-testid="link-courses">
-              Courses
-            </a>
+          <Link 
+            href="/courses" 
+            className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
+            data-testid="link-courses"
+          >
+            Courses
           </Link>
-          <Link href="/dashboard">
-            <a className="text-sm font-medium hover-elevate rounded-md px-3 py-2" data-testid="link-dashboard">
-              My Dashboard
-            </a>
+          <Link 
+            href="/dashboard" 
+            className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
+            data-testid="link-dashboard"
+          >
+            My Dashboard
           </Link>
         </nav>
 
