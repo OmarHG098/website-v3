@@ -15,10 +15,10 @@ export default function LandingHero() {
     <section className="relative container mx-auto px-4 py-16 md:py-24 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
         {/* Left Images Column */}
-        <div className="relative h-[300px] lg:h-[500px] hidden lg:block pt-16">
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 1 - Top */}
           <div 
-            className="absolute top-0 left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            className="absolute top-16 left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
             <img 
@@ -30,7 +30,7 @@ export default function LandingHero() {
           
           {/* Photo Card 2 - Overlapping */}
           <div 
-            className="absolute top-32 left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-10"
+            className="absolute top-48 left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-10"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
             <img 
@@ -114,10 +114,10 @@ export default function LandingHero() {
         </div>
 
         {/* Right Images Column */}
-        <div className="relative h-[300px] lg:h-[500px] hidden lg:block pt-16">
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 3 - Top */}
           <div 
-            className="absolute top-0 right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            className="absolute top-16 right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
             <img 
@@ -129,7 +129,7 @@ export default function LandingHero() {
           
           {/* Photo Card 4 - Overlapping */}
           <div 
-            className="absolute top-32 right-[40%] w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            className="absolute top-48 right-[40%] w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
             <img 
