@@ -15,7 +15,7 @@ export default function LandingHero() {
     <section className="relative container mx-auto px-4 py-16 md:py-24 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
         {/* Left Images Column */}
-        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block pt-16">
           {/* Photo Card 1 - Top */}
           <div 
             className="absolute top-0 left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
@@ -114,7 +114,7 @@ export default function LandingHero() {
         </div>
 
         {/* Right Images Column */}
-        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block pt-16">
           {/* Photo Card 3 - Top */}
           <div 
             className="absolute top-0 right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
