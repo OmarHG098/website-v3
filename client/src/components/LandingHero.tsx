@@ -13,7 +13,7 @@ import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.pn
 export default function LandingHero() {
   return (
     <section className="relative container mx-auto px-4 py-16 md:py-24 overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-center max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
         {/* Left Images Column */}
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 1 - Top */}
