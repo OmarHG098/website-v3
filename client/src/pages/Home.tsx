@@ -1,113 +1,216 @@
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import LearningPathCard from "@/components/LearningPathCard";
-import CourseCard from "@/components/CourseCard";
+import LandingHero from "@/components/LandingHero";
+import LogoSection from "@/components/LogoSection";
+import FeatureSection from "@/components/FeatureSection";
+import StatsSection from "@/components/StatsSection";
+import IconFeatureGrid from "@/components/IconFeatureGrid";
+import ImageTextSection from "@/components/ImageTextSection";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
-import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
-import skillIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.png";
-import toolIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.png";
-import webDevThumbnail from "@assets/generated_images/Web_development_course_thumbnail_fd09be69.png";
-import dataScienceThumbnail from "@assets/generated_images/Data_science_course_thumbnail_c63194fb.png";
-import aiThumbnail from "@assets/generated_images/AI_course_thumbnail_0a0401e7.png";
+import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.png";
+import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.png";
+import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.png";
+import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.png";
+import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
+import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
 
 export default function Home() {
   const [, setLocation] = useLocation();
 
-  const learningPaths = [
+  const mainFeatures = [
     {
-      title: "I want to become a Developer",
-      description: "Follow a structured path to become a professional software developer",
-      icon: careerIcon,
+      title: "Head Digital",
+      description: "Our AI-powered learning assistant provides personalized guidance throughout your journey, helping you stay on track and overcome challenges with intelligent feedback and adaptive learning paths.",
     },
     {
-      title: "I want to learn a Skill",
-      description: "Master specific technical skills to advance your career",
-      icon: skillIcon,
-    },
-    {
-      title: "I want to master a Tool",
-      description: "Become proficient in industry-leading tools and platforms",
-      icon: toolIcon,
+      title: "Unlimited Human Support",
+      description: "Connect with experienced mentors and instructors who are dedicated to your success. Get help whenever you need it through live sessions, code reviews, and career coaching - no limits, no restrictions.",
     },
   ];
 
-  const featuredCourses = [
+  const iconFeatures = [
     {
-      id: '1',
-      title: "Full Stack Web Development",
-      description: "Learn to build modern web applications from scratch using React, Node.js, and databases",
-      thumbnail: webDevThumbnail,
-      duration: "12 weeks",
-      difficulty: "Intermediate" as const,
-      lessons: 48,
+      icon: rocketIcon,
+      title: "Fast Launch",
+      description: "Get started quickly with our streamlined onboarding and structured curriculum",
+      color: "bg-blue-100 dark:bg-blue-900/20",
     },
     {
-      id: '2',
-      title: "Data Science & Analytics",
-      description: "Master data analysis, visualization, and machine learning with Python and industry tools",
-      thumbnail: dataScienceThumbnail,
-      duration: "10 weeks",
-      difficulty: "Advanced" as const,
-      lessons: 42,
+      icon: communityIcon,
+      title: "Global Community",
+      description: "Join thousands of learners worldwide on the same journey to tech mastery",
+      color: "bg-green-100 dark:bg-green-900/20",
     },
     {
-      id: '3',
-      title: "Introduction to AI & Machine Learning",
-      description: "Understand AI fundamentals and build your first machine learning models",
-      thumbnail: aiThumbnail,
-      duration: "8 weeks",
-      difficulty: "Beginner" as const,
-      lessons: 36,
+      icon: securityIcon,
+      title: "Secure Platform",
+      description: "Your progress, projects, and personal data are always protected",
+      color: "bg-red-100 dark:bg-red-900/20",
+    },
+    {
+      icon: lightningIcon,
+      title: "Quick Results",
+      description: "See measurable progress in weeks with our proven learning methodology",
+      color: "bg-yellow-100 dark:bg-yellow-900/20",
     },
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <Hero />
       
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Choose Your Learning Path</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Select the path that aligns with your career goals and start your transformation today
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {learningPaths.map((path) => (
-            <LearningPathCard
-              key={path.title}
-              {...path}
-              onClick={() => {
-                console.log(`Selected path: ${path.title}`);
-                setLocation('/courses');
-              }}
-            />
-          ))}
+      <LandingHero />
+      
+      <LogoSection />
+      
+      <FeatureSection features={mainFeatures} />
+      
+      <StatsSection />
+      
+      <IconFeatureGrid 
+        title="Our mission is to get you into tech."
+        features={iconFeatures}
+      />
+
+      <section className="bg-muted/30 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            The Key to Your Success: AI- Powered Tools and Unmatched Human Support
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Card data-testid="card-ai-tools">
+              <CardContent className="p-6">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <img src={rocketIcon} alt="" className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold mb-2">AI-Powered Learning</h3>
+                <p className="text-sm text-muted-foreground">
+                  Personalized curriculum adapts to your pace and learning style
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card data-testid="card-mentorship">
+              <CardContent className="p-6">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <img src={communityIcon} alt="" className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold mb-2">Expert Mentorship</h3>
+                <p className="text-sm text-muted-foreground">
+                  1-on-1 guidance from industry professionals with real-world experience
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card data-testid="card-career-support">
+              <CardContent className="p-6">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <img src={lightningIcon} alt="" className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold mb-2">Career Support</h3>
+                <p className="text-sm text-muted-foreground">
+                  Job placement assistance and interview preparation included
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16 bg-muted/30">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Featured Courses</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Start with our most popular courses designed by industry experts
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {featuredCourses.map((course) => (
-            <CourseCard
-              key={course.id}
-              {...course}
-              onClick={() => {
-                console.log(`Course clicked: ${course.title}`);
-              }}
-            />
-          ))}
+      <ImageTextSection 
+        title="Making Tech Careers Accessible"
+        description="We believe everyone deserves the opportunity to build a career in technology. Our platform removes barriers with flexible learning schedules, affordable pricing options, and comprehensive support from day one to job placement. Whether you're a complete beginner or looking to level up your skills, we're here to guide you every step of the way."
+        image={collabImage}
+        imagePosition="left"
+        ctaText="Start Your Journey"
+        onCtaClick={() => {
+          console.log('Start journey clicked');
+          setLocation('/courses');
+        }}
+      />
+
+      <ImageTextSection 
+        title="Fuel Your Company's Growth with Top Early Talent"
+        description="Partner with us to access a pipeline of skilled, job-ready tech professionals. Our graduates are trained in the latest technologies and best practices, ready to contribute from day one. Build your team with passionate developers who bring fresh perspectives and cutting-edge knowledge."
+        image={teamImage}
+        imagePosition="right"
+        ctaText="Partner With Us"
+        onCtaClick={() => console.log('Partner clicked')}
+      />
+
+      <section className="border-t py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Important Awards and Top Ratings</h2>
+          
+          <div className="flex flex-wrap justify-center items-center gap-8">
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <div className="text-yellow-500 text-2xl">★★★★★</div>
+              </div>
+              <p className="text-sm text-muted-foreground">5.0 Course Report</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <div className="text-yellow-500 text-2xl">★★★★★</div>
+              </div>
+              <p className="text-sm text-muted-foreground">4.9 SwitchUp</p>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-lg font-semibold mb-2">Best Coding Bootcamp</p>
+              <p className="text-sm text-muted-foreground">2024 Awards</p>
+            </div>
+          </div>
         </div>
       </section>
+
+      <footer className="bg-muted/30 border-t py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-semibold mb-4">About</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground">Our Story</a></li>
+                <li><a href="#" className="hover:text-foreground">Team</a></li>
+                <li><a href="#" className="hover:text-foreground">Careers</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Programs</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground">Full Stack</a></li>
+                <li><a href="#" className="hover:text-foreground">Data Science</a></li>
+                <li><a href="#" className="hover:text-foreground">AI & ML</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Resources</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground">Blog</a></li>
+                <li><a href="#" className="hover:text-foreground">FAQ</a></li>
+                <li><a href="#" className="hover:text-foreground">Support</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Contact</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>hello@aireskill.com</li>
+                <li>1-800-RESKILL</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t pt-8 text-center text-sm text-muted-foreground">
+            <p>&copy; 2024 The AI Reskilling Platform. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
