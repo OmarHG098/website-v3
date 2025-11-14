@@ -44,8 +44,7 @@ export default function LandingHero() {
         {/* Content Column (Center) */}
         <div className="z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-primary">Build your Freedom,</span>{" "}
-            <span className="text-foreground">Tech is where it's at</span>
+            The AI Reskilling Platform
           </h1>
           
           <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
