@@ -1,14 +1,26 @@
 {
   "nav": {
+    "brand": "La Plataforma de Recualificación con IA",
     "home": "Inicio",
     "courses": "Cursos",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "changeLanguage": "Cambiar idioma"
   },
   "hero": {
     "title": "La Plataforma de Recualificación con IA",
     "subtitle": "Transforma tu carrera con aprendizaje impulsado por IA. Domina programación, ciencia de datos y habilidades tecnológicas con retroalimentación en tiempo real y orientación experta.",
+    "rating": "4,5",
     "trustedBy": "Confiado por 2.5K+ estudiantes",
-    "cta": "Comienza Tu Viaje"
+    "cta": "Comienza Tu Viaje",
+    "altImage1": "Estudiantes colaborando en proyectos de programación en un entorno de aprendizaje moderno",
+    "altImage2": "Mujer profesional programando en laptop con herramientas impulsadas por IA",
+    "altImage3": "Grupo diverso de profesionales tecnológicos aprendiendo juntos",
+    "altImage4": "Desarrollador de software trabajando en soluciones tecnológicas innovadoras",
+    "altArrow": "Flecha curva decorativa apuntando al botón de llamada a la acción",
+    "altAvatar1": "Foto de perfil de estudiante",
+    "altAvatar2": "Foto de perfil de estudiante",
+    "altAvatar3": "Foto de perfil de estudiante",
+    "altAvatar4": "Foto de perfil de estudiante"
   },
   "logo": {
     "forbesTitle": "Forbes",

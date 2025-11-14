@@ -14,7 +14,7 @@ const languages = [
 ];
 
 export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
           variant="ghost" 
           size="icon"
           data-testid="button-language-switcher"
-          aria-label="Change language"
+          aria-label={t('nav.changeLanguage')}
         >
           <IconWorld className="h-5 w-5" />
         </Button>

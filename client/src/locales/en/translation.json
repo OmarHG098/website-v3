@@ -1,14 +1,26 @@
 {
   "nav": {
+    "brand": "The AI Reskilling Platform",
     "home": "Home",
     "courses": "Courses",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "changeLanguage": "Change language"
   },
   "hero": {
     "title": "The AI Reskilling Platform",
     "subtitle": "Transform your career with AI-powered learning. Master coding, data science, and tech skills with real-time feedback and expert guidance.",
+    "rating": "4.5",
     "trustedBy": "Trusted by 2.5K+ learners",
-    "cta": "Start Your Journey"
+    "cta": "Start Your Journey",
+    "altImage1": "Students collaborating on coding projects in a modern learning environment",
+    "altImage2": "Professional woman coding on laptop with AI-powered tools",
+    "altImage3": "Diverse group of tech professionals learning together",
+    "altImage4": "Software developer working on innovative tech solutions",
+    "altArrow": "Decorative curved arrow pointing to call-to-action button",
+    "altAvatar1": "Learner profile photo",
+    "altAvatar2": "Learner profile photo",
+    "altAvatar3": "Learner profile photo",
+    "altAvatar4": "Learner profile photo"
   },
   "logo": {
     "forbesTitle": "Forbes",

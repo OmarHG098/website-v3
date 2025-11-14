@@ -17,7 +17,7 @@ export default function Header() {
           data-testid="link-home"
         >
           <IconBook className="h-6 w-6 text-primary" />
-          <span className="text-xl font-semibold">The AI Reskilling Platform</span>
+          <span className="text-xl font-semibold">{t('nav.brand')}</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

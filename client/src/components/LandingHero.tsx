@@ -27,7 +27,7 @@ export default function LandingHero() {
           >
             <img 
               src={collabImage} 
-              alt="Students collaborating on coding projects in modern workspace" 
+              alt={t('hero.altImage1')}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
@@ -40,7 +40,7 @@ export default function LandingHero() {
           >
             <img 
               src={happyDevImage} 
-              alt="Successful developer celebrating career achievement" 
+              alt={t('hero.altImage4')}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
@@ -61,26 +61,26 @@ export default function LandingHero() {
           <div className="flex items-center justify-center gap-3 mb-8">
             <div className="flex -space-x-2">
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar1} alt="Sarah J." />
+                <AvatarImage src={avatar1} alt={t('hero.altAvatar1')} />
                 <AvatarFallback className="bg-primary/20 text-xs">SJ</AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar2} alt="Michael C." />
+                <AvatarImage src={avatar2} alt={t('hero.altAvatar2')} />
                 <AvatarFallback className="bg-blue-500/20 text-xs">MC</AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar3} alt="Emily R." />
+                <AvatarImage src={avatar3} alt={t('hero.altAvatar3')} />
                 <AvatarFallback className="bg-green-500/20 text-xs">ER</AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar4} alt="David K." />
+                <AvatarImage src={avatar4} alt={t('hero.altAvatar4')} />
                 <AvatarFallback className="bg-purple-500/20 text-xs">DK</AvatarFallback>
               </Avatar>
             </div>
             
             <div className="flex flex-col items-start gap-1">
               <div className="flex items-center gap-2">
-                <span className="font-semibold">4.5</span>
+                <span className="font-semibold">{t('hero.rating')}</span>
                 <div className="flex">
                   {[1, 2, 3, 4].map((i) => (
                     <IconStarFilled key={i} className="text-yellow-500 w-5 h-5" />
@@ -96,7 +96,7 @@ export default function LandingHero() {
           <div className="hidden lg:flex justify-center mb-4">
             <img 
               src={curvedArrow} 
-              alt="Decorative curved arrow pointing to call-to-action button" 
+              alt={t('hero.altArrow')}
               className="w-20 h-auto opacity-80"
               loading="lazy"
             />
@@ -123,7 +123,7 @@ export default function LandingHero() {
           >
             <img 
               src={womanCodingImage} 
-              alt="Professional woman coding on laptop in modern office" 
+              alt={t('hero.altImage2')}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
@@ -136,7 +136,7 @@ export default function LandingHero() {
           >
             <img 
               src={teamImage} 
-              alt="Diverse tech team celebrating successful project completion" 
+              alt={t('hero.altImage3')}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
