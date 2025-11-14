@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.png";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
@@ -30,9 +31,9 @@ export default function LandingHero() {
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[1, 2, 3, 4].map((i) => (
-                  <span key={i} className="text-yellow-500 text-xl">★</span>
+                  <IconStarFilled key={i} className="text-yellow-500 w-5 h-5" />
                 ))}
-                <span className="text-yellow-500 text-xl">☆</span>
+                <IconStar className="text-yellow-500 w-5 h-5" />
               </div>
               <span className="font-semibold">4.5</span>
             </div>
