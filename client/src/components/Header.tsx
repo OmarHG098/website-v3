@@ -1,10 +1,11 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IconBook, IconUser } from "@tabler/icons-react";
+import { IconUser } from "@tabler/icons-react";
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import logo from "@assets/4geeks-devs-logo_1763162063433.png";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -24,11 +25,10 @@ export default function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link 
           href="/" 
-          className="flex items-center gap-2 hover-elevate rounded-md px-3 py-2" 
+          className="flex items-center hover-elevate rounded-md px-3 py-2" 
           data-testid="link-home"
         >
-          <IconBook className="h-6 w-6 text-primary" />
-          <span className="text-xl font-semibold">{t('nav.brand')}</span>
+          <img src={logo} alt={t('nav.brand')} className="h-8" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
