@@ -21,13 +21,11 @@ export default function LandingHero() {
             className="absolute top-0 left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
-            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
-              <img 
-                src={collabImage} 
-                alt="Student learning" 
-                className="w-full h-48 object-cover rounded"
-              />
-            </div>
+            <img 
+              src={collabImage} 
+              alt="Student learning" 
+              className="w-full h-48 object-cover rounded-lg"
+            />
           </div>
           
           {/* Photo Card 2 - Bottom */}
@@ -35,13 +33,11 @@ export default function LandingHero() {
             className="absolute bottom-0 right-0 w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-10"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
-            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
-              <img 
-                src={happyDevImage} 
-                alt="Happy developer" 
-                className="w-full h-48 object-cover rounded"
-              />
-            </div>
+            <img 
+              src={happyDevImage} 
+              alt="Happy developer" 
+              className="w-full h-48 object-cover rounded-lg"
+            />
           </div>
         </div>
 
@@ -125,13 +121,11 @@ export default function LandingHero() {
             className="absolute top-0 right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
-            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
-              <img 
-                src={womanCodingImage} 
-                alt="Woman coding" 
-                className="w-full h-48 object-cover rounded"
-              />
-            </div>
+            <img 
+              src={womanCodingImage} 
+              alt="Woman coding" 
+              className="w-full h-48 object-cover rounded-lg"
+            />
           </div>
           
           {/* Photo Card 4 - Bottom */}
@@ -139,13 +133,11 @@ export default function LandingHero() {
             className="absolute bottom-0 left-0 w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
-            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
-              <img 
-                src={teamImage} 
-                alt="Tech team" 
-                className="w-full h-48 object-cover rounded"
-              />
-            </div>
+            <img 
+              src={teamImage} 
+              alt="Tech team" 
+              className="w-full h-48 object-cover rounded-lg"
+            />
           </div>
         </div>
       </div>
