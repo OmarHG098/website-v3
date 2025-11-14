@@ -1,48 +1,150 @@
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.png";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
+import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
 
 export default function LandingHero() {
   return (
-    <section className="container mx-auto px-4 py-16">
-      <div className="text-center mb-12">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-          <span className="text-primary">Build your Freedom.</span>
-          <br />
-          <span className="text-foreground">Tech is where it's at</span>
-        </h1>
-        
-        <div className="flex justify-center gap-4 mb-8 flex-wrap">
-          <img src={collabImage} alt="Student 1" className="w-32 h-32 rounded-lg object-cover" />
-          <img src={happyDevImage} alt="Student 2" className="w-32 h-32 rounded-lg object-cover" />
-          <img src={womanCodingImage} alt="Student 3" className="w-32 h-32 rounded-lg object-cover" />
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-        <div className="space-y-4">
-          <h2 className="text-3xl font-semibold">
-            Welcome to the best personal tech Learning.
-            <br />
-            <span className="text-primary">Progress Like Never Before.</span>
-          </h2>
-        </div>
-        
-        <div className="bg-primary text-primary-foreground rounded-lg p-8">
-          <h3 className="text-2xl font-bold mb-4">YES, you can LEARN!</h3>
-          <p className="text-lg mb-6">
-            COURSE with your college or university and get on a earning track
+    <section className="relative container mx-auto px-4 py-16 md:py-24 overflow-hidden">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
+        {/* Content Column */}
+        <div className="flex-1 z-10 text-center md:text-left">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <span className="text-primary">Build your Freedom,</span>{" "}
+            <span className="text-foreground">Tech is where it's at</span>
+          </h1>
+          
+          <p className="text-lg text-muted-foreground mb-6 max-w-xl">
+            Learn smarter with AI tools, real-time feedback, and expert guidance
+            all with a money-back guarantee.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-white text-primary hover:bg-white/90"
-            data-testid="button-start-learning"
+          
+          {/* Ratings Bar */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 mb-8 justify-center md:justify-start">
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[1, 2, 3, 4].map((i) => (
+                  <span key={i} className="text-yellow-500 text-xl">★</span>
+                ))}
+                <span className="text-yellow-500 text-xl">☆</span>
+              </div>
+              <span className="font-semibold">4.5</span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-2">
+                <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarFallback className="bg-primary/20 text-xs">SJ</AvatarFallback>
+                </Avatar>
+                <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarFallback className="bg-blue-500/20 text-xs">MC</AvatarFallback>
+                </Avatar>
+                <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarFallback className="bg-green-500/20 text-xs">ER</AvatarFallback>
+                </Avatar>
+                <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarFallback className="bg-purple-500/20 text-xs">DK</AvatarFallback>
+                </Avatar>
+              </div>
+              <span className="text-sm text-muted-foreground">Trusted by 2.5K+ learners</span>
+            </div>
+          </div>
+          
+          {/* CTA with Arrow */}
+          <div className="relative inline-block">
+            <Button 
+              size="lg" 
+              className="text-lg px-8"
+              data-testid="button-choose-path"
+            >
+              Choose your path
+            </Button>
+            
+            {/* Hand-drawn arrow - hidden on mobile */}
+            <div className="hidden md:block absolute -bottom-12 left-1/2 -translate-x-1/2">
+              <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path 
+                  d="M40 5 Q 30 25, 35 40 L 35 45 M 35 45 L 30 40 M 35 45 L 40 40" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                  className="text-foreground/60"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        {/* Visual Collage Column */}
+        <div className="relative flex-1 h-[400px] md:h-[500px] w-full">
+          {/* Photo Card 1 - Top Left */}
+          <div 
+            className="absolute top-0 left-0 md:left-8 w-48 md:w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
-            Start Learning
-          </Button>
+            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
+              <img 
+                src={collabImage} 
+                alt="Student learning" 
+                className="w-full h-40 md:h-48 object-cover rounded"
+              />
+            </div>
+          </div>
+          
+          {/* Photo Card 2 - Center Left */}
+          <div 
+            className="absolute top-32 left-4 md:left-0 w-48 md:w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-10"
+            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+          >
+            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
+              <img 
+                src={happyDevImage} 
+                alt="Happy developer" 
+                className="w-full h-40 md:h-48 object-cover rounded"
+              />
+            </div>
+          </div>
+          
+          {/* Photo Card 3 - Right */}
+          <div 
+            className="absolute top-16 right-0 md:right-8 w-48 md:w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+          >
+            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
+              <img 
+                src={womanCodingImage} 
+                alt="Woman coding" 
+                className="w-full h-40 md:h-48 object-cover rounded"
+              />
+            </div>
+          </div>
+          
+          {/* Photo Card 4 - Bottom Right */}
+          <div 
+            className="absolute bottom-8 right-4 md:right-0 w-48 md:w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+          >
+            <div className="bg-white dark:bg-card p-2 rounded-lg border-4 border-white dark:border-card">
+              <img 
+                src={teamImage} 
+                alt="Tech team" 
+                className="w-full h-40 md:h-48 object-cover rounded"
+              />
+            </div>
+          </div>
+          
+          {/* Decorative floating elements */}
+          <div className="absolute top-10 right-20 w-3 h-3 rounded-full bg-primary/20 hidden lg:block"></div>
+          <div className="absolute bottom-20 left-16 w-4 h-4 rounded-full bg-chart-2/20 hidden lg:block"></div>
+          <div className="absolute top-1/2 right-4 w-2 h-2 rounded-full bg-chart-3/20 hidden lg:block"></div>
         </div>
       </div>
+      
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-chart-2/5 pointer-events-none -z-10"></div>
     </section>
   );
 }
