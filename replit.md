@@ -15,7 +15,7 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - **Routing**: wouter
 - **State Management**: TanStack Query
 - **Backend**: Express (currently in-memory storage, will integrate with 4geeks Breathecode API)
-- **Typography**: Poppins font family
+- **Typography**: Lato font family
 
 ## Color System
 - **Primary**: hsl(212 85% 53%) - Blue

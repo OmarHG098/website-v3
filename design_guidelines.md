@@ -13,7 +13,7 @@
 
 ## Typography System
 
-**Font Family**: Poppins (via Google Fonts CDN)
+**Font Family**: Lato (via Google Fonts CDN)
 
 **Hierarchy**:
 - **Page Titles**: 2.5rem (40px), font-weight 700, letter-spacing -0.02em
