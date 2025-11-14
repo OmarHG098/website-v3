@@ -1,11 +1,15 @@
+import { useTranslation } from 'react-i18next';
+
 export default function LogoSection() {
+  const { t } = useTranslation();
+  
   return (
     <section className="border-y bg-muted/30 py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
           {/* Forbes Section */}
           <div className="text-center md:text-left">
-            <h3 className="text-5xl font-bold font-serif mb-4">Forbes</h3>
+            <h3 className="text-5xl font-bold font-serif mb-4">{t('logo.forbesTitle')}</h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0">
               4Geeks is included by Forbes in "5 Coding bootcamps to consider"
             </p>
@@ -14,7 +18,7 @@ export default function LogoSection() {
               className="text-sm text-primary font-medium hover:underline"
               data-testid="link-forbes-articles"
             >
-              See articles
+              {t('logo.forbesLink')}
             </a>
           </div>
 
@@ -26,14 +30,14 @@ export default function LogoSection() {
               UNIVERSITY
             </h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto">
-              We are certified by the most recognized universities
+              {t('logo.clarkSubtitle')}
             </p>
             <a 
               href="#" 
               className="text-sm text-primary font-medium hover:underline"
               data-testid="link-clark-articles"
             >
-              See articles
+              {t('logo.forbesLink')}
             </a>
           </div>
 
@@ -61,15 +65,14 @@ export default function LogoSection() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0 md:ml-auto">
-              Recognized in 2024 and 2025 by SwitchUp, Course Report, and Forbes. 
-              Continuing our legacy as one of the top coding bootcamps in the world.
+              {t('logo.awardsText')}
             </p>
             <a 
               href="#" 
               className="text-sm text-primary font-medium hover:underline"
               data-testid="link-awards-articles"
             >
-              See articles
+              {t('logo.forbesLink')}
             </a>
           </div>
         </div>

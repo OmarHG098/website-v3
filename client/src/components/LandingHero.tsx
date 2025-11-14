@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
+import { useTranslation } from 'react-i18next';
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.png";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
@@ -12,6 +13,8 @@ import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.pn
 import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
 
 export default function LandingHero() {
+  const { t } = useTranslation();
+  
   return (
     <section className="relative container mx-auto px-4 py-16 md:py-24 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
@@ -47,12 +50,11 @@ export default function LandingHero() {
         {/* Content Column (Center) */}
         <div className="z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap">
-            The AI Reskilling Platform
+            {t('hero.title')}
           </h1>
           
           <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Learn smarter with AI tools, real-time feedback, and expert guidance
-            all with a money-back guarantee.
+            {t('hero.subtitle')}
           </p>
           
           {/* Ratings Bar */}
@@ -86,7 +88,7 @@ export default function LandingHero() {
                   <IconStar className="text-yellow-500 w-5 h-5" />
                 </div>
               </div>
-              <span className="text-sm text-muted-foreground">Trusted by 2.5K+ learners</span>
+              <span className="text-sm text-muted-foreground">{t('hero.trustedBy', { count: '2.5K' })}</span>
             </div>
           </div>
           
@@ -107,7 +109,7 @@ export default function LandingHero() {
               className="text-lg px-8"
               data-testid="button-choose-path"
             >
-              Choose your path
+              {t('hero.cta')}
             </Button>
           </div>
         </div>

@@ -2,8 +2,12 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconBook, IconUser } from "@tabler/icons-react";
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
+  const { t } = useTranslation();
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -22,18 +26,19 @@ export default function Header() {
             className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
             data-testid="link-courses"
           >
-            Courses
+            {t('nav.courses')}
           </Link>
           <Link 
             href="/dashboard" 
             className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
             data-testid="link-dashboard"
           >
-            My Dashboard
+            {t('nav.dashboard')}
           </Link>
         </nav>
 
         <div className="flex items-center gap-3">
+          <LanguageSwitcher />
           <Button variant="ghost" size="icon" data-testid="button-profile">
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-primary text-primary-foreground">
