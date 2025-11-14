@@ -9,6 +9,7 @@ export default {
         lg: ".5625rem", /* 9px */
         md: ".375rem", /* 6px */
         sm: ".1875rem", /* 3px */
+        card: ".8rem", /* 12.8px - for course cards */
       },
       colors: {
         // Flat / base colors (regular buttons)
