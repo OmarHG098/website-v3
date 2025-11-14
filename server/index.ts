@@ -1,8 +1,29 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import compression from "compression";
 
 const app = express();
+
+app.use(compression({
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  },
+  level: 6,
+}));
+
+app.use((req, res, next) => {
+  const ext = req.path.split('.').pop();
+  if (['js', 'css', 'woff2', 'woff', 'ttf', 'png', 'jpg', 'jpeg', 'webp', 'svg', 'ico'].includes(ext || '')) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (req.path.endsWith('.html') || req.path === '/') {
+    res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+  }
+  next();
+});
 
 declare module 'http' {
   interface IncomingMessage {

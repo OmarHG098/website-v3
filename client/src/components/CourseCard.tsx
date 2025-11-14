@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { IconClock, IconBook } from "@tabler/icons-react";
+import { memo } from "react";
 
 interface CourseCardProps {
   title: string;
@@ -14,7 +15,7 @@ interface CourseCardProps {
   onClick?: () => void;
 }
 
-export default function CourseCard({ 
+function CourseCard({ 
   title, 
   description, 
   thumbnail, 
@@ -80,3 +81,5 @@ export default function CourseCard({
     </Card>
   );
 }
+
+export default memo(CourseCard);
