@@ -43,7 +43,7 @@ export default function LandingHero() {
 
         {/* Content Column (Center) */}
         <div className="z-10 text-center px-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap">
             The AI Reskilling Platform
           </h1>
           
