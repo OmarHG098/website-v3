@@ -7,8 +7,7 @@
   "hero": {
     "title": "La Plataforma de Recualificación con IA",
     "subtitle": "Transforma tu carrera con aprendizaje impulsado por IA. Domina programación, ciencia de datos y habilidades tecnológicas con retroalimentación en tiempo real y orientación experta.",
-    "rating": "{{rating}}/5 de {{count}} estudiantes",
-    "trustedBy": "Confiado por {{count}}+ estudiantes",
+    "trustedBy": "Confiado por 2.5K+ estudiantes",
     "cta": "Comienza Tu Viaje"
   },
   "logo": {

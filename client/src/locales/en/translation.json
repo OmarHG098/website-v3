@@ -7,8 +7,7 @@
   "hero": {
     "title": "The AI Reskilling Platform",
     "subtitle": "Transform your career with AI-powered learning. Master coding, data science, and tech skills with real-time feedback and expert guidance.",
-    "rating": "{{rating}}/5 from {{count}} learners",
-    "trustedBy": "Trusted by {{count}}+ learners",
+    "trustedBy": "Trusted by 2.5K+ learners",
     "cta": "Start Your Journey"
   },
   "logo": {

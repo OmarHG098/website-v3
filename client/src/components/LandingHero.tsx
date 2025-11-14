@@ -88,7 +88,7 @@ export default function LandingHero() {
                   <IconStar className="text-yellow-500 w-5 h-5" />
                 </div>
               </div>
-              <span className="text-sm text-muted-foreground">{t('hero.trustedBy', { count: '2.5K' })}</span>
+              <span className="text-sm text-muted-foreground">{t('hero.trustedBy')}</span>
             </div>
           </div>
           
