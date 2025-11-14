@@ -4,6 +4,10 @@ import collabImage from "@assets/generated_images/Students_collaborating_workspa
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.png";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
+import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.png";
+import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.png";
+import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.png";
+import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.png";
 
 export default function LandingHero() {
   return (
@@ -36,15 +40,19 @@ export default function LandingHero() {
             <div className="flex items-center gap-2">
               <div className="flex -space-x-2">
                 <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarImage src={avatar1} alt="Sarah J." />
                   <AvatarFallback className="bg-primary/20 text-xs">SJ</AvatarFallback>
                 </Avatar>
                 <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarImage src={avatar2} alt="Michael C." />
                   <AvatarFallback className="bg-blue-500/20 text-xs">MC</AvatarFallback>
                 </Avatar>
                 <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarImage src={avatar3} alt="Emily R." />
                   <AvatarFallback className="bg-green-500/20 text-xs">ER</AvatarFallback>
                 </Avatar>
                 <Avatar className="h-8 w-8 border-2 border-background">
+                  <AvatarImage src={avatar4} alt="David K." />
                   <AvatarFallback className="bg-purple-500/20 text-xs">DK</AvatarFallback>
                 </Avatar>
               </div>
