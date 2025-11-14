@@ -24,8 +24,9 @@ export default function LandingHero() {
           >
             <img 
               src={collabImage} 
-              alt="Student learning" 
+              alt="Students collaborating on coding projects in modern workspace" 
               className="w-full h-48 object-cover rounded-lg"
+              loading="lazy"
             />
           </div>
           
@@ -36,8 +37,9 @@ export default function LandingHero() {
           >
             <img 
               src={happyDevImage} 
-              alt="Happy developer" 
+              alt="Successful developer celebrating career achievement" 
               className="w-full h-48 object-cover rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -92,8 +94,9 @@ export default function LandingHero() {
           <div className="hidden lg:flex justify-center mb-4">
             <img 
               src={curvedArrow} 
-              alt="Arrow pointing down" 
+              alt="Decorative curved arrow pointing to call-to-action button" 
               className="w-20 h-auto opacity-80"
+              loading="lazy"
             />
           </div>
           
@@ -118,8 +121,9 @@ export default function LandingHero() {
           >
             <img 
               src={womanCodingImage} 
-              alt="Woman coding" 
+              alt="Professional woman coding on laptop in modern office" 
               className="w-full h-48 object-cover rounded-lg"
+              loading="lazy"
             />
           </div>
           
@@ -130,8 +134,9 @@ export default function LandingHero() {
           >
             <img 
               src={teamImage} 
-              alt="Tech team" 
+              alt="Diverse tech team celebrating successful project completion" 
               className="w-full h-48 object-cover rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>

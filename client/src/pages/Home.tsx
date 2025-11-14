@@ -6,6 +6,7 @@ import StatsSection from "@/components/StatsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import SchemaOrg from "@/components/SchemaOrg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
@@ -60,6 +61,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SchemaOrg type="organization" />
+      <SchemaOrg type="website" />
+      <SchemaOrg type="educational" />
+      
       <Header />
       
       <LandingHero />

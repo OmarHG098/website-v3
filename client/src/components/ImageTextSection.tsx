@@ -25,6 +25,7 @@ export default function ImageTextSection({
             src={image} 
             alt={title}
             className="rounded-lg w-full h-auto object-cover"
+            loading="lazy"
           />
         </div>
         

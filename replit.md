@@ -38,7 +38,7 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 
 ## Current Features
 - ✅ Landing page with hero section (tilted photo cards layout)
-- ✅ Logo section
+- ✅ Logo section with Forbes, Clark University, and awards badges
 - ✅ Feature sections with stats (20,000 students, 5000 hours, 85% placement)
 - ✅ Icon feature grid
 - ✅ Image-text sections
@@ -46,6 +46,8 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Dashboard with progress tracking
 - ✅ Course catalog with search/filtering
 - ✅ Responsive design
+- ✅ Comprehensive SEO optimization (meta tags, schema.org, sitemap, robots.txt)
+- ✅ Performance optimizations (lazy loading, font optimization)
 
 ## Future Integration
 - Backend integration with 4geeks Breathecode API (documentation pending from user)
@@ -65,3 +67,44 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - Card border radius: 0.8rem throughout the platform
 - Testing: NEVER use playwright for testing - user prefers manual verification or alternative testing approaches
 - Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
+
+## SEO & Performance Optimizations
+
+### Meta Tags & Social Sharing
+- Comprehensive title and description tags optimized for search engines
+- Open Graph tags for enhanced social media sharing (Facebook, LinkedIn)
+- Twitter Card tags for Twitter/X sharing
+- Canonical URLs to prevent duplicate content issues
+- Keywords and author meta tags for enhanced discoverability
+- Robots meta tags with max-image-preview and snippet directives
+
+**TODO**: Create and add 1200x630 social media preview image (og:image/twitter:image)
+
+### Schema.org Structured Data
+Implemented JSON-LD schemas for maximum search engine and LLM discovery:
+- **EducationalOrganization**: Organization info with aggregate rating (4.5/5 from 2,500 learners)
+- **WebSite**: Site metadata with SearchAction for course search functionality
+- **ItemList**: Course catalog listing (Full Stack Development, Data Science & AI, Cloud Computing) for enhanced search visibility
+
+All schemas use proper schema.org vocabulary for optimal search engine understanding.
+
+**TODO**: Add individual Course/CourseInstance schemas when course detail pages are implemented.
+
+### Technical SEO
+- **robots.txt**: Allows all crawlers including AI/LLM bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, anthropic-ai)
+- **sitemap.xml**: XML sitemap with proper priority and change frequency for all pages
+- **Semantic HTML**: Proper heading hierarchy (h1 → h2 → h3) throughout the site
+- **Accessibility**: Descriptive alt text on all images for better accessibility and image search
+
+### Performance Optimizations
+- **Lazy Loading**: All images use native lazy loading (`loading="lazy"`) for improved initial page load
+- **Font Optimization**: Google Fonts configured with `display=swap` to prevent FOUT (Flash of Unstyled Text)
+- **Preconnect Headers**: DNS prefetching for Google Fonts to reduce latency
+- **Image Alt Text**: Descriptive, SEO-optimized alt attributes on all images
+
+### LLM & AI Discovery
+The site is explicitly optimized for discovery by LLMs and AI assistants:
+- Allows GPTBot, ClaudeBot, PerplexityBot, and other AI crawlers in robots.txt
+- Rich structured data helps LLMs understand the educational content and organization
+- Semantic HTML and descriptive text improve context extraction
+- Meta descriptions provide concise summaries for AI-generated responses
