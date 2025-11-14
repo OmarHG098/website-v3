@@ -54,18 +54,8 @@ export default function LandingHero() {
           </p>
           
           {/* Ratings Bar */}
-          <div className="flex flex-col items-start gap-3 mb-8 mx-auto">
-            <div className="flex items-center gap-2">
-              <div className="flex">
-                {[1, 2, 3, 4].map((i) => (
-                  <IconStarFilled key={i} className="text-yellow-500 w-5 h-5" />
-                ))}
-                <IconStar className="text-yellow-500 w-5 h-5" />
-              </div>
-              <span className="font-semibold">4.5</span>
-            </div>
-            
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col items-start gap-2 mb-8 mx-auto">
+            <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 <Avatar className="h-8 w-8 border-2 border-background">
                   <AvatarImage src={avatar1} alt="Sarah J." />
@@ -84,8 +74,19 @@ export default function LandingHero() {
                   <AvatarFallback className="bg-purple-500/20 text-xs">DK</AvatarFallback>
                 </Avatar>
               </div>
-              <span className="text-sm text-muted-foreground">Trusted by 2.5K+ learners</span>
+              
+              <div className="flex items-center gap-2">
+                <span className="font-semibold">4.5</span>
+                <div className="flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <IconStarFilled key={i} className="text-yellow-500 w-5 h-5" />
+                  ))}
+                  <IconStar className="text-yellow-500 w-5 h-5" />
+                </div>
+              </div>
             </div>
+            
+            <span className="text-sm text-muted-foreground">Trusted by 2.5K+ learners</span>
           </div>
           
           {/* CTA with Arrow */}
