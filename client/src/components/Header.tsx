@@ -3,13 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconBook, IconUser } from "@tabler/icons-react";
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
   const { t } = useTranslation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-card">
+    <header className={`sticky top-0 z-50 w-full bg-background transition-colors ${isScrolled ? 'border-b' : 'border-b border-background'}`}>
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link 
           href="/" 
