@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "courses": "Cursos",
+    "dashboard": "Panel"
+  },
+  "hero": {
+    "title": "La Plataforma de Recualificación con IA",
+    "subtitle": "Transforma tu carrera con aprendizaje impulsado por IA. Domina programación, ciencia de datos y habilidades tecnológicas con retroalimentación en tiempo real y orientación experta.",
+    "rating": "{{rating}}/5 de {{count}} estudiantes",
+    "trustedBy": "Confiado por {{count}}+ estudiantes",
+    "cta": "Comienza Tu Viaje"
+  },
+  "logo": {
+    "forbesTitle": "Forbes",
+    "forbesLink": "Ver artículos",
+    "clarkTitle": "Universidad Clark",
+    "clarkSubtitle": "Socio Certificado",
+    "awardsTitle": "Premios y Reconocimientos",
+    "awardsText": "Mejor Plataforma de Aprendizaje IA 2024"
+  },
+  "stats": {
+    "students": {
+      "count": "20,000+",
+      "label": "Estudiantes Activos"
+    },
+    "hours": {
+      "count": "5,000+",
+      "label": "Horas de Contenido"
+    },
+    "placement": {
+      "count": "85%",
+      "label": "Colocación Laboral"
+    }
+  },
+  "features": {
+    "title": "Por Qué Elegir Nuestra Plataforma",
+    "personalizedLearning": {
+      "title": "Aprendizaje Personalizado",
+      "description": "Recomendaciones de cursos impulsadas por IA adaptadas a tus objetivos y nivel de habilidad"
+    },
+    "expertMentors": {
+      "title": "Mentores Expertos",
+      "description": "Conéctate con profesionales de la industria para orientación y consejos de carrera"
+    },
+    "handsonProjects": {
+      "title": "Proyectos Prácticos",
+      "description": "Construye aplicaciones del mundo real para mostrar en tu portafolio"
+    },
+    "flexibleSchedule": {
+      "title": "Horario Flexible",
+      "description": "Aprende a tu propio ritmo con acceso 24/7 a materiales del curso"
+    },
+    "careerSupport": {
+      "title": "Apoyo Profesional",
+      "description": "Revisión de currículum, preparación para entrevistas y asistencia en colocación laboral"
+    },
+    "community": {
+      "title": "Comunidad Activa",
+      "description": "Únete a miles de estudiantes en nuestra comunidad de apoyo"
+    }
+  },
+  "imageText": {
+    "section1": {
+      "title": "Aprende de Expertos de la Industria",
+      "description": "Nuestros instructores son profesionales en activo con años de experiencia real. Obtén perspectivas y orientación de aquellos que han estado en tu lugar y han tenido éxito."
+    },
+    "section2": {
+      "title": "Construye Proyectos del Mundo Real",
+      "description": "Aplica tus habilidades a proyectos prácticos que resuelven problemas reales. Construye un portafolio que muestre tus capacidades a empleadores potenciales."
+    }
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Estudiantes",
+    "student1": {
+      "name": "Sarah Chen",
+      "role": "Ingeniera de Software en Tech Corp",
+      "text": "Esta plataforma transformó completamente mi carrera. Los proyectos prácticos y la mentoría me ayudaron a conseguir el trabajo de mis sueños en tecnología."
+    },
+    "student2": {
+      "name": "Michael Rodriguez",
+      "role": "Científico de Datos en Analytics Inc",
+      "text": "Las rutas de aprendizaje impulsadas por IA me mantuvieron comprometido y motivado. Pasé de principiante a profesional en solo 6 meses."
+    },
+    "student3": {
+      "name": "Emily Watson",
+      "role": "Desarrolladora Full Stack en StartupCo",
+      "text": "La mejor inversión que he hecho en mi educación. El apoyo de la comunidad y los servicios profesionales fueron invaluables."
+    }
+  },
+  "footer": {
+    "description": "Transforma tu carrera con aprendizaje impulsado por IA",
+    "rights": "© 2024 La Plataforma de Recualificación con IA. Todos los derechos reservados.",
+    "company": "Empresa",
+    "about": "Sobre Nosotros",
+    "careers": "Carreras",
+    "contact": "Contacto",
+    "resources": "Recursos",
+    "blog": "Blog",
+    "help": "Centro de Ayuda",
+    "documentation": "Documentación",
+    "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "cookies": "Política de Cookies"
+  },
+  "dashboard": {
+    "title": "Mi Panel",
+    "welcome": "¡Bienvenido de nuevo, {{name}}!",
+    "progress": "Tu Progreso",
+    "currentCourses": "Cursos Actuales",
+    "completedCourses": "Cursos Completados",
+    "certificates": "Certificados",
+    "continue": "Continuar Aprendiendo",
+    "viewCourse": "Ver Curso"
+  },
+  "courses": {
+    "title": "Explorar Cursos",
+    "search": "Buscar cursos...",
+    "filter": "Filtrar por categoría",
+    "all": "Todas las Categorías",
+    "viewDetails": "Ver Detalles",
+    "enroll": "Inscribirse Ahora",
+    "enrolled": "Inscrito",
+    "hours": "{{count}} horas",
+    "lessons": "{{count}} lecciones"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "¡Éxito!",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior"
+  }
+}

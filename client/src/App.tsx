@@ -7,6 +7,7 @@ import Home from "@/pages/Home";
 import Courses from "@/pages/Courses";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
+import "./i18n";
 
 function Router() {
   return (

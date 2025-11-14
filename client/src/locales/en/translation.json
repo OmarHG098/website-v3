@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "The AI Reskilling Platform",
+    "subtitle": "Transform your career with AI-powered learning. Master coding, data science, and tech skills with real-time feedback and expert guidance.",
+    "rating": "{{rating}}/5 from {{count}} learners",
+    "trustedBy": "Trusted by {{count}}+ learners",
+    "cta": "Start Your Journey"
+  },
+  "logo": {
+    "forbesTitle": "Forbes",
+    "forbesLink": "See articles",
+    "clarkTitle": "Clark University",
+    "clarkSubtitle": "Certified Partner",
+    "awardsTitle": "Awards & Recognition",
+    "awardsText": "Best AI Learning Platform 2024"
+  },
+  "stats": {
+    "students": {
+      "count": "20,000+",
+      "label": "Active Students"
+    },
+    "hours": {
+      "count": "5,000+",
+      "label": "Hours of Content"
+    },
+    "placement": {
+      "count": "85%",
+      "label": "Job Placement"
+    }
+  },
+  "features": {
+    "title": "Why Choose Our Platform",
+    "personalizedLearning": {
+      "title": "Personalized Learning",
+      "description": "AI-driven course recommendations tailored to your goals and skill level"
+    },
+    "expertMentors": {
+      "title": "Expert Mentors",
+      "description": "Connect with industry professionals for guidance and career advice"
+    },
+    "handsonProjects": {
+      "title": "Hands-on Projects",
+      "description": "Build real-world applications to showcase in your portfolio"
+    },
+    "flexibleSchedule": {
+      "title": "Flexible Schedule",
+      "description": "Learn at your own pace with 24/7 access to course materials"
+    },
+    "careerSupport": {
+      "title": "Career Support",
+      "description": "Resume reviews, interview prep, and job placement assistance"
+    },
+    "community": {
+      "title": "Active Community",
+      "description": "Join thousands of learners in our supportive community"
+    }
+  },
+  "imageText": {
+    "section1": {
+      "title": "Learn From Industry Experts",
+      "description": "Our instructors are working professionals with years of real-world experience. Get insights and guidance from those who've been in your shoes and succeeded."
+    },
+    "section2": {
+      "title": "Build Real-World Projects",
+      "description": "Apply your skills to practical projects that solve real problems. Build a portfolio that showcases your abilities to potential employers."
+    }
+  },
+  "testimonials": {
+    "title": "What Our Students Say",
+    "student1": {
+      "name": "Sarah Chen",
+      "role": "Software Engineer at Tech Corp",
+      "text": "This platform completely transformed my career. The hands-on projects and mentorship helped me land my dream job in tech."
+    },
+    "student2": {
+      "name": "Michael Rodriguez",
+      "role": "Data Scientist at Analytics Inc",
+      "text": "The AI-powered learning paths kept me engaged and motivated. I went from beginner to professional in just 6 months."
+    },
+    "student3": {
+      "name": "Emily Watson",
+      "role": "Full Stack Developer at StartupCo",
+      "text": "Best investment I've made in my education. The community support and career services were invaluable."
+    }
+  },
+  "footer": {
+    "description": "Transform your career with AI-powered learning",
+    "rights": "© 2024 The AI Reskilling Platform. All rights reserved.",
+    "company": "Company",
+    "about": "About Us",
+    "careers": "Careers",
+    "contact": "Contact",
+    "resources": "Resources",
+    "blog": "Blog",
+    "help": "Help Center",
+    "documentation": "Documentation",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy"
+  },
+  "dashboard": {
+    "title": "My Dashboard",
+    "welcome": "Welcome back, {{name}}!",
+    "progress": "Your Progress",
+    "currentCourses": "Current Courses",
+    "completedCourses": "Completed Courses",
+    "certificates": "Certificates",
+    "continue": "Continue Learning",
+    "viewCourse": "View Course"
+  },
+  "courses": {
+    "title": "Browse Courses",
+    "search": "Search courses...",
+    "filter": "Filter by category",
+    "all": "All Categories",
+    "viewDetails": "View Details",
+    "enroll": "Enroll Now",
+    "enrolled": "Enrolled",
+    "hours": "{{count}} hours",
+    "lessons": "{{count}} lessons"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  }
+}
