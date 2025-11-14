@@ -62,3 +62,5 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - Icon library: @tabler/icons-react (NEVER lucide-react)
 - Design approach: Marketing-focused landing page
 - Card border radius: 0.8rem throughout the platform
+- Testing: NEVER use playwright for testing - user prefers manual verification or alternative testing approaches
+- Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
