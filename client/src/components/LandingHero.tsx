@@ -54,7 +54,7 @@ export default function LandingHero() {
           </p>
           
           {/* Ratings Bar */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 mb-8 justify-center">
+          <div className="flex flex-col items-start gap-3 mb-8 mx-auto">
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[1, 2, 3, 4].map((i) => (
