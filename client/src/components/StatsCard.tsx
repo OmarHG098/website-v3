@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
+import { Icon } from "@tabler/icons-react";
 
 interface StatsCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon;
+  icon: Icon;
   trend?: string;
   trendUp?: boolean;
 }

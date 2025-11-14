@@ -3,7 +3,7 @@ import CourseCard from "@/components/CourseCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search } from "lucide-react";
+import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 import webDevThumbnail from "@assets/generated_images/Web_development_course_thumbnail_fd09be69.png";
 import dataScienceThumbnail from "@assets/generated_images/Data_science_course_thumbnail_c63194fb.png";
@@ -89,7 +89,7 @@ export default function Courses() {
 
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <IconSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Search courses..."
               value={searchQuery}

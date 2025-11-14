@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import StatsCard from "@/components/StatsCard";
 import ProgressCard from "@/components/ProgressCard";
-import { BookOpen, Clock, Award, TrendingUp } from "lucide-react";
+import { IconBook, IconClock, IconAward, IconTrendingUp } from "@tabler/icons-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import webDevThumbnail from "@assets/generated_images/Web_development_course_thumbnail_fd09be69.png";
 import dataScienceThumbnail from "@assets/generated_images/Data_science_course_thumbnail_c63194fb.png";
@@ -67,28 +67,28 @@ export default function Dashboard() {
           <StatsCard
             title="Courses Enrolled"
             value={3}
-            icon={BookOpen}
+            icon={IconBook}
             trend="+1 this month"
             trendUp={true}
           />
           <StatsCard
             title="Hours Learned"
             value={48}
-            icon={Clock}
+            icon={IconClock}
             trend="+12 this week"
             trendUp={true}
           />
           <StatsCard
             title="Courses Completed"
             value={5}
-            icon={Award}
+            icon={IconAward}
             trend="+2 this month"
             trendUp={true}
           />
           <StatsCard
             title="Learning Streak"
             value="12 days"
-            icon={TrendingUp}
+            icon={IconTrendingUp}
             trend="Keep it up!"
             trendUp={true}
           />

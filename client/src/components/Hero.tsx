@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import heroImage from "@assets/generated_images/Hero_image_students_learning_437ba36d.png";
 
 export default function Hero() {
@@ -28,7 +28,7 @@ export default function Hero() {
               data-testid="button-get-started"
             >
               Get Started
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <IconArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button 
               size="lg" 

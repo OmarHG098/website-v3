@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Clock, BookOpen } from "lucide-react";
+import { IconClock, IconBook } from "@tabler/icons-react";
 
 interface CourseCardProps {
   title: string;
@@ -56,12 +56,12 @@ export default function CourseCard({
         
         <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
           <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
+            <IconClock className="h-3 w-3" />
             <span>{duration}</span>
           </div>
           {lessons > 0 && (
             <div className="flex items-center gap-1">
-              <BookOpen className="h-3 w-3" />
+              <IconBook className="h-3 w-3" />
               <span>{lessons} lessons</span>
             </div>
           )}

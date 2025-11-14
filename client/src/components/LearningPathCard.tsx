@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { IconArrowRight } from "@tabler/icons-react";
 
 interface LearningPathCardProps {
   title: string;
@@ -23,7 +23,7 @@ export default function LearningPathCard({ title, description, icon, onClick }: 
       <p className="text-sm text-muted-foreground mb-6 max-w-xs">{description}</p>
       <Button className="mt-auto" data-testid={`button-select-${title.toLowerCase().replace(/\s+/g, '-')}`}>
         Select Path
-        <ArrowRight className="ml-2 h-4 w-4" />
+        <IconArrowRight className="ml-2 h-4 w-4" />
       </Button>
     </Card>
   );
