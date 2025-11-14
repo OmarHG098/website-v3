@@ -9,6 +9,7 @@ import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.png";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.png";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.png";
+import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
 
 export default function LandingHero() {
   return (
@@ -87,18 +88,13 @@ export default function LandingHero() {
             </div>
           </div>
           
-          {/* Hand-drawn arrow - hidden on mobile */}
+          {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
-            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path 
-                d="M40 5 Q 30 25, 35 40 L 35 45 M 35 45 L 30 40 M 35 45 L 40 40" 
-                stroke="currentColor" 
-                strokeWidth="2.5" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-                className="text-foreground/60"
-              />
-            </svg>
+            <img 
+              src={curvedArrow} 
+              alt="Arrow pointing down" 
+              className="w-20 h-auto opacity-80"
+            />
           </div>
           
           {/* CTA Button */}
