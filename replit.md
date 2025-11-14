@@ -26,7 +26,8 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 **CRITICAL PREFERENCE**: 
 - ✅ **ALWAYS use @tabler/icons-react** for all icons
 - ❌ **NEVER use lucide-react** - This library is forbidden for this project
-- Icons are imported as `Icon*` from '@tabler/icons-react' (e.g., `IconBook`, `IconUser`, `IconArrowRight`)
+- ✅ **ALWAYS prefer icons over Unicode characters** - Use tabler icons (e.g., IconStarFilled) instead of Unicode (★, ☆, emoji)
+- Icons are imported as `Icon*` from '@tabler/icons-react' (e.g., `IconBook`, `IconUser`, `IconArrowRight`, `IconStarFilled`)
 - For TypeScript types, use `Icon` from '@tabler/icons-react' instead of `LucideIcon`
 
 ## Project Structure

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IconStarFilled, IconStar } from "@tabler/icons-react";
 
 interface Testimonial {
   id: string;
@@ -44,12 +45,17 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               
               <div className="flex items-center gap-1 mb-3">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <span 
-                    key={i} 
-                    className={`text-lg ${i < testimonial.rating ? 'text-yellow-500' : 'text-muted'}`}
-                  >
-                    ★
-                  </span>
+                  i < testimonial.rating ? (
+                    <IconStarFilled 
+                      key={i} 
+                      className="w-4 h-4 text-yellow-500"
+                    />
+                  ) : (
+                    <IconStar 
+                      key={i} 
+                      className="w-4 h-4 text-muted"
+                    />
+                  )
                 ))}
               </div>
               

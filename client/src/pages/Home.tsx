@@ -9,6 +9,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
+import { IconStarFilled } from "@tabler/icons-react";
 import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.png";
 import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.png";
 import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.png";
@@ -147,15 +148,19 @@ export default function Home() {
           
           <div className="flex flex-wrap justify-center items-center gap-8">
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 mb-2">
-                <div className="text-yellow-500 text-2xl">★★★★★</div>
+              <div className="inline-flex items-center gap-1 mb-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <IconStarFilled key={i} className="w-6 h-6 text-yellow-500" />
+                ))}
               </div>
               <p className="text-sm text-muted-foreground">5.0 Course Report</p>
             </div>
             
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 mb-2">
-                <div className="text-yellow-500 text-2xl">★★★★★</div>
+              <div className="inline-flex items-center gap-1 mb-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <IconStarFilled key={i} className="w-6 h-6 text-yellow-500" />
+                ))}
               </div>
               <p className="text-sm text-muted-foreground">4.9 SwitchUp</p>
             </div>
