@@ -54,7 +54,7 @@ export default function LandingHero() {
           </p>
           
           {/* Ratings Bar */}
-          <div className="flex items-start gap-3 mb-8 mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-8">
             <div className="flex -space-x-2">
               <Avatar className="h-8 w-8 border-2 border-background">
                 <AvatarImage src={avatar1} alt="Sarah J." />
