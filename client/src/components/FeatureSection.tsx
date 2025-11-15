@@ -74,12 +74,10 @@ export default function FeatureSection({
             {decorations.length > 0 && (
               <div className="hidden md:flex items-center gap-2">
                 {decorations.map((decoration, index) => (
-                  <img
-                    key={index}
-                    src={decoration.src}
-                    alt={decoration.alt}
-                    className={decoration.className || "h-16 w-16"}
-                  />
+                  <Avatar key={index} className={decoration.className || "h-12 w-12"}>
+                    <AvatarImage src={decoration.src} alt={decoration.alt} />
+                    <AvatarFallback>{decoration.alt.charAt(0)}</AvatarFallback>
+                  </Avatar>
                 ))}
               </div>
             )}
@@ -90,10 +88,7 @@ export default function FeatureSection({
               const cardContent = (
                 <div className="flex items-center gap-3 w-full">
                   {action.icon && (
-                    <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarImage src={action.icon} alt="" />
-                      <AvatarFallback>AI</AvatarFallback>
-                    </Avatar>
+                    <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0" />
                   )}
                   <span className="flex-1 text-left text-sm">{action.label}</span>
                   <ArrowRight className="w-4 h-4 flex-shrink-0 text-muted-foreground" />

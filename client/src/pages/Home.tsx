@@ -36,42 +36,42 @@ export default function Home() {
   const aiAutomations = [
     {
       label: "Turn career goals into AI-guided learning plans",
-      icon: rigobotAvatar,
+      icon: rocketIcon,
       onClick: () => setLocation('/courses'),
     },
     {
       label: "Convert lecture notes into project-ready tasks",
-      icon: womanProfile1,
+      icon: toolMasteryIcon,
       onClick: () => console.log('Convert notes clicked'),
     },
     {
       label: "Generate interview drills from your progress gaps",
-      icon: manProfile1,
+      icon: lightningIcon,
       onClick: () => console.log('Generate drills clicked'),
     },
     {
       label: "Match you with the right mentor instantly",
-      icon: womanProfile2,
+      icon: communityIcon,
       onClick: () => console.log('Match mentor clicked'),
     },
     {
       label: "Draft weekly skill reports for your manager",
-      icon: manProfile2,
+      icon: skillLearningIcon,
       onClick: () => console.log('Draft reports clicked'),
     },
     {
       label: "Transform code reviews into practice scenarios",
-      icon: student1,
+      icon: securityIcon,
       onClick: () => console.log('Transform reviews clicked'),
     },
     {
       label: "Translate real projects into résumé wins",
-      icon: student2,
+      icon: careerIcon,
       onClick: () => console.log('Translate projects clicked'),
     },
     {
       label: "Forecast hiring-ready timelines with AI insights",
-      icon: student3,
+      icon: lightningIcon,
       onClick: () => console.log('Forecast timelines clicked'),
     },
   ];
@@ -125,9 +125,9 @@ export default function Home() {
         ctaHref="/courses"
         actions={aiAutomations}
         decorations={[
-          { src: skillLearningIcon, alt: "Skill learning icon", className: "h-14 w-14" },
-          { src: toolMasteryIcon, alt: "Tool mastery icon", className: "h-16 w-16" },
-          { src: rocketIcon, alt: "Rocket icon", className: "h-14 w-14" },
+          { src: rigobotAvatar, alt: "Rigobot AI Tutor", className: "h-14 w-14" },
+          { src: womanProfile1, alt: "Student Maria", className: "h-16 w-16" },
+          { src: manProfile1, alt: "Student David", className: "h-14 w-14" },
         ]}
       />
       
