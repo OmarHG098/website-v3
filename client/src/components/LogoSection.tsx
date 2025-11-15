@@ -9,9 +9,9 @@ export default function LogoSection() {
   return (
     <section className="bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 max-w-7xl mx-auto">
           {/* Forbes Section */}
-          <div className="text-center md:text-left flex flex-col items-center md:items-start">
+          <div className="text-center flex flex-col items-center">
             <img 
               src={forbesLogo} 
               alt="Forbes" 
@@ -53,8 +53,8 @@ export default function LogoSection() {
           </div>
 
           {/* Badges/Awards Section */}
-          <div className="text-center md:text-right flex flex-col items-center md:items-end">
-            <div className="flex justify-center md:justify-end gap-4 mb-4">
+          <div className="text-center flex flex-col items-center">
+            <div className="flex justify-center gap-4 mb-4">
               <img 
                 src={badgesImage} 
                 alt="Award Badges - Best Coding Bootcamp" 
