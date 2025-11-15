@@ -1,4 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import forbesLogo from "@assets/forbes-logo.avif";
+import clarkLogo from "@assets/clark-logo.avif";
+import bestBootcampBadge from "@assets/best-bootcamp-badge.avif";
 
 export default function LogoSection() {
   const { t } = useTranslation();
@@ -6,11 +9,17 @@ export default function LogoSection() {
   return (
     <section className="border-y bg-muted/30 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
           {/* Forbes Section */}
-          <div className="text-center md:text-left">
-            <h3 className="text-5xl font-bold font-serif mb-4">{t('logo.forbesTitle')}</h3>
-            <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0">
+          <div className="text-center md:text-left flex flex-col items-center md:items-start">
+            <img 
+              src={forbesLogo} 
+              alt="Forbes" 
+              className="h-12 w-auto object-contain mb-4"
+              loading="lazy"
+              data-testid="img-forbes-logo"
+            />
+            <p className="text-sm text-muted-foreground mb-4 max-w-xs">
               {t('logo.forbesDescription')}
             </p>
             <a 
@@ -23,16 +32,15 @@ export default function LogoSection() {
           </div>
 
           {/* Clark University Section */}
-          <div className="text-center">
-            <h3 className="text-3xl font-bold tracking-wider mb-4">
-              {t('logo.clarkTitle').split(' ').map((word, i) => (
-                <span key={i}>
-                  {word}
-                  {i === 0 && <br />}
-                </span>
-              ))}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto">
+          <div className="text-center flex flex-col items-center">
+            <img 
+              src={clarkLogo} 
+              alt="Clark University" 
+              className="h-16 w-auto object-contain mb-4"
+              loading="lazy"
+              data-testid="img-clark-logo"
+            />
+            <p className="text-sm text-muted-foreground mb-4 max-w-xs">
               {t('logo.clarkSubtitle')}
             </p>
             <a 
@@ -45,29 +53,17 @@ export default function LogoSection() {
           </div>
 
           {/* Badges/Awards Section */}
-          <div className="text-center md:text-right">
+          <div className="text-center md:text-right flex flex-col items-center md:items-end">
             <div className="flex justify-center md:justify-end gap-4 mb-4">
-              {/* Badge placeholders - can be replaced with actual badge images */}
-              <div className="w-20 h-24 border-2 border-primary/20 rounded-lg flex items-center justify-center bg-background">
-                <div className="text-xs font-bold text-center px-2">
-                  {t('logo.badge1Year')}
-                  <br />
-                  {t('logo.badge1Top')}
-                  <br />
-                  {t('logo.badge1Name')}
-                </div>
-              </div>
-              <div className="w-24 h-24 border-2 border-chart-2/20 rounded-full flex items-center justify-center bg-background">
-                <div className="text-xs font-bold text-center">
-                  {t('logo.badge2Best')}
-                  <br />
-                  {t('logo.badge2Coding')}
-                  <br />
-                  {t('logo.badge2Bootcamp')}
-                </div>
-              </div>
+              <img 
+                src={bestBootcampBadge} 
+                alt="Best Coding Bootcamp Award" 
+                className="h-24 w-auto object-contain"
+                loading="lazy"
+                data-testid="img-best-bootcamp-badge"
+              />
             </div>
-            <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0 md:ml-auto">
+            <p className="text-sm text-muted-foreground mb-4 max-w-xs">
               {t('logo.awardsText')}
             </p>
             <a 
