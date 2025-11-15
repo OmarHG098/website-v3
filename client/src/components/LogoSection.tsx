@@ -7,7 +7,7 @@ export default function LogoSection() {
   const { t } = useTranslation();
   
   return (
-    <section className="bg-muted/30">
+    <section>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 max-w-7xl mx-auto">
           {/* Forbes Section */}
