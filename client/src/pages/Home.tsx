@@ -21,6 +21,14 @@ import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62
 import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
+import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
+import womanProfile1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.png";
+import manProfile1 from "@assets/generated_images/Man_profile_headshot_1_0850c276.png";
+import womanProfile2 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.png";
+import manProfile2 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.png";
+import student1 from "@assets/student-1-asian.png";
+import student2 from "@assets/student-2-latin.png";
+import student3 from "@assets/student-3-african.png";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -28,42 +36,42 @@ export default function Home() {
   const aiAutomations = [
     {
       label: "Turn career goals into AI-guided learning plans",
-      icon: rocketIcon,
+      icon: rigobotAvatar,
       onClick: () => setLocation('/courses'),
     },
     {
       label: "Convert lecture notes into project-ready tasks",
-      icon: toolMasteryIcon,
+      icon: womanProfile1,
       onClick: () => console.log('Convert notes clicked'),
     },
     {
       label: "Generate interview drills from your progress gaps",
-      icon: lightningIcon,
+      icon: manProfile1,
       onClick: () => console.log('Generate drills clicked'),
     },
     {
       label: "Match you with the right mentor instantly",
-      icon: communityIcon,
+      icon: womanProfile2,
       onClick: () => console.log('Match mentor clicked'),
     },
     {
       label: "Draft weekly skill reports for your manager",
-      icon: skillLearningIcon,
+      icon: manProfile2,
       onClick: () => console.log('Draft reports clicked'),
     },
     {
       label: "Transform code reviews into practice scenarios",
-      icon: securityIcon,
+      icon: student1,
       onClick: () => console.log('Transform reviews clicked'),
     },
     {
       label: "Translate real projects into résumé wins",
-      icon: careerIcon,
+      icon: student2,
       onClick: () => console.log('Translate projects clicked'),
     },
     {
       label: "Forecast hiring-ready timelines with AI insights",
-      icon: lightningIcon,
+      icon: student3,
       onClick: () => console.log('Forecast timelines clicked'),
     },
   ];

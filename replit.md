@@ -49,6 +49,8 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Responsive design
 - ✅ Comprehensive SEO optimization (meta tags, schema.org, sitemap, robots.txt)
 - ✅ Performance optimizations (lazy loading, font optimization)
+- ✅ Notion-inspired AI automation section with 8 use cases displayed as interactive cards
+- ✅ User avatars in AI automation cards (including Rigobot the AI tutor)
 
 ## Future Integration
 - Backend integration with 4geeks Breathecode API (documentation pending from user)

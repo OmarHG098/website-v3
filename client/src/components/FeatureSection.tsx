@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ArrowRight } from "lucide-react";
 
 interface Feature {
@@ -89,7 +90,10 @@ export default function FeatureSection({
               const cardContent = (
                 <div className="flex items-center gap-3 w-full">
                   {action.icon && (
-                    <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0" />
+                    <Avatar className="h-8 w-8 flex-shrink-0">
+                      <AvatarImage src={action.icon} alt="" />
+                      <AvatarFallback>AI</AvatarFallback>
+                    </Avatar>
                   )}
                   <span className="flex-1 text-left text-sm">{action.label}</span>
                   <ArrowRight className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
