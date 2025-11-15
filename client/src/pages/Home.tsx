@@ -24,13 +24,20 @@ export default function Home() {
 
   const mainFeatures = [
     {
-      title: "Head Digital",
-      description: "Our AI-powered learning assistant provides personalized guidance throughout your journey, helping you stay on track and overcome challenges with intelligent feedback and adaptive learning paths.",
+      bullets: [
+        "AI-powered learning assistant provides personalized guidance throughout your journey",
+        "Stay on track and overcome challenges with intelligent feedback",
+        "Adaptive learning paths that adjust to your pace and style",
+        "Real-time progress tracking and performance analytics",
+      ],
     },
-    {
-      title: "Unlimited Human Support",
-      description: "Connect with experienced mentors and instructors who are dedicated to your success. Get help whenever you need it through live sessions, code reviews, and career coaching - no limits, no restrictions.",
-    },
+  ];
+
+  const featureAvatars = [
+    { src: rocketIcon, alt: "AI Learning Tools", fallback: "AI" },
+    { src: communityIcon, alt: "Community Support", fallback: "CS" },
+    { src: securityIcon, alt: "Secure Platform", fallback: "SP" },
+    { src: lightningIcon, alt: "Quick Results", fallback: "QR" },
   ];
 
   const iconFeatures = [
@@ -74,7 +81,11 @@ export default function Home() {
       
       <PersonalizedLearningSection />
       
-      <FeatureSection features={mainFeatures} />
+      <FeatureSection 
+        title="Welcome to Hyper-personalized Learning. Progress Like Never Before."
+        features={mainFeatures}
+        avatars={featureAvatars}
+      />
       
       <StatsSection />
       
