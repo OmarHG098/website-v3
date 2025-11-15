@@ -48,12 +48,12 @@ export default function LandingHero() {
         </div>
 
         {/* Content Column (Center) */}
-        <div className="z-10 text-center px-4 md:max-w-xl md:mx-auto">
+        <div className="z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap">
             {t('hero.title')}
           </h1>
           
-          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto">
             {t('hero.subtitle')}
           </p>
           
