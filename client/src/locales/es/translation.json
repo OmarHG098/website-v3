@@ -37,6 +37,14 @@
     "badge2Coding": "BOOTCAMP",
     "badge2Bootcamp": "PROGRAMACIÓN"
   },
+  "personalized": {
+    "heading": "El \"estudiante promedio\" no existe.",
+    "mainText": "TÚ SÍ—con tus fortalezas, debilidades y estilo de aprendizaje únicos.",
+    "altStudent1": "Estudiante aprendiendo con enfoque personalizado",
+    "altStudent2": "Estudiante programando con estilo de aprendizaje individual",
+    "altStudent3": "Estudiante comprometido en educación personalizada",
+    "altStudent4": "Estudiante desarrollando habilidades únicas"
+  },
   "stats": {
     "students": {
       "count": "20,000+",

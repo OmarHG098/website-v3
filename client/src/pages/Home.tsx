@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import LandingHero from "@/components/LandingHero";
 import LogoSection from "@/components/LogoSection";
+import PersonalizedLearningSection from "@/components/PersonalizedLearningSection";
 import FeatureSection from "@/components/FeatureSection";
 import StatsSection from "@/components/StatsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
@@ -70,6 +71,8 @@ export default function Home() {
       <LandingHero />
       
       <LogoSection />
+      
+      <PersonalizedLearningSection />
       
       <FeatureSection features={mainFeatures} />
       

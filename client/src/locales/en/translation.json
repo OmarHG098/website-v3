@@ -37,6 +37,14 @@
     "badge2Coding": "CODING",
     "badge2Bootcamp": "BOOTCAMP"
   },
+  "personalized": {
+    "heading": "The \"average student\" doesn't exist.",
+    "mainText": "YOU DO—with your unique strengths, weaknesses and learning style.",
+    "altStudent1": "Student learning with personalized approach",
+    "altStudent2": "Student coding with individual learning style",
+    "altStudent3": "Student engaged in personalized education",
+    "altStudent4": "Student developing unique skills"
+  },
   "stats": {
     "students": {
       "count": "20,000+",
