@@ -9,7 +9,7 @@ export default function LogoSection() {
   return (
     <section className="bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center max-w-7xl mx-auto">
           {/* Forbes Section */}
           <div className="text-center md:text-left flex flex-col items-center md:items-start">
             <img 
