@@ -71,15 +71,19 @@ export default function FeatureSection({
             </div>
             
             {decorations.length > 0 && (
-              <div className="hidden md:flex -space-x-2 items-center">
+              <div className="hidden md:flex -space-x-4 items-center">
                 {decorations.map((decoration, index) => (
                   <Avatar 
                     key={index} 
-                    className="h-10 w-10 border-2 border-background"
+                    className="h-20 w-20 border-2 border-background"
                     style={{ zIndex: decorations.length - index }}
                     data-testid={`avatar-decoration-${index}`}
                   >
-                    <AvatarImage src={decoration.src} alt={decoration.alt} />
+                    <AvatarImage 
+                      src={decoration.src} 
+                      alt={decoration.alt}
+                      className="object-cover"
+                    />
                     <AvatarFallback>{decoration.alt.charAt(0).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 ))}
