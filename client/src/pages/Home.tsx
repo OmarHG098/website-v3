@@ -116,7 +116,7 @@ export default function Home() {
       
       <FeatureSection 
         variant="notion"
-        heading="Let your AI co-pilot fast-track every milestone."
+        heading="Welcome to Hyper-personalized Learning."
         subheading="Pick a workflow and witness the platform auto-build plans, resources, and check-ins in seconds."
         ctaLabel="Explore all automations"
         ctaHref="/courses"
