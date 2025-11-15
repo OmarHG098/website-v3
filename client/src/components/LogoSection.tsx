@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import forbesLogo from "@assets/forbes-logo.avif";
-import clarkLogo from "@assets/clark-logo.avif";
-import bestBootcampBadge from "@assets/best-bootcamp-badge.avif";
+import forbesLogo from "@assets/forbes-new.avif";
+import clarkLogo from "@assets/clark-new.avif";
+import badgesImage from "@assets/badges-new.avif";
 
 export default function LogoSection() {
   const { t } = useTranslation();
@@ -56,11 +56,11 @@ export default function LogoSection() {
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
             <div className="flex justify-center md:justify-end gap-4 mb-4">
               <img 
-                src={bestBootcampBadge} 
-                alt="Best Coding Bootcamp Award" 
+                src={badgesImage} 
+                alt="Award Badges - Best Coding Bootcamp" 
                 className="h-24 w-auto object-contain"
                 loading="lazy"
-                data-testid="img-best-bootcamp-badge"
+                data-testid="img-award-badges"
               />
             </div>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs">
