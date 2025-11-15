@@ -7,7 +7,7 @@ export default function LogoSection() {
   const { t } = useTranslation();
   
   return (
-    <section className="border-y bg-muted/30 pb-16">
+    <section className="bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
           {/* Forbes Section */}
