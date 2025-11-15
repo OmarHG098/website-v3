@@ -1,4 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 interface Feature {
   title: string;
@@ -6,12 +8,128 @@ interface Feature {
   icon?: string;
 }
 
-interface FeatureSectionProps {
-  title?: string;
-  features: Feature[];
+interface FeatureAction {
+  label: string;
+  icon?: string;
+  href?: string;
+  onClick?: () => void;
 }
 
-export default function FeatureSection({ title, features }: FeatureSectionProps) {
+interface DecorationAsset {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+interface FeatureSectionProps {
+  variant?: "detailed" | "notion";
+  title?: string;
+  heading?: string;
+  subheading?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaIcon?: React.ReactNode;
+  features?: Feature[];
+  actions?: FeatureAction[];
+  decorations?: DecorationAsset[];
+}
+
+export default function FeatureSection({
+  variant = "detailed",
+  title,
+  heading,
+  subheading,
+  ctaLabel,
+  ctaHref,
+  ctaIcon,
+  features = [],
+  actions = [],
+  decorations = [],
+}: FeatureSectionProps) {
+  if (variant === "notion") {
+    return (
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-start justify-between gap-8 mb-8">
+            <div className="flex-1">
+              {heading && (
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+              )}
+              {subheading && (
+                <p className="text-muted-foreground text-lg mb-4">{subheading}</p>
+              )}
+              {ctaLabel && ctaHref && (
+                <a 
+                  href={ctaHref}
+                  className="inline-flex items-center gap-2 text-primary hover:underline"
+                  data-testid="link-feature-cta"
+                >
+                  {ctaLabel}
+                  {ctaIcon || <ArrowRight className="w-4 h-4" />}
+                </a>
+              )}
+            </div>
+            
+            {decorations.length > 0 && (
+              <div className="hidden md:flex items-center gap-2">
+                {decorations.map((decoration, index) => (
+                  <img
+                    key={index}
+                    src={decoration.src}
+                    alt={decoration.alt}
+                    className={decoration.className || "h-16 w-16"}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {actions.map((action, index) => {
+              const content = (
+                <>
+                  {action.icon && (
+                    <img src={action.icon} alt="" className="h-5 w-5 text-muted-foreground" />
+                  )}
+                  <span className="flex-1 text-left">{action.label}</span>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                </>
+              );
+
+              if (action.href) {
+                return (
+                  <Button
+                    key={index}
+                    size="lg"
+                    variant="ghost"
+                    asChild
+                    className="justify-start gap-3 bg-muted/60"
+                    data-testid={`button-feature-action-${index}`}
+                  >
+                    <a href={action.href}>{content}</a>
+                  </Button>
+                );
+              }
+
+              return (
+                <Button
+                  key={index}
+                  size="lg"
+                  variant="ghost"
+                  onClick={action.onClick}
+                  className="justify-start gap-3 bg-muted/60"
+                  data-testid={`button-feature-action-${index}`}
+                >
+                  {content}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="container mx-auto px-4 py-16">
       {title && (

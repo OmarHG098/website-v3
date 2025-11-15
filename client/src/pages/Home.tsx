@@ -16,20 +16,55 @@ import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.png
 import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.png";
 import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.png";
 import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.png";
+import skillLearningIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.png";
+import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.png";
+import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
 
 export default function Home() {
   const [, setLocation] = useLocation();
 
-  const mainFeatures = [
+  const aiAutomations = [
     {
-      title: "Head Digital",
-      description: "Our AI-powered learning assistant provides personalized guidance throughout your journey, helping you stay on track and overcome challenges with intelligent feedback and adaptive learning paths.",
+      label: "Turn career goals into AI-guided learning plans",
+      icon: rocketIcon,
+      onClick: () => setLocation('/courses'),
     },
     {
-      title: "Unlimited Human Support",
-      description: "Connect with experienced mentors and instructors who are dedicated to your success. Get help whenever you need it through live sessions, code reviews, and career coaching - no limits, no restrictions.",
+      label: "Convert lecture notes into project-ready tasks",
+      icon: toolMasteryIcon,
+      onClick: () => console.log('Convert notes clicked'),
+    },
+    {
+      label: "Generate interview drills from your progress gaps",
+      icon: lightningIcon,
+      onClick: () => console.log('Generate drills clicked'),
+    },
+    {
+      label: "Match you with the right mentor instantly",
+      icon: communityIcon,
+      onClick: () => console.log('Match mentor clicked'),
+    },
+    {
+      label: "Draft weekly skill reports for your manager",
+      icon: skillLearningIcon,
+      onClick: () => console.log('Draft reports clicked'),
+    },
+    {
+      label: "Transform code reviews into practice scenarios",
+      icon: securityIcon,
+      onClick: () => console.log('Transform reviews clicked'),
+    },
+    {
+      label: "Translate real projects into résumé wins",
+      icon: careerIcon,
+      onClick: () => console.log('Translate projects clicked'),
+    },
+    {
+      label: "Forecast hiring-ready timelines with AI insights",
+      icon: lightningIcon,
+      onClick: () => console.log('Forecast timelines clicked'),
     },
   ];
 
@@ -74,7 +109,19 @@ export default function Home() {
       
       <PersonalizedLearningSection />
       
-      <FeatureSection features={mainFeatures} />
+      <FeatureSection 
+        variant="notion"
+        heading="Let your AI co-pilot fast-track every milestone."
+        subheading="Pick a workflow and witness the platform auto-build plans, resources, and check-ins in seconds."
+        ctaLabel="Explore all automations"
+        ctaHref="/courses"
+        actions={aiAutomations}
+        decorations={[
+          { src: skillLearningIcon, alt: "Skill learning icon", className: "h-14 w-14" },
+          { src: toolMasteryIcon, alt: "Tool mastery icon", className: "h-16 w-16" },
+          { src: rocketIcon, alt: "Rocket icon", className: "h-14 w-14" },
+        ]}
+      />
       
       <StatsSection />
       
