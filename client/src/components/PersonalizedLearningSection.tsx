@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import student1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.png";
-import student2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.png";
-import student3 from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
-import student4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.png";
+import student1 from "@assets/student-1-asian.png";
+import student2 from "@assets/student-2-latin.png";
+import student3 from "@assets/student-3-african.png";
+import student4 from "@assets/student-4-lady-latin.png";
 
 export default function PersonalizedLearningSection() {
   const { t } = useTranslation();
