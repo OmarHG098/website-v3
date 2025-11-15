@@ -129,8 +129,6 @@ export default function Home() {
           { src: student2, alt: "Student Carlos" },
           { src: student3, alt: "Student Amara" },
           { src: student4, alt: "Student Sofia" },
-          { src: student5, alt: "Student Layla" },
-          { src: student6, alt: "Student Jun" },
         ]}
       />
       

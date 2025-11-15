@@ -76,6 +76,7 @@ export default function FeatureSection({
                   <Avatar 
                     key={index} 
                     className="h-10 w-10 border-2 border-background"
+                    style={{ zIndex: decorations.length - index }}
                     data-testid={`avatar-decoration-${index}`}
                   >
                     <AvatarImage src={decoration.src} alt={decoration.alt} />
