@@ -17,7 +17,7 @@ export default function PersonalizedLearningSection() {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-stretch gap-4 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row items-stretch gap-4 max-w-7xl mx-auto h-auto md:h-80">
           {/* Student Images - 4 columns */}
           {studentImages.map((image, index) => (
             <div
