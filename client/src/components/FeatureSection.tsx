@@ -19,7 +19,6 @@ interface FeatureAction {
 interface DecorationAsset {
   src: string;
   alt: string;
-  className?: string;
 }
 
 interface FeatureSectionProps {
@@ -72,11 +71,15 @@ export default function FeatureSection({
             </div>
             
             {decorations.length > 0 && (
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden md:flex -space-x-2 items-center">
                 {decorations.map((decoration, index) => (
-                  <Avatar key={index} className={decoration.className || "h-12 w-12"}>
+                  <Avatar 
+                    key={index} 
+                    className="h-10 w-10 border-2 border-background"
+                    data-testid={`avatar-decoration-${index}`}
+                  >
                     <AvatarImage src={decoration.src} alt={decoration.alt} />
-                    <AvatarFallback>{decoration.alt.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{decoration.alt.charAt(0).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 ))}
               </div>
