@@ -43,7 +43,7 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Feature sections with stats (20,000 students, 5000 hours, 85% placement)
 - ✅ Icon feature grid
 - ✅ Image-text sections
-- ✅ Testimonials with ratings
+- ✅ Important Awards and Top Ratings section with star ratings
 - ✅ Dashboard with progress tracking
 - ✅ Course catalog with search/filtering
 - ✅ Responsive design
