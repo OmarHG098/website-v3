@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { IconChevronDown, IconArrowRight } from "@tabler/icons-react";
 import { useState } from "react";
+import type { Icon } from "@tabler/icons-react";
 
 interface Feature {
   title: string;
@@ -13,7 +14,7 @@ interface Feature {
 interface FeatureAction {
   label: string;
   description: string;
-  icon?: string;
+  icon?: Icon;
   href?: string;
   onClick?: () => void;
 }
@@ -79,7 +80,7 @@ export default function FeatureSection({
                   data-testid="link-feature-cta"
                 >
                   {ctaLabel}
-                  {ctaIcon || <ArrowRight className="w-4 h-4" />}
+                  {ctaIcon || <IconArrowRight className="w-4 h-4" />}
                 </a>
               )}
             </div>
@@ -119,12 +120,12 @@ export default function FeatureSection({
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
-                        <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                        <action.icon className="h-5 w-5 flex-shrink-0 mt-0.5" />
                       )}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="text-sm font-medium">{action.label}</span>
-                          <ChevronDown 
+                          <IconChevronDown 
                             className={`w-4 h-4 flex-shrink-0 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                           />
                         </div>
