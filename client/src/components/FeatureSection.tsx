@@ -86,42 +86,43 @@ export default function FeatureSection({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
-              const content = (
-                <>
+              const cardContent = (
+                <div className="flex items-center gap-3 w-full">
                   {action.icon && (
-                    <img src={action.icon} alt="" className="h-5 w-5 text-muted-foreground" />
+                    <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0" />
                   )}
-                  <span className="flex-1 text-left">{action.label}</span>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                </>
+                  <span className="flex-1 text-left text-sm">{action.label}</span>
+                  <ArrowRight className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
+                </div>
               );
 
               if (action.href) {
                 return (
-                  <Button
+                  <Card 
                     key={index}
-                    size="lg"
-                    variant="ghost"
-                    asChild
-                    className="justify-start gap-3 bg-muted/60"
+                    className="hover-elevate active-elevate-2 cursor-pointer"
                     data-testid={`button-feature-action-${index}`}
                   >
-                    <a href={action.href}>{content}</a>
-                  </Button>
+                    <a href={action.href} className="block">
+                      <CardContent className="p-4">
+                        {cardContent}
+                      </CardContent>
+                    </a>
+                  </Card>
                 );
               }
 
               return (
-                <Button
+                <Card 
                   key={index}
-                  size="lg"
-                  variant="ghost"
+                  className="hover-elevate active-elevate-2 cursor-pointer"
                   onClick={action.onClick}
-                  className="justify-start gap-3 bg-muted/60"
                   data-testid={`button-feature-action-${index}`}
                 >
-                  {content}
-                </Button>
+                  <CardContent className="p-4">
+                    {cardContent}
+                  </CardContent>
+                </Card>
               );
             })}
           </div>
