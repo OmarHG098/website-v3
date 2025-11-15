@@ -4,6 +4,7 @@ import LogoSection from "@/components/LogoSection";
 import PersonalizedLearningSection from "@/components/PersonalizedLearningSection";
 import FeatureSection from "@/components/FeatureSection";
 import StatsSection from "@/components/StatsSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";
@@ -148,6 +149,57 @@ export default function Home() {
       />
       
       <StatsSection />
+      
+      <TestimonialsSection testimonials={[
+        {
+          id: '1',
+          name: 'Sarah Johnson',
+          role: 'Software Engineer at Google',
+          course: 'Full Stack Web Development',
+          rating: 5,
+          comment: 'This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications.',
+        },
+        {
+          id: '2',
+          name: 'Michael Chen',
+          role: 'Data Analyst at Meta',
+          course: 'Data Science & Analytics',
+          rating: 5,
+          comment: 'Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable.',
+        },
+        {
+          id: '3',
+          name: 'Emily Rodriguez',
+          role: 'ML Engineer at Amazon',
+          course: 'AI & Machine Learning',
+          rating: 5,
+          comment: 'Excellent content and great support from mentors. The projects were challenging but rewarding, and now I\'m working on cutting-edge AI.',
+        },
+        {
+          id: '4',
+          name: 'David Kim',
+          role: 'Full Stack Developer',
+          course: 'Full Stack Web Development',
+          rating: 5,
+          comment: 'From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference.',
+        },
+        {
+          id: '5',
+          name: 'Jessica Martinez',
+          role: 'Frontend Developer at Spotify',
+          course: 'Full Stack Web Development',
+          rating: 4,
+          comment: 'Great course with practical, real-world projects. The community is supportive and the instructors are always available to help.',
+        },
+        {
+          id: '6',
+          name: 'Ryan Thompson',
+          role: 'Data Scientist',
+          course: 'Data Science & Analytics',
+          rating: 5,
+          comment: 'The best online learning experience I\'ve had. Clear explanations, practical exercises, and excellent career guidance throughout.',
+        },
+      ]} />
       
       <IconFeatureGrid 
         title="Our mission is to get you into tech."

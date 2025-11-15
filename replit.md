@@ -41,6 +41,7 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Landing page with hero section (tilted photo cards layout)
 - ✅ Logo section with Forbes, Clark University, and awards badges
 - ✅ Feature sections with stats (20,000 students, 5000 hours, 85% placement)
+- ✅ Testimonials section positioned after stats (6 user reviews with ratings)
 - ✅ Icon feature grid
 - ✅ Image-text sections
 - ✅ Important Awards and Top Ratings section with star ratings
