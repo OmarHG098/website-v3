@@ -256,8 +256,7 @@ export default function Home() {
         imagePosition="left"
         ctaText="Start Your Journey"
         onCtaClick={() => {
-          console.log('Start journey clicked');
-          setLocation('/courses');
+          setLocation('/learning-paths');
         }}
       />
 

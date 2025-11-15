@@ -10,6 +10,10 @@ import "./i18n";
 
 const Courses = lazy(() => import("@/pages/Courses"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const LearningPathSelection = lazy(() => import("@/pages/LearningPathSelection"));
+const CareerPaths = lazy(() => import("@/pages/CareerPaths"));
+const SkillBoosters = lazy(() => import("@/pages/SkillBoosters"));
+const ToolMastery = lazy(() => import("@/pages/ToolMastery"));
 
 function LoadingFallback() {
   return (
@@ -28,6 +32,10 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/learning-paths" component={LearningPathSelection} />
+        <Route path="/career-paths" component={CareerPaths} />
+        <Route path="/skill-boosters" component={SkillBoosters} />
+        <Route path="/tool-mastery" component={ToolMastery} />
         <Route path="/courses" component={Courses} />
         <Route path="/dashboard" component={Dashboard} />
         <Route component={NotFound} />
