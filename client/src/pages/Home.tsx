@@ -22,12 +22,10 @@ import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
 import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
-import student1 from "@assets/student-1-asian.png";
-import student2 from "@assets/student-2-latin.png";
-import student3 from "@assets/student-3-african.png";
-import student4 from "@assets/student-4-lady-latin.png";
-import student5 from "@assets/generated_images/Middle_Eastern_woman_engineer_headshot_e0799c60.png";
-import student6 from "@assets/generated_images/Asian_man_tech_professional_headshot_f6414ee1.png";
+import learner1 from "@assets/generated_images/South_Asian_woman_tech_professional_5cd2753e.png";
+import learner2 from "@assets/generated_images/Black_man_software_developer_4fbc5963.png";
+import learner3 from "@assets/generated_images/East_Asian_woman_engineer_8ba7b781.png";
+import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89ae.png";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -125,10 +123,10 @@ export default function Home() {
         actions={aiAutomations}
         decorations={[
           { src: rigobotAvatar, alt: "Rigobot AI Tutor" },
-          { src: student1, alt: "Student Wei" },
-          { src: student2, alt: "Student Carlos" },
-          { src: student3, alt: "Student Amara" },
-          { src: student4, alt: "Student Sofia" },
+          { src: learner1, alt: "Priya S." },
+          { src: learner2, alt: "Marcus J." },
+          { src: learner3, alt: "Yuki M." },
+          { src: learner4, alt: "Diego R." },
         ]}
       />
       
