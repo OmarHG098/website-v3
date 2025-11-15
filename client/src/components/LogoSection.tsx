@@ -10,22 +10,24 @@ export default function LogoSection() {
     <section className="border-y bg-muted/30 py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-          {/* Forbes Section */}
+          {/* Badges/Awards Section */}
           <div className="text-center md:text-left flex flex-col items-center md:items-start">
-            <img 
-              src={forbesLogo} 
-              alt="Forbes" 
-              className="h-12 w-auto object-contain mb-4"
-              loading="lazy"
-              data-testid="img-forbes-logo"
-            />
+            <div className="flex justify-center md:justify-start gap-4 mb-4">
+              <img 
+                src={bestBootcampBadge} 
+                alt="Best Coding Bootcamp Award" 
+                className="h-24 w-auto object-contain"
+                loading="lazy"
+                data-testid="img-best-bootcamp-badge"
+              />
+            </div>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs">
-              {t('logo.forbesDescription')}
+              {t('logo.awardsText')}
             </p>
             <a 
               href="#" 
               className="text-sm text-primary font-medium hover:underline"
-              data-testid="link-forbes-articles"
+              data-testid="link-awards-articles"
             >
               {t('logo.forbesLink')}
             </a>
@@ -52,24 +54,22 @@ export default function LogoSection() {
             </a>
           </div>
 
-          {/* Badges/Awards Section */}
+          {/* Forbes Section */}
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
-            <div className="flex justify-center md:justify-end gap-4 mb-4">
-              <img 
-                src={bestBootcampBadge} 
-                alt="Best Coding Bootcamp Award" 
-                className="h-24 w-auto object-contain"
-                loading="lazy"
-                data-testid="img-best-bootcamp-badge"
-              />
-            </div>
+            <img 
+              src={forbesLogo} 
+              alt="Forbes" 
+              className="h-12 w-auto object-contain mb-4"
+              loading="lazy"
+              data-testid="img-forbes-logo"
+            />
             <p className="text-sm text-muted-foreground mb-4 max-w-xs">
-              {t('logo.awardsText')}
+              {t('logo.forbesDescription')}
             </p>
             <a 
               href="#" 
               className="text-sm text-primary font-medium hover:underline"
-              data-testid="link-awards-articles"
+              data-testid="link-forbes-articles"
             >
               {t('logo.forbesLink')}
             </a>
