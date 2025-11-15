@@ -3,7 +3,6 @@ import LandingHero from "@/components/LandingHero";
 import LogoSection from "@/components/LogoSection";
 import PersonalizedLearningSection from "@/components/PersonalizedLearningSection";
 import FeatureSection from "@/components/FeatureSection";
-import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
@@ -147,8 +146,6 @@ export default function Home() {
           { src: learner4, alt: "Diego R." },
         ]}
       />
-      
-      <StatsSection />
       
       <TestimonialsSection testimonials={[
         {
