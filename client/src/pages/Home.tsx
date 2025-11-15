@@ -32,44 +32,52 @@ export default function Home() {
 
   const aiAutomations = [
     {
-      label: "Turn career goals into AI-guided learning plans",
+      label: "Adaptive AI learning paths",
+      description: "Every student receives a LearnPack package generated from their diagnostics, past performance, pace, errors, and career goals.",
       icon: rocketIcon,
       onClick: () => setLocation('/courses'),
     },
     {
-      label: "Convert lecture notes into project-ready tasks",
-      icon: toolMasteryIcon,
-      onClick: () => console.log('Convert notes clicked'),
-    },
-    {
-      label: "Generate interview drills from your progress gaps",
-      icon: lightningIcon,
-      onClick: () => console.log('Generate drills clicked'),
-    },
-    {
-      label: "Match you with the right mentor instantly",
+      label: "Human-guided calibration",
+      description: "Expert mentors review student progress weekly and adjust the AI-generated path with human nuance and judgment.",
       icon: communityIcon,
-      onClick: () => console.log('Match mentor clicked'),
+      onClick: () => console.log('Human-guided calibration clicked'),
     },
     {
-      label: "Draft weekly skill reports for your manager",
-      icon: skillLearningIcon,
-      onClick: () => console.log('Draft reports clicked'),
-    },
-    {
-      label: "Transform code reviews into practice scenarios",
-      icon: securityIcon,
-      onClick: () => console.log('Transform reviews clicked'),
-    },
-    {
-      label: "Translate real projects into résumé wins",
-      icon: careerIcon,
-      onClick: () => console.log('Translate projects clicked'),
-    },
-    {
-      label: "Forecast hiring-ready timelines with AI insights",
+      label: "Context-aware AI feedback",
+      description: "Rigobot analyzes each student's code history and provides suggestions based on their patterns, not generic explanations.",
       icon: lightningIcon,
-      onClick: () => console.log('Forecast timelines clicked'),
+      onClick: () => console.log('Context-aware AI feedback clicked'),
+    },
+    {
+      label: "Personalized skill-gap detection",
+      description: "The platform automatically identifies weak areas from submissions and injects micro-lessons or extra challenges exactly where needed.",
+      icon: skillLearningIcon,
+      onClick: () => console.log('Skill-gap detection clicked'),
+    },
+    {
+      label: "Individual pacing and progression",
+      description: "Learners advance when they demonstrate mastery, not when the calendar says so; humans intervene when a student needs a strategic push or slowdown.",
+      icon: toolMasteryIcon,
+      onClick: () => console.log('Individual pacing clicked'),
+    },
+    {
+      label: "Career-aligned project customization",
+      description: "Assignments adapt to the student's target role (frontend, data, cybersecurity, AI), while career coaches refine the portfolio to match real employer expectations.",
+      icon: careerIcon,
+      onClick: () => console.log('Career-aligned projects clicked'),
+    },
+    {
+      label: "Human mentorship with AI augmentation",
+      description: "Mentors see AI-generated insights about each student's patterns, letting them focus on high-impact coaching instead of repetitive troubleshooting.",
+      icon: communityIcon,
+      onClick: () => console.log('AI-augmented mentorship clicked'),
+    },
+    {
+      label: "Continuous re-personalization",
+      description: "The learning path is re-generated as the student evolves; neither humans nor AI rely on a fixed curriculum but on continuous, data-driven adjustment.",
+      icon: securityIcon,
+      onClick: () => console.log('Re-personalization clicked'),
     },
   ];
 

@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 interface Feature {
   title: string;
@@ -11,6 +12,7 @@ interface Feature {
 
 interface FeatureAction {
   label: string;
+  description: string;
   icon?: string;
   href?: string;
   onClick?: () => void;
@@ -47,6 +49,18 @@ export default function FeatureSection({
   decorations = [],
 }: FeatureSectionProps) {
   if (variant === "notion") {
+    const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
+
+    const toggleCard = (index: number) => {
+      const newExpanded = new Set(expandedCards);
+      if (newExpanded.has(index)) {
+        newExpanded.delete(index);
+      } else {
+        newExpanded.add(index);
+      }
+      setExpandedCards(newExpanded);
+    };
+
     return (
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -93,41 +107,34 @@ export default function FeatureSection({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
-              const cardContent = (
-                <div className="flex items-center gap-3 w-full">
-                  {action.icon && (
-                    <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0" />
-                  )}
-                  <span className="flex-1 text-left text-sm">{action.label}</span>
-                  <ArrowRight className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
-                </div>
-              );
-
-              if (action.href) {
-                return (
-                  <Card 
-                    key={index}
-                    className="hover-elevate active-elevate-2 cursor-pointer"
-                    data-testid={`button-feature-action-${index}`}
-                  >
-                    <a href={action.href} className="block">
-                      <CardContent className="p-4">
-                        {cardContent}
-                      </CardContent>
-                    </a>
-                  </Card>
-                );
-              }
-
+              const isExpanded = expandedCards.has(index);
+              
               return (
                 <Card 
                   key={index}
                   className="hover-elevate active-elevate-2 cursor-pointer"
-                  onClick={action.onClick}
+                  onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
                   <CardContent className="p-4">
-                    {cardContent}
+                    <div className="flex items-start gap-3 w-full">
+                      {action.icon && (
+                        <img src={action.icon} alt="" className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-medium">{action.label}</span>
+                          <ChevronDown 
+                            className={`w-4 h-4 flex-shrink-0 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                          />
+                        </div>
+                        {isExpanded && (
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {action.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               );
