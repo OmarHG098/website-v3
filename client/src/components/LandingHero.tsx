@@ -22,7 +22,7 @@ export default function LandingHero() {
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 1 - Top */}
           <div
-            className="absolute top-[94px] left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            className="absolute top-[94px] left-[50px] w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
             <img
