@@ -88,11 +88,11 @@ export default function LogoSection() {
             </div>
             <div className="flex justify-center gap-4">
               <CarouselPrevious
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-10 !w-10 [&>svg]:!h-5 [&>svg]:!w-5"
+                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
                 data-testid="button-award-prev"
               />
               <CarouselNext
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-10 !w-10 [&>svg]:!h-5 [&>svg]:!w-5"
+                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
                 data-testid="button-award-next"
               />
             </div>
