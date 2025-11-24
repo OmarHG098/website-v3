@@ -2,13 +2,6 @@ import { useTranslation } from "react-i18next";
 import forbesLogo from "@assets/forbes-new.avif";
 import clarkLogo from "@assets/clark-new.avif";
 import badgesImage from "@assets/badges-new.avif";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 export default function LogoSection() {
   const { t } = useTranslation();
@@ -68,39 +61,7 @@ export default function LogoSection() {
   return (
     <section>
       <div className="container mx-auto px-4">
-        {/* Mobile Carousel */}
-        <div className="md:hidden mt-5">
-          <Carousel
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-            className="w-full max-w-sm mx-auto flex flex-col"
-          >
-            <div className="h-[240px] flex items-end pb-5">
-              <CarouselContent>
-                {awardItems.map((item) => (
-                  <CarouselItem key={item.id}>
-                    <AwardCard item={item} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </div>
-            <div className="flex justify-center gap-4">
-              <CarouselPrevious
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
-                data-testid="button-award-prev"
-              />
-              <CarouselNext
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
-                data-testid="button-award-next"
-              />
-            </div>
-          </Carousel>
-        </div>
-
-        {/* Desktop Horizontal Layout */}
-        <div className="hidden md:flex justify-center items-center gap-8 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 max-w-7xl mx-auto py-8">
           {awardItems.map((item) => (
             <AwardCard key={item.id} item={item} />
           ))}
