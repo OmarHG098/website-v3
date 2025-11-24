@@ -63,8 +63,8 @@ TestimonialCard.displayName = 'TestimonialCard';
 function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
   return (
     <section className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-4">
-        4.5 Outstanding / 1294 Comments
+      <h2 className="text-3xl font-bold text-center mb-4 flex items-center justify-center gap-2">
+        4.5 <IconStarFilled className="w-7 h-7 text-yellow-500" /> Outstanding / 1294 Comments
       </h2>
       <p className="text-center text-muted-foreground mb-12">
         See what our students have to say about their experience
