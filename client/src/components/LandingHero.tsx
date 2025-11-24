@@ -6,10 +6,10 @@ import collabImage from "@assets/generated_images/Students_collaborating_workspa
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.webp";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.webp";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.webp";
-import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.png";
-import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.png";
-import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.png";
-import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.png";
+import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
+import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
+import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
+import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
 import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
 
 export default function LandingHero() {

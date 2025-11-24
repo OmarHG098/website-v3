@@ -1,5 +1,5 @@
 import ImageTextSection from '../ImageTextSection';
-import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
+import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.webp";
 
 export default function ImageTextSectionExample() {
   return (

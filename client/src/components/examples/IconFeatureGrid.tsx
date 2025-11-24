@@ -1,8 +1,8 @@
 import IconFeatureGrid from '../IconFeatureGrid';
-import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.png";
-import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.png";
-import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.png";
-import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.png";
+import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.webp";
+import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.webp";
+import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.webp";
+import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.webp";
 
 export default function IconFeatureGridExample() {
   const features = [

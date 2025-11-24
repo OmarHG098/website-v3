@@ -21,20 +21,20 @@ import {
   IconSchool, 
   IconRefresh 
 } from "@tabler/icons-react";
-import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.png";
-import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.png";
-import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.png";
-import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.png";
-import skillLearningIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.png";
-import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.png";
-import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
-import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
-import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.png";
+import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.webp";
+import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.webp";
+import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.webp";
+import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.webp";
+import skillLearningIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.webp";
+import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.webp";
+import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.webp";
+import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
+import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.webp";
 import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
-import learner1 from "@assets/generated_images/South_Asian_woman_tech_professional_5cd2753e.png";
-import learner2 from "@assets/generated_images/Black_man_software_developer_4fbc5963.png";
-import learner3 from "@assets/generated_images/East_Asian_woman_engineer_8ba7b781.png";
-import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89ae.png";
+import learner1 from "@assets/generated_images/South_Asian_woman_tech_professional_5cd2753e.webp";
+import learner2 from "@assets/generated_images/Black_man_software_developer_4fbc5963.webp";
+import learner3 from "@assets/generated_images/East_Asian_woman_engineer_8ba7b781.webp";
+import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89ae.webp";
 
 export default function Home() {
   const [, setLocation] = useLocation();

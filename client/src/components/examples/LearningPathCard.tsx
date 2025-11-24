@@ -1,5 +1,5 @@
 import LearningPathCard from '../LearningPathCard';
-import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.png";
+import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.webp";
 
 export default function LearningPathCardExample() {
   return (
