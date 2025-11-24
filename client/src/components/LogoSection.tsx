@@ -85,11 +85,11 @@ export default function LogoSection() {
               ))}
             </CarouselContent>
             <CarouselPrevious 
-              className="!left-0"
+              className="!left-0 !top-8 !-translate-y-0"
               data-testid="button-achievement-prev" 
             />
             <CarouselNext 
-              className="!right-0"
+              className="!right-0 !top-8 !-translate-y-0"
               data-testid="button-achievement-next" 
             />
           </Carousel>
