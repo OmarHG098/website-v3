@@ -75,16 +75,18 @@ export default function LogoSection() {
               align: "center",
               loop: true,
             }}
-            className="w-full max-w-sm mx-auto"
+            className="w-full max-w-sm mx-auto flex flex-col"
           >
-            <div className="min-h-[200px] flex items-end">
-              <CarouselContent className="w-full">
-                {awardItems.map((item) => (
-                  <CarouselItem key={item.id}>
-                    <AwardCard item={item} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
+            <div className="h-[240px] flex items-end pb-2">
+              <div className="w-full">
+                <CarouselContent>
+                  {awardItems.map((item) => (
+                    <CarouselItem key={item.id}>
+                      <AwardCard item={item} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </div>
             </div>
             <div className="flex justify-center gap-4 mt-4">
               <CarouselPrevious 
