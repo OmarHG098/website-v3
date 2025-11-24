@@ -70,7 +70,15 @@ function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
         See what our students have to say about their experience
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {/* Mobile: Show only first 3 */}
+      <div className="grid grid-cols-1 gap-6 max-w-6xl mx-auto md:hidden">
+        {testimonials.slice(0, 3).map((testimonial) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        ))}
+      </div>
+
+      {/* Tablet and Desktop: Show all */}
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {testimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
