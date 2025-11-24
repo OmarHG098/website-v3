@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.png";
 import happyDevImage from "@assets/generated_images/Happy_developer_portrait_1d924db5.png";
 import womanCodingImage from "@assets/generated_images/Woman_coding_portrait_fa2041e2.png";
@@ -14,33 +14,33 @@ import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
 
 export default function LandingHero() {
   const { t } = useTranslation();
-  
+
   return (
     <section className="relative container mx-auto px-4 pt-16 md:pt-24 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
         {/* Left Images Column */}
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 1 - Top */}
-          <div 
-            className="absolute top-[94px] left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-20"
-            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+          <div
+            className="absolute top-[94px] left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
-            <img 
-              src={collabImage} 
-              alt={t('hero.altImage1')}
+            <img
+              src={collabImage}
+              alt={t("hero.altImage1")}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
           </div>
-          
+
           {/* Photo Card 2 - Overlapping */}
-          <div 
-            className="absolute top-[222px] left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-30"
-            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+          <div
+            className="absolute top-[222px] left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
-            <img 
-              src={happyDevImage} 
-              alt={t('hero.altImage4')}
+            <img
+              src={happyDevImage}
+              alt={t("hero.altImage4")}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
@@ -50,66 +50,79 @@ export default function LandingHero() {
         {/* Content Column (Center) */}
         <div className="z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap">
-            {t('hero.title')}
+            {t("hero.title")}
           </h1>
-          
+
           <p className="text-lg text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto">
-            {t('hero.subtitle')}
+            {t("hero.subtitle")}
           </p>
-          
+
           {/* Ratings Bar */}
           <div className="flex items-center justify-center gap-3 mb-8">
             <div className="flex -space-x-2">
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar1} alt={t('hero.altAvatar1')} />
-                <AvatarFallback className="bg-primary/20 text-xs">SJ</AvatarFallback>
+                <AvatarImage src={avatar1} alt={t("hero.altAvatar1")} />
+                <AvatarFallback className="bg-primary/20 text-xs">
+                  SJ
+                </AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar2} alt={t('hero.altAvatar2')} />
-                <AvatarFallback className="bg-blue-500/20 text-xs">MC</AvatarFallback>
+                <AvatarImage src={avatar2} alt={t("hero.altAvatar2")} />
+                <AvatarFallback className="bg-blue-500/20 text-xs">
+                  MC
+                </AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar3} alt={t('hero.altAvatar3')} />
-                <AvatarFallback className="bg-green-500/20 text-xs">ER</AvatarFallback>
+                <AvatarImage src={avatar3} alt={t("hero.altAvatar3")} />
+                <AvatarFallback className="bg-green-500/20 text-xs">
+                  ER
+                </AvatarFallback>
               </Avatar>
               <Avatar className="h-8 w-8 border-2 border-background">
-                <AvatarImage src={avatar4} alt={t('hero.altAvatar4')} />
-                <AvatarFallback className="bg-purple-500/20 text-xs">DK</AvatarFallback>
+                <AvatarImage src={avatar4} alt={t("hero.altAvatar4")} />
+                <AvatarFallback className="bg-purple-500/20 text-xs">
+                  DK
+                </AvatarFallback>
               </Avatar>
             </div>
-            
+
             <div className="flex flex-col items-start gap-1">
               <div className="flex items-center gap-2">
-                <span className="font-semibold">{t('hero.rating')}</span>
+                <span className="font-semibold">{t("hero.rating")}</span>
                 <div className="flex">
                   {[1, 2, 3, 4].map((i) => (
-                    <IconStarFilled key={i} className="text-yellow-500 w-5 h-5" />
+                    <IconStarFilled
+                      key={i}
+                      className="text-yellow-500 w-5 h-5"
+                    />
                   ))}
                   <IconStar className="text-yellow-500 w-5 h-5" />
                 </div>
               </div>
-              <span className="text-sm text-muted-foreground">{t('hero.trustedBy')}</span>
+              <span className="text-sm text-muted-foreground">
+                {t("hero.trustedBy")}
+              </span>
             </div>
           </div>
-          
+
           {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
-            <img 
-              src={curvedArrow} 
-              alt={t('hero.altArrow')}
+            <img
+              src={curvedArrow}
+              alt={t("hero.altArrow")}
               className="w-20 h-auto opacity-80"
               loading="lazy"
             />
           </div>
-          
+
           {/* CTA Button */}
           <div>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="text-lg px-8"
               data-testid="button-choose-path"
             >
-              {t('hero.cta')}
+              {t("hero.cta")}
             </Button>
           </div>
         </div>
@@ -117,33 +130,33 @@ export default function LandingHero() {
         {/* Right Images Column */}
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 3 - Top */}
-          <div 
+          <div
             className="absolute top-[94px] right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
-            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+            style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
-            <img 
-              src={womanCodingImage} 
-              alt={t('hero.altImage2')}
+            <img
+              src={womanCodingImage}
+              alt={t("hero.altImage2")}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
           </div>
-          
+
           {/* Photo Card 4 - Overlapping */}
-          <div 
+          <div
             className="absolute top-[222px] right-[40%] w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
-            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+            style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
-            <img 
-              src={teamImage} 
-              alt={t('hero.altImage3')}
+            <img
+              src={teamImage}
+              alt={t("hero.altImage3")}
               className="w-full h-48 object-cover rounded-lg"
               loading="lazy"
             />
           </div>
         </div>
       </div>
-      
+
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-chart-2/5 pointer-events-none -z-10"></div>
     </section>
