@@ -119,7 +119,7 @@ export default function LandingHero() {
           <div>
             <Button
               size="lg"
-              className="text-xl px-10 py-6"
+              className="text-lg px-8 scale-110"
               data-testid="button-choose-path"
             >
               {t("hero.cta")}
