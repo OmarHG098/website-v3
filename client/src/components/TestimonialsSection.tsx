@@ -2,13 +2,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import { memo } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 interface Testimonial {
   id: string;
@@ -77,35 +70,7 @@ function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
         See what our students have to say about their experience
       </p>
       
-      {/* Mobile Carousel */}
-      <div className="md:hidden max-w-md mx-auto relative px-12">
-        <Carousel
-          opts={{
-            align: "center",
-            loop: true,
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {testimonials.map((testimonial) => (
-              <CarouselItem key={testimonial.id}>
-                <TestimonialCard testimonial={testimonial} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious 
-            className="left-0"
-            data-testid="button-testimonial-prev" 
-          />
-          <CarouselNext 
-            className="right-0"
-            data-testid="button-testimonial-next" 
-          />
-        </Carousel>
-      </div>
-
-      {/* Desktop Grid */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {testimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
