@@ -29,7 +29,7 @@ export default function PersonalizedLearningSection() {
           </div>
 
           {/* Images row */}
-          <div className="flex flex-row items-stretch gap-4 h-48 md:h-[28.5rem]">
+          <div className="flex flex-row items-stretch gap-4 h-[21rem] md:h-[33rem]">
             {/* Student Images - 4 columns */}
             {studentImages.map((image, index) => (
               <div
