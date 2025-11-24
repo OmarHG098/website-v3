@@ -19,7 +19,7 @@ export default function PersonalizedLearningSection() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
           {/* Blue Message Box - appears first on mobile */}
-          <div className="bg-primary text-primary-foreground p-8 md:p-12 rounded-lg flex flex-col justify-center md:hidden" data-testid="box-personalized-message">
+          <div className="bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-lg flex flex-col justify-center md:hidden" data-testid="box-personalized-message">
             <p className="text-lg md:text-xl mb-4 font-light">
               {t('personalized.heading')}
             </p>
@@ -47,7 +47,7 @@ export default function PersonalizedLearningSection() {
             ))}
 
             {/* Blue Message Box - 5th column, desktop only, 2x wider */}
-            <div className="hidden md:flex flex-[2] bg-primary text-primary-foreground p-8 md:p-12 rounded-lg flex-col justify-center" data-testid="box-personalized-message-desktop">
+            <div className="hidden md:flex flex-[2] bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-lg flex-col justify-center" data-testid="box-personalized-message-desktop">
               <p className="text-lg md:text-xl mb-4 font-light">
                 {t('personalized.heading')}
               </p>
