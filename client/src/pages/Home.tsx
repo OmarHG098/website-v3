@@ -302,7 +302,7 @@ export default function Home() {
 
       <footer className="bg-muted/30 border-t py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-8 mb-8">
+          <div className="flex flex-wrap justify-between gap-8 mb-8">
             <div>
               <h3 className="font-semibold mb-4">About</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
