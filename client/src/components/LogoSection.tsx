@@ -13,7 +13,7 @@ import {
 export default function LogoSection() {
   const { t } = useTranslation();
 
-  const achievementItems = [
+  const awardItems = [
     {
       id: 'forbes',
       logo: forbesLogo,
@@ -43,7 +43,7 @@ export default function LogoSection() {
     },
   ];
 
-  const AchievementCard = ({ item }: { item: typeof achievementItems[0] }) => (
+  const AwardCard = ({ item }: { item: typeof awardItems[0] }) => (
     <div className="text-center flex flex-col items-center">
       <img 
         src={item.logo} 
@@ -78,20 +78,20 @@ export default function LogoSection() {
             className="w-full max-w-sm mx-auto"
           >
             <CarouselContent>
-              {achievementItems.map((item) => (
+              {awardItems.map((item) => (
                 <CarouselItem key={item.id}>
-                  <AchievementCard item={item} />
+                  <AwardCard item={item} />
                 </CarouselItem>
               ))}
             </CarouselContent>
             <div className="flex justify-center gap-4 mt-4">
               <CarouselPrevious 
                 className="!static !translate-y-0"
-                data-testid="button-achievement-prev" 
+                data-testid="button-award-prev" 
               />
               <CarouselNext 
                 className="!static !translate-y-0"
-                data-testid="button-achievement-next" 
+                data-testid="button-award-next" 
               />
             </div>
           </Carousel>
@@ -99,8 +99,8 @@ export default function LogoSection() {
 
         {/* Desktop Horizontal Layout */}
         <div className="hidden md:flex justify-center items-center gap-8 max-w-7xl mx-auto">
-          {achievementItems.map((item) => (
-            <AchievementCard key={item.id} item={item} />
+          {awardItems.map((item) => (
+            <AwardCard key={item.id} item={item} />
           ))}
         </div>
       </div>
