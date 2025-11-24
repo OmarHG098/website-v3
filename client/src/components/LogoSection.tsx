@@ -44,7 +44,7 @@ export default function LogoSection() {
   ];
 
   const AwardCard = ({ item }: { item: (typeof awardItems)[0] }) => (
-    <div className="text-center flex flex-col items-center">
+    <div className="text-center flex flex-col items-center h-full justify-center">
       <img
         src={item.logo}
         alt={item.alt}
@@ -78,15 +78,13 @@ export default function LogoSection() {
             className="w-full max-w-sm mx-auto flex flex-col"
           >
             <div className="h-[240px] flex items-end pb-2">
-              <div className="w-full">
-                <CarouselContent>
-                  {awardItems.map((item) => (
-                    <CarouselItem key={item.id}>
-                      <AwardCard item={item} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </div>
+              <CarouselContent>
+                {awardItems.map((item) => (
+                  <CarouselItem key={item.id}>
+                    <AwardCard item={item} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
             </div>
             <div className="flex justify-center gap-4 mt-4">
               <CarouselPrevious
