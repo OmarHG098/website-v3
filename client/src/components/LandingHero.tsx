@@ -35,7 +35,7 @@ export default function LandingHero() {
           
           {/* Photo Card 2 - Overlapping */}
           <div 
-            className="absolute top-[222px] left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-10"
+            className="absolute top-[222px] left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
           >
             <img 
