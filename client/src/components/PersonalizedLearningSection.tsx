@@ -29,7 +29,7 @@ export default function PersonalizedLearningSection() {
           </div>
 
           {/* Images row */}
-          <div className="flex flex-row items-stretch gap-4 h-[21rem] md:h-[33rem]">
+          <div className="flex flex-row items-stretch gap-4 h-[21rem] md:h-[22rem]">
             {/* Student Images - 4 columns */}
             {studentImages.map((image, index) => (
               <div
@@ -46,8 +46,8 @@ export default function PersonalizedLearningSection() {
               </div>
             ))}
 
-            {/* Blue Message Box - 5th column, desktop only */}
-            <div className="hidden md:flex flex-1 bg-primary text-primary-foreground p-8 md:p-12 rounded-lg flex-col justify-center" data-testid="box-personalized-message-desktop">
+            {/* Blue Message Box - 5th column, desktop only, 2x wider */}
+            <div className="hidden md:flex flex-[2] bg-primary text-primary-foreground p-8 md:p-12 rounded-lg flex-col justify-center" data-testid="box-personalized-message-desktop">
               <p className="text-lg md:text-xl mb-4 font-light">
                 {t('personalized.heading')}
               </p>
