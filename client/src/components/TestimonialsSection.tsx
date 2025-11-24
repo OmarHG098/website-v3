@@ -71,7 +71,7 @@ function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
       </p>
       
       {/* Mobile: Show only first 3 */}
-      <div className="grid grid-cols-1 gap-6 max-w-6xl mx-auto md:hidden">
+      <div className="grid grid-cols-1 gap-4 max-w-6xl mx-auto md:hidden">
         {testimonials.slice(0, 3).map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
