@@ -6,9 +6,31 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
+  useCarousel,
 } from "@/components/ui/carousel";
+
+function CarouselArrows() {
+  const { scrollPrev, scrollNext } = useCarousel();
+  
+  return (
+    <div className="flex justify-center gap-4 mt-4">
+      <button
+        onClick={scrollPrev}
+        className="w-10 h-10 rounded-lg bg-primary/10 text-primary text-xl font-light flex items-center justify-center hover:bg-primary/20 transition-colors"
+        data-testid="button-award-prev"
+      >
+        ‹
+      </button>
+      <button
+        onClick={scrollNext}
+        className="w-10 h-10 rounded-lg bg-primary/10 text-primary text-xl font-light flex items-center justify-center hover:bg-primary/20 transition-colors"
+        data-testid="button-award-next"
+      >
+        ›
+      </button>
+    </div>
+  );
+}
 
 export default function LogoSection() {
   const { t } = useTranslation();
@@ -84,16 +106,7 @@ export default function LogoSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-center gap-4 mt-4">
-              <CarouselPrevious 
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20"
-                data-testid="button-award-prev" 
-              />
-              <CarouselNext 
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20"
-                data-testid="button-award-next" 
-              />
-            </div>
+            <CarouselArrows />
           </Carousel>
         </div>
 
