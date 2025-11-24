@@ -69,7 +69,7 @@ export default function LogoSection() {
     <section>
       <div className="container mx-auto px-4">
         {/* Mobile Carousel */}
-        <div className="md:hidden">
+        <div className="md:hidden mt-5">
           <Carousel
             opts={{
               align: "center",
@@ -86,13 +86,13 @@ export default function LogoSection() {
                 ))}
               </CarouselContent>
             </div>
-            <div className="flex justify-center gap-4 mt-4">
+            <div className="flex justify-center gap-4">
               <CarouselPrevious
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20"
+                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-12 !w-12"
                 data-testid="button-award-prev"
               />
               <CarouselNext
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20"
+                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-12 !w-12"
                 data-testid="button-award-next"
               />
             </div>
