@@ -22,7 +22,7 @@ export default function LandingHero() {
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 1 - Top */}
           <div
-            className="absolute top-[94px] left-0 w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            className="absolute top-[94px] left-[15%] w-56 transform -rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
             <img
@@ -35,7 +35,7 @@ export default function LandingHero() {
 
           {/* Photo Card 2 - Overlapping */}
           <div
-            className="absolute top-[222px] left-[60%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            className="absolute top-[222px] left-[40%] w-56 transform rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
             <img
@@ -131,7 +131,7 @@ export default function LandingHero() {
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
           {/* Photo Card 3 - Top */}
           <div
-            className="absolute top-[94px] right-0 w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
+            className="absolute top-[94px] right-[15%] w-56 transform rotate-6 transition-transform hover:rotate-0 hover:scale-105 z-30"
             style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
             <img
@@ -144,7 +144,7 @@ export default function LandingHero() {
 
           {/* Photo Card 4 - Overlapping */}
           <div
-            className="absolute top-[222px] right-[40%] w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
+            className="absolute top-[222px] right-[25%] w-56 transform -rotate-3 transition-transform hover:rotate-0 hover:scale-105 z-20"
             style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
           >
             <img
