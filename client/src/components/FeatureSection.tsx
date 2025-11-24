@@ -86,7 +86,7 @@ export default function FeatureSection({
             </div>
             
             {decorations.length > 0 && (
-              <div className="hidden md:flex -space-x-4 items-center self-end">
+              <div className="hidden md:flex -space-x-4 items-center self-start">
                 {decorations.map((decoration, index) => (
                   <Avatar 
                     key={index} 
