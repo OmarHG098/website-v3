@@ -77,7 +77,7 @@ export default function LogoSection() {
             }}
             className="w-full max-w-sm mx-auto flex flex-col"
           >
-            <div className="h-[240px] flex items-end pb-2">
+            <div className="h-[240px] flex items-end pb-5">
               <CarouselContent>
                 {awardItems.map((item) => (
                   <CarouselItem key={item.id}>
