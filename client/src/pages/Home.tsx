@@ -203,48 +203,42 @@ export default function Home() {
         features={iconFeatures}
       />
 
-      <section className="bg-muted/30 py-16">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
-            The Key to Your Success: AI- Powered Tools and Unmatched Human Support
+            The Key to Your Success: AI-Powered Tools and Unmatched Human Support
           </h2>
           
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <Card data-testid="card-ai-tools">
-              <CardContent className="p-6">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <img src={rocketIcon} alt="" className="h-6 w-6" />
-                </div>
-                <h3 className="font-semibold mb-2">AI-Powered Learning</h3>
-                <p className="text-sm text-muted-foreground">
-                  Personalized curriculum adapts to your pace and learning style
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+            <div className="text-center" data-testid="feature-ai-tools">
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 mx-auto">
+                <img src={rocketIcon} alt="" className="h-7 w-7" />
+              </div>
+              <h3 className="font-semibold mb-2">AI-Powered Learning</h3>
+              <p className="text-sm text-muted-foreground">
+                Personalized curriculum adapts to your pace and learning style
+              </p>
+            </div>
             
-            <Card data-testid="card-mentorship">
-              <CardContent className="p-6">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <img src={communityIcon} alt="" className="h-6 w-6" />
-                </div>
-                <h3 className="font-semibold mb-2">Expert Mentorship</h3>
-                <p className="text-sm text-muted-foreground">
-                  1-on-1 guidance from industry professionals with real-world experience
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center" data-testid="feature-mentorship">
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 mx-auto">
+                <img src={communityIcon} alt="" className="h-7 w-7" />
+              </div>
+              <h3 className="font-semibold mb-2">Expert Mentorship</h3>
+              <p className="text-sm text-muted-foreground">
+                1-on-1 guidance from industry professionals with real-world experience
+              </p>
+            </div>
             
-            <Card data-testid="card-career-support">
-              <CardContent className="p-6">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <img src={lightningIcon} alt="" className="h-6 w-6" />
-                </div>
-                <h3 className="font-semibold mb-2">Career Support</h3>
-                <p className="text-sm text-muted-foreground">
-                  Job placement assistance and interview preparation included
-                </p>
-              </CardContent>
-            </Card>
+            <div className="text-center" data-testid="feature-career-support">
+              <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 mx-auto">
+                <img src={lightningIcon} alt="" className="h-7 w-7" />
+              </div>
+              <h3 className="font-semibold mb-2">Career Support</h3>
+              <p className="text-sm text-muted-foreground">
+                Job placement assistance and interview preparation included
+              </p>
+            </div>
           </div>
         </div>
       </section>
