@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
+import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import webDevThumbnail from "@assets/generated_images/Web_development_course_thumbnail_fd09be69.png";
 import dataScienceThumbnail from "@assets/generated_images/Data_science_course_thumbnail_c63194fb.png";
 import aiThumbnail from "@assets/generated_images/AI_course_thumbnail_0a0401e7.png";
@@ -12,6 +14,12 @@ import aiThumbnail from "@assets/generated_images/AI_course_thumbnail_0a0401e7.p
 export default function Courses() {
   const [searchQuery, setSearchQuery] = useState("");
   const [difficulty, setDifficulty] = useState("all");
+  const [, setLocation] = useLocation();
+  const { i18n } = useTranslation();
+
+  const getFullStackUrl = () => {
+    return i18n.language === "es" ? "/es/bootcamps/full-stack" : "/us/courses/full-stack";
+  };
 
   const allCourses = [
     {
@@ -22,6 +30,7 @@ export default function Courses() {
       duration: "12 weeks",
       difficulty: "Intermediate" as const,
       lessons: 48,
+      link: "full-stack",
     },
     {
       id: '2',
@@ -117,7 +126,13 @@ export default function Courses() {
             <CourseCard
               key={course.id}
               {...course}
-              onClick={() => console.log(`Course clicked: ${course.title}`)}
+              onClick={() => {
+                if (course.link === "full-stack") {
+                  setLocation(getFullStackUrl());
+                } else {
+                  console.log(`Course clicked: ${course.title}`);
+                }
+              }}
             />
           ))}
         </div>
