@@ -14,6 +14,7 @@ const LearningPathSelection = lazy(() => import("@/pages/LearningPathSelection")
 const CareerPaths = lazy(() => import("@/pages/CareerPaths"));
 const SkillBoosters = lazy(() => import("@/pages/SkillBoosters"));
 const ToolMastery = lazy(() => import("@/pages/ToolMastery"));
+const FullStackBootcamp = lazy(() => import("@/pages/FullStackBootcamp"));
 
 function LoadingFallback() {
   return (
@@ -38,6 +39,8 @@ function Router() {
         <Route path="/tool-mastery" component={ToolMastery} />
         <Route path="/courses" component={Courses} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/us/courses/full-stack" component={FullStackBootcamp} />
+        <Route path="/es/bootcamps/full-stack" component={FullStackBootcamp} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

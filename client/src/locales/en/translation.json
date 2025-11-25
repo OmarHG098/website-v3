@@ -162,5 +162,127 @@
     "back": "Back",
     "next": "Next",
     "previous": "Previous"
+  },
+  "fullstack": {
+    "hero": {
+      "badge": "Bootcamp",
+      "title": "Full Stack Development with AI",
+      "subtitle": "Learn at your own pace with AI-powered tools, unlimited mentorship, and a global community. Build real-world applications and launch your tech career.",
+      "ctaApply": "Start Learning Now",
+      "ctaSyllabus": "Download Syllabus"
+    },
+    "program": {
+      "title": "Program Overview",
+      "subtitle": "Everything you need to become a professional full stack developer",
+      "format": {
+        "title": "Self-Paced Learning",
+        "description": "Learn on your own schedule with 24/7 access to all materials and AI-powered support"
+      },
+      "prerequisites": {
+        "title": "No Prerequisites",
+        "description": "Start from scratch - we teach you the fundamentals before advancing to complex topics"
+      },
+      "level": {
+        "title": "Beginner Friendly",
+        "description": "Designed for complete beginners with no prior coding experience required"
+      }
+    },
+    "ai": {
+      "badge": "AI-Powered",
+      "title": "Learn Faster with AI Support",
+      "description": "Our proprietary AI tools provide instant feedback, personalized guidance, and real-time code review to accelerate your learning journey.",
+      "rigobot": {
+        "title": "Rigobot AI Tutor",
+        "description": "Your personal AI coding assistant that reviews your code, helps with exercises, and provides instant feedback 24/7.",
+        "status": "AI Tutor - Online",
+        "example1": "I'm stuck on this React component. Can you help?",
+        "example2": "I see the issue! Your useEffect is missing a dependency. Let me show you how to fix it..."
+      },
+      "learnpack": {
+        "title": "LearnPack Software",
+        "description": "Our custom learning platform with interactive exercises, automated tests, and instant feedback for every lesson."
+      }
+    },
+    "mentorship": {
+      "title": "Mentorship & Support",
+      "subtitle": "You're never alone in your learning journey. Get help when you need it.",
+      "monthly": {
+        "title": "Monthly Sessions",
+        "description": "Regular mentorship sessions with expert developers to guide your progress and answer questions."
+      },
+      "private": {
+        "title": "1-on-1 Sessions",
+        "description": "Schedule private 45-minute sessions with mentors for personalized help on specific challenges."
+      },
+      "community": {
+        "title": "Active Community",
+        "description": "Join thousands of learners in our supportive community with daily live workshops and peer collaboration."
+      }
+    },
+    "features": {
+      "title": "What You Get",
+      "selfPaced": "Learn at your own pace",
+      "aiReview": "AI reviews your code instantly",
+      "mentorship": "Monthly mentorship sessions",
+      "community": "Active learning community",
+      "workshops": "Optional live workshops",
+      "privateSessions": "Schedule private sessions",
+      "certificate": "4Geeks certificate",
+      "globalNetwork": "Global career network"
+    },
+    "curriculum": {
+      "title": "Technologies You'll Master",
+      "subtitle": "Learn the most in-demand technologies used by professional developers worldwide",
+      "extras": "+ APIs, Git, SQL, REST, and AI-powered development tools like Cursor & Copilot"
+    },
+    "certificate": {
+      "title": "Certificate & Career Network",
+      "description": "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.",
+      "benefit1": "Recognized by international institutions",
+      "benefit2": "Access to 5,000+ hiring partners",
+      "benefit3": "Lifetime career support",
+      "cardTitle": "Full Stack Developer",
+      "cardSubtitle": "4Geeks Academy Certificate"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "schedule": {
+        "question": "Are there fixed class times?",
+        "answer": "No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction."
+      },
+      "motivation": {
+        "question": "How do I stay motivated learning on my own?",
+        "answer": "You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes."
+      },
+      "experience": {
+        "question": "Do I need prior coding experience?",
+        "answer": "No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts."
+      },
+      "mentoring": {
+        "question": "How do I schedule mentoring sessions?",
+        "answer": "Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with."
+      },
+      "certificate": {
+        "question": "Is the certificate recognized by employers?",
+        "answer": "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+      }
+    },
+    "credibility": {
+      "title": "Trusted by Thousands",
+      "graduates": "Graduates",
+      "placement": "Job Placement Rate",
+      "rating": "Student Rating",
+      "countries": "Countries",
+      "featuredIn": "Featured In"
+    },
+    "cta": {
+      "title": "Ready to Start Your Tech Career?",
+      "subtitle": "Join thousands of graduates who have transformed their careers with 4Geeks.",
+      "button": "Start Learning Now",
+      "contact": "Talk to an Advisor"
+    },
+    "footer": {
+      "rights": "All rights reserved."
+    }
   }
 }

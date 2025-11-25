@@ -162,5 +162,127 @@
     "back": "Atrás",
     "next": "Siguiente",
     "previous": "Anterior"
+  },
+  "fullstack": {
+    "hero": {
+      "badge": "Bootcamp",
+      "title": "Desarrollo Full Stack con IA",
+      "subtitle": "Aprende a tu propio ritmo con herramientas potenciadas por IA, mentoría ilimitada y una comunidad global. Construye aplicaciones reales y lanza tu carrera tecnológica.",
+      "ctaApply": "Comienza Ahora",
+      "ctaSyllabus": "Descargar Programa"
+    },
+    "program": {
+      "title": "Descripción del Programa",
+      "subtitle": "Todo lo que necesitas para convertirte en un desarrollador full stack profesional",
+      "format": {
+        "title": "Aprendizaje a Tu Ritmo",
+        "description": "Aprende según tu horario con acceso 24/7 a todos los materiales y soporte impulsado por IA"
+      },
+      "prerequisites": {
+        "title": "Sin Prerrequisitos",
+        "description": "Comienza desde cero - te enseñamos los fundamentos antes de avanzar a temas complejos"
+      },
+      "level": {
+        "title": "Para Principiantes",
+        "description": "Diseñado para principiantes completos sin experiencia previa en programación"
+      }
+    },
+    "ai": {
+      "badge": "Potenciado por IA",
+      "title": "Aprende Más Rápido con Soporte de IA",
+      "description": "Nuestras herramientas de IA propietarias proporcionan retroalimentación instantánea, orientación personalizada y revisión de código en tiempo real para acelerar tu aprendizaje.",
+      "rigobot": {
+        "title": "Rigobot Tutor IA",
+        "description": "Tu asistente personal de programación con IA que revisa tu código, ayuda con ejercicios y proporciona retroalimentación instantánea 24/7.",
+        "status": "Tutor IA - En línea",
+        "example1": "Estoy atascado con este componente React. ¿Puedes ayudarme?",
+        "example2": "¡Veo el problema! A tu useEffect le falta una dependencia. Déjame mostrarte cómo arreglarlo..."
+      },
+      "learnpack": {
+        "title": "Software LearnPack",
+        "description": "Nuestra plataforma de aprendizaje personalizada con ejercicios interactivos, pruebas automatizadas y retroalimentación instantánea para cada lección."
+      }
+    },
+    "mentorship": {
+      "title": "Mentoría y Soporte",
+      "subtitle": "Nunca estás solo en tu viaje de aprendizaje. Obtén ayuda cuando la necesites.",
+      "monthly": {
+        "title": "Sesiones Mensuales",
+        "description": "Sesiones regulares de mentoría con desarrolladores expertos para guiar tu progreso y responder preguntas."
+      },
+      "private": {
+        "title": "Sesiones 1 a 1",
+        "description": "Agenda sesiones privadas de 45 minutos con mentores para ayuda personalizada en desafíos específicos."
+      },
+      "community": {
+        "title": "Comunidad Activa",
+        "description": "Únete a miles de estudiantes en nuestra comunidad de apoyo con talleres en vivo diarios y colaboración entre pares."
+      }
+    },
+    "features": {
+      "title": "Lo Que Obtienes",
+      "selfPaced": "Aprende a tu propio ritmo",
+      "aiReview": "La IA revisa tu código al instante",
+      "mentorship": "Sesiones de mentoría mensuales",
+      "community": "Comunidad de aprendizaje activa",
+      "workshops": "Talleres en vivo opcionales",
+      "privateSessions": "Agenda sesiones privadas",
+      "certificate": "Certificado 4Geeks",
+      "globalNetwork": "Red de carreras global"
+    },
+    "curriculum": {
+      "title": "Tecnologías que Dominarás",
+      "subtitle": "Aprende las tecnologías más demandadas utilizadas por desarrolladores profesionales en todo el mundo",
+      "extras": "+ APIs, Git, SQL, REST y herramientas de desarrollo con IA como Cursor y Copilot"
+    },
+    "certificate": {
+      "title": "Certificado y Red de Carreras",
+      "description": "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo.",
+      "benefit1": "Reconocido por instituciones internacionales",
+      "benefit2": "Acceso a más de 5,000 socios de contratación",
+      "benefit3": "Soporte de carrera de por vida",
+      "cardTitle": "Desarrollador Full Stack",
+      "cardSubtitle": "Certificado 4Geeks Academy"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "schedule": {
+        "question": "¿Hay horarios de clase fijos?",
+        "answer": "No, el bootcamp a tu ritmo está diseñado para aprender cuando quieras. Puedes acceder a todos los materiales 24/7 y avanzar en el plan de estudios cuando te convenga. Los talleres en vivo opcionales están disponibles en varios horarios si deseas interacción en tiempo real."
+      },
+      "motivation": {
+        "question": "¿Cómo me mantengo motivado aprendiendo solo?",
+        "answer": "¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales."
+      },
+      "experience": {
+        "question": "¿Necesito experiencia previa en programación?",
+        "answer": "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados."
+      },
+      "mentoring": {
+        "question": "¿Cómo agendo sesiones de mentoría?",
+        "answer": "Simplemente ve a tu panel, selecciona el servicio de mentoría, elige tu mentor preferido y escoge un día y hora que te funcione. Cada sesión es de 45 minutos y puede usarse para cualquier tema en el que necesites ayuda."
+      },
+      "certificate": {
+        "question": "¿El certificado es reconocido por empleadores?",
+        "answer": "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación."
+      }
+    },
+    "credibility": {
+      "title": "Confiado por Miles",
+      "graduates": "Graduados",
+      "placement": "Tasa de Colocación Laboral",
+      "rating": "Calificación de Estudiantes",
+      "countries": "Países",
+      "featuredIn": "Destacado En"
+    },
+    "cta": {
+      "title": "¿Listo para Iniciar tu Carrera Tech?",
+      "subtitle": "Únete a miles de graduados que han transformado sus carreras con 4Geeks.",
+      "button": "Comienza Ahora",
+      "contact": "Habla con un Asesor"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados."
+    }
   }
 }
