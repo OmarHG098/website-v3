@@ -65,7 +65,7 @@ export default function FeatureSection({
     return (
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-start justify-between gap-8 mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 mb-8">
             <div className="flex-1">
               {heading && (
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
@@ -86,7 +86,7 @@ export default function FeatureSection({
             </div>
             
             {decorations.length > 0 && (
-              <div className="hidden lg:flex -space-x-4 items-center self-end">
+              <div className="hidden md:flex -space-x-4 items-center lg:self-end">
                 {decorations.map((decoration, index) => (
                   <Avatar 
                     key={index} 
