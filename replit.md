@@ -52,14 +52,14 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Notion-inspired AI automation section with 8 expandable cards showcasing hyper-personalized learning features
 - ✅ User avatars in AI automation section (Rigobot + 4 diverse learners, overlapping design)
 - ✅ Expandable card functionality with detailed descriptions for each learning feature
-- ✅ Full Stack Bootcamp page with language-aware routing (English: /us/career-programs/full-stack, Spanish: /es/bootcamps/full-stack)
+- ✅ Full Stack Career Program page with language-aware routing (English: /us/career-programs/full-stack, Spanish: /es/programas-de-carrera/full-stack)
 
-## Full Stack Bootcamp Page (November 2025)
-A comprehensive bootcamp landing page mirroring 4geeksacademy.com's Full Stack Developer course with a cleaner, modern design.
+## Full Stack Career Program Page (November 2025)
+A comprehensive career program landing page mirroring 4geeksacademy.com's Full Stack Developer course with a cleaner, modern design. These are self-paced career programs, not bootcamps.
 
 ### Routes
 - **English**: `/us/career-programs/full-stack`
-- **Spanish**: `/es/bootcamps/full-stack`
+- **Spanish**: `/es/programas-de-carrera/full-stack`
 - **Career Programs listing**: `/career-programs`
 
 ### Sections (12 total)
