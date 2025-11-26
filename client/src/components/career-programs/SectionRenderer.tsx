@@ -42,8 +42,12 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <FooterCTASection key={index} data={section} />;
           case "footer":
             return <FooterSection key={index} data={section} />;
-          default:
+          default: {
+            if (process.env.NODE_ENV === "development") {
+              console.warn(`Unknown section type: ${(section as { type: string }).type}`);
+            }
             return null;
+          }
         }
       })}
     </>

@@ -54,35 +54,48 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Expandable card functionality with detailed descriptions for each learning feature
 - ✅ Full Stack Career Program page with language-aware routing (English: /us/career-programs/full-stack, Spanish: /es/programas-de-carrera/full-stack)
 
-## Full Stack Career Program Page (November 2025)
-A comprehensive career program landing page mirroring 4geeksacademy.com's Full Stack Developer course with a cleaner, modern design. These are self-paced career programs, not bootcamps.
+## YAML-Based Content Management System
 
-### Routes
-- **English**: `/us/career-programs/full-stack`
-- **Spanish**: `/es/programas-de-carrera/full-stack`
+The platform uses a YAML-based component system that allows marketing teams to modify content and create new program pages by interacting with Replit Agent, without requiring backend code changes.
+
+### Architecture Overview
+- **Content Storage**: `marketing-content/programs/{program-slug}/{locale}.yml`
+- **Component Registry**: `marketing-content/components-registry.yml` - Documents all available section types
+- **Backend API**: `/api/career-programs/:slug?locale=en|es` - Serves parsed YAML content
+- **Frontend Renderer**: `SectionRenderer` component dynamically renders sections from YAML
+
+### How to Add/Modify Career Program Content
+
+**To update existing content:**
+1. Edit the relevant YAML file in `marketing-content/programs/{program}/en.yml` or `es.yml`
+2. Changes are reflected immediately on page refresh
+
+**To add a new career program:**
+1. Create folder: `marketing-content/programs/{new-slug}/`
+2. Add `en.yml` and `es.yml` files following the schema
+3. The program is automatically available at `/us/career-programs/{slug}` and `/es/programas-de-carrera/{slug}`
+
+### Available Section Types
+See `marketing-content/components-registry.yml` for full documentation. Current types:
+- `hero` - Main banner with title, subtitle, badge, CTA buttons
+- `program_overview` - Grid of feature cards
+- `ai_learning` - AI tools showcase with chat example
+- `mentorship` - Support options cards
+- `features_checklist` - Checkmark list of benefits
+- `tech_stack` - Technology icons grid
+- `certificate` - Certificate preview and benefits
+- `faq` - Collapsible accordion questions
+- `credibility` - Stats and featured logos
+- `footer_cta` - Final call-to-action section
+- `footer` - Copyright notice
+
+### Career Program Routes
+- **English**: `/us/career-programs/:slug`
+- **Spanish**: `/es/programas-de-carrera/:slug`
 - **Career Programs listing**: `/career-programs`
 
-### Sections (12 total)
-1. **Hero Section**: Title, subtitle, "Bootcamp" badge, 2 CTA buttons (Start Learning Now, Download Syllabus)
-2. **Program Overview**: 3 cards (Self-Paced Learning, No Prerequisites, Beginner Friendly)
-3. **AI-Powered Learning**: Rigobot AI Tutor, LearnPack Software, interactive chat example
-4. **Mentorship & Support**: 3 cards (Monthly Sessions, 1-on-1 Sessions, Active Community)
-5. **Key Features Checklist**: 8 checkmark items highlighting program benefits
-6. **Tech Stack**: 6 technology icons (HTML5, CSS3, JavaScript, Python, React, Node.js)
-7. **Certificate & Career Network**: Benefits list with certificate preview card
-8. **FAQ Section**: 5 collapsible accordion items with common questions
-9. **Credibility Stats**: 4 stat cards (4,000+ graduates, 84% placement, 4.9/5 rating, 20+ countries)
-10. **Featured In**: Forbes, Newsweek, Course Report, SwitchUp logos
-11. **Footer CTA**: Final call-to-action with primary and secondary buttons
-12. **Footer**: Copyright notice
-
-### Implementation Details
-- Automatic language switching based on URL path prefix (/us/ = English, /es/ = Spanish)
-- All content fully translated in both languages
-- Uses shadcn/ui components (Card, Button, Badge, Accordion)
-- Proper data-testid attributes on all interactive and content elements
-- No pricing information displayed (per requirements)
-- Clean, section-based layout matching 4geeks.com design style
+### Current Programs
+- **Full Stack Development** (`full-stack`): Complete bilingual YAML content
 
 ## Future Integration
 - Backend integration with 4geeks Breathecode API (documentation pending from user)

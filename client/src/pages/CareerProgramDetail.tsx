@@ -11,9 +11,9 @@ export default function CareerProgramDetail() {
   const [matchEn, paramsEn] = useRoute("/us/career-programs/:slug");
   const [matchEs, paramsEs] = useRoute("/es/programas-de-carrera/:slug");
   
-  const isEnglish = matchEn;
-  const slug = isEnglish ? paramsEn?.slug : paramsEs?.slug;
-  const locale = isEnglish ? "en" : "es";
+  const locale = matchEn ? "en" : matchEs ? "es" : i18n.language;
+  const slug = matchEn ? paramsEn?.slug : matchEs ? paramsEs?.slug : undefined;
+  const hasValidRoute = matchEn || matchEs;
 
   const { data: program, isLoading, error } = useQuery<CareerProgram>({
     queryKey: ["/api/career-programs", slug, locale],
@@ -24,7 +24,7 @@ export default function CareerProgramDetail() {
       }
       return response.json();
     },
-    enabled: !!slug,
+    enabled: !!slug && hasValidRoute,
   });
 
   if (isLoading) {

@@ -5,20 +5,28 @@ interface TechStackSectionProps {
   data: TechStackSectionType;
 }
 
-const techIcons: Record<string, JSX.Element> = {
-  "HTML5": <SiHtml5 className="w-12 h-12 text-orange-500" />,
-  "CSS3": <SiCss3 className="w-12 h-12 text-blue-500" />,
-  "JavaScript": <SiJavascript className="w-12 h-12 text-yellow-400" />,
-  "Python": <SiPython className="w-12 h-12 text-blue-400" />,
-  "React": <SiReact className="w-12 h-12 text-cyan-400" />,
-  "Node.js": <SiNodedotjs className="w-12 h-12 text-green-500" />,
-  "TypeScript": <SiTypescript className="w-12 h-12 text-blue-600" />,
-  "PostgreSQL": <SiPostgresql className="w-12 h-12 text-blue-700" />,
-  "MongoDB": <SiMongodb className="w-12 h-12 text-green-600" />,
-  "Docker": <SiDocker className="w-12 h-12 text-blue-500" />,
-  "Git": <SiGit className="w-12 h-12 text-orange-600" />,
-  "AWS": <SiAmazonwebservices className="w-12 h-12 text-orange-400" />,
-};
+function getTechIcon(tech: string): JSX.Element {
+  const iconMap: Record<string, JSX.Element> = {
+    "HTML5": <SiHtml5 className="w-12 h-12 text-orange-500" />,
+    "CSS3": <SiCss3 className="w-12 h-12 text-blue-500" />,
+    "JavaScript": <SiJavascript className="w-12 h-12 text-yellow-400" />,
+    "Python": <SiPython className="w-12 h-12 text-blue-400" />,
+    "React": <SiReact className="w-12 h-12 text-cyan-400" />,
+    "Node.js": <SiNodedotjs className="w-12 h-12 text-green-500" />,
+    "TypeScript": <SiTypescript className="w-12 h-12 text-blue-600" />,
+    "PostgreSQL": <SiPostgresql className="w-12 h-12 text-blue-700" />,
+    "MongoDB": <SiMongodb className="w-12 h-12 text-green-600" />,
+    "Docker": <SiDocker className="w-12 h-12 text-blue-500" />,
+    "Git": <SiGit className="w-12 h-12 text-orange-600" />,
+    "AWS": <SiAmazonwebservices className="w-12 h-12 text-orange-400" />,
+  };
+  
+  return iconMap[tech] || (
+    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+      <span className="text-xs font-bold text-primary">{tech.substring(0, 2).toUpperCase()}</span>
+    </div>
+  );
+}
 
 export function TechStackSection({ data }: TechStackSectionProps) {
   return (
@@ -51,11 +59,7 @@ export function TechStackSection({ data }: TechStackSectionProps) {
               className="flex flex-col items-center gap-2"
               data-testid={`tech-icon-${index}`}
             >
-              {techIcons[tech] || (
-                <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center">
-                  <span className="text-xs font-medium">{tech}</span>
-                </div>
-              )}
+              {getTechIcon(tech)}
               <span className="text-sm text-muted-foreground">{tech}</span>
             </div>
           ))}
