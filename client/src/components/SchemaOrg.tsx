@@ -40,7 +40,7 @@ export default function SchemaOrg({ type, data }: SchemaOrgProps) {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://ai-reskilling-platform.replit.app/courses?q={search_term_string}"
+            "urlTemplate": "https://ai-reskilling-platform.replit.app/career-programs?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }

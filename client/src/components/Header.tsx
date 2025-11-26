@@ -33,11 +33,11 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link 
-            href="/courses" 
+            href="/career-programs" 
             className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
-            data-testid="link-courses"
+            data-testid="link-career-programs"
           >
-            {t('nav.courses')}
+            {t('nav.careerPrograms')}
           </Link>
           <Link 
             href="/dashboard" 

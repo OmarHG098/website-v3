@@ -45,21 +45,22 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - ✅ Image-text sections
 - ✅ Important Awards and Top Ratings section with star ratings
 - ✅ Dashboard with progress tracking
-- ✅ Course catalog with search/filtering
+- ✅ Career Programs catalog with search/filtering
 - ✅ Responsive design
 - ✅ Comprehensive SEO optimization (meta tags, schema.org, sitemap, robots.txt)
 - ✅ Performance optimizations (lazy loading, font optimization)
 - ✅ Notion-inspired AI automation section with 8 expandable cards showcasing hyper-personalized learning features
 - ✅ User avatars in AI automation section (Rigobot + 4 diverse learners, overlapping design)
 - ✅ Expandable card functionality with detailed descriptions for each learning feature
-- ✅ Full Stack Bootcamp page with language-aware routing (English: /us/courses/full-stack, Spanish: /es/bootcamps/full-stack)
+- ✅ Full Stack Bootcamp page with language-aware routing (English: /us/career-programs/full-stack, Spanish: /es/bootcamps/full-stack)
 
 ## Full Stack Bootcamp Page (November 2025)
 A comprehensive bootcamp landing page mirroring 4geeksacademy.com's Full Stack Developer course with a cleaner, modern design.
 
 ### Routes
-- **English**: `/us/courses/full-stack`
+- **English**: `/us/career-programs/full-stack`
 - **Spanish**: `/es/bootcamps/full-stack`
+- **Career Programs listing**: `/career-programs`
 
 ### Sections (12 total)
 1. **Hero Section**: Title, subtitle, "Bootcamp" badge, 2 CTA buttons (Start Learning Now, Download Syllabus)

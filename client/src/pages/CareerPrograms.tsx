@@ -11,14 +11,14 @@ import webDevThumbnail from "@assets/generated_images/Web_development_course_thu
 import dataScienceThumbnail from "@assets/generated_images/Data_science_course_thumbnail_c63194fb.png";
 import aiThumbnail from "@assets/generated_images/AI_course_thumbnail_0a0401e7.png";
 
-export default function Courses() {
+export default function CareerPrograms() {
   const [searchQuery, setSearchQuery] = useState("");
   const [difficulty, setDifficulty] = useState("all");
   const [, setLocation] = useLocation();
   const { i18n } = useTranslation();
 
   const getFullStackUrl = () => {
-    return i18n.language === "es" ? "/es/bootcamps/full-stack" : "/us/courses/full-stack";
+    return i18n.language === "es" ? "/es/bootcamps/full-stack" : "/us/career-programs/full-stack";
   };
 
   const allCourses = [

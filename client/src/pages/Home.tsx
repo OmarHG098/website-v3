@@ -45,7 +45,7 @@ export default function Home() {
       description:
         "Every student receives a LearnPack package generated from their diagnostics, past performance, pace, errors, and career goals.",
       icon: IconRoute,
-      onClick: () => setLocation("/courses"),
+      onClick: () => setLocation("/career-programs"),
     },
     {
       label: "Human-guided calibration and oversight",

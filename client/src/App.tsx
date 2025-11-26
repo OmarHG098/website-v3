@@ -8,7 +8,7 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import "./i18n";
 
-const Courses = lazy(() => import("@/pages/Courses"));
+const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const LearningPathSelection = lazy(() => import("@/pages/LearningPathSelection"));
 const CareerPaths = lazy(() => import("@/pages/CareerPaths"));
@@ -37,9 +37,9 @@ function Router() {
         <Route path="/career-paths" component={CareerPaths} />
         <Route path="/skill-boosters" component={SkillBoosters} />
         <Route path="/tool-mastery" component={ToolMastery} />
-        <Route path="/courses" component={Courses} />
+        <Route path="/career-programs" component={CareerPrograms} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/us/courses/full-stack" component={FullStackBootcamp} />
+        <Route path="/us/career-programs/full-stack" component={FullStackBootcamp} />
         <Route path="/es/bootcamps/full-stack" component={FullStackBootcamp} />
         <Route component={NotFound} />
       </Switch>
