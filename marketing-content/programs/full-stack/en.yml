@@ -1,0 +1,151 @@
+# Full Stack Development Career Program - English
+# This file defines all sections and content for the Full Stack career program page
+
+slug: "full-stack"
+title: "Full Stack Development"
+
+meta:
+  page_title: "Full Stack Developer Career Program | 4Geeks"
+  description: "Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community."
+
+sections:
+  - type: hero
+    badge: "Career Program"
+    title: "Full Stack Development with AI"
+    subtitle: "Learn at your own pace with AI-powered tools, unlimited mentorship, and a global community. Build real-world applications and launch your tech career."
+    cta_buttons:
+      - text: "Start Learning Now"
+        url: "/signup"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "Download Syllabus"
+        url: "/syllabus/full-stack"
+        variant: "outline"
+        icon: "Download"
+
+  - type: program_overview
+    title: "Program Overview"
+    subtitle: "Everything you need to become a professional full stack developer"
+    cards:
+      - icon: "DeviceLaptop"
+        title: "Self-Paced Learning"
+        description: "Learn on your own schedule with 24/7 access to all materials and AI-powered support"
+      - icon: "Code"
+        title: "No Prerequisites"
+        description: "Start from scratch - we teach you the fundamentals before advancing to complex topics"
+      - icon: "Rocket"
+        title: "Beginner Friendly"
+        description: "Designed for complete beginners with no prior coding experience required"
+
+  - type: ai_learning
+    badge: "AI-Powered"
+    title: "Learn Faster with AI Support"
+    description: "Our proprietary AI tools provide instant feedback, personalized guidance, and real-time code review to accelerate your learning journey."
+    features:
+      - icon: "Brain"
+        title: "Rigobot AI Tutor"
+        description: "Your personal AI coding assistant that reviews your code, helps with exercises, and provides instant feedback 24/7."
+      - icon: "Code"
+        title: "LearnPack Software"
+        description: "Our custom learning platform with interactive exercises, automated tests, and instant feedback for every lesson."
+    chat_example:
+      bot_name: "Rigobot"
+      bot_status: "AI Tutor - Online"
+      user_message: "I'm stuck on this React component. Can you help?"
+      bot_response: "I see the issue! Your useEffect is missing a dependency. Let me show you how to fix it..."
+
+  - type: mentorship
+    title: "Mentorship & Support"
+    subtitle: "You're never alone in your learning journey. Get help when you need it."
+    cards:
+      - icon: "CalendarEvent"
+        title: "Monthly Sessions"
+        description: "Regular mentorship sessions with expert developers to guide your progress and answer questions."
+      - icon: "Headset"
+        title: "1-on-1 Sessions"
+        description: "Schedule private 45-minute sessions with mentors for personalized help on specific challenges."
+      - icon: "Users"
+        title: "Active Community"
+        description: "Join thousands of learners in our supportive community with daily live workshops and peer collaboration."
+
+  - type: features_checklist
+    title: "What You Get"
+    items:
+      - text: "Learn at your own pace"
+      - text: "AI reviews your code instantly"
+      - text: "Monthly mentorship sessions"
+      - text: "Active learning community"
+      - text: "Optional live workshops"
+      - text: "Schedule private sessions"
+      - text: "4Geeks certificate"
+      - text: "Global career network"
+
+  - type: tech_stack
+    title: "Technologies You'll Master"
+    subtitle: "Learn the most in-demand technologies used by professional developers worldwide"
+    technologies:
+      - "HTML5"
+      - "CSS3"
+      - "JavaScript"
+      - "Python"
+      - "React"
+      - "Node.js"
+    extras_text: "+ APIs, Git, SQL, REST, and AI-powered development tools like Cursor & Copilot"
+
+  - type: certificate
+    title: "Certificate & Career Network"
+    description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."
+    benefits:
+      - text: "Recognized by international institutions"
+      - text: "Access to 5,000+ hiring partners"
+      - text: "Lifetime career support"
+    card:
+      title: "Full Stack Developer"
+      subtitle: "4Geeks Academy Certificate"
+
+  - type: faq
+    title: "Frequently Asked Questions"
+    items:
+      - question: "Are there fixed class times?"
+        answer: "No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction."
+      - question: "How do I stay motivated learning on my own?"
+        answer: "You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes."
+      - question: "Do I need prior coding experience?"
+        answer: "No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts."
+      - question: "How do I schedule mentoring sessions?"
+        answer: "Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with."
+      - question: "Is the certificate recognized by employers?"
+        answer: "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+
+  - type: credibility
+    title: "Trusted by Thousands"
+    stats:
+      - value: "4,000+"
+        label: "Graduates"
+      - value: "84%"
+        label: "Job Placement Rate"
+      - value: "4.9/5"
+        label: "Student Rating"
+      - value: "20+"
+        label: "Countries"
+    featured_in:
+      label: "Featured In"
+      logos:
+        - "Forbes"
+        - "Newsweek"
+        - "Course Report"
+        - "SwitchUp"
+
+  - type: footer_cta
+    title: "Ready to Start Your Tech Career?"
+    subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."
+    buttons:
+      - text: "Start Learning Now"
+        url: "/signup"
+        variant: "secondary"
+      - text: "Talk to an Advisor"
+        url: "/contact"
+        variant: "outline"
+
+  - type: footer
+    copyright_text: "2024 4Geeks. All rights reserved."

@@ -1,0 +1,151 @@
+# Programa de Carrera Full Stack - Español
+# Este archivo define todas las secciones y contenido para la página del programa Full Stack
+
+slug: "full-stack"
+title: "Desarrollo Full Stack"
+
+meta:
+  page_title: "Programa de Carrera Desarrollador Full Stack | 4Geeks"
+  description: "Aprende desarrollo full stack a tu propio ritmo con herramientas de IA, mentoría ilimitada y una comunidad global."
+
+sections:
+  - type: hero
+    badge: "Programa de Carrera"
+    title: "Desarrollo Full Stack con IA"
+    subtitle: "Aprende a tu propio ritmo con herramientas potenciadas por IA, mentoría ilimitada y una comunidad global. Construye aplicaciones reales y lanza tu carrera tecnológica."
+    cta_buttons:
+      - text: "Comienza Ahora"
+        url: "/registro"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "Descargar Programa"
+        url: "/programa/full-stack"
+        variant: "outline"
+        icon: "Download"
+
+  - type: program_overview
+    title: "Descripción del Programa"
+    subtitle: "Todo lo que necesitas para convertirte en un desarrollador full stack profesional"
+    cards:
+      - icon: "DeviceLaptop"
+        title: "Aprendizaje a Tu Ritmo"
+        description: "Aprende según tu horario con acceso 24/7 a todos los materiales y soporte impulsado por IA"
+      - icon: "Code"
+        title: "Sin Prerrequisitos"
+        description: "Comienza desde cero - te enseñamos los fundamentos antes de avanzar a temas complejos"
+      - icon: "Rocket"
+        title: "Para Principiantes"
+        description: "Diseñado para principiantes completos sin experiencia previa en programación"
+
+  - type: ai_learning
+    badge: "Potenciado por IA"
+    title: "Aprende Más Rápido con Soporte de IA"
+    description: "Nuestras herramientas de IA propietarias proporcionan retroalimentación instantánea, orientación personalizada y revisión de código en tiempo real para acelerar tu aprendizaje."
+    features:
+      - icon: "Brain"
+        title: "Rigobot Tutor IA"
+        description: "Tu asistente personal de programación con IA que revisa tu código, ayuda con ejercicios y proporciona retroalimentación instantánea 24/7."
+      - icon: "Code"
+        title: "Software LearnPack"
+        description: "Nuestra plataforma de aprendizaje personalizada con ejercicios interactivos, pruebas automatizadas y retroalimentación instantánea para cada lección."
+    chat_example:
+      bot_name: "Rigobot"
+      bot_status: "Tutor IA - En línea"
+      user_message: "Estoy atascado con este componente React. ¿Puedes ayudarme?"
+      bot_response: "¡Veo el problema! A tu useEffect le falta una dependencia. Déjame mostrarte cómo arreglarlo..."
+
+  - type: mentorship
+    title: "Mentoría y Soporte"
+    subtitle: "Nunca estás solo en tu viaje de aprendizaje. Obtén ayuda cuando la necesites."
+    cards:
+      - icon: "CalendarEvent"
+        title: "Sesiones Mensuales"
+        description: "Sesiones regulares de mentoría con desarrolladores expertos para guiar tu progreso y responder preguntas."
+      - icon: "Headset"
+        title: "Sesiones 1 a 1"
+        description: "Agenda sesiones privadas de 45 minutos con mentores para ayuda personalizada en desafíos específicos."
+      - icon: "Users"
+        title: "Comunidad Activa"
+        description: "Únete a miles de estudiantes en nuestra comunidad de apoyo con talleres en vivo diarios y colaboración entre pares."
+
+  - type: features_checklist
+    title: "Lo Que Obtienes"
+    items:
+      - text: "Aprende a tu propio ritmo"
+      - text: "La IA revisa tu código al instante"
+      - text: "Sesiones de mentoría mensuales"
+      - text: "Comunidad de aprendizaje activa"
+      - text: "Talleres en vivo opcionales"
+      - text: "Agenda sesiones privadas"
+      - text: "Certificado 4Geeks"
+      - text: "Red de carreras global"
+
+  - type: tech_stack
+    title: "Tecnologías que Dominarás"
+    subtitle: "Aprende las tecnologías más demandadas utilizadas por desarrolladores profesionales en todo el mundo"
+    technologies:
+      - "HTML5"
+      - "CSS3"
+      - "JavaScript"
+      - "Python"
+      - "React"
+      - "Node.js"
+    extras_text: "+ APIs, Git, SQL, REST y herramientas de desarrollo con IA como Cursor y Copilot"
+
+  - type: certificate
+    title: "Certificado y Red de Carreras"
+    description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
+    benefits:
+      - text: "Reconocido por instituciones internacionales"
+      - text: "Acceso a más de 5,000 socios de contratación"
+      - text: "Soporte de carrera de por vida"
+    card:
+      title: "Desarrollador Full Stack"
+      subtitle: "Certificado 4Geeks Academy"
+
+  - type: faq
+    title: "Preguntas Frecuentes"
+    items:
+      - question: "¿Hay horarios de clase fijos?"
+        answer: "No, el bootcamp a tu ritmo está diseñado para aprender cuando quieras. Puedes acceder a todos los materiales 24/7 y avanzar en el plan de estudios cuando te convenga. Los talleres en vivo opcionales están disponibles en varios horarios si deseas interacción en tiempo real."
+      - question: "¿Cómo me mantengo motivado aprendiendo solo?"
+        answer: "¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales."
+      - question: "¿Necesito experiencia previa en programación?"
+        answer: "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados."
+      - question: "¿Cómo agendo sesiones de mentoría?"
+        answer: "Simplemente ve a tu panel, selecciona el servicio de mentoría, elige tu mentor preferido y escoge un día y hora que te funcione. Cada sesión es de 45 minutos y puede usarse para cualquier tema en el que necesites ayuda."
+      - question: "¿El certificado es reconocido por empleadores?"
+        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación."
+
+  - type: credibility
+    title: "Confiado por Miles"
+    stats:
+      - value: "4,000+"
+        label: "Graduados"
+      - value: "84%"
+        label: "Tasa de Colocación Laboral"
+      - value: "4.9/5"
+        label: "Calificación de Estudiantes"
+      - value: "20+"
+        label: "Países"
+    featured_in:
+      label: "Destacado En"
+      logos:
+        - "Forbes"
+        - "Newsweek"
+        - "Course Report"
+        - "SwitchUp"
+
+  - type: footer_cta
+    title: "¿Listo para Iniciar tu Carrera Tech?"
+    subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."
+    buttons:
+      - text: "Comienza Ahora"
+        url: "/registro"
+        variant: "secondary"
+      - text: "Habla con un Asesor"
+        url: "/contacto"
+        variant: "outline"
+
+  - type: footer
+    copyright_text: "2024 4Geeks. Todos los derechos reservados."
