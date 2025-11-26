@@ -18,7 +18,7 @@ export default function CareerPrograms() {
   const { i18n } = useTranslation();
 
   const getFullStackUrl = () => {
-    return i18n.language === "es" ? "/es/bootcamps/full-stack" : "/us/career-programs/full-stack";
+    return i18n.language === "es" ? "/es/programas-de-carrera/full-stack" : "/us/career-programs/full-stack";
   };
 
   const allCourses = [

@@ -40,7 +40,7 @@ function Router() {
         <Route path="/career-programs" component={CareerPrograms} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/us/career-programs/full-stack" component={FullStackBootcamp} />
-        <Route path="/es/bootcamps/full-stack" component={FullStackBootcamp} />
+        <Route path="/es/programas-de-carrera/full-stack" component={FullStackBootcamp} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
