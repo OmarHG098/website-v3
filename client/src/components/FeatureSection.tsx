@@ -20,7 +20,6 @@ interface FeatureAction {
   onClick?: () => void;
 }
 
-
 interface DecorationAsset {
   src: string;
   alt: string;
@@ -126,7 +125,7 @@ export default function FeatureSection({
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-l-4 border-l-${action.color}` : ''}`}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-t-4 border-t-${action.color}` : ""}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -134,7 +133,7 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.color ? `text-${action.color}` : ''}`}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.color ? `text-${action.color}` : ""}`}
                         />
                       )}
                       <div className="flex-1">
