@@ -126,19 +126,19 @@ export default function FeatureSection({
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden border-t-4 ${action.color || ''}`}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden border-t-4 ${action.color || ""}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
-                  <CardContent className="p-4">
+                  <CardContent className="p-2 md:p-3">
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ''}`}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ""}`}
                         />
                       )}
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center justify-between gap-2 mb-2">
                           <span className="text-sm font-medium">
                             {action.label}
                           </span>
