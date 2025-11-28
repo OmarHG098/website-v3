@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import forbesLogo from "@assets/forbes-new.avif";
 import clarkLogo from "@assets/clark-new.avif";
 import badgesImage from "@assets/badges-new.avif";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -75,6 +76,12 @@ export default function LogoSection() {
               align: "center",
               loop: true,
             }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+                stopOnInteraction: true,
+              }),
+            ]}
             className="w-full max-w-sm mx-auto flex flex-col"
           >
             <div className="h-[240px] flex items-end pb-5">
