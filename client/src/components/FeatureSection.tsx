@@ -121,19 +121,34 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
-              const borderColor = action.iconColor?.replace('text-', 'border-l-') || '';
+              
+              const colorMap: Record<string, string> = {
+                'text-blue-500': '#3b82f6',
+                'text-cyan-500': '#06b6d4',
+                'text-purple-500': '#a855f7',
+                'text-rose-500': '#f43f5e',
+                'text-green-500': '#22c55e',
+                'text-amber-500': '#f59e0b',
+                'text-indigo-500': '#6366f1',
+                'text-emerald-500': '#10b981',
+              };
+              
+              const borderColorValue = action.iconColor ? colorMap[action.iconColor] : undefined;
 
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${borderColor ? 'border-l-4' : ''} ${borderColor}`}
+                  className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden"
+                  style={borderColorValue ? { borderLeftWidth: '4px', borderLeftColor: borderColorValue } : undefined}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
-                        <action.icon className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ''}`} />
+                        <action.icon
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ""}`}
+                        />
                       )}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
