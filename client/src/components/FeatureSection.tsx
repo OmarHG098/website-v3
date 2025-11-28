@@ -16,6 +16,7 @@ interface FeatureAction {
   description: string;
   icon?: Icon;
   color?: string;
+  iconColor?: string;
   href?: string;
   onClick?: () => void;
 }
@@ -125,8 +126,7 @@ export default function FeatureSection({
               return (
                 <Card
                   key={index}
-                  className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden"
-                  style={action.color ? { borderTopWidth: '4px', borderTopColor: action.color } : undefined}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden border-t-4 ${action.color || ''}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -134,8 +134,7 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className="h-5 w-5 flex-shrink-0 mt-0.5"
-                          style={action.color ? { color: action.color } : undefined}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ''}`}
                         />
                       )}
                       <div className="flex-1">
