@@ -121,11 +121,12 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
+              const borderColor = action.iconColor?.replace('text-', 'border-l-') || '';
 
               return (
                 <Card
                   key={index}
-                  className="hover-elevate active-elevate-2 cursor-pointer"
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${borderColor ? 'border-l-4' : ''} ${borderColor}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
