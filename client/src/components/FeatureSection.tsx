@@ -15,10 +15,21 @@ interface FeatureAction {
   label: string;
   description: string;
   icon?: Icon;
-  iconColor?: string;
+  color?: string;
   href?: string;
   onClick?: () => void;
 }
+
+const colorClasses: Record<string, { text: string; border: string }> = {
+  blue: { text: 'text-blue-500', border: 'border-l-blue-500' },
+  cyan: { text: 'text-cyan-500', border: 'border-l-cyan-500' },
+  purple: { text: 'text-purple-500', border: 'border-l-purple-500' },
+  rose: { text: 'text-rose-500', border: 'border-l-rose-500' },
+  green: { text: 'text-green-500', border: 'border-l-green-500' },
+  amber: { text: 'text-amber-500', border: 'border-l-amber-500' },
+  indigo: { text: 'text-indigo-500', border: 'border-l-indigo-500' },
+  emerald: { text: 'text-emerald-500', border: 'border-l-emerald-500' },
+};
 
 interface DecorationAsset {
   src: string;
@@ -121,25 +132,12 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
-              
-              const colorMap: Record<string, string> = {
-                'text-blue-500': '#3b82f6',
-                'text-cyan-500': '#06b6d4',
-                'text-purple-500': '#a855f7',
-                'text-rose-500': '#f43f5e',
-                'text-green-500': '#22c55e',
-                'text-amber-500': '#f59e0b',
-                'text-indigo-500': '#6366f1',
-                'text-emerald-500': '#10b981',
-              };
-              
-              const borderColorValue = action.iconColor ? colorMap[action.iconColor] : undefined;
+              const colors = action.color ? colorClasses[action.color] : null;
 
               return (
                 <Card
                   key={index}
-                  className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden"
-                  style={borderColorValue ? { borderLeftWidth: '4px', borderLeftColor: borderColorValue } : undefined}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${colors ? `border-l-4 ${colors.border}` : ''}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -147,7 +145,7 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.iconColor || ""}`}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${colors?.text || ''}`}
                         />
                       )}
                       <div className="flex-1">
