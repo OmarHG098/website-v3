@@ -20,16 +20,6 @@ interface FeatureAction {
   onClick?: () => void;
 }
 
-const colorClasses: Record<string, { text: string; border: string }> = {
-  'blue-500': { text: 'text-blue-500', border: 'border-l-blue-500' },
-  'cyan-500': { text: 'text-cyan-500', border: 'border-l-cyan-500' },
-  'purple-500': { text: 'text-purple-500', border: 'border-l-purple-500' },
-  'rose-500': { text: 'text-rose-500', border: 'border-l-rose-500' },
-  'green-500': { text: 'text-green-500', border: 'border-l-green-500' },
-  'amber-500': { text: 'text-amber-500', border: 'border-l-amber-500' },
-  'indigo-500': { text: 'text-indigo-500', border: 'border-l-indigo-500' },
-  'emerald-500': { text: 'text-emerald-500', border: 'border-l-emerald-500' },
-};
 
 interface DecorationAsset {
   src: string;
@@ -132,12 +122,11 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
-              const colors = action.color ? colorClasses[action.color] : null;
 
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${colors ? `border-l-4 ${colors.border}` : ''}`}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-l-4 border-l-${action.color}` : ''}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -145,7 +134,7 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${colors?.text || ''}`}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.color ? `text-${action.color}` : ''}`}
                         />
                       )}
                       <div className="flex-1">
