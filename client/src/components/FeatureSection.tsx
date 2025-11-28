@@ -21,14 +21,14 @@ interface FeatureAction {
 }
 
 const colorClasses: Record<string, { text: string; border: string }> = {
-  blue: { text: 'text-blue-500', border: 'border-l-blue-500' },
-  cyan: { text: 'text-cyan-500', border: 'border-l-cyan-500' },
-  purple: { text: 'text-purple-500', border: 'border-l-purple-500' },
-  rose: { text: 'text-rose-500', border: 'border-l-rose-500' },
-  green: { text: 'text-green-500', border: 'border-l-green-500' },
-  amber: { text: 'text-amber-500', border: 'border-l-amber-500' },
-  indigo: { text: 'text-indigo-500', border: 'border-l-indigo-500' },
-  emerald: { text: 'text-emerald-500', border: 'border-l-emerald-500' },
+  'blue-500': { text: 'text-blue-500', border: 'border-l-blue-500' },
+  'cyan-500': { text: 'text-cyan-500', border: 'border-l-cyan-500' },
+  'purple-500': { text: 'text-purple-500', border: 'border-l-purple-500' },
+  'rose-500': { text: 'text-rose-500', border: 'border-l-rose-500' },
+  'green-500': { text: 'text-green-500', border: 'border-l-green-500' },
+  'amber-500': { text: 'text-amber-500', border: 'border-l-amber-500' },
+  'indigo-500': { text: 'text-indigo-500', border: 'border-l-indigo-500' },
+  'emerald-500': { text: 'text-emerald-500', border: 'border-l-emerald-500' },
 };
 
 interface DecorationAsset {
