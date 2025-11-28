@@ -121,11 +121,13 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
+              const textColor = action.color ? `text-${action.color}` : "";
+              const borderColor = action.color ? `border-t-${action.color}` : "";
 
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-t-4 border-t-${action.color}` : ""}`}
+                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-t-4 ${borderColor}` : ""}`}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -133,7 +135,7 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${action.color ? `text-${action.color}` : ""}`}
+                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${textColor}`}
                         />
                       )}
                       <div className="flex-1">
