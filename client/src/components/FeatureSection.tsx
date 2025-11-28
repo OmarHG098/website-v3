@@ -66,12 +66,15 @@ export default function FeatureSection({
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
           {heading && (
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 hidden md:block lg:hidden">{heading}</h2>
           )}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-8 mb-8">
+          <div className="flex flex-col md:flex-row md:items-end lg:items-start md:justify-between gap-4 md:gap-8 mb-8">
             <div className="flex-1">
+              {heading && (
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 md:hidden lg:block">{heading}</h2>
+              )}
               {subheading && (
-                <p className="text-muted-foreground text-lg mb-4 md:mb-0">{subheading}</p>
+                <p className="text-muted-foreground text-lg mb-4 md:mb-0 lg:mb-4">{subheading}</p>
               )}
               {ctaLabel && ctaHref && (
                 <a 
@@ -86,7 +89,7 @@ export default function FeatureSection({
             </div>
             
             {decorations.length > 0 && (
-              <div className="hidden md:flex -space-x-4 items-center">
+              <div className="hidden md:flex -space-x-4 items-center lg:self-end">
                 {decorations.map((decoration, index) => (
                   <Avatar 
                     key={index} 
