@@ -121,13 +121,25 @@ export default function FeatureSection({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, index) => {
               const isExpanded = expandedCards.has(index);
-              const textColor = action.color ? `text-${action.color}` : "";
-              const borderColor = action.color ? `border-t-${action.color}` : "";
+              
+              const colorValues: Record<string, string> = {
+                'blue-500': '#3b82f6',
+                'cyan-500': '#06b6d4',
+                'purple-500': '#a855f7',
+                'rose-500': '#f43f5e',
+                'green-500': '#22c55e',
+                'amber-500': '#f59e0b',
+                'indigo-500': '#6366f1',
+                'emerald-500': '#10b981',
+              };
+              
+              const colorValue = action.color ? colorValues[action.color] : undefined;
 
               return (
                 <Card
                   key={index}
-                  className={`hover-elevate active-elevate-2 cursor-pointer overflow-hidden ${action.color ? `border-t-4 ${borderColor}` : ""}`}
+                  className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden"
+                  style={colorValue ? { borderTopWidth: '4px', borderTopColor: colorValue } : undefined}
                   onClick={() => toggleCard(index)}
                   data-testid={`button-feature-action-${index}`}
                 >
@@ -135,7 +147,8 @@ export default function FeatureSection({
                     <div className="flex items-start gap-3 w-full">
                       {action.icon && (
                         <action.icon
-                          className={`h-5 w-5 flex-shrink-0 mt-0.5 ${textColor}`}
+                          className="h-5 w-5 flex-shrink-0 mt-0.5"
+                          style={colorValue ? { color: colorValue } : undefined}
                         />
                       )}
                       <div className="flex-1">
