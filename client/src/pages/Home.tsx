@@ -45,6 +45,7 @@ export default function Home() {
       description:
         "Every student receives a LearnPack package generated from their diagnostics, past performance, pace, errors, and career goals.",
       icon: IconRoute,
+      iconColor: "text-blue-500",
       onClick: () => setLocation("/career-programs"),
     },
     {
@@ -52,6 +53,7 @@ export default function Home() {
       description:
         "Expert mentors review student progress weekly and adjust the AI-generated path with human nuance and judgment.",
       icon: IconEye,
+      iconColor: "text-cyan-500",
       onClick: () => console.log("Human-guided calibration clicked"),
     },
     {
@@ -59,6 +61,7 @@ export default function Home() {
       description:
         "Rigobot analyzes each student's code history and provides suggestions based on their patterns, not generic explanations.",
       icon: IconBrain,
+      iconColor: "text-purple-500",
       onClick: () => console.log("Context-aware AI feedback clicked"),
     },
     {
@@ -66,6 +69,7 @@ export default function Home() {
       description:
         "The platform automatically identifies weak areas from submissions and injects micro-lessons or extra challenges exactly where needed.",
       icon: IconTarget,
+      iconColor: "text-rose-500",
       onClick: () => console.log("Skill-gap detection clicked"),
     },
     {
@@ -73,6 +77,7 @@ export default function Home() {
       description:
         "Learners advance when they demonstrate mastery, not when the calendar says so; humans intervene when a student needs a strategic push or slowdown.",
       icon: IconTrendingUp,
+      iconColor: "text-green-500",
       onClick: () => console.log("Individual pacing clicked"),
     },
     {
@@ -80,6 +85,7 @@ export default function Home() {
       description:
         "Assignments adapt to the student's target role (frontend, data, cybersecurity, AI), while career coaches refine the portfolio to match real employer expectations.",
       icon: IconBriefcase,
+      iconColor: "text-amber-500",
       onClick: () => console.log("Career-aligned projects clicked"),
     },
     {
@@ -87,6 +93,7 @@ export default function Home() {
       description:
         "Mentors see AI-generated insights about each student's patterns, letting them focus on high-impact coaching instead of repetitive troubleshooting.",
       icon: IconSchool,
+      iconColor: "text-indigo-500",
       onClick: () => console.log("AI-augmented mentorship clicked"),
     },
     {
@@ -94,6 +101,7 @@ export default function Home() {
       description:
         "The learning path is re-generated as the student evolves; neither humans nor AI rely on a fixed curriculum but on continuous, data-driven adjustment.",
       icon: IconRefresh,
+      iconColor: "text-emerald-500",
       onClick: () => console.log("Re-personalization clicked"),
     },
   ];
