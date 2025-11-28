@@ -61,7 +61,7 @@ export default function Home() {
       description:
         "Rigobot analyzes each student's code history and provides suggestions based on their patterns, not generic explanations.",
       icon: IconBrain,
-      color: "#ec4899",
+      color: "#f472b6",
       onClick: () => console.log("Context-aware AI feedback clicked"),
     },
     {
