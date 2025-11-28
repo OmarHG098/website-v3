@@ -70,7 +70,7 @@ export default function LogoSection() {
     <section>
       <div className="container mx-auto px-4">
         {/* Mobile Carousel */}
-        <div className="md:hidden mt-5">
+        <div className="md:hidden">
           <Carousel
             opts={{
               align: "center",
@@ -78,11 +78,11 @@ export default function LogoSection() {
             }}
             plugins={[
               Autoplay({
-                delay: 4000,
+                delay: 5000,
                 stopOnInteraction: true,
               }),
             ]}
-            className="w-full max-w-sm mx-auto flex flex-col"
+            className="w-full max-w-sm mx-auto flex flex-col mt-12"
           >
             <div className="h-[240px] flex items-end pb-5">
               <CarouselContent>
