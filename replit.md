@@ -138,6 +138,36 @@ See `marketing-content/components-registry.yml` for full documentation. Current 
 ### Current Programs
 - **Full Stack Development** (`full-stack`): Complete bilingual YAML content
 
+## Landing Pages
+
+Landing pages are public pages at `/landing/<slug>` that use the same YAML-based content system as career programs.
+
+### Architecture Overview
+- **Content Storage**: `marketing-content/landings/{landing-slug}/{locale}.yml`
+- **Backend API**: `/api/landings/:slug?locale=en|es` - Serves parsed YAML content
+- **Frontend Route**: `/landing/:slug` - Renders landing pages dynamically
+
+### How to Add a New Landing Page
+
+1. Create folder: `marketing-content/landings/{new-slug}/`
+2. Add `en.yml` and `es.yml` files following the schema
+3. The page is automatically available at `/landing/{slug}`
+
+### Landing Page Schema
+```yaml
+slug: "landing-slug"
+title: "Landing Page Title"
+meta:
+  page_title: "SEO Title | 4Geeks"
+  description: "SEO meta description"
+sections:
+  - type: hero
+    # ... section content
+```
+
+### Current Landings
+- **AI Learning Webinar** (`webinar-ai-learning`): Sample bilingual landing page
+
 ## Future Integration
 - Backend integration with 4geeks Breathecode API (documentation pending from user)
 - User authentication
