@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
+import { DebugBubble } from "@/components/DebugBubble";
 import "./i18n";
 
 const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
@@ -43,6 +44,7 @@ function Router() {
         <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/component-showcase" component={ComponentShowcase} />
+        <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
@@ -55,6 +57,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
+        <DebugBubble />
       </TooltipProvider>
     </QueryClientProvider>
   );

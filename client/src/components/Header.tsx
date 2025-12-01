@@ -46,13 +46,6 @@ export default function Header() {
           >
             {t('nav.dashboard')}
           </Link>
-          <Link 
-            href="/component-showcase" 
-            className="text-sm font-medium text-muted-foreground hover-elevate rounded-md px-3 py-2" 
-            data-testid="link-component-showcase"
-          >
-            Components
-          </Link>
         </nav>
 
         <div className="flex items-center gap-3">

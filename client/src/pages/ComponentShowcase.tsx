@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { IconChevronDown, IconCode, IconEye } from "@tabler/icons-react";
+import { useState, useEffect, useRef } from "react";
+import { useSearch, useParams, Link } from "wouter";
+import { IconChevronDown, IconCode, IconEye, IconArrowLeft, IconArrowRight, IconList } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +11,19 @@ import {
 import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
+
+function useNoIndex() {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+}
 
 interface ComponentSample {
   type: string;
@@ -320,9 +334,11 @@ interface ComponentCardProps {
   sample: ComponentSample;
   globalYamlState: boolean | null;
   globalPreviewState: boolean | null;
+  isFocused?: boolean;
+  cardRef?: React.RefObject<HTMLDivElement>;
 }
 
-function ComponentCard({ sample, globalYamlState, globalPreviewState }: ComponentCardProps) {
+function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused, cardRef }: ComponentCardProps) {
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
 
@@ -339,7 +355,11 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState }: Componen
   }, [globalPreviewState]);
 
   return (
-    <Card className="mb-8" data-testid={`component-card-${sample.type}`}>
+    <Card 
+      ref={cardRef}
+      className={`mb-8 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
+      data-testid={`component-card-${sample.type}`}
+    >
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2 flex-wrap">
@@ -395,12 +415,43 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState }: Componen
 }
 
 export default function ComponentShowcase() {
+  useNoIndex();
+  
+  const { componentType } = useParams<{ componentType?: string }>();
+  const search = useSearch();
+  const searchParams = new URLSearchParams(search);
+  const focusedComponent = searchParams.get('focus');
+  
   const [globalYamlState, setGlobalYamlState] = useState<boolean | null>(null);
   const [globalPreviewState, setGlobalPreviewState] = useState<boolean | null>(null);
   const [yamlExpanded, setYamlExpanded] = useState(false);
   const [previewExpanded, setPreviewExpanded] = useState(true);
   const [yamlTrigger, setYamlTrigger] = useState(0);
   const [previewTrigger, setPreviewTrigger] = useState(0);
+  const [highlightedComponent, setHighlightedComponent] = useState<string | null>(focusedComponent);
+  
+  const cardRefs = useRef<Record<string, React.RefObject<HTMLDivElement>>>({});
+  
+  componentSamples.forEach(sample => {
+    if (!cardRefs.current[sample.type]) {
+      cardRefs.current[sample.type] = { current: null } as React.RefObject<HTMLDivElement>;
+    }
+  });
+  
+  useEffect(() => {
+    if (focusedComponent && cardRefs.current[focusedComponent]?.current) {
+      setTimeout(() => {
+        cardRefs.current[focusedComponent]?.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+      
+      setTimeout(() => {
+        setHighlightedComponent(null);
+      }, 3000);
+    }
+  }, [focusedComponent]);
 
   const toggleAllYaml = () => {
     const newState = !yamlExpanded;
@@ -416,6 +467,102 @@ export default function ComponentShowcase() {
     setPreviewTrigger(prev => prev + 1);
   };
 
+  // Single component view
+  if (componentType) {
+    const currentIndex = componentSamples.findIndex(s => s.type === componentType);
+    const sample = componentSamples[currentIndex];
+    
+    if (!sample) {
+      return (
+        <div className="min-h-screen bg-background">
+          <Header />
+          <main className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-3xl font-bold mb-4">Component Not Found</h1>
+              <p className="text-muted-foreground mb-6">
+                The component "{componentType}" does not exist.
+              </p>
+              <Link href="/component-showcase">
+                <Button variant="outline" data-testid="link-back-to-showcase">
+                  <IconList className="w-4 h-4 mr-2" />
+                  View All Components
+                </Button>
+              </Link>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    const prevComponent = currentIndex > 0 ? componentSamples[currentIndex - 1] : null;
+    const nextComponent = currentIndex < componentSamples.length - 1 ? componentSamples[currentIndex + 1] : null;
+
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto mb-6">
+            <div className="flex items-center gap-4 mb-4">
+              <Link href="/component-showcase">
+                <Button variant="ghost" size="sm" data-testid="link-back-to-all">
+                  <IconArrowLeft className="w-4 h-4 mr-1" />
+                  All Components
+                </Button>
+              </Link>
+              <span className="text-muted-foreground text-sm">
+                {currentIndex + 1} of {componentSamples.length}
+              </span>
+            </div>
+            
+            <h1 className="text-3xl font-bold mb-2" data-testid="text-component-title">
+              {sample.name}
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              {sample.description}
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <ComponentCard 
+              key={sample.type} 
+              sample={sample} 
+              globalYamlState={true}
+              globalPreviewState={true}
+              isFocused={false}
+              cardRef={cardRefs.current[sample.type]}
+            />
+          </div>
+
+          <div className="max-w-4xl mx-auto mt-8 flex items-center justify-between">
+            {prevComponent ? (
+              <Link href={`/component-showcase/${prevComponent.type}`}>
+                <Button variant="outline" data-testid="link-prev-component">
+                  <IconArrowLeft className="w-4 h-4 mr-2" />
+                  {prevComponent.name}
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+            
+            {nextComponent ? (
+              <Link href={`/component-showcase/${nextComponent.type}`}>
+                <Button variant="outline" data-testid="link-next-component">
+                  {nextComponent.name}
+                  <IconArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // All components view
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -465,6 +612,8 @@ export default function ComponentShowcase() {
               sample={sample} 
               globalYamlState={globalYamlState}
               globalPreviewState={globalPreviewState}
+              isFocused={highlightedComponent === sample.type}
+              cardRef={cardRefs.current[sample.type]}
             />
           ))}
         </div>
