@@ -158,5 +158,14 @@ export function useDebugAuth() {
     setIsLoading(false);
   }, []);
 
-  return { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken };
+  // Clear token and reset to "no token" state
+  const clearToken = useCallback(() => {
+    sessionStorage.removeItem(DEBUG_SESSION_KEY);
+    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
+    setHasToken(false);
+    setIsValidated(false);
+  }, []);
+
+  return { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken, clearToken };
 }

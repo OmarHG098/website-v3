@@ -73,7 +73,7 @@ const getPersistedMenuView = (): MenuView => {
 };
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -265,26 +265,35 @@ export function DebugBubble() {
                   <p className="text-xs text-muted-foreground mb-3">
                     Token detected but no webmaster capabilities have been detected
                   </p>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={retryValidation}
-                    disabled={isLoading}
-                    className="w-full"
-                    data-testid="button-retry-validation"
-                  >
-                    {isLoading ? (
-                      <>
-                        <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
-                        Retrying...
-                      </>
-                    ) : (
-                      <>
-                        <IconRefresh className="h-4 w-4 mr-2" />
-                        Retry validation
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={retryValidation}
+                      disabled={isLoading}
+                      className="flex-1"
+                      data-testid="button-retry-validation"
+                    >
+                      {isLoading ? (
+                        <IconRefresh className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <IconRefresh className="h-4 w-4 mr-1" />
+                          Retry
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={clearToken}
+                      disabled={isLoading}
+                      data-testid="button-clear-token"
+                    >
+                      <IconX className="h-4 w-4 mr-1" />
+                      Clear
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
