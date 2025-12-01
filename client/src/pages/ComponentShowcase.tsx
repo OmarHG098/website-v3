@@ -12,6 +12,19 @@ import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
 
+function useNoIndex() {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+}
+
 interface ComponentSample {
   type: string;
   name: string;
@@ -402,6 +415,8 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
 }
 
 export default function ComponentShowcase() {
+  useNoIndex();
+  
   const search = useSearch();
   const searchParams = new URLSearchParams(search);
   const focusedComponent = searchParams.get('focus');

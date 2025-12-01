@@ -1,0 +1,25 @@
+# Allow all crawlers including AI/LLM bots
+User-agent: *
+Allow: /
+
+# Disallow internal development/debug pages
+Disallow: /component-showcase
+
+# Sitemap location
+Sitemap: https://4geeks.com/sitemap.xml
+
+# AI/LLM Bot Access
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /

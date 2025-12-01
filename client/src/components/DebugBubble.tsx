@@ -65,11 +65,7 @@ interface SitemapUrl {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "sitemap") {
-      return stored;
-    }
-    // Only allow "components" view in development
-    if (stored === "components" && import.meta.env.DEV) {
+    if (stored === "main" || stored === "components" || stored === "sitemap") {
       return stored;
     }
   }
@@ -269,19 +265,17 @@ export function DebugBubble() {
                   </div>
                 </div>
                 
-                {import.meta.env.DEV && (
-                  <button
-                    onClick={() => setMenuView("components")}
-                    className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                    data-testid="button-components-menu"
-                  >
-                    <div className="flex items-center gap-3">
-                      <IconComponents className="h-4 w-4 text-muted-foreground" />
-                      <span>Components</span>
-                    </div>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                )}
+                <button
+                  onClick={() => setMenuView("components")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-components-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconComponents className="h-4 w-4 text-muted-foreground" />
+                    <span>Components</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
 
               <div className="border-t p-2 space-y-1">
