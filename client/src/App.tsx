@@ -43,7 +43,9 @@ function Router() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
-        <Route path="/component-showcase" component={ComponentShowcase} />
+        {import.meta.env.DEV && (
+          <Route path="/component-showcase" component={ComponentShowcase} />
+        )}
         <Route component={NotFound} />
       </Switch>
     </Suspense>
