@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 import {
@@ -55,7 +55,6 @@ export function DebugBubble() {
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [menuView, setMenuView] = useState<MenuView>("main");
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       return document.documentElement.classList.contains("dark") ? "dark" : "light";
@@ -63,11 +62,28 @@ export function DebugBubble() {
     return "light";
   });
 
-  // Reset menu view when popover closes
+  // Determine initial menu view based on current page
+  const getDefaultMenuView = (): MenuView => {
+    if (location.startsWith("/component-showcase")) {
+      return "components";
+    }
+    return "main";
+  };
+
+  const [menuView, setMenuView] = useState<MenuView>(getDefaultMenuView);
+
+  // Update menu view when location changes (while popover is closed)
+  useEffect(() => {
+    if (!open) {
+      setMenuView(getDefaultMenuView());
+    }
+  }, [location]);
+
+  // Reset menu view to appropriate default when popover closes
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (!newOpen) {
-      setMenuView("main");
+      setMenuView(getDefaultMenuView());
     }
   };
 
