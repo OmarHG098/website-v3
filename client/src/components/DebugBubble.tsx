@@ -88,6 +88,7 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -143,10 +144,8 @@ export function DebugBubble() {
   // Token states for different warning scenarios
   const noTokenDetected = !hasToken;
   const tokenWithoutCapabilities = hasToken && isValidated === false;
-  const showFullMenu = isValidated === true;
   
   // Retry token validation
-  const [isRetrying, setIsRetrying] = useState(false);
   const retryTokenValidation = async () => {
     setIsRetrying(true);
     // Clear cached session and reload to re-trigger validation
