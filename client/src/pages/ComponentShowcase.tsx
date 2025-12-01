@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearch, useParams, Link } from "wouter";
-import { IconChevronDown, IconCode, IconEye, IconArrowLeft, IconArrowRight, IconList } from "@tabler/icons-react";
+import { IconChevronDown, IconCode, IconEye, IconArrowLeft, IconArrowRight, IconList, IconRefresh, IconAlertTriangle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,10 @@ import {
 import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
+import CodeMirror from "@uiw/react-codemirror";
+import { yaml } from "@codemirror/lang-yaml";
+import { oneDark } from "@codemirror/theme-one-dark";
+import jsYaml from "js-yaml";
 
 function useNoIndex() {
   useEffect(() => {
@@ -341,6 +345,24 @@ interface ComponentCardProps {
 function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused, cardRef }: ComponentCardProps) {
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
+  const [yamlContent, setYamlContent] = useState(sample.yaml);
+  const [parsedData, setParsedData] = useState<Section>(sample.data);
+  const [parseError, setParseError] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => 
+    typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (globalYamlState !== null) {
@@ -353,6 +375,30 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
       setShowPreview(globalPreviewState);
     }
   }, [globalPreviewState]);
+
+  const handleYamlChange = useCallback((value: string) => {
+    setYamlContent(value);
+    try {
+      const parsed = jsYaml.load(value);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setParsedData(parsed[0] as Section);
+        setParseError(null);
+      } else if (parsed && typeof parsed === 'object') {
+        setParsedData(parsed as Section);
+        setParseError(null);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setParseError(err.message);
+      }
+    }
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setYamlContent(sample.yaml);
+    setParsedData(sample.data);
+    setParseError(null);
+  }, [sample.yaml, sample.data]);
 
   return (
     <Card 
@@ -392,10 +438,42 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
       <CardContent>
         <Collapsible open={showYaml}>
           <CollapsibleContent>
-            <div className="mb-4 rounded-lg bg-muted p-4 overflow-x-auto">
-              <pre className="text-sm font-mono whitespace-pre text-foreground">
-                {sample.yaml}
-              </pre>
+            <div className="mb-4 rounded-lg overflow-hidden border border-border">
+              <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
+                <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleReset}
+                  className="h-6 px-2 text-xs"
+                  data-testid={`button-reset-yaml-${sample.type}`}
+                >
+                  <IconRefresh className="w-3 h-3 mr-1" />
+                  Reset
+                </Button>
+              </div>
+              <CodeMirror
+                value={yamlContent}
+                height="auto"
+                minHeight="100px"
+                maxHeight="400px"
+                extensions={[yaml()]}
+                theme={isDarkMode ? oneDark : undefined}
+                onChange={handleYamlChange}
+                basicSetup={{
+                  lineNumbers: true,
+                  foldGutter: true,
+                  highlightActiveLine: true,
+                }}
+                className="text-sm"
+                data-testid={`editor-yaml-${sample.type}`}
+              />
+              {parseError && (
+                <div className="flex items-start gap-2 px-3 py-2 bg-destructive/10 border-t border-destructive/20 text-destructive text-xs">
+                  <IconAlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <span className="font-mono">{parseError}</span>
+                </div>
+              )}
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -404,7 +482,7 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
           <CollapsibleContent>
             <div className="border rounded-lg overflow-hidden bg-background">
               <div className="p-0">
-                <SectionRenderer sections={[sample.data]} />
+                <SectionRenderer sections={[parsedData]} />
               </div>
             </div>
           </CollapsibleContent>
