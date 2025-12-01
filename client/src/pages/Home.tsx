@@ -121,6 +121,7 @@ export default function Home() {
       description:
         "Get started quickly with our streamlined onboarding and structured curriculum",
       color: "bg-blue-100 dark:bg-blue-900/20",
+      onClick: () => setLocation("/career-programs"),
     },
     {
       icon: communityIcon,
@@ -128,6 +129,7 @@ export default function Home() {
       description:
         "Join thousands of learners worldwide on the same journey to tech mastery",
       color: "bg-green-100 dark:bg-green-900/20",
+      onClick: () => setLocation("/career-programs"),
     },
     {
       icon: securityIcon,
@@ -135,6 +137,7 @@ export default function Home() {
       description:
         "Your progress, projects, and personal data are always protected",
       color: "bg-red-100 dark:bg-red-900/20",
+      onClick: () => setLocation("/career-programs"),
     },
     {
       icon: lightningIcon,
@@ -142,6 +145,7 @@ export default function Home() {
       description:
         "See measurable progress in weeks with our proven learning methodology",
       color: "bg-yellow-100 dark:bg-yellow-900/20",
+      onClick: () => setLocation("/career-programs"),
     },
   ];
 

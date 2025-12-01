@@ -65,7 +65,7 @@ export default function FeatureSection({
     };
 
     return (
-      <section className="container mx-auto px-4 py-16 pt-[0px] pb-[0px]">
+      <section className="container mx-auto px-4 py-4">
         <div className="max-w-6xl mx-auto">
           {heading && (
             <h2 className="text-4xl md:text-5xl font-bold mb-4 hidden md:block lg:hidden">
@@ -101,7 +101,7 @@ export default function FeatureSection({
                 {decorations.map((decoration, index) => (
                   <Avatar
                     key={index}
-                    className="h-20 w-20 border-2 border-background"
+                    className="h-[70px] w-[70px] lg:h-20 lg:w-20 border-2 border-background"
                     style={{ zIndex: decorations.length - index }}
                     data-testid={`avatar-decoration-${index}`}
                   >
