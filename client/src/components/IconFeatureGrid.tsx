@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Card } from "@/components/ui/card";
 
 interface IconFeature {
   icon: string;
@@ -26,9 +27,9 @@ export default function IconFeatureGrid({
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {features.map((feature, index) => (
-          <div
+          <Card
             key={index}
-            className="group bg-card rounded-[0.8rem] p-6 border border-border"
+            className="group p-6"
             data-testid={`feature-icon-${index}`}
           >
             <div className="mb-4 transition-transform duration-200 group-hover:scale-110">
@@ -50,7 +51,7 @@ export default function IconFeatureGrid({
                 {t("common.seeMore", "See more")}
               </a>
             )}
-          </div>
+          </Card>
         ))}
       </div>
     </section>
