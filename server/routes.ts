@@ -4,12 +4,13 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, type CareerProgram } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, type CareerProgram, type LandingPage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
+const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -61,6 +62,56 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
   }
 }
 
+function loadLandingPage(slug: string, locale: string): LandingPage | null {
+  try {
+    const filePath = path.join(LANDINGS_CONTENT_PATH, slug, `${locale}.yml`);
+    
+    if (!fs.existsSync(filePath)) {
+      return null;
+    }
+    
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const data = yaml.load(fileContent);
+    
+    const result = landingPageSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
+      return null;
+    }
+    
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading landing page ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
+  try {
+    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
+      return [];
+    }
+    
+    const landings: Array<{ slug: string; title: string }> = [];
+    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
+    
+    for (const dir of dirs) {
+      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
+      if (fs.statSync(landingPath).isDirectory()) {
+        const landing = loadLandingPage(dir, locale);
+        if (landing) {
+          landings.push({ slug: landing.slug, title: landing.title });
+        }
+      }
+    }
+    
+    return landings;
+  } catch (error) {
+    console.error("Error listing landing pages:", error);
+    return [];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/debug/validate-token", async (req, res) => {
     try {
@@ -108,6 +159,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(program);
+  });
+
+  // Landing pages API
+  app.get("/api/landings", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const landings = listLandingPages(locale);
+    res.json(landings);
+  });
+
+  app.get("/api/landings/:slug", (req, res) => {
+    const { slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+    
+    const landing = loadLandingPage(slug, locale);
+    
+    if (!landing) {
+      res.status(404).json({ error: "Landing page not found" });
+      return;
+    }
+    
+    res.json(landing);
   });
 
   // Dynamic sitemap with caching
