@@ -5,6 +5,7 @@ import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
 import { careerProgramSchema, type CareerProgram } from "@shared/schema";
+import { getSitemap, clearSitemapCache, getSitemapCacheStatus } from "./sitemap";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -107,6 +108,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(program);
+  });
+
+  // Dynamic sitemap with caching
+  app.get("/sitemap.xml", (req, res) => {
+    const xml = getSitemap();
+    res.set("Content-Type", "application/xml");
+    res.set("Cache-Control", "public, max-age=3600"); // Browser cache for 1 hour
+    res.send(xml);
+  });
+
+  // Sitemap cache status (for debug tools)
+  app.get("/api/debug/sitemap-cache-status", (req, res) => {
+    const status = getSitemapCacheStatus();
+    res.json(status);
+  });
+
+  // Clear sitemap cache (requires token validation)
+  app.post("/api/debug/clear-sitemap-cache", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      const token = authHeader?.replace("Token ", "");
+      
+      // In development mode, allow without token
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      
+      if (!isDevelopment && !token) {
+        res.status(401).json({ error: "Authorization required" });
+        return;
+      }
+
+      // Validate token in production
+      if (!isDevelopment && token) {
+        const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Token ${token}`,
+            "Academy": "4",
+          },
+        });
+
+        if (response.status !== 200) {
+          res.status(403).json({ error: "Invalid or unauthorized token" });
+          return;
+        }
+      }
+
+      const result = clearSitemapCache();
+      res.json(result);
+    } catch (error) {
+      console.error("Error clearing sitemap cache:", error);
+      res.status(500).json({ error: "Failed to clear cache" });
+    }
   });
 
   const httpServer = createServer(app);

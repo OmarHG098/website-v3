@@ -160,7 +160,11 @@ All schemas use proper schema.org vocabulary for optimal search engine understan
 
 ### Technical SEO
 - **robots.txt**: Allows all crawlers including AI/LLM bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, anthropic-ai)
-- **sitemap.xml**: XML sitemap with proper priority and change frequency for all pages
+- **Dynamic sitemap.xml**: Automatically generated from YAML career programs with 24-hour caching
+  - Scans `marketing-content/programs/` for available programs and locales
+  - Includes all static pages and bilingual career program URLs
+  - Cache auto-resets on deploy; can be manually cleared via debug bubble
+  - API: `GET /sitemap.xml`, `GET /api/debug/sitemap-cache-status`, `POST /api/debug/clear-sitemap-cache`
 - **Semantic HTML**: Proper heading hierarchy (h1 → h2 → h3) throughout the site
 - **Accessibility**: Descriptive alt text on all images for better accessibility and image search
 

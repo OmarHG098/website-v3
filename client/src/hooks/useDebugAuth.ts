@@ -2,7 +2,28 @@ import { useState, useEffect } from "react";
 
 const DEBUG_SESSION_KEY = "debug_validated";
 const DEBUG_SESSION_EXPIRY_KEY = "debug_validated_expiry";
+const DEBUG_TOKEN_KEY = "debug_token";
 const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+
+export function getDebugToken(): string | null {
+  // Check sessionStorage for cached token
+  const cachedToken = sessionStorage.getItem(DEBUG_TOKEN_KEY);
+  const cachedExpiry = sessionStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
+  
+  if (cachedToken && cachedExpiry) {
+    const expiryTime = parseInt(cachedExpiry, 10);
+    if (Date.now() < expiryTime) {
+      return cachedToken;
+    }
+  }
+  
+  // Fall back to URL or env variable
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlToken = urlParams.get("token");
+  const envToken = import.meta.env.VITE_BREATHECODE_TOKEN;
+  
+  return urlToken || envToken || null;
+}
 
 export function useDebugAuth() {
   const [isValidated, setIsValidated] = useState<boolean | null>(null);
@@ -16,8 +37,9 @@ export function useDebugAuth() {
       // Check if we have a valid cached session
       const cachedValidation = sessionStorage.getItem(DEBUG_SESSION_KEY);
       const cachedExpiry = sessionStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
+      const cachedToken = sessionStorage.getItem(DEBUG_TOKEN_KEY);
       
-      if (cachedValidation === "true" && cachedExpiry) {
+      if (cachedValidation === "true" && cachedExpiry && cachedToken) {
         const expiryTime = parseInt(cachedExpiry, 10);
         if (Date.now() < expiryTime) {
           setHasToken(true);
@@ -62,13 +84,15 @@ export function useDebugAuth() {
         const data = await response.json();
         
         if (data.valid) {
-          // Cache the validation result with expiry
+          // Cache the validation result and token with expiry
           sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
           sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+          sessionStorage.setItem(DEBUG_TOKEN_KEY, token);
           setIsValidated(true);
         } else {
           sessionStorage.removeItem(DEBUG_SESSION_KEY);
           sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+          sessionStorage.removeItem(DEBUG_TOKEN_KEY);
           setIsValidated(false);
         }
       } catch (error) {

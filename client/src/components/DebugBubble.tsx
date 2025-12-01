@@ -24,6 +24,8 @@ import {
   IconLayoutBottombar,
   IconArrowLeft,
   IconChevronRight,
+  IconRefresh,
+  IconCheck,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +34,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useDebugAuth } from "@/hooks/useDebugAuth";
+import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -61,6 +63,7 @@ export function DebugBubble() {
     }
     return "light";
   });
+  const [cacheClearStatus, setCacheClearStatus] = useState<"idle" | "loading" | "success">("idle");
 
   // Determine initial menu view based on current page
   const getDefaultMenuView = (): MenuView => {
@@ -117,6 +120,35 @@ export function DebugBubble() {
 
   const currentLang = i18n.language === "es" ? "ES" : "EN";
 
+  const clearSitemapCache = async () => {
+    setCacheClearStatus("loading");
+    try {
+      const token = getDebugToken();
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (token) {
+        headers["Authorization"] = `Token ${token}`;
+      }
+
+      const response = await fetch("/api/debug/clear-sitemap-cache", {
+        method: "POST",
+        headers,
+      });
+
+      if (response.ok) {
+        setCacheClearStatus("success");
+        setTimeout(() => setCacheClearStatus("idle"), 2000);
+      } else {
+        console.error("Failed to clear sitemap cache");
+        setCacheClearStatus("idle");
+      }
+    } catch (error) {
+      console.error("Error clearing sitemap cache:", error);
+      setCacheClearStatus("idle");
+    }
+  };
+
   return (
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
       <Popover open={open} onOpenChange={handleOpenChange}>
@@ -158,16 +190,34 @@ export function DebugBubble() {
               )}
               
               <div className="p-2 space-y-1">
-                <a
-                  href="/sitemap.xml"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                  data-testid="link-sitemap"
-                >
-                  <IconMap className="h-4 w-4 text-muted-foreground" />
-                  <span>Sitemap</span>
-                </a>
+                <div className="flex items-center justify-between px-3 py-2">
+                  <a
+                    href="/sitemap.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 rounded-md text-sm hover:underline cursor-pointer"
+                    data-testid="link-sitemap"
+                  >
+                    <IconMap className="h-4 w-4 text-muted-foreground" />
+                    <span>Sitemap</span>
+                  </a>
+                  <button
+                    onClick={clearSitemapCache}
+                    disabled={cacheClearStatus === "loading"}
+                    className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs hover-elevate disabled:opacity-50"
+                    data-testid="button-clear-sitemap-cache"
+                    title="Clear sitemap cache"
+                  >
+                    {cacheClearStatus === "loading" ? (
+                      <IconRefresh className="h-3.5 w-3.5 animate-spin" />
+                    ) : cacheClearStatus === "success" ? (
+                      <IconCheck className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
+                    ) : (
+                      <IconRefresh className="h-3.5 w-3.5" />
+                    )}
+                    <span>{cacheClearStatus === "success" ? "Cleared" : "Clear cache"}</span>
+                  </button>
+                </div>
                 
                 <button
                   onClick={() => setMenuView("components")}
