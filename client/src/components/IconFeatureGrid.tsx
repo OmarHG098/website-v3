@@ -6,7 +6,7 @@ interface IconFeature {
   description: string;
   color: string;
   href?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 interface IconFeatureGridProps {

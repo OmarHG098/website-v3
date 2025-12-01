@@ -381,3 +381,47 @@ footer:
       type: string
       required: true
       example: "2024 4Geeks. All rights reserved."
+
+# === Homepage Components ===
+
+icon_feature_grid:
+  component: "IconFeatureGrid"
+  file: "client/src/components/IconFeatureGrid.tsx"
+  description: "Grid of feature cards with icons, titles, descriptions, and optional links"
+  location: "Homepage only (marketing-content/homepage/{locale}.yml)"
+  
+  when_to_use: |
+    Use on the homepage to highlight key platform features or value propositions.
+    Each feature can link to a relevant page.
+  
+  fields:
+    - name: title
+      type: string
+      required: true
+      description: "Main heading for the section"
+      example: "Our mission is to get you into tech."
+      
+    - name: features
+      type: array
+      required: true
+      description: "Array of feature items (recommended: 4 items)"
+      items:
+        - name: icon
+          type: string
+          description: "URL to the icon image"
+          example: "https://images.prismic.io/4geeks/..."
+        - name: title
+          type: string
+          example: "Immersive Bootcamp"
+        - name: description
+          type: string
+          example: "Get job-ready in record time with our intensive programs."
+        - name: color
+          type: string
+          description: "Tailwind background color classes"
+          example: "bg-blue-100 dark:bg-blue-900/20"
+        - name: href
+          type: string
+          required: false
+          description: "Link destination when clicked"
+          example: "/career-programs"

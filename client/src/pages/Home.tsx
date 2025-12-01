@@ -7,9 +7,11 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import type { HomepageContent } from "@shared/schema";
 import {
   IconStarFilled,
   IconRoute,
@@ -23,11 +25,7 @@ import {
 } from "@tabler/icons-react";
 import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.webp";
 import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.webp";
-import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.webp";
 import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.webp";
-import skillLearningIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.webp";
-import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.webp";
-import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.webp";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.webp";
 import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
@@ -38,6 +36,12 @@ import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89a
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { i18n } = useTranslation();
+  
+  const locale = i18n.language.startsWith('es') ? 'es' : 'en';
+  const { data: homepageContent, isLoading: isHomepageLoading, isError: isHomepageError } = useQuery<HomepageContent>({
+    queryKey: [`/api/homepage?locale=${locale}`],
+  });
 
   const aiAutomations = [
     {
@@ -114,40 +118,6 @@ export default function Home() {
     },
   ];
 
-  const iconFeatures = [
-    {
-      icon: rocketIcon,
-      title: "Fast Launch",
-      description:
-        "Get started quickly with our streamlined onboarding and structured curriculum",
-      color: "bg-blue-100 dark:bg-blue-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: communityIcon,
-      title: "Global Community",
-      description:
-        "Join thousands of learners worldwide on the same journey to tech mastery",
-      color: "bg-green-100 dark:bg-green-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: securityIcon,
-      title: "Secure Platform",
-      description:
-        "Your progress, projects, and personal data are always protected",
-      color: "bg-red-100 dark:bg-red-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: lightningIcon,
-      title: "Quick Results",
-      description:
-        "See measurable progress in weeks with our proven learning methodology",
-      color: "bg-yellow-100 dark:bg-yellow-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -238,10 +208,44 @@ export default function Home() {
         ]}
       />
 
-      <IconFeatureGrid
-        title="Our mission is to get you into tech."
-        features={iconFeatures}
-      />
+      {isHomepageLoading ? (
+        <section className="container mx-auto px-4 py-16">
+          <div className="h-8 w-64 bg-muted animate-pulse rounded mx-auto mb-12" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="space-y-4">
+                <div className="w-16 h-16 bg-muted animate-pulse rounded-2xl" />
+                <div className="h-4 w-32 bg-muted animate-pulse rounded" />
+                <div className="h-3 w-48 bg-muted animate-pulse rounded" />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : isHomepageError ? (
+        <section className="container mx-auto px-4 py-16">
+          <div className="text-center text-muted-foreground">
+            <p>Unable to load content. Please refresh the page.</p>
+          </div>
+        </section>
+      ) : homepageContent?.icon_feature_grid ? (
+        <IconFeatureGrid
+          title={homepageContent.icon_feature_grid.title}
+          features={homepageContent.icon_feature_grid.features.map((feature) => ({
+            icon: feature.icon,
+            title: feature.title,
+            description: feature.description,
+            color: feature.color,
+            href: feature.href,
+            onClick: feature.href ? (e: React.MouseEvent) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
+                return;
+              }
+              e.preventDefault();
+              setLocation(feature.href!);
+            } : undefined,
+          }))}
+        />
+      ) : null}
 
       <section className="py-16">
         <div className="container mx-auto px-4">
