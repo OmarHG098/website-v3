@@ -213,7 +213,7 @@ export function DebugBubble() {
         >
           {/* No token detected - show only warning */}
           {noTokenDetected ? (
-            <div className="p-4">
+            <div className="p-4 pl-[8px] pr-[8px]">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900 flex-shrink-0">
                   <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
@@ -255,7 +255,7 @@ export function DebugBubble() {
             </div>
           ) : tokenWithoutCapabilities ? (
             /* Token exists but not validated - show warning with retry */
-            <div className="p-4">
+            (<div className="p-4">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900">
                   <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
@@ -296,7 +296,7 @@ export function DebugBubble() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>)
           ) : menuView === "main" ? (
             <>
               <div className="p-3 border-b">
