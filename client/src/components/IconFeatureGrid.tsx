@@ -22,10 +22,10 @@ export default function IconFeatureGrid({
   const { t } = useTranslation();
 
   return (
-    <section className="container mx-auto px-8 md:px-12 lg:px-16 pb-16 pt-10">
+    <section className="container mx-auto px-4 md:px-12 lg:px-16 pb-16 pt-10">
       <h2 className="text-4xl font-bold text-center mb-12">{title}</h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
         {features.map((feature, index) => (
           <Card
             key={index}
