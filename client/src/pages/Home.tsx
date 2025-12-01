@@ -37,13 +37,9 @@ import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89a
 export default function Home() {
   const [, setLocation] = useLocation();
   const { i18n } = useTranslation();
-
-  const locale = i18n.language.startsWith("es") ? "es" : "en";
-  const {
-    data: homepageContent,
-    isLoading: isHomepageLoading,
-    isError: isHomepageError,
-  } = useQuery<HomepageContent>({
+  
+  const locale = i18n.language.startsWith('es') ? 'es' : 'en';
+  const { data: homepageContent, isLoading: isHomepageLoading, isError: isHomepageError } = useQuery<HomepageContent>({
     queryKey: [`/api/homepage?locale=${locale}`],
   });
 
@@ -121,6 +117,7 @@ export default function Home() {
       onClick: () => console.log("Re-personalization clicked"),
     },
   ];
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -233,35 +230,26 @@ export default function Home() {
       ) : homepageContent?.icon_feature_grid ? (
         <IconFeatureGrid
           title={homepageContent.icon_feature_grid.title}
-          features={homepageContent.icon_feature_grid.features.map(
-            (feature) => ({
-              icon: feature.icon,
-              title: feature.title,
-              description: feature.description,
-              color: feature.color,
-              href: feature.href,
-              onClick: feature.href
-                ? (e: React.MouseEvent) => {
-                    if (
-                      e.metaKey ||
-                      e.ctrlKey ||
-                      e.shiftKey ||
-                      e.button !== 0
-                    ) {
-                      return;
-                    }
-                    e.preventDefault();
-                    setLocation(feature.href!);
-                  }
-                : undefined,
-            }),
-          )}
+          features={homepageContent.icon_feature_grid.features.map((feature) => ({
+            icon: feature.icon,
+            title: feature.title,
+            description: feature.description,
+            color: feature.color,
+            href: feature.href,
+            onClick: feature.href ? (e: React.MouseEvent) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
+                return;
+              }
+              e.preventDefault();
+              setLocation(feature.href!);
+            } : undefined,
+          }))}
         />
       ) : null}
 
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl font-bold text-center mb-12">
             The Key to Your Success: AI-Powered Tools and Unmatched Human
             Support
           </h2>
