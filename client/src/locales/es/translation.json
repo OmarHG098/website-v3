@@ -59,6 +59,25 @@
       "label": "Colocación Laboral"
     }
   },
+  "iconFeatures": {
+    "title": "Quiero convertirme en...",
+    "fullStack": {
+      "title": "Desarrollador Full Stack",
+      "description": "Construye aplicaciones web completas desde frontend hasta backend"
+    },
+    "dataScience": {
+      "title": "Científico de Datos",
+      "description": "Domina análisis de datos, visualización y aprendizaje automático"
+    },
+    "cloudComputing": {
+      "title": "Ingeniero Cloud",
+      "description": "Despliega y gestiona infraestructura cloud escalable"
+    },
+    "aiMachineLearning": {
+      "title": "Ingeniero IA/ML",
+      "description": "Crea sistemas inteligentes y modelos de aprendizaje automático"
+    }
+  },
   "features": {
     "title": "Por Qué Elegir Nuestra Plataforma",
     "personalizedLearning": {

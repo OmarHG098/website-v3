@@ -9,9 +9,7 @@ import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import type { HomepageContent } from "@shared/schema";
 import {
   IconStarFilled,
   IconRoute,
@@ -36,12 +34,58 @@ import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89a
 
 export default function Home() {
   const [, setLocation] = useLocation();
-  const { i18n } = useTranslation();
-  
-  const locale = i18n.language.startsWith('es') ? 'es' : 'en';
-  const { data: homepageContent, isLoading: isHomepageLoading, isError: isHomepageError } = useQuery<HomepageContent>({
-    queryKey: [`/api/homepage?locale=${locale}`],
-  });
+  const { t } = useTranslation();
+
+  const iconFeatures = [
+    {
+      icon: "IconCode",
+      title: t("iconFeatures.fullStack.title"),
+      description: t("iconFeatures.fullStack.description"),
+      color: "blue",
+      href: "/us/career-programs/full-stack",
+      onClick: (e: React.MouseEvent) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        setLocation("/us/career-programs/full-stack");
+      },
+    },
+    {
+      icon: "IconChartBar",
+      title: t("iconFeatures.dataScience.title"),
+      description: t("iconFeatures.dataScience.description"),
+      color: "green",
+      href: "/career-programs",
+      onClick: (e: React.MouseEvent) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        setLocation("/career-programs");
+      },
+    },
+    {
+      icon: "IconCloud",
+      title: t("iconFeatures.cloudComputing.title"),
+      description: t("iconFeatures.cloudComputing.description"),
+      color: "purple",
+      href: "/career-programs",
+      onClick: (e: React.MouseEvent) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        setLocation("/career-programs");
+      },
+    },
+    {
+      icon: "IconBrain",
+      title: t("iconFeatures.aiMachineLearning.title"),
+      description: t("iconFeatures.aiMachineLearning.description"),
+      color: "rose",
+      href: "/career-programs",
+      onClick: (e: React.MouseEvent) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        setLocation("/career-programs");
+      },
+    },
+  ];
 
   const aiAutomations = [
     {
@@ -208,44 +252,10 @@ export default function Home() {
         ]}
       />
 
-      {isHomepageLoading ? (
-        <section className="container mx-auto px-4 py-16">
-          <div className="h-8 w-64 bg-muted animate-pulse rounded mx-auto mb-12" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="space-y-4">
-                <div className="w-16 h-16 bg-muted animate-pulse rounded-2xl" />
-                <div className="h-4 w-32 bg-muted animate-pulse rounded" />
-                <div className="h-3 w-48 bg-muted animate-pulse rounded" />
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : isHomepageError ? (
-        <section className="container mx-auto px-4 py-16">
-          <div className="text-center text-muted-foreground">
-            <p>Unable to load content. Please refresh the page.</p>
-          </div>
-        </section>
-      ) : homepageContent?.icon_feature_grid ? (
-        <IconFeatureGrid
-          title={homepageContent.icon_feature_grid.title}
-          features={homepageContent.icon_feature_grid.features.map((feature) => ({
-            icon: feature.icon,
-            title: feature.title,
-            description: feature.description,
-            color: feature.color,
-            href: feature.href,
-            onClick: feature.href ? (e: React.MouseEvent) => {
-              if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
-                return;
-              }
-              e.preventDefault();
-              setLocation(feature.href!);
-            } : undefined,
-          }))}
-        />
-      ) : null}
+      <IconFeatureGrid
+        title={t("iconFeatures.title")}
+        features={iconFeatures}
+      />
 
       <section className="py-16">
         <div className="container mx-auto px-4">

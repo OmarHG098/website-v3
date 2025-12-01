@@ -174,25 +174,3 @@ export type FooterSection = z.infer<typeof footerSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
 
-// === Homepage Content Schemas ===
-
-export const iconFeatureItemSchema = z.object({
-  icon: z.string(),
-  title: z.string(),
-  description: z.string(),
-  color: z.string(),
-  href: z.string().optional(),
-});
-
-export const iconFeatureGridContentSchema = z.object({
-  title: z.string(),
-  features: z.array(iconFeatureItemSchema),
-});
-
-export const homepageContentSchema = z.object({
-  icon_feature_grid: iconFeatureGridContentSchema,
-});
-
-export type IconFeatureItem = z.infer<typeof iconFeatureItemSchema>;
-export type IconFeatureGridContent = z.infer<typeof iconFeatureGridContentSchema>;
-export type HomepageContent = z.infer<typeof homepageContentSchema>;

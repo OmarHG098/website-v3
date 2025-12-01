@@ -10,7 +10,7 @@ import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
-import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
+import curvedArrow from "@assets/curved-arrow.svg";
 
 export default function LandingHero() {
   const { t } = useTranslation();
