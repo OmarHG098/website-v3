@@ -309,4 +309,23 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  /* Arrow drawing animation - reveals from top to bottom */
+  .animate-draw-arrow {
+    animation: draw-arrow 1.2s ease-out forwards;
+  }
+}
+
+@keyframes draw-arrow {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  100% {
+    clip-path: inset(0 0 0% 0);
+    opacity: 0.8;
+  }
 }

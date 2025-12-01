@@ -110,7 +110,7 @@ export default function LandingHero() {
             <img
               src={curvedArrow}
               alt={t("hero.altArrow")}
-              className="w-24 h-auto opacity-80"
+              className="w-24 h-auto opacity-80 animate-draw-arrow"
               loading="lazy"
             />
           </div>
