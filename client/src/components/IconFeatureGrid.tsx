@@ -14,15 +14,6 @@ interface IconFeatureGridProps {
   features: IconFeature[];
 }
 
-function getTitleColorFromBg(bgColor: string): string {
-  const match = bgColor.match(/bg-(\w+)-\d+/);
-  if (match) {
-    const colorName = match[1];
-    return `text-${colorName}-600 dark:text-${colorName}-400`;
-  }
-  return "text-primary";
-}
-
 export default function IconFeatureGrid({ title, features }: IconFeatureGridProps) {
   const { t } = useTranslation();
   
@@ -33,12 +24,10 @@ export default function IconFeatureGrid({ title, features }: IconFeatureGridProp
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {features.map((feature, index) => (
           <div key={index} className="group" data-testid={`feature-icon-${index}`}>
-            <div 
-              className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${feature.color} mb-4 transition-transform duration-200 group-hover:scale-110`}
-            >
-              <img src={feature.icon} alt="" className="h-8 w-8" />
+            <div className="mb-4 transition-transform duration-200 group-hover:scale-110">
+              <img src={feature.icon} alt="" className="h-16 w-16" />
             </div>
-            <h3 className="font-semibold text-primary mb-2">{feature.title}</h3>
+            <h3 className={`font-semibold mb-2 ${feature.color}`}>{feature.title}</h3>
             <p className="text-sm text-muted-foreground mb-3">{feature.description}</p>
             {(feature.href || feature.onClick) && (
               <a
