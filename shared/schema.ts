@@ -156,6 +156,16 @@ export const careerProgramSchema = z.object({
   sections: z.array(sectionSchema),
 });
 
+export const landingPageSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  meta: z.object({
+    page_title: z.string(),
+    description: z.string(),
+  }),
+  sections: z.array(sectionSchema),
+});
+
 export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
@@ -173,3 +183,4 @@ export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
+export type LandingPage = z.infer<typeof landingPageSchema>;
