@@ -119,5 +119,44 @@ export function useDebugAuth() {
     return validateToken(true);
   }, [validateToken]);
 
-  return { isValidated, hasToken, isLoading, isDevelopment, retryValidation };
+  // Validate a manually entered token
+  const validateManualToken = useCallback(async (manualToken: string) => {
+    if (!manualToken.trim()) return;
+    
+    setHasToken(true);
+    setIsLoading(true);
+    
+    // Clear any existing cache
+    sessionStorage.removeItem(DEBUG_SESSION_KEY);
+    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
+
+    try {
+      const response = await fetch("/api/debug/validate-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: manualToken }),
+      });
+
+      const data = await response.json();
+      
+      if (data.valid) {
+        sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
+        sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        sessionStorage.setItem(DEBUG_TOKEN_KEY, manualToken);
+        setIsValidated(true);
+      } else {
+        setIsValidated(false);
+      }
+    } catch (error) {
+      console.error("Debug auth validation error:", error);
+      setIsValidated(false);
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  return { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken };
 }

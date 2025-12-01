@@ -73,7 +73,7 @@ const getPersistedMenuView = (): MenuView => {
 };
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -88,6 +88,7 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
+  const [tokenInput, setTokenInput] = useState("");
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -214,14 +215,41 @@ export function DebugBubble() {
           {noTokenDetected ? (
             <div className="p-4">
               <div className="flex items-start gap-3">
-                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900">
+                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900 flex-shrink-0">
                   <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-sm mb-1">No token detected</h3>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL or set <code className="bg-muted px-1 rounded">VITE_BREATHECODE_TOKEN</code> environment variable
+                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL
                   </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter token..."
+                      value={tokenInput}
+                      onChange={(e) => setTokenInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && tokenInput.trim()) {
+                          validateManualToken(tokenInput.trim());
+                        }
+                      }}
+                      className="flex-1 px-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-token"
+                    />
+                    <Button
+                      size="sm"
+                      onClick={() => validateManualToken(tokenInput.trim())}
+                      disabled={!tokenInput.trim() || isLoading}
+                      data-testid="button-validate-token"
+                    >
+                      {isLoading ? (
+                        <IconRefresh className="h-4 w-4 animate-spin" />
+                      ) : (
+                        "Validate"
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
