@@ -14,21 +14,32 @@ interface IconFeatureGridProps {
   features: IconFeature[];
 }
 
-export default function IconFeatureGrid({ title, features }: IconFeatureGridProps) {
+export default function IconFeatureGrid({
+  title,
+  features,
+}: IconFeatureGridProps) {
   const { t } = useTranslation();
-  
+
   return (
-    <section className="container mx-auto px-8 md:px-12 lg:px-16 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
-      
+    <section className="container mx-auto px-8 md:px-12 lg:px-16 pb-16 pt-10">
+      <h2 className="text-4xl font-bold text-center mb-12">{title}</h2>
+
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {features.map((feature, index) => (
-          <div key={index} className="group" data-testid={`feature-icon-${index}`}>
+          <div
+            key={index}
+            className="group bg-card rounded-[0.8rem] p-6 border border-border"
+            data-testid={`feature-icon-${index}`}
+          >
             <div className="mb-4 transition-transform duration-200 group-hover:scale-110">
-              <img src={feature.icon} alt="" className="h-16 w-16" />
+              <img src={feature.icon} alt="" className="h-[70px] w-[70px]" />
             </div>
-            <h3 className={`font-semibold mb-2 ${feature.color}`}>{feature.title}</h3>
-            <p className="text-sm text-muted-foreground mb-3">{feature.description}</p>
+            <h3 className={`font-semibold mb-2 ${feature.color}`}>
+              {feature.title}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              {feature.description}
+            </p>
             {(feature.href || feature.onClick) && (
               <a
                 href={feature.href || "#"}
