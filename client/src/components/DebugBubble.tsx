@@ -140,7 +140,21 @@ export function DebugBubble() {
     return null;
   }
   
-  const showTokenWarning = isDevelopment && !hasToken;
+  // Token states for different warning scenarios
+  const noTokenDetected = !hasToken;
+  const tokenWithoutCapabilities = hasToken && isValidated === false;
+  const showFullMenu = isValidated === true;
+  
+  // Retry token validation
+  const [isRetrying, setIsRetrying] = useState(false);
+  const retryTokenValidation = async () => {
+    setIsRetrying(true);
+    // Clear cached session and reload to re-trigger validation
+    sessionStorage.removeItem("debug_validated");
+    sessionStorage.removeItem("debug_validated_expiry");
+    sessionStorage.removeItem("debug_token");
+    window.location.reload();
+  };
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -208,26 +222,62 @@ export function DebugBubble() {
           className="w-80 p-0"
           sideOffset={8}
         >
-          {menuView === "main" ? (
+          {/* No token detected - show only warning */}
+          {noTokenDetected ? (
+            <div className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900">
+                  <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm mb-1">No token detected</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL or set <code className="bg-muted px-1 rounded">VITE_BREATHECODE_TOKEN</code> environment variable
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : tokenWithoutCapabilities ? (
+            /* Token exists but not validated - show warning with retry */
+            <div className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900">
+                  <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm mb-1">Limited access</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Token detected but no webmaster capabilities have been detected
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={retryTokenValidation}
+                    disabled={isRetrying}
+                    className="w-full"
+                    data-testid="button-retry-validation"
+                  >
+                    {isRetrying ? (
+                      <>
+                        <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                        Retrying...
+                      </>
+                    ) : (
+                      <>
+                        <IconRefresh className="h-4 w-4 mr-2" />
+                        Retry validation
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : menuView === "main" ? (
             <>
               <div className="p-3 border-b">
                 <h3 className="font-semibold text-sm">Debug Tools</h3>
                 <p className="text-xs text-muted-foreground">Development utilities</p>
               </div>
-              
-              {showTokenWarning && (
-                <div className="p-3 bg-amber-50 dark:bg-amber-950 border-b border-amber-200 dark:border-amber-800">
-                  <div className="flex items-start gap-2">
-                    <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-xs font-medium text-amber-800 dark:text-amber-200">No token detected</p>
-                      <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">
-                        Add <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">?token=xxx</code> to URL or set <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">VITE_BREATHECODE_TOKEN</code>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
               
               <div className="p-2 space-y-1">
                 <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
