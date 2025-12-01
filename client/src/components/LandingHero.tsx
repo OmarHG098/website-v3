@@ -11,6 +11,7 @@ import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.we
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
 import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
+import CurvedArrowSvg from "./CurvedArrowSvg";
 
 export default function LandingHero() {
   const { t } = useTranslation();
@@ -107,12 +108,7 @@ export default function LandingHero() {
 
           {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
-            <img
-              src={curvedArrow}
-              alt={t("hero.altArrow")}
-              className="w-24 h-auto opacity-80"
-              loading="lazy"
-            />
+            <CurvedArrowSvg className="w-24 h-auto opacity-80 text-foreground" />
           </div>
 
           {/* CTA Button */}
