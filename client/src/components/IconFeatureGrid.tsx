@@ -14,6 +14,15 @@ interface IconFeatureGridProps {
   features: IconFeature[];
 }
 
+function getTitleColorFromBg(bgColor: string): string {
+  const match = bgColor.match(/bg-(\w+)-\d+/);
+  if (match) {
+    const colorName = match[1];
+    return `text-${colorName}-600 dark:text-${colorName}-400`;
+  }
+  return "text-primary";
+}
+
 export default function IconFeatureGrid({ title, features }: IconFeatureGridProps) {
   const { t } = useTranslation();
   
