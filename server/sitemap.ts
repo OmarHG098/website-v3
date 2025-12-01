@@ -1,7 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
+import * as yaml from "js-yaml";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
+const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function getBaseUrl(): string {
@@ -61,6 +63,70 @@ function getAvailablePrograms(): Array<{ slug: string; locales: string[] }> {
     console.error("Error scanning programs:", error);
     return [];
   }
+}
+
+interface LandingMeta {
+  robots?: string;
+  priority?: number;
+  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+}
+
+interface AvailableLanding {
+  slug: string;
+  locale: string;
+  title: string;
+  meta: LandingMeta;
+}
+
+function getAvailableLandings(): AvailableLanding[] {
+  try {
+    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
+      return [];
+    }
+
+    const landings: AvailableLanding[] = [];
+    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
+
+    for (const dir of dirs) {
+      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
+      if (fs.statSync(landingPath).isDirectory()) {
+        const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml"));
+        
+        for (const file of files) {
+          const locale = file.replace(".yml", "");
+          const filePath = path.join(landingPath, file);
+          
+          try {
+            const content = fs.readFileSync(filePath, "utf-8");
+            const data = yaml.load(content) as { 
+              slug: string; 
+              title: string; 
+              meta?: LandingMeta 
+            };
+            
+            landings.push({
+              slug: data.slug || dir,
+              locale,
+              title: data.title || dir,
+              meta: data.meta || {},
+            });
+          } catch (parseError) {
+            console.error(`Error parsing landing ${filePath}:`, parseError);
+          }
+        }
+      }
+    }
+
+    return landings;
+  } catch (error) {
+    console.error("Error scanning landings:", error);
+    return [];
+  }
+}
+
+function shouldIndex(robots?: string): boolean {
+  if (!robots) return true;
+  return !robots.toLowerCase().includes("noindex");
 }
 
 function getCurrentDate(): string {
@@ -143,6 +209,30 @@ function buildSitemapXml(): string {
         priority: 0.8,
       });
     }
+  }
+
+  // Dynamic landing pages from YAML (only include indexable pages)
+  const landings = getAvailableLandings();
+  const processedLandingSlugs = new Set<string>();
+  
+  for (const landing of landings) {
+    // Skip if already processed (avoid duplicates for multi-locale landings)
+    if (processedLandingSlugs.has(landing.slug)) continue;
+    
+    // Skip pages marked as noindex
+    if (!shouldIndex(landing.meta.robots)) {
+      console.log(`[Sitemap] Skipping noindex landing: ${landing.slug}`);
+      continue;
+    }
+    
+    processedLandingSlugs.add(landing.slug);
+    
+    urls.push({
+      loc: `${getBaseUrl()}/landing/${landing.slug}`,
+      lastmod: today,
+      changefreq: landing.meta.change_frequency || "weekly",
+      priority: landing.meta.priority || 0.8,
+    });
   }
 
   // Build XML
@@ -256,6 +346,21 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
         label: `${program.slug} (ES)`,
       });
     }
+  }
+
+  // Dynamic landing pages from YAML (only indexable)
+  const landings = getAvailableLandings();
+  const processedLandingSlugs = new Set<string>();
+  
+  for (const landing of landings) {
+    if (processedLandingSlugs.has(landing.slug)) continue;
+    if (!shouldIndex(landing.meta.robots)) continue;
+    
+    processedLandingSlugs.add(landing.slug);
+    urls.push({
+      loc: `${getBaseUrl()}/landing/${landing.slug}`,
+      label: `Landing: ${landing.title}`,
+    });
   }
 
   return urls;
