@@ -73,7 +73,7 @@ const getPersistedMenuView = (): MenuView => {
 };
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -88,7 +88,6 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
-  const [isRetrying, setIsRetrying] = useState(false);
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -144,16 +143,6 @@ export function DebugBubble() {
   // Token states for different warning scenarios
   const noTokenDetected = !hasToken;
   const tokenWithoutCapabilities = hasToken && isValidated === false;
-  
-  // Retry token validation
-  const retryTokenValidation = async () => {
-    setIsRetrying(true);
-    // Clear cached session and reload to re-trigger validation
-    sessionStorage.removeItem("debug_validated");
-    sessionStorage.removeItem("debug_validated_expiry");
-    sessionStorage.removeItem("debug_token");
-    window.location.reload();
-  };
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -251,12 +240,12 @@ export function DebugBubble() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={retryTokenValidation}
-                    disabled={isRetrying}
+                    onClick={retryValidation}
+                    disabled={isLoading}
                     className="w-full"
                     data-testid="button-retry-validation"
                   >
-                    {isRetrying ? (
+                    {isLoading ? (
                       <>
                         <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
                         Retrying...
