@@ -73,7 +73,7 @@ const getPersistedMenuView = (): MenuView => {
 };
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken, clearToken } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -131,13 +131,15 @@ export function DebugBubble() {
       url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
   );
 
-  // In production, don't render if not validated or still loading
-  // In development, always show (but with warning if no token)
-  if (isLoading) {
+  // Only show bubble if debug mode is active
+  // In dev: always active
+  // In production: requires ?debug=true in URL
+  if (!isDebugMode) {
     return null;
   }
   
-  if (!isDevelopment && !isValidated) {
+  // Wait for loading to complete
+  if (isLoading) {
     return null;
   }
   

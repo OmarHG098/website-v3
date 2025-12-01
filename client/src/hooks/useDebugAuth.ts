@@ -3,7 +3,41 @@ import { useState, useEffect, useCallback } from "react";
 const DEBUG_SESSION_KEY = "debug_validated";
 const DEBUG_SESSION_EXPIRY_KEY = "debug_validated_expiry";
 const DEBUG_TOKEN_KEY = "debug_token";
+const DEBUG_MODE_KEY = "debug_mode";
 const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+
+// Check if debug mode is active
+// In development: always true
+// In production: requires ?debug=true in URL (persisted in sessionStorage)
+export function isDebugModeActive(): boolean {
+  const isDev = import.meta.env.DEV;
+  
+  // Always active in development
+  if (isDev) {
+    return true;
+  }
+  
+  // Check sessionStorage first (persists across navigation)
+  const storedDebugMode = sessionStorage.getItem(DEBUG_MODE_KEY);
+  if (storedDebugMode === "true") {
+    return true;
+  }
+  
+  // Check URL for ?debug=true
+  const urlParams = new URLSearchParams(window.location.search);
+  const debugParam = urlParams.get("debug");
+  
+  if (debugParam === "true") {
+    // Store in sessionStorage and clean up URL
+    sessionStorage.setItem(DEBUG_MODE_KEY, "true");
+    const url = new URL(window.location.href);
+    url.searchParams.delete("debug");
+    window.history.replaceState({}, "", url.toString());
+    return true;
+  }
+  
+  return false;
+}
 
 export function getDebugToken(): string | null {
   // Check sessionStorage for cached token
@@ -31,6 +65,7 @@ export function useDebugAuth() {
   const [isLoading, setIsLoading] = useState(true);
   
   const isDevelopment = import.meta.env.DEV;
+  const isDebugMode = isDebugModeActive();
 
   const validateToken = useCallback(async (skipCache = false) => {
     // Check if we have a valid cached session (unless skipping cache for retry)
@@ -167,5 +202,5 @@ export function useDebugAuth() {
     setIsValidated(false);
   }, []);
 
-  return { isValidated, hasToken, isLoading, isDevelopment, retryValidation, validateManualToken, clearToken };
+  return { isValidated, hasToken, isLoading, isDevelopment, isDebugMode, retryValidation, validateManualToken, clearToken };
 }
