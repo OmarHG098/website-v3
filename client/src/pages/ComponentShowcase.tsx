@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSearch } from "wouter";
 import { IconChevronDown, IconCode, IconEye } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -320,9 +321,11 @@ interface ComponentCardProps {
   sample: ComponentSample;
   globalYamlState: boolean | null;
   globalPreviewState: boolean | null;
+  isFocused?: boolean;
+  cardRef?: React.RefObject<HTMLDivElement>;
 }
 
-function ComponentCard({ sample, globalYamlState, globalPreviewState }: ComponentCardProps) {
+function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused, cardRef }: ComponentCardProps) {
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
 
@@ -339,7 +342,11 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState }: Componen
   }, [globalPreviewState]);
 
   return (
-    <Card className="mb-8" data-testid={`component-card-${sample.type}`}>
+    <Card 
+      ref={cardRef}
+      className={`mb-8 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
+      data-testid={`component-card-${sample.type}`}
+    >
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2 flex-wrap">
@@ -395,12 +402,40 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState }: Componen
 }
 
 export default function ComponentShowcase() {
+  const search = useSearch();
+  const searchParams = new URLSearchParams(search);
+  const focusedComponent = searchParams.get('focus');
+  
   const [globalYamlState, setGlobalYamlState] = useState<boolean | null>(null);
   const [globalPreviewState, setGlobalPreviewState] = useState<boolean | null>(null);
   const [yamlExpanded, setYamlExpanded] = useState(false);
   const [previewExpanded, setPreviewExpanded] = useState(true);
   const [yamlTrigger, setYamlTrigger] = useState(0);
   const [previewTrigger, setPreviewTrigger] = useState(0);
+  const [highlightedComponent, setHighlightedComponent] = useState<string | null>(focusedComponent);
+  
+  const cardRefs = useRef<Record<string, React.RefObject<HTMLDivElement>>>({});
+  
+  componentSamples.forEach(sample => {
+    if (!cardRefs.current[sample.type]) {
+      cardRefs.current[sample.type] = { current: null } as React.RefObject<HTMLDivElement>;
+    }
+  });
+  
+  useEffect(() => {
+    if (focusedComponent && cardRefs.current[focusedComponent]?.current) {
+      setTimeout(() => {
+        cardRefs.current[focusedComponent]?.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+      
+      setTimeout(() => {
+        setHighlightedComponent(null);
+      }, 3000);
+    }
+  }, [focusedComponent]);
 
   const toggleAllYaml = () => {
     const newState = !yamlExpanded;
@@ -465,6 +500,8 @@ export default function ComponentShowcase() {
               sample={sample} 
               globalYamlState={globalYamlState}
               globalPreviewState={globalPreviewState}
+              isFocused={highlightedComponent === sample.type}
+              cardRef={cardRefs.current[sample.type]}
             />
           ))}
         </div>
