@@ -81,40 +81,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { token } = req.body;
 
-      console.log("[validate-token] Request received");
-      console.log("[validate-token] Token present:", !!token);
-
       if (!token) {
-        console.log("[validate-token] No token provided");
         res.status(400).json({ valid: false, error: "Token required" });
         return;
       }
 
-      const url = "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster";
-      console.log("[validate-token] Calling Breathecode API:", url);
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Token ${token}`,
-          Academy: "4",
+      const response = await fetch(
+        "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${token}`,
+            Academy: "4",
+          },
         },
-      });
-
-      console.log("[validate-token] Breathecode response status:", response.status);
-
-      const responseText = await response.text();
-      console.log("[validate-token] Breathecode response body:", responseText);
+      );
 
       if (response.status === 200) {
-        console.log("[validate-token] Token is VALID");
         res.json({ valid: true });
       } else {
-        console.log("[validate-token] Token is INVALID");
         res.json({ valid: false });
       }
     } catch (error) {
-      console.error("[validate-token] Error:", error);
+      console.error("Token validation error:", error);
       res.json({ valid: false });
     }
   });
