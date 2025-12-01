@@ -6,6 +6,8 @@ import * as fs from "fs";
 import * as path from "path";
 import { careerProgramSchema, type CareerProgram } from "@shared/schema";
 
+const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
+
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
@@ -59,6 +61,34 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.post("/api/debug/validate-token", async (req, res) => {
+    try {
+      const { token } = req.body;
+      
+      if (!token) {
+        res.status(400).json({ valid: false, error: "Token required" });
+        return;
+      }
+
+      const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${token}`,
+          "Academy": "4",
+        },
+      });
+
+      if (response.status === 200) {
+        res.json({ valid: true });
+      } else {
+        res.json({ valid: false });
+      }
+    } catch (error) {
+      console.error("Token validation error:", error);
+      res.json({ valid: false });
+    }
+  });
+
   app.get("/api/career-programs", (req, res) => {
     const locale = (req.query.locale as string) || "en";
     const programs = listCareerPrograms(locale);
