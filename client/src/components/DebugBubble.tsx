@@ -22,6 +22,8 @@ import {
   IconChartBar,
   IconArrowRight,
   IconLayoutBottombar,
+  IconArrowLeft,
+  IconChevronRight,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,7 +31,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 
@@ -47,17 +48,28 @@ const componentsList = [
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
 ];
 
+type MenuView = "main" | "components";
+
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [menuView, setMenuView] = useState<MenuView>("main");
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       return document.documentElement.classList.contains("dark") ? "dark" : "light";
     }
     return "light";
   });
+
+  // Reset menu view when popover closes
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (!newOpen) {
+      setMenuView("main");
+    }
+  };
 
   // In production, don't render if not validated or still loading
   // In development, always show (but with warning if no token)
@@ -91,7 +103,7 @@ export function DebugBubble() {
 
   return (
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
           <Button
             size="icon"
@@ -108,21 +120,13 @@ export function DebugBubble() {
           className="w-80 p-0"
           sideOffset={8}
         >
-          <Tabs defaultValue="debug" className="w-full">
-            <div className="p-2 border-b">
-              <TabsList className="w-full grid grid-cols-2">
-                <TabsTrigger value="debug" data-testid="tab-debug-tools">
-                  <IconBug className="h-4 w-4 mr-2" />
-                  Debug Tools
-                </TabsTrigger>
-                <TabsTrigger value="components" data-testid="tab-components">
-                  <IconComponents className="h-4 w-4 mr-2" />
-                  Components
-                </TabsTrigger>
-              </TabsList>
-            </div>
-            
-            <TabsContent value="debug" className="m-0">
+          {menuView === "main" ? (
+            <>
+              <div className="p-3 border-b">
+                <h3 className="font-semibold text-sm">Debug Tools</h3>
+                <p className="text-xs text-muted-foreground">Development utilities</p>
+              </div>
+              
               {showTokenWarning && (
                 <div className="p-3 bg-amber-50 dark:bg-amber-950 border-b border-amber-200 dark:border-amber-800">
                   <div className="flex items-start gap-2">
@@ -149,14 +153,17 @@ export function DebugBubble() {
                   <span>Sitemap</span>
                 </a>
                 
-                <a
-                  href="/component-showcase"
-                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                  data-testid="link-component-showcase"
+                <button
+                  onClick={() => setMenuView("components")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-components-menu"
                 >
-                  <IconComponents className="h-4 w-4 text-muted-foreground" />
-                  <span>Component Showcase</span>
-                </a>
+                  <div className="flex items-center gap-3">
+                    <IconComponents className="h-4 w-4 text-muted-foreground" />
+                    <span>Components</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -196,10 +203,26 @@ export function DebugBubble() {
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
               </div>
-            </TabsContent>
-            
-            <TabsContent value="components" className="m-0">
-              <ScrollArea className="h-[320px]">
+            </>
+          ) : (
+            <>
+              <div className="p-2 border-b">
+                <button
+                  onClick={() => setMenuView("main")}
+                  className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover-elevate w-full"
+                  data-testid="button-back-to-main"
+                >
+                  <IconArrowLeft className="h-4 w-4" />
+                  <span>Back to main</span>
+                </button>
+              </div>
+              
+              <div className="px-3 py-2 border-b">
+                <h3 className="font-semibold text-sm">Components</h3>
+                <p className="text-xs text-muted-foreground">Select a component to view in showcase</p>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
                 <div className="p-2 space-y-1">
                   {componentsList.map((component) => {
                     const Icon = component.icon;
@@ -220,8 +243,8 @@ export function DebugBubble() {
                   })}
                 </div>
               </ScrollArea>
-            </TabsContent>
-          </Tabs>
+            </>
+          )}
         </PopoverContent>
       </Popover>
     </div>
