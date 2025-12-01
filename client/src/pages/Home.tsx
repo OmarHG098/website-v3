@@ -4,14 +4,12 @@ import LogoSection from "@/components/LogoSection";
 import PersonalizedLearningSection from "@/components/PersonalizedLearningSection";
 import FeatureSection from "@/components/FeatureSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { HomeSectionRenderer } from "@/components/home/HomeSectionRenderer";
+import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import type { HomepageContent } from "@shared/schema";
 import {
   IconStarFilled,
   IconRoute,
@@ -38,25 +36,8 @@ import learner2 from "@assets/generated_images/Black_man_software_developer_4fbc
 import learner3 from "@assets/generated_images/East_Asian_woman_engineer_8ba7b781.webp";
 import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89ae.webp";
 
-function normalizeLocale(locale: string): string {
-  const baseLocale = locale.split("-")[0].toLowerCase();
-  return ["en", "es"].includes(baseLocale) ? baseLocale : "en";
-}
-
 export default function Home() {
   const [, setLocation] = useLocation();
-  const { i18n } = useTranslation();
-  
-  const locale = normalizeLocale(i18n.language);
-  
-  const { data: homepageContent } = useQuery<HomepageContent>({
-    queryKey: ["/api/home", locale],
-    queryFn: async () => {
-      const response = await fetch(`/api/home?locale=${locale}`);
-      if (!response.ok) throw new Error("Failed to fetch homepage content");
-      return response.json();
-    },
-  });
 
   const aiAutomations = [
     {
@@ -130,6 +111,41 @@ export default function Home() {
       color: "border-t-emerald-500",
       iconColor: "text-emerald-500",
       onClick: () => console.log("Re-personalization clicked"),
+    },
+  ];
+
+  const iconFeatures = [
+    {
+      icon: rocketIcon,
+      title: "Fast Launch",
+      description:
+        "Get started quickly with our streamlined onboarding and structured curriculum",
+      color: "bg-blue-100 dark:bg-blue-900/20",
+      onClick: () => setLocation("/career-programs"),
+    },
+    {
+      icon: communityIcon,
+      title: "Global Community",
+      description:
+        "Join thousands of learners worldwide on the same journey to tech mastery",
+      color: "bg-green-100 dark:bg-green-900/20",
+      onClick: () => setLocation("/career-programs"),
+    },
+    {
+      icon: securityIcon,
+      title: "Secure Platform",
+      description:
+        "Your progress, projects, and personal data are always protected",
+      color: "bg-red-100 dark:bg-red-900/20",
+      onClick: () => setLocation("/career-programs"),
+    },
+    {
+      icon: lightningIcon,
+      title: "Quick Results",
+      description:
+        "See measurable progress in weeks with our proven learning methodology",
+      color: "bg-yellow-100 dark:bg-yellow-900/20",
+      onClick: () => setLocation("/career-programs"),
     },
   ];
 
@@ -222,9 +238,10 @@ export default function Home() {
         ]}
       />
 
-      {homepageContent?.sections && (
-        <HomeSectionRenderer sections={homepageContent.sections} />
-      )}
+      <IconFeatureGrid
+        title="Our mission is to get you into tech."
+        features={iconFeatures}
+      />
 
       <section className="py-16">
         <div className="container mx-auto px-4">

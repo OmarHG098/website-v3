@@ -83,15 +83,9 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
   }
 }
 
-function normalizeLocale(locale: string): string {
-  const baseLocale = locale.split("-")[0].toLowerCase();
-  return ["en", "es"].includes(baseLocale) ? baseLocale : "en";
-}
-
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/home", (req, res) => {
-    const rawLocale = (req.query.locale as string) || "en";
-    const locale = normalizeLocale(rawLocale);
+    const locale = (req.query.locale as string) || "en";
     
     const content = loadHomepageContent(locale);
     

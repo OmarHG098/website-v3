@@ -59,15 +59,10 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 The platform uses a YAML-based component system that allows marketing teams to modify content and create new program pages by interacting with Replit Agent, without requiring backend code changes.
 
 ### Architecture Overview
-- **Career Program Content**: `marketing-content/programs/{program-slug}/{locale}.yml`
-- **Homepage Content**: `marketing-content/home/{locale}.yml`
+- **Content Storage**: `marketing-content/programs/{program-slug}/{locale}.yml`
 - **Component Registry**: `marketing-content/components-registry.yml` - Documents all available section types
-- **Backend APIs**: 
-  - `/api/career-programs/:slug?locale=en|es` - Serves career program YAML content
-  - `/api/home?locale=en|es` - Serves homepage YAML content
-- **Frontend Renderers**: 
-  - `SectionRenderer` - Renders career program sections from YAML
-  - `HomeSectionRenderer` - Renders homepage sections from YAML
+- **Backend API**: `/api/career-programs/:slug?locale=en|es` - Serves parsed YAML content
+- **Frontend Renderer**: `SectionRenderer` component dynamically renders sections from YAML
 
 ### How to Add/Modify Career Program Content
 
@@ -80,19 +75,8 @@ The platform uses a YAML-based component system that allows marketing teams to m
 2. Add `en.yml` and `es.yml` files following the schema
 3. The program is automatically available at `/us/career-programs/{slug}` and `/es/programas-de-carrera/{slug}`
 
-### How to Modify Homepage Content
-
-**To update the Icon Feature Grid section:**
-1. Edit `marketing-content/home/en.yml` or `es.yml`
-2. Modify the `icon_feature_grid` section features (title, description, icon path, color)
-3. Changes are reflected immediately on page refresh
-
-**Icon paths:** Icons should be placed in `client/public/generated_images/` and referenced as `/generated_images/filename.webp`
-
 ### Available Section Types
 See `marketing-content/components-registry.yml` for full documentation. Current types:
-
-**Career Program Sections:**
 - `hero` - Main banner with title, subtitle, badge, CTA buttons
 - `program_overview` - Grid of feature cards
 - `ai_learning` - AI tools showcase with chat example
@@ -104,9 +88,6 @@ See `marketing-content/components-registry.yml` for full documentation. Current 
 - `credibility` - Stats and featured logos
 - `footer_cta` - Final call-to-action section
 - `footer` - Copyright notice
-
-**Homepage Sections:**
-- `icon_feature_grid` - Grid of feature cards with custom icons, titles, descriptions, and optional links
 
 ### Career Program Routes
 - **English**: `/us/career-programs/:slug`
