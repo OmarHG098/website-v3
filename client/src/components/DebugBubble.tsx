@@ -341,7 +341,7 @@ export function DebugBubble() {
                     return (
                       <a
                         key={component.type}
-                        href={`/component-showcase?focus=${component.type}`}
+                        href={`/component-showcase/${component.type}`}
                         className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
                         data-testid={`link-component-${component.type}`}
                       >

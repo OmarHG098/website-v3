@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useSearch } from "wouter";
-import { IconChevronDown, IconCode, IconEye } from "@tabler/icons-react";
+import { useSearch, useParams, Link } from "wouter";
+import { IconChevronDown, IconCode, IconEye, IconArrowLeft, IconArrowRight, IconList } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -417,6 +417,7 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
 export default function ComponentShowcase() {
   useNoIndex();
   
+  const { componentType } = useParams<{ componentType?: string }>();
   const search = useSearch();
   const searchParams = new URLSearchParams(search);
   const focusedComponent = searchParams.get('focus');
@@ -466,6 +467,102 @@ export default function ComponentShowcase() {
     setPreviewTrigger(prev => prev + 1);
   };
 
+  // Single component view
+  if (componentType) {
+    const currentIndex = componentSamples.findIndex(s => s.type === componentType);
+    const sample = componentSamples[currentIndex];
+    
+    if (!sample) {
+      return (
+        <div className="min-h-screen bg-background">
+          <Header />
+          <main className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-3xl font-bold mb-4">Component Not Found</h1>
+              <p className="text-muted-foreground mb-6">
+                The component "{componentType}" does not exist.
+              </p>
+              <Link href="/component-showcase">
+                <Button variant="outline" data-testid="link-back-to-showcase">
+                  <IconList className="w-4 h-4 mr-2" />
+                  View All Components
+                </Button>
+              </Link>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    const prevComponent = currentIndex > 0 ? componentSamples[currentIndex - 1] : null;
+    const nextComponent = currentIndex < componentSamples.length - 1 ? componentSamples[currentIndex + 1] : null;
+
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto mb-6">
+            <div className="flex items-center gap-4 mb-4">
+              <Link href="/component-showcase">
+                <Button variant="ghost" size="sm" data-testid="link-back-to-all">
+                  <IconArrowLeft className="w-4 h-4 mr-1" />
+                  All Components
+                </Button>
+              </Link>
+              <span className="text-muted-foreground text-sm">
+                {currentIndex + 1} of {componentSamples.length}
+              </span>
+            </div>
+            
+            <h1 className="text-3xl font-bold mb-2" data-testid="text-component-title">
+              {sample.name}
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              {sample.description}
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <ComponentCard 
+              key={sample.type} 
+              sample={sample} 
+              globalYamlState={true}
+              globalPreviewState={true}
+              isFocused={false}
+              cardRef={cardRefs.current[sample.type]}
+            />
+          </div>
+
+          <div className="max-w-4xl mx-auto mt-8 flex items-center justify-between">
+            {prevComponent ? (
+              <Link href={`/component-showcase/${prevComponent.type}`}>
+                <Button variant="outline" data-testid="link-prev-component">
+                  <IconArrowLeft className="w-4 h-4 mr-2" />
+                  {prevComponent.name}
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+            
+            {nextComponent ? (
+              <Link href={`/component-showcase/${nextComponent.type}`}>
+                <Button variant="outline" data-testid="link-next-component">
+                  {nextComponent.name}
+                  <IconArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // All components view
   return (
     <div className="min-h-screen bg-background">
       <Header />

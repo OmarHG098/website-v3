@@ -44,6 +44,7 @@ function Router() {
         <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/component-showcase" component={ComponentShowcase} />
+        <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
