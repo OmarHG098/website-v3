@@ -29,7 +29,7 @@ export default function IconFeatureGrid({
         {features.map((feature, index) => (
           <Card
             key={index}
-            className="group p-4 md:p-6"
+            className="group p-4 md:p-6 bg-transparent border-0 shadow-none"
             data-testid={`feature-icon-${index}`}
           >
             <div className="mb-4 transition-transform duration-200 group-hover:scale-110">
