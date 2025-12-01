@@ -33,7 +33,7 @@ export default function IconFeatureGrid({
             data-testid={`feature-icon-${index}`}
           >
             <div className="mb-4 transition-transform duration-200 group-hover:scale-110">
-              <img src={feature.icon} alt="" className="h-[70px] w-[70px]" />
+              <img src={feature.icon} alt="" className="h-12 w-12 md:h-[70px] md:w-[70px]" />
             </div>
             <h3 className={`font-semibold mb-2 ${feature.color}`}>
               {feature.title}
