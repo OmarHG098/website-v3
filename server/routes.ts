@@ -4,9 +4,10 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, type CareerProgram } from "@shared/schema";
+import { careerProgramSchema, type CareerProgram, homepageContentSchema, type HomepageContent } from "@shared/schema";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
+const HOMEPAGE_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "homepage");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -28,6 +29,30 @@ function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
     return result.data;
   } catch (error) {
     console.error(`Error loading career program ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function loadHomepageContent(locale: string): HomepageContent | null {
+  try {
+    const filePath = path.join(HOMEPAGE_CONTENT_PATH, `${locale}.yml`);
+    
+    if (!fs.existsSync(filePath)) {
+      return null;
+    }
+    
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const data = yaml.load(fileContent);
+    
+    const result = homepageContentSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for homepage/${locale}:`, result.error);
+      return null;
+    }
+    
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading homepage content ${locale}:`, error);
     return null;
   }
 }
@@ -77,6 +102,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(program);
+  });
+
+  app.get("/api/homepage", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    const content = loadHomepageContent(locale);
+    
+    if (!content) {
+      res.status(404).json({ error: "Homepage content not found" });
+      return;
+    }
+    
+    res.json(content);
   });
 
   const httpServer = createServer(app);
