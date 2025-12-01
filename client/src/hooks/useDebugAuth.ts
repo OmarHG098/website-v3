@@ -1,9 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const DEBUG_SESSION_KEY = "debug_validated";
 const DEBUG_SESSION_EXPIRY_KEY = "debug_validated_expiry";
 const DEBUG_TOKEN_KEY = "debug_token";
+const DEBUG_MODE_KEY = "debug_mode";
 const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+
+// Check if debug mode is active
+// In development: always true
+// In production: requires ?debug=true in URL (persisted in sessionStorage)
+export function isDebugModeActive(): boolean {
+  const isDev = import.meta.env.DEV;
+  
+  // Always active in development
+  if (isDev) {
+    return true;
+  }
+  
+  // Check sessionStorage first (persists across navigation)
+  const storedDebugMode = sessionStorage.getItem(DEBUG_MODE_KEY);
+  if (storedDebugMode === "true") {
+    return true;
+  }
+  
+  // Check URL for ?debug=true
+  const urlParams = new URLSearchParams(window.location.search);
+  const debugParam = urlParams.get("debug");
+  
+  if (debugParam === "true") {
+    // Store in sessionStorage and clean up URL
+    sessionStorage.setItem(DEBUG_MODE_KEY, "true");
+    const url = new URL(window.location.href);
+    url.searchParams.delete("debug");
+    window.history.replaceState({}, "", url.toString());
+    return true;
+  }
+  
+  return false;
+}
 
 export function getDebugToken(): string | null {
   // Check sessionStorage for cached token
@@ -31,10 +65,11 @@ export function useDebugAuth() {
   const [isLoading, setIsLoading] = useState(true);
   
   const isDevelopment = import.meta.env.DEV;
+  const isDebugMode = isDebugModeActive();
 
-  useEffect(() => {
-    async function validateToken() {
-      // Check if we have a valid cached session
+  const validateToken = useCallback(async (skipCache = false) => {
+    // Check if we have a valid cached session (unless skipping cache for retry)
+    if (!skipCache) {
       const cachedValidation = sessionStorage.getItem(DEBUG_SESSION_KEY);
       const cachedExpiry = sessionStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
       const cachedToken = sessionStorage.getItem(DEBUG_TOKEN_KEY);
@@ -48,63 +83,124 @@ export function useDebugAuth() {
           return;
         }
       }
-
-      // Get token from URL querystring or env variable
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlToken = urlParams.get("token");
-      const envToken = import.meta.env.VITE_BREATHECODE_TOKEN;
-      
-      const token = urlToken || envToken;
-
-      if (!token) {
-        setHasToken(false);
-        setIsValidated(false);
-        setIsLoading(false);
-        return;
-      }
-
-      setHasToken(true);
-
-      // Clean up URL if token was in querystring
-      if (urlToken) {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("token");
-        window.history.replaceState({}, "", url.toString());
-      }
-
-      try {
-        const response = await fetch("/api/debug/validate-token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        });
-
-        const data = await response.json();
-        
-        if (data.valid) {
-          // Cache the validation result and token with expiry
-          sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
-          sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
-          sessionStorage.setItem(DEBUG_TOKEN_KEY, token);
-          setIsValidated(true);
-        } else {
-          sessionStorage.removeItem(DEBUG_SESSION_KEY);
-          sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
-          sessionStorage.removeItem(DEBUG_TOKEN_KEY);
-          setIsValidated(false);
-        }
-      } catch (error) {
-        console.error("Debug auth validation error:", error);
-        setIsValidated(false);
-      }
-
-      setIsLoading(false);
+    } else {
+      // Clear cache when retrying
+      sessionStorage.removeItem(DEBUG_SESSION_KEY);
+      sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+      sessionStorage.removeItem(DEBUG_TOKEN_KEY);
     }
 
-    validateToken();
+    // Get token from URL querystring or env variable
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlToken = urlParams.get("token");
+    const envToken = import.meta.env.VITE_BREATHECODE_TOKEN;
+    
+    const token = urlToken || envToken;
+
+    if (!token) {
+      setHasToken(false);
+      setIsValidated(false);
+      setIsLoading(false);
+      return;
+    }
+
+    setHasToken(true);
+    setIsLoading(true);
+
+    // Clean up URL if token was in querystring
+    if (urlToken) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("token");
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    try {
+      const response = await fetch("/api/debug/validate-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      const data = await response.json();
+      
+      if (data.valid) {
+        // Cache the validation result and token with expiry
+        sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
+        sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        sessionStorage.setItem(DEBUG_TOKEN_KEY, token);
+        setIsValidated(true);
+      } else {
+        sessionStorage.removeItem(DEBUG_SESSION_KEY);
+        sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+        sessionStorage.removeItem(DEBUG_TOKEN_KEY);
+        setIsValidated(false);
+      }
+    } catch (error) {
+      console.error("Debug auth validation error:", error);
+      setIsValidated(false);
+    }
+
+    setIsLoading(false);
   }, []);
 
-  return { isValidated, hasToken, isLoading, isDevelopment };
+  useEffect(() => {
+    validateToken(false);
+  }, [validateToken]);
+
+  // Retry validation (clears cache and re-validates)
+  const retryValidation = useCallback(() => {
+    return validateToken(true);
+  }, [validateToken]);
+
+  // Validate a manually entered token
+  const validateManualToken = useCallback(async (manualToken: string) => {
+    if (!manualToken.trim()) return;
+    
+    setHasToken(true);
+    setIsLoading(true);
+    
+    // Clear any existing cache
+    sessionStorage.removeItem(DEBUG_SESSION_KEY);
+    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
+
+    try {
+      const response = await fetch("/api/debug/validate-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: manualToken }),
+      });
+
+      const data = await response.json();
+      
+      if (data.valid) {
+        sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
+        sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        sessionStorage.setItem(DEBUG_TOKEN_KEY, manualToken);
+        setIsValidated(true);
+      } else {
+        setIsValidated(false);
+      }
+    } catch (error) {
+      console.error("Debug auth validation error:", error);
+      setIsValidated(false);
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  // Clear token and reset to "no token" state
+  const clearToken = useCallback(() => {
+    sessionStorage.removeItem(DEBUG_SESSION_KEY);
+    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
+    setHasToken(false);
+    setIsValidated(false);
+  }, []);
+
+  return { isValidated, hasToken, isLoading, isDevelopment, isDebugMode, retryValidation, validateManualToken, clearToken };
 }

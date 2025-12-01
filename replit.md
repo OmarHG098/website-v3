@@ -67,6 +67,33 @@ See `design_guidelines.md` for complete color system documentation with examples
 - ✅ User avatars in AI automation section (Rigobot + 4 diverse learners, overlapping design)
 - ✅ Expandable card functionality with detailed descriptions for each learning feature
 - ✅ Full Stack Career Program page with language-aware routing (English: /us/career-programs/full-stack, Spanish: /es/programas-de-carrera/full-stack)
+- ✅ Debug bubble with development utilities (theme toggle, language switch, sitemap viewer, component showcase)
+
+## Debug Mode
+
+The DebugBubble provides development and marketing utilities for testing and content preview.
+
+### Visibility Rules
+- **Development**: Always visible (no action required)
+- **Production**: Add `?debug=true` to any URL to enable debug mode
+- Debug mode persists across page navigation via sessionStorage
+
+### Features Available
+- Theme toggle (light/dark mode)
+- Language switcher (EN/ES)
+- Sitemap viewer with search
+- Component showcase access
+- Sitemap cache management
+
+### Authentication
+- Uses 4Geeks Breathecode API token for validation
+- Token stored in localStorage with key `breathecode_token`
+- Manual token entry via input field in debug bubble
+- "Clear token" button to reset authentication
+
+### Key Files
+- `client/src/components/DebugBubble.tsx` - Main debug UI component
+- `client/src/hooks/useDebugAuth.ts` - Authentication and debug mode logic
 
 ## YAML-Based Content Management System
 

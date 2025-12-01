@@ -71,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
+      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
         method: "GET",
         headers: {
           "Authorization": `Token ${token}`,
