@@ -381,3 +381,49 @@ footer:
       type: string
       required: true
       example: "2024 4Geeks. All rights reserved."
+
+# Homepage Section Types
+
+icon_feature_grid:
+  component: "IconFeatureGridSection"
+  file: "client/src/components/home/IconFeatureGridSection.tsx"
+  description: "Grid of feature cards with custom icons, titles, descriptions, and optional links"
+  
+  when_to_use: |
+    Use to highlight key platform benefits or features.
+    Great for landing pages to quickly communicate value propositions.
+    Typically shows 4 cards for a balanced grid layout.
+  
+  fields:
+    - name: title
+      type: string
+      required: true
+      description: "Section heading displayed above the grid"
+      example: "Our mission is to get you into tech."
+      
+    - name: features
+      type: array
+      required: true
+      description: "Feature cards (recommended: 4 cards for balanced grid)"
+      items:
+        - name: icon
+          type: string
+          description: "URL or path to icon image (relative to public folder)"
+          example: "/generated_images/Rocket_launch_icon.webp"
+        - name: title
+          type: string
+          description: "Feature card title"
+          example: "Fast Launch"
+        - name: description
+          type: string
+          description: "Brief description of the feature"
+          example: "Get started quickly with our streamlined onboarding"
+        - name: color
+          type: string
+          description: "Tailwind background color class for icon container (include dark mode variant)"
+          example: "bg-blue-100 dark:bg-blue-900/20"
+        - name: link_url
+          type: string
+          required: false
+          description: "Optional URL for 'See more' link"
+          example: "/career-programs"

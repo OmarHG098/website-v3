@@ -132,6 +132,21 @@ export const footerSectionSchema = z.object({
   copyright_text: z.string(),
 });
 
+// Homepage Section Types
+export const iconFeatureItemSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+  color: z.string(),
+  link_url: z.string().optional(),
+});
+
+export const iconFeatureGridSectionSchema = z.object({
+  type: z.literal("icon_feature_grid"),
+  title: z.string(),
+  features: z.array(iconFeatureItemSchema),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   programOverviewSectionSchema,
@@ -144,6 +159,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
   credibilitySectionSchema,
   footerCtaSectionSchema,
   footerSectionSchema,
+  iconFeatureGridSectionSchema,
 ]);
 
 export const careerProgramSchema = z.object({
@@ -171,5 +187,18 @@ export type StatItem = z.infer<typeof statItemSchema>;
 export type CredibilitySection = z.infer<typeof credibilitySectionSchema>;
 export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
+export type IconFeatureItem = z.infer<typeof iconFeatureItemSchema>;
+export type IconFeatureGridSection = z.infer<typeof iconFeatureGridSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
+
+// Homepage Content Schema
+export const homepageContentSchema = z.object({
+  meta: z.object({
+    page_title: z.string(),
+    description: z.string(),
+  }),
+  sections: z.array(sectionSchema),
+});
+
+export type HomepageContent = z.infer<typeof homepageContentSchema>;
