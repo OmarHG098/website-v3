@@ -109,7 +109,7 @@ export default function LandingHero() {
             <svg 
               width="96" 
               height="96" 
-              viewBox="0 0 320 320" 
+              viewBox="0 0 100 120" 
               fill="none" 
               className="opacity-80"
               aria-label={t("hero.altArrow")}
@@ -117,44 +117,45 @@ export default function LandingHero() {
               <style>
                 {`
                   @keyframes draw {
-                    0% { stroke-dashoffset: 600; }
+                    0% { stroke-dashoffset: 250; }
                     100% { stroke-dashoffset: 0; }
                   }
                   @keyframes drawArrow {
-                    0% { stroke-dashoffset: 100; opacity: 0; }
-                    80% { stroke-dashoffset: 100; opacity: 0; }
+                    0% { stroke-dashoffset: 30; opacity: 0; }
+                    70% { stroke-dashoffset: 30; opacity: 0; }
                     100% { stroke-dashoffset: 0; opacity: 1; }
                   }
                   .arrow-path {
-                    stroke-dasharray: 600;
-                    stroke-dashoffset: 600;
+                    stroke-dasharray: 250;
+                    stroke-dashoffset: 250;
                     animation: draw 1.5s ease-out forwards;
                   }
                   .arrow-head {
-                    stroke-dasharray: 100;
-                    stroke-dashoffset: 100;
+                    stroke-dasharray: 30;
+                    stroke-dashoffset: 30;
                     animation: drawArrow 1.8s ease-out forwards;
                   }
                 `}
               </style>
               <path 
                 className="arrow-path"
-                d="M40 30 
-                   C 120 20, 200 40, 240 100
-                   C 260 140, 220 160, 180 140
-                   C 140 120, 140 160, 160 200
-                   L 160 260"
+                d="M10 8
+                   C 35 5, 65 10, 80 30
+                   C 95 50, 85 65, 65 60
+                   C 45 55, 35 65, 45 80
+                   C 55 95, 55 75, 50 65
+                   C 45 55, 50 70, 50 95"
                 stroke="currentColor" 
-                strokeWidth="8" 
+                strokeWidth="3" 
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
               />
               <path 
                 className="arrow-head"
-                d="M140 240 L160 270 L180 240"
+                d="M40 88 L50 105 L60 88"
                 stroke="currentColor" 
-                strokeWidth="8" 
+                strokeWidth="3" 
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
