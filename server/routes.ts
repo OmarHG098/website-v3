@@ -81,6 +81,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (response.status === 200) {
         res.json({ valid: true });
+        c
       } else {
         res.json({ valid: false });
       }
