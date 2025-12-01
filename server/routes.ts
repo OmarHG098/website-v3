@@ -71,10 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const url = `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`;
-      console.log(`[debug] Validating token against: ${url}`);
-      
-      const response = await fetch(url, {
+      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
         method: "GET",
         headers: {
           "Authorization": `Token ${token}`,
@@ -82,17 +79,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       });
 
-      const responseText = await response.text();
-      console.log(`[debug] Response status: ${response.status}, body: ${responseText}`);
-
       if (response.status === 200) {
         res.json({ valid: true });
       } else {
-        res.json({ valid: false, status: response.status, message: responseText });
+        res.json({ valid: false });
       }
     } catch (error) {
       console.error("Token validation error:", error);
-      res.json({ valid: false, error: String(error) });
+      res.json({ valid: false });
     }
   });
 
