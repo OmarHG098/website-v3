@@ -223,21 +223,18 @@ export function DebugBubble() {
               )}
               
               <div className="p-2 space-y-1">
-                <button
-                  onClick={() => setMenuView("sitemap")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-sitemap-menu"
-                >
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                  <button
+                    onClick={() => setMenuView("sitemap")}
+                    className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
+                    data-testid="button-sitemap-menu"
+                  >
                     <IconMap className="h-4 w-4 text-muted-foreground" />
                     <span>Sitemap</span>
-                  </div>
+                  </button>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        clearSitemapCache();
-                      }}
+                      onClick={clearSitemapCache}
                       disabled={cacheClearStatus === "loading"}
                       className="p-1 rounded hover-elevate disabled:opacity-50"
                       data-testid="button-clear-sitemap-cache"
@@ -251,9 +248,15 @@ export function DebugBubble() {
                         <IconRefresh className="h-3.5 w-3.5" />
                       )}
                     </button>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <button
+                      onClick={() => setMenuView("sitemap")}
+                      className="p-0.5 rounded hover-elevate"
+                      data-testid="button-sitemap-chevron"
+                    >
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </button>
                   </div>
-                </button>
+                </div>
                 
                 <button
                   onClick={() => setMenuView("components")}

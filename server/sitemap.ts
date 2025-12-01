@@ -2,8 +2,22 @@ import * as fs from "fs";
 import * as path from "path";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
-const BASE_URL = "https://ai-reskilling-platform.replit.app";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function getBaseUrl(): string {
+  // Use explicit SITE_URL if set
+  if (process.env.SITE_URL) {
+    return process.env.SITE_URL.replace(/\/$/, ""); // Remove trailing slash
+  }
+  
+  // Fall back to Replit's domain
+  if (process.env.REPLIT_DEV_DOMAIN) {
+    return `https://${process.env.REPLIT_DEV_DOMAIN}`;
+  }
+  
+  // Development fallback
+  return "http://localhost:5000";
+}
 
 interface SitemapCache {
   xml: string;
@@ -59,49 +73,49 @@ function buildSitemapXml(): string {
 
   // Static pages
   urls.push({
-    loc: `${BASE_URL}/`,
+    loc: `${getBaseUrl()}/`,
     lastmod: today,
     changefreq: "weekly",
     priority: 1.0,
   });
 
   urls.push({
-    loc: `${BASE_URL}/learning-paths`,
+    loc: `${getBaseUrl()}/learning-paths`,
     lastmod: today,
     changefreq: "weekly",
     priority: 0.9,
   });
 
   urls.push({
-    loc: `${BASE_URL}/career-paths`,
+    loc: `${getBaseUrl()}/career-paths`,
     lastmod: today,
     changefreq: "weekly",
     priority: 0.9,
   });
 
   urls.push({
-    loc: `${BASE_URL}/skill-boosters`,
+    loc: `${getBaseUrl()}/skill-boosters`,
     lastmod: today,
     changefreq: "weekly",
     priority: 0.9,
   });
 
   urls.push({
-    loc: `${BASE_URL}/tool-mastery`,
+    loc: `${getBaseUrl()}/tool-mastery`,
     lastmod: today,
     changefreq: "weekly",
     priority: 0.9,
   });
 
   urls.push({
-    loc: `${BASE_URL}/career-programs`,
+    loc: `${getBaseUrl()}/career-programs`,
     lastmod: today,
     changefreq: "weekly",
     priority: 0.9,
   });
 
   urls.push({
-    loc: `${BASE_URL}/dashboard`,
+    loc: `${getBaseUrl()}/dashboard`,
     lastmod: today,
     changefreq: "daily",
     priority: 0.8,
@@ -113,7 +127,7 @@ function buildSitemapXml(): string {
     // English version
     if (program.locales.includes("en")) {
       urls.push({
-        loc: `${BASE_URL}/us/career-programs/${program.slug}`,
+        loc: `${getBaseUrl()}/us/career-programs/${program.slug}`,
         lastmod: today,
         changefreq: "weekly",
         priority: 0.8,
@@ -123,7 +137,7 @@ function buildSitemapXml(): string {
     // Spanish version
     if (program.locales.includes("es")) {
       urls.push({
-        loc: `${BASE_URL}/es/programas-de-carrera/${program.slug}`,
+        loc: `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`,
         lastmod: today,
         changefreq: "weekly",
         priority: 0.8,
@@ -219,26 +233,26 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   const urls: Array<{ loc: string; label: string }> = [];
 
   // Static pages
-  urls.push({ loc: `${BASE_URL}/`, label: "Home" });
-  urls.push({ loc: `${BASE_URL}/learning-paths`, label: "Learning Paths" });
-  urls.push({ loc: `${BASE_URL}/career-paths`, label: "Career Paths" });
-  urls.push({ loc: `${BASE_URL}/skill-boosters`, label: "Skill Boosters" });
-  urls.push({ loc: `${BASE_URL}/tool-mastery`, label: "Tool Mastery" });
-  urls.push({ loc: `${BASE_URL}/career-programs`, label: "Career Programs" });
-  urls.push({ loc: `${BASE_URL}/dashboard`, label: "Dashboard" });
+  urls.push({ loc: `${getBaseUrl()}/`, label: "Home" });
+  urls.push({ loc: `${getBaseUrl()}/learning-paths`, label: "Learning Paths" });
+  urls.push({ loc: `${getBaseUrl()}/career-paths`, label: "Career Paths" });
+  urls.push({ loc: `${getBaseUrl()}/skill-boosters`, label: "Skill Boosters" });
+  urls.push({ loc: `${getBaseUrl()}/tool-mastery`, label: "Tool Mastery" });
+  urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
+  urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
 
   // Dynamic career program pages from YAML
   const programs = getAvailablePrograms();
   for (const program of programs) {
     if (program.locales.includes("en")) {
       urls.push({
-        loc: `${BASE_URL}/us/career-programs/${program.slug}`,
+        loc: `${getBaseUrl()}/us/career-programs/${program.slug}`,
         label: `${program.slug} (EN)`,
       });
     }
     if (program.locales.includes("es")) {
       urls.push({
-        loc: `${BASE_URL}/es/programas-de-carrera/${program.slug}`,
+        loc: `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`,
         label: `${program.slug} (ES)`,
       });
     }
