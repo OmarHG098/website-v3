@@ -11,7 +11,7 @@
        Q 220 170, 200 210
        Q 180 250, 170 300
        L 170 340"
-    stroke="currentColor" 
+    stroke="#374151" 
     stroke-width="12" 
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -19,7 +19,7 @@
   />
   <path 
     d="M145 320 L170 360 L195 320"
-    stroke="currentColor" 
+    stroke="#374151" 
     stroke-width="12" 
     stroke-linecap="round"
     stroke-linejoin="round"
