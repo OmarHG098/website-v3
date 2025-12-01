@@ -10,7 +10,47 @@ import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
-import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
+
+function CurvedArrow() {
+  return (
+    <svg
+      width="80"
+      height="100"
+      viewBox="0 0 80 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="opacity-70"
+      aria-hidden="true"
+    >
+      <path
+        d="M40 2 C20 10, 10 25, 15 40 C20 55, 45 55, 50 40 C55 25, 40 15, 30 25 C20 35, 25 50, 40 55 L40 90"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        className="animate-draw-stroke"
+        style={{
+          strokeDasharray: 250,
+          strokeDashoffset: 250,
+        }}
+      />
+      <path
+        d="M32 82 L40 95 L48 82"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        className="animate-draw-arrowhead"
+        style={{
+          strokeDasharray: 30,
+          strokeDashoffset: 30,
+        }}
+      />
+    </svg>
+  );
+}
 
 export default function LandingHero() {
   const { t } = useTranslation();
@@ -107,12 +147,7 @@ export default function LandingHero() {
 
           {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
-            <img
-              src={curvedArrow}
-              alt={t("hero.altArrow")}
-              className="w-24 h-auto opacity-80 animate-draw-arrow"
-              loading="lazy"
-            />
+            <CurvedArrow />
           </div>
 
           {/* CTA Button */}

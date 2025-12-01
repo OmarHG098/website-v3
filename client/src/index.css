@@ -329,3 +329,29 @@
     opacity: 0.8;
   }
 }
+
+@keyframes draw-stroke {
+  0% {
+    stroke-dashoffset: 250;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-arrowhead {
+  0% {
+    stroke-dashoffset: 30;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-stroke {
+  animation: draw-stroke 1.5s ease-out 0.3s forwards;
+}
+
+.animate-draw-arrowhead {
+  animation: draw-arrowhead 0.4s ease-out 1.6s forwards;
+}
