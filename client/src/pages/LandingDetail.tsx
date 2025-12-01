@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useTranslation } from "react-i18next";
@@ -22,6 +23,88 @@ export default function LandingDetail() {
     },
     enabled: !!slug,
   });
+
+  useEffect(() => {
+    if (!landing?.meta) return;
+
+    const meta = landing.meta;
+    const originalTitle = document.title;
+    const addedElements: Element[] = [];
+    const modifiedElements: Map<Element, string> = new Map();
+    
+    if (meta.page_title) {
+      document.title = meta.page_title;
+    }
+    
+    const setMeta = (name: string, content: string, isProperty = false) => {
+      const attr = isProperty ? "property" : "name";
+      let element = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attr, name);
+        document.head.appendChild(element);
+        addedElements.push(element);
+      } else {
+        modifiedElements.set(element, element.getAttribute("content") || "");
+      }
+      element.setAttribute("content", content);
+    };
+
+    if (meta.description) {
+      setMeta("description", meta.description);
+      setMeta("og:description", meta.description, true);
+    }
+
+    if (meta.robots) {
+      setMeta("robots", meta.robots);
+    }
+
+    if (meta.og_image) {
+      setMeta("og:image", meta.og_image, true);
+    }
+
+    if (meta.page_title) {
+      setMeta("og:title", meta.page_title, true);
+    }
+
+    let originalCanonical: string | null = null;
+    let addedCanonical = false;
+    
+    if (meta.canonical_url) {
+      let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "canonical";
+        document.head.appendChild(link);
+        addedCanonical = true;
+      } else {
+        originalCanonical = link.href;
+      }
+      link.href = meta.canonical_url;
+    }
+
+    return () => {
+      document.title = originalTitle;
+      
+      addedElements.forEach(el => el.remove());
+      
+      modifiedElements.forEach((originalValue, element) => {
+        if (originalValue) {
+          element.setAttribute("content", originalValue);
+        } else {
+          element.removeAttribute("content");
+        }
+      });
+      
+      if (addedCanonical) {
+        const canonicalLink = document.querySelector('link[rel="canonical"]');
+        if (canonicalLink) canonicalLink.remove();
+      } else if (originalCanonical !== null) {
+        const canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+        if (canonicalLink) canonicalLink.href = originalCanonical;
+      }
+    };
+  }, [landing]);
 
   if (isLoading) {
     return (
