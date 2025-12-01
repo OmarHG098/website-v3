@@ -1,0 +1,31 @@
+# Homepage Content - Spanish
+# This file defines sections for the homepage that marketing can edit
+
+meta:
+  page_title: "La Plataforma de Recapacitación con IA | Aprende Tecnología"
+  description: "Transforma tu carrera con aprendizaje impulsado por IA. Únete a miles de graduados exitosos en tecnología."
+
+sections:
+  - type: icon_feature_grid
+    title: "Nuestra misión es llevarte a la tecnología."
+    features:
+      - icon: "/generated_images/Rocket_launch_icon_76306c53.webp"
+        title: "Inicio Rápido"
+        description: "Comienza rápidamente con nuestra incorporación simplificada y currículo estructurado"
+        color: "bg-blue-100 dark:bg-blue-900/20"
+        link_url: "/career-programs"
+      - icon: "/generated_images/Community_network_icon_a5c67162.webp"
+        title: "Comunidad Global"
+        description: "Únete a miles de estudiantes en todo el mundo en el mismo camino hacia el dominio tecnológico"
+        color: "bg-green-100 dark:bg-green-900/20"
+        link_url: "/career-programs"
+      - icon: "/generated_images/Security_shield_icon_e948888d.webp"
+        title: "Plataforma Segura"
+        description: "Tu progreso, proyectos y datos personales siempre están protegidos"
+        color: "bg-red-100 dark:bg-red-900/20"
+        link_url: "/career-programs"
+      - icon: "/generated_images/Lightning_speed_icon_7822b42c.webp"
+        title: "Resultados Rápidos"
+        description: "Ve progreso medible en semanas con nuestra metodología de aprendizaje probada"
+        color: "bg-yellow-100 dark:bg-yellow-900/20"
+        link_url: "/career-programs"
