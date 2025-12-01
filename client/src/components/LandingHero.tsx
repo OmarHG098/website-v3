@@ -10,6 +10,7 @@ import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
+import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
 
 export default function LandingHero() {
   const { t } = useTranslation();
@@ -106,62 +107,12 @@ export default function LandingHero() {
 
           {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
-            <svg 
-              width="80" 
-              height="104" 
-              viewBox="0 0 200 260" 
-              fill="none" 
-              className="opacity-80"
-              aria-label={t("hero.altArrow")}
-            >
-              <style>
-                {`
-                  @keyframes draw {
-                    0% { stroke-dashoffset: 450; }
-                    100% { stroke-dashoffset: 0; }
-                  }
-                  @keyframes drawArrow {
-                    0% { stroke-dashoffset: 80; opacity: 0; }
-                    70% { stroke-dashoffset: 80; opacity: 0; }
-                    100% { stroke-dashoffset: 0; opacity: 1; }
-                  }
-                  .arrow-path {
-                    stroke-dasharray: 450;
-                    stroke-dashoffset: 450;
-                    animation: draw 1.5s ease-out forwards;
-                  }
-                  .arrow-head {
-                    stroke-dasharray: 80;
-                    stroke-dashoffset: 80;
-                    animation: drawArrow 1.8s ease-out forwards;
-                  }
-                `}
-              </style>
-              <path 
-                className="arrow-path"
-                d="M15 25
-                   C 50 15, 100 20, 140 50
-                   C 170 75, 175 105, 150 120
-                   C 125 135, 95 125, 85 100
-                   C 75 75, 95 55, 120 65
-                   C 145 75, 150 100, 135 125
-                   C 120 150, 110 175, 110 210"
-                stroke="#374151" 
-                strokeWidth="10" 
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-              <path 
-                className="arrow-head"
-                d="M90 195 L110 235 L130 195"
-                stroke="#374151" 
-                strokeWidth="10" 
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-            </svg>
+            <img
+              src={curvedArrow}
+              alt={t("hero.altArrow")}
+              className="w-24 h-auto opacity-80"
+              loading="lazy"
+            />
           </div>
 
           {/* CTA Button */}
