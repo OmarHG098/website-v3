@@ -156,13 +156,21 @@ export const careerProgramSchema = z.object({
   sections: z.array(sectionSchema),
 });
 
+export const landingPageMetaSchema = z.object({
+  page_title: z.string(),
+  description: z.string(),
+  robots: z.string().default("index, follow"),
+  og_image: z.string().optional(),
+  canonical_url: z.string().optional(),
+  expiry_date: z.string().optional(),
+  priority: z.number().min(0).max(1).default(0.8),
+  change_frequency: z.enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]).default("weekly"),
+});
+
 export const landingPageSchema = z.object({
   slug: z.string(),
   title: z.string(),
-  meta: z.object({
-    page_title: z.string(),
-    description: z.string(),
-  }),
+  meta: landingPageMetaSchema,
   sections: z.array(sectionSchema),
 });
 
@@ -183,4 +191,5 @@ export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
+export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
 export type LandingPage = z.infer<typeof landingPageSchema>;
