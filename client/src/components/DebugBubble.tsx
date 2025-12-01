@@ -26,6 +26,8 @@ import {
   IconChevronRight,
   IconRefresh,
   IconCheck,
+  IconSearch,
+  IconExternalLink,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,7 +52,12 @@ const componentsList = [
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
 ];
 
-type MenuView = "main" | "components";
+type MenuView = "main" | "components" | "sitemap";
+
+interface SitemapUrl {
+  loc: string;
+  label: string;
+}
 
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
@@ -64,6 +71,9 @@ export function DebugBubble() {
     return "light";
   });
   const [cacheClearStatus, setCacheClearStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [sitemapUrls, setSitemapUrls] = useState<SitemapUrl[]>([]);
+  const [sitemapSearch, setSitemapSearch] = useState("");
+  const [sitemapLoading, setSitemapLoading] = useState(false);
 
   // Determine initial menu view based on current page
   const getDefaultMenuView = (): MenuView => {
@@ -79,16 +89,39 @@ export function DebugBubble() {
   useEffect(() => {
     if (!open) {
       setMenuView(getDefaultMenuView());
+      setSitemapSearch("");
     }
   }, [location]);
+
+  // Fetch sitemap URLs when entering sitemap view
+  useEffect(() => {
+    if (menuView === "sitemap" && sitemapUrls.length === 0) {
+      setSitemapLoading(true);
+      fetch("/api/debug/sitemap-urls")
+        .then((res) => res.json())
+        .then((data) => {
+          setSitemapUrls(data);
+          setSitemapLoading(false);
+        })
+        .catch(() => setSitemapLoading(false));
+    }
+  }, [menuView]);
 
   // Reset menu view to appropriate default when popover closes
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (!newOpen) {
       setMenuView(getDefaultMenuView());
+      setSitemapSearch("");
     }
   };
+
+  // Filter sitemap URLs by search
+  const filteredSitemapUrls = sitemapUrls.filter(
+    (url) =>
+      url.label.toLowerCase().includes(sitemapSearch.toLowerCase()) ||
+      url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
+  );
 
   // In production, don't render if not validated or still loading
   // In development, always show (but with warning if no token)
@@ -190,34 +223,37 @@ export function DebugBubble() {
               )}
               
               <div className="p-2 space-y-1">
-                <div className="flex items-center justify-between px-3 py-2">
-                  <a
-                    href="/sitemap.xml"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 rounded-md text-sm hover:underline cursor-pointer"
-                    data-testid="link-sitemap"
-                  >
+                <button
+                  onClick={() => setMenuView("sitemap")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-sitemap-menu"
+                >
+                  <div className="flex items-center gap-3">
                     <IconMap className="h-4 w-4 text-muted-foreground" />
                     <span>Sitemap</span>
-                  </a>
-                  <button
-                    onClick={clearSitemapCache}
-                    disabled={cacheClearStatus === "loading"}
-                    className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs hover-elevate disabled:opacity-50"
-                    data-testid="button-clear-sitemap-cache"
-                    title="Clear sitemap cache"
-                  >
-                    {cacheClearStatus === "loading" ? (
-                      <IconRefresh className="h-3.5 w-3.5 animate-spin" />
-                    ) : cacheClearStatus === "success" ? (
-                      <IconCheck className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
-                    ) : (
-                      <IconRefresh className="h-3.5 w-3.5" />
-                    )}
-                    <span>{cacheClearStatus === "success" ? "Cleared" : "Clear cache"}</span>
-                  </button>
-                </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        clearSitemapCache();
+                      }}
+                      disabled={cacheClearStatus === "loading"}
+                      className="p-1 rounded hover-elevate disabled:opacity-50"
+                      data-testid="button-clear-sitemap-cache"
+                      title="Clear sitemap cache"
+                    >
+                      {cacheClearStatus === "loading" ? (
+                        <IconRefresh className="h-3.5 w-3.5 animate-spin" />
+                      ) : cacheClearStatus === "success" ? (
+                        <IconCheck className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
+                      ) : (
+                        <IconRefresh className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </button>
                 
                 <button
                   onClick={() => setMenuView("components")}
@@ -270,7 +306,7 @@ export function DebugBubble() {
                 </button>
               </div>
             </>
-          ) : (
+          ) : menuView === "components" ? (
             <>
               <div className="p-2 border-b">
                 <button
@@ -307,6 +343,84 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
+                </div>
+              </ScrollArea>
+            </>
+          ) : (
+            <>
+              <div className="p-2 border-b">
+                <button
+                  onClick={() => setMenuView("main")}
+                  className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover-elevate w-full"
+                  data-testid="button-back-to-main-sitemap"
+                >
+                  <IconArrowLeft className="h-4 w-4" />
+                  <span>Back to main</span>
+                </button>
+              </div>
+              
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-sm">Sitemap URLs</h3>
+                    <p className="text-xs text-muted-foreground">{sitemapUrls.length} URLs indexed</p>
+                  </div>
+                  <a
+                    href="/sitemap.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded hover-elevate"
+                    title="Open sitemap.xml"
+                    data-testid="link-sitemap-xml"
+                  >
+                    <IconExternalLink className="h-4 w-4 text-muted-foreground" />
+                  </a>
+                </div>
+              </div>
+              
+              <div className="p-2 border-b">
+                <div className="relative">
+                  <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search URLs..."
+                    value={sitemapSearch}
+                    onChange={(e) => setSitemapSearch(e.target.value)}
+                    className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                    data-testid="input-sitemap-search"
+                  />
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[240px]">
+                <div className="p-2 space-y-1">
+                  {sitemapLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : filteredSitemapUrls.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No URLs found
+                    </div>
+                  ) : (
+                    filteredSitemapUrls.map((url) => (
+                      <a
+                        key={url.loc}
+                        href={url.loc}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer group"
+                        data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium">{url.label}</div>
+                          <div className="text-xs text-muted-foreground truncate">{url.loc.replace('https://ai-reskilling-platform.replit.app', '')}</div>
+                        </div>
+                        <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 flex-shrink-0" />
+                      </a>
+                    ))
+                  )}
                 </div>
               </ScrollArea>
             </>

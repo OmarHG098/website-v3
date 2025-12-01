@@ -214,3 +214,35 @@ export function getSitemapCacheStatus(): {
     expiresInMinutes: Math.max(0, Math.round(expiresInMs / 1000 / 60)),
   };
 }
+
+export function getSitemapUrls(): Array<{ loc: string; label: string }> {
+  const urls: Array<{ loc: string; label: string }> = [];
+
+  // Static pages
+  urls.push({ loc: `${BASE_URL}/`, label: "Home" });
+  urls.push({ loc: `${BASE_URL}/learning-paths`, label: "Learning Paths" });
+  urls.push({ loc: `${BASE_URL}/career-paths`, label: "Career Paths" });
+  urls.push({ loc: `${BASE_URL}/skill-boosters`, label: "Skill Boosters" });
+  urls.push({ loc: `${BASE_URL}/tool-mastery`, label: "Tool Mastery" });
+  urls.push({ loc: `${BASE_URL}/career-programs`, label: "Career Programs" });
+  urls.push({ loc: `${BASE_URL}/dashboard`, label: "Dashboard" });
+
+  // Dynamic career program pages from YAML
+  const programs = getAvailablePrograms();
+  for (const program of programs) {
+    if (program.locales.includes("en")) {
+      urls.push({
+        loc: `${BASE_URL}/us/career-programs/${program.slug}`,
+        label: `${program.slug} (EN)`,
+      });
+    }
+    if (program.locales.includes("es")) {
+      urls.push({
+        loc: `${BASE_URL}/es/programas-de-carrera/${program.slug}`,
+        label: `${program.slug} (ES)`,
+      });
+    }
+  }
+
+  return urls;
+}

@@ -5,7 +5,7 @@ import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
 import { careerProgramSchema, type CareerProgram } from "@shared/schema";
-import { getSitemap, clearSitemapCache, getSitemapCacheStatus } from "./sitemap";
+import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -122,6 +122,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/debug/sitemap-cache-status", (req, res) => {
     const status = getSitemapCacheStatus();
     res.json(status);
+  });
+
+  // Sitemap URLs as JSON (for debug tools)
+  app.get("/api/debug/sitemap-urls", (req, res) => {
+    const urls = getSitemapUrls();
+    res.json(urls);
   });
 
   // Clear sitemap cache (requires token validation)
