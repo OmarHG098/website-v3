@@ -54,10 +54,23 @@ const componentsList = [
 
 type MenuView = "main" | "components" | "sitemap";
 
+const STORAGE_KEY = "debug-bubble-menu-view";
+
 interface SitemapUrl {
   loc: string;
   label: string;
 }
+
+// Get persisted menu view from sessionStorage
+const getPersistedMenuView = (): MenuView => {
+  if (typeof window !== "undefined") {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored === "main" || stored === "components" || stored === "sitemap") {
+      return stored;
+    }
+  }
+  return "main";
+};
 
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
@@ -76,23 +89,16 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
 
-  // Determine initial menu view based on current page
-  const getDefaultMenuView = (): MenuView => {
-    if (location.startsWith("/component-showcase")) {
-      return "components";
+  // Initialize menu view from sessionStorage (persisted across refreshes)
+  const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
+
+  // Wrapper to persist menu view changes to sessionStorage
+  const setMenuView = (view: MenuView) => {
+    setMenuViewState(view);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(STORAGE_KEY, view);
     }
-    return "main";
   };
-
-  const [menuView, setMenuView] = useState<MenuView>(getDefaultMenuView);
-
-  // Update menu view when location changes (while popover is closed)
-  useEffect(() => {
-    if (!open) {
-      setMenuView(getDefaultMenuView());
-      setSitemapSearch("");
-    }
-  }, [location]);
 
   // Fetch sitemap URLs when entering sitemap view
   useEffect(() => {
@@ -108,11 +114,10 @@ export function DebugBubble() {
     }
   }, [menuView]);
 
-  // Reset menu view to appropriate default when popover closes
+  // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (!newOpen) {
-      setMenuView(getDefaultMenuView());
       setSitemapSearch("");
       setShowSitemapSearch(false);
     }
