@@ -309,49 +309,4 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
-
-  /* Arrow drawing animation - reveals from top to bottom */
-  .animate-draw-arrow {
-    animation: draw-arrow 1.2s ease-out forwards;
-  }
-}
-
-@keyframes draw-arrow {
-  0% {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.8;
-  }
-  100% {
-    clip-path: inset(0 0 0% 0);
-    opacity: 0.8;
-  }
-}
-
-@keyframes draw-stroke {
-  0% {
-    stroke-dashoffset: 250;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw-arrowhead {
-  0% {
-    stroke-dashoffset: 30;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-.animate-draw-stroke {
-  animation: draw-stroke 1.5s ease-out 0.3s forwards;
-}
-
-.animate-draw-arrowhead {
-  animation: draw-arrowhead 0.4s ease-out 1.6s forwards;
 }
