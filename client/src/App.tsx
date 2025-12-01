@@ -15,6 +15,7 @@ const CareerPaths = lazy(() => import("@/pages/CareerPaths"));
 const SkillBoosters = lazy(() => import("@/pages/SkillBoosters"));
 const ToolMastery = lazy(() => import("@/pages/ToolMastery"));
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
+const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 
 function LoadingFallback() {
   return (
@@ -41,6 +42,7 @@ function Router() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
+        <Route path="/component-showcase" component={ComponentShowcase} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
