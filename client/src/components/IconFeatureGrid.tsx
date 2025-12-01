@@ -18,10 +18,10 @@ export default function IconFeatureGrid({ title, features }: IconFeatureGridProp
   const { t } = useTranslation();
   
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className="container mx-auto px-8 md:px-12 lg:px-16 py-16">
       <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
       
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {features.map((feature, index) => (
           <div key={index} className="group" data-testid={`feature-icon-${index}`}>
             <div 
