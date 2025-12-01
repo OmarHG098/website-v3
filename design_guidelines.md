@@ -11,6 +11,99 @@
 - Clean, spacious layouts that reduce cognitive load
 - Progress visualization as a motivational element
 
+---
+
+## Color System (STRICT - No Exceptions)
+
+**IMPORTANT**: Only use the semantic color tokens defined below. NEVER use hardcoded colors like `bg-blue-500`, `text-[#ff0000]`, `text-red-600`, or any Tailwind color palette classes. All colors MUST come from CSS variables via semantic class names.
+
+### Brand Colors
+
+| Token | HSL Value | Hex Equivalent | Usage |
+|-------|-----------|----------------|-------|
+| `primary` | `212 85% 53%` | `#2563EB` | Primary buttons, links, focus rings, accents |
+| `destructive` | `0 75% 45%` | `#C41E1E` | Error states, delete actions, warnings |
+
+### Semantic Color Tokens
+
+#### Backgrounds
+| Tailwind Class | Usage |
+|----------------|-------|
+| `bg-background` | Main page background |
+| `bg-card` | Card surfaces, elevated containers |
+| `bg-popover` | Dropdown menus, tooltips, popovers |
+| `bg-muted` | Subtle backgrounds, disabled states |
+| `bg-primary` | Primary action buttons |
+| `bg-secondary` | Secondary buttons, tags |
+| `bg-accent` | Hover states, subtle highlights |
+| `bg-destructive` | Error/danger buttons |
+| `bg-sidebar` | Sidebar background |
+
+#### Text Colors
+| Tailwind Class | Usage |
+|----------------|-------|
+| `text-foreground` | Primary text (headings, body) |
+| `text-muted-foreground` | Secondary text, captions, metadata |
+| `text-primary` | Links, emphasized text (use sparingly) |
+| `text-primary-foreground` | Text on primary backgrounds |
+| `text-destructive` | Error messages |
+| `text-card-foreground` | Text on cards |
+
+#### Borders
+| Tailwind Class | Usage |
+|----------------|-------|
+| `border-border` | Default borders |
+| `border-input` | Input field borders |
+| `border-card-border` | Card borders |
+| `border-primary` | Focus rings, active states |
+
+### Chart/Data Visualization Colors
+Only for charts and graphs - use via `chart-1` through `chart-5`:
+| Token | Color | Purpose |
+|-------|-------|---------|
+| `chart-1` | Blue | Primary data series |
+| `chart-2` | Coral | Secondary data series |
+| `chart-3` | Teal | Tertiary data series |
+| `chart-4` | Purple | Quaternary data series |
+| `chart-5` | Gold | Quinary data series |
+
+### Forbidden Practices
+
+**NEVER do this:**
+```jsx
+// Hardcoded Tailwind colors
+<div className="bg-blue-500 text-white">  // WRONG
+<span className="text-red-600">Error</span>  // WRONG
+<div className="bg-gray-100">  // WRONG
+
+// Arbitrary values
+<div className="bg-[#2563EB]">  // WRONG
+<span className="text-[rgb(255,0,0)]">  // WRONG
+```
+
+**ALWAYS do this:**
+```jsx
+// Semantic tokens
+<div className="bg-primary text-primary-foreground">  // CORRECT
+<span className="text-destructive">Error</span>  // CORRECT
+<div className="bg-muted">  // CORRECT
+
+// Using CSS variables if absolutely needed
+style={{ color: 'hsl(var(--primary))' }}  // CORRECT (rare cases only)
+```
+
+### Special Cases
+
+**Status Colors** (already defined in Tailwind config):
+- `status-online` - Green for online/success indicators
+- `status-away` - Amber for away/warning indicators  
+- `status-busy` - Red for busy/error indicators
+- `status-offline` - Gray for offline/inactive indicators
+
+**Star Ratings**: Use `text-primary` for filled stars, `text-muted` for empty stars.
+
+---
+
 ## Typography System
 
 **Font Family**: Lato (via Google Fonts CDN)

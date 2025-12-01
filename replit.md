@@ -18,10 +18,24 @@ A minimalistic Learning Management System (LMS) web application designed as a ma
 - **Backend**: Express (currently in-memory storage, will integrate with 4geeks Breathecode API)
 - **Typography**: Lato font family
 
-## Color System
-- **Primary**: hsl(212 85% 53%) - Blue
-- **Accent**: hsl(9 75% 61%) - Coral
-- See `design_guidelines.md` for complete color palette and design system
+## Color System (STRICT ENFORCEMENT)
+
+**CRITICAL RULE**: ONLY use semantic color tokens. NEVER use hardcoded Tailwind colors (e.g., `bg-blue-500`, `text-red-600`, `bg-gray-100`) or arbitrary values (e.g., `bg-[#2563EB]`).
+
+### Brand Colors
+- **Primary**: `hsl(212 85% 53%)` - Blue (use via `bg-primary`, `text-primary`)
+- **Destructive**: `hsl(0 75% 45%)` - Red (use via `bg-destructive`, `text-destructive`)
+
+### Allowed Color Classes
+| Purpose | Use These Classes |
+|---------|-------------------|
+| Backgrounds | `bg-background`, `bg-card`, `bg-muted`, `bg-primary`, `bg-secondary`, `bg-accent`, `bg-destructive`, `bg-popover`, `bg-sidebar` |
+| Text | `text-foreground`, `text-muted-foreground`, `text-primary`, `text-primary-foreground`, `text-destructive`, `text-card-foreground` |
+| Borders | `border-border`, `border-input`, `border-primary`, `border-card-border` |
+| Charts | `chart-1` through `chart-5` |
+| Status | `status-online`, `status-away`, `status-busy`, `status-offline` |
+
+See `design_guidelines.md` for complete color system documentation with examples.
 
 ## Icon Library
 **CRITICAL PREFERENCE**: 
@@ -115,6 +129,7 @@ See `marketing-content/components-registry.yml` for full documentation. Current 
 - Card border radius: 0.8rem throughout the platform
 - Testing: NEVER use playwright for testing - it takes too much time. User prefers manual verification only.
 - Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
+- **Colors: ONLY semantic tokens** - NEVER use hardcoded colors like `bg-blue-500`, `text-red-600`, or arbitrary hex values. Only use semantic classes: `bg-primary`, `text-foreground`, `bg-muted`, etc. See Color System section above.
 
 ## Internationalization (i18n)
 The platform supports multiple languages using react-i18next:
