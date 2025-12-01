@@ -6,7 +6,10 @@ const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 export function useDebugAuth() {
   const [isValidated, setIsValidated] = useState<boolean | null>(null);
+  const [hasToken, setHasToken] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const isDevelopment = import.meta.env.DEV;
 
   useEffect(() => {
     async function validateToken() {
@@ -17,6 +20,7 @@ export function useDebugAuth() {
       if (cachedValidation === "true" && cachedExpiry) {
         const expiryTime = parseInt(cachedExpiry, 10);
         if (Date.now() < expiryTime) {
+          setHasToken(true);
           setIsValidated(true);
           setIsLoading(false);
           return;
@@ -31,10 +35,13 @@ export function useDebugAuth() {
       const token = urlToken || envToken;
 
       if (!token) {
+        setHasToken(false);
         setIsValidated(false);
         setIsLoading(false);
         return;
       }
+
+      setHasToken(true);
 
       // Clean up URL if token was in querystring
       if (urlToken) {
@@ -75,5 +82,5 @@ export function useDebugAuth() {
     validateToken();
   }, []);
 
-  return { isValidated, isLoading };
+  return { isValidated, hasToken, isLoading, isDevelopment };
 }

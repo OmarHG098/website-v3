@@ -10,6 +10,7 @@ import {
   IconSun,
   IconMoon,
   IconX,
+  IconAlertTriangle,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +21,7 @@ import {
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 
 export function DebugBubble() {
-  const { isValidated, isLoading } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -31,10 +32,17 @@ export function DebugBubble() {
     return "light";
   });
 
-  // Don't render if not validated or still loading
-  if (isLoading || !isValidated) {
+  // In production, don't render if not validated or still loading
+  // In development, always show (but with warning if no token)
+  if (isLoading) {
     return null;
   }
+  
+  if (!isDevelopment && !isValidated) {
+    return null;
+  }
+  
+  const showTokenWarning = isDevelopment && !hasToken;
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -77,6 +85,20 @@ export function DebugBubble() {
             <h3 className="font-semibold text-sm">Debug Tools</h3>
             <p className="text-xs text-muted-foreground">Development utilities</p>
           </div>
+          
+          {showTokenWarning && (
+            <div className="p-3 bg-amber-50 dark:bg-amber-950 border-b border-amber-200 dark:border-amber-800">
+              <div className="flex items-start gap-2">
+                <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-medium text-amber-800 dark:text-amber-200">No token detected</p>
+                  <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">
+                    Add <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">?token=xxx</code> to URL or set <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">VITE_BREATHECODE_TOKEN</code>
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           
           <div className="p-2 space-y-1">
             <a
