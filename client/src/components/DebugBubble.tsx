@@ -419,23 +419,23 @@ export function DebugBubble() {
                       No URLs found
                     </div>
                   ) : (
-                    filteredSitemapUrls.map((url) => (
-                      <a
-                        key={url.loc}
-                        href={url.loc}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer group"
-                        data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                      >
-                        <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium">{url.label}</div>
-                          <div className="text-xs text-muted-foreground truncate">{url.loc.replace('https://ai-reskilling-platform.replit.app', '')}</div>
-                        </div>
-                        <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 flex-shrink-0" />
-                      </a>
-                    ))
+                    filteredSitemapUrls.map((url) => {
+                      const path = new URL(url.loc).pathname;
+                      return (
+                        <a
+                          key={url.loc}
+                          href={path}
+                          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                          data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                        >
+                          <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium">{url.label}</div>
+                            <div className="text-xs text-muted-foreground truncate">{path}</div>
+                          </div>
+                        </a>
+                      );
+                    })
                   )}
                 </div>
               </ScrollArea>
