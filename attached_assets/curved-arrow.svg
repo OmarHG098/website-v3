@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="320" height="400" viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="200" height="260" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path 
-    d="M30 20
-       Q 80 15, 130 40
-       Q 180 70, 200 120
-       Q 220 170, 190 190
-       Q 160 210, 140 180
-       Q 120 150, 150 130
-       Q 180 110, 200 140
-       Q 220 170, 200 210
-       Q 180 250, 170 300
-       L 170 340"
+    d="M15 25
+       C 50 15, 100 20, 140 50
+       C 170 75, 175 105, 150 120
+       C 125 135, 95 125, 85 100
+       C 75 75, 95 55, 120 65
+       C 145 75, 150 100, 135 125
+       C 120 150, 110 175, 110 210"
     stroke="#374151" 
-    stroke-width="12" 
+    stroke-width="10" 
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
   />
   <path 
-    d="M145 320 L170 360 L195 320"
+    d="M90 195 L110 235 L130 195"
     stroke="#374151" 
-    stroke-width="12" 
+    stroke-width="10" 
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"

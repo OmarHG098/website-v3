@@ -107,9 +107,9 @@ export default function LandingHero() {
           {/* Curved arrow - hidden on mobile */}
           <div className="hidden lg:flex justify-center mb-4">
             <svg 
-              width="96" 
-              height="120" 
-              viewBox="0 0 320 400" 
+              width="80" 
+              height="104" 
+              viewBox="0 0 200 260" 
               fill="none" 
               className="opacity-80"
               aria-label={t("hero.altArrow")}
@@ -117,7 +117,7 @@ export default function LandingHero() {
               <style>
                 {`
                   @keyframes draw {
-                    0% { stroke-dashoffset: 600; }
+                    0% { stroke-dashoffset: 450; }
                     100% { stroke-dashoffset: 0; }
                   }
                   @keyframes drawArrow {
@@ -126,8 +126,8 @@ export default function LandingHero() {
                     100% { stroke-dashoffset: 0; opacity: 1; }
                   }
                   .arrow-path {
-                    stroke-dasharray: 600;
-                    stroke-dashoffset: 600;
+                    stroke-dasharray: 450;
+                    stroke-dashoffset: 450;
                     animation: draw 1.5s ease-out forwards;
                   }
                   .arrow-head {
@@ -139,27 +139,24 @@ export default function LandingHero() {
               </style>
               <path 
                 className="arrow-path"
-                d="M30 20
-                   Q 80 15, 130 40
-                   Q 180 70, 200 120
-                   Q 220 170, 190 190
-                   Q 160 210, 140 180
-                   Q 120 150, 150 130
-                   Q 180 110, 200 140
-                   Q 220 170, 200 210
-                   Q 180 250, 170 300
-                   L 170 340"
+                d="M15 25
+                   C 50 15, 100 20, 140 50
+                   C 170 75, 175 105, 150 120
+                   C 125 135, 95 125, 85 100
+                   C 75 75, 95 55, 120 65
+                   C 145 75, 150 100, 135 125
+                   C 120 150, 110 175, 110 210"
                 stroke="#374151" 
-                strokeWidth="12" 
+                strokeWidth="10" 
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
               />
               <path 
                 className="arrow-head"
-                d="M145 320 L170 360 L195 320"
+                d="M90 195 L110 235 L130 195"
                 stroke="#374151" 
-                strokeWidth="12" 
+                strokeWidth="10" 
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
