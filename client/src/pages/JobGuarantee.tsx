@@ -38,7 +38,7 @@ export default function JobGuarantee() {
 
         {/* Stats Section */}
         <section 
-          className="py-16 md:py-24 bg-secondary"
+          className="py-16 md:py-24 bg-sky-200"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
@@ -50,10 +50,10 @@ export default function JobGuarantee() {
                 >
                   Does the Job Guarantee Deliver Results You Can Count On?
                 </h2>
-                <p className="text-lg text-primary font-semibold mb-2">
+                <p className="text-xl font-semibold mb-2">
                   Yes, and we've got the numbers to back it up.
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-xl">
                   These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
                   We don't just teach you how to code, we help you build a career you're proud of.
                 </p>
