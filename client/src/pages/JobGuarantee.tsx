@@ -162,7 +162,7 @@ export default function JobGuarantee() {
 
         {/* Available Programs Section */}
         <section 
-          className="py-16 md:py-24 bg-muted"
+          className="py-16 md:py-24 bg-sky-50"
           data-testid="section-programs"
         >
           <div className="container mx-auto px-4">
