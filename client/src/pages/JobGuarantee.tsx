@@ -210,7 +210,7 @@ export default function JobGuarantee() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
               <FeatureCard>
                 <div data-testid="stat-card-0" className="flex items-center gap-6 md:block">
                   <div className="flex-shrink-0 md:mb-6">
