@@ -62,37 +62,37 @@ export default function JobGuarantee() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <FeatureCard>
                 <div data-testid="stat-card-0">
-                  <div className="mb-4">
-                    <Briefcase width="70" height="63" />
+                  <div className="mb-6">
+                    <Briefcase width="90" height="81" />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
                     84%
                   </div>
-                  <div className="text-muted-foreground">Job placement rate</div>
+                  <div className="text-lg text-muted-foreground">Job placement rate</div>
                 </div>
               </FeatureCard>
               
               <FeatureCard>
                 <div data-testid="stat-card-1">
-                  <div className="mb-4">
-                    <Graduation width="70" height="60" />
+                  <div className="mb-6">
+                    <Graduation width="90" height="77" />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
-                    3-6<span className="text-2xl md:text-3xl ml-1 md:block md:ml-0">months</span>
+                  <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
+                    3-6<span className="text-3xl md:text-4xl ml-1 md:block md:ml-0">months</span>
                   </div>
-                  <div className="text-muted-foreground">Average time to get hired</div>
+                  <div className="text-lg text-muted-foreground">Average time to get hired</div>
                 </div>
               </FeatureCard>
               
               <FeatureCard>
                 <div data-testid="stat-card-2">
-                  <div className="mb-4">
-                    <GrowthChart width="70" height="73" />
+                  <div className="mb-6">
+                    <GrowthChart width="90" height="94" />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                  <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
                     55%
                   </div>
-                  <div className="text-muted-foreground">Salary increase after graduation</div>
+                  <div className="text-lg text-muted-foreground">Salary increase after graduation</div>
                 </div>
               </FeatureCard>
               </div>
