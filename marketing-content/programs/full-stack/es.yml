@@ -70,21 +70,29 @@ sections:
   - type: ai_learning
     badge: "Por qué 4Geeks?"
     title: "Por qué Aprender con 4Geeks?"
-    description: "Únete a miles de estudiantes que transformaron sus carreras con nuestra combinación única de herramientas potenciadas por IA, mentoría experta y una comunidad global de apoyo."
+    description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
     video_url: "https://www.youtube.com/watch?v=cOFm_deKj6Q"
     features:
       - icon: "Robot"
-        title: "Rigobot Tutor IA"
-        description: "Tu asistente personal de programación con IA que revisa tu código, ayuda con ejercicios y proporciona retroalimentación instantánea 24/7. Nunca te quedes atascado."
-      - icon: "Code"
-        title: "Plataforma LearnPack"
-        description: "Nuestra plataforma de aprendizaje interactivo con más de 1,200 ejercicios, pruebas automatizadas y retroalimentación en tiempo real mientras codificas."
+        title: "Aprende con IA"
+        description: "Nuestra IA revisa tu código para darte retroalimentación instantánea, ayuda con ejercicios, ¡y más!"
+      - icon: "Headset"
+        title: "Sesiones de mentoría 1 a 1"
+        description: "Accede a sesiones mensuales de mentoría con nuestros expertos y añade sesiones extra según necesites."
       - icon: "Users"
-        title: "Comunidad Global"
-        description: "Conéctate con más de 4,000 graduados y estudiantes actuales. Obtén ayuda, comparte proyectos y construye tu red profesional."
-      - icon: "HeartHandshake"
-        title: "Soporte de Por Vida"
-        description: "¿Te graduaste y aún necesitas ayuda? Nuestros mentores y comunidad están disponibles de por vida. Tu éxito es nuestro éxito."
+        title: "Aprende con la comunidad"
+        description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
+    highlight:
+      title: "Maximiza Tu Potencial con LearnPack!"
+      description: "LearnPack es nuestro software diseñado para autodidactas. Integra nuestro tutor IA Rigobot para ayuda instantánea."
+      bullets:
+        - text: "Rigobot, nuestro asistente IA, te da retroalimentación personalizada cuando la necesitas"
+        - text: "Ratio 7:1 estudiante-profesor más sesiones 1:1 ilimitadas"
+        - text: "Pruebas automatizadas con retroalimentación inmediata en cada ejercicio"
+      cta:
+        text: "¡Comienza a aprender ahora!"
+        url: "/apply"
+        variant: "primary"
 
   - type: mentorship
     title: "Mentoría y Soporte"

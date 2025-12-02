@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { AILearningSection as AILearningSectionType } from "@shared/schema";
 import type { ComponentType } from "react";
@@ -33,7 +34,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
     }
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
     const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={28} className="text-primary" /> : null;
+    return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
   };
 
   const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
@@ -70,60 +71,37 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          <div className="space-y-6">
-            {data.features.map((feature, index) => {
-              const isRigobot = feature.title.toLowerCase().includes('rigobot');
-              return (
-                <Card 
-                  key={index} 
-                  className="bg-background border"
-                  data-testid={`feature-ai-${index}`}
-                >
-                  <CardContent className="p-5">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        {getIcon(feature.icon, isRigobot)}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">
-                          {feature.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm">
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          
-          {videoId && (
-            <div 
-              className="relative aspect-video rounded-lg overflow-hidden shadow-lg"
-              data-testid="video-container-ai"
-            >
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}`}
-                title="Learn with 4Geeks"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-                data-testid="iframe-youtube-video"
-              />
-            </div>
-          )}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {data.features.slice(0, 3).map((feature, index) => {
+            const isRigobot = feature.title.toLowerCase().includes('rigobot');
+            return (
+              <Card 
+                key={index} 
+                className="bg-background border text-center"
+                data-testid={`feature-ai-${index}`}
+              >
+                <CardContent className="p-6">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                    {getIcon(feature.icon, isRigobot)}
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
 
-          {!videoId && data.chat_example && (
-            <Card 
-              className="bg-background border shadow-lg"
-              data-testid="card-chat-example"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b">
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+        {(data.highlight || videoId) && (
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {data.highlight && (
+              <div data-testid="highlight-block">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
                     <img 
                       src={rigobotLogo} 
                       alt="Rigobot" 
@@ -131,32 +109,66 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                     />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">
-                      {data.chat_example.bot_name}
-                    </p>
-                    <p className="text-xs text-green-500">
-                      {data.chat_example.bot_status}
-                    </p>
+                    <h3 
+                      className="text-2xl md:text-3xl font-bold text-foreground mb-2"
+                      data-testid="text-highlight-title"
+                    >
+                      {data.highlight.title}
+                    </h3>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex justify-end">
-                    <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 max-w-[80%]">
-                      <p className="text-sm">{data.chat_example.user_message}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-start">
-                    <div className="bg-muted rounded-lg px-4 py-2 max-w-[80%]">
-                      <p className="text-sm text-foreground">{data.chat_example.bot_response}</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                <p 
+                  className="text-muted-foreground mb-6"
+                  data-testid="text-highlight-description"
+                >
+                  {data.highlight.description}
+                </p>
+                
+                {data.highlight.bullets && data.highlight.bullets.length > 0 && (
+                  <ul className="space-y-3 mb-8">
+                    {data.highlight.bullets.map((bullet, index) => (
+                      <li 
+                        key={index} 
+                        className="flex items-start gap-2 text-foreground"
+                        data-testid={`bullet-highlight-${index}`}
+                      >
+                        <TablerIcons.IconCheck size={20} className="text-primary flex-shrink-0 mt-0.5" />
+                        <span>{bullet.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                
+                {data.highlight.cta && (
+                  <Button
+                    variant={data.highlight.cta.variant === "primary" ? "default" : data.highlight.cta.variant === "outline" ? "outline" : "secondary"}
+                    asChild
+                    data-testid="button-highlight-cta"
+                  >
+                    <a href={data.highlight.cta.url}>{data.highlight.cta.text}</a>
+                  </Button>
+                )}
+              </div>
+            )}
+            
+            {videoId && (
+              <div 
+                className="relative aspect-video rounded-lg overflow-hidden shadow-lg"
+                data-testid="video-container-ai"
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title="Learn with 4Geeks"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                  data-testid="iframe-youtube-video"
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -70,21 +70,29 @@ sections:
   - type: ai_learning
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"
-    description: "Join thousands of students who transformed their careers with our unique combination of AI-powered tools, expert mentorship, and a supportive global community."
+    description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
     video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
     features:
       - icon: "Robot"
-        title: "Rigobot AI Tutor"
-        description: "Your personal AI coding assistant that reviews your code, helps with exercises, and provides instant feedback 24/7. Never get stuck again."
-      - icon: "Code"
-        title: "LearnPack Platform"
-        description: "Our interactive learning platform with 1,200+ exercises, automated tests, and real-time feedback as you code."
+        title: "Learn with AI"
+        description: "Our AI reviews your code to give you instant feedback, helps with the exercises, and more!"
+      - icon: "Headset"
+        title: "One-on-one mentoring sessions"
+        description: "Access monthly mentorship sessions with our experts and add extra sessions as needed."
       - icon: "Users"
-        title: "Global Community"
-        description: "Connect with 4,000+ graduates and current students. Get help, share projects, and build your professional network."
-      - icon: "HeartHandshake"
-        title: "Lifetime Support"
-        description: "Graduate and still need help? Our mentors and community are available for life. Your success is our success."
+        title: "Learn with the community"
+        description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
+    highlight:
+      title: "Maximize Your Learning Potential with LearnPack!"
+      description: "LearnPack is our custom-designed software for self-learners. It integrates our AI tutor Rigobot for instant coding help."
+      bullets:
+        - text: "Rigobot, our AI coding assistant, gives tailored feedback when you need it"
+        - text: "7:1 student-teacher ratio plus unlimited 1:1 sessions"
+        - text: "Automated tests for immediate feedback on every exercise"
+      cta:
+        text: "Start learning now!"
+        url: "/apply"
+        variant: "primary"
 
   - type: mentorship
     title: "Mentorship & Support"
