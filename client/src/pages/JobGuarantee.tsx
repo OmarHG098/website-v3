@@ -42,7 +42,7 @@ export default function JobGuarantee() {
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-5xl mx-auto">
               <div className="text-left mb-12">
                 <h2 
                   className="text-3xl font-bold mb-4 text-foreground text-center"
@@ -59,7 +59,7 @@ export default function JobGuarantee() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <FeatureCard>
                 <div data-testid="stat-card-0">
                   <div className="mb-4">
