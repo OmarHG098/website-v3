@@ -68,21 +68,23 @@ sections:
         description: "Designed for complete beginners with no prior coding experience required"
 
   - type: ai_learning
-    badge: "AI-Powered"
-    title: "Learn Faster with AI Support"
-    description: "Our proprietary AI tools provide instant feedback, personalized guidance, and real-time code review to accelerate your learning journey."
+    badge: "Why 4Geeks?"
+    title: "Why Learn with 4Geeks?"
+    description: "Join thousands of students who transformed their careers with our unique combination of AI-powered tools, expert mentorship, and a supportive global community."
+    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
     features:
-      - icon: "Brain"
+      - icon: "Robot"
         title: "Rigobot AI Tutor"
-        description: "Your personal AI coding assistant that reviews your code, helps with exercises, and provides instant feedback 24/7."
+        description: "Your personal AI coding assistant that reviews your code, helps with exercises, and provides instant feedback 24/7. Never get stuck again."
       - icon: "Code"
-        title: "LearnPack Software"
-        description: "Our custom learning platform with interactive exercises, automated tests, and instant feedback for every lesson."
-    chat_example:
-      bot_name: "Rigobot"
-      bot_status: "AI Tutor - Online"
-      user_message: "I'm stuck on this React component. Can you help?"
-      bot_response: "I see the issue! Your useEffect is missing a dependency. Let me show you how to fix it..."
+        title: "LearnPack Platform"
+        description: "Our interactive learning platform with 1,200+ exercises, automated tests, and real-time feedback as you code."
+      - icon: "Users"
+        title: "Global Community"
+        description: "Connect with 4,000+ graduates and current students. Get help, share projects, and build your professional network."
+      - icon: "HeartHandshake"
+        title: "Lifetime Support"
+        description: "Graduate and still need help? Our mentors and community are available for life. Your success is our success."
 
   - type: mentorship
     title: "Mentorship & Support"

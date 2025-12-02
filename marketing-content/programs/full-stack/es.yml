@@ -68,21 +68,23 @@ sections:
         description: "Diseñado para principiantes completos sin experiencia previa en programación"
 
   - type: ai_learning
-    badge: "Potenciado por IA"
-    title: "Aprende Más Rápido con Soporte de IA"
-    description: "Nuestras herramientas de IA propietarias proporcionan retroalimentación instantánea, orientación personalizada y revisión de código en tiempo real para acelerar tu aprendizaje."
+    badge: "Por qué 4Geeks?"
+    title: "Por qué Aprender con 4Geeks?"
+    description: "Únete a miles de estudiantes que transformaron sus carreras con nuestra combinación única de herramientas potenciadas por IA, mentoría experta y una comunidad global de apoyo."
+    video_url: "https://www.youtube.com/watch?v=cOFm_deKj6Q"
     features:
-      - icon: "Brain"
+      - icon: "Robot"
         title: "Rigobot Tutor IA"
-        description: "Tu asistente personal de programación con IA que revisa tu código, ayuda con ejercicios y proporciona retroalimentación instantánea 24/7."
+        description: "Tu asistente personal de programación con IA que revisa tu código, ayuda con ejercicios y proporciona retroalimentación instantánea 24/7. Nunca te quedes atascado."
       - icon: "Code"
-        title: "Software LearnPack"
-        description: "Nuestra plataforma de aprendizaje personalizada con ejercicios interactivos, pruebas automatizadas y retroalimentación instantánea para cada lección."
-    chat_example:
-      bot_name: "Rigobot"
-      bot_status: "Tutor IA - En línea"
-      user_message: "Estoy atascado con este componente React. ¿Puedes ayudarme?"
-      bot_response: "¡Veo el problema! A tu useEffect le falta una dependencia. Déjame mostrarte cómo arreglarlo..."
+        title: "Plataforma LearnPack"
+        description: "Nuestra plataforma de aprendizaje interactivo con más de 1,200 ejercicios, pruebas automatizadas y retroalimentación en tiempo real mientras codificas."
+      - icon: "Users"
+        title: "Comunidad Global"
+        description: "Conéctate con más de 4,000 graduados y estudiantes actuales. Obtén ayuda, comparte proyectos y construye tu red profesional."
+      - icon: "HeartHandshake"
+        title: "Soporte de Por Vida"
+        description: "¿Te graduaste y aún necesitas ayuda? Nuestros mentores y comunidad están disponibles de por vida. Tu éxito es nuestro éxito."
 
   - type: mentorship
     title: "Mentoría y Soporte"

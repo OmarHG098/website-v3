@@ -81,6 +81,7 @@ export const aiLearningSectionSchema = z.object({
   description: z.string(),
   features: z.array(cardItemSchema),
   chat_example: chatExampleSchema.optional(),
+  video_url: z.string().optional(),
 });
 
 export const mentorshipSectionSchema = z.object({
