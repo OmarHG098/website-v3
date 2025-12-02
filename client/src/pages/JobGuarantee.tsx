@@ -405,7 +405,7 @@ export default function JobGuarantee() {
                   <img 
                     src={confidenceImage} 
                     alt="Happy graduate with laptop showing the 4Geeks Academy logo"
-                    className="max-w-full h-auto rounded-lg"
+                    className="max-w-[280px] md:max-w-full h-auto rounded-lg"
                     loading="lazy"
                     data-testid="img-confidence"
                   />
