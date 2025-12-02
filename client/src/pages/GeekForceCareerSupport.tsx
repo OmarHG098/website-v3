@@ -108,26 +108,26 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
           
           <div className="order-1 md:order-2 md:col-span-3">
             <h2 
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6"
+              className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
               data-testid="text-unlimited-support-title"
             >
               {data.title}
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-base text-muted-foreground mb-6">
               {data.subtitle}
             </p>
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               {data.features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="flex gap-4 items-start"
+                  className="flex gap-3 items-start"
                   data-testid={`feature-unlimited-${index}`}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="w-6 h-6 text-primary" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <feature.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <p className="text-foreground pt-2">
+                  <p className="text-sm text-foreground pt-2">
                     {feature.text}
                   </p>
                 </div>
