@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
 import GrowthChart from "@/components/CustomIcons/GrowthChart";
+import Briefcase from "@/components/CustomIcons/Briefcase";
+import Graduation from "@/components/CustomIcons/Graduation";
 import FeatureCard from "@/components/job-guarantee/FeatureCard";
 
 export default function JobGuarantee() {
@@ -23,22 +25,6 @@ export default function JobGuarantee() {
       },
     ],
   };
-
-  const stats = [
-    {
-      value: "84%",
-      label: "Job placement rate",
-    },
-    {
-      value: "3-6",
-      unit: "months",
-      label: "Average time to get hired",
-    },
-    {
-      value: "55%",
-      label: "Salary increase after graduation",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -73,19 +59,41 @@ export default function JobGuarantee() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {stats.map((stat, index) => (
-                <FeatureCard key={index}>
-                  <div data-testid={`stat-card-${index}`}>
-                    <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
-                      {stat.value}
-                      {stat.unit && (
-                        <span className="text-2xl md:text-3xl ml-1">{stat.unit}</span>
-                      )}
-                    </div>
-                    <div className="text-muted-foreground">{stat.label}</div>
+              <FeatureCard>
+                <div data-testid="stat-card-0">
+                  <div className="mb-4">
+                    <Briefcase width="70px" height="63px" />
                   </div>
-                </FeatureCard>
-              ))}
+                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                    84%
+                  </div>
+                  <div className="text-muted-foreground">Job placement rate</div>
+                </div>
+              </FeatureCard>
+              
+              <FeatureCard>
+                <div data-testid="stat-card-1">
+                  <div className="mb-4">
+                    <Graduation width="70px" height="60px" />
+                  </div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                    3-6<span className="text-2xl md:text-3xl ml-1">months</span>
+                  </div>
+                  <div className="text-muted-foreground">Average time to get hired</div>
+                </div>
+              </FeatureCard>
+              
+              <FeatureCard>
+                <div data-testid="stat-card-2">
+                  <div className="mb-4">
+                    <GrowthChart width="70px" height="73px" />
+                  </div>
+                  <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                    55%
+                  </div>
+                  <div className="text-muted-foreground">Salary increase after graduation</div>
+                </div>
+              </FeatureCard>
             </div>
           </div>
         </section>
