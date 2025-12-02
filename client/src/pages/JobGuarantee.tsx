@@ -12,6 +12,7 @@ import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
+import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
 
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
@@ -234,6 +235,76 @@ export default function JobGuarantee() {
                     Read More
                   </Button>
                 </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why We Have Confidence Section */}
+        <section 
+          className="py-16 md:py-24 bg-background"
+          data-testid="section-confidence"
+        >
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                {/* Content Column */}
+                <div>
+                  <h2 
+                    className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                    data-testid="text-confidence-title"
+                  >
+                    Why We Have the Confidence to Offer a Job Guarantee
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Our confidence comes from years of proven results and a comprehensive support system designed for your success:
+                  </p>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="text-foreground">
+                        <strong>Industry-Aligned Curriculum:</strong> Our programs are designed with input from tech employers to ensure you learn the most in-demand skills.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="text-foreground">
+                        <strong>Lifetime Career Support:</strong> Access to mentors, career coaches, and job placement assistance that continues even after you graduate.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="text-foreground">
+                        <strong>Strong Employer Network:</strong> We partner with hundreds of companies actively seeking to hire our graduates.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="text-foreground">
+                        <strong>Proven Track Record:</strong> Thousands of successful graduates now working at top tech companies worldwide.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Image Column */}
+                <div className="flex justify-center">
+                  <img 
+                    src={confidenceImage} 
+                    alt="Happy graduate with laptop showing the 4Geeks Academy logo"
+                    className="max-w-full h-auto rounded-lg"
+                    loading="lazy"
+                    data-testid="img-confidence"
+                  />
+                </div>
               </div>
             </div>
           </div>
