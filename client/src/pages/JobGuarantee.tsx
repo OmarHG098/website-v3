@@ -329,25 +329,25 @@ export default function JobGuarantee() {
 
               {/* Desktop Timeline - Horizontal Wave */}
               <div className="hidden md:block relative">
-                {/* SVG container for curved lines - spans across all steps */}
+                {/* SVG container for curved lines */}
                 <svg 
                   className="absolute inset-0 w-full h-full pointer-events-none"
-                  viewBox="0 0 700 280"
+                  viewBox="0 0 600 280"
                   preserveAspectRatio="xMidYMid meet"
                   style={{ zIndex: 1 }}
                 >
-                  {/* Curved line from Step 1 to Step 2 */}
+                  {/* Curved line from Step 1 to Step 2 - starts at circle edge, curves down */}
                   <path
-                    d="M 130 55 C 180 55, 220 120, 280 140 C 340 160, 350 175, 350 175"
+                    d="M 135 60 C 200 60, 220 170, 300 190"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
                     strokeDasharray="12 8"
                     className="text-foreground/60"
                   />
-                  {/* Curved line from Step 2 to Step 3 */}
+                  {/* Curved line from Step 2 to Step 3 - curves back up */}
                   <path
-                    d="M 350 175 C 350 175, 360 160, 420 140 C 480 120, 520 55, 570 55"
+                    d="M 300 190 C 380 210, 400 60, 465 60"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
@@ -356,33 +356,33 @@ export default function JobGuarantee() {
                   />
                 </svg>
 
-                <div className="flex justify-between items-start max-w-3xl mx-auto relative" style={{ zIndex: 2 }}>
+                <div className="flex justify-center items-start gap-6 max-w-[640px] mx-auto relative" style={{ zIndex: 2 }}>
                   {/* Step 1 - Top */}
-                  <div className="flex flex-col items-center w-[180px]">
-                    <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
+                  <div className="flex flex-col items-center flex-1 max-w-[160px]">
+                    <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <BriefcaseOutline width={50} height={50} color="#1a1a1a" />
                     </div>
-                    <p className="text-base lg:text-lg text-foreground text-center mt-4 max-w-[180px]">
+                    <p className="text-base text-foreground text-center mt-4">
                       1. You were not hired into a qualifying role within 9 months of graduation.
                     </p>
                   </div>
 
                   {/* Step 2 - Lower (offset down) */}
-                  <div className="flex flex-col items-center w-[180px] mt-[100px]">
-                    <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
+                  <div className="flex flex-col items-center flex-1 max-w-[160px] mt-[130px]">
+                    <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <ChecklistVerify width={50} height={50} color="#1a1a1a" />
                     </div>
-                    <p className="text-base lg:text-lg text-foreground text-center mt-4 max-w-[180px]">
+                    <p className="text-base text-foreground text-center mt-4">
                       2. Our team verifies that you met all Job Guarantee requirements
                     </p>
                   </div>
 
                   {/* Step 3 - Top */}
-                  <div className="flex flex-col items-center w-[180px]">
-                    <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
+                  <div className="flex flex-col items-center flex-1 max-w-[160px]">
+                    <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <FolderCheck width={50} height={50} color="#1a1a1a" />
                     </div>
-                    <p className="text-base lg:text-lg text-foreground text-center mt-4 max-w-[180px]">
+                    <p className="text-base text-foreground text-center mt-4">
                       3. Receive the full refund within 30 days.
                     </p>
                   </div>
