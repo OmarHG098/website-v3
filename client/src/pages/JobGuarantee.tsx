@@ -91,25 +91,32 @@ export default function JobGuarantee() {
           className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
           data-testid="section-hero"
         >
-          {/* Left side decorative circles - 2 columns */}
-          <div className="absolute left-8 md:left-16 top-4 md:top-8 h-[280px] w-[50px]">
-            {/* Row 1: Yellow dot (col 1) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '0px', top: '0px' }} />
-            {/* Row 2: Two black dots */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '32px' }} />
-            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '28px', top: '32px' }} />
-            {/* Row 3: Gray dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '28px', top: '72px' }} />
-            {/* Row 3.5: Gray dot (col 1) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '104px' }} />
-            {/* Row 4: Gray dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '28px', top: '136px' }} />
-            {/* Row 5: Blue dot (col 1) */}
-            <div className="absolute w-4 h-4 rounded-full bg-primary" style={{ left: '0px', top: '176px' }} />
-            {/* Row 6: Yellow dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '28px', top: '216px' }} />
-            {/* Row 7: Gray dot (col 1) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '256px' }} />
+          {/* Left side decorative circles - 2 column grid */}
+          <div className="absolute left-8 md:left-16 top-4 md:top-8 grid grid-cols-2 gap-3">
+            {/* Row 1 */}
+            <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
+            <div />
+            {/* Row 2 */}
+            <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
+            <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
+            {/* Row 3 */}
+            <div />
+            <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
+            {/* Row 4 */}
+            <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
+            <div />
+            {/* Row 5 */}
+            <div />
+            <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
+            {/* Row 6 */}
+            <div className="w-4 h-4 rounded-full bg-primary" />
+            <div />
+            {/* Row 7 */}
+            <div />
+            <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
+            {/* Row 8 */}
+            <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
+            <div />
           </div>
 
           {/* Right side decorative circles */}
@@ -169,7 +176,7 @@ export default function JobGuarantee() {
 
         {/* Stats Section */}
         <section 
-          className="py-8 bg-cyan-100"
+          className="py-8 bg-sky-200"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
@@ -184,7 +191,7 @@ export default function JobGuarantee() {
                 <p className="text-xl mb-2">
                   Yes, and we've got the numbers to back it up.
                 </p>
-                <p className="text-muted-foreground text-xl">
+                <p className="text-xl">
                   These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
                   We don't just teach you how to code, we help you build a career you're proud of.
                 </p>
@@ -246,7 +253,7 @@ export default function JobGuarantee() {
                   >
                     Who's Eligible?
                   </h2>
-                  <p className="text-xl text-muted-foreground/60 mb-6">
+                  <p className="text-xl text-muted-foreground mb-6">
                     You'll qualify for the Job Guarantee if you:
                   </p>
                   <ul className="space-y-4 mb-6">
@@ -300,7 +307,7 @@ export default function JobGuarantee() {
               >
                 Our Job Guarantee is Available for Our Top Tech Programs
               </h2>
-              <p className="text-xl text-muted-foreground text-center mb-12">
+              <p className="text-xl text-center mb-12">
                 Choose your career path. Master the skills and get hired.
               </p>
 
@@ -445,7 +452,7 @@ export default function JobGuarantee() {
                 >
                   How the Refund Works
                 </h2>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="text-lg max-w-3xl mx-auto">
                   We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.
                 </p>
               </div>
