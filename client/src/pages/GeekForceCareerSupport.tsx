@@ -4,6 +4,7 @@ import SolidCard from "@/components/SolidCard";
 import { IconCheck } from "@tabler/icons-react";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import CheckListWithPencil from "@/components/custom-icons/CheckListWithPencil";
+import Briefcase from "@/components/custom-icons/Briefcase";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
@@ -49,6 +50,15 @@ const careerProcessData = {
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
         "Develop tailored strategies for upcoming interviews."
+      ]
+    },
+    {
+      icon: Briefcase,
+      title: "Strategic Job Search",
+      items: [
+        "Create a personalized job search plan aligned with your goals.",
+        "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
+        "Connect with our extensive network of global hiring partners."
       ]
     }
   ]
