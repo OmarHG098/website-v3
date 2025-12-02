@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
 import GrowthChart from "@/components/job-guarantee/GrowthChart";
-import StatCard from "@/components/job-guarantee/StatCard";
+import FeatureCard from "@/components/job-guarantee/FeatureCard";
 
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
@@ -74,7 +74,7 @@ export default function JobGuarantee() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               {stats.map((stat, index) => (
-                <StatCard key={index}>
+                <FeatureCard key={index}>
                   <div data-testid={`stat-card-${index}`}>
                     <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                       {stat.value}
@@ -84,7 +84,7 @@ export default function JobGuarantee() {
                     </div>
                     <div className="text-muted-foreground">{stat.label}</div>
                   </div>
-                </StatCard>
+                </FeatureCard>
               ))}
             </div>
           </div>
