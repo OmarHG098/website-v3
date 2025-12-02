@@ -8,6 +8,25 @@ import Briefcase from "@/components/custom-icons/Briefcase";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
+// TYPES
+// ============================================
+
+interface IconProps {
+  width?: string;
+  height?: string;
+  color?: string;
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+interface CareerStep {
+  icon: React.ComponentType<IconProps>;
+  title: string;
+  color?: string;
+  items: string[];
+}
+
+// ============================================
 // DATA
 // ============================================
 
@@ -30,13 +49,17 @@ const unlimitedSupportData = {
   ]
 };
 
-const careerProcessData = {
+const careerProcessData: {
+  title: string;
+  subtitle: string;
+  steps: CareerStep[];
+} = {
   title: "Get Hired with Our 3-Step Career Development Process",
   subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
   steps: [
     {
       icon: StairsWithFlag,
-      title: "Profile Optimization",
+      title: "1. Profile Optimization",
       items: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
         "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
@@ -45,7 +68,7 @@ const careerProcessData = {
     },
     {
       icon: Contract,
-      title: "Interview Preparation",
+      title: "2. Interview Preparation",
       items: [
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
@@ -54,7 +77,7 @@ const careerProcessData = {
     },
     {
       icon: Briefcase,
-      title: "Strategic Job Search",
+      title: "3. Strategic Job Search",
       color: "hsl(var(--destructive))",
       items: [
         "Create a personalized job search plan aligned with your goals.",
@@ -182,7 +205,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
           >
             {data.title}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg max-w-3xl mx-auto">
             {data.subtitle}
           </p>
         </div>
