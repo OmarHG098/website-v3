@@ -343,7 +343,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index} className="p-3">
+              <SolidCard key={index} className="p-4 md:p-4">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
                   <div className="flex-shrink-0 md:mb-4">
                     {iconMap[stat.icon]}
