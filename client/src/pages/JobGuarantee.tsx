@@ -343,7 +343,7 @@ export default function JobGuarantee() {
                     stroke="currentColor"
                     strokeWidth="4"
                     strokeDasharray="12 8"
-                    className="text-foreground/60"
+                    className="text-foreground"
                   />
                   {/* Curved line from Step 3 (left edge) to Step 2 (right edge) - inverse curve */}
                   <path
@@ -352,7 +352,7 @@ export default function JobGuarantee() {
                     stroke="currentColor"
                     strokeWidth="4"
                     strokeDasharray="12 8"
-                    className="text-foreground/60"
+                    className="text-foreground"
                   />
                 </svg>
 
