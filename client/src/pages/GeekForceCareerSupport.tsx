@@ -101,7 +101,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
-            <div>
+            <div className="text-center md:text-left">
               <p className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
@@ -128,11 +128,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
             </div>
           </div>
           
-          <div className="md:col-span-2 flex">
+          <div className="md:col-span-2 flex w-full md:w-auto">
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-full max-w-[400px]"
+              className="w-full md:max-w-[400px]"
               ratio="9:12"
             />
           </div>
@@ -210,7 +210,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 px-24">
+        <div className="grid md:grid-cols-3 gap-6 p-0 lg:px-24">
           {data.steps.map((step, index) => (
             <SolidCard 
               key={index}
