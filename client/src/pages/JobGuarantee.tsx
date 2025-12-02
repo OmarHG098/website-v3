@@ -7,16 +7,16 @@ import FeatureCard from "@/components/job-guarantee/FeatureCard";
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
     type: "hero",
-    title: "Get Into Tech With Our Job Guarantee",
+    title: "Get into tech with our Job Guarantee",
     subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
     cta_buttons: [
       {
-        text: "APPLY NOW",
+        text: "Apply now",
         url: "#apply",
         variant: "primary",
       },
       {
-        text: "REQUEST A SYLLABUS",
+        text: "Request a syllabus",
         url: "#syllabus",
         variant: "outline",
         icon: "FileDownload",
@@ -49,7 +49,7 @@ export default function JobGuarantee() {
 
         {/* Stats Section */}
         <section 
-          className="py-16 md:py-24 bg-muted/30"
+          className="py-16 md:py-24 bg-primary/10"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
