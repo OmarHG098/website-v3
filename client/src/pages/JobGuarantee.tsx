@@ -347,7 +347,7 @@ export default function JobGuarantee() {
                   />
                   {/* Curved line from Step 3 (left edge) to Step 2 (right edge) - inverse curve */}
                   <path
-                    d="M 395 35 C 365 30, 310 10, 305 120"
+                    d="M 395 35 C 365 100, 310 130, 305 120"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
