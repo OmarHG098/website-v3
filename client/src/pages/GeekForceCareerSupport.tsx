@@ -115,9 +115,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
                   className="flex gap-3 items-start"
                   data-testid={`feature-unlimited-${index}`}
                 >
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mt-0.5">
-                    <IconCheck className="w-4 h-4 text-white" />
-                  </div>
+                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground">
                     {feature}
                   </p>
