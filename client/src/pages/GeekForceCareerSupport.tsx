@@ -31,44 +31,46 @@ function HeroSection({ data }: { data: typeof heroData }) {
       data-testid="section-hero"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col items-center">
-            <p className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground">
-              {data.welcomeText} <span className="text-primary">{data.brandName}</span>:
-            </p>
-            <h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground self-start"
-              data-testid="text-hero-title"
-            >
-              {data.title}
-            </h1>
-            <p 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6 self-start"
-              data-testid="text-hero-subtitle"
-            >
-              {data.subtitle}
-            </p>
-            
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl">
-              {data.description}
-            </p>
-            
-            <div className="flex flex-wrap gap-4">
-              {data.ctaButtons.map((btn, index) => (
-                <Button
-                  key={index}
-                  size="lg"
-                  variant={btn.variant}
-                  asChild
-                  data-testid={`button-hero-cta-${index}`}
-                >
-                  <a href={btn.href}>{btn.text}</a>
-                </Button>
-              ))}
+        <div className="grid md:grid-cols-5 gap-12 items-center">
+          <div className="md:col-span-3 flex flex-col items-center">
+            <div>
+              <p className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground">
+                {data.welcomeText} <span className="text-primary">{data.brandName}</span>:
+              </p>
+              <h1 
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground"
+                data-testid="text-hero-title"
+              >
+                {data.title}
+              </h1>
+              <p 
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6"
+                data-testid="text-hero-subtitle"
+              >
+                {data.subtitle}
+              </p>
+              
+              <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+                {data.description}
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                {data.ctaButtons.map((btn, index) => (
+                  <Button
+                    key={index}
+                    size="lg"
+                    variant={btn.variant}
+                    asChild
+                    data-testid={`button-hero-cta-${index}`}
+                  >
+                    <a href={btn.href}>{btn.text}</a>
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
           
-          <div className="flex justify-center">
+          <div className="md:col-span-2 flex justify-center">
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
