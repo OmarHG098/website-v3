@@ -229,7 +229,7 @@ export default function JobGuarantee() {
                     <Graduation width="90" height="77" />
                   </div>
                   <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
-                    3-6<span className="text-3xl md:text-4xl ml-1 md:block md:ml-0">months</span>
+                    3-6<span className="text-3xl md:text-4xl ml-1 md:block md:ml-0 lg:inline lg:ml-1">months</span>
                   </div>
                   <div className="text-lg text-muted-foreground">Average time to get hired</div>
                 </div>
