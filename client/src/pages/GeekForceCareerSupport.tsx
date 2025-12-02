@@ -96,7 +96,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
       data-testid="section-unlimited-support"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
           <div className="order-2 md:order-1">
             <img 
               src={careerSupportImage} 
