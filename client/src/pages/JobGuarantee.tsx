@@ -10,12 +10,12 @@ export default function JobGuarantee() {
       <main>
         {/* Hero Section */}
         <section 
-          className="py-20 md:py-32 bg-gradient-to-b from-primary/10 via-primary/5 to-background"
+          className="py-20 bg-gradient-to-b from-primary/10 via-primary/5 to-background"
           data-testid="section-job-guarantee-hero"
         >
           <div className="container mx-auto px-4 text-center">
             <h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground uppercase tracking-tight"
+              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground uppercase tracking-tight"
               data-testid="text-hero-title"
             >
               Get Into Tech With Our{" "}
@@ -23,7 +23,7 @@ export default function JobGuarantee() {
             </h1>
             
             <p 
-              className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
+              className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8"
               data-testid="text-hero-subtitle"
             >
               Your success is our mission — Get hired within 9 months of graduation, 
@@ -39,7 +39,7 @@ export default function JobGuarantee() {
             
             <Button
               size="lg"
-              className="text-lg px-8 py-6"
+              className="text-lg px-8 py-6 pl-[10px] pr-[10px] pt-[10px] pb-[10px]"
               data-testid="button-request-syllabus"
             >
               <IconFileDownload className="mr-2" size={20} />
