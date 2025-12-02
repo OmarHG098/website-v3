@@ -39,7 +39,7 @@ export default function JobGuarantee() {
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
-            <div className="text-right mb-12">
+            <div className="text-left mb-12">
               <h2 
                 className="text-3xl font-bold mb-4 text-foreground"
                 data-testid="text-stats-title"
@@ -49,7 +49,7 @@ export default function JobGuarantee() {
               <p className="text-lg text-primary font-semibold mb-4">
                 Yes, and we've got the numbers to back it up.
               </p>
-              <p className="text-muted-foreground max-w-3xl ml-auto">
+              <p className="text-muted-foreground max-w-3xl">
                 These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
                 We don't just teach you how to code, we help you build a career you're proud of.
               </p>
