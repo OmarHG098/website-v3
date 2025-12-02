@@ -83,7 +83,7 @@ sections:
         title: "Learn with the community"
         description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
     highlight:
-      title: "Maximize Your Learning Potential with LearnPack!"
+      title: "Maximize Your Learning Potential with Rigobot"
       description: "LearnPack is our custom-designed software for self-learners. It integrates our AI tutor Rigobot for instant coding help."
       bullets:
         - text: "Rigobot, our AI coding assistant, gives tailored feedback when you need it"
