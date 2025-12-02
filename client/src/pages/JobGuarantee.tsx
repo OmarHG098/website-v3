@@ -49,7 +49,7 @@ export default function JobGuarantee() {
 
         {/* Stats Section */}
         <section 
-          className="py-16 md:py-24 bg-primary/10"
+          className="py-16 md:py-24 bg-muted"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
