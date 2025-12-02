@@ -324,12 +324,12 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-8 bg-sky-200"
+      className="py-6 bg-sky-200"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <h2 
               className="text-xl md:text-2xl font-bold mb-2 text-foreground"
               data-testid="text-stats-title"
@@ -341,9 +341,9 @@ function StatsSection({ data }: { data: typeof statsData }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index} className="p-4">
+              <SolidCard key={index} className="p-3">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
                   <div className="flex-shrink-0 md:mb-4">
                     {iconMap[stat.icon]}
