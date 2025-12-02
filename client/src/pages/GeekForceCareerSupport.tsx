@@ -37,13 +37,13 @@ function HeroSection({ data }: { data: typeof heroData }) {
               {data.welcomeText} <span className="text-primary">{data.brandName}</span>:
             </p>
             <h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground self-start"
               data-testid="text-hero-title"
             >
               {data.title}
             </h1>
             <p 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6 self-start"
               data-testid="text-hero-subtitle"
             >
               {data.subtitle}
