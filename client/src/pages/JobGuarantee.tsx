@@ -332,22 +332,22 @@ export default function JobGuarantee() {
                 {/* SVG container for curved lines */}
                 <svg 
                   className="absolute inset-0 w-full h-full pointer-events-none"
-                  viewBox="0 0 600 280"
+                  viewBox="0 0 530 280"
                   preserveAspectRatio="xMidYMid meet"
                   style={{ zIndex: 1 }}
                 >
-                  {/* Curved line from Step 1 to Step 2 - starts at circle edge, curves down */}
+                  {/* Curved line from Step 1 (right edge) to Step 2 (top-left edge) */}
                   <path
-                    d="M 135 60 C 200 60, 220 170, 300 190"
+                    d="M 135 55 C 185 55, 195 130, 225 146"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
                     strokeDasharray="12 8"
                     className="text-foreground/60"
                   />
-                  {/* Curved line from Step 2 to Step 3 - curves back up */}
+                  {/* Curved line from Step 2 (right edge) to Step 3 (bottom-left edge) */}
                   <path
-                    d="M 300 190 C 380 210, 400 60, 465 60"
+                    d="M 319 185 C 360 205, 382 80, 409 94"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
@@ -356,7 +356,7 @@ export default function JobGuarantee() {
                   />
                 </svg>
 
-                <div className="flex justify-center items-start gap-6 max-w-[640px] mx-auto relative" style={{ zIndex: 2 }}>
+                <div className="flex justify-center items-start gap-4 max-w-[530px] mx-auto relative" style={{ zIndex: 2 }}>
                   {/* Step 1 - Top */}
                   <div className="flex flex-col items-center flex-1 max-w-[160px]">
                     <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
