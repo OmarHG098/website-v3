@@ -8,6 +8,9 @@ import GrowthChart from "@/components/CustomIcons/GrowthChart";
 import CodeWindow from "@/components/CustomIcons/CodeWindow";
 import Monitor from "@/components/CustomIcons/Monitor";
 import Security from "@/components/CustomIcons/Security";
+import BriefcaseOutline from "@/components/CustomIcons/BriefcaseOutline";
+import ChecklistVerify from "@/components/CustomIcons/ChecklistVerify";
+import FolderCheck from "@/components/CustomIcons/FolderCheck";
 import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -300,6 +303,125 @@ export default function JobGuarantee() {
                     Apply
                   </Button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How the Refund Works Section */}
+        <section 
+          className="py-16 md:py-24 bg-muted/30"
+          data-testid="section-refund"
+        >
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 
+                  className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+                  data-testid="text-refund-title"
+                >
+                  How the Refund Works
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.
+                </p>
+              </div>
+
+              {/* Desktop Timeline - Horizontal Wave */}
+              <div className="hidden md:block relative">
+                <div className="flex justify-between items-start relative">
+                  {/* Step 1 - Top Left */}
+                  <div className="flex flex-col items-center text-center w-1/3 relative z-10">
+                    <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
+                      <BriefcaseOutline width={48} height={48} color="#1a1a1a" />
+                    </div>
+                    <p className="text-lg text-foreground max-w-[200px]">
+                      1. You were not hired into a qualifying role within 9 months of graduation.
+                    </p>
+                  </div>
+
+                  {/* Step 2 - Center Lower */}
+                  <div className="flex flex-col items-center text-center w-1/3 relative z-10 mt-24">
+                    <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
+                      <ChecklistVerify width={48} height={48} color="#1a1a1a" />
+                    </div>
+                    <p className="text-lg text-foreground max-w-[200px]">
+                      2. Our team verifies that you met all Job Guarantee requirements
+                    </p>
+                  </div>
+
+                  {/* Step 3 - Top Right */}
+                  <div className="flex flex-col items-center text-center w-1/3 relative z-10">
+                    <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
+                      <FolderCheck width={48} height={48} color="#1a1a1a" />
+                    </div>
+                    <p className="text-lg text-foreground max-w-[200px]">
+                      3. Receive the full refund within 30 days.
+                    </p>
+                  </div>
+
+                  {/* Dashed Line 1 - from Step 1 to Step 2 */}
+                  <div 
+                    className="absolute top-14 left-[20%] w-[30%] h-24 border-t-4 border-r-4 border-dashed border-foreground/40 rounded-tr-3xl"
+                    style={{ transform: 'rotate(0deg)' }}
+                  />
+                  
+                  {/* Dashed Line 2 - from Step 2 to Step 3 */}
+                  <div 
+                    className="absolute top-[152px] right-[20%] w-[30%] h-24 border-t-4 border-l-4 border-dashed border-foreground/40 rounded-tl-3xl"
+                    style={{ transform: 'rotate(0deg)' }}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile Timeline - Vertical Zigzag */}
+              <div className="md:hidden relative">
+                {/* Step 1 - Icon Left, Text Right */}
+                <div className="flex items-start gap-6 mb-8 relative">
+                  <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
+                    <BriefcaseOutline width={40} height={40} color="#1a1a1a" />
+                  </div>
+                  <p className="text-base text-foreground pt-6">
+                    1. You were not hired into a qualifying role within 9 months of graduation.
+                  </p>
+                  {/* Dashed line to step 2 */}
+                  <div className="absolute left-12 top-24 w-16 h-16 border-b-4 border-r-4 border-dashed border-foreground/40 rounded-br-2xl" />
+                </div>
+
+                {/* Step 2 - Text Left, Icon Right */}
+                <div className="flex items-start gap-6 mb-8 flex-row-reverse relative pl-8">
+                  <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
+                    <ChecklistVerify width={40} height={40} color="#1a1a1a" />
+                  </div>
+                  <p className="text-base text-foreground pt-6 text-right">
+                    2. Our team verifies that you met all Job Guarantee requirements
+                  </p>
+                  {/* Dashed line to step 3 */}
+                  <div className="absolute right-12 top-24 w-16 h-16 border-b-4 border-l-4 border-dashed border-foreground/40 rounded-bl-2xl" />
+                </div>
+
+                {/* Step 3 - Icon Left, Text Right */}
+                <div className="flex items-start gap-6 relative">
+                  <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
+                    <FolderCheck width={40} height={40} color="#1a1a1a" />
+                  </div>
+                  <p className="text-base text-foreground pt-6">
+                    3. Receive the full refund within 30 days.
+                  </p>
+                </div>
+              </div>
+
+              {/* Conditions Apply Link */}
+              <div className="text-center mt-12">
+                <a 
+                  href="https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline text-lg"
+                  data-testid="link-conditions-apply"
+                >
+                  Conditions Apply.
+                </a>
               </div>
             </div>
           </div>
