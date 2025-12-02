@@ -33,9 +33,12 @@ function HeroSection({ data }: { data: typeof heroData }) {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-5 gap-12 items-center">
           <div className="md:col-span-3 flex flex-col items-center">
-            <div>
-              <p className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground">
-                {data.welcomeText} <span className="text-primary">{data.brandName}</span>:
+            <div className="-mt-8 md:-mt-12">
+              <p className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+                {data.welcomeText}
+              </p>
+              <p className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-2">
+                {data.brandName}:
               </p>
               <h1 
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground"
@@ -50,7 +53,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 {data.subtitle}
               </p>
               
-              <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+              <p className="text-xl text-foreground mb-8 max-w-xl">
                 {data.description}
               </p>
               
