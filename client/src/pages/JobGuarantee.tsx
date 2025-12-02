@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType } from "@shared/schema";
 import SolidCard from "@/components/SolidCard";
+import { JobGuaranteeHero } from "@/components/JobGuaranteeHero";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import Briefcase from "@/components/CustomIcons/Briefcase";
 import Graduation from "@/components/CustomIcons/Graduation";
@@ -11,7 +12,7 @@ import Security from "@/components/CustomIcons/Security";
 import BriefcaseOutline from "@/components/CustomIcons/BriefcaseOutline";
 import ChecklistVerify from "@/components/CustomIcons/ChecklistVerify";
 import FolderCheck from "@/components/CustomIcons/FolderCheck";
-import { IconCheck, IconDownload } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
@@ -21,15 +22,17 @@ import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp"
 // DATA
 // ============================================
 
-const heroData = {
+const heroData: HeroSectionType = {
+  type: "hero",
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition.",
-  conditionsLink: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
-  ctaButtons: [
-    { text: "Apply now", href: "#apply", variant: "default" as const },
-    { text: "Request a syllabus", href: "#syllabus", variant: "outline" as const, icon: true },
+  cta_buttons: [
+    { text: "Apply now", url: "#apply", variant: "primary" },
+    { text: "Request a syllabus", url: "#syllabus", variant: "outline", icon: "Download" },
   ],
 };
+
+const heroConditionsLink = "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf";
 
 const statsData = {
   title: "Does the Job Guarantee Deliver Results You Can Count On?",
@@ -177,92 +180,6 @@ const faqData: FAQSectionType = {
 // ============================================
 // SECTION COMPONENTS
 // ============================================
-
-function HeroSection({ data }: { data: typeof heroData }) {
-  return (
-    <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
-      data-testid="section-hero"
-    >
-      <div className="hidden md:flex lg:hidden absolute left-8 top-8 flex-col gap-6">
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-primary" />
-      </div>
-      <div className="hidden lg:grid absolute left-16 top-8 grid-cols-2 gap-3">
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-primary" />
-        <div />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div />
-      </div>
-
-      <div className="hidden md:block lg:hidden absolute right-0 top-1/3 -translate-y-1/2">
-        <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
-      </div>
-      <div className="hidden lg:block absolute right-0 top-1/3 -translate-y-1/2">
-        <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
-      </div>
-      <div className="hidden lg:block absolute right-32 bottom-36">
-        <div className="w-6 h-6 rounded-full bg-[#FFB718]" />
-      </div>
-
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground"
-          data-testid="text-hero-title"
-        >
-          {data.title}
-        </h1>
-        
-        <p 
-          className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-2"
-          data-testid="text-hero-subtitle"
-        >
-          {data.subtitle}
-        </p>
-        <a 
-          href={data.conditionsLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline text-lg md:text-xl"
-        >
-          Conditions apply
-        </a>
-        <span className="text-lg md:text-xl text-muted-foreground">.</span>
-        
-        <div className="flex flex-wrap justify-center gap-4 mt-8">
-          {data.ctaButtons.map((btn, index) => (
-            <Button
-              key={index}
-              size="lg"
-              variant={btn.variant}
-              asChild
-              data-testid={`button-hero-cta-${index}`}
-            >
-              <a href={btn.href} className={btn.icon ? "flex items-center gap-2" : ""}>
-                {btn.icon && <IconDownload size={20} />}
-                {btn.text}
-              </a>
-            </Button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
@@ -614,7 +531,7 @@ export default function JobGuarantee() {
       <Header />
       
       <main>
-        <HeroSection data={heroData} />
+        <JobGuaranteeHero data={heroData} conditionsLink={heroConditionsLink} />
         <StatsSection data={statsData} />
         <EligibleSection data={eligibleData} />
         <ProgramsSection data={programsData} />
