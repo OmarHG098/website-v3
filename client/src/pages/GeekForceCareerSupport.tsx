@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 
 const heroData = {
   welcomeText: "Welcome to",
-  brandName: "GeekFORCE",
+  brandGeek: "Geek",
+  brandForce: "FORCE",
   title: "Career Development",
   subtitle: "for the AI Era",
   description: "Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms, we'll give you the personalized mentorship you need to land your first job and keep thriving in today's tech.",
@@ -37,8 +38,9 @@ function HeroSection({ data }: { data: typeof heroData }) {
               <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
                 {data.welcomeText}
               </p>
-              <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">
-                {data.brandName}:
+              <p className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+                <span className="text-primary">{data.brandGeek}</span>
+                <span className="text-foreground">{data.brandForce}</span>:
               </p>
               <h1 
                 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-foreground"
