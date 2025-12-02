@@ -6,6 +6,7 @@ import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
+import communityImage from "@assets/community_1764717588840.png";
 
 // ============================================
 // TYPES
@@ -46,6 +47,25 @@ const unlimitedSupportData = {
     "Receive tailored guidance aligned with your goals, context, and challenges.",
     "Meet mentors online or in-person whenever you need support—unlimited, for life.",
     "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
+  ]
+};
+
+const hyperpersonalizedData = {
+  title: "Hyperpersonalized Support: AI + Human Mentorship",
+  subtitle: "Most career support programs give you generic advice. GeekForce is different. We blend cutting-edge AI tools with real human mentorship to give you a hyper-personalized career experience.",
+  features: [
+    {
+      title: "AI-Powered Insights",
+      description: "Our AI analyzes your profile, skills, and goals to provide personalized recommendations for your career path."
+    },
+    {
+      title: "Human Mentorship",
+      description: "Connect with experienced industry professionals who understand your unique challenges and can provide tailored guidance."
+    },
+    {
+      title: "Community Support",
+      description: "Join a global network of learners and alumni who share your journey and can offer peer-to-peer support."
+    }
   ]
 };
 
@@ -128,11 +148,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
             </div>
           </div>
           
-          <div className="md:col-span-2 flex justify-center w-full md:w-auto">
+          <div className="md:col-span-2 w-full md:w-auto">
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-[280px] md:w-full md:max-w-[400px]"
+              className="w-[370px] md:w-full md:max-w-[400px]"
               ratio="9:12"
             />
           </div>
@@ -243,6 +263,62 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   );
 }
 
+function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
+  return (
+    <section 
+      className="py-16 md:py-24 bg-muted/30"
+      data-testid="section-hyperpersonalized"
+    >
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
+              data-testid="text-hyperpersonalized-title"
+            >
+              {data.title}
+            </h2>
+            <p className="text-lg mb-8">
+              {data.subtitle}
+            </p>
+            
+            <div className="space-y-6">
+              {data.features.map((feature, index) => (
+                <div 
+                  key={index}
+                  className="flex gap-4 items-start"
+                  data-testid={`feature-hyperpersonalized-${index}`}
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <IconCheck className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="order-first md:order-last">
+            <img 
+              src={communityImage} 
+              alt="4Geeks Academy community members collaborating on a project" 
+              className="w-full rounded-lg"
+              data-testid="img-community"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -256,6 +332,7 @@ export default function GeekForceCareerSupport() {
         <HeroSection data={heroData} />
         <UnlimitedSupportSection data={unlimitedSupportData} />
         <CareerProcessSection data={careerProcessData} />
+        <HyperpersonalizedSection data={hyperpersonalizedData} />
       </main>
     </div>
   );
