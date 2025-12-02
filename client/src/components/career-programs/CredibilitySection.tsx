@@ -1,20 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import type { CredibilitySection as CredibilitySectionType } from "@shared/schema";
-import forbesLogo from "@assets/forbes-logo-award_1764705431773.webp";
-import newsweekLogo from "@assets/newsweek_1764705449168.webp";
-import courseReportLogo from "@assets/Course-Report-Badge-2025_1764705464228.webp";
 
 interface CredibilitySectionProps {
   data: CredibilitySectionType;
 }
 
 export function CredibilitySection({ data }: CredibilitySectionProps) {
-  const logoMap: Record<string, string> = {
-    "Forbes": forbesLogo,
-    "Newsweek": newsweekLogo,
-    "Course Report": courseReportLogo,
-  };
-
   return (
     <section 
       className="py-16 bg-muted/30"
@@ -61,29 +52,16 @@ export function CredibilitySection({ data }: CredibilitySectionProps) {
             >
               {data.featured_in.label}
             </p>
-            <div className="flex flex-wrap justify-center gap-8 items-center">
-              {data.featured_in.logos.map((logoName, index) => {
-                const logoSrc = logoMap[logoName as keyof typeof logoMap];
-                return (
-                  <div
-                    key={index}
-                    className="transition-transform duration-300 hover:scale-110"
-                    data-testid={`logo-featured-${index}`}
-                  >
-                    {logoSrc ? (
-                      <img 
-                        src={logoSrc} 
-                        alt={logoName} 
-                        className="h-12 max-w-[120px] object-contain"
-                      />
-                    ) : (
-                      <span className="text-xl font-bold text-foreground opacity-60">
-                        {logoName}
-                      </span>
-                    )}
-                  </div>
-                );
-              })}
+            <div className="flex flex-wrap justify-center gap-8 items-center opacity-60">
+              {data.featured_in.logos.map((logo, index) => (
+                <span 
+                  key={index} 
+                  className="text-xl font-bold text-foreground"
+                  data-testid={`logo-featured-${index}`}
+                >
+                  {logo}
+                </span>
+              ))}
             </div>
           </div>
         )}
