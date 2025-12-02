@@ -13,7 +13,7 @@ export default function VideoPlayer({ videoId, title, className = "", vertical =
 
   if (vertical) {
     return (
-      <SolidCard className={`p-0 md:p-0 md:min-h-0 overflow-hidden ${className}`}>
+      <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
         <div 
           style={{ aspectRatio: '9/12' }}
           data-testid="video-player"
@@ -31,7 +31,7 @@ export default function VideoPlayer({ videoId, title, className = "", vertical =
   }
 
   return (
-    <SolidCard className={`p-0 md:p-0 md:min-h-0 overflow-hidden ${className}`}>
+    <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
       <div data-testid="video-player">
         <LiteYouTubeEmbed
           id={videoId}
