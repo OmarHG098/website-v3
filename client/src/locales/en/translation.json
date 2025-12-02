@@ -59,25 +59,6 @@
       "label": "Job Placement"
     }
   },
-  "iconFeatures": {
-    "title": "I want to become a...",
-    "fullStack": {
-      "title": "Full Stack Developer",
-      "description": "Build complete web applications from frontend to backend"
-    },
-    "dataScience": {
-      "title": "Data Scientist",
-      "description": "Master data analysis, visualization, and machine learning"
-    },
-    "cloudComputing": {
-      "title": "Cloud Engineer",
-      "description": "Deploy and manage scalable cloud infrastructure"
-    },
-    "aiMachineLearning": {
-      "title": "AI/ML Engineer",
-      "description": "Create intelligent systems and machine learning models"
-    }
-  },
   "features": {
     "title": "Why Choose Our Platform",
     "personalizedLearning": {
