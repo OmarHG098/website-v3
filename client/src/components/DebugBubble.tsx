@@ -391,6 +391,26 @@ export function DebugBubble() {
               </div>
 
               <div className="border-t p-2 space-y-1">
+                <p className="px-3 py-1 text-xs text-muted-foreground font-medium">Marketing Pages</p>
+                <a
+                  href="/job-guarantee"
+                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-job-guarantee"
+                >
+                  <IconChecklist className="h-4 w-4 text-muted-foreground" />
+                  <span>Job Guarantee</span>
+                </a>
+                <a
+                  href="/geekforce-career-support"
+                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-geekforce-career-support"
+                >
+                  <IconUsers className="h-4 w-4 text-muted-foreground" />
+                  <span>GeekForce Career Support</span>
+                </a>
+              </div>
+
+              <div className="border-t p-2 space-y-1">
                 <div className="flex items-center justify-between px-3 py-2">
                   <div className="flex items-center gap-3">
                     <IconRoute className="h-4 w-4 text-muted-foreground" />
