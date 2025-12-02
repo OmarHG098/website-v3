@@ -96,17 +96,17 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
       data-testid="section-unlimited-support"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-4 items-center">
-          <div className="order-2 md:order-1">
+        <div className="grid md:grid-cols-5 gap-4 items-center">
+          <div className="order-2 md:order-1 md:col-span-2">
             <img 
               src={careerSupportImage} 
               alt="Career support team members collaborating" 
-              className="w-full max-w-xl"
+              className="w-full"
               data-testid="img-career-support"
             />
           </div>
           
-          <div className="order-1 md:order-2">
+          <div className="order-1 md:order-2 md:col-span-3">
             <h2 
               className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6"
               data-testid="text-unlimited-support-title"
