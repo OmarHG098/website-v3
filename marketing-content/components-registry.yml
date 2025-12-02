@@ -1,6 +1,37 @@
-# Components Registry for Career Program Pages
-# This file documents all available section components that can be used in career program YAML files.
-# Marketing team and Replit AI use this as a reference for building and modifying program pages.
+# Components Registry for Career Program and Landing Pages
+# This file documents all available section components that can be used in career program and landing YAML files.
+# Marketing team and Replit AI use this as a reference for building and modifying pages.
+
+# ================================================================================
+# UNIFIED META SCHEMA (Required for all content types: programs and landings)
+# ================================================================================
+# Every YAML file (programs and landings) uses this consistent meta structure for SEO control.
+#
+# meta:
+#   page_title: "Title for browser tab and search results | 4Geeks"
+#   description: "Meta description for search engine snippets (150-160 characters)"
+#   robots: "index, follow"          # Options: "index, follow" | "noindex, follow" | "noindex, nofollow"
+#   og_image: "/images/og-preview.jpg"  # Open Graph image for social sharing
+#   canonical_url: "/us/career-programs/full-stack"  # Canonical URL (optional, auto-generated if omitted)
+#   priority: 0.9                    # Sitemap priority 0.0-1.0 (default: 0.8)
+#   change_frequency: "weekly"       # Options: always | hourly | daily | weekly | monthly | yearly | never
+#   expiry_date: "2025-12-31"        # Optional: Hide page after this date
+#   redirects:                       # 301 redirects from old URLs to this page
+#     - "/old-url/path"
+#     - "/legacy/program-name"
+#
+# VALIDATION:
+# Run `npx tsx scripts/validate-content.ts` before deploying to check:
+# - Redirect conflicts (same URL claimed by multiple pages)
+# - Invalid redirect targets
+# - Self-redirects and loops
+# - Required meta fields (page_title, description)
+#
+# ================================================================================
+
+# ================================================================================
+# SECTION COMPONENTS (for career programs and landing pages)
+# ================================================================================
 
 hero:
   component: "HeroSection"

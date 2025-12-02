@@ -68,7 +68,11 @@ function scanDirectory(dirPath: string, type: "program" | "landing"): Map<string
         const sourceRedirects = data.meta?.redirects || [];
 
         for (const redirect of sourceRedirects) {
-          const normalizedRedirect = redirect.startsWith("/") ? redirect : `/${redirect}`;
+          let normalizedRedirect = redirect.startsWith("/") ? redirect : `/${redirect}`;
+          normalizedRedirect = normalizedRedirect.toLowerCase();
+          if (normalizedRedirect.length > 1 && normalizedRedirect.endsWith("/")) {
+            normalizedRedirect = normalizedRedirect.slice(0, -1);
+          }
           
           // Only add if not already claimed (first one wins - conflicts should be caught by validator)
           if (!redirects.has(normalizedRedirect)) {
@@ -119,9 +123,18 @@ function getRedirectMap(): Map<string, RedirectEntry> {
   return redirectMap;
 }
 
+function normalizePath(path: string): string {
+  let normalized = path.toLowerCase();
+  if (normalized.length > 1 && normalized.endsWith("/")) {
+    normalized = normalized.slice(0, -1);
+  }
+  return normalized;
+}
+
 export function redirectMiddleware(req: Request, res: Response, next: NextFunction): void {
   const map = getRedirectMap();
-  const entry = map.get(req.path);
+  const normalizedPath = normalizePath(req.path);
+  const entry = map.get(normalizedPath);
 
   if (entry) {
     console.log(`[Redirects] 301: ${req.path} -> ${entry.target}`);
