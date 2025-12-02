@@ -17,7 +17,7 @@ export function HeroSection({ data }: HeroSectionProps) {
 
   return (
     <section 
-      className="py-16 md:py-24 bg-card"
+      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
       data-testid="section-hero"
     >
       <div className="container mx-auto px-4 text-center">
