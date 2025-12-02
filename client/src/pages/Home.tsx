@@ -40,26 +40,28 @@ export default function Home() {
     {
       icon: "https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress",
       title: "Fast Launch",
-      description: "Get started quickly with our streamlined onboarding and structured curriculum",
-      color: "text-foreground",
+      description:
+        "Get started quickly with our streamlined onboarding and structured curriculum",
+      color: "text-blue-500",
     },
     {
       icon: "https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress",
       title: "Global Community",
-      description: "Join thousands of learners worldwide on the same journey to tech mastery",
-      color: "text-foreground",
+      description:
+        "Join thousands of learners worldwide on the same journey to tech mastery",
+      color: "text-yellow-500",
     },
     {
       icon: "https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress",
       title: "Self-paced courses",
       description: "Learn at your own pace with expert-guided resources.",
-      color: "text-foreground",
+      color: "text-green-600",
     },
     {
       icon: "https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress",
       title: "Career Booster",
       description: "Enhance your resume, networking, and interview skills.",
-      color: "text-foreground",
+      color: "text-red-500",
     },
   ];
 
@@ -137,7 +139,6 @@ export default function Home() {
       onClick: () => console.log("Re-personalization clicked"),
     },
   ];
-
 
   return (
     <div className="min-h-screen bg-background">
