@@ -54,11 +54,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
             </div>
           </div>
           
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex justify-center">
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-full max-w-md"
+              className="w-full max-w-sm"
             />
           </div>
         </div>
