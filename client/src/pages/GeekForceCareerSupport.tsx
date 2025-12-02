@@ -36,9 +36,9 @@ function HeroSection({ data }: { data: typeof heroData }) {
               <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
                 {data.welcomeText}
               </p>
-              <p className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
-                <span className="text-primary">Geek</span>
-                <span className="text-foreground">FORCE</span>:
+              <p className="text-3xl md:text-4xl lg:text-5xl font-black mb-2">
+                <span className="text-foreground">Geek</span>
+                <span className="text-yellow-500">FORCE</span>:
               </p>
               <h1 
                 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-foreground"
