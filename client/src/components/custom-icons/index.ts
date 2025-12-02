@@ -1,3 +1,11 @@
-export { IconProfileOptimization } from './IconProfileOptimization';
-export { IconInterviewPrep } from './IconInterviewPrep';
-export { IconJobSearch } from './IconJobSearch';
+export { default as BriefcaseOutline } from './BriefcaseOutline';
+export { default as Briefcase } from './Briefcase';
+export { default as ChecklistVerify } from './ChecklistVerify';
+export { default as CodeWindow } from './CodeWindow';
+export { default as FolderCheck } from './FolderCheck';
+export { default as Graduation } from './Graduation';
+export { default as GrowthChart } from './GrowthChart';
+export { default as Monitor } from './Monitor';
+export { default as Security } from './Security';
+export { CheckListWithPencil } from './CheckListWithPencil';
+export { StairsWithFlag } from './StairsWithFlag';

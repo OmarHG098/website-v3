@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import SolidCard from "@/components/SolidCard";
 import { IconCheck } from "@tabler/icons-react";
-import { IconProfileOptimization, IconInterviewPrep, IconJobSearch } from "@/components/custom-icons";
+import { StairsWithFlag, CheckListWithPencil } from "@/components/custom-icons";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
@@ -33,7 +33,7 @@ const careerProcessData = {
   subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
   steps: [
     {
-      icon: IconProfileOptimization,
+      icon: StairsWithFlag,
       title: "Profile Optimization",
       items: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
@@ -42,21 +42,12 @@ const careerProcessData = {
       ]
     },
     {
-      icon: IconInterviewPrep,
+      icon: CheckListWithPencil,
       title: "Interview Preparation",
       items: [
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
         "Develop tailored strategies for upcoming interviews."
-      ]
-    },
-    {
-      icon: IconJobSearch,
-      title: "Strategic Job Search",
-      items: [
-        "Create a personalized job search plan aligned with your goals.",
-        "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
-        "Connect with our extensive network of global hiring partners."
       ]
     }
   ]
