@@ -91,8 +91,16 @@ export default function JobGuarantee() {
           className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
           data-testid="section-hero"
         >
-          {/* Left side decorative circles - 2 column grid (hidden on md and below) */}
-          <div className="hidden lg:grid absolute left-8 md:left-16 top-4 md:top-8 grid-cols-2 gap-3">
+          {/* Left side decorative circles - simplified for md, full grid for lg+ */}
+          {/* MD only: fewer circles in column 1 */}
+          <div className="hidden md:flex lg:hidden absolute left-8 top-8 flex-col gap-6">
+            <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
+            <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
+            <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
+            <div className="w-4 h-4 rounded-full bg-primary" />
+          </div>
+          {/* LG+: full 2 column grid */}
+          <div className="hidden lg:grid absolute left-16 top-8 grid-cols-2 gap-3">
             {/* Row 1 */}
             <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
             <div />
@@ -119,7 +127,12 @@ export default function JobGuarantee() {
             <div />
           </div>
 
-          {/* Right side decorative circles (hidden on md and below) */}
+          {/* Right side decorative circles */}
+          {/* MD only: smaller circle */}
+          <div className="hidden md:block lg:hidden absolute right-0 top-1/3 -translate-y-1/2">
+            <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
+          </div>
+          {/* LG+: large circle with small yellow dot */}
           <div className="hidden lg:block absolute right-0 top-1/3 -translate-y-1/2">
             <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
           </div>
