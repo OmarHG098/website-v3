@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { IconCheck, IconCertificate } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import type { CertificateSection as CertificateSectionType } from "@shared/schema";
+import certificatePreview from "@assets/certificate-preview_1764706363525.webp";
 
 interface CertificateSectionProps {
   data: CertificateSectionType;
@@ -70,30 +71,16 @@ export function CertificateSection({ data }: CertificateSectionProps) {
           {data.card && (
             <div className="flex justify-center">
               <Card 
-                className="w-full max-w-sm border-2 border-primary/20 bg-gradient-to-br from-card to-primary/5"
+                className="w-full max-w-md overflow-hidden"
                 data-testid="card-certificate-preview"
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
-                    <IconCertificate size={40} className="text-primary" />
-                  </div>
-                  <div className="border-b border-primary/20 pb-4 mb-4">
-                    <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">
-                      Certificate of Completion
-                    </p>
-                    <h3 
-                      className="text-xl font-bold text-foreground"
-                      data-testid="text-certificate-card-title"
-                    >
-                      {data.card.title}
-                    </h3>
-                  </div>
-                  <p 
-                    className="text-muted-foreground"
-                    data-testid="text-certificate-card-subtitle"
-                  >
-                    {data.card.subtitle}
-                  </p>
+                <CardContent className="p-0">
+                  <img 
+                    src={certificatePreview} 
+                    alt={data.card.title}
+                    className="w-full h-auto"
+                    data-testid="img-certificate-preview"
+                  />
                 </CardContent>
               </Card>
             </div>
