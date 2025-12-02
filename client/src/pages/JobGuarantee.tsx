@@ -116,8 +116,8 @@ export default function JobGuarantee() {
           <div className="absolute right-0 top-1/3 -translate-y-1/2">
             <div className="w-52 h-52 md:w-80 md:h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
           </div>
-          <div className="absolute right-16 md:right-24 bottom-28 md:bottom-32">
-            <div className="w-5 h-5 rounded-full bg-[#FFB718]" />
+          <div className="absolute right-20 md:right-32 bottom-28 md:bottom-32">
+            <div className="w-6 h-6 rounded-full bg-[#FFB718]" />
           </div>
 
           <div className="container mx-auto px-4 text-center relative z-10">
@@ -169,7 +169,7 @@ export default function JobGuarantee() {
 
         {/* Stats Section */}
         <section 
-          className="pt-16 md:pt-24 pb-8 bg-cyan-100"
+          className="py-8 bg-cyan-100"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
