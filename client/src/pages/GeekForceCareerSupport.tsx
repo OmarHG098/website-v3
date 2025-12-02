@@ -31,9 +31,9 @@ function HeroSection({ data }: { data: typeof heroData }) {
       data-testid="section-hero"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-12 items-center">
-          <div className="md:col-span-3 flex flex-col items-center">
-            <div className="-mt-8 md:-mt-12">
+        <div className="grid md:grid-cols-5 gap-12 items-start">
+          <div className="md:col-span-3 flex flex-col items-center justify-start">
+            <div>
               <p className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
                 {data.welcomeText}
               </p>
