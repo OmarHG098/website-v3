@@ -101,7 +101,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
             <img 
               src={careerSupportImage} 
               alt="Career support team members collaborating" 
-              className="w-full max-w-2xl"
+              className="w-full max-w-xl"
               data-testid="img-career-support"
             />
           </div>
