@@ -1,33 +1,52 @@
 import Header from "@/components/Header";
-import GrowthChart from "@/components/job-guarantee/GrowthChart";
+import { Button } from "@/components/ui/button";
+import { IconFileDownload } from "@tabler/icons-react";
 
 export default function JobGuarantee() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-16">
-        <div className="flex flex-col items-center justify-center gap-8">
-          <h1 className="text-3xl font-bold text-center">Job Guarantee Page</h1>
-          <p className="text-muted-foreground text-center">Testing the GrowthChart SVG component</p>
-          
-          <div className="flex flex-wrap gap-8 items-end justify-center">
-            <div className="text-center">
-              <GrowthChart />
-              <p className="mt-2 text-sm text-muted-foreground">Default (89x93, green)</p>
-            </div>
+      <main>
+        {/* Hero Section */}
+        <section 
+          className="py-20 md:py-32 bg-gradient-to-b from-primary/10 via-primary/5 to-background"
+          data-testid="section-job-guarantee-hero"
+        >
+          <div className="container mx-auto px-4 text-center">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground uppercase tracking-tight"
+              data-testid="text-hero-title"
+            >
+              Get Into Tech With Our{" "}
+              <span className="text-primary">Job Guarantee</span>
+            </h1>
             
-            <div className="text-center">
-              <GrowthChart width="120px" height="125px" color="#2563EB" />
-              <p className="mt-2 text-sm text-muted-foreground">Larger, blue</p>
-            </div>
+            <p 
+              className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
+              data-testid="text-hero-subtitle"
+            >
+              Your success is our mission — Get hired within 9 months of graduation, 
+              or we will refund your tuition.{" "}
+              <a 
+                href="#" 
+                className="text-primary hover:underline"
+                data-testid="link-conditions"
+              >
+                Conditions apply
+              </a>.
+            </p>
             
-            <div className="text-center">
-              <GrowthChart width="60px" height="63px" color="#8B5CF6" />
-              <p className="mt-2 text-sm text-muted-foreground">Smaller, purple</p>
-            </div>
+            <Button
+              size="lg"
+              className="text-lg px-8 py-6"
+              data-testid="button-request-syllabus"
+            >
+              <IconFileDownload className="mr-2" size={20} />
+              Request a Syllabus
+            </Button>
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );
