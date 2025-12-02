@@ -84,7 +84,7 @@ sections:
         description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
     highlight:
       title: "Maximiza Tu Potencial con Rigobot"
-      description: "LearnPack es nuestro software diseñado para autodidactas. Integra nuestro tutor IA Rigobot para ayuda instantánea."
+      description: "Rigobot es nuestro software diseñado para autodidactas, listo para abordar cualquier problema relacionado con código y equipado con pruebas automatizadas para retroalimentación inmediata, permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
       bullets:
         - text: "Rigobot, nuestro asistente IA, te da retroalimentación personalizada cuando la necesitas"
         - text: "Ratio 7:1 estudiante-profesor más sesiones 1:1 ilimitadas"

@@ -119,26 +119,11 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 </div>
                 
                 <p 
-                  className="text-muted-foreground mb-6"
+                  className="mb-6 text-[#666666] text-[18px]"
                   data-testid="text-highlight-description"
                 >
                   {data.highlight.description}
                 </p>
-                
-                {data.highlight.bullets && data.highlight.bullets.length > 0 && (
-                  <ul className="space-y-3 mb-8">
-                    {data.highlight.bullets.map((bullet, index) => (
-                      <li 
-                        key={index} 
-                        className="flex items-start gap-2 text-foreground"
-                        data-testid={`bullet-highlight-${index}`}
-                      >
-                        <TablerIcons.IconCheck size={20} className="text-primary flex-shrink-0 mt-0.5" />
-                        <span>{bullet.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
                 
                 {data.highlight.cta && (
                   <Button
