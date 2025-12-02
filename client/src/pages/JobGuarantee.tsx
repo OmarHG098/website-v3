@@ -187,7 +187,7 @@ export default function JobGuarantee() {
                         Full Stack Development with AI
                       </h3>
                     </div>
-                    <CodeWindow width="56" height="56" />
+                    <CodeWindow width="72" height="72" />
                   </div>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
@@ -206,7 +206,7 @@ export default function JobGuarantee() {
                         Data Science and Machine Learning with AI
                       </h3>
                     </div>
-                    <Monitor width="56" height="56" />
+                    <Monitor width="72" height="72" />
                   </div>
                   <p className="text-muted-foreground mb-4">
                     Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
@@ -225,7 +225,7 @@ export default function JobGuarantee() {
                         Cybersecurity
                       </h3>
                     </div>
-                    <Security width="56" height="56" />
+                    <Security width="72" height="72" />
                   </div>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
