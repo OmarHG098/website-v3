@@ -15,6 +15,11 @@ meta:
     - "/webinar/ai-learning"
     - "/events/ai-coding-webinar"
 
+schema:
+  include:
+    - "organization"
+    - "website"
+
 sections:
   - type: hero
     badge: "Free Webinar"

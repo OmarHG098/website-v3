@@ -16,6 +16,12 @@ meta:
     - "/programs/fullstack-developer"
     - "/coding-bootcamp/full-stack"
 
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:full-stack"
+
 sections:
   - type: hero
     badge: "Career Program"

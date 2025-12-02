@@ -16,6 +16,12 @@ meta:
     - "/programas/desarrollador-fullstack"
     - "/cursos/full-stack"
 
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:full-stack"
+
 sections:
   - type: hero
     badge: "Programa de Carrera"
