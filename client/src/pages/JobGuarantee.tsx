@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
 import GrowthChart from "@/components/job-guarantee/GrowthChart";
+import StatCard from "@/components/job-guarantee/StatCard";
 
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
@@ -73,19 +74,17 @@ export default function JobGuarantee() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               {stats.map((stat, index) => (
-                <div 
-                  key={index}
-                  className="text-center p-6 bg-card rounded-md border border-border"
-                  data-testid={`stat-card-${index}`}
-                >
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-1">
-                    {stat.value}
-                    {stat.unit && (
-                      <span className="text-2xl md:text-3xl ml-1">{stat.unit}</span>
-                    )}
+                <StatCard key={index}>
+                  <div data-testid={`stat-card-${index}`}>
+                    <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
+                      {stat.value}
+                      {stat.unit && (
+                        <span className="text-2xl md:text-3xl ml-1">{stat.unit}</span>
+                      )}
+                    </div>
+                    <div className="text-muted-foreground">{stat.label}</div>
                   </div>
-                  <div className="text-muted-foreground">{stat.label}</div>
-                </div>
+                </StatCard>
               ))}
             </div>
           </div>
