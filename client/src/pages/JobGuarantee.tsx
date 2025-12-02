@@ -419,7 +419,7 @@ export default function JobGuarantee() {
                   >
                     Why We Have the Confidence to Offer a Job Guarantee
                   </h2>
-                  <p className="text-xl text-muted-foreground mb-8">
+                  <p className="text-base md:text-xl text-muted-foreground mb-8">
                     Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.
                   </p>
                   <ul className="space-y-5 mb-8">
@@ -427,7 +427,7 @@ export default function JobGuarantee() {
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                         <IconCheck className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="text-lg text-foreground">
+                      <span className="text-sm md:text-lg text-foreground">
                         Our program's effectiveness is backed by strong placement rates
                       </span>
                     </li>
@@ -435,7 +435,7 @@ export default function JobGuarantee() {
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                         <IconCheck className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="text-lg text-foreground">
+                      <span className="text-sm md:text-lg text-foreground">
                         The tech industry continues to grow with high demand for talent
                       </span>
                     </li>
@@ -443,7 +443,7 @@ export default function JobGuarantee() {
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                         <IconCheck className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="text-lg text-foreground">
+                      <span className="text-sm md:text-lg text-foreground">
                         We believe in our teaching approach and your commitment to succeed
                       </span>
                     </li>
