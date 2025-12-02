@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { CareerProgram } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function CareerProgramDetail() {
   const { i18n } = useTranslation();
@@ -26,6 +27,8 @@ export default function CareerProgramDetail() {
     },
     enabled: !!slug && hasValidRoute,
   });
+
+  usePageMeta(program?.meta);
 
   if (isLoading) {
     return (

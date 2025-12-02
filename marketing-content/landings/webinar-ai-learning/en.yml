@@ -11,6 +11,9 @@ meta:
   og_image: "/images/webinar-og.jpg"
   priority: 0.9
   change_frequency: "weekly"
+  redirects:
+    - "/webinar/ai-learning"
+    - "/events/ai-coding-webinar"
 
 sections:
   - type: hero

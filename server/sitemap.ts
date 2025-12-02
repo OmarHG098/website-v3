@@ -35,25 +35,55 @@ interface SitemapUrl {
   priority: number;
 }
 
-function getAvailablePrograms(): Array<{ slug: string; locales: string[] }> {
+interface ContentMeta {
+  robots?: string;
+  priority?: number;
+  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  redirects?: string[];
+}
+
+interface AvailableProgram {
+  slug: string;
+  locale: string;
+  title: string;
+  meta: ContentMeta;
+}
+
+function getAvailablePrograms(): AvailableProgram[] {
   try {
     if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
       return [];
     }
 
-    const programs: Array<{ slug: string; locales: string[] }> = [];
+    const programs: AvailableProgram[] = [];
     const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
 
     for (const dir of dirs) {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
-      if (fs.statSync(programPath).isDirectory()) {
-        const files = fs.readdirSync(programPath);
-        const locales = files
-          .filter(f => f.endsWith(".yml"))
-          .map(f => f.replace(".yml", ""));
+      if (!fs.statSync(programPath).isDirectory()) continue;
+      
+      const files = fs.readdirSync(programPath).filter(f => f.endsWith(".yml"));
+      
+      for (const file of files) {
+        const locale = file.replace(".yml", "");
+        const filePath = path.join(programPath, file);
         
-        if (locales.length > 0) {
-          programs.push({ slug: dir, locales });
+        try {
+          const content = fs.readFileSync(filePath, "utf-8");
+          const data = yaml.load(content) as {
+            slug?: string;
+            title?: string;
+            meta?: ContentMeta;
+          };
+          
+          programs.push({
+            slug: data.slug || dir,
+            locale,
+            title: data.title || dir,
+            meta: data.meta || {},
+          });
+        } catch (parseError) {
+          console.error(`Error parsing program ${filePath}:`, parseError);
         }
       }
     }
@@ -187,28 +217,25 @@ function buildSitemapXml(): string {
     priority: 0.8,
   });
 
-  // Dynamic career program pages from YAML
+  // Dynamic career program pages from YAML (only include indexable pages)
   const programs = getAvailablePrograms();
   for (const program of programs) {
-    // English version
-    if (program.locales.includes("en")) {
-      urls.push({
-        loc: `${getBaseUrl()}/us/career-programs/${program.slug}`,
-        lastmod: today,
-        changefreq: "weekly",
-        priority: 0.8,
-      });
+    // Skip pages marked as noindex
+    if (!shouldIndex(program.meta.robots)) {
+      console.log(`[Sitemap] Skipping noindex program: ${program.slug} (${program.locale})`);
+      continue;
     }
 
-    // Spanish version
-    if (program.locales.includes("es")) {
-      urls.push({
-        loc: `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`,
-        lastmod: today,
-        changefreq: "weekly",
-        priority: 0.8,
-      });
-    }
+    const url = program.locale === "es"
+      ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
+      : `${getBaseUrl()}/us/career-programs/${program.slug}`;
+
+    urls.push({
+      loc: url,
+      lastmod: today,
+      changefreq: program.meta.change_frequency || "weekly",
+      priority: program.meta.priority || 0.8,
+    });
   }
 
   // Dynamic landing pages from YAML (only include indexable pages)
@@ -331,21 +358,20 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
   urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
 
-  // Dynamic career program pages from YAML
+  // Dynamic career program pages from YAML (only indexable)
   const programs = getAvailablePrograms();
   for (const program of programs) {
-    if (program.locales.includes("en")) {
-      urls.push({
-        loc: `${getBaseUrl()}/us/career-programs/${program.slug}`,
-        label: `${program.slug} (EN)`,
-      });
-    }
-    if (program.locales.includes("es")) {
-      urls.push({
-        loc: `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`,
-        label: `${program.slug} (ES)`,
-      });
-    }
+    if (!shouldIndex(program.meta.robots)) continue;
+    
+    const url = program.locale === "es"
+      ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
+      : `${getBaseUrl()}/us/career-programs/${program.slug}`;
+    const localeLabel = program.locale === "es" ? "ES" : "EN";
+    
+    urls.push({
+      loc: url,
+      label: `${program.title} (${localeLabel})`,
+    });
   }
 
   // Dynamic landing pages from YAML (only indexable)

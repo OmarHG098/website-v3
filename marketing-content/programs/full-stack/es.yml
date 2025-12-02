@@ -7,6 +7,14 @@ title: "Desarrollo Full Stack"
 meta:
   page_title: "Programa de Carrera Desarrollador Full Stack | 4Geeks"
   description: "Aprende desarrollo full stack a tu propio ritmo con herramientas de IA, mentoría ilimitada y una comunidad global."
+  robots: "index, follow"
+  og_image: "/images/programs/full-stack-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/bootcamp/full-stack-es"
+    - "/programas/desarrollador-fullstack"
+    - "/cursos/full-stack"
 
 sections:
   - type: hero
