@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import SolidCard from "@/components/SolidCard";
 import { IconCheck } from "@tabler/icons-react";
-import { IconProfileOptimization, IconInterviewPrep, IconJobSearch } from "@/components/CustomIcons";
+import { IconProfileOptimization, IconInterviewPrep, IconJobSearch } from "@/components/custom-icons";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
