@@ -304,7 +304,7 @@ export default function JobGuarantee() {
                   <img 
                     src={eligibleImage} 
                     alt="Woman working on laptop" 
-                    className="max-w-full h-auto rounded-md"
+                    className="max-w-[280px] md:max-w-full h-auto rounded-md"
                     data-testid="img-eligible"
                   />
                 </div>
