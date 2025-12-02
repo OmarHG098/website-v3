@@ -1,58 +1,33 @@
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { IconFileDownload } from "@tabler/icons-react";
+import { HeroSection } from "@/components/career-programs/HeroSection";
+import type { HeroSection as HeroSectionType } from "@shared/schema";
 
 export default function JobGuarantee() {
+  const heroData: HeroSectionType = {
+    type: "hero",
+    title: "Get Into Tech With Our Job Guarantee",
+    subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+    cta_buttons: [
+      {
+        text: "APPLY NOW",
+        url: "#apply",
+        variant: "primary",
+      },
+      {
+        text: "REQUEST A SYLLABUS",
+        url: "#syllabus",
+        variant: "outline",
+        icon: "FileDownload",
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       <main>
-        {/* Hero Section */}
-        <section 
-          className="py-20 bg-gradient-to-b from-primary/10 via-primary/5 to-background"
-          data-testid="section-job-guarantee-hero"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <h1 
-              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground uppercase tracking-tight"
-              data-testid="text-hero-title"
-            >
-              Get Into Tech With Our{" "}
-              <span className="text-primary">Job Guarantee</span>
-            </h1>
-            
-            <p 
-              className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8"
-              data-testid="text-hero-subtitle"
-            >
-              Your success is our mission — Get hired within 9 months of graduation, 
-              or we will refund your tuition.{" "}
-              <a 
-                href="#" 
-                className="text-primary hover:underline"
-                data-testid="link-conditions"
-              >
-                Conditions apply
-              </a>.
-            </p>
-            
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button
-                data-testid="button-apply-now"
-              >
-                APPLY NOW
-              </Button>
-              <Button
-                variant="outline"
-                data-testid="button-request-syllabus"
-              >
-                <IconFileDownload className="mr-2" size={16} />
-                REQUEST A SYLLABUS
-              </Button>
-            </div>
-          </div>
-        </section>
+        <HeroSection data={heroData} />
       </main>
     </div>
   );
