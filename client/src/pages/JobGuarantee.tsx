@@ -5,7 +5,8 @@ import type { HeroSection as HeroSectionType } from "@shared/schema";
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
     type: "hero",
-    title: "Get Into Tech With Our Job Guarantee",
+    title: "Get into tech with our Job Guarantee",
+    title_highlight: "Job Guarantee",
     subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
     cta_buttons: [
       {
