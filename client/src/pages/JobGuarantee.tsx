@@ -180,60 +180,66 @@ export default function JobGuarantee() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Full Stack Card */}
                 <Card className="p-6 hover-elevate" data-testid="card-program-fullstack">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CodeWindow width="48" height="48" />
-                    <span className="text-sm font-medium text-primary">Full Stack</span>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Full Stack</span>
+                      <h3 className="text-xl font-bold text-foreground mt-1">
+                        Full Stack Development with AI
+                      </h3>
+                    </div>
+                    <CodeWindow width="56" height="56" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-foreground">
-                    Full Stack Development with AI
-                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
                   </p>
                   <p className="text-sm text-muted-foreground mb-4">
                     Online, face-to-face and flexible
                   </p>
-                  <Button variant="outline" className="w-full" data-testid="button-read-more-fullstack">
+                  <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-fullstack">
                     Read More
                   </Button>
                 </Card>
 
                 {/* Data Science Card */}
                 <Card className="p-6 hover-elevate" data-testid="card-program-datascience">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Monitor width="48" height="48" />
-                    <span className="text-sm font-medium text-primary">With Python</span>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">With Python</span>
+                      <h3 className="text-xl font-bold text-foreground mt-1">
+                        Data Science and Machine Learning with AI
+                      </h3>
+                    </div>
+                    <Monitor width="56" height="56" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-foreground">
-                    Data Science and Machine Learning with AI
-                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
                   </p>
                   <p className="text-sm text-muted-foreground mb-4">
                     Online, face-to-face and flexible
                   </p>
-                  <Button variant="outline" className="w-full" data-testid="button-read-more-datascience">
+                  <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-datascience">
                     Read More
                   </Button>
                 </Card>
 
                 {/* Cybersecurity Card */}
                 <Card className="p-6 hover-elevate" data-testid="card-program-cybersecurity">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Security width="48" height="48" />
-                    <span className="text-sm font-medium text-primary">For Windows & Linux</span>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">For Windows & Linux</span>
+                      <h3 className="text-xl font-bold text-foreground mt-1">
+                        Cybersecurity
+                      </h3>
+                    </div>
+                    <Security width="56" height="56" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-foreground">
-                    Cybersecurity
-                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
                   </p>
                   <p className="text-sm text-muted-foreground mb-4">
                     Online, face-to-face and flexible
                   </p>
-                  <Button variant="outline" className="w-full" data-testid="button-read-more-cybersecurity">
+                  <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-cybersecurity">
                     Read More
                   </Button>
                 </Card>
