@@ -627,41 +627,6 @@ export default function JobGuarantee() {
 
         {/* FAQ Section */}
         <FAQSection data={faqData} />
-
-        {/* CTA Footer Section */}
-        <section 
-          className="py-16 md:py-24 bg-muted"
-          data-testid="section-cta-footer"
-        >
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 
-                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground"
-                data-testid="text-cta-title"
-              >
-                Ready to Start Your Tech Career with Confidence?
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Join our program with the peace of mind that comes from our Job Guarantee. Your success is our priority.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  data-testid="button-apply-now-footer"
-                >
-                  Apply Now
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  data-testid="button-learn-more-footer"
-                >
-                  Learn More
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
