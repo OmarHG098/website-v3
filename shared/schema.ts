@@ -4,9 +4,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
-  id: varchar("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
 });
@@ -90,12 +88,10 @@ export const certificateSectionSchema = z.object({
   title: z.string(),
   description: z.string(),
   benefits: z.array(z.object({ text: z.string() })),
-  card: z
-    .object({
-      title: z.string(),
-      subtitle: z.string(),
-    })
-    .optional(),
+  card: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+  }).optional(),
 });
 
 export const faqItemSchema = z.object({
@@ -118,12 +114,10 @@ export const credibilitySectionSchema = z.object({
   type: z.literal("credibility"),
   title: z.string(),
   stats: z.array(statItemSchema),
-  featured_in: z
-    .object({
-      label: z.string(),
-      logos: z.array(z.string()),
-    })
-    .optional(),
+  featured_in: z.object({
+    label: z.string(),
+    logos: z.array(z.string()),
+  }).optional(),
 });
 
 export const footerCtaSectionSchema = z.object({
@@ -170,9 +164,7 @@ export const landingPageMetaSchema = z.object({
   canonical_url: z.string().optional(),
   expiry_date: z.string().optional(),
   priority: z.number().min(0).max(1).default(0.8),
-  change_frequency: z
-    .enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"])
-    .default("weekly"),
+  change_frequency: z.enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]).default("weekly"),
 });
 
 export const landingPageSchema = z.object({
@@ -185,14 +177,10 @@ export const landingPageSchema = z.object({
 export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
-export type ProgramOverviewSection = z.infer<
-  typeof programOverviewSectionSchema
->;
+export type ProgramOverviewSection = z.infer<typeof programOverviewSectionSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
-export type FeaturesChecklistSection = z.infer<
-  typeof featuresChecklistSectionSchema
->;
+export type FeaturesChecklistSection = z.infer<typeof featuresChecklistSectionSchema>;
 export type TechStackSection = z.infer<typeof techStackSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
 export type FAQItem = z.infer<typeof faqItemSchema>;

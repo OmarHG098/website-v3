@@ -4,32 +4,13 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import {
-  careerProgramSchema,
-  landingPageSchema,
-  type CareerProgram,
-  type LandingPage,
-} from "@shared/schema";
-import {
-  getSitemap,
-  clearSitemapCache,
-  getSitemapCacheStatus,
-  getSitemapUrls,
-} from "./sitemap";
+import { careerProgramSchema, landingPageSchema, type CareerProgram, type LandingPage } from "@shared/schema";
+import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 
-const BREATHECODE_HOST =
-  process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
+const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
-const MARKETING_CONTENT_PATH = path.join(
-  process.cwd(),
-  "marketing-content",
-  "programs",
-);
-const LANDINGS_CONTENT_PATH = path.join(
-  process.cwd(),
-  "marketing-content",
-  "landings",
-);
+const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
+const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -44,10 +25,7 @@ function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
 
     const result = careerProgramSchema.safeParse(data);
     if (!result.success) {
-      console.error(
-        `Invalid YAML structure for ${slug}/${locale}:`,
-        result.error,
-      );
+      console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
       return null;
     }
 
@@ -58,9 +36,7 @@ function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   }
 }
 
-function listCareerPrograms(
-  locale: string,
-): Array<{ slug: string; title: string }> {
+function listCareerPrograms(locale: string): Array<{ slug: string; title: string }> {
   try {
     if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
       return [];
@@ -99,10 +75,7 @@ function loadLandingPage(slug: string, locale: string): LandingPage | null {
 
     const result = landingPageSchema.safeParse(data);
     if (!result.success) {
-      console.error(
-        `Invalid YAML structure for landing ${slug}/${locale}:`,
-        result.error,
-      );
+      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
       return null;
     }
 
@@ -113,9 +86,7 @@ function loadLandingPage(slug: string, locale: string): LandingPage | null {
   }
 }
 
-function listLandingPages(
-  locale: string,
-): Array<{ slug: string; title: string }> {
+function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
   try {
     if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
       return [];
@@ -151,16 +122,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const response = await fetch(
-        "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${token}`,
-            Academy: "4",
-          },
+      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${token}`,
+          "Academy": "4",
         },
-      );
+      });
 
       if (response.status === 200) {
         res.json({ valid: true });
@@ -250,16 +218,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate token in production
       if (!isDevelopment && token) {
-        const response = await fetch(
-          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Token ${token}`,
-              Academy: "4",
-            },
+        const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Token ${token}`,
+            "Academy": "4",
           },
-        );
+        });
 
         if (response.status !== 200) {
           res.status(403).json({ error: "Invalid or unauthorized token" });
