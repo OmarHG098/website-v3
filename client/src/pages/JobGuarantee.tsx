@@ -91,8 +91,8 @@ export default function JobGuarantee() {
           className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
           data-testid="section-hero"
         >
-          {/* Left side decorative circles - 2 column grid */}
-          <div className="absolute left-8 md:left-16 top-4 md:top-8 grid grid-cols-2 gap-3">
+          {/* Left side decorative circles - 2 column grid (hidden on mobile) */}
+          <div className="hidden sm:grid absolute left-8 md:left-16 top-4 md:top-8 grid-cols-2 gap-3">
             {/* Row 1 */}
             <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
             <div />
@@ -119,11 +119,11 @@ export default function JobGuarantee() {
             <div />
           </div>
 
-          {/* Right side decorative circles */}
-          <div className="absolute right-0 top-1/3 -translate-y-1/2">
-            <div className="w-52 h-52 md:w-80 md:h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
+          {/* Right side decorative circles (hidden on mobile) */}
+          <div className="hidden sm:block absolute right-0 top-1/3 -translate-y-1/2">
+            <div className="w-40 h-40 md:w-80 md:h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
           </div>
-          <div className="absolute right-20 md:right-32 bottom-32 md:bottom-36">
+          <div className="hidden sm:block absolute right-20 md:right-32 bottom-32 md:bottom-36">
             <div className="w-6 h-6 rounded-full bg-[#FFB718]" />
           </div>
 
