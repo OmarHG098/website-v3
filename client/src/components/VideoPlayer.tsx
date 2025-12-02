@@ -16,7 +16,7 @@ export default function VideoPlayer({ videoId, title, className = "", aspectRati
         data-testid="video-player"
         style={aspectRatio ? { aspectRatio } : undefined}
       >
-        <LiteYouTubeEmbed
+        <iframe
           id={videoId}
           title={title}
           poster="maxresdefault"
