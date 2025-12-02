@@ -34,20 +34,20 @@ function HeroSection({ data }: { data: typeof heroData }) {
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div>
-              <p className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+              <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
                 {data.welcomeText}
               </p>
-              <p className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-2">
+              <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">
                 {data.brandName}:
               </p>
               <h1 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
               </h1>
               <p 
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-6"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}
