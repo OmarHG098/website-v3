@@ -17,8 +17,17 @@ interface TestimonialsSectionProps {
   testimonials: Testimonial[];
 }
 
+const avatarColors = [
+  "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
+  "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400",
+  "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
+  "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400",
+  "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400",
+  "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400",
+];
+
 const TestimonialCard = memo(
-  ({ testimonial }: { testimonial: Testimonial }) => (
+  ({ testimonial, index }: { testimonial: Testimonial; index: number }) => (
     <Card
       key={testimonial.id}
       data-testid={`card-testimonial-${testimonial.id}`}
@@ -29,7 +38,7 @@ const TestimonialCard = memo(
             {testimonial.avatar && (
               <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
             )}
-            <AvatarFallback className="bg-primary/10 text-primary">
+            <AvatarFallback className={avatarColors[index % avatarColors.length]}>
               {testimonial.name
                 .split(" ")
                 .map((n) => n[0])
@@ -79,15 +88,15 @@ function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
 
       {/* Mobile: Show only first 3 */}
       <div className="grid grid-cols-1 gap-3 max-w-[77rem] mx-auto md:hidden">
-        {testimonials.slice(0, 3).map((testimonial) => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        {testimonials.slice(0, 3).map((testimonial, index) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
         ))}
       </div>
 
       {/* Tablet and Desktop: Show all */}
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[77rem] mx-auto">
-        {testimonials.map((testimonial) => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        {testimonials.map((testimonial, index) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
         ))}
       </div>
     </section>

@@ -28,6 +28,7 @@ import {
   IconCheck,
   IconSearch,
   IconExternalLink,
+  IconWorld,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,7 +53,7 @@ const componentsList = [
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
 ];
 
-type MenuView = "main" | "components" | "sitemap";
+type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -61,11 +62,22 @@ interface SitemapUrl {
   label: string;
 }
 
+interface LandingItem {
+  slug: string;
+  title: string;
+}
+
+interface RedirectItem {
+  from: string;
+  to: string;
+  type: string;
+}
+
 // Get persisted menu view from sessionStorage
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings" || stored === "redirects") {
       return stored;
     }
   }
@@ -73,7 +85,7 @@ const getPersistedMenuView = (): MenuView => {
 };
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDevelopment } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const [location] = useLocation();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -88,6 +100,11 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
+  const [tokenInput, setTokenInput] = useState("");
+  const [landingsList, setLandingsList] = useState<LandingItem[]>([]);
+  const [landingsLoading, setLandingsLoading] = useState(false);
+  const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
+  const [redirectsLoading, setRedirectsLoading] = useState(false);
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -114,6 +131,35 @@ export function DebugBubble() {
     }
   }, [menuView]);
 
+  // Fetch landings when entering landings view
+  useEffect(() => {
+    if (menuView === "landings" && landingsList.length === 0) {
+      setLandingsLoading(true);
+      const locale = i18n.language || "en";
+      fetch(`/api/landings?locale=${locale}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setLandingsList(data);
+          setLandingsLoading(false);
+        })
+        .catch(() => setLandingsLoading(false));
+    }
+  }, [menuView, i18n.language]);
+
+  // Fetch redirects when entering redirects view
+  useEffect(() => {
+    if (menuView === "redirects" && redirectsList.length === 0) {
+      setRedirectsLoading(true);
+      fetch("/api/debug/redirects")
+        .then((res) => res.json())
+        .then((data) => {
+          setRedirectsList(data.redirects || []);
+          setRedirectsLoading(false);
+        })
+        .catch(() => setRedirectsLoading(false));
+    }
+  }, [menuView]);
+
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -130,17 +176,21 @@ export function DebugBubble() {
       url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
   );
 
-  // In production, don't render if not validated or still loading
-  // In development, always show (but with warning if no token)
+  // Only show bubble if debug mode is active
+  // In dev: always active
+  // In production: requires ?debug=true in URL
+  if (!isDebugMode) {
+    return null;
+  }
+  
+  // Wait for loading to complete
   if (isLoading) {
     return null;
   }
   
-  if (!isDevelopment && !isValidated) {
-    return null;
-  }
-  
-  const showTokenWarning = isDevelopment && !hasToken;
+  // Token states for different warning scenarios
+  const noTokenDetected = !hasToken;
+  const tokenWithoutCapabilities = hasToken && isValidated === false;
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -208,26 +258,98 @@ export function DebugBubble() {
           className="w-80 p-0"
           sideOffset={8}
         >
-          {menuView === "main" ? (
+          {/* No token detected - show only warning */}
+          {noTokenDetected ? (
+            <div className="p-4 pl-[8px] pr-[8px]">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900 flex-shrink-0">
+                  <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm mb-1">No token detected</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter token..."
+                      value={tokenInput}
+                      onChange={(e) => setTokenInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && tokenInput.trim()) {
+                          validateManualToken(tokenInput.trim());
+                        }
+                      }}
+                      className="flex-1 px-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-token"
+                    />
+                    <Button
+                      size="sm"
+                      onClick={() => validateManualToken(tokenInput.trim())}
+                      disabled={!tokenInput.trim() || isLoading}
+                      data-testid="button-validate-token"
+                    >
+                      {isLoading ? (
+                        <IconRefresh className="h-4 w-4 animate-spin" />
+                      ) : (
+                        "Validate"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : tokenWithoutCapabilities ? (
+            /* Token exists but not validated - show warning with retry */
+            (<div className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900">
+                  <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm mb-1">Limited access</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Token detected but no webmaster capabilities have been detected
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={retryValidation}
+                      disabled={isLoading}
+                      className="flex-1"
+                      data-testid="button-retry-validation"
+                    >
+                      {isLoading ? (
+                        <IconRefresh className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <IconRefresh className="h-4 w-4 mr-1" />
+                          Retry
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={clearToken}
+                      disabled={isLoading}
+                      data-testid="button-clear-token"
+                    >
+                      <IconX className="h-4 w-4 mr-1" />
+                      Clear
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>)
+          ) : menuView === "main" ? (
             <>
               <div className="p-3 border-b">
                 <h3 className="font-semibold text-sm">Debug Tools</h3>
                 <p className="text-xs text-muted-foreground">Development utilities</p>
               </div>
-              
-              {showTokenWarning && (
-                <div className="p-3 bg-amber-50 dark:bg-amber-950 border-b border-amber-200 dark:border-amber-800">
-                  <div className="flex items-start gap-2">
-                    <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-xs font-medium text-amber-800 dark:text-amber-200">No token detected</p>
-                      <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">
-                        Add <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">?token=xxx</code> to URL or set <code className="bg-amber-100 dark:bg-amber-900 px-1 rounded">VITE_BREATHECODE_TOKEN</code>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
               
               <div className="p-2 space-y-1">
                 <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
@@ -275,6 +397,33 @@ export function DebugBubble() {
                     <span>Components</span>
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
+                
+                <button
+                  onClick={() => setMenuView("landings")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-landings-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconWorld className="h-4 w-4 text-muted-foreground" />
+                    <span>Landings</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
+                
+                <button
+                  onClick={() => setMenuView("redirects")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-redirects-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconRoute className="h-4 w-4 text-muted-foreground" />
+                    <span>Redirects</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
                 </button>
               </div>
 
@@ -341,7 +490,7 @@ export function DebugBubble() {
                     return (
                       <a
                         key={component.type}
-                        href={`/component-showcase?focus=${component.type}`}
+                        href={`/component-showcase/${component.type}`}
                         className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
                         data-testid={`link-component-${component.type}`}
                       >
@@ -353,6 +502,106 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
+                </div>
+              </ScrollArea>
+            </>
+          ) : menuView === "landings" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setMenuView("main")}
+                    className="p-1 rounded-md hover-elevate"
+                    data-testid="button-back-to-main-landings"
+                  >
+                    <IconArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div>
+                    <h3 className="font-semibold text-sm">Landing Pages</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {landingsList.length} landing{landingsList.length !== 1 ? 's' : ''} available
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  {landingsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : landingsList.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No landings found
+                    </div>
+                  ) : (
+                    landingsList.map((landing) => (
+                      <a
+                        key={landing.slug}
+                        href={`/landing/${landing.slug}`}
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                        data-testid={`link-landing-${landing.slug}`}
+                      >
+                        <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium">{landing.title}</div>
+                          <div className="text-xs text-muted-foreground truncate">/landing/{landing.slug}</div>
+                        </div>
+                      </a>
+                    ))
+                  )}
+                </div>
+              </ScrollArea>
+            </>
+          ) : menuView === "redirects" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setMenuView("main")}
+                    className="p-1 rounded-md hover-elevate"
+                    data-testid="button-back-to-main-redirects"
+                  >
+                    <IconArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div>
+                    <h3 className="font-semibold text-sm">Active Redirects</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {redirectsList.length} 301 redirect{redirectsList.length !== 1 ? 's' : ''} configured
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  {redirectsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : redirectsList.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No redirects configured
+                    </div>
+                  ) : (
+                    redirectsList.map((redirect, index) => (
+                      <div
+                        key={`${redirect.from}-${index}`}
+                        className="px-3 py-2 rounded-md text-sm bg-muted/50"
+                        data-testid={`redirect-item-${index}`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.from}</code>
+                          <IconArrowRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.to}</code>
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Type: {redirect.type}
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </ScrollArea>
             </>

@@ -7,9 +7,9 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import {
   IconStarFilled,
   IconRoute,
@@ -23,11 +23,7 @@ import {
 } from "@tabler/icons-react";
 import rocketIcon from "@assets/generated_images/Rocket_launch_icon_76306c53.webp";
 import communityIcon from "@assets/generated_images/Community_network_icon_a5c67162.webp";
-import securityIcon from "@assets/generated_images/Security_shield_icon_e948888d.webp";
 import lightningIcon from "@assets/generated_images/Lightning_speed_icon_7822b42c.webp";
-import skillLearningIcon from "@assets/generated_images/Skill_learning_icon_b1295d22.webp";
-import toolMasteryIcon from "@assets/generated_images/Tool_mastery_icon_2e46cd62.webp";
-import careerIcon from "@assets/generated_images/Career_role_icon_080fe87b.webp";
 import collabImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
 import teamImage from "@assets/generated_images/Tech_team_group_photo_4a9b4011.webp";
 import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
@@ -38,6 +34,36 @@ import learner4 from "@assets/generated_images/Hispanic_man_tech_student_992b89a
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { t } = useTranslation();
+
+  const iconFeatures = [
+    {
+      icon: "https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress",
+      title: "Fast Launch",
+      description:
+        "Get started quickly with our streamlined onboarding and structured curriculum",
+      color: "text-blue-500",
+    },
+    {
+      icon: "https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress",
+      title: "Global Community",
+      description:
+        "Join thousands of learners worldwide on the same journey to tech mastery",
+      color: "text-yellow-500",
+    },
+    {
+      icon: "https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress",
+      title: "Self-paced courses",
+      description: "Learn at your own pace with expert-guided resources.",
+      color: "text-green-600",
+    },
+    {
+      icon: "https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress",
+      title: "Career Booster",
+      description: "Enhance your resume, networking, and interview skills.",
+      color: "text-red-500",
+    },
+  ];
 
   const aiAutomations = [
     {
@@ -111,41 +137,6 @@ export default function Home() {
       color: "border-t-emerald-500",
       iconColor: "text-emerald-500",
       onClick: () => console.log("Re-personalization clicked"),
-    },
-  ];
-
-  const iconFeatures = [
-    {
-      icon: rocketIcon,
-      title: "Fast Launch",
-      description:
-        "Get started quickly with our streamlined onboarding and structured curriculum",
-      color: "bg-blue-100 dark:bg-blue-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: communityIcon,
-      title: "Global Community",
-      description:
-        "Join thousands of learners worldwide on the same journey to tech mastery",
-      color: "bg-green-100 dark:bg-green-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: securityIcon,
-      title: "Secure Platform",
-      description:
-        "Your progress, projects, and personal data are always protected",
-      color: "bg-red-100 dark:bg-red-900/20",
-      onClick: () => setLocation("/career-programs"),
-    },
-    {
-      icon: lightningIcon,
-      title: "Quick Results",
-      description:
-        "See measurable progress in weeks with our proven learning methodology",
-      color: "bg-yellow-100 dark:bg-yellow-900/20",
-      onClick: () => setLocation("/career-programs"),
     },
   ];
 
@@ -239,7 +230,7 @@ export default function Home() {
       />
 
       <IconFeatureGrid
-        title="Our mission is to get you into tech."
+        title="Our mission is to get you into tech. You choose how."
         features={iconFeatures}
       />
 

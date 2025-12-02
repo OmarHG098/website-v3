@@ -4,30 +4,33 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, type CareerProgram } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, type CareerProgram, type LandingPage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
+import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
+import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
+const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
     const filePath = path.join(MARKETING_CONTENT_PATH, slug, `${locale}.yml`);
-    
+
     if (!fs.existsSync(filePath)) {
       return null;
     }
-    
+
     const fileContent = fs.readFileSync(filePath, "utf8");
     const data = yaml.load(fileContent);
-    
+
     const result = careerProgramSchema.safeParse(data);
     if (!result.success) {
       console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
       return null;
     }
-    
+
     return result.data;
   } catch (error) {
     console.error(`Error loading career program ${slug}/${locale}:`, error);
@@ -40,10 +43,10 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
     if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
       return [];
     }
-    
+
     const programs: Array<{ slug: string; title: string }> = [];
     const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
-    
+
     for (const dir of dirs) {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
       if (fs.statSync(programPath).isDirectory()) {
@@ -53,7 +56,7 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
         }
       }
     }
-    
+
     return programs;
   } catch (error) {
     console.error("Error listing career programs:", error);
@@ -61,17 +64,70 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
   }
 }
 
+function loadLandingPage(slug: string, locale: string): LandingPage | null {
+  try {
+    const filePath = path.join(LANDINGS_CONTENT_PATH, slug, `${locale}.yml`);
+
+    if (!fs.existsSync(filePath)) {
+      return null;
+    }
+
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const data = yaml.load(fileContent);
+
+    const result = landingPageSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
+      return null;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading landing page ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
+  try {
+    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
+      return [];
+    }
+
+    const landings: Array<{ slug: string; title: string }> = [];
+    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
+
+    for (const dir of dirs) {
+      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
+      if (fs.statSync(landingPath).isDirectory()) {
+        const landing = loadLandingPage(dir, locale);
+        if (landing) {
+          landings.push({ slug: landing.slug, title: landing.title });
+        }
+      }
+    }
+
+    return landings;
+  } catch (error) {
+    console.error("Error listing landing pages:", error);
+    return [];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Apply redirect middleware for 301 redirects from YAML content
+  app.use(redirectMiddleware);
+
   app.post("/api/debug/validate-token", async (req, res) => {
     try {
       const { token } = req.body;
-      
+
       if (!token) {
         res.status(400).json({ valid: false, error: "Token required" });
         return;
       }
 
-      const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
+      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
         method: "GET",
         headers: {
           "Authorization": `Token ${token}`,
@@ -99,15 +155,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/career-programs/:slug", (req, res) => {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
-    
+
     const program = loadCareerProgram(slug, locale);
-    
+
     if (!program) {
       res.status(404).json({ error: "Career program not found" });
       return;
     }
-    
+
     res.json(program);
+  });
+
+  // Landing pages API
+  app.get("/api/landings", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const landings = listLandingPages(locale);
+    res.json(landings);
+  });
+
+  app.get("/api/landings/:slug", (req, res) => {
+    const { slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+
+    const landing = loadLandingPage(slug, locale);
+
+    if (!landing) {
+      res.status(404).json({ error: "Landing page not found" });
+      return;
+    }
+
+    res.json(landing);
   });
 
   // Dynamic sitemap with caching
@@ -135,10 +212,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const authHeader = req.headers.authorization;
       const token = authHeader?.replace("Token ", "");
-      
+
       // In development mode, allow without token
       const isDevelopment = process.env.NODE_ENV !== "production";
-      
+
       if (!isDevelopment && !token) {
         res.status(401).json({ error: "Authorization required" });
         return;
@@ -166,6 +243,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error clearing sitemap cache:", error);
       res.status(500).json({ error: "Failed to clear cache" });
     }
+  });
+
+  // Get active redirects (for debug tools)
+  app.get("/api/debug/redirects", (req, res) => {
+    const redirects = getRedirects();
+    res.json({
+      count: redirects.length,
+      redirects,
+    });
+  });
+
+  // Clear redirect cache (for debug tools)
+  app.post("/api/debug/clear-redirect-cache", (req, res) => {
+    clearRedirectCache();
+    res.json({ success: true, message: "Redirect cache cleared" });
+  });
+
+  // Schema.org API endpoints
+  app.get("/api/schema", (req, res) => {
+    const keys = getAvailableSchemaKeys();
+    res.json({ available: keys });
+  });
+
+  app.get("/api/schema/:key", (req, res) => {
+    const { key } = req.params;
+    const locale = (req.query.locale as string) || "en";
+    
+    const schema = getSchema(key, locale);
+    
+    if (!schema) {
+      res.status(404).json({ error: "Schema not found" });
+      return;
+    }
+    
+    res.json(schema);
+  });
+
+  app.post("/api/schema/merge", (req, res) => {
+    const { include, overrides } = req.body;
+    const locale = (req.query.locale as string) || "en";
+    
+    if (!include || !Array.isArray(include)) {
+      res.status(400).json({ error: "include array required" });
+      return;
+    }
+    
+    const schemas = getMergedSchemas({ include, overrides }, locale);
+    res.json({ schemas });
+  });
+
+  app.post("/api/debug/clear-schema-cache", (req, res) => {
+    clearSchemaCache();
+    res.json({ success: true, message: "Schema cache cleared" });
   });
 
   const httpServer = createServer(app);

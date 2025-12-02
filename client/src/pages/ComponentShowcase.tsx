@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { useSearch } from "wouter";
-import { IconChevronDown, IconCode, IconEye } from "@tabler/icons-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useSearch, useParams, Link } from "wouter";
+import { IconChevronDown, IconCode, IconEye, IconArrowLeft, IconArrowRight, IconList, IconRefresh, IconAlertTriangle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,23 @@ import {
 import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
+import CodeMirror from "@uiw/react-codemirror";
+import { yaml } from "@codemirror/lang-yaml";
+import { oneDark } from "@codemirror/theme-one-dark";
+import jsYaml from "js-yaml";
+
+function useNoIndex() {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+}
 
 interface ComponentSample {
   type: string;
@@ -328,6 +345,24 @@ interface ComponentCardProps {
 function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused, cardRef }: ComponentCardProps) {
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
+  const [yamlContent, setYamlContent] = useState(sample.yaml);
+  const [parsedData, setParsedData] = useState<Section>(sample.data);
+  const [parseError, setParseError] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => 
+    typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (globalYamlState !== null) {
@@ -340,6 +375,30 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
       setShowPreview(globalPreviewState);
     }
   }, [globalPreviewState]);
+
+  const handleYamlChange = useCallback((value: string) => {
+    setYamlContent(value);
+    try {
+      const parsed = jsYaml.load(value);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setParsedData(parsed[0] as Section);
+        setParseError(null);
+      } else if (parsed && typeof parsed === 'object') {
+        setParsedData(parsed as Section);
+        setParseError(null);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setParseError(err.message);
+      }
+    }
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setYamlContent(sample.yaml);
+    setParsedData(sample.data);
+    setParseError(null);
+  }, [sample.yaml, sample.data]);
 
   return (
     <Card 
@@ -379,10 +438,42 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
       <CardContent>
         <Collapsible open={showYaml}>
           <CollapsibleContent>
-            <div className="mb-4 rounded-lg bg-muted p-4 overflow-x-auto">
-              <pre className="text-sm font-mono whitespace-pre text-foreground">
-                {sample.yaml}
-              </pre>
+            <div className="mb-4 rounded-lg overflow-hidden border border-border">
+              <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
+                <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleReset}
+                  className="h-6 px-2 text-xs"
+                  data-testid={`button-reset-yaml-${sample.type}`}
+                >
+                  <IconRefresh className="w-3 h-3 mr-1" />
+                  Reset
+                </Button>
+              </div>
+              <CodeMirror
+                value={yamlContent}
+                height="auto"
+                minHeight="100px"
+                maxHeight="400px"
+                extensions={[yaml()]}
+                theme={isDarkMode ? oneDark : undefined}
+                onChange={handleYamlChange}
+                basicSetup={{
+                  lineNumbers: true,
+                  foldGutter: true,
+                  highlightActiveLine: true,
+                }}
+                className="text-sm"
+                data-testid={`editor-yaml-${sample.type}`}
+              />
+              {parseError && (
+                <div className="flex items-start gap-2 px-3 py-2 bg-destructive/10 border-t border-destructive/20 text-destructive text-xs">
+                  <IconAlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <span className="font-mono">{parseError}</span>
+                </div>
+              )}
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -391,7 +482,7 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
           <CollapsibleContent>
             <div className="border rounded-lg overflow-hidden bg-background">
               <div className="p-0">
-                <SectionRenderer sections={[sample.data]} />
+                <SectionRenderer sections={[parsedData]} />
               </div>
             </div>
           </CollapsibleContent>
@@ -402,6 +493,9 @@ function ComponentCard({ sample, globalYamlState, globalPreviewState, isFocused,
 }
 
 export default function ComponentShowcase() {
+  useNoIndex();
+  
+  const { componentType } = useParams<{ componentType?: string }>();
   const search = useSearch();
   const searchParams = new URLSearchParams(search);
   const focusedComponent = searchParams.get('focus');
@@ -451,6 +545,102 @@ export default function ComponentShowcase() {
     setPreviewTrigger(prev => prev + 1);
   };
 
+  // Single component view
+  if (componentType) {
+    const currentIndex = componentSamples.findIndex(s => s.type === componentType);
+    const sample = componentSamples[currentIndex];
+    
+    if (!sample) {
+      return (
+        <div className="min-h-screen bg-background">
+          <Header />
+          <main className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-3xl font-bold mb-4">Component Not Found</h1>
+              <p className="text-muted-foreground mb-6">
+                The component "{componentType}" does not exist.
+              </p>
+              <Link href="/component-showcase">
+                <Button variant="outline" data-testid="link-back-to-showcase">
+                  <IconList className="w-4 h-4 mr-2" />
+                  View All Components
+                </Button>
+              </Link>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    const prevComponent = currentIndex > 0 ? componentSamples[currentIndex - 1] : null;
+    const nextComponent = currentIndex < componentSamples.length - 1 ? componentSamples[currentIndex + 1] : null;
+
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto mb-6">
+            <div className="flex items-center gap-4 mb-4">
+              <Link href="/component-showcase">
+                <Button variant="ghost" size="sm" data-testid="link-back-to-all">
+                  <IconArrowLeft className="w-4 h-4 mr-1" />
+                  All Components
+                </Button>
+              </Link>
+              <span className="text-muted-foreground text-sm">
+                {currentIndex + 1} of {componentSamples.length}
+              </span>
+            </div>
+            
+            <h1 className="text-3xl font-bold mb-2" data-testid="text-component-title">
+              {sample.name}
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              {sample.description}
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <ComponentCard 
+              key={sample.type} 
+              sample={sample} 
+              globalYamlState={true}
+              globalPreviewState={true}
+              isFocused={false}
+              cardRef={cardRefs.current[sample.type]}
+            />
+          </div>
+
+          <div className="max-w-4xl mx-auto mt-8 flex items-center justify-between">
+            {prevComponent ? (
+              <Link href={`/component-showcase/${prevComponent.type}`}>
+                <Button variant="outline" data-testid="link-prev-component">
+                  <IconArrowLeft className="w-4 h-4 mr-2" />
+                  {prevComponent.name}
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+            
+            {nextComponent ? (
+              <Link href={`/component-showcase/${nextComponent.type}`}>
+                <Button variant="outline" data-testid="link-next-component">
+                  {nextComponent.name}
+                  <IconArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // All components view
   return (
     <div className="min-h-screen bg-background">
       <Header />

@@ -1,0 +1,90 @@
+# Webinar Landing Page - English
+# This file defines all sections and content for an AI learning webinar landing page
+
+slug: "webinar-ai-learning"
+title: "Free Webinar: Learn to Code with AI"
+
+meta:
+  page_title: "Free Webinar: Learn to Code with AI | 4Geeks"
+  description: "Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!"
+  robots: "index, follow"
+  og_image: "/images/webinar-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/webinar/ai-learning"
+    - "/events/ai-coding-webinar"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+
+sections:
+  - type: hero
+    badge: "Free Webinar"
+    title: "Learn to Code with AI in 2024"
+    subtitle: "Discover how AI-powered tools are revolutionizing tech education. Join our free 1-hour webinar and see the future of learning."
+    cta_buttons:
+      - text: "Reserve Your Spot"
+        url: "/signup?event=webinar"
+        variant: "primary"
+        icon: "Calendar"
+      - text: "Watch Preview"
+        url: "#preview"
+        variant: "outline"
+        icon: "Player"
+
+  - type: program_overview
+    title: "What You'll Learn"
+    subtitle: "In just 1 hour, discover the tools that make learning faster and easier"
+    cards:
+      - icon: "Brain"
+        title: "AI-Powered Learning"
+        description: "See how AI tutors provide instant feedback and personalized guidance 24/7"
+      - icon: "Rocket"
+        title: "Accelerated Progress"
+        description: "Learn how students are completing courses 3x faster with AI assistance"
+      - icon: "Code"
+        title: "Live Demo"
+        description: "Watch a live demonstration of our AI coding assistant in action"
+
+  - type: credibility
+    title: "Join 50,000+ Learners"
+    stats:
+      - value: "50,000+"
+        label: "Students Worldwide"
+      - value: "4.8/5"
+        label: "Average Rating"
+      - value: "1,500+"
+        label: "Webinar Attendees"
+    featured_in:
+      label: "Featured In"
+      logos:
+        - "Forbes"
+        - "TechCrunch"
+        - "Wired"
+
+  - type: faq
+    title: "Frequently Asked Questions"
+    items:
+      - question: "Is this webinar really free?"
+        answer: "Yes! This webinar is completely free. We want to show you how AI is changing education."
+      - question: "Do I need any coding experience?"
+        answer: "No prior experience needed. This webinar is designed for complete beginners."
+      - question: "Will there be a recording?"
+        answer: "Yes, all registered attendees will receive a recording after the live session."
+
+  - type: footer_cta
+    title: "Ready to Transform Your Learning?"
+    subtitle: "Reserve your free spot now. Limited seats available!"
+    buttons:
+      - text: "Register Now"
+        url: "/signup?event=webinar"
+        variant: "primary"
+      - text: "Ask a Question"
+        url: "/contact"
+        variant: "outline"
+
+  - type: footer
+    copyright_text: "2024 4Geeks. All rights reserved."
