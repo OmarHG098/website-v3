@@ -18,6 +18,12 @@ import * as yaml from "js-yaml";
 
 const PROGRAMS_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_PATH = path.join(process.cwd(), "marketing-content", "landings");
+const SCHEMA_ORG_PATH = path.join(process.cwd(), "marketing-content", "schema-org.yml");
+
+interface SchemaRef {
+  include?: string[];
+  overrides?: Record<string, Record<string, unknown>>;
+}
 
 interface ContentMeta {
   page_title?: string;
@@ -34,6 +40,7 @@ interface ContentFile {
   slug: string;
   title: string;
   meta?: ContentMeta;
+  schema?: SchemaRef;
   type: "program" | "landing";
   locale: string;
   filePath: string;
@@ -77,12 +84,14 @@ function loadYamlFiles(dirPath: string, type: "program" | "landing"): ContentFil
           slug?: string;
           title?: string;
           meta?: ContentMeta;
+          schema?: SchemaRef;
         };
 
         files.push({
           slug: data.slug || dir,
           title: data.title || dir,
           meta: data.meta,
+          schema: data.schema,
           type,
           locale,
           filePath,
@@ -104,6 +113,37 @@ function getCanonicalUrl(file: ContentFile): string {
   } else {
     return `/landing/${file.slug}`;
   }
+}
+
+function getAvailableSchemaKeys(): Set<string> {
+  const keys = new Set<string>();
+  
+  if (!fs.existsSync(SCHEMA_ORG_PATH)) {
+    console.warn("Warning: schema-org.yml not found");
+    return keys;
+  }
+  
+  try {
+    const content = fs.readFileSync(SCHEMA_ORG_PATH, "utf-8");
+    const data = yaml.load(content) as Record<string, unknown>;
+    
+    // Add top-level keys: organization, website
+    for (const key of Object.keys(data)) {
+      if (key === "courses" || key === "item_lists") {
+        // For nested schemas, add with prefix: courses:full-stack, item_lists:career-programs
+        const nested = data[key] as Record<string, unknown>;
+        for (const nestedKey of Object.keys(nested)) {
+          keys.add(`${key}:${nestedKey}`);
+        }
+      } else {
+        keys.add(key);
+      }
+    }
+  } catch (err) {
+    console.error("Failed to parse schema-org.yml:", err);
+  }
+  
+  return keys;
 }
 
 function validateContent(): ValidationResult {
@@ -238,6 +278,35 @@ function validateContent(): ValidationResult {
         message: `Invalid change_frequency: "${file.meta.change_frequency}". Must be one of: ${validChangeFreqs.join(", ")}`,
         file: file.filePath,
       });
+    }
+  }
+
+  // Validate Schema.org references
+  const availableSchemas = getAvailableSchemaKeys();
+  for (const file of result.contentFiles) {
+    if (file.schema?.include) {
+      for (const schemaRef of file.schema.include) {
+        if (!availableSchemas.has(schemaRef)) {
+          result.errors.push({
+            type: "error",
+            message: `Invalid schema reference: "${schemaRef}". Available schemas: ${Array.from(availableSchemas).join(", ")}`,
+            file: file.filePath,
+          });
+        }
+      }
+    }
+
+    // Validate override keys reference valid schemas
+    if (file.schema?.overrides) {
+      for (const overrideKey of Object.keys(file.schema.overrides)) {
+        if (!availableSchemas.has(overrideKey)) {
+          result.errors.push({
+            type: "error",
+            message: `Invalid schema override key: "${overrideKey}". Available schemas: ${Array.from(availableSchemas).join(", ")}`,
+            file: file.filePath,
+          });
+        }
+      }
     }
   }
 
