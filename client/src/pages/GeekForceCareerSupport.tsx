@@ -26,6 +26,40 @@ const unlimitedSupportData = {
   ]
 };
 
+const careerProcessData = {
+  title: "Get Hired with Our 3-Step Career Development Process",
+  subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+  steps: [
+    {
+      number: 1,
+      title: "Profile Optimization",
+      items: [
+        "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
+        "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
+        "Showcase your skills with a recruiter-ready portfolio."
+      ]
+    },
+    {
+      number: 2,
+      title: "Interview Preparation",
+      items: [
+        "Gain confidence with mock technical and behavioral interviews.",
+        "Practice coding and problem-solving with auto-graded exercises.",
+        "Develop tailored strategies for upcoming interviews."
+      ]
+    },
+    {
+      number: 3,
+      title: "Strategic Job Search",
+      items: [
+        "Create a personalized job search plan aligned with your goals.",
+        "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
+        "Connect with our extensive network of global hiring partners."
+      ]
+    }
+  ]
+};
+
 // ============================================
 // SECTION COMPONENTS
 // ============================================
@@ -129,6 +163,60 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
   );
 }
 
+function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
+  return (
+    <section 
+      className="py-16 md:py-24 bg-background"
+      data-testid="section-career-process"
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
+            data-testid="text-career-process-title"
+          >
+            {data.title}
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            {data.subtitle}
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {data.steps.map((step, index) => (
+            <div 
+              key={index}
+              className="bg-card border border-border rounded-lg p-6"
+              data-testid={`card-step-${step.number}`}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg">
+                  {step.number}
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {step.title}
+                </h3>
+              </div>
+              
+              <ul className="space-y-3">
+                {step.items.map((item, itemIndex) => (
+                  <li 
+                    key={itemIndex}
+                    className="flex gap-2 items-start text-sm text-muted-foreground"
+                  >
+                    <IconCheck className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -141,6 +229,7 @@ export default function GeekForceCareerSupport() {
       <main>
         <HeroSection data={heroData} />
         <UnlimitedSupportSection data={unlimitedSupportData} />
+        <CareerProcessSection data={careerProcessData} />
       </main>
     </div>
   );
