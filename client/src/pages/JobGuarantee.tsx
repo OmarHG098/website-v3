@@ -97,21 +97,19 @@ export default function JobGuarantee() {
             <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '0px', top: '0px' }} />
             {/* Row 2: Two black dots */}
             <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '32px' }} />
-            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '24px', top: '32px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '28px', top: '32px' }} />
             {/* Row 3: Gray dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '24px', top: '72px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '28px', top: '72px' }} />
             {/* Row 3.5: Gray dot (col 1) */}
             <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '104px' }} />
             {/* Row 4: Gray dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '24px', top: '136px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '28px', top: '136px' }} />
             {/* Row 5: Blue dot (col 1) */}
             <div className="absolute w-4 h-4 rounded-full bg-primary" style={{ left: '0px', top: '176px' }} />
             {/* Row 6: Yellow dot (col 2) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '24px', top: '216px' }} />
-            {/* Row 7: Small blue dot (col 2) */}
-            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '28px', top: '256px' }} />
-            {/* Row 8: Gray dot (col 1) */}
-            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '296px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '28px', top: '216px' }} />
+            {/* Row 7: Gray dot (col 1) */}
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '256px' }} />
           </div>
 
           {/* Right side decorative circles */}
