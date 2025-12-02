@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
+import SolidCard from "@/components/SolidCard";
 import { IconCheck } from "@tabler/icons-react";
+import { IconProfileOptimization, IconInterviewPrep, IconJobSearch } from "@/components/CustomIcons";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
@@ -31,7 +33,7 @@ const careerProcessData = {
   subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
   steps: [
     {
-      number: 1,
+      icon: IconProfileOptimization,
       title: "Profile Optimization",
       items: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
@@ -40,7 +42,7 @@ const careerProcessData = {
       ]
     },
     {
-      number: 2,
+      icon: IconInterviewPrep,
       title: "Interview Preparation",
       items: [
         "Gain confidence with mock technical and behavioral interviews.",
@@ -49,7 +51,7 @@ const careerProcessData = {
       ]
     },
     {
-      number: 3,
+      icon: IconJobSearch,
       title: "Strategic Job Search",
       items: [
         "Create a personalized job search plan aligned with your goals.",
@@ -184,15 +186,13 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
         
         <div className="grid md:grid-cols-3 gap-6">
           {data.steps.map((step, index) => (
-            <div 
+            <SolidCard 
               key={index}
-              className="bg-card border border-border rounded-lg p-6"
-              data-testid={`card-step-${step.number}`}
+              className="p-6"
+              data-testid={`card-step-${index + 1}`}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg">
-                  {step.number}
-                </div>
+                <step.icon className="w-12 h-12" />
                 <h3 className="text-lg font-semibold text-foreground">
                   {step.title}
                 </h3>
@@ -204,12 +204,12 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
                     key={itemIndex}
                     className="flex gap-2 items-start text-sm text-muted-foreground"
                   >
-                    <IconCheck className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </SolidCard>
           ))}
         </div>
       </div>
