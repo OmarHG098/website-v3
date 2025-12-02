@@ -28,6 +28,7 @@ import {
   IconCheck,
   IconSearch,
   IconExternalLink,
+  IconWorld,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,7 +53,7 @@ const componentsList = [
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
 ];
 
-type MenuView = "main" | "components" | "sitemap";
+type MenuView = "main" | "components" | "sitemap" | "landings";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -61,11 +62,16 @@ interface SitemapUrl {
   label: string;
 }
 
+interface LandingItem {
+  slug: string;
+  title: string;
+}
+
 // Get persisted menu view from sessionStorage
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings") {
       return stored;
     }
   }
@@ -89,6 +95,8 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [landingsList, setLandingsList] = useState<LandingItem[]>([]);
+  const [landingsLoading, setLandingsLoading] = useState(false);
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -114,6 +122,21 @@ export function DebugBubble() {
         .catch(() => setSitemapLoading(false));
     }
   }, [menuView]);
+
+  // Fetch landings when entering landings view
+  useEffect(() => {
+    if (menuView === "landings" && landingsList.length === 0) {
+      setLandingsLoading(true);
+      const locale = i18n.language || "en";
+      fetch(`/api/landings?locale=${locale}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setLandingsList(data);
+          setLandingsLoading(false);
+        })
+        .catch(() => setLandingsLoading(false));
+    }
+  }, [menuView, i18n.language]);
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -353,6 +376,18 @@ export function DebugBubble() {
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
+                
+                <button
+                  onClick={() => setMenuView("landings")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-landings-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconWorld className="h-4 w-4 text-muted-foreground" />
+                    <span>Landings</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -430,6 +465,55 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
+                </div>
+              </ScrollArea>
+            </>
+          ) : menuView === "landings" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setMenuView("main")}
+                    className="p-1 rounded-md hover-elevate"
+                    data-testid="button-back-to-main-landings"
+                  >
+                    <IconArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div>
+                    <h3 className="font-semibold text-sm">Landing Pages</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {landingsList.length} landing{landingsList.length !== 1 ? 's' : ''} available
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  {landingsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : landingsList.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No landings found
+                    </div>
+                  ) : (
+                    landingsList.map((landing) => (
+                      <a
+                        key={landing.slug}
+                        href={`/landing/${landing.slug}`}
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                        data-testid={`link-landing-${landing.slug}`}
+                      >
+                        <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium">{landing.title}</div>
+                          <div className="text-xs text-muted-foreground truncate">/landing/{landing.slug}</div>
+                        </div>
+                      </a>
+                    ))
+                  )}
                 </div>
               </ScrollArea>
             </>
