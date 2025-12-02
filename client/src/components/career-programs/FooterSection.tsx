@@ -10,7 +10,7 @@ export function FooterSection({ data }: FooterSectionProps) {
       className="py-8 bg-background border-t"
       data-testid="section-footer"
     >
-      <div className="container mx-auto px-4 text-center">
+      <div className="max-w-6xl mx-auto px-4 text-center">
         <p 
           className="text-sm text-muted-foreground"
           data-testid="text-copyright"

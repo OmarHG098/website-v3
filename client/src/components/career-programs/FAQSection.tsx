@@ -18,7 +18,7 @@ export function FAQSection({ data }: FAQSectionProps) {
       className="py-16 bg-background"
       data-testid="section-faq"
     >
-      <div className="container mx-auto px-4 max-w-3xl">
+      <div className="max-w-6xl mx-auto px-4">
         <h2 
           className="text-3xl md:text-4xl font-bold mb-10 text-center text-foreground"
           data-testid="text-faq-title"
@@ -26,7 +26,7 @@ export function FAQSection({ data }: FAQSectionProps) {
           {data.title}
         </h2>
         
-        <Accordion type="single" collapsible className="space-y-3">
+        <Accordion type="single" collapsible className="space-y-3 max-w-3xl mx-auto">
           {data.items.map((item, index) => (
             <AccordionItem 
               key={index} 
@@ -52,7 +52,7 @@ export function FAQSection({ data }: FAQSectionProps) {
 
         {data.cta && (
           <div 
-            className="mt-12 text-center p-8 rounded-lg bg-muted/30 border"
+            className="mt-12 text-center p-8 rounded-lg bg-muted/30 border max-w-3xl mx-auto"
             data-testid="faq-cta"
           >
             <div className="flex justify-center mb-4">

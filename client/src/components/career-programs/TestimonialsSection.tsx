@@ -14,7 +14,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
       className="py-16 bg-background"
       data-testid="section-testimonials"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           {data.rating_summary && (
             <div 
@@ -48,13 +48,13 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 max-w-5xl mx-auto md:hidden">
+        <div className="grid grid-cols-1 gap-4 md:hidden">
           {data.items.slice(0, 3).map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} index={index} />
           ))}
         </div>
 
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data.items.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} index={index} />
           ))}

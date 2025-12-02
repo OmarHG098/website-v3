@@ -28,7 +28,7 @@ export function HeroSection({ data }: HeroSectionProps) {
       className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
       data-testid="section-hero"
     >
-      <div className="container mx-auto px-4 text-center max-w-4xl">
+      <div className="max-w-6xl mx-auto px-4 text-center">
         {data.badge && (
           <Badge 
             variant="secondary" 

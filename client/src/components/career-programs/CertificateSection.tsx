@@ -12,10 +12,10 @@ export function CertificateSection({ data }: CertificateSectionProps) {
       className="py-16 bg-muted/30"
       data-testid="section-certificate"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         {data.stats && data.stats.length > 0 && (
           <div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
             data-testid="certificate-stats"
           >
             {data.stats.map((stat, index) => (
@@ -35,7 +35,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"

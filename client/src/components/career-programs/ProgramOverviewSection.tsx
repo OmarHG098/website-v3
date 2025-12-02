@@ -19,7 +19,7 @@ export function ProgramOverviewSection({ data }: ProgramOverviewSectionProps) {
       className="py-16 bg-background"
       data-testid="section-program-overview"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
@@ -39,7 +39,7 @@ export function ProgramOverviewSection({ data }: ProgramOverviewSectionProps) {
 
         {data.specs && data.specs.length > 0 && (
           <div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
             data-testid="program-specs"
           >
             {data.specs.map((spec, index) => (

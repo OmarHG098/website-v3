@@ -21,7 +21,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
       className="py-16 bg-muted/30"
       data-testid="section-ai-learning"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             {data.badge && (
