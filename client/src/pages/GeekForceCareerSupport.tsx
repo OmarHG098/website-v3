@@ -55,7 +55,7 @@ const careerProcessData = {
     {
       icon: Briefcase,
       title: "Strategic Job Search",
-      color: "#CD0000",
+      color: "hsl(var(--destructive))",
       items: [
         "Create a personalized job search plan aligned with your goals.",
         "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
