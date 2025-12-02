@@ -13,7 +13,29 @@ export function CertificateSection({ data }: CertificateSectionProps) {
       data-testid="section-certificate"
     >
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {data.stats && data.stats.length > 0 && (
+          <div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto"
+            data-testid="certificate-stats"
+          >
+            {data.stats.map((stat, index) => (
+              <div 
+                key={index}
+                className="text-center"
+                data-testid={`stat-${index}`}
+              >
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
           <div>
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
@@ -23,7 +45,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             </h2>
             
             <p 
-              className="text-lg text-muted-foreground mb-8"
+              className="text-lg text-muted-foreground mb-8 leading-relaxed"
               data-testid="text-certificate-description"
             >
               {data.description}
@@ -33,11 +55,11 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               {data.benefits.map((benefit, index) => (
                 <li 
                   key={index} 
-                  className="flex items-center gap-3"
+                  className="flex items-start gap-3"
                   data-testid={`item-benefit-${index}`}
                 >
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <IconCheck size={16} className="text-green-600 dark:text-green-400" />
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
+                    <IconCheck size={14} className="text-green-600 dark:text-green-400" />
                   </div>
                   <span className="text-foreground">{benefit.text}</span>
                 </li>
@@ -48,28 +70,30 @@ export function CertificateSection({ data }: CertificateSectionProps) {
           {data.card && (
             <div className="flex justify-center">
               <Card 
-                className="w-full max-w-sm bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20"
+                className="w-full max-w-sm border-2 border-primary/20 bg-gradient-to-br from-card to-primary/5"
                 data-testid="card-certificate-preview"
               >
                 <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                    <IconCertificate size={32} className="text-primary" />
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
+                    <IconCertificate size={40} className="text-primary" />
                   </div>
-                  <h3 
-                    className="text-xl font-bold text-foreground mb-2"
-                    data-testid="text-certificate-card-title"
-                  >
-                    {data.card.title}
-                  </h3>
+                  <div className="border-b border-primary/20 pb-4 mb-4">
+                    <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">
+                      Certificate of Completion
+                    </p>
+                    <h3 
+                      className="text-xl font-bold text-foreground"
+                      data-testid="text-certificate-card-title"
+                    >
+                      {data.card.title}
+                    </h3>
+                  </div>
                   <p 
                     className="text-muted-foreground"
                     data-testid="text-certificate-card-subtitle"
                   >
                     {data.card.subtitle}
                   </p>
-                  <div className="mt-6 pt-6 border-t border-primary/20">
-                    <p className="text-xs text-muted-foreground">Certificate of Completion</p>
-                  </div>
                 </CardContent>
               </Card>
             </div>

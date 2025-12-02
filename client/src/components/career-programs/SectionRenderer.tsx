@@ -4,9 +4,9 @@ import { ProgramOverviewSection } from "./ProgramOverviewSection";
 import { AILearningSection } from "./AILearningSection";
 import { MentorshipSection } from "./MentorshipSection";
 import { FeaturesChecklistSection } from "./FeaturesChecklistSection";
-import { TechStackSection } from "./TechStackSection";
 import { CertificateSection } from "./CertificateSection";
 import { FAQSection } from "./FAQSection";
+import { TestimonialsSection } from "./TestimonialsSection";
 import { CredibilitySection } from "./CredibilitySection";
 import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
@@ -30,12 +30,12 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <MentorshipSection key={index} data={section} />;
           case "features_checklist":
             return <FeaturesChecklistSection key={index} data={section} />;
-          case "tech_stack":
-            return <TechStackSection key={index} data={section} />;
           case "certificate":
             return <CertificateSection key={index} data={section} />;
           case "faq":
             return <FAQSection key={index} data={section} />;
+          case "testimonials":
+            return <TestimonialsSection key={index} data={section} />;
           case "credibility":
             return <CredibilitySection key={index} data={section} />;
           case "footer_cta":

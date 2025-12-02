@@ -8,10 +8,10 @@ interface ProgramOverviewSectionProps {
 }
 
 export function ProgramOverviewSection({ data }: ProgramOverviewSectionProps) {
-  const getIcon = (iconName: string) => {
+  const getIcon = (iconName: string, size = 24, className = "text-primary") => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
     const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={32} className="text-primary" /> : null;
+    return IconComponent ? <IconComponent size={size} className={className} /> : null;
   };
 
   return (
@@ -36,17 +36,40 @@ export function ProgramOverviewSection({ data }: ProgramOverviewSectionProps) {
             </p>
           )}
         </div>
+
+        {data.specs && data.specs.length > 0 && (
+          <div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto"
+            data-testid="program-specs"
+          >
+            {data.specs.map((spec, index) => (
+              <div 
+                key={index}
+                className="flex flex-col items-center text-center p-4 rounded-lg bg-muted/50"
+                data-testid={`spec-${index}`}
+              >
+                <div className="mb-2">
+                  {getIcon(spec.icon, 28, "text-primary")}
+                </div>
+                <span className="text-lg font-bold text-foreground">{spec.value}</span>
+                <span className="text-sm text-muted-foreground">{spec.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
         
         <div className="grid md:grid-cols-3 gap-6">
           {data.cards.map((card, index) => (
             <Card 
               key={index} 
-              className="text-center p-6 hover-elevate"
+              className="text-center hover-elevate"
               data-testid={`card-overview-${index}`}
             >
-              <CardContent className="pt-6">
+              <CardContent className="p-6">
                 <div className="flex justify-center mb-4">
-                  {getIcon(card.icon)}
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                    {getIcon(card.icon, 28, "text-primary")}
+                  </div>
                 </div>
                 <h3 
                   className="text-xl font-semibold mb-2 text-foreground"

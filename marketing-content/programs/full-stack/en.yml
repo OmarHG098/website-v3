@@ -12,20 +12,50 @@ sections:
   - type: hero
     badge: "Career Program"
     title: "Full Stack Development with AI"
-    subtitle: "Learn at your own pace with AI-powered tools, unlimited mentorship, and a global community. Build real-world applications and launch your tech career."
+    subtitle: "Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee."
+    trust_bar:
+      rating: "4.5"
+      rating_count: "1,294"
+      trusted_text: "Trusted by 2.5K+ learners"
     cta_buttons:
-      - text: "Start Learning Now"
-        url: "/signup"
+      - text: "Apply Now"
+        url: "/apply"
         variant: "primary"
         icon: "Rocket"
       - text: "Download Syllabus"
         url: "/syllabus/full-stack"
         variant: "outline"
         icon: "Download"
+    award_badges:
+      - name: "Top Coding Bootcamp"
+        source: "Forbes"
+        year: "2024"
+      - name: "Best for Spanish Speakers"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Best Coding Bootcamp"
+        source: "Course Report"
+        year: "2025"
 
   - type: program_overview
     title: "Program Overview"
     subtitle: "Everything you need to become a professional full stack developer"
+    specs:
+      - icon: "Clock"
+        label: "Duration"
+        value: "20 Weeks"
+      - icon: "Users"
+        label: "Class Size"
+        value: "1:7 Ratio"
+      - icon: "Certificate"
+        label: "Certificate"
+        value: "Recognized"
+      - icon: "Code"
+        label: "Prerequisites"
+        value: "None"
     cards:
       - icon: "DeviceLaptop"
         title: "Self-Paced Learning"
@@ -80,21 +110,18 @@ sections:
       - text: "4Geeks certificate"
       - text: "Global career network"
 
-  - type: tech_stack
-    title: "Technologies You'll Master"
-    subtitle: "Learn the most in-demand technologies used by professional developers worldwide"
-    technologies:
-      - "HTML5"
-      - "CSS3"
-      - "JavaScript"
-      - "Python"
-      - "React"
-      - "Node.js"
-    extras_text: "+ APIs, Git, SQL, REST, and AI-powered development tools like Cursor & Copilot"
-
   - type: certificate
     title: "Certificate & Career Network"
     description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."
+    stats:
+      - value: "4,000+"
+        label: "Graduates"
+      - value: "84%"
+        label: "Job Placement"
+      - value: "4.9/5"
+        label: "Student Rating"
+      - value: "20+"
+        label: "Countries"
     benefits:
       - text: "Recognized by international institutions"
       - text: "Access to 5,000+ hiring partners"
@@ -102,6 +129,50 @@ sections:
     card:
       title: "Full Stack Developer"
       subtitle: "4Geeks Academy Certificate"
+
+  - type: testimonials
+    title: "Your New Career Starts Here"
+    subtitle: "See what our graduates have to say about their experience"
+    rating_summary:
+      average: "4.5"
+      count: "1,294"
+    items:
+      - name: "Sarah Johnson"
+        role: "Software Engineer"
+        company: "Google"
+        rating: 5
+        comment: "This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications."
+        outcome: "+55% salary increase"
+      - name: "Michael Chen"
+        role: "Data Analyst"
+        company: "Meta"
+        rating: 5
+        comment: "Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable."
+        outcome: "Hired in 4 months"
+      - name: "Emily Rodriguez"
+        role: "ML Engineer"
+        company: "Amazon"
+        rating: 5
+        comment: "Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI."
+        outcome: "+100% salary increase"
+      - name: "David Kim"
+        role: "Full Stack Developer"
+        company: "Startup"
+        rating: 5
+        comment: "From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference."
+        outcome: "Career change success"
+      - name: "Jessica Martinez"
+        role: "Frontend Developer"
+        company: "Spotify"
+        rating: 4
+        comment: "Great course with practical, real-world projects. The community is supportive and the instructors are always available to help."
+        outcome: "+45% salary increase"
+      - name: "Ryan Thompson"
+        role: "Data Scientist"
+        company: "Tech Startup"
+        rating: 5
+        comment: "The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout."
+        outcome: "Landed first tech job"
 
   - type: faq
     title: "Frequently Asked Questions"
@@ -116,6 +187,10 @@ sections:
         answer: "Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with."
       - question: "Is the certificate recognized by employers?"
         answer: "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+    cta:
+      text: "Still have questions?"
+      button_text: "Talk to an Advisor"
+      button_url: "/contact"
 
   - type: credibility
     title: "Trusted by Thousands"

@@ -12,20 +12,50 @@ sections:
   - type: hero
     badge: "Programa de Carrera"
     title: "Desarrollo Full Stack con IA"
-    subtitle: "Aprende a tu propio ritmo con herramientas potenciadas por IA, mentoría ilimitada y una comunidad global. Construye aplicaciones reales y lanza tu carrera tecnológica."
+    subtitle: "Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo."
+    trust_bar:
+      rating: "4.5"
+      rating_count: "1,294"
+      trusted_text: "Confiado por más de 2.5K estudiantes"
     cta_buttons:
-      - text: "Comienza Ahora"
-        url: "/registro"
+      - text: "Aplicar Ahora"
+        url: "/aplicar"
         variant: "primary"
         icon: "Rocket"
       - text: "Descargar Programa"
         url: "/programa/full-stack"
         variant: "outline"
         icon: "Download"
+    award_badges:
+      - name: "Mejor Bootcamp de Código"
+        source: "Forbes"
+        year: "2024"
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Bootcamp de Código"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Mejor Bootcamp de Código"
+        source: "Course Report"
+        year: "2025"
 
   - type: program_overview
     title: "Descripción del Programa"
     subtitle: "Todo lo que necesitas para convertirte en un desarrollador full stack profesional"
+    specs:
+      - icon: "Clock"
+        label: "Duración"
+        value: "20 Semanas"
+      - icon: "Users"
+        label: "Tamaño de Clase"
+        value: "Ratio 1:7"
+      - icon: "Certificate"
+        label: "Certificado"
+        value: "Reconocido"
+      - icon: "Code"
+        label: "Prerrequisitos"
+        value: "Ninguno"
     cards:
       - icon: "DeviceLaptop"
         title: "Aprendizaje a Tu Ritmo"
@@ -80,21 +110,18 @@ sections:
       - text: "Certificado 4Geeks"
       - text: "Red de carreras global"
 
-  - type: tech_stack
-    title: "Tecnologías que Dominarás"
-    subtitle: "Aprende las tecnologías más demandadas utilizadas por desarrolladores profesionales en todo el mundo"
-    technologies:
-      - "HTML5"
-      - "CSS3"
-      - "JavaScript"
-      - "Python"
-      - "React"
-      - "Node.js"
-    extras_text: "+ APIs, Git, SQL, REST y herramientas de desarrollo con IA como Cursor y Copilot"
-
   - type: certificate
     title: "Certificado y Red de Carreras"
     description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
+    stats:
+      - value: "4,000+"
+        label: "Graduados"
+      - value: "84%"
+        label: "Colocación Laboral"
+      - value: "4.9/5"
+        label: "Calificación"
+      - value: "20+"
+        label: "Países"
     benefits:
       - text: "Reconocido por instituciones internacionales"
       - text: "Acceso a más de 5,000 socios de contratación"
@@ -102,6 +129,50 @@ sections:
     card:
       title: "Desarrollador Full Stack"
       subtitle: "Certificado 4Geeks Academy"
+
+  - type: testimonials
+    title: "Tu Nueva Carrera Comienza Aquí"
+    subtitle: "Mira lo que nuestros graduados tienen que decir sobre su experiencia"
+    rating_summary:
+      average: "4.5"
+      count: "1,294"
+    items:
+      - name: "María González"
+        role: "Ingeniera de Software"
+        company: "Google"
+        rating: 5
+        comment: "Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones del mundo real."
+        outcome: "+55% aumento salarial"
+      - name: "Carlos Martínez"
+        role: "Analista de Datos"
+        company: "Meta"
+        rating: 5
+        comment: "La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el apoyo profesional fueron invaluables."
+        outcome: "Contratado en 4 meses"
+      - name: "Ana Rodríguez"
+        role: "Ingeniera ML"
+        company: "Amazon"
+        rating: 5
+        comment: "Excelente contenido y gran apoyo de los mentores. Los proyectos fueron desafiantes pero gratificantes, y ahora trabajo en IA de vanguardia."
+        outcome: "+100% aumento salarial"
+      - name: "Diego Hernández"
+        role: "Desarrollador Full Stack"
+        company: "Startup"
+        rating: 5
+        comment: "De cero conocimiento en programación a conseguir mi trabajo soñado en 4 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia."
+        outcome: "Cambio de carrera exitoso"
+      - name: "Laura Sánchez"
+        role: "Desarrolladora Frontend"
+        company: "Spotify"
+        rating: 4
+        comment: "Excelente curso con proyectos prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar."
+        outcome: "+45% aumento salarial"
+      - name: "Roberto Torres"
+        role: "Científico de Datos"
+        company: "Tech Startup"
+        rating: 5
+        comment: "La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional."
+        outcome: "Primer trabajo en tech"
 
   - type: faq
     title: "Preguntas Frecuentes"
@@ -116,6 +187,10 @@ sections:
         answer: "Simplemente ve a tu panel, selecciona el servicio de mentoría, elige tu mentor preferido y escoge un día y hora que te funcione. Cada sesión es de 45 minutos y puede usarse para cualquier tema en el que necesites ayuda."
       - question: "¿El certificado es reconocido por empleadores?"
         answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación."
+    cta:
+      text: "¿Aún tienes preguntas?"
+      button_text: "Habla con un Asesor"
+      button_url: "/contacto"
 
   - type: credibility
     title: "Confiado por Miles"

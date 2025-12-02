@@ -4,6 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { IconMessageCircle } from "@tabler/icons-react";
 import type { FAQSection as FAQSectionType } from "@shared/schema";
 
 interface FAQSectionProps {
@@ -24,22 +26,22 @@ export function FAQSection({ data }: FAQSectionProps) {
           {data.title}
         </h2>
         
-        <Accordion type="single" collapsible className="space-y-4">
+        <Accordion type="single" collapsible className="space-y-3">
           {data.items.map((item, index) => (
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="border rounded-lg px-4"
+              className="border rounded-lg px-6 bg-card"
               data-testid={`accordion-faq-${index}`}
             >
               <AccordionTrigger 
-                className="text-left font-medium text-foreground hover:no-underline"
+                className="text-left font-medium text-foreground hover:no-underline py-5"
                 data-testid={`button-faq-${index}`}
               >
                 {item.question}
               </AccordionTrigger>
               <AccordionContent 
-                className="text-muted-foreground"
+                className="text-muted-foreground pb-5 leading-relaxed"
                 data-testid={`text-faq-answer-${index}`}
               >
                 {item.answer}
@@ -47,6 +49,23 @@ export function FAQSection({ data }: FAQSectionProps) {
             </AccordionItem>
           ))}
         </Accordion>
+
+        {data.cta && (
+          <div 
+            className="mt-12 text-center p-8 rounded-lg bg-muted/30 border"
+            data-testid="faq-cta"
+          >
+            <div className="flex justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <IconMessageCircle size={24} className="text-primary" />
+              </div>
+            </div>
+            <p className="text-lg text-foreground mb-4">{data.cta.text}</p>
+            <Button asChild data-testid="button-faq-cta">
+              <a href={data.cta.button_url}>{data.cta.button_text}</a>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
