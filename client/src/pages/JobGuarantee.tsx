@@ -37,21 +37,17 @@ export default function JobGuarantee() {
               </a>.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               <Button
-                size="lg"
-                className="text-lg px-5 py-3"
                 data-testid="button-apply-now"
               >
                 APPLY NOW
               </Button>
               <Button
-                size="lg"
                 variant="outline"
-                className="text-lg px-5 py-3"
                 data-testid="button-request-syllabus"
               >
-                <IconFileDownload className="mr-2" size={20} />
+                <IconFileDownload className="mr-2" size={16} />
                 REQUEST A SYLLABUS
               </Button>
             </div>
