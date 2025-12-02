@@ -92,14 +92,23 @@ export default function JobGuarantee() {
           data-testid="section-hero"
         >
           {/* Left side decorative circles */}
-          <div className="absolute left-4 md:left-8 top-8 flex flex-col gap-3">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
-              <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
-            </div>
-            <div className="w-3 h-3 rounded-full bg-[#9ca3af] ml-1" />
-            <div className="w-3 h-3 rounded-full bg-primary ml-2" />
-            <div className="w-3 h-3 rounded-full bg-[#FFB718]" />
+          <div className="absolute left-[8%] md:left-[12%] top-4 md:top-8 h-[220px] w-[60px]">
+            {/* Yellow dot top */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '8px', top: '0px' }} />
+            {/* Two black dots */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '20px' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '18px', top: '20px' }} />
+            {/* Two gray dots staggered */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '6px', top: '52px' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '76px' }} />
+            {/* Blue dot */}
+            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '0px', top: '104px' }} />
+            {/* Yellow dot */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '10px', top: '140px' }} />
+            {/* Small blue dot to the right */}
+            <div className="absolute w-2 h-2 rounded-full bg-primary" style={{ left: '36px', top: '160px' }} />
+            {/* Gray dot at bottom */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '4px', top: '190px' }} />
           </div>
 
           {/* Right side decorative circles */}
