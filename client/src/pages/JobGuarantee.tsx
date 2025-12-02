@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
-import { HeroSection } from "@/components/career-programs/HeroSection";
-import type { HeroSection as HeroSectionType, FAQSection as FAQSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType } from "@shared/schema";
 import FeatureCard from "@/components/job-guarantee/FeatureCard";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import Briefcase from "@/components/CustomIcons/Briefcase";
@@ -12,32 +11,13 @@ import Security from "@/components/CustomIcons/Security";
 import BriefcaseOutline from "@/components/CustomIcons/BriefcaseOutline";
 import ChecklistVerify from "@/components/CustomIcons/ChecklistVerify";
 import FolderCheck from "@/components/CustomIcons/FolderCheck";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconDownload } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
 
 export default function JobGuarantee() {
-  const heroData: HeroSectionType = {
-    type: "hero",
-    title: "Get into tech with our Job Guarantee",
-    subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
-    cta_buttons: [
-      {
-        text: "Apply now",
-        url: "#apply",
-        variant: "primary",
-      },
-      {
-        text: "Request a syllabus",
-        url: "#syllabus",
-        variant: "outline",
-        icon: "Download",
-      },
-    ],
-  };
-
   const faqData: FAQSectionType = {
     type: "faq",
     title: "Frequently Asked Questions about the Job Guarantee",
@@ -106,11 +86,80 @@ export default function JobGuarantee() {
       <Header />
       
       <main>
-        <HeroSection data={heroData} />
+        {/* Custom Hero Section with decorative circles */}
+        <section 
+          className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
+          data-testid="section-hero"
+        >
+          {/* Left side decorative circles */}
+          <div className="absolute left-4 md:left-8 top-8 flex flex-col gap-3">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
+              <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
+            </div>
+            <div className="w-3 h-3 rounded-full bg-[#9ca3af] ml-1" />
+            <div className="w-3 h-3 rounded-full bg-primary ml-2" />
+            <div className="w-3 h-3 rounded-full bg-[#FFB718]" />
+          </div>
+
+          {/* Right side decorative circles */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2">
+            <div className="w-40 h-40 md:w-64 md:h-64 rounded-full bg-[#FFF1D1] translate-x-1/2" />
+          </div>
+          <div className="absolute right-8 md:right-16 bottom-8">
+            <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
+          </div>
+
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground"
+              data-testid="text-hero-title"
+            >
+              Get into tech with our Job Guarantee
+            </h1>
+            
+            <p 
+              className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-2"
+              data-testid="text-hero-subtitle"
+            >
+              Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition.
+            </p>
+            <a 
+              href="https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline text-lg md:text-xl"
+            >
+              Conditions apply
+            </a>
+            <span className="text-lg md:text-xl text-muted-foreground">.</span>
+            
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
+              <Button
+                size="lg"
+                asChild
+                data-testid="button-hero-cta-0"
+              >
+                <a href="#apply">Apply now</a>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+                data-testid="button-hero-cta-1"
+              >
+                <a href="#syllabus" className="flex items-center gap-2">
+                  <IconDownload size={20} />
+                  Request a syllabus
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
 
         {/* Stats Section */}
         <section 
-          className="py-16 md:py-24 bg-sky-200"
+          className="pt-16 md:pt-24 pb-8 bg-cyan-100"
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
@@ -174,7 +223,7 @@ export default function JobGuarantee() {
 
         {/* Who's Eligible Section */}
         <section 
-          className="py-16 md:py-24 bg-background"
+          className="py-14 bg-background"
           data-testid="section-eligible"
         >
           <div className="container mx-auto px-4">
@@ -230,7 +279,7 @@ export default function JobGuarantee() {
 
         {/* Available Programs Section */}
         <section 
-          className="py-16 md:py-24 bg-sky-50"
+          className="pb-8 pt-10 bg-sky-50"
           data-testid="section-programs"
         >
           <div className="container mx-auto px-4">
@@ -309,7 +358,7 @@ export default function JobGuarantee() {
 
         {/* Why We Have Confidence Section */}
         <section 
-          className="py-16 md:py-24 bg-background"
+          className="pb-8 pt-12 bg-background"
           data-testid="section-confidence"
         >
           <div className="container mx-auto px-4">
@@ -374,7 +423,7 @@ export default function JobGuarantee() {
 
         {/* How the Refund Works Section */}
         <section 
-          className="py-16 md:py-24 bg-muted/30"
+          className="pt-18 pb-10 bg-muted/30"
           data-testid="section-refund"
         >
           <div className="container mx-auto px-4">
