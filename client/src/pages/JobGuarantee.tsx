@@ -39,7 +39,7 @@ export default function JobGuarantee() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex justify-center mb-6">
-                <GrowthChart width="120px" height="125px" />
+                <IconTrendingUp size={120} className="text-primary" />
               </div>
               <h2 
                 className="text-2xl md:text-3xl font-bold mb-4 text-foreground"
@@ -60,7 +60,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-0">
                   <div className="mb-4">
-                    <Briefcase width="70px" height="63px" />
+                    <IconBriefcase size={70} className="text-primary" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     84%
@@ -72,7 +72,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-1">
                   <div className="mb-4">
-                    <Graduation width="70px" height="60px" />
+                    <IconSchool size={70} className="text-primary" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     3-6<span className="text-2xl md:text-3xl ml-1">months</span>
@@ -84,7 +84,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-2">
                   <div className="mb-4">
-                    <GrowthChart width="70px" height="73px" />
+                    <IconTrendingUp size={70} className="text-primary" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     55%
