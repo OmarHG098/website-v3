@@ -186,15 +186,15 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 px-24">
           {data.steps.map((step, index) => (
             <SolidCard 
               key={index}
-              className="p-6"
+              className="p-3 md:p-5"
               data-testid={`card-step-${index + 1}`}
             >
               <div className="flex items-center gap-3 mb-4">
-                <step.icon className="w-12 h-12" />
+                <step.icon className="w-12 h-12" width="60px" />
                 <h3 className="text-lg font-semibold text-foreground">
                   {step.title}
                 </h3>
@@ -204,7 +204,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
                 {step.items.map((item, itemIndex) => (
                   <li 
                     key={itemIndex}
-                    className="flex gap-2 items-start text-sm text-muted-foreground"
+                    className="flex gap-2 items-start text-base"
                   >
                     <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
