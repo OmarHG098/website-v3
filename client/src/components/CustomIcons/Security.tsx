@@ -1,17 +1,27 @@
 interface SecurityProps {
+  width?: string;
+  height?: string;
+  color?: string;
+  style?: React.CSSProperties;
   className?: string;
-  size?: number;
 }
 
-export default function Security({ className = "", size = 48 }: SecurityProps) {
+export default function Security({
+  width = "88px",
+  height = "79px",
+  color = "#0097CD",
+  style,
+  className,
+}: SecurityProps) {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
+      width={width || "88px"}
+      height={height || "79px"}
+      style={style}
+      className={className}
+      viewBox="0 0 88 79"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
     >
       {/* Paste SVG path data here */}
     </svg>
