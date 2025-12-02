@@ -38,52 +38,28 @@ export default function Home() {
 
   const iconFeatures = [
     {
-      icon: "IconCode",
-      title: t("iconFeatures.fullStack.title"),
-      description: t("iconFeatures.fullStack.description"),
-      color: "blue",
-      href: "/us/career-programs/full-stack",
-      onClick: (e: React.MouseEvent) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-        e.preventDefault();
-        setLocation("/us/career-programs/full-stack");
-      },
+      icon: "https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress",
+      title: "Fast Launch",
+      description: "Get started quickly with our streamlined onboarding and structured curriculum",
+      color: "text-foreground",
     },
     {
-      icon: "IconChartBar",
-      title: t("iconFeatures.dataScience.title"),
-      description: t("iconFeatures.dataScience.description"),
-      color: "green",
-      href: "/career-programs",
-      onClick: (e: React.MouseEvent) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-        e.preventDefault();
-        setLocation("/career-programs");
-      },
+      icon: "https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress",
+      title: "Global Community",
+      description: "Join thousands of learners worldwide on the same journey to tech mastery",
+      color: "text-foreground",
     },
     {
-      icon: "IconCloud",
-      title: t("iconFeatures.cloudComputing.title"),
-      description: t("iconFeatures.cloudComputing.description"),
-      color: "purple",
-      href: "/career-programs",
-      onClick: (e: React.MouseEvent) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-        e.preventDefault();
-        setLocation("/career-programs");
-      },
+      icon: "https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress",
+      title: "Self-paced courses",
+      description: "Learn at your own pace with expert-guided resources.",
+      color: "text-foreground",
     },
     {
-      icon: "IconBrain",
-      title: t("iconFeatures.aiMachineLearning.title"),
-      description: t("iconFeatures.aiMachineLearning.description"),
-      color: "rose",
-      href: "/career-programs",
-      onClick: (e: React.MouseEvent) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-        e.preventDefault();
-        setLocation("/career-programs");
-      },
+      icon: "https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress",
+      title: "Career Booster",
+      description: "Enhance your resume, networking, and interview skills.",
+      color: "text-foreground",
     },
   ];
 
@@ -253,7 +229,7 @@ export default function Home() {
       />
 
       <IconFeatureGrid
-        title={t("iconFeatures.title")}
+        title="Our mission is to get you into tech. You choose how."
         features={iconFeatures}
       />
 
