@@ -5,8 +5,12 @@ import FeatureCard from "@/components/job-guarantee/FeatureCard";
 import Briefcase from "@/components/CustomIcons/Briefcase";
 import Graduation from "@/components/CustomIcons/Graduation";
 import GrowthChart from "@/components/CustomIcons/GrowthChart";
+import CodeWindow from "@/components/CustomIcons/CodeWindow";
+import Monitor from "@/components/CustomIcons/Monitor";
+import Security from "@/components/CustomIcons/Security";
 import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
 
 export default function JobGuarantee() {
@@ -151,6 +155,88 @@ export default function JobGuarantee() {
                     data-testid="img-eligible"
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Available Programs Section */}
+        <section 
+          className="py-16 md:py-24 bg-muted"
+          data-testid="section-programs"
+        >
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 
+                className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
+                data-testid="text-programs-title"
+              >
+                Our Job Guarantee is Available for Our Top Tech Programs
+              </h2>
+              <p className="text-xl text-muted-foreground text-center mb-12">
+                Choose your career path. Master the skills and get hired.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Full Stack Card */}
+                <Card className="p-6 hover-elevate" data-testid="card-program-fullstack">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CodeWindow width="48" height="48" />
+                    <span className="text-sm font-medium text-primary">Full Stack</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">
+                    Full Stack Development with AI
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Online, face-to-face and flexible
+                  </p>
+                  <Button variant="outline" className="w-full" data-testid="button-read-more-fullstack">
+                    Read More
+                  </Button>
+                </Card>
+
+                {/* Data Science Card */}
+                <Card className="p-6 hover-elevate" data-testid="card-program-datascience">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Monitor width="48" height="48" />
+                    <span className="text-sm font-medium text-primary">With Python</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">
+                    Data Science and Machine Learning with AI
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Online, face-to-face and flexible
+                  </p>
+                  <Button variant="outline" className="w-full" data-testid="button-read-more-datascience">
+                    Read More
+                  </Button>
+                </Card>
+
+                {/* Cybersecurity Card */}
+                <Card className="p-6 hover-elevate" data-testid="card-program-cybersecurity">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Security width="48" height="48" />
+                    <span className="text-sm font-medium text-primary">For Windows & Linux</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">
+                    Cybersecurity
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Online, face-to-face and flexible
+                  </p>
+                  <Button variant="outline" className="w-full" data-testid="button-read-more-cybersecurity">
+                    Read More
+                  </Button>
+                </Card>
               </div>
             </div>
           </div>

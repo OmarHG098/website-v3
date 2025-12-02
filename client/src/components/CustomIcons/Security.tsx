@@ -15,9 +15,10 @@ export default function Security({
 }: SecurityProps) {
   return (
     <svg
-      width={props.width || "160"}
-      height={props.height || "80"}
-      style={props.style}
+      width={width || "88px"}
+      height={height || "79px"}
+      style={style}
+      className={className}
       viewBox="0 0 80 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
