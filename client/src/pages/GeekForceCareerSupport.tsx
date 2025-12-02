@@ -195,7 +195,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
               data-testid={`card-step-${index + 1}`}
             >
               <div className="flex items-center gap-3 mb-4">
-                <step.icon className="w-12 h-12" width="60px" />
+                <step.icon className="w-12 h-12" width="60px" color={step.color} />
                 <h3 className="text-lg font-semibold text-foreground">
                   {step.title}
                 </h3>
