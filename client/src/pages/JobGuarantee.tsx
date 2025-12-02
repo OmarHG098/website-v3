@@ -50,7 +50,7 @@ export default function JobGuarantee() {
                 >
                   Does the Job Guarantee Deliver Results You Can Count On?
                 </h2>
-                <p className="text-xl font-semibold mb-2">
+                <p className="text-xl mb-2">
                   Yes, and we've got the numbers to back it up.
                 </p>
                 <p className="text-muted-foreground text-xl">
@@ -110,33 +110,33 @@ export default function JobGuarantee() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
                   <h2 
-                    className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                    className="text-4xl md:text-5xl font-bold mb-6 text-foreground"
                     data-testid="text-eligible-title"
                   >
                     Who's Eligible?
                   </h2>
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-xl text-muted-foreground/70 mb-6">
                     You'll qualify for the Job Guarantee if you:
                   </p>
                   <ul className="space-y-4 mb-6">
                     <li className="flex items-start gap-3">
-                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                      <span className="text-foreground">Have U.S. work authorization</span>
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={24} />
+                      <span className="text-lg text-foreground">Have U.S. work authorization</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                      <span className="text-foreground">Pass our logic test</span>
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={24} />
+                      <span className="text-lg text-foreground">Pass our logic test</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                      <span className="text-foreground">Complete all coursework and projects</span>
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={24} />
+                      <span className="text-lg text-foreground">Complete all coursework and projects</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                      <span className="text-foreground">Follow our career team's guidance</span>
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={24} />
+                      <span className="text-lg text-foreground">Follow our career team's guidance</span>
                     </li>
                   </ul>
-                  <p className="text-sm text-muted-foreground mb-8">
+                  <p className="text-base text-muted-foreground mb-8">
                     *Conditions apply depending on your country or U.S. state
                   </p>
                   <Button size="lg" data-testid="button-apply-eligible" className="text-md px-6">
