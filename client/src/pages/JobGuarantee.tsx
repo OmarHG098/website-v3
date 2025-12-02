@@ -332,22 +332,13 @@ export default function JobGuarantee() {
                 {/* SVG container for curved lines */}
                 <svg 
                   className="absolute inset-0 w-full h-full pointer-events-none"
-                  viewBox="0 0 530 280"
+                  viewBox="0 0 530 250"
                   preserveAspectRatio="xMidYMid meet"
                   style={{ zIndex: 1 }}
                 >
                   {/* Curved line from Step 1 (right edge) to Step 2 (top-left edge) */}
                   <path
-                    d="M 135 55 C 185 55, 195 130, 225 146"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    strokeDasharray="12 8"
-                    className="text-foreground/60"
-                  />
-                  {/* Curved line from Step 2 (right edge) to Step 3 (bottom-left edge) */}
-                  <path
-                    d="M 319 185 C 360 205, 382 80, 409 94"
+                    d="M 135 55 C 180 55, 200 100, 225 120"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
@@ -368,7 +359,7 @@ export default function JobGuarantee() {
                   </div>
 
                   {/* Step 2 - Lower (offset down) */}
-                  <div className="flex flex-col items-center flex-1 max-w-[160px] mt-[130px]">
+                  <div className="flex flex-col items-center flex-1 max-w-[160px] mt-[70px]">
                     <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <ChecklistVerify width={50} height={50} color="#1a1a1a" />
                     </div>
