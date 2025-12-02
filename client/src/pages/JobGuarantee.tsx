@@ -329,9 +329,36 @@ export default function JobGuarantee() {
 
               {/* Desktop Timeline - Horizontal Wave */}
               <div className="hidden md:block relative">
-                <div className="flex justify-between items-start relative">
+                {/* SVG Curved Dashed Lines */}
+                <svg 
+                  className="absolute inset-0 w-full h-full pointer-events-none" 
+                  viewBox="0 0 900 300"
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ zIndex: 1 }}
+                >
+                  {/* Curved line from Step 1 to Step 2 */}
+                  <path
+                    d="M 180 70 Q 300 70, 350 150 Q 400 230, 450 180"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeDasharray="12 8"
+                    className="text-foreground/50"
+                  />
+                  {/* Curved line from Step 2 to Step 3 */}
+                  <path
+                    d="M 450 180 Q 500 130, 550 100 Q 650 40, 720 70"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeDasharray="12 8"
+                    className="text-foreground/50"
+                  />
+                </svg>
+
+                <div className="flex justify-between items-start relative" style={{ zIndex: 2 }}>
                   {/* Step 1 - Top Left */}
-                  <div className="flex flex-col items-center text-center w-1/3 relative z-10">
+                  <div className="flex flex-col items-center text-center w-1/3 relative">
                     <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
                       <BriefcaseOutline width={48} height={48} color="#1a1a1a" />
                     </div>
@@ -341,7 +368,7 @@ export default function JobGuarantee() {
                   </div>
 
                   {/* Step 2 - Center Lower */}
-                  <div className="flex flex-col items-center text-center w-1/3 relative z-10 mt-24">
+                  <div className="flex flex-col items-center text-center w-1/3 relative mt-24">
                     <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
                       <ChecklistVerify width={48} height={48} color="#1a1a1a" />
                     </div>
@@ -351,7 +378,7 @@ export default function JobGuarantee() {
                   </div>
 
                   {/* Step 3 - Top Right */}
-                  <div className="flex flex-col items-center text-center w-1/3 relative z-10">
+                  <div className="flex flex-col items-center text-center w-1/3 relative">
                     <div className="w-28 h-28 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center mb-4">
                       <FolderCheck width={48} height={48} color="#1a1a1a" />
                     </div>
@@ -359,49 +386,60 @@ export default function JobGuarantee() {
                       3. Receive the full refund within 30 days.
                     </p>
                   </div>
-
-                  {/* Dashed Line 1 - from Step 1 to Step 2 */}
-                  <div 
-                    className="absolute top-14 left-[20%] w-[30%] h-24 border-t-4 border-r-4 border-dashed border-foreground/40 rounded-tr-3xl"
-                    style={{ transform: 'rotate(0deg)' }}
-                  />
-                  
-                  {/* Dashed Line 2 - from Step 2 to Step 3 */}
-                  <div 
-                    className="absolute top-[152px] right-[20%] w-[30%] h-24 border-t-4 border-l-4 border-dashed border-foreground/40 rounded-tl-3xl"
-                    style={{ transform: 'rotate(0deg)' }}
-                  />
                 </div>
               </div>
 
               {/* Mobile Timeline - Vertical Zigzag */}
               <div className="md:hidden relative">
+                {/* SVG Curved Dashed Lines for Mobile */}
+                <svg 
+                  className="absolute inset-0 w-full h-full pointer-events-none" 
+                  viewBox="0 0 300 450"
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ zIndex: 1 }}
+                >
+                  {/* Curved line from Step 1 to Step 2 */}
+                  <path
+                    d="M 60 100 Q 100 130, 150 150 Q 220 180, 240 200"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeDasharray="8 6"
+                    className="text-foreground/50"
+                  />
+                  {/* Curved line from Step 2 to Step 3 */}
+                  <path
+                    d="M 240 260 Q 180 290, 120 320 Q 80 340, 60 360"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeDasharray="8 6"
+                    className="text-foreground/50"
+                  />
+                </svg>
+
                 {/* Step 1 - Icon Left, Text Right */}
-                <div className="flex items-start gap-6 mb-8 relative">
+                <div className="flex items-start gap-6 mb-12 relative" style={{ zIndex: 2 }}>
                   <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
                     <BriefcaseOutline width={40} height={40} color="#1a1a1a" />
                   </div>
                   <p className="text-base text-foreground pt-6">
                     1. You were not hired into a qualifying role within 9 months of graduation.
                   </p>
-                  {/* Dashed line to step 2 */}
-                  <div className="absolute left-12 top-24 w-16 h-16 border-b-4 border-r-4 border-dashed border-foreground/40 rounded-br-2xl" />
                 </div>
 
                 {/* Step 2 - Text Left, Icon Right */}
-                <div className="flex items-start gap-6 mb-8 flex-row-reverse relative pl-8">
+                <div className="flex items-start gap-6 mb-12 flex-row-reverse relative pl-8" style={{ zIndex: 2 }}>
                   <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
                     <ChecklistVerify width={40} height={40} color="#1a1a1a" />
                   </div>
                   <p className="text-base text-foreground pt-6 text-right">
                     2. Our team verifies that you met all Job Guarantee requirements
                   </p>
-                  {/* Dashed line to step 3 */}
-                  <div className="absolute right-12 top-24 w-16 h-16 border-b-4 border-l-4 border-dashed border-foreground/40 rounded-bl-2xl" />
                 </div>
 
                 {/* Step 3 - Icon Left, Text Right */}
-                <div className="flex items-start gap-6 relative">
+                <div className="flex items-start gap-6 relative" style={{ zIndex: 2 }}>
                   <div className="w-24 h-24 rounded-full bg-amber-100 border-4 border-amber-400 flex items-center justify-center flex-shrink-0">
                     <FolderCheck width={40} height={40} color="#1a1a1a" />
                   </div>
