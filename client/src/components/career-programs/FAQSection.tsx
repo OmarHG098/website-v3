@@ -26,7 +26,7 @@ export function FAQSection({ data }: FAQSectionProps) {
           {data.title}
         </h2>
         
-        <Accordion type="single" collapsible className="space-y-3 max-w-3xl mx-auto">
+        <Accordion type="single" collapsible className="space-y-3">
           {data.items.map((item, index) => (
             <AccordionItem 
               key={index} 
@@ -52,7 +52,7 @@ export function FAQSection({ data }: FAQSectionProps) {
 
         {data.cta && (
           <div 
-            className="mt-12 text-center p-8 rounded-lg bg-muted/30 border max-w-3xl mx-auto"
+            className="mt-12 text-center p-8 rounded-lg bg-muted/30 border"
             data-testid="faq-cta"
           >
             <div className="flex justify-center mb-4">
