@@ -31,7 +31,7 @@ export function FAQSection({ data }: FAQSectionProps) {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="border rounded-lg px-6 bg-card"
+              className="border rounded-lg px-6 bg-card text-[22px]"
               data-testid={`accordion-faq-${index}`}
             >
               <AccordionTrigger 
