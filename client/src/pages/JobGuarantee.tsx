@@ -187,7 +187,7 @@ export default function JobGuarantee() {
                         Full Stack Development with AI
                       </h3>
                     </div>
-                    <CodeWindow width="72" height="72" />
+                    <CodeWindow width="64" height="64" />
                   </div>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
