@@ -9,6 +9,24 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ videoId, title, className = "", vertical = false }: VideoPlayerProps) {
+  if (vertical) {
+    return (
+      <div 
+        className={`rounded-lg overflow-hidden shadow-lg ${className}`}
+        style={{ aspectRatio: '9/16' }}
+        data-testid="video-player"
+      >
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full border-0"
+        />
+      </div>
+    );
+  }
+
   return (
     <div 
       className={`rounded-lg overflow-hidden shadow-lg ${className}`}
@@ -19,8 +37,6 @@ export default function VideoPlayer({ videoId, title, className = "", vertical =
         title={title}
         poster="maxresdefault"
         webp
-        aspectHeight={vertical ? 16 : 9}
-        aspectWidth={vertical ? 9 : 16}
       />
     </div>
   );
