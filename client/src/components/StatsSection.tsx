@@ -18,7 +18,7 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="bg-muted/30 py-16">
+    <section className="bg-muted py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Why join us?</h2>
         
