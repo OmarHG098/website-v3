@@ -58,7 +58,8 @@ function HeroSection({ data }: { data: typeof heroData }) {
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-full max-w-sm"
+              className="w-full max-w-xs"
+              vertical
             />
           </div>
         </div>
