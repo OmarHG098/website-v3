@@ -345,6 +345,15 @@ export default function JobGuarantee() {
                     strokeDasharray="12 8"
                     className="text-foreground/60"
                   />
+                  {/* Curved line from Step 3 (left edge) to Step 2 (right edge) - inverse curve */}
+                  <path
+                    d="M 395 35 C 365 30, 310 10, 305 120"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeDasharray="12 8"
+                    className="text-foreground/60"
+                  />
                 </svg>
 
                 <div className="flex justify-center items-start gap-4 max-w-[530px] mx-auto relative" style={{ zIndex: 2 }}>
