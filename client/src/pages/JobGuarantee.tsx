@@ -113,8 +113,8 @@ export default function JobGuarantee() {
           </div>
 
           {/* Right side decorative circles */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2">
-            <div className="w-40 h-40 md:w-64 md:h-64 rounded-full bg-[#FFF1D1] translate-x-1/2" />
+          <div className="absolute right-0 top-1/3 -translate-y-1/2">
+            <div className="w-40 h-40 md:w-64 md:h-64 rounded-full bg-[#FFF1D1] translate-x-1/3" />
           </div>
           <div className="absolute right-8 md:right-16 bottom-8">
             <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
