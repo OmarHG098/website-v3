@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
-import { IconTarget, IconUsers, IconRocket } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 
 // ============================================
@@ -20,18 +20,9 @@ const unlimitedSupportData = {
   title: "Unlimited Career Support – Always Ahead of Job Market Trends",
   subtitle: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
   features: [
-    {
-      icon: IconTarget,
-      text: "Receive tailored guidance aligned with your goals, context, and challenges."
-    },
-    {
-      icon: IconUsers,
-      text: "Meet mentors online or in-person whenever you need support—unlimited, for life."
-    },
-    {
-      icon: IconRocket,
-      text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
-    }
+    "Receive tailored guidance aligned with your goals, context, and challenges.",
+    "Meet mentors online or in-person whenever you need support—unlimited, for life.",
+    "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
   ]
 };
 
@@ -96,7 +87,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
       data-testid="section-unlimited-support"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-4 items-center">
+        <div className="grid md:grid-cols-5 gap-8 items-center px-12">
           <div className="order-2 md:order-1 md:col-span-2">
             <img 
               src={careerSupportImage} 
@@ -124,11 +115,11 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
                   className="flex gap-3 items-start"
                   data-testid={`feature-unlimited-${index}`}
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="w-5 h-5 text-primary" />
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mt-0.5">
+                    <IconCheck className="w-4 h-4 text-white" />
                   </div>
-                  <p className="text-sm text-foreground pt-2">
-                    {feature.text}
+                  <p className="text-sm text-foreground">
+                    {feature}
                   </p>
                 </div>
               ))}
