@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType } from "@shared/schema";
-import FeatureCard from "@/components/job-guarantee/FeatureCard";
+import SolidCard from "@/components/SolidCard";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import Briefcase from "@/components/CustomIcons/Briefcase";
 import Graduation from "@/components/CustomIcons/Graduation";
@@ -294,7 +294,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
             {data.stats.map((stat, index) => (
-              <FeatureCard key={index}>
+              <SolidCard key={index}>
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-6 md:block">
                   <div className="flex-shrink-0 md:mb-6">
                     {iconMap[stat.icon]}
@@ -311,7 +311,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
                     <div className="text-xl text-muted-foreground">{stat.label}</div>
                   </div>
                 </div>
-              </FeatureCard>
+              </SolidCard>
             ))}
           </div>
         </div>
