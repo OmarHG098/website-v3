@@ -22,7 +22,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ data }: HeroSectionProps) {
   const { i18n } = useTranslation();
-  const isSpanish = i18n.language === 'es';
+  const isSpanish = i18n.language?.startsWith('es');
 
   const getIcon = (iconName: string) => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number }>>;
