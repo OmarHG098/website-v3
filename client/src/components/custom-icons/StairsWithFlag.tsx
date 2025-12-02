@@ -1,17 +1,24 @@
-interface IconProps {
-  className?: string;
+interface StairsWithFlagProps {
+  width?: string;
+  height?: string;
+  color?: string;
   style?: React.CSSProperties;
-  width?: number | string;
-  height?: number | string;
+  className?: string;
 }
 
-export default function StairsWithFlag({ className = "", style, width = 58, height = 73 }: IconProps) {
+export default function StairsWithFlag({
+  width = "58px",
+  height = "73px",
+  color = "#FFCF18",
+  style,
+  className,
+}: StairsWithFlagProps) {
   return (
     <svg
-      className={className}
+      width={width || "58px"}
+      height={height || "73px"}
       style={style}
-      width={width}
-      height={height}
+      className={className}
       viewBox="0 0 58 73"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
