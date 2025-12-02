@@ -139,7 +139,7 @@ export default function JobGuarantee() {
                   <p className="text-sm text-muted-foreground mb-8">
                     *Conditions apply depending on your country or U.S. state
                   </p>
-                  <Button size="lg" data-testid="button-apply-eligible">
+                  <Button size="lg" data-testid="button-apply-eligible" className="text-md px-6">
                     Apply
                   </Button>
                 </div>
