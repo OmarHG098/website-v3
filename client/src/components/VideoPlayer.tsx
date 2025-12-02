@@ -6,33 +6,16 @@ interface VideoPlayerProps {
   videoId: string;
   title: string;
   className?: string;
-  vertical?: boolean;
+  aspectRatio?: string;
 }
 
-export default function VideoPlayer({ videoId, title, className = "", vertical = false }: VideoPlayerProps) {
-
-  if (vertical) {
-    return (
-      <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
-        <div 
-          style={{ aspectRatio: '9/12' }}
-          data-testid="video-player"
-        >
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full border-0"
-          />
-        </div>
-      </SolidCard>
-    );
-  }
-
+export default function VideoPlayer({ videoId, title, className = "", aspectRatio }: VideoPlayerProps) {
   return (
     <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
-      <div data-testid="video-player">
+      <div 
+        data-testid="video-player"
+        style={aspectRatio ? { aspectRatio } : undefined}
+      >
         <LiteYouTubeEmbed
           id={videoId}
           title={title}
