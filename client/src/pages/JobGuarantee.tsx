@@ -248,53 +248,6 @@ export default function JobGuarantee() {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="grid md:grid-cols-2 gap-12 items-center">
-                {/* Content Column */}
-                <div>
-                  <h2 
-                    className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-                    data-testid="text-confidence-title"
-                  >
-                    Why We Have the Confidence to Offer a Job Guarantee
-                  </h2>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    Our confidence comes from years of proven results and a comprehensive support system designed for your success:
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                        <IconCheck className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="text-foreground">
-                        <strong>Industry-Aligned Curriculum:</strong> Our programs are designed with input from tech employers to ensure you learn the most in-demand skills.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                        <IconCheck className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="text-foreground">
-                        <strong>Lifetime Career Support:</strong> Access to mentors, career coaches, and job placement assistance that continues even after you graduate.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                        <IconCheck className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="text-foreground">
-                        <strong>Strong Employer Network:</strong> We partner with hundreds of companies actively seeking to hire our graduates.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                        <IconCheck className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="text-foreground">
-                        <strong>Proven Track Record:</strong> Thousands of successful graduates now working at top tech companies worldwide.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-
                 {/* Image Column */}
                 <div className="flex justify-center">
                   <img 
@@ -304,6 +257,48 @@ export default function JobGuarantee() {
                     loading="lazy"
                     data-testid="img-confidence"
                   />
+                </div>
+
+                {/* Content Column */}
+                <div>
+                  <h2 
+                    className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                    data-testid="text-confidence-title"
+                  >
+                    Why We Have the Confidence to Offer a Job Guarantee
+                  </h2>
+                  <p className="text-xl text-muted-foreground mb-8">
+                    Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.
+                  </p>
+                  <ul className="space-y-5 mb-8">
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-5 h-5 text-primary" />
+                      </div>
+                      <span className="text-lg text-foreground">
+                        Our program's effectiveness is backed by strong placement rates
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-5 h-5 text-primary" />
+                      </div>
+                      <span className="text-lg text-foreground">
+                        The tech industry continues to grow with high demand for talent
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                        <IconCheck className="w-5 h-5 text-primary" />
+                      </div>
+                      <span className="text-lg text-foreground">
+                        We believe in our teaching approach and your commitment to succeed
+                      </span>
+                    </li>
+                  </ul>
+                  <Button size="lg" data-testid="button-apply-confidence">
+                    Apply
+                  </Button>
                 </div>
               </div>
             </div>
