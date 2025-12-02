@@ -215,25 +215,6 @@ sections:
       button_text: "Habla con un Asesor"
       button_url: "/contacto"
 
-  - type: credibility
-    title: "Confiado por Miles"
-    stats:
-      - value: "4,000+"
-        label: "Graduados"
-      - value: "84%"
-        label: "Tasa de Colocación Laboral"
-      - value: "4.9/5"
-        label: "Calificación de Estudiantes"
-      - value: "20+"
-        label: "Países"
-    featured_in:
-      label: "Destacado En"
-      logos:
-        - "Forbes"
-        - "Newsweek"
-        - "Course Report"
-        - "SwitchUp"
-
   - type: footer_cta
     title: "¿Listo para Iniciar tu Carrera Tech?"
     subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."

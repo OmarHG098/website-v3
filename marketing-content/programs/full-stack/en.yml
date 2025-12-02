@@ -215,25 +215,6 @@ sections:
       button_text: "Talk to an Advisor"
       button_url: "/contact"
 
-  - type: credibility
-    title: "Trusted by Thousands"
-    stats:
-      - value: "4,000+"
-        label: "Graduates"
-      - value: "84%"
-        label: "Job Placement Rate"
-      - value: "4.9/5"
-        label: "Student Rating"
-      - value: "20+"
-        label: "Countries"
-    featured_in:
-      label: "Featured In"
-      logos:
-        - "Forbes"
-        - "Newsweek"
-        - "Course Report"
-        - "SwitchUp"
-
   - type: footer_cta
     title: "Ready to Start Your Tech Career?"
     subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."

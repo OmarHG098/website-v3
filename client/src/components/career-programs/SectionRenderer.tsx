@@ -8,7 +8,6 @@ import { FeaturesChecklistSection } from "./FeaturesChecklistSection";
 import { CertificateSection } from "./CertificateSection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
-import { CredibilitySection } from "./CredibilitySection";
 import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 
@@ -39,8 +38,6 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <FAQSection key={index} data={section} />;
           case "testimonials":
             return <TestimonialsSection key={index} data={section} />;
-          case "credibility":
-            return <CredibilitySection key={index} data={section} />;
           case "footer_cta":
             return <FooterCTASection key={index} data={section} />;
           case "footer":

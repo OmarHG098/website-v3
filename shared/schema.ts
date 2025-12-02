@@ -157,16 +157,6 @@ export const testimonialsSectionSchema = z.object({
   items: z.array(testimonialItemSchema),
 });
 
-export const credibilitySectionSchema = z.object({
-  type: z.literal("credibility"),
-  title: z.string(),
-  stats: z.array(statItemSchema),
-  featured_in: z.object({
-    label: z.string(),
-    logos: z.array(z.string()),
-  }).optional(),
-});
-
 export const footerCtaSectionSchema = z.object({
   type: z.literal("footer_cta"),
   title: z.string(),
@@ -201,7 +191,6 @@ export const sectionSchema = z.discriminatedUnion("type", [
   certificateSectionSchema,
   faqSectionSchema,
   testimonialsSectionSchema,
-  credibilitySectionSchema,
   footerCtaSectionSchema,
   footerSectionSchema,
 ]);
@@ -232,7 +221,6 @@ export type FAQSection = z.infer<typeof faqSectionSchema>;
 export type TestimonialItem = z.infer<typeof testimonialItemSchema>;
 export type TestimonialsSection = z.infer<typeof testimonialsSectionSchema>;
 export type StatItem = z.infer<typeof statItemSchema>;
-export type CredibilitySection = z.infer<typeof credibilitySectionSchema>;
 export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
 export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
