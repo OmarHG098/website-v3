@@ -212,38 +212,38 @@ export default function JobGuarantee() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <FeatureCard>
-                <div data-testid="stat-card-0">
+                <div data-testid="stat-card-0" className="flex flex-col h-full">
                   <div className="mb-6">
                     <Briefcase width="90" height="81" />
                   </div>
                   <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
                     84%
                   </div>
-                  <div className="text-lg text-muted-foreground">Job placement rate</div>
+                  <div className="text-xl text-muted-foreground mt-auto">Job placement rate</div>
                 </div>
               </FeatureCard>
               
               <FeatureCard>
-                <div data-testid="stat-card-1">
+                <div data-testid="stat-card-1" className="flex flex-col h-full">
                   <div className="mb-6">
                     <Graduation width="90" height="77" />
                   </div>
                   <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
-                    3-6<span className="text-3xl md:text-4xl ml-1 md:block md:ml-0 lg:inline lg:ml-1">months</span>
+                    3-6<span className="text-2xl md:text-3xl ml-1 md:block md:ml-0 lg:inline lg:ml-1">months</span>
                   </div>
-                  <div className="text-lg text-muted-foreground">Average time to get hired</div>
+                  <div className="text-xl text-muted-foreground mt-auto">Average time to get hired</div>
                 </div>
               </FeatureCard>
               
               <FeatureCard>
-                <div data-testid="stat-card-2">
+                <div data-testid="stat-card-2" className="flex flex-col h-full">
                   <div className="mb-6">
                     <GrowthChart width="90" height="94" />
                   </div>
                   <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
                     55%
                   </div>
-                  <div className="text-lg text-muted-foreground">Salary increase after graduation</div>
+                  <div className="text-xl text-muted-foreground mt-auto">Salary increase after graduation</div>
                 </div>
               </FeatureCard>
               </div>
