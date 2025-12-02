@@ -59,7 +59,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
               videoId={data.videoId} 
               title={data.videoTitle}
               className="w-full max-w-md"
-              aspectRatio="9/12"
+              ratio="9:12"
             />
           </div>
         </div>

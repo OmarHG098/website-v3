@@ -1,26 +1,21 @@
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import ResponsiveEmbed from 'react-responsive-embed';
 import SolidCard from './SolidCard';
 
 interface VideoPlayerProps {
   videoId: string;
   title: string;
   className?: string;
-  aspectRatio?: string;
+  ratio?: string;
 }
 
-export default function VideoPlayer({ videoId, title, className = "", aspectRatio }: VideoPlayerProps) {
+export default function VideoPlayer({ videoId, title, className = "", ratio = "16:9" }: VideoPlayerProps) {
   return (
     <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
-      <div 
-        data-testid="video-player"
-        style={aspectRatio ? { aspectRatio } : undefined}
-      >
-        <iframe
-          id={videoId}
+      <div data-testid="video-player">
+        <ResponsiveEmbed
+          src={`https://www.youtube.com/embed/${videoId}`}
+          ratio={ratio}
           title={title}
-          poster="maxresdefault"
-          webp
         />
       </div>
     </SolidCard>
