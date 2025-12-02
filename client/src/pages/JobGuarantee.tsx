@@ -98,18 +98,20 @@ export default function JobGuarantee() {
             {/* Row 2: Two black dots */}
             <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '24px' }} />
             <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '20px', top: '24px' }} />
-            {/* Row 3: Gray dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '56px' }} />
+            {/* Row 3: Gray dot (col 2) */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '56px' }} />
+            {/* Row 3.5: Gray dot (col 1) */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '72px' }} />
             {/* Row 4: Gray dot (col 2) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '80px' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '96px' }} />
             {/* Row 5: Blue dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '0px', top: '112px' }} />
-            {/* Row 6: Yellow dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '0px', top: '148px' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '0px', top: '128px' }} />
+            {/* Row 6: Yellow dot (col 2) */}
+            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '20px', top: '164px' }} />
             {/* Row 6: Small blue dot (col 2) */}
-            <div className="absolute w-2 h-2 rounded-full bg-primary" style={{ left: '24px', top: '168px' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-primary" style={{ left: '24px', top: '196px' }} />
             {/* Row 7: Gray dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '196px' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '220px' }} />
           </div>
 
           {/* Right side decorative circles */}
