@@ -209,7 +209,6 @@ sections:
         - "Forbes"
         - "Newsweek"
         - "Course Report"
-        - "SwitchUp"
 
   - type: footer_cta
     title: "Ready to Start Your Tech Career?"
