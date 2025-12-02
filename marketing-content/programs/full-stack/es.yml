@@ -67,6 +67,23 @@ sections:
         title: "Para Principiantes"
         description: "Diseñado para principiantes completos sin experiencia previa en programación"
 
+  - type: syllabus
+    title: "¡Prepárate para el Trabajo con Nuestro Programa!"
+    subtitle: "Hemos ajustado nuestro contenido del curso con cientos de posiciones laborales para prepararte para una entrada exitosa en tecnología."
+    modules:
+      - title: "Introducción a HTML y CSS"
+        description: "Aprende a crear estructuras web con HTML y estilizarlas con CSS, esencial para construir sitios web visualmente atractivos y funcionales. Dominar HTML te permite crear la base de cualquier página web, mientras que CSS te da el poder de diseñarla a tu gusto, mejorando la experiencia del usuario y la accesibilidad del sitio."
+      - title: "JavaScript"
+        description: "Domina los fundamentos de JavaScript, el lenguaje de programación que impulsa experiencias web interactivas. Aprende variables, funciones, bucles, manipulación del DOM y características modernas de ES6+ para crear sitios web dinámicos y responsivos."
+      - title: "React"
+        description: "Construye interfaces de usuario modernas con React, la biblioteca JavaScript más popular para crear aplicaciones basadas en componentes. Aprende gestión de estado, hooks, enrutamiento y mejores prácticas para desarrollo frontend escalable."
+      - title: "Python"
+        description: "Sumérgete en Python, un lenguaje de programación versátil utilizado en desarrollo web, ciencia de datos y automatización. Domina conceptos fundamentales, estructuras de datos y principios de programación orientada a objetos."
+      - title: "Creación de APIs"
+        description: "Aprende a diseñar y construir APIs RESTful usando frameworks modernos. Comprende métodos HTTP, autenticación, integración de bases de datos y documentación de API para crear servicios backend robustos."
+      - title: "Metodologías Ágiles"
+        description: "Comprende Scrum, Kanban y otros frameworks ágiles utilizados por equipos de desarrollo en todo el mundo. Aprende planificación de sprints, reuniones diarias, retrospectivas y cómo colaborar efectivamente en entornos modernos de desarrollo de software."
+
   - type: ai_learning
     badge: "Por qué 4Geeks?"
     title: "Por qué Aprender con 4Geeks?"

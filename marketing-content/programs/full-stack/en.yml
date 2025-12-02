@@ -67,6 +67,23 @@ sections:
         title: "Beginner Friendly"
         description: "Designed for complete beginners with no prior coding experience required"
 
+  - type: syllabus
+    title: "Get Job-Ready with Our Syllabus!"
+    subtitle: "We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech."
+    modules:
+      - title: "Introduction To HTML And CSS"
+        description: "Learn to create web structures with HTML and style them with CSS, essential for building visually appealing and functional websites. Mastering HTML allows you to create the foundation of any web page, while CSS gives you the power to design it to your liking, improving the user experience and site accessibility."
+      - title: "JavaScript"
+        description: "Master the fundamentals of JavaScript, the programming language that powers interactive web experiences. Learn variables, functions, loops, DOM manipulation, and modern ES6+ features to create dynamic, responsive websites."
+      - title: "React"
+        description: "Build modern user interfaces with React, the most popular JavaScript library for creating component-based applications. Learn state management, hooks, routing, and best practices for scalable frontend development."
+      - title: "Python"
+        description: "Dive into Python, a versatile programming language used in web development, data science, and automation. Master core concepts, data structures, and object-oriented programming principles."
+      - title: "Creating APIs"
+        description: "Learn to design and build RESTful APIs using modern frameworks. Understand HTTP methods, authentication, database integration, and API documentation to create robust backend services."
+      - title: "Agile Methodologies"
+        description: "Understand Scrum, Kanban, and other agile frameworks used by development teams worldwide. Learn sprint planning, daily standups, retrospectives, and how to collaborate effectively in modern software development environments."
+
   - type: ai_learning
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"

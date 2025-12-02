@@ -179,9 +179,22 @@ export const footerSectionSchema = z.object({
   copyright_text: z.string(),
 });
 
+export const syllabusModuleSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+export const syllabusSectionSchema = z.object({
+  type: z.literal("syllabus"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  modules: z.array(syllabusModuleSchema),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   programOverviewSectionSchema,
+  syllabusSectionSchema,
   aiLearningSectionSchema,
   mentorshipSectionSchema,
   featuresChecklistSectionSchema,
@@ -222,5 +235,7 @@ export type StatItem = z.infer<typeof statItemSchema>;
 export type CredibilitySection = z.infer<typeof credibilitySectionSchema>;
 export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
+export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
+export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;

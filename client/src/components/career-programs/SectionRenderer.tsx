@@ -1,6 +1,7 @@
 import type { Section } from "@shared/schema";
 import { HeroSection } from "./HeroSection";
 import { ProgramOverviewSection } from "./ProgramOverviewSection";
+import { SyllabusSection } from "./SyllabusSection";
 import { AILearningSection } from "./AILearningSection";
 import { MentorshipSection } from "./MentorshipSection";
 import { FeaturesChecklistSection } from "./FeaturesChecklistSection";
@@ -24,6 +25,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <HeroSection key={index} data={section} />;
           case "program_overview":
             return <ProgramOverviewSection key={index} data={section} />;
+          case "syllabus":
+            return <SyllabusSection key={index} data={section} />;
           case "ai_learning":
             return <AILearningSection key={index} data={section} />;
           case "mentorship":
