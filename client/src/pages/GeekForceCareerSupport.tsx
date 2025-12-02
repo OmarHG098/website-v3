@@ -5,6 +5,8 @@ import { IconCheck } from "@tabler/icons-react";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
+import Graduation from "@/components/custom-icons/Graduation";
+import GrowthChart from "@/components/custom-icons/GrowthChart";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 import communityImage from "@assets/community_1764717588840.png";
 
@@ -58,6 +60,16 @@ const hyperpersonalizedData = {
     "Practice technical interviews and behavioral questions with AI-guided exercises.",
     "Get expert coaching from our mentors who tailor advice to your unique profile and goals."
   ]
+};
+
+const statsData = {
+  title: "Does Our Career Support Deliver Results You Can Count On?",
+  description: "Yes — and we've got the numbers to back it up.",
+  stats: [
+    { value: "84%", label: "Job Placement Rate", sublabel: "of graduates were hired", icon: "briefcase" as const },
+    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", sublabel: "after graduation", icon: "graduation" as const },
+    { value: "55%", label: "Salary Increase", sublabel: "higher at new job", icon: "growth" as const },
+  ],
 };
 
 const careerProcessData: {
@@ -303,6 +315,61 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
   );
 }
 
+function StatsSection({ data }: { data: typeof statsData }) {
+  const iconMap = {
+    briefcase: <Briefcase width="60" height="54" />,
+    graduation: <Graduation width="60" height="51" />,
+    growth: <GrowthChart width="60" height="63" />,
+  };
+
+  return (
+    <section 
+      className="py-8 bg-sky-200"
+      data-testid="section-stats"
+    >
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 
+              className="text-xl md:text-2xl font-bold mb-2 text-foreground"
+              data-testid="text-stats-title"
+            >
+              {data.title}
+            </h2>
+            <p className="text-base">
+              {data.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+            {data.stats.map((stat, index) => (
+              <SolidCard key={index} className="p-4">
+                <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
+                  <div className="flex-shrink-0 md:mb-4">
+                    {iconMap[stat.icon]}
+                  </div>
+                  <div>
+                    <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
+                    <div className="text-3xl md:text-4xl font-bold text-foreground">
+                      {stat.value}
+                      {stat.valueSuffix && (
+                        <span className="text-lg md:text-xl ml-1">
+                          {stat.valueSuffix}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
+                  </div>
+                </div>
+              </SolidCard>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -317,6 +384,7 @@ export default function GeekForceCareerSupport() {
         <UnlimitedSupportSection data={unlimitedSupportData} />
         <CareerProcessSection data={careerProcessData} />
         <HyperpersonalizedSection data={hyperpersonalizedData} />
+        <StatsSection data={statsData} />
       </main>
     </div>
   );
