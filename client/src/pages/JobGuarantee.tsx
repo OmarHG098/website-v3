@@ -92,26 +92,26 @@ export default function JobGuarantee() {
           data-testid="section-hero"
         >
           {/* Left side decorative circles - 2 columns */}
-          <div className="absolute left-4 md:left-8 top-4 md:top-8 h-[220px] w-[50px]">
+          <div className="absolute left-8 md:left-16 top-4 md:top-8 h-[280px] w-[50px]">
             {/* Row 1: Yellow dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '0px', top: '0px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '0px', top: '0px' }} />
             {/* Row 2: Two black dots */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '24px' }} />
-            <div className="absolute w-3 h-3 rounded-full bg-[#1a1a1a]" style={{ left: '20px', top: '24px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '0px', top: '32px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#1a1a1a]" style={{ left: '24px', top: '32px' }} />
             {/* Row 3: Gray dot (col 2) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '56px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '24px', top: '72px' }} />
             {/* Row 3.5: Gray dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '72px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '104px' }} />
             {/* Row 4: Gray dot (col 2) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '20px', top: '96px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '24px', top: '136px' }} />
             {/* Row 5: Blue dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '0px', top: '128px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-primary" style={{ left: '0px', top: '176px' }} />
             {/* Row 6: Yellow dot (col 2) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#FFB718]" style={{ left: '20px', top: '164px' }} />
-            {/* Row 6: Small blue dot (col 2) */}
-            <div className="absolute w-2 h-2 rounded-full bg-primary" style={{ left: '24px', top: '196px' }} />
-            {/* Row 7: Gray dot (col 1) */}
-            <div className="absolute w-3 h-3 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '220px' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-[#FFB718]" style={{ left: '24px', top: '216px' }} />
+            {/* Row 7: Small blue dot (col 2) */}
+            <div className="absolute w-3 h-3 rounded-full bg-primary" style={{ left: '28px', top: '256px' }} />
+            {/* Row 8: Gray dot (col 1) */}
+            <div className="absolute w-4 h-4 rounded-full bg-[#d1d5db]" style={{ left: '0px', top: '296px' }} />
           </div>
 
           {/* Right side decorative circles */}
