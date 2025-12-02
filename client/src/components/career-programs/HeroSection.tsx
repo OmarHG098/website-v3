@@ -15,22 +15,6 @@ export function HeroSection({ data }: HeroSectionProps) {
     return IconComponent ? <IconComponent size={20} /> : null;
   };
 
-  const renderTitle = () => {
-    if (data.title_highlight) {
-      const parts = data.title.split(data.title_highlight);
-      if (parts.length === 2) {
-        return (
-          <>
-            {parts[0]}
-            <span className="text-primary">{data.title_highlight}</span>
-            {parts[1]}
-          </>
-        );
-      }
-    }
-    return data.title;
-  };
-
   return (
     <section 
       className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
@@ -51,7 +35,7 @@ export function HeroSection({ data }: HeroSectionProps) {
           className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground"
           data-testid="text-hero-title"
         >
-          {renderTitle()}
+          {data.title}
         </h1>
         
         {data.subtitle && (

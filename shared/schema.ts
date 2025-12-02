@@ -29,7 +29,6 @@ export const heroSectionSchema = z.object({
   type: z.literal("hero"),
   badge: z.string().optional(),
   title: z.string(),
-  title_highlight: z.string().optional(),
   subtitle: z.string().optional(),
   cta_buttons: z.array(ctaButtonSchema),
 });
