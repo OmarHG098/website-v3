@@ -6,11 +6,9 @@ import type { ComponentType } from "react";
 
 interface HeroSectionProps {
   data: HeroSectionType;
-  className?: string;
-  children?: React.ReactNode;
 }
 
-export function HeroSection({ data, className, children }: HeroSectionProps) {
+export function HeroSection({ data }: HeroSectionProps) {
   const getIcon = (iconName: string) => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number }>>;
     const IconComponent = icons[`Icon${iconName}`];
