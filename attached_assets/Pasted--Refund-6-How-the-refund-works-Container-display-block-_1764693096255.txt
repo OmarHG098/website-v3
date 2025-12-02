@@ -1,0 +1,139 @@
+      {/* Refund: 6. How the refund works */}
+      <Container
+        display="block"
+        margin="20px auto"
+        margin_sm="15px auto"
+        margin_xs="10px auto"
+        margin_tablet="40px auto"
+        padding="20px 10px"
+        padding_sm="30px 20px"
+        padding_tablet="40px 90px"
+        padding_md="40px 130px"
+        padding_lg="40px 0"
+      >
+        <Div
+          display="block"
+          margin="0px auto 20px 0"
+          margin_sm="0px auto 15px 0"
+          margin_xs="0px auto 10px 0"
+          margin_tablet="0px auto 40px 0"
+          padding="20px 0"
+          padding_sm="30px 0"
+          padding_tablet="42px 0"
+        >
+          <H2 margin="0 0 15px 0">{yml.how_it_works.title}</H2>
+          <SubTitle
+            dangerouslySetInnerHTML={{ __html: yml.how_it_works.text }}
+          />
+        </Div>
+        <Div
+          margin="auto"
+          margin_lg="auto"
+          marginBottom="30px"
+          marginBottom_sm="25px"
+          marginBottom_xs="20px"
+          marginBottom_tablet="50px"
+          width="300px"
+          width_tablet="fit-content"
+          width_md="auto"
+          gap_tablet="60px"
+          gap_md="60px"
+          flexDirection="column"
+          flexDirection_tablet="row"
+          justifyContent="center"
+        >
+          {yml.how_it_works.steps.map((step, i) => (
+            <Div
+              width="100%"
+              width_tablet="120px"
+              width_md="160px"
+              height_tablet="350px"
+              position="relative"
+            >
+              {i !== yml.how_it_works.steps.length - 1 && (
+                <ImgV2
+                  src="/images/dotted-line.png"
+                  position="absolute"
+                  left_tablet="50%"
+                  left="90px"
+                  top_md={i % 2 === 0 ? "40px" : "15px"}
+                  top_tablet="40px"
+                  top="80px"
+                  rotate_tablet={i % 2 !== 0 && "123deg"}
+                  rotate={i % 2 !== 0 && "-45deg"}
+                  alt="Dashed line"
+                  width_tablet="180px"
+                  width_md="240px"
+                  width="150px"
+                  height="69px"
+                  height_tablet="69px"
+                  height_md="119px"
+                  backgroundSize="contain"
+                />
+              )}
+              <Div
+                flexDirection={i % 2 === 0 ? "row" : "row-reverse"}
+                justifyContent="between"
+                justifyContent_tablet="start"
+                flexDirection_tablet="column"
+                alignItems="center"
+                position_tablet="absolute"
+                top={i % 2 !== 0 && "90px"}
+                zIndex="5"
+                width="100%"
+                width_tablet="auto"
+              >
+                <Div
+                  flexDirection="column"
+                  justifyContent="center"
+                  width="140px"
+                  width_tablet="110px"
+                  width_md="100px"
+                  height="140px"
+                  height_tablet="110px"
+                  height_md="100px"
+                  border={`4px solid #FFB718`}
+                  background="#FFF1D1"
+                  borderRadius="70px"
+                >
+                  <Icon
+                    style={{ margin: "auto" }}
+                    color="#FFB718"
+                    icon={step.icon}
+                    width="60px"
+                    height="60px"
+                  />
+                </Div>
+                <Paragraph
+                  fontSize={step.highlight ? "16px" : "14px"}
+                  fontSize_tablet={step.highlight ? "22px" : "20px"}
+                  fontSize_md={step.highlight ? "22px" : "20px"}
+                  color={step?.highlight ? "#FFB718" : "#000"}
+                  opacity="1"
+                  maxWidth="100px"
+                  maxWidth_tablet="120px"
+                  maxWidth_md="180px"
+                  margin="15px 0 0 0"
+                >
+                  {`${i + 1}. ${step.title}`}
+                </Paragraph>
+              </Div>
+            </Div>
+          ))}
+        </Div>
+
+        {yml.how_it_works.link && (
+          <Paragraph
+            margin="30px 0 0 0"
+            color={Colors.black}
+            textDecoration="underline"
+          >
+            <Anchor
+              color={`${Colors.black} !important`}
+              to={yml.how_it_works.link.url}
+            >
+              {yml.how_it_works.link.label}
+            </Anchor>
+          </Paragraph>
+        )}
+      </Container>
