@@ -10,7 +10,7 @@ export default function JobGuarantee() {
   const heroData: HeroSectionType = {
     type: "hero",
     title: "Get into tech with our Job Guarantee",
-    subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+    subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
     cta_buttons: [
       {
         text: "Apply now",
@@ -39,22 +39,19 @@ export default function JobGuarantee() {
           data-testid="section-stats"
         >
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex justify-center mb-6">
-                <GrowthChart width="120" height="125" />
-              </div>
+            <div className="text-right mb-12">
               <h2 
-                className="text-2xl md:text-3xl font-bold mb-4 text-foreground"
+                className="text-3xl font-bold mb-4 text-foreground"
                 data-testid="text-stats-title"
               >
                 Does the Job Guarantee Deliver Results You Can Count On?
               </h2>
               <p className="text-lg text-primary font-semibold mb-4">
-                Yes — and we've got the numbers to back it up.
+                Yes, and we've got the numbers to back it up.
               </p>
-              <p className="text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-muted-foreground max-w-3xl ml-auto">
                 These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
-                We don't just teach you how to code — we help you build a career you're proud of.
+                We don't just teach you how to code, we help you build a career you're proud of.
               </p>
             </div>
 
