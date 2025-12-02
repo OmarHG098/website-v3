@@ -5,6 +5,9 @@ import FeatureCard from "@/components/job-guarantee/FeatureCard";
 import Briefcase from "@/components/CustomIcons/Briefcase";
 import Graduation from "@/components/CustomIcons/Graduation";
 import GrowthChart from "@/components/CustomIcons/GrowthChart";
+import { IconCheck } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
+import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
 
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
@@ -92,6 +95,62 @@ export default function JobGuarantee() {
                   <div className="text-muted-foreground">Salary increase after graduation</div>
                 </div>
               </FeatureCard>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Who's Eligible Section */}
+        <section 
+          className="py-16 md:py-24 bg-background"
+          data-testid="section-eligible"
+        >
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 
+                    className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                    data-testid="text-eligible-title"
+                  >
+                    Who's Eligible?
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    You'll qualify for the Job Guarantee if you:
+                  </p>
+                  <ul className="space-y-4 mb-6">
+                    <li className="flex items-start gap-3">
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
+                      <span className="text-foreground">Have U.S. work authorization</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
+                      <span className="text-foreground">Pass our logic test</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
+                      <span className="text-foreground">Complete all coursework and projects</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
+                      <span className="text-foreground">Follow our career team's guidance</span>
+                    </li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground mb-8">
+                    *Conditions apply depending on your country or U.S. state
+                  </p>
+                  <Button size="lg" data-testid="button-apply-eligible">
+                    Apply
+                  </Button>
+                </div>
+                <div className="flex justify-center">
+                  <img 
+                    src={eligibleImage} 
+                    alt="Woman working on laptop" 
+                    className="max-w-full h-auto rounded-md"
+                    data-testid="img-eligible"
+                  />
+                </div>
               </div>
             </div>
           </div>
