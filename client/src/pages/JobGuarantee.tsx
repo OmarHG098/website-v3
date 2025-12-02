@@ -555,7 +555,7 @@ export default function JobGuarantee() {
                       stroke="currentColor"
                       strokeWidth="4"
                       strokeDasharray="8 6"
-                      className="text-foreground/50"
+                      className="text-foreground"
                     />
                   </svg>
                   <div className="flex items-center justify-between relative z-10">
@@ -583,7 +583,7 @@ export default function JobGuarantee() {
                       stroke="currentColor"
                       strokeWidth="4"
                       strokeDasharray="8 6"
-                      className="text-foreground/50"
+                      className="text-foreground"
                     />
                   </svg>
                   <div className="flex items-center justify-between flex-row-reverse relative z-10">
