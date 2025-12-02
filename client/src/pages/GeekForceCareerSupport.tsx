@@ -51,21 +51,12 @@ const unlimitedSupportData = {
 };
 
 const hyperpersonalizedData = {
-  title: "Hyperpersonalized Support: AI + Human Mentorship",
-  subtitle: "Most career support programs give you generic advice. GeekForce is different. We blend cutting-edge AI tools with real human mentorship to give you a hyper-personalized career experience.",
+  title: "Accelerate Your Results with Hyperpersonalized Career Support",
+  subtitle: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
   features: [
-    {
-      title: "AI-Powered Insights",
-      description: "Our AI analyzes your profile, skills, and goals to provide personalized recommendations for your career path."
-    },
-    {
-      title: "Human Mentorship",
-      description: "Connect with experienced industry professionals who understand your unique challenges and can provide tailored guidance."
-    },
-    {
-      title: "Community Support",
-      description: "Join a global network of learners and alumni who share your journey and can offer peer-to-peer support."
-    }
+    "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.",
+    "Practice technical interviews and behavioral questions with AI-guided exercises.",
+    "Get expert coaching from our mentors who tailor advice to your unique profile and goals."
   ]
 };
 
@@ -270,12 +261,12 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
       data-testid="section-hyperpersonalized"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-8 items-center lg:px-12">
-          <div className="order-2 md:order-1 md:col-span-2">
+        <div className="grid md:grid-cols-5 gap-4 xl:gap-20 items-center lg:px-12">
+          <div className="order-2 md:order-1 md:col-span-2 flex justify-center">
             <img 
               src={communityImage} 
               alt="4Geeks Academy community members collaborating on a project" 
-              className="w-full"
+              className="w-[200px] md:w-full"
               data-testid="img-community"
             />
           </div>
@@ -298,9 +289,9 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
                   className="flex gap-3 items-start"
                   data-testid={`feature-hyperpersonalized-${index}`}
                 >
-                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  <span className="text-foreground flex-shrink-0">•</span>
                   <p className="text-sm text-foreground">
-                    <span className="font-semibold">{feature.title}:</span> {feature.description}
+                    {feature}
                   </p>
                 </div>
               ))}
