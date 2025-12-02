@@ -1,9 +1,7 @@
 import Header from "@/components/Header";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
-import GrowthChart from "@/components/CustomIcons/GrowthChart";
-import Briefcase from "@/components/CustomIcons/Briefcase";
-import Graduation from "@/components/CustomIcons/Graduation";
+import { IconBriefcase, IconSchool, IconTrendingUp } from "@tabler/icons-react";
 import FeatureCard from "@/components/job-guarantee/FeatureCard";
 
 export default function JobGuarantee() {
