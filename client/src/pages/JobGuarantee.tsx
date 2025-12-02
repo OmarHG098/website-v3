@@ -328,26 +328,37 @@ export default function JobGuarantee() {
               </div>
 
               {/* Desktop Timeline - Horizontal Wave */}
-              <div className="hidden md:flex justify-center gap-8 lg:gap-16 relative">
-                {/* Step 1 */}
-                <div className="w-[160px] lg:w-[180px] relative" style={{ height: '350px' }}>
-                  {/* Dotted line to step 2 */}
-                  <svg 
-                    className="absolute left-1/2 top-10 w-[180px] lg:w-[240px] h-[90px] lg:h-[120px]"
-                    viewBox="0 0 200 100"
-                    preserveAspectRatio="none"
-                    style={{ zIndex: 1 }}
-                  >
-                    <path
-                      d="M 0 10 Q 50 10, 100 50 Q 150 90, 200 90"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeDasharray="10 8"
-                      className="text-foreground/50"
-                    />
-                  </svg>
-                  <div className="flex flex-col items-center relative z-10">
+              <div className="hidden md:block relative">
+                {/* SVG container for curved lines - spans across all steps */}
+                <svg 
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 700 280"
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ zIndex: 1 }}
+                >
+                  {/* Curved line from Step 1 to Step 2 */}
+                  <path
+                    d="M 130 55 C 180 55, 220 120, 280 140 C 340 160, 350 175, 350 175"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeDasharray="12 8"
+                    className="text-foreground/60"
+                  />
+                  {/* Curved line from Step 2 to Step 3 */}
+                  <path
+                    d="M 350 175 C 350 175, 360 160, 420 140 C 480 120, 520 55, 570 55"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeDasharray="12 8"
+                    className="text-foreground/60"
+                  />
+                </svg>
+
+                <div className="flex justify-between items-start max-w-3xl mx-auto relative" style={{ zIndex: 2 }}>
+                  {/* Step 1 - Top */}
+                  <div className="flex flex-col items-center w-[180px]">
                     <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <BriefcaseOutline width={50} height={50} color="#1a1a1a" />
                     </div>
@@ -355,27 +366,9 @@ export default function JobGuarantee() {
                       1. You were not hired into a qualifying role within 9 months of graduation.
                     </p>
                   </div>
-                </div>
 
-                {/* Step 2 - Offset down */}
-                <div className="w-[160px] lg:w-[180px] relative" style={{ height: '350px' }}>
-                  {/* Dotted line to step 3 */}
-                  <svg 
-                    className="absolute left-1/2 top-10 w-[180px] lg:w-[240px] h-[90px] lg:h-[120px]"
-                    viewBox="0 0 200 100"
-                    preserveAspectRatio="none"
-                    style={{ zIndex: 1, transform: 'rotate(123deg)', transformOrigin: 'left center' }}
-                  >
-                    <path
-                      d="M 0 10 Q 50 10, 100 50 Q 150 90, 200 90"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeDasharray="10 8"
-                      className="text-foreground/50"
-                    />
-                  </svg>
-                  <div className="flex flex-col items-center absolute top-[90px] z-10 w-full">
+                  {/* Step 2 - Lower (offset down) */}
+                  <div className="flex flex-col items-center w-[180px] mt-[100px]">
                     <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <ChecklistVerify width={50} height={50} color="#1a1a1a" />
                     </div>
@@ -383,11 +376,9 @@ export default function JobGuarantee() {
                       2. Our team verifies that you met all Job Guarantee requirements
                     </p>
                   </div>
-                </div>
 
-                {/* Step 3 */}
-                <div className="w-[160px] lg:w-[180px] relative" style={{ height: '350px' }}>
-                  <div className="flex flex-col items-center relative z-10">
+                  {/* Step 3 - Top */}
+                  <div className="flex flex-col items-center w-[180px]">
                     <div className="w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
                       <FolderCheck width={50} height={50} color="#1a1a1a" />
                     </div>
