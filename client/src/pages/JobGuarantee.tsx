@@ -37,14 +37,24 @@ export default function JobGuarantee() {
               </a>.
             </p>
             
-            <Button
-              size="lg"
-              className="text-lg px-8 py-6 pl-[10px] pr-[10px] pt-[10px] pb-[10px]"
-              data-testid="button-request-syllabus"
-            >
-              <IconFileDownload className="mr-2" size={20} />
-              Request a Syllabus
-            </Button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                size="lg"
+                className="text-lg px-5 py-3"
+                data-testid="button-apply-now"
+              >
+                APPLY NOW
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-5 py-3"
+                data-testid="button-request-syllabus"
+              >
+                <IconFileDownload className="mr-2" size={20} />
+                REQUEST A SYLLABUS
+              </Button>
+            </div>
           </div>
         </section>
       </main>
