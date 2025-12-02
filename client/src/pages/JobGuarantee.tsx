@@ -41,7 +41,7 @@ export default function JobGuarantee() {
           <div className="container mx-auto px-4">
             <div className="text-left mb-12">
               <h2 
-                className="text-3xl font-bold mb-4 text-foreground"
+                className="text-3xl font-bold mb-4 text-foreground text-center"
                 data-testid="text-stats-title"
               >
                 Does the Job Guarantee Deliver Results You Can Count On?
