@@ -144,7 +144,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                     <img 
                       src={logoSrc} 
                       alt={`${award.source} - ${award.name}`}
-                      className="h-12 md:h-16 w-auto object-contain"
+                      className="h-12 md:h-16 w-auto object-contain pl-[40px] pr-[40px]"
                     />
                   ) : (
                     <div className="flex flex-col items-center text-center">
