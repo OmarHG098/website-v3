@@ -266,52 +266,45 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
 function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
   return (
     <section 
-      className="py-16 md:py-24 bg-muted/30"
+      className="py-12 bg-muted/30"
       data-testid="section-hyperpersonalized"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+        <div className="grid md:grid-cols-5 gap-8 items-center lg:px-12">
+          <div className="order-2 md:order-1 md:col-span-2">
+            <img 
+              src={communityImage} 
+              alt="4Geeks Academy community members collaborating on a project" 
+              className="w-full"
+              data-testid="img-community"
+            />
+          </div>
+          
+          <div className="order-1 md:order-2 md:col-span-3">
             <h2 
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
+              className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
               data-testid="text-hyperpersonalized-title"
             >
               {data.title}
             </h2>
-            <p className="text-lg mb-8">
+            <p className="text-base mb-6">
               {data.subtitle}
             </p>
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               {data.features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="flex gap-4 items-start"
+                  className="flex gap-3 items-start"
                   data-testid={`feature-hyperpersonalized-${index}`}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <IconCheck className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
+                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  <p className="text-sm text-foreground">
+                    <span className="font-semibold">{feature.title}:</span> {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
-          </div>
-          
-          <div className="order-first md:order-last">
-            <img 
-              src={communityImage} 
-              alt="4Geeks Academy community members collaborating on a project" 
-              className="w-full rounded-lg"
-              data-testid="img-community"
-            />
           </div>
         </div>
       </div>
