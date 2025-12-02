@@ -541,7 +541,7 @@ export default function JobGuarantee() {
               {/* Mobile Timeline - Vertical Zigzag */}
               <div className="md:hidden flex flex-col items-center w-[300px] mx-auto">
                 {/* Step 1 - Icon Left, Text Right */}
-                <div className="w-full relative">
+                <div className="w-full relative -mt-2">
                   {/* Dotted line to step 2 */}
                   <svg 
                     className="absolute left-[90px] top-[80px] w-[150px] h-[69px]"
@@ -569,7 +569,7 @@ export default function JobGuarantee() {
                 </div>
 
                 {/* Step 2 - Text Left, Icon Right */}
-                <div className="w-full relative mt-4">
+                <div className="w-full relative -mt-2">
                   {/* Dotted line to step 3 */}
                   <svg 
                     className="absolute right-[90px] top-[80px] w-[150px] h-[69px]"
@@ -597,7 +597,7 @@ export default function JobGuarantee() {
                 </div>
 
                 {/* Step 3 - Icon Left, Text Right */}
-                <div className="w-full relative mt-4">
+                <div className="w-full relative -mt-2">
                   <div className="flex items-center justify-between relative z-10">
                     <div className="w-[100px] h-[100px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center flex-shrink-0">
                       <FolderCheck width={45} height={45} color="#1a1a1a" />
