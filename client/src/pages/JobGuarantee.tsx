@@ -338,7 +338,7 @@ export default function JobGuarantee() {
                 >
                   {/* Curved line from Step 1 (right edge) to Step 2 (top-left edge) */}
                   <path
-                    d="M 135 55 C 160 30, 200 130, 225 120"
+                    d="M 135 55 C 165 8, 210 170, 225 120"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
