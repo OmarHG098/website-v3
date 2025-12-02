@@ -33,7 +33,7 @@ export default function JobGuarantee() {
         text: "Request a syllabus",
         url: "#syllabus",
         variant: "outline",
-        icon: "FileDownload",
+        icon: "Download",
       },
     ],
   };
