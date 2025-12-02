@@ -128,11 +128,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
             </div>
           </div>
           
-          <div className="md:col-span-2 flex w-full md:w-auto">
+          <div className="md:col-span-2 flex justify-center w-full md:w-auto">
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-full max-h-[400px] md:max-h-none md:max-w-[400px]"
+              className="w-[280px] md:w-full md:max-w-[400px]"
               ratio="9:12"
             />
           </div>
