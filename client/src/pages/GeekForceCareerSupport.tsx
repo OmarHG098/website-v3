@@ -58,7 +58,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
             <VideoPlayer 
               videoId={data.videoId} 
               title={data.videoTitle}
-              className="w-full max-w-xs"
+              className="w-full max-w-[400px]"
               ratio="9:12"
             />
           </div>
