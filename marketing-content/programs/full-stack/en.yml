@@ -85,10 +85,6 @@ sections:
     highlight:
       title: "Maximize Your Learning Potential with Rigobot"
       description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
-      bullets:
-        - text: "Rigobot, our AI coding assistant, gives tailored feedback when you need it"
-        - text: "7:1 student-teacher ratio plus unlimited 1:1 sessions"
-        - text: "Automated tests for immediate feedback on every exercise"
       cta:
         text: "Start learning now!"
         url: "/apply"

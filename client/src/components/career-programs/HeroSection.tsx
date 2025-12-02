@@ -5,16 +5,25 @@ import * as TablerIcons from "@tabler/icons-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
 import type { ComponentType } from "react";
+import { useTranslation } from "react-i18next";
 import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
+import forbesLogo from "@assets/forbes-logo-award_1764709625651.webp";
+import fortuneLogo from "@assets/fortune-logo_1764709618095.webp";
+import newsweekLogoEn from "@assets/newsweek_1764709608255.webp";
+import newsweekLogoEs from "@assets/newsweek-es_1764709602003.webp";
+import courseReportLogo from "@assets/Course-Report-Badge-2025_1764709632231.webp";
 
 interface HeroSectionProps {
   data: HeroSectionType;
 }
 
 export function HeroSection({ data }: HeroSectionProps) {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language === 'es';
+
   const getIcon = (iconName: string) => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number }>>;
     const IconComponent = icons[`Icon${iconName}`];
@@ -22,6 +31,13 @@ export function HeroSection({ data }: HeroSectionProps) {
   };
 
   const avatars = [avatar1, avatar2, avatar3, avatar4];
+
+  const awardLogos: Record<string, string> = {
+    "Forbes": forbesLogo,
+    "Fortune": fortuneLogo,
+    "Newsweek": isSpanish ? newsweekLogoEs : newsweekLogoEn,
+    "Course Report": courseReportLogo,
+  };
 
   return (
     <section 
@@ -113,23 +129,36 @@ export function HeroSection({ data }: HeroSectionProps) {
 
         {data.award_badges && data.award_badges.length > 0 && (
           <div 
-            className="flex flex-wrap justify-center items-center gap-6 pt-8 border-t border-border"
+            className="flex flex-wrap justify-center items-center gap-8 pt-8 border-t border-border"
             data-testid="award-badges"
           >
-            {data.award_badges.map((award, index) => (
-              <div 
-                key={index}
-                className="flex flex-col items-center text-center"
-                data-testid={`award-badge-${index}`}
-              >
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                  {award.source} {award.year && `${award.year}`}
-                </span>
-                <span className="text-sm font-medium text-foreground mt-0.5">
-                  {award.name}
-                </span>
-              </div>
-            ))}
+            {data.award_badges.map((award, index) => {
+              const logoSrc = awardLogos[award.source];
+              return (
+                <div 
+                  key={index}
+                  className="flex items-center justify-center transition-transform duration-200 hover:scale-110"
+                  data-testid={`award-badge-${index}`}
+                >
+                  {logoSrc ? (
+                    <img 
+                      src={logoSrc} 
+                      alt={`${award.source} - ${award.name}`}
+                      className="h-12 md:h-16 w-auto object-contain"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center text-center">
+                      <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                        {award.source} {award.year && `${award.year}`}
+                      </span>
+                      <span className="text-sm font-medium text-foreground mt-0.5">
+                        {award.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
