@@ -116,7 +116,7 @@ export default function JobGuarantee() {
           <div className="absolute right-0 top-1/3 -translate-y-1/2">
             <div className="w-40 h-40 md:w-64 md:h-64 rounded-full bg-[#FFF1D1] translate-x-1/4" />
           </div>
-          <div className="absolute right-16 md:right-24 bottom-16 md:bottom-20">
+          <div className="absolute right-16 md:right-24 bottom-28 md:bottom-32">
             <div className="w-5 h-5 rounded-full bg-[#FFB718]" />
           </div>
 
