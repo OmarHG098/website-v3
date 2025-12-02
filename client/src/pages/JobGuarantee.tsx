@@ -192,9 +192,6 @@ export default function JobGuarantee() {
                   <p className="text-muted-foreground mb-4">
                     Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
                   </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Online, face-to-face and flexible
-                  </p>
                   <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-fullstack">
                     Read More
                   </Button>
@@ -214,9 +211,6 @@ export default function JobGuarantee() {
                   <p className="text-muted-foreground mb-4">
                     Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
                   </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Online, face-to-face and flexible
-                  </p>
                   <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-datascience">
                     Read More
                   </Button>
@@ -235,9 +229,6 @@ export default function JobGuarantee() {
                   </div>
                   <p className="text-muted-foreground mb-4">
                     Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Online, face-to-face and flexible
                   </p>
                   <Button variant="link" className="p-0 h-auto text-primary" data-testid="button-read-more-cybersecurity">
                     Read More
