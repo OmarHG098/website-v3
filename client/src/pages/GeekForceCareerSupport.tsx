@@ -18,7 +18,7 @@ const heroData = {
 
 const unlimitedSupportData = {
   title: "Unlimited Career Support – Always Ahead of Job Market Trends",
-  subtitle: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
+  description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
   features: [
     "Receive tailored guidance aligned with your goals, context, and challenges.",
     "Meet mentors online or in-person whenever you need support—unlimited, for life.",
@@ -83,11 +83,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
 function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }) {
   return (
     <section 
-      className="py-16 md:py-24 bg-background"
+      className="py-12 bg-amber-50"
       data-testid="section-unlimited-support"
     >
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-8 items-center px-12">
+        <div className="grid md:grid-cols-5 gap-8 items-center lg:px-12">
           <div className="order-2 md:order-1 md:col-span-2">
             <img 
               src={careerSupportImage} 
@@ -104,8 +104,8 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
             >
               {data.title}
             </h2>
-            <p className="text-base text-muted-foreground mb-6">
-              {data.subtitle}
+            <p className="text-base mb-6">
+              {data.description}
             </p>
             
             <div className="space-y-4">
@@ -115,7 +115,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
                   className="flex gap-3 items-start"
                   data-testid={`feature-unlimited-${index}`}
                 >
-                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0" />
                   <p className="text-sm text-foreground">
                     {feature}
                   </p>
