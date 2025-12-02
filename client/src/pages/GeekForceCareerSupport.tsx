@@ -32,7 +32,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
     >
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-center">
+          <div className="flex flex-col items-center">
             <p className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 text-foreground">
               {data.welcomeText} <span className="text-primary">{data.brandName}</span>:
             </p>
@@ -49,11 +49,11 @@ function HeroSection({ data }: { data: typeof heroData }) {
               {data.subtitle}
             </p>
             
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl">
               {data.description}
             </p>
             
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4">
               {data.ctaButtons.map((btn, index) => (
                 <Button
                   key={index}
