@@ -9,11 +9,12 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ videoId, title, className = "", vertical = false }: VideoPlayerProps) {
+
   if (vertical) {
     return (
       <div 
         className={`rounded-lg overflow-hidden shadow-lg ${className}`}
-        style={{ aspectRatio: '9/16' }}
+        style={{ aspectRatio: '9/12' }}
         data-testid="video-player"
       >
         <iframe
