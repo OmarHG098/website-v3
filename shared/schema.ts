@@ -31,6 +31,12 @@ export const trustBarSchema = z.object({
   trusted_text: z.string(),
 });
 
+export const awardBadgeSchema = z.object({
+  name: z.string(),
+  source: z.string(),
+  year: z.string().optional(),
+});
+
 export const heroSectionSchema = z.object({
   type: z.literal("hero"),
   badge: z.string().optional(),
@@ -38,17 +44,7 @@ export const heroSectionSchema = z.object({
   subtitle: z.string().optional(),
   cta_buttons: z.array(ctaButtonSchema),
   trust_bar: trustBarSchema.optional(),
-});
-
-export const pressMentionLogoSchema = z.object({
-  name: z.string(),
-  src: z.string(),
-});
-
-export const pressMentionsSectionSchema = z.object({
-  type: z.literal("press_mentions"),
-  title: z.string().optional(),
-  logos: z.array(pressMentionLogoSchema),
+  award_badges: z.array(awardBadgeSchema).optional(),
 });
 
 export const cardItemSchema = z.object({
@@ -178,7 +174,6 @@ export const footerSectionSchema = z.object({
 
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
-  pressMentionsSectionSchema,
   programOverviewSectionSchema,
   aiLearningSectionSchema,
   mentorshipSectionSchema,
@@ -203,9 +198,8 @@ export const careerProgramSchema = z.object({
 
 export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
+export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
-export type PressMentionLogo = z.infer<typeof pressMentionLogoSchema>;
-export type PressMentionsSection = z.infer<typeof pressMentionsSectionSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type ProgramSpec = z.infer<typeof programSpecSchema>;
 export type ProgramOverviewSection = z.infer<typeof programOverviewSectionSchema>;

@@ -26,18 +26,19 @@ sections:
         url: "/programa/full-stack"
         variant: "outline"
         icon: "Download"
-
-  - type: press_mentions
-    title: "Destacado En"
-    logos:
-      - name: "Forbes"
-        src: "forbes"
-      - name: "Fortune"
-        src: "fortune"
-      - name: "Newsweek"
-        src: "newsweek-es"
-      - name: "Course Report"
-        src: "course-report"
+    award_badges:
+      - name: "Mejor Bootcamp de Código"
+        source: "Forbes"
+        year: "2024"
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Bootcamp de Código"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Mejor Bootcamp de Código"
+        source: "Course Report"
+        year: "2025"
 
   - type: program_overview
     title: "Descripción del Programa"
