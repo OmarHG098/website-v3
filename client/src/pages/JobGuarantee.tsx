@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import type { HeroSection as HeroSectionType } from "@shared/schema";
-import { IconBriefcase, IconSchool, IconTrendingUp } from "@tabler/icons-react";
 import FeatureCard from "@/components/job-guarantee/FeatureCard";
+import Briefcase from "@/components/CustomIcons/Briefcase";
+import Graduation from "@/components/CustomIcons/Graduation";
+import GrowthChart from "@/components/CustomIcons/GrowthChart";
 
 export default function JobGuarantee() {
   const heroData: HeroSectionType = {
@@ -39,7 +41,7 @@ export default function JobGuarantee() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex justify-center mb-6">
-                <IconTrendingUp size={120} className="text-primary" />
+                <GrowthChart width="120" height="125" />
               </div>
               <h2 
                 className="text-2xl md:text-3xl font-bold mb-4 text-foreground"
@@ -60,7 +62,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-0">
                   <div className="mb-4">
-                    <IconBriefcase size={70} className="text-primary" />
+                    <Briefcase width="70" height="63" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     84%
@@ -72,7 +74,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-1">
                   <div className="mb-4">
-                    <IconSchool size={70} className="text-primary" />
+                    <Graduation width="70" height="60" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     3-6<span className="text-2xl md:text-3xl ml-1">months</span>
@@ -84,7 +86,7 @@ export default function JobGuarantee() {
               <FeatureCard>
                 <div data-testid="stat-card-2">
                   <div className="mb-4">
-                    <IconTrendingUp size={70} className="text-primary" />
+                    <GrowthChart width="70" height="73" />
                   </div>
                   <div className="text-4xl md:text-5xl font-bold text-foreground mb-1">
                     55%
