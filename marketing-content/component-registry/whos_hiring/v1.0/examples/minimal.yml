@@ -1,5 +1,5 @@
-name: "Minimal - Title Only"
-description: "Minimal configuration with just title and logos (no subtitle or description)"
+name: "Minimal"
+description: "Simplified configuration with just title and a few logos (no subtitle or description)"
 
 yaml: |
   - type: whos_hiring

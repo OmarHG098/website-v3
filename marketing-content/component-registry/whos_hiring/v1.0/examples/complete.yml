@@ -1,5 +1,5 @@
-name: "Full with Description"
-description: "Complete configuration with title, subtitle, description, and all 24 company logos"
+name: "Complete (24 logos)"
+description: "Full configuration showcasing all 24 hiring companies - recommended starting point"
 
 yaml: |
   - type: whos_hiring
