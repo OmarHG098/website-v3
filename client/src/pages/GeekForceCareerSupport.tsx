@@ -457,15 +457,15 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
             <h2 
-              className="text-2xl md:text-3xl font-bold mb-2 text-foreground"
+              className="text-3xl md:text-4xl font-bold mb-3"
               data-testid="text-whos-hiring-title"
             >
               {data.title}
             </h2>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-lg md:text-xl mb-4">
               {data.subtitle}
             </p>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-base md:text-lg max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>
