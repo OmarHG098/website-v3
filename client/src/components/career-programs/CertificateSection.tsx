@@ -71,7 +71,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             </p>
             
             <ul className="space-y-4">
-              {data.benefits.map((benefit, index) => (
+              {(data.benefits || []).map((benefit, index) => (
                 <li 
                   key={index} 
                   className="flex items-start gap-3"

@@ -79,15 +79,17 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
 
         <div className="relative">
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToPrevious}
-              className="flex-shrink-0"
-              data-testid="button-carousel-prev"
-            >
-              <IconChevronLeft className="h-4 w-4" />
-            </Button>
+            {totalPages > 1 && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToPrevious}
+                className="flex-shrink-0"
+                data-testid="button-carousel-prev"
+              >
+                <IconChevronLeft className="h-4 w-4" />
+              </Button>
+            )}
 
             <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
               {currentLogos.map((logo, index) => (
@@ -106,15 +108,17 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
               ))}
             </div>
 
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToNext}
-              className="flex-shrink-0"
-              data-testid="button-carousel-next"
-            >
-              <IconChevronRight className="h-4 w-4" />
-            </Button>
+            {totalPages > 1 && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToNext}
+                className="flex-shrink-0"
+                data-testid="button-carousel-next"
+              >
+                <IconChevronRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
 
           {totalPages > 1 && (
