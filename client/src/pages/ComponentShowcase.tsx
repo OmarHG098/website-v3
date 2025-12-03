@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearch, useParams, Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { 
-  IconChevronDown, 
   IconCode, 
   IconEye, 
   IconArrowLeft, 
@@ -132,7 +131,7 @@ function ComponentCard({
   const { toast } = useToast();
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
-  const [showYaml, setShowYaml] = useState(false);
+  const [showYaml, setShowYaml] = useState(true);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
   const [yamlContent, setYamlContent] = useState('');
@@ -323,80 +322,59 @@ function ComponentCard({
               </div>
               <p className="text-sm text-muted-foreground">{schema.description}</p>
             </div>
-            <div className="flex gap-2">
-              <Button
-                variant={showYaml ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowYaml(!showYaml)}
-                data-testid={`button-yaml-${componentType}`}
-              >
-                <IconCode className="w-4 h-4 mr-1" />
-                YAML
-              </Button>
-              <Button
-                variant={showPreview ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowPreview(!showPreview)}
-                data-testid={`button-preview-${componentType}`}
-              >
-                <IconEye className="w-4 h-4 mr-1" />
-                Preview
-              </Button>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Version:</span>
-              <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {componentInfo.versions.map(v => (
-                    <SelectItem key={v.version} value={v.version}>
-                      {v.version}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="__add_new__" className="text-primary">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new version
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Example:</span>
-              <Select 
-                value={selectedExample || '__default__'} 
-                onValueChange={handleExampleChange}
-              >
-                <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
-                  <SelectValue placeholder="Default" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__default__">Default (from schema)</SelectItem>
-                  {examples.map(ex => (
-                    <SelectItem key={ex.name} value={ex.name}>
-                      <div className="flex flex-col">
-                        <span>{ex.name}</span>
-                        {ex.description && (
-                          <span className="text-xs text-muted-foreground">{ex.description}</span>
-                        )}
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Version:</span>
+                <Select value={selectedVersion} onValueChange={handleVersionChange}>
+                  <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {componentInfo.versions.map(v => (
+                      <SelectItem key={v.version} value={v.version}>
+                        {v.version}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value="__add_new__" className="text-primary">
+                      <div className="flex items-center gap-1">
+                        <IconPlus className="w-3 h-3" />
+                        Add new version
                       </div>
                     </SelectItem>
-                  ))}
-                  <SelectItem value="__add_new__" className="text-primary">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new example
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Example:</span>
+                <Select 
+                  value={selectedExample || '__default__'} 
+                  onValueChange={handleExampleChange}
+                >
+                  <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
+                    <SelectValue placeholder="Default" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__default__">Default (from schema)</SelectItem>
+                    {examples.map(ex => (
+                      <SelectItem key={ex.name} value={ex.name}>
+                        <div className="flex flex-col">
+                          <span>{ex.name}</span>
+                          {ex.description && (
+                            <span className="text-xs text-muted-foreground">{ex.description}</span>
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                    <SelectItem value="__add_new__" className="text-primary">
+                      <div className="flex items-center gap-1">
+                        <IconPlus className="w-3 h-3" />
+                        Add new example
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </CardHeader>
