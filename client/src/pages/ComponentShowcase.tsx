@@ -10,7 +10,8 @@ import {
   IconRefresh, 
   IconAlertTriangle,
   IconPlus,
-  IconFolder
+  IconFolder,
+  IconInfoCircle
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +34,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
@@ -358,12 +364,7 @@ function ComponentCard({
                     <SelectItem value="__default__">Default (from schema)</SelectItem>
                     {examples.map(ex => (
                       <SelectItem key={ex.name} value={ex.name}>
-                        <div className="flex flex-col">
-                          <span>{ex.name}</span>
-                          {ex.description && (
-                            <span className="text-xs text-muted-foreground">{ex.description}</span>
-                          )}
-                        </div>
+                        {ex.name}
                       </SelectItem>
                     ))}
                     <SelectItem value="__add_new__" className="text-primary">
@@ -374,6 +375,28 @@ function ComponentCard({
                     </SelectItem>
                   </SelectContent>
                 </Select>
+                {(() => {
+                  const currentExample = examples.find(ex => ex.name === selectedExample);
+                  if (!currentExample?.description) return null;
+                  return (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          data-testid={`button-example-info-${componentType}`}
+                        >
+                          <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-64 text-sm">
+                        <p className="font-medium mb-1">{currentExample.name}</p>
+                        <p className="text-muted-foreground">{currentExample.description}</p>
+                      </PopoverContent>
+                    </Popover>
+                  );
+                })()}
                 <Button
                   variant="ghost"
                   size="icon"
