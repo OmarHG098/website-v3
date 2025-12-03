@@ -47,6 +47,12 @@ export const heroSectionSchema = z.object({
   award_badges: z.array(awardBadgeSchema).optional(),
 });
 
+export const cardItemSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
+
 export const chatExampleSchema = z.object({
   bot_name: z.string(),
   bot_status: z.string(),
@@ -232,6 +238,7 @@ export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
+export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;

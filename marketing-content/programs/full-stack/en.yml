@@ -71,6 +71,20 @@ sections:
       - title: "Agile Methodologies"
         description: "Understand Scrum, Kanban, and other agile frameworks used by development teams worldwide. Learn sprint planning, daily standups, retrospectives, and how to collaborate effectively in modern software development environments."
 
+  - type: projects
+    title: "Learn by Building Real-Life Projects"
+    subtitle: "Apply your skills to hands-on projects that simulate real-world development scenarios."
+    items:
+      - title: "Star Wars Blog"
+        description: "Build a full-stack blog application using React and Flask. Practice database modeling, API design, and user authentication while working with the Star Wars API."
+        image: "star-wars"
+      - title: "Authentication System"
+        description: "Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management."
+        image: "authentication"
+      - title: "Full-Stack Final Project"
+        description: "Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations."
+        image: "final-project"
+
   - type: ai_learning
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"

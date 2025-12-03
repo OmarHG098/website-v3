@@ -24,6 +24,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <HeroSection key={index} data={section} />;
           case "syllabus":
             return <SyllabusSection key={index} data={section} />;
+          case "projects":
+            return <ProjectsSection key={index} data={section} />;
           case "ai_learning":
             return <AILearningSection key={index} data={section} />;
           case "mentorship":
