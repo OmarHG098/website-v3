@@ -215,7 +215,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-16"
+      className="py-16 bg-primary/5"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
