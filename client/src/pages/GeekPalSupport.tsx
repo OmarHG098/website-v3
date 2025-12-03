@@ -165,15 +165,15 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
             >
               <div className="flex flex-col items-start gap-2">
                 <feature.icon 
-                  width="48px" 
-                  height="48px" 
+                  width="68px" 
+                  height="68px" 
                   color={feature.iconColor}
                 />
                 <div>
-                  <h3 className="text-base font-semibold text-foreground">
+                  <h3 className="text-lg font-semibold text-foreground">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-md">
                     {feature.description}
                   </p>
                 </div>
