@@ -9,23 +9,6 @@ when_to_use: |
   or any content that benefits from image/text pairing. Great for breaking up
   long-form content and creating visual interest.
 
-default_example: |
-  - type: two_column
-    proportions: [5, 7]
-    background: "bg-muted/30"
-    alignment: "center"
-    gap: "12"
-    reverse_on_mobile: true
-    left:
-      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
-      image_alt: "Team collaborating"
-      justify: "center"
-    right:
-      heading: "Why Choose Us"
-      sub_heading: "Your success is our priority"
-      description: "We provide comprehensive support for your learning journey from day one to career success. Our personalized approach ensures you get the guidance you need."
-      font_size: "base"
-
 props:
   proportions:
     type: array
