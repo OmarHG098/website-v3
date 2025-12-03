@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IconChevronLeft, IconChevronRight, IconClock, IconDownload } from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight, IconClock } from "@tabler/icons-react";
 import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
 import starWarsImg from "@assets/star-wars_1764729369149.webp";
@@ -128,17 +128,6 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                       {currentProject.difficulty}
                     </Badge>
                   )}
-                  
-                  <div className="flex items-center gap-2 ml-auto">
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      className="text-muted-foreground"
-                      data-testid="button-project-download"
-                    >
-                      <IconDownload size={20} />
-                    </Button>
-                  </div>
                 </div>
               </div>
             </div>
