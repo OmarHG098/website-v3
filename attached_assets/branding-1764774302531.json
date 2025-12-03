@@ -1,0 +1,108 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Lato",
+      "role": "body"
+    },
+    {
+      "family": "Segoe UI",
+      "role": "body"
+    },
+    {
+      "family": "Roboto",
+      "role": "body"
+    },
+    {
+      "family": "Helvetica",
+      "role": "body"
+    },
+    {
+      "family": "Arial",
+      "role": "body"
+    }
+  ],
+  "colors": {
+    "primary": "#0084FF",
+    "accent": "#0097CD",
+    "background": "#FFFFFF",
+    "textPrimary": "#000000",
+    "link": "#0097CD"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Lato",
+      "heading": "Lato"
+    },
+    "fontStacks": {
+      "heading": [
+        "Lato"
+      ],
+      "body": [
+        "Lato"
+      ],
+      "paragraph": [
+        "Lato"
+      ]
+    },
+    "fontSizes": {
+      "h1": "16px",
+      "h2": "14px",
+      "body": "16px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "5px"
+  },
+  "components": {
+    "input": {
+      "borderColor": "#CCCCCC",
+      "borderRadius": "5px"
+    },
+    "buttonPrimary": {
+      "background": "#0084FF",
+      "textColor": "#FFFFFF",
+      "borderRadius": "4px",
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "File saved at: attached_assets/logo.svg",
+    "favicon": "File saved at: attached_assets/favicon.ico",
+    "ogImage": "File saved at: attached_assets/ogImage.png"
+  },
+  "__framework_hints": [],
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "The logo matches the brand name '4Geeks' and is located in the header, linking to the homepage, which indicates it is the main brand logo.",
+    "confidence": 0.95
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 0,
+      "text": "Get Started",
+      "reasoning": "The button 'Get Started' has a vibrant blue background (#0084FF), which is the brand color and indicates a strong call-to-action. It is action-oriented and visually prominent, making it the primary CTA."
+    },
+    "secondary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "There are no other buttons present to classify as secondary, as the only button available shares the same color group as the primary button."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "high",
+    "targetAudience": "tech-savvy individuals interested in coding and AI."
+  },
+  "designSystem": {
+    "framework": "chakra",
+    "componentLibrary": null
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.95,
+    "overall": 0.95
+  }
+}
