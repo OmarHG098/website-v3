@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import SolidCard from "@/components/SolidCard";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { HeroSection } from "@/components/career-programs/HeroSection";
+import { TwoColumn } from "@/components/TwoColumn";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -45,19 +46,31 @@ const statsData = {
   ],
 };
 
-const eligibleData = {
-  title: "Who's Eligible?",
-  subtitle: "You'll qualify for the Job Guarantee if you:",
-  requirements: [
-    "Have U.S. work authorization",
-    "Pass our logic test",
-    "Complete all coursework and projects",
-    "Follow our career team's guidance",
-  ],
-  note: "*Conditions apply depending on your country or U.S. state",
-  buttonText: "Apply",
-  image: eligibleImage,
-  imageAlt: "Woman working on laptop",
+const eligibleData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [6, 6],
+  alignment: "center",
+  left: {
+    heading: "Who's Eligible?",
+    sub_heading: "You'll qualify for the Job Guarantee if you:",
+    bullets: [
+      { text: "Have U.S. work authorization" },
+      { text: "Pass our logic test" },
+      { text: "Complete all coursework and projects" },
+      { text: "Follow our career team's guidance" },
+    ],
+    description: "*Conditions apply depending on your country or U.S. state",
+    button: {
+      text: "Apply",
+      url: "#apply",
+      variant: "primary",
+    },
+  },
+  right: {
+    image: eligibleImage,
+    image_alt: "Woman working on laptop",
+    justify: "center",
+  },
 };
 
 const programsData = {
@@ -235,54 +248,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
   );
 }
 
-function EligibleSection({ data }: { data: typeof eligibleData }) {
-  return (
-    <section 
-      className="py-14 bg-background"
-      data-testid="section-eligible"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-                data-testid="text-eligible-title"
-              >
-                {data.title}
-              </h2>
-              <p className="text-xl text-muted-foreground mb-6">
-                {data.subtitle}
-              </p>
-              <ul className="space-y-4 mb-6">
-                {data.requirements.map((req, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                    <span className="text-foreground text-lg">{req}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-md text-muted-foreground mb-8">
-                {data.note}
-              </p>
-              <Button size="lg" data-testid="button-apply-eligible" className="text-md px-6">
-                {data.buttonText}
-              </Button>
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src={data.image} 
-                alt={data.imageAlt} 
-                className="max-w-[280px] md:max-w-full h-auto rounded-md"
-                data-testid="img-eligible"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function ProgramsSection({ data }: { data: typeof programsData }) {
   const iconMap = {
@@ -531,7 +496,7 @@ export default function JobGuarantee() {
       <main>
         <HeroSection data={heroData} />
         <StatsSection data={statsData} />
-        <EligibleSection data={eligibleData} />
+        <TwoColumn data={eligibleData} />
         <ProgramsSection data={programsData} />
         <ConfidenceSection data={confidenceData} />
         <RefundSection data={refundData} />

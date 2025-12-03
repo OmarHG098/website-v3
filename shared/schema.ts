@@ -157,6 +157,41 @@ export const footerSectionSchema = z.object({
   copyright_text: z.string(),
 });
 
+// TwoColumn Section Types
+export const twoColumnBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+  heading: z.string().optional(),
+});
+
+export const twoColumnColumnSchema = z.object({
+  video: z.string().optional(),
+  video_height: z.string().optional(),
+  video_width: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  heading: z.string().optional(),
+  sub_heading: z.string().optional(),
+  description: z.string().optional(),
+  html_content: z.string().optional(),
+  button: ctaButtonSchema.optional(),
+  bullets: z.array(twoColumnBulletSchema).optional(),
+  bullet_icon: z.string().optional(),
+  gap: z.string().optional(),
+  justify: z.enum(["start", "center", "end"]).optional(),
+});
+
+export const twoColumnSectionSchema = z.object({
+  type: z.literal("two_column"),
+  proportions: z.tuple([z.number(), z.number()]).optional(),
+  background: z.string().optional(),
+  alignment: z.enum(["start", "center", "end"]).optional(),
+  container_style: z.record(z.string(), z.string()).optional(),
+  left: twoColumnColumnSchema.optional(),
+  right: twoColumnColumnSchema.optional(),
+  reverse_on_mobile: z.boolean().optional(),
+});
+
 export const syllabusModuleSchema = z.object({
   title: z.string(),
   description: z.string(),
@@ -198,6 +233,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
   testimonialsSectionSchema,
   footerCtaSectionSchema,
   footerSectionSchema,
+  twoColumnSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -267,6 +303,9 @@ export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
 export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
 export type ProjectItem = z.infer<typeof projectItemSchema>;
 export type ProjectsSection = z.infer<typeof projectsSectionSchema>;
+export type TwoColumnBullet = z.infer<typeof twoColumnBulletSchema>;
+export type TwoColumnColumn = z.infer<typeof twoColumnColumnSchema>;
+export type TwoColumnSection = z.infer<typeof twoColumnSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
