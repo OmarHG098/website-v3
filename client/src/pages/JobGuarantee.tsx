@@ -208,14 +208,14 @@ const faqData: FAQSectionType = {
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="90" height="81" />,
-    graduation: <Graduation width="90" height="77" />,
-    growth: <GrowthChart width="90" height="94" />,
+    briefcase: <Briefcase width="60" height="54" />,
+    graduation: <Graduation width="60" height="51" />,
+    growth: <GrowthChart width="60" height="63" />,
   };
 
   return (
     <section 
-      className="py-16 bg-primary/5"
+      className="py-16"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
