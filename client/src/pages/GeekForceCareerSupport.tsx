@@ -706,21 +706,21 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
       
       <div className="p-3 flex flex-col flex-1 overflow-hidden">
         <div className="flex items-center justify-between mb-1 gap-2">
-          <h4 className="font-bold text-foreground text-sm leading-tight">{testimonial.name}</h4>
+          <h4 className="font-bold text-foreground text-base leading-tight">{testimonial.name}</h4>
           {testimonial.status === "Graduated" && (
             <div className="flex items-center gap-1 text-muted-foreground flex-shrink-0">
-              <IconSchool className="w-3 h-3" />
-              <span className="text-xs">Graduated</span>
+              <IconSchool className="w-4 h-4" />
+              <span className="text-sm">Graduated</span>
             </div>
           )}
         </div>
         
         <div className="flex items-center gap-1.5 mb-1">
-          <span className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`} />
-          <span className="text-xs text-foreground">{testimonial.country.name}</span>
+          <span className={`flag flag-sm flag-country-${testimonial.country.iso.toLowerCase()}`} />
+          <span className="text-sm text-foreground">{testimonial.country.name}</span>
         </div>
         
-        <p className="text-xs text-muted-foreground mb-2">
+        <p className="text-sm text-muted-foreground mb-2">
           Contributor: {testimonial.contributor}
         </p>
         
