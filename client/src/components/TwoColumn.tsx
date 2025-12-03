@@ -49,6 +49,15 @@ const getJustifyClass = (justify?: "start" | "center" | "end"): string => {
   }
 };
 
+const getResponsiveJustifyClass = (justify?: "start" | "center" | "end"): string => {
+  switch (justify) {
+    case "start": return "justify-center lg:justify-start";
+    case "end": return "justify-center lg:justify-end";
+    case "center":
+    default: return "justify-center";
+  }
+};
+
 const getGapClass = (gap?: string): string => {
   const gapMap: Record<string, string> = {
     "1": "gap-1",
@@ -66,10 +75,10 @@ const getGapClass = (gap?: string): string => {
 
 const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "center": return "items-center text-center";
-    case "end": return "items-end text-right";
+    case "center": return "lg:items-center lg:text-center";
+    case "end": return "lg:items-end lg:text-right";
     case "start": 
-    default: return "items-start text-left";
+    default: return "lg:items-start lg:text-left";
   }
 };
 
@@ -79,10 +88,10 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   const itemsAlignClass = getItemsAlignClass(column.justify);
 
   return (
-    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
+    <div className={`flex flex-col ${gapClass} items-center ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className="text-3xl md:text-4xl font-bold text-foreground"
+          className="text-3xl md:text-4xl font-bold text-foreground text-center lg:text-left"
           data-testid="text-two-column-heading"
         >
           {column.heading}
@@ -91,7 +100,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className="text-xl text-muted-foreground"
+          className="text-xl text-muted-foreground text-center lg:text-left"
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
@@ -100,7 +109,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.description && (
         <p 
-          className="text-muted-foreground leading-relaxed"
+          className="text-muted-foreground leading-relaxed text-left"
           data-testid="text-two-column-description"
         >
           {column.description}
@@ -150,15 +159,14 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       )}
       
       {column.image && (
-        <div className={`flex ${getJustifyClass(column.justify)}`}>
+        <div className={`flex ${getResponsiveJustifyClass(column.justify)}`}>
           <img 
             src={column.image} 
             alt={column.image_alt || "Section image"}
-            className="rounded-md"
+            className="rounded-md w-full max-w-md lg:max-w-none"
             style={{
               height: column.image_height || "auto",
-              width: column.image_width || "100%",
-              maxWidth: column.image_width ? undefined : "280px",
+              width: column.image_width || undefined,
             }}
             loading="lazy"
             data-testid="img-two-column"
