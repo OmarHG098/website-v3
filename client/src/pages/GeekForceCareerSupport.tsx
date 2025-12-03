@@ -5,6 +5,8 @@ import SolidCard from "@/components/SolidCard";
 import { Card } from "@/components/ui/card";
 import { IconCheck, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import Marquee from "react-fast-marquee";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -12,6 +14,19 @@ import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 import communityImage from "@assets/community_1764717588840.png";
+
+import imgLoretta from "@assets/ttaLoretta_1764725322100.jpeg";
+import imgAkers from "@assets/Akers_1764725327796.jpeg";
+import imgMaiLinh from "@assets/MaiLinh_1764725334980.png";
+import imgCoimbra from "@assets/coimbra_1764725341501.png";
+import imgJean from "@assets/JeanSt.Cloud_1764725356935.jpeg";
+import imgAlexandra from "@assets/AlexandraEspinoza_1764725386161.jpeg";
+import imgGabriel from "@assets/GabrielSalazar_1764725392872.jpeg";
+import imgLaura from "@assets/Laura_1764725397398.jpeg";
+import imgLeandro from "@assets/Leandro_1764725403142.jpeg";
+import imgMelanie from "@assets/MelamnieGalaretto_1764725408397.jpeg";
+import imgNatia from "@assets/NatiaLombardo_1764725413363.jpeg";
+import imgLuis from "@assets/LuisLarraburo_1764725418057.jpeg";
 
 import logoMicrosoft from "@assets/microsoft_1764719829995.png";
 import logoGoogleDev from "@assets/google-developers_1764719904190.png";
@@ -98,6 +113,135 @@ const statsData = {
     { value: "3-6", valueSuffix: "months", label: "Average time to get hired", sublabel: "after graduation", icon: "graduation" as const },
     { value: "55%", label: "Salary Increase", sublabel: "higher at new job", icon: "growth" as const },
   ],
+};
+
+interface Testimonial {
+  name: string;
+  img: string;
+  status: string;
+  country: {
+    iso: string;
+    name: string;
+  };
+  contributor: string;
+  description: string;
+  achievement?: string;
+}
+
+const testimonialsData: {
+  title: string;
+  testimonials: Testimonial[];
+} = {
+  title: "Success Stories from Our Graduates",
+  testimonials: [
+    {
+      name: "Loretta Thompson",
+      img: imgLoretta,
+      status: "Graduated",
+      country: { iso: "us", name: "United States of America" },
+      contributor: "United Way Miami",
+      description: "Loretta joined in 2022 and graduated in 2023. She already found a job within the next few months and has fulfilled the whole circle of skills+job that we all want to complete!",
+      achievement: "She got a 45% increase in her salary"
+    },
+    {
+      name: "Rich Akers",
+      img: imgAkers,
+      status: "Graduated",
+      country: { iso: "us", name: "United States of America" },
+      contributor: "Clark University",
+      description: "Richard is a great developer that just transitioned from a different background and is now working as a web dev in the tech field.",
+      achievement: "He got a 30% increase in his salary"
+    },
+    {
+      name: "MaiLinh Tran",
+      img: imgMaiLinh,
+      status: "Graduated",
+      country: { iso: "us", name: "United States of America" },
+      contributor: "Clark University",
+      description: "An entrepreneur with a passion for technology is now focusing on the dev side of their endeavour.",
+      achievement: "She has launched her startup, is capable of hiring new tech talent and coordinates a dev team!"
+    },
+    {
+      name: "Jorge Martín Coimbra",
+      img: imgCoimbra,
+      status: "Graduated",
+      country: { iso: "uy", name: "Uruguay" },
+      contributor: "UTEC-BID",
+      description: "Martín joined the first program that we launched together with UTEC and IDB. He got a better paying job, a career that he is passionate about and a new professional life.",
+      achievement: "He got a 100% increase in his salary"
+    },
+    {
+      name: "Jean St. Cloud",
+      img: imgJean,
+      status: "Graduated",
+      country: { iso: "us", name: "United States of America" },
+      contributor: "Clark",
+      description: "Jean is transitioning from other industries (Music) and is finding his way into Tech. He got it with the support of Clark University and is already performing as a developer and a Mentor.",
+      achievement: "He got a 100% increase in his salary"
+    },
+    {
+      name: "Alexandra Espinoza",
+      img: imgAlexandra,
+      status: "Graduated",
+      country: { iso: "cr", name: "Costa Rica" },
+      contributor: "CINDE-BID",
+      description: "Alexandra came from a total different background is been a huge revelation for her and everyone around her. She is now a successful and talented software developer in Costa Rica.",
+      achievement: "She got a 100% increase in her salary"
+    },
+    {
+      name: "Gabriel Salazar",
+      img: imgGabriel,
+      status: "Graduated",
+      country: { iso: "cr", name: "Costa Rica" },
+      contributor: "CINDE-BID",
+      description: "Gabriel was already a support specialist at Microsoft and after completing the program he was able to achieve a new position within Microsoft where he is now working as a Software Engineer.",
+      achievement: "He got a 50% increase in his salary"
+    },
+    {
+      name: "Laura Magallanes",
+      img: imgLaura,
+      status: "Graduated",
+      country: { iso: "uy", name: "Uruguay" },
+      contributor: "UTEC-BID",
+      description: "Laura is just extraordinary. From a little town in Uruguay with no experience in Coding, she is now a woman head of household, an Instructor and a Program Coordinator.",
+      achievement: "She got a 120% increase in her salary"
+    },
+    {
+      name: "Leandro Matonte",
+      img: imgLeandro,
+      status: "Graduated",
+      country: { iso: "uy", name: "Uruguay" },
+      contributor: "UTEC-BID",
+      description: "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
+      achievement: "He got a 60% increase in his salary"
+    },
+    {
+      name: "Melanie Galaretto",
+      img: imgMelanie,
+      status: "Graduated",
+      country: { iso: "uy", name: "Uruguay" },
+      contributor: "UTEC-BID",
+      description: "Melanie is a young professional who is dreaming of achieving a life that now she owns. She is a resourceful and committed software developer working for a software firm in her home country.",
+      achievement: "She got a +100% increase in her salary"
+    },
+    {
+      name: "Natia Lombardo",
+      img: imgNatia,
+      status: "Graduated",
+      country: { iso: "uy", name: "Uruguay" },
+      contributor: "UTEC-BID",
+      description: "Natia is a philosopher and a software developer. Currently working as a QA Engineer of a huge and successful International firm."
+    },
+    {
+      name: "Luis Larraburo",
+      img: imgLuis,
+      status: "Graduated",
+      country: { iso: "cr", name: "Costa Rica" },
+      contributor: "CINDE-BID",
+      description: "Luis came to the program without any previous experience, He is now a software developer working on a tech firm in Costa Rica.",
+      achievement: "He got a 50% increase in his salary"
+    }
+  ]
 };
 
 const whosHiringData = {
@@ -547,6 +691,68 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
   );
 }
 
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <Card 
+      className="w-[300px] md:w-[350px] p-4 mx-3 flex-shrink-0"
+      data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
+    >
+      <div className="flex items-start gap-3 mb-3">
+        <Avatar className="w-12 h-12 border-2 border-primary/20">
+          <AvatarImage src={testimonial.img} alt={testimonial.name} />
+          <AvatarFallback>{testimonial.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+        </Avatar>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-foreground truncate">{testimonial.name}</h4>
+          <p className="text-sm text-muted-foreground">{testimonial.contributor}</p>
+          <p className="text-xs text-muted-foreground">{testimonial.country.name}</p>
+        </div>
+      </div>
+      
+      <p className="text-sm text-foreground mb-3 line-clamp-4">
+        {testimonial.description}
+      </p>
+      
+      {testimonial.achievement && (
+        <div className="bg-primary/10 rounded-md p-2">
+          <p className="text-sm font-medium text-primary">
+            {testimonial.achievement}
+          </p>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
+  return (
+    <section 
+      className="py-12 md:py-16 bg-muted/30"
+      data-testid="section-testimonials"
+    >
+      <div className="container mx-auto px-4 mb-8">
+        <h2 
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground"
+          data-testid="text-testimonials-title"
+        >
+          {data.title}
+        </h2>
+      </div>
+      
+      <Marquee 
+        gradient={false} 
+        speed={40} 
+        pauseOnHover={true}
+        data-testid="marquee-testimonials"
+      >
+        {data.testimonials.map((testimonial, index) => (
+          <TestimonialCard key={index} testimonial={testimonial} />
+        ))}
+      </Marquee>
+    </section>
+  );
+}
+
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -563,6 +769,7 @@ export default function GeekForceCareerSupport() {
         <HyperpersonalizedSection data={hyperpersonalizedData} />
         <StatsSection data={statsData} />
         <WhosHiringSection data={whosHiringData} />
+        <TestimonialsSection data={testimonialsData} />
       </main>
     </div>
   );
