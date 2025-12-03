@@ -323,28 +323,28 @@ const careerProcessData: {
 function HeroSection({ data }: { data: typeof heroData }) {
   return (
     <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
+      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background"
       data-testid="section-hero"
     >
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div className="text-center md:text-left">
-              <p className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
+              <p className="text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
-              <p className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+              <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
                 <span className="text-foreground">Geek</span>
                 <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
               </p>
               <h1 
-                className="text-3xl md:text-4xl lg:text-5xl font-medium mb-2 text-foreground"
+                className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
               </h1>
               <p 
-                className="text-2xl md:text-3xl lg:text-4xl font-medium mb-6"
+                className="text-3xl lg:text-4xl font-medium mb-6"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}
@@ -422,7 +422,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
 function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   return (
     <section 
-      className="py-16 md:py-24 bg-background pt-[50px] pb-[50px]"
+      className="py-16 md:py-20 bg-background"
       data-testid="section-career-process"
     >
       <div className="container mx-auto px-4">
@@ -705,6 +705,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           className="w-full h-full object-cover"
         />
       </div>
+      
       <div className="p-4 flex flex-col flex-1 overflow-hidden">
         <div className="flex items-center justify-between mb-1 gap-2">
           <h4 className="font-bold text-foreground text-lg leading-tight">{testimonial.name}</h4>
