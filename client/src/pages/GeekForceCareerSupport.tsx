@@ -103,6 +103,7 @@ const statsData = {
 const whosHiringData = {
   title: "Who's Hiring Our Graduates?",
   subtitle: "Our alumni work at top companies around the world",
+  description: "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.",
   logos: [
     { src: logoMicrosoft, alt: "Microsoft" },
     { src: logoGoogleDev, alt: "Google Developers" },
@@ -461,8 +462,11 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
             >
               {data.title}
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-4">
               {data.subtitle}
+            </p>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              {data.description}
             </p>
           </div>
 
@@ -482,13 +486,13 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
                 {currentLogos.map((logo, index) => (
                   <Card 
                     key={`${currentPage}-${index}`} 
-                    className="p-4 flex items-center justify-center h-24"
+                    className="p-6 flex items-center justify-center h-32"
                     data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
                   >
                     <img
                       src={logo.src}
                       alt={logo.alt}
-                      className="max-h-12 max-w-full object-contain"
+                      className="max-h-16 max-w-full object-contain"
                       loading="lazy"
                     />
                   </Card>
