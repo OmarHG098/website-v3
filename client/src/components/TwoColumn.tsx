@@ -73,15 +73,6 @@ const getGapClass = (gap?: string): string => {
   return gap ? (gapMap[gap] || "gap-4") : "gap-4";
 };
 
-const getBlockAlignClass = (justify?: "start" | "center" | "end"): string => {
-  switch (justify) {
-    case "center": return "self-center";
-    case "end": return "self-end";
-    case "start": 
-    default: return "self-start";
-  }
-};
-
 const getTextAlignClass = (textAlign?: "left" | "center" | "right"): string => {
   switch (textAlign) {
     case "center": return "text-center";
@@ -109,7 +100,6 @@ const getTextFontSize = (size?: string): string => {
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
-  const blockAlignClass = getBlockAlignClass(column.justify);
   const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
 
@@ -118,7 +108,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   return (
     <div className={`flex flex-col ${gapClass}`}>
       {hasTextContent && (
-        <div className={`flex flex-col ${gapClass} w-full lg:max-w-xl ${blockAlignClass} ${textAlignClass}`}>
+        <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
               className="text-3xl md:text-4xl font-bold text-foreground"

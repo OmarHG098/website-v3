@@ -410,7 +410,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
           heading: data.title,
           description: data.description,
           justify: "center",
-          text_align: "left",
+          text_align: "right",
           font_size: "sm",
           bullet_icon: "Check",
           bullets: data.features.map(feature => ({
