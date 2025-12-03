@@ -37,6 +37,24 @@ export function CertificateSection({ data }: CertificateSectionProps) {
         )}
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {data.card && (
+            <div className="flex justify-center">
+              <Card 
+                className="w-full max-w-md overflow-hidden"
+                data-testid="card-certificate-preview"
+              >
+                <CardContent className="p-0">
+                  <img 
+                    src={certificatePreview} 
+                    alt={data.card.title}
+                    className="w-full h-auto"
+                    data-testid="img-certificate-preview"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
           <div>
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
@@ -67,24 +85,6 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               ))}
             </ul>
           </div>
-          
-          {data.card && (
-            <div className="flex justify-center">
-              <Card 
-                className="w-full max-w-md overflow-hidden"
-                data-testid="card-certificate-preview"
-              >
-                <CardContent className="p-0">
-                  <img 
-                    src={certificatePreview} 
-                    alt={data.card.title}
-                    className="w-full h-auto"
-                    data-testid="img-certificate-preview"
-                  />
-                </CardContent>
-              </Card>
-            </div>
-          )}
         </div>
       </div>
     </section>
