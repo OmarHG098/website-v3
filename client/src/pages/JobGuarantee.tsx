@@ -46,6 +46,7 @@ const eligibleData: TwoColumnSectionType = {
   proportions: [9, 3],
   padding_left: "52",
   padding_right: "52",
+  background: "bg-primary/5",
   left: {
     heading: "Who's Eligible?",
     sub_heading: "You'll qualify for the Job Guarantee if you:",
@@ -206,7 +207,6 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
-// Stats section with job placement metrics displayed in cards
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="75" height="68" />,
@@ -216,7 +216,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-16 bg-primary/5"
+      className="py-16"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
