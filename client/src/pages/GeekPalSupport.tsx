@@ -140,7 +140,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
 function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
   return (
     <section 
-      className="py-16 md:py-20 bg-background"
+      className="py-16 md:py-20 bg-amber-50"
       data-testid="section-advance-faster"
     >
       <div className="container mx-auto px-4">
@@ -165,8 +165,8 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
             >
               <div className="flex flex-col items-start gap-4 md:gap-6">
                 <feature.icon 
-                  width="68px" 
-                  height="68px" 
+                  width="58px" 
+                  height="58px" 
                   color={feature.iconColor}
                 />
                 <div>
