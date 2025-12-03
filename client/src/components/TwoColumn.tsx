@@ -100,7 +100,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className="text-xl text-muted-foreground text-center lg:text-left"
+          className="text-xl text-muted-foreground text-left"
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
