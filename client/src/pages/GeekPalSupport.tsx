@@ -160,10 +160,10 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
           {data.features.map((feature, index) => (
             <SolidCard 
               key={index}
-              className="p-4 md:p-5 md:pb-8"
+              className="p-3 md:p-4 md:pb-5"
               data-testid={`card-feature-${index + 1}`}
             >
-              <div className="flex flex-col items-start gap-4 md:gap-6">
+              <div className="flex flex-col items-start gap-3 md:gap-4">
                 <feature.icon 
                   width="58px" 
                   height="58px" 
