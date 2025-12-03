@@ -57,7 +57,7 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
 }
 
 export function SyllabusSection({ data }: SyllabusSectionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
