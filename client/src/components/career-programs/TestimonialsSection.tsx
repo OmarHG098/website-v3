@@ -1,8 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
+
+import profilePic1 from "@assets/profile-pic1_1764775438461.webp";
+import profilePic2 from "@assets/profile-pic2_1764775432918.webp";
+import profilePic3 from "@assets/profile-pic3_1764775528641.webp";
+import profilePic4 from "@assets/profile-pic4_1764775523318.webp";
+
+const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4];
 
 interface TestimonialsSectionProps {
   data: TestimonialsSectionType;
@@ -79,15 +86,10 @@ function TestimonialCard({
       <CardContent className="p-6">
         <div className="flex items-center gap-3 mb-4">
           <Avatar className="h-10 w-10">
-            {testimonial.avatar && (
-              <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-            )}
-            <AvatarFallback className="bg-primary/10 text-primary text-sm">
-              {testimonial.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </AvatarFallback>
+            <AvatarImage 
+              src={testimonial.avatar || defaultAvatars[index % defaultAvatars.length]} 
+              alt={testimonial.name} 
+            />
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-foreground truncate">{testimonial.name}</p>
