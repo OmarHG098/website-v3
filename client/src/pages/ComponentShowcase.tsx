@@ -648,27 +648,6 @@ export default function ComponentShowcase() {
         <Header />
         
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto mb-6">
-            <div className="flex items-center gap-4 mb-4">
-              <Link href="/component-showcase">
-                <Button variant="ghost" size="sm" data-testid="link-back-to-all">
-                  <IconArrowLeft className="w-4 h-4 mr-1" />
-                  All Components
-                </Button>
-              </Link>
-              <span className="text-muted-foreground text-sm">
-                {currentIndex + 1} of {components.length}
-              </span>
-            </div>
-            
-            <h1 className="text-3xl font-bold mb-2" data-testid="text-component-title">
-              {singleComponent.versions[0]?.schema?.name || componentType}
-            </h1>
-            <p className="text-muted-foreground mb-6">
-              {singleComponent.versions[0]?.schema?.description}
-            </p>
-          </div>
-
           <div className="max-w-6xl mx-auto">
             <ComponentCard 
               key={componentType} 
