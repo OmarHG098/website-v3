@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn } from "@shared/schema";
 import type { ComponentType, CSSProperties } from "react";
+import VideoPlayer from "./VideoPlayer";
 
 interface TwoColumnProps {
   data: TwoColumnSectionType;
@@ -235,19 +236,15 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.video && (
         <div 
-          className={`flex ${getJustifyClass(column.justify)}`}
+          className={`w-full ${getJustifyClass(column.justify)}`}
           style={{ 
-            height: column.video_height || "360px",
             width: column.video_width || "100%"
           }}
         >
-          <iframe
-            src={`https://www.youtube.com/embed/${column.video}`}
+          <VideoPlayer
+            videoId={column.video}
             title="Video"
-            className="w-full h-full rounded-md"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            data-testid="video-two-column"
+            ratio={column.video_height ? undefined : "16:9"}
           />
         </div>
       )}
