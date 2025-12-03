@@ -1,5 +1,5 @@
-name: "Minimal"
-description: "Simplified configuration with just title and a few logos (no subtitle or description)"
+name: "Minimal (4 logos)"
+description: "Simple configuration with just 4 logos - no navigation arrows shown"
 
 yaml: |
   - type: whos_hiring
@@ -13,7 +13,3 @@ yaml: |
         alt: "Meta"
       - src: "/attached_assets/uber_1764719999685.png"
         alt: "Uber"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
