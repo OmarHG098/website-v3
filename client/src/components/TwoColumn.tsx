@@ -75,23 +75,34 @@ const getGapClass = (gap?: string): string => {
 
 const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "center": return "lg:items-center lg:text-center";
-    case "end": return "lg:items-end lg:text-right";
+    case "center": return "items-center text-center";
+    case "end": return "items-end text-right";
     case "start": 
-    default: return "lg:items-start lg:text-left";
+    default: return "items-start text-left";
   }
+};
+
+const getHeadingFontSize = (size?: string): string => {
+  const sizeMap: Record<string, string> = {
+    "sm": "text-xl md:text-2xl",
+    "md": "text-2xl md:text-3xl",
+    "lg": "text-3xl md:text-4xl",
+    "xl": "text-4xl md:text-5xl",
+  };
+  return size ? (sizeMap[size] || "text-3xl md:text-4xl") : "text-3xl md:text-4xl";
 };
 
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
   const itemsAlignClass = getItemsAlignClass(column.justify);
+  const headingFontSize = getHeadingFontSize(column.font_size);
 
   return (
-    <div className={`flex flex-col ${gapClass} items-center ${itemsAlignClass}`}>
+    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className="text-3xl md:text-4xl font-bold text-foreground text-center lg:text-left"
+          className={`${headingFontSize} font-bold text-foreground text-center lg:text-left self-center lg:self-auto`}
           data-testid="text-two-column-heading"
         >
           {column.heading}
@@ -100,7 +111,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className="text-xl text-muted-foreground text-left"
+          className="text-xl text-muted-foreground"
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
@@ -109,7 +120,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.description && (
         <p 
-          className="text-muted-foreground leading-relaxed text-left"
+          className="text-muted-foreground leading-relaxed"
           data-testid="text-two-column-description"
         >
           {column.description}
