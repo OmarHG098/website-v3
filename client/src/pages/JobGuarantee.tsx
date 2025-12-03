@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
-import SolidCard from "@/components/SolidCard";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { HeroSection } from "@/components/career-programs/HeroSection";
 import { TwoColumn } from "@/components/TwoColumn";
@@ -48,7 +47,9 @@ const statsData = {
 
 const eligibleData: TwoColumnSectionType = {
   type: "two_column",
-  proportions: [8, 4],
+  proportions: [9, 3],
+  padding_left: "52",
+  padding_right: "52",
   left: {
     heading: "Who's Eligible?",
     sub_heading: "You'll qualify for the Job Guarantee if you:",
@@ -64,13 +65,10 @@ const eligibleData: TwoColumnSectionType = {
       url: "#apply",
       variant: "primary",
     },
-    text_align: "center",
-    justify: "center"
   },
   right: {
     image: eligibleImage,
     image_alt: "Woman working on laptop",
-    justify: "start",
     image_width: "400px"
   },
 };
@@ -224,7 +222,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index}>
+              <Card key={index} className="p-6">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-6 md:block">
                   <div className="flex-shrink-0 md:mb-6">
                     {iconMap[stat.icon]}
@@ -241,7 +239,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
                     <div className="text-xl text-muted-foreground">{stat.label}</div>
                   </div>
                 </div>
-              </SolidCard>
+              </Card>
             ))}
           </div>
         </div>
