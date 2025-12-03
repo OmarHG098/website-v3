@@ -1,0 +1,40 @@
+name: "Certificate Section"
+version: "1.0"
+component: "CertificateSection"
+file: "client/src/components/career-programs/CertificateSection.tsx"
+description: "Highlights the certificate and career network benefits"
+
+when_to_use: |
+  Use to show the tangible outcome of completing the program.
+  Important for conversion as it addresses "what do I get?" question.
+
+props:
+  title:
+    type: string
+    required: true
+    example: "Certificate & Career Network"
+    
+  description:
+    type: string
+    required: true
+    
+  benefits:
+    type: array
+    required: true
+    description: "List of certificate/career benefits (recommended: 3)"
+    items:
+      text:
+        type: string
+        example: "Recognized by international institutions"
+        
+  card:
+    type: object
+    required: false
+    description: "Certificate preview card"
+    fields:
+      title:
+        type: string
+        example: "Full Stack Developer"
+      subtitle:
+        type: string
+        example: "4Geeks Academy Certificate"

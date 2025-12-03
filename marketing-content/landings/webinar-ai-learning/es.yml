@@ -22,6 +22,7 @@ schema:
 
 sections:
   - type: hero
+    version: "1.0"
     badge: "Webinar Gratis"
     title: "Aprende a Programar con IA en 2024"
     subtitle: "Descubre cómo las herramientas potenciadas por IA están revolucionando la educación tecnológica. Únete a nuestro webinar gratuito de 1 hora y conoce el futuro del aprendizaje."
@@ -36,6 +37,7 @@ sections:
         icon: "Player"
 
   - type: program_overview
+    version: "1.0"
     title: "Lo Que Aprenderás"
     subtitle: "En solo 1 hora, descubre las herramientas que hacen el aprendizaje más rápido y fácil"
     cards:
@@ -50,6 +52,7 @@ sections:
         description: "Mira una demostración en vivo de nuestro asistente de programación con IA en acción"
 
   - type: credibility
+    version: "1.0"
     title: "Únete a más de 50,000 Estudiantes"
     stats:
       - value: "50,000+"
@@ -66,6 +69,7 @@ sections:
         - "Wired"
 
   - type: faq
+    version: "1.0"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Este webinar es realmente gratis?"
@@ -76,6 +80,7 @@ sections:
         answer: "Sí, todos los asistentes registrados recibirán una grabación después de la sesión en vivo."
 
   - type: footer_cta
+    version: "1.0"
     title: "¿Listo para Transformar tu Aprendizaje?"
     subtitle: "Reserva tu lugar gratis ahora. ¡Cupos limitados!"
     buttons:
@@ -87,4 +92,5 @@ sections:
         variant: "outline"
 
   - type: footer
+    version: "1.0"
     copyright_text: "2024 4Geeks. Todos los derechos reservados."

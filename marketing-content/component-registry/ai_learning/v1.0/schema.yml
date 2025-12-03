@@ -1,0 +1,53 @@
+name: "AI Learning Section"
+version: "1.0"
+component: "AILearningSection"
+file: "client/src/components/career-programs/AILearningSection.tsx"
+description: "Showcases AI-powered learning tools with an interactive chat example"
+
+when_to_use: |
+  Use to highlight Rigobot AI tutor and LearnPack software.
+  Best placed after program overview to emphasize unique learning experience.
+
+props:
+  badge:
+    type: string
+    required: false
+    example: "AI-Powered"
+    
+  title:
+    type: string
+    required: true
+    example: "Learn Faster with AI Support"
+    
+  description:
+    type: string
+    required: true
+    example: "Our AI tools provide instant feedback and personalized guidance"
+    
+  features:
+    type: array
+    required: true
+    description: "AI features to highlight (recommended: 2)"
+    items:
+      icon:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+        
+  chat_example:
+    type: object
+    required: false
+    description: "Interactive chat demo showing AI tutor in action"
+    fields:
+      bot_name:
+        type: string
+        example: "Rigobot"
+      bot_status:
+        type: string
+        example: "AI Tutor - Online"
+      user_message:
+        type: string
+      bot_response:
+        type: string

@@ -1,0 +1,51 @@
+name: "Hero Section"
+version: "1.0"
+component: "HeroSection"
+file: "client/src/components/career-programs/HeroSection.tsx"
+description: "Main banner at the top of the page with title, subtitle, badge, and call-to-action buttons"
+
+when_to_use: |
+  Every career program page should start with a hero section.
+  Use for first impressions and main call-to-action.
+
+props:
+  badge:
+    type: string
+    required: false
+    description: "Small label displayed above the title"
+    example: "Career Program"
+    
+  title:
+    type: string
+    required: true
+    description: "Main headline (keep under 60 characters for best display)"
+    example: "Full Stack Development with AI"
+    
+  subtitle:
+    type: string
+    required: false
+    description: "Supporting text below title explaining the program value"
+    example: "Learn at your own pace with AI-powered tools and unlimited mentorship"
+    
+  cta_buttons:
+    type: array
+    required: true
+    description: "Call-to-action buttons (recommended: 2 buttons max)"
+    items:
+      text:
+        type: string
+        description: "Button label"
+        example: "Start Learning Now"
+      url:
+        type: string
+        description: "Link destination"
+        example: "/signup"
+      variant:
+        type: string
+        options: ["primary", "outline"]
+        description: "Button style"
+      icon:
+        type: string
+        required: false
+        description: "Tabler icon name (without 'Icon' prefix)"
+        example: "Rocket"

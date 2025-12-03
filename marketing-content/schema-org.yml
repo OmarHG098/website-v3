@@ -1,6 +1,87 @@
 # Schema.org Structured Data Configuration
+# =========================================
 # This file defines the base JSON-LD schemas used across the website.
 # Pages can include these schemas and optionally override specific properties.
+#
+# USAGE IN PROGRAMS, LANDINGS, AND OTHER YAML FILES:
+# ---------------------------------------------------
+#
+# 1. BASIC INCLUDE (inherits all properties from base schema):
+#
+#    schema:
+#      include:
+#        - "organization"
+#        - "website"
+#        - "courses:full-stack"
+#
+# 2. WITH OVERRIDES (customize specific properties):
+#
+#    schema:
+#      include:
+#        - "organization"
+#        - "courses:full-stack"
+#      overrides:
+#        courses:full-stack:
+#          name: "Full Stack Developer Bootcamp - Miami"
+#          description: "Join our Miami campus for in-person training..."
+#          location:
+#            type: "Place"
+#            name: "4Geeks Academy Miami"
+#            address: "1395 Brickell Ave, Miami, FL 33131"
+#
+# 3. LANDING PAGE EXAMPLE (webinar/event with custom event schema):
+#
+#    schema:
+#      include:
+#        - "organization"
+#      overrides:
+#        organization:
+#          name: "4Geeks Academy - Special Event"
+#      custom:
+#        - type: "Event"
+#          name: "Free AI Coding Webinar"
+#          start_date: "2024-03-15T18:00:00-05:00"
+#          end_date: "2024-03-15T19:00:00-05:00"
+#          event_attendance_mode: "OnlineEventAttendanceMode"
+#          location:
+#            type: "VirtualLocation"
+#            url: "https://4geeks.com/webinar/ai-learning"
+#
+# 4. PROGRAM PAGE EXAMPLE (with course offers):
+#
+#    schema:
+#      include:
+#        - "organization"
+#        - "website"
+#        - "courses:full-stack"
+#      overrides:
+#        courses:full-stack:
+#          offers:
+#            type: "Offer"
+#            price: "7999"
+#            price_currency: "USD"
+#            availability: "InStock"
+#            valid_from: "2024-01-01"
+#
+# NESTED SCHEMA REFERENCES:
+# -------------------------
+# Use colon notation to reference nested schemas:
+#   - "courses:full-stack" → courses.full-stack
+#   - "courses:data-science" → courses.data-science
+#   - "item_lists:career-programs" → item_lists.career-programs
+#
+# PROVIDER REFERENCES:
+# --------------------
+# Use "@organization" to reference the organization schema as provider:
+#   provider: "@organization"
+#
+# LOCALIZATION:
+# -------------
+# Each schema can have locale-specific overrides under "locales":
+#   locales:
+#     es:
+#       name: "Nombre en Español"
+#       description: "Descripción en español..."
 
 # Organization schema - represents 4Geeks Academy as an entity
 organization:
