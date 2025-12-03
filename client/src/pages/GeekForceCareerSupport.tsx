@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { IconCheck, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
-import { US, UY, CR } from "country-flag-icons/react/3x2";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -691,14 +690,6 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
   );
 }
 
-function isoToFlagEmoji(iso: string): string {
-  const codePoints = iso
-    .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt(0));
-  return String.fromCodePoint(...codePoints);
-}
-
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
@@ -725,7 +716,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
         
         <div className="flex items-center gap-1.5 mb-1">
-          <span className="text-base leading-none">{isoToFlagEmoji(testimonial.country.iso)}</span>
+          <span className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`} />
           <span className="text-xs text-foreground">{testimonial.country.name}</span>
         </div>
         
