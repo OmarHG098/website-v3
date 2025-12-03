@@ -795,7 +795,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
       
       <Marquee 
         gradient={false} 
-        speed={42} 
+        speed={40} 
         pauseOnHover={true}
         data-testid="marquee-testimonials"
       >
