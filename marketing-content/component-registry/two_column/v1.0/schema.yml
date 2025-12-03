@@ -30,6 +30,27 @@ props:
     description: "Vertical alignment of columns"
     default: "center"
     
+  gap:
+    type: string
+    required: false
+    description: "Gap between left and right columns (Tailwind gap value)"
+    example: "8"
+    default: "8"
+    
+  padding_left:
+    type: string
+    required: false
+    description: "Left padding for the section (Tailwind pl-* value, 0-96)"
+    example: "24"
+    default: "24"
+    
+  padding_right:
+    type: string
+    required: false
+    description: "Right padding for the section (Tailwind pr-* value, 0-96)"
+    example: "24"
+    default: "24"
+    
   container_style:
     type: object
     required: false
@@ -103,17 +124,33 @@ props:
             description: "Bold heading before the text"
       bullet_icon:
         type: string
-        description: "Default icon for all bullets in this column"
+        description: "Default Tabler icon for all bullets (e.g., 'Check', 'ArrowRight')"
         example: "Check"
         default: "Check"
-      gap:
+      bullet_char:
         type: string
-        description: "Tailwind gap value between elements"
-        example: "6"
+        description: "Text character to use as bullet instead of icon (e.g., '•', '*')"
+        example: "•"
+      bullet_icon_color:
+        type: string
+        description: "Tailwind text color class for bullet icons"
+        example: "text-primary"
+        default: "text-primary"
+      font_size:
+        type: string
+        description: "Tailwind text size for sub_heading, description, and bullets"
+        options: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl"]
+        example: "sm"
+        default: "base"
+      text_align:
+        type: string
+        description: "Text alignment for content"
+        options: ["left", "center", "right"]
+        default: "left"
       justify:
         type: string
         options: ["start", "center", "end"]
-        description: "Horizontal alignment for media"
+        description: "Horizontal alignment for media (images/videos)"
         
   right:
     type: object

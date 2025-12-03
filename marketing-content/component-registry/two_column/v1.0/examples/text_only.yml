@@ -1,0 +1,27 @@
+name: "Text Only Layout"
+description: "Two-column layout with text content on both sides, useful for feature comparisons or detailed explanations"
+yaml: |
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    background: "bg-background"
+    alignment: "start"
+    gap: "16"
+    left:
+      heading: "For Beginners"
+      description: "Start your coding journey with our beginner-friendly curriculum designed for complete newcomers."
+      bullets:
+        - text: "No prior experience required"
+        - text: "Step-by-step tutorials"
+        - text: "Supportive community"
+      bullet_char: "•"
+      font_size: "base"
+    right:
+      heading: "For Professionals"
+      description: "Upskill with advanced courses tailored for working professionals looking to transition into tech."
+      bullets:
+        - text: "Flexible evening and weekend sessions"
+        - text: "Industry-recognized certifications"
+        - text: "Direct employer connections"
+      bullet_char: "•"
+      font_size: "base"
