@@ -34,10 +34,7 @@ const heroData: HeroSectionType = {
 
 const statsData = {
   title: "Does the Job Guarantee Deliver Results You Can Count On?",
-  description: [
-    "Yes, and we've got the numbers to back it up.",
-    "These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
-  ],
+  description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
     { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
     { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
@@ -213,13 +210,9 @@ function StatsSection({ data }: { data: typeof statsData }) {
             >
               {data.title}
             </h2>
-            <div className="max-w-3xl mx-auto">
-              {data.description.map((text, index) => (
-                <p key={index} className={`text-lg md:text-xl text-muted-foreground ${index < data.description.length - 1 ? 'mb-3' : ''}`}>
-                  {text}
-                </p>
-              ))}
-            </div>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+              {data.description}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
