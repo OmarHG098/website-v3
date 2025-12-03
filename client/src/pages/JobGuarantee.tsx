@@ -50,6 +50,7 @@ const eligibleData: TwoColumnSectionType = {
   left: {
     heading: "Who's Eligible?",
     sub_heading: "You'll qualify for the Job Guarantee if you:",
+    font_size: "base",
     bullets: [
       { text: "Have U.S. work authorization" },
       { text: "Pass our logic test" },
@@ -216,7 +217,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-16"
+      className="pb-16"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
@@ -326,7 +327,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
 
   return (
     <section 
-      className="pt-18 pb-10 bg-muted/30"
+      className="pt-12 pb-10 bg-muted/30"
       data-testid="section-refund"
     >
       <div className="container mx-auto px-4">
