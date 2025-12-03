@@ -285,5 +285,267 @@
     "footer": {
       "rights": "All rights reserved."
     }
+  },
+  "geekforce": {
+    "hero": {
+      "welcomeText": "Welcome to",
+      "title": "Career Development",
+      "subtitle": "for the AI Era",
+      "description": "Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms, we'll give you the personalized mentorship you need to land your first job and keep thriving in today's tech.",
+      "videoTitle": "GeekForce Career Support"
+    },
+    "unlimitedSupport": {
+      "title": "Unlimited Career Support – Always Ahead of Job Market Trends",
+      "description": "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
+      "feature1": "Receive tailored guidance aligned with your goals, context, and challenges.",
+      "feature2": "Meet mentors online or in-person whenever you need support—unlimited, for life.",
+      "feature3": "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
+    },
+    "hyperpersonalized": {
+      "title": "Accelerate Your Results with Hyperpersonalized Career Support",
+      "subtitle": "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
+      "feature1": "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.",
+      "feature2": "Practice technical interviews and behavioral questions with AI-guided exercises.",
+      "feature3": "Get expert coaching from our mentors who tailor advice to your unique profile and goals."
+    },
+    "stats": {
+      "title": "Does Our Career Support Deliver Results You Can Count On?",
+      "description": "Yes — and we've got the numbers to back it up.",
+      "placement": {
+        "label": "Job Placement Rate",
+        "sublabel": "of graduates were hired"
+      },
+      "timeToHire": {
+        "label": "Average time to get hired",
+        "sublabel": "after graduation",
+        "suffix": "months"
+      },
+      "salary": {
+        "label": "Salary Increase",
+        "sublabel": "higher at new job"
+      }
+    },
+    "testimonials": {
+      "title": "Real Careers Start Here — Just Ask Our Students",
+      "description": "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing.",
+      "graduated": "Graduated",
+      "contributor": "Contributor",
+      "countries": {
+        "us": "United States of America",
+        "uy": "Uruguay",
+        "cr": "Costa Rica"
+      },
+      "loretta": {
+        "name": "Loretta Thompson",
+        "description": "Loretta joined in 2022 and graduated in 2023. She already found a job within the next few months and has fulfilled the whole circle of skills+job that we all want to complete!",
+        "achievement": "She got a 45% increase in her salary"
+      },
+      "akers": {
+        "name": "Rich Akers",
+        "description": "Richard is a great developer that just transitioned from a different background and is now working as a web dev in the tech field.",
+        "achievement": "He got a 30% increase in his salary"
+      },
+      "maiLinh": {
+        "name": "MaiLinh Tran",
+        "description": "An entrepreneur with a passion for technology is now focusing on the dev side of their endeavour.",
+        "achievement": "She has launched her startup, is capable of hiring new tech talent and coordinates a dev team!"
+      },
+      "coimbra": {
+        "name": "Jorge Martín Coimbra",
+        "description": "Martín joined the first program that we launched together with UTEC and IDB. He got a better paying job, a career that he is passionate about and a new professional life.",
+        "achievement": "He got a 100% increase in his salary"
+      },
+      "jean": {
+        "name": "Jean St. Cloud",
+        "description": "Jean is transitioning from other industries (Music) and is finding his way into Tech. He got it with the support of Clark University and is already performing as a developer and a Mentor.",
+        "achievement": "He got a 100% increase in his salary"
+      },
+      "alexandra": {
+        "name": "Alexandra Espinoza",
+        "description": "Alexandra came from a total different background is been a huge revelation for her and everyone around her. She is now a successful and talented software developer in Costa Rica.",
+        "achievement": "She got a 100% increase in her salary"
+      },
+      "gabriel": {
+        "name": "Gabriel Salazar",
+        "description": "Gabriel was already a support specialist at Microsoft and after completing the program he was able to achieve a new position within Microsoft where he is now working as a Software Engineer.",
+        "achievement": "He got a 50% increase in his salary"
+      },
+      "laura": {
+        "name": "Laura Magallanes",
+        "description": "Laura is just extraordinary. From a little town in Uruguay with no experience in Coding, she is now a woman head of household, an Instructor and a Program Coordinator.",
+        "achievement": "She got a 120% increase in her salary"
+      },
+      "leandro": {
+        "name": "Leandro Matonte",
+        "description": "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
+        "achievement": "He got a 60% increase in his salary"
+      },
+      "melanie": {
+        "name": "Melanie Galaretto",
+        "description": "Melanie is a young professional who is dreaming of achieving a life that now she owns. She is a resourceful and committed software developer working for a software firm in her home country.",
+        "achievement": "She got a +100% increase in her salary"
+      },
+      "natia": {
+        "name": "Natia Lombardo",
+        "description": "Natia is a philosopher and a software developer. Currently working as a QA Engineer of a huge and successful International firm."
+      },
+      "luis": {
+        "name": "Luis Larraburo",
+        "description": "Luis came to the program without any previous experience, He is now a software developer working on a tech firm in Costa Rica.",
+        "achievement": "He got a 50% increase in his salary"
+      }
+    },
+    "whosHiring": {
+      "title": "Who's Hiring Our Graduates?",
+      "subtitle": "Our alumni work at top companies around the world",
+      "description": "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally."
+    },
+    "careerProcess": {
+      "title": "Get Hired with Our 3-Step Career Development Process",
+      "subtitle": "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+      "step1": {
+        "title": "1. Profile Optimization",
+        "item1": "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
+        "item2": "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
+        "item3": "Showcase your skills with a recruiter-ready portfolio."
+      },
+      "step2": {
+        "title": "2. Interview Preparation",
+        "item1": "Gain confidence with mock technical and behavioral interviews.",
+        "item2": "Practice coding and problem-solving with auto-graded exercises.",
+        "item3": "Develop tailored strategies for upcoming interviews."
+      },
+      "step3": {
+        "title": "3. Strategic Job Search",
+        "item1": "Create a personalized job search plan aligned with your goals.",
+        "item2": "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
+        "item3": "Connect with our extensive network of global hiring partners."
+      }
+    }
+  },
+  "jobGuarantee": {
+    "hero": {
+      "title": "Get into tech with our Job Guarantee",
+      "subtitle": "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition.",
+      "conditionsApply": "Conditions apply",
+      "applyNow": "Apply now",
+      "requestSyllabus": "Request a syllabus"
+    },
+    "stats": {
+      "title": "Does the Job Guarantee Deliver Results You Can Count On?",
+      "description1": "Yes, and we've got the numbers to back it up.",
+      "description2": "These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
+      "placement": "Job placement rate",
+      "timeToHire": "Average time to get hired",
+      "salaryIncrease": "Salary increase after graduation",
+      "months": "months"
+    },
+    "eligible": {
+      "title": "Who's Eligible?",
+      "subtitle": "You'll qualify for the Job Guarantee if you:",
+      "req1": "Have U.S. work authorization",
+      "req2": "Pass our logic test",
+      "req3": "Complete all coursework and projects",
+      "req4": "Follow our career team's guidance",
+      "note": "*Conditions apply depending on your country or U.S. state",
+      "apply": "Apply",
+      "imageAlt": "Woman working on laptop"
+    },
+    "programs": {
+      "title": "Our Job Guarantee is Available for Our Top Tech Programs",
+      "subtitle": "Choose your career path. Master the skills and get hired.",
+      "readMore": "Read More",
+      "fullstack": {
+        "category": "Full Stack",
+        "title": "Full Stack Development with AI",
+        "description": "Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career."
+      },
+      "datascience": {
+        "category": "With Python",
+        "title": "Data Science and Machine Learning with AI",
+        "description": "Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI."
+      },
+      "cybersecurity": {
+        "category": "For Windows & Linux",
+        "title": "Cybersecurity",
+        "description": "Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards."
+      }
+    },
+    "confidence": {
+      "title": "Why We Have the Confidence to Offer a Job Guarantee",
+      "description": "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
+      "benefit1": "Our program's effectiveness is backed by strong placement rates",
+      "benefit2": "The tech industry continues to grow with high demand for talent",
+      "benefit3": "We believe in our teaching approach and your commitment to succeed",
+      "apply": "Apply",
+      "imageAlt": "Happy graduate with laptop showing the 4Geeks Academy logo"
+    },
+    "refund": {
+      "title": "How the Refund Works",
+      "description": "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.",
+      "step1": "1. You were not hired into a qualifying role within 9 months of graduation.",
+      "step2": "2. Our team verifies that you met all Job Guarantee requirements",
+      "step3": "3. Receive the full refund within 30 days.",
+      "conditionsApply": "Conditions Apply."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions about the Job Guarantee",
+      "q1": {
+        "question": "How does the 4Geeks Academy Job Guarantee work?",
+        "answer": "Our Job Guarantee ensures that if you meet all program requirements and still don't get a qualifying tech job within 9 months of graduation, you are eligible for a full refund of your tuition. It's our way of backing the real-world outcomes our bootcamp delivers. Conditions apply."
+      },
+      "q2": {
+        "question": "Does the Job Guarantee refund the full tuition if I don't get hired?",
+        "answer": "Yes. If you qualify for the Job Guarantee and don't receive a qualifying job offer within the job search window, you'll receive a full tuition refund."
+      },
+      "q3": {
+        "question": "How long do I have to look for a job before the refund is issued?",
+        "answer": "You'll have up to 9 months after graduating to secure qualifying employment. If you meet all requirements and are still not hired within that time, you can apply for a full refund."
+      },
+      "q4": {
+        "question": "What kinds of jobs count toward the Job Guarantee?",
+        "answer": "Full-time or contract positions in tech (such as software development, QA, or related roles) qualify. Remote jobs and freelance positions may be eligible depending on terms."
+      },
+      "q5": {
+        "question": "Is there a minimum salary for jobs that count?",
+        "answer": "There is no set salary threshold, but the job must be aligned with the skills taught in the program and be a legitimate entry-level tech role."
+      },
+      "q6": {
+        "question": "What do I need to do to qualify for the Job Guarantee?",
+        "answer": "You must: Complete 100% of coursework and projects, attend sessions consistently, follow the steps our career services team advises, actively apply to jobs and document your search, and hold valid U.S. work authorization."
+      },
+      "q7": {
+        "question": "Do I need to have work authorization to qualify?",
+        "answer": "Yes, you must have valid U.S. work authorization to be eligible for the Job Guarantee."
+      },
+      "q8": {
+        "question": "Is attendance important for the Job Guarantee?",
+        "answer": "Yes, maintaining good attendance throughout the bootcamp is mandatory for eligibility."
+      },
+      "q9": {
+        "question": "What coursework or projects must I complete?",
+        "answer": "You'll need to finish your final project in a satisfactory manner, plus all assigned coding projects, exercises, and coursework provided during the bootcamp."
+      },
+      "q10": {
+        "question": "What does it mean to follow the career team's guidance?",
+        "answer": "It includes completing your resume and portfolio according to our guidelines, participating in mock interviews, and applying to a minimum number of jobs weekly — all with the support of our career services team."
+      },
+      "q11": {
+        "question": "Can I finance the additional $2,000 Job Guarantee fee with my tuition?",
+        "answer": "Yes, in many cases the Job Guarantee fee can be bundled into your overall tuition financing plan."
+      },
+      "q12": {
+        "question": "Is the Job Guarantee available for all courses?",
+        "answer": "No — it is currently only available for select bootcamps, including the Full Stack Development program. Please check your program's eligibility."
+      },
+      "q13": {
+        "question": "What's the average time it takes for 4Geeks grads to get hired?",
+        "answer": "Most 4Geeks Academy graduates find a job within 90 to 180 days of completing the bootcamp, depending on their location, dedication, and prior experience."
+      },
+      "q14": {
+        "question": "If I'm offered a contract job, does it count toward the guarantee?",
+        "answer": "Yes, contract jobs can qualify if they are relevant to the bootcamp training and meet our minimum standards for legitimacy and compensation."
+      }
+    }
   }
 }
