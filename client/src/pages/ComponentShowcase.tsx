@@ -42,6 +42,7 @@ import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
 import jsYaml from "js-yaml";
 import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 function useNoIndex() {
   useEffect(() => {
@@ -128,6 +129,7 @@ function ComponentCard({
   isFocused, 
   cardRef 
 }: ComponentCardProps) {
+  const { toast } = useToast();
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
   const [showYaml, setShowYaml] = useState(false);
@@ -146,14 +148,29 @@ function ComponentCard({
 
   const createVersionMutation = useMutation({
     mutationFn: async (baseVersion: string) => {
-      const response = await apiRequest('POST', `/api/component-registry/${componentType}/create-version`, {
+      const result = await apiRequest('POST', `/api/component-registry/${componentType}/create-version`, {
         baseVersion,
       });
-      return response.json();
+      return result as { success: boolean; newVersion: string };
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['/api/component-registry'] });
       queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+      if (data.newVersion) {
+        setSelectedVersion(data.newVersion);
+        setSelectedExample(null);
+      }
+      toast({
+        title: "Version created",
+        description: `Created new version ${data.newVersion} for ${componentType}`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to create version",
+        description: error.message,
+        variant: "destructive",
+      });
     },
   });
 
@@ -440,40 +457,79 @@ function ComponentCard({
       </Card>
 
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <IconFolder className="w-5 h-5" />
-              Add New Example
+              Add New Example for {schema?.name || componentType}
             </DialogTitle>
             <DialogDescription>
-              Create a new YAML example file for this component.
+              Create a new YAML example file demonstrating a specific use case.
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4">
             <div>
-              <h4 className="font-medium mb-2">File Location</h4>
+              <h4 className="font-medium mb-2">Step 1: Create File</h4>
+              <p className="text-sm text-muted-foreground mb-2">
+                Create a new <code className="px-1 bg-muted rounded">.yml</code> file in:
+              </p>
               <code className="block p-3 bg-muted rounded-lg text-sm break-all">
-                {examplePath}<span className="text-primary">your-example-name.yml</span>
+                {examplePath}
               </code>
+              <p className="text-xs text-muted-foreground mt-1">
+                Use descriptive names like <code className="px-1 bg-muted/50 rounded">minimal.yml</code>, <code className="px-1 bg-muted/50 rounded">with-all-features.yml</code>, or <code className="px-1 bg-muted/50 rounded">spanish-content.yml</code>
+              </p>
             </div>
             
             <div>
-              <h4 className="font-medium mb-2">File Structure</h4>
+              <h4 className="font-medium mb-2">Step 2: File Structure</h4>
+              <p className="text-sm text-muted-foreground mb-2">
+                Each example file must have <code className="px-1 bg-muted rounded">name</code>, <code className="px-1 bg-muted rounded">description</code>, and <code className="px-1 bg-muted rounded">yaml</code> fields:
+              </p>
               <pre className="p-3 bg-muted rounded-lg text-sm overflow-x-auto">
-{`name: "Your Example Name"
-description: "Brief description of this example"
+{`name: "Descriptive Example Name"
+description: "When and why to use this variant"
 yaml: |
   - type: ${componentType}
-    # Add your component configuration here
-    title: "Example Title"
-    # ... other props`}
+    version: "${selectedVersion}"
+${schema?.props ? Object.entries(schema.props).slice(0, 4).map(([key, prop]) => {
+  const p = prop as { type?: string; example?: unknown };
+  const example = p.example !== undefined ? 
+    (typeof p.example === 'string' ? `"${p.example}"` : JSON.stringify(p.example)) : 
+    (p.type === 'string' ? '"..."' : '...');
+  return `    ${key}: ${example}`;
+}).join('\n') : '    # props here'}`}
               </pre>
             </div>
             
-            <div className="text-sm text-muted-foreground">
-              <p>After creating the file, refresh this page to see your new example in the dropdown.</p>
+            {schema?.props && Object.keys(schema.props).length > 0 && (
+              <div>
+                <h4 className="font-medium mb-2">Available Props</h4>
+                <div className="max-h-32 overflow-y-auto p-2 bg-muted/50 rounded-lg">
+                  <div className="flex flex-wrap gap-1">
+                    {Object.entries(schema.props).map(([key, prop]) => {
+                      const p = prop as { required?: boolean };
+                      return (
+                        <Badge 
+                          key={key} 
+                          variant={p.required ? "default" : "secondary"}
+                          className="text-xs"
+                        >
+                          {key}{p.required ? '*' : ''}
+                        </Badge>
+                      );
+                    })}
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">* = required</p>
+              </div>
+            )}
+            
+            <div className="pt-2 border-t">
+              <p className="text-sm text-muted-foreground">
+                After creating the file, refresh this page to see your new example in the dropdown.
+              </p>
             </div>
           </div>
         </DialogContent>

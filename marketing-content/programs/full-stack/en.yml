@@ -24,6 +24,7 @@ schema:
 
 sections:
   - type: hero
+    version: "1.0"
     badge: "Career Program"
     title: "Full Stack Development with AI"
     subtitle: "Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee."
@@ -98,6 +99,7 @@ sections:
         difficulty: "hard"
 
   - type: ai_learning
+    version: "1.0"
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"
     description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
@@ -121,6 +123,7 @@ sections:
         variant: "primary"
 
   - type: certificate
+    version: "1.0"
     title: "Certificate & Career Network"
     description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."
     stats:
@@ -194,6 +197,7 @@ sections:
         outcome: "Landed first tech job"
 
   - type: faq
+    version: "1.0"
     title: "Frequently Asked Questions"
     items:
       - question: "Are there fixed class times?"
@@ -212,6 +216,7 @@ sections:
       button_url: "/contact"
 
   - type: footer_cta
+    version: "1.0"
     title: "Ready to Start Your Tech Career?"
     subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."
     buttons:
@@ -223,4 +228,5 @@ sections:
         variant: "outline"
 
   - type: footer
+    version: "1.0"
     copyright_text: "2024 4Geeks. All rights reserved."

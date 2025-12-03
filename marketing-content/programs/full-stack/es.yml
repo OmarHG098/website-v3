@@ -24,6 +24,7 @@ schema:
 
 sections:
   - type: hero
+    version: "1.0"
     badge: "Programa de Carrera"
     title: "Desarrollo Full Stack con IA"
     subtitle: "Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo."
@@ -98,6 +99,7 @@ sections:
         difficulty: "hard"
 
   - type: ai_learning
+    version: "1.0"
     badge: "Por qué 4Geeks?"
     title: "¿Por qué Aprender con 4Geeks?"
     description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
@@ -121,6 +123,7 @@ sections:
         variant: "primary"
 
   - type: certificate
+    version: "1.0"
     title: "Certificado y Red de Carreras"
     description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
     stats:
@@ -194,6 +197,7 @@ sections:
         outcome: "Primer trabajo en tech"
 
   - type: faq
+    version: "1.0"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Hay horarios de clase fijos?"
@@ -212,6 +216,7 @@ sections:
       button_url: "/contacto"
 
   - type: footer_cta
+    version: "1.0"
     title: "¿Listo para Iniciar tu Carrera Tech?"
     subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."
     buttons:
@@ -223,4 +228,5 @@ sections:
         variant: "outline"
 
   - type: footer
+    version: "1.0"
     copyright_text: "2024 4Geeks. Todos los derechos reservados."
