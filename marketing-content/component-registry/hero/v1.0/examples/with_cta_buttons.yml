@@ -1,0 +1,17 @@
+name: "Hero with CTA Buttons"
+description: "Hero section with two call-to-action buttons - a primary button and an outline button with icons"
+yaml: |
+  - type: hero
+    version: "1.0"
+    badge: "Career Program"
+    title: "Full Stack Development with AI"
+    subtitle: "Learn at your own pace with AI-powered tools and unlimited mentorship"
+    cta_buttons:
+      - text: "Start Learning Now"
+        url: "/signup"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "View Curriculum"
+        url: "/curriculum"
+        variant: "outline"
+        icon: "Book"
