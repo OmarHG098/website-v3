@@ -39,7 +39,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
               </p>
               <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
                 <span className="text-foreground">Geek</span>
-                <span style={{ color: 'hsl(var(--primary))' }}>PAL</span>:
+                <span style={{ color: 'hsl(var(--destructive))' }}>PAL</span>:
               </p>
               <h1 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
