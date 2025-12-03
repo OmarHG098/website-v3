@@ -1,7 +1,8 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType } from "@shared/schema";
 import SolidCard from "@/components/SolidCard";
 import { FAQSection } from "@/components/career-programs/FAQSection";
+import { HeroSection } from "@/components/career-programs/HeroSection";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -10,52 +11,31 @@ import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
 import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
 import FolderCheck from "@/components/custom-icons/FolderCheck";
-import { IconCheck, IconDownload, IconStarFilled, IconStar } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
-
-import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
-import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
-import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
-import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
-
-import forbesLogo from "@assets/forbes-logo-award_1764709625651.webp";
-import fortuneLogo from "@assets/fortune-logo_1764709618095.webp";
-import newsweekLogoEn from "@assets/newsweek_1764709608255.webp";
-import courseReportLogo from "@assets/Course-Report-Badge-2025_1764709632231.webp";
 
 // ============================================
 // DATA
 // ============================================
 
-const avatars = [avatar1, avatar2, avatar3, avatar4];
-
-const awardLogos: Record<string, string> = {
-  "Forbes": forbesLogo,
-  "Fortune": fortuneLogo,
-  "Newsweek": newsweekLogoEn,
-  "Course Report": courseReportLogo,
-};
-
-const heroData = {
+const heroData: HeroSectionType = {
+  type: "hero",
   badge: "Job Guarantee",
   title: "Get into tech with our Job Guarantee",
-  subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition.",
-  conditionsLink: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
-  trustBar: {
+  subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+  trust_bar: {
     rating: "4.5",
-    ratingCount: "1,294",
-    trustedText: "Trusted by 4,000+ graduates",
+    rating_count: "1,294",
+    trusted_text: "Trusted by 4,000+ graduates",
   },
-  ctaButtons: [
-    { text: "Apply now", href: "#apply", variant: "default" as const },
-    { text: "Download Details", href: "#syllabus", variant: "outline" as const, icon: true },
+  cta_buttons: [
+    { text: "Apply now", url: "#apply", variant: "primary" },
+    { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
   ],
-  awardBadges: [
+  award_badges: [
     { name: "Top Coding Bootcamp", source: "Forbes", year: "2024" },
     { name: "Best for Spanish Speakers", source: "Fortune", year: "2024" },
     { name: "Top Coding Bootcamp", source: "Newsweek", year: "2024" },
@@ -209,143 +189,6 @@ const faqData: FAQSectionType = {
 // ============================================
 // SECTION COMPONENTS
 // ============================================
-
-function HeroSection({ data }: { data: typeof heroData }) {
-  return (
-    <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
-      data-testid="section-hero"
-    >
-      <div className="max-w-6xl mx-auto px-4 text-center">
-        {data.badge && (
-          <Badge 
-            variant="secondary" 
-            className="mb-6"
-            data-testid="badge-hero"
-          >
-            {data.badge}
-          </Badge>
-        )}
-        
-        <h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight"
-          data-testid="text-hero-title"
-        >
-          {data.title}
-        </h1>
-        
-        <p 
-          className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-2 leading-relaxed"
-          data-testid="text-hero-subtitle"
-        >
-          {data.subtitle}
-        </p>
-        <a 
-          href={data.conditionsLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline text-lg md:text-xl"
-          data-testid="link-conditions"
-        >
-          Conditions apply
-        </a>
-        <span className="text-lg md:text-xl text-muted-foreground">.</span>
-
-        {data.trustBar && (
-          <div 
-            className="flex items-center justify-center gap-3 my-8"
-            data-testid="trust-bar"
-          >
-            <div className="flex -space-x-2">
-              {avatars.map((avatar, index) => (
-                <Avatar 
-                  key={index} 
-                  className="h-8 w-8 border-2 border-background"
-                >
-                  <AvatarImage src={avatar} alt={`Graduate ${index + 1}`} />
-                  <AvatarFallback className="bg-primary/20 text-xs">
-                    {String.fromCharCode(65 + index)}
-                  </AvatarFallback>
-                </Avatar>
-              ))}
-            </div>
-
-            <div className="flex flex-col items-start gap-0.5">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-foreground">{data.trustBar.rating}</span>
-                <div className="flex">
-                  {[1, 2, 3, 4].map((i) => (
-                    <IconStarFilled
-                      key={i}
-                      className="text-yellow-500 w-4 h-4"
-                    />
-                  ))}
-                  <IconStar className="text-yellow-500 w-4 h-4" />
-                </div>
-                <span className="text-sm text-muted-foreground">({data.trustBar.ratingCount} reviews)</span>
-              </div>
-              <span className="text-sm text-muted-foreground">
-                {data.trustBar.trustedText}
-              </span>
-            </div>
-          </div>
-        )}
-        
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {data.ctaButtons.map((btn, index) => (
-            <Button
-              key={index}
-              size="lg"
-              variant={btn.variant}
-              asChild
-              data-testid={`button-hero-cta-${index}`}
-            >
-              <a href={btn.href} className={btn.icon ? "flex items-center gap-2" : ""}>
-                {btn.icon && <IconDownload size={20} />}
-                {btn.text}
-              </a>
-            </Button>
-          ))}
-        </div>
-
-        {data.awardBadges && data.awardBadges.length > 0 && (
-          <div 
-            className="flex flex-wrap justify-center items-center gap-8 pt-8 border-t border-border"
-            data-testid="award-badges"
-          >
-            {data.awardBadges.map((award, index) => {
-              const logoSrc = awardLogos[award.source];
-              return (
-                <div 
-                  key={index}
-                  className="flex items-center justify-center transition-transform duration-200 hover:scale-110"
-                  data-testid={`award-badge-${index}`}
-                >
-                  {logoSrc ? (
-                    <img 
-                      src={logoSrc} 
-                      alt={`${award.source} - ${award.name}`}
-                      className="h-12 md:h-16 w-auto object-contain px-4"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center text-center">
-                      <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                        {award.source} {award.year && `${award.year}`}
-                      </span>
-                      <span className="text-sm font-medium text-foreground mt-0.5">
-                        {award.name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
