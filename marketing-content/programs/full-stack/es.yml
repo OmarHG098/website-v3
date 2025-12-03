@@ -99,7 +99,7 @@ sections:
 
   - type: ai_learning
     badge: "Por qué 4Geeks?"
-    title: "Por qué Aprender con 4Geeks?"
+    title: "¿Por qué Aprender con 4Geeks?"
     description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
     video_url: "https://www.youtube.com/watch?v=cOFm_deKj6Q"
     features:
