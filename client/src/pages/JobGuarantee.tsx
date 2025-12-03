@@ -11,7 +11,6 @@ import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
 import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
 import FolderCheck from "@/components/custom-icons/FolderCheck";
-import { IconCheck } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
@@ -98,17 +97,33 @@ const programsData = {
   ],
 };
 
-const confidenceData = {
-  title: "Why We Have the Confidence to Offer a Job Guarantee",
-  description: "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
-  benefits: [
-    "Our program's effectiveness is backed by strong placement rates",
-    "The tech industry continues to grow with high demand for talent",
-    "We believe in our teaching approach and your commitment to succeed",
-  ],
-  buttonText: "Apply",
-  image: confidenceImage,
-  imageAlt: "Happy graduate with laptop showing the 4Geeks Academy logo",
+const confidenceData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [5, 7],
+  background: "bg-primary/50",
+  alignment: "center",
+  gap: "12",
+  reverse_on_mobile: true,
+  left: {
+    image: confidenceImage,
+    image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo",
+    justify: "center",
+  },
+  right: {
+    heading: "Why We Have the Confidence to Offer a Job Guarantee",
+    description: "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
+    bullets: [
+      { text: "Our program's effectiveness is backed by strong placement rates" },
+      { text: "The tech industry continues to grow with high demand for talent" },
+      { text: "We believe in our teaching approach and your commitment to succeed" },
+    ],
+    bullet_icon: "Check",
+    button: {
+      text: "Apply",
+      url: "#apply",
+      variant: "primary",
+    },
+  },
 };
 
 const refundData = {
@@ -299,58 +314,6 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
   );
 }
 
-function ConfidenceSection({ data }: { data: typeof confidenceData }) {
-  return (
-    <section 
-      className="pb-8 pt-12 bg-background"
-      data-testid="section-confidence"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="flex justify-center">
-              <img 
-                src={data.image} 
-                alt={data.imageAlt}
-                className="max-w-[280px] md:max-w-full h-auto rounded-lg"
-                loading="lazy"
-                data-testid="img-confidence"
-              />
-            </div>
-
-            <div>
-              <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-                data-testid="text-confidence-title"
-              >
-                {data.title}
-              </h2>
-              <p className="text-base md:text-xl text-muted-foreground mb-8">
-                {data.description}
-              </p>
-              <ul className="space-y-5 mb-8">
-                {data.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                      <IconCheck className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-sm md:text-lg text-foreground">
-                      {benefit}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button size="lg" data-testid="button-apply-confidence">
-                {data.buttonText}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function RefundSection({ data }: { data: typeof refundData }) {
   const iconMap = {
     briefcase: Briefcase,
@@ -490,9 +453,9 @@ export default function JobGuarantee() {
         <HeroSection data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
-        <ProgramsSection data={programsData} />
-        <ConfidenceSection data={confidenceData} />
         <RefundSection data={refundData} />
+        <ProgramsSection data={programsData} />
+        <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>
     </div>
