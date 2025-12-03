@@ -64,6 +64,15 @@ const getGapClass = (gap?: string): string => {
   return gap ? (gapMap[gap] || "gap-4") : "gap-4";
 };
 
+const getSelfAlignClass = (alignment?: "start" | "center" | "end"): string => {
+  switch (alignment) {
+    case "start": return "self-start";
+    case "end": return "self-end";
+    case "center": return "self-center";
+    default: return "";
+  }
+};
+
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
@@ -195,13 +204,13 @@ export function TwoColumn({ data }: TwoColumnProps) {
         <div className="max-w-6xl mx-auto">
           <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 ${alignmentClass}`}>
             {data.left && (
-              <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
+              <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""} ${getSelfAlignClass(data.left.alignment)}`}>
                 <ColumnContent column={data.left} />
               </div>
             )}
             
             {data.right && (
-              <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 lg:order-2" : ""}`}>
+              <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 lg:order-2" : ""} ${getSelfAlignClass(data.right.alignment)}`}>
                 <ColumnContent column={data.right} />
               </div>
             )}

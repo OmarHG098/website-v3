@@ -179,6 +179,7 @@ export const twoColumnColumnSchema = z.object({
   bullet_icon: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),
+  alignment: z.enum(["start", "center", "end"]).optional(),
 });
 
 export const twoColumnSectionSchema = z.object({
