@@ -189,6 +189,7 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
+// Stats section showcasing job placement metrics and program success rates
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="90" height="81" />,
