@@ -51,6 +51,7 @@ import logoMdc from "@assets/mdc_ce_1764720089793.png";
 import logoBeaconCouncil from "@assets/beacon_council_1764720100166.jpg";
 import logoBlackstone from "@assets/blackstone_1764720124773.png";
 import logoCemex from "@assets/cemex_1764720131666.png";
+import vectorStroke from "@assets/vector-stroke-light_1764729540525.png";
 
 // ============================================
 // TYPES
@@ -323,20 +324,35 @@ const careerProcessData: {
 function HeroSection({ data }: { data: typeof heroData }) {
   return (
     <section 
-      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background"
+      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
       data-testid="section-hero"
     >
-      <div className="container mx-auto px-4">
+      <div className="hidden md:block lg:hidden absolute right-0 top-1/4 -translate-y-1/2">
+        <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
+      </div>
+      <div className="hidden lg:block absolute right-0 top-1/4 -translate-y-1/2">
+        <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
-            <div className="text-center md:text-left">
+            <div className="text-center md:text-left relative">
               <p className="text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
-              <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
-                <span className="text-foreground">Geek</span>
-                <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+                  <span className="text-foreground">Geek</span>
+                  <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
+                </p>
+                <img 
+                  src={vectorStroke} 
+                  alt="" 
+                  className="hidden md:block w-12 h-12 opacity-30"
+                  style={{ filter: 'grayscale(100%)' }}
+                />
+              </div>
               <h1 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
@@ -350,9 +366,17 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 {data.subtitle}
               </p>
               
-              <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
-                {data.description}
-              </p>
+              <div className="relative">
+                <img 
+                  src={vectorStroke} 
+                  alt="" 
+                  className="hidden md:block absolute -left-16 -bottom-4 w-10 h-10 opacity-30 rotate-180"
+                  style={{ filter: 'grayscale(100%)' }}
+                />
+                <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
+                  {data.description}
+                </p>
+              </div>
             </div>
           </div>
           
