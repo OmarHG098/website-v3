@@ -48,7 +48,7 @@ const statsData = {
 
 const eligibleData: TwoColumnSectionType = {
   type: "two_column",
-  proportions: [6, 6],
+  proportions: [8, 4],
   alignment: "center",
   left: {
     heading: "Who's Eligible?",
@@ -65,7 +65,7 @@ const eligibleData: TwoColumnSectionType = {
       url: "#apply",
       variant: "primary",
     },
-    justify: "end"
+    justify: "center"
   },
   right: {
     image: eligibleImage,

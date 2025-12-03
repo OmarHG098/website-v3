@@ -75,10 +75,19 @@ const getGapClass = (gap?: string): string => {
 
 const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "center": return "lg:items-center lg:text-center";
-    case "end": return "lg:items-end lg:text-right";
+    case "center": return "lg:items-center";
+    case "end": return "lg:items-end";
     case "start": 
-    default: return "lg:items-start lg:text-left";
+    default: return "lg:items-start";
+  }
+};
+
+const getTextAlignClass = (textAlign?: "left" | "center" | "right"): string => {
+  switch (textAlign) {
+    case "center": return "text-center";
+    case "right": return "text-right";
+    case "left":
+    default: return "text-left";
   }
 };
 
@@ -101,10 +110,11 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
   const itemsAlignClass = getItemsAlignClass(column.justify);
+  const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
 
   return (
-    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
+    <div className={`flex flex-col ${gapClass} ${itemsAlignClass} ${textAlignClass}`}>
       {column.heading && (
         <h2 
           className="text-3xl md:text-4xl font-bold text-foreground text-center self-center lg:self-auto"

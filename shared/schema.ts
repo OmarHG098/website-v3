@@ -181,6 +181,7 @@ export const twoColumnColumnSchema = z.object({
   bullet_icon: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),
+  text_align: z.enum(["left", "center", "right"]).optional(),
   font_size: z.enum(["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"]).optional(),
 });
 
