@@ -65,7 +65,7 @@ const eligibleData: TwoColumnSectionType = {
       variant: "primary",
     },
     text_align: "center",
-    justify: "end"
+    justify: "center"
   },
   right: {
     image: eligibleImage,
