@@ -718,7 +718,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
         
         <div className="flex items-center gap-1.5 mb-1">
-          <span className={`flag flag-sm flag-country-${testimonial.country.iso.toLowerCase()}`} />
+          <span className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`} />
           <span className="text-sm text-foreground">{testimonial.country.name}</span>
         </div>
         
@@ -761,7 +761,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
           {data.title}
         </h2>
         <p 
-          className="text-center text-muted-foreground max-w-3xl mx-auto text-base md:text-lg"
+          className="text-center text-foreground max-w-3xl mx-auto text-base md:text-lg"
           data-testid="text-testimonials-description"
         >
           {data.description}
