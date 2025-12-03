@@ -8,6 +8,15 @@ import { careerProgramSchema, landingPageSchema, type CareerProgram, type Landin
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
 import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
+import { 
+  getRegistryOverview, 
+  getComponentInfo, 
+  listVersions, 
+  loadSchema, 
+  loadExamples, 
+  createNewVersion,
+  getExampleFilePath 
+} from "./component-registry";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -296,6 +305,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/debug/clear-schema-cache", (req, res) => {
     clearSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
+  });
+
+  // Component Registry API endpoints
+  app.get("/api/component-registry", (req, res) => {
+    const overview = getRegistryOverview();
+    res.json(overview);
+  });
+
+  app.get("/api/component-registry/:componentType", (req, res) => {
+    const { componentType } = req.params;
+    const info = getComponentInfo(componentType);
+    
+    if (!info) {
+      res.status(404).json({ error: "Component not found" });
+      return;
+    }
+    
+    res.json(info);
+  });
+
+  app.get("/api/component-registry/:componentType/versions", (req, res) => {
+    const { componentType } = req.params;
+    const versions = listVersions(componentType);
+    res.json({ versions });
+  });
+
+  app.get("/api/component-registry/:componentType/:version/schema", (req, res) => {
+    const { componentType, version } = req.params;
+    const schema = loadSchema(componentType, version);
+    
+    if (!schema) {
+      res.status(404).json({ error: "Schema not found" });
+      return;
+    }
+    
+    res.json(schema);
+  });
+
+  app.get("/api/component-registry/:componentType/:version/examples", (req, res) => {
+    const { componentType, version } = req.params;
+    const examples = loadExamples(componentType, version);
+    res.json({ examples });
+  });
+
+  app.get("/api/component-registry/:componentType/:version/example-path", (req, res) => {
+    const { componentType, version } = req.params;
+    const filePath = getExampleFilePath(componentType, version);
+    res.json({ path: filePath });
+  });
+
+  app.post("/api/component-registry/:componentType/create-version", (req, res) => {
+    const { componentType } = req.params;
+    const { baseVersion } = req.body;
+    
+    if (!baseVersion) {
+      res.status(400).json({ error: "baseVersion required" });
+      return;
+    }
+    
+    const result = createNewVersion(componentType, baseVersion);
+    
+    if (!result.success) {
+      res.status(400).json({ error: result.error });
+      return;
+    }
+    
+    res.json({ success: true, newVersion: result.newVersion });
   });
 
   const httpServer = createServer(app);
