@@ -399,7 +399,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
       data={{
         type: "two_column",
         background: "bg-amber-50",
-        proportions: [5, 7],
+        proportions: [4, 8],
         reverse_on_mobile: true,
         alignment: "center",
         left: {
