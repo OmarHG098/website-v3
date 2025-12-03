@@ -422,7 +422,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
 function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   return (
     <section 
-      className="py-16 md:py-24 bg-background"
+      className="py-16 md:py-24 bg-background pt-[50px] pb-[50px]"
       data-testid="section-career-process"
     >
       <div className="container mx-auto px-4">
@@ -695,7 +695,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[300px] h-[490px] -mx-4 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
+      className="w-[300px] h-[490px] -mx-7 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
@@ -705,7 +705,6 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           className="w-full h-full object-cover"
         />
       </div>
-      
       <div className="p-4 flex flex-col flex-1 overflow-hidden">
         <div className="flex items-center justify-between mb-1 gap-2">
           <h4 className="font-bold text-foreground text-lg leading-tight">{testimonial.name}</h4>
