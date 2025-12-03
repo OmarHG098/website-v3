@@ -194,6 +194,7 @@ export const twoColumnSectionSchema = z.object({
   left: twoColumnColumnSchema.optional(),
   right: twoColumnColumnSchema.optional(),
   reverse_on_mobile: z.boolean().optional(),
+  gap: z.string().optional(),
 });
 
 export const syllabusModuleSchema = z.object({

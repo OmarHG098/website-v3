@@ -223,6 +223,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
   const alignmentClass = getAlignmentClass(data.alignment);
   const leftColClass = getGridColClass(leftProportion);
   const rightColClass = getGridColClass(rightProportion);
+  const columnGapClass = getGapClass(data.gap || "8");
   
   const containerStyle: CSSProperties = data.container_style 
     ? (data.container_style as unknown as CSSProperties)
@@ -238,7 +239,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 ${alignmentClass}`}>
+          <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
             {data.left && (
               <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
                 <ColumnContent column={data.left} />

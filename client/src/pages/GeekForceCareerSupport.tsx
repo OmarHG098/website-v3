@@ -408,10 +408,11 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
         },
         left: {
           heading: data.title,
+          gap: "12",
           description: data.description,
           justify: "center",
-          text_align: "right",
-          font_size: "sm",
+          text_align: "left",
+          font_size: "base",
           bullet_icon: "Check",
           bullets: data.features.map(feature => ({
             text: feature,
