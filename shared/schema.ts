@@ -100,6 +100,14 @@ export const certificateSectionSchema = z.object({
   stats: z.array(statItemSchema).optional(),
 });
 
+export const whyLearnAISectionSchema = z.object({
+  type: z.literal("why_learn_ai"),
+  title: z.string(),
+  subtitle: z.string(),
+  description: z.string(),
+  cta: ctaButtonSchema.optional(),
+});
+
 export const faqItemSchema = z.object({
   question: z.string(),
   answer: z.string(),
@@ -185,6 +193,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
   aiLearningSectionSchema,
   mentorshipSectionSchema,
   certificateSectionSchema,
+  whyLearnAISectionSchema,
   faqSectionSchema,
   testimonialsSectionSchema,
   footerCtaSectionSchema,
@@ -246,6 +255,7 @@ export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
+export type WhyLearnAISection = z.infer<typeof whyLearnAISectionSchema>;
 export type FAQItem = z.infer<typeof faqItemSchema>;
 export type FAQSection = z.infer<typeof faqSectionSchema>;
 export type TestimonialItem = z.infer<typeof testimonialItemSchema>;

@@ -184,6 +184,15 @@ sections:
         comment: "La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional."
         outcome: "Primer trabajo en tech"
 
+  - type: why_learn_ai
+    title: "¿Por qué Aprender a Construir y Programar con IA?"
+    subtitle: "El Desarrollo de Software Como lo Conoces Dejará de Existir"
+    description: "Programar con IA se convertirá en un nuevo estándar, pero es una profesión muy diferente al desarrollo de software tradicional. Mientras que la IA puede generar un producto 400% más rápido a corto plazo, construir y mantener un código seguro y eficiente con 90% de código generado por IA a largo plazo requiere fusionarte con la IA. Estamos presenciando una nueva profesión nacer ante nuestros ojos. ¿Estás listo para convertirte en un Programador de IA?"
+    cta:
+      text: "¡Únete ahora!"
+      url: "/registro"
+      variant: "primary"
+
   - type: faq
     title: "Preguntas Frecuentes"
     items:
