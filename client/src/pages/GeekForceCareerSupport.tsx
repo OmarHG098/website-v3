@@ -3,9 +3,8 @@ import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import SolidCard from "@/components/SolidCard";
 import { Card } from "@/components/ui/card";
-import { IconCheck, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconCheck, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Marquee from "react-fast-marquee";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
@@ -691,35 +690,63 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
   );
 }
 
+function isoToFlagEmoji(iso: string): string {
+  const codePoints = iso
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}
+
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[300px] md:w-[350px] p-4 mx-3 flex-shrink-0"
+      className="w-[280px] md:w-[320px] mx-3 flex-shrink-0 overflow-hidden flex flex-col"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
-      <div className="flex items-start gap-3 mb-3">
-        <Avatar className="w-12 h-12 border-2 border-primary/20">
-          <AvatarImage src={testimonial.img} alt={testimonial.name} />
-          <AvatarFallback>{testimonial.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-        </Avatar>
-        <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-foreground truncate">{testimonial.name}</h4>
-          <p className="text-sm text-muted-foreground">{testimonial.contributor}</p>
-          <p className="text-xs text-muted-foreground">{testimonial.country.name}</p>
-        </div>
+      <div className="h-40 w-full overflow-hidden">
+        <img 
+          src={testimonial.img} 
+          alt={testimonial.name}
+          className="w-full h-full object-cover"
+        />
       </div>
       
-      <p className="text-sm text-foreground mb-3 line-clamp-4">
-        {testimonial.description}
-      </p>
-      
-      {testimonial.achievement && (
-        <div className="bg-primary/10 rounded-md p-2">
-          <p className="text-sm font-medium text-primary">
-            {testimonial.achievement}
-          </p>
+      <div className="p-4 flex flex-col flex-1">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-bold text-foreground text-lg">{testimonial.name}</h4>
+          {testimonial.status === "Graduated" && (
+            <div className="flex items-center gap-1 text-muted-foreground">
+              <IconSchool className="w-4 h-4" />
+              <span className="text-sm">Graduated</span>
+            </div>
+          )}
         </div>
-      )}
+        
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-xl leading-none">{isoToFlagEmoji(testimonial.country.iso)}</span>
+          <span className="text-sm text-foreground">{testimonial.country.name}</span>
+        </div>
+        
+        <p className="text-sm text-muted-foreground mb-3">
+          Contributor: {testimonial.contributor}
+        </p>
+        
+        <div className="border-t border-border mb-3" />
+        
+        <p className="text-sm text-foreground flex-1 mb-3">
+          {testimonial.description}
+        </p>
+        
+        {testimonial.achievement && (
+          <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-2 mt-auto">
+            <IconCheck className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+              {testimonial.achievement}
+            </p>
+          </div>
+        )}
+      </div>
     </Card>
   );
 }
