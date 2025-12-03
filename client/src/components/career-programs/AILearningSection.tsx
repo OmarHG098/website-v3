@@ -37,15 +37,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
     return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
   };
 
-  const getCardBackgroundClass = (index: number) => {
-    const backgroundClasses = [
-      "bg-blue-50 dark:bg-blue-950/20",
-      "bg-muted/40",
-      "bg-blue-50 dark:bg-blue-950/20",
-    ];
-    return backgroundClasses[index] || "bg-background";
-  };
-
   const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
 
   return (
@@ -86,7 +77,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             return (
               <Card 
                 key={index} 
-                className={`${getCardBackgroundClass(index)} border text-center`}
+                className="bg-background border text-center"
                 data-testid={`feature-ai-${index}`}
               >
                 <CardContent className="p-6">
