@@ -1,7 +1,10 @@
+import { useState, useCallback, useEffect } from "react";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import SolidCard from "@/components/SolidCard";
-import { IconCheck } from "@tabler/icons-react";
+import { Card } from "@/components/ui/card";
+import { IconCheck, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -9,6 +12,31 @@ import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 import communityImage from "@assets/community_1764717588840.png";
+
+import logoMicrosoft from "@assets/microsoft_1764719829995.png";
+import logoGoogleDev from "@assets/google-developers_1764719904190.png";
+import logoBoatsGroup from "@assets/boats_1764719939123.jpg";
+import logoMeta from "@assets/meta-logo_1764719959855.png";
+import logoEbay from "@assets/ebay_1764719967118.png";
+import logoNatGeo from "@assets/natgeo_1764719975443.png";
+import logoEvernote from "@assets/evernote_1764719981901.png";
+import logoTelefonica from "@assets/telefonica_1764719987250.png";
+import logoTwilio from "@assets/twilio_1764719992371.png";
+import logoUber from "@assets/uber_1764719999685.png";
+import logoNeo9 from "@assets/Neo9_1764720006347.png";
+import logoJooble from "@assets/jooble_1764720010702.png";
+import logoKpmg from "@assets/kpmg-logo1_1764720019827.png";
+import logoUltimate from "@assets/ultimate_1764720025067.png";
+import logoTcg from "@assets/tcg_1764720028893.png";
+import logoRazz from "@assets/razz_1764720036807.png";
+import logoOverseas from "@assets/overseas_1764720045331.png";
+import logoDs9 from "@assets/ds9_1764720051158.png";
+import logoCoinet from "@assets/coinet_1764720056569.jpg";
+import logoStrata from "@assets/strata_1764720063140.png";
+import logoMdc from "@assets/mdc_ce_1764720089793.png";
+import logoBeaconCouncil from "@assets/beacon_council_1764720100166.jpg";
+import logoBlackstone from "@assets/blackstone_1764720124773.png";
+import logoCemex from "@assets/cemex_1764720131666.png";
 
 // ============================================
 // TYPES
@@ -69,6 +97,37 @@ const statsData = {
     { value: "84%", label: "Job Placement Rate", sublabel: "of graduates were hired", icon: "briefcase" as const },
     { value: "3-6", valueSuffix: "months", label: "Average time to get hired", sublabel: "after graduation", icon: "graduation" as const },
     { value: "55%", label: "Salary Increase", sublabel: "higher at new job", icon: "growth" as const },
+  ],
+};
+
+const whosHiringData = {
+  title: "Who's Hiring Our Graduates?",
+  subtitle: "Our alumni work at top companies around the world",
+  logos: [
+    { src: logoMicrosoft, alt: "Microsoft" },
+    { src: logoGoogleDev, alt: "Google Developers" },
+    { src: logoBoatsGroup, alt: "Boats Group" },
+    { src: logoMeta, alt: "Meta" },
+    { src: logoEbay, alt: "eBay" },
+    { src: logoNatGeo, alt: "National Geographic" },
+    { src: logoEvernote, alt: "Evernote" },
+    { src: logoTelefonica, alt: "Telefonica" },
+    { src: logoTwilio, alt: "Twilio" },
+    { src: logoUber, alt: "Uber" },
+    { src: logoNeo9, alt: "Neo9" },
+    { src: logoJooble, alt: "Jooble" },
+    { src: logoKpmg, alt: "KPMG" },
+    { src: logoUltimate, alt: "Ultimate Software" },
+    { src: logoTcg, alt: "The Creative Group" },
+    { src: logoRazz, alt: "Razz" },
+    { src: logoOverseas, alt: "Overseas Leisure Group" },
+    { src: logoDs9, alt: "DS9 Design" },
+    { src: logoCoinet, alt: "Coinet" },
+    { src: logoStrata, alt: "Strata.ai" },
+    { src: logoMdc, alt: "Miami Dade College" },
+    { src: logoBeaconCouncil, alt: "Miami-Dade Beacon Council" },
+    { src: logoBlackstone, alt: "Blackstone" },
+    { src: logoCemex, alt: "Cemex" },
   ],
 };
 
@@ -370,6 +429,105 @@ function StatsSection({ data }: { data: typeof statsData }) {
   );
 }
 
+function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
+  const LOGOS_PER_PAGE = 8;
+  const totalPages = Math.ceil(data.logos.length / LOGOS_PER_PAGE);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const goToPrevious = useCallback(() => {
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+  }, [totalPages]);
+
+  const goToNext = useCallback(() => {
+    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+  }, [totalPages]);
+
+  const currentLogos = data.logos.slice(
+    currentPage * LOGOS_PER_PAGE,
+    currentPage * LOGOS_PER_PAGE + LOGOS_PER_PAGE
+  );
+
+  return (
+    <section 
+      className="py-12 md:py-16 bg-background"
+      data-testid="section-whos-hiring"
+    >
+      <div className="container mx-auto px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 
+              className="text-2xl md:text-3xl font-bold mb-2 text-foreground"
+              data-testid="text-whos-hiring-title"
+            >
+              {data.title}
+            </h2>
+            <p className="text-muted-foreground">
+              {data.subtitle}
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToPrevious}
+                className="flex-shrink-0"
+                data-testid="button-carousel-prev"
+              >
+                <IconChevronLeft className="h-4 w-4" />
+              </Button>
+
+              <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
+                {currentLogos.map((logo, index) => (
+                  <Card 
+                    key={`${currentPage}-${index}`} 
+                    className="p-4 flex items-center justify-center h-24"
+                    data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
+                  >
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      className="max-h-12 max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </Card>
+                ))}
+              </div>
+
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goToNext}
+                className="flex-shrink-0"
+                data-testid="button-carousel-next"
+              >
+                <IconChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="flex justify-center gap-2 mt-6" data-testid="carousel-pagination">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                    currentPage === index 
+                      ? "bg-primary" 
+                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  data-testid={`button-pagination-dot-${index}`}
+                  aria-label={`Go to page ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -385,6 +543,7 @@ export default function GeekForceCareerSupport() {
         <CareerProcessSection data={careerProcessData} />
         <HyperpersonalizedSection data={hyperpersonalizedData} />
         <StatsSection data={statsData} />
+        <WhosHiringSection data={whosHiringData} />
       </main>
     </div>
   );
