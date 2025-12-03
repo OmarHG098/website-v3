@@ -70,6 +70,7 @@ interface ComponentSchema {
   description: string;
   when_to_use: string;
   props: Record<string, unknown>;
+  default_example?: string;
 }
 
 interface ComponentExample {
@@ -101,6 +102,10 @@ interface RegistryOverview {
 }
 
 function generateDefaultYaml(componentType: string, schema: ComponentSchema): string {
+  if (schema.default_example) {
+    return schema.default_example;
+  }
+  
   const example: Record<string, unknown> = { type: componentType };
   
   if (schema.props) {
