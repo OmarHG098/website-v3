@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight, IconClock, IconVideo, IconDownload } from "@tabler/icons-react";
 import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
 import starWarsImg from "@assets/star-wars_1764729369149.webp";
@@ -18,29 +18,32 @@ const projectImages: Record<string, string> = {
   "final-project": finalProjectImg,
 };
 
+const difficultyColors: Record<string, string> = {
+  easy: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
+  hard: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+};
+
 export function ProjectsSection({ data }: ProjectsSectionProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const items = data.items;
+  const totalItems = items.length;
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? totalItems - 1 : prev - 1));
   };
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 400;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-      setTimeout(checkScroll, 300);
-    }
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === totalItems - 1 ? 0 : prev + 1));
   };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const currentProject = items[currentIndex];
+  const imageKey = currentProject.image.toLowerCase().replace(/\s+/g, "-");
+  const imageSrc = projectImages[imageKey] || projectImages["final-project"];
 
   return (
     <section 
@@ -48,84 +51,144 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
       data-testid="section-projects"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 
-              className="text-3xl md:text-4xl font-bold text-foreground"
-              data-testid="text-projects-title"
+        <div className="text-center mb-10">
+          <h2 
+            className="text-3xl md:text-4xl font-bold text-foreground"
+            data-testid="text-projects-title"
+          >
+            {data.title}
+          </h2>
+          {data.subtitle && (
+            <p 
+              className="text-muted-foreground mt-4 max-w-3xl mx-auto"
+              data-testid="text-projects-subtitle"
             >
-              {data.title}
-            </h2>
-            {data.subtitle && (
-              <p 
-                className="text-lg text-muted-foreground mt-2"
-                data-testid="text-projects-subtitle"
-              >
-                {data.subtitle}
-              </p>
-            )}
-          </div>
-          
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => scroll("left")}
-              disabled={!canScrollLeft}
-              className="rounded-full"
-              data-testid="button-projects-prev"
-            >
-              <IconChevronLeft size={20} />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => scroll("right")}
-              disabled={!canScrollRight}
-              className="rounded-full"
-              data-testid="button-projects-next"
-            >
-              <IconChevronRight size={20} />
-            </Button>
-          </div>
+              {data.subtitle}
+            </p>
+          )}
         </div>
 
-        <div 
-          ref={scrollRef}
-          onScroll={checkScroll}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {data.items.map((project, index) => {
-            const imageKey = project.image.toLowerCase().replace(/\s+/g, "-");
-            const imageSrc = projectImages[imageKey] || projectImages["final-project"];
-            
-            return (
-              <Card 
-                key={index}
-                className="flex-shrink-0 w-[500px] overflow-hidden border"
-                data-testid={`card-project-${index}`}
-              >
-                <CardContent className="p-0 flex">
-                  <div className="w-48 h-36 flex-shrink-0 overflow-hidden">
-                    <img 
-                      src={imageSrc}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
+        <div className="relative">
+          <div 
+            className="bg-card border rounded-lg overflow-hidden"
+            data-testid={`card-project-${currentIndex}`}
+          >
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[280px] overflow-hidden bg-muted">
+                <img 
+                  src={imageSrc}
+                  alt={currentProject.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              
+              <div className="md:w-3/5 p-6 md:p-8 flex flex-col">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {currentProject.tags?.map((tag, idx) => (
+                      <Badge 
+                        key={idx} 
+                        variant="secondary"
+                        className="text-xs font-medium"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
                   </div>
-                  <div className="p-4 flex flex-col justify-center">
-                    <h3 className="font-semibold text-foreground mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                      {project.description}
-                    </p>
+                  
+                  {(currentProject.duration || currentProject.date) && (
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground shrink-0">
+                      {currentProject.duration && (
+                        <span className="flex items-center gap-1">
+                          <IconClock size={16} />
+                          {currentProject.duration}
+                        </span>
+                      )}
+                      {currentProject.date && (
+                        <span>{currentProject.date}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
+                  {currentProject.title}
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed flex-grow">
+                  {currentProject.description}
+                </p>
+
+                <div className="flex items-center justify-between mt-6 pt-4 border-t">
+                  {currentProject.difficulty && (
+                    <Badge 
+                      className={`uppercase text-xs font-bold ${difficultyColors[currentProject.difficulty]}`}
+                    >
+                      {currentProject.difficulty}
+                    </Badge>
+                  )}
+                  
+                  <div className="flex items-center gap-2 ml-auto">
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="text-muted-foreground"
+                      data-testid="button-project-video"
+                    >
+                      <IconVideo size={20} />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="text-muted-foreground"
+                      data-testid="button-project-download"
+                    >
+                      <IconDownload size={20} />
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-8">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={goToPrevious}
+              className="rounded-full border"
+              data-testid="button-projects-prev"
+            >
+              <IconChevronLeft size={24} />
+            </Button>
+
+            <div className="flex items-center gap-2">
+              {items.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentIndex 
+                      ? "bg-primary" 
+                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  data-testid={`button-project-dot-${index}`}
+                  aria-label={`Go to project ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={goToNext}
+              className="rounded-full border"
+              data-testid="button-projects-next"
+            >
+              <IconChevronRight size={24} />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

@@ -73,17 +73,29 @@ sections:
 
   - type: projects
     title: "Aprende Construyendo Proyectos Reales"
-    subtitle: "Aplica tus habilidades en proyectos prácticos que simulan escenarios de desarrollo del mundo real."
+    subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para tener éxito. Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto tecnológico real. Aquí tienes un vistazo de lo que trabajarás:"
     items:
-      - title: "Blog de Star Wars"
-        description: "Construye una aplicación de blog full-stack usando React y Flask. Practica modelado de bases de datos, diseño de API y autenticación de usuarios mientras trabajas con la API de Star Wars."
+      - title: "Construye una API REST de StarWars"
+        description: "La API del Blog de StarWars te permitirá practicar la construcción de una API REST usando frameworks ligeros como Express (para node) o Flask (para python) usando SQLAlchemy ORM y lenguaje Python, mientras construyes un blog divertido. Ideal para juniors que buscan practicar desarrollo de API en python."
         image: "star-wars"
-      - title: "Sistema de Autenticación"
-        description: "Crea un sistema de autenticación completo con tokens JWT, frontend React y backend Python. Aprende mejores prácticas de seguridad y gestión de sesiones."
+        tags: ["REST"]
+        duration: "8 HORAS"
+        date: "15/11/2022"
+        difficulty: "easy"
+      - title: "Sistema de Autenticación con JWT"
+        description: "Crea un sistema de autenticación completo con tokens JWT, frontend React y backend Python. Aprende mejores prácticas de seguridad y patrones de gestión de sesiones utilizados en aplicaciones de producción."
         image: "authentication"
+        tags: ["Seguridad", "JWT"]
+        duration: "6 HORAS"
+        date: "20/01/2023"
+        difficulty: "medium"
       - title: "Proyecto Final Full-Stack"
-        description: "Diseña y construye tu propia aplicación full-stack desde cero. Demuestra tus habilidades con React, Flask, SQLAlchemy e integraciones de API de terceros."
+        description: "Diseña y construye tu propia aplicación full-stack desde cero. Demuestra tus habilidades con React, Flask, SQLAlchemy e integraciones de API de terceros. Este proyecto final muestra todo lo que has aprendido."
         image: "final-project"
+        tags: ["Full-Stack", "Final"]
+        duration: "40 HORAS"
+        date: "01/03/2023"
+        difficulty: "hard"
 
   - type: ai_learning
     badge: "Por qué 4Geeks?"

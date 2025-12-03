@@ -73,17 +73,29 @@ sections:
 
   - type: projects
     title: "Learn by Building Real-Life Projects"
-    subtitle: "Apply your skills to hands-on projects that simulate real-world development scenarios."
+    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
-      - title: "Star Wars Blog"
-        description: "Build a full-stack blog application using React and Flask. Practice database modeling, API design, and user authentication while working with the Star Wars API."
+      - title: "Build a StarWars REST API"
+        description: "The StarWars Blog API will let you practice building a REST API using lightweight API frameworks like Express (for node) or Flask (for python) using SQLAlchemy ORM and Python language, while building a fun blog. Ideal for juniors looking to practice API development in python."
         image: "star-wars"
-      - title: "Authentication System"
-        description: "Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management."
+        tags: ["REST"]
+        duration: "8 HOURS"
+        date: "15/11/2022"
+        difficulty: "easy"
+      - title: "Authentication System with JWT"
+        description: "Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management patterns used in production applications."
         image: "authentication"
+        tags: ["Security", "JWT"]
+        duration: "6 HOURS"
+        date: "20/01/2023"
+        difficulty: "medium"
       - title: "Full-Stack Final Project"
-        description: "Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations."
+        description: "Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations. This capstone project showcases everything you've learned."
         image: "final-project"
+        tags: ["Full-Stack", "Capstone"]
+        duration: "40 HOURS"
+        date: "01/03/2023"
+        difficulty: "hard"
 
   - type: ai_learning
     badge: "Why 4Geeks?"

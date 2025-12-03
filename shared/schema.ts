@@ -165,6 +165,10 @@ export const projectItemSchema = z.object({
   title: z.string(),
   description: z.string(),
   image: z.string(),
+  tags: z.array(z.string()).optional(),
+  duration: z.string().optional(),
+  difficulty: z.enum(["easy", "medium", "hard"]).optional(),
+  date: z.string().optional(),
 });
 
 export const projectsSectionSchema = z.object({
