@@ -46,7 +46,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             </h2>
             
             <p 
-              className="text-lg text-muted-foreground mb-8 leading-relaxed"
+              className="text-lg mb-8 leading-relaxed text-[#1a1a1a] font-bold"
               data-testid="text-certificate-description"
             >
               {data.description}
