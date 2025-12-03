@@ -35,28 +35,28 @@ const advanceFasterData: {
   subtitle: string;
   features: AdvanceFeature[];
 } = {
-  title: "GeekPAL: Advance Faster with Always-On Support",
-  subtitle: "GeekPAL gives you unlimited access to expert mentors and AI-powered coding assistance—helping you learn faster, solve problems in real time, and never code alone.",
+  title: "Advance Faster, Never Lose Momentum",
+  subtitle: "The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help you with your challenges— so you never lose momentum and keep advancing fast.",
   features: [
     {
       icon: PeopleGroup,
-      title: "Unlimited 1:1 Sessions",
-      description: "Work directly with expert mentors online or in person—schedule as many sessions as you need. Get personalized guidance and feedback on any coding challenge, project, or concept.",
+      title: "7:1 Student–Teacher Ratio",
+      description: "Individual attention in every class.",
     },
     {
       icon: Handshake,
-      title: "Tailored to You",
-      description: "Every session adapts to your skill level, goals, and learning style. Whether you're debugging, building projects, or preparing for interviews, we meet you where you are.",
+      title: "Unlimited 1:1 Mentorship",
+      description: "From day one — and for a lifetime.",
     },
     {
       icon: Rocket,
-      title: "Available 24/7 via AI",
-      description: "Our AI-powered coding assistant, Rigobot, is available around the clock to answer questions, review your code, and help you troubleshoot—even when mentors aren't online.",
+      title: "24/7 AI Coding Assistant (Rigobot)",
+      description: "Instant feedback while you code.",
     },
     {
       icon: HandsGroup,
-      title: "Community-Powered Growth",
-      description: "Join a global network of developers on Slack and 4Geeks.com. Get peer support, share ideas, and grow alongside thousands of fellow learners and alumni.",
+      title: "Real Community Support",
+      description: "Mentors, alumni & peers always ready to help.",
     },
   ],
 };
@@ -151,26 +151,28 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:px-8">
+        <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
           {data.features.map((feature, index) => (
             <SolidCard 
               key={index}
-              className="p-5"
+              className="p-4"
               data-testid={`card-feature-${index + 1}`}
             >
-              <div className="flex flex-col items-center text-center">
+              <div className="flex items-center gap-4">
                 <feature.icon 
-                  width="64px" 
-                  height="64px" 
+                  width="48px" 
+                  height="48px" 
                   color="hsl(var(--primary))"
-                  className="mb-4"
+                  className="flex-shrink-0"
                 />
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm">
-                  {feature.description}
-                </p>
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </div>
               </div>
             </SolidCard>
           ))}
