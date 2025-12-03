@@ -201,28 +201,30 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-8 bg-primary/5"
+      className="py-16 bg-primary/5"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-left mb-12">
+          <div className="text-center mb-14">
             <h2 
-              className="text-3xl font-bold mb-4 text-foreground text-center"
+              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
               data-testid="text-stats-title"
             >
               {data.title}
             </h2>
-            {data.description.map((text, index) => (
-              <p key={index} className={`text-xl ${index < data.description.length - 1 ? 'mb-2' : ''}`}>
-                {text}
-              </p>
-            ))}
+            <div className="max-w-3xl mx-auto">
+              {data.description.map((text, index) => (
+                <p key={index} className={`text-lg md:text-xl text-muted-foreground ${index < data.description.length - 1 ? 'mb-3' : ''}`}>
+                  {text}
+                </p>
+              ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {data.stats.map((stat, index) => (
-              <Card key={index} className="p-6">
+              <Card key={index} className="p-8">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-6 md:block">
                   <div className="flex-shrink-0 md:mb-6">
                     {iconMap[stat.icon]}
