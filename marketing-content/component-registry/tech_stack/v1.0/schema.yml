@@ -1,0 +1,31 @@
+name: "Tech Stack Section"
+version: "1.0"
+component: "TechStackSection"
+file: "client/src/components/career-programs/TechStackSection.tsx"
+description: "Grid of technology icons showing what students will learn"
+
+when_to_use: |
+  Use to show the technologies covered in the program.
+  Great for SEO and helping learners understand the curriculum.
+
+props:
+  title:
+    type: string
+    required: true
+    example: "Technologies You'll Master"
+    
+  subtitle:
+    type: string
+    required: false
+    
+  technologies:
+    type: array
+    required: true
+    description: "List of technology names"
+    example: ["HTML5", "CSS3", "JavaScript", "Python", "React", "Node.js"]
+    
+  extras_text:
+    type: string
+    required: false
+    description: "Additional text about extra technologies"
+    example: "+ APIs, Git, SQL, REST, and AI tools"
