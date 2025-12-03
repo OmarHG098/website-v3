@@ -64,12 +64,22 @@ const getGapClass = (gap?: string): string => {
   return gap ? (gapMap[gap] || "gap-4") : "gap-4";
 };
 
+const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
+  switch (justify) {
+    case "center": return "items-center text-center";
+    case "end": return "items-end text-right";
+    case "start": 
+    default: return "items-start text-left";
+  }
+};
+
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
+  const itemsAlignClass = getItemsAlignClass(column.justify);
 
   return (
-    <div className={`flex flex-col ${gapClass}`}>
+    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
           className="text-3xl md:text-4xl font-bold text-foreground"
