@@ -11,12 +11,12 @@ function getBaseUrl(): string {
   if (process.env.SITE_URL) {
     return process.env.SITE_URL.replace(/\/$/, ""); // Remove trailing slash
   }
-  
+
   // Fall back to Replit's domain
   if (process.env.REPLIT_DEV_DOMAIN) {
     return `https://${process.env.REPLIT_DEV_DOMAIN}`;
   }
-  
+
   // Development fallback
   return "http://localhost:5000";
 }
@@ -61,13 +61,14 @@ function getAvailablePrograms(): AvailableProgram[] {
     for (const dir of dirs) {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
       if (!fs.statSync(programPath).isDirectory()) continue;
-      
+
       const files = fs.readdirSync(programPath).filter(f => f.endsWith(".yml"));
-      
+
       for (const file of files) {
         const locale = file.replace(".yml", "");
         const filePath = path.join(programPath, file);
-        
+
+
         try {
           const content = fs.readFileSync(filePath, "utf-8");
           const data = yaml.load(content) as {
@@ -75,7 +76,7 @@ function getAvailablePrograms(): AvailableProgram[] {
             title?: string;
             meta?: ContentMeta;
           };
-          
+
           programs.push({
             slug: data.slug || dir,
             locale,
@@ -121,11 +122,11 @@ function getAvailableLandings(): AvailableLanding[] {
       const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
       if (fs.statSync(landingPath).isDirectory()) {
         const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml"));
-        
+
         for (const file of files) {
           const locale = file.replace(".yml", "");
           const filePath = path.join(landingPath, file);
-          
+
           try {
             const content = fs.readFileSync(filePath, "utf-8");
             const data = yaml.load(content) as { 
@@ -133,7 +134,7 @@ function getAvailableLandings(): AvailableLanding[] {
               title: string; 
               meta?: LandingMeta 
             };
-            
+
             landings.push({
               slug: data.slug || dir,
               locale,
@@ -217,6 +218,20 @@ function buildSitemapXml(): string {
     priority: 0.8,
   });
 
+  urls.push({
+    loc: `${getBaseUrl()}/job-guarantee`,
+    lastmod: today,
+    changefreq: "weekly",
+    priority: 0.9,
+  });
+
+  urls.push({
+    loc: `${getBaseUrl()}/geekforce-career-support`,
+    lastmod: today,
+    changefreq: "weekly",
+    priority: 0.9,
+  });
+
   // Dynamic career program pages from YAML (only include indexable pages)
   const programs = getAvailablePrograms();
   for (const program of programs) {
@@ -241,19 +256,19 @@ function buildSitemapXml(): string {
   // Dynamic landing pages from YAML (only include indexable pages)
   const landings = getAvailableLandings();
   const processedLandingSlugs = new Set<string>();
-  
+
   for (const landing of landings) {
     // Skip if already processed (avoid duplicates for multi-locale landings)
     if (processedLandingSlugs.has(landing.slug)) continue;
-    
+
     // Skip pages marked as noindex
     if (!shouldIndex(landing.meta.robots)) {
       console.log(`[Sitemap] Skipping noindex landing: ${landing.slug}`);
       continue;
     }
-    
+
     processedLandingSlugs.add(landing.slug);
-    
+
     urls.push({
       loc: `${getBaseUrl()}/landing/${landing.slug}`,
       lastmod: today,
@@ -292,7 +307,7 @@ export function getSitemap(): string {
   // Generate fresh sitemap
   console.log("[Sitemap] Generating fresh sitemap");
   const xml = buildSitemapXml();
-  
+
   sitemapCache = {
     xml,
     generatedAt: now,
@@ -312,7 +327,7 @@ export function clearSitemapCache(): { success: boolean; message: string } {
       message: `Cache cleared. Previous cache was ${ageMinutes} minutes old.`,
     };
   }
-  
+
   return {
     success: true,
     message: "No cache to clear.",
@@ -357,17 +372,19 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   urls.push({ loc: `${getBaseUrl()}/tool-mastery`, label: "Tool Mastery" });
   urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
   urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
+  urls.push({ loc: `${getBaseUrl()}/job-guarantee`, label: "Job Guarantee" });
+  urls.push({ loc: `${getBaseUrl()}/geekforce-career-support`, label: "GeekForce Career Support" });
 
   // Dynamic career program pages from YAML (only indexable)
   const programs = getAvailablePrograms();
   for (const program of programs) {
     if (!shouldIndex(program.meta.robots)) continue;
-    
+
     const url = program.locale === "es"
       ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
       : `${getBaseUrl()}/us/career-programs/${program.slug}`;
     const localeLabel = program.locale === "es" ? "ES" : "EN";
-    
+
     urls.push({
       loc: url,
       label: `${program.title} (${localeLabel})`,
@@ -377,11 +394,11 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   // Dynamic landing pages from YAML (only indexable)
   const landings = getAvailableLandings();
   const processedLandingSlugs = new Set<string>();
-  
+
   for (const landing of landings) {
     if (processedLandingSlugs.has(landing.slug)) continue;
     if (!shouldIndex(landing.meta.robots)) continue;
-    
+
     processedLandingSlugs.add(landing.slug);
     urls.push({
       loc: `${getBaseUrl()}/landing/${landing.slug}`,

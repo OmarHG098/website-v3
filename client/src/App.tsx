@@ -18,6 +18,8 @@ const ToolMastery = lazy(() => import("@/pages/ToolMastery"));
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
+const JobGuarantee = lazy(() => import("@/pages/JobGuarantee"));
+const GeekForceCareerSupport = lazy(() => import("@/pages/GeekForceCareerSupport"));
 
 function LoadingFallback() {
   return (
@@ -45,6 +47,8 @@ function Router() {
         <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
+        <Route path="/job-guarantee" component={JobGuarantee} />
+        <Route path="/geekforce-career-support" component={GeekForceCareerSupport} />
         <Route path="/component-showcase" component={ComponentShowcase} />
         <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
         <Route component={NotFound} />
