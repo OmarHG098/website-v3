@@ -70,7 +70,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 className="bg-primary/5 border-0 shadow-none"
                 data-testid={`feature-ai-${index}`}
               >
-                <CardContent className="p-6">
+                <CardContent className="p-6 bg-[#f0f0f04d]">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                       {getIcon(feature.icon, isRigobot)}
