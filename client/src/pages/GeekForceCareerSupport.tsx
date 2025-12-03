@@ -338,21 +338,19 @@ function HeroSection({ data }: { data: typeof heroData }) {
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div className="text-center md:text-left relative">
+              <img 
+                src={vectorStroke} 
+                alt="" 
+                className="absolute right-0 md:right-[-50px] top-0 w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-50"
+                style={{ filter: 'grayscale(100%) brightness(0.5)' }}
+              />
               <p className="text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
-              <div className="flex items-center gap-4">
-                <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
-                  <span className="text-foreground">Geek</span>
-                  <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
-                </p>
-                <img 
-                  src={vectorStroke} 
-                  alt="" 
-                  className="w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-50"
-                  style={{ filter: 'grayscale(100%) brightness(0.5)' }}
-                />
-              </div>
+              <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+                <span className="text-foreground">Geek</span>
+                <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
+              </p>
               <h1 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
