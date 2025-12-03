@@ -695,7 +695,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[260px] md:w-[280px] h-[450px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
+      className="w-[280px] md:w-[300px] h-[480px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
@@ -706,13 +706,13 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         />
       </div>
       
-      <div className="p-3 flex flex-col flex-1 overflow-hidden">
+      <div className="p-4 flex flex-col flex-1 overflow-hidden">
         <div className="flex items-center justify-between mb-1 gap-2">
-          <h4 className="font-bold text-foreground text-base leading-tight">{testimonial.name}</h4>
+          <h4 className="font-bold text-foreground text-lg leading-tight">{testimonial.name}</h4>
           {testimonial.status === "Graduated" && (
             <div className="flex items-center gap-1 text-muted-foreground flex-shrink-0">
-              <IconSchool className="w-4 h-4" />
-              <span className="text-sm">Graduated</span>
+              <IconSchool className="w-5 h-5" />
+              <span className="text-base">Graduated</span>
             </div>
           )}
         </div>
@@ -722,23 +722,23 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`}
             style={{ transform: 'scale(0.8)', transformOrigin: 'left center' }}
           />
-          <span className="text-sm text-foreground">{testimonial.country.name}</span>
+          <span className="text-base text-foreground">{testimonial.country.name}</span>
         </div>
         
-        <p className="text-sm text-muted-foreground mb-2">
+        <p className="text-base text-muted-foreground mb-2">
           Contributor: {testimonial.contributor}
         </p>
         
         <div className="border-t border-border mb-2" />
         
-        <p className="text-sm text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
+        <p className="text-base text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
           {testimonial.description}
         </p>
         
         {testimonial.achievement ? (
           <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
-            <IconFlag className="w-3 h-3 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
+            <IconFlag className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
               {testimonial.achievement}
             </p>
           </div>
