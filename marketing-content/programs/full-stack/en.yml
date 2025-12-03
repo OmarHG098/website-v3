@@ -140,6 +140,15 @@ sections:
       title: "Full Stack Developer"
       subtitle: "4Geeks Academy Certificate"
 
+  - type: why_learn_ai
+    title: "Why Should I Learn to Build and Code with AI?"
+    subtitle: "Software Development as You Know It Will Cease to Exist"
+    description: "Coding with AI will become a new standard, but it's a very different profession from traditional software development. While AI can generate a product 400% faster in the short term, building and maintaining a secure, performant codebase with 90% AI-generated code in the long term requires merging yourself with the AI. We are witnessing a new profession come to fruition before our eyes. Are you ready to become an AI Coder?"
+    cta:
+      text: "Join now!"
+      url: "/signup"
+      variant: "primary"
+
   - type: testimonials
     title: "Your New Career Starts Here"
     subtitle: "See what our graduates have to say about their experience"
@@ -183,15 +192,6 @@ sections:
         rating: 5
         comment: "The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout."
         outcome: "Landed first tech job"
-
-  - type: why_learn_ai
-    title: "Why Should I Learn to Build and Code with AI?"
-    subtitle: "Software Development as You Know It Will Cease to Exist"
-    description: "Coding with AI will become a new standard, but it's a very different profession from traditional software development. While AI can generate a product 400% faster in the short term, building and maintaining a secure, performant codebase with 90% AI-generated code in the long term requires merging yourself with the AI. We are witnessing a new profession come to fruition before our eyes. Are you ready to become an AI Coder?"
-    cta:
-      text: "Join now!"
-      url: "/signup"
-      variant: "primary"
 
   - type: faq
     title: "Frequently Asked Questions"
