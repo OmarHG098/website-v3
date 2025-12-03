@@ -26,20 +26,9 @@ const heroData: HeroSectionType = {
   badge: "Job Guarantee",
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
-  trust_bar: {
-    rating: "4.5",
-    rating_count: "1,294",
-    trusted_text: "Trusted by 4,000+ graduates",
-  },
   cta_buttons: [
-    { text: "Apply now", url: "#apply", variant: "primary" },
+    { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
     { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
-  ],
-  award_badges: [
-    { name: "Top Coding Bootcamp", source: "Forbes", year: "2024" },
-    { name: "Best for Spanish Speakers", source: "Fortune", year: "2024" },
-    { name: "Top Coding Bootcamp", source: "Newsweek", year: "2024" },
-    { name: "Best Coding Bootcamp", source: "Course Report", year: "2025" },
   ],
 };
 
