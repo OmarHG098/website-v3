@@ -73,12 +73,12 @@ const getGapClass = (gap?: string): string => {
   return gap ? (gapMap[gap] || "gap-4") : "gap-4";
 };
 
-const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
+const getBlockAlignClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "center": return "lg:items-center";
-    case "end": return "lg:items-end";
+    case "center": return "self-center";
+    case "end": return "self-end";
     case "start": 
-    default: return "lg:items-start";
+    default: return "self-start";
   }
 };
 
@@ -109,83 +109,89 @@ const getTextFontSize = (size?: string): string => {
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
-  const itemsAlignClass = getItemsAlignClass(column.justify);
+  const blockAlignClass = getBlockAlignClass(column.justify);
   const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
 
-  return (
-    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
-      {column.heading && (
-        <h2 
-          className={`text-3xl md:text-4xl font-bold text-foreground ${textAlignClass}`}
-          data-testid="text-two-column-heading"
-        >
-          {column.heading}
-        </h2>
-      )}
-      
-      {column.sub_heading && (
-        <p 
-          className={`${textFontSize} ${textAlignClass}`}
-          data-testid="text-two-column-subheading"
-        >
-          {column.sub_heading}
-        </p>
-      )}
-      
-      {column.description && (
-        <p 
-          className={`${textFontSize} text-muted-foreground leading-relaxed ${textAlignClass}`}
-          data-testid="text-two-column-description"
-        >
-          {column.description}
-        </p>
-      )}
+  const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.button;
 
-      {column.html_content && (
-        <div 
-          className={`text-muted-foreground leading-relaxed ${textAlignClass}`}
-          dangerouslySetInnerHTML={{ __html: column.html_content }}
-          data-testid="html-two-column-content"
-        />
-      )}
-      
-      {column.bullets && column.bullets.length > 0 && (
-        <ul className={`space-y-4 ${textAlignClass}`} data-testid="list-two-column-bullets">
-          {column.bullets.map((bullet, index) => (
-            <li key={index} className="flex items-start gap-3">
-              <span className="text-primary mt-1 flex-shrink-0">
-                {getIcon(bullet.icon || bulletIcon, "w-5 h-5")}
-              </span>
-              <div className={`flex flex-col ${textAlignClass}`}>
-                {bullet.heading && (
-                  <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
-                )}
-                <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-      
-      {column.button && (
-        <div className="mt-2">
-          <Button
-            variant={column.button.variant === "primary" ? "default" : column.button.variant}
-            size="lg"
-            asChild
-            data-testid="button-two-column-cta"
-          >
-            <a href={column.button.url} className="flex items-center gap-2">
-              {column.button.icon && getIcon(column.button.icon)}
-              {column.button.text}
-            </a>
-          </Button>
+  return (
+    <div className={`flex flex-col ${gapClass}`}>
+      {hasTextContent && (
+        <div className={`flex flex-col ${gapClass} w-full lg:max-w-xl ${blockAlignClass} ${textAlignClass}`}>
+          {column.heading && (
+            <h2 
+              className="text-3xl md:text-4xl font-bold text-foreground"
+              data-testid="text-two-column-heading"
+            >
+              {column.heading}
+            </h2>
+          )}
+          
+          {column.sub_heading && (
+            <p 
+              className={textFontSize}
+              data-testid="text-two-column-subheading"
+            >
+              {column.sub_heading}
+            </p>
+          )}
+          
+          {column.description && (
+            <p 
+              className={`${textFontSize} text-muted-foreground leading-relaxed`}
+              data-testid="text-two-column-description"
+            >
+              {column.description}
+            </p>
+          )}
+
+          {column.html_content && (
+            <div 
+              className="text-muted-foreground leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: column.html_content }}
+              data-testid="html-two-column-content"
+            />
+          )}
+          
+          {column.bullets && column.bullets.length > 0 && (
+            <ul className="space-y-4" data-testid="list-two-column-bullets">
+              {column.bullets.map((bullet, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="text-primary mt-1 flex-shrink-0">
+                    {getIcon(bullet.icon || bulletIcon, "w-5 h-5")}
+                  </span>
+                  <div className="flex flex-col">
+                    {bullet.heading && (
+                      <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                    )}
+                    <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          
+          {column.button && (
+            <div className="mt-2">
+              <Button
+                variant={column.button.variant === "primary" ? "default" : column.button.variant}
+                size="lg"
+                asChild
+                data-testid="button-two-column-cta"
+              >
+                <a href={column.button.url} className="flex items-center gap-2">
+                  {column.button.icon && getIcon(column.button.icon)}
+                  {column.button.text}
+                </a>
+              </Button>
+            </div>
+          )}
         </div>
       )}
       
       {column.image && (
-        <div className={`flex ${getResponsiveJustifyClass(column.justify)}`}>
+        <div className={`flex w-full ${getResponsiveJustifyClass(column.justify)}`}>
           <img 
             src={column.image} 
             alt={column.image_alt || "Section image"}
