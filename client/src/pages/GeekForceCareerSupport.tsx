@@ -475,6 +475,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   );
 }
 
+// Hyperpersonalized Career Support Section - Uses TwoColumn component
 function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
   return (
     <TwoColumn
