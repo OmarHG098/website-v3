@@ -100,38 +100,38 @@ const getTextFontSize = (size?: string): string => {
 
 const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): string => {
   const paddingMap: Record<string, string> = {
-    "0": side === "left" ? "pl-0" : "pr-0",
-    "1": side === "left" ? "pl-1" : "pr-1",
-    "2": side === "left" ? "pl-2" : "pr-2",
-    "3": side === "left" ? "pl-3" : "pr-3",
-    "4": side === "left" ? "pl-4" : "pr-4",
-    "5": side === "left" ? "pl-5" : "pr-5",
-    "6": side === "left" ? "pl-6" : "pr-6",
-    "7": side === "left" ? "pl-7" : "pr-7",
-    "8": side === "left" ? "pl-8" : "pr-8",
-    "9": side === "left" ? "pl-9" : "pr-9",
-    "10": side === "left" ? "pl-10" : "pr-10",
-    "11": side === "left" ? "pl-11" : "pr-11",
-    "12": side === "left" ? "pl-12" : "pr-12",
-    "14": side === "left" ? "pl-14" : "pr-14",
-    "16": side === "left" ? "pl-16" : "pr-16",
-    "20": side === "left" ? "pl-20" : "pr-20",
-    "24": side === "left" ? "pl-24" : "pr-24",
-    "28": side === "left" ? "pl-28" : "pr-28",
-    "32": side === "left" ? "pl-32" : "pr-32",
-    "36": side === "left" ? "pl-36" : "pr-36",
-    "40": side === "left" ? "pl-40" : "pr-40",
-    "44": side === "left" ? "pl-44" : "pr-44",
-    "48": side === "left" ? "pl-48" : "pr-48",
-    "52": side === "left" ? "pl-52" : "pr-52",
-    "56": side === "left" ? "pl-56" : "pr-56",
-    "60": side === "left" ? "pl-60" : "pr-60",
-    "64": side === "left" ? "pl-64" : "pr-64",
-    "72": side === "left" ? "pl-72" : "pr-72",
-    "80": side === "left" ? "pl-80" : "pr-80",
-    "96": side === "left" ? "pl-96" : "pr-96",
+    "0": side === "left" ? "lg:pl-0" : "lg:pr-0",
+    "1": side === "left" ? "lg:pl-1" : "lg:pr-1",
+    "2": side === "left" ? "lg:pl-2" : "lg:pr-2",
+    "3": side === "left" ? "lg:pl-3" : "lg:pr-3",
+    "4": side === "left" ? "lg:pl-4" : "lg:pr-4",
+    "5": side === "left" ? "lg:pl-5" : "lg:pr-5",
+    "6": side === "left" ? "lg:pl-6" : "lg:pr-6",
+    "7": side === "left" ? "lg:pl-7" : "lg:pr-7",
+    "8": side === "left" ? "lg:pl-8" : "lg:pr-8",
+    "9": side === "left" ? "lg:pl-9" : "lg:pr-9",
+    "10": side === "left" ? "lg:pl-10" : "lg:pr-10",
+    "11": side === "left" ? "lg:pl-11" : "lg:pr-11",
+    "12": side === "left" ? "lg:pl-12" : "lg:pr-12",
+    "14": side === "left" ? "lg:pl-14" : "lg:pr-14",
+    "16": side === "left" ? "lg:pl-16" : "lg:pr-16",
+    "20": side === "left" ? "lg:pl-20" : "lg:pr-20",
+    "24": side === "left" ? "lg:pl-24" : "lg:pr-24",
+    "28": side === "left" ? "lg:pl-28" : "lg:pr-28",
+    "32": side === "left" ? "lg:pl-32" : "lg:pr-32",
+    "36": side === "left" ? "lg:pl-36" : "lg:pr-36",
+    "40": side === "left" ? "lg:pl-40" : "lg:pr-40",
+    "44": side === "left" ? "lg:pl-44" : "lg:pr-44",
+    "48": side === "left" ? "lg:pl-48" : "lg:pr-48",
+    "52": side === "left" ? "lg:pl-52" : "lg:pr-52",
+    "56": side === "left" ? "lg:pl-56" : "lg:pr-56",
+    "60": side === "left" ? "lg:pl-60" : "lg:pr-60",
+    "64": side === "left" ? "lg:pl-64" : "lg:pr-64",
+    "72": side === "left" ? "lg:pl-72" : "lg:pr-72",
+    "80": side === "left" ? "lg:pl-80" : "lg:pr-80",
+    "96": side === "left" ? "lg:pl-96" : "lg:pr-96",
   };
-  const defaultPadding = side === "left" ? "pl-24" : "pr-24";
+  const defaultPadding = side === "left" ? "lg:pl-24" : "lg:pr-24";
   return padding ? (paddingMap[padding] || defaultPadding) : defaultPadding;
 };
 
@@ -277,7 +277,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
       data-testid="section-two-column"
       style={containerStyle}
     >
-      <div className={`container mx-auto ${paddingLeftClass} ${paddingRightClass}`}>
+      <div className={`container mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
         <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>

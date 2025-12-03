@@ -33,7 +33,7 @@ const heroData: HeroSectionType = {
 };
 
 const statsData = {
-  title: "Does the Job Guarantee Deliver Results You Can Count On?",
+  title: "Does the Job Guarantee deliver results you can count on?",
   description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
     { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
@@ -189,7 +189,6 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
-// Stats section showcasing job placement metrics and program success rates
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="90" height="81" />,
@@ -211,7 +210,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
             >
               {data.title}
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>
@@ -252,7 +251,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
 
   return (
     <section 
-      className="pb-8 pt-10 bg-sky-50"
+      className="pb-8 pt-10"
       data-testid="section-programs"
     >
       <div className="container mx-auto px-4">
