@@ -188,8 +188,8 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
               {column.bullets.map((bullet, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
-                    {column.bullet_text 
-                      ? column.bullet_text 
+                    {column.bullet_char 
+                      ? column.bullet_char 
                       : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
                     }
                   </span>
