@@ -19,6 +19,7 @@ interface AdvanceFeature {
   icon: React.ComponentType<IconProps>;
   title: string;
   description: string;
+  iconColor: string;
 }
 
 const heroData = {
@@ -42,21 +43,25 @@ const advanceFasterData: {
       icon: PeopleGroup,
       title: "7:1 Student–Teacher Ratio",
       description: "Individual attention in every class.",
+      iconColor: "hsl(var(--primary))",
     },
     {
       icon: Handshake,
       title: "Unlimited 1:1 Mentorship",
       description: "From day one — and for a lifetime.",
+      iconColor: "hsl(var(--chart-4))",
     },
     {
       icon: Rocket,
       title: "24/7 AI Coding Assistant (Rigobot)",
       description: "Instant feedback while you code.",
+      iconColor: "hsl(var(--chart-5))",
     },
     {
       icon: HandsGroup,
       title: "Real Community Support",
       description: "Mentors, alumni & peers always ready to help.",
+      iconColor: "hsl(var(--destructive))",
     },
   ],
 };
@@ -162,7 +167,7 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
                 <feature.icon 
                   width="48px" 
                   height="48px" 
-                  color="hsl(var(--primary))"
+                  color={feature.iconColor}
                   className="flex-shrink-0"
                 />
                 <div>
