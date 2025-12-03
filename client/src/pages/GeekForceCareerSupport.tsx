@@ -718,7 +718,10 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
         
         <div className="flex items-center gap-1.5 mb-1">
-          <span className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`} />
+          <span 
+            className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`}
+            style={{ transform: 'scale(0.7)', transformOrigin: 'left center' }}
+          />
           <span className="text-sm text-foreground">{testimonial.country.name}</span>
         </div>
         
