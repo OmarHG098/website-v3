@@ -222,26 +222,24 @@ function StatsSection({ data }: { data: typeof statsData }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
             {data.stats.map((stat, index) => (
-              <Card key={index} className="p-8">
-                <div data-testid={`stat-card-${index}`} className="flex items-center gap-6 md:block">
-                  <div className="flex-shrink-0 md:mb-6">
-                    {iconMap[stat.icon]}
-                  </div>
-                  <div>
-                    <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
-                      {stat.value}
-                      {stat.valueSuffix && (
-                        <span className="text-2xl md:text-3xl ml-1 md:block md:ml-0 lg:inline lg:ml-1">
-                          {stat.valueSuffix}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xl text-muted-foreground">{stat.label}</div>
-                  </div>
+              <div key={index} data-testid={`stat-item-${index}`} className="flex items-center gap-5">
+                <div className="flex-shrink-0">
+                  {iconMap[stat.icon]}
                 </div>
-              </Card>
+                <div>
+                  <div className="text-4xl md:text-5xl font-semibold text-foreground">
+                    {stat.value}
+                    {stat.valueSuffix && (
+                      <span className="text-xl md:text-2xl ml-1">
+                        {stat.valueSuffix}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
