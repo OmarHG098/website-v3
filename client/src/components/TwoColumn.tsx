@@ -97,6 +97,25 @@ const getTextFontSize = (size?: string): string => {
   return size ? (sizeMap[size] || "text-xl") : "text-xl";
 };
 
+const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): string => {
+  const paddingMap: Record<string, string> = {
+    "0": side === "left" ? "pl-0" : "pr-0",
+    "1": side === "left" ? "pl-1" : "pr-1",
+    "2": side === "left" ? "pl-2" : "pr-2",
+    "3": side === "left" ? "pl-3" : "pr-3",
+    "4": side === "left" ? "pl-4" : "pr-4",
+    "6": side === "left" ? "pl-6" : "pr-6",
+    "8": side === "left" ? "pl-8" : "pr-8",
+    "10": side === "left" ? "pl-10" : "pr-10",
+    "12": side === "left" ? "pl-12" : "pr-12",
+    "16": side === "left" ? "pl-16" : "pr-16",
+    "20": side === "left" ? "pl-20" : "pr-20",
+    "24": side === "left" ? "pl-24" : "pr-24",
+  };
+  const defaultPadding = side === "left" ? "pl-4" : "pr-4";
+  return padding ? (paddingMap[padding] || defaultPadding) : defaultPadding;
+};
+
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
@@ -224,6 +243,8 @@ export function TwoColumn({ data }: TwoColumnProps) {
   const leftColClass = getGridColClass(leftProportion);
   const rightColClass = getGridColClass(rightProportion);
   const columnGapClass = getGapClass(data.gap || "8");
+  const paddingLeftClass = getPaddingClass(data.padding_left, "left");
+  const paddingRightClass = getPaddingClass(data.padding_right, "right");
   
   const containerStyle: CSSProperties = data.container_style 
     ? (data.container_style as unknown as CSSProperties)
@@ -237,21 +258,19 @@ export function TwoColumn({ data }: TwoColumnProps) {
       data-testid="section-two-column"
       style={containerStyle}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
-            {data.left && (
-              <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
-                <ColumnContent column={data.left} />
-              </div>
-            )}
-            
-            {data.right && (
-              <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 lg:order-2" : ""}`}>
-                <ColumnContent column={data.right} />
-              </div>
-            )}
-          </div>
+      <div className={`container mx-auto ${paddingLeftClass} ${paddingRightClass}`}>
+        <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
+          {data.left && (
+            <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
+              <ColumnContent column={data.left} />
+            </div>
+          )}
+          
+          {data.right && (
+            <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 lg:order-2" : ""}`}>
+              <ColumnContent column={data.right} />
+            </div>
+          )}
         </div>
       </div>
     </section>

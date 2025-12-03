@@ -195,6 +195,8 @@ export const twoColumnSectionSchema = z.object({
   right: twoColumnColumnSchema.optional(),
   reverse_on_mobile: z.boolean().optional(),
   gap: z.string().optional(),
+  padding_left: z.string().optional(),
+  padding_right: z.string().optional(),
 });
 
 export const syllabusModuleSchema = z.object({
