@@ -137,6 +137,7 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
 
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
+  const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
   const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
@@ -186,7 +187,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
             <ul className="space-y-4" data-testid="list-two-column-bullets">
               {column.bullets.map((bullet, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <span className="text-primary mt-1 flex-shrink-0">
+                  <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
                     {getIcon(bullet.icon || bulletIcon, "w-5 h-5")}
                   </span>
                   <div className="flex flex-col">
