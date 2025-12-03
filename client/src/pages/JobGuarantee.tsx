@@ -206,6 +206,7 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
+// Stats section with job placement metrics displayed in cards
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="75" height="68" />,
