@@ -431,9 +431,24 @@ function StatsSection({ data }: { data: typeof statsData }) {
 }
 
 function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
-  const LOGOS_PER_PAGE = 8;
-  const totalPages = Math.ceil(data.logos.length / LOGOS_PER_PAGE);
+  const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const LOGOS_PER_PAGE = isMobile ? 4 : 8;
+  const totalPages = Math.ceil(data.logos.length / LOGOS_PER_PAGE);
+
+  useEffect(() => {
+    if (currentPage >= totalPages) {
+      setCurrentPage(Math.max(0, totalPages - 1));
+    }
+  }, [currentPage, totalPages]);
 
   const goToPrevious = useCallback(() => {
     setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
@@ -486,7 +501,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
                 {currentLogos.map((logo, index) => (
                   <Card 
                     key={`${currentPage}-${index}`} 
-                    className="p-6 flex items-center justify-center h-32"
+                    className="p-3 lg:p-6 flex items-center justify-center h-40"
                     data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
                   >
                     <img
