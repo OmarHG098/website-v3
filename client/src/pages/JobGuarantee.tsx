@@ -49,7 +49,6 @@ const statsData = {
 const eligibleData: TwoColumnSectionType = {
   type: "two_column",
   proportions: [8, 4],
-  alignment: "center",
   left: {
     heading: "Who's Eligible?",
     sub_heading: "You'll qualify for the Job Guarantee if you:",
@@ -65,7 +64,8 @@ const eligibleData: TwoColumnSectionType = {
       url: "#apply",
       variant: "primary",
     },
-    justify: "center"
+    text_align: "left",
+    justify: "end"
   },
   right: {
     image: eligibleImage,

@@ -114,10 +114,10 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   const textFontSize = getTextFontSize(column.font_size);
 
   return (
-    <div className={`flex flex-col ${gapClass} ${itemsAlignClass} ${textAlignClass}`}>
+    <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className="text-3xl md:text-4xl font-bold text-foreground text-center self-center lg:self-auto"
+          className={`text-3xl md:text-4xl font-bold text-foreground w-full ${textAlignClass}`}
           data-testid="text-two-column-heading"
         >
           {column.heading}
@@ -126,7 +126,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className={`${textFontSize}`}
+          className={`${textFontSize} w-full ${textAlignClass}`}
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
@@ -135,7 +135,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.description && (
         <p 
-          className={`${textFontSize} text-muted-foreground leading-relaxed`}
+          className={`${textFontSize} text-muted-foreground leading-relaxed w-full ${textAlignClass}`}
           data-testid="text-two-column-description"
         >
           {column.description}
@@ -144,7 +144,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
 
       {column.html_content && (
         <div 
-          className="text-muted-foreground leading-relaxed"
+          className={`text-muted-foreground leading-relaxed w-full ${textAlignClass}`}
           dangerouslySetInnerHTML={{ __html: column.html_content }}
           data-testid="html-two-column-content"
         />
