@@ -32,9 +32,7 @@ const heroData: HeroSectionType = {
 };
 
 const statsData = {
-  titleStart: "Does the Job Guarantee deliver results ",
-  titleHighlight: "you can count on",
-  titleEnd: "?",
+  title: "Does the Job Guarantee deliver results you can count on?",
   description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
     { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
@@ -227,7 +225,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
               className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
               data-testid="text-stats-title"
             >
-              {data.titleStart}<span className="text-primary">{data.titleHighlight}</span>{data.titleEnd}
+              {data.title}
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto">
               {data.description}
