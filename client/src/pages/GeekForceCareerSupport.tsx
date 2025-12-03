@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { IconCheck, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
+import { US, UY, CR } from "country-flag-icons/react/3x2";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -701,10 +702,10 @@ function isoToFlagEmoji(iso: string): string {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[240px] md:w-[260px] h-[420px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
+      className="w-[260px] md:w-[280px] h-[450px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
-      <div className="h-32 w-full overflow-hidden flex-shrink-0">
+      <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
         <img 
           src={testimonial.img} 
           alt={testimonial.name}
@@ -734,7 +735,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         
         <div className="border-t border-border mb-2" />
         
-        <p className="text-xs text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
+        <p className="text-sm text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
           {testimonial.description}
         </p>
         
@@ -770,7 +771,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
       
       <Marquee 
         gradient={false} 
-        speed={40} 
+        speed={42} 
         pauseOnHover={true}
         data-testid="marquee-testimonials"
       >
