@@ -156,14 +156,14 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {data.features.map((feature, index) => (
             <SolidCard 
               key={index}
-              className="p-3 md:p-4 md:pb-6"
+              className="p-4 md:p-5 md:pb-8"
               data-testid={`card-feature-${index + 1}`}
             >
-              <div className="flex flex-col items-start gap-3 md:gap-4">
+              <div className="flex flex-col items-start gap-4 md:gap-6">
                 <feature.icon 
                   width="68px" 
                   height="68px" 
