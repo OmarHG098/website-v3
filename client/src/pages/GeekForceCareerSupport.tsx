@@ -399,17 +399,17 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
       data={{
         type: "two_column",
         background: "bg-amber-50",
-        proportions: [4, 8],
+        proportions: [8, 4],
         reverse_on_mobile: true,
         alignment: "center",
-        left: {
+        right: {
           image: careerSupportImage,
           image_alt: "Career support team members collaborating",
         },
-        right: {
+        left: {
           heading: data.title,
           description: data.description,
-          justify: "start",
+          justify: "center",
           text_align: "left",
           font_size: "sm",
           bullet_icon: "Check",
