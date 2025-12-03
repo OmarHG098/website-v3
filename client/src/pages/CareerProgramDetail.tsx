@@ -6,6 +6,7 @@ import type { CareerProgram } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import Header from "@/components/Header";
 
 export default function CareerProgramDetail() {
   const { i18n } = useTranslation();
@@ -65,6 +66,7 @@ export default function CareerProgramDetail() {
 
   return (
     <div data-testid="page-career-program">
+      <Header />
       <SectionRenderer sections={program.sections} />
     </div>
   );

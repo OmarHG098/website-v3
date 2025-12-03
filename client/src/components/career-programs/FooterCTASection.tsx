@@ -11,7 +11,7 @@ export function FooterCTASection({ data }: FooterCTASectionProps) {
       className="py-16 bg-primary"
       data-testid="section-footer-cta"
     >
-      <div className="container mx-auto px-4 text-center">
+      <div className="max-w-6xl mx-auto px-4 text-center">
         <h2 
           className="text-3xl md:text-4xl font-bold mb-4 text-primary-foreground"
           data-testid="text-footer-cta-title"

@@ -1,13 +1,13 @@
+
 import type { Section } from "@shared/schema";
 import { HeroSection } from "./HeroSection";
-import { ProgramOverviewSection } from "./ProgramOverviewSection";
+import { SyllabusSection } from "./SyllabusSection";
+import { ProjectsSection } from "./ProjectsSection";
 import { AILearningSection } from "./AILearningSection";
-import { MentorshipSection } from "./MentorshipSection";
-import { FeaturesChecklistSection } from "./FeaturesChecklistSection";
-import { TechStackSection } from "./TechStackSection";
 import { CertificateSection } from "./CertificateSection";
+import { WhyLearnAISection } from "./WhyLearnAISection";
 import { FAQSection } from "./FAQSection";
-import { CredibilitySection } from "./CredibilitySection";
+import { TestimonialsSection } from "./TestimonialsSection";
 import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 
@@ -22,22 +22,20 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
         switch (section.type) {
           case "hero":
             return <HeroSection key={index} data={section} />;
-          case "program_overview":
-            return <ProgramOverviewSection key={index} data={section} />;
+          case "syllabus":
+            return <SyllabusSection key={index} data={section} />;
+          case "projects":
+            return <ProjectsSection key={index} data={section} />;
           case "ai_learning":
             return <AILearningSection key={index} data={section} />;
-          case "mentorship":
-            return <MentorshipSection key={index} data={section} />;
-          case "features_checklist":
-            return <FeaturesChecklistSection key={index} data={section} />;
-          case "tech_stack":
-            return <TechStackSection key={index} data={section} />;
           case "certificate":
             return <CertificateSection key={index} data={section} />;
+          case "why_learn_ai":
+            return <WhyLearnAISection key={index} data={section} />;
           case "faq":
             return <FAQSection key={index} data={section} />;
-          case "credibility":
-            return <CredibilitySection key={index} data={section} />;
+          case "testimonials":
+            return <TestimonialsSection key={index} data={section} />;
           case "footer_cta":
             return <FooterCTASection key={index} data={section} />;
           case "footer":

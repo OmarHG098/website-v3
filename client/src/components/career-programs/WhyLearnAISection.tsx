@@ -1,0 +1,63 @@
+import { Button } from "@/components/ui/button";
+import type { WhyLearnAISection as WhyLearnAISectionType } from "@shared/schema";
+import manWithLaptop from "@assets/man-with-laptop_1764772912948.webp";
+
+interface WhyLearnAISectionProps {
+  data: WhyLearnAISectionType;
+}
+
+export function WhyLearnAISection({ data }: WhyLearnAISectionProps) {
+  return (
+    <section 
+      className="py-16 bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+      data-testid="section-why-learn-ai"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 
+              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+              data-testid="text-why-learn-title"
+            >
+              {data.title}
+            </h2>
+            
+            <h3 
+              className="text-xl font-bold mb-6 text-foreground"
+              data-testid="text-why-learn-subtitle"
+            >
+              {data.subtitle}
+            </h3>
+            
+            <p 
+              className="text-muted-foreground mb-8 leading-relaxed"
+              data-testid="text-why-learn-description"
+            >
+              {data.description}
+            </p>
+            
+            {data.cta && (
+              <Button
+                variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+                asChild
+                data-testid="button-why-learn-cta"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
+          </div>
+          
+          <div className="flex justify-center lg:justify-end">
+            <img 
+              src={manWithLaptop}
+              alt="Developer coding with AI"
+              className="max-w-full h-auto max-h-[400px] object-contain"
+              loading="lazy"
+              data-testid="img-why-learn-ai"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

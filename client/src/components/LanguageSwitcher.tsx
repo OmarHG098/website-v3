@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'wouter';
 import { IconWorld } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,12 +14,36 @@ const languages = [
   { code: 'es', name: 'Español' }
 ];
 
+const routeMappings = [
+  { en: '/us/career-programs/', es: '/es/programas-de-carrera/' },
+];
+
+function getLocalizedPath(currentPath: string, targetLang: string): string | null {
+  for (const mapping of routeMappings) {
+    if (targetLang === 'es' && currentPath.startsWith(mapping.en)) {
+      const slug = currentPath.slice(mapping.en.length);
+      return mapping.es + slug;
+    }
+    if (targetLang === 'en' && currentPath.startsWith(mapping.es)) {
+      const slug = currentPath.slice(mapping.es.length);
+      return mapping.en + slug;
+    }
+  }
+  return null;
+}
+
 export default function LanguageSwitcher() {
   const { t, i18n } = useTranslation();
+  const [location, setLocation] = useLocation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     document.documentElement.lang = lng;
+    
+    const localizedPath = getLocalizedPath(location, lng);
+    if (localizedPath) {
+      setLocation(localizedPath);
+    }
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];

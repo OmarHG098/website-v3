@@ -1,113 +1,151 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
-import { IconRobot } from "@tabler/icons-react";
 import type { AILearningSection as AILearningSectionType } from "@shared/schema";
 import type { ComponentType } from "react";
+import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
 }
 
+function extractYouTubeId(url: string): string | null {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\s?]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
+
 export function AILearningSection({ data }: AILearningSectionProps) {
-  const getIcon = (iconName: string) => {
+  const getIcon = (iconName: string, isRigobot: boolean = false) => {
+    if (isRigobot) {
+      return (
+        <img 
+          src={rigobotLogo} 
+          alt="Rigobot" 
+          className="w-7 h-7 object-contain"
+        />
+      );
+    }
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
     const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={28} className="text-primary" /> : null;
+    return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
   };
+
+  const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
 
   return (
     <section 
-      className="py-16 bg-muted/30"
+      className="py-16"
       data-testid="section-ai-learning"
     >
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            {data.badge && (
-              <Badge 
-                variant="secondary" 
-                className="mb-4"
-                data-testid="badge-ai-learning"
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            data-testid="text-ai-title"
+          >
+            {data.title}
+          </h2>
+          
+          <p 
+            className="text-lg text-muted-foreground max-w-3xl mx-auto"
+            data-testid="text-ai-description"
+          >
+            {data.description}
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {data.features.slice(0, 3).map((feature, index) => {
+            const isRigobot = feature.title.toLowerCase().includes('rigobot');
+            return (
+              <Card 
+                key={index} 
+                className="bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-0 shadow-none"
+                data-testid={`feature-ai-${index}`}
               >
-                {data.badge}
-              </Badge>
-            )}
-            
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
-              data-testid="text-ai-title"
-            >
-              {data.title}
-            </h2>
-            
-            <p 
-              className="text-lg text-muted-foreground mb-8"
-              data-testid="text-ai-description"
-            >
-              {data.description}
-            </p>
-            
-            <div className="space-y-6">
-              {data.features.map((feature, index) => (
-                <div 
-                  key={index} 
-                  className="flex gap-4"
-                  data-testid={`feature-ai-${index}`}
-                >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    {getIcon(feature.icon)}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      {getIcon(feature.icon, isRigobot)}
+                    </div>
+                    <h3 className="font-semibold text-foreground">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm">
-                      {feature.description}
-                    </p>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {data.chat_example && (
-            <Card 
-              className="bg-background border shadow-lg"
-              data-testid="card-chat-example"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b">
-                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                    <TablerIcons.IconRobot size={24} className="text-primary-foreground" />
+                  <p className="text-muted-foreground text-sm">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {(data.highlight || videoId) && (
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {data.highlight && (
+              <div data-testid="highlight-block">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
+                    <img 
+                      src={rigobotLogo} 
+                      alt="Rigobot" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">
-                      {data.chat_example.bot_name}
-                    </p>
-                    <p className="text-xs text-green-500">
-                      {data.chat_example.bot_status}
-                    </p>
+                    <h3 
+                      className="text-2xl md:text-3xl font-bold text-foreground mb-2"
+                      data-testid="text-highlight-title"
+                    >
+                      {data.highlight.title}
+                    </h3>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="flex justify-end">
-                    <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 max-w-[80%]">
-                      <p className="text-sm">{data.chat_example.user_message}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-start">
-                    <div className="bg-muted rounded-lg px-4 py-2 max-w-[80%]">
-                      <p className="text-sm text-foreground">{data.chat_example.bot_response}</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                <p 
+                  className="mb-6 text-[#666666] text-[18px]"
+                  data-testid="text-highlight-description"
+                >
+                  {data.highlight.description}
+                </p>
+                
+                {data.highlight.cta && (
+                  <Button
+                    variant={data.highlight.cta.variant === "primary" ? "default" : data.highlight.cta.variant === "outline" ? "outline" : "secondary"}
+                    asChild
+                    data-testid="button-highlight-cta"
+                  >
+                    <a href={data.highlight.cta.url}>{data.highlight.cta.text}</a>
+                  </Button>
+                )}
+              </div>
+            )}
+            
+            {videoId && (
+              <div 
+                className="relative aspect-video rounded-lg overflow-hidden shadow-lg"
+                data-testid="video-container-ai"
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title="Learn with 4Geeks"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                  data-testid="iframe-youtube-video"
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
