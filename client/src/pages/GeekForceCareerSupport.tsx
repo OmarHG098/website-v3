@@ -129,9 +129,11 @@ interface Testimonial {
 
 const testimonialsData: {
   title: string;
+  description: string;
   testimonials: Testimonial[];
 } = {
-  title: "Success Stories from Our Graduates",
+  title: "Real Careers Start Here — Just Ask Our Students",
+  description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing.",
   testimonials: [
     {
       name: "Loretta Thompson",
@@ -753,11 +755,17 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
     >
       <div className="container mx-auto px-4 mb-8">
         <h2 
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground"
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-testimonials-title"
         >
           {data.title}
         </h2>
+        <p 
+          className="text-center text-muted-foreground max-w-3xl mx-auto text-base md:text-lg"
+          data-testid="text-testimonials-description"
+        >
+          {data.description}
+        </p>
       </div>
       
       <Marquee 
