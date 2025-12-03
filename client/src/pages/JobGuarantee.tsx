@@ -559,7 +559,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 <div key={index} className="w-full relative -mt-2">
                   {!isLast && (
                     <svg 
-                      className={`absolute ${isLeft ? 'left-[90px]' : 'right-[90px]'} top-[80px] w-[150px] h-[69px]`}
+                      className={`absolute ${isLeft ? 'left-[90px]' : 'right-[90px]'} top-[55px] w-[150px] h-[69px]`}
                       viewBox="0 0 200 100"
                       preserveAspectRatio="none"
                       style={!isLeft ? { zIndex: 1, transform: 'rotate(-45deg)', transformOrigin: 'right center' } : { zIndex: 1 }}
