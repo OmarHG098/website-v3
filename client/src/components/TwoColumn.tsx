@@ -111,7 +111,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className={`${textFontSize} text-muted-foreground`}
+          className={`${textFontSize}`}
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
