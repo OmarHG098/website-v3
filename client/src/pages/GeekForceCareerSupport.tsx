@@ -529,7 +529,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-6 bg-sky-200"
+      className="py-8 bg-sky-200"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
@@ -695,7 +695,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[280px] md:w-[300px] h-[480px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
+      className="w-[240px] md:w-[300px] h-[440px] md:h-[490px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
@@ -738,7 +738,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         {testimonial.achievement ? (
           <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
             <IconFlag className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+            <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
               {testimonial.achievement}
             </p>
           </div>
@@ -753,7 +753,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
   return (
     <section 
-      className="py-12 md:py-16 bg-muted/30"
+      className="py-12 md:py-16 bg-sidebar"
       data-testid="section-testimonials"
     >
       <div className="container mx-auto px-4 mb-8">
