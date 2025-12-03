@@ -29,6 +29,7 @@ import {
   IconSearch,
   IconExternalLink,
   IconWorld,
+  IconMessage,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,6 +48,7 @@ const componentsList = [
   { type: "features_checklist", label: "Features Checklist", icon: IconChecklist, description: "Benefits list" },
   { type: "tech_stack", label: "Tech Stack", icon: IconCode, description: "Technologies grid" },
   { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
+  { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
   { type: "credibility", label: "Credibility", icon: IconChartBar, description: "Stats and logos" },
   { type: "footer_cta", label: "Footer CTA", icon: IconArrowRight, description: "Final call-to-action" },
