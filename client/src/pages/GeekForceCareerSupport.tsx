@@ -481,13 +481,14 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
     <TwoColumn
       data={{
         type: "two_column",
-        proportions: [5, 7],
+        proportions: [4, 8],
         background: "bg-muted/30",
         alignment: "center",
         gap: "12",
         reverse_on_mobile: true,
         left: {
-          video: "-2ZvlgDnltc",
+          image: communityImage,
+          image_alt: "4Geeks Academy community members collaborating on a project",
           justify: "center",
         },
         right: {
