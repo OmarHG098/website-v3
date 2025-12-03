@@ -184,7 +184,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
           )}
           
           {column.bullets && column.bullets.length > 0 && (
-            <ul className="space-y-4" data-testid="list-two-column-bullets">
+            <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
               {column.bullets.map((bullet, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
