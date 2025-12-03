@@ -150,7 +150,7 @@ function ComponentCard({
       const result = await apiRequest('POST', `/api/component-registry/${componentType}/create-version`, {
         baseVersion,
       });
-      return result as { success: boolean; newVersion: string };
+      return result as unknown as { success: boolean; newVersion: string };
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['/api/component-registry'] });
@@ -374,6 +374,17 @@ function ComponentCard({
                     </SelectItem>
                   </SelectContent>
                 </Select>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+                  }}
+                  title="Reload examples"
+                  data-testid={`button-reload-examples-${componentType}`}
+                >
+                  <IconRefresh className="w-4 h-4" />
+                </Button>
               </div>
             </div>
           </div>
