@@ -64,7 +64,7 @@ const eligibleData: TwoColumnSectionType = {
       url: "#apply",
       variant: "primary",
     },
-    text_align: "left",
+    text_align: "center",
     justify: "end"
   },
   right: {

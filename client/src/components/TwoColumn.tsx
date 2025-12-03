@@ -117,7 +117,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
     <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className={`text-3xl md:text-4xl font-bold text-foreground w-full ${textAlignClass}`}
+          className={`text-3xl md:text-4xl font-bold text-foreground ${textAlignClass}`}
           data-testid="text-two-column-heading"
         >
           {column.heading}
@@ -126,7 +126,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className={`${textFontSize} w-full ${textAlignClass}`}
+          className={`${textFontSize} ${textAlignClass}`}
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
@@ -135,7 +135,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.description && (
         <p 
-          className={`${textFontSize} text-muted-foreground leading-relaxed w-full ${textAlignClass}`}
+          className={`${textFontSize} text-muted-foreground leading-relaxed ${textAlignClass}`}
           data-testid="text-two-column-description"
         >
           {column.description}
@@ -144,20 +144,20 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
 
       {column.html_content && (
         <div 
-          className={`text-muted-foreground leading-relaxed w-full ${textAlignClass}`}
+          className={`text-muted-foreground leading-relaxed ${textAlignClass}`}
           dangerouslySetInnerHTML={{ __html: column.html_content }}
           data-testid="html-two-column-content"
         />
       )}
       
       {column.bullets && column.bullets.length > 0 && (
-        <ul className="space-y-4" data-testid="list-two-column-bullets">
+        <ul className={`space-y-4 ${textAlignClass}`} data-testid="list-two-column-bullets">
           {column.bullets.map((bullet, index) => (
             <li key={index} className="flex items-start gap-3">
               <span className="text-primary mt-1 flex-shrink-0">
                 {getIcon(bullet.icon || bulletIcon, "w-5 h-5")}
               </span>
-              <div className="flex flex-col">
+              <div className={`flex flex-col ${textAlignClass}`}>
                 {bullet.heading && (
                   <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
                 )}
