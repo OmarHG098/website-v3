@@ -22,12 +22,8 @@ default_example: |
       justify: "center"
     right:
       heading: "Why Choose Us"
-      description: "We provide comprehensive support for your learning journey."
-      bullets:
-        - text: "Personalized mentorship from industry experts"
-        - text: "Flexible learning schedule that fits your life"
-        - text: "Real-world projects to build your portfolio"
-      bullet_icon: "Check"
+      sub_heading: "Your success is our priority"
+      description: "We provide comprehensive support for your learning journey from day one to career success. Our personalized approach ensures you get the guidance you need."
       font_size: "base"
 
 props:
