@@ -179,6 +179,7 @@ export const twoColumnColumnSchema = z.object({
   button: ctaButtonSchema.optional(),
   bullets: z.array(twoColumnBulletSchema).optional(),
   bullet_icon: z.string().optional(),
+  bullet_text: z.string().optional(),
   bullet_icon_color: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),
