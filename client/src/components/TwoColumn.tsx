@@ -82,27 +82,38 @@ const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
   }
 };
 
-const getHeadingFontSize = (size?: string): string => {
+const getTextFontSize = (size?: string): string => {
   const sizeMap: Record<string, string> = {
-    "sm": "text-xl md:text-2xl",
-    "md": "text-2xl md:text-3xl",
-    "lg": "text-3xl md:text-4xl",
-    "xl": "text-4xl md:text-5xl",
+    "sm": "text-sm",
+    "md": "text-base",
+    "lg": "text-lg",
+    "xl": "text-xl",
   };
-  return size ? (sizeMap[size] || "text-3xl md:text-4xl") : "text-3xl md:text-4xl";
+  return size ? (sizeMap[size] || "text-base") : "text-base";
+};
+
+const getSubHeadingFontSize = (size?: string): string => {
+  const sizeMap: Record<string, string> = {
+    "sm": "text-lg",
+    "md": "text-xl",
+    "lg": "text-2xl",
+    "xl": "text-3xl",
+  };
+  return size ? (sizeMap[size] || "text-xl") : "text-xl";
 };
 
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const gapClass = getGapClass(column.gap);
   const itemsAlignClass = getItemsAlignClass(column.justify);
-  const headingFontSize = getHeadingFontSize(column.font_size);
+  const textFontSize = getTextFontSize(column.font_size);
+  const subHeadingFontSize = getSubHeadingFontSize(column.font_size);
 
   return (
     <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className={`${headingFontSize} font-bold text-foreground text-center self-center lg:self-auto`}
+          className="text-3xl md:text-4xl font-bold text-foreground text-center self-center lg:self-auto"
           data-testid="text-two-column-heading"
         >
           {column.heading}
@@ -111,7 +122,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className="text-xl text-muted-foreground"
+          className={`${subHeadingFontSize} text-muted-foreground`}
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
@@ -120,7 +131,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.description && (
         <p 
-          className="text-muted-foreground leading-relaxed"
+          className={`${textFontSize} text-muted-foreground leading-relaxed`}
           data-testid="text-two-column-description"
         >
           {column.description}
@@ -144,9 +155,9 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
               </span>
               <div className="flex flex-col">
                 {bullet.heading && (
-                  <span className="font-semibold text-foreground">{bullet.heading}</span>
+                  <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
                 )}
-                <span className="text-foreground text-lg">{bullet.text}</span>
+                <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
               </div>
             </li>
           ))}

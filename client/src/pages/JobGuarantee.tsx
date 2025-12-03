@@ -60,6 +60,7 @@ const eligibleData: TwoColumnSectionType = {
       { text: "Follow our career team's guidance" },
     ],
     description: "*Conditions apply depending on your country or U.S. state",
+    font_size: "lg",
     button: {
       text: "Apply",
       url: "#apply",
