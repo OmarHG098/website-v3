@@ -54,33 +54,6 @@ sections:
         source: "Course Report"
         year: "2025"
 
-  - type: program_overview
-    title: "Program Overview"
-    subtitle: "Everything you need to become a professional full stack developer"
-    specs:
-      - icon: "Clock"
-        label: "Duration"
-        value: "20 Weeks"
-      - icon: "Users"
-        label: "Class Size"
-        value: "1:7 Ratio"
-      - icon: "Certificate"
-        label: "Certificate"
-        value: "Recognized"
-      - icon: "Code"
-        label: "Prerequisites"
-        value: "None"
-    cards:
-      - icon: "DeviceLaptop"
-        title: "Self-Paced Learning"
-        description: "Learn on your own schedule with 24/7 access to all materials and AI-powered support"
-      - icon: "Code"
-        title: "No Prerequisites"
-        description: "Start from scratch - we teach you the fundamentals before advancing to complex topics"
-      - icon: "Rocket"
-        title: "Beginner Friendly"
-        description: "Designed for complete beginners with no prior coding experience required"
-
   - type: syllabus
     title: "Get Job-Ready with Our Syllabus!"
     subtitle: "We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech."

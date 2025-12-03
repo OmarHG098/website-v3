@@ -47,26 +47,6 @@ export const heroSectionSchema = z.object({
   award_badges: z.array(awardBadgeSchema).optional(),
 });
 
-export const cardItemSchema = z.object({
-  icon: z.string(),
-  title: z.string(),
-  description: z.string(),
-});
-
-export const programSpecSchema = z.object({
-  icon: z.string(),
-  label: z.string(),
-  value: z.string(),
-});
-
-export const programOverviewSectionSchema = z.object({
-  type: z.literal("program_overview"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  specs: z.array(programSpecSchema).optional(),
-  cards: z.array(cardItemSchema),
-});
-
 export const chatExampleSchema = z.object({
   bot_name: z.string(),
   bot_status: z.string(),
@@ -190,8 +170,8 @@ export const projectsSectionSchema = z.object({
 
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
-  programOverviewSectionSchema,
   syllabusSectionSchema,
+  projectsSectionSchema,
   aiLearningSectionSchema,
   mentorshipSectionSchema,
   certificateSectionSchema,
@@ -252,9 +232,6 @@ export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
-export type CardItem = z.infer<typeof cardItemSchema>;
-export type ProgramSpec = z.infer<typeof programSpecSchema>;
-export type ProgramOverviewSection = z.infer<typeof programOverviewSectionSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
@@ -267,6 +244,8 @@ export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
 export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
 export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
+export type ProjectItem = z.infer<typeof projectItemSchema>;
+export type ProjectsSection = z.infer<typeof projectsSectionSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;

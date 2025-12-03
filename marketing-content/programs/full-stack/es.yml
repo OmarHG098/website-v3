@@ -54,33 +54,6 @@ sections:
         source: "Course Report"
         year: "2025"
 
-  - type: program_overview
-    title: "Descripción del Programa"
-    subtitle: "Todo lo que necesitas para convertirte en un desarrollador full stack profesional"
-    specs:
-      - icon: "Clock"
-        label: "Duración"
-        value: "20 Semanas"
-      - icon: "Users"
-        label: "Tamaño de Clase"
-        value: "Ratio 1:7"
-      - icon: "Certificate"
-        label: "Certificado"
-        value: "Reconocido"
-      - icon: "Code"
-        label: "Prerrequisitos"
-        value: "Ninguno"
-    cards:
-      - icon: "DeviceLaptop"
-        title: "Aprendizaje a Tu Ritmo"
-        description: "Aprende según tu horario con acceso 24/7 a todos los materiales y soporte impulsado por IA"
-      - icon: "Code"
-        title: "Sin Prerrequisitos"
-        description: "Comienza desde cero - te enseñamos los fundamentos antes de avanzar a temas complejos"
-      - icon: "Rocket"
-        title: "Para Principiantes"
-        description: "Diseñado para principiantes completos sin experiencia previa en programación"
-
   - type: syllabus
     title: "¡Prepárate para el Trabajo con Nuestro Programa!"
     subtitle: "Hemos ajustado nuestro contenido del curso con cientos de posiciones laborales para prepararte para una entrada exitosa en tecnología."
