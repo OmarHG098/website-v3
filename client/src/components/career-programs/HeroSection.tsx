@@ -110,22 +110,24 @@ export function HeroSection({ data }: HeroSectionProps) {
           </div>
         )}
         
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {data.cta_buttons.map((button, index) => (
-            <Button
-              key={index}
-              variant={button.variant === "primary" ? "default" : button.variant}
-              size="lg"
-              asChild
-              data-testid={`button-hero-cta-${index}`}
-            >
-              <a href={button.url} className="flex items-center gap-2">
-                {button.icon && getIcon(button.icon)}
-                {button.text}
-              </a>
-            </Button>
-          ))}
-        </div>
+        {data.cta_buttons && data.cta_buttons.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {data.cta_buttons.map((button, index) => (
+              <Button
+                key={index}
+                variant={button.variant === "primary" ? "default" : button.variant}
+                size="lg"
+                asChild
+                data-testid={`button-hero-cta-${index}`}
+              >
+                <a href={button.url} className="flex items-center gap-2">
+                  {button.icon && getIcon(button.icon)}
+                  {button.text}
+                </a>
+              </Button>
+            ))}
+          </div>
+        )}
 
         {data.award_badges && data.award_badges.length > 0 && (
           <div 
