@@ -84,16 +84,6 @@ const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
 
 const getTextFontSize = (size?: string): string => {
   const sizeMap: Record<string, string> = {
-    "sm": "text-sm",
-    "md": "text-base",
-    "lg": "text-lg",
-    "xl": "text-xl",
-  };
-  return size ? (sizeMap[size] || "text-base") : "text-base";
-};
-
-const getSubHeadingFontSize = (size?: string): string => {
-  const sizeMap: Record<string, string> = {
     "sm": "text-lg",
     "md": "text-xl",
     "lg": "text-2xl",
@@ -107,7 +97,6 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   const gapClass = getGapClass(column.gap);
   const itemsAlignClass = getItemsAlignClass(column.justify);
   const textFontSize = getTextFontSize(column.font_size);
-  const subHeadingFontSize = getSubHeadingFontSize(column.font_size);
 
   return (
     <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
@@ -122,7 +111,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
       
       {column.sub_heading && (
         <p 
-          className={`${subHeadingFontSize} text-muted-foreground`}
+          className={`${textFontSize} text-muted-foreground`}
           data-testid="text-two-column-subheading"
         >
           {column.sub_heading}
