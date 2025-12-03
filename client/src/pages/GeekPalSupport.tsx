@@ -140,7 +140,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
 function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
   return (
     <section 
-      className="py-16 md:py-20 bg-amber-50"
+      className="py-8 bg-amber-50"
       data-testid="section-advance-faster"
     >
       <div className="container mx-auto px-4">
@@ -156,11 +156,11 @@ function AdvanceFasterSection({ data }: { data: typeof advanceFasterData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-4  gap-4 md:gap-6 max-w-6xl mx-auto">
           {data.features.map((feature, index) => (
             <SolidCard 
               key={index}
-              className="p-3 md:p-4 md:pb-5"
+              className="p-0  mb-0 md:mb-5"
               data-testid={`card-feature-${index + 1}`}
             >
               <div className="flex flex-col items-start gap-3 md:gap-4">
