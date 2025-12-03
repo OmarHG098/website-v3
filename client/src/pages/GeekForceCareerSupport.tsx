@@ -701,10 +701,10 @@ function isoToFlagEmoji(iso: string): string {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
-      className="w-[280px] md:w-[320px] mx-3 flex-shrink-0 overflow-hidden flex flex-col"
+      className="w-[240px] md:w-[260px] h-[420px] mx-2 flex-shrink-0 overflow-hidden flex flex-col"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
-      <div className="h-40 w-full overflow-hidden">
+      <div className="h-32 w-full overflow-hidden flex-shrink-0">
         <img 
           src={testimonial.img} 
           alt={testimonial.name}
@@ -712,39 +712,41 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         />
       </div>
       
-      <div className="p-4 flex flex-col flex-1">
-        <div className="flex items-center justify-between mb-2">
-          <h4 className="font-bold text-foreground text-lg">{testimonial.name}</h4>
+      <div className="p-3 flex flex-col flex-1 overflow-hidden">
+        <div className="flex items-center justify-between mb-1 gap-2">
+          <h4 className="font-bold text-foreground text-sm leading-tight">{testimonial.name}</h4>
           {testimonial.status === "Graduated" && (
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <IconSchool className="w-4 h-4" />
-              <span className="text-sm">Graduated</span>
+            <div className="flex items-center gap-1 text-muted-foreground flex-shrink-0">
+              <IconSchool className="w-3 h-3" />
+              <span className="text-xs">Graduated</span>
             </div>
           )}
         </div>
         
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-xl leading-none">{isoToFlagEmoji(testimonial.country.iso)}</span>
-          <span className="text-sm text-foreground">{testimonial.country.name}</span>
+        <div className="flex items-center gap-1.5 mb-1">
+          <span className="text-base leading-none">{isoToFlagEmoji(testimonial.country.iso)}</span>
+          <span className="text-xs text-foreground">{testimonial.country.name}</span>
         </div>
         
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className="text-xs text-muted-foreground mb-2">
           Contributor: {testimonial.contributor}
         </p>
         
-        <div className="border-t border-border mb-3" />
+        <div className="border-t border-border mb-2" />
         
-        <p className="text-sm text-foreground flex-1 mb-3">
+        <p className="text-xs text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
           {testimonial.description}
         </p>
         
-        {testimonial.achievement && (
-          <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-2 mt-auto">
-            <IconCheck className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+        {testimonial.achievement ? (
+          <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
+            <IconCheck className="w-3 h-3 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
               {testimonial.achievement}
             </p>
           </div>
+        ) : (
+          <div className="h-10 mt-auto flex-shrink-0" />
         )}
       </div>
     </Card>
