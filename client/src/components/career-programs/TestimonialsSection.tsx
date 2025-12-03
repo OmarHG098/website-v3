@@ -8,8 +8,10 @@ import profilePic1 from "@assets/profile-pic1_1764775438461.webp";
 import profilePic2 from "@assets/profile-pic2_1764775432918.webp";
 import profilePic3 from "@assets/profile-pic3_1764775528641.webp";
 import profilePic4 from "@assets/profile-pic4_1764775523318.webp";
+import profilePic5 from "@assets/profile-pic5_1764775738827.webp";
+import profilePic6 from "@assets/profile-pic6_1764775742734.webp";
 
-const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4];
+const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4, profilePic5, profilePic6];
 
 interface TestimonialsSectionProps {
   data: TestimonialsSectionType;
