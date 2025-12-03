@@ -8,7 +8,6 @@ import GrowthChart from "@/components/custom-icons/GrowthChart";
 import CodeWindow from "@/components/custom-icons/CodeWindow";
 import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
-import BriefcaseOutline from "@/components/custom-icons/BriefcaseOutline";
 import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
 import FolderCheck from "@/components/custom-icons/FolderCheck";
 import { IconCheck, IconDownload } from "@tabler/icons-react";
@@ -480,7 +479,7 @@ function ConfidenceSection({ data }: { data: typeof confidenceData }) {
 
 function RefundSection({ data }: { data: typeof refundData }) {
   const iconMap = {
-    briefcase: BriefcaseOutline,
+    briefcase: Briefcase,
     checklist: ChecklistVerify,
     folder: FolderCheck,
   };
