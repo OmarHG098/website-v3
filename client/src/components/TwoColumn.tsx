@@ -75,10 +75,10 @@ const getGapClass = (gap?: string): string => {
 
 const getItemsAlignClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "center": return "items-center text-center";
-    case "end": return "items-end text-right";
+    case "center": return "lg:items-center lg:text-center";
+    case "end": return "lg:items-end lg:text-right";
     case "start": 
-    default: return "items-start text-left";
+    default: return "lg:items-start lg:text-left";
   }
 };
 
@@ -102,7 +102,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
     <div className={`flex flex-col ${gapClass} ${itemsAlignClass}`}>
       {column.heading && (
         <h2 
-          className={`${headingFontSize} font-bold text-foreground text-center lg:text-left self-center lg:self-auto`}
+          className={`${headingFontSize} font-bold text-foreground text-center self-center lg:self-auto`}
           data-testid="text-two-column-heading"
         >
           {column.heading}
