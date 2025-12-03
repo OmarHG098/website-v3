@@ -501,7 +501,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
                 {currentLogos.map((logo, index) => (
                   <Card 
                     key={`${currentPage}-${index}`} 
-                    className="p-3 lg:p-6 flex items-center justify-center h-40"
+                    className="p-3 lg:p-6 flex items-center justify-center h-20 sm:h-40"
                     data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
                   >
                     <img
