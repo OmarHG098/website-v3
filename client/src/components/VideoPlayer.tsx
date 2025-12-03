@@ -1,3 +1,4 @@
+// @ts-expect-error - react-responsive-embed lacks TypeScript types
 import ResponsiveEmbed from 'react-responsive-embed';
 import SolidCard from './SolidCard';
 

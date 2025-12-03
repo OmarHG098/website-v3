@@ -341,7 +341,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
               <img 
                 src={vectorStroke} 
                 alt="" 
-                className="absolute right-0 md:right-[-50px] top-0 w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-50"
+                className="absolute right-0 md:right-[-100px] top-0 w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-20"
                 style={{ filter: 'grayscale(100%) brightness(0.5)' }}
               />
               <p className="text-4xl lg:text-5xl font-medium text-foreground">
@@ -368,7 +368,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 <img 
                   src={vectorStroke} 
                   alt="" 
-                  className="absolute -left-[100px] md:-left-[140px] -bottom-8 w-[85px] md:w-[126px] h-[85px] md:h-[126px] opacity-50 rotate-180"
+                  className="absolute -left-[100px] md:-left-[140px] -bottom-8 w-[85px] md:w-[126px] h-[85px] md:h-[126px] opacity-20 rotate-180"
                   style={{ filter: 'grayscale(100%) brightness(0.5)' }}
                 />
                 <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
