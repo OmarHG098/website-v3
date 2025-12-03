@@ -201,7 +201,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
   return (
     <section 
-      className="py-8 bg-sky-200"
+      className="py-8 bg-primary/5"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
