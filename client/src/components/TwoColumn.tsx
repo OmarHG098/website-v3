@@ -114,14 +114,11 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
   const textFontSize = getTextFontSize(column.font_size);
 
   const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.button;
-  
-  const needsWidthConstraint = column.justify === "center" || column.justify === "end";
-  const maxWidthClass = needsWidthConstraint ? "lg:max-w-xl" : "";
 
   return (
     <div className={`flex flex-col ${gapClass}`}>
       {hasTextContent && (
-        <div className={`flex flex-col ${gapClass} w-full ${maxWidthClass} ${blockAlignClass} ${textAlignClass}`}>
+        <div className={`flex flex-col ${gapClass} w-full lg:max-w-xl ${blockAlignClass} ${textAlignClass}`}>
           {column.heading && (
             <h2 
               className="text-3xl md:text-4xl font-bold text-foreground"
