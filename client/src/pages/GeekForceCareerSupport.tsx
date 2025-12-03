@@ -349,8 +349,8 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 <img 
                   src={vectorStroke} 
                   alt="" 
-                  className="hidden md:block w-12 h-12 opacity-30"
-                  style={{ filter: 'grayscale(100%)' }}
+                  className="w-10 md:w-14 h-10 md:h-14 opacity-50"
+                  style={{ filter: 'grayscale(100%) brightness(0.5)' }}
                 />
               </div>
               <h1 
@@ -370,8 +370,8 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 <img 
                   src={vectorStroke} 
                   alt="" 
-                  className="hidden md:block absolute -left-16 -bottom-4 w-10 h-10 opacity-30 rotate-180"
-                  style={{ filter: 'grayscale(100%)' }}
+                  className="absolute -left-12 md:-left-16 bottom-0 w-8 md:w-10 h-8 md:h-10 opacity-50 rotate-180"
+                  style={{ filter: 'grayscale(100%) brightness(0.5)' }}
                 />
                 <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
                   {data.description}
