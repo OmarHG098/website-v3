@@ -16,7 +16,7 @@ export function WhyLearnAISection({ data }: WhyLearnAISectionProps) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground italic"
+              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
               data-testid="text-why-learn-title"
             >
               {data.title}
