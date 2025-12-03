@@ -495,7 +495,6 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
           heading: data.title,
           description: data.subtitle,
           bullets: data.features.map(feature => ({ text: feature })),
-          bullet_char: "•",
           font_size: "sm",
         },
       }}
