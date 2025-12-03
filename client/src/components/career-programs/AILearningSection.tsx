@@ -77,16 +77,18 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             return (
               <Card 
                 key={index} 
-                className="bg-background border text-center"
+                className="bg-primary/5 border-0 shadow-none"
                 data-testid={`feature-ai-${index}`}
               >
                 <CardContent className="p-6">
-                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                    {getIcon(feature.icon, isRigobot)}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      {getIcon(feature.icon, isRigobot)}
+                    </div>
+                    <h3 className="font-semibold text-foreground">
+                      {feature.title}
+                    </h3>
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    {feature.title}
-                  </h3>
                   <p className="text-muted-foreground text-sm">
                     {feature.description}
                   </p>
