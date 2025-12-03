@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import SolidCard from "@/components/SolidCard";
 import { Card } from "@/components/ui/card";
-import { IconCheck, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
+import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
@@ -720,7 +720,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         <div className="flex items-center gap-1.5 mb-1">
           <span 
             className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`}
-            style={{ transform: 'scale(0.7)', transformOrigin: 'left center' }}
+            style={{ transform: 'scale(0.8)', transformOrigin: 'left center' }}
           />
           <span className="text-sm text-foreground">{testimonial.country.name}</span>
         </div>
@@ -737,7 +737,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         
         {testimonial.achievement ? (
           <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
-            <IconCheck className="w-3 h-3 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <IconFlag className="w-3 h-3 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
             <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
               {testimonial.achievement}
             </p>
