@@ -70,7 +70,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
         <div className="relative">
           <div 
-            className="bg-card border rounded-lg p-4 md:p-5"
+            className="bg-card border rounded-lg p-4 md:p-5 md:min-h-[320px]"
             data-testid={`card-project-${currentIndex}`}
           >
             <div className="flex flex-col md:flex-row gap-5">
