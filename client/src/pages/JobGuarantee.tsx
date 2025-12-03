@@ -220,7 +220,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-8">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
               data-testid="text-stats-title"
@@ -232,9 +232,9 @@ function StatsSection({ data }: { data: typeof statsData }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
-              <div key={index} data-testid={`stat-item-${index}`} className="flex items-center gap-5">
+              <Card key={index} data-testid={`stat-item-${index}`} className="p-6 flex items-center gap-5">
                 <div className="flex-shrink-0">
                   {iconMap[stat.icon]}
                 </div>
@@ -249,7 +249,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
                   </div>
                   <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>
