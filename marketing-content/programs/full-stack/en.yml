@@ -135,18 +135,6 @@ sections:
         title: "Active Community"
         description: "Join thousands of learners in our supportive community with daily live workshops and peer collaboration."
 
-  - type: features_checklist
-    title: "What You Get"
-    items:
-      - text: "Learn at your own pace"
-      - text: "AI reviews your code instantly"
-      - text: "Monthly mentorship sessions"
-      - text: "Active learning community"
-      - text: "Optional live workshops"
-      - text: "Schedule private sessions"
-      - text: "4Geeks certificate"
-      - text: "Global career network"
-
   - type: certificate
     title: "Certificate & Career Network"
     description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."

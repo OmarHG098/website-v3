@@ -97,12 +97,6 @@ export const mentorshipSectionSchema = z.object({
   cards: z.array(cardItemSchema),
 });
 
-export const featuresChecklistSectionSchema = z.object({
-  type: z.literal("features_checklist"),
-  title: z.string(),
-  items: z.array(z.object({ text: z.string() })),
-});
-
 export const statItemSchema = z.object({
   value: z.string(),
   label: z.string(),
@@ -181,13 +175,25 @@ export const syllabusSectionSchema = z.object({
   modules: z.array(syllabusModuleSchema),
 });
 
+export const projectItemSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  image: z.string(),
+});
+
+export const projectsSectionSchema = z.object({
+  type: z.literal("projects"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  items: z.array(projectItemSchema),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   programOverviewSectionSchema,
   syllabusSectionSchema,
   aiLearningSectionSchema,
   mentorshipSectionSchema,
-  featuresChecklistSectionSchema,
   certificateSectionSchema,
   faqSectionSchema,
   testimonialsSectionSchema,
@@ -251,7 +257,6 @@ export type ProgramSpec = z.infer<typeof programSpecSchema>;
 export type ProgramOverviewSection = z.infer<typeof programOverviewSectionSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
-export type FeaturesChecklistSection = z.infer<typeof featuresChecklistSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
 export type FAQItem = z.infer<typeof faqItemSchema>;
 export type FAQSection = z.infer<typeof faqSectionSchema>;

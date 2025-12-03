@@ -135,18 +135,6 @@ sections:
         title: "Comunidad Activa"
         description: "Únete a miles de estudiantes en nuestra comunidad de apoyo con talleres en vivo diarios y colaboración entre pares."
 
-  - type: features_checklist
-    title: "Lo Que Obtienes"
-    items:
-      - text: "Aprende a tu propio ritmo"
-      - text: "La IA revisa tu código al instante"
-      - text: "Sesiones de mentoría mensuales"
-      - text: "Comunidad de aprendizaje activa"
-      - text: "Talleres en vivo opcionales"
-      - text: "Agenda sesiones privadas"
-      - text: "Certificado 4Geeks"
-      - text: "Red de carreras global"
-
   - type: certificate
     title: "Certificado y Red de Carreras"
     description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
