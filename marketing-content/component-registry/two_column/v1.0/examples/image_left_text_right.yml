@@ -1,4 +1,4 @@
-name: "Image Left, Text Right"
+name: "Image Left, Text Right with Bullets"
 description: "Classic two-column layout with an image on the left and text content with bullets on the right - most common use case"
 yaml: |
   - type: two_column
