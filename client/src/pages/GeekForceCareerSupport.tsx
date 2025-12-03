@@ -475,26 +475,26 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   );
 }
 
+// Hyperpersonalized Career Support Section - Uses TwoColumn component
 function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
   return (
     <TwoColumn
       data={{
         type: "two_column",
-        proportions: [4, 8],
+        proportions: [5, 7],
         background: "bg-muted/30",
         alignment: "center",
         gap: "12",
         reverse_on_mobile: true,
         left: {
-          image: communityImage,
-          image_alt: "4Geeks Academy community members collaborating on a project",
+          video: "-2ZvlgDnltc",
           justify: "center",
         },
         right: {
           heading: data.title,
           description: data.subtitle,
           bullets: data.features.map(feature => ({ text: feature })),
-          text_align: "center",
+          bullet_char: "•",
           font_size: "sm",
         },
       }}
