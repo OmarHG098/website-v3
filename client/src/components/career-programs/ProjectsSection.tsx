@@ -70,11 +70,11 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
         <div className="relative">
           <div 
-            className="bg-card border rounded-lg overflow-hidden"
+            className="bg-card border rounded-lg p-4 md:p-5"
             data-testid={`card-project-${currentIndex}`}
           >
-            <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[280px] overflow-hidden bg-muted">
+            <div className="flex flex-col md:flex-row gap-5">
+              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg">
                 <img 
                   src={imageSrc}
                   alt={currentProject.title}
@@ -83,7 +83,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                 />
               </div>
               
-              <div className="md:w-3/5 p-6 md:p-8 flex flex-col">
+              <div className="md:w-3/5 flex flex-col">
                 <div className="flex items-center justify-between gap-4 mb-4">
                   <div className="flex items-center gap-2 flex-wrap">
                     {currentProject.tags?.map((tag, idx) => (
