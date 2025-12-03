@@ -41,7 +41,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
 
   return (
     <section 
-      className="py-16 bg-muted/30"
+      className="py-16"
       data-testid="section-ai-learning"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -67,10 +67,10 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             return (
               <Card 
                 key={index} 
-                className="bg-primary/5 border-0 shadow-none"
+                className="bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-0 shadow-none"
                 data-testid={`feature-ai-${index}`}
               >
-                <CardContent className="p-6 bg-[#f0f0f04d]">
+                <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                       {getIcon(feature.icon, isRigobot)}
