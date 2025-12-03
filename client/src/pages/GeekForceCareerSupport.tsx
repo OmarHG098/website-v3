@@ -341,7 +341,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
               <p className="text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
                   <span className="text-foreground">Geek</span>
                   <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
@@ -349,7 +349,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 <img 
                   src={vectorStroke} 
                   alt="" 
-                  className="w-10 md:w-14 h-10 md:h-14 opacity-50"
+                  className="w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-50"
                   style={{ filter: 'grayscale(100%) brightness(0.5)' }}
                 />
               </div>
@@ -370,7 +370,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
                 <img 
                   src={vectorStroke} 
                   alt="" 
-                  className="absolute -left-12 md:-left-16 bottom-0 w-8 md:w-10 h-8 md:h-10 opacity-50 rotate-180"
+                  className="absolute -left-[100px] md:-left-[140px] -bottom-8 w-[85px] md:w-[126px] h-[85px] md:h-[126px] opacity-50 rotate-180"
                   style={{ filter: 'grayscale(100%) brightness(0.5)' }}
                 />
                 <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
