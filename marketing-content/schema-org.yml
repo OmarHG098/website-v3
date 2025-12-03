@@ -1,0 +1,112 @@
+# Schema.org Structured Data Configuration
+# This file defines the base JSON-LD schemas used across the website.
+# Pages can include these schemas and optionally override specific properties.
+
+# Organization schema - represents 4Geeks Academy as an entity
+organization:
+  type: "EducationalOrganization"
+  name: "4Geeks Academy"
+  url: "https://4geeks.com"
+  logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
+  description: "4Geeks Academy is a coding bootcamp that helps people transition into tech careers with AI-powered learning tools, unlimited mentorship, and career support."
+  founding_date: "2015"
+  founders:
+    - name: "Alejandro Sanchez"
+    - name: "Marcelo Ricigliano"
+  same_as:
+    - "https://twitter.com/4GeeksAcademy"
+    - "https://www.linkedin.com/school/4geeksacademy/"
+    - "https://www.facebook.com/4geeksacademy"
+    - "https://www.instagram.com/4geeksacademy/"
+    - "https://www.youtube.com/c/4GeeksAcademy"
+    - "https://github.com/4GeeksAcademy"
+  aggregate_rating:
+    rating_value: 4.5
+    review_count: 2500
+    best_rating: 5
+    worst_rating: 1
+  contact_point:
+    type: "ContactPoint"
+    contact_type: "customer service"
+    email: "info@4geeks.com"
+  address:
+    type: "PostalAddress"
+    address_country: "US"
+  locales:
+    es:
+      description: "4Geeks Academy es un bootcamp de programación que ayuda a las personas a hacer la transición a carreras tecnológicas con herramientas de aprendizaje impulsadas por IA, mentoría ilimitada y apoyo profesional."
+
+# Website schema - represents the website itself
+website:
+  type: "WebSite"
+  name: "4Geeks Academy"
+  url: "https://4geeks.com"
+  description: "Learn to code with AI-powered tools, unlimited mentorship, and career support. Join thousands of graduates who have transformed their careers."
+  search_action:
+    target: "https://4geeks.com/search?q={search_term_string}"
+    query_input: "required name=search_term_string"
+  locales:
+    es:
+      description: "Aprende a programar con herramientas impulsadas por IA, mentoría ilimitada y apoyo profesional. Únete a miles de graduados que han transformado sus carreras."
+
+# Course schemas - individual courses/programs
+# Pages can reference these via "courses:full-stack" etc.
+courses:
+  full-stack:
+    type: "Course"
+    name: "Full Stack Development"
+    description: "Comprehensive program covering front-end and back-end web development with modern technologies including React, Node.js, Python, and databases."
+    provider: "@organization"
+    educational_level: "Beginner to Advanced"
+    time_required: "PT480H"
+    teaches:
+      - "HTML5"
+      - "CSS3"
+      - "JavaScript"
+      - "React"
+      - "Python"
+      - "Node.js"
+      - "SQL"
+      - "REST APIs"
+      - "Git"
+    locales:
+      es:
+        name: "Desarrollo Full Stack"
+        description: "Programa integral que cubre desarrollo web front-end y back-end con tecnologías modernas incluyendo React, Node.js, Python y bases de datos."
+
+  data-science:
+    type: "Course"
+    name: "Data Science & Machine Learning"
+    description: "Learn data analysis, machine learning, and AI with Python. Master pandas, scikit-learn, TensorFlow and build real-world projects."
+    provider: "@organization"
+    educational_level: "Intermediate"
+    time_required: "PT400H"
+    teaches:
+      - "Python"
+      - "Pandas"
+      - "NumPy"
+      - "Scikit-learn"
+      - "TensorFlow"
+      - "Machine Learning"
+      - "Data Visualization"
+    locales:
+      es:
+        name: "Ciencia de Datos y Machine Learning"
+        description: "Aprende análisis de datos, machine learning e IA con Python. Domina pandas, scikit-learn, TensorFlow y construye proyectos reales."
+
+# ItemList schema for course catalogs
+item_lists:
+  career-programs:
+    type: "ItemList"
+    name: "Career Programs"
+    description: "Complete career programs designed to transform beginners into professional developers"
+    item_list_order: "ItemListOrderDescending"
+    items:
+      - ref: "courses:full-stack"
+        position: 1
+      - ref: "courses:data-science"
+        position: 2
+    locales:
+      es:
+        name: "Programas de Carrera"
+        description: "Programas de carrera completos diseñados para transformar principiantes en desarrolladores profesionales"

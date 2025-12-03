@@ -6,6 +6,8 @@ import * as fs from "fs";
 import * as path from "path";
 import { careerProgramSchema, landingPageSchema, type CareerProgram, type LandingPage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
+import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
+import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -113,6 +115,9 @@ function listLandingPages(locale: string): Array<{ slug: string; title: string }
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Apply redirect middleware for 301 redirects from YAML content
+  app.use(redirectMiddleware);
+
   app.post("/api/debug/validate-token", async (req, res) => {
     try {
       const { token } = req.body;
@@ -238,6 +243,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Error clearing sitemap cache:", error);
       res.status(500).json({ error: "Failed to clear cache" });
     }
+  });
+
+  // Get active redirects (for debug tools)
+  app.get("/api/debug/redirects", (req, res) => {
+    const redirects = getRedirects();
+    res.json({
+      count: redirects.length,
+      redirects,
+    });
+  });
+
+  // Clear redirect cache (for debug tools)
+  app.post("/api/debug/clear-redirect-cache", (req, res) => {
+    clearRedirectCache();
+    res.json({ success: true, message: "Redirect cache cleared" });
+  });
+
+  // Schema.org API endpoints
+  app.get("/api/schema", (req, res) => {
+    const keys = getAvailableSchemaKeys();
+    res.json({ available: keys });
+  });
+
+  app.get("/api/schema/:key", (req, res) => {
+    const { key } = req.params;
+    const locale = (req.query.locale as string) || "en";
+    
+    const schema = getSchema(key, locale);
+    
+    if (!schema) {
+      res.status(404).json({ error: "Schema not found" });
+      return;
+    }
+    
+    res.json(schema);
+  });
+
+  app.post("/api/schema/merge", (req, res) => {
+    const { include, overrides } = req.body;
+    const locale = (req.query.locale as string) || "en";
+    
+    if (!include || !Array.isArray(include)) {
+      res.status(400).json({ error: "include array required" });
+      return;
+    }
+    
+    const schemas = getMergedSchemas({ include, overrides }, locale);
+    res.json({ schemas });
+  });
+
+  app.post("/api/debug/clear-schema-cache", (req, res) => {
+    clearSchemaCache();
+    res.json({ success: true, message: "Schema cache cleared" });
   });
 
   const httpServer = createServer(app);

@@ -7,6 +7,20 @@ title: "Full Stack Development"
 meta:
   page_title: "Full Stack Developer Career Program | 4Geeks"
   description: "Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community."
+  robots: "index, follow"
+  og_image: "/images/programs/full-stack-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/bootcamp/full-stack"
+    - "/programs/fullstack-developer"
+    - "/coding-bootcamp/full-stack"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:full-stack"
 
 sections:
   - type: hero

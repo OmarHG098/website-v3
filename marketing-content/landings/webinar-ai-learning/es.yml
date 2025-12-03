@@ -11,6 +11,14 @@ meta:
   og_image: "/images/webinar-og.jpg"
   priority: 0.9
   change_frequency: "weekly"
+  redirects:
+    - "/webinar/aprender-ia"
+    - "/eventos/webinar-programacion-ia"
+
+schema:
+  include:
+    - "organization"
+    - "website"
 
 sections:
   - type: hero

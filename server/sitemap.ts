@@ -68,6 +68,7 @@ function getAvailablePrograms(): AvailableProgram[] {
         const locale = file.replace(".yml", "");
         const filePath = path.join(programPath, file);
 
+
         try {
           const content = fs.readFileSync(filePath, "utf-8");
           const data = yaml.load(content) as {
