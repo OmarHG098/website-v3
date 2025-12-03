@@ -120,20 +120,6 @@ sections:
         url: "/apply"
         variant: "primary"
 
-  - type: mentorship
-    title: "Mentorship & Support"
-    subtitle: "You're never alone in your learning journey. Get help when you need it."
-    cards:
-      - icon: "CalendarEvent"
-        title: "Monthly Sessions"
-        description: "Regular mentorship sessions with expert developers to guide your progress and answer questions."
-      - icon: "Headset"
-        title: "1-on-1 Sessions"
-        description: "Schedule private 45-minute sessions with mentors for personalized help on specific challenges."
-      - icon: "Users"
-        title: "Active Community"
-        description: "Join thousands of learners in our supportive community with daily live workshops and peer collaboration."
-
   - type: certificate
     title: "Certificate & Career Network"
     description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."

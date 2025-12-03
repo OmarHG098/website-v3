@@ -120,20 +120,6 @@ sections:
         url: "/apply"
         variant: "primary"
 
-  - type: mentorship
-    title: "Mentoría y Soporte"
-    subtitle: "Nunca estás solo en tu viaje de aprendizaje. Obtén ayuda cuando la necesites."
-    cards:
-      - icon: "CalendarEvent"
-        title: "Sesiones Mensuales"
-        description: "Sesiones regulares de mentoría con desarrolladores expertos para guiar tu progreso y responder preguntas."
-      - icon: "Headset"
-        title: "Sesiones 1 a 1"
-        description: "Agenda sesiones privadas de 45 minutos con mentores para ayuda personalizada en desafíos específicos."
-      - icon: "Users"
-        title: "Comunidad Activa"
-        description: "Únete a miles de estudiantes en nuestra comunidad de apoyo con talleres en vivo diarios y colaboración entre pares."
-
   - type: certificate
     title: "Certificado y Red de Carreras"
     description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."

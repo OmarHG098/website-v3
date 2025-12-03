@@ -4,7 +4,6 @@ import { HeroSection } from "./HeroSection";
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
 import { AILearningSection } from "./AILearningSection";
-import { MentorshipSection } from "./MentorshipSection";
 import { CertificateSection } from "./CertificateSection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
@@ -28,8 +27,6 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <ProjectsSection key={index} data={section} />;
           case "ai_learning":
             return <AILearningSection key={index} data={section} />;
-          case "mentorship":
-            return <MentorshipSection key={index} data={section} />;
           case "certificate":
             return <CertificateSection key={index} data={section} />;
           case "faq":
