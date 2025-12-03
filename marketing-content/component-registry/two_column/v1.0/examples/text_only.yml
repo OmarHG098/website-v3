@@ -2,9 +2,8 @@ name: "Text Only Layout"
 description: "Two-column layout with text content on both sides, useful for feature comparisons or detailed explanations"
 yaml: |
   - type: two_column
-    version: "1.0"
     proportions: [6, 6]
-    background: "bg-background"
+    background: "bg-muted/20"
     alignment: "start"
     gap: "16"
     left:

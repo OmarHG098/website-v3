@@ -1,9 +1,8 @@
-name: "Right-Aligned Image"
-description: "Two-column layout with text on the left and an image on the right"
+name: "Bullets with Headings"
+description: "Two-column layout with timeline-style bullets that have headings"
 yaml: |
   - type: two_column
-    version: "1.0"
-    proportions: [7, 5]
+    proportions: [6, 6]
     alignment: "center"
     gap: "12"
     left:
@@ -21,6 +20,14 @@ yaml: |
       bullet_icon_color: "text-primary"
       text_align: "left"
     right:
-      image: "/images/coding-student.jpg"
-      image_alt: "Student coding on laptop"
-      justify: "end"
+      heading: "Your Journey"
+      description: "From zero to hero in just 16 weeks. Our structured curriculum takes you from complete beginner to job-ready developer."
+      bullets:
+        - heading: "Phase 1"
+          text: "HTML, CSS, and JavaScript fundamentals"
+        - heading: "Phase 2"
+          text: "React and modern frontend development"
+        - heading: "Phase 3"
+          text: "Backend APIs and databases"
+      bullet_icon: "ChevronRight"
+      bullet_icon_color: "text-chart-5"

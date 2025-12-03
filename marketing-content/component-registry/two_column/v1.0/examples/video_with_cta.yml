@@ -2,12 +2,11 @@ name: "Video with CTA Button"
 description: "Two-column layout with a YouTube video on the left and text content with a call-to-action button on the right"
 yaml: |
   - type: two_column
-    version: "1.0"
     proportions: [6, 6]
     alignment: "center"
     gap: "8"
     left:
-      video: "dQw4w9WgXcQ"
+      video: "-2ZvlgDnltc"
       justify: "center"
     right:
       heading: "See It In Action"

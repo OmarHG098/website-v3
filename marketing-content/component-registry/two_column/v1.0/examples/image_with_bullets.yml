@@ -1,17 +1,15 @@
-name: "Image with Bullet List"
-description: "Two-column layout with an image on the left and a heading with bullet points on the right"
+name: "Text with Bullet List"
+description: "Two-column layout with heading and bullet points"
 yaml: |
   - type: two_column
-    version: "1.0"
     proportions: [5, 7]
     background: "bg-muted/30"
     alignment: "center"
     gap: "12"
     reverse_on_mobile: true
     left:
-      image: "/images/community.jpg"
-      image_alt: "Community members collaborating"
-      justify: "center"
+      heading: "Our Values"
+      description: "We believe in empowering learners to achieve their full potential through personalized education."
     right:
       heading: "Why Choose Us"
       description: "We provide comprehensive support for your learning journey"
