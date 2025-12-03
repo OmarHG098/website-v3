@@ -10,7 +10,8 @@ import {
   IconRefresh, 
   IconAlertTriangle,
   IconPlus,
-  IconFolder
+  IconFolder,
+  IconInfoCircle
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +34,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
@@ -316,11 +322,28 @@ function ComponentCard({
         <CardHeader className="flex flex-col gap-4">
           <div className="flex flex-row items-start justify-between gap-4">
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
                 <CardTitle className="text-xl">{schema.name}</CardTitle>
                 <Badge variant="secondary">{componentType}</Badge>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-6 w-6"
+                      data-testid={`button-info-${componentType}`}
+                    >
+                      <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <p className="text-sm">{schema.description}</p>
+                    {schema.when_to_use && (
+                      <p className="text-xs text-muted-foreground mt-2">{schema.when_to_use}</p>
+                    )}
+                  </PopoverContent>
+                </Popover>
               </div>
-              <p className="text-sm text-muted-foreground">{schema.description}</p>
             </div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-2">
