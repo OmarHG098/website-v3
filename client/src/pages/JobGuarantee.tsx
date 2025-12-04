@@ -360,17 +360,17 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 className="flex flex-col"
                 data-testid={`refund-step-${index + 1}`}
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-6xl md:text-7xl text-primary font-bold">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+                <span className="text-6xl md:text-7xl text-primary font-bold mb-4">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                     {getIcon(step.icon)}
                   </div>
+                  <p className="text-base text-foreground">
+                    {step.text}
+                  </p>
                 </div>
-                <p className="text-base text-foreground">
-                  {step.text}
-                </p>
               </div>
             ))}
           </div>
