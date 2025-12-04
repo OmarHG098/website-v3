@@ -341,6 +341,15 @@ function RefundSection({ data }: { data: typeof refundData }) {
             <p className="text-lg max-w-3xl mx-auto text-muted-foreground">
               {data.description}
             </p>
+            <a 
+              href={data.conditionsLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline text-lg mt-2 inline-block"
+              data-testid="link-conditions-apply"
+            >
+              Conditions Apply.
+            </a>
           </div>
 
           {/* Steps Grid - 3 columns on desktop, 1 on mobile */}
@@ -352,30 +361,18 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 data-testid={`refund-step-${index + 1}`}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {getIcon(step.icon)}
-                  </div>
                   <span className="text-6xl md:text-7xl text-primary font-bold">
                     {String(index + 1).padStart(2, '0')}
                   </span>
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    {getIcon(step.icon)}
+                  </div>
                 </div>
                 <p className="text-base text-foreground">
                   {step.text}
                 </p>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <a 
-              href={data.conditionsLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline text-lg"
-              data-testid="link-conditions-apply"
-            >
-              Conditions Apply.
-            </a>
           </div>
         </div>
       </div>
