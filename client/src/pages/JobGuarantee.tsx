@@ -14,6 +14,7 @@ import { Card } from "@/components/ui/card";
 import type { ComponentType } from "react";
 import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
+import heroImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
 
 // ============================================
 // DATA
@@ -25,11 +26,6 @@ const heroData = {
   cta_buttons: [
     { text: "Apply now", url: "#apply", variant: "primary" as const, icon: "Rocket" },
     { text: "Download Details", url: "#syllabus", variant: "outline" as const, icon: "Download" },
-  ],
-  features: [
-    { icon: "Users", title: "1-on-1 Mentorship", description: "Get personalized guidance from industry experts" },
-    { icon: "Robot", title: "AI Learning Assistant", description: "24/7 support with our AI-powered tutor Rigobot" },
-    { icon: "Briefcase", title: "Career Support", description: "Resume reviews, interview prep & job placement help" },
   ],
 };
 
@@ -258,29 +254,14 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
             </div>
           </div>
 
-          {/* Right Side - Feature Preview Cards */}
-          <div className="flex flex-col gap-4">
-            {data.features.map((feature, index) => (
-              <Card 
-                key={index} 
-                className="p-5 flex items-start gap-4"
-                data-testid={`feature-card-${index}`}
-              >
-                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <span className="text-primary">
-                    {getIcon(feature.icon)}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </div>
-              </Card>
-            ))}
+          {/* Right Side - Hero Image */}
+          <div className="relative">
+            <img 
+              src={heroImage} 
+              alt="Students collaborating in a tech workspace"
+              className="w-full h-auto rounded-lg shadow-lg"
+              data-testid="img-hero"
+            />
           </div>
         </div>
       </div>
