@@ -207,7 +207,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               </div>
             )}
 
-            <div className="flex flex-wrap gap-x-6 gap-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {data.features.map((feature, index) => (
                 <div
                   key={index}
