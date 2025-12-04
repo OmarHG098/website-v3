@@ -13,7 +13,7 @@ import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
 import FolderCheck from "@/components/custom-icons/FolderCheck";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import eligibleImage from "@assets/mujer-sentada-ordenador_1764813990807.png";
+import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
 
 // ============================================
