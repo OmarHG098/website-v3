@@ -210,7 +210,7 @@ const faqData: FAQSectionType = {
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="75" height="68" />,
+    briefcase: <Briefcase width="75" height="68" color="#0097CD" />,
     graduation: <Graduation width="75" height="64" />,
     growth: <GrowthChart width="75" height="79" />,
   };
