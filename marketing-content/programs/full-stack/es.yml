@@ -183,12 +183,12 @@ sections:
         text: "Construye tu portafolio con cientos de proyectos del mundo real."
       - icon: "cloud"
         text: "Miles de desafíos de código en la nube (sin configuración necesaria)."
+      - text: "Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
+        use_rigobot_icon: true
       - icon: "certificate"
         text: "Certificados de cursos"
       - icon: "certificate"
         text: "Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida."
-      - text: "Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
-        use_rigobot_icon: true
     cta:
       text: "Obtener plan"
       url: "/registro"

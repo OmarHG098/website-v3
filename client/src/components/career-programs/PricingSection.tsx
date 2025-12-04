@@ -43,6 +43,19 @@ const iconMap: Record<string, Icon> = {
   robot: IconRobot,
 };
 
+const techIconColors: Record<string, string> = {
+  html: "#0084FF",
+  css: "#25BF6C",
+  javascript: "#FFB718",
+  react: "#0084FF",
+  python: "#FFB718",
+  nodejs: "#FFB718",
+  git: "#EB5757",
+  bootstrap: "#9747FF",
+  api: "#061258",
+  settings: "#061258",
+};
+
 export function PricingSection({ data }: PricingSectionProps) {
   const { i18n } = useTranslation();
   const isSpanish = i18n.language?.startsWith('es');
@@ -103,84 +116,88 @@ export function PricingSection({ data }: PricingSectionProps) {
           </p>
         )}
 
-        <div className="grid lg:grid-cols-12 gap-0 items-stretch">
+        <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
           <div
-            className="relative rounded-l-2xl overflow-hidden lg:col-span-4"
-            style={{
-              background: "linear-gradient(135deg, #4F46E5 0%, #0EA5E9 50%, #06B6D4 100%)",
-            }}
-            data-testid="card-pricing"
+            className="flex items-center absolute -top-4 left-0 z-10"
+            data-testid="badge-discount"
           >
-            <div
-              className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1"
-              data-testid="badge-discount"
-            >
-              <IconFlame size={16} className="text-orange-400" />
-              <span className="text-white text-sm font-semibold">
+            <div className="flex items-center justify-center p-1.5 bg-[#BE0000] border-2 border-[#EB5757] rounded-full z-10">
+              <IconFlame size={28} className="text-[#FFB718]" style={{ filter: 'drop-shadow(0 0 4px rgba(255, 183, 24, 0.5))' }} />
+            </div>
+            <div className="flex items-center justify-center bg-[#EB5757] rounded-full px-3 py-1 -ml-2">
+              <span className="text-[#FFBEBE] text-sm font-normal">
                 {currentPlan.discount_badge}
               </span>
             </div>
+          </div>
 
-            <div className="pt-16 pb-8 px-6">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-white/90 text-sm">{learnAtPaceText}</span>
+          <div
+            className="relative rounded-l-2xl overflow-hidden lg:col-span-4"
+            style={{
+              background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
+            }}
+            data-testid="card-pricing"
+          >
+            <div className="flex flex-col items-center justify-between h-full px-4 py-6 pt-12">
+              <div className="flex items-center gap-2 w-full">
+                <span className="text-white text-sm flex-1">{learnAtPaceText}</span>
                 <Badge
-                  variant="outline"
-                  className="border-white/40 text-white bg-white/10 text-xs"
+                  className="bg-[#0062BD] border border-[#FAFDFF] text-[#FAFDFF] text-xs font-bold px-2.5 py-1 rounded-full"
                   data-testid="badge-period"
                 >
                   {isYearly ? yearlyLabel : monthlyLabel}
                 </Badge>
               </div>
 
-              <div className="mb-4">
-                <span
-                  className="text-5xl md:text-6xl font-bold text-white"
-                  data-testid="text-price"
-                >
-                  ${currentPlan.price}
-                </span>
-                <span className="text-white/70 text-lg ml-1">/{currentPlan.period}</span>
-              </div>
-
-              {currentPlan.original_price && (
-                <div
-                  className="text-white/60 line-through text-lg mb-3"
-                  data-testid="text-original-price"
-                >
-                  ${currentPlan.original_price}
+              <div className="flex flex-col items-center justify-center flex-1 py-6">
+                <div className="text-center">
+                  <span
+                    className="text-5xl md:text-[55px] font-bold text-white"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                    data-testid="text-price"
+                  >
+                    ${currentPlan.price}
+                  </span>
+                  <span className="text-white text-xs font-normal">/{currentPlan.period}</span>
                 </div>
-              )}
 
-              {currentPlan.savings_badge && (
-                <Badge
-                  className="bg-white/20 text-white border-0 backdrop-blur-sm mb-6"
-                  data-testid="badge-savings"
-                >
-                  {currentPlan.savings_badge}
-                </Badge>
-              )}
+                {currentPlan.original_price && (
+                  <div
+                    className="text-white/60 line-through text-lg mt-1"
+                    data-testid="text-original-price"
+                  >
+                    ${currentPlan.original_price}
+                  </div>
+                )}
 
-              <div className="mt-6 pt-6 border-t border-white/20">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full bg-white text-foreground border-0 hover:bg-white/90 font-semibold py-6 text-base"
-                  data-testid="button-get-plan"
-                >
-                  <a href={data.cta.url} className="flex items-center justify-center gap-2">
-                    <IconSchool size={22} />
-                    {data.cta.text}
-                  </a>
-                </Button>
+                {currentPlan.savings_badge && (
+                  <Badge
+                    className="bg-[#061258] text-white border-0 mt-2 text-xs"
+                    data-testid="badge-savings"
+                  >
+                    {currentPlan.savings_badge}
+                  </Badge>
+                )}
               </div>
+
+              <Button
+                asChild
+                variant="outline"
+                className="w-full bg-white text-[#061258] border-0 hover:bg-white/90 font-bold h-10 text-[17px] tracking-wide rounded"
+                data-testid="button-get-plan"
+              >
+                <a href={data.cta.url} className="flex items-center justify-center gap-2">
+                  <IconSchool size={24} className="text-[#061258]" />
+                  {data.cta.text}
+                </a>
+              </Button>
             </div>
           </div>
 
-          <div className="bg-background border border-l-0 border-border rounded-r-2xl pt-16 pb-8 px-6 space-y-6 lg:col-span-8">
+          <div className="bg-background border border-l-0 border-border rounded-r-2xl p-4 space-y-4 lg:col-span-8">
             {data.features_title && (
               <p
-                className="text-foreground font-semibold text-lg"
+                className="text-[#3A3A3A] font-normal text-lg"
                 data-testid="text-features-title"
               >
                 {data.features_title}
@@ -189,23 +206,26 @@ export function PricingSection({ data }: PricingSectionProps) {
 
             {data.tech_icons && data.tech_icons.length > 0 && (
               <div
-                className="flex flex-wrap gap-3"
+                className="flex flex-wrap gap-4"
                 data-testid="tech-icons"
               >
                 {data.tech_icons.map((iconName, index) => {
                   const IconComponent = iconMap[iconName.toLowerCase()];
+                  const color = techIconColors[iconName.toLowerCase()] || "#061258";
                   return IconComponent ? (
                     <div
                       key={index}
-                      className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center"
+                      className="flex items-center justify-center p-2"
                       data-testid={`icon-tech-${index}`}
                     >
-                      <IconComponent size={24} className="text-muted-foreground" />
+                      <IconComponent size={20} style={{ color }} />
                     </div>
                   ) : null;
                 })}
               </div>
             )}
+
+            <div className="border-t border-border" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {data.features.map((feature, index) => (
@@ -216,21 +236,21 @@ export function PricingSection({ data }: PricingSectionProps) {
                 >
                   <div className="flex-shrink-0 mt-0.5">
                     {feature.use_rigobot_icon ? (
-                      <RigobotIconTiny width="24px" height="14px" />
+                      <RigobotIconTiny width="27px" height="17px" />
                     ) : feature.icon ? (
                       (() => {
                         const IconComponent = iconMap[feature.icon.toLowerCase()];
                         return IconComponent ? (
-                          <IconComponent size={20} className="text-primary" />
+                          <IconComponent size={22} className="text-primary" />
                         ) : (
-                          <IconRobot size={20} className="text-primary" />
+                          <IconRobot size={22} className="text-primary" />
                         );
                       })()
                     ) : (
-                      <IconCertificate size={20} className="text-primary" />
+                      <IconCertificate size={22} className="text-primary" />
                     )}
                   </div>
-                  <span className="text-foreground text-sm leading-relaxed">
+                  <span className="text-[#061258] text-xs leading-relaxed">
                     {feature.text}
                   </span>
                 </div>
