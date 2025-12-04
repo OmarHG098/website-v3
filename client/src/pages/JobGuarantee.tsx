@@ -210,9 +210,9 @@ const faqData: FAQSectionType = {
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="75" height="68" color="" />,
-    graduation: <Graduation width="75" height="64" />,
-    growth: <GrowthChart width="75" height="79" />,
+    briefcase: <Briefcase width="75" height="68" color="#0097CD" />,
+    graduation: <Graduation width="75" height="64" color="#0097CD" />,
+    growth: <GrowthChart width="75" height="79" color="#0097CD" />,
   };
 
   return (
@@ -331,7 +331,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
       data-testid="section-refund"
     >
       <div className="container mx-auto px-4">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
