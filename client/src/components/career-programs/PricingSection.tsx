@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -42,8 +43,14 @@ const iconMap: Record<string, Icon> = {
 };
 
 export function PricingSection({ data }: PricingSectionProps) {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language?.startsWith('es');
   const [isYearly, setIsYearly] = useState(true);
   const currentPlan = isYearly ? data.yearly : data.monthly;
+  
+  const yearlyLabel = isSpanish ? "Anual" : "Annual";
+  const monthlyLabel = isSpanish ? "Mensual" : "Monthly";
+  const learnAtPaceText = isSpanish ? "Aprende a tu ritmo" : "Learn at your own pace";
 
   return (
     <section
@@ -82,7 +89,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               }`}
               data-testid="button-yearly"
             >
-              Yearly
+              {yearlyLabel}
             </button>
             <button
               onClick={() => setIsYearly(false)}
@@ -93,7 +100,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               }`}
               data-testid="button-monthly"
             >
-              Monthly
+              {monthlyLabel}
             </button>
           </div>
         </div>
@@ -118,13 +125,13 @@ export function PricingSection({ data }: PricingSectionProps) {
 
             <div className="pt-16 pb-8 px-6">
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-white/90 text-sm">Learn at your own pace</span>
+                <span className="text-white/90 text-sm">{learnAtPaceText}</span>
                 <Badge
                   variant="outline"
                   className="border-white/40 text-white bg-white/10 text-xs"
                   data-testid="badge-period"
                 >
-                  {isYearly ? "Anual" : "Monthly"}
+                  {isYearly ? yearlyLabel : monthlyLabel}
                 </Badge>
               </div>
 
