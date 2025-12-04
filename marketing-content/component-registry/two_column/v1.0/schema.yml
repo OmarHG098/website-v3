@@ -1,0 +1,171 @@
+name: "Two Column Section"
+version: "1.0"
+component: "TwoColumn"
+file: "client/src/components/TwoColumn.tsx"
+description: "Flexible two-column layout with 12-column grid system, supporting images, videos, text, bullets, and CTAs"
+
+when_to_use: |
+  Use for side-by-side content layouts like feature explanations, eligibility criteria,
+  or any content that benefits from image/text pairing. Great for breaking up
+  long-form content and creating visual interest.
+
+props:
+  proportions:
+    type: array
+    required: false
+    description: "Grid column proportions as [left, right] numbers that sum to 12"
+    example: [6, 6]
+    default: [6, 6]
+    
+  background:
+    type: string
+    required: false
+    description: "Tailwind background class"
+    example: "bg-muted/30"
+    
+  alignment:
+    type: string
+    required: false
+    options: ["start", "center", "end"]
+    description: "Vertical alignment of columns"
+    default: "center"
+    
+  gap:
+    type: string
+    required: false
+    description: "Gap between left and right columns (Tailwind gap value)"
+    example: "8"
+    default: "8"
+    
+  padding_left:
+    type: string
+    required: false
+    description: "Left padding for the section (Tailwind pl-* value, 0-96)"
+    example: "24"
+    default: "24"
+    
+  padding_right:
+    type: string
+    required: false
+    description: "Right padding for the section (Tailwind pr-* value, 0-96)"
+    example: "24"
+    default: "24"
+    
+  container_style:
+    type: object
+    required: false
+    description: "Additional CSS styles for the container"
+    example: { "padding": "20px" }
+    
+  reverse_on_mobile:
+    type: boolean
+    required: false
+    description: "Reverse column order on mobile devices"
+    default: false
+    
+  left:
+    type: object
+    required: false
+    description: "Left column content configuration"
+    example:
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
+      image_alt: "Team collaborating"
+      justify: "center"
+    fields:
+      video:
+        type: string
+        description: "YouTube video ID"
+      video_height:
+        type: string
+        description: "Video height (e.g., '360px')"
+      video_width:
+        type: string
+        description: "Video width (e.g., '100%')"
+      image:
+        type: string
+        description: "Image URL or import path"
+      image_alt:
+        type: string
+        description: "Image alt text"
+      heading:
+        type: string
+        description: "Main heading (h2)"
+      sub_heading:
+        type: string
+        description: "Subtitle text below heading"
+      description:
+        type: string
+        description: "Paragraph text"
+      html_content:
+        type: string
+        description: "Raw HTML content (use with caution)"
+      button:
+        type: object
+        description: "CTA button configuration"
+        fields:
+          text:
+            type: string
+          url:
+            type: string
+          variant:
+            type: string
+            options: ["primary", "secondary", "outline"]
+          icon:
+            type: string
+            description: "Tabler icon name without 'Icon' prefix"
+      bullets:
+        type: array
+        description: "List of bullet points"
+        items:
+          text:
+            type: string
+            required: true
+          icon:
+            type: string
+            description: "Override icon for this bullet"
+          heading:
+            type: string
+            description: "Bold heading before the text"
+      bullet_icon:
+        type: string
+        description: "Default Tabler icon for all bullets (e.g., 'Check', 'ArrowRight')"
+        example: "Check"
+        default: "Check"
+      bullet_char:
+        type: string
+        description: "Text character to use as bullet instead of icon (e.g., '•', '*')"
+        example: "•"
+      bullet_icon_color:
+        type: string
+        description: "Tailwind text color class for bullet icons"
+        example: "text-primary"
+        default: "text-primary"
+      font_size:
+        type: string
+        description: "Tailwind text size for sub_heading, description, and bullets"
+        options: ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl"]
+        example: "sm"
+        default: "base"
+      text_align:
+        type: string
+        description: "Text alignment for content"
+        options: ["left", "center", "right"]
+        default: "left"
+      justify:
+        type: string
+        options: ["start", "center", "end"]
+        description: "Horizontal alignment for media (images/videos)"
+        
+  right:
+    type: object
+    required: false
+    description: "Right column content configuration (same fields as left)"
+    example:
+      heading: "Why Choose Us"
+      description: "We provide comprehensive support for your learning journey."
+      bullets:
+        - text: "Personalized mentorship from industry experts"
+        - text: "Flexible learning schedule that fits your life"
+        - text: "Real-world projects to build your portfolio"
+      bullet_icon: "Check"
+      font_size: "base"

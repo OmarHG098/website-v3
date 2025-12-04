@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
+import { TwoColumn } from "@/components/TwoColumn";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -394,50 +395,31 @@ function HeroSection({ data }: { data: typeof heroData }) {
 
 function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }) {
   return (
-    <section 
-      className="py-12 bg-amber-50"
-      data-testid="section-unlimited-support"
-    >
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-8 items-center lg:px-12">
-          <div className="order-2 md:order-1 md:col-span-2">
-            <img 
-              src={careerSupportImage} 
-              alt="Career support team members collaborating" 
-              className="w-full"
-              data-testid="img-career-support"
-            />
-          </div>
-          
-          <div className="order-1 md:order-2 md:col-span-3">
-            <h2 
-              className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
-              data-testid="text-unlimited-support-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-base mb-6">
-              {data.description}
-            </p>
-            
-            <div className="space-y-4">
-              {data.features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="flex gap-3 items-start"
-                  data-testid={`feature-unlimited-${index}`}
-                >
-                  <IconCheck className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  <p className="text-sm text-foreground">
-                    {feature}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <TwoColumn 
+      data={{
+        type: "two_column",
+        background: "bg-amber-50",
+        proportions: [6, 6],
+        reverse_on_mobile: true,
+        alignment: "center",
+        right: {
+          image: careerSupportImage,
+          image_alt: "Career support team members collaborating",
+          image_width: "500px"
+        },
+        left: {
+          heading: data.title,
+          description: data.description,
+          justify: "center",
+          text_align: "left",
+          font_size: "base",
+          bullet_icon: "Check",
+          bullets: data.features.map(feature => ({
+            text: feature,
+          })),
+        },
+      }}
+    />
   );
 }
 
@@ -493,52 +475,30 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   );
 }
 
+// Hyperpersonalized Career Support Section - Uses TwoColumn component
 function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
   return (
-    <section 
-      className="py-12 bg-muted/30"
-      data-testid="section-hyperpersonalized"
-    >
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-5 gap-4 xl:gap-20 items-center lg:px-12">
-          <div className="order-2 md:order-1 md:col-span-2 flex justify-center">
-            <img 
-              src={communityImage} 
-              alt="4Geeks Academy community members collaborating on a project" 
-              className="w-[200px] md:w-full"
-              data-testid="img-community"
-            />
-          </div>
-          
-          <div className="order-1 md:order-2 md:col-span-3">
-            <h2 
-              className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
-              data-testid="text-hyperpersonalized-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-base mb-6">
-              {data.subtitle}
-            </p>
-            
-            <div className="space-y-4">
-              {data.features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="flex gap-3 items-start"
-                  data-testid={`feature-hyperpersonalized-${index}`}
-                >
-                  <span className="text-foreground flex-shrink-0">•</span>
-                  <p className="text-sm text-foreground">
-                    {feature}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <TwoColumn
+      data={{
+        type: "two_column",
+        proportions: [4, 8],
+        background: "bg-muted/30",
+        alignment: "center",
+        gap: "12",
+        reverse_on_mobile: true,
+        left: {
+          image: communityImage,
+          image_alt: "4Geeks Academy community members collaborating on a project",
+          justify: "center",
+        },
+        right: {
+          heading: data.title,
+          description: data.subtitle,
+          bullets: data.features.map(feature => ({ text: feature })),
+          font_size: "sm",
+        },
+      }}
+    />
   );
 }
 

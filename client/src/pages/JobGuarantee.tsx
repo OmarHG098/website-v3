@@ -1,7 +1,8 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType } from "@shared/schema";
-import SolidCard from "@/components/SolidCard";
+import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
+import { HeroSection } from "@/components/career-programs/HeroSection";
+import { TwoColumn } from "@/components/TwoColumn";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -10,32 +11,33 @@ import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
 import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
 import FolderCheck from "@/components/custom-icons/FolderCheck";
-import { IconCheck, IconDownload } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import eligibleImage from "@assets/job-guarantee-1_1764687119325.png";
+import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
 
 // ============================================
 // DATA
 // ============================================
 
-const heroData = {
+const heroData: HeroSectionType = {
+  type: "hero",
   title: "Get into tech with our Job Guarantee",
-  subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition.",
-  conditionsLink: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
-  ctaButtons: [
-    { text: "Apply now", href: "#apply", variant: "default" as const },
-    { text: "Request a syllabus", href: "#syllabus", variant: "outline" as const, icon: true },
+  subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+  trust_bar: {
+    rating: "4.5",
+    rating_count: "1294",
+    trusted_text: "84% success rate",
+  },
+  cta_buttons: [
+    { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
+    { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
   ],
 };
 
 const statsData = {
-  title: "Does the Job Guarantee Deliver Results You Can Count On?",
-  description: [
-    "Yes, and we've got the numbers to back it up.",
-    "These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
-  ],
+  title: "Does the Job Guarantee deliver results you can count on?",
+  description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
     { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
     { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
@@ -43,19 +45,34 @@ const statsData = {
   ],
 };
 
-const eligibleData = {
-  title: "Who's Eligible?",
-  subtitle: "You'll qualify for the Job Guarantee if you:",
-  requirements: [
-    "Have U.S. work authorization",
-    "Pass our logic test",
-    "Complete all coursework and projects",
-    "Follow our career team's guidance",
-  ],
-  note: "*Conditions apply depending on your country or U.S. state",
-  buttonText: "Apply",
-  image: eligibleImage,
-  imageAlt: "Woman working on laptop",
+const eligibleData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [9, 3],
+  padding_left: "52",
+  padding_right: "52",
+  background: "bg-primary/5",
+  left: {
+    heading: "Who's Eligible?",
+    sub_heading: "You'll qualify for the Job Guarantee if you:",
+    bullets: [
+      { text: "Have U.S. work authorization" },
+      { text: "Pass our logic test" },
+      { text: "Complete all coursework and projects" },
+      { text: "Follow our career team's guidance" },
+    ],
+    description: "*Conditions apply depending on your country or U.S. state",
+    button: {
+      text: "Apply",
+      url: "#apply",
+      variant: "primary",
+    },
+    font_size: "lg"
+  },
+  right: {
+    image: eligibleImage,
+    image_alt: "Woman working on laptop",
+    image_width: "420px"
+  },
 };
 
 const programsData = {
@@ -86,17 +103,35 @@ const programsData = {
   ],
 };
 
-const confidenceData = {
-  title: "Why We Have the Confidence to Offer a Job Guarantee",
-  description: "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
-  benefits: [
-    "Our program's effectiveness is backed by strong placement rates",
-    "The tech industry continues to grow with high demand for talent",
-    "We believe in our teaching approach and your commitment to succeed",
-  ],
-  buttonText: "Apply",
-  image: confidenceImage,
-  imageAlt: "Happy graduate with laptop showing the 4Geeks Academy logo",
+const confidenceData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [5, 7],
+  background: "bg-primary/5",
+  alignment: "center",
+  gap: "12",
+  reverse_on_mobile: true,
+  left: {
+    image: confidenceImage,
+    image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo",
+    image_width: "320px",
+    justify: "center",
+  },
+  right: {
+    heading: "Why We Have the Confidence to Offer a Job Guarantee",
+    description: "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
+    font_size: "base",
+    bullets: [
+      { text: "Our program's effectiveness is backed by strong placement rates" },
+      { text: "The tech industry continues to grow with high demand for talent" },
+      { text: "We believe in our teaching approach and your commitment to succeed" },
+    ],
+    bullet_icon: "Check",
+    button: {
+      text: "Apply",
+      url: "#apply",
+      variant: "primary",
+    },
+  },
 };
 
 const refundData = {
@@ -177,140 +212,50 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
-function HeroSection({ data }: { data: typeof heroData }) {
-  return (
-    <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
-      data-testid="section-hero"
-    >
-      <div className="hidden md:flex lg:hidden absolute left-8 top-8 flex-col gap-6">
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-primary" />
-      </div>
-      <div className="hidden lg:grid absolute left-16 top-8 grid-cols-2 gap-3">
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div className="w-4 h-4 rounded-full bg-primary" />
-        <div />
-        <div />
-        <div className="w-4 h-4 rounded-full bg-[#FFB718]" />
-        <div className="w-4 h-4 rounded-full bg-[#d1d5db]" />
-        <div />
-      </div>
-
-      <div className="hidden md:block lg:hidden absolute right-0 top-1/3 -translate-y-1/2">
-        <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
-      </div>
-      <div className="hidden lg:block absolute right-0 top-1/3 -translate-y-1/2">
-        <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
-      </div>
-      <div className="hidden lg:block absolute right-32 bottom-36">
-        <div className="w-6 h-6 rounded-full bg-[#FFB718]" />
-      </div>
-
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground"
-          data-testid="text-hero-title"
-        >
-          {data.title}
-        </h1>
-        
-        <p 
-          className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-2"
-          data-testid="text-hero-subtitle"
-        >
-          {data.subtitle}
-        </p>
-        <a 
-          href={data.conditionsLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline text-lg md:text-xl"
-        >
-          Conditions apply
-        </a>
-        <span className="text-lg md:text-xl text-muted-foreground">.</span>
-        
-        <div className="flex flex-wrap justify-center gap-4 mt-8">
-          {data.ctaButtons.map((btn, index) => (
-            <Button
-              key={index}
-              size="lg"
-              variant={btn.variant}
-              asChild
-              data-testid={`button-hero-cta-${index}`}
-            >
-              <a href={btn.href} className={btn.icon ? "flex items-center gap-2" : ""}>
-                {btn.icon && <IconDownload size={20} />}
-                {btn.text}
-              </a>
-            </Button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="90" height="81" />,
-    graduation: <Graduation width="90" height="77" />,
-    growth: <GrowthChart width="90" height="94" />,
+    briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
+    graduation: <Graduation width="64" height="54" />,
+    growth: <GrowthChart width="64" height="67" />,
   };
 
   return (
     <section 
-      className="py-8 bg-sky-200"
+      className="pb-16"
       data-testid="section-stats"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-left mb-12">
+          <div className="text-center mb-8">
             <h2 
-              className="text-3xl font-bold mb-4 text-foreground text-center"
+              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
               data-testid="text-stats-title"
             >
               {data.title}
             </h2>
-            {data.description.map((text, index) => (
-              <p key={index} className={`text-xl ${index < data.description.length - 1 ? 'mb-2' : ''}`}>
-                {text}
-              </p>
-            ))}
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              {data.description}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index}>
-                <div data-testid={`stat-card-${index}`} className="flex items-center gap-6 md:block">
-                  <div className="flex-shrink-0 md:mb-6">
-                    {iconMap[stat.icon]}
-                  </div>
-                  <div>
-                    <div className="text-5xl md:text-6xl font-bold text-foreground mb-2">
-                      {stat.value}
-                      {stat.valueSuffix && (
-                        <span className="text-2xl md:text-3xl ml-1 md:block md:ml-0 lg:inline lg:ml-1">
-                          {stat.valueSuffix}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xl text-muted-foreground">{stat.label}</div>
-                  </div>
+              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
+                <div className="flex-shrink-0">
+                  {iconMap[stat.icon]}
                 </div>
-              </SolidCard>
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
+                    {stat.value}
+                    {stat.valueSuffix && (
+                      <span className="text-xl md:text-2xl ml-1">
+                        {stat.valueSuffix}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -319,54 +264,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
   );
 }
 
-function EligibleSection({ data }: { data: typeof eligibleData }) {
-  return (
-    <section 
-      className="py-14 bg-background"
-      data-testid="section-eligible"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-                data-testid="text-eligible-title"
-              >
-                {data.title}
-              </h2>
-              <p className="text-xl text-muted-foreground mb-6">
-                {data.subtitle}
-              </p>
-              <ul className="space-y-4 mb-6">
-                {data.requirements.map((req, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <IconCheck className="text-primary mt-1 flex-shrink-0" size={20} />
-                    <span className="text-foreground text-lg">{req}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-md text-muted-foreground mb-8">
-                {data.note}
-              </p>
-              <Button size="lg" data-testid="button-apply-eligible" className="text-md px-6">
-                {data.buttonText}
-              </Button>
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src={data.image} 
-                alt={data.imageAlt} 
-                className="max-w-[280px] md:max-w-full h-auto rounded-md"
-                data-testid="img-eligible"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function ProgramsSection({ data }: { data: typeof programsData }) {
   const iconMap = {
@@ -377,7 +274,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
 
   return (
     <section 
-      className="pb-8 pt-10 bg-sky-50"
+      className="pb-8 pt-10"
       data-testid="section-programs"
     >
       <div className="container mx-auto px-4">
@@ -388,7 +285,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
           >
             {data.title}
           </h2>
-          <p className="text-xl text-center mb-12">
+          <p className="text-lg text-center mb-12">
             {data.subtitle}
           </p>
 
@@ -425,58 +322,6 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
   );
 }
 
-function ConfidenceSection({ data }: { data: typeof confidenceData }) {
-  return (
-    <section 
-      className="pb-8 pt-12 bg-background"
-      data-testid="section-confidence"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="flex justify-center">
-              <img 
-                src={data.image} 
-                alt={data.imageAlt}
-                className="max-w-[280px] md:max-w-full h-auto rounded-lg"
-                loading="lazy"
-                data-testid="img-confidence"
-              />
-            </div>
-
-            <div>
-              <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-                data-testid="text-confidence-title"
-              >
-                {data.title}
-              </h2>
-              <p className="text-base md:text-xl text-muted-foreground mb-8">
-                {data.description}
-              </p>
-              <ul className="space-y-5 mb-8">
-                {data.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                      <IconCheck className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-sm md:text-lg text-foreground">
-                      {benefit}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button size="lg" data-testid="button-apply-confidence">
-                {data.buttonText}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function RefundSection({ data }: { data: typeof refundData }) {
   const iconMap = {
     briefcase: Briefcase,
@@ -486,7 +331,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
 
   return (
     <section 
-      className="pt-18 pb-10 bg-muted/30"
+      className="pt-12 pb-10 bg-muted/30"
       data-testid="section-refund"
     >
       <div className="container mx-auto px-4">
@@ -536,7 +381,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 return (
                   <div key={index} className={`flex flex-col items-center flex-1 max-w-[160px] ${isMiddle ? 'mt-[70px]' : ''}`}>
                     <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
-                      <IconComponent width={50} height={50} color="#1a1a1a" />
+                      <IconComponent width="50" height="50" />
                     </div>
                     <p className="text-base text-foreground text-center mt-4">
                       {step.text}
@@ -575,7 +420,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                   )}
                   <div className={`flex items-center justify-between relative z-10 ${!isLeft ? 'flex-row-reverse' : ''}`}>
                     <div className="w-[100px] h-[100px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center flex-shrink-0">
-                      <IconComponent width={45} height={45} color="#1a1a1a" />
+                      <IconComponent width="45" height="45" />
                     </div>
                     <p className={`text-sm text-foreground max-w-[140px] ${!isLeft ? 'text-right' : ''}`}>
                       {step.text}
@@ -615,10 +460,10 @@ export default function JobGuarantee() {
       <main>
         <HeroSection data={heroData} />
         <StatsSection data={statsData} />
-        <EligibleSection data={eligibleData} />
-        <ProgramsSection data={programsData} />
-        <ConfidenceSection data={confidenceData} />
+        <TwoColumn data={eligibleData} />
         <RefundSection data={refundData} />
+        <ProgramsSection data={programsData} />
+        <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>
     </div>
