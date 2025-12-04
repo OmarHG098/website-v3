@@ -294,7 +294,7 @@ sections:
 
   - type: faq
     version: "1.0"
-    title: "Frequently Asked Questions"
+    title: "FAQ"
     items:
       - question: "Are there fixed class times?"
         answer: "No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction."

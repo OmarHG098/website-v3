@@ -294,7 +294,7 @@ sections:
 
   - type: faq
     version: "1.0"
-    title: "Preguntas Frecuentes"
+    title: "FAQ"
     items:
       - question: "¿Hay horarios de clase fijos?"
         answer: "No, el bootcamp a tu ritmo está diseñado para aprender cuando quieras. Puedes acceder a todos los materiales 24/7 y avanzar en el plan de estudios cuando te convenga. Los talleres en vivo opcionales están disponibles en varios horarios si deseas interacción en tiempo real."
