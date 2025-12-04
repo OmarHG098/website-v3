@@ -22,9 +22,13 @@ import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp"
 
 const heroData: HeroSectionType = {
   type: "hero",
-  badge: "Job Guarantee",
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+  trust_bar: {
+    rating: "4.9",
+    rating_count: "1294",
+    trusted_text: "84% job placement rate",
+  },
   cta_buttons: [
     { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
     { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
