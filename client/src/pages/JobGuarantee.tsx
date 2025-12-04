@@ -208,12 +208,11 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
-// Briefcase icon uses blue color override via color prop
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="75" height="68" color="#0097CD" />,
-    graduation: <Graduation width="75" height="64" />,
-    growth: <GrowthChart width="75" height="79" />,
+    graduation: <Graduation width="75" height="64" color="#0097CD" />,
+    growth: <GrowthChart width="75" height="79" color="#0097CD" />,
   };
 
   return (
