@@ -17,6 +17,7 @@ import {
   IconCertificate,
   IconCloud,
   IconRobot,
+  IconSchool,
   type Icon,
 } from "@tabler/icons-react";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
@@ -58,24 +59,13 @@ export function PricingSection({ data }: PricingSectionProps) {
       data-testid="section-pricing"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
           <h2
-            className="text-2xl md:text-3xl font-bold text-primary mb-2"
+            className="text-2xl md:text-3xl font-bold text-primary"
             data-testid="text-pricing-title"
           >
             {data.title}
           </h2>
-          {data.subtitle && (
-            <p
-              className="text-foreground font-medium"
-              data-testid="text-pricing-subtitle"
-            >
-              {data.subtitle}
-            </p>
-          )}
-        </div>
-
-        <div className="flex justify-end mb-6">
           <div
             className="inline-flex rounded-full border border-primary/20 p-1 bg-background"
             data-testid="toggle-billing-period"
@@ -104,10 +94,18 @@ export function PricingSection({ data }: PricingSectionProps) {
             </button>
           </div>
         </div>
+        {data.subtitle && (
+          <p
+            className="text-foreground font-medium mb-6"
+            data-testid="text-pricing-subtitle"
+          >
+            {data.subtitle}
+          </p>
+        )}
 
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="grid lg:grid-cols-2 gap-0 items-stretch">
           <div
-            className="relative rounded-2xl overflow-hidden"
+            className="relative rounded-l-2xl overflow-hidden"
             style={{
               background: "linear-gradient(135deg, #4F46E5 0%, #0EA5E9 50%, #06B6D4 100%)",
             }}
@@ -167,11 +165,11 @@ export function PricingSection({ data }: PricingSectionProps) {
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full bg-white text-foreground border-0 hover:bg-white/90 font-semibold py-6"
+                  className="w-full bg-white text-foreground border-0 hover:bg-white/90 font-semibold py-6 text-base"
                   data-testid="button-get-plan"
                 >
                   <a href={data.cta.url} className="flex items-center justify-center gap-2">
-                    <IconRobot size={20} />
+                    <IconSchool size={22} />
                     {data.cta.text}
                   </a>
                 </Button>
@@ -179,10 +177,10 @@ export function PricingSection({ data }: PricingSectionProps) {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="bg-background border border-l-0 border-border rounded-r-2xl pt-16 pb-8 px-6 space-y-6">
             {data.features_title && (
               <p
-                className="text-foreground font-medium"
+                className="text-foreground font-semibold text-lg"
                 data-testid="text-features-title"
               >
                 {data.features_title}
@@ -209,11 +207,11 @@ export function PricingSection({ data }: PricingSectionProps) {
               </div>
             )}
 
-            <div className="space-y-4">
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
               {data.features.map((feature, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-2"
                   data-testid={`feature-${index}`}
                 >
                   <div className="flex-shrink-0 mt-0.5">
