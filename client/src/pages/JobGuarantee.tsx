@@ -281,7 +281,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
           >
             {data.title}
           </h2>
-          <p className="text-xl text-center mb-12">
+          <p className="text-lg text-center mb-12">
             {data.subtitle}
           </p>
 
