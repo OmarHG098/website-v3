@@ -210,9 +210,9 @@ const faqData: FAQSectionType = {
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="48" height="44" />,
-    graduation: <Graduation width="48" height="40" />,
-    growth: <GrowthChart width="48" height="50" />,
+    briefcase: <Briefcase width="64" height="58" />,
+    graduation: <Graduation width="64" height="54" />,
+    growth: <GrowthChart width="64" height="67" />,
   };
 
   return (
@@ -237,7 +237,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
               <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
-                <div className="w-[72px] h-[72px] rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <div className="flex-shrink-0">
                   {iconMap[stat.icon]}
                 </div>
                 <div>
