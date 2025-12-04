@@ -51,8 +51,18 @@ export default function RigobotIconTiny({
         d="M20.7092 4.2753H3.29171C3.10952 4.2753 2.96183 4.4258 2.96183 4.61145V10.9983C2.96183 11.184 3.10952 11.3345 3.29171 11.3345H20.7092C20.8914 11.3345 21.0391 11.184 21.0391 10.9983V4.61145C21.0391 4.4258 20.8914 4.2753 20.7092 4.2753ZM3.29171 3.80469C2.85446 3.80469 2.5 4.16589 2.5 4.61145V10.9983C2.5 11.4439 2.85446 11.8051 3.29171 11.8051H20.7092C21.1465 11.8051 21.5009 11.4439 21.5009 10.9983V4.61145C21.5009 4.16589 21.1465 3.80469 20.7092 3.80469H3.29171Z"
         fill="#00041A"
       />
-      <rect x="5" y="6.8" width="5" height="2" rx="0.5" fill="white" />
-      <rect x="14" y="6.8" width="5" height="2" rx="0.5" fill="white" />
+      {/* Left sunglasses lens with vertical stripes and triangle notch */}
+      <g>
+        <rect x="5" y="5.5" width="1.2" height="4.5" fill="white" />
+        <rect x="6.5" y="5.5" width="1.2" height="4.5" fill={color} />
+        <polygon points="6.1,10 5,8.5 7.2,8.5" fill="#00041A" />
+      </g>
+      {/* Right sunglasses lens with vertical stripes and triangle notch */}
+      <g>
+        <rect x="16.5" y="5.5" width="1.2" height="4.5" fill="white" />
+        <rect x="18" y="5.5" width="1.2" height="4.5" fill={color} />
+        <polygon points="17.6,10 16.5,8.5 18.7,8.5" fill="#00041A" />
+      </g>
     </svg>
   );
 }
