@@ -71,7 +71,7 @@ const eligibleData: TwoColumnSectionType = {
   right: {
     image: eligibleImage,
     image_alt: "Woman working on laptop",
-    image_width: "400px"
+    image_width: "280px"
   },
 };
 
