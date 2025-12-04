@@ -132,7 +132,7 @@ export function PricingSection({ data }: PricingSectionProps) {
           </div>
 
           <div
-            className="relative rounded-l-2xl overflow-hidden lg:col-span-4"
+            className="relative rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl overflow-hidden lg:col-span-4"
             style={{
               background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
             }}
@@ -194,7 +194,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             </div>
           </div>
 
-          <div className="bg-background border border-l-0 border-border rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+          <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
             {data.features_title && (
               <p
                 className="text-[#3A3A3A] font-normal text-lg"
