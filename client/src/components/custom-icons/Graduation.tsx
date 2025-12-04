@@ -24,8 +24,6 @@ export default function Graduation({
     >
       <path
         d="M3.5271 22.9039L37.0015 6.76465L71.7501 23.0468L37.0015 39.7209L3.5271 22.9039Z"
-        fill={color}
-        stroke={color}
         strokeWidth="2"
       />
       <path
