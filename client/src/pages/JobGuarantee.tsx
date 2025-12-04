@@ -321,7 +321,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
   const getIcon = (iconName: string) => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
     const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={32} className="text-primary" /> : null;
+    return IconComponent ? <IconComponent size={24} className="text-primary-foreground" /> : null;
   };
 
   return (
@@ -348,18 +348,20 @@ function RefundSection({ data }: { data: typeof refundData }) {
             {data.steps.map((step, index) => (
               <div 
                 key={index} 
-                className="flex flex-col items-center text-center"
+                className="flex flex-col"
                 data-testid={`refund-step-${index + 1}`}
               >
                 <span className="text-6xl md:text-7xl font-bold text-primary mb-4">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <div className="mb-4">
-                  {getIcon(step.icon)}
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
+                    {getIcon(step.icon)}
+                  </div>
+                  <p className="text-base text-foreground">
+                    {step.text}
+                  </p>
                 </div>
-                <p className="text-base text-foreground max-w-[250px]">
-                  {step.text}
-                </p>
               </div>
             ))}
           </div>
