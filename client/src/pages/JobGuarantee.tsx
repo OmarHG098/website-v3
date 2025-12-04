@@ -236,12 +236,12 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
-              <Card key={index} data-testid={`stat-item-${index}`} className="p-6 flex items-center gap-5">
+              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
                 <div className="w-[72px] h-[72px] rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                   {iconMap[stat.icon]}
                 </div>
                 <div>
-                  <div className="text-4xl md:text-5xl font-semibold text-foreground">
+                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
                     {stat.value}
                     {stat.valueSuffix && (
                       <span className="text-xl md:text-2xl ml-1">
@@ -377,7 +377,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 return (
                   <div key={index} className={`flex flex-col items-center flex-1 max-w-[160px] ${isMiddle ? 'mt-[70px]' : ''}`}>
                     <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
-                      <IconComponent width="50" height="50" />
+                      <IconComponent width="50" height="50" color="#1a1a1a" />
                     </div>
                     <p className="text-base text-foreground text-center mt-4">
                       {step.text}
@@ -416,7 +416,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                   )}
                   <div className={`flex items-center justify-between relative z-10 ${!isLeft ? 'flex-row-reverse' : ''}`}>
                     <div className="w-[100px] h-[100px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center flex-shrink-0">
-                      <IconComponent width="45" height="45" />
+                      <IconComponent width="45" height="45" color="#1a1a1a" />
                     </div>
                     <p className={`text-sm text-foreground max-w-[140px] ${!isLeft ? 'text-right' : ''}`}>
                       {step.text}

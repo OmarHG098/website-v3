@@ -9,7 +9,7 @@ interface BriefcaseProps {
 export default function Briefcase({
   width = "88px",
   height = "79px",
-  color = "#0080FF",
+  color = "#0097CD",
   style,
   className,
 }: BriefcaseProps) {
