@@ -20,6 +20,7 @@ import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp"
 // DATA
 // ============================================
 
+// Hero section with trust bar showing 84% job placement rate
 const heroData: HeroSectionType = {
   type: "hero",
   title: "Get into tech with our Job Guarantee",
