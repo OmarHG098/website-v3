@@ -22,6 +22,7 @@ export default function Briefcase({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      {/* Main briefcase body - uses color prop or defaults to yellow */}
       <rect
         x="12.59"
         y="21.8672"
