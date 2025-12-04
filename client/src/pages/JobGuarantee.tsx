@@ -280,7 +280,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
           >
             {data.title}
           </h2>
-          <p className="text-lg text-center mb-12">
+          <p className="text-lg text-center text-muted-foreground mb-12">
             {data.subtitle}
           </p>
 
@@ -331,14 +331,14 @@ function RefundSection({ data }: { data: typeof refundData }) {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="mb-12">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
               data-testid="text-refund-title"
             >
               {data.title}
             </h2>
-            <p className="text-lg max-w-3xl mx-auto text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               {data.description}
             </p>
             <a 
@@ -360,7 +360,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
                 className="flex flex-col"
                 data-testid={`refund-step-${index + 1}`}
               >
-                <span className="text-6xl md:text-7xl text-primary font-bold mb-4">
+                <span className="text-5xl md:text-6xl text-primary font-bold mb-4">
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <div className="flex items-start gap-3">
@@ -393,8 +393,8 @@ export default function JobGuarantee() {
         <HeroSection data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
-        <RefundSection data={refundData} />
         <ProgramsSection data={programsData} />
+        <RefundSection data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>
