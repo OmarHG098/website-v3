@@ -108,6 +108,33 @@ export const whyLearnAISectionSchema = z.object({
   cta: ctaButtonSchema.optional(),
 });
 
+// Pricing Section Types
+export const pricingFeatureSchema = z.object({
+  icon: z.string().optional(),
+  text: z.string(),
+  use_rigobot_icon: z.boolean().optional(),
+});
+
+export const pricingPlanSchema = z.object({
+  discount_badge: z.string(),
+  price: z.string(),
+  period: z.string(),
+  original_price: z.string().optional(),
+  savings_badge: z.string().optional(),
+});
+
+export const pricingSectionSchema = z.object({
+  type: z.literal("pricing"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  monthly: pricingPlanSchema,
+  yearly: pricingPlanSchema,
+  tech_icons: z.array(z.string()).optional(),
+  features_title: z.string().optional(),
+  features: z.array(pricingFeatureSchema),
+  cta: ctaButtonSchema,
+});
+
 export const faqItemSchema = z.object({
   question: z.string(),
   answer: z.string(),
@@ -251,6 +278,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
   mentorshipSectionSchema,
   certificateSectionSchema,
   whyLearnAISectionSchema,
+  pricingSectionSchema,
   faqSectionSchema,
   testimonialsSectionSchema,
   whosHiringSectionSchema,
@@ -315,6 +343,9 @@ export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
 export type WhyLearnAISection = z.infer<typeof whyLearnAISectionSchema>;
+export type PricingFeature = z.infer<typeof pricingFeatureSchema>;
+export type PricingPlan = z.infer<typeof pricingPlanSchema>;
+export type PricingSection = z.infer<typeof pricingSectionSchema>;
 export type FAQItem = z.infer<typeof faqItemSchema>;
 export type FAQSection = z.infer<typeof faqSectionSchema>;
 export type TestimonialItem = z.infer<typeof testimonialItemSchema>;
