@@ -9,7 +9,7 @@ interface GrowthChartProps {
 export default function GrowthChart({
   width = "89px",
   height = "93px",
-  color = "#0080FF",
+  color = "#0097CD",
   style,
   className,
 }: GrowthChartProps) {
