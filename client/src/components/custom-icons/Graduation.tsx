@@ -9,7 +9,7 @@ interface GraduationProps {
 export default function Graduation({
   width = "72",
   height = "61",
-  color = "#FFCF18",
+  color = "#0097CD",
   style,
   className,
 }: GraduationProps) {
