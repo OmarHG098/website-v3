@@ -50,7 +50,6 @@ const eligibleData: TwoColumnSectionType = {
   left: {
     heading: "Who's Eligible?",
     sub_heading: "You'll qualify for the Job Guarantee if you:",
-    font_size: "base",
     bullets: [
       { text: "Have U.S. work authorization" },
       { text: "Pass our logic test" },
@@ -63,6 +62,7 @@ const eligibleData: TwoColumnSectionType = {
       url: "#apply",
       variant: "primary",
     },
+    font_size: "lg"
   },
   right: {
     image: eligibleImage,
