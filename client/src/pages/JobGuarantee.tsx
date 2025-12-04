@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
-import { HeroSection } from "@/components/career-programs/HeroSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
@@ -20,13 +19,17 @@ import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp"
 // DATA
 // ============================================
 
-const heroData: HeroSectionType = {
-  type: "hero",
+const heroData = {
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
   cta_buttons: [
-    { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
-    { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
+    { text: "Apply now", url: "#apply", variant: "primary" as const, icon: "Rocket" },
+    { text: "Download Details", url: "#syllabus", variant: "outline" as const, icon: "Download" },
+  ],
+  features: [
+    { icon: "Users", title: "1-on-1 Mentorship", description: "Get personalized guidance from industry experts" },
+    { icon: "Robot", title: "AI Learning Assistant", description: "24/7 support with our AI-powered tutor Rigobot" },
+    { icon: "Briefcase", title: "Career Support", description: "Resume reviews, interview prep & job placement help" },
   ],
 };
 
@@ -207,6 +210,84 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
+function JobGuaranteeHero({ data }: { data: typeof heroData }) {
+  const getIcon = (iconName: string) => {
+    const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
+    const IconComponent = icons[`Icon${iconName}`];
+    return IconComponent ? <IconComponent size={20} /> : null;
+  };
+
+  return (
+    <section 
+      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
+      data-testid="section-hero"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Content */}
+          <div>
+            <h1 
+              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
+              data-testid="text-hero-title"
+            >
+              {data.title}
+            </h1>
+            
+            <p 
+              className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
+              data-testid="text-hero-subtitle"
+            >
+              {data.subtitle}
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              {data.cta_buttons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={button.variant === "primary" ? "default" : button.variant}
+                  size="lg"
+                  asChild
+                  data-testid={`button-hero-cta-${index}`}
+                >
+                  <a href={button.url} className="flex items-center gap-2">
+                    {button.icon && getIcon(button.icon)}
+                    {button.text}
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side - Feature Preview Cards */}
+          <div className="flex flex-col gap-4">
+            {data.features.map((feature, index) => (
+              <Card 
+                key={index} 
+                className="p-5 flex items-start gap-4"
+                data-testid={`feature-card-${index}`}
+              >
+                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-primary">
+                    {getIcon(feature.icon)}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
@@ -326,19 +407,19 @@ function RefundSection({ data }: { data: typeof refundData }) {
 
   return (
     <section 
-      className="pt-12 pb-10 bg-muted/30"
+      className="pt-4 pb-10 bg-muted/30"
       data-testid="section-refund"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-12">
+          <div className="text-center mb-12">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
               data-testid="text-refund-title"
             >
               {data.title}
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg max-w-3xl mx-auto text-muted-foreground">
               {data.description}
             </p>
             <a 
@@ -390,7 +471,7 @@ export default function JobGuarantee() {
       <Header />
       
       <main>
-        <HeroSection data={heroData} />
+        <JobGuaranteeHero data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
         <ProgramsSection data={programsData} />
