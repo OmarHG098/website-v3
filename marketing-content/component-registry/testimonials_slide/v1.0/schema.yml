@@ -1,0 +1,65 @@
+name: "Testimonials Slide"
+version: "1.0"
+component: "TestimonialsSlide"
+file: "client/src/components/TestimonialsSlide.tsx"
+description: "A sliding marquee of testimonial cards with photos, country flags, and achievement badges. Cards auto-scroll horizontally and pause on hover."
+when_to_use: "Use this component for showcasing multiple student testimonials with rich content including photos, country info, and achievements. Best for career support and program pages where social proof is important."
+
+props:
+  title:
+    type: string
+    required: true
+    description: "Main heading for the testimonials section"
+    example: "Real Careers Start Here — Just Ask Our Students"
+  
+  description:
+    type: string
+    required: true
+    description: "Supporting text that introduces the testimonials"
+    example: "Our grads are in high demand, with over 84% hired within six months of finishing the program."
+  
+  background:
+    type: string
+    required: false
+    description: "Background color class (default: bg-sidebar)"
+    example: "bg-muted"
+  
+  testimonials:
+    type: array
+    required: true
+    description: "Array of testimonial objects"
+    items:
+      name:
+        type: string
+        required: true
+        description: "Name of the person giving testimonial"
+      img:
+        type: string
+        required: true
+        description: "URL or path to the person's photo"
+      status:
+        type: string
+        required: false
+        description: "Status like 'Graduated'"
+      country:
+        type: object
+        required: true
+        properties:
+          name:
+            type: string
+            description: "Country name"
+          iso:
+            type: string
+            description: "ISO country code for flag display"
+      contributor:
+        type: string
+        required: true
+        description: "Role or contribution type"
+      description:
+        type: string
+        required: true
+        description: "The testimonial text"
+      achievement:
+        type: string
+        required: false
+        description: "Optional achievement or outcome badge"
