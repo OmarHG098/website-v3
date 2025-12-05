@@ -57,7 +57,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         
         {data.description && (
           <div className="text-center mb-10">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
             {data.description_link && (
@@ -75,7 +75,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.steps.map((step, index) => (
+          {(data.steps || []).map((step, index) => (
             <div 
               key={index} 
               className="flex flex-col"
