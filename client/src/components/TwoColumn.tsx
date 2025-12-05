@@ -16,23 +16,14 @@ const getIcon = (iconName: string, className?: string) => {
   return IconComponent ? <IconComponent className={className} size={20} /> : null;
 };
 
-const getGridColClass = (proportion: number): string => {
-  const colMap: Record<number, string> = {
-    1: "lg:col-span-1",
-    2: "lg:col-span-2",
-    3: "lg:col-span-3",
-    4: "lg:col-span-4",
-    5: "lg:col-span-5",
-    6: "lg:col-span-6",
-    7: "lg:col-span-7",
-    8: "lg:col-span-8",
-    9: "lg:col-span-9",
-    10: "lg:col-span-10",
-    11: "lg:col-span-11",
-    12: "lg:col-span-12",
-  };
-  return colMap[proportion] || "lg:col-span-6";
-};
+const TAILWIND_SPACING_SCALE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96];
+const GRID_COLS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+const createClassMap = (prefix: string, values: number[] = TAILWIND_SPACING_SCALE): Record<string, string> => 
+  Object.fromEntries(values.map(v => [String(v), `${prefix}-${v}`]));
+
+const colSpanMap = createClassMap("lg:col-span", GRID_COLS);
+const getGridColClass = (proportion: number): string => colSpanMap[String(proportion)] || "lg:col-span-6";
 
 const getAlignmentClass = (alignment?: "start" | "center" | "end"): string => {
   switch (alignment) {
@@ -61,20 +52,8 @@ const getResponsiveJustifyClass = (justify?: "start" | "center" | "end"): string
   }
 };
 
-const getGapClass = (gap?: string): string => {
-  const gapMap: Record<string, string> = {
-    "1": "gap-1",
-    "2": "gap-2",
-    "3": "gap-3",
-    "4": "gap-4",
-    "5": "gap-5",
-    "6": "gap-6",
-    "8": "gap-8",
-    "10": "gap-10",
-    "12": "gap-12",
-  };
-  return gap ? (gapMap[gap] || "gap-4") : "gap-4";
-};
+const gapMap = createClassMap("gap");
+const getGapClass = (gap?: string): string => gap ? (gapMap[gap] || "gap-4") : "gap-4";
 
 const getTextAlignClass = (textAlign?: "left" | "center" | "right"): string => {
   switch (textAlign) {
@@ -100,41 +79,11 @@ const getTextFontSize = (size?: string): string => {
   return size ? (sizeMap[size] || "text-xl") : "text-xl";
 };
 
+const paddingLeftMap = createClassMap("lg:pl");
+const paddingRightMap = createClassMap("lg:pr");
 const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): string => {
-  const paddingMap: Record<string, string> = {
-    "0": side === "left" ? "lg:pl-0" : "lg:pr-0",
-    "1": side === "left" ? "lg:pl-1" : "lg:pr-1",
-    "2": side === "left" ? "lg:pl-2" : "lg:pr-2",
-    "3": side === "left" ? "lg:pl-3" : "lg:pr-3",
-    "4": side === "left" ? "lg:pl-4" : "lg:pr-4",
-    "5": side === "left" ? "lg:pl-5" : "lg:pr-5",
-    "6": side === "left" ? "lg:pl-6" : "lg:pr-6",
-    "7": side === "left" ? "lg:pl-7" : "lg:pr-7",
-    "8": side === "left" ? "lg:pl-8" : "lg:pr-8",
-    "9": side === "left" ? "lg:pl-9" : "lg:pr-9",
-    "10": side === "left" ? "lg:pl-10" : "lg:pr-10",
-    "11": side === "left" ? "lg:pl-11" : "lg:pr-11",
-    "12": side === "left" ? "lg:pl-12" : "lg:pr-12",
-    "14": side === "left" ? "lg:pl-14" : "lg:pr-14",
-    "16": side === "left" ? "lg:pl-16" : "lg:pr-16",
-    "20": side === "left" ? "lg:pl-20" : "lg:pr-20",
-    "24": side === "left" ? "lg:pl-24" : "lg:pr-24",
-    "28": side === "left" ? "lg:pl-28" : "lg:pr-28",
-    "32": side === "left" ? "lg:pl-32" : "lg:pr-32",
-    "36": side === "left" ? "lg:pl-36" : "lg:pr-36",
-    "40": side === "left" ? "lg:pl-40" : "lg:pr-40",
-    "44": side === "left" ? "lg:pl-44" : "lg:pr-44",
-    "48": side === "left" ? "lg:pl-48" : "lg:pr-48",
-    "52": side === "left" ? "lg:pl-52" : "lg:pr-52",
-    "56": side === "left" ? "lg:pl-56" : "lg:pr-56",
-    "60": side === "left" ? "lg:pl-60" : "lg:pr-60",
-    "64": side === "left" ? "lg:pl-64" : "lg:pr-64",
-    "72": side === "left" ? "lg:pl-72" : "lg:pr-72",
-    "80": side === "left" ? "lg:pl-80" : "lg:pr-80",
-    "96": side === "left" ? "lg:pl-96" : "lg:pr-96",
-  };
-  const defaultPadding = "0"
-  return padding ? (paddingMap[padding] || defaultPadding) : defaultPadding;
+  const map = side === "left" ? paddingLeftMap : paddingRightMap;
+  return padding ? (map[padding] || "") : "";
 };
 
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
