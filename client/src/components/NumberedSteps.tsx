@@ -1,5 +1,4 @@
 import * as TablerIcons from "@tabler/icons-react";
-import { IconCheck } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 
 export interface NumberedStepsStep {
@@ -7,6 +6,9 @@ export interface NumberedStepsStep {
   text?: string;
   title?: string;
   bullets?: string[];
+  bullet_icon?: string;
+  bullet_icon_color?: string;
+  bullet_char?: string;
 }
 
 export interface NumberedStepsData {
@@ -18,16 +20,25 @@ export interface NumberedStepsData {
   };
   steps: NumberedStepsStep[];
   background?: string;
+  bullet_icon?: string;
+  bullet_icon_color?: string;
+  bullet_char?: string;
 }
 
 interface NumberedStepsProps {
   data: NumberedStepsData;
 }
 
-const getIcon = (iconName: string) => {
+const getIcon = (iconName: string, className?: string) => {
   const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
   const IconComponent = icons[`Icon${iconName}`];
-  return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
+  return IconComponent ? <IconComponent size={24} className={className || "text-primary"} /> : null;
+};
+
+const getBulletIcon = (iconName: string, colorClass: string) => {
+  const icons = TablerIcons as unknown as Record<string, ComponentType<{ className?: string }>>;
+  const IconComponent = icons[`Icon${iconName}`];
+  return IconComponent ? <IconComponent className={`w-4 h-4 ${colorClass} flex-shrink-0 mt-0.5`} /> : null;
 };
 
 export default function NumberedSteps({ data }: NumberedStepsProps) {
@@ -90,19 +101,30 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 )}
               </div>
               
-              {step.bullets && step.bullets.length > 0 && (
-                <ul className="space-y-2 ml-[52px]">
-                  {step.bullets.map((bullet, bulletIndex) => (
-                    <li 
-                      key={bulletIndex}
-                      className="flex gap-2 items-start text-base text-muted-foreground"
-                    >
-                      <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {step.bullets && step.bullets.length > 0 && (() => {
+                const bulletChar = step.bullet_char || data.bullet_char;
+                const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
+                const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
+                
+                return (
+                  <ul className="space-y-2 ml-[52px]">
+                    {step.bullets.map((bullet, bulletIndex) => (
+                      <li 
+                        key={bulletIndex}
+                        className="flex gap-2 items-start text-base text-muted-foreground"
+                      >
+                        <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                          {bulletChar 
+                            ? bulletChar 
+                            : getBulletIcon(bulletIcon, bulletIconColor)
+                          }
+                        </span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
             </div>
           ))}
         </div>

@@ -45,6 +45,26 @@ props:
     description: "Tailwind background class for the section"
     example: "bg-muted/30"
     default: "bg-muted/30"
+
+  bullet_icon:
+    type: string
+    required: false
+    description: "Default Tabler icon name for all bullets (without 'Icon' prefix)"
+    example: "Check"
+    default: "Check"
+
+  bullet_icon_color:
+    type: string
+    required: false
+    description: "Tailwind color class for bullet icons"
+    example: "text-primary"
+    default: "text-primary"
+
+  bullet_char:
+    type: string
+    required: false
+    description: "Text character to use instead of icon for bullets (e.g., '•' for dot)"
+    example: "•"
     
   steps:
     type: array
@@ -73,3 +93,18 @@ props:
         example:
           - "Polish LinkedIn, GitHub, and portfolio to attract recruiters"
           - "Build a resume that clears applicant tracking systems"
+      bullet_icon:
+        type: string
+        required: false
+        description: "Override default bullet icon for this step"
+        example: "CircleCheck"
+      bullet_icon_color:
+        type: string
+        required: false
+        description: "Override bullet icon color for this step"
+        example: "text-chart-5"
+      bullet_char:
+        type: string
+        required: false
+        description: "Override with text character for this step's bullets"
+        example: "•"

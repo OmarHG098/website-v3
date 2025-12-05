@@ -1,6 +1,7 @@
 title: "Career Development Process"
 description: "Our structured approach guides you from learning to landing your dream tech job."
 background: "bg-muted/30"
+bullet_char: "•"
 steps:
   - icon: "Stairs"
     title: "Profile Optimization"
