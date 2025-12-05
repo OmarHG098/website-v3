@@ -41,9 +41,7 @@ const statsData = {
 
 const eligibleData: TwoColumnSectionType = {
   type: "two_column",
-  proportions: [9, 3],
-  padding_left: "52",
-  padding_right: "52",
+  proportions: [8, 4],
   background: "bg-primary/5",
   left: {
     heading: "Who's Eligible?",
@@ -100,8 +98,6 @@ const programsData = {
 const confidenceData: TwoColumnSectionType = {
   type: "two_column",
   proportions: [5, 7],
-  padding_left: "52",
-  padding_right: "52",
   background: "bg-primary/5",
   alignment: "center",
   gap: "12",

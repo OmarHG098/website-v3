@@ -131,7 +131,7 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
     "80": side === "left" ? "lg:pl-80" : "lg:pr-80",
     "96": side === "left" ? "lg:pl-96" : "lg:pr-96",
   };
-  const defaultPadding = side === "left" ? "lg:pl-24" : "lg:pr-24";
+  const defaultPadding = "0"
   return padding ? (paddingMap[padding] || defaultPadding) : defaultPadding;
 };
 
