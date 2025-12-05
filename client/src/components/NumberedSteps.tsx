@@ -74,59 +74,73 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {(data.steps || []).map((step, index) => (
-            <div 
-              key={index} 
-              className="flex flex-col"
-              data-testid={`numbered-step-${index + 1}`}
-            >
-              <span className="text-5xl md:text-6xl text-primary font-bold mb-4">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  {getIcon(step.icon)}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+          {(data.steps || []).map((step, index) => {
+            const isLast = index === (data.steps || []).length - 1;
+            
+            return (
+              <div 
+                key={index} 
+                className="flex flex-col relative"
+                data-testid={`numbered-step-${index + 1}`}
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center flex-shrink-0 relative z-10">
+                    <span className="text-xl font-bold text-primary-foreground">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  {!isLast && (
+                    <>
+                      <div className="hidden md:block flex-1 h-0.5 bg-primary/30 ml-2" />
+                      <div className="md:hidden absolute left-7 top-14 w-0.5 h-8 bg-primary/30" />
+                    </>
+                  )}
                 </div>
-                {step.title && (
-                  <h3 className="text-lg font-semibold text-foreground pt-2">
-                    {step.title}
-                  </h3>
-                )}
-                {step.text && !step.title && (
-                  <p className="text-base text-foreground pt-2">
-                    {step.text}
-                  </p>
-                )}
-              </div>
-              
-              {step.bullets && step.bullets.length > 0 && (() => {
-                const bulletChar = step.bullet_char || data.bullet_char;
-                const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
-                const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
                 
-                return (
-                  <ul className="space-y-2 ml-[52px]">
-                    {step.bullets.map((bullet, bulletIndex) => (
-                      <li 
-                        key={bulletIndex}
-                        className="flex gap-2 items-start text-base text-muted-foreground"
-                      >
-                        <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
-                          {bulletChar 
-                            ? bulletChar 
-                            : getBulletIcon(bulletIcon, bulletIconColor)
-                          }
-                        </span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                );
-              })()}
-            </div>
-          ))}
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    {getIcon(step.icon)}
+                  </div>
+                  {step.title && (
+                    <h3 className="text-lg font-semibold text-foreground pt-2">
+                      {step.title}
+                    </h3>
+                  )}
+                  {step.text && !step.title && (
+                    <p className="text-base text-foreground pt-2">
+                      {step.text}
+                    </p>
+                  )}
+                </div>
+                
+                {step.bullets && step.bullets.length > 0 && (() => {
+                  const bulletChar = step.bullet_char || data.bullet_char;
+                  const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
+                  const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
+                  
+                  return (
+                    <ul className="space-y-2 ml-[52px]">
+                      {step.bullets.map((bullet, bulletIndex) => (
+                        <li 
+                          key={bulletIndex}
+                          className="flex gap-2 items-start text-base text-muted-foreground"
+                        >
+                          <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                            {bulletChar 
+                              ? bulletChar 
+                              : getBulletIcon(bulletIcon, bulletIconColor)
+                            }
+                          </span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  );
+                })()}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
