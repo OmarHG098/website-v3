@@ -52,12 +52,8 @@ const getResponsiveJustifyClass = (justify?: "start" | "center" | "end"): string
   }
 };
 
-const getGapStyle = (gap?: string): CSSProperties => {
-  if (!gap) return {};
-  const value = parseFloat(gap);
-  if (isNaN(value)) return {};
-  return { gap: `${value * 0.25}rem` };
-};
+const gapMap = createClassMap("gap");
+const getGapClass = (gap?: string): string => gap ? (gapMap[gap] || "gap-4") : "gap-4";
 
 const getTextAlignClass = (textAlign?: "left" | "center" | "right"): string => {
   switch (textAlign) {
