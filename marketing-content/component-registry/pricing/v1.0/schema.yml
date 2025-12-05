@@ -1,0 +1,106 @@
+name: "Pricing Section"
+version: "1.0"
+component: "PricingSection"
+file: "client/src/components/career-programs/PricingSection.tsx"
+description: "Pricing card with monthly/yearly toggle, features grid, and tech icons"
+
+when_to_use: |
+  Use to display subscription pricing options.
+  Shows pricing with discount badges, features included, and tech stack icons.
+
+props:
+  title:
+    type: string
+    required: true
+    description: "Main heading for the pricing section"
+    example: "Get access to all of our learning database, courses, and services"
+    
+  subtitle:
+    type: string
+    required: false
+    description: "Supporting text below title"
+    example: "Earn new skills every 30 min, never get stuck or lost again."
+    
+  monthly:
+    type: object
+    required: true
+    description: "Monthly pricing details"
+    properties:
+      discount_badge:
+        type: string
+        example: "35% OFF"
+      price:
+        type: string
+        example: "38.99"
+      period:
+        type: string
+        example: "mo"
+      original_price:
+        type: string
+        example: "59.99"
+        
+  yearly:
+    type: object
+    required: true
+    description: "Yearly pricing details"
+    properties:
+      discount_badge:
+        type: string
+        example: "35% OFF"
+      price:
+        type: string
+        example: "311.99"
+      period:
+        type: string
+        example: "yr"
+      original_price:
+        type: string
+        example: "479.99"
+      savings_badge:
+        type: string
+        example: "Save 3 months"
+        
+  tech_icons:
+    type: array
+    required: false
+    description: "List of technology icons to display"
+    items:
+      type: string
+      example: "html"
+    
+  features_title:
+    type: string
+    required: false
+    description: "Title above the features list"
+    
+  features:
+    type: array
+    required: true
+    description: "List of included features"
+    items:
+      icon:
+        type: string
+        required: false
+        description: "Icon name (certificate, cloud, etc.)"
+      text:
+        type: string
+        description: "Feature description"
+      use_rigobot_icon:
+        type: boolean
+        required: false
+        description: "Use Rigobot icon instead of standard icon"
+        
+  cta:
+    type: object
+    required: true
+    description: "Call-to-action button"
+    properties:
+      text:
+        type: string
+        example: "Get plan"
+      url:
+        type: string
+        example: "/signup"
+      variant:
+        type: string
+        options: ["primary", "outline"]

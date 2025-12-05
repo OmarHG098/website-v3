@@ -1,0 +1,43 @@
+name: "Why Learn AI Section"
+version: "1.0"
+component: "WhyLearnAISection"
+file: "client/src/components/career-programs/WhyLearnAISection.tsx"
+description: "Compelling section about the importance of learning AI-powered development"
+
+when_to_use: |
+  Use to motivate students about the future of AI in software development.
+  Creates urgency and explains why this skill set matters.
+
+props:
+  title:
+    type: string
+    required: true
+    description: "Main headline"
+    example: "Why Should I Learn to Build and Code with AI?"
+    
+  subtitle:
+    type: string
+    required: false
+    description: "Supporting headline"
+    example: "Software Development as You Know It Will Cease to Exist"
+    
+  description:
+    type: string
+    required: true
+    description: "Detailed explanation of why AI coding matters"
+    example: "Coding with AI will become a new standard, but it's a very different profession from traditional software development."
+    
+  cta:
+    type: object
+    required: false
+    description: "Call-to-action button"
+    properties:
+      text:
+        type: string
+        example: "Join now!"
+      url:
+        type: string
+        example: "/signup"
+      variant:
+        type: string
+        options: ["primary", "outline"]
