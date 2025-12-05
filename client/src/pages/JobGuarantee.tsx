@@ -291,7 +291,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
             >
               {data.title}
             </h2>
-            <p className="text-xl text-foreground max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>

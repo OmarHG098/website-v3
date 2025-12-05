@@ -64,7 +64,7 @@ export function HeroSection({ data }: HeroSectionProps) {
         
         {data.subtitle && (
           <p 
-            className="text-xl text-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
             data-testid="text-hero-subtitle"
           >
             {data.subtitle}

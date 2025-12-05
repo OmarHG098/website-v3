@@ -29,7 +29,7 @@ export function MentorshipSection({ data }: MentorshipSectionProps) {
           </h2>
           {data.subtitle && (
             <p 
-              className="text-xl text-foreground max-w-2xl mx-auto"
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
               data-testid="text-mentorship-subtitle"
             >
               {data.subtitle}

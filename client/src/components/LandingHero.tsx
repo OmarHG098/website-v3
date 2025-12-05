@@ -53,7 +53,7 @@ export default function LandingHero() {
             {t("hero.title")}
           </h1>
 
-          <p className="text-xl text-foreground mb-6 max-w-2xl md:max-w-xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto">
             {t("hero.subtitle")}
           </p>
 

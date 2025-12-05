@@ -60,7 +60,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           </h2>
           {data.subtitle && (
             <p 
-              className="text-xl text-foreground mt-4 max-w-3xl mx-auto"
+              className="text-muted-foreground mt-4 max-w-3xl mx-auto"
               data-testid="text-projects-subtitle"
             >
               {data.subtitle}
