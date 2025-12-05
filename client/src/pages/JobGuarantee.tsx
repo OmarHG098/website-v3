@@ -1,37 +1,32 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, HeroSection as HeroSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
-import { HeroSection } from "@/components/career-programs/HeroSection";
 import { TwoColumn } from "@/components/TwoColumn";
+import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
 import CodeWindow from "@/components/custom-icons/CodeWindow";
 import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
-import ChecklistVerify from "@/components/custom-icons/ChecklistVerify";
-import FolderCheck from "@/components/custom-icons/FolderCheck";
+import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import type { ComponentType } from "react";
 import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
+import heroImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
 
 // ============================================
 // DATA
 // ============================================
 
-const heroData: HeroSectionType = {
-  type: "hero",
+const heroData = {
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
-  trust_bar: {
-    rating: "4.5",
-    rating_count: "1294",
-    trusted_text: "84% success rate",
-  },
   cta_buttons: [
-    { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
-    { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
+    { text: "Apply now", url: "#apply", variant: "primary" as const, icon: "Rocket" },
+    { text: "Download Details", url: "#syllabus", variant: "outline" as const, icon: "Download" },
   ],
 };
 
@@ -47,9 +42,7 @@ const statsData = {
 
 const eligibleData: TwoColumnSectionType = {
   type: "two_column",
-  proportions: [9, 3],
-  padding_left: "52",
-  padding_right: "52",
+  proportions: [8, 4],
   background: "bg-primary/5",
   left: {
     heading: "Who's Eligible?",
@@ -113,8 +106,8 @@ const confidenceData: TwoColumnSectionType = {
   left: {
     image: confidenceImage,
     image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo",
-    image_width: "320px",
-    justify: "center",
+    image_width: "400px",
+    justify: "start",
   },
   right: {
     heading: "Why We Have the Confidence to Offer a Job Guarantee",
@@ -134,15 +127,18 @@ const confidenceData: TwoColumnSectionType = {
   },
 };
 
-const refundData = {
+const refundData: NumberedStepsData = {
   title: "How the Refund Works",
   description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.",
+  description_link: {
+    text: "Conditions Apply.",
+    url: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
+  },
   steps: [
-    { text: "1. You were not hired into a qualifying role within 9 months of graduation.", icon: "briefcase" as const },
-    { text: "2. Our team verifies that you met all Job Guarantee requirements", icon: "checklist" as const },
-    { text: "3. Receive the full refund within 30 days.", icon: "folder" as const },
+    { text: "You were not hired into a qualifying role within 9 months of graduation.", icon: "BriefcaseOff" },
+    { text: "Our team verifies that you met all Job Guarantee requirements.", icon: "ClipboardCheck" },
+    { text: "Receive the full refund within 30 days.", icon: "CashBanknote" },
   ],
-  conditionsLink: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
 };
 
 const faqData: FAQSectionType = {
@@ -212,6 +208,69 @@ const faqData: FAQSectionType = {
 // SECTION COMPONENTS
 // ============================================
 
+function JobGuaranteeHero({ data }: { data: typeof heroData }) {
+  const getIcon = (iconName: string) => {
+    const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
+    const IconComponent = icons[`Icon${iconName}`];
+    return IconComponent ? <IconComponent size={20} /> : null;
+  };
+
+  return (
+    <section 
+      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
+      data-testid="section-hero"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Content */}
+          <div>
+            <h1 
+              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
+              data-testid="text-hero-title"
+            >
+              {data.title}
+            </h1>
+            
+            <p 
+              className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
+              data-testid="text-hero-subtitle"
+            >
+              {data.subtitle}
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              {data.cta_buttons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={button.variant === "primary" ? "default" : button.variant}
+                  size="lg"
+                  asChild
+                  data-testid={`button-hero-cta-${index}`}
+                >
+                  <a href={button.url} className="flex items-center gap-2">
+                    {button.icon && getIcon(button.icon)}
+                    {button.text}
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side - Hero Image */}
+          <div className="relative">
+            <img 
+              src={heroImage} 
+              alt="Students collaborating in a tech workspace"
+              className="w-full h-auto rounded-lg shadow-lg"
+              data-testid="img-hero"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
     briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
@@ -224,8 +283,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
       className="pb-16"
       data-testid="section-stats"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
@@ -258,7 +316,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
               </Card>
             ))}
           </div>
-        </div>
       </div>
     </section>
   );
@@ -277,15 +334,14 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
       className="pb-8 pt-10"
       data-testid="section-programs"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
           <h2 
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
             data-testid="text-programs-title"
           >
             {data.title}
           </h2>
-          <p className="text-lg text-center mb-12">
+          <p className="text-lg text-center text-muted-foreground mb-12">
             {data.subtitle}
           </p>
 
@@ -316,133 +372,6 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
               </Card>
             ))}
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function RefundSection({ data }: { data: typeof refundData }) {
-  const iconMap = {
-    briefcase: Briefcase,
-    checklist: ChecklistVerify,
-    folder: FolderCheck,
-  };
-
-  return (
-    <section 
-      className="pt-12 pb-10 bg-muted/30"
-      data-testid="section-refund"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
-              data-testid="text-refund-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              {data.description}
-            </p>
-          </div>
-
-          {/* Desktop Timeline - Horizontal Wave */}
-          <div className="hidden md:block relative">
-            <svg 
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 530 250"
-              preserveAspectRatio="xMidYMid meet"
-              style={{ zIndex: 1 }}
-            >
-              <path
-                d="M 135 55 C 165 50, 220 30, 225 120"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeDasharray="12 8"
-                className="text-foreground"
-              />
-              <path
-                d="M 395 15 C 350 100, 320 110, 305 95"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeDasharray="12 8"
-                className="text-foreground"
-              />
-            </svg>
-
-            <div className="flex justify-center items-start gap-4 max-w-[530px] mx-auto relative" style={{ zIndex: 2 }}>
-              {data.steps.map((step, index) => {
-                const IconComponent = iconMap[step.icon];
-                const isMiddle = index === 1;
-                return (
-                  <div key={index} className={`flex flex-col items-center flex-1 max-w-[160px] ${isMiddle ? 'mt-[70px]' : ''}`}>
-                    <div className="w-[110px] h-[110px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center">
-                      <IconComponent width="50" height="50" />
-                    </div>
-                    <p className="text-base text-foreground text-center mt-4">
-                      {step.text}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Mobile Timeline - Vertical Zigzag */}
-          <div className="md:hidden flex flex-col items-center w-[300px] mx-auto">
-            {data.steps.map((step, index) => {
-              const IconComponent = iconMap[step.icon];
-              const isLeft = index % 2 === 0;
-              const isLast = index === data.steps.length - 1;
-              
-              return (
-                <div key={index} className="w-full relative -mt-2">
-                  {!isLast && (
-                    <svg 
-                      className={`absolute ${isLeft ? 'left-[90px]' : 'right-[90px]'} ${index === 0 ? 'top-[65px]' : 'top-[35px]'} w-[150px] h-[69px]`}
-                      viewBox="0 0 200 100"
-                      preserveAspectRatio="none"
-                      style={!isLeft ? { zIndex: 1, transform: 'rotate(-45deg)', transformOrigin: 'right center' } : { zIndex: 1 }}
-                    >
-                      <path
-                        d="M 0 10 Q 50 10, 100 50 Q 150 90, 200 90"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        strokeDasharray="8 6"
-                        className="text-foreground"
-                      />
-                    </svg>
-                  )}
-                  <div className={`flex items-center justify-between relative z-10 ${!isLeft ? 'flex-row-reverse' : ''}`}>
-                    <div className="w-[100px] h-[100px] rounded-full bg-[#FFF1D1] border-4 border-[#FFB718] flex items-center justify-center flex-shrink-0">
-                      <IconComponent width="45" height="45" />
-                    </div>
-                    <p className={`text-sm text-foreground max-w-[140px] ${!isLeft ? 'text-right' : ''}`}>
-                      {step.text}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-12">
-            <a 
-              href={data.conditionsLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline text-lg"
-              data-testid="link-conditions-apply"
-            >
-              Conditions Apply.
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -458,11 +387,11 @@ export default function JobGuarantee() {
       <Header />
       
       <main>
-        <HeroSection data={heroData} />
+        <JobGuaranteeHero data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
-        <RefundSection data={refundData} />
         <ProgramsSection data={programsData} />
+        <NumberedSteps data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>

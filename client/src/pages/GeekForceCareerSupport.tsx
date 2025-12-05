@@ -1,14 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
-import SolidCard from "@/components/SolidCard";
 import { Card } from "@/components/ui/card";
 import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
-import { TwoColumn } from "@/components/TwoColumn";
-import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
-import Contract from "@/components/custom-icons/Contract";
+import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
+import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -55,25 +53,6 @@ import logoCemex from "@assets/cemex_1764720131666.png";
 import vectorStroke from "@assets/vector-stroke-light_1764729540525.png";
 
 // ============================================
-// TYPES
-// ============================================
-
-interface IconProps {
-  width?: string;
-  height?: string;
-  color?: string;
-  style?: React.CSSProperties;
-  className?: string;
-}
-
-interface CareerStep {
-  icon: React.ComponentType<IconProps>;
-  title: string;
-  color?: string;
-  items: string[];
-}
-
-// ============================================
 // DATA
 // ============================================
 
@@ -86,33 +65,65 @@ const heroData = {
   videoTitle: "GeekForce Career Support",
 };
 
-const unlimitedSupportData = {
-  title: "Unlimited Career Support – Always Ahead of Job Market Trends",
-  description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
-  features: [
-    "Receive tailored guidance aligned with your goals, context, and challenges.",
-    "Meet mentors online or in-person whenever you need support—unlimited, for life.",
-    "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
-  ]
+const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
+  type: "two_column",
+  background: "bg-primary/5",
+  proportions: [7, 5],
+  reverse_on_mobile: true,
+  alignment: "center",
+  gap: "10",
+  right: {
+    image: careerSupportImage,
+    image_alt: "Career support team members collaborating",
+    image_width: "500px"
+  },
+  left: {
+    heading: "Unlimited Career Support – Always Ahead of Job Market Trends",
+    description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
+    justify: "center",
+    text_align: "left",
+    font_size: "base",
+    bullet_icon: "Check",
+    bullets: [
+      { text: "Receive tailored guidance aligned with your goals, context, and challenges." },
+      { text: "Meet mentors online or in-person whenever you need support—unlimited, for life." },
+      { text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves." }
+    ],
+  },
 };
 
-const hyperpersonalizedData = {
-  title: "Accelerate Your Results with Hyperpersonalized Career Support",
-  subtitle: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
-  features: [
-    "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.",
-    "Practice technical interviews and behavioral questions with AI-guided exercises.",
-    "Get expert coaching from our mentors who tailor advice to your unique profile and goals."
-  ]
+const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [5, 7],
+  background: "bg-primary/5",
+  alignment: "center",
+  reverse_on_mobile: true,
+  padding_right: "6",
+  left: {
+    image: communityImage,
+    image_alt: "4Geeks Academy community members collaborating on a project",
+    image_width: "440px",
+    justify: "start",
+  },
+  right: {
+    heading: "Accelerate Your Results with Hyperpersonalized Career Support",
+    description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
+    bullets: [
+      { text: "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects." },
+      { text: "Practice technical interviews and behavioral questions with AI-guided exercises." },
+      { text: "Get expert coaching from our mentors who tailor advice to your unique profile and goals." }
+    ],
+    font_size: "base",
+  },
 };
 
 const statsData = {
-  title: "Does Our Career Support Deliver Results You Can Count On?",
-  description: "Yes — and we've got the numbers to back it up.",
+  title: "Does the Job Guarantee deliver results you can count on?",
+  description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
-    { value: "84%", label: "Job Placement Rate", sublabel: "of graduates were hired", icon: "briefcase" as const },
-    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", sublabel: "after graduation", icon: "graduation" as const },
-    { value: "55%", label: "Salary Increase", sublabel: "higher at new job", icon: "growth" as const },
+    { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
+    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
+    { value: "55%", label: "Salary increase after graduation", icon: "growth" as const },
   ],
 };
 
@@ -279,37 +290,35 @@ const whosHiringData = {
   ],
 };
 
-const careerProcessData: {
-  title: string;
-  subtitle: string;
-  steps: CareerStep[];
-} = {
+const careerProcessData: NumberedStepsData = {
   title: "Get Hired with Our 3-Step Career Development Process",
-  subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+  description: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+  background: "bg-background",
+  bullet_icon_color: "black",
+  bullet_char: "•",
   steps: [
     {
-      icon: StairsWithFlag,
-      title: "1. Profile Optimization",
-      items: [
+      icon: "Stairs",
+      title: "Profile Optimization",
+      bullets: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
         "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
         "Showcase your skills with a recruiter-ready portfolio."
       ]
     },
     {
-      icon: Contract,
-      title: "2. Interview Preparation",
-      items: [
+      icon: "FileText",
+      title: "Interview Preparation",
+      bullets: [
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
         "Develop tailored strategies for upcoming interviews."
       ]
     },
     {
-      icon: Briefcase,
-      title: "3. Strategic Job Search",
-      color: "hsl(var(--destructive))",
-      items: [
+      icon: "Briefcase",
+      title: "Strategic Job Search",
+      bullets: [
         "Create a personalized job search plan aligned with your goals.",
         "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
         "Connect with our extensive network of global hiring partners."
@@ -328,14 +337,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
       className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
       data-testid="section-hero"
     >
-      <div className="hidden md:block lg:hidden absolute right-0 top-1/4 -translate-y-1/2">
-        <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
-      </div>
-      <div className="hidden lg:block absolute right-0 top-1/4 -translate-y-1/2">
-        <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div className="text-center md:text-left relative">
@@ -393,165 +395,54 @@ function HeroSection({ data }: { data: typeof heroData }) {
   );
 }
 
-function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }) {
-  return (
-    <TwoColumn 
-      data={{
-        type: "two_column",
-        background: "bg-amber-50",
-        proportions: [6, 6],
-        reverse_on_mobile: true,
-        alignment: "center",
-        right: {
-          image: careerSupportImage,
-          image_alt: "Career support team members collaborating",
-          image_width: "500px"
-        },
-        left: {
-          heading: data.title,
-          description: data.description,
-          justify: "center",
-          text_align: "left",
-          font_size: "base",
-          bullet_icon: "Check",
-          bullets: data.features.map(feature => ({
-            text: feature,
-          })),
-        },
-      }}
-    />
-  );
-}
 
-function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
-  return (
-    <section 
-      className="py-16 md:py-20 bg-background"
-      data-testid="section-career-process"
-    >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
-            data-testid="text-career-process-title"
-          >
-            {data.title}
-          </h2>
-          <p className="text-lg max-w-3xl mx-auto">
-            {data.subtitle}
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6 p-0 lg:px-24">
-          {data.steps.map((step, index) => (
-            <SolidCard 
-              key={index}
-              className="p-3 md:p-5"
-              data-testid={`card-step-${index + 1}`}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <step.icon className="w-12 h-12" width="60px" color={step.color} />
-                <h3 className="text-lg font-semibold text-foreground">
-                  {step.title}
-                </h3>
-              </div>
-              
-              <ul className="space-y-3">
-                {step.items.map((item, itemIndex) => (
-                  <li 
-                    key={itemIndex}
-                    className="flex gap-2 items-start text-base"
-                  >
-                    <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </SolidCard>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-// Hyperpersonalized Career Support Section - Uses TwoColumn component
-function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
-  return (
-    <TwoColumn
-      data={{
-        type: "two_column",
-        proportions: [4, 8],
-        background: "bg-muted/30",
-        alignment: "center",
-        gap: "12",
-        reverse_on_mobile: true,
-        left: {
-          image: communityImage,
-          image_alt: "4Geeks Academy community members collaborating on a project",
-          justify: "center",
-        },
-        right: {
-          heading: data.title,
-          description: data.subtitle,
-          bullets: data.features.map(feature => ({ text: feature })),
-          font_size: "sm",
-        },
-      }}
-    />
-  );
-}
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="60" height="54" />,
-    graduation: <Graduation width="60" height="51" />,
-    growth: <GrowthChart width="60" height="63" />,
+    briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
+    graduation: <Graduation width="64" height="54" />,
+    growth: <GrowthChart width="64" height="67" />,
   };
 
   return (
     <section 
-      className="py-8 bg-sky-200"
+      className="pb-16"
       data-testid="section-stats"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6">
+      <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-8">
             <h2 
-              className="text-xl md:text-2xl font-bold mb-2 text-foreground"
+              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
               data-testid="text-stats-title"
             >
               {data.title}
             </h2>
-            <p className="text-base">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index} className="p-4 md:p-4">
-                <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
-                  <div className="flex-shrink-0 md:mb-4">
-                    {iconMap[stat.icon]}
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
-                    <div className="text-3xl md:text-4xl font-bold text-foreground">
-                      {stat.value}
-                      {stat.valueSuffix && (
-                        <span className="text-lg md:text-xl ml-1">
-                          {stat.valueSuffix}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
-                  </div>
+              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
+                <div className="flex-shrink-0">
+                  {iconMap[stat.icon]}
                 </div>
-              </SolidCard>
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
+                    {stat.value}
+                    {stat.valueSuffix && (
+                      <span className="text-xl md:text-2xl ml-1">
+                        {stat.valueSuffix}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              </Card>
             ))}
           </div>
-        </div>
       </div>
     </section>
   );
@@ -595,24 +486,23 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
       className="py-12 md:py-16 bg-background"
       data-testid="section-whos-hiring"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-3"
-              data-testid="text-whos-hiring-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-lg md:text-xl mb-4">
-              {data.subtitle}
-            </p>
-            <p className="text-base md:text-lg max-w-3xl mx-auto">
-              {data.description}
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-3"
+            data-testid="text-whos-hiring-title"
+          >
+            {data.title}
+          </h2>
+          <p className="text-lg md:text-xl mb-4">
+            {data.subtitle}
+          </p>
+          <p className="text-xl text-foreground max-w-3xl mx-auto">
+            {data.description}
+          </p>
+        </div>
 
-          <div className="relative">
+        <div className="relative">
             <div className="flex items-center gap-4">
               <Button
                 variant="outline"
@@ -668,7 +558,6 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
               ))}
             </div>
           </div>
-        </div>
       </div>
     </section>
   );
@@ -738,7 +627,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
       className="py-12 md:py-16 bg-sidebar"
       data-testid="section-testimonials"
     >
-      <div className="container mx-auto px-4 mb-8">
+      <div className="max-w-6xl mx-auto px-4 mb-8">
         <h2 
           className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-testimonials-title"
@@ -746,7 +635,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
           {data.title}
         </h2>
         <p 
-          className="text-center text-foreground max-w-3xl mx-auto text-base md:text-lg"
+          className="text-center text-lg text-muted-foreground max-w-3xl mx-auto"
           data-testid="text-testimonials-description"
         >
           {data.description}
@@ -770,7 +659,6 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
-
 export default function GeekForceCareerSupport() {
   return (
     <div className="min-h-screen bg-background">
@@ -778,11 +666,11 @@ export default function GeekForceCareerSupport() {
       
       <main>
         <HeroSection data={heroData} />
-        <UnlimitedSupportSection data={unlimitedSupportData} />
-        <CareerProcessSection data={careerProcessData} />
-        <HyperpersonalizedSection data={hyperpersonalizedData} />
-        <StatsSection data={statsData} />
+        <TwoColumn data={unlimitedSupportTwoColumnData} />
+        <NumberedSteps data={careerProcessData} />
+        <TwoColumn data={hyperpersonalizedTwoColumnData} />
         <WhosHiringSection data={whosHiringData} />
+        <StatsSection data={statsData} />
         <TestimonialsSection data={testimonialsData} />
       </main>
     </div>

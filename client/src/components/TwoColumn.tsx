@@ -4,6 +4,8 @@ import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn } from "
 import type { ComponentType, CSSProperties } from "react";
 import VideoPlayer from "./VideoPlayer";
 
+export type { TwoColumnSectionType };
+
 interface TwoColumnProps {
   data: TwoColumnSectionType;
 }
@@ -59,18 +61,16 @@ const getResponsiveJustifyClass = (justify?: "start" | "center" | "end"): string
   }
 };
 
+const gapMap: Record<string, string> = {
+  "0": "gap-0", "1": "gap-1", "2": "gap-2", "3": "gap-3", "4": "gap-4",
+  "5": "gap-5", "6": "gap-6", "7": "gap-7", "8": "gap-8", "9": "gap-9",
+  "10": "gap-10", "11": "gap-11", "12": "gap-12", "14": "gap-14", "16": "gap-16",
+  "20": "gap-20", "24": "gap-24", "28": "gap-28", "32": "gap-32", "36": "gap-36",
+  "40": "gap-40", "44": "gap-44", "48": "gap-48", "52": "gap-52", "56": "gap-56",
+  "60": "gap-60", "64": "gap-64", "72": "gap-72", "80": "gap-80", "96": "gap-96",
+};
+
 const getGapClass = (gap?: string): string => {
-  const gapMap: Record<string, string> = {
-    "1": "gap-1",
-    "2": "gap-2",
-    "3": "gap-3",
-    "4": "gap-4",
-    "5": "gap-5",
-    "6": "gap-6",
-    "8": "gap-8",
-    "10": "gap-10",
-    "12": "gap-12",
-  };
   return gap ? (gapMap[gap] || "gap-4") : "gap-4";
 };
 
@@ -98,41 +98,27 @@ const getTextFontSize = (size?: string): string => {
   return size ? (sizeMap[size] || "text-xl") : "text-xl";
 };
 
+const paddingLeftMap: Record<string, string> = {
+  "0": "lg:pl-0", "1": "lg:pl-1", "2": "lg:pl-2", "3": "lg:pl-3", "4": "lg:pl-4",
+  "5": "lg:pl-5", "6": "lg:pl-6", "7": "lg:pl-7", "8": "lg:pl-8", "9": "lg:pl-9",
+  "10": "lg:pl-10", "11": "lg:pl-11", "12": "lg:pl-12", "14": "lg:pl-14", "16": "lg:pl-16",
+  "20": "lg:pl-20", "24": "lg:pl-24", "28": "lg:pl-28", "32": "lg:pl-32", "36": "lg:pl-36",
+  "40": "lg:pl-40", "44": "lg:pl-44", "48": "lg:pl-48", "52": "lg:pl-52", "56": "lg:pl-56",
+  "60": "lg:pl-60", "64": "lg:pl-64", "72": "lg:pl-72", "80": "lg:pl-80", "96": "lg:pl-96",
+};
+
+const paddingRightMap: Record<string, string> = {
+  "0": "lg:pr-0", "1": "lg:pr-1", "2": "lg:pr-2", "3": "lg:pr-3", "4": "lg:pr-4",
+  "5": "lg:pr-5", "6": "lg:pr-6", "7": "lg:pr-7", "8": "lg:pr-8", "9": "lg:pr-9",
+  "10": "lg:pr-10", "11": "lg:pr-11", "12": "lg:pr-12", "14": "lg:pr-14", "16": "lg:pr-16",
+  "20": "lg:pr-20", "24": "lg:pr-24", "28": "lg:pr-28", "32": "lg:pr-32", "36": "lg:pr-36",
+  "40": "lg:pr-40", "44": "lg:pr-44", "48": "lg:pr-48", "52": "lg:pr-52", "56": "lg:pr-56",
+  "60": "lg:pr-60", "64": "lg:pr-64", "72": "lg:pr-72", "80": "lg:pr-80", "96": "lg:pr-96",
+};
+
 const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): string => {
-  const paddingMap: Record<string, string> = {
-    "0": side === "left" ? "lg:pl-0" : "lg:pr-0",
-    "1": side === "left" ? "lg:pl-1" : "lg:pr-1",
-    "2": side === "left" ? "lg:pl-2" : "lg:pr-2",
-    "3": side === "left" ? "lg:pl-3" : "lg:pr-3",
-    "4": side === "left" ? "lg:pl-4" : "lg:pr-4",
-    "5": side === "left" ? "lg:pl-5" : "lg:pr-5",
-    "6": side === "left" ? "lg:pl-6" : "lg:pr-6",
-    "7": side === "left" ? "lg:pl-7" : "lg:pr-7",
-    "8": side === "left" ? "lg:pl-8" : "lg:pr-8",
-    "9": side === "left" ? "lg:pl-9" : "lg:pr-9",
-    "10": side === "left" ? "lg:pl-10" : "lg:pr-10",
-    "11": side === "left" ? "lg:pl-11" : "lg:pr-11",
-    "12": side === "left" ? "lg:pl-12" : "lg:pr-12",
-    "14": side === "left" ? "lg:pl-14" : "lg:pr-14",
-    "16": side === "left" ? "lg:pl-16" : "lg:pr-16",
-    "20": side === "left" ? "lg:pl-20" : "lg:pr-20",
-    "24": side === "left" ? "lg:pl-24" : "lg:pr-24",
-    "28": side === "left" ? "lg:pl-28" : "lg:pr-28",
-    "32": side === "left" ? "lg:pl-32" : "lg:pr-32",
-    "36": side === "left" ? "lg:pl-36" : "lg:pr-36",
-    "40": side === "left" ? "lg:pl-40" : "lg:pr-40",
-    "44": side === "left" ? "lg:pl-44" : "lg:pr-44",
-    "48": side === "left" ? "lg:pl-48" : "lg:pr-48",
-    "52": side === "left" ? "lg:pl-52" : "lg:pr-52",
-    "56": side === "left" ? "lg:pl-56" : "lg:pr-56",
-    "60": side === "left" ? "lg:pl-60" : "lg:pr-60",
-    "64": side === "left" ? "lg:pl-64" : "lg:pr-64",
-    "72": side === "left" ? "lg:pl-72" : "lg:pr-72",
-    "80": side === "left" ? "lg:pl-80" : "lg:pr-80",
-    "96": side === "left" ? "lg:pl-96" : "lg:pr-96",
-  };
-  const defaultPadding = side === "left" ? "lg:pl-24" : "lg:pr-24";
-  return padding ? (paddingMap[padding] || defaultPadding) : defaultPadding;
+  const paddingMap = side === "left" ? paddingLeftMap : paddingRightMap;
+  return padding ? (paddingMap[padding] || "") : "";
 };
 
 function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
@@ -273,11 +259,11 @@ export function TwoColumn({ data }: TwoColumnProps) {
 
   return (
     <section 
-      className={`py-14 mb-8 ${backgroundClass}`}
+      className={`py-14 ${backgroundClass}`}
       data-testid="section-two-column"
       style={containerStyle}
     >
-      <div className={`container mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
+      <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
         <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
