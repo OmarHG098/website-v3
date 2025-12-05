@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
-import SolidCard from "@/components/SolidCard";
 import { Card } from "@/components/ui/card";
 import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
@@ -115,16 +114,16 @@ const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
 
 const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   type: "two_column",
-  proportions: [4, 8],
+  proportions: [5, 7],
   background: "bg-muted/30",
   alignment: "center",
-  gap: "32",
   reverse_on_mobile: true,
+  padding_right: "24",
   left: {
     image: communityImage,
     image_alt: "4Geeks Academy community members collaborating on a project",
-    image_width: "400px",
-    justify: "center",
+    image_width: "420px",
+    justify: "start",
   },
   right: {
     heading: "Accelerate Your Results with Hyperpersonalized Career Support",
@@ -447,7 +446,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
         
         <div className="grid md:grid-cols-3 gap-6">
           {data.steps.map((step, index) => (
-            <SolidCard 
+            <Card 
               key={index}
               className="p-3 md:p-5"
               data-testid={`card-step-${index + 1}`}
@@ -470,7 +469,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
                   </li>
                 ))}
               </ul>
-            </SolidCard>
+            </Card>
           ))}
         </div>
       </div>
@@ -506,7 +505,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
             {data.stats.map((stat, index) => (
-              <SolidCard key={index} className="p-4 md:p-4">
+              <Card key={index} className="p-4 md:p-4">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
                   <div className="flex-shrink-0 md:mb-4">
                     {iconMap[stat.icon]}
@@ -524,7 +523,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
                     <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
                   </div>
                 </div>
-              </SolidCard>
+              </Card>
             ))}
         </div>
       </div>
