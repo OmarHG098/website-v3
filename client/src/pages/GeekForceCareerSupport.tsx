@@ -294,6 +294,7 @@ const careerProcessData: NumberedStepsData = {
   title: "Get Hired with Our 3-Step Career Development Process",
   description: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
   background: "bg-background",
+  bullet_icon_color: "black",
   bullet_char: "•",
   steps: [
     {

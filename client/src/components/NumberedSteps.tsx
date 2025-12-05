@@ -57,7 +57,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         
         {data.description && (
           <div className="text-center mb-10">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
             {data.description_link && (
