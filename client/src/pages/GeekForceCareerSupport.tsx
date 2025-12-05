@@ -493,7 +493,7 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
         left: {
           image: communityImage,
           image_alt: "4Geeks Academy community members collaborating on a project",
-          image_width: "400px",
+          image_width: "500px",
           justify: "center",
         },
         right: {
