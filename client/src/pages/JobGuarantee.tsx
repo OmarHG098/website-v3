@@ -393,14 +393,14 @@ function RefundSection({ data }: { data: typeof refundData }) {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-left mb-12">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
               data-testid="text-refund-title"
             >
               {data.title}
             </h2>
-            <p className="text-lg max-w-3xl mx-auto text-muted-foreground">
+            <p className="text-lg max-w-3xl text-muted-foreground">
               {data.description}
             </p>
             <a 
