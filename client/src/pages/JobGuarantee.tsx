@@ -386,26 +386,29 @@ function RefundSection({ data }: { data: typeof refundData }) {
       data-testid="section-refund"
     >
       <div className="max-w-6xl mx-auto px-4">
-          <div className="text-left mb-12">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
-              data-testid="text-refund-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-lg max-w-3xl text-muted-foreground">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-8 text-foreground text-center"
+            data-testid="text-refund-title"
+          >
+            {data.title}
+          </h2>
+          
+          <Card className="p-6 md:p-8 mb-10">
+            <p className="text-lg text-muted-foreground text-center">
               {data.description}
             </p>
-            <a 
-              href={data.conditionsLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline text-lg mt-2 inline-block"
-              data-testid="link-conditions-apply"
-            >
-              Conditions Apply.
-            </a>
-          </div>
+            <div className="text-center mt-2">
+              <a 
+                href={data.conditionsLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline text-lg"
+                data-testid="link-conditions-apply"
+              >
+                Conditions Apply.
+              </a>
+            </div>
+          </Card>
 
           {/* Steps Grid - 3 columns on desktop, 1 on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">

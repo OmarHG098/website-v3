@@ -359,13 +359,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
       className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
       data-testid="section-hero"
     >
-      <div className="hidden md:block lg:hidden absolute right-0 top-1/4 -translate-y-1/2">
-        <div className="w-40 h-40 rounded-full bg-[#FFF1D1] translate-x-1/3" />
-      </div>
-      <div className="hidden lg:block absolute right-0 top-1/4 -translate-y-1/2">
-        <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
-      </div>
-
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
@@ -749,8 +742,8 @@ export default function GeekForceCareerSupport() {
         <TwoColumn data={unlimitedSupportTwoColumnData} />
         <CareerProcessSection data={careerProcessData} />
         <TwoColumn data={hyperpersonalizedTwoColumnData} />
-        <StatsSection data={statsData} />
         <WhosHiringSection data={whosHiringData} />
+        <StatsSection data={statsData} />
         <TestimonialsSection data={testimonialsData} />
       </main>
     </div>
