@@ -58,10 +58,21 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
 
 export function SyllabusSection({ data }: SyllabusSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const modules = data.modules || [];
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  if (modules.length === 0) {
+    return (
+      <section className="py-16 bg-primary/5" data-testid="section-syllabus">
+        <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
+          Syllabus section requires at least one module
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 
@@ -87,7 +98,7 @@ export function SyllabusSection({ data }: SyllabusSectionProps) {
         </div>
 
         <div className="space-y-2">
-          {data.modules.map((module, index) => (
+          {modules.map((module, index) => (
             <ModuleAccordion
               key={index}
               title={module.title}

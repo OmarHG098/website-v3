@@ -26,8 +26,18 @@ const difficultyColors: Record<string, string> = {
 
 export function ProjectsSection({ data }: ProjectsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const items = data.items;
+  const items = data.items || [];
   const totalItems = items.length;
+  
+  if (totalItems === 0) {
+    return (
+      <section className="py-16 bg-background" data-testid="section-projects">
+        <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
+          Projects section requires at least one project item
+        </div>
+      </section>
+    );
+  }
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? totalItems - 1 : prev - 1));

@@ -60,6 +60,17 @@ export function PricingSection({ data }: PricingSectionProps) {
   const { i18n } = useTranslation();
   const isSpanish = i18n.language?.startsWith('es');
   const [isYearly, setIsYearly] = useState(true);
+  
+  if (!data.monthly || !data.yearly) {
+    return (
+      <section className="py-16 bg-muted/30" data-testid="section-pricing">
+        <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
+          Pricing section requires monthly and yearly pricing data
+        </div>
+      </section>
+    );
+  }
+  
   const currentPlan = isYearly ? data.yearly : data.monthly;
   
   const yearlyLabel = isSpanish ? "Anual" : "Annual";
