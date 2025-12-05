@@ -78,8 +78,25 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
         </div>
 
         <div className="relative">
-          <div className="flex items-center gap-4">
-            {totalPages > 1 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {currentLogos.map((logo, index) => (
+              <Card 
+                key={`${currentPage}-${index}`} 
+                className="p-3 lg:p-6 flex items-center justify-center h-20 sm:h-40"
+                data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-16 max-w-full object-contain"
+                  loading="lazy"
+                />
+              </Card>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-6" data-testid="carousel-pagination">
               <Button
                 variant="outline"
                 size="icon"
@@ -89,26 +106,23 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
               >
                 <IconChevronLeft className="h-4 w-4" />
               </Button>
-            )}
 
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {currentLogos.map((logo, index) => (
-                <Card 
-                  key={`${currentPage}-${index}`} 
-                  className="p-3 lg:p-6 flex items-center justify-center h-20 sm:h-40"
-                  data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-h-16 max-w-full object-contain"
-                    loading="lazy"
+              <div className="flex gap-2">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                      currentPage === index 
+                        ? "bg-primary" 
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                    data-testid={`button-pagination-dot-${index}`}
+                    aria-label={`Go to page ${index + 1}`}
                   />
-                </Card>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {totalPages > 1 && (
               <Button
                 variant="outline"
                 size="icon"
@@ -118,24 +132,6 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
               >
                 <IconChevronRight className="h-4 w-4" />
               </Button>
-            )}
-          </div>
-
-          {totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-6" data-testid="carousel-pagination">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    currentPage === index 
-                      ? "bg-primary" 
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                  }`}
-                  data-testid={`button-pagination-dot-${index}`}
-                  aria-label={`Go to page ${index + 1}`}
-                />
-              ))}
             </div>
           )}
         </div>

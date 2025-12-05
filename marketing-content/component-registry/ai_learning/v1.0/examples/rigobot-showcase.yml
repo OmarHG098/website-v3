@@ -1,0 +1,20 @@
+name: "Rigobot AI Showcase"
+description: "Highlights the AI-powered learning experience with Rigobot tutor and LearnPack"
+
+yaml: |
+  type: ai_learning
+  badge: "AI-Powered"
+  title: "Learn Faster with AI Support"
+  description: "Get instant feedback and personalized guidance from our AI tutor. Rigobot helps you understand concepts, debug code, and accelerate your learning journey."
+  features:
+    - icon: "robot"
+      title: "Rigobot AI Tutor"
+      description: "24/7 AI assistant that explains concepts, reviews your code, and provides personalized guidance tailored to your learning pace."
+    - icon: "code"
+      title: "LearnPack Interactive"
+      description: "Hands-on coding exercises with real-time feedback. Practice in a sandbox environment with auto-grading and hints when you get stuck."
+  chat_example:
+    bot_name: "Rigobot"
+    bot_status: "AI Tutor - Online"
+    user_message: "I don't understand how async/await works in JavaScript"
+    bot_response: "Great question! Async/await is syntactic sugar for Promises. When you use 'async' before a function, it always returns a Promise. The 'await' keyword pauses execution until that Promise resolves. Let me show you an example..."
