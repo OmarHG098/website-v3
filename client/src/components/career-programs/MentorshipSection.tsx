@@ -38,7 +38,7 @@ export function MentorshipSection({ data }: MentorshipSectionProps) {
         </div>
         
         <div className="grid md:grid-cols-3 gap-6">
-          {data.cards.map((card, index) => (
+          {(data.cards || []).map((card, index) => (
             <Card 
               key={index} 
               className="text-center p-6 hover-elevate"
