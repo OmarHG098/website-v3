@@ -77,14 +77,18 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {(data.steps || []).map((step, index) => {
             const isLast = index === (data.steps || []).length - 1;
+            const isFirst = index === 0;
             
             return (
               <div 
                 key={index} 
-                className="flex flex-col relative"
+                className="flex flex-col items-center relative"
                 data-testid={`numbered-step-${index + 1}`}
               >
-                <div className="flex items-center mb-6">
+                <div className="flex items-center justify-center w-full mb-6 relative">
+                  {!isFirst && (
+                    <div className="hidden md:block absolute right-1/2 top-1/2 w-1/2 h-0.5 bg-primary/30 -translate-y-1/2 mr-7" />
+                  )}
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center flex-shrink-0 relative z-10">
                     <span className="text-xl font-bold text-primary-foreground">
                       {String(index + 1).padStart(2, '0')}
@@ -92,23 +96,23 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   </div>
                   {!isLast && (
                     <>
-                      <div className="hidden md:block flex-1 h-0.5 bg-primary/30 ml-2" />
-                      <div className="md:hidden absolute left-7 top-14 w-0.5 h-8 bg-primary/30" />
+                      <div className="hidden md:block absolute left-1/2 top-1/2 w-1/2 h-0.5 bg-primary/30 -translate-y-1/2 ml-7" />
+                      <div className="md:hidden absolute left-1/2 top-14 w-0.5 h-8 bg-primary/30 -translate-x-1/2" />
                     </>
                   )}
                 </div>
                 
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <div className="flex flex-col items-center text-center mb-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mb-2">
                     {getIcon(step.icon)}
                   </div>
                   {step.title && (
-                    <h3 className="text-lg font-semibold text-foreground pt-2">
+                    <h3 className="text-lg font-semibold text-foreground">
                       {step.title}
                     </h3>
                   )}
                   {step.text && !step.title && (
-                    <p className="text-base text-foreground pt-2">
+                    <p className="text-base text-foreground">
                       {step.text}
                     </p>
                   )}
@@ -120,7 +124,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
                   
                   return (
-                    <ul className="space-y-2 ml-[52px]">
+                    <ul className="space-y-2 text-left">
                       {step.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex}
