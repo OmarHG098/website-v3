@@ -43,6 +43,7 @@ import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
   { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
+  { type: "numbered_steps", label: "Numbered Steps", icon: IconChecklist, description: "Sequential process steps" },
   { type: "program_overview", label: "Program Overview", icon: IconLayout, description: "Key program features" },
   { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
   { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },

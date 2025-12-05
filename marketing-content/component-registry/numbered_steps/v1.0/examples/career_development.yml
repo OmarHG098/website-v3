@@ -1,0 +1,10 @@
+title: "Career Development Process"
+description: "Our structured approach guides you from learning to landing your dream tech job."
+background: "bg-muted/30"
+steps:
+  - icon: "Book"
+    text: "Master the fundamentals through our comprehensive curriculum and hands-on projects."
+  - icon: "Users"
+    text: "Connect with mentors, attend career workshops, and build your professional network."
+  - icon: "Target"
+    text: "Apply strategically with personalized resume reviews, interview prep, and job matching support."

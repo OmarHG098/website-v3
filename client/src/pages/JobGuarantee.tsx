@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
+import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -126,15 +127,18 @@ const confidenceData: TwoColumnSectionType = {
   },
 };
 
-const refundData = {
+const refundData: NumberedStepsData = {
   title: "How the Refund Works",
   description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.",
+  description_link: {
+    text: "Conditions Apply.",
+    url: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
+  },
   steps: [
     { text: "You were not hired into a qualifying role within 9 months of graduation.", icon: "BriefcaseOff" },
     { text: "Our team verifies that you met all Job Guarantee requirements.", icon: "ClipboardCheck" },
     { text: "Receive the full refund within 30 days.", icon: "CashBanknote" },
   ],
-  conditionsLink: "https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf",
 };
 
 const faqData: FAQSectionType = {
@@ -373,67 +377,6 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
   );
 }
 
-function RefundSection({ data }: { data: typeof refundData }) {
-  const getIcon = (iconName: string) => {
-    const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
-    const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
-  };
-
-  return (
-    <section 
-      className="pt-4 pb-10 bg-muted/30"
-      data-testid="section-refund"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-          <h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-foreground text-center"
-            data-testid="text-refund-title"
-          >
-            {data.title}
-          </h2>
-          
-          <div className="text-center mb-10">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              {data.description}
-            </p>
-            <a 
-              href={data.conditionsLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline text-lg mt-2 inline-block"
-              data-testid="link-conditions-apply"
-            >
-              Conditions Apply.
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {data.steps.map((step, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col"
-                data-testid={`refund-step-${index + 1}`}
-              >
-                <span className="text-5xl md:text-6xl text-primary font-bold mb-4">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {getIcon(step.icon)}
-                  </div>
-                  <p className="text-base text-foreground">
-                    {step.text}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-      </div>
-    </section>
-  );
-}
-
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -448,7 +391,7 @@ export default function JobGuarantee() {
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
         <ProgramsSection data={programsData} />
-        <RefundSection data={refundData} />
+        <NumberedSteps data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>
