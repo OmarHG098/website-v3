@@ -393,9 +393,9 @@ function RefundSection({ data }: { data: typeof refundData }) {
             {data.title}
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left side - Description Card */}
-            <Card className="p-6 h-fit">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Left side - Description Card (25%) */}
+            <Card className="p-6 h-fit md:col-span-1">
               <p className="text-base text-muted-foreground">
                 {data.description}
               </p>
@@ -410,8 +410,8 @@ function RefundSection({ data }: { data: typeof refundData }) {
               </a>
             </Card>
 
-            {/* Right side - Steps stacked vertically */}
-            <div className="flex flex-col gap-6">
+            {/* Right side - Steps stacked vertically (75%) */}
+            <div className="md:col-span-3 flex flex-col gap-6">
               {data.steps.map((step, index) => (
                 <div 
                   key={index} 
