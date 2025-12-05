@@ -335,7 +335,7 @@ function HeroSection({ data }: { data: typeof heroData }) {
         <div className="w-80 h-80 rounded-full bg-[#FFF1D1] translate-x-1/4" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div className="text-center md:text-left relative">
@@ -429,7 +429,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
       className="py-16 md:py-20 bg-background"
       data-testid="section-career-process"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
@@ -442,7 +442,7 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 p-0 lg:px-24">
+        <div className="grid md:grid-cols-3 gap-6">
           {data.steps.map((step, index) => (
             <SolidCard 
               key={index}
@@ -514,21 +514,20 @@ function StatsSection({ data }: { data: typeof statsData }) {
       className="py-8 bg-sky-200"
       data-testid="section-stats"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6">
-            <h2 
-              className="text-xl md:text-2xl font-bold mb-2 text-foreground"
-              data-testid="text-stats-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-base">
-              {data.description}
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-6">
+          <h2 
+            className="text-xl md:text-2xl font-bold mb-2 text-foreground"
+            data-testid="text-stats-title"
+          >
+            {data.title}
+          </h2>
+          <p className="text-base">
+            {data.description}
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
             {data.stats.map((stat, index) => (
               <SolidCard key={index} className="p-4 md:p-4">
                 <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
@@ -550,7 +549,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
                 </div>
               </SolidCard>
             ))}
-          </div>
         </div>
       </div>
     </section>
@@ -595,24 +593,23 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
       className="py-12 md:py-16 bg-background"
       data-testid="section-whos-hiring"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-3"
-              data-testid="text-whos-hiring-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-lg md:text-xl mb-4">
-              {data.subtitle}
-            </p>
-            <p className="text-base md:text-lg max-w-3xl mx-auto">
-              {data.description}
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-3"
+            data-testid="text-whos-hiring-title"
+          >
+            {data.title}
+          </h2>
+          <p className="text-lg md:text-xl mb-4">
+            {data.subtitle}
+          </p>
+          <p className="text-base md:text-lg max-w-3xl mx-auto">
+            {data.description}
+          </p>
+        </div>
 
-          <div className="relative">
+        <div className="relative">
             <div className="flex items-center gap-4">
               <Button
                 variant="outline"
@@ -668,7 +665,6 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
               ))}
             </div>
           </div>
-        </div>
       </div>
     </section>
   );
@@ -738,7 +734,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
       className="py-12 md:py-16 bg-sidebar"
       data-testid="section-testimonials"
     >
-      <div className="container mx-auto px-4 mb-8">
+      <div className="max-w-6xl mx-auto px-4 mb-8">
         <h2 
           className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-testimonials-title"
