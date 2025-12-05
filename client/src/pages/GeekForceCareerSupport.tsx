@@ -89,9 +89,10 @@ const heroData = {
 const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
   type: "two_column",
   background: "bg-primary/10",
-  proportions: [6, 6],
+  proportions: [7, 5],
   reverse_on_mobile: true,
   alignment: "center",
+  gap: "10",
   right: {
     image: careerSupportImage,
     image_alt: "Career support team members collaborating",
@@ -122,7 +123,7 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   left: {
     image: communityImage,
     image_alt: "4Geeks Academy community members collaborating on a project",
-    image_width: "500px",
+    image_width: "400px",
     justify: "center",
   },
   right: {
