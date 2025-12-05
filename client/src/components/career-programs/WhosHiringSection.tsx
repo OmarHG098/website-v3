@@ -96,7 +96,7 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-6" data-testid="carousel-pagination">
+            <div className="flex justify-between items-center mt-6" data-testid="carousel-pagination">
               <Button
                 variant="outline"
                 size="icon"
