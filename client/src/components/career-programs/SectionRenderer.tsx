@@ -11,6 +11,7 @@ import { TestimonialsSection } from "./TestimonialsSection";
 import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
+import NumberedSteps from "@/components/NumberedSteps";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -43,6 +44,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <FooterSection key={index} data={section} />;
           case "two_column":
             return <TwoColumn key={index} data={section} />;
+          case "numbered_steps":
+            return <NumberedSteps key={index} data={section} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);
