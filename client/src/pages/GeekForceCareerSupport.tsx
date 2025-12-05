@@ -87,7 +87,7 @@ const heroData = {
 
 const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
   type: "two_column",
-  background: "bg-primary/10",
+  background: "bg-primary/5",
   proportions: [7, 5],
   reverse_on_mobile: true,
   alignment: "center",
@@ -115,7 +115,7 @@ const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
 const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   type: "two_column",
   proportions: [5, 7],
-  background: "bg-muted/30",
+  background: "bg-primary/5",
   alignment: "center",
   reverse_on_mobile: true,
   padding_right: "24",
@@ -138,12 +138,12 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
 };
 
 const statsData = {
-  title: "Does Our Career Support Deliver Results You Can Count On?",
-  description: "Yes — and we've got the numbers to back it up.",
+  title: "Does the Job Guarantee deliver results you can count on?",
+  description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   stats: [
-    { value: "84%", label: "Job Placement Rate", sublabel: "of graduates were hired", icon: "briefcase" as const },
-    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", sublabel: "after graduation", icon: "graduation" as const },
-    { value: "55%", label: "Salary Increase", sublabel: "higher at new job", icon: "growth" as const },
+    { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
+    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
+    { value: "55%", label: "Salary increase after graduation", icon: "growth" as const },
   ],
 };
 
@@ -520,7 +520,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
                         </span>
                       )}
                     </div>
-                    <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
                   </div>
                 </div>
               </Card>
