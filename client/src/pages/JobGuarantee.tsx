@@ -281,8 +281,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
       className="pb-16"
       data-testid="section-stats"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
@@ -315,7 +314,6 @@ function StatsSection({ data }: { data: typeof statsData }) {
               </Card>
             ))}
           </div>
-        </div>
       </div>
     </section>
   );
@@ -334,8 +332,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
       className="pb-8 pt-10"
       data-testid="section-programs"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
           <h2 
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
             data-testid="text-programs-title"
@@ -373,7 +370,6 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
               </Card>
             ))}
           </div>
-        </div>
       </div>
     </section>
   );
@@ -391,8 +387,7 @@ function RefundSection({ data }: { data: typeof refundData }) {
       className="pt-4 pb-10 bg-muted/30"
       data-testid="section-refund"
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
           <div className="text-left mb-12">
             <h2 
               className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
@@ -436,7 +431,6 @@ function RefundSection({ data }: { data: typeof refundData }) {
               </div>
             ))}
           </div>
-        </div>
       </div>
     </section>
   );
