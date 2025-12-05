@@ -98,11 +98,11 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   background: "bg-primary/5",
   alignment: "center",
   reverse_on_mobile: true,
-  padding_right: "24",
+  padding_right: "6",
   left: {
     image: communityImage,
     image_alt: "4Geeks Academy community members collaborating on a project",
-    image_width: "420px",
+    image_width: "440px",
     justify: "start",
   },
   right: {
@@ -113,7 +113,7 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
       { text: "Practice technical interviews and behavioral questions with AI-guided exercises." },
       { text: "Get expert coaching from our mentors who tailor advice to your unique profile and goals." }
     ],
-    font_size: "sm",
+    font_size: "base",
   },
 };
 
@@ -418,7 +418,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
             >
               {data.title}
             </h2>
-            <p className="text-xl text-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>
@@ -635,7 +635,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
           {data.title}
         </h2>
         <p 
-          className="text-center text-xl text-foreground max-w-3xl mx-auto"
+          className="text-center text-lg text-muted-foreground max-w-3xl mx-auto"
           data-testid="text-testimonials-description"
         >
           {data.description}
