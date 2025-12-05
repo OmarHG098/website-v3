@@ -400,6 +400,8 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
         type: "two_column",
         background: "bg-primary/10",
         proportions: [6, 6],
+        padding_left: "52",
+        padding_right: "52",
         reverse_on_mobile: true,
         alignment: "center",
         right: {
@@ -482,6 +484,8 @@ function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData
       data={{
         type: "two_column",
         proportions: [4, 8],
+        padding_left: "52",
+        padding_right: "52",
         background: "bg-muted/30",
         alignment: "center",
         gap: "12",
