@@ -98,7 +98,7 @@ export function SyllabusSection({ data }: SyllabusSectionProps) {
         </div>
 
         <div className="space-y-2">
-          {modules.map((module, index) => (
+          {(data.modules || []).map((module, index) => (
             <ModuleAccordion
               key={index}
               title={module.title}

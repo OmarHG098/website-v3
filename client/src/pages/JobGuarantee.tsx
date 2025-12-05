@@ -3,9 +3,7 @@ import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSection
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
-import Briefcase from "@/components/custom-icons/Briefcase";
-import Graduation from "@/components/custom-icons/Graduation";
-import GrowthChart from "@/components/custom-icons/GrowthChart";
+import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
 import CodeWindow from "@/components/custom-icons/CodeWindow";
 import Monitor from "@/components/custom-icons/Monitor";
 import Security from "@/components/custom-icons/Security";
@@ -30,14 +28,9 @@ const heroData = {
   ],
 };
 
-const statsData = {
+const statsData: StatsSectionData = {
   title: "Does the Job Guarantee deliver results you can count on?",
   description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
-  stats: [
-    { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
-    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
-    { value: "55%", label: "Salary increase after graduation", icon: "growth" as const },
-  ],
 };
 
 const eligibleData: TwoColumnSectionType = {
@@ -270,57 +263,6 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
     </section>
   );
 }
-
-function StatsSection({ data }: { data: typeof statsData }) {
-  const iconMap = {
-    briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
-    graduation: <Graduation width="64" height="54" />,
-    growth: <GrowthChart width="64" height="67" />,
-  };
-
-  return (
-    <section 
-      className="pb-16"
-      data-testid="section-stats"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-              data-testid="text-stats-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              {data.description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.stats.map((stat, index) => (
-              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
-                <div className="flex-shrink-0">
-                  {iconMap[stat.icon]}
-                </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
-                    {stat.value}
-                    {stat.valueSuffix && (
-                      <span className="text-xl md:text-2xl ml-1">
-                        {stat.valueSuffix}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
-                </div>
-              </Card>
-            ))}
-          </div>
-      </div>
-    </section>
-  );
-}
-
 
 function ProgramsSection({ data }: { data: typeof programsData }) {
   const iconMap = {

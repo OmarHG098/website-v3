@@ -296,6 +296,33 @@ export const projectsSectionSchema = z.object({
   items: z.array(projectItemSchema),
 });
 
+export const statsSectionSchema = z.object({
+  type: z.literal("stats_section"),
+  title: z.string(),
+  description: z.string(),
+});
+
+export const testimonialsSlideTestimonialSchema = z.object({
+  name: z.string(),
+  img: z.string(),
+  status: z.string().optional(),
+  country: z.object({
+    name: z.string(),
+    iso: z.string(),
+  }),
+  contributor: z.string(),
+  description: z.string(),
+  achievement: z.string().optional(),
+});
+
+export const testimonialsSlideSectionSchema = z.object({
+  type: z.literal("testimonials_slide"),
+  title: z.string(),
+  description: z.string(),
+  testimonials: z.array(testimonialsSlideTestimonialSchema),
+  background: z.string().optional(),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   syllabusSectionSchema,
@@ -312,6 +339,8 @@ export const sectionSchema = z.discriminatedUnion("type", [
   footerSectionSchema,
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
+  statsSectionSchema,
+  testimonialsSlideSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

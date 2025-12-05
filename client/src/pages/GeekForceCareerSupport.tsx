@@ -1,15 +1,13 @@
-import { useState, useCallback, useEffect } from "react";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import { Card } from "@/components/ui/card";
-import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
+import { IconFlag, IconSchool } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
 import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
-import Briefcase from "@/components/custom-icons/Briefcase";
-import Graduation from "@/components/custom-icons/Graduation";
-import GrowthChart from "@/components/custom-icons/GrowthChart";
+import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
+import { WhosHiringSection } from "@/components/career-programs/WhosHiringSection";
+import type { WhosHiringSection as WhosHiringSectionType } from "@shared/schema";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 import communityImage from "@assets/community_1764717588840.png";
 
@@ -117,14 +115,9 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   },
 };
 
-const statsData = {
+const statsData: StatsSectionData = {
   title: "Does the Job Guarantee deliver results you can count on?",
   description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
-  stats: [
-    { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
-    { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
-    { value: "55%", label: "Salary increase after graduation", icon: "growth" as const },
-  ],
 };
 
 interface Testimonial {
@@ -258,7 +251,8 @@ const testimonialsData: {
   ]
 };
 
-const whosHiringData = {
+const whosHiringData: WhosHiringSectionType = {
+  type: "whos_hiring",
   title: "Who's Hiring Our Graduates?",
   subtitle: "Our alumni work at top companies around the world",
   description: "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.",
@@ -341,12 +335,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center justify-start">
             <div className="text-center md:text-left relative">
-              <img 
-                src={vectorStroke} 
-                alt="" 
-                className="absolute right-0 md:right-[-100px] top-0 w-[120px] md:w-[180px] h-[120px] md:h-[180px] opacity-20"
-                style={{ filter: 'grayscale(100%) brightness(0.5)' }}
-              />
               <p className="text-4xl lg:text-5xl font-medium text-foreground">
                 {data.welcomeText}
               </p>
@@ -368,12 +356,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
               </p>
               
               <div className="relative">
-                <img 
-                  src={vectorStroke} 
-                  alt="" 
-                  className="absolute -left-[100px] md:-left-[140px] -bottom-8 w-[85px] md:w-[126px] h-[85px] md:h-[126px] opacity-20 rotate-180"
-                  style={{ filter: 'grayscale(100%) brightness(0.5)' }}
-                />
                 <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
                   {data.description}
                 </p>
@@ -390,174 +372,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
             />
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-
-
-
-function StatsSection({ data }: { data: typeof statsData }) {
-  const iconMap = {
-    briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
-    graduation: <Graduation width="64" height="54" />,
-    growth: <GrowthChart width="64" height="67" />,
-  };
-
-  return (
-    <section 
-      className="pb-16"
-      data-testid="section-stats"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-              data-testid="text-stats-title"
-            >
-              {data.title}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              {data.description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.stats.map((stat, index) => (
-              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
-                <div className="flex-shrink-0">
-                  {iconMap[stat.icon]}
-                </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
-                    {stat.value}
-                    {stat.valueSuffix && (
-                      <span className="text-xl md:text-2xl ml-1">
-                        {stat.valueSuffix}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
-                </div>
-              </Card>
-            ))}
-          </div>
-      </div>
-    </section>
-  );
-}
-
-function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
-  const [isMobile, setIsMobile] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const LOGOS_PER_PAGE = isMobile ? 4 : 8;
-  const totalPages = Math.ceil(data.logos.length / LOGOS_PER_PAGE);
-
-  useEffect(() => {
-    if (currentPage >= totalPages) {
-      setCurrentPage(Math.max(0, totalPages - 1));
-    }
-  }, [currentPage, totalPages]);
-
-  const goToPrevious = useCallback(() => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
-  }, [totalPages]);
-
-  const goToNext = useCallback(() => {
-    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
-  }, [totalPages]);
-
-  const currentLogos = data.logos.slice(
-    currentPage * LOGOS_PER_PAGE,
-    currentPage * LOGOS_PER_PAGE + LOGOS_PER_PAGE
-  );
-
-  return (
-    <section 
-      className="py-12 md:py-16 bg-background"
-      data-testid="section-whos-hiring"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 
-            className="text-3xl md:text-4xl font-bold mb-3"
-            data-testid="text-whos-hiring-title"
-          >
-            {data.title}
-          </h2>
-          <p className="text-lg md:text-xl mb-4">
-            {data.subtitle}
-          </p>
-          <p className="text-xl text-foreground max-w-3xl mx-auto">
-            {data.description}
-          </p>
-        </div>
-
-        <div className="relative">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={goToPrevious}
-                className="flex-shrink-0"
-                data-testid="button-carousel-prev"
-              >
-                <IconChevronLeft className="h-4 w-4" />
-              </Button>
-
-              <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {currentLogos.map((logo, index) => (
-                  <Card 
-                    key={`${currentPage}-${index}`} 
-                    className="p-3 lg:p-6 flex items-center justify-center h-20 sm:h-40"
-                    data-testid={`card-logo-${currentPage * LOGOS_PER_PAGE + index}`}
-                  >
-                    <img
-                      src={logo.src}
-                      alt={logo.alt}
-                      className="max-h-16 max-w-full object-contain"
-                      loading="lazy"
-                    />
-                  </Card>
-                ))}
-              </div>
-
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={goToNext}
-                className="flex-shrink-0"
-                data-testid="button-carousel-next"
-              >
-                <IconChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="flex justify-center gap-2 mt-6" data-testid="carousel-pagination">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    currentPage === index 
-                      ? "bg-primary" 
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                  }`}
-                  data-testid={`button-pagination-dot-${index}`}
-                  aria-label={`Go to page ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
       </div>
     </section>
   );

@@ -1,34 +1,66 @@
-export default function StatsSection() {
-  const stats = [
-    {
-      value: "20,000",
-      label: "Students Graduated",
-      sublabel: "Join our global community",
-    },
-    {
-      value: "5000",
-      label: "Hours of Content",
-      sublabel: "Expert-led instruction",
-    },
-    {
-      value: "85%",
-      label: "Job Placement",
-      sublabel: "Within 6 months",
-    },
-  ];
+import { Card } from "@/components/ui/card";
+import Briefcase from "@/components/custom-icons/Briefcase";
+import Graduation from "@/components/custom-icons/Graduation";
+import GrowthChart from "@/components/custom-icons/GrowthChart";
 
+export interface StatsSectionData {
+  title: string;
+  description: string;
+}
+
+interface StatsSectionProps {
+  data: StatsSectionData;
+}
+
+const stats = [
+  { value: "84%", label: "Job placement rate", icon: "briefcase" as const },
+  { value: "3-6", valueSuffix: "months", label: "Average time to get hired", icon: "graduation" as const },
+  { value: "55%", label: "Salary increase after graduation", icon: "growth" as const },
+];
+
+const iconMap = {
+  briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
+  graduation: <Graduation width="64" height="54" />,
+  growth: <GrowthChart width="64" height="67" />,
+};
+
+export default function StatsSection({ data }: StatsSectionProps) {
   return (
-    <section className="bg-muted py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Why join us?</h2>
-        
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    <section 
+      className="pb-16"
+      data-testid="section-stats"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+            data-testid="text-stats-title"
+          >
+            {data.title}
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            {data.description}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center" data-testid={`stat-${index}`}>
-              <p className="text-5xl font-bold text-primary mb-2">{stat.value}</p>
-              <p className="text-lg font-semibold mb-1">{stat.label}</p>
-              <p className="text-sm text-muted-foreground">{stat.sublabel}</p>
-            </div>
+            <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
+              <div className="flex-shrink-0">
+                {iconMap[stat.icon]}
+              </div>
+              <div>
+                <div className="text-3xl md:text-4xl font-semibold text-foreground">
+                  {stat.value}
+                  {stat.valueSuffix && (
+                    <span className="text-xl md:text-2xl ml-1">
+                      {stat.valueSuffix}
+                    </span>
+                  )}
+                </div>
+                <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
+              </div>
+            </Card>
           ))}
         </div>
       </div>
