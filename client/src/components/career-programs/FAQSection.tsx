@@ -18,7 +18,7 @@ export function FAQSection({ data }: FAQSectionProps) {
       className="py-16 bg-[#e8f4fc] dark:bg-muted/30"
       data-testid="section-faq"
     >
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <h2 
           className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground"
           data-testid="text-faq-title"
