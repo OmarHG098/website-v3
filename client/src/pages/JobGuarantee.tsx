@@ -109,8 +109,8 @@ const confidenceData: TwoColumnSectionType = {
   left: {
     image: confidenceImage,
     image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo",
-    image_width: "500px",
-    justify: "center",
+    image_width: "400px",
+    justify: "start",
   },
   right: {
     heading: "Why We Have the Confidence to Offer a Job Guarantee",
