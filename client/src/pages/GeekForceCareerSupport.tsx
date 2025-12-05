@@ -6,8 +6,7 @@ import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } fr
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
 import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
-import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
-import Contract from "@/components/custom-icons/Contract";
+import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import Briefcase from "@/components/custom-icons/Briefcase";
 import Graduation from "@/components/custom-icons/Graduation";
 import GrowthChart from "@/components/custom-icons/GrowthChart";
@@ -52,25 +51,6 @@ import logoBeaconCouncil from "@assets/beacon_council_1764720100166.jpg";
 import logoBlackstone from "@assets/blackstone_1764720124773.png";
 import logoCemex from "@assets/cemex_1764720131666.png";
 import vectorStroke from "@assets/vector-stroke-light_1764729540525.png";
-
-// ============================================
-// TYPES
-// ============================================
-
-interface IconProps {
-  width?: string;
-  height?: string;
-  color?: string;
-  style?: React.CSSProperties;
-  className?: string;
-}
-
-interface CareerStep {
-  icon: React.ComponentType<IconProps>;
-  title: string;
-  color?: string;
-  items: string[];
-}
 
 // ============================================
 // DATA
@@ -310,17 +290,14 @@ const whosHiringData = {
   ],
 };
 
-const careerProcessData: {
-  title: string;
-  subtitle: string;
-  steps: CareerStep[];
-} = {
+const careerProcessData: NumberedStepsData = {
   title: "Get Hired with Our 3-Step Career Development Process",
-  subtitle: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+  description: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.",
+  background: "bg-background",
   steps: [
     {
-      icon: StairsWithFlag,
-      title: "1. Profile Optimization",
+      icon: "Stairs",
+      title: "Profile Optimization",
       items: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
         "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
@@ -328,8 +305,8 @@ const careerProcessData: {
       ]
     },
     {
-      icon: Contract,
-      title: "2. Interview Preparation",
+      icon: "FileText",
+      title: "Interview Preparation",
       items: [
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
@@ -337,9 +314,8 @@ const careerProcessData: {
       ]
     },
     {
-      icon: Briefcase,
-      title: "3. Strategic Job Search",
-      color: "hsl(var(--destructive))",
+      icon: "Briefcase",
+      title: "Strategic Job Search",
       items: [
         "Create a personalized job search plan aligned with your goals.",
         "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
@@ -418,57 +394,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
 }
 
 
-function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
-  return (
-    <section 
-      className="py-16 md:py-20 bg-background"
-      data-testid="section-career-process"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
-            data-testid="text-career-process-title"
-          >
-            {data.title}
-          </h2>
-          <p className="text-lg max-w-3xl mx-auto">
-            {data.subtitle}
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          {data.steps.map((step, index) => (
-            <Card 
-              key={index}
-              className="p-3 md:p-5"
-              data-testid={`card-step-${index + 1}`}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <step.icon className="w-12 h-12" width="60px" color={step.color} />
-                <h3 className="text-lg font-semibold text-foreground">
-                  {step.title}
-                </h3>
-              </div>
-              
-              <ul className="space-y-3">
-                {step.items.map((item, itemIndex) => (
-                  <li 
-                    key={itemIndex}
-                    className="flex gap-2 items-start text-base"
-                  >
-                    <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 
 function StatsSection({ data }: { data: typeof statsData }) {
@@ -740,7 +665,7 @@ export default function GeekForceCareerSupport() {
       <main>
         <HeroSection data={heroData} />
         <TwoColumn data={unlimitedSupportTwoColumnData} />
-        <CareerProcessSection data={careerProcessData} />
+        <NumberedSteps data={careerProcessData} />
         <TwoColumn data={hyperpersonalizedTwoColumnData} />
         <WhosHiringSection data={whosHiringData} />
         <StatsSection data={statsData} />

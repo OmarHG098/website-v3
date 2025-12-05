@@ -1,9 +1,12 @@
 import * as TablerIcons from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 
 export interface NumberedStepsStep {
   icon: string;
-  text: string;
+  text?: string;
+  title?: string;
+  items?: string[];
 }
 
 export interface NumberedStepsData {
@@ -70,14 +73,36 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
               <span className="text-5xl md:text-6xl text-primary font-bold mb-4">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <div className="flex items-start gap-3">
+              
+              <div className="flex items-start gap-3 mb-3">
                 <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                   {getIcon(step.icon)}
                 </div>
-                <p className="text-base text-foreground">
-                  {step.text}
-                </p>
+                {step.title && (
+                  <h3 className="text-lg font-semibold text-foreground pt-2">
+                    {step.title}
+                  </h3>
+                )}
+                {step.text && !step.title && (
+                  <p className="text-base text-foreground pt-2">
+                    {step.text}
+                  </p>
+                )}
               </div>
+              
+              {step.items && step.items.length > 0 && (
+                <ul className="space-y-2 ml-[52px]">
+                  {step.items.map((item, itemIndex) => (
+                    <li 
+                      key={itemIndex}
+                      className="flex gap-2 items-start text-base text-muted-foreground"
+                    >
+                      <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>

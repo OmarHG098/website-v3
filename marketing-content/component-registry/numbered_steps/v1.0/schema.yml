@@ -2,12 +2,15 @@ name: "Numbered Steps"
 version: "1.0"
 component: "NumberedSteps"
 file: "client/src/components/NumberedSteps.tsx"
-description: "Displays a numbered list of steps with icons in a 3-column grid layout, with optional title, description and link"
+description: "Displays a numbered list of steps with icons in a 3-column grid layout, with optional title, description and link. Supports both simple single-text steps and detailed multi-item steps with bullet points."
 
 when_to_use: |
   Use for showing sequential processes, how-to guides, or multi-step workflows.
   Great for refund processes, onboarding steps, career development phases, or any content 
   that benefits from numbered, visual step-by-step presentation.
+  
+  Simple mode: Use `text` for single-line step descriptions (e.g., refund process).
+  Detailed mode: Use `title` + `items` for steps with multiple bullet points (e.g., career development).
 
 props:
   title:
@@ -55,6 +58,18 @@ props:
         example: "School"
       text:
         type: string
-        required: true
-        description: "Step description text"
+        required: false
+        description: "Simple step description text (use for single-line steps)"
         example: "Complete our intensive coding bootcamp and graduate within 180 days"
+      title:
+        type: string
+        required: false
+        description: "Step title heading (use with items for detailed steps)"
+        example: "Profile Optimization"
+      items:
+        type: array
+        required: false
+        description: "Array of bullet point strings (use with title for detailed steps)"
+        example:
+          - "Polish LinkedIn, GitHub, and portfolio to attract recruiters"
+          - "Build a resume that clears applicant tracking systems"
