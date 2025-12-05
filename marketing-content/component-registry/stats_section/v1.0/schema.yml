@@ -1,0 +1,19 @@
+name: "Stats Section"
+version: "1.0"
+component: "StatsSection"
+file: "client/src/components/StatsSection.tsx"
+description: "Displays key statistics with icons in a 3-column grid layout. Shows job placement rate, time to get hired, and salary increase metrics."
+when_to_use: "Use this component to showcase important success metrics and statistics that build credibility. Ideal for career support pages and job guarantee sections."
+
+props:
+  title:
+    type: string
+    required: true
+    description: "Main heading for the statistics section"
+    example: "Does the Job Guarantee deliver results you can count on?"
+  
+  description:
+    type: string
+    required: true
+    description: "Supporting text that provides context for the statistics"
+    example: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community."

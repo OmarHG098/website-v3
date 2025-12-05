@@ -269,6 +269,12 @@ export const projectsSectionSchema = z.object({
   items: z.array(projectItemSchema),
 });
 
+export const statsSectionSchema = z.object({
+  type: z.literal("stats_section"),
+  title: z.string(),
+  description: z.string(),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   syllabusSectionSchema,
@@ -284,6 +290,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
   footerSectionSchema,
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
+  statsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

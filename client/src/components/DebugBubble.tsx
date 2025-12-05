@@ -53,6 +53,7 @@ const componentsList = [
   { type: "tech_stack", label: "Tech Stack", icon: IconCode, description: "Technologies grid" },
   { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
   { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo carousel of hiring companies" },
+  { type: "stats_section", label: "Stats Section", icon: IconChartBar, description: "Key statistics display" },
   { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
   { type: "credibility", label: "Credibility", icon: IconChartBar, description: "Stats and logos" },
