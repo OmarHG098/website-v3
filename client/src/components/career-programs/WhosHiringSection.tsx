@@ -96,23 +96,23 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex justify-between items-center mt-6" data-testid="carousel-pagination">
+            <div className="flex justify-between items-center mt-8" data-testid="carousel-pagination">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
                 onClick={goToPrevious}
-                className="flex-shrink-0"
+                className="rounded-full border"
                 data-testid="button-carousel-prev"
               >
-                <IconChevronLeft className="h-4 w-4" />
+                <IconChevronLeft size={24} />
               </Button>
 
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 {Array.from({ length: totalPages }).map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                    className={`w-3 h-3 rounded-full transition-colors ${
                       currentPage === index 
                         ? "bg-primary" 
                         : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
@@ -124,13 +124,13 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
               </div>
 
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
                 onClick={goToNext}
-                className="flex-shrink-0"
+                className="rounded-full border"
                 data-testid="button-carousel-next"
               >
-                <IconChevronRight className="h-4 w-4" />
+                <IconChevronRight size={24} />
               </Button>
             </div>
           )}
