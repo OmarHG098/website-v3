@@ -75,9 +75,10 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+          <div className="hidden md:block absolute top-10 left-[16.67%] right-[16.67%] h-0.5 bg-primary/30" />
+          
           {(data.steps || []).map((step, index) => {
             const isLast = index === (data.steps || []).length - 1;
-            const isFirst = index === 0;
             
             return (
               <div 
@@ -86,19 +87,13 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 data-testid={`numbered-step-${index + 1}`}
               >
                 <div className="flex items-center justify-center w-full mb-3 relative">
-                  {!isFirst && (
-                    <div className="hidden md:block absolute right-1/2 top-1/2 w-1/2 h-0.5 bg-primary/30 -translate-y-1/2 mr-10" />
-                  )}
                   <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center flex-shrink-0 relative z-10">
                     <span className="text-2xl font-bold text-primary-foreground">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
                   {!isLast && (
-                    <>
-                      <div className="hidden md:block absolute left-1/2 top-1/2 w-1/2 h-0.5 bg-primary/30 -translate-y-1/2 ml-10" />
-                      <div className="md:hidden absolute left-1/2 top-20 w-0.5 h-6 bg-primary/30 -translate-x-1/2" />
-                    </>
+                    <div className="md:hidden absolute left-1/2 top-20 w-0.5 h-6 bg-primary/30 -translate-x-1/2" />
                   )}
                 </div>
                 
