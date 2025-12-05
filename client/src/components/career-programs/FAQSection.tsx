@@ -27,7 +27,7 @@ export function FAQSection({ data }: FAQSectionProps) {
         </h2>
         
         <Accordion type="single" collapsible className="space-y-3">
-          {data.items.map((item, index) => (
+          {(data.items || []).map((item, index) => (
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
