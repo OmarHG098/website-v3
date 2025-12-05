@@ -54,7 +54,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </h2>
           
           <p 
-            className="text-lg text-muted-foreground max-w-3xl mx-auto"
+            className="text-xl text-foreground max-w-3xl mx-auto"
             data-testid="text-ai-description"
           >
             {data.description}

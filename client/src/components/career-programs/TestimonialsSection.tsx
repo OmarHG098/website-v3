@@ -49,7 +49,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
           
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-xl text-foreground max-w-2xl mx-auto"
               data-testid="text-testimonials-subtitle"
             >
               {data.subtitle}

@@ -54,7 +54,7 @@ export default function LearningPathSelection() {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Choose Your Learning Path
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-foreground max-w-2xl mx-auto">
               Select the path that best matches your goals. Each journey is powered by AI and supported by expert human mentors.
             </p>
           </div>
