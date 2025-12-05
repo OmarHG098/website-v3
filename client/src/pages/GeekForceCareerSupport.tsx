@@ -398,7 +398,7 @@ function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }
     <TwoColumn 
       data={{
         type: "two_column",
-        background: "bg-amber-50",
+        background: "bg-primary/10",
         proportions: [6, 6],
         reverse_on_mobile: true,
         alignment: "center",
