@@ -418,7 +418,7 @@ function StatsSection({ data }: { data: typeof statsData }) {
             >
               {data.title}
             </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
           </div>
@@ -497,7 +497,7 @@ function WhosHiringSection({ data }: { data: typeof whosHiringData }) {
           <p className="text-lg md:text-xl mb-4">
             {data.subtitle}
           </p>
-          <p className="text-base md:text-lg max-w-3xl mx-auto">
+          <p className="text-xl text-foreground max-w-3xl mx-auto">
             {data.description}
           </p>
         </div>
@@ -635,7 +635,7 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
           {data.title}
         </h2>
         <p 
-          className="text-center text-foreground max-w-3xl mx-auto text-base md:text-lg"
+          className="text-center text-xl text-foreground max-w-3xl mx-auto"
           data-testid="text-testimonials-description"
         >
           {data.description}
