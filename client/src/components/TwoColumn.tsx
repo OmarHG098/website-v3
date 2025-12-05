@@ -277,7 +277,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
       data-testid="section-two-column"
       style={containerStyle}
     >
-      <div className={`container mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
+      <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
         <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
