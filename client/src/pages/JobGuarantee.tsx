@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
-import NumberedStepsV2, { type NumberedStepsV2Data } from "@/components/NumberedStepsV2";
+import VerticalTimeline, { type VerticalTimelineData } from "@/components/VerticalTimeline";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
 import CodeWindow from "@/components/custom-icons/CodeWindow";
 import Monitor from "@/components/custom-icons/Monitor";
@@ -120,7 +120,7 @@ const confidenceData: TwoColumnSectionType = {
   },
 };
 
-const refundData: NumberedStepsV2Data = {
+const refundData: VerticalTimelineData = {
   title: "How the Refund Works",
   description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition.",
   description_link: {
@@ -333,7 +333,7 @@ export default function JobGuarantee() {
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
         <ProgramsSection data={programsData} />
-        <NumberedStepsV2 data={refundData} />
+        <VerticalTimeline data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />
       </main>
