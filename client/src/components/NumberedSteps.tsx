@@ -49,7 +49,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
+          className="text-3xl md:text-4xl font-bold mb-8 text-foreground text-center"
           data-testid="text-numbered-steps-title"
         >
           {data.title}
@@ -57,7 +57,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         
         {data.description && (
           <div className="text-center mb-10">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
             {data.description_link && (
@@ -97,8 +97,8 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   )}
                 </div>
                 
-                <div className="flex flex-col items-start text-left mb-3 w-full">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mb-2">
+                <div className="flex flex-col items-center text-center mb-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mb-1">
                     {getIcon(step.icon)}
                   </div>
                   {step.title && (
@@ -119,7 +119,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
                   
                   return (
-                    <ul className="space-y-2 text-left w-full">
+                    <ul className="space-y-2 text-left">
                       {step.bullets.map((bullet, bulletIndex) => (
                         <li 
                           key={bulletIndex}
