@@ -180,7 +180,9 @@ function ComponentCard({
   });
 
   useEffect(() => {
-    if (schema && !selectedExample) {
+    if (examples.length > 0 && !selectedExample) {
+      setSelectedExample(examples[0].name);
+    } else if (schema && !selectedExample && examples.length === 0) {
       const defaultYaml = generateDefaultYaml(componentType, schema);
       setYamlContent(defaultYaml);
       try {
@@ -192,7 +194,7 @@ function ComponentCard({
         // Ignore parse errors on initial load
       }
     }
-  }, [schema, componentType, selectedExample]);
+  }, [schema, componentType, selectedExample, examples]);
 
   useEffect(() => {
     if (selectedExample && examples.length > 0) {
@@ -354,14 +356,16 @@ function ComponentCard({
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Example:</span>
                 <Select 
-                  value={selectedExample || '__default__'} 
+                  value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
                   onValueChange={handleExampleChange}
                 >
                   <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
                     <SelectValue placeholder="Default" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__default__">Default (from schema)</SelectItem>
+                    {examples.length === 0 && (
+                      <SelectItem value="__default__">Default (from schema)</SelectItem>
+                    )}
                     {examples.map(ex => (
                       <SelectItem key={ex.name} value={ex.name}>
                         {ex.name}
