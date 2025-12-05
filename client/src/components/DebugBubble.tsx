@@ -32,6 +32,7 @@ import {
   IconFolderCode,
   IconBook,
   IconSparkles,
+  IconChartBar,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
