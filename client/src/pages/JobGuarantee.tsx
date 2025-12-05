@@ -100,6 +100,8 @@ const programsData = {
 const confidenceData: TwoColumnSectionType = {
   type: "two_column",
   proportions: [5, 7],
+  padding_left: "52",
+  padding_right: "52",
   background: "bg-primary/5",
   alignment: "center",
   gap: "12",
