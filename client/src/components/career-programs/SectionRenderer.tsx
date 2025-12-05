@@ -8,6 +8,7 @@ import { CertificateSection } from "./CertificateSection";
 import { WhyLearnAISection } from "./WhyLearnAISection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
+import { WhosHiringSection } from "./WhosHiringSection";
 import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
@@ -38,6 +39,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <FAQSection key={index} data={section} />;
           case "testimonials":
             return <TestimonialsSection key={index} data={section} />;
+          case "whos_hiring":
+            return <WhosHiringSection key={index} data={section} />;
           case "footer_cta":
             return <FooterCTASection key={index} data={section} />;
           case "footer":

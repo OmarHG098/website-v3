@@ -29,7 +29,7 @@ export function FooterCTASection({ data }: FooterCTASectionProps) {
         )}
         
         <div className="flex flex-wrap justify-center gap-4">
-          {data.buttons.map((button, index) => (
+          {(data.buttons || []).map((button, index) => (
             <Button
               key={index}
               variant={button.variant === "secondary" ? "secondary" : "outline"}
