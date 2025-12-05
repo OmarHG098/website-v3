@@ -1,0 +1,32 @@
+name: "Full Stack Projects"
+description: "Project carousel with three real-world coding projects"
+yaml: |
+  - type: projects
+    version: "1.0"
+    title: "Learn by Building Real-Life Projects"
+    subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world tech position."
+    items:
+      - title: "Build a StarWars REST API"
+        description: "Practice building a REST API using Express or Flask with SQLAlchemy ORM."
+        image: "star-wars"
+        tags:
+          - "REST"
+          - "Python"
+        duration: "8 HOURS"
+        difficulty: "medium"
+      - title: "Authentication System with Python"
+        description: "Develop a secure login system implementing JWT tokens and session management."
+        image: "authentication"
+        tags:
+          - "Auth"
+          - "Security"
+        duration: "12 HOURS"
+        difficulty: "hard"
+      - title: "Full Stack Final Project"
+        description: "Build a complete web application with user stories, database design, and deployment."
+        image: "final-project"
+        tags:
+          - "Full Stack"
+          - "React"
+        duration: "40+ HOURS"
+        difficulty: "hard"
