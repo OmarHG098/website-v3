@@ -118,7 +118,7 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   proportions: [4, 8],
   background: "bg-muted/30",
   alignment: "center",
-  gap: "12",
+  gap: "32",
   reverse_on_mobile: true,
   left: {
     image: communityImage,
