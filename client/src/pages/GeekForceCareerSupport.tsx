@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { IconCheck, IconFlag, IconChevronLeft, IconChevronRight, IconSchool } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
-import { TwoColumn } from "@/components/TwoColumn";
+import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
 import StairsWithFlag from "@/components/custom-icons/StairsWithFlag";
 import Contract from "@/components/custom-icons/Contract";
 import Briefcase from "@/components/custom-icons/Briefcase";
@@ -86,24 +86,55 @@ const heroData = {
   videoTitle: "GeekForce Career Support",
 };
 
-const unlimitedSupportData = {
-  title: "Unlimited Career Support – Always Ahead of Job Market Trends",
-  description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
-  features: [
-    "Receive tailored guidance aligned with your goals, context, and challenges.",
-    "Meet mentors online or in-person whenever you need support—unlimited, for life.",
-    "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
-  ]
+const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
+  type: "two_column",
+  background: "bg-primary/10",
+  proportions: [6, 6],
+  reverse_on_mobile: true,
+  alignment: "center",
+  right: {
+    image: careerSupportImage,
+    image_alt: "Career support team members collaborating",
+    image_width: "500px"
+  },
+  left: {
+    heading: "Unlimited Career Support – Always Ahead of Job Market Trends",
+    description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.",
+    justify: "center",
+    text_align: "left",
+    font_size: "base",
+    bullet_icon: "Check",
+    bullets: [
+      { text: "Receive tailored guidance aligned with your goals, context, and challenges." },
+      { text: "Meet mentors online or in-person whenever you need support—unlimited, for life." },
+      { text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves." }
+    ],
+  },
 };
 
-const hyperpersonalizedData = {
-  title: "Accelerate Your Results with Hyperpersonalized Career Support",
-  subtitle: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
-  features: [
-    "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.",
-    "Practice technical interviews and behavioral questions with AI-guided exercises.",
-    "Get expert coaching from our mentors who tailor advice to your unique profile and goals."
-  ]
+const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
+  type: "two_column",
+  proportions: [4, 8],
+  background: "bg-muted/30",
+  alignment: "center",
+  gap: "12",
+  reverse_on_mobile: true,
+  left: {
+    image: communityImage,
+    image_alt: "4Geeks Academy community members collaborating on a project",
+    image_width: "500px",
+    justify: "center",
+  },
+  right: {
+    heading: "Accelerate Your Results with Hyperpersonalized Career Support",
+    description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
+    bullets: [
+      { text: "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects." },
+      { text: "Practice technical interviews and behavioral questions with AI-guided exercises." },
+      { text: "Get expert coaching from our mentors who tailor advice to your unique profile and goals." }
+    ],
+    font_size: "sm",
+  },
 };
 
 const statsData = {
@@ -393,37 +424,6 @@ function HeroSection({ data }: { data: typeof heroData }) {
   );
 }
 
-function UnlimitedSupportSection({ data }: { data: typeof unlimitedSupportData }) {
-  return (
-    <TwoColumn 
-      data={{
-        type: "two_column",
-        background: "bg-primary/10",
-        proportions: [6, 6],
-        padding_left: "52",
-        padding_right: "52",
-        reverse_on_mobile: true,
-        alignment: "center",
-        right: {
-          image: careerSupportImage,
-          image_alt: "Career support team members collaborating",
-          image_width: "500px"
-        },
-        left: {
-          heading: data.title,
-          description: data.description,
-          justify: "center",
-          text_align: "left",
-          font_size: "base",
-          bullet_icon: "Check",
-          bullets: data.features.map(feature => ({
-            text: feature,
-          })),
-        },
-      }}
-    />
-  );
-}
 
 function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   return (
@@ -477,35 +477,6 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
   );
 }
 
-// Hyperpersonalized Career Support Section - Uses TwoColumn component
-function HyperpersonalizedSection({ data }: { data: typeof hyperpersonalizedData }) {
-  return (
-    <TwoColumn
-      data={{
-        type: "two_column",
-        proportions: [4, 8],
-        padding_left: "52",
-        padding_right: "52",
-        background: "bg-muted/30",
-        alignment: "center",
-        gap: "12",
-        reverse_on_mobile: true,
-        left: {
-          image: communityImage,
-          image_alt: "4Geeks Academy community members collaborating on a project",
-          image_width: "500px",
-          justify: "center",
-        },
-        right: {
-          heading: data.title,
-          description: data.subtitle,
-          bullets: data.features.map(feature => ({ text: feature })),
-          font_size: "sm",
-        },
-      }}
-    />
-  );
-}
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
@@ -771,7 +742,6 @@ function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
-// test
 export default function GeekForceCareerSupport() {
   return (
     <div className="min-h-screen bg-background">
@@ -779,9 +749,9 @@ export default function GeekForceCareerSupport() {
       
       <main>
         <HeroSection data={heroData} />
-        <UnlimitedSupportSection data={unlimitedSupportData} />
+        <TwoColumn data={unlimitedSupportTwoColumnData} />
         <CareerProcessSection data={careerProcessData} />
-        <HyperpersonalizedSection data={hyperpersonalizedData} />
+        <TwoColumn data={hyperpersonalizedTwoColumnData} />
         <StatsSection data={statsData} />
         <WhosHiringSection data={whosHiringData} />
         <TestimonialsSection data={testimonialsData} />

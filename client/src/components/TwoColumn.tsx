@@ -4,6 +4,8 @@ import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn } from "
 import type { ComponentType, CSSProperties } from "react";
 import VideoPlayer from "./VideoPlayer";
 
+export type { TwoColumnSectionType };
+
 interface TwoColumnProps {
   data: TwoColumnSectionType;
 }
