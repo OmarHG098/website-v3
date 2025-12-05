@@ -480,51 +480,49 @@ function CareerProcessSection({ data }: { data: typeof careerProcessData }) {
 
 function StatsSection({ data }: { data: typeof statsData }) {
   const iconMap = {
-    briefcase: <Briefcase width="60" height="54" />,
-    graduation: <Graduation width="60" height="51" />,
-    growth: <GrowthChart width="60" height="63" />,
+    briefcase: <Briefcase width="64" height="58" color="#0097CD" />,
+    graduation: <Graduation width="64" height="54" />,
+    growth: <GrowthChart width="64" height="67" />,
   };
 
   return (
     <section 
-      className="py-8 bg-sky-200"
+      className="pb-16"
       data-testid="section-stats"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-6">
-          <h2 
-            className="text-xl md:text-2xl font-bold mb-2 text-foreground"
-            data-testid="text-stats-title"
-          >
-            {data.title}
-          </h2>
-          <p className="text-base">
-            {data.description}
-          </p>
-        </div>
+          <div className="text-center mb-8">
+            <h2 
+              className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+              data-testid="text-stats-title"
+            >
+              {data.title}
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              {data.description}
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.stats.map((stat, index) => (
-              <Card key={index} className="p-4 md:p-4">
-                <div data-testid={`stat-card-${index}`} className="flex items-center gap-4 md:block">
-                  <div className="flex-shrink-0 md:mb-4">
-                    {iconMap[stat.icon]}
+              <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
+                <div className="flex-shrink-0">
+                  {iconMap[stat.icon]}
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold text-foreground">
+                    {stat.value}
+                    {stat.valueSuffix && (
+                      <span className="text-xl md:text-2xl ml-1">
+                        {stat.valueSuffix}
+                      </span>
+                    )}
                   </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
-                    <div className="text-3xl md:text-4xl font-bold text-foreground">
-                      {stat.value}
-                      {stat.valueSuffix && (
-                        <span className="text-lg md:text-xl ml-1">
-                          {stat.valueSuffix}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
                 </div>
               </Card>
             ))}
-        </div>
+          </div>
       </div>
     </section>
   );
