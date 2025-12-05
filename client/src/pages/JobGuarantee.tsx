@@ -393,45 +393,41 @@ function RefundSection({ data }: { data: typeof refundData }) {
             {data.title}
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Left side - Description Card (25%) */}
-            <Card className="p-6 h-fit md:col-span-1">
-              <p className="text-base text-muted-foreground">
-                {data.description}
-              </p>
-              <a 
-                href={data.conditionsLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-primary hover:underline text-base mt-3 inline-block"
-                data-testid="link-conditions-apply"
-              >
-                Conditions Apply.
-              </a>
-            </Card>
+          <div className="text-center mb-10">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {data.description}
+            </p>
+            <a 
+              href={data.conditionsLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline text-lg mt-2 inline-block"
+              data-testid="link-conditions-apply"
+            >
+              Conditions Apply.
+            </a>
+          </div>
 
-            {/* Right side - Steps side by side (75%) */}
-            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {data.steps.map((step, index) => (
-                <div 
-                  key={index} 
-                  className="flex flex-col"
-                  data-testid={`refund-step-${index + 1}`}
-                >
-                  <span className="text-4xl md:text-5xl text-primary font-bold mb-3">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {getIcon(step.icon)}
-                    </div>
-                    <p className="text-base text-foreground">
-                      {step.text}
-                    </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {data.steps.map((step, index) => (
+              <div 
+                key={index} 
+                className="flex flex-col"
+                data-testid={`refund-step-${index + 1}`}
+              >
+                <span className="text-5xl md:text-6xl text-primary font-bold mb-4">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    {getIcon(step.icon)}
                   </div>
+                  <p className="text-base text-foreground">
+                    {step.text}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
       </div>
     </section>
