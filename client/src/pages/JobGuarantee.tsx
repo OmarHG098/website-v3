@@ -410,18 +410,18 @@ function RefundSection({ data }: { data: typeof refundData }) {
               </a>
             </Card>
 
-            {/* Right side - Steps stacked vertically (75%) */}
-            <div className="md:col-span-3 flex flex-col gap-6">
+            {/* Right side - Steps side by side (75%) */}
+            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
               {data.steps.map((step, index) => (
                 <div 
                   key={index} 
-                  className="flex items-start gap-4"
+                  className="flex flex-col"
                   data-testid={`refund-step-${index + 1}`}
                 >
-                  <span className="text-4xl md:text-5xl text-primary font-bold">
+                  <span className="text-4xl md:text-5xl text-primary font-bold mb-3">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <div className="flex items-start gap-3 pt-2">
+                  <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                       {getIcon(step.icon)}
                     </div>
