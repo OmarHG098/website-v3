@@ -6,7 +6,7 @@ export interface NumberedStepsStep {
   icon: string;
   text?: string;
   title?: string;
-  items?: string[];
+  bullets?: string[];
 }
 
 export interface NumberedStepsData {
@@ -90,15 +90,15 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 )}
               </div>
               
-              {step.items && step.items.length > 0 && (
+              {step.bullets && step.bullets.length > 0 && (
                 <ul className="space-y-2 ml-[52px]">
-                  {step.items.map((item, itemIndex) => (
+                  {step.bullets.map((bullet, bulletIndex) => (
                     <li 
-                      key={itemIndex}
+                      key={bulletIndex}
                       className="flex gap-2 items-start text-base text-muted-foreground"
                     >
                       <IconCheck className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span>{item}</span>
+                      <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>

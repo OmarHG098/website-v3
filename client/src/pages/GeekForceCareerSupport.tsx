@@ -298,7 +298,7 @@ const careerProcessData: NumberedStepsData = {
     {
       icon: "Stairs",
       title: "Profile Optimization",
-      items: [
+      bullets: [
         "Polish LinkedIn, GitHub, and portfolio to attract recruiters and pass AI-based filters.",
         "Build a resume that clears applicant tracking systems (ATS) and highlights your strengths.",
         "Showcase your skills with a recruiter-ready portfolio."
@@ -307,7 +307,7 @@ const careerProcessData: NumberedStepsData = {
     {
       icon: "FileText",
       title: "Interview Preparation",
-      items: [
+      bullets: [
         "Gain confidence with mock technical and behavioral interviews.",
         "Practice coding and problem-solving with auto-graded exercises.",
         "Develop tailored strategies for upcoming interviews."
@@ -316,7 +316,7 @@ const careerProcessData: NumberedStepsData = {
     {
       icon: "Briefcase",
       title: "Strategic Job Search",
-      items: [
+      bullets: [
         "Create a personalized job search plan aligned with your goals.",
         "Navigate AI-driven hiring platforms, from resume scanners to automated interviews.",
         "Connect with our extensive network of global hiring partners."

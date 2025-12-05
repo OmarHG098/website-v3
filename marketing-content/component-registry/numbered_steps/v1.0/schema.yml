@@ -10,7 +10,7 @@ when_to_use: |
   that benefits from numbered, visual step-by-step presentation.
   
   Simple mode: Use `text` for single-line step descriptions (e.g., refund process).
-  Detailed mode: Use `title` + `items` for steps with multiple bullet points (e.g., career development).
+  Detailed mode: Use `title` + `bullets` for steps with multiple bullet points (e.g., career development).
 
 props:
   title:
@@ -64,9 +64,9 @@ props:
       title:
         type: string
         required: false
-        description: "Step title heading (use with items for detailed steps)"
+        description: "Step title heading (use with bullets for detailed steps)"
         example: "Profile Optimization"
-      items:
+      bullets:
         type: array
         required: false
         description: "Array of bullet point strings (use with title for detailed steps)"
