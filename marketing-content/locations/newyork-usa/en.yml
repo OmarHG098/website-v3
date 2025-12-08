@@ -26,6 +26,7 @@ schema:
         addressCountry: US
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: New York Campus
     title: 4Geeks Academy New York

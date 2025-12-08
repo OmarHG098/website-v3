@@ -23,6 +23,7 @@ schema:
         addressCountry: PA
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Ciudad de Panamá
     title: 4Geeks Academy Ciudad de Panamá

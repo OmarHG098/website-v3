@@ -1,6 +1,6 @@
 
 import type { Section } from "@shared/schema";
-import { HeroSection } from "./HeroSection";
+import { Hero } from "@/components/hero/Hero";
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
 import { AILearningSection } from "./AILearningSection";
@@ -30,7 +30,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
       {sections.map((section, index) => {
         switch (section.type) {
           case "hero":
-            return <HeroSection key={index} data={section} />;
+            return <Hero key={index} data={section} />;
           case "syllabus":
             return <SyllabusSection key={index} data={section} />;
           case "projects":

@@ -24,6 +24,7 @@ schema:
         addressCountry: PT
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Lisbon Campus
     title: 4Geeks Academy Lisbon

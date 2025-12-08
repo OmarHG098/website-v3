@@ -23,6 +23,7 @@ schema:
         addressCountry: CR
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Costa Rica
     title: 4Geeks Academy Costa Rica

@@ -25,6 +25,7 @@ schema:
         addressCountry: MX
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Ciudad de México
     title: 4Geeks Academy Ciudad de México

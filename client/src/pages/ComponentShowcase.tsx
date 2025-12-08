@@ -76,6 +76,7 @@ interface ComponentExample {
   name: string;
   description: string;
   yaml: string;
+  variant?: string;
 }
 
 interface ComponentVersion {
@@ -368,7 +369,14 @@ function ComponentCard({
                     )}
                     {examples.map(ex => (
                       <SelectItem key={ex.name} value={ex.name}>
-                        {ex.name}
+                        <span className="flex items-center gap-2">
+                          {ex.name}
+                          {ex.variant && (
+                            <Badge variant="outline" className="text-xs py-0 px-1">
+                              {ex.variant}
+                            </Badge>
+                          )}
+                        </span>
                       </SelectItem>
                     ))}
                     <SelectItem value="__add_new__" className="text-primary">

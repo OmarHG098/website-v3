@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as TablerIcons from "@tabler/icons-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
-import type { HeroSection as HeroSectionType } from "@shared/schema";
+import type { HeroSingleColumn } from "@shared/schema";
 import type { ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
@@ -16,11 +16,11 @@ import newsweekLogoEn from "@assets/newsweek_1764709608255.webp";
 import newsweekLogoEs from "@assets/newsweek-es_1764709602003.webp";
 import courseReportLogo from "@assets/Course-Report-Badge-2025_1764709632231.webp";
 
-interface HeroSectionProps {
-  data: HeroSectionType;
+interface HeroSingleColumnProps {
+  data: HeroSingleColumn;
 }
 
-export function HeroSection({ data }: HeroSectionProps) {
+export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
   const { i18n } = useTranslation();
   const isSpanish = i18n.language?.startsWith('es');
 

@@ -1,0 +1,149 @@
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IconStarFilled, IconStar } from "@tabler/icons-react";
+import type { HeroShowcase } from "@shared/schema";
+import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
+import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
+import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
+import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
+import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
+
+interface HeroShowcaseProps {
+  data: HeroShowcase;
+}
+
+export function HeroShowcase({ data }: HeroShowcaseProps) {
+  const avatars = [avatar1, avatar2, avatar3, avatar4];
+
+  return (
+    <section className="relative container mx-auto px-4 pt-12 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
+        {/* Left Images Column */}
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
+          {data.left_images?.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute w-56 transform transition-transform hover:rotate-0 hover:scale-105 z-30 ${
+                index === 0 
+                  ? "top-[94px] left-0 -rotate-6" 
+                  : "top-[222px] left-[100px] rotate-3"
+              }`}
+              style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-48 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Content Column (Center) */}
+        <div className="z-10 text-center px-4">
+          <h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap"
+            data-testid="text-hero-title"
+          >
+            {data.title}
+          </h1>
+
+          {data.subtitle && (
+            <p 
+              className="text-lg text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto"
+              data-testid="text-hero-subtitle"
+            >
+              {data.subtitle}
+            </p>
+          )}
+
+          {/* Trust Bar / Ratings */}
+          {data.trust_bar && (
+            <div className="flex items-center justify-center gap-3 mb-8" data-testid="trust-bar">
+              <div className="flex -space-x-2">
+                {avatars.map((avatar, index) => (
+                  <Avatar key={index} className="h-8 w-8 border-2 border-background">
+                    <AvatarImage src={avatar} alt={`User ${index + 1}`} />
+                    <AvatarFallback className="bg-primary/20 text-xs">
+                      {String.fromCharCode(65 + index)}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
+              </div>
+
+              <div className="flex flex-col items-start gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">{data.trust_bar.rating}</span>
+                  <div className="flex">
+                    {[1, 2, 3, 4].map((i) => (
+                      <IconStarFilled
+                        key={i}
+                        className="text-yellow-500 w-5 h-5"
+                      />
+                    ))}
+                    <IconStar className="text-yellow-500 w-5 h-5" />
+                  </div>
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  {data.trust_bar.trusted_text}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Curved arrow */}
+          {data.show_arrow && (
+            <div className="hidden lg:flex justify-center mb-4">
+              <img
+                src={curvedArrow}
+                alt="Arrow pointing to CTA"
+                className="w-24 h-auto opacity-80"
+                loading="lazy"
+              />
+            </div>
+          )}
+
+          {/* CTA Button */}
+          <div>
+            <Button
+              size="lg"
+              className="text-lg px-8 scale-110 mb-1"
+              asChild
+              data-testid="button-hero-cta"
+            >
+              <a href={data.cta_button.url}>
+                {data.cta_button.text}
+              </a>
+            </Button>
+          </div>
+        </div>
+
+        {/* Right Images Column */}
+        <div className="relative h-[300px] lg:h-[500px] hidden lg:block">
+          {data.right_images?.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute w-56 transform transition-transform hover:rotate-0 hover:scale-105 ${
+                index === 0 
+                  ? "top-[94px] right-0 rotate-6 z-30" 
+                  : "top-[222px] right-[100px] -rotate-3 z-20"
+              }`}
+              style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-48 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-chart-2/5 pointer-events-none -z-10"></div>
+    </section>
+  );
+}

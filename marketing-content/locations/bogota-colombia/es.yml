@@ -22,6 +22,7 @@ schema:
         addressCountry: CO
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Bogotá
     title: 4Geeks Academy Bogotá

@@ -24,6 +24,7 @@ schema:
 
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: "Career Program"
     title: "Full Stack Development with AI"

@@ -24,6 +24,7 @@ schema:
         addressCountry: US
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Tampa
     title: 4Geeks Academy Tampa

@@ -22,6 +22,7 @@ schema:
 
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: "Webinar Gratis"
     title: "Aprende a Programar con IA en 2024"

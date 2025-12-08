@@ -23,6 +23,7 @@ schema:
         addressCountry: IE
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Dublin Campus
     title: 4Geeks Academy Dublin

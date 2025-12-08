@@ -23,6 +23,7 @@ schema:
         addressCountry: AR
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Buenos Aires
     title: 4Geeks Academy Buenos Aires

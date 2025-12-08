@@ -22,6 +22,7 @@ schema:
         addressCountry: UY
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Montevideo
     title: 4Geeks Academy Montevideo

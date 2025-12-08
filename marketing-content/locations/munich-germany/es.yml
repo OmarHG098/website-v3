@@ -24,6 +24,7 @@ schema:
         addressCountry: DE
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Múnich
     title: 4Geeks Academy Múnich

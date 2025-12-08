@@ -23,6 +23,7 @@ schema:
         addressCountry: ES
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Valencia Campus
     title: 4Geeks Academy Valencia

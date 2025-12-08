@@ -22,6 +22,7 @@ schema:
         addressCountry: EC
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Quito Campus
     title: 4Geeks Academy Quito

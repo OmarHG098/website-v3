@@ -23,6 +23,7 @@ schema:
         addressCountry: BO
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus La Paz
     title: 4Geeks Academy La Paz

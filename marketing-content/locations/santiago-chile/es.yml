@@ -23,6 +23,7 @@ schema:
         addressCountry: CL
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Campus Santiago
     title: 4Geeks Academy Santiago

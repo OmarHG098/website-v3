@@ -23,6 +23,7 @@ schema:
         addressCountry: DE
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Hamburg Campus
     title: 4Geeks Academy Hamburg

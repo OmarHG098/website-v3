@@ -22,6 +22,7 @@ schema:
         addressCountry: PE
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Lima Campus
     title: 4Geeks Academy Lima

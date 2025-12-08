@@ -37,16 +37,57 @@ export const awardBadgeSchema = z.object({
   year: z.string().optional(),
 });
 
-export const heroSectionSchema = z.object({
+export const heroImageSchema = z.object({
+  src: z.string(),
+  alt: z.string(),
+});
+
+// Hero variant schemas - each with required fields for that variant
+// Using .strict() to prevent mixing variant-specific fields
+export const heroSingleColumnSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
-  badge: z.string().optional(),
+  variant: z.literal("singleColumn"),
   title: z.string(),
   subtitle: z.string().optional(),
-  cta_buttons: z.array(ctaButtonSchema),
+  badge: z.string().optional(),
+  cta_buttons: z.array(ctaButtonSchema).min(1),
   trust_bar: trustBarSchema.optional(),
   award_badges: z.array(awardBadgeSchema).optional(),
-});
+}).strict();
+
+export const heroShowcaseSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("showcase"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  trust_bar: trustBarSchema.optional(),
+  cta_button: ctaButtonSchema,
+  left_images: z.array(heroImageSchema).optional(),
+  right_images: z.array(heroImageSchema).optional(),
+  show_arrow: z.boolean().optional(),
+}).strict();
+
+export const heroTwoColumnSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("twoColumn"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  welcome_text: z.string().optional(),
+  description: z.string().optional(),
+  video_id: z.string(),
+  video_title: z.string().optional(),
+  video_ratio: z.string().optional(),
+}).strict();
+
+// Combined hero section schema - union of all variants
+export const heroSectionSchema = z.union([
+  heroSingleColumnSchema,
+  heroShowcaseSchema,
+  heroTwoColumnSchema,
+]);
 
 export const cardItemSchema = z.object({
   icon: z.string(),
@@ -359,8 +400,12 @@ export const ctaBannerSectionSchema = z.object({
   background: z.string().optional(),
 });
 
-export const sectionSchema = z.discriminatedUnion("type", [
-  heroSectionSchema,
+// Section schema using z.union to support hero variants
+// Each hero variant has the same type: "hero" but different variant-specific required fields
+export const sectionSchema = z.union([
+  heroSingleColumnSchema,
+  heroShowcaseSchema,
+  heroTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -433,6 +478,9 @@ export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
+export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
+export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
+export type HeroTwoColumn = z.infer<typeof heroTwoColumnSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;

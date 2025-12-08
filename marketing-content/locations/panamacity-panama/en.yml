@@ -23,6 +23,7 @@ schema:
         addressCountry: PA
 sections:
   - type: hero
+    variant: singleColumn
     version: "1.0"
     badge: Panama City Campus
     title: 4Geeks Academy Panama City
