@@ -460,9 +460,10 @@ function ComponentCard({
 
       <Collapsible open={showYaml}>
         <CollapsibleContent>
-          <Card className="mb-4">
-            <CardContent className="p-0">
-              <div className="rounded-lg overflow-hidden">
+          <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+            <Card>
+              <CardContent className="p-0">
+                <div className="rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
                   <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
                   <Button
@@ -498,9 +499,10 @@ function ComponentCard({
                     <span className="font-mono">{parseError}</span>
                   </div>
                 )}
-              </div>
-            </CardContent>
-          </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </CollapsibleContent>
       </Collapsible>
 
