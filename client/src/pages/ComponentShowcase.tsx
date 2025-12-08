@@ -14,7 +14,8 @@ import {
   IconInfoCircle,
   IconDeviceMobile,
   IconDeviceTablet,
-  IconDeviceDesktop
+  IconDeviceDesktop,
+  IconChevronUp
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -458,6 +459,21 @@ function ComponentCard({
         </CardHeader>
       </Card>
 
+      {!showYaml && (
+        <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowYaml(true)}
+            className="w-full"
+            data-testid={`button-show-yaml-${componentType}`}
+          >
+            <IconCode className="w-4 h-4 mr-2" />
+            Show YAML Editor
+          </Button>
+        </div>
+      )}
+
       <Collapsible open={showYaml}>
         <CollapsibleContent>
           <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
@@ -466,16 +482,28 @@ function ComponentCard({
                 <div className="rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
                   <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleReset}
-                    className="h-6 px-2 text-xs"
-                    data-testid={`button-reset-yaml-${componentType}`}
-                  >
-                    <IconRefresh className="w-3 h-3 mr-1" />
-                    Reset
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleReset}
+                      className="h-6 px-2 text-xs"
+                      data-testid={`button-reset-yaml-${componentType}`}
+                    >
+                      <IconRefresh className="w-3 h-3 mr-1" />
+                      Reset
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowYaml(false)}
+                      className="h-6 px-2 text-xs"
+                      data-testid={`button-collapse-yaml-${componentType}`}
+                    >
+                      <IconChevronUp className="w-3 h-3 mr-1" />
+                      Collapse
+                    </Button>
+                  </div>
                 </div>
                 <CodeMirror
                   value={yamlContent}
