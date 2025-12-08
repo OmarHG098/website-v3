@@ -146,7 +146,7 @@ function ComponentCard({
   const [showYaml, setShowYaml] = useState(true);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
-  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
   const [yamlContent, setYamlContent] = useState('');
   const [parsedData, setParsedData] = useState<Section | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
