@@ -11,3 +11,77 @@ timezone: America/New_York
 visibility: listed
 phone: "+1 786-416-6640"
 address: "1395 Brickell Ave, Miami, FL 33131"
+
+meta:
+  page_title: "4Geeks Academy Miami | Bootcamp de Programación en Florida"
+  description: "Únete al bootcamp de programación 4Geeks en Miami. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/miami-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/miami"
+    - "/campus/miami"
+    - "/us/miami"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "1395 Brickell Ave"
+        addressLocality: "Miami"
+        addressRegion: "FL"
+        postalCode: "33131"
+        addressCountry: "US"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Miami"
+    title: "4Geeks Academy Miami"
+    subtitle: "El bootcamp de programación mejor valorado de Florida con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=miami-usa"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Miami?"
+    items:
+      - icon: "Building"
+        title: "Ubicación Premium"
+        description: "Ubicado en el corazón de Brickell, el distrito financiero de Miami."
+      - icon: "Users"
+        title: "Comunidad Tech"
+        description: "Acceso al próspero ecosistema de startups tecnológicas de Miami."
+      - icon: "Globe"
+        title: "Hub Internacional"
+        description: "Conecta con una comunidad diversa y multicultural de estudiantes."
+      - icon: "Briefcase"
+        title: "Oportunidades Laborales"
+        description: "Alta demanda de contratación de empresas locales y remotas."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Miami"
+    filter_by_location: "miami-usa"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Miami"
+    filter_by_location: "miami-usa"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Miami?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=miami-usa"

@@ -11,3 +11,77 @@ timezone: Europe/Lisbon
 visibility: listed
 phone: "+351 21 123 4567"
 address: "Avenida da Liberdade 110, 1250-146 Lisboa"
+
+meta:
+  page_title: "4Geeks Academy Lisbon | Coding Bootcamp in Portugal"
+  description: "Join 4Geeks Lisbon coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/lisbon-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/lisbon"
+    - "/lisboa"
+    - "/campus/lisbon"
+    - "/pt/lisbon"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Avenida da Liberdade 110"
+        addressLocality: "Lisboa"
+        postalCode: "1250-146"
+        addressCountry: "PT"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Lisbon Campus"
+    title: "4Geeks Academy Lisbon"
+    subtitle: "Portugal's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=lisbon-portugal"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Lisbon?"
+    items:
+      - icon: "Building"
+        title: "Rising Tech Hub"
+        description: "Lisbon is Europe's fastest-growing startup ecosystem."
+      - icon: "Users"
+        title: "Web Summit Home"
+        description: "Host city of Web Summit, the world's largest tech conference."
+      - icon: "TrendingUp"
+        title: "Digital Nomad Friendly"
+        description: "Attractive destination for remote workers and entrepreneurs."
+      - icon: "Briefcase"
+        title: "Career Growth"
+        description: "Growing demand from startups and international companies."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Lisbon"
+    filter_by_location: "lisbon-portugal"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Lisbon Graduate Success Stories"
+    filter_by_location: "lisbon-portugal"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Lisbon?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=lisbon-portugal"

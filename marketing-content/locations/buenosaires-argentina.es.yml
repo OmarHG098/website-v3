@@ -11,3 +11,76 @@ timezone: America/Argentina/Buenos_Aires
 visibility: listed
 phone: "+54 11 1234 5678"
 address: "Av. Corrientes 1234, Buenos Aires"
+
+meta:
+  page_title: "4Geeks Academy Buenos Aires | Bootcamp de Programación en Argentina"
+  description: "Únete al bootcamp de programación 4Geeks en Buenos Aires. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/buenosaires-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/buenos-aires"
+    - "/buenosaires"
+    - "/campus/buenos-aires"
+    - "/ar/buenos-aires"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Av. Corrientes 1234"
+        addressLocality: "Buenos Aires"
+        addressCountry: "AR"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Buenos Aires"
+    title: "4Geeks Academy Buenos Aires"
+    subtitle: "El bootcamp de programación líder de Argentina con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=buenosaires-argentina"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Buenos Aires?"
+    items:
+      - icon: "Building"
+        title: "Hub Tecnológico"
+        description: "El ecosistema tech más grande y vibrante de Argentina."
+      - icon: "Users"
+        title: "Talento de Élite"
+        description: "Fuerza laboral altamente educada con sólidas habilidades técnicas."
+      - icon: "TrendingUp"
+        title: "Fábrica de Unicornios"
+        description: "Hogar de múltiples unicornios tecnológicos y startups exitosas."
+      - icon: "Briefcase"
+        title: "Alcance Global"
+        description: "Fuertes conexiones con mercados tecnológicos de EE.UU. y Europa."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Buenos Aires"
+    filter_by_location: "buenosaires-argentina"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Buenos Aires"
+    filter_by_location: "buenosaires-argentina"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Buenos Aires?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=buenosaires-argentina"

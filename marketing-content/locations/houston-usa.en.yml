@@ -11,3 +11,77 @@ timezone: America/Chicago
 visibility: listed
 phone: "+1 713-555-0100"
 address: "1000 Main St, Houston, TX 77002"
+
+meta:
+  page_title: "4Geeks Academy Houston | Coding Bootcamp in Texas"
+  description: "Join 4Geeks Houston coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/houston-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/houston"
+    - "/campus/houston"
+    - "/us/houston"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "1000 Main St"
+        addressLocality: "Houston"
+        addressRegion: "TX"
+        postalCode: "77002"
+        addressCountry: "US"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Houston Campus"
+    title: "4Geeks Academy Houston"
+    subtitle: "Texas's largest city coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=houston-usa"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Houston?"
+    items:
+      - icon: "Building"
+        title: "Energy & Tech"
+        description: "Houston combines energy industry expertise with growing tech sector."
+      - icon: "Users"
+        title: "Diverse Economy"
+        description: "Tech opportunities in healthcare, aerospace, and energy."
+      - icon: "TrendingUp"
+        title: "Innovation Hub"
+        description: "Home to NASA and cutting-edge technology companies."
+      - icon: "Briefcase"
+        title: "Career Growth"
+        description: "Strong demand for developers across multiple industries."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Houston"
+    filter_by_location: "houston-usa"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Houston Graduate Success Stories"
+    filter_by_location: "houston-usa"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Houston?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=houston-usa"

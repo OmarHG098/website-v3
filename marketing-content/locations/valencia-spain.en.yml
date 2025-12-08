@@ -11,3 +11,76 @@ timezone: Europe/Madrid
 visibility: listed
 phone: "+34 963 55 01 00"
 address: "Calle Colón 48, 46004 Valencia"
+
+meta:
+  page_title: "4Geeks Academy Valencia | Coding Bootcamp in Spain"
+  description: "Join 4Geeks Valencia coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/valencia-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/valencia"
+    - "/campus/valencia"
+    - "/es/valencia"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Calle Colón 48"
+        addressLocality: "Valencia"
+        postalCode: "46004"
+        addressCountry: "ES"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Valencia Campus"
+    title: "4Geeks Academy Valencia"
+    subtitle: "Valencia's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=valencia-spain"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Valencia?"
+    items:
+      - icon: "Building"
+        title: "Innovation City"
+        description: "Spain's third-largest city with growing tech ecosystem."
+      - icon: "Users"
+        title: "Quality of Life"
+        description: "Mediterranean climate with affordable cost of living."
+      - icon: "TrendingUp"
+        title: "Startup Scene"
+        description: "Vibrant startup community with strong local support."
+      - icon: "Briefcase"
+        title: "Career Balance"
+        description: "Great work-life balance with competitive opportunities."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Valencia"
+    filter_by_location: "valencia-spain"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Valencia Graduate Success Stories"
+    filter_by_location: "valencia-spain"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Valencia?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=valencia-spain"

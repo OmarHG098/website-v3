@@ -219,3 +219,104 @@ item_lists:
       es:
         name: "Programas de Carrera"
         description: "Programas de carrera completos diseñados para transformar principiantes en desarrolladores profesionales"
+
+# LocalBusiness schemas for location pages
+# Pages reference these via "local_business:miami-usa" etc.
+# These are base templates - actual addresses are overridden in location YAML files
+local_business:
+  base:
+    type: "LocalBusiness"
+    additional_type: "EducationalOrganization"
+    name: "4Geeks Academy"
+    url: "https://4geeks.com"
+    logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
+    price_range: "$$"
+    opens_at: "09:00"
+    closes_at: "21:00"
+    payment_accepted:
+      - "Cash"
+      - "Credit Card"
+      - "Financing"
+    parent_organization: "@organization"
+    locales:
+      es:
+        name: "4Geeks Academy"
+
+  miami-usa:
+    type: "LocalBusiness"
+    additional_type: "EducationalOrganization"
+    name: "4Geeks Academy Miami"
+    url: "https://4geeks.com/us/location/miami"
+    logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
+    telephone: "+1 786-416-6640"
+    address:
+      type: "PostalAddress"
+      street_address: "1395 Brickell Ave"
+      address_locality: "Miami"
+      address_region: "FL"
+      postal_code: "33131"
+      address_country: "US"
+    geo:
+      type: "GeoCoordinates"
+      latitude: 25.7617
+      longitude: -80.1918
+    opening_hours_specification:
+      - day_of_week: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        opens: "09:00"
+        closes: "21:00"
+    locales:
+      es:
+        name: "4Geeks Academy Miami"
+        url: "https://4geeks.com/es/ubicacion/miami"
+
+  madrid-spain:
+    type: "LocalBusiness"
+    additional_type: "EducationalOrganization"
+    name: "4Geeks Academy Madrid"
+    url: "https://4geeks.com/us/location/madrid"
+    logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
+    telephone: "+34 910 86 69 83"
+    address:
+      type: "PostalAddress"
+      street_address: "Calle de Alcalá 54"
+      address_locality: "Madrid"
+      postal_code: "28014"
+      address_country: "ES"
+    geo:
+      type: "GeoCoordinates"
+      latitude: 40.4168
+      longitude: -3.7038
+    opening_hours_specification:
+      - day_of_week: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        opens: "09:00"
+        closes: "21:00"
+    locales:
+      es:
+        name: "4Geeks Academy Madrid"
+        url: "https://4geeks.com/es/ubicacion/madrid"
+
+  mexicocity-mexico:
+    type: "LocalBusiness"
+    additional_type: "EducationalOrganization"
+    name: "4Geeks Academy Mexico City"
+    url: "https://4geeks.com/us/location/mexico-city"
+    logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
+    telephone: "+52 55 1234 5678"
+    address:
+      type: "PostalAddress"
+      street_address: "Paseo de la Reforma 222"
+      address_locality: "Ciudad de México"
+      postal_code: "06600"
+      address_country: "MX"
+    geo:
+      type: "GeoCoordinates"
+      latitude: 19.4326
+      longitude: -99.1332
+    opening_hours_specification:
+      - day_of_week: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        opens: "09:00"
+        closes: "21:00"
+    locales:
+      es:
+        name: "4Geeks Academy Ciudad de México"
+        url: "https://4geeks.com/es/ubicacion/ciudad-de-mexico"

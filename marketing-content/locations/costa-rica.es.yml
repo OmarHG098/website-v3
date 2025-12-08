@@ -11,3 +11,76 @@ timezone: America/Costa_Rica
 visibility: listed
 phone: "+506 2222 3333"
 address: "Avenida Central, San José"
+
+meta:
+  page_title: "4Geeks Academy Costa Rica | Bootcamp de Programación en San José"
+  description: "Únete al bootcamp de programación 4Geeks en Costa Rica. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/costarica-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/costa-rica"
+    - "/costarica"
+    - "/san-jose"
+    - "/campus/costa-rica"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Avenida Central"
+        addressLocality: "San José"
+        addressCountry: "CR"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Costa Rica"
+    title: "4Geeks Academy Costa Rica"
+    subtitle: "El bootcamp de programación líder de Centroamérica con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=costa-rica"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Costa Rica?"
+    items:
+      - icon: "Building"
+        title: "Líder Tecnológico"
+        description: "El ecosistema tech más desarrollado de Centroamérica."
+      - icon: "Users"
+        title: "Talento Bilingüe"
+        description: "Fuerte dominio del inglés para oportunidades globales."
+      - icon: "TrendingUp"
+        title: "Hub Nearshore"
+        description: "Destino popular para outsourcing tecnológico de EE.UU."
+      - icon: "Briefcase"
+        title: "Crecimiento Profesional"
+        description: "Alta demanda de empresas estadounidenses buscando talento nearshore."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Costa Rica"
+    filter_by_location: "costa-rica"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Costa Rica"
+    filter_by_location: "costa-rica"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Costa Rica?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=costa-rica"

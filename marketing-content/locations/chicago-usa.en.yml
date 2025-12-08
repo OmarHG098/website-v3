@@ -11,3 +11,77 @@ timezone: America/Chicago
 visibility: listed
 phone: "+1 312-555-0100"
 address: "233 S Wacker Dr, Chicago, IL 60606"
+
+meta:
+  page_title: "4Geeks Academy Chicago | Coding Bootcamp in Illinois"
+  description: "Join 4Geeks Chicago coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/chicago-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/chicago"
+    - "/campus/chicago"
+    - "/us/chicago"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "233 S Wacker Dr"
+        addressLocality: "Chicago"
+        addressRegion: "IL"
+        postalCode: "60606"
+        addressCountry: "US"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Chicago Campus"
+    title: "4Geeks Academy Chicago"
+    subtitle: "Illinois's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=chicago-usa"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Chicago?"
+    items:
+      - icon: "Building"
+        title: "Major Tech Hub"
+        description: "Chicago has a thriving tech scene with Fortune 500 companies."
+      - icon: "Users"
+        title: "Diverse Industries"
+        description: "Tech opportunities across finance, healthcare, and logistics."
+      - icon: "TrendingUp"
+        title: "Growing Demand"
+        description: "Strong demand for developers in the Midwest's largest city."
+      - icon: "Briefcase"
+        title: "Career Network"
+        description: "Access to a vast network of tech professionals and employers."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Chicago"
+    filter_by_location: "chicago-usa"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Chicago Graduate Success Stories"
+    filter_by_location: "chicago-usa"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Chicago?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=chicago-usa"

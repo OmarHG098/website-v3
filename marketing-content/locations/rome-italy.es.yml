@@ -11,3 +11,77 @@ timezone: Europe/Rome
 visibility: listed
 phone: "+39 06 555 0100"
 address: "Via del Corso 123, 00186 Roma"
+
+meta:
+  page_title: "4Geeks Academy Roma | Bootcamp de Programación en Italia"
+  description: "Únete al bootcamp de programación 4Geeks en Roma. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/rome-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/rome"
+    - "/roma"
+    - "/campus/rome"
+    - "/it/rome"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Via del Corso 123"
+        addressLocality: "Roma"
+        postalCode: "00186"
+        addressCountry: "IT"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Roma"
+    title: "4Geeks Academy Roma"
+    subtitle: "El bootcamp de programación de la capital de Italia con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=rome-italy"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Roma?"
+    items:
+      - icon: "Building"
+        title: "Ciudad Capital"
+        description: "Centro político y administrativo de Italia."
+      - icon: "Users"
+        title: "Escena Tech en Crecimiento"
+        description: "Ecosistema de startups emergente con apoyo gubernamental."
+      - icon: "TrendingUp"
+        title: "Transformación Digital"
+        description: "Digitalización del sector público impulsando la demanda tech."
+      - icon: "Briefcase"
+        title: "Diversidad de Carreras"
+        description: "Oportunidades en gobierno, tecnología turística y startups."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Roma"
+    filter_by_location: "rome-italy"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Roma"
+    filter_by_location: "rome-italy"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Roma?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=rome-italy"

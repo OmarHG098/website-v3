@@ -11,3 +11,79 @@ timezone: America/New_York
 visibility: listed
 phone: "+1 212-555-0100"
 address: "350 5th Ave, New York, NY 10118"
+
+meta:
+  page_title: "4Geeks Academy New York | Coding Bootcamp in NYC"
+  description: "Join 4Geeks New York coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/newyork-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/new-york"
+    - "/newyork"
+    - "/nyc"
+    - "/campus/new-york"
+    - "/us/new-york"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "350 5th Ave"
+        addressLocality: "New York"
+        addressRegion: "NY"
+        postalCode: "10118"
+        addressCountry: "US"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "New York Campus"
+    title: "4Geeks Academy New York"
+    subtitle: "NYC's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=newyork-usa"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose New York?"
+    items:
+      - icon: "Building"
+        title: "Tech Capital"
+        description: "NYC is one of the world's largest tech hubs."
+      - icon: "Users"
+        title: "Industry Diversity"
+        description: "Tech opportunities in finance, media, fashion, and more."
+      - icon: "TrendingUp"
+        title: "Startup Scene"
+        description: "Second-largest startup ecosystem in the United States."
+      - icon: "Briefcase"
+        title: "Career Network"
+        description: "Access to Fortune 500 companies and innovative startups."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in New York"
+    filter_by_location: "newyork-usa"
+
+  - type: testimonials
+    version: "1.0"
+    title: "New York Graduate Success Stories"
+    filter_by_location: "newyork-usa"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in New York?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=newyork-usa"

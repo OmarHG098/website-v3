@@ -4,6 +4,7 @@ import * as yaml from "js-yaml";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
+const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function getBaseUrl(): string {
@@ -155,6 +156,65 @@ function getAvailableLandings(): AvailableLanding[] {
   }
 }
 
+interface LocationMeta {
+  robots?: string;
+  priority?: number;
+  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+}
+
+interface AvailableLocation {
+  slug: string;
+  locale: string;
+  name: string;
+  visibility: string;
+  meta: LocationMeta;
+}
+
+function getAvailableLocations(): AvailableLocation[] {
+  try {
+    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
+      return [];
+    }
+
+    const locations: AvailableLocation[] = [];
+    const files = fs.readdirSync(LOCATIONS_CONTENT_PATH).filter(f => f.endsWith(".yml"));
+
+    for (const file of files) {
+      const filePath = path.join(LOCATIONS_CONTENT_PATH, file);
+      const parts = file.replace(".yml", "").split(".");
+      const locale = parts.pop() || "en";
+      const slug = parts.join(".");
+
+      try {
+        const content = fs.readFileSync(filePath, "utf-8");
+        const data = yaml.load(content) as {
+          slug?: string;
+          name?: string;
+          visibility?: string;
+          meta?: LocationMeta;
+        };
+
+        if (data.visibility === "listed") {
+          locations.push({
+            slug: data.slug || slug,
+            locale,
+            name: data.name || slug,
+            visibility: data.visibility || "listed",
+            meta: data.meta || {},
+          });
+        }
+      } catch (parseError) {
+        console.error(`Error parsing location ${filePath}:`, parseError);
+      }
+    }
+
+    return locations;
+  } catch (error) {
+    console.error("Error scanning locations:", error);
+    return [];
+  }
+}
+
 function shouldIndex(robots?: string): boolean {
   if (!robots) return true;
   return !robots.toLowerCase().includes("noindex");
@@ -281,6 +341,27 @@ function buildSitemapXml(): string {
       lastmod: today,
       changefreq: landing.meta.change_frequency || "weekly",
       priority: landing.meta.priority || 0.8,
+    });
+  }
+
+  // Dynamic location pages from YAML (only include indexable pages)
+  const locations = getAvailableLocations();
+  for (const location of locations) {
+    // Skip pages marked as noindex
+    if (!shouldIndex(location.meta.robots)) {
+      console.log(`[Sitemap] Skipping noindex location: ${location.slug} (${location.locale})`);
+      continue;
+    }
+
+    const url = location.locale === "es"
+      ? `${getBaseUrl()}/es/ubicacion/${location.slug}`
+      : `${getBaseUrl()}/us/location/${location.slug}`;
+
+    urls.push({
+      loc: url,
+      lastmod: today,
+      changefreq: location.meta.change_frequency || "monthly",
+      priority: location.meta.priority || 0.8,
     });
   }
 

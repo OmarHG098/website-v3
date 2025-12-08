@@ -11,3 +11,77 @@ timezone: Europe/Berlin
 visibility: listed
 phone: "+49 89 555 0100"
 address: "Marienplatz 1, 80331 München"
+
+meta:
+  page_title: "4Geeks Academy Múnich | Bootcamp de Programación en Alemania"
+  description: "Únete al bootcamp de programación 4Geeks en Múnich. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/munich-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/munich"
+    - "/munchen"
+    - "/campus/munich"
+    - "/de/munich"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Marienplatz 1"
+        addressLocality: "München"
+        postalCode: "80331"
+        addressCountry: "DE"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Múnich"
+    title: "4Geeks Academy Múnich"
+    subtitle: "El bootcamp de programación líder de Baviera con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=munich-germany"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Múnich?"
+    items:
+      - icon: "Building"
+        title: "Potencia Tecnológica"
+        description: "Sede de BMW, Siemens y grandes empresas tecnológicas."
+      - icon: "Users"
+        title: "Altos Salarios"
+        description: "Entre los salarios de desarrolladores más altos de Europa."
+      - icon: "TrendingUp"
+        title: "Hub de Innovación"
+        description: "Fuerte enfoque en tecnología automotriz, IA e IoT."
+      - icon: "Briefcase"
+        title: "Excelencia Profesional"
+        description: "Mercado laboral premium con corporaciones establecidas."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Múnich"
+    filter_by_location: "munich-germany"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Múnich"
+    filter_by_location: "munich-germany"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Múnich?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=munich-germany"

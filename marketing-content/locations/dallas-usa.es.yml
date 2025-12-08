@@ -11,3 +11,77 @@ timezone: America/Chicago
 visibility: listed
 phone: "+1 214-555-0100"
 address: "1401 Elm St, Dallas, TX 75202"
+
+meta:
+  page_title: "4Geeks Academy Dallas | Bootcamp de Programación en Texas"
+  description: "Únete al bootcamp de programación 4Geeks en Dallas. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/dallas-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/dallas"
+    - "/campus/dallas"
+    - "/us/dallas"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "1401 Elm St"
+        addressLocality: "Dallas"
+        addressRegion: "TX"
+        postalCode: "75202"
+        addressCountry: "US"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Dallas"
+    title: "4Geeks Academy Dallas"
+    subtitle: "El principal bootcamp de programación del norte de Texas con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=dallas-usa"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Dallas?"
+    items:
+      - icon: "Building"
+        title: "Centro de Negocios"
+        description: "Dallas-Fort Worth alberga numerosas empresas Fortune 500."
+      - icon: "Users"
+        title: "Crecimiento Tech"
+        description: "Sector tech en rápida expansión con reubicaciones de grandes empresas."
+      - icon: "TrendingUp"
+        title: "Mercado Laboral"
+        description: "Fuerte demanda de contratación en diversas industrias."
+      - icon: "Briefcase"
+        title: "Oportunidades"
+        description: "Acceso a roles tech corporativos y startups innovadoras."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Dallas"
+    filter_by_location: "dallas-usa"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Dallas"
+    filter_by_location: "dallas-usa"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Dallas?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=dallas-usa"

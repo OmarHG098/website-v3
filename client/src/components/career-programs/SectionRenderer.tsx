@@ -16,6 +16,9 @@ import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps from "@/components/NumberedSteps";
 import StatsSection from "@/components/StatsSection";
 import TestimonialsSlide from "@/components/TestimonialsSlide";
+import { FeaturesGridSection } from "./FeaturesGridSection";
+import { ProgramsListSection } from "./ProgramsListSection";
+import { CTABannerSection } from "./CTABannerSection";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -58,6 +61,12 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <StatsSection key={index} data={section} />;
           case "testimonials_slide":
             return <TestimonialsSlide key={index} data={section} />;
+          case "features_grid":
+            return <FeaturesGridSection key={index} data={section} />;
+          case "programs_list":
+            return <ProgramsListSection key={index} data={section} />;
+          case "cta_banner":
+            return <CTABannerSection key={index} data={section} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);

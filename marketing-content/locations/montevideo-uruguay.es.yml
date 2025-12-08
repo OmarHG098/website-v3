@@ -11,3 +11,75 @@ timezone: America/Montevideo
 visibility: listed
 phone: "+598 2 123 4567"
 address: "18 de Julio 1234, Montevideo"
+
+meta:
+  page_title: "4Geeks Academy Montevideo | Bootcamp de Programación en Uruguay"
+  description: "Únete al bootcamp de programación 4Geeks en Montevideo. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/montevideo-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/montevideo"
+    - "/campus/montevideo"
+    - "/uy/montevideo"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "18 de Julio 1234"
+        addressLocality: "Montevideo"
+        addressCountry: "UY"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Montevideo"
+    title: "4Geeks Academy Montevideo"
+    subtitle: "El bootcamp de programación líder de Uruguay con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=montevideo-uruguay"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Montevideo?"
+    items:
+      - icon: "Building"
+        title: "Pionero Tecnológico"
+        description: "Uruguay es líder en exportación de software e innovación tech."
+      - icon: "Users"
+        title: "Alta Calidad"
+        description: "Fuerza laboral bien educada con sólidas habilidades técnicas."
+      - icon: "TrendingUp"
+        title: "Hub de Software"
+        description: "Una de las mayores exportaciones de software per cápita del mundo."
+      - icon: "Briefcase"
+        title: "Clientes Globales"
+        description: "Fuertes conexiones con mercados de EE.UU. y Europa."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Montevideo"
+    filter_by_location: "montevideo-uruguay"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Montevideo"
+    filter_by_location: "montevideo-uruguay"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Montevideo?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=montevideo-uruguay"

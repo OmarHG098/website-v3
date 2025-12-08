@@ -11,3 +11,75 @@ timezone: America/Bogota
 visibility: listed
 phone: "+57 1 234 5678"
 address: "Carrera 7 #71-21, Bogota"
+
+meta:
+  page_title: "4Geeks Academy Bogota | Coding Bootcamp in Colombia"
+  description: "Join 4Geeks Bogota coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/bogota-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/bogota"
+    - "/campus/bogota"
+    - "/co/bogota"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Carrera 7 #71-21"
+        addressLocality: "Bogotá"
+        addressCountry: "CO"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Bogota Campus"
+    title: "4Geeks Academy Bogota"
+    subtitle: "Colombia's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=bogota-colombia"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Bogota?"
+    items:
+      - icon: "Building"
+        title: "Tech Capital"
+        description: "Colombia's largest tech hub with growing startup ecosystem."
+      - icon: "Users"
+        title: "Talent Pool"
+        description: "Strong technical talent and university ecosystem."
+      - icon: "TrendingUp"
+        title: "Investment Growth"
+        description: "Increasing VC investment in Colombian tech companies."
+      - icon: "Briefcase"
+        title: "Career Opportunities"
+        description: "High demand from local and international tech companies."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Bogota"
+    filter_by_location: "bogota-colombia"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Bogota Graduate Success Stories"
+    filter_by_location: "bogota-colombia"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Bogota?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=bogota-colombia"

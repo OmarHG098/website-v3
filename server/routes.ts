@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, landingPageSchema, type CareerProgram, type LandingPage } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, locationPageSchema, type CareerProgram, type LandingPage, type LocationPage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
 import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
@@ -22,6 +22,7 @@ const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breatheco
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
+const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -123,6 +124,60 @@ function listLandingPages(locale: string): Array<{ slug: string; title: string }
   }
 }
 
+function loadLocationPage(slug: string, locale: string): LocationPage | null {
+  try {
+    const filePath = path.join(LOCATIONS_CONTENT_PATH, `${slug}.${locale}.yml`);
+
+    if (!fs.existsSync(filePath)) {
+      return null;
+    }
+
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const data = yaml.load(fileContent);
+
+    const result = locationPageSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for location ${slug}/${locale}:`, result.error);
+      return null;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading location page ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function listLocationPages(locale: string): Array<{ slug: string; name: string; city: string; country: string; region: string }> {
+  try {
+    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
+      return [];
+    }
+
+    const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
+    const files = fs.readdirSync(LOCATIONS_CONTENT_PATH).filter(f => f.endsWith(`.${locale}.yml`));
+
+    for (const file of files) {
+      const slug = file.replace(`.${locale}.yml`, "");
+      const location = loadLocationPage(slug, locale);
+      if (location && location.visibility === "listed") {
+        locations.push({
+          slug: location.slug,
+          name: location.name,
+          city: location.city,
+          country: location.country,
+          region: location.region,
+        });
+      }
+    }
+
+    return locations;
+  } catch (error) {
+    console.error("Error listing location pages:", error);
+    return [];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Apply redirect middleware for 301 redirects from YAML content
   app.use(redirectMiddleware);
@@ -157,6 +212,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/career-programs", (req, res) => {
     const locale = (req.query.locale as string) || "en";
+    const _location = req.query.location as string | undefined;
     const programs = listCareerPrograms(locale);
     res.json(programs);
   });
@@ -194,6 +250,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     res.json(landing);
+  });
+
+  // Locations API
+  app.get("/api/locations", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const region = req.query.region as string | undefined;
+    let locations = listLocationPages(locale);
+    
+    if (region) {
+      locations = locations.filter(loc => loc.region === region);
+    }
+    
+    res.json(locations);
+  });
+
+  app.get("/api/locations/:slug", (req, res) => {
+    const { slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+
+    const location = loadLocationPage(slug, locale);
+
+    if (!location) {
+      res.status(404).json({ error: "Location not found" });
+      return;
+    }
+
+    res.json(location);
   });
 
   // Dynamic sitemap with caching

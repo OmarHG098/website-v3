@@ -11,3 +11,76 @@ timezone: Europe/Madrid
 visibility: listed
 phone: "+34 910 86 69 83"
 address: "Calle de Alcalá 54, 28014 Madrid"
+
+meta:
+  page_title: "4Geeks Academy Madrid | Bootcamp de Programación en España"
+  description: "Únete al bootcamp de programación 4Geeks en Madrid. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/madrid-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/madrid"
+    - "/campus/madrid"
+    - "/es/madrid"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Calle de Alcalá 54"
+        addressLocality: "Madrid"
+        postalCode: "28014"
+        addressCountry: "ES"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Madrid"
+    title: "4Geeks Academy Madrid"
+    subtitle: "El bootcamp de programación líder de España con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=madrid-spain"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Madrid?"
+    items:
+      - icon: "Building"
+        title: "Capital del País"
+        description: "Capital de España y el mayor mercado tecnológico del país."
+      - icon: "Users"
+        title: "Principal Hub Tech"
+        description: "Sede de grandes empresas tecnológicas y creciente escena de startups."
+      - icon: "TrendingUp"
+        title: "Crecimiento de Inversión"
+        description: "Aumento de inversión de capital riesgo y expansión de empresas tech."
+      - icon: "Briefcase"
+        title: "Red de Contactos"
+        description: "Fuertes conexiones con los mayores empleadores de España."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Madrid"
+    filter_by_location: "madrid-spain"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Madrid"
+    filter_by_location: "madrid-spain"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Madrid?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=madrid-spain"

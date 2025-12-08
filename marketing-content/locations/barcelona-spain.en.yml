@@ -11,3 +11,77 @@ timezone: Europe/Madrid
 visibility: listed
 phone: "+34 932 20 80 80"
 address: "Carrer de Balmes 200, 08006 Barcelona"
+
+meta:
+  page_title: "4Geeks Academy Barcelona | Coding Bootcamp in Spain"
+  description: "Join 4Geeks Barcelona coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee."
+  robots: "index, follow"
+  og_image: "/images/locations/barcelona-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/barcelona"
+    - "/campus/barcelona"
+    - "/es/barcelona"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Carrer de Balmes 200"
+        addressLocality: "Barcelona"
+        addressRegion: "Catalonia"
+        postalCode: "08006"
+        addressCountry: "ES"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Barcelona Campus"
+    title: "4Geeks Academy Barcelona"
+    subtitle: "Catalonia's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers."
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply?location=barcelona-spain"
+        variant: "primary"
+      - text: "Download Syllabus"
+        url: "/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "Why Choose Barcelona?"
+    items:
+      - icon: "Building"
+        title: "Tech Hub"
+        description: "Barcelona is Southern Europe's leading tech and startup hub."
+      - icon: "Users"
+        title: "International Community"
+        description: "Diverse, multicultural city with a thriving expat tech scene."
+      - icon: "TrendingUp"
+        title: "Startup Ecosystem"
+        description: "Home to major tech events like Mobile World Congress."
+      - icon: "Briefcase"
+        title: "Career Opportunities"
+        description: "Strong demand from local startups and international companies."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programs Available in Barcelona"
+    filter_by_location: "barcelona-spain"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Barcelona Graduate Success Stories"
+    filter_by_location: "barcelona-spain"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Start Your Tech Career in Barcelona?"
+    subtitle: "Join our next cohort and transform your future."
+    cta_text: "Apply Now"
+    cta_url: "/apply?location=barcelona-spain"

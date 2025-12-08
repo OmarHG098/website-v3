@@ -11,3 +11,75 @@ timezone: America/Bogota
 visibility: listed
 phone: "+57 1 234 5678"
 address: "Carrera 7 #71-21, Bogotá"
+
+meta:
+  page_title: "4Geeks Academy Bogotá | Bootcamp de Programación en Colombia"
+  description: "Únete al bootcamp de programación 4Geeks en Bogotá. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo."
+  robots: "index, follow"
+  og_image: "/images/locations/bogota-og.jpg"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/bogota"
+    - "/campus/bogota"
+    - "/co/bogota"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+  overrides:
+    organization:
+      address:
+        "@type": "PostalAddress"
+        streetAddress: "Carrera 7 #71-21"
+        addressLocality: "Bogotá"
+        addressCountry: "CO"
+
+sections:
+  - type: hero
+    version: "1.0"
+    badge: "Campus Bogotá"
+    title: "4Geeks Academy Bogotá"
+    subtitle: "El bootcamp de programación líder de Colombia con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores."
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/es/apply?location=bogota-colombia"
+        variant: "primary"
+      - text: "Descargar Programa"
+        url: "/es/syllabus"
+        variant: "outline"
+
+  - type: features_grid
+    version: "1.0"
+    title: "¿Por qué elegir Bogotá?"
+    items:
+      - icon: "Building"
+        title: "Capital Tecnológica"
+        description: "El hub tecnológico más grande de Colombia con un ecosistema de startups en crecimiento."
+      - icon: "Users"
+        title: "Talento de Calidad"
+        description: "Fuerte talento técnico y ecosistema universitario."
+      - icon: "TrendingUp"
+        title: "Crecimiento de Inversión"
+        description: "Inversión de capital de riesgo en aumento en empresas tech colombianas."
+      - icon: "Briefcase"
+        title: "Oportunidades Laborales"
+        description: "Alta demanda de empresas tecnológicas locales e internacionales."
+
+  - type: programs_list
+    version: "1.0"
+    title: "Programas Disponibles en Bogotá"
+    filter_by_location: "bogota-colombia"
+
+  - type: testimonials
+    version: "1.0"
+    title: "Historias de Éxito de Graduados de Bogotá"
+    filter_by_location: "bogota-colombia"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera Tech en Bogotá?"
+    subtitle: "Únete a nuestra próxima cohorte y transforma tu futuro."
+    cta_text: "Aplicar Ahora"
+    cta_url: "/es/apply?location=bogota-colombia"

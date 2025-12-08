@@ -39,6 +39,7 @@ export const awardBadgeSchema = z.object({
 
 export const heroSectionSchema = z.object({
   type: z.literal("hero"),
+  version: z.string().optional(),
   badge: z.string().optional(),
   title: z.string(),
   subtitle: z.string().optional(),
@@ -163,13 +164,15 @@ export const testimonialItemSchema = z.object({
 
 export const testimonialsSectionSchema = z.object({
   type: z.literal("testimonials"),
+  version: z.string().optional(),
   title: z.string(),
   subtitle: z.string().optional(),
   rating_summary: z.object({
     average: z.string(),
     count: z.string(),
   }).optional(),
-  items: z.array(testimonialItemSchema),
+  items: z.array(testimonialItemSchema).optional(),
+  filter_by_location: z.string().optional(),
 });
 
 export const logoItemSchema = z.object({
@@ -323,6 +326,39 @@ export const testimonialsSlideSectionSchema = z.object({
   background: z.string().optional(),
 });
 
+// Location page section types
+export const featuresGridItemSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
+
+export const featuresGridSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridItemSchema),
+});
+
+export const programsListSectionSchema = z.object({
+  type: z.literal("programs_list"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  filter_by_location: z.string().optional(),
+});
+
+export const ctaBannerSectionSchema = z.object({
+  type: z.literal("cta_banner"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  cta_text: z.string(),
+  cta_url: z.string(),
+  background: z.string().optional(),
+});
+
 export const sectionSchema = z.discriminatedUnion("type", [
   heroSectionSchema,
   syllabusSectionSchema,
@@ -341,6 +377,9 @@ export const sectionSchema = z.discriminatedUnion("type", [
   numberedStepsSectionSchema,
   statsSectionSchema,
   testimonialsSlideSectionSchema,
+  featuresGridSectionSchema,
+  programsListSectionSchema,
+  ctaBannerSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -422,3 +461,36 @@ export type Section = z.infer<typeof sectionSchema>;
 export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
 export type LandingPage = z.infer<typeof landingPageSchema>;
+
+// Location Page Schema
+export const locationMetaSchema = z.object({
+  page_title: z.string(),
+  description: z.string(),
+  robots: z.string().default("index, follow"),
+  og_image: z.string().optional(),
+  priority: z.number().min(0).max(1).default(0.8),
+  change_frequency: z.enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]).default("monthly"),
+  redirects: z.array(z.string()).optional(),
+});
+
+export const locationPageSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
+  city: z.string(),
+  country: z.string(),
+  country_code: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+  region: z.enum(["usa-canada", "europe", "latam"]),
+  default_language: z.string(),
+  timezone: z.string(),
+  visibility: z.enum(["listed", "unlisted"]),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  meta: locationMetaSchema,
+  schema: schemaRefSchema.optional(),
+  sections: z.array(sectionSchema),
+});
+
+export type LocationMeta = z.infer<typeof locationMetaSchema>;
+export type LocationPage = z.infer<typeof locationPageSchema>;
