@@ -213,7 +213,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
           <img 
             src={column.image} 
             alt={column.image_alt || "Section image"}
-            className="rounded-md w-full max-w-md lg:max-w-none"
+            className="rounded-md w-full max-w-xs lg:max-w-none"
             style={{
               height: column.image_height || "auto",
               width: column.image_width || undefined,
