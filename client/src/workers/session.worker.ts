@@ -238,6 +238,16 @@ async function initSession(message: WorkerMessage['payload']): Promise<Session> 
     location = findLocationForUser(geo, browserLang);
   }
   
+  // Check for location override from query string
+  const searchParams = new URLSearchParams(search);
+  const locationOverride = searchParams.get('location');
+  if (locationOverride) {
+    const overrideLocation = locations.find(loc => loc.slug === locationOverride);
+    if (overrideLocation) {
+      location = { ...overrideLocation, reliable: true };
+    }
+  }
+  
   const language = determineLanguage(browserLang, location, path);
   
   const session: Session = {

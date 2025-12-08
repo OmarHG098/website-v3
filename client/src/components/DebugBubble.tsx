@@ -41,8 +41,24 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
+import { locations } from "@/lib/locations";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -115,6 +131,13 @@ export function DebugBubble() {
   const [landingsLoading, setLandingsLoading] = useState(false);
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [redirectsLoading, setRedirectsLoading] = useState(false);
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
+
+  // Check if location is currently overridden via query string
+  const currentLocationOverride = typeof window !== "undefined" 
+    ? new URLSearchParams(window.location.search).get("location") 
+    : null;
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -247,6 +270,32 @@ export function DebugBubble() {
       console.error("Error clearing sitemap cache:", error);
       setCacheClearStatus("idle");
     }
+  };
+
+  const handleLocationOverride = () => {
+    if (!selectedLocationSlug) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("location", selectedLocationSlug);
+    window.location.href = url.toString();
+  };
+
+  const handleClearLocationOverride = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("location");
+    window.location.href = url.toString();
+  };
+
+  // Group locations by region for display
+  const locationsByRegion = locations.reduce((acc, loc) => {
+    if (!acc[loc.region]) acc[loc.region] = [];
+    acc[loc.region].push(loc);
+    return acc;
+  }, {} as Record<string, typeof locations>);
+
+  const regionLabels: Record<string, string> = {
+    "usa-canada": "USA & Canada",
+    "latam": "Latin America",
+    "europe": "Europe",
   };
 
   return (
@@ -438,15 +487,25 @@ export function DebugBubble() {
               </div>
 
               <div className="border-t p-2 space-y-1">
-                <div className="flex items-center justify-between px-3 py-2">
+                <button
+                  onClick={() => {
+                    setSelectedLocationSlug(session.location?.slug || "");
+                    setLocationModalOpen(true);
+                  }}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-location-override"
+                >
                   <div className="flex items-center gap-3">
                     <IconMapPin className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">Location</span>
+                    <span>Location</span>
+                    {currentLocationOverride && (
+                      <span className="text-xs text-muted-foreground">(override)</span>
+                    )}
                   </div>
                   <code className="text-xs bg-muted px-2 py-1 rounded max-w-[120px] truncate">
                     {session.location?.name || 'Detecting...'}
                   </code>
-                </div>
+                </button>
                 
                 <button
                   onClick={toggleLanguage}
@@ -709,6 +768,75 @@ export function DebugBubble() {
           )}
         </PopoverContent>
       </Popover>
+
+      <Dialog open={locationModalOpen} onOpenChange={setLocationModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Override Session Location</DialogTitle>
+            <DialogDescription>
+              You can override the auto-detected location by adding a <code className="text-xs bg-muted px-1 py-0.5 rounded">?location=slug</code> query parameter to any URL. This is useful for testing location-specific content.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Select Location</label>
+              <Select value={selectedLocationSlug} onValueChange={setSelectedLocationSlug}>
+                <SelectTrigger data-testid="select-location-override">
+                  <SelectValue placeholder="Choose a location..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(locationsByRegion).map(([region, locs]) => (
+                    <div key={region}>
+                      <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                        {regionLabels[region] || region}
+                      </div>
+                      {locs.map((loc) => (
+                        <SelectItem key={loc.slug} value={loc.slug}>
+                          {loc.name}, {loc.country}
+                        </SelectItem>
+                      ))}
+                    </div>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {currentLocationOverride && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Currently overriding:</span>
+                <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{currentLocationOverride}</code>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearLocationOverride}
+                  className="h-6 px-2 text-xs"
+                  data-testid="button-clear-location-override"
+                >
+                  Clear
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setLocationModalOpen(false)}
+              data-testid="button-cancel-location-override"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleLocationOverride}
+              disabled={!selectedLocationSlug}
+              data-testid="button-confirm-location-override"
+            >
+              Override Location
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
