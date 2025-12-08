@@ -1,0 +1,13 @@
+slug: rome-italy
+name: Rome
+city: Rome
+country: Italy
+country_code: IT
+latitude: 41.9028
+longitude: 12.4964
+region: europe
+default_language: en
+timezone: Europe/Rome
+visibility: listed
+phone: "+39 06 555 0100"
+address: "Via del Corso 123, 00186 Roma"

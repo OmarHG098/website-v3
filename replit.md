@@ -27,11 +27,12 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - `shared/session.ts`: Type definitions for Session, Location, UTMParams, GeoData
     - `client/src/workers/session.worker.ts`: Web worker for deferred heavy processing (IP lookup, haversine distance calculation)
     - `client/src/contexts/SessionContext.tsx`: React context with `useSession`, `useLocation`, `useLanguage`, `useUTM`, `useRegion` hooks
-    - `client/src/lib/locations.ts`: Static campus data with coordinates for 14 locations across USA, LATAM, and Europe
-    - `marketing-content/locations.yml`: YAML source for campus data
+    - `client/src/lib/locations.ts`: Static campus data with coordinates for 33 locations across USA, Canada, LATAM, and Europe
+    - `marketing-content/locations/{slug}.{locale}.yml`: Individual YAML files per location (e.g., `miami-usa.en.yml`, `miami-usa.es.yml`)
     - Session data is cached in localStorage with versioning for cache invalidation (24-hour stale threshold)
     - Geolocation uses ip-api.com with 5-second timeout and graceful fallbacks
     - Nearest campus sorting uses the haversine (great-circle) distance formula
+    - Location slugs follow pattern: `{city}-{country}` (e.g., `miami-usa`, `madrid-spain`, `bogota-colombia`)
 
 ### External Dependencies
 -   **4geeks Breathecode API**: Used for user authentication, profile management, and educational content delivery (future integration).

@@ -1,0 +1,13 @@
+slug: caracas-venezuela
+name: Caracas
+city: Caracas
+country: Venezuela
+country_code: VE
+latitude: 10.4806
+longitude: -66.9036
+region: latam
+default_language: es
+timezone: America/Caracas
+visibility: listed
+phone: "+58 212 123 4567"
+address: "Av. Francisco de Miranda, Caracas"

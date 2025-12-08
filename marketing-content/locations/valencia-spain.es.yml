@@ -1,0 +1,13 @@
+slug: valencia-spain
+name: Valencia
+city: Valencia
+country: España
+country_code: ES
+latitude: 39.4699
+longitude: -0.3763
+region: europe
+default_language: es
+timezone: Europe/Madrid
+visibility: listed
+phone: "+34 963 55 01 00"
+address: "Calle Colón 48, 46004 Valencia"

@@ -1,0 +1,13 @@
+slug: lima-peru
+name: Lima
+city: Lima
+country: Perú
+country_code: PE
+latitude: -12.0464
+longitude: -77.0428
+region: latam
+default_language: es
+timezone: America/Lima
+visibility: listed
+phone: "+51 1 123 4567"
+address: "Av. Javier Prado Este 123, Lima"

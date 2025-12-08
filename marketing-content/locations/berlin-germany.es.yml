@@ -1,0 +1,13 @@
+slug: berlin-germany
+name: Berlín
+city: Berlín
+country: Alemania
+country_code: DE
+latitude: 52.5200
+longitude: 13.4050
+region: europe
+default_language: en
+timezone: Europe/Berlin
+visibility: listed
+phone: "+49 30 555 0100"
+address: "Friedrichstraße 123, 10117 Berlin"

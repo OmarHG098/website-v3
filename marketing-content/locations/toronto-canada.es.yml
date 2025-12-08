@@ -1,0 +1,13 @@
+slug: toronto-canada
+name: Toronto
+city: Toronto
+country: Canadá
+country_code: CA
+latitude: 43.6532
+longitude: -79.3832
+region: usa-canada
+default_language: en
+timezone: America/Toronto
+visibility: listed
+phone: "+1 416-850-4600"
+address: "100 King St W, Toronto, ON M5X 1A9"

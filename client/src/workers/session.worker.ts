@@ -182,12 +182,12 @@ function findLocationForUser(geo: GeoData | null, browserLang: string): Location
   
   if (langLocations.length > 0) {
     const defaultLoc = browserLang === 'es' 
-      ? langLocations.find(loc => loc.slug === 'madrid') || langLocations[0]
-      : langLocations.find(loc => loc.slug === 'downtown-miami') || langLocations[0];
+      ? langLocations.find(loc => loc.slug === 'madrid-spain') || langLocations[0]
+      : langLocations.find(loc => loc.slug === 'miami-usa') || langLocations[0];
     return { ...defaultLoc, reliable: false };
   }
   
-  const miami = listedLocations.find(loc => loc.slug === 'downtown-miami');
+  const miami = listedLocations.find(loc => loc.slug === 'miami-usa');
   return miami 
     ? { ...miami, reliable: false }
     : { ...listedLocations[0], reliable: false };

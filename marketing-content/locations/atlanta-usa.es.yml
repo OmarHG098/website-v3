@@ -1,0 +1,13 @@
+slug: atlanta-usa
+name: Atlanta
+city: Atlanta
+country: Estados Unidos
+country_code: US
+latitude: 33.7490
+longitude: -84.3880
+region: usa-canada
+default_language: en
+timezone: America/New_York
+visibility: listed
+phone: "+1 404-555-0100"
+address: "191 Peachtree St NE, Atlanta, GA 30303"
