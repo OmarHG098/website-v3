@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import VideoPlayer from "@/components/VideoPlayer";
 import { Card } from "@/components/ui/card";
 import { IconFlag, IconSchool } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
@@ -7,7 +6,8 @@ import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
 import { WhosHiringSection } from "@/components/career-programs/WhosHiringSection";
-import type { WhosHiringSection as WhosHiringSectionType } from "@shared/schema";
+import { HeroTwoColumn } from "@/components/hero/HeroTwoColumn";
+import type { WhosHiringSection as WhosHiringSectionType, HeroTwoColumn as HeroTwoColumnType } from "@shared/schema";
 import careerSupportImage from "@assets/Group-6663_1764711021914.png";
 import communityImage from "@assets/community_1764717588840.png";
 
@@ -54,13 +54,17 @@ import vectorStroke from "@assets/vector-stroke-light_1764729540525.png";
 // DATA
 // ============================================
 
-const heroData = {
-  welcomeText: "Welcome to",
+const heroData: HeroTwoColumnType = {
+  type: "hero",
+  variant: "twoColumn",
+  welcome_text: "Welcome to",
+  brand_text: "GeekFORCE:",
   title: "Career Development",
   subtitle: "for the AI Era",
   description: "Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms, we'll give you the personalized mentorship you need to land your first job and keep thriving in today's tech.",
-  videoId: "-2ZvlgDnltc",
-  videoTitle: "GeekForce Career Support",
+  video_id: "-2ZvlgDnltc",
+  video_title: "GeekForce Career Support",
+  video_ratio: "9:12",
 };
 
 const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
@@ -325,58 +329,6 @@ const careerProcessData: NumberedStepsData = {
 // SECTION COMPONENTS
 // ============================================
 
-function HeroSection({ data }: { data: typeof heroData }) {
-  return (
-    <section 
-      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
-      data-testid="section-hero"
-    >
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-5 gap-12 items-start">
-          <div className="md:col-span-3 flex flex-col items-center justify-start">
-            <div className="text-center md:text-left relative">
-              <p className="text-4xl lg:text-5xl font-medium text-foreground">
-                {data.welcomeText}
-              </p>
-              <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
-                <span className="text-foreground">Geek</span>
-                <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
-              </p>
-              <h1 
-                className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
-                data-testid="text-hero-title"
-              >
-                {data.title}
-              </h1>
-              <p 
-                className="text-3xl lg:text-4xl font-medium mb-6"
-                data-testid="text-hero-subtitle"
-              >
-                {data.subtitle}
-              </p>
-              
-              <div className="relative">
-                <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
-                  {data.description}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
-            <VideoPlayer 
-              videoId={data.videoId} 
-              title={data.videoTitle}
-              className="w-[280px] md:w-full md:max-w-[400px]"
-              ratio="9:12"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <Card 
@@ -479,7 +431,7 @@ export default function GeekForceCareerSupport() {
       <Header />
       
       <main>
-        <HeroSection data={heroData} />
+        <HeroTwoColumn data={heroData} />
         <TwoColumn data={unlimitedSupportTwoColumnData} />
         <NumberedSteps data={careerProcessData} />
         <TwoColumn data={hyperpersonalizedTwoColumnData} />

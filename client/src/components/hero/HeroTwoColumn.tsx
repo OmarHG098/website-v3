@@ -1,34 +1,8 @@
-import type { HeroTwoColumn } from "@shared/schema";
-import LiteYouTubeEmbed from "react-lite-youtube-embed";
-import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+import type { HeroTwoColumn as HeroTwoColumnType } from "@shared/schema";
+import VideoPlayer from "@/components/VideoPlayer";
 
 interface HeroTwoColumnProps {
-  data: HeroTwoColumn;
-}
-
-function VideoPlayer({ 
-  videoId, 
-  title, 
-  className = "",
-  ratio = "16:9"
-}: { 
-  videoId: string; 
-  title: string;
-  className?: string;
-  ratio?: string;
-}) {
-  const aspectRatio = ratio === "9:12" ? "aspect-[9/12]" : "aspect-video";
-  
-  return (
-    <div className={`${aspectRatio} rounded-lg overflow-hidden ${className}`}>
-      <LiteYouTubeEmbed
-        id={videoId}
-        title={title}
-        poster="maxresdefault"
-        webp
-      />
-    </div>
-  );
+  data: HeroTwoColumnType;
 }
 
 export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
@@ -44,6 +18,17 @@ export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
               {data.welcome_text && (
                 <p className="text-4xl lg:text-5xl font-medium text-foreground">
                   {data.welcome_text}
+                </p>
+              )}
+              
+              {data.brand_text && (
+                <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+                  <span className="text-foreground">{data.brand_text.split(':')[0]?.includes('Geek') ? 'Geek' : data.brand_text}</span>
+                  {data.brand_text.includes('FORCE') && (
+                    <>
+                      <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
+                    </>
+                  )}
                 </p>
               )}
               

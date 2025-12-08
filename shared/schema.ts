@@ -76,6 +76,7 @@ export const heroTwoColumnSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   welcome_text: z.string().optional(),
+  brand_text: z.string().optional(),
   description: z.string().optional(),
   video_id: z.string(),
   video_title: z.string().optional(),
