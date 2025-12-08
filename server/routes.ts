@@ -148,7 +148,17 @@ function loadLocationPage(slug: string, locale: string): LocationPage | null {
       return null;
     }
 
-    return result.data;
+    // Automatically inject organization schema as parentOrganization for all locations
+    const locationData = result.data;
+    if (!locationData.schema) {
+      locationData.schema = { include: ["organization"] };
+    } else if (!locationData.schema.include) {
+      locationData.schema.include = ["organization"];
+    } else if (!locationData.schema.include.includes("organization")) {
+      locationData.schema.include = ["organization", ...locationData.schema.include];
+    }
+
+    return locationData;
   } catch (error) {
     console.error(`Error loading location page ${slug}/${locale}:`, error);
     return null;
