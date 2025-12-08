@@ -5,6 +5,7 @@ import {
   IconBug,
   IconMap,
   IconMapPin,
+  IconPencil,
   IconComponents,
   IconLanguage,
   IconRoute,
@@ -502,9 +503,12 @@ export function DebugBubble() {
                       <span className="text-xs text-muted-foreground">(override)</span>
                     )}
                   </div>
-                  <code className="text-xs bg-muted px-2 py-1 rounded max-w-[120px] truncate">
-                    {session.location?.name || 'Detecting...'}
-                  </code>
+                  <div className="flex items-center gap-1.5">
+                    <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
+                      {session.location?.name || 'Detecting...'}
+                    </code>
+                    <IconPencil className="h-3 w-3 text-muted-foreground" />
+                  </div>
                 </button>
                 
                 <button
