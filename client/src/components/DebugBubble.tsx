@@ -7,6 +7,7 @@ import {
   IconMapPin,
   IconComponents,
   IconLanguage,
+  IconRoute,
   IconSun,
   IconMoon,
   IconX,
