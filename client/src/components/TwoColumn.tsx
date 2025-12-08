@@ -121,7 +121,7 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
   return padding ? (paddingMap[padding] || "") : "";
 };
 
-function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn; defaultBulletIcon?: string }) {
+function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
@@ -136,7 +136,7 @@ function ColumnContent({ column, defaultBulletIcon }: { column: TwoColumnColumn;
         <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
-              className="text-3xl md:text-4xl font-bold text-foreground"
+              className={`text-3xl md:text-4xl font-bold text-foreground ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
               data-testid="text-two-column-heading"
             >
               {column.heading}
@@ -256,6 +256,8 @@ export function TwoColumn({ data }: TwoColumnProps) {
     : {};
 
   const backgroundClass = data.background || "bg-background";
+  
+  const leftHeading = data.left?.heading;
 
   return (
     <section 
@@ -264,10 +266,18 @@ export function TwoColumn({ data }: TwoColumnProps) {
       style={containerStyle}
     >
       <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
+        {leftHeading && (
+          <h2 
+            className="hidden md:block lg:hidden text-3xl md:text-4xl font-bold text-foreground text-center mb-8"
+            data-testid="text-two-column-heading-tablet"
+          >
+            {leftHeading}
+          </h2>
+        )}
         <div className={`grid grid-cols-1 md:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 md:order-1" : ""}`}>
-              <ColumnContent column={data.left} />
+              <ColumnContent column={data.left} hideHeadingOnTablet={!!leftHeading} />
             </div>
           )}
           
