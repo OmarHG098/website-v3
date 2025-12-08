@@ -18,20 +18,20 @@ const getIcon = (iconName: string, className?: string) => {
 
 const getGridColClass = (proportion: number): string => {
   const colMap: Record<number, string> = {
-    1: "lg:col-span-1",
-    2: "lg:col-span-2",
-    3: "lg:col-span-3",
-    4: "lg:col-span-4",
-    5: "lg:col-span-5",
-    6: "lg:col-span-6",
-    7: "lg:col-span-7",
-    8: "lg:col-span-8",
-    9: "lg:col-span-9",
-    10: "lg:col-span-10",
-    11: "lg:col-span-11",
-    12: "lg:col-span-12",
+    1: "md:col-span-1",
+    2: "md:col-span-2",
+    3: "md:col-span-3",
+    4: "md:col-span-4",
+    5: "md:col-span-5",
+    6: "md:col-span-6",
+    7: "md:col-span-7",
+    8: "md:col-span-8",
+    9: "md:col-span-9",
+    10: "md:col-span-10",
+    11: "md:col-span-11",
+    12: "md:col-span-12",
   };
-  return colMap[proportion] || "lg:col-span-6";
+  return colMap[proportion] || "md:col-span-6";
 };
 
 const getAlignmentClass = (alignment?: "start" | "center" | "end"): string => {
@@ -54,8 +54,8 @@ const getJustifyClass = (justify?: "start" | "center" | "end"): string => {
 
 const getResponsiveJustifyClass = (justify?: "start" | "center" | "end"): string => {
   switch (justify) {
-    case "start": return "justify-center lg:justify-start";
-    case "end": return "justify-center lg:justify-end";
+    case "start": return "justify-center md:justify-start";
+    case "end": return "justify-center md:justify-end";
     case "center":
     default: return "justify-center";
   }
@@ -99,21 +99,21 @@ const getTextFontSize = (size?: string): string => {
 };
 
 const paddingLeftMap: Record<string, string> = {
-  "0": "lg:pl-0", "1": "lg:pl-1", "2": "lg:pl-2", "3": "lg:pl-3", "4": "lg:pl-4",
-  "5": "lg:pl-5", "6": "lg:pl-6", "7": "lg:pl-7", "8": "lg:pl-8", "9": "lg:pl-9",
-  "10": "lg:pl-10", "11": "lg:pl-11", "12": "lg:pl-12", "14": "lg:pl-14", "16": "lg:pl-16",
-  "20": "lg:pl-20", "24": "lg:pl-24", "28": "lg:pl-28", "32": "lg:pl-32", "36": "lg:pl-36",
-  "40": "lg:pl-40", "44": "lg:pl-44", "48": "lg:pl-48", "52": "lg:pl-52", "56": "lg:pl-56",
-  "60": "lg:pl-60", "64": "lg:pl-64", "72": "lg:pl-72", "80": "lg:pl-80", "96": "lg:pl-96",
+  "0": "md:pl-0", "1": "md:pl-1", "2": "md:pl-2", "3": "md:pl-3", "4": "md:pl-4",
+  "5": "md:pl-5", "6": "md:pl-6", "7": "md:pl-7", "8": "md:pl-8", "9": "md:pl-9",
+  "10": "md:pl-10", "11": "md:pl-11", "12": "md:pl-12", "14": "md:pl-14", "16": "md:pl-16",
+  "20": "md:pl-20", "24": "md:pl-24", "28": "md:pl-28", "32": "md:pl-32", "36": "md:pl-36",
+  "40": "md:pl-40", "44": "md:pl-44", "48": "md:pl-48", "52": "md:pl-52", "56": "md:pl-56",
+  "60": "md:pl-60", "64": "md:pl-64", "72": "md:pl-72", "80": "md:pl-80", "96": "md:pl-96",
 };
 
 const paddingRightMap: Record<string, string> = {
-  "0": "lg:pr-0", "1": "lg:pr-1", "2": "lg:pr-2", "3": "lg:pr-3", "4": "lg:pr-4",
-  "5": "lg:pr-5", "6": "lg:pr-6", "7": "lg:pr-7", "8": "lg:pr-8", "9": "lg:pr-9",
-  "10": "lg:pr-10", "11": "lg:pr-11", "12": "lg:pr-12", "14": "lg:pr-14", "16": "lg:pr-16",
-  "20": "lg:pr-20", "24": "lg:pr-24", "28": "lg:pr-28", "32": "lg:pr-32", "36": "lg:pr-36",
-  "40": "lg:pr-40", "44": "lg:pr-44", "48": "lg:pr-48", "52": "lg:pr-52", "56": "lg:pr-56",
-  "60": "lg:pr-60", "64": "lg:pr-64", "72": "lg:pr-72", "80": "lg:pr-80", "96": "lg:pr-96",
+  "0": "md:pr-0", "1": "md:pr-1", "2": "md:pr-2", "3": "md:pr-3", "4": "md:pr-4",
+  "5": "md:pr-5", "6": "md:pr-6", "7": "md:pr-7", "8": "md:pr-8", "9": "md:pr-9",
+  "10": "md:pr-10", "11": "md:pr-11", "12": "md:pr-12", "14": "md:pr-14", "16": "md:pr-16",
+  "20": "md:pr-20", "24": "md:pr-24", "28": "md:pr-28", "32": "md:pr-32", "36": "md:pr-36",
+  "40": "md:pr-40", "44": "md:pr-44", "48": "md:pr-48", "52": "md:pr-52", "56": "md:pr-56",
+  "60": "md:pr-60", "64": "md:pr-64", "72": "md:pr-72", "80": "md:pr-80", "96": "md:pr-96",
 };
 
 const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): string => {
@@ -264,15 +264,15 @@ export function TwoColumn({ data }: TwoColumnProps) {
       style={containerStyle}
     >
       <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
-        <div className={`grid grid-cols-1 lg:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
-            <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 lg:order-1" : ""}`}>
+            <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 md:order-1" : ""}`}>
               <ColumnContent column={data.left} />
             </div>
           )}
           
           {data.right && (
-            <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 lg:order-2" : ""}`}>
+            <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 md:order-2" : ""}`}>
               <ColumnContent column={data.right} />
             </div>
           )}
