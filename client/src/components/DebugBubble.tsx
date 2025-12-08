@@ -772,7 +772,6 @@ export function DebugBubble() {
           )}
         </PopoverContent>
       </Popover>
-
       <Dialog open={locationModalOpen} onOpenChange={setLocationModalOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -784,7 +783,7 @@ export function DebugBubble() {
           
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Select Location</label>
+              <label className="text-sm font-medium">Select new Location</label>
               <Select value={selectedLocationSlug} onValueChange={setSelectedLocationSlug}>
                 <SelectTrigger data-testid="select-location-override">
                   <SelectValue placeholder="Choose a location..." />
