@@ -324,11 +324,12 @@ function ComponentCard({
 
   return (
     <>
-      <Card 
-        ref={cardRef}
-        className={`mb-4 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
-        data-testid={`component-card-${componentType}`}
-      >
+      <div className="-mx-4 sm:-mx-8 lg:-mx-16 mb-4">
+        <Card 
+          ref={cardRef}
+          className={`transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
+          data-testid={`component-card-${componentType}`}
+        >
         <CardHeader className="flex flex-col gap-4">
           <div className="flex flex-row items-start justify-between gap-4">
             <div className="flex-1">
@@ -338,7 +339,7 @@ function ComponentCard({
               </div>
               <p className="text-sm text-muted-foreground">{schema.description}</p>
               {(() => {
-                const variants = [...new Set(examples.map(ex => ex.variant).filter(Boolean))];
+                const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
                 if (variants.length === 0) return null;
                 const variantLabels: Record<string, string> = {
                   singleColumn: 'Single Column',
@@ -476,7 +477,8 @@ function ComponentCard({
             </div>
           </div>
         </CardHeader>
-      </Card>
+        </Card>
+      </div>
 
       {!showYaml && (
         <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
