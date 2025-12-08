@@ -133,11 +133,33 @@ variant_props:
       required: false
       description: "Text displayed above the title"
       example: "Welcome to"
-    brand_text:
-      type: string
+    brand_mark:
+      type: object
       required: false
-      description: "Brand text displayed prominently (e.g., 'GeekFORCE:'). If it contains 'FORCE', it will be styled with the accent color."
-      example: "GeekFORCE:"
+      description: "Configurable brand text with colored highlight"
+      properties:
+        prefix:
+          type: string
+          required: false
+          description: "Text before the highlighted portion"
+          example: "Geek"
+        highlight:
+          type: string
+          required: true
+          description: "The highlighted/colored portion of the brand"
+          example: "FORCE"
+        suffix:
+          type: string
+          required: false
+          description: "Text after the highlighted portion"
+          example: ":"
+        color:
+          type: string
+          required: false
+          options: ["primary", "accent", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
+          default: "primary"
+          description: "Semantic color token for the highlight"
+          example: "chart-5"
     description:
       type: string
       required: false

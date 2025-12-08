@@ -69,6 +69,13 @@ export const heroShowcaseSchema = z.object({
   show_arrow: z.boolean().optional(),
 }).strict();
 
+export const brandMarkSchema = z.object({
+  prefix: z.string().optional(),
+  highlight: z.string(),
+  suffix: z.string().optional(),
+  color: z.enum(["primary", "accent", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
+});
+
 export const heroTwoColumnSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
@@ -76,7 +83,7 @@ export const heroTwoColumnSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   welcome_text: z.string().optional(),
-  brand_text: z.string().optional(),
+  brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
   video_id: z.string(),
   video_title: z.string().optional(),

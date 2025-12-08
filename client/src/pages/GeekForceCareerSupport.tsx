@@ -58,7 +58,12 @@ const heroData: HeroTwoColumnType = {
   type: "hero",
   variant: "twoColumn",
   welcome_text: "Welcome to",
-  brand_text: "GeekFORCE:",
+  brand_mark: {
+    prefix: "Geek",
+    highlight: "FORCE",
+    suffix: ":",
+    color: "chart-5",
+  },
   title: "Career Development",
   subtitle: "for the AI Era",
   description: "Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms, we'll give you the personalized mentorship you need to land your first job and keep thriving in today's tech.",

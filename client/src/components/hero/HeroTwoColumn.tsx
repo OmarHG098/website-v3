@@ -6,6 +6,16 @@ interface HeroTwoColumnProps {
 }
 
 export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
+  const colorMap: Record<string, string> = {
+    "primary": "hsl(var(--primary))",
+    "accent": "hsl(var(--accent))",
+    "chart-1": "hsl(var(--chart-1))",
+    "chart-2": "hsl(var(--chart-2))",
+    "chart-3": "hsl(var(--chart-3))",
+    "chart-4": "hsl(var(--chart-4))",
+    "chart-5": "hsl(var(--chart-5))",
+  };
+
   return (
     <section 
       className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
@@ -21,13 +31,16 @@ export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
                 </p>
               )}
               
-              {data.brand_text && (
+              {data.brand_mark && (
                 <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
-                  <span className="text-foreground">{data.brand_text.split(':')[0]?.includes('Geek') ? 'Geek' : data.brand_text}</span>
-                  {data.brand_text.includes('FORCE') && (
-                    <>
-                      <span style={{ color: 'hsl(var(--chart-5))' }}>FORCE</span>:
-                    </>
+                  {data.brand_mark.prefix && (
+                    <span className="text-foreground">{data.brand_mark.prefix}</span>
+                  )}
+                  <span style={{ color: colorMap[data.brand_mark.color || "primary"] }}>
+                    {data.brand_mark.highlight}
+                  </span>
+                  {data.brand_mark.suffix && (
+                    <span className="text-foreground">{data.brand_mark.suffix}</span>
                   )}
                 </p>
               )}
