@@ -500,67 +500,68 @@ function ComponentCard({
             </CollapsibleContent>
           </Collapsible>
 
-          <Collapsible open={showPreview}>
-            <CollapsibleContent>
-              <div className="border rounded-lg overflow-hidden bg-background">
-                <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
-                    <span className="text-xs text-muted-foreground">
-                      {previewViewport === 'mobile' ? '375px' : previewViewport === 'tablet' ? '768px' : '100%'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant={previewViewport === 'mobile' ? 'default' : 'ghost'}
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => setPreviewViewport('mobile')}
-                      title="Mobile (375px)"
-                      data-testid={`button-viewport-mobile-${componentType}`}
-                    >
-                      <IconDeviceMobile className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant={previewViewport === 'tablet' ? 'default' : 'ghost'}
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => setPreviewViewport('tablet')}
-                      title="Tablet (768px)"
-                      data-testid={`button-viewport-tablet-${componentType}`}
-                    >
-                      <IconDeviceTablet className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant={previewViewport === 'desktop' ? 'default' : 'ghost'}
-                      size="icon"
-                      className="h-7 w-7"
-                      onClick={() => setPreviewViewport('desktop')}
-                      title="Desktop (100%)"
-                      data-testid={`button-viewport-desktop-${componentType}`}
-                    >
-                      <IconDeviceDesktop className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-                <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
-                  <div 
-                    className={`bg-background transition-all duration-300 ${
-                      previewViewport === 'mobile' 
-                        ? 'w-[375px] shadow-lg border-x' 
-                        : previewViewport === 'tablet' 
-                          ? 'w-[768px] shadow-lg border-x' 
-                          : 'w-full'
-                    }`}
-                  >
-                    {parsedData && <SectionRenderer sections={[parsedData]} />}
-                  </div>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
         </CardContent>
       </Card>
+
+      <Collapsible open={showPreview}>
+        <CollapsibleContent>
+          <div className="border rounded-lg overflow-hidden bg-background -mx-4 sm:-mx-8 lg:-mx-16">
+            <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
+                <span className="text-xs text-muted-foreground">
+                  {previewViewport === 'mobile' ? '375px' : previewViewport === 'tablet' ? '768px' : '100%'}
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant={previewViewport === 'mobile' ? 'default' : 'ghost'}
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => setPreviewViewport('mobile')}
+                  title="Mobile (375px)"
+                  data-testid={`button-viewport-mobile-${componentType}`}
+                >
+                  <IconDeviceMobile className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={previewViewport === 'tablet' ? 'default' : 'ghost'}
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => setPreviewViewport('tablet')}
+                  title="Tablet (768px)"
+                  data-testid={`button-viewport-tablet-${componentType}`}
+                >
+                  <IconDeviceTablet className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={previewViewport === 'desktop' ? 'default' : 'ghost'}
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => setPreviewViewport('desktop')}
+                  title="Desktop (100%)"
+                  data-testid={`button-viewport-desktop-${componentType}`}
+                >
+                  <IconDeviceDesktop className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+            <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
+              <div 
+                className={`bg-background transition-all duration-300 ${
+                  previewViewport === 'mobile' 
+                    ? 'w-[375px] shadow-lg border-x' 
+                    : previewViewport === 'tablet' 
+                      ? 'w-[768px] shadow-lg border-x' 
+                      : 'w-full'
+                }`}
+              >
+                {parsedData && <SectionRenderer sections={[parsedData]} />}
+              </div>
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
