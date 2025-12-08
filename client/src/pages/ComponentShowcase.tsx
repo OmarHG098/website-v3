@@ -504,7 +504,12 @@ function ComponentCard({
             <CollapsibleContent>
               <div className="border rounded-lg overflow-hidden bg-background">
                 <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
+                    <span className="text-xs text-muted-foreground">
+                      {previewViewport === 'mobile' ? '375px' : previewViewport === 'tablet' ? '768px' : '100%'}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-1">
                     <Button
                       variant={previewViewport === 'mobile' ? 'default' : 'ghost'}
