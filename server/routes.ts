@@ -126,16 +126,23 @@ function listLandingPages(locale: string): Array<{ slug: string; title: string }
 
 function loadLocationPage(slug: string, locale: string): LocationPage | null {
   try {
-    const filePath = path.join(LOCATIONS_CONTENT_PATH, `${slug}.${locale}.yml`);
+    const locationDir = path.join(LOCATIONS_CONTENT_PATH, slug);
+    const campusPath = path.join(locationDir, "campus.yml");
+    const localePath = path.join(locationDir, `${locale}.yml`);
 
-    if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(campusPath) || !fs.existsSync(localePath)) {
       return null;
     }
 
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
+    const campusContent = fs.readFileSync(campusPath, "utf8");
+    const localeContent = fs.readFileSync(localePath, "utf8");
+    
+    const campusData = yaml.load(campusContent) as Record<string, unknown>;
+    const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    const result = locationPageSchema.safeParse(data);
+    const mergedData = { ...campusData, ...localeData };
+
+    const result = locationPageSchema.safeParse(mergedData);
     if (!result.success) {
       console.error(`Invalid YAML structure for location ${slug}/${locale}:`, result.error);
       return null;
@@ -155,19 +162,21 @@ function listLocationPages(locale: string): Array<{ slug: string; name: string; 
     }
 
     const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
-    const files = fs.readdirSync(LOCATIONS_CONTENT_PATH).filter(f => f.endsWith(`.${locale}.yml`));
+    const entries = fs.readdirSync(LOCATIONS_CONTENT_PATH, { withFileTypes: true });
 
-    for (const file of files) {
-      const slug = file.replace(`.${locale}.yml`, "");
-      const location = loadLocationPage(slug, locale);
-      if (location && location.visibility === "listed") {
-        locations.push({
-          slug: location.slug,
-          name: location.name,
-          city: location.city,
-          country: location.country,
-          region: location.region,
-        });
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const slug = entry.name;
+        const location = loadLocationPage(slug, locale);
+        if (location && location.visibility === "listed") {
+          locations.push({
+            slug: location.slug,
+            name: location.name,
+            city: location.city,
+            country: location.country,
+            region: location.region,
+          });
+        }
       }
     }
 
