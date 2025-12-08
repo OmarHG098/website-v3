@@ -11,3 +11,13 @@ timezone: America/Panama
 visibility: listed
 phone: +507 123 4567
 address: Calle 50, Panama City
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

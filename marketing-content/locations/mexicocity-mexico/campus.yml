@@ -11,3 +11,13 @@ timezone: America/Mexico_City
 visibility: listed
 phone: +52 55 1234 5678
 address: Paseo de la Reforma 222, 06600 CDMX
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

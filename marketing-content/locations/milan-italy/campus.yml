@@ -11,3 +11,13 @@ timezone: Europe/Rome
 visibility: listed
 phone: +39 02 555 0100
 address: Via Montenapoleone 8, 20121 Milano
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

@@ -11,3 +11,13 @@ timezone: Europe/Lisbon
 visibility: listed
 phone: +351 21 123 4567
 address: Avenida da Liberdade 110, 1250-146 Lisboa
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

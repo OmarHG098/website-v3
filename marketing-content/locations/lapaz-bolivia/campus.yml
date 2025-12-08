@@ -11,3 +11,13 @@ timezone: America/La_Paz
 visibility: listed
 phone: +591 2 123 4567
 address: Av. 16 de Julio, La Paz
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

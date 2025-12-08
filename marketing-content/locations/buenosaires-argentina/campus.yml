@@ -11,3 +11,13 @@ timezone: America/Argentina/Buenos_Aires
 visibility: listed
 phone: +54 11 1234 5678
 address: Av. Corrientes 1234, Buenos Aires
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

@@ -11,3 +11,13 @@ timezone: Europe/Berlin
 visibility: listed
 phone: +49 89 555 0100
 address: Marienplatz 1, 80331 München
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

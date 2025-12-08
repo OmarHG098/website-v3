@@ -11,3 +11,13 @@ timezone: America/Bogota
 visibility: listed
 phone: +57 1 234 5678
 address: "Carrera 7 #71-21, Bogota"
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

@@ -11,3 +11,13 @@ timezone: America/Chicago
 visibility: listed
 phone: +1 512-887-4460
 address: 701 Brazos St, Austin, TX 78701
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"

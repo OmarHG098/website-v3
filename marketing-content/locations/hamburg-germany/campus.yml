@@ -11,3 +11,13 @@ timezone: Europe/Berlin
 visibility: listed
 phone: +49 40 555 0100
 address: Jungfernstieg 1, 20095 Hamburg
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
