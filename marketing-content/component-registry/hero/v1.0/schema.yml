@@ -133,6 +133,11 @@ variant_props:
       required: false
       description: "Text displayed above the title"
       example: "Welcome to"
+    brand_text:
+      type: string
+      required: false
+      description: "Brand text displayed prominently (e.g., 'GeekFORCE:'). If it contains 'FORCE', it will be styled with the accent color."
+      example: "GeekFORCE:"
     description:
       type: string
       required: false
