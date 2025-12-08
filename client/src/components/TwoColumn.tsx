@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn } from "@shared/schema";
@@ -123,7 +122,6 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
 };
 
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
-  const imageId = useId().replace(/:/g, "");
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
@@ -212,23 +210,14 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
       
       {column.image && (
         <div className={`flex w-full ${getResponsiveJustifyClass(column.justify)}`}>
-          <style>{`
-            #two-col-img-${imageId} {
-              height: ${column.image_height || "auto"};
-              width: ${column.image_width || "auto"};
-            }
-            @media (min-width: 768px) and (max-width: 1023px) {
-              #two-col-img-${imageId} {
-                height: ${column.image_md_height || column.image_height || "auto"};
-                width: ${column.image_md_width || column.image_width || "auto"};
-              }
-            }
-          `}</style>
           <img 
-            id={`two-col-img-${imageId}`}
             src={column.image} 
             alt={column.image_alt || "Section image"}
-            className="rounded-md w-full max-w-xs md:max-w-none"
+            className="rounded-md w-full h-auto"
+            style={{
+              maxWidth: column.image_max_width || undefined,
+              maxHeight: column.image_max_height || undefined,
+            }}
             loading="lazy"
             data-testid="img-two-column"
           />
