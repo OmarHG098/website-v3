@@ -18,6 +18,7 @@ export interface ComponentExample {
   name: string;
   description: string;
   yaml: string;
+  variant?: string;
 }
 
 export interface ComponentVersion {
@@ -117,12 +118,13 @@ export function loadExamples(componentType: string, version: string): ComponentE
     return exampleFiles.map(file => {
       const filePath = path.join(examplesPath, file);
       const content = fs.readFileSync(filePath, "utf8");
-      const data = yaml.load(content) as { name?: string; description?: string; yaml?: string };
+      const data = yaml.load(content) as { name?: string; description?: string; yaml?: string; variant?: string };
       
       return {
         name: data.name || file.replace(/\.(yml|yaml)$/, ''),
         description: data.description || '',
         yaml: data.yaml || content,
+        variant: data.variant,
       };
     });
   } catch (error) {
