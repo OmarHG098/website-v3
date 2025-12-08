@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
+import { useSession } from "@/contexts/SessionContext";
 import {
   IconBug,
   IconMap,
+  IconMapPin,
   IconComponents,
   IconLanguage,
-  IconRoute,
   IconSun,
   IconMoon,
   IconX,
@@ -95,7 +95,7 @@ const getPersistedMenuView = (): MenuView => {
 
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
-  const [location] = useLocation();
+  const { session } = useSession();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -439,10 +439,12 @@ export function DebugBubble() {
               <div className="border-t p-2 space-y-1">
                 <div className="flex items-center justify-between px-3 py-2">
                   <div className="flex items-center gap-3">
-                    <IconRoute className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm">Current Route</span>
+                    <IconMapPin className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">Location</span>
                   </div>
-                  <code className="text-xs bg-muted px-2 py-1 rounded max-w-[120px] truncate">{location}</code>
+                  <code className="text-xs bg-muted px-2 py-1 rounded max-w-[120px] truncate">
+                    {session.location?.name || 'Detecting...'}
+                  </code>
                 </div>
                 
                 <button
