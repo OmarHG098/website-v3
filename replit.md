@@ -20,7 +20,7 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - `marketing-content/programs/{program-slug}/{locale}.yml` for career programs
     - `marketing-content/landings/{landing-slug}/{locale}.yml` for landing pages
     - `marketing-content/locations/{slug}/` for location pages with:
-      - `campus.yml` - Non-translated campus info (slug, name, city, country, coordinates, phone, address, etc.)
+      - `campus.yml` - Non-translated campus info (slug, name, city, country, coordinates, phone, address, available_programs, catalog with admission_advisors)
       - `en.yml` - English translated content (meta, schema, sections)
       - `es.yml` - Spanish translated content (meta, schema, sections)
     All content types share the same structure with `meta`, `schema`, and `sections` properties, dynamically rendered by a unified `SectionRenderer` component. Location-specific section types include `features_grid`, `programs_list`, and `cta_banner`.
