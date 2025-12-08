@@ -385,13 +385,6 @@ function ComponentCard({
                         return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
                       });
                       
-                      const variantColors: Record<string, string> = {
-                        singleColumn: 'bg-primary/10 text-primary border-primary/20',
-                        showcase: 'bg-chart-1/10 text-chart-1 border-chart-1/20',
-                        twoColumn: 'bg-chart-2/10 text-chart-2 border-chart-2/20',
-                        default: 'bg-muted text-muted-foreground border-border',
-                      };
-                      
                       const variantLabels: Record<string, string> = {
                         singleColumn: 'Single Column',
                         showcase: 'Showcase',
@@ -401,13 +394,8 @@ function ComponentCard({
                       
                       return sortedVariants.map(variant => (
                         <SelectGroup key={variant}>
-                          <SelectLabel className="flex items-center gap-2 pl-2 py-2 border-b border-border/50 mb-1">
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs px-2 py-0.5 font-medium ${variantColors[variant] || variantColors.default}`}
-                            >
-                              {variantLabels[variant] || variant}
-                            </Badge>
+                          <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
+                            {variantLabels[variant] || variant}
                           </SelectLabel>
                           {grouped[variant].map(ex => (
                             <SelectItem key={ex.name} value={ex.name} className="pl-4">
