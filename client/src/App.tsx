@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import { DebugBubble } from "@/components/DebugBubble";
+import { SessionProvider } from "@/contexts/SessionContext";
 import "./i18n";
 
 const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
@@ -62,11 +63,13 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-        <DebugBubble />
-      </TooltipProvider>
+      <SessionProvider enableAutoRedirect={false}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+          <DebugBubble />
+        </TooltipProvider>
+      </SessionProvider>
     </QueryClientProvider>
   );
 }
