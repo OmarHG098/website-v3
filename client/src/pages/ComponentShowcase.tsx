@@ -325,7 +325,7 @@ function ComponentCard({
     <>
       <Card 
         ref={cardRef}
-        className={`mb-8 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
+        className={`mb-4 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
         data-testid={`component-card-${componentType}`}
       >
         <CardHeader className="flex flex-col gap-4">
@@ -456,11 +456,13 @@ function ComponentCard({
             </div>
           </div>
         </CardHeader>
-        
-        <CardContent>
-          <Collapsible open={showYaml}>
-            <CollapsibleContent>
-              <div className="mb-4 rounded-lg overflow-hidden border border-border">
+      </Card>
+
+      <Collapsible open={showYaml}>
+        <CollapsibleContent>
+          <Card className="mb-4">
+            <CardContent className="p-0">
+              <div className="rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
                   <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
                   <Button
@@ -497,11 +499,10 @@ function ComponentCard({
                   </div>
                 )}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
 
       <Collapsible open={showPreview}>
         <CollapsibleContent>
