@@ -39,21 +39,6 @@ export function getPathLanguage(path: string): 'en' | 'es' | null {
   return null;
 }
 
-export function shouldRedirectLanguage(currentPath: string): string | null {
-  const session = getCachedSession();
-  if (!session?.initialized) return null;
-  
-  const pathLang = getPathLanguage(currentPath);
-  
-  if (pathLang !== null) return null;
-  
-  if (session.language === 'es' && !currentPath.startsWith('/es')) {
-    return `/es${currentPath}`;
-  }
-  
-  return null;
-}
-
 export function getNavigatorInfo(): string {
   if (typeof navigator === 'undefined') {
     return JSON.stringify({ languages: ['en'] });

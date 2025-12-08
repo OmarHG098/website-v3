@@ -63,7 +63,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionProvider enableAutoRedirect={false}>
+      <SessionProvider>
         <TooltipProvider>
           <Toaster />
           <Router />

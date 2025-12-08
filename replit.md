@@ -23,6 +23,15 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
 -   **URL Redirects System**: A robust system handles 301 redirects defined in YAML meta properties, with a validation script (`scripts/validate-content.ts`) to prevent conflicts and ensure target existence.
 -   **Debug Mode**: A `DebugBubble` component provides development utilities like theme toggle, language switcher, sitemap viewer, and component showcase, visible in development or via a `?debug=true` URL parameter in production.
 -   **Versioned Component Registry**: A filesystem-based registry at `marketing-content/component-registry/{component}/v{version}/` stores versioned component schemas and examples. Each version folder contains a `schema.yml` (defining props, descriptions, when-to-use guidance) and an `examples/` subfolder with individual YAML example files. The API at `/api/component-registry` enables listing components, loading schemas/examples by version, and creating new versions via folder cloning. The ComponentShowcase page (`/showcase`) consumes this API with version/example dropdowns, live YAML editing with preview, and guided modals for adding new examples. YAML content files reference component versions via `version: "1.0"` in each section.
+-   **Session Management System**: A hybrid client-side session system provides IP-based geolocation, nearest campus calculation, UTM parameter tracking, and language detection. Key components:
+    - `shared/session.ts`: Type definitions for Session, Location, UTMParams, GeoData
+    - `client/src/workers/session.worker.ts`: Web worker for deferred heavy processing (IP lookup, haversine distance calculation)
+    - `client/src/contexts/SessionContext.tsx`: React context with `useSession`, `useLocation`, `useLanguage`, `useUTM`, `useRegion` hooks
+    - `client/src/lib/locations.ts`: Static campus data with coordinates for 14 locations across USA, LATAM, and Europe
+    - `marketing-content/locations.yml`: YAML source for campus data
+    - Session data is cached in localStorage with versioning for cache invalidation (24-hour stale threshold)
+    - Geolocation uses ip-api.com with 5-second timeout and graceful fallbacks
+    - Nearest campus sorting uses the haversine (great-circle) distance formula
 
 ### External Dependencies
 -   **4geeks Breathecode API**: Used for user authentication, profile management, and educational content delivery (future integration).

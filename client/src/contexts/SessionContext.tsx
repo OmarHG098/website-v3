@@ -4,10 +4,23 @@ import { defaultSession } from '@shared/session';
 import { 
   getCachedSession, 
   saveSession, 
-  getNavigatorInfo,
-  shouldRedirectLanguage 
+  getNavigatorInfo
 } from '../lib/sessionBootstrap';
 import { locations, getLocationBySlug } from '../lib/locations';
+
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  if (lat1 === lat2 && lon1 === lon2) return 0;
+  
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
 interface SessionContextValue {
   session: Session;
@@ -24,10 +37,9 @@ const SessionContext = createContext<SessionContextValue | null>(null);
 
 interface SessionProviderProps {
   children: React.ReactNode;
-  enableAutoRedirect?: boolean;
 }
 
-export function SessionProvider({ children, enableAutoRedirect = false }: SessionProviderProps) {
+export function SessionProvider({ children }: SessionProviderProps) {
   const [session, setSession] = useState<Session>(() => {
     const cached = getCachedSession();
     return cached || defaultSession;
@@ -54,12 +66,6 @@ export function SessionProvider({ children, enableAutoRedirect = false }: Sessio
             saveSession(newSession);
             setIsLoading(false);
 
-            if (enableAutoRedirect && newSession.initialized) {
-              const redirectPath = shouldRedirectLanguage(window.location.pathname);
-              if (redirectPath) {
-                window.location.href = redirectPath;
-              }
-            }
           }
         };
 
@@ -90,7 +96,7 @@ export function SessionProvider({ children, enableAutoRedirect = false }: Sessio
     return () => {
       workerRef.current?.terminate();
     };
-  }, [enableAutoRedirect]);
+  }, []);
 
   const setLocation = useCallback((slug: string) => {
     const location = getLocationBySlug(slug);
@@ -132,13 +138,17 @@ export function SessionProvider({ children, enableAutoRedirect = false }: Sessio
     .sort((a, b) => {
       if (!session.geo?.latitude || !session.geo?.longitude) return 0;
       
-      const distA = Math.sqrt(
-        Math.pow(a.latitude - session.geo.latitude, 2) +
-        Math.pow(a.longitude - session.geo.longitude, 2)
+      const distA = haversineDistance(
+        session.geo.latitude, 
+        session.geo.longitude, 
+        a.latitude, 
+        a.longitude
       );
-      const distB = Math.sqrt(
-        Math.pow(b.latitude - session.geo.latitude, 2) +
-        Math.pow(b.longitude - session.geo.longitude, 2)
+      const distB = haversineDistance(
+        session.geo.latitude, 
+        session.geo.longitude, 
+        b.latitude, 
+        b.longitude
       );
       return distA - distB;
     });
