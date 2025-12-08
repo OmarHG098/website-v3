@@ -711,30 +711,6 @@ export default function ComponentShowcase() {
               cardRef={cardRefs.current[componentType]}
             />
           </div>
-
-          <div className="max-w-4xl mx-auto mt-8 flex items-center justify-between">
-            {prevComponent ? (
-              <Link href={`/component-showcase/${prevComponent.type}`}>
-                <Button variant="outline" data-testid="link-prev-component">
-                  <IconArrowLeft className="w-4 h-4 mr-2" />
-                  {prevComponent.name}
-                </Button>
-              </Link>
-            ) : (
-              <div />
-            )}
-            
-            {nextComponent ? (
-              <Link href={`/component-showcase/${nextComponent.type}`}>
-                <Button variant="outline" data-testid="link-next-component">
-                  {nextComponent.name}
-                  <IconArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            ) : (
-              <div />
-            )}
-          </div>
         </main>
       </div>
     );
