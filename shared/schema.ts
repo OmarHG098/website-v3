@@ -473,6 +473,18 @@ export const locationMetaSchema = z.object({
   redirects: z.array(z.string()).optional(),
 });
 
+export const admissionAdvisorSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  calendar_url: z.string().optional(),
+  photo: z.string().optional(),
+  languages: z.array(z.string()).optional(),
+});
+
+export const locationCatalogSchema = z.object({
+  admission_advisors: z.array(admissionAdvisorSchema).optional(),
+});
+
 export const locationPageSchema = z.object({
   slug: z.string(),
   name: z.string(),
@@ -487,6 +499,8 @@ export const locationPageSchema = z.object({
   visibility: z.enum(["listed", "unlisted"]),
   phone: z.string().optional(),
   address: z.string().optional(),
+  available_programs: z.array(z.string()).optional(),
+  catalog: locationCatalogSchema.optional(),
   meta: locationMetaSchema,
   schema: schemaRefSchema.optional(),
   sections: z.array(sectionSchema),
