@@ -1,0 +1,69 @@
+meta:
+  page_title: 4Geeks Academy Nueva York | Bootcamp de Programación en NYC
+  description: Únete al bootcamp de programación 4Geeks en Nueva York. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/newyork-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /new-york
+    - /newyork
+    - /nyc
+    - /campus/new-york
+    - /us/new-york
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 350 5th Ave
+        addressLocality: New York
+        addressRegion: NY
+        postalCode: "10118"
+        addressCountry: US
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Nueva York
+    title: 4Geeks Academy Nueva York
+    subtitle: El principal bootcamp de programación de NYC con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=newyork-usa
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Nueva York?
+    items:
+      - icon: Building
+        title: Capital Tech
+        description: NYC es uno de los mayores hubs tech del mundo.
+      - icon: Users
+        title: Diversidad de Industrias
+        description: Oportunidades tech en finanzas, medios, moda y más.
+      - icon: TrendingUp
+        title: Escena Startup
+        description: Segundo ecosistema de startups más grande de Estados Unidos.
+      - icon: Briefcase
+        title: Red Profesional
+        description: Acceso a empresas Fortune 500 y startups innovadoras.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Nueva York
+    filter_by_location: newyork-usa
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Nueva York
+    filter_by_location: newyork-usa
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Nueva York?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=newyork-usa

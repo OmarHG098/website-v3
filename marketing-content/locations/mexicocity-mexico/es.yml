@@ -1,0 +1,68 @@
+meta:
+  page_title: 4Geeks Academy Ciudad de México | Bootcamp de Programación en CDMX
+  description: Únete al bootcamp de programación 4Geeks en Ciudad de México. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/mexicocity-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /mexico-city
+    - /mexicocity
+    - /cdmx
+    - /campus/mexico-city
+    - /mx/mexico-city
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Paseo de la Reforma 222
+        addressLocality: Ciudad de México
+        postalCode: "06600"
+        addressCountry: MX
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Ciudad de México
+    title: 4Geeks Academy Ciudad de México
+    subtitle: El bootcamp de programación líder de Latinoamérica con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=mexicocity-mexico
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Ciudad de México?
+    items:
+      - icon: Building
+        title: Hub de LATAM
+        description: El ecosistema tech más grande y dinámico de Latinoamérica.
+      - icon: Users
+        title: Enorme Talento
+        description: Gran reserva de talento técnico y universidades de primer nivel.
+      - icon: TrendingUp
+        title: Boom de Startups
+        description: Escena de startups en rápido crecimiento con gran inversión de VC.
+      - icon: Briefcase
+        title: Empresas Globales
+        description: Presencia de grandes empresas tech y startups en crecimiento.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Ciudad de México
+    filter_by_location: mexicocity-mexico
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Ciudad de México
+    filter_by_location: mexicocity-mexico
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Ciudad de México?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=mexicocity-mexico

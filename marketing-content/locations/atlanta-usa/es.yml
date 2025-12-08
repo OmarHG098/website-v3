@@ -1,0 +1,67 @@
+meta:
+  page_title: 4Geeks Academy Atlanta | Bootcamp de Programación en Georgia
+  description: Únete al bootcamp de programación 4Geeks en Atlanta. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/atlanta-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /atlanta
+    - /campus/atlanta
+    - /us/atlanta
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 191 Peachtree St NE
+        addressLocality: Atlanta
+        addressRegion: GA
+        postalCode: "30303"
+        addressCountry: US
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Atlanta
+    title: 4Geeks Academy Atlanta
+    subtitle: El principal bootcamp de programación de Georgia con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=atlanta-usa
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Atlanta?
+    items:
+      - icon: Building
+        title: Hub Tecnológico
+        description: Atlanta es uno de los hubs tech de más rápido crecimiento del sureste.
+      - icon: Users
+        title: Comunidad Diversa
+        description: Únete a una comunidad diversa de estudiantes y profesionales tech.
+      - icon: TrendingUp
+        title: Mercado en Crecimiento
+        description: Alta demanda de desarrolladores en el sector tech en expansión de Atlanta.
+      - icon: Briefcase
+        title: Apoyo Profesional
+        description: Fuertes conexiones con empleadores locales y startups.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Atlanta
+    filter_by_location: atlanta-usa
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Atlanta
+    filter_by_location: atlanta-usa
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Atlanta?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=atlanta-usa

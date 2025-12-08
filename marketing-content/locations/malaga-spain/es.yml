@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Málaga | Bootcamp de Programación en España
+  description: Únete al bootcamp de programación 4Geeks en Málaga. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/malaga-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /malaga
+    - /campus/malaga
+    - /es/malaga
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle Larios 12
+        addressLocality: Málaga
+        postalCode: "29005"
+        addressCountry: ES
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Málaga
+    title: 4Geeks Academy Málaga
+    subtitle: El bootcamp de programación líder de Andalucía con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=malaga-spain
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Málaga?
+    items:
+      - icon: Building
+        title: Valle Tecnológico
+        description: Málaga está emergiendo como el 'Silicon Valley' de España con parques tecnológicos.
+      - icon: Users
+        title: Calidad de Vida
+        description: Estilo de vida mediterráneo con costo de vida asequible.
+      - icon: TrendingUp
+        title: Hub en Crecimiento
+        description: Google, Vodafone y otros gigantes tech estableciendo presencia.
+      - icon: Briefcase
+        title: Trabajo Remoto
+        description: Destino popular para nómadas digitales y trabajadores remotos.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Málaga
+    filter_by_location: malaga-spain
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Málaga
+    filter_by_location: malaga-spain
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Málaga?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=malaga-spain

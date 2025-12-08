@@ -1,0 +1,67 @@
+meta:
+  page_title: 4Geeks Academy Orlando | Coding Bootcamp in Florida
+  description: Join 4Geeks Orlando coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee.
+  robots: index, follow
+  og_image: /images/locations/orlando-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /orlando
+    - /campus/orlando
+    - /us/orlando
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 100 S Orange Ave
+        addressLocality: Orlando
+        addressRegion: FL
+        postalCode: "32801"
+        addressCountry: US
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Orlando Campus
+    title: 4Geeks Academy Orlando
+    subtitle: Central Florida's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers.
+    cta_buttons:
+      - text: Apply Now
+        url: /apply?location=orlando-usa
+        variant: primary
+      - text: Download Syllabus
+        url: /syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: Why Choose Orlando?
+    items:
+      - icon: Building
+        title: Growing Tech Hub
+        description: Orlando's tech industry is rapidly expanding.
+      - icon: Users
+        title: Simulation & Gaming
+        description: Leader in simulation, gaming, and entertainment tech.
+      - icon: TrendingUp
+        title: Affordable Living
+        description: Lower cost of living compared to other major tech hubs.
+      - icon: Briefcase
+        title: Career Opportunities
+        description: Strong demand in defense, tourism, and healthcare tech.
+  - type: programs_list
+    version: "1.0"
+    title: Programs Available in Orlando
+    filter_by_location: orlando-usa
+  - type: testimonials
+    version: "1.0"
+    title: Orlando Graduate Success Stories
+    filter_by_location: orlando-usa
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Start Your Tech Career in Orlando?
+    subtitle: Join our next cohort and transform your future.
+    cta_text: Apply Now
+    cta_url: /apply?location=orlando-usa

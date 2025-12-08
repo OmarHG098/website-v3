@@ -1,0 +1,67 @@
+meta:
+  page_title: 4Geeks Academy Toronto | Bootcamp de Programación en Canadá
+  description: Únete al bootcamp de programación 4Geeks en Toronto. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/toronto-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /toronto
+    - /campus/toronto
+    - /ca/toronto
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 100 King St W
+        addressLocality: Toronto
+        addressRegion: "ON"
+        postalCode: M5X 1A9
+        addressCountry: CA
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Toronto
+    title: 4Geeks Academy Toronto
+    subtitle: El principal bootcamp de programación de Canadá con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=toronto-canada
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Toronto?
+    items:
+      - icon: Building
+        title: Capital Tech
+        description: Toronto es el hub tech más grande de Canadá con grandes empresas.
+      - icon: Users
+        title: Liderazgo en IA
+        description: Centro de investigación en IA y machine learning de renombre mundial.
+      - icon: TrendingUp
+        title: Economía Diversa
+        description: Oportunidades tech en finanzas, salud y medios.
+      - icon: Briefcase
+        title: Talento Global
+        description: Fuerza laboral multicultural con oportunidades internacionales.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Toronto
+    filter_by_location: toronto-canada
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Toronto
+    filter_by_location: toronto-canada
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Toronto?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=toronto-canada

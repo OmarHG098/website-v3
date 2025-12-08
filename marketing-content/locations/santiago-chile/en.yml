@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Santiago | Coding Bootcamp in Chile
+  description: Join 4Geeks Santiago coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee.
+  robots: index, follow
+  og_image: /images/locations/santiago-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /santiago
+    - /campus/santiago
+    - /cl/santiago
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Apoquindo 3000
+        addressLocality: Santiago
+        addressRegion: Región Metropolitana
+        addressCountry: CL
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Santiago Campus
+    title: 4Geeks Academy Santiago
+    subtitle: Chile's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers.
+    cta_buttons:
+      - text: Apply Now
+        url: /apply?location=santiago-chile
+        variant: primary
+      - text: Download Syllabus
+        url: /syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: Why Choose Santiago?
+    items:
+      - icon: Building
+        title: Innovation Leader
+        description: Chile leads Latin America in innovation and ease of doing business.
+      - icon: Users
+        title: Startup Ecosystem
+        description: Vibrant startup scene with programs like Start-Up Chile.
+      - icon: TrendingUp
+        title: VC Investment
+        description: Strong venture capital presence and investment.
+      - icon: Briefcase
+        title: Career Opportunities
+        description: High demand from tech companies and financial sector.
+  - type: programs_list
+    version: "1.0"
+    title: Programs Available in Santiago
+    filter_by_location: santiago-chile
+  - type: testimonials
+    version: "1.0"
+    title: Santiago Graduate Success Stories
+    filter_by_location: santiago-chile
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Start Your Tech Career in Santiago?
+    subtitle: Join our next cohort and transform your future.
+    cta_text: Apply Now
+    cta_url: /apply?location=santiago-chile

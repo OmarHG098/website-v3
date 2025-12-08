@@ -1,0 +1,67 @@
+meta:
+  page_title: 4Geeks Academy Austin | Bootcamp de Programación en Texas
+  description: Únete al bootcamp de programación 4Geeks en Austin. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/austin-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /austin
+    - /campus/austin
+    - /us/austin
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 701 Brazos St
+        addressLocality: Austin
+        addressRegion: TX
+        postalCode: "78701"
+        addressCountry: US
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Austin
+    title: 4Geeks Academy Austin
+    subtitle: El principal bootcamp de programación de Texas con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=austin-usa
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Austin?
+    items:
+      - icon: Building
+        title: Silicon Hills
+        description: Austin es un importante hub tech con empresas como Tesla, Apple y Oracle.
+      - icon: Users
+        title: Cultura Startup
+        description: Vibrante ecosistema de startups con infinitas oportunidades de networking.
+      - icon: TrendingUp
+        title: Crecimiento Laboral
+        description: Uno de los mercados laborales de más rápido crecimiento para desarrolladores en EE.UU.
+      - icon: Briefcase
+        title: Apoyo Profesional
+        description: Fuertes conexiones con gigantes tech locales y startups.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Austin
+    filter_by_location: austin-usa
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Austin
+    filter_by_location: austin-usa
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Austin?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=austin-usa

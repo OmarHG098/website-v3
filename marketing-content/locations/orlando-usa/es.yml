@@ -1,0 +1,67 @@
+meta:
+  page_title: 4Geeks Academy Orlando | Bootcamp de Programación en Florida
+  description: Únete al bootcamp de programación 4Geeks en Orlando. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/orlando-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /orlando
+    - /campus/orlando
+    - /us/orlando
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 100 S Orange Ave
+        addressLocality: Orlando
+        addressRegion: FL
+        postalCode: "32801"
+        addressCountry: US
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Orlando
+    title: 4Geeks Academy Orlando
+    subtitle: El principal bootcamp de programación del centro de Florida con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=orlando-usa
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Orlando?
+    items:
+      - icon: Building
+        title: Hub Tech en Crecimiento
+        description: La industria tech de Orlando está en rápida expansión.
+      - icon: Users
+        title: Simulación y Gaming
+        description: Líder en simulación, gaming y tecnología de entretenimiento.
+      - icon: TrendingUp
+        title: Costo de Vida Accesible
+        description: Menor costo de vida comparado con otros grandes hubs tech.
+      - icon: Briefcase
+        title: Oportunidades
+        description: Fuerte demanda en defensa, turismo y salud tech.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Orlando
+    filter_by_location: orlando-usa
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Orlando
+    filter_by_location: orlando-usa
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Orlando?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=orlando-usa

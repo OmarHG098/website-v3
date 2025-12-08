@@ -1,0 +1,65 @@
+meta:
+  page_title: 4Geeks Academy Quito | Bootcamp de Programación en Ecuador
+  description: Únete al bootcamp de programación 4Geeks en Quito. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/quito-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /quito
+    - /campus/quito
+    - /ec/quito
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Amazonas N21-147
+        addressLocality: Quito
+        addressCountry: EC
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Quito
+    title: 4Geeks Academy Quito
+    subtitle: El bootcamp de programación líder de Ecuador con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=quito-ecuador
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Quito?
+    items:
+      - icon: Building
+        title: Ciudad Capital
+        description: La capital de Ecuador con ecosistema tech en crecimiento.
+      - icon: Users
+        title: Hub Emergente
+        description: Escena de startups en ascenso con apoyo gubernamental.
+      - icon: TrendingUp
+        title: Listo para Remoto
+        description: Prepárate para oportunidades remotas internacionales.
+      - icon: Briefcase
+        title: Crecimiento Profesional
+        description: Acceso a mercados laborales locales y globales.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Quito
+    filter_by_location: quito-ecuador
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Quito
+    filter_by_location: quito-ecuador
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Quito?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=quito-ecuador

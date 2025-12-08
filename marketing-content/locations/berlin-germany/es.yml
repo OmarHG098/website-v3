@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Berlín | Bootcamp de Programación en Alemania
+  description: Únete al bootcamp de programación 4Geeks en Berlín. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/berlin-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /berlin
+    - /campus/berlin
+    - /de/berlin
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Friedrichstraße 123
+        addressLocality: Berlin
+        postalCode: "10117"
+        addressCountry: DE
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Berlín
+    title: 4Geeks Academy Berlín
+    subtitle: El bootcamp de programación líder de Alemania con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=berlin-germany
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Berlín?
+    items:
+      - icon: Building
+        title: Capital de Startups
+        description: Berlín es el principal hub de startups de Europa con una vibrante escena tech.
+      - icon: Users
+        title: Comunidad Internacional
+        description: Comunidad tech de habla inglesa de todo el mundo.
+      - icon: TrendingUp
+        title: Inversión VC
+        description: Principal destino para capital de riesgo e inversión tecnológica.
+      - icon: Briefcase
+        title: Crecimiento Profesional
+        description: Alta demanda de startups y empresas tecnológicas establecidas.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Berlín
+    filter_by_location: berlin-germany
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Berlín
+    filter_by_location: berlin-germany
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Berlín?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=berlin-germany

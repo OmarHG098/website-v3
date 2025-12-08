@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Hamburg | Coding Bootcamp in Germany
+  description: Join 4Geeks Hamburg coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee.
+  robots: index, follow
+  og_image: /images/locations/hamburg-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /hamburg
+    - /campus/hamburg
+    - /de/hamburg
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Jungfernstieg 1
+        addressLocality: Hamburg
+        postalCode: "20095"
+        addressCountry: DE
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Hamburg Campus
+    title: 4Geeks Academy Hamburg
+    subtitle: Northern Germany's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers.
+    cta_buttons:
+      - text: Apply Now
+        url: /apply?location=hamburg-germany
+        variant: primary
+      - text: Download Syllabus
+        url: /syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: Why Choose Hamburg?
+    items:
+      - icon: Building
+        title: Media & Tech Hub
+        description: Germany's media capital with growing tech scene.
+      - icon: Users
+        title: Business Center
+        description: Major business hub with diverse industry opportunities.
+      - icon: TrendingUp
+        title: Digital Innovation
+        description: Strong focus on digital transformation and e-commerce.
+      - icon: Briefcase
+        title: Career Paths
+        description: Opportunities in media, logistics, and fintech sectors.
+  - type: programs_list
+    version: "1.0"
+    title: Programs Available in Hamburg
+    filter_by_location: hamburg-germany
+  - type: testimonials
+    version: "1.0"
+    title: Hamburg Graduate Success Stories
+    filter_by_location: hamburg-germany
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Start Your Tech Career in Hamburg?
+    subtitle: Join our next cohort and transform your future.
+    cta_text: Apply Now
+    cta_url: /apply?location=hamburg-germany

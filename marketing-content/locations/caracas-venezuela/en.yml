@@ -1,0 +1,65 @@
+meta:
+  page_title: 4Geeks Academy Caracas | Coding Bootcamp in Venezuela
+  description: Join 4Geeks Caracas coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee.
+  robots: index, follow
+  og_image: /images/locations/caracas-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /caracas
+    - /campus/caracas
+    - /ve/caracas
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Francisco de Miranda
+        addressLocality: Caracas
+        addressCountry: VE
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Caracas Campus
+    title: 4Geeks Academy Caracas
+    subtitle: Venezuela's premier coding bootcamp with unlimited mentorship, career support, and a global community of developers.
+    cta_buttons:
+      - text: Apply Now
+        url: /apply?location=caracas-venezuela
+        variant: primary
+      - text: Download Syllabus
+        url: /syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: Why Choose Caracas?
+    items:
+      - icon: Building
+        title: Capital City
+        description: Venezuela's capital with strong educational institutions.
+      - icon: Users
+        title: Talented Community
+        description: Highly motivated developers seeking global opportunities.
+      - icon: TrendingUp
+        title: Remote Work
+        description: Train for international remote tech positions.
+      - icon: Briefcase
+        title: Global Careers
+        description: Access to worldwide remote job opportunities.
+  - type: programs_list
+    version: "1.0"
+    title: Programs Available in Caracas
+    filter_by_location: caracas-venezuela
+  - type: testimonials
+    version: "1.0"
+    title: Caracas Graduate Success Stories
+    filter_by_location: caracas-venezuela
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Start Your Tech Career in Caracas?
+    subtitle: Join our next cohort and transform your future.
+    cta_text: Apply Now
+    cta_url: /apply?location=caracas-venezuela

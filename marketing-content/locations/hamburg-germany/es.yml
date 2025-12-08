@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Hamburgo | Bootcamp de Programación en Alemania
+  description: Únete al bootcamp de programación 4Geeks en Hamburgo. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/hamburg-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /hamburg
+    - /campus/hamburg
+    - /de/hamburg
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Jungfernstieg 1
+        addressLocality: Hamburg
+        postalCode: "20095"
+        addressCountry: DE
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Hamburgo
+    title: 4Geeks Academy Hamburgo
+    subtitle: El bootcamp de programación líder del norte de Alemania con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=hamburg-germany
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Hamburgo?
+    items:
+      - icon: Building
+        title: Hub de Medios y Tech
+        description: Capital de medios de Alemania con una creciente escena tecnológica.
+      - icon: Users
+        title: Centro de Negocios
+        description: Principal hub de negocios con diversas oportunidades industriales.
+      - icon: TrendingUp
+        title: Innovación Digital
+        description: Fuerte enfoque en transformación digital y comercio electrónico.
+      - icon: Briefcase
+        title: Trayectorias Profesionales
+        description: Oportunidades en sectores de medios, logística y fintech.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Hamburgo
+    filter_by_location: hamburg-germany
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Hamburgo
+    filter_by_location: hamburg-germany
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Hamburgo?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=hamburg-germany

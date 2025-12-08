@@ -1,0 +1,66 @@
+meta:
+  page_title: 4Geeks Academy Dublín | Bootcamp de Programación en Irlanda
+  description: Únete al bootcamp de programación 4Geeks en Dublín. Aprende Desarrollo Full Stack, IA o Ciencia de Datos con mentoría ilimitada y garantía de empleo.
+  robots: index, follow
+  og_image: /images/locations/dublin-og.jpg
+  priority: 0.8
+  change_frequency: monthly
+  redirects:
+    - /dublin
+    - /campus/dublin
+    - /ie/dublin
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 1 Grand Canal Square
+        addressLocality: Dublin
+        postalCode: Dublin 2
+        addressCountry: IE
+sections:
+  - type: hero
+    version: "1.0"
+    badge: Campus Dublín
+    title: 4Geeks Academy Dublín
+    subtitle: El bootcamp de programación líder de Irlanda con mentoría ilimitada, apoyo profesional y una comunidad global de desarrolladores.
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/apply?location=dublin-ireland
+        variant: primary
+      - text: Descargar Programa
+        url: /es/syllabus
+        variant: outline
+  - type: features_grid
+    version: "1.0"
+    title: ¿Por qué elegir Dublín?
+    items:
+      - icon: Building
+        title: Sede de Gigantes Tech
+        description: Sede europea de Google, Facebook, LinkedIn y más.
+      - icon: Users
+        title: Habla Inglesa
+        description: Hub tecnológico de habla inglesa nativa en Europa.
+      - icon: TrendingUp
+        title: Sector en Crecimiento
+        description: Sector tecnológico en rápida expansión con fuerte apoyo gubernamental.
+      - icon: Briefcase
+        title: Oportunidades Laborales
+        description: Alta demanda de desarrolladores de empresas tecnológicas globales.
+  - type: programs_list
+    version: "1.0"
+    title: Programas Disponibles en Dublín
+    filter_by_location: dublin-ireland
+  - type: testimonials
+    version: "1.0"
+    title: Historias de Éxito de Graduados de Dublín
+    filter_by_location: dublin-ireland
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Iniciar tu Carrera Tech en Dublín?
+    subtitle: Únete a nuestra próxima cohorte y transforma tu futuro.
+    cta_text: Aplicar Ahora
+    cta_url: /es/apply?location=dublin-ireland
