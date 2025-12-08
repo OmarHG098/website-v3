@@ -63,6 +63,34 @@
 #            availability: "InStock"
 #            valid_from: "2024-01-01"
 #
+# 5. ADDING NEW SCHEMAS (not in this file):
+#
+#    Use the "custom" array to add schemas that don't exist in schema-org.yml:
+#
+#    schema:
+#      include:
+#        - "organization"
+#        - "courses:full-stack"
+#      custom:
+#        - type: "FAQPage"
+#          main_entity:
+#            - question: "How long is the bootcamp?"
+#              answer: "The program is 16 weeks part-time."
+#            - question: "Do you offer financing?"
+#              answer: "Yes, we offer multiple payment plans."
+#        - type: "BreadcrumbList"
+#          items:
+#            - name: "Home"
+#              url: "https://4geeks.com"
+#              position: 1
+#            - name: "Programs"
+#              url: "https://4geeks.com/programs"
+#              position: 2
+#            - name: "Full Stack"
+#              position: 3
+#
+#    Each item in the "custom" array becomes a separate JSON-LD block.
+#
 # NESTED SCHEMA REFERENCES:
 # -------------------------
 # Use colon notation to reference nested schemas:
