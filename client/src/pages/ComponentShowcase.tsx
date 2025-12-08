@@ -23,7 +23,9 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -363,23 +365,61 @@ function ComponentCard({
                   <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
                     <SelectValue placeholder="Default" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="min-w-[280px]">
                     {examples.length === 0 && (
                       <SelectItem value="__default__">Default (from schema)</SelectItem>
                     )}
-                    {examples.map(ex => (
-                      <SelectItem key={ex.name} value={ex.name}>
-                        <span className="flex items-center gap-2">
-                          {ex.name}
-                          {ex.variant && (
-                            <Badge variant="outline" className="text-xs py-0 px-1">
-                              {ex.variant}
+                    {(() => {
+                      // Group examples by variant
+                      const grouped = examples.reduce((acc, ex) => {
+                        const variant = ex.variant || 'default';
+                        if (!acc[variant]) acc[variant] = [];
+                        acc[variant].push(ex);
+                        return acc;
+                      }, {} as Record<string, typeof examples>);
+                      
+                      const variantOrder = ['singleColumn', 'showcase', 'twoColumn', 'default'];
+                      const sortedVariants = Object.keys(grouped).sort((a, b) => {
+                        const aIdx = variantOrder.indexOf(a);
+                        const bIdx = variantOrder.indexOf(b);
+                        return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+                      });
+                      
+                      const variantColors: Record<string, string> = {
+                        singleColumn: 'bg-primary/10 text-primary border-primary/20',
+                        showcase: 'bg-chart-1/10 text-chart-1 border-chart-1/20',
+                        twoColumn: 'bg-chart-2/10 text-chart-2 border-chart-2/20',
+                        default: 'bg-muted text-muted-foreground border-border',
+                      };
+                      
+                      const variantLabels: Record<string, string> = {
+                        singleColumn: 'Single Column',
+                        showcase: 'Showcase',
+                        twoColumn: 'Two Column',
+                        default: 'Default',
+                      };
+                      
+                      return sortedVariants.map(variant => (
+                        <SelectGroup key={variant}>
+                          <SelectLabel className="flex items-center gap-2 pl-2 py-2 border-b border-border/50 mb-1">
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs px-2 py-0.5 font-medium ${variantColors[variant] || variantColors.default}`}
+                            >
+                              {variantLabels[variant] || variant}
                             </Badge>
-                          )}
-                        </span>
-                      </SelectItem>
-                    ))}
-                    <SelectItem value="__add_new__" className="text-primary">
+                          </SelectLabel>
+                          {grouped[variant].map(ex => (
+                            <SelectItem key={ex.name} value={ex.name} className="pl-4">
+                              <span className="flex items-center gap-2">
+                                {ex.name}
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ));
+                    })()}
+                    <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
                       <div className="flex items-center gap-1">
                         <IconPlus className="w-3 h-3" />
                         Add new example
