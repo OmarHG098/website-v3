@@ -24,7 +24,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
         <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
-          <div className="w-full md:w-5/12">
+          <div className="w-full md:w-5/12 space-y-6">
             {video_id ? (
               <div className="rounded-lg overflow-hidden">
                 <LiteYouTubeEmbed
@@ -42,14 +42,8 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
                 data-testid="img-project-showcase"
               />
             ) : null}
-          </div>
 
-          <div className="w-full md:w-7/12">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6" data-testid="text-project-title">
-              Project: {project_title}
-            </h3>
-
-            <div className="mb-6">
+            <div>
               <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                 {">"} MADE BY
               </p>
@@ -87,6 +81,12 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="w-full md:w-7/12">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6" data-testid="text-project-title">
+              Project: {project_title}
+            </h3>
 
             <div>
               <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
