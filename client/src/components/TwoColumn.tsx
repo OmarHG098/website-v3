@@ -130,7 +130,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
   const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
 
-  const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.button;
+  const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.bullet_groups || column.footer_description || column.button;
 
   return (
     <div className={`flex flex-col ${gapClass}`}>
