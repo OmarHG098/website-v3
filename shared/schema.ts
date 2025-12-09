@@ -51,7 +51,7 @@ export const heroSingleColumnSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   badge: z.string().optional(),
-  cta_buttons: z.array(ctaButtonSchema).min(1),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
   trust_bar: trustBarSchema.optional(),
   award_badges: z.array(awardBadgeSchema).optional(),
 }).strict();
