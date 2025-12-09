@@ -1,10 +1,8 @@
 import Header from "@/components/Header";
-import { Card } from "@/components/ui/card";
-import { IconFlag, IconSchool } from "@tabler/icons-react";
-import Marquee from "react-fast-marquee";
 import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
+import TestimonialsSlide, { type TestimonialsSlideData } from "@/components/TestimonialsSlide";
 import { WhosHiringSection } from "@/components/career-programs/WhosHiringSection";
 import { HeroTwoColumn } from "@/components/hero/HeroTwoColumn";
 import type { WhosHiringSection as WhosHiringSectionType, HeroTwoColumn as HeroTwoColumnType } from "@shared/schema";
@@ -48,7 +46,6 @@ import logoMdc from "@assets/mdc_ce_1764720089793.png";
 import logoBeaconCouncil from "@assets/beacon_council_1764720100166.jpg";
 import logoBlackstone from "@assets/blackstone_1764720124773.png";
 import logoCemex from "@assets/cemex_1764720131666.png";
-import vectorStroke from "@assets/vector-stroke-light_1764729540525.png";
 
 // ============================================
 // DATA
@@ -130,24 +127,7 @@ const statsData: StatsSectionData = {
   description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
 };
 
-interface Testimonial {
-  name: string;
-  img: string;
-  status: string;
-  country: {
-    iso: string;
-    name: string;
-  };
-  contributor: string;
-  description: string;
-  achievement?: string;
-}
-
-const testimonialsData: {
-  title: string;
-  description: string;
-  testimonials: Testimonial[];
-} = {
+const testimonialsData: TestimonialsSlideData = {
   title: "Real Careers Start Here — Just Ask Our Students",
   description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing.",
   testimonials: [
@@ -332,103 +312,6 @@ const careerProcessData: NumberedStepsData = {
 };
 
 // ============================================
-// SECTION COMPONENTS
-// ============================================
-
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
-  return (
-    <Card 
-      className="w-[300px] h-[490px] -mx-7 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
-      data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
-    >
-      <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
-        <img 
-          src={testimonial.img} 
-          alt={testimonial.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      
-      <div className="p-4 flex flex-col flex-1 overflow-hidden">
-        <div className="flex items-center justify-between mb-1 gap-2">
-          <h4 className="font-bold text-foreground text-lg leading-tight">{testimonial.name}</h4>
-          {testimonial.status === "Graduated" && (
-            <div className="flex items-center gap-1 text-muted-foreground flex-shrink-0">
-              <IconSchool className="w-5 h-5" />
-              <span className="text-base">Graduated</span>
-            </div>
-          )}
-        </div>
-        
-        <div className="flex items-center gap-1.5 mb-1">
-          <span 
-            className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`}
-            style={{ transform: 'scale(0.8)', transformOrigin: 'left center' }}
-          />
-          <span className="text-base text-foreground">{testimonial.country.name}</span>
-        </div>
-        
-        <p className="text-base text-muted-foreground mb-2">
-          Contributor: {testimonial.contributor}
-        </p>
-        
-        <div className="border-t border-border mb-2" />
-        
-        <p className="text-base text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
-          {testimonial.description}
-        </p>
-        
-        {testimonial.achievement ? (
-          <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
-            <IconFlag className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
-              {testimonial.achievement}
-            </p>
-          </div>
-        ) : (
-          <div className="h-10 mt-auto flex-shrink-0" />
-        )}
-      </div>
-    </Card>
-  );
-}
-
-function TestimonialsSection({ data }: { data: typeof testimonialsData }) {
-  return (
-    <section 
-      className="py-12 md:py-16 bg-sidebar"
-      data-testid="section-testimonials"
-    >
-      <div className="max-w-6xl mx-auto px-4 mb-8">
-        <h2 
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-4"
-          data-testid="text-testimonials-title"
-        >
-          {data.title}
-        </h2>
-        <p 
-          className="text-center text-lg text-muted-foreground max-w-3xl mx-auto"
-          data-testid="text-testimonials-description"
-        >
-          {data.description}
-        </p>
-      </div>
-      
-      <Marquee 
-        gradient={false} 
-        speed={40} 
-        pauseOnHover={true}
-        data-testid="marquee-testimonials"
-      >
-        {data.testimonials.map((testimonial, index) => (
-          <TestimonialCard key={index} testimonial={testimonial} />
-        ))}
-      </Marquee>
-    </section>
-  );
-}
-
-// ============================================
 // MAIN PAGE COMPONENT
 // ============================================
 export default function GeekForceCareerSupport() {
@@ -443,7 +326,7 @@ export default function GeekForceCareerSupport() {
         <TwoColumn data={hyperpersonalizedTwoColumnData} />
         <WhosHiringSection data={whosHiringData} />
         <StatsSection data={statsData} />
-        <TestimonialsSection data={testimonialsData} />
+        <TestimonialsSlide data={testimonialsData} />
       </main>
     </div>
   );
