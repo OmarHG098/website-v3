@@ -98,8 +98,8 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   </span>
                 </div>
                 
-                {/* Content */}
-                <div className="flex items-start gap-2 mb-2">
+                {/* Content - aligned with center of circle (circle is 40px, so center is at 20px) */}
+                <div className="flex items-start gap-2 mb-2 pt-2">
                   <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                     {getIcon(step.icon)}
                   </div>
