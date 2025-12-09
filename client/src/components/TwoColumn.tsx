@@ -255,7 +255,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               }
               @media (min-width: 768px) {
                 #${imageId} {
-                  max-width: ${column.image_max_width || "none"};
+                  max-width: ${column.image_max_width || "100%"};
                   max-height: ${column.image_max_height || "none"};
                 }
               }

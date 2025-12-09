@@ -87,6 +87,22 @@ props:
       image_alt:
         type: string
         description: "Image alt text"
+      image_max_width:
+        type: string
+        description: "Maximum width for image on desktop (e.g., '500px', '80%')"
+        example: "500px"
+      image_max_height:
+        type: string
+        description: "Maximum height for image on desktop"
+        example: "400px"
+      image_mobile_max_width:
+        type: string
+        description: "Maximum width for image on mobile (< 768px)"
+        example: "280px"
+        default: "280px"
+      image_mobile_max_height:
+        type: string
+        description: "Maximum height for image on mobile"
       heading:
         type: string
         description: "Main heading (h2)"
@@ -126,6 +142,11 @@ props:
           heading:
             type: string
             description: "Bold heading before the text"
+      bullets_visible:
+        type: number
+        description: "Number of bullets to show on mobile/tablet before 'Show more' toggle"
+        example: 2
+        default: 1
       bullet_icon:
         type: string
         description: "Default Tabler icon for all bullets (e.g., 'Check', 'ArrowRight')"
