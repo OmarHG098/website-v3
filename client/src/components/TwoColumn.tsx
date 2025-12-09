@@ -244,34 +244,27 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
       )}
       
       {column.image && (() => {
-        const hasMobileStyles = column.image_mobile_max_width || column.image_mobile_max_height;
-        const imageId = hasMobileStyles ? `img-${Math.random().toString(36).substr(2, 9)}` : undefined;
+        const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
         
         return (
           <div className={`flex w-full ${getResponsiveJustifyClass(column.justify)}`}>
-            {hasMobileStyles && (
-              <style>{`
+            <style>{`
+              #${imageId} {
+                max-width: ${column.image_mobile_max_width || "280px"};
+                max-height: ${column.image_mobile_max_height || column.image_max_height || "none"};
+              }
+              @media (min-width: 768px) {
                 #${imageId} {
-                  max-width: ${column.image_mobile_max_width || column.image_max_width || "none"};
-                  max-height: ${column.image_mobile_max_height || column.image_max_height || "none"};
+                  max-width: ${column.image_max_width || "none"};
+                  max-height: ${column.image_max_height || "none"};
                 }
-                @media (min-width: 768px) {
-                  #${imageId} {
-                    max-width: ${column.image_max_width || "none"};
-                    max-height: ${column.image_max_height || "none"};
-                  }
-                }
-              `}</style>
-            )}
+              }
+            `}</style>
             <img 
               id={imageId}
               src={column.image} 
               alt={column.image_alt || "Section image"}
               className="rounded-md w-full h-auto"
-              style={!hasMobileStyles ? {
-                maxWidth: column.image_max_width || undefined,
-                maxHeight: column.image_max_height || undefined,
-              } : undefined}
               loading="lazy"
               data-testid="img-two-column"
             />

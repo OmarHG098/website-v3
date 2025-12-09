@@ -82,6 +82,7 @@ const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
   right: {
     image: careerSupportImage,
     image_alt: "Career support team members collaborating",
+    image_mobile_max_width: "280px"
   },
   left: {
     heading: "Unlimited Career Support – Always Ahead of Job Market Trends",
@@ -109,12 +110,12 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   left: {
     image: communityImage,
     image_alt: "4Geeks Academy community members collaborating on a project",
-    image_max_width: "440px",
     justify: "start",
   },
   right: {
     heading: "Accelerate Your Results with Hyperpersonalized Career Support",
     description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:",
+    bullets_visible: 2,
     bullets: [
       { text: "Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects." },
       { text: "Practice technical interviews and behavioral questions with AI-guided exercises." },
