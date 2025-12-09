@@ -37,24 +37,40 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
   const hasValue = Boolean(item.value);
   const hasDescription = Boolean(item.description);
   
-  // Use vertical layout when there's description but no value (feature cards)
-  // Use horizontal layout when there's a value (stats cards)
-  const useVerticalLayout = hasDescription && !hasValue;
+  // Cards with descriptions use vertical layout on desktop, horizontal on mobile
+  const hasDescriptionNoValue = hasDescription && !hasValue;
   
-  if (useVerticalLayout) {
+  if (hasDescriptionNoValue) {
     return (
       <Card 
-        className="p-4 md:p-5"
+        className="p-3 md:p-5"
         data-testid={`card-feature-${itemId}`}
       >
-        <div className="w-12 h-12 md:w-14 md:h-14 mb-3">
-          {getIcon(item.icon, "w-full h-full", iconColor)}
+        {/* Mobile: horizontal layout (smaller) */}
+        <div className="flex items-center gap-3 md:hidden">
+          <div className="flex-shrink-0 w-10 h-10">
+            {getIcon(item.icon, "w-full h-full", iconColor)}
+          </div>
+          <div>
+            <div className="font-semibold text-foreground text-sm">
+              {item.title}
+            </div>
+            <div className="text-xs text-muted-foreground mt-0.5">
+              {item.description}
+            </div>
+          </div>
         </div>
-        <div className="font-semibold text-foreground text-base md:text-lg">
-          {item.title}
-        </div>
-        <div className="text-sm text-muted-foreground mt-1">
-          {item.description}
+        {/* Desktop: vertical layout */}
+        <div className="hidden md:block">
+          <div className="w-14 h-14 mb-3">
+            {getIcon(item.icon, "w-full h-full", iconColor)}
+          </div>
+          <div className="font-semibold text-foreground text-lg">
+            {item.title}
+          </div>
+          <div className="text-sm text-muted-foreground mt-1">
+            {item.description}
+          </div>
         </div>
       </Card>
     );
