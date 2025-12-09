@@ -179,7 +179,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                   return (
                     <li 
                       key={index} 
-                      className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden md:flex" : ""}`}
+                      className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
                     >
                       <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
                         {column.bullet_char 
@@ -200,7 +200,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               {column.bullets.length > 1 && (
                 <button
                   onClick={() => setBulletsExpanded(!bulletsExpanded)}
-                  className="md:hidden mt-4 text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1"
+                  className="lg:hidden mt-4 text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1"
                   data-testid="button-toggle-bullets"
                 >
                   {bulletsExpanded ? (
