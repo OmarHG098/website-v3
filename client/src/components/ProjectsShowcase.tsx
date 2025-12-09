@@ -93,17 +93,6 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
 
         <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
-            {project_url && (
-              <a
-                href={project_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-primary hover:underline mb-4"
-                data-testid="link-project-url"
-              >
-                {project_title} {">"}
-              </a>
-            )}
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
                 {renderMedia()}
@@ -149,6 +138,18 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
                 </div>
               )}
             </div>
+
+            {project_url && (
+              <a
+                href={project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline mt-4"
+                data-testid="link-project-url"
+              >
+                {project_title} {">"}
+              </a>
+            )}
           </div>
 
           <div className="w-full md:w-1/2 space-y-6">
