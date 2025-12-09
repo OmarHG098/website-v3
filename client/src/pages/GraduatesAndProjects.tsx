@@ -33,6 +33,11 @@ const projectsData: ProjectsShowcaseSection = {
       ],
       media: [
         {
+          type: "image",
+          src: "/attached_assets/image_1765318479754.png",
+          alt: "Raspberry Sky - Satellite access for everyone",
+        },
+        {
           type: "video",
           src: "OZfv9kYl0_o",
         },
@@ -60,6 +65,11 @@ const projectsData: ProjectsShowcaseSection = {
         },
       ],
       media: [
+        {
+          type: "image",
+          src: "/attached_assets/image_1765318521904.png",
+          alt: "IMS Dashboard",
+        },
         {
           type: "video",
           src: "TTjSZ2Lud2E",
@@ -110,6 +120,11 @@ const projectsData: ProjectsShowcaseSection = {
       media: [
         {
           type: "image",
+          src: "/attached_assets/image_1765318556862.png",
+          alt: "WonderTracker - Plan Travel, Save Memories",
+        },
+        {
+          type: "image",
           src: "/attached_assets/fernando-funez_1765315920677.jpg",
           alt: "WonderTracker team member",
         },
@@ -132,6 +147,11 @@ const projectsData: ProjectsShowcaseSection = {
         },
       ],
       media: [
+        {
+          type: "image",
+          src: "/attached_assets/image_1765318600261.png",
+          alt: "reMindful - Reduce, Reuse, Recycle",
+        },
         {
           type: "video",
           src: "cKcZD0_1IKk",
