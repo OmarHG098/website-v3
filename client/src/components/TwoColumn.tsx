@@ -172,7 +172,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           )}
           
           {column.bullets && column.bullets.length > 0 && (() => {
-            const visibleCount = column.bullets_visible ?? 1;
+            const visibleCount = column.bullets_visible ?? column.bullets.length;
             const hiddenCount = column.bullets.length - visibleCount;
             const hasHiddenBullets = hiddenCount > 0;
             

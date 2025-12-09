@@ -144,9 +144,8 @@ props:
             description: "Bold heading before the text"
       bullets_visible:
         type: number
-        description: "Number of bullets to show on mobile/tablet before 'Show more' toggle"
+        description: "Number of bullets to show on mobile/tablet before 'Show more' toggle. If not set, all bullets are shown."
         example: 2
-        default: 1
       bullet_icon:
         type: string
         description: "Default Tabler icon for all bullets (e.g., 'Check', 'ArrowRight')"
