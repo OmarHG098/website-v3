@@ -76,13 +76,11 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
 
         {/* Mobile: Vertical timeline */}
         <div className="md:hidden relative pl-16">
-          {/* Vertical line - centered with circles */}
-          <div className="absolute left-[1.25rem] top-6 bottom-6 w-0.5 bg-primary/30 z-0" />
-          
           {(data.steps || []).map((step, index) => {
             const bulletChar = step.bullet_char || data.bullet_char;
             const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
             const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
+            const isLast = index === (data.steps || []).length - 1;
             
             return (
               <div 
@@ -90,13 +88,17 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 className="relative pb-5 last:pb-0"
                 data-testid={`numbered-step-mobile-${index + 1}`}
               >
-                {/* Circle on the left */}
+                {/* Circle on the left - centered at 28px from container edge */}
                 <div className="absolute left-[-3.5rem] w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center z-10">
                   <div className="absolute inset-0 bg-primary/10 rounded-full" />
                   <span className="text-base font-bold text-primary relative z-10">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
+                {/* Connecting line to next circle - only if not last */}
+                {!isLast && (
+                  <div className="absolute left-[-2.375rem] top-10 bottom-[-0.75rem] w-0.5 bg-primary/30 z-0" />
+                )}
                 
                 {/* Content - aligned with center of circle (circle is 40px, so center is at 20px) */}
                 <div className="flex items-start gap-2 mb-2 pt-2">
