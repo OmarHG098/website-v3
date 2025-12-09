@@ -605,7 +605,7 @@ function ComponentCard({
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
                 <span className="text-xs text-muted-foreground">
-                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '100%'}
+                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '1440 × 900'}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -634,7 +634,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('desktop')}
-                  title="Desktop (auto)"
+                  title="Desktop (1440 × 900)"
                   data-testid={`button-viewport-desktop-${componentType}`}
                 >
                   <IconDeviceDesktop className="w-4 h-4" />
@@ -660,7 +660,7 @@ function ComponentCard({
                       ? '667px'  // iPhone SE/8 screen height
                       : previewViewport === 'tablet'
                         ? '1024px'  // iPad portrait height
-                        : `${Math.max(iframeHeight, 200)}px`,
+                        : '900px',  // Desktop height (1440×900)
                     minHeight: '200px',
                   }}
                   title={`Preview ${componentType}`}
