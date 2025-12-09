@@ -1,5 +1,4 @@
 import * as TablerIcons from "@tabler/icons-react";
-import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
 
 export interface NumberedStepsStep {
@@ -31,13 +30,6 @@ interface NumberedStepsProps {
 }
 
 const getIcon = (iconName: string, className?: string) => {
-  // Check custom icons first
-  const CustomIcon = getCustomIcon(iconName);
-  if (CustomIcon) {
-    return <CustomIcon width="24px" height="24px" className={className || "text-primary"} />;
-  }
-  
-  // Fall back to Tabler icons
   const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
   const IconComponent = icons[`Icon${iconName}`];
   return IconComponent ? <IconComponent size={24} className={className || "text-primary"} /> : null;

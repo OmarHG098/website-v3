@@ -74,7 +74,7 @@ props:
       icon:
         type: string
         required: true
-        description: "Icon name - checks custom icons first (e.g., 'CodeWindow', 'Monitor'), then falls back to Tabler icons (e.g., 'School', 'Briefcase')"
+        description: "Tabler icon name without 'Icon' prefix"
         example: "School"
       text:
         type: string
