@@ -129,7 +129,7 @@ const graduateTestimonialData: TwoColumnSection = {
   type: "two_column",
   proportions: [5, 7],
   background: "bg-background",
-  alignment: "center",
+  alignment: "start",
   heading_above_on_md: false,
   left: {
     heading: "Hear From One of Our Graduates",
