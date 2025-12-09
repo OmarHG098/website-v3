@@ -138,14 +138,14 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
   return (
     <section className={`py-12 md:py-16 ${background}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Mobile: Title centered above carousel */}
-        <h3 className="text-2xl font-bold text-foreground text-center mb-6 md:hidden" data-testid="text-project-title-mobile">
+        {/* Mobile/md: Title centered above carousel */}
+        <h3 className="text-2xl font-bold text-foreground text-center mb-6 lg:hidden" data-testid="text-project-title-mobile">
           {project_title}
         </h3>
 
-        <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
-          {/* Media column */}
-          <div className="w-full md:w-1/2">
+        <div className={`flex flex-col ${mediaPosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-12 items-start`}>
+          {/* Media column - full width on mobile, smaller on md, half on lg+ */}
+          <div className="w-full md:w-3/4 md:mx-auto lg:w-1/2 lg:mx-0">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
                 {renderMedia()}
@@ -192,27 +192,41 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
               )}
             </div>
 
+            {/* Desktop only: project URL below carousel */}
             {project_url && (
               <a
                 href={project_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-primary hover:underline mt-4"
+                className="hidden lg:inline-flex items-center gap-1 text-primary hover:underline mt-4"
                 data-testid="link-project-url"
               >
                 {project_title} {">"}
               </a>
             )}
 
-            {/* Mobile: Info in a card below carousel */}
-            <Card className="mt-6 p-6 space-y-6 md:hidden">
+            {/* Mobile/md: Info in a card below carousel */}
+            <Card className="mt-6 p-6 space-y-6 lg:hidden">
               <InfoContent />
             </Card>
+
+            {/* Mobile/md: project URL below card */}
+            {project_url && (
+              <a
+                href={project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex lg:hidden items-center gap-1 text-primary hover:underline mt-4"
+                data-testid="link-project-url-mobile"
+              >
+                {project_title} {">"}
+              </a>
+            )}
           </div>
 
-          {/* Desktop: Text column with title and info */}
-          <div className="hidden md:block w-full md:w-1/2 space-y-6">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground" data-testid="text-project-title">
+          {/* Desktop (lg+): Text column with title and info */}
+          <div className="hidden lg:block w-full lg:w-1/2 space-y-6">
+            <h3 className="text-2xl lg:text-3xl font-bold text-foreground" data-testid="text-project-title">
               {project_title}
             </h3>
 
