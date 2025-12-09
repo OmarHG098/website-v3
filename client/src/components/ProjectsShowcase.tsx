@@ -188,7 +188,7 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
                       )}
                     </div>
                     {creator.role && (
-                      <p className="text-sm text-muted-foreground">{creator.role}</p>
+                      <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
                     )}
                   </div>
                 ))}
