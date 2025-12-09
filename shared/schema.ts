@@ -355,6 +355,7 @@ export const projectsSectionSchema = z.object({
 export const featuresGridHighlightItemSchema = z.object({
   id: z.string().optional(),
   icon: z.string(),
+  icon_color: z.string().optional(),
   value: z.string().optional(),
   title: z.string(),
   description: z.string().optional(),
@@ -363,6 +364,7 @@ export const featuresGridHighlightItemSchema = z.object({
 export const featuresGridDetailedItemSchema = z.object({
   id: z.string().optional(),
   icon: z.string(),
+  icon_color: z.string().optional(),
   category: z.string().optional(),
   title: z.string(),
   description: z.string(),

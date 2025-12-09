@@ -63,6 +63,10 @@ highlight_item_props:
       type: string
       required: true
       description: Icon name - checks custom icons first, then falls back to Tabler icons
+    icon_color:
+      type: string
+      required: false
+      description: Hex color for this item's icon (e.g., "#0097CD"). Overrides section-level icon_color.
     value:
       type: string
       required: false
@@ -87,6 +91,10 @@ detailed_item_props:
       type: string
       required: true
       description: Icon name - checks custom icons first, then falls back to Tabler icons
+    icon_color:
+      type: string
+      required: false
+      description: Hex color for this item's icon (e.g., "#0097CD"). Overrides section-level icon_color.
     category:
       type: string
       required: false

@@ -193,7 +193,7 @@ function HighlightGrid({ data }: { data: FeaturesGridHighlightSection }) {
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
           {data.items.map((item, index) => (
-            <HighlightCard key={item.id || index} item={item} iconColor={data.icon_color} />
+            <HighlightCard key={item.id || index} item={item} iconColor={item.icon_color || data.icon_color} />
           ))}
         </div>
       </div>
@@ -236,7 +236,7 @@ function DetailedGrid({ data }: { data: FeaturesGridDetailedSection }) {
               key={item.id || index} 
               item={item} 
               collapsible={collapsible}
-              iconColor={data.icon_color}
+              iconColor={item.icon_color || data.icon_color}
             />
           ))}
         </div>
