@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn } from "@shared/schema";
@@ -122,6 +123,7 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
 };
 
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
+  const [bulletsExpanded, setBulletsExpanded] = useState(false);
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
@@ -170,24 +172,51 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           )}
           
           {column.bullets && column.bullets.length > 0 && (
-            <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
-              {column.bullets.map((bullet, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
-                    {column.bullet_char 
-                      ? column.bullet_char 
-                      : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
-                    }
-                  </span>
-                  <div className="flex flex-col">
-                    {bullet.heading && (
-                      <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
-                    )}
-                    <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="w-full">
+              <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
+                {column.bullets.map((bullet, index) => {
+                  const isHiddenOnMobile = !bulletsExpanded && index > 0;
+                  return (
+                    <li 
+                      key={index} 
+                      className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden md:flex" : ""}`}
+                    >
+                      <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
+                        {column.bullet_char 
+                          ? column.bullet_char 
+                          : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
+                        }
+                      </span>
+                      <div className="flex flex-col">
+                        {bullet.heading && (
+                          <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                        )}
+                        <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              {column.bullets.length > 1 && (
+                <button
+                  onClick={() => setBulletsExpanded(!bulletsExpanded)}
+                  className="md:hidden mt-4 text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1"
+                  data-testid="button-toggle-bullets"
+                >
+                  {bulletsExpanded ? (
+                    <>
+                      {getIcon("ChevronUp", "w-4 h-4")}
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      {getIcon("ChevronDown", "w-4 h-4")}
+                      Show {column.bullets.length - 1} more
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
           )}
           
           {column.button && (

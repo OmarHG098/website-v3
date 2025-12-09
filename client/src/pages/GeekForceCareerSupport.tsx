@@ -82,8 +82,6 @@ const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
   right: {
     image: careerSupportImage,
     image_alt: "Career support team members collaborating",
-    image_width: "500px",
-    image_md_width: "350px"
   },
   left: {
     heading: "Unlimited Career Support – Always Ahead of Job Market Trends",
