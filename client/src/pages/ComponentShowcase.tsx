@@ -653,7 +653,7 @@ function ComponentCard({
               >
                 <iframe
                   ref={iframeRef}
-                  src="/preview-frame"
+                  src="/preview-frame?debug=false"
                   className="w-full border-0"
                   style={{ 
                     height: previewViewport === 'mobile' 
