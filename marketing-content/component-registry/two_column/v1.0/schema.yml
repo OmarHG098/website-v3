@@ -62,6 +62,13 @@ props:
     required: false
     description: "Reverse column order on mobile devices"
     default: false
+
+  heading_above_on_md:
+    type: boolean
+    required: false
+    description: "Whether the heading appears above both columns on tablet (md) screens. When true, heading is centered above columns on tablet. When false, heading stays within its column."
+    default: true
+    example: false
     
   left:
     type: object

@@ -396,6 +396,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
 
   const backgroundClass = data.background || "bg-background";
   
+  const headingAboveOnMd = data.heading_above_on_md !== false;
   const tabletHeading = data.left?.heading || data.right?.heading;
   const leftHasHeading = !!data.left?.heading;
   const rightHasHeading = !!data.right?.heading;
@@ -407,7 +408,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
       style={containerStyle}
     >
       <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
-        {tabletHeading && (
+        {headingAboveOnMd && tabletHeading && (
           <h2 
             className="hidden md:block lg:hidden text-3xl md:text-4xl font-bold text-foreground text-center mb-8"
             data-testid="text-two-column-heading-tablet"
@@ -418,13 +419,13 @@ export function TwoColumn({ data }: TwoColumnProps) {
         <div className={`grid grid-cols-1 md:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 md:order-1" : ""}`}>
-              <ColumnContent column={data.left} hideHeadingOnTablet={leftHasHeading} />
+              <ColumnContent column={data.left} hideHeadingOnTablet={headingAboveOnMd && leftHasHeading} />
             </div>
           )}
           
           {data.right && (
             <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 md:order-2" : ""}`}>
-              <ColumnContent column={data.right} hideHeadingOnTablet={rightHasHeading} />
+              <ColumnContent column={data.right} hideHeadingOnTablet={headingAboveOnMd && rightHasHeading} />
             </div>
           )}
         </div>

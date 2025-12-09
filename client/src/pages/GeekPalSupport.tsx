@@ -62,6 +62,7 @@ const humanAiData: TwoColumnSection = {
   proportions: [7, 5],
   background: "bg-background",
   alignment: "center",
+  heading_above_on_md: false,
   left: {
     heading: "Human + AI: The Perfect Support Duo",
     description: "Learning works best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey.",

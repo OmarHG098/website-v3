@@ -300,6 +300,7 @@ export const twoColumnSectionSchema = z.object({
   left: twoColumnColumnSchema.optional(),
   right: twoColumnColumnSchema.optional(),
   reverse_on_mobile: z.boolean().optional(),
+  heading_above_on_md: z.boolean().optional(),
   gap: z.string().optional(),
   padding_left: z.string().optional(),
   padding_right: z.string().optional(),
