@@ -4,6 +4,7 @@ import FeaturesGrid from "@/components/FeaturesGrid";
 import { TwoColumn } from "@/components/TwoColumn";
 import type { HeroTwoColumn, FeaturesGridHighlightSection, TwoColumnSection } from "@shared/schema";
 import humanAiImage from "@assets/Group_6685_(1)_1765300162049.png";
+import communityImage from "@assets/image_1765300905942.png";
 
 const heroData: HeroTwoColumn = {
   type: "hero",
@@ -96,6 +97,34 @@ const humanAiData: TwoColumnSection = {
   },
 };
 
+const communityData: TwoColumnSection = {
+  type: "two_column",
+  proportions: [5, 7],
+  background: "bg-primary/5",
+  alignment: "center",
+  heading_above_on_md: false,
+  left: {
+    image: communityImage,
+    image_alt: "Global developer community video call with Slack",
+    image_max_width: "100%",
+  },
+  right: {
+    heading: "A Global Developer Community Supporting Your Growth",
+    description: "4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.",
+    bullet_groups: [
+      {
+        title: "Slack Community (6,000+ Members)",
+        description: "Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).",
+      },
+      {
+        title: "4Geeks.com",
+        description: "Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.",
+      },
+    ],
+    font_size: "base",
+  },
+};
+
 export default function GeekPalSupport() {
   return (
     <div className="min-h-screen bg-background">
@@ -104,6 +133,7 @@ export default function GeekPalSupport() {
         <Hero data={heroData} />
         <FeaturesGrid data={advanceFasterData} />
         <TwoColumn data={humanAiData} />
+        <TwoColumn data={communityData} />
       </main>
     </div>
   );
