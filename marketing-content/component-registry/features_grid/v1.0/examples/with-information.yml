@@ -4,6 +4,7 @@ variant: highlight
 title: Advance Faster, Never Lose Momentum
 subtitle: The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help.
 columns: 4
+icon_color: "#0097CD"
 items:
   - icon: PeopleGroup
     title: "7:1 Student-Teacher Ratio"

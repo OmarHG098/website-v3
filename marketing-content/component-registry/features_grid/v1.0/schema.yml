@@ -42,6 +42,11 @@ props:
     required: false
     description: Background color class (e.g., "bg-muted/30", "bg-primary/5")
 
+  icon_color:
+    type: string
+    required: false
+    description: Hex color for all icons in this grid (e.g., "#0097CD" for blue). If not specified, icons use their default colors.
+
   items:
     type: array
     required: true

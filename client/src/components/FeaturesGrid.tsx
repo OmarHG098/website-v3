@@ -15,20 +15,24 @@ interface FeaturesGridProps {
   data: FeaturesGridSection;
 }
 
-function getIcon(iconName: string, className?: string) {
+function getIcon(iconName: string, className?: string, color?: string) {
   const CustomIcon = getCustomIcon(iconName);
   if (CustomIcon) {
-    return <CustomIcon width="100%" height="100%" className={className || "text-primary"} />;
+    // Custom icons accept a color prop for their fill/stroke
+    return <CustomIcon width="100%" height="100%" color={color} className={className} />;
   }
   
-  const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string }>;
+  const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string; style?: React.CSSProperties }>;
   if (IconComponent) {
-    return <IconComponent className={className || "w-full h-full text-primary"} />;
+    // Tabler icons use style for color when a hex color is provided
+    const style = color ? { color } : undefined;
+    return <IconComponent className={className || "w-full h-full text-primary"} style={style} />;
   }
-  return <TablerIcons.IconBox className={className || "w-full h-full text-primary"} />;
+  const style = color ? { color } : undefined;
+  return <TablerIcons.IconBox className={className || "w-full h-full text-primary"} style={style} />;
 }
 
-function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
+function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; iconColor?: string }) {
   const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
   const hasValue = Boolean(item.value);
   const hasDescription = Boolean(item.description);
@@ -44,7 +48,7 @@ function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
         data-testid={`card-feature-${itemId}`}
       >
         <div className="w-12 h-12 md:w-14 md:h-14 mb-3">
-          {getIcon(item.icon, "w-full h-full text-primary")}
+          {getIcon(item.icon, "w-full h-full", iconColor)}
         </div>
         <div className="font-semibold text-foreground text-base md:text-lg">
           {item.title}
@@ -62,7 +66,7 @@ function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
       data-testid={`card-feature-${itemId}`}
     >
       <div className="flex-shrink-0 w-10 h-10 md:w-16 md:h-16">
-        {getIcon(item.icon, "w-full h-full text-primary")}
+        {getIcon(item.icon, "w-full h-full", iconColor)}
       </div>
       <div>
         {item.value && (
@@ -85,10 +89,12 @@ function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
 
 function DetailedCard({ 
   item, 
-  collapsible 
+  collapsible,
+  iconColor
 }: { 
   item: FeaturesGridDetailedItem; 
   collapsible: boolean;
+  iconColor?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
@@ -111,7 +117,7 @@ function DetailedCard({
           </h3>
         </div>
         <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
-          {getIcon(item.icon)}
+          {getIcon(item.icon, "w-full h-full", iconColor)}
         </div>
         {collapsible && (
           <TablerIcons.IconChevronDown 
@@ -187,7 +193,7 @@ function HighlightGrid({ data }: { data: FeaturesGridHighlightSection }) {
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
           {data.items.map((item, index) => (
-            <HighlightCard key={item.id || index} item={item} />
+            <HighlightCard key={item.id || index} item={item} iconColor={data.icon_color} />
           ))}
         </div>
       </div>
@@ -230,6 +236,7 @@ function DetailedGrid({ data }: { data: FeaturesGridDetailedSection }) {
               key={item.id || index} 
               item={item} 
               collapsible={collapsible}
+              iconColor={data.icon_color}
             />
           ))}
         </div>

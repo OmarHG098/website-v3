@@ -378,6 +378,7 @@ export const featuresGridHighlightSectionSchema = z.object({
   subtitle: z.string().optional(),
   items: z.array(featuresGridHighlightItemSchema),
   columns: z.number().optional(),
+  icon_color: z.string().optional(),
   background: z.string().optional(),
 });
 
@@ -389,6 +390,7 @@ export const featuresGridDetailedSectionSchema = z.object({
   subtitle: z.string().optional(),
   items: z.array(featuresGridDetailedItemSchema),
   columns: z.number().optional(),
+  icon_color: z.string().optional(),
   collapsible_mobile: z.boolean().optional(),
   background: z.string().optional(),
 });
