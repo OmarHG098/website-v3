@@ -45,21 +45,6 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
 
             <div>
               <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                {">"} DESCRIPTION
-              </p>
-              <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
-                {description}
-              </p>
-            </div>
-          </div>
-
-          <div className="w-full md:w-1/2">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6" data-testid="text-project-title">
-              Project: {project_title}
-            </h3>
-
-            <div>
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                 {">"} MADE BY
               </p>
               <div className="space-y-2">
@@ -96,6 +81,21 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
                 ))}
               </div>
             </div>
+
+            <div>
+              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+                {">"} DESCRIPTION
+              </p>
+              <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
+                {description}
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground" data-testid="text-project-title">
+              Project: {project_title}
+            </h3>
           </div>
         </div>
       </div>
