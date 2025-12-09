@@ -342,7 +342,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
           >
             {data.title}
           </h2>
-          <p className="text-lg text-center text-muted-foreground mb-12">
+          <p className="text-lg text-center text-muted-foreground mb-6">
             {data.subtitle}
           </p>
 
