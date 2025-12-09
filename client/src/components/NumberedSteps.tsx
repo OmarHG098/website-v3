@@ -74,11 +74,78 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          <div className="hidden md:block absolute top-10 left-[16.67%] right-[16.67%] h-0.5 bg-primary/30 z-0" />
+        {/* Mobile: Vertical timeline */}
+        <div className="md:hidden relative pl-12">
+          {/* Vertical line */}
+          <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-primary/30 z-0" />
           
           {(data.steps || []).map((step, index) => {
-            const isLast = index === (data.steps || []).length - 1;
+            const bulletChar = step.bullet_char || data.bullet_char;
+            const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
+            const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
+            
+            return (
+              <div 
+                key={index} 
+                className="relative pb-8 last:pb-0"
+                data-testid={`numbered-step-mobile-${index + 1}`}
+              >
+                {/* Circle on the left */}
+                <div className="absolute left-[-2rem] w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center z-10">
+                  <div className="absolute inset-0 bg-primary/10 rounded-full" />
+                  <span className="text-sm font-bold text-primary relative z-10">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                
+                {/* Content */}
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    {getIcon(step.icon)}
+                  </div>
+                  {step.title && (
+                    <h3 className="text-base font-semibold text-foreground">
+                      {step.title}
+                    </h3>
+                  )}
+                  {step.text && !step.title && (
+                    <p className="text-sm text-foreground">
+                      {step.text}
+                    </p>
+                  )}
+                </div>
+                
+                {step.bullets && step.bullets.length > 0 && (
+                  <ul className="space-y-1 text-left pl-10">
+                    {step.bullets.map((bullet, bulletIndex) => (
+                      <li 
+                        key={bulletIndex}
+                        className="flex gap-2 items-start text-sm text-muted-foreground"
+                      >
+                        <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                          {bulletChar 
+                            ? bulletChar 
+                            : getBulletIcon(bulletIcon, bulletIconColor)
+                          }
+                        </span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop: Horizontal timeline */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8 relative">
+          <div className="absolute top-10 left-[16.67%] right-[16.67%] h-0.5 bg-primary/30 z-0" />
+          
+          {(data.steps || []).map((step, index) => {
+            const bulletChar = step.bullet_char || data.bullet_char;
+            const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
+            const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
             
             return (
               <div 
@@ -93,9 +160,6 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  {!isLast && (
-                    <div className="md:hidden absolute left-1/2 top-20 w-0.5 h-6 bg-primary/30 -translate-x-1/2" />
-                  )}
                 </div>
                 
                 <div className="flex items-center gap-2 mb-3">
@@ -114,30 +178,24 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   )}
                 </div>
                 
-                {step.bullets && step.bullets.length > 0 && (() => {
-                  const bulletChar = step.bullet_char || data.bullet_char;
-                  const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
-                  const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
-                  
-                  return (
-                    <ul className="space-y-2 text-left">
-                      {step.bullets.map((bullet, bulletIndex) => (
-                        <li 
-                          key={bulletIndex}
-                          className="flex gap-2 items-start text-base text-muted-foreground"
-                        >
-                          <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
-                            {bulletChar 
-                              ? bulletChar 
-                              : getBulletIcon(bulletIcon, bulletIconColor)
-                            }
-                          </span>
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                })()}
+                {step.bullets && step.bullets.length > 0 && (
+                  <ul className="space-y-2 text-left">
+                    {step.bullets.map((bullet, bulletIndex) => (
+                      <li 
+                        key={bulletIndex}
+                        className="flex gap-2 items-start text-base text-muted-foreground"
+                      >
+                        <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                          {bulletChar 
+                            ? bulletChar 
+                            : getBulletIcon(bulletIcon, bulletIconColor)
+                          }
+                        </span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             );
           })}
