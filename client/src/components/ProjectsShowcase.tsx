@@ -138,8 +138,8 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
   return (
     <section className={`py-12 md:py-16 ${background}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Mobile/md: Title centered above carousel */}
-        <h3 className="text-2xl font-bold text-foreground text-center mb-6 lg:hidden" data-testid="text-project-title-mobile">
+        {/* Title above carousel on all screen sizes */}
+        <h3 className="text-2xl lg:text-3xl font-bold text-foreground text-center lg:text-left mb-6" data-testid="text-project-title">
           {project_title}
         </h3>
 
@@ -224,12 +224,8 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
             )}
           </div>
 
-          {/* Desktop (lg+): Text column with title and info in card */}
-          <div className="hidden lg:block w-full lg:w-1/2 space-y-6">
-            <h3 className="text-2xl lg:text-3xl font-bold text-foreground" data-testid="text-project-title">
-              {project_title}
-            </h3>
-
+          {/* Desktop (lg+): Info in card */}
+          <div className="hidden lg:block w-full lg:w-1/2">
             <Card className="p-6 space-y-6">
               <InfoContent />
             </Card>
