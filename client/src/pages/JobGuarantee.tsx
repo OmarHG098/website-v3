@@ -272,7 +272,7 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
     <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-program-${program.id}`}>
       {/* Mobile: Collapsible header */}
       <div 
-        className="flex justify-between items-center cursor-pointer md:cursor-default"
+        className="flex justify-between items-start cursor-pointer md:cursor-default"
         onClick={() => setIsOpen(!isOpen)}
         data-testid={`button-toggle-program-${program.id}`}
       >
