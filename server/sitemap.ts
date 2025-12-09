@@ -463,6 +463,7 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   urls.push({ loc: `${getBaseUrl()}/job-guarantee`, label: "Job Guarantee" });
   urls.push({ loc: `${getBaseUrl()}/geekforce-career-support`, label: "GeekForce Career Support" });
   urls.push({ loc: `${getBaseUrl()}/geekpal-support`, label: "GeekPAL Support" });
+  urls.push({ loc: `${getBaseUrl()}/graduates-and-projects`, label: "Graduates & Projects" });
 
   // Dynamic career program pages from YAML (only indexable)
   const programs = getAvailablePrograms();
