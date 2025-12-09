@@ -1,7 +1,9 @@
 import Header from "@/components/Header";
 import { Hero } from "@/components/hero/Hero";
 import FeaturesGrid from "@/components/FeaturesGrid";
-import type { HeroTwoColumn, FeaturesGridHighlightSection } from "@shared/schema";
+import { TwoColumn } from "@/components/TwoColumn";
+import type { HeroTwoColumn, FeaturesGridHighlightSection, TwoColumnSection } from "@shared/schema";
+import humanAiImage from "@assets/mujer-leyendo-cafeteria_1765298412439.webp";
 
 const heroData: HeroTwoColumn = {
   type: "hero",
@@ -55,6 +57,44 @@ const advanceFasterData: FeaturesGridHighlightSection = {
   ],
 };
 
+const humanAiData: TwoColumnSection = {
+  type: "two_column",
+  proportions: [6, 6],
+  background: "bg-background",
+  alignment: "center",
+  left: {
+    heading: "Human + AI: The Perfect Support Duo",
+    description: "Learning works best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey.",
+    bullet_groups: [
+      {
+        title: "Our Team of Expert Mentors:",
+        bullets: [
+          { text: "Provides personalized guidance on coding challenges and best practices" },
+          { text: "Offers live troubleshooting and debugging support" },
+          { text: "Expert bug fixing assistance" },
+          { text: "Shares industry insights, career advice, and learning strategies" },
+        ],
+      },
+      {
+        title: "Rigobot + Learnpack:",
+        bullets: [
+          { text: "Provides instant feedback and tutoring while you code" },
+          { text: "Tracks your skills and progress" },
+          { text: "Helps with debugging and problem-solving tasks" },
+          { text: "Hundreds of hands-on coding exercises and structured practice on Learnpack" },
+        ],
+      },
+    ],
+    footer_description: "Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence.",
+    font_size: "base",
+  },
+  right: {
+    image: humanAiImage,
+    image_alt: "Woman working on laptop in cafe",
+    image_max_width: "100%",
+  },
+};
+
 export default function GeekPalSupport() {
   return (
     <div className="min-h-screen bg-background">
@@ -62,6 +102,7 @@ export default function GeekPalSupport() {
       <main>
         <Hero data={heroData} />
         <FeaturesGrid data={advanceFasterData} />
+        <TwoColumn data={humanAiData} />
       </main>
     </div>
   );

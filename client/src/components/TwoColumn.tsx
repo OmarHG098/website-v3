@@ -224,6 +224,44 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               </div>
             );
           })()}
+
+          {column.bullet_groups && column.bullet_groups.length > 0 && (
+            <div className="w-full space-y-4" data-testid="list-two-column-bullet-groups">
+              {column.bullet_groups.map((group, groupIndex) => (
+                <div key={groupIndex} className="space-y-2">
+                  <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
+                    {group.title}
+                  </h4>
+                  {group.description && (
+                    <p className={`text-muted-foreground ${textFontSize}`}>
+                      {group.description}
+                    </p>
+                  )}
+                  {group.bullets && group.bullets.length > 0 && (
+                    <ul className="space-y-1 pl-1">
+                      {group.bullets.map((bullet, bulletIndex) => (
+                        <li key={bulletIndex} className="flex items-start gap-2">
+                          <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
+                            {column.bullet_char || "•"}
+                          </span>
+                          <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {column.footer_description && (
+            <p 
+              className={`${textFontSize} text-muted-foreground leading-relaxed italic`}
+              data-testid="text-two-column-footer-description"
+            >
+              {column.footer_description}
+            </p>
+          )}
           
           {column.button && (
             <div className="mt-2">

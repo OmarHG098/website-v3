@@ -256,6 +256,12 @@ export const twoColumnBulletSchema = z.object({
   heading: z.string().optional(),
 });
 
+export const bulletGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  bullets: z.array(z.object({ text: z.string() })).optional(),
+});
+
 export const twoColumnColumnSchema = z.object({
   video: z.string().optional(),
   video_height: z.string().optional(),
@@ -276,6 +282,8 @@ export const twoColumnColumnSchema = z.object({
   bullet_icon: z.string().optional(),
   bullet_char: z.string().optional(),
   bullet_icon_color: z.string().optional(),
+  bullet_groups: z.array(bulletGroupSchema).optional(),
+  footer_description: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),
   text_align: z.enum(["left", "center", "right"]).optional(),
