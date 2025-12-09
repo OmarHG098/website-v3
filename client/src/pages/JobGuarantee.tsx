@@ -285,7 +285,7 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
           </h3>
         </div>
         <div className="flex items-start gap-2">
-          <div className="[&_svg]:w-10 [&_svg]:h-10 md:[&_svg]:w-16 md:[&_svg]:h-16">
+          <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16">
             {iconMap[program.icon]}
           </div>
           <TablerIcons.IconChevronDown 
