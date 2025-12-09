@@ -243,21 +243,41 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
         </div>
       )}
       
-      {column.image && (
-        <div className={`flex w-full ${getResponsiveJustifyClass(column.justify)}`}>
-          <img 
-            src={column.image} 
-            alt={column.image_alt || "Section image"}
-            className="rounded-md w-full h-auto"
-            style={{
-              maxWidth: column.image_max_width || undefined,
-              maxHeight: column.image_max_height || undefined,
-            }}
-            loading="lazy"
-            data-testid="img-two-column"
-          />
-        </div>
-      )}
+      {column.image && (() => {
+        const hasMobileStyles = column.image_mobile_max_width || column.image_mobile_max_height;
+        const imageId = hasMobileStyles ? `img-${Math.random().toString(36).substr(2, 9)}` : undefined;
+        
+        return (
+          <div className={`flex w-full ${getResponsiveJustifyClass(column.justify)}`}>
+            {hasMobileStyles && (
+              <style>{`
+                #${imageId} {
+                  max-width: ${column.image_mobile_max_width || column.image_max_width || "none"};
+                  max-height: ${column.image_mobile_max_height || column.image_max_height || "none"};
+                }
+                @media (min-width: 768px) {
+                  #${imageId} {
+                    max-width: ${column.image_max_width || "none"};
+                    max-height: ${column.image_max_height || "none"};
+                  }
+                }
+              `}</style>
+            )}
+            <img 
+              id={imageId}
+              src={column.image} 
+              alt={column.image_alt || "Section image"}
+              className="rounded-md w-full h-auto"
+              style={!hasMobileStyles ? {
+                maxWidth: column.image_max_width || undefined,
+                maxHeight: column.image_max_height || undefined,
+              } : undefined}
+              loading="lazy"
+              data-testid="img-two-column"
+            />
+          </div>
+        );
+      })()}
       
       {column.video && (
         <div 

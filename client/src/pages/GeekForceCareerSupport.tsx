@@ -89,6 +89,7 @@ const unlimitedSupportTwoColumnData: TwoColumnSectionType = {
     justify: "center",
     text_align: "left",
     font_size: "base",
+    bullets_visible: 2,
     bullet_icon: "Check",
     bullets: [
       { text: "Receive tailored guidance aligned with your goals, context, and challenges." },

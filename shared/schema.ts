@@ -264,6 +264,8 @@ export const twoColumnColumnSchema = z.object({
   image_alt: z.string().optional(),
   image_max_width: z.string().optional(),
   image_max_height: z.string().optional(),
+  image_mobile_max_width: z.string().optional(),
+  image_mobile_max_height: z.string().optional(),
   heading: z.string().optional(),
   sub_heading: z.string().optional(),
   description: z.string().optional(),
