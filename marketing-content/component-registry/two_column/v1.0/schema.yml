@@ -178,6 +178,11 @@ props:
               text:
                 type: string
                 required: true
+      bullet_groups_collapsible:
+        type: boolean
+        description: "Whether bullet groups are collapsible on mobile/tablet (titles become clickable toggles). On desktop, all content is always visible."
+        default: true
+        example: false
       footer_description:
         type: string
         description: "Optional italic text at the bottom of the content, after bullet_groups"

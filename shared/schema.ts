@@ -283,6 +283,7 @@ export const twoColumnColumnSchema = z.object({
   bullet_char: z.string().optional(),
   bullet_icon_color: z.string().optional(),
   bullet_groups: z.array(bulletGroupSchema).optional(),
+  bullet_groups_collapsible: z.boolean().optional(),
   footer_description: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),

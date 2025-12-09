@@ -122,6 +122,79 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
   return padding ? (paddingMap[padding] || "") : "";
 };
 
+interface BulletGroup {
+  title: string;
+  description?: string;
+  bullets?: { text: string }[];
+}
+
+function BulletGroups({ 
+  groups, 
+  bulletChar, 
+  textFontSize,
+  collapsible = true 
+}: { 
+  groups: BulletGroup[]; 
+  bulletChar?: string;
+  textFontSize: string;
+  collapsible?: boolean;
+}) {
+  const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
+
+  const toggleGroup = (index: number) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  return (
+    <div className="w-full space-y-4 pl-4" data-testid="list-two-column-bullet-groups">
+      {groups.map((group, groupIndex) => {
+        const isExpanded = expandedGroups[groupIndex] ?? false;
+        const hasContent = (group.description || (group.bullets && group.bullets.length > 0));
+        
+        return (
+          <div key={groupIndex} className="space-y-2">
+            {collapsible && hasContent ? (
+              <button
+                onClick={() => toggleGroup(groupIndex)}
+                className="lg:hidden flex items-center gap-2 w-full text-left"
+                data-testid={`button-toggle-group-${groupIndex}`}
+              >
+                <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
+                  {group.title}
+                </h4>
+                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground")}
+              </button>
+            ) : null}
+            <h4 className={`font-bold text-foreground uppercase tracking-wide text-sm ${collapsible && hasContent ? "hidden lg:block" : ""}`}>
+              {group.title}
+            </h4>
+            {group.description && (
+              <p className={`text-muted-foreground ${textFontSize} ${collapsible ? (isExpanded ? "" : "hidden lg:block") : ""}`}>
+                {group.description}
+              </p>
+            )}
+            {group.bullets && group.bullets.length > 0 && (
+              <ul className={`space-y-1 pl-1 ${collapsible ? (isExpanded ? "" : "hidden lg:block") : ""}`}>
+                {group.bullets.map((bullet, bulletIndex) => (
+                  <li key={bulletIndex} className="flex items-start gap-2">
+                    <span className="text-foreground mt-1 flex-shrink-0">
+                      {bulletChar || "•"}
+                    </span>
+                    <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
   const [bulletsExpanded, setBulletsExpanded] = useState(false);
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
@@ -226,32 +299,12 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           })()}
 
           {column.bullet_groups && column.bullet_groups.length > 0 && (
-            <div className="w-full space-y-4 pl-4" data-testid="list-two-column-bullet-groups">
-              {column.bullet_groups.map((group, groupIndex) => (
-                <div key={groupIndex} className="space-y-2">
-                  <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
-                    {group.title}
-                  </h4>
-                  {group.description && (
-                    <p className={`text-muted-foreground ${textFontSize}`}>
-                      {group.description}
-                    </p>
-                  )}
-                  {group.bullets && group.bullets.length > 0 && (
-                    <ul className="space-y-1 pl-1">
-                      {group.bullets.map((bullet, bulletIndex) => (
-                        <li key={bulletIndex} className="flex items-start gap-2">
-                          <span className="text-foreground mt-1 flex-shrink-0">
-                            {column.bullet_char || "•"}
-                          </span>
-                          <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
+            <BulletGroups 
+              groups={column.bullet_groups} 
+              bulletChar={column.bullet_char}
+              textFontSize={textFontSize}
+              collapsible={column.bullet_groups_collapsible !== false}
+            />
           )}
 
           {column.footer_description && (

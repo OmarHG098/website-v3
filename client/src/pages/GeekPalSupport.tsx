@@ -59,7 +59,7 @@ const advanceFasterData: FeaturesGridHighlightSection = {
 
 const humanAiData: TwoColumnSection = {
   type: "two_column",
-  proportions: [6, 6],
+  proportions: [7, 5],
   background: "bg-background",
   alignment: "center",
   left: {
