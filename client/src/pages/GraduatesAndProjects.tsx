@@ -1,6 +1,8 @@
 import { HeroSingleColumn } from "@/components/hero/HeroSingleColumn";
 import { ProjectsShowcase } from "@/components/ProjectsShowcase";
+import { AboutSection } from "@/components/AboutSection";
 import type { HeroSingleColumn as HeroSingleColumnType, ProjectsShowcaseSection } from "@shared/schema";
+import foundersImage from "@assets/image_1765323155886.png";
 
 const heroData: HeroSingleColumnType = {
   type: "hero",
@@ -166,6 +168,14 @@ export default function GraduatesAndProjects() {
     <div className="min-h-screen bg-background">
       <HeroSingleColumn data={heroData} />
       <ProjectsShowcase data={projectsData} />
+      <AboutSection
+        title="More About 4Geeks Academy"
+        description="4Geeks Academy was founded in 2015. What started as an internal project to train more developers has now become our full-time passion. 4Geeks is today a USA based Coding Bootcamp pursuing to build a new framework for Coding Education, because coding is becoming an essentials part of our society. 4Geeks Academy has now Locations in 12 cities, 13 on-going campus, and more than 600 graduates."
+        linkText="Read More"
+        linkUrl="/about"
+        imageSrc={foundersImage}
+        imageAlt="4Geeks Academy Founders"
+      />
     </div>
   );
 }
