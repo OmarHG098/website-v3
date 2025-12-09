@@ -171,53 +171,59 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
             />
           )}
           
-          {column.bullets && column.bullets.length > 0 && (
-            <div className="w-full">
-              <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
-                {column.bullets.map((bullet, index) => {
-                  const isHiddenOnMobile = !bulletsExpanded && index > 0;
-                  return (
-                    <li 
-                      key={index} 
-                      className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
-                    >
-                      <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
-                        {column.bullet_char 
-                          ? column.bullet_char 
-                          : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
-                        }
-                      </span>
-                      <div className="flex flex-col">
-                        {bullet.heading && (
-                          <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
-                        )}
-                        <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-              {column.bullets.length > 1 && (
-                <button
-                  onClick={() => setBulletsExpanded(!bulletsExpanded)}
-                  className="lg:hidden mt-4 text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1"
-                  data-testid="button-toggle-bullets"
-                >
-                  {bulletsExpanded ? (
-                    <>
-                      {getIcon("ChevronUp", "w-4 h-4")}
-                      Show less
-                    </>
-                  ) : (
-                    <>
-                      {getIcon("ChevronDown", "w-4 h-4")}
-                      Show {column.bullets.length - 1} more
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
-          )}
+          {column.bullets && column.bullets.length > 0 && (() => {
+            const visibleCount = column.bullets_visible ?? 1;
+            const hiddenCount = column.bullets.length - visibleCount;
+            const hasHiddenBullets = hiddenCount > 0;
+            
+            return (
+              <div className="w-full">
+                <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
+                  {column.bullets.map((bullet, index) => {
+                    const isHiddenOnMobile = !bulletsExpanded && index >= visibleCount;
+                    return (
+                      <li 
+                        key={index} 
+                        className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
+                      >
+                        <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
+                          {column.bullet_char 
+                            ? column.bullet_char 
+                            : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
+                          }
+                        </span>
+                        <div className="flex flex-col">
+                          {bullet.heading && (
+                            <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                          )}
+                          <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {hasHiddenBullets && (
+                  <button
+                    onClick={() => setBulletsExpanded(!bulletsExpanded)}
+                    className="lg:hidden mt-4 text-primary hover:text-primary/80 text-sm font-medium flex items-center gap-1"
+                    data-testid="button-toggle-bullets"
+                  >
+                    {bulletsExpanded ? (
+                      <>
+                        {getIcon("ChevronUp", "w-4 h-4")}
+                        Show less
+                      </>
+                    ) : (
+                      <>
+                        {getIcon("ChevronDown", "w-4 h-4")}
+                        Show {hiddenCount} more
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+            );
+          })()}
           
           {column.button && (
             <div className="mt-2">

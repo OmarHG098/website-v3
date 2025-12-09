@@ -108,7 +108,7 @@ const hyperpersonalizedTwoColumnData: TwoColumnSectionType = {
   left: {
     image: communityImage,
     image_alt: "4Geeks Academy community members collaborating on a project",
-    image_width: "440px",
+    image_max_width: "440px",
     justify: "start",
   },
   right: {
