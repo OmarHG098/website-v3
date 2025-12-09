@@ -374,7 +374,6 @@ export const testimonialsSlideSectionSchema = z.object({
   type: z.literal("testimonials_slide"),
   title: z.string(),
   description: z.string(),
-  testimonials: z.array(testimonialsSlideTestimonialSchema),
   background: z.string().optional(),
 });
 
