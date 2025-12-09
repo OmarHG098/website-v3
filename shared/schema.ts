@@ -456,6 +456,28 @@ export const ctaBannerSectionSchema = z.object({
   background: z.string().optional(),
 });
 
+// Project Showcase Section - for graduates/projects page
+export const projectShowcaseCreatorSchema = z.object({
+  name: z.string(),
+  github_url: z.string().optional(),
+  linkedin_url: z.string().optional(),
+});
+
+export const projectShowcaseSectionSchema = z.object({
+  type: z.literal("project_showcase"),
+  version: z.string().optional(),
+  project_title: z.string(),
+  description: z.string(),
+  creators: z.array(projectShowcaseCreatorSchema),
+  image: z.string().optional(),
+  video_id: z.string().optional(),
+  background: z.string().optional(),
+  reverse: z.boolean().optional(),
+});
+
+export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;
+export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -481,6 +503,7 @@ export const sectionSchema = z.union([
   featuresGridDetailedSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
+  projectShowcaseSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
