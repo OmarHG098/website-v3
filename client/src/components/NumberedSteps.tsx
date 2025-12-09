@@ -98,8 +98,8 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   )}
                 </div>
                 
-                <div className="flex flex-col items-center text-center mb-3">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mb-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                     {getIcon(step.icon)}
                   </div>
                   {step.title && (
