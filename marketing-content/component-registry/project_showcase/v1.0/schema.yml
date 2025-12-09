@@ -33,6 +33,10 @@ props:
         type: string
         required: true
         description: "Creator's full name"
+      role:
+        type: string
+        required: false
+        description: "Creator's role or profession (e.g., 'Web Developer', 'QA Analyst')"
       github_url:
         type: string
         required: false

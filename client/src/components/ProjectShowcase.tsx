@@ -150,11 +150,11 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
               <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                 {">"} MADE BY
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {creators.map((creator, index) => (
-                  <div key={index} className="flex items-center gap-3" data-testid={`creator-${index}`}>
-                    <span className="text-foreground">{creator.name}</span>
+                  <div key={index} data-testid={`creator-${index}`}>
                     <div className="flex items-center gap-2">
+                      <span className="text-foreground font-medium">{creator.name}</span>
                       {creator.github_url && (
                         <a
                           href={creator.github_url}
@@ -180,6 +180,9 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
                         </a>
                       )}
                     </div>
+                    {creator.role && (
+                      <p className="text-sm text-muted-foreground">{creator.role}</p>
+                    )}
                   </div>
                 ))}
               </div>

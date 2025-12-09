@@ -459,6 +459,7 @@ export const ctaBannerSectionSchema = z.object({
 // Project Showcase Section - for graduates/projects page
 export const projectShowcaseCreatorSchema = z.object({
   name: z.string(),
+  role: z.string().optional(),
   github_url: z.string().optional(),
   linkedin_url: z.string().optional(),
 });
