@@ -25,7 +25,22 @@ const projectData: ProjectShowcaseSection = {
       linkedin_url: "https://linkedin.com/in/georgemihov",
     },
   ],
-  image: "/attached_assets/Screenshot_2023-05-11_at_5.59_1_1765310496047.png",
+  media: [
+    {
+      type: "video",
+      src: "D5nUZNL52-Q",
+    },
+    {
+      type: "image",
+      src: "/attached_assets/Screenshot_2023-05-11_at_5.59_1_1765310496047.png",
+      alt: "Project screenshot",
+    },
+    {
+      type: "image",
+      src: "/attached_assets/image_1765310359129.png",
+      alt: "Project demo",
+    },
+  ],
 };
 
 export default function GraduatesAndProjects() {

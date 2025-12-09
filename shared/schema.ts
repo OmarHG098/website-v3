@@ -463,12 +463,19 @@ export const projectShowcaseCreatorSchema = z.object({
   linkedin_url: z.string().optional(),
 });
 
+export const projectShowcaseMediaSchema = z.object({
+  type: z.enum(["video", "image"]),
+  src: z.string(),
+  alt: z.string().optional(),
+});
+
 export const projectShowcaseSectionSchema = z.object({
   type: z.literal("project_showcase"),
   version: z.string().optional(),
   project_title: z.string(),
   description: z.string(),
   creators: z.array(projectShowcaseCreatorSchema),
+  media: z.array(projectShowcaseMediaSchema).optional(),
   image: z.string().optional(),
   video_id: z.string().optional(),
   background: z.string().optional(),
@@ -476,6 +483,7 @@ export const projectShowcaseSectionSchema = z.object({
 });
 
 export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;
+export type ProjectShowcaseMedia = z.infer<typeof projectShowcaseMediaSchema>;
 export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
 
 // Section schema using z.union to support hero variants
