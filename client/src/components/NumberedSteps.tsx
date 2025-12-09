@@ -87,8 +87,9 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 data-testid={`numbered-step-${index + 1}`}
               >
                 <div className="flex items-center justify-center w-full mb-3 relative">
-                  <div className="w-20 h-20 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center flex-shrink-0 relative z-10">
-                    <span className="text-3xl font-bold text-primary">
+                  <div className="w-20 h-20 rounded-full border-2 border-primary bg-background flex items-center justify-center flex-shrink-0 relative z-10">
+                    <div className="absolute inset-0 bg-primary/10 rounded-full" />
+                    <span className="text-3xl font-bold text-primary relative z-10">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
