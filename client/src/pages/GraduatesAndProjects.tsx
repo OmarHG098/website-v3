@@ -34,7 +34,7 @@ const projectsData: ProjectsShowcaseSection = {
       media: [
         {
           type: "image",
-          src: "/attached_assets/image_1765318479754.png",
+          src: "/attached_assets/image_1765318882641.png",
           alt: "Raspberry Sky - Satellite access for everyone",
         },
         {
