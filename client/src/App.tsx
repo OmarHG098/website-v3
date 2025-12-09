@@ -20,7 +20,6 @@ const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const JobGuarantee = lazy(() => import("@/pages/JobGuarantee"));
-const GeekPalSupport = lazy(() => import("@/pages/GeekPalSupport"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const GraduatesAndProjects = lazy(() => import("@/pages/GraduatesAndProjects"));
 
@@ -51,7 +50,6 @@ function Router() {
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
         <Route path="/job-guarantee" component={JobGuarantee} />
-        <Route path="/geekpal-support" component={GeekPalSupport} />
         <Route path="/graduates-and-projects" component={GraduatesAndProjects} />
         <Route path="/component-showcase" component={ComponentShowcase} />
         <Route path="/component-showcase/:componentType" component={ComponentShowcase} />

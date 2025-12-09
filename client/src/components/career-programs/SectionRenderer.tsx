@@ -15,7 +15,7 @@ import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps from "@/components/NumberedSteps";
 import TestimonialsSlide from "@/components/TestimonialsSlide";
-import FeaturesGrid from "@/components/FeaturesGrid";
+import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
 import { ProgramsListSection } from "./ProgramsListSection";
 import { CTABannerSection } from "./CTABannerSection";
 

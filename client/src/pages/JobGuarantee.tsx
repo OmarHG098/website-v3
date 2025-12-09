@@ -3,7 +3,7 @@ import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSection
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
-import FeaturesGrid from "@/components/FeaturesGrid";
+import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
 import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import type { ComponentType } from "react";
