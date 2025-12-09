@@ -173,7 +173,7 @@ function HighlightGrid({ data }: { data: FeaturesGridHighlightSection }) {
 
   return (
     <section 
-      className={`pb-16 ${data.background || ''}`}
+      className={`py-14 ${data.background || ''}`}
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -214,7 +214,7 @@ function DetailedGrid({ data }: { data: FeaturesGridDetailedSection }) {
 
   return (
     <section 
-      className={`pb-8 pt-10 ${data.background || ''}`}
+      className={`py-14 ${data.background || ''}`}
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
