@@ -272,7 +272,7 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
     <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-program-${program.id}`}>
       {/* Mobile: Collapsible header */}
       <div 
-        className="flex justify-between items-start cursor-pointer md:cursor-default"
+        className="flex justify-between items-center cursor-pointer md:cursor-default"
         onClick={() => setIsOpen(!isOpen)}
         data-testid={`button-toggle-program-${program.id}`}
       >
@@ -284,14 +284,12 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
             {program.title}
           </h3>
         </div>
-        <div className="flex items-start gap-2">
-          <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16 self-center">
-            {iconMap[program.icon]}
-          </div>
-          <TablerIcons.IconChevronDown 
-            className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 mt-1 ${isOpen ? 'rotate-180' : ''}`}
-          />
+        <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16">
+          {iconMap[program.icon]}
         </div>
+        <TablerIcons.IconChevronDown 
+          className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </div>
       
       {/* Mobile: Collapsible content */}
