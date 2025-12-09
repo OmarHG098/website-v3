@@ -2,7 +2,7 @@ import { HeroSingleColumn } from "@/components/hero/HeroSingleColumn";
 import { ProjectsShowcase } from "@/components/ProjectsShowcase";
 import { AboutSection } from "@/components/AboutSection";
 import type { HeroSingleColumn as HeroSingleColumnType, ProjectsShowcaseSection } from "@shared/schema";
-import foundersImage from "@assets/image_1765323155886.png";
+import foundersImage from "@assets/our-story_1765323971104.webp";
 
 const heroData: HeroSingleColumnType = {
   type: "hero",

@@ -299,6 +299,13 @@ function buildSitemapXml(): string {
     priority: 0.9,
   });
 
+  urls.push({
+    loc: `${getBaseUrl()}/graduates-and-projects`,
+    lastmod: today,
+    changefreq: "weekly",
+    priority: 0.9,
+  });
+
   // Dynamic career program pages from YAML (only include indexable pages)
   const programs = getAvailablePrograms();
   for (const program of programs) {
