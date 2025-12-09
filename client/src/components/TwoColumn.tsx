@@ -226,7 +226,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           })()}
 
           {column.bullet_groups && column.bullet_groups.length > 0 && (
-            <div className="w-full space-y-4" data-testid="list-two-column-bullet-groups">
+            <div className="w-full space-y-4 pl-4" data-testid="list-two-column-bullet-groups">
               {column.bullet_groups.map((group, groupIndex) => (
                 <div key={groupIndex} className="space-y-2">
                   <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
@@ -241,7 +241,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                     <ul className="space-y-1 pl-1">
                       {group.bullets.map((bullet, bulletIndex) => (
                         <li key={bulletIndex} className="flex items-start gap-2">
-                          <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
+                          <span className="text-foreground mt-1 flex-shrink-0">
                             {column.bullet_char || "•"}
                           </span>
                           <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
