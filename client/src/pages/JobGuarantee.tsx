@@ -288,7 +288,7 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
           {iconMap[program.icon]}
         </div>
         <TablerIcons.IconChevronDown 
-          className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ${isOpen ? 'rotate-180' : ''}`}
+          className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ml-2 ${isOpen ? 'rotate-180' : ''}`}
         />
       </div>
       
