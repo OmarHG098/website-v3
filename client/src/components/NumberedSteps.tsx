@@ -87,7 +87,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
             return (
               <div 
                 key={index} 
-                className="relative pb-8 last:pb-0"
+                className="relative pb-5 last:pb-0"
                 data-testid={`numbered-step-mobile-${index + 1}`}
               >
                 {/* Circle on the left */}
