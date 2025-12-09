@@ -1,0 +1,88 @@
+name: "Project Showcase"
+version: "1.0"
+component: "ProjectShowcase"
+file: "client/src/components/ProjectShowcase.tsx"
+description: "Displays a graduate project with a media carousel (videos and images) alongside project details including title, creators with social links, and description."
+
+when_to_use: |
+  Use this component to showcase student/graduate projects with:
+  - A media carousel featuring videos and images
+  - Project title and description
+  - Creator credits with GitHub and LinkedIn links
+  Best for: Graduates page, portfolio showcases, project galleries
+
+props:
+  project_title:
+    type: string
+    required: true
+    description: "The name of the project"
+    example: "WonderTracker"
+
+  description:
+    type: string
+    required: true
+    description: "A detailed description of the project and what it does"
+    example: "A platform capable of keeping your travel information and documents saved in an absolute secure system."
+
+  creators:
+    type: array
+    required: true
+    description: "List of people who created the project"
+    items:
+      name:
+        type: string
+        required: true
+        description: "Creator's full name"
+      github_url:
+        type: string
+        required: false
+        description: "Link to creator's GitHub profile"
+      linkedin_url:
+        type: string
+        required: false
+        description: "Link to creator's LinkedIn profile"
+
+  media:
+    type: array
+    required: false
+    description: "Array of media items (videos and images) for the carousel. First item is displayed by default."
+    items:
+      type:
+        type: string
+        required: true
+        options: ["video", "image"]
+        description: "Type of media - 'video' for YouTube videos, 'image' for static images"
+      src:
+        type: string
+        required: true
+        description: "For videos: YouTube video ID. For images: image URL/path"
+      alt:
+        type: string
+        required: false
+        description: "Alt text for images (accessibility)"
+
+  media_position:
+    type: string
+    required: false
+    options: ["left", "right"]
+    default: "left"
+    description: "Position of the media carousel. 'left' places media on left with text on right, 'right' places media on right with text on left."
+    example: "left"
+
+  background:
+    type: string
+    required: false
+    description: "Background color class (Tailwind)"
+    example: "bg-muted"
+
+  image:
+    type: string
+    required: false
+    description: "Single image URL (legacy, use 'media' array instead)"
+    deprecated: true
+
+  video_id:
+    type: string
+    required: false
+    description: "Single YouTube video ID (legacy, use 'media' array instead)"
+    deprecated: true

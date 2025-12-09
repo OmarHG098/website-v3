@@ -479,7 +479,7 @@ export const projectShowcaseSectionSchema = z.object({
   image: z.string().optional(),
   video_id: z.string().optional(),
   background: z.string().optional(),
-  reverse: z.boolean().optional(),
+  media_position: z.enum(["left", "right"]).optional(),
 });
 
 export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;

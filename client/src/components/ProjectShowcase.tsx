@@ -18,7 +18,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
     image,
     video_id,
     background,
-    reverse = false,
+    media_position = "left",
   } = data;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -92,7 +92,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
+        <div className={`flex flex-col ${media_position === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
