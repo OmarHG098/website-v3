@@ -224,13 +224,15 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
             )}
           </div>
 
-          {/* Desktop (lg+): Text column with title and info */}
+          {/* Desktop (lg+): Text column with title and info in card */}
           <div className="hidden lg:block w-full lg:w-1/2 space-y-6">
             <h3 className="text-2xl lg:text-3xl font-bold text-foreground" data-testid="text-project-title">
               {project_title}
             </h3>
 
-            <InfoContent />
+            <Card className="p-6 space-y-6">
+              <InfoContent />
+            </Card>
           </div>
         </div>
       </div>
