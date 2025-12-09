@@ -30,6 +30,31 @@ function getIcon(iconName: string, className?: string) {
 
 function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
   const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
+  const hasValue = Boolean(item.value);
+  const hasDescription = Boolean(item.description);
+  
+  // Use vertical layout when there's description but no value (feature cards)
+  // Use horizontal layout when there's a value (stats cards)
+  const useVerticalLayout = hasDescription && !hasValue;
+  
+  if (useVerticalLayout) {
+    return (
+      <Card 
+        className="p-4 md:p-5"
+        data-testid={`card-feature-${itemId}`}
+      >
+        <div className="w-12 h-12 md:w-14 md:h-14 mb-3">
+          {getIcon(item.icon, "w-full h-full text-primary")}
+        </div>
+        <div className="font-semibold text-foreground text-base md:text-lg">
+          {item.title}
+        </div>
+        <div className="text-sm text-muted-foreground mt-1">
+          {item.description}
+        </div>
+      </Card>
+    );
+  }
   
   return (
     <Card 
