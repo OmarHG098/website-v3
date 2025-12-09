@@ -656,7 +656,9 @@ function ComponentCard({
                   src="/preview-frame"
                   className="w-full border-0"
                   style={{ 
-                    height: `${Math.max(iframeHeight, 200)}px`,
+                    height: previewViewport === 'mobile' 
+                      ? '667px'  // iPhone SE/8 screen height
+                      : `${Math.max(iframeHeight, 200)}px`,
                     minHeight: '200px',
                   }}
                   title={`Preview ${componentType}`}
