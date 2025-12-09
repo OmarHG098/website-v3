@@ -4,7 +4,7 @@ import { IconFlag, IconSchool } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
 import { TwoColumn, TwoColumnSectionType } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
-import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
+import StatsSection, { type seStatsSectionData } from "@/components/StatsSection";
 import { WhosHiringSection } from "@/components/career-programs/WhosHiringSection";
 import { HeroTwoColumn } from "@/components/hero/HeroTwoColumn";
 import type { WhosHiringSection as WhosHiringSectionType, HeroTwoColumn as HeroTwoColumnType } from "@shared/schema";

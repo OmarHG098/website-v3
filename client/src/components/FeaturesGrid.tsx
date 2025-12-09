@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FeaturesGridSection, FeaturesGridItem } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
+import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
 
 interface FeaturesGridProps {
@@ -9,6 +10,13 @@ interface FeaturesGridProps {
 }
 
 function getIcon(iconName: string) {
+  // Check custom icons first
+  const CustomIcon = getCustomIcon(iconName);
+  if (CustomIcon) {
+    return <CustomIcon width="100%" height="100%" className="text-primary" />;
+  }
+  
+  // Fall back to Tabler icons
   const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string }>;
   if (IconComponent) {
     return <IconComponent className="w-full h-full text-primary" />;
