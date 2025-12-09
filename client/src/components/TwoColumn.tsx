@@ -177,7 +177,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
             const hasHiddenBullets = hiddenCount > 0;
             
             return (
-              <div className="w-full">
+              <div className="w-full pl-4">
                 <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
                   {column.bullets.map((bullet, index) => {
                     const isHiddenOnMobile = !bulletsExpanded && index >= visibleCount;
