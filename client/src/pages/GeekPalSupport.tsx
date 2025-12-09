@@ -30,7 +30,7 @@ const advanceFasterData: FeaturesGridHighlightSection = {
   items: [
     {
       icon: "PeopleGroup",
-      icon_color: "#23C520",
+      icon_color: "#0097CD",
       title: "7:1 Student–Teacher Ratio",
       description: "Individual attention in every class.",
     },
