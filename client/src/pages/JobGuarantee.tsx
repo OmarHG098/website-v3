@@ -1,16 +1,12 @@
-import { useState } from "react";
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, FeaturesGridSection } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
-import CodeWindow from "@/components/custom-icons/CodeWindow";
-import Monitor from "@/components/custom-icons/Monitor";
-import Security from "@/components/custom-icons/Security";
+import FeaturesGrid from "@/components/FeaturesGrid";
 import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import type { ComponentType } from "react";
 import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
@@ -58,34 +54,43 @@ const eligibleData: TwoColumnSectionType = {
   right: {
     image: eligibleImage,
     image_alt: "Woman working on laptop",
-    image_width: "420px"
+    image_max_width: "420px"
   },
 };
 
-const programsData = {
+const programsData: FeaturesGridSection = {
+  type: "features_grid",
   title: "Our Job Guarantee is Available for Our Top Tech Programs",
   subtitle: "Choose your career path. Master the skills and get hired.",
-  programs: [
+  columns: 3,
+  collapsible_mobile: true,
+  items: [
     {
       id: "fullstack",
       category: "Full Stack",
       title: "Full Stack Development with AI",
       description: "Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.",
-      icon: "codewindow" as const,
+      icon: "Code",
+      link_url: "#",
+      link_text: "Read More",
     },
     {
       id: "datascience",
       category: "With Python",
       title: "Data Science and Machine Learning with AI",
       description: "Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.",
-      icon: "monitor" as const,
+      icon: "ChartDots",
+      link_url: "#",
+      link_text: "Read More",
     },
     {
       id: "cybersecurity",
       category: "For Windows & Linux",
       title: "Cybersecurity",
       description: "Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.",
-      icon: "security" as const,
+      icon: "Shield",
+      link_url: "#",
+      link_text: "Read More",
     },
   ],
 };
@@ -265,97 +270,6 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
   );
 }
 
-function ProgramCard({ program, iconMap }: { program: typeof programsData.programs[0], iconMap: Record<string, JSX.Element> }) {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  return (
-    <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-program-${program.id}`}>
-      {/* Mobile: Collapsible header */}
-      <div 
-        className="flex justify-between items-start cursor-pointer md:cursor-default"
-        onClick={() => setIsOpen(!isOpen)}
-        data-testid={`button-toggle-program-${program.id}`}
-      >
-        <div className="flex-1">
-          <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-            {program.category}
-          </span>
-          <h3 className="text-lg md:text-xl font-bold text-foreground mt-1">
-            {program.title}
-          </h3>
-        </div>
-        <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16">
-          {iconMap[program.icon]}
-        </div>
-        <TablerIcons.IconChevronDown 
-          className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ml-2 ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </div>
-      
-      {/* Mobile: Collapsible content */}
-      <div className={`md:hidden overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
-        <p className="text-muted-foreground mb-4">
-          {program.description}
-        </p>
-        <a 
-          href="#"
-          className="text-primary hover:underline font-medium"
-          data-testid={`button-read-more-mobile-${program.id}`}
-        >
-          Read More
-        </a>
-      </div>
-      
-      {/* Desktop: Always visible content */}
-      <div className="hidden md:block mt-4">
-        <p className="text-muted-foreground mb-4">
-          {program.description}
-        </p>
-        <a 
-          href="#"
-          className="text-primary hover:underline font-medium"
-          data-testid={`button-read-more-${program.id}`}
-        >
-          Read More
-        </a>
-      </div>
-    </Card>
-  );
-}
-
-function ProgramsSection({ data }: { data: typeof programsData }) {
-  const iconMap = {
-    codewindow: <CodeWindow width="64" height="64" />,
-    monitor: <Monitor width="72" height="72" />,
-    security: <Security width="72" height="72" />,
-  };
-
-  return (
-    <section 
-      className="pb-8 pt-10"
-      data-testid="section-programs"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-          <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
-            data-testid="text-programs-title"
-          >
-            {data.title}
-          </h2>
-          <p className="text-lg text-center text-muted-foreground mb-6">
-            {data.subtitle}
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.programs.map((program) => (
-              <ProgramCard key={program.id} program={program} iconMap={iconMap} />
-            ))}
-          </div>
-      </div>
-    </section>
-  );
-}
-
 // ============================================
 // MAIN PAGE COMPONENT
 // ============================================
@@ -369,7 +283,7 @@ export default function JobGuarantee() {
         <JobGuaranteeHero data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
-        <ProgramsSection data={programsData} />
+        <FeaturesGrid data={programsData} />
         <NumberedSteps data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />

@@ -380,9 +380,13 @@ export const testimonialsSlideSectionSchema = z.object({
 
 // Location page section types
 export const featuresGridItemSchema = z.object({
+  id: z.string().optional(),
   icon: z.string(),
+  category: z.string().optional(),
   title: z.string(),
   description: z.string(),
+  link_url: z.string().optional(),
+  link_text: z.string().optional(),
 });
 
 export const featuresGridSectionSchema = z.object({
@@ -391,7 +395,13 @@ export const featuresGridSectionSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   items: z.array(featuresGridItemSchema),
+  columns: z.number().optional(),
+  collapsible_mobile: z.boolean().optional(),
+  background: z.string().optional(),
 });
+
+export type FeaturesGridItem = z.infer<typeof featuresGridItemSchema>;
+export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
 
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
