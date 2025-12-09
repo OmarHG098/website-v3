@@ -15,6 +15,7 @@ const projectsData: ProjectsShowcaseSection = {
   items: [
     {
       project_title: "Raspberry Sky",
+      project_url: "https://sattelite-beta.vercel.app/",
       description: "A platform capable of receiving information (wind, temperature, geolocation, etc) from rockets being launched to outer space. The platform also lets you make arrangements to send your own rocket, track it and receive messages from it.",
       creators: [
         {
@@ -39,6 +40,7 @@ const projectsData: ProjectsShowcaseSection = {
     },
     {
       project_title: "IMS: Inventory Tracking",
+      project_url: "https://ims-frontend.vercel.app/react-hello-webapp/private/dashboard",
       description: "IMS is a Pharmacy Inventory and logistics tracking system built using Python, Javascript, React, and integration with Barcode Readers, SMS, the Twillio API, and GPS Tracking Systems. IMS holds stock quantities of all products stored and sold by the Drug Store and then tracks the vehicles that deliver those sells.",
       creators: [
         {
@@ -66,6 +68,7 @@ const projectsData: ProjectsShowcaseSection = {
     },
     {
       project_title: "The Hour",
+      project_url: "#",
       description: "Happy Hour! What are you doing today? The Hour is your perfect night sidekick, find happy hour information about bars, night clubs and what is happening in the city! This application stands out because of its UI/UX component, very easy to use, mobile first and build around React.js, Javascript and Headless Wordpress API for easy management.",
       creators: [
         {
@@ -89,6 +92,7 @@ const projectsData: ProjectsShowcaseSection = {
     },
     {
       project_title: "WonderTracker",
+      project_url: "https://wandertrackerfront-end-gmihov001.vercel.app/",
       description: "A platform capable of keeping your travel information and documents saved in an absolute secure system. It also lets you track places where you have been, and gather information that you thought was important to save for as long as you want - all in just one place.",
       creators: [
         {
@@ -113,6 +117,7 @@ const projectsData: ProjectsShowcaseSection = {
     },
     {
       project_title: "reMindful",
+      project_url: "https://re-mindful.vercel.app/",
       description: "Generating awareness about recycling and considering all the steps that need to be covered. They have created an application that integrates both software and hardware that allows to weigh the amount of plastic, glass or garbage there is within a container and how much it will affect both the recycling process as well as the environment.",
       creators: [
         {

@@ -16,7 +16,7 @@ interface SingleProjectProps {
 }
 
 function SingleProject({ project, mediaPosition, background }: SingleProjectProps) {
-  const { project_title, description, creators, media, image, video_id } = project;
+  const { project_title, project_url, description, creators, media, image, video_id } = project;
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -93,6 +93,17 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
 
         <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
+            {project_url && (
+              <a
+                href={project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline mb-4"
+                data-testid="link-project-url"
+              >
+                {project_title} {">"}
+              </a>
+            )}
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
                 {renderMedia()}

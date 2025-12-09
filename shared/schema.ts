@@ -472,6 +472,7 @@ export const projectShowcaseMediaSchema = z.object({
 
 export const projectShowcaseItemSchema = z.object({
   project_title: z.string(),
+  project_url: z.string().optional(),
   description: z.string(),
   creators: z.array(projectShowcaseCreatorSchema),
   media: z.array(projectShowcaseMediaSchema).optional(),
