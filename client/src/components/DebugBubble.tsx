@@ -81,13 +81,7 @@ const componentsList = [
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects" | "pages";
-
-const STATIC_PAGES = [
-  { path: "/job-guarantee", title: "Job Guarantee" },
-  { path: "/geekpal-support", title: "GeekPal Support" },
-  { path: "/graduates-and-projects", title: "Graduates & Projects" },
-];
+type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -111,7 +105,7 @@ interface RedirectItem {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings" || stored === "redirects" || stored === "pages") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings" || stored === "redirects") {
       return stored;
     }
   }
@@ -492,21 +486,6 @@ export function DebugBubble() {
                     <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
                 </button>
-                
-                <button
-                  onClick={() => setMenuView("pages")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-pages-menu"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconFolderCode className="h-4 w-4 text-muted-foreground" />
-                    <span>Static Pages</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{STATIC_PAGES.length}</span>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                </button>
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -699,45 +678,6 @@ export function DebugBubble() {
                       </div>
                     ))
                   )}
-                </div>
-              </ScrollArea>
-            </>
-          ) : menuView === "pages" ? (
-            <>
-              <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main-pages"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Static Pages</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {STATIC_PAGES.length} page{STATIC_PAGES.length !== 1 ? 's' : ''} available
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <ScrollArea className="h-[280px]">
-                <div className="p-2 space-y-1">
-                  {STATIC_PAGES.map((page) => (
-                    <a
-                      key={page.path}
-                      href={page.path}
-                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                      data-testid={`link-page-${page.path.replace('/', '')}`}
-                    >
-                      <IconFolderCode className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium">{page.title}</div>
-                        <div className="text-xs text-muted-foreground truncate">{page.path}</div>
-                      </div>
-                    </a>
-                  ))}
                 </div>
               </ScrollArea>
             </>
