@@ -160,6 +160,28 @@ props:
         description: "Tailwind text color class for bullet icons"
         example: "text-primary"
         default: "text-primary"
+      bullet_groups:
+        type: array
+        description: "Groups of bullets with subtitles for organized content (e.g., Human + AI sections)"
+        items:
+          title:
+            type: string
+            required: true
+            description: "Group title/subtitle (rendered as uppercase bold)"
+          description:
+            type: string
+            description: "Optional paragraph below the title"
+          bullets:
+            type: array
+            description: "Optional list of bullet points within the group"
+            items:
+              text:
+                type: string
+                required: true
+      footer_description:
+        type: string
+        description: "Optional italic text at the bottom of the content, after bullet_groups"
+        example: "Together, human mentorship and AI tools accelerate your learning."
       font_size:
         type: string
         description: "Tailwind text size for sub_heading, description, and bullets"
