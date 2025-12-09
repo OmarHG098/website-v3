@@ -1,10 +1,9 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, ItemsShowcaseSection } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, FeaturesGridHighlightSection, FeaturesGridDetailedSection } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
-import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
-import ItemsShowcase from "@/components/ItemsShowcase";
+import FeaturesGrid from "@/components/FeaturesGrid";
 import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import type { ComponentType } from "react";
@@ -25,9 +24,16 @@ const heroData = {
   ],
 };
 
-const statsData: StatsSectionData = {
+const statsData: FeaturesGridHighlightSection = {
+  type: "features_grid",
   title: "Does the Job Guarantee deliver results you can count on?",
-  description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
+  subtitle: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
+  columns: 3,
+  items: [
+    { icon: "Briefcase", value: "84%", title: "Job placement rate" },
+    { icon: "Graduation", value: "3-6 months", title: "Average time to get hired" },
+    { icon: "GrowthChart", value: "55%", title: "Salary increase after graduation" },
+  ],
 };
 
 const eligibleData: TwoColumnSectionType = {
@@ -58,8 +64,9 @@ const eligibleData: TwoColumnSectionType = {
   },
 };
 
-const programsData: ItemsShowcaseSection = {
-  type: "items_showcase",
+const programsData: FeaturesGridDetailedSection = {
+  type: "features_grid",
+  variant: "detailed",
   title: "Our Job Guarantee is Available for Our Top Tech Programs",
   subtitle: "Choose your career path. Master the skills and get hired.",
   columns: 3,
@@ -281,9 +288,9 @@ export default function JobGuarantee() {
       
       <main>
         <JobGuaranteeHero data={heroData} />
-        <StatsSection data={statsData} />
+        <FeaturesGrid data={statsData} />
         <TwoColumn data={eligibleData} />
-        <ItemsShowcase data={programsData} />
+        <FeaturesGrid data={programsData} />
         <NumberedSteps data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />

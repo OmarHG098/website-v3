@@ -351,11 +351,58 @@ export const projectsSectionSchema = z.object({
   items: z.array(projectItemSchema),
 });
 
-export const statsSectionSchema = z.object({
-  type: z.literal("stats_section"),
+// FeaturesGrid - unified component for highlight and detailed card grids
+export const featuresGridHighlightItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string(),
+  value: z.string().optional(),
+  title: z.string(),
+  description: z.string().optional(),
+});
+
+export const featuresGridDetailedItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string(),
+  category: z.string().optional(),
   title: z.string(),
   description: z.string(),
+  link_url: z.string().optional(),
+  link_text: z.string().optional(),
 });
+
+export const featuresGridHighlightSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("highlight").optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridHighlightItemSchema),
+  columns: z.number().optional(),
+  background: z.string().optional(),
+});
+
+export const featuresGridDetailedSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("detailed"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridDetailedItemSchema),
+  columns: z.number().optional(),
+  collapsible_mobile: z.boolean().optional(),
+  background: z.string().optional(),
+});
+
+export const featuresGridSectionSchema = z.union([
+  featuresGridHighlightSectionSchema,
+  featuresGridDetailedSectionSchema,
+]);
+
+export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
+export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
+export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
+export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
+export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
 
 export const testimonialsSlideTestimonialSchema = z.object({
   name: z.string(),
@@ -376,48 +423,6 @@ export const testimonialsSlideSectionSchema = z.object({
   description: z.string(),
   background: z.string().optional(),
 });
-
-// Location page section types
-export const featuresGridItemSchema = z.object({
-  id: z.string().optional(),
-  icon: z.string(),
-  category: z.string().optional(),
-  title: z.string(),
-  description: z.string(),
-  link_url: z.string().optional(),
-  link_text: z.string().optional(),
-});
-
-export const featuresGridSectionSchema = z.object({
-  type: z.literal("features_grid"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  items: z.array(featuresGridItemSchema),
-  columns: z.number().optional(),
-  collapsible_mobile: z.boolean().optional(),
-  background: z.string().optional(),
-});
-
-export type FeaturesGridItem = z.infer<typeof featuresGridItemSchema>;
-export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
-
-// ItemsShowcase - reuses FeaturesGrid structure with different type literal
-export const itemsShowcaseItemSchema = featuresGridItemSchema;
-
-export const itemsShowcaseSectionSchema = z.object({
-  type: z.literal("items_showcase"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  items: z.array(itemsShowcaseItemSchema),
-  columns: z.number().optional(),
-  collapsible_mobile: z.boolean().optional(),
-  background: z.string().optional(),
-});
-
-export type ItemsShowcaseItem = z.infer<typeof itemsShowcaseItemSchema>;
-export type ItemsShowcaseSection = z.infer<typeof itemsShowcaseSectionSchema>;
 
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
@@ -457,12 +462,11 @@ export const sectionSchema = z.union([
   footerSectionSchema,
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
-  statsSectionSchema,
   testimonialsSlideSectionSchema,
-  featuresGridSectionSchema,
+  featuresGridHighlightSectionSchema,
+  featuresGridDetailedSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
-  itemsShowcaseSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

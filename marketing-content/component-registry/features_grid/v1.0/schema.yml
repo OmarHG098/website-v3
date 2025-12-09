@@ -1,6 +1,8 @@
 name: FeaturesGrid
-description: A flexible grid of feature cards with icons, titles, descriptions, and optional links. Cards are collapsible on mobile for better UX.
-when_to_use: Use when showcasing multiple features, programs, services, or offerings in a grid layout. Ideal for program listings, feature highlights, or service comparisons.
+description: A unified grid component with two variants - "highlight" for stats/metrics cards and "detailed" for full feature cards with descriptions and links.
+when_to_use: |
+  Use the "highlight" variant (default) when showcasing key metrics, statistics, or simple features with optional values.
+  Use the "detailed" variant when showcasing programs, services, or features that need full descriptions, categories, and action links.
 
 props:
   type:
@@ -13,6 +15,12 @@ props:
     required: false
     description: Component version for registry tracking
     
+  variant:
+    type: string
+    required: false
+    default: highlight
+    description: Card style - "highlight" for stats/metrics cards, "detailed" for full feature cards with descriptions and links
+    
   title:
     type: string
     required: true
@@ -23,53 +31,81 @@ props:
     required: false
     description: Supporting text below the title
     
-  items:
-    type: array
-    required: true
-    description: Array of feature items to display
-    items:
-      id:
-        type: string
-        required: false
-        description: Unique identifier for the item (used for data-testid)
-      icon:
-        type: string
-        required: true
-        description: Icon name - checks custom icons first (e.g., "CodeWindow", "Monitor", "Security"), then falls back to Tabler icons (e.g., "Code", "Rocket", "Shield")
-      category:
-        type: string
-        required: false
-        description: Small category label shown above the title
-      title:
-        type: string
-        required: true
-        description: Main title for the feature card
-      description:
-        type: string
-        required: true
-        description: Descriptive text for the feature
-      link_url:
-        type: string
-        required: false
-        description: URL for the "Read More" or action link
-      link_text:
-        type: string
-        required: false
-        description: Text for the link (defaults to "Read More")
-        
   columns:
     type: number
     required: false
     default: 3
     description: Number of columns on desktop (1-4)
     
-  collapsible_mobile:
-    type: boolean
-    required: false
-    default: true
-    description: Whether cards collapse on mobile with a toggle arrow
-    
   background:
     type: string
     required: false
     description: Background color class (e.g., "bg-muted/30", "bg-primary/5")
+
+  items:
+    type: array
+    required: true
+    description: Array of items to display (structure varies by variant)
+
+highlight_item_props:
+  description: Item structure for variant "highlight" (default)
+  props:
+    id:
+      type: string
+      required: false
+      description: Unique identifier for the item
+    icon:
+      type: string
+      required: true
+      description: Icon name - checks custom icons first, then falls back to Tabler icons
+    value:
+      type: string
+      required: false
+      description: The prominent metric/stat value (e.g., "84%", "3-6 months"). If omitted, shows icon + title + description style.
+    title:
+      type: string
+      required: true
+      description: Label or title for the card
+    description:
+      type: string
+      required: false
+      description: Optional description text below the title
+
+detailed_item_props:
+  description: Item structure for variant "detailed"
+  props:
+    id:
+      type: string
+      required: false
+      description: Unique identifier for the item
+    icon:
+      type: string
+      required: true
+      description: Icon name - checks custom icons first, then falls back to Tabler icons
+    category:
+      type: string
+      required: false
+      description: Small category label shown above the title
+    title:
+      type: string
+      required: true
+      description: Main title for the feature card
+    description:
+      type: string
+      required: true
+      description: Full descriptive text for the feature
+    link_url:
+      type: string
+      required: false
+      description: URL for the action link
+    link_text:
+      type: string
+      required: false
+      description: Text for the link (defaults to "Read More")
+
+detailed_only_props:
+  collapsible_mobile:
+    type: boolean
+    required: false
+    default: true
+    description: Whether detailed cards collapse on mobile with a toggle arrow (only for "detailed" variant)

@@ -1,34 +1,68 @@
 import { useState } from "react";
-import type { ItemsShowcaseSection, ItemsShowcaseItem } from "@shared/schema";
+import type { 
+  FeaturesGridSection, 
+  FeaturesGridHighlightSection, 
+  FeaturesGridDetailedSection,
+  FeaturesGridHighlightItem,
+  FeaturesGridDetailedItem 
+} from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
 
-interface ItemsShowcaseProps {
-  data: ItemsShowcaseSection;
+interface FeaturesGridProps {
+  data: FeaturesGridSection;
 }
 
-function getIcon(iconName: string) {
-  // Check custom icons first
+function getIcon(iconName: string, className?: string) {
   const CustomIcon = getCustomIcon(iconName);
   if (CustomIcon) {
-    return <CustomIcon width="100%" height="100%" className="text-primary" />;
+    return <CustomIcon width="100%" height="100%" className={className || "text-primary"} />;
   }
   
-  // Fall back to Tabler icons
   const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string }>;
   if (IconComponent) {
-    return <IconComponent className="w-full h-full text-primary" />;
+    return <IconComponent className={className || "w-full h-full text-primary"} />;
   }
-  return <TablerIcons.IconBox className="w-full h-full text-primary" />;
+  return <TablerIcons.IconBox className={className || "w-full h-full text-primary"} />;
 }
 
-function ItemCard({ 
+function HighlightCard({ item }: { item: FeaturesGridHighlightItem }) {
+  const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
+  
+  return (
+    <Card 
+      className="p-3 md:p-5 flex items-center gap-3 md:gap-5"
+      data-testid={`card-feature-${itemId}`}
+    >
+      <div className="flex-shrink-0 w-10 h-10 md:w-16 md:h-16">
+        {getIcon(item.icon, "w-full h-full text-primary")}
+      </div>
+      <div>
+        {item.value && (
+          <div className="text-xl md:text-4xl font-semibold text-foreground">
+            {item.value}
+          </div>
+        )}
+        <div className={`font-semibold text-foreground ${item.value ? 'text-sm md:text-base mt-0.5 md:mt-1' : 'text-lg'}`}>
+          {item.title}
+        </div>
+        {item.description && (
+          <div className="text-sm text-muted-foreground mt-0.5">
+            {item.description}
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+}
+
+function DetailedCard({ 
   item, 
   collapsible 
 }: { 
-  item: ItemsShowcaseItem; 
+  item: FeaturesGridDetailedItem; 
   collapsible: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +70,6 @@ function ItemCard({
   
   return (
     <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-feature-${itemId}`}>
-      {/* Header */}
       <div 
         className={`flex justify-between items-start ${collapsible ? 'cursor-pointer md:cursor-default' : ''}`}
         onClick={() => collapsible && setIsOpen(!isOpen)}
@@ -62,7 +95,6 @@ function ItemCard({
         )}
       </div>
       
-      {/* Mobile: Collapsible content */}
       {collapsible && (
         <div className={`md:hidden overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
           <p className="text-muted-foreground mb-4">
@@ -80,7 +112,6 @@ function ItemCard({
         </div>
       )}
       
-      {/* Desktop: Always visible content (or non-collapsible mode) */}
       <div className={collapsible ? "hidden md:block mt-4" : "mt-4"}>
         <p className="text-muted-foreground mb-4">
           {item.description}
@@ -99,7 +130,47 @@ function ItemCard({
   );
 }
 
-export default function ItemsShowcase({ data }: ItemsShowcaseProps) {
+function HighlightGrid({ data }: { data: FeaturesGridHighlightSection }) {
+  const columns = data.columns || 3;
+  
+  const gridColsClass = {
+    1: "md:grid-cols-1",
+    2: "md:grid-cols-2",
+    3: "md:grid-cols-3",
+    4: "md:grid-cols-4",
+  }[columns] || "md:grid-cols-3";
+
+  return (
+    <section 
+      className={`pb-16 ${data.background || ''}`}
+      data-testid="section-features-grid"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+            data-testid="text-features-grid-title"
+          >
+            {data.title}
+          </h2>
+          {data.subtitle && (
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {data.subtitle}
+            </p>
+          )}
+        </div>
+
+        <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
+          {data.items.map((item, index) => (
+            <HighlightCard key={item.id || index} item={item} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DetailedGrid({ data }: { data: FeaturesGridDetailedSection }) {
   const columns = data.columns || 3;
   const collapsible = data.collapsible_mobile ?? true;
   
@@ -113,12 +184,12 @@ export default function ItemsShowcase({ data }: ItemsShowcaseProps) {
   return (
     <section 
       className={`pb-8 pt-10 ${data.background || ''}`}
-      data-testid="section-items-showcase"
+      data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
           className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
-          data-testid="text-items-showcase-title"
+          data-testid="text-features-grid-title"
         >
           {data.title}
         </h2>
@@ -130,7 +201,7 @@ export default function ItemsShowcase({ data }: ItemsShowcaseProps) {
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
           {data.items.map((item, index) => (
-            <ItemCard 
+            <DetailedCard 
               key={item.id || index} 
               item={item} 
               collapsible={collapsible}
@@ -142,5 +213,15 @@ export default function ItemsShowcase({ data }: ItemsShowcaseProps) {
   );
 }
 
-export { ItemsShowcase };
-export type { ItemsShowcaseProps };
+export default function FeaturesGrid({ data }: FeaturesGridProps) {
+  const variant = data.variant || "highlight";
+  
+  if (variant === "detailed") {
+    return <DetailedGrid data={data as FeaturesGridDetailedSection} />;
+  }
+  
+  return <HighlightGrid data={data as FeaturesGridHighlightSection} />;
+}
+
+export { FeaturesGrid };
+export type { FeaturesGridProps };

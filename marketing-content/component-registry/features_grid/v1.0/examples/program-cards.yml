@@ -1,5 +1,6 @@
 type: features_grid
 version: "1.0"
+variant: detailed
 title: Programs with Job Guarantee
 subtitle: Our career-focused programs come with a Job Guarantee - if you're not hired within 9 months, we refund your tuition.
 columns: 3

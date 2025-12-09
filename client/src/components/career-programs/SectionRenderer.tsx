@@ -14,12 +14,10 @@ import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps from "@/components/NumberedSteps";
-import StatsSection from "@/components/StatsSection";
 import TestimonialsSlide from "@/components/TestimonialsSlide";
-import { FeaturesGridSection } from "./FeaturesGridSection";
+import FeaturesGrid from "@/components/FeaturesGrid";
 import { ProgramsListSection } from "./ProgramsListSection";
 import { CTABannerSection } from "./CTABannerSection";
-import ItemsShowcase from "@/components/ItemsShowcase";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -58,18 +56,14 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <TwoColumn key={index} data={section} />;
           case "numbered_steps":
             return <NumberedSteps key={index} data={section} />;
-          case "stats_section":
-            return <StatsSection key={index} data={section} />;
           case "testimonials_slide":
             return <TestimonialsSlide key={index} data={section} />;
           case "features_grid":
-            return <FeaturesGridSection key={index} data={section} />;
+            return <FeaturesGrid key={index} data={section} />;
           case "programs_list":
             return <ProgramsListSection key={index} data={section} />;
           case "cta_banner":
             return <CTABannerSection key={index} data={section} />;
-          case "items_showcase":
-            return <ItemsShowcase key={index} data={section} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);
