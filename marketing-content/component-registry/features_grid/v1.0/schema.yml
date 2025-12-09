@@ -35,7 +35,7 @@ props:
       icon:
         type: string
         required: true
-        description: Tabler icon name (without Icon prefix, e.g., "Code", "Rocket", "Shield")
+        description: Icon name - checks custom icons first (e.g., "CodeWindow", "Monitor", "Security"), then falls back to Tabler icons (e.g., "Code", "Rocket", "Shield")
       category:
         type: string
         required: false
