@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero/Hero";
 import FeaturesGrid from "@/components/FeaturesGrid";
 import { TwoColumn } from "@/components/TwoColumn";
 import type { HeroTwoColumn, FeaturesGridHighlightSection, TwoColumnSection } from "@shared/schema";
-import humanAiImage from "@assets/Group_6685_1765299876649.png";
+import humanAiImage from "@assets/1_1_1765300041955.png";
 
 const heroData: HeroTwoColumn = {
   type: "hero",
