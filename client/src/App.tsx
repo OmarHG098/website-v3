@@ -22,6 +22,7 @@ const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const JobGuarantee = lazy(() => import("@/pages/JobGuarantee"));
 const GeekPalSupport = lazy(() => import("@/pages/GeekPalSupport"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
+const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 
 function LoadingFallback() {
   return (
@@ -55,6 +56,7 @@ function Router() {
         <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
         <Route path="/us/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
+        <Route path="/preview-frame" component={PreviewFrame} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

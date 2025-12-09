@@ -142,6 +142,9 @@ function ComponentCard({
   cardRef 
 }: ComponentCardProps) {
   const { toast } = useToast();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeReady, setIframeReady] = useState(false);
+  const [iframeHeight, setIframeHeight] = useState(400);
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
   const [showYaml, setShowYaml] = useState(true);
@@ -249,6 +252,46 @@ function ComponentCard({
       setShowPreview(globalPreviewState);
     }
   }, [globalPreviewState]);
+
+  // Listen for iframe ready and height messages
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') {
+        setIframeReady(true);
+      }
+      if (event.data?.type === 'preview-height') {
+        setIframeHeight(event.data.height || 400);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  // Send data to iframe when ready or data changes
+  useEffect(() => {
+    if (iframeReady && iframeRef.current?.contentWindow && parsedData) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'preview-update',
+        sections: [parsedData],
+      }, '*');
+    }
+  }, [iframeReady, parsedData]);
+
+  // Send theme to iframe when it changes
+  useEffect(() => {
+    if (iframeReady && iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'theme-update',
+        theme: isDarkMode ? 'dark' : 'light',
+      }, '*');
+    }
+  }, [iframeReady, isDarkMode]);
+
+  // Reset iframe ready state when viewport changes (iframe remounts)
+  useEffect(() => {
+    setIframeReady(false);
+  }, [previewViewport]);
 
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
@@ -600,7 +643,7 @@ function ComponentCard({
             </div>
             <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
               <div 
-                className={`bg-background transition-all duration-300 ${
+                className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
                     ? 'w-[375px] shadow-lg border-x' 
                     : previewViewport === 'tablet' 
@@ -608,7 +651,17 @@ function ComponentCard({
                       : 'w-full'
                 }`}
               >
-                {parsedData && <SectionRenderer sections={[parsedData]} />}
+                <iframe
+                  ref={iframeRef}
+                  src="/preview-frame"
+                  className="w-full border-0"
+                  style={{ 
+                    height: `${Math.max(iframeHeight, 200)}px`,
+                    minHeight: '200px',
+                  }}
+                  title={`Preview ${componentType}`}
+                  data-testid={`iframe-preview-${componentType}`}
+                />
               </div>
             </div>
           </div>
