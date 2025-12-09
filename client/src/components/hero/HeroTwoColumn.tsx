@@ -9,6 +9,7 @@ export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
   const colorMap: Record<string, string> = {
     "primary": "hsl(var(--primary))",
     "accent": "hsl(var(--accent))",
+    "destructive": "hsl(var(--destructive))",
     "chart-1": "hsl(var(--chart-1))",
     "chart-2": "hsl(var(--chart-2))",
     "chart-3": "hsl(var(--chart-3))",

@@ -73,7 +73,7 @@ export const brandMarkSchema = z.object({
   prefix: z.string().optional(),
   highlight: z.string(),
   suffix: z.string().optional(),
-  color: z.enum(["primary", "accent", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
+  color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
 export const heroTwoColumnSchema = z.object({
