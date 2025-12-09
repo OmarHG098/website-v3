@@ -22,7 +22,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
 
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-5/12">
             {video_id ? (
