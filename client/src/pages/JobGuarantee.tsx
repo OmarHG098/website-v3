@@ -284,12 +284,12 @@ function ProgramCard({ program, iconMap }: { program: typeof programsData.progra
             {program.title}
           </h3>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16">
+        <div className="flex items-start gap-2">
+          <div className="[&_svg]:w-14 [&_svg]:h-14 md:[&_svg]:w-16 md:[&_svg]:h-16 self-center">
             {iconMap[program.icon]}
           </div>
           <TablerIcons.IconChevronDown 
-            className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}
+            className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 mt-1 ${isOpen ? 'rotate-180' : ''}`}
           />
         </div>
       </div>
