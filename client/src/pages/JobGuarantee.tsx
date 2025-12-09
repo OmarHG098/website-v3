@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
@@ -264,6 +265,66 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
   );
 }
 
+function ProgramCard({ program, iconMap }: { program: typeof programsData.programs[0], iconMap: Record<string, JSX.Element> }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-program-${program.id}`}>
+      {/* Mobile: Collapsible header */}
+      <div 
+        className="flex justify-between items-start cursor-pointer md:cursor-default"
+        onClick={() => setIsOpen(!isOpen)}
+        data-testid={`button-toggle-program-${program.id}`}
+      >
+        <div className="flex-1">
+          <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+            {program.category}
+          </span>
+          <h3 className="text-lg md:text-xl font-bold text-foreground mt-1">
+            {program.title}
+          </h3>
+        </div>
+        <div className="flex items-start gap-2">
+          <div className="hidden md:block">
+            {iconMap[program.icon]}
+          </div>
+          <TablerIcons.IconChevronDown 
+            className={`md:hidden w-5 h-5 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </div>
+      </div>
+      
+      {/* Mobile: Collapsible content */}
+      <div className={`md:hidden overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
+        <p className="text-muted-foreground mb-4">
+          {program.description}
+        </p>
+        <a 
+          href="#"
+          className="text-primary hover:underline font-medium"
+          data-testid={`button-read-more-mobile-${program.id}`}
+        >
+          Read More
+        </a>
+      </div>
+      
+      {/* Desktop: Always visible content */}
+      <div className="hidden md:block mt-4">
+        <p className="text-muted-foreground mb-4">
+          {program.description}
+        </p>
+        <a 
+          href="#"
+          className="text-primary hover:underline font-medium"
+          data-testid={`button-read-more-${program.id}`}
+        >
+          Read More
+        </a>
+      </div>
+    </Card>
+  );
+}
+
 function ProgramsSection({ data }: { data: typeof programsData }) {
   const iconMap = {
     codewindow: <CodeWindow width="64" height="64" />,
@@ -289,29 +350,7 @@ function ProgramsSection({ data }: { data: typeof programsData }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.programs.map((program) => (
-              <Card key={program.id} className="p-6 hover-elevate" data-testid={`card-program-${program.id}`}>
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                      {program.category}
-                    </span>
-                    <h3 className="text-xl font-bold text-foreground mt-1">
-                      {program.title}
-                    </h3>
-                  </div>
-                  {iconMap[program.icon]}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  {program.description}
-                </p>
-                <a 
-                  href="#"
-                  className="text-primary hover:underline font-medium"
-                  data-testid={`button-read-more-${program.id}`}
-                >
-                  Read More
-                </a>
-              </Card>
+              <ProgramCard key={program.id} program={program} iconMap={iconMap} />
             ))}
           </div>
       </div>
