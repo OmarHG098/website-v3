@@ -92,6 +92,15 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
+        <div className="mb-8">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4" data-testid="text-project-title">
+            {project_title}
+          </h3>
+          <p className="text-muted-foreground leading-relaxed max-w-4xl" data-testid="text-project-description">
+            {description}
+          </p>
+        </div>
+
         <div className={`flex flex-col ${media_position === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
             <div className="relative">
@@ -141,60 +150,45 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 space-y-6">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground" data-testid="text-project-title">
-              Project: {project_title}
-            </h3>
-
-            <div>
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                {">"} MADE BY
-              </p>
-              <div className="space-y-3">
-                {creators.map((creator, index) => (
-                  <div key={index} data-testid={`creator-${index}`}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-foreground font-medium">{creator.name}</span>
-                      {creator.github_url && (
-                        <a
-                          href={creator.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s GitHub`}
-                          data-testid={`link-github-${index}`}
-                        >
-                          <IconBrandGithub size={20} />
-                        </a>
-                      )}
-                      {creator.linkedin_url && (
-                        <a
-                          href={creator.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s LinkedIn`}
-                          data-testid={`link-linkedin-${index}`}
-                        >
-                          <IconBrandLinkedin size={20} />
-                        </a>
-                      )}
-                    </div>
-                    {creator.role && (
-                      <p className="text-sm text-muted-foreground">{creator.role}</p>
+          <div className="w-full md:w-1/2">
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+              {">"} MADE BY
+            </p>
+            <div className="space-y-3">
+              {creators.map((creator, index) => (
+                <div key={index} data-testid={`creator-${index}`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-foreground font-medium">{creator.name}</span>
+                    {creator.github_url && (
+                      <a
+                        href={creator.github_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        aria-label={`${creator.name}'s GitHub`}
+                        data-testid={`link-github-${index}`}
+                      >
+                        <IconBrandGithub size={20} />
+                      </a>
+                    )}
+                    {creator.linkedin_url && (
+                      <a
+                        href={creator.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        aria-label={`${creator.name}'s LinkedIn`}
+                        data-testid={`link-linkedin-${index}`}
+                      >
+                        <IconBrandLinkedin size={20} />
+                      </a>
                     )}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                {">"} DESCRIPTION
-              </p>
-              <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
-                {description}
-              </p>
+                  {creator.role && (
+                    <p className="text-sm text-muted-foreground">{creator.role}</p>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
