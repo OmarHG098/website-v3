@@ -30,9 +30,9 @@ const statsData: FeaturesGridHighlightSection = {
   subtitle: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.",
   columns: 3,
   items: [
-    { icon: "Briefcase", value: "84%", title: "Job placement rate" },
-    { icon: "Graduation", value: "3-6 months", title: "Average time to get hired" },
-    { icon: "GrowthChart", value: "55%", title: "Salary increase after graduation" },
+    { icon: "Briefcase", icon_color: "#0097CD", value: "84%", title: "Job placement rate" },
+    { icon: "Graduation", icon_color: "#0097CD", value: "3-6 months", title: "Average time to get hired" },
+    { icon: "GrowthChart", icon_color: "#0097CD", value: "55%", title: "Salary increase after graduation" },
   ],
 };
 
