@@ -88,10 +88,9 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 className="relative pb-5 last:pb-0"
                 data-testid={`numbered-step-mobile-${index + 1}`}
               >
-                {/* Circle on the left - centered at 28px from container edge */}
-                <div className="absolute left-[-3.5rem] w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center z-10">
-                  <div className="absolute inset-0 bg-primary/10 rounded-full" />
-                  <span className="text-base font-bold text-primary relative z-10">
+                {/* Circle on the left */}
+                <div className="absolute left-[-3.5rem] w-10 h-10 rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center">
+                  <span className="text-base font-bold text-primary">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
