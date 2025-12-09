@@ -125,6 +125,22 @@ const communityData: TwoColumnSection = {
   },
 };
 
+const graduateTestimonialData: TwoColumnSection = {
+  type: "two_column",
+  proportions: [5, 7],
+  background: "bg-background",
+  alignment: "center",
+  heading_above_on_md: false,
+  left: {
+    heading: "Hear From One of Our Graduates",
+    description: "Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career.",
+    font_size: "lg",
+  },
+  right: {
+    video: "MBXqEnhodx0",
+  },
+};
+
 export default function GeekPalSupport() {
   return (
     <div className="min-h-screen bg-background">
@@ -134,6 +150,7 @@ export default function GeekPalSupport() {
         <FeaturesGrid data={advanceFasterData} />
         <TwoColumn data={humanAiData} />
         <TwoColumn data={communityData} />
+        <TwoColumn data={graduateTestimonialData} />
       </main>
     </div>
   );
