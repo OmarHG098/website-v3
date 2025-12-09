@@ -605,7 +605,7 @@ function ComponentCard({
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
                 <span className="text-xs text-muted-foreground">
-                  {previewViewport === 'mobile' ? '375px' : previewViewport === 'tablet' ? '768px' : '100%'}
+                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '100%'}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -614,7 +614,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('mobile')}
-                  title="Mobile (375px)"
+                  title="Mobile (375 × 667)"
                   data-testid={`button-viewport-mobile-${componentType}`}
                 >
                   <IconDeviceMobile className="w-4 h-4" />
@@ -624,7 +624,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('tablet')}
-                  title="Tablet (768px)"
+                  title="Tablet (768 × 1024)"
                   data-testid={`button-viewport-tablet-${componentType}`}
                 >
                   <IconDeviceTablet className="w-4 h-4" />
@@ -634,7 +634,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('desktop')}
-                  title="Desktop (100%)"
+                  title="Desktop (auto)"
                   data-testid={`button-viewport-desktop-${componentType}`}
                 >
                   <IconDeviceDesktop className="w-4 h-4" />
@@ -658,7 +658,9 @@ function ComponentCard({
                   style={{ 
                     height: previewViewport === 'mobile' 
                       ? '667px'  // iPhone SE/8 screen height
-                      : `${Math.max(iframeHeight, 200)}px`,
+                      : previewViewport === 'tablet'
+                        ? '1024px'  // iPad portrait height
+                        : `${Math.max(iframeHeight, 200)}px`,
                     minHeight: '200px',
                   }}
                   title={`Preview ${componentType}`}
