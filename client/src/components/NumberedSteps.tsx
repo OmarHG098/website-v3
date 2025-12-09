@@ -75,9 +75,9 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
         )}
 
         {/* Mobile: Vertical timeline */}
-        <div className="md:hidden relative pl-12">
-          {/* Vertical line */}
-          <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-primary/30 z-0" />
+        <div className="md:hidden relative pl-16">
+          {/* Vertical line - centered with circles */}
+          <div className="absolute left-[1.25rem] top-6 bottom-6 w-0.5 bg-primary/30 z-0" />
           
           {(data.steps || []).map((step, index) => {
             const bulletChar = step.bullet_char || data.bullet_char;
@@ -91,9 +91,9 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                 data-testid={`numbered-step-mobile-${index + 1}`}
               >
                 {/* Circle on the left */}
-                <div className="absolute left-[-2rem] w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center z-10">
+                <div className="absolute left-[-3.5rem] w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center z-10">
                   <div className="absolute inset-0 bg-primary/10 rounded-full" />
-                  <span className="text-sm font-bold text-primary relative z-10">
+                  <span className="text-base font-bold text-primary relative z-10">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
