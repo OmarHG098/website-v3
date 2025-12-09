@@ -470,6 +470,15 @@ export const projectShowcaseMediaSchema = z.object({
   alt: z.string().optional(),
 });
 
+export const projectShowcaseItemSchema = z.object({
+  project_title: z.string(),
+  description: z.string(),
+  creators: z.array(projectShowcaseCreatorSchema),
+  media: z.array(projectShowcaseMediaSchema).optional(),
+  image: z.string().optional(),
+  video_id: z.string().optional(),
+});
+
 export const projectShowcaseSectionSchema = z.object({
   type: z.literal("project_showcase"),
   version: z.string().optional(),
@@ -483,9 +492,17 @@ export const projectShowcaseSectionSchema = z.object({
   media_position: z.enum(["left", "right"]).optional(),
 });
 
+export const projectsShowcaseSectionSchema = z.object({
+  type: z.literal("projects_showcase"),
+  version: z.string().optional(),
+  items: z.array(projectShowcaseItemSchema),
+});
+
 export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;
 export type ProjectShowcaseMedia = z.infer<typeof projectShowcaseMediaSchema>;
+export type ProjectShowcaseItem = z.infer<typeof projectShowcaseItemSchema>;
 export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
+export type ProjectsShowcaseSection = z.infer<typeof projectsShowcaseSectionSchema>;
 
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
@@ -513,6 +530,7 @@ export const sectionSchema = z.union([
   programsListSectionSchema,
   ctaBannerSectionSchema,
   projectShowcaseSectionSchema,
+  projectsShowcaseSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
