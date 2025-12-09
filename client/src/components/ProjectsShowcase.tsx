@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import type { ProjectsShowcaseSection, ProjectShowcaseItem } from "@shared/schema";
 import { IconBrandGithub, IconBrandLinkedin, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 
@@ -84,10 +85,66 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
     return null;
   };
 
+  const InfoContent = () => (
+    <>
+      <div>
+        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+          MADE BY
+        </p>
+        <div className="space-y-3">
+          {creators.map((creator, index) => (
+            <div key={index} data-testid={`creator-${index}`}>
+              <div className="flex items-center gap-2">
+                <span className="text-foreground font-medium">{">"} {creator.name}</span>
+                {creator.github_url && (
+                  <a
+                    href={creator.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`${creator.name}'s GitHub`}
+                    data-testid={`link-github-${index}`}
+                  >
+                    <IconBrandGithub size={20} />
+                  </a>
+                )}
+                {creator.linkedin_url && (
+                  <a
+                    href={creator.linkedin_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`${creator.name}'s LinkedIn`}
+                    data-testid={`link-linkedin-${index}`}
+                  >
+                    <IconBrandLinkedin size={20} />
+                  </a>
+                )}
+              </div>
+              {creator.role && (
+                <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
+        {description}
+      </p>
+    </>
+  );
+
   return (
     <section className={`py-12 md:py-16 ${background}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
+        {/* Mobile: Title centered above carousel */}
+        <h3 className="text-2xl font-bold text-foreground text-center mb-6 md:hidden" data-testid="text-project-title-mobile">
+          {project_title}
+        </h3>
+
         <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
+          {/* Media column */}
           <div className="w-full md:w-1/2">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
@@ -146,58 +203,20 @@ function SingleProject({ project, mediaPosition, background }: SingleProjectProp
                 {project_title} {">"}
               </a>
             )}
+
+            {/* Mobile: Info in a card below carousel */}
+            <Card className="mt-6 p-6 space-y-6 md:hidden">
+              <InfoContent />
+            </Card>
           </div>
 
-          <div className="w-full md:w-1/2 space-y-6">
+          {/* Desktop: Text column with title and info */}
+          <div className="hidden md:block w-full md:w-1/2 space-y-6">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground" data-testid="text-project-title">
               {project_title}
             </h3>
 
-            <div>
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                MADE BY
-              </p>
-              <div className="space-y-3">
-                {creators.map((creator, index) => (
-                  <div key={index} data-testid={`creator-${index}`}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-foreground font-medium">{">"} {creator.name}</span>
-                      {creator.github_url && (
-                        <a
-                          href={creator.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s GitHub`}
-                          data-testid={`link-github-${index}`}
-                        >
-                          <IconBrandGithub size={20} />
-                        </a>
-                      )}
-                      {creator.linkedin_url && (
-                        <a
-                          href={creator.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s LinkedIn`}
-                          data-testid={`link-linkedin-${index}`}
-                        >
-                          <IconBrandLinkedin size={20} />
-                        </a>
-                      )}
-                    </div>
-                    {creator.role && (
-                      <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
-              {description}
-            </p>
+            <InfoContent />
           </div>
         </div>
       </div>
