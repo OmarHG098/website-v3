@@ -92,14 +92,9 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4" data-testid="text-project-title">
-            {project_title}
-          </h3>
-          <p className="text-muted-foreground leading-relaxed max-w-4xl" data-testid="text-project-description">
-            {description}
-          </p>
-        </div>
+        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8" data-testid="text-project-title">
+          {project_title}
+        </h3>
 
         <div className={`flex flex-col ${media_position === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
@@ -192,6 +187,10 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
             </div>
           </div>
         </div>
+
+        <p className="text-muted-foreground leading-relaxed mt-8" data-testid="text-project-description">
+          {description}
+        </p>
       </div>
     </section>
   );
