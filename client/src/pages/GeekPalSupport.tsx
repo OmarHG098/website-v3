@@ -135,6 +135,7 @@ const graduateTestimonialData: TwoColumnSection = {
     heading: "Hear From One of Our Graduates",
     description: "Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career.",
     font_size: "lg",
+    text_align: "center"
   },
   right: {
     video: "MBXqEnhodx0",

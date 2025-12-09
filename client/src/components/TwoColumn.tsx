@@ -211,7 +211,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
         <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
-              className={`text-3xl md:text-4xl font-bold text-foreground text-center md:text-left ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
+              className={`text-3xl md:text-4xl font-bold text-foreground ${column.text_align ? '' : 'text-center md:text-left'} ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
               data-testid="text-two-column-heading"
             >
               {column.heading}
