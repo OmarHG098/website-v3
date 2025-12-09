@@ -1,0 +1,75 @@
+name: ItemsShowcase
+description: A grid of feature cards with custom/Tabler icons, titles, descriptions, and optional links. Cards are collapsible on mobile for better UX. Supports custom icons from the custom-icons registry.
+when_to_use: Use when showcasing multiple features, programs, services, or offerings in a grid layout with custom branded icons. Ideal for program listings with collapsible mobile cards.
+
+props:
+  type:
+    type: string
+    required: true
+    description: Must be "items_showcase"
+    
+  version:
+    type: string
+    required: false
+    description: Component version for registry tracking
+    
+  title:
+    type: string
+    required: true
+    description: Main heading for the section
+    
+  subtitle:
+    type: string
+    required: false
+    description: Supporting text below the title
+    
+  items:
+    type: array
+    required: true
+    description: Array of items to display
+    items:
+      id:
+        type: string
+        required: false
+        description: Unique identifier for the item (used for data-testid)
+      icon:
+        type: string
+        required: true
+        description: Icon name - checks custom icons first (e.g., "CodeWindow", "Monitor", "Security"), then falls back to Tabler icons (e.g., "Code", "Rocket", "Shield")
+      category:
+        type: string
+        required: false
+        description: Small category label shown above the title
+      title:
+        type: string
+        required: true
+        description: Main title for the card
+      description:
+        type: string
+        required: true
+        description: Descriptive text for the item
+      link_url:
+        type: string
+        required: false
+        description: URL for the action link
+      link_text:
+        type: string
+        required: false
+        description: Text for the link (defaults to "Read More")
+        
+  columns:
+    type: number
+    required: false
+    default: 3
+    description: Number of columns on desktop (1-4)
+    
+  collapsible_mobile:
+    type: boolean
+    required: false
+    default: true
+    description: Whether cards collapse on mobile with a toggle arrow
+    
+  background:
+    type: string
+    required: false
+    description: Background color class (e.g., "bg-muted/30", "bg-primary/5")

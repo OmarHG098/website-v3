@@ -19,6 +19,7 @@ import TestimonialsSlide from "@/components/TestimonialsSlide";
 import { FeaturesGridSection } from "./FeaturesGridSection";
 import { ProgramsListSection } from "./ProgramsListSection";
 import { CTABannerSection } from "./CTABannerSection";
+import ItemsShowcase from "@/components/ItemsShowcase";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -67,6 +68,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <ProgramsListSection key={index} data={section} />;
           case "cta_banner":
             return <CTABannerSection key={index} data={section} />;
+          case "items_showcase":
+            return <ItemsShowcase key={index} data={section} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);

@@ -403,6 +403,23 @@ export const featuresGridSectionSchema = z.object({
 export type FeaturesGridItem = z.infer<typeof featuresGridItemSchema>;
 export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
 
+// ItemsShowcase - reuses FeaturesGrid structure with different type literal
+export const itemsShowcaseItemSchema = featuresGridItemSchema;
+
+export const itemsShowcaseSectionSchema = z.object({
+  type: z.literal("items_showcase"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  items: z.array(itemsShowcaseItemSchema),
+  columns: z.number().optional(),
+  collapsible_mobile: z.boolean().optional(),
+  background: z.string().optional(),
+});
+
+export type ItemsShowcaseItem = z.infer<typeof itemsShowcaseItemSchema>;
+export type ItemsShowcaseSection = z.infer<typeof itemsShowcaseSectionSchema>;
+
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
   version: z.string().optional(),
@@ -446,6 +463,7 @@ export const sectionSchema = z.union([
   featuresGridSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
+  itemsShowcaseSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

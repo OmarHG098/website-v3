@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, FeaturesGridSection } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, ItemsShowcaseSection } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";
-import FeaturesGrid from "@/components/FeaturesGrid";
+import ItemsShowcase from "@/components/ItemsShowcase";
 import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import type { ComponentType } from "react";
@@ -58,8 +58,8 @@ const eligibleData: TwoColumnSectionType = {
   },
 };
 
-const programsData: FeaturesGridSection = {
-  type: "features_grid",
+const programsData: ItemsShowcaseSection = {
+  type: "items_showcase",
   title: "Our Job Guarantee is Available for Our Top Tech Programs",
   subtitle: "Choose your career path. Master the skills and get hired.",
   columns: 3,
@@ -283,7 +283,7 @@ export default function JobGuarantee() {
         <JobGuaranteeHero data={heroData} />
         <StatsSection data={statsData} />
         <TwoColumn data={eligibleData} />
-        <FeaturesGrid data={programsData} />
+        <ItemsShowcase data={programsData} />
         <NumberedSteps data={refundData} />
         <TwoColumn data={confidenceData} />
         <FAQSection data={faqData} />

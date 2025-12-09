@@ -1,12 +1,12 @@
 import { useState } from "react";
-import type { FeaturesGridSection, FeaturesGridItem } from "@shared/schema";
+import type { ItemsShowcaseSection, ItemsShowcaseItem } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
 
-interface FeaturesGridProps {
-  data: FeaturesGridSection;
+interface ItemsShowcaseProps {
+  data: ItemsShowcaseSection;
 }
 
 function getIcon(iconName: string) {
@@ -24,11 +24,11 @@ function getIcon(iconName: string) {
   return <TablerIcons.IconBox className="w-full h-full text-primary" />;
 }
 
-function FeatureCard({ 
+function ItemCard({ 
   item, 
   collapsible 
 }: { 
-  item: FeaturesGridItem; 
+  item: ItemsShowcaseItem; 
   collapsible: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,7 +99,7 @@ function FeatureCard({
   );
 }
 
-export default function FeaturesGrid({ data }: FeaturesGridProps) {
+export default function ItemsShowcase({ data }: ItemsShowcaseProps) {
   const columns = data.columns || 3;
   const collapsible = data.collapsible_mobile ?? true;
   
@@ -113,12 +113,12 @@ export default function FeaturesGrid({ data }: FeaturesGridProps) {
   return (
     <section 
       className={`pb-8 pt-10 ${data.background || ''}`}
-      data-testid="section-features-grid"
+      data-testid="section-items-showcase"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
           className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
-          data-testid="text-features-grid-title"
+          data-testid="text-items-showcase-title"
         >
           {data.title}
         </h2>
@@ -130,7 +130,7 @@ export default function FeaturesGrid({ data }: FeaturesGridProps) {
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
           {data.items.map((item, index) => (
-            <FeatureCard 
+            <ItemCard 
               key={item.id || index} 
               item={item} 
               collapsible={collapsible}
@@ -142,5 +142,5 @@ export default function FeaturesGrid({ data }: FeaturesGridProps) {
   );
 }
 
-export { FeaturesGrid };
-export type { FeaturesGridProps };
+export { ItemsShowcase };
+export type { ItemsShowcaseProps };
