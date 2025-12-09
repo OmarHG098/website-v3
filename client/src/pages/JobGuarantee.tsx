@@ -99,13 +99,13 @@ const confidenceData: TwoColumnSectionType = {
   left: {
     image: confidenceImage,
     image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo",
-    image_width: "400px",
     justify: "start",
   },
   right: {
     heading: "Why We Have the Confidence to Offer a Job Guarantee",
     description: "Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.",
     font_size: "base",
+    bullets_visible: 2,
     bullets: [
       { text: "Our program's effectiveness is backed by strong placement rates" },
       { text: "The tech industry continues to grow with high demand for talent" },

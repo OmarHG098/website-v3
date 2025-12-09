@@ -109,7 +109,7 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                     </h3>
                   )}
                   {step.text && !step.title && (
-                    <p className="text-foreground">
+                    <p className="text-base text-foreground">
                       {step.text}
                     </p>
                   )}

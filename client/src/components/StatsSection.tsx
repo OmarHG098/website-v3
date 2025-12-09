@@ -45,20 +45,20 @@ export default function StatsSection({ data }: StatsSectionProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} data-testid={`stat-item-${index}`} className="p-5 flex items-center gap-5">
-              <div className="flex-shrink-0">
+            <Card key={index} data-testid={`stat-item-${index}`} className="p-3 md:p-5 flex items-center gap-3 md:gap-5">
+              <div className="flex-shrink-0 [&_svg]:w-10 [&_svg]:h-10 md:[&_svg]:w-16 md:[&_svg]:h-16">
                 {iconMap[stat.icon]}
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-semibold text-foreground">
+                <div className="text-xl md:text-4xl font-semibold text-foreground">
                   {stat.value}
                   {stat.valueSuffix && (
-                    <span className="text-xl md:text-2xl ml-1">
+                    <span className="text-base md:text-2xl ml-1">
                       {stat.valueSuffix}
                     </span>
                   )}
                 </div>
-                <div className="text-base text-muted-foreground mt-1">{stat.label}</div>
+                <div className="text-sm md:text-base text-muted-foreground mt-0.5 md:mt-1">{stat.label}</div>
               </div>
             </Card>
           ))}
