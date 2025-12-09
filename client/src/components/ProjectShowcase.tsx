@@ -41,7 +41,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
       const currentMedia = mediaItems[currentIndex];
       if (currentMedia.type === "video") {
         return (
-          <div className="rounded-lg overflow-hidden">
+          <div className="rounded-lg overflow-hidden h-full">
             <LiteYouTubeEmbed
               id={currentMedia.src}
               title={project_title}
@@ -54,7 +54,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
           <img
             src={currentMedia.src}
             alt={currentMedia.alt || project_title}
-            className="w-full rounded-lg object-cover"
+            className="w-full h-full rounded-lg object-cover"
             loading="lazy"
             data-testid="img-project-showcase"
           />
@@ -64,7 +64,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
 
     if (video_id) {
       return (
-        <div className="rounded-lg overflow-hidden">
+        <div className="rounded-lg overflow-hidden h-full">
           <LiteYouTubeEmbed
             id={video_id}
             title={project_title}
@@ -79,7 +79,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
         <img
           src={image}
           alt={project_title}
-          className="w-full rounded-lg object-cover"
+          className="w-full h-full rounded-lg object-cover"
           loading="lazy"
           data-testid="img-project-showcase"
         />
@@ -95,7 +95,9 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
         <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
             <div className="relative">
-              {renderMedia()}
+              <div className="aspect-video rounded-lg overflow-hidden">
+                {renderMedia()}
+              </div>
 
               {hasCarousel && (
                 <div className="flex justify-between items-center mt-4" data-testid="carousel-pagination">
