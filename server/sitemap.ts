@@ -446,7 +446,6 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   urls.push({ loc: `${getBaseUrl()}/tool-mastery`, label: "Tool Mastery" });
   urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
   urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
-  urls.push({ loc: `${getBaseUrl()}/job-guarantee`, label: "Job Guarantee" });
 
   // Dynamic career program pages from YAML (only indexable)
   const programs = getAvailablePrograms();
