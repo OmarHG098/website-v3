@@ -1,7 +1,7 @@
 import { HeroSingleColumn } from "@/components/hero/HeroSingleColumn";
 import { ProjectsShowcase } from "@/components/ProjectsShowcase";
-import { AboutSection } from "@/components/AboutSection";
-import type { HeroSingleColumn as HeroSingleColumnType, ProjectsShowcaseSection } from "@shared/schema";
+import { About } from "@/components/About";
+import type { HeroSingleColumn as HeroSingleColumnType, ProjectsShowcaseSection, AboutSection } from "@shared/schema";
 import foundersImage from "@assets/our-story_1765323971104.webp";
 
 const heroData: HeroSingleColumnType = {
@@ -163,19 +163,22 @@ const projectsData: ProjectsShowcaseSection = {
   ],
 };
 
+const aboutData: AboutSection = {
+  type: "about",
+  title: "More About 4Geeks Academy",
+  description: "4Geeks Academy was founded in 2015. What started as an internal project to train more developers has now become our full-time passion. 4Geeks is today a USA based Coding Bootcamp pursuing to build a new framework for Coding Education, because coding is becoming an essentials part of our society. 4Geeks Academy has now Locations in 12 cities, 13 on-going campus, and more than 600 graduates.",
+  link_text: "Read More",
+  link_url: "/about",
+  image_src: foundersImage,
+  image_alt: "4Geeks Academy Founders",
+};
+
 export default function GraduatesAndProjects() {
   return (
     <div className="min-h-screen bg-background">
       <HeroSingleColumn data={heroData} />
       <ProjectsShowcase data={projectsData} />
-      <AboutSection
-        title="More About 4Geeks Academy"
-        description="4Geeks Academy was founded in 2015. What started as an internal project to train more developers has now become our full-time passion. 4Geeks is today a USA based Coding Bootcamp pursuing to build a new framework for Coding Education, because coding is becoming an essentials part of our society. 4Geeks Academy has now Locations in 12 cities, 13 on-going campus, and more than 600 graduates."
-        linkText="Read More"
-        linkUrl="/about"
-        imageSrc={foundersImage}
-        imageAlt="4Geeks Academy Founders"
-      />
+      <About data={aboutData} />
     </div>
   );
 }

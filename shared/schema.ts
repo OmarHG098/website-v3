@@ -505,6 +505,20 @@ export type ProjectShowcaseItem = z.infer<typeof projectShowcaseItemSchema>;
 export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
 export type ProjectsShowcaseSection = z.infer<typeof projectsShowcaseSectionSchema>;
 
+// About section schema
+export const aboutSectionSchema = z.object({
+  type: z.literal("about"),
+  version: z.string().optional(),
+  title: z.string(),
+  description: z.string(),
+  link_text: z.string(),
+  link_url: z.string(),
+  image_src: z.string(),
+  image_alt: z.string(),
+});
+
+export type AboutSection = z.infer<typeof aboutSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([

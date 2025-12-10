@@ -1,22 +1,13 @@
 import { Card } from "@/components/ui/card";
+import type { AboutSection as AboutSectionType } from "@shared/schema";
 
-interface AboutSectionProps {
-  title: string;
-  description: string;
-  linkText: string;
-  linkUrl: string;
-  imageSrc: string;
-  imageAlt: string;
+interface AboutProps {
+  data: AboutSectionType;
 }
 
-export function AboutSection({
-  title,
-  description,
-  linkText,
-  linkUrl,
-  imageSrc,
-  imageAlt,
-}: AboutSectionProps) {
+export function About({ data }: AboutProps) {
+  const { title, description, link_text, link_url, image_src, image_alt } = data;
+
   return (
     <section className="py-12 md:py-16 bg-muted" data-testid="section-about">
       <div className="max-w-6xl mx-auto px-4">
@@ -30,18 +21,18 @@ export function AboutSection({
               {description}
             </p>
             <a
-              href={linkUrl}
+              href={link_url}
               className="text-primary hover:underline font-medium text-center"
               data-testid="link-about-read-more"
             >
-              {linkText} {">"}
+              {link_text} {">"}
             </a>
           </Card>
 
           <div className="flex-1 min-h-[250px] md:min-h-0">
             <img
-              src={imageSrc}
-              alt={imageAlt}
+              src={image_src}
+              alt={image_alt}
               className="w-full h-full object-cover rounded-b-lg md:rounded-b-none md:rounded-r-lg"
               loading="lazy"
               data-testid="img-about"
