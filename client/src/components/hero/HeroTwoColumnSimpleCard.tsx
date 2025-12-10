@@ -47,6 +47,14 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
               >
                 {data.subtitle}
               </p>
+              {data.badge && (
+                <span 
+                  className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4"
+                  data-testid="text-hero-badge"
+                >
+                  {data.badge}
+                </span>
+              )}
         </>
             )}
 

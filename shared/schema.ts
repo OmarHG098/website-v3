@@ -96,6 +96,7 @@ export const heroTwoColumnSimpleCardSchema = z.object({
   variant: z.literal("twoColumnSimpleCard"),
   title: z.string(),
   subtitle: z.string().optional(),
+  badge: z.string().optional(),
   image: z.object({
     src: z.string(),
     alt: z.string(),

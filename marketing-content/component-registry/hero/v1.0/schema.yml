@@ -184,6 +184,11 @@ variant_props:
       default: "9:12"
 
   twoColumnSimpleCard:
+    badge:
+      type: string
+      required: false
+      description: "Small label displayed below the subtitle"
+      example: "Coding Bootcamp Projects & Alumni"
     image:
       type: object
       required: true
