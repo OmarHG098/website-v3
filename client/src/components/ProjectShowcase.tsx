@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import type { ProjectShowcaseSection, ProjectsShowcaseSection, ProjectShowcaseItem } from "@shared/schema";
 import { IconBrandGithub, IconBrandLinkedin, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 
@@ -66,10 +67,72 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
     return null;
   };
 
+  const detailsContent = (
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+          MADE BY
+        </p>
+        <div className="space-y-3">
+          {creators.map((creator, index) => (
+            <div key={index} data-testid={`creator-${index}`}>
+              <div className="flex items-center gap-2">
+                <span className="text-foreground font-medium">{">"} {creator.name}</span>
+                {creator.github_url && (
+                  <a
+                    href={creator.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`${creator.name}'s GitHub`}
+                    data-testid={`link-github-${index}`}
+                  >
+                    <IconBrandGithub size={20} />
+                  </a>
+                )}
+                {creator.linkedin_url && (
+                  <a
+                    href={creator.linkedin_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`${creator.name}'s LinkedIn`}
+                    data-testid={`link-linkedin-${index}`}
+                  >
+                    <IconBrandLinkedin size={20} />
+                  </a>
+                )}
+              </div>
+              {creator.role && (
+                <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
+        {description}
+      </p>
+
+      {project_url && project_url !== "#" && (
+        <a
+          href={project_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-primary hover:underline font-medium"
+          data-testid="link-project-url"
+        >
+          Visit Project →
+        </a>
+      )}
+    </div>
+  );
+
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8" data-testid="text-project-title">
+        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center md:text-left" data-testid="text-project-title">
           {project_title}
         </h3>
 
@@ -81,7 +144,7 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
               </div>
 
               {hasCarousel && (
-                <div className="flex justify-between items-center mt-4" data-testid="carousel-pagination">
+                <div className="flex justify-between items-center mt-4 gap-2" data-testid="carousel-pagination">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -122,64 +185,12 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 space-y-6">
-            <div>
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                MADE BY
-              </p>
-              <div className="space-y-3">
-                {creators.map((creator, index) => (
-                  <div key={index} data-testid={`creator-${index}`}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-foreground font-medium">{">"} {creator.name}</span>
-                      {creator.github_url && (
-                        <a
-                          href={creator.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s GitHub`}
-                          data-testid={`link-github-${index}`}
-                        >
-                          <IconBrandGithub size={20} />
-                        </a>
-                      )}
-                      {creator.linkedin_url && (
-                        <a
-                          href={creator.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          aria-label={`${creator.name}'s LinkedIn`}
-                          data-testid={`link-linkedin-${index}`}
-                        >
-                          <IconBrandLinkedin size={20} />
-                        </a>
-                      )}
-                    </div>
-                    {creator.role && (
-                      <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
-              {description}
-            </p>
-
-            {project_url && project_url !== "#" && (
-              <a
-                href={project_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-primary hover:underline font-medium"
-                data-testid="link-project-url"
-              >
-                Visit Project →
-              </a>
-            )}
+          <div className="w-full md:w-1/2">
+            <Card className="md:border-0 md:shadow-none md:bg-transparent">
+              <CardContent className="p-4 md:p-0">
+                {detailsContent}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
