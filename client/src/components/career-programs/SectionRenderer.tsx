@@ -20,6 +20,7 @@ import { ProgramsListSection } from "./ProgramsListSection";
 import { CTABannerSection } from "./CTABannerSection";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { About } from "@/components/About";
+import { ComparisonTable } from "@/components/ComparisonTable";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -71,6 +72,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <ProjectShowcase key={index} data={section} />;
           case "about":
             return <About key={index} data={section} />;
+          case "comparison_table":
+            return <ComparisonTable key={index} data={section} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);

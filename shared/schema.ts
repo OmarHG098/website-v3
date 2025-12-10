@@ -536,6 +536,33 @@ export const aboutSectionSchema = z.object({
 
 export type AboutSection = z.infer<typeof aboutSectionSchema>;
 
+// Comparison Table Section
+export const comparisonTableColumnSchema = z.object({
+  name: z.string(),
+  highlight: z.boolean().optional(),
+});
+
+export const comparisonTableRowSchema = z.object({
+  feature: z.string(),
+  values: z.array(z.string()),
+  feature_description: z.string().optional(),
+});
+
+export const comparisonTableSectionSchema = z.object({
+  type: z.literal("comparison_table"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  columns: z.array(comparisonTableColumnSchema),
+  rows: z.array(comparisonTableRowSchema),
+  background: z.string().optional(),
+  footer_note: z.string().optional(),
+});
+
+export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;
+export type ComparisonTableRow = z.infer<typeof comparisonTableRowSchema>;
+export type ComparisonTableSection = z.infer<typeof comparisonTableSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -565,6 +592,7 @@ export const sectionSchema = z.union([
   projectShowcaseSectionSchema,
   projectsShowcaseSectionSchema,
   aboutSectionSchema,
+  comparisonTableSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

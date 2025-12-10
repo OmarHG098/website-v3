@@ -23,6 +23,37 @@ sections:
     version: "1.0"
     title: "4Geeks vs Others"
     subtitle: "Compare 4Geeks Academy with other coding bootcamps and see why our unlimited mentorship, career support, and proven outcomes set us apart from the rest."
+    badge: "Why 4Geeks Stands Out"
     image:
       src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
       alt: "Students coding together at a table with laptops"
+
+  - type: comparison_table
+    version: "1.0"
+    title: "How 4Geeks Compares"
+    subtitle: "See how our approach stacks up against typical coding bootcamps"
+    columns:
+      - name: "Feature"
+      - name: "4Geeks Academy"
+        highlight: true
+      - name: "Other Bootcamps"
+    rows:
+      - feature: "1:1 Mentorship"
+        values: ["Unlimited", "Limited hours"]
+        feature_description: "Get personalized guidance whenever you need it"
+      - feature: "Career Support Duration"
+        values: ["Lifetime", "3-6 months"]
+        feature_description: "We support you throughout your entire career journey"
+      - feature: "Job Guarantee"
+        values: ["Yes", "Varies"]
+        feature_description: "Get hired within 9 months or get your tuition back"
+      - feature: "Class Size"
+        values: ["Small groups", "Large cohorts"]
+        feature_description: "More attention and personalized feedback"
+      - feature: "AI-Focused Curriculum"
+        values: ["Yes", "Limited"]
+        feature_description: "Learn cutting-edge AI and machine learning skills"
+      - feature: "Flexible Financing"
+        values: ["Yes", "Limited options"]
+        feature_description: "Multiple payment plans to fit your budget"
+    footer_note: "* Based on publicly available information from major coding bootcamps as of 2024"
