@@ -88,9 +88,9 @@ sections:
       heading: "Making Tech Careers Accessible"
       description: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
       bullets:
-        - text: "Among the **most affordable tuition** of any top-ranked bootcamp (recognized by Forbes)."
-        - text: "**Financing options start below $299/month**, so you can learn without financial stress."
-        - text: "**Income-based payment options**, where you only pay once you're earning."
+        - text: "Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes)."
+        - text: "Financing options start below $299/month, so you can learn without financial stress."
+        - text: "Income-based payment options, where you only pay once you're earning."
         - text: "Scholarships available for eligible students."
       text_align: "left"
       button:
@@ -112,9 +112,9 @@ sections:
       description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
       sub_heading: "We can do this because:"
       bullets:
-        - text: "Our **curriculum is industry-aligned and AI-ready**"
-        - text: "Our **mentorship is unlimited and personalized**"
-        - text: "Our **career support never expires**"
+        - text: "Our curriculum is industry-aligned and AI-ready"
+        - text: "Our mentorship is unlimited and personalized"
+        - text: "Our career support never expires"
       text_align: "left"
       button:
         text: "Learn More"

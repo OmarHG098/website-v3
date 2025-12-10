@@ -118,7 +118,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <AccordionItem
                 key={rowIndex}
                 value={`row-${rowIndex}`}
-                className="bg-card rounded-lg border-t border-l border-r border-border px-4 !border-b-0"
+                className="bg-card rounded-lg shadow-sm px-4 [&]:border-0"
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
                 <AccordionTrigger className="hover:no-underline py-3">
