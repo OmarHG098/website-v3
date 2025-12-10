@@ -27,11 +27,11 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
           {data.title}
         </h1>
         
-        <div className="mb-8">
+        <div className="mb-8 flex justify-center">
           <img 
             src={data.image.src} 
             alt={data.image.alt}
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="max-w-md w-full h-auto rounded-lg shadow-lg"
             data-testid="img-hero"
           />
         </div>
