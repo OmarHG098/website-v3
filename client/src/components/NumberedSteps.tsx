@@ -1,5 +1,8 @@
+import { useState } from "react";
 import * as TablerIcons from "@tabler/icons-react";
+import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentType } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 export interface NumberedStepsStep {
   icon: string;
@@ -42,6 +45,12 @@ const getBulletIcon = (iconName: string, colorClass: string) => {
 };
 
 export default function NumberedSteps({ data }: NumberedStepsProps) {
+  const [expandedSteps, setExpandedSteps] = useState<Record<number, boolean>>({});
+
+  const toggleStep = (index: number) => {
+    setExpandedSteps(prev => ({ ...prev, [index]: !prev[index] }));
+  };
+
   return (
     <section 
       className={`pt-4 pb-10 ${data.background || "bg-muted/30"}`}
@@ -74,13 +83,15 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
           </div>
         )}
 
-        {/* Mobile: Vertical timeline */}
+        {/* Mobile: Vertical timeline with collapsible steps */}
         <div className="md:hidden relative pl-16">
           {(data.steps || []).map((step, index) => {
             const bulletChar = step.bullet_char || data.bullet_char;
             const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
             const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
             const isLast = index === (data.steps || []).length - 1;
+            const hasCollapsibleContent = step.title && (step.bullets?.length || step.text);
+            const isExpanded = expandedSteps[index] || false;
             
             return (
               <div 
@@ -99,40 +110,86 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
                   <div className="absolute left-[-2.375rem] top-10 bottom-[-0.75rem] w-0.5 bg-primary/30 z-0" />
                 )}
                 
-                {/* Content - aligned with center of circle (circle is 40px, so center is at 20px) */}
-                <div className="flex items-start gap-2 mb-2 pt-2">
-                  <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {getIcon(step.icon)}
-                  </div>
-                  {step.title && (
-                    <h3 className="text-base font-semibold text-foreground">
-                      {step.title}
-                    </h3>
-                  )}
-                  {step.text && !step.title && (
-                    <p className="text-base text-foreground">
-                      {step.text}
-                    </p>
-                  )}
-                </div>
-                
-                {step.bullets && step.bullets.length > 0 && (
-                  <ul className="space-y-1 text-left pl-10">
-                    {step.bullets.map((bullet, bulletIndex) => (
-                      <li 
-                        key={bulletIndex}
-                        className="flex gap-2 items-start text-sm text-muted-foreground"
-                      >
-                        <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
-                          {bulletChar 
-                            ? bulletChar 
-                            : getBulletIcon(bulletIcon, bulletIconColor)
-                          }
-                        </span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+                {hasCollapsibleContent ? (
+                  <Collapsible open={isExpanded} onOpenChange={() => toggleStep(index)}>
+                    <CollapsibleTrigger className="w-full">
+                      <div className="flex items-center gap-2 pt-2 cursor-pointer">
+                        <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          {getIcon(step.icon)}
+                        </div>
+                        <h3 className="text-base font-semibold text-foreground flex-1 text-left">
+                          {step.title}
+                        </h3>
+                        <IconChevronDown 
+                          className={`w-5 h-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
+                        />
+                      </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="mt-2">
+                        {step.text && (
+                          <p className="text-sm text-muted-foreground pl-10 mb-2">
+                            {step.text}
+                          </p>
+                        )}
+                        {step.bullets && step.bullets.length > 0 && (
+                          <ul className="space-y-1 text-left pl-10">
+                            {step.bullets.map((bullet, bulletIndex) => (
+                              <li 
+                                key={bulletIndex}
+                                className="flex gap-2 items-start text-sm text-muted-foreground"
+                              >
+                                <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                                  {bulletChar 
+                                    ? bulletChar 
+                                    : getBulletIcon(bulletIcon, bulletIconColor)
+                                  }
+                                </span>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ) : (
+                  <>
+                    <div className="flex items-start gap-2 mb-2 pt-2">
+                      <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        {getIcon(step.icon)}
+                      </div>
+                      {step.title && (
+                        <h3 className="text-base font-semibold text-foreground">
+                          {step.title}
+                        </h3>
+                      )}
+                      {step.text && !step.title && (
+                        <p className="text-base text-foreground">
+                          {step.text}
+                        </p>
+                      )}
+                    </div>
+                    
+                    {step.bullets && step.bullets.length > 0 && (
+                      <ul className="space-y-1 text-left pl-10">
+                        {step.bullets.map((bullet, bulletIndex) => (
+                          <li 
+                            key={bulletIndex}
+                            className="flex gap-2 items-start text-sm text-muted-foreground"
+                          >
+                            <span className={`${bulletIconColor} flex-shrink-0 mt-0.5`}>
+                              {bulletChar 
+                                ? bulletChar 
+                                : getBulletIcon(bulletIcon, bulletIconColor)
+                              }
+                            </span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
                 )}
               </div>
             );
