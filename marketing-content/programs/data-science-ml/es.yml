@@ -74,29 +74,29 @@ sections:
         description: "Explora deep learning con TensorFlow y Keras, procesamiento de lenguaje natural y sistemas de recomendación. Aprende cómo desplegar modelos en ambientes de producción con privacidad, seguridad y escalabilidad en mente."
 
   - type: projects
-    title: "Aprende Construyendo Proyectos Reales"
-    subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para el éxito. Las tareas que enfrentarás se asemejarán a las de una posición real en ciencia de datos. Aquí hay un vistazo de lo que trabajarás:"
+    title: "Aprende construyendo **proyectos reales**"
+    subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para el éxito. Las tareas que enfrentarás se asemejarán a las de una posición real en tecnología. Aquí hay un vistazo de lo que trabajarás:"
     items:
-      - title: "App Web de ML con Flask"
+      - title: "App web de ML con Flask"
         description: "Aprende a entrenar y optimizar un modelo de machine learning, construir una app web con Flask para interactuar con él, y desplegar la aplicación completa en Render. Este proyecto práctico te guía paso a paso por exploración de datos, creación de modelos, desarrollo de apps y despliegue en la nube."
-        image: "ml-flask"
-        tags: ["Flask", "ML"]
-        duration: "8 HORAS"
-        date: "02/08/2023"
+        image: "flask-render"
+        tags: ["DATA SCIENCE", "SCIKIT-LEARN", "MACHINE LEARNING", "RENDER", "TENSORFLOW", "KERAS"]
+        duration: "1 HORAS"
+        date: "8/2/2023"
         difficulty: "easy"
-      - title: "Sistema de Detección de Fraude"
-        description: "Construye un sistema completo de detección de fraude usando algoritmos de aprendizaje supervisado. Trabaja con datos reales de transacciones, maneja desbalance de clases, ingeniería de características y despliega un modelo que puede identificar actividades fraudulentas en tiempo real."
-        image: "fraud-detection"
-        tags: ["Clasificación", "Scikit-learn"]
-        duration: "12 HORAS"
-        date: "15/03/2023"
+      - title: "App web de ML con Streamlit"
+        description: "Usa Streamlit para construir una aplicación web interactiva que integra un modelo de machine learning. Esto permitirá a los usuarios ingresar datos, hacer predicciones y visualizar resultados en una interfaz amigable."
+        image: "streamlit-render"
+        tags: ["DATA SCIENCE", "MACHINE LEARNING"]
+        duration: "1 HORAS"
+        date: "16/1/2023"
         difficulty: "medium"
-      - title: "Proyecto Final de Ciencia de Datos"
-        description: "Diseña y construye tu propio proyecto de ciencia de datos de principio a fin desde cero. Demuestra tus habilidades con Python, machine learning, visualización de datos y despliegue de modelos. Este proyecto capstone muestra todo lo que has aprendido en el programa."
-        image: "final-project"
-        tags: ["Data Science", "Capstone"]
-        duration: "40 HORAS"
-        date: "01/05/2023"
+      - title: "Proyecto Final de Machine Learning"
+        description: "Aprende a construir tu propio proyecto de Machine Learning de principio a fin: define un problema del mundo real, recolecta y procesa datos, entrena y optimiza un modelo, y despliega una app web para mostrarlo. ¡Trabaja colaborativamente, aplica tus habilidades y presenta tu solución como un profesional!"
+        image: "ml-final-project"
+        tags: ["HEROKU.COM", "DATA SCIENCE", "SQL", "SEABORN", "STREAMLIT", "SCIKIT-LEARN", "MATPLOTLIB", "WEB SCRAPING", "MACHINE LEARNING", "RENDER"]
+        duration: "2 HORAS"
+        date: "16/1/2023"
         difficulty: "hard"
 
   - type: ai_learning
