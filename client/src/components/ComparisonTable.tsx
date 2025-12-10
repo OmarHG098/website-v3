@@ -129,10 +129,10 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex items-stretch gap-2">
+                  <div className="flex items-stretch gap-3">
                     {/* 4Geeks Academy side - highlighted */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-4 border-l-4 border-primary">
-                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                    <div className="flex-1 bg-primary/10 rounded-lg p-5 border-l-4 border-primary">
+                      <p className="text-xs text-muted-foreground mb-2 font-semibold">
                         {data.columns[1]?.name || "4Geeks Academy"}
                       </p>
                       <p className="font-semibold text-foreground text-sm">
@@ -140,12 +140,12 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       </p>
                     </div>
                     {/* VS divider */}
-                    <div className="flex items-center justify-center px-2">
+                    <div className="flex items-center justify-center px-1">
                       <span className="text-muted-foreground font-semibold text-sm">vs</span>
                     </div>
                     {/* Competitors side */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-4">
-                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                    <div className="flex-1 bg-primary/10 rounded-lg p-5">
+                      <p className="text-xs text-muted-foreground mb-2 font-semibold">
                         {(data.columns[2]?.name || "Industry Average / Competitors").replace(" / Competitors", "")}
                       </p>
                       <p className="text-foreground text-sm">
