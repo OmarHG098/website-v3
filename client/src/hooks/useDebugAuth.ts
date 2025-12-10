@@ -10,9 +10,17 @@ const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 // In development: always true
 // In production: requires ?debug=true in URL (persisted in sessionStorage)
 export function isDebugModeActive(): boolean {
+  // Check URL for ?debug=false first - explicit override to disable
+  const urlParams = new URLSearchParams(window.location.search);
+  const debugParam = urlParams.get("debug");
+  
+  if (debugParam === "false") {
+    return false;
+  }
+  
   const isDev = import.meta.env.DEV;
   
-  // Always active in development
+  // Always active in development (unless explicitly disabled above)
   if (isDev) {
     return true;
   }
@@ -22,10 +30,6 @@ export function isDebugModeActive(): boolean {
   if (storedDebugMode === "true") {
     return true;
   }
-  
-  // Check URL for ?debug=true
-  const urlParams = new URLSearchParams(window.location.search);
-  const debugParam = urlParams.get("debug");
   
   if (debugParam === "true") {
     // Store in sessionStorage and clean up URL
