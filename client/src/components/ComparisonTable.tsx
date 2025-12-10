@@ -60,9 +60,9 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     key={colIndex}
                     className={`p-4 text-left font-semibold text-lg ${
                       column.highlight
-                        ? "bg-primary text-primary-foreground"
+                        ? "bg-primary text-primary-foreground rounded-t-lg"
                         : "bg-primary/20 text-foreground"
-                    } ${colIndex === 0 ? "rounded-tl-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tr-lg" : ""}`}
+                    } ${colIndex === 0 ? "rounded-tr-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tl-lg" : ""}`}
                     data-testid={`th-column-${colIndex}`}
                   >
                     {column.name}
