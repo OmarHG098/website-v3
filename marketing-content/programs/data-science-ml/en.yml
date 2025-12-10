@@ -1,0 +1,329 @@
+# Data Science and Machine Learning Career Program - English
+# This file defines all sections and content for the Data Science & ML career program page
+
+slug: "data-science-ml"
+title: "Data Science and Machine Learning"
+
+meta:
+  page_title: "Data Science and Machine Learning Career Program | 4Geeks"
+  description: "Learn data science and machine learning at your own pace with AI-powered tools, unlimited mentorship, and a global community. Master Python, TensorFlow, and predictive modeling."
+  robots: "index, follow"
+  og_image: "/images/programs/data-science-ml-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/bootcamp/data-science"
+    - "/programs/datascience-machine-learning"
+    - "/coding-bootcamp/machine-learning"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:data-science-ml"
+
+sections:
+  - type: hero
+    variant: singleColumn
+    version: "1.0"
+    badge: "Career Program"
+    title: "Data Science and Machine Learning with AI"
+    subtitle: "Break into one of tech's fastest-growing, highest-paying fields. Learn to analyze data, build predictive models, and use AI tools to solve real-world problems—backed by expert mentorship, an 84% hire rate within 6 months, and our job guarantee."
+    trust_bar:
+      rating: "4.5"
+      rating_count: "1,294"
+      trusted_text: "Trusted by 2.5K+ learners"
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "Download Syllabus"
+        url: "/syllabus/data-science-ml"
+        variant: "outline"
+        icon: "Download"
+    award_badges:
+      - name: "Top Coding Bootcamp"
+        source: "Forbes"
+        year: "2024"
+      - name: "Best for Spanish Speakers"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Best Coding Bootcamp"
+        source: "Course Report"
+        year: "2025"
+
+  - type: syllabus
+    title: "Get Job-Ready with Our Syllabus!"
+    subtitle: "We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into data science and machine learning."
+    modules:
+      - title: "Python Basics & Notebooks"
+        description: "Start your journey with Python, learning conditionals, functions, and lists while exploring Jupyter notebooks. Build a strong programming foundation and get introduced to your first machine learning concepts through hands-on exercises."
+      - title: "Data Analysis & Visualization"
+        description: "Analyze and manipulate data with Pandas, clean and normalize datasets, and create impactful visualizations with Matplotlib and Seaborn. Learn to extract meaningful insights from raw data and present them effectively."
+      - title: "Data Collection with SQL, Scraping & APIs"
+        description: "Collect data from different sources by writing SQL queries, scraping websites with BeautifulSoup, and working with REST APIs. Master the essential skills to gather and prepare data for analysis."
+      - title: "Math & Probability Foundations"
+        description: "Build a strong mathematical foundation with probability, statistics, and linear algebra. Understand core concepts like mean, median, standard deviation, and matrix operations that power machine learning algorithms."
+      - title: "Applied Machine Learning"
+        description: "Apply machine learning techniques such as regression, decision trees, random forests, boosting, K-Nearest Neighbors, clustering, and time series forecasting. Learn to train, evaluate, and optimize models for real-world problems."
+      - title: "Deep Learning, NLP & Model Deployment"
+        description: "Explore deep learning with TensorFlow and Keras, natural language processing, and recommender systems. Learn how to deploy models into production environments with privacy, security, and scalability in mind."
+
+  - type: projects
+    title: "Learn by Building Real-Life Projects"
+    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world data science position. Here's a glimpse of what you'll be working on:"
+    items:
+      - title: "ML Web App using Flask"
+        description: "Learn how to train and optimize a machine learning model, build a Flask web app to interact with it, and deploy the full application on Render. This hands-on project walks you through data exploration, model creation, app development, and cloud deployment step by step."
+        image: "ml-flask"
+        tags: ["Flask", "ML"]
+        duration: "8 HOURS"
+        date: "02/08/2023"
+        difficulty: "easy"
+      - title: "Fraud Detection System"
+        description: "Build a complete fraud detection system using supervised learning algorithms. Work with real transaction data, handle class imbalance, engineer features, and deploy a model that can identify fraudulent activities in real-time."
+        image: "fraud-detection"
+        tags: ["Classification", "Scikit-learn"]
+        duration: "12 HOURS"
+        date: "15/03/2023"
+        difficulty: "medium"
+      - title: "Data Science Final Project"
+        description: "Design and build your own end-to-end data science project from scratch. Demonstrate your skills with Python, machine learning, data visualization, and model deployment. This capstone project showcases everything you've learned throughout the program."
+        image: "final-project"
+        tags: ["Data Science", "Capstone"]
+        duration: "40 HOURS"
+        date: "01/05/2023"
+        difficulty: "hard"
+
+  - type: ai_learning
+    version: "1.0"
+    badge: "Why 4Geeks?"
+    title: "Why Learn with 4Geeks?"
+    description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
+    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
+    features:
+      - icon: "Robot"
+        title: "Learn with AI"
+        description: "Our AI reviews your code to give you instant feedback, helps with the exercises, and more!"
+      - icon: "Headset"
+        title: "One-on-one mentoring sessions"
+        description: "Access monthly mentorship sessions with our experts and add extra sessions as needed."
+      - icon: "Users"
+        title: "Learn with the community"
+        description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
+    highlight:
+      title: "Maximize Your Learning Potential with Rigobot"
+      description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
+      cta:
+        text: "Start learning now!"
+        url: "/apply"
+        variant: "primary"
+
+  - type: certificate
+    version: "1.0"
+    title: "Certificate & Career Network"
+    description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities in data science and machine learning worldwide."
+    stats:
+      - value: "4,000+"
+        label: "Graduates"
+      - value: "84%"
+        label: "Job Placement"
+      - value: "4.9/5"
+        label: "Student Rating"
+      - value: "20+"
+        label: "Countries"
+    benefits:
+      - text: "Recognized by international institutions"
+      - text: "Access to 5,000+ hiring partners"
+      - text: "Lifetime career support"
+    card:
+      title: "Data Scientist"
+      subtitle: "4Geeks Academy Certificate"
+
+  - type: why_learn_ai
+    title: "Why Should I Learn Data Science and Machine Learning?"
+    subtitle: "Data-Driven Decision Making is the New Standard"
+    description: "Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?"
+    cta:
+      text: "Join now!"
+      url: "/signup"
+      variant: "primary"
+
+  - type: pricing
+    title: "Get access to all of our learning database, courses, and services"
+    subtitle: "Earn a new skills every 30 min, never get stuck or lost again."
+    monthly:
+      discount_badge: "35% OFF"
+      price: "38.99"
+      period: "mo"
+      original_price: "59.99"
+    yearly:
+      discount_badge: "35% OFF"
+      price: "311.99"
+      period: "yr"
+      original_price: "479.99"
+      savings_badge: "Save 3 months"
+    tech_icons:
+      - "html"
+      - "css"
+      - "javascript"
+      - "react"
+      - "python"
+      - "nodejs"
+      - "git"
+      - "bootstrap"
+      - "api"
+      - "settings"
+    features_title: "Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies"
+    features:
+      - icon: "certificate"
+        text: "Build your portfolio with hundreds of real-world projects."
+      - icon: "cloud"
+        text: "Thousands of and cloud-based coding challenges (no setup needed)."
+      - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
+        use_rigobot_icon: true
+      - icon: "certificate"
+        text: "Course certificates"
+      - icon: "certificate"
+        text: "Earn certificates from a USA certified school by the florida department of education."
+    cta:
+      text: "Get plan"
+      url: "/signup"
+      variant: "primary"
+
+  - type: whos_hiring
+    title: "Who's Hiring Our Graduates?"
+    subtitle: "Our alumni work at top companies around the world"
+    description: "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally."
+    logos:
+      - src: "/attached_assets/microsoft_1764719829995.png"
+        alt: "Microsoft"
+      - src: "/attached_assets/google-developers_1764719904190.png"
+        alt: "Google Developers"
+      - src: "/attached_assets/boats_1764719939123.jpg"
+        alt: "Boats Group"
+      - src: "/attached_assets/meta-logo_1764719959855.png"
+        alt: "Meta"
+      - src: "/attached_assets/ebay_1764719967118.png"
+        alt: "eBay"
+      - src: "/attached_assets/natgeo_1764719975443.png"
+        alt: "National Geographic"
+      - src: "/attached_assets/evernote_1764719981901.png"
+        alt: "Evernote"
+      - src: "/attached_assets/telefonica_1764719987250.png"
+        alt: "Telefonica"
+      - src: "/attached_assets/twilio_1764719992371.png"
+        alt: "Twilio"
+      - src: "/attached_assets/uber_1764719999685.png"
+        alt: "Uber"
+      - src: "/attached_assets/Neo9_1764720006347.png"
+        alt: "Neo9"
+      - src: "/attached_assets/jooble_1764720010702.png"
+        alt: "Jooble"
+      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
+        alt: "KPMG"
+      - src: "/attached_assets/ultimate_1764720025067.png"
+        alt: "Ultimate"
+      - src: "/attached_assets/tcg_1764720028893.png"
+        alt: "TCG"
+      - src: "/attached_assets/razz_1764720036807.png"
+        alt: "Razz"
+      - src: "/attached_assets/overseas_1764720045331.png"
+        alt: "Overseas"
+      - src: "/attached_assets/ds9_1764720051158.png"
+        alt: "DS9"
+      - src: "/attached_assets/coinet_1764720056569.jpg"
+        alt: "Coinet"
+      - src: "/attached_assets/strata_1764720063140.png"
+        alt: "Strata"
+      - src: "/attached_assets/mdc_ce_1764720089793.png"
+        alt: "MDC"
+      - src: "/attached_assets/beacon_council_1764720100166.jpg"
+        alt: "Beacon Council"
+      - src: "/attached_assets/blackstone_1764720124773.png"
+        alt: "Blackstone"
+      - src: "/attached_assets/cemex_1764720131666.png"
+        alt: "Cemex"
+
+  - type: testimonials
+    title: "Your New Career Starts Here"
+    subtitle: "See what our graduates have to say about their experience"
+    rating_summary:
+      average: "4.5"
+      count: "1,294"
+    items:
+      - name: "Gabriel Salazar"
+        role: "Software Engineer"
+        company: "Microsoft"
+        rating: 5
+        comment: "I was already a support specialist at Microsoft and after completing the program I was able to achieve a new position where I'm now working as a Software Engineer."
+        outcome: "+50% salary increase"
+      - name: "Laura Magallanes"
+        role: "Program Coordinator"
+        company: "4Geeks"
+        rating: 5
+        comment: "From a little town in Uruguay with no experience in coding, I'm now a woman head of household, an Instructor and a Program Coordinator. This course changed my life."
+        outcome: "+120% salary increase"
+      - name: "Alexandra Espinoza"
+        role: "Software Developer"
+        company: "Tech Startup"
+        rating: 5
+        comment: "Coming from a totally different background has been a huge revelation for me and everyone around me. I'm now a successful and talented software developer in Costa Rica."
+        outcome: "+100% salary increase"
+      - name: "Loretta Thompson"
+        role: "Data Analyst"
+        company: "United Way Miami"
+        rating: 5
+        comment: "I joined in 2022 and graduated in 2023. I already found a job within the next few months and have fulfilled the whole circle of skills+job that we all want to complete!"
+        outcome: "+45% salary increase"
+      - name: "Melanie Galaretto"
+        role: "Software Developer"
+        company: "Tech Firm"
+        rating: 5
+        comment: "I'm a young professional who is dreaming of achieving a life that now I own. I'm a resourceful and committed software developer working for a firm in my home country."
+        outcome: "+100% salary increase"
+      - name: "Jean St. Cloud"
+        role: "Developer & Mentor"
+        company: "Clark University"
+        rating: 4
+        comment: "Transitioning from the music industry into tech was challenging but 4Geeks made it possible. Now I'm performing as a developer and a Mentor, helping others achieve the same dream."
+        outcome: "+100% salary increase"
+
+  - type: faq
+    version: "1.0"
+    title: "FAQ"
+    items:
+      - question: "Do I need prior experience with data or coding?"
+        answer: "No prior experience is required. Our bootcamp starts with Python fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced machine learning concepts."
+      - question: "What tools and technologies will I learn?"
+        answer: "You'll master Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras, and Flask. These are the industry-standard tools used by data scientists and ML engineers worldwide."
+      - question: "How do I stay motivated learning on my own?"
+        answer: "You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes."
+      - question: "How long does it take to complete the program?"
+        answer: "The self-paced program can be completed in as little as 16 weeks with dedicated study. However, you have lifetime access to all materials and can learn at your own pace—whether that's 30 minutes a day or intensive weekend sessions."
+      - question: "Is the certificate recognized by employers?"
+        answer: "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+    cta:
+      text: "Still have questions?"
+      button_text: "Talk to an Advisor"
+      button_url: "/contact"
+
+  - type: footer_cta
+    version: "1.0"
+    title: "Ready to Start Your Data Science Career?"
+    subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."
+    buttons:
+      - text: "Start Learning Now"
+        url: "/signup"
+        variant: "secondary"
+      - text: "Talk to an Advisor"
+        url: "/contact"
+        variant: "outline"
+
+  - type: footer
+    version: "1.0"
+    copyright_text: "2024 4Geeks. All rights reserved."

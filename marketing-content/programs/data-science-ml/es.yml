@@ -1,0 +1,329 @@
+# Data Science and Machine Learning Career Program - Spanish
+# Este archivo define todas las secciones y contenido para la página del programa de Data Science & ML
+
+slug: "data-science-ml"
+title: "Ciencia de Datos y Machine Learning"
+
+meta:
+  page_title: "Programa de Ciencia de Datos y Machine Learning | 4Geeks"
+  description: "Aprende ciencia de datos y machine learning a tu propio ritmo con herramientas potenciadas por IA, mentoría ilimitada y una comunidad global. Domina Python, TensorFlow y modelado predictivo."
+  robots: "index, follow"
+  og_image: "/images/programs/data-science-ml-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/bootcamp/ciencia-de-datos"
+    - "/programas/datascience-machine-learning"
+    - "/coding-bootcamp/machine-learning"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:data-science-ml"
+
+sections:
+  - type: hero
+    variant: singleColumn
+    version: "1.0"
+    badge: "Programa de Carrera"
+    title: "Ciencia de Datos y Machine Learning con IA"
+    subtitle: "Entra a uno de los campos tecnológicos de más rápido crecimiento y mejores salarios. Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales—respaldado por mentoría experta, 84% de tasa de contratación en 6 meses y nuestra garantía de empleo."
+    trust_bar:
+      rating: "4.5"
+      rating_count: "1,294"
+      trusted_text: "Confianza de más de 2.5K estudiantes"
+    cta_buttons:
+      - text: "Aplicar Ahora"
+        url: "/apply"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "Descargar Syllabus"
+        url: "/syllabus/data-science-ml"
+        variant: "outline"
+        icon: "Download"
+    award_badges:
+      - name: "Top Coding Bootcamp"
+        source: "Forbes"
+        year: "2024"
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Mejor Coding Bootcamp"
+        source: "Course Report"
+        year: "2025"
+
+  - type: syllabus
+    title: "¡Prepárate para el Trabajo con Nuestro Syllabus!"
+    subtitle: "Hemos ajustado nuestro contenido con cientos de posiciones laborales para prepararte para una entrada exitosa en ciencia de datos y machine learning."
+    modules:
+      - title: "Fundamentos de Python y Notebooks"
+        description: "Comienza tu viaje con Python, aprendiendo condicionales, funciones y listas mientras exploras Jupyter notebooks. Construye una base sólida de programación y familiarízate con tus primeros conceptos de machine learning a través de ejercicios prácticos."
+      - title: "Análisis y Visualización de Datos"
+        description: "Analiza y manipula datos con Pandas, limpia y normaliza datasets, y crea visualizaciones impactantes con Matplotlib y Seaborn. Aprende a extraer insights significativos de datos crudos y presentarlos efectivamente."
+      - title: "Recolección de Datos con SQL, Scraping y APIs"
+        description: "Recolecta datos de diferentes fuentes escribiendo consultas SQL, haciendo scraping de sitios web con BeautifulSoup y trabajando con APIs REST. Domina las habilidades esenciales para recopilar y preparar datos para análisis."
+      - title: "Fundamentos de Matemáticas y Probabilidad"
+        description: "Construye una base matemática sólida con probabilidad, estadística y álgebra lineal. Comprende conceptos clave como media, mediana, desviación estándar y operaciones matriciales que potencian los algoritmos de machine learning."
+      - title: "Machine Learning Aplicado"
+        description: "Aplica técnicas de machine learning como regresión, árboles de decisión, random forests, boosting, K-Nearest Neighbors, clustering y pronóstico de series temporales. Aprende a entrenar, evaluar y optimizar modelos para problemas del mundo real."
+      - title: "Deep Learning, NLP y Despliegue de Modelos"
+        description: "Explora deep learning con TensorFlow y Keras, procesamiento de lenguaje natural y sistemas de recomendación. Aprende cómo desplegar modelos en ambientes de producción con privacidad, seguridad y escalabilidad en mente."
+
+  - type: projects
+    title: "Aprende Construyendo Proyectos Reales"
+    subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para el éxito. Las tareas que enfrentarás se asemejarán a las de una posición real en ciencia de datos. Aquí hay un vistazo de lo que trabajarás:"
+    items:
+      - title: "App Web de ML con Flask"
+        description: "Aprende a entrenar y optimizar un modelo de machine learning, construir una app web con Flask para interactuar con él, y desplegar la aplicación completa en Render. Este proyecto práctico te guía paso a paso por exploración de datos, creación de modelos, desarrollo de apps y despliegue en la nube."
+        image: "ml-flask"
+        tags: ["Flask", "ML"]
+        duration: "8 HORAS"
+        date: "02/08/2023"
+        difficulty: "easy"
+      - title: "Sistema de Detección de Fraude"
+        description: "Construye un sistema completo de detección de fraude usando algoritmos de aprendizaje supervisado. Trabaja con datos reales de transacciones, maneja desbalance de clases, ingeniería de características y despliega un modelo que puede identificar actividades fraudulentas en tiempo real."
+        image: "fraud-detection"
+        tags: ["Clasificación", "Scikit-learn"]
+        duration: "12 HORAS"
+        date: "15/03/2023"
+        difficulty: "medium"
+      - title: "Proyecto Final de Ciencia de Datos"
+        description: "Diseña y construye tu propio proyecto de ciencia de datos de principio a fin desde cero. Demuestra tus habilidades con Python, machine learning, visualización de datos y despliegue de modelos. Este proyecto capstone muestra todo lo que has aprendido en el programa."
+        image: "final-project"
+        tags: ["Data Science", "Capstone"]
+        duration: "40 HORAS"
+        date: "01/05/2023"
+        difficulty: "hard"
+
+  - type: ai_learning
+    version: "1.0"
+    badge: "¿Por qué 4Geeks?"
+    title: "¿Por qué Aprender con 4Geeks?"
+    description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
+    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
+    features:
+      - icon: "Robot"
+        title: "Aprende con IA"
+        description: "Nuestra IA revisa tu código para darte retroalimentación instantánea, te ayuda con los ejercicios, ¡y más!"
+      - icon: "Headset"
+        title: "Sesiones de mentoría uno a uno"
+        description: "Accede a sesiones mensuales de mentoría con nuestros expertos y añade sesiones extra según lo necesites."
+      - icon: "Users"
+        title: "Aprende con la comunidad"
+        description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
+    highlight:
+      title: "Maximiza Tu Potencial de Aprendizaje con Rigobot"
+      description: "Rigobot es nuestro tutor de IA diseñado especialmente para estudiantes autodidactas, listo para abordar cualquier problema de programación y equipado con pruebas automatizadas para retroalimentación inmediata, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
+      cta:
+        text: "¡Empieza a aprender ahora!"
+        url: "/apply"
+        variant: "primary"
+
+  - type: certificate
+    version: "1.0"
+    title: "Certificado y Red de Carreras"
+    description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en ciencia de datos y machine learning en todo el mundo."
+    stats:
+      - value: "4,000+"
+        label: "Graduados"
+      - value: "84%"
+        label: "Colocación Laboral"
+      - value: "4.9/5"
+        label: "Calificación"
+      - value: "20+"
+        label: "Países"
+    benefits:
+      - text: "Reconocido por instituciones internacionales"
+      - text: "Acceso a más de 5,000 empresas asociadas"
+      - text: "Soporte de carrera de por vida"
+    card:
+      title: "Científico de Datos"
+      subtitle: "Certificado de 4Geeks Academy"
+
+  - type: why_learn_ai
+    title: "¿Por qué Debería Aprender Ciencia de Datos y Machine Learning?"
+    subtitle: "La Toma de Decisiones Basada en Datos es el Nuevo Estándar"
+    description: "La ciencia de datos y el machine learning están transformando todas las industrias. Las empresas buscan desesperadamente profesionales que puedan convertir datos crudos en insights accionables y construir modelos predictivos. Con las herramientas de IA volviéndose más poderosas, los científicos de datos que pueden aprovechar estas tecnologías son 400% más productivos. Ya sea analizando comportamiento de clientes, prediciendo tendencias de mercado o construyendo sistemas de recomendación—estas habilidades están en alta demanda y tienen los mejores salarios. ¿Estás listo para convertirte en científico de datos?"
+    cta:
+      text: "¡Únete ahora!"
+      url: "/signup"
+      variant: "primary"
+
+  - type: pricing
+    title: "Obtén acceso a toda nuestra base de aprendizaje, cursos y servicios"
+    subtitle: "Aprende una nueva habilidad cada 30 min, nunca te quedes atascado o perdido de nuevo."
+    monthly:
+      discount_badge: "35% OFF"
+      price: "38.99"
+      period: "mes"
+      original_price: "59.99"
+    yearly:
+      discount_badge: "35% OFF"
+      price: "311.99"
+      period: "año"
+      original_price: "479.99"
+      savings_badge: "Ahorra 3 meses"
+    tech_icons:
+      - "html"
+      - "css"
+      - "javascript"
+      - "react"
+      - "python"
+      - "nodejs"
+      - "git"
+      - "bootstrap"
+      - "api"
+      - "settings"
+    features_title: "Accede a cientos de ejercicios, proyectos, tutoriales y cursos en las tecnologías más demandadas"
+    features:
+      - icon: "certificate"
+        text: "Construye tu portafolio con cientos de proyectos del mundo real."
+      - icon: "cloud"
+        text: "Miles de desafíos de código en la nube (sin necesidad de configuración)."
+      - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
+        use_rigobot_icon: true
+      - icon: "certificate"
+        text: "Certificados de cursos"
+      - icon: "certificate"
+        text: "Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida."
+    cta:
+      text: "Obtener plan"
+      url: "/signup"
+      variant: "primary"
+
+  - type: whos_hiring
+    title: "¿Quién Está Contratando a Nuestros Graduados?"
+    subtitle: "Nuestros egresados trabajan en las mejores empresas del mundo"
+    description: "Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en todas las industrias. Nuestro soporte de carrera y fuerte red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y empresas globalmente."
+    logos:
+      - src: "/attached_assets/microsoft_1764719829995.png"
+        alt: "Microsoft"
+      - src: "/attached_assets/google-developers_1764719904190.png"
+        alt: "Google Developers"
+      - src: "/attached_assets/boats_1764719939123.jpg"
+        alt: "Boats Group"
+      - src: "/attached_assets/meta-logo_1764719959855.png"
+        alt: "Meta"
+      - src: "/attached_assets/ebay_1764719967118.png"
+        alt: "eBay"
+      - src: "/attached_assets/natgeo_1764719975443.png"
+        alt: "National Geographic"
+      - src: "/attached_assets/evernote_1764719981901.png"
+        alt: "Evernote"
+      - src: "/attached_assets/telefonica_1764719987250.png"
+        alt: "Telefonica"
+      - src: "/attached_assets/twilio_1764719992371.png"
+        alt: "Twilio"
+      - src: "/attached_assets/uber_1764719999685.png"
+        alt: "Uber"
+      - src: "/attached_assets/Neo9_1764720006347.png"
+        alt: "Neo9"
+      - src: "/attached_assets/jooble_1764720010702.png"
+        alt: "Jooble"
+      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
+        alt: "KPMG"
+      - src: "/attached_assets/ultimate_1764720025067.png"
+        alt: "Ultimate"
+      - src: "/attached_assets/tcg_1764720028893.png"
+        alt: "TCG"
+      - src: "/attached_assets/razz_1764720036807.png"
+        alt: "Razz"
+      - src: "/attached_assets/overseas_1764720045331.png"
+        alt: "Overseas"
+      - src: "/attached_assets/ds9_1764720051158.png"
+        alt: "DS9"
+      - src: "/attached_assets/coinet_1764720056569.jpg"
+        alt: "Coinet"
+      - src: "/attached_assets/strata_1764720063140.png"
+        alt: "Strata"
+      - src: "/attached_assets/mdc_ce_1764720089793.png"
+        alt: "MDC"
+      - src: "/attached_assets/beacon_council_1764720100166.jpg"
+        alt: "Beacon Council"
+      - src: "/attached_assets/blackstone_1764720124773.png"
+        alt: "Blackstone"
+      - src: "/attached_assets/cemex_1764720131666.png"
+        alt: "Cemex"
+
+  - type: testimonials
+    title: "Tu Nueva Carrera Comienza Aquí"
+    subtitle: "Mira lo que nuestros graduados dicen sobre su experiencia"
+    rating_summary:
+      average: "4.5"
+      count: "1,294"
+    items:
+      - name: "Gabriel Salazar"
+        role: "Ingeniero de Software"
+        company: "Microsoft"
+        rating: 5
+        comment: "Ya era especialista de soporte en Microsoft y después de completar el programa pude conseguir una nueva posición donde ahora trabajo como Ingeniero de Software."
+        outcome: "+50% aumento salarial"
+      - name: "Laura Magallanes"
+        role: "Coordinadora de Programa"
+        company: "4Geeks"
+        rating: 5
+        comment: "De un pequeño pueblo en Uruguay sin experiencia en programación, ahora soy una mujer jefa de hogar, Instructora y Coordinadora de Programa. Este curso cambió mi vida."
+        outcome: "+120% aumento salarial"
+      - name: "Alexandra Espinoza"
+        role: "Desarrolladora de Software"
+        company: "Tech Startup"
+        rating: 5
+        comment: "Venir de un trasfondo totalmente diferente ha sido una gran revelación para mí y todos a mi alrededor. Ahora soy una desarrolladora de software exitosa y talentosa en Costa Rica."
+        outcome: "+100% aumento salarial"
+      - name: "Loretta Thompson"
+        role: "Analista de Datos"
+        company: "United Way Miami"
+        rating: 5
+        comment: "Me uní en 2022 y me gradué en 2023. ¡Ya encontré trabajo en los siguientes meses y he completado todo el círculo de habilidades+trabajo que todos queremos completar!"
+        outcome: "+45% aumento salarial"
+      - name: "Melanie Galaretto"
+        role: "Desarrolladora de Software"
+        company: "Empresa Tech"
+        rating: 5
+        comment: "Soy una joven profesional que sueña con lograr una vida que ahora poseo. Soy una desarrolladora de software ingeniosa y comprometida trabajando para una empresa en mi país."
+        outcome: "+100% aumento salarial"
+      - name: "Jean St. Cloud"
+        role: "Desarrollador y Mentor"
+        company: "Clark University"
+        rating: 4
+        comment: "La transición de la industria musical a tech fue desafiante pero 4Geeks lo hizo posible. Ahora trabajo como desarrollador y Mentor, ayudando a otros a lograr el mismo sueño."
+        outcome: "+100% aumento salarial"
+
+  - type: faq
+    version: "1.0"
+    title: "Preguntas Frecuentes"
+    items:
+      - question: "¿Necesito experiencia previa con datos o programación?"
+        answer: "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos de Python y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados de machine learning."
+      - question: "¿Qué herramientas y tecnologías aprenderé?"
+        answer: "Dominarás Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras y Flask. Estas son las herramientas estándar de la industria usadas por científicos de datos e ingenieros de ML en todo el mundo."
+      - question: "¿Cómo me mantengo motivado aprendiendo solo?"
+        answer: "¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales."
+      - question: "¿Cuánto tiempo toma completar el programa?"
+        answer: "El programa autodidacta puede completarse en tan solo 16 semanas con estudio dedicado. Sin embargo, tienes acceso de por vida a todos los materiales y puedes aprender a tu propio ritmo—ya sean 30 minutos al día o sesiones intensivas de fin de semana."
+      - question: "¿El certificado es reconocido por empleadores?"
+        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores coding bootcamps."
+    cta:
+      text: "¿Todavía tienes preguntas?"
+      button_text: "Habla con un Asesor"
+      button_url: "/contact"
+
+  - type: footer_cta
+    version: "1.0"
+    title: "¿Listo para Iniciar tu Carrera en Ciencia de Datos?"
+    subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."
+    buttons:
+      - text: "Empieza a Aprender Ahora"
+        url: "/signup"
+        variant: "secondary"
+      - text: "Habla con un Asesor"
+        url: "/contact"
+        variant: "outline"
+
+  - type: footer
+    version: "1.0"
+    copyright_text: "2024 4Geeks. Todos los derechos reservados."

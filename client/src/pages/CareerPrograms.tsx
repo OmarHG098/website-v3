@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import CourseCard from "@/components/CourseCard";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
@@ -21,6 +20,10 @@ export default function CareerPrograms() {
     return i18n.language === "es" ? "/es/programas-de-carrera/full-stack" : "/us/career-programs/full-stack";
   };
 
+  const getDataScienceUrl = () => {
+    return i18n.language === "es" ? "/es/programas-de-carrera/data-science-ml" : "/us/career-programs/data-science-ml";
+  };
+
   const allCourses = [
     {
       id: '1',
@@ -34,12 +37,13 @@ export default function CareerPrograms() {
     },
     {
       id: '2',
-      title: "Data Science & Analytics",
-      description: "Master data analysis, visualization, and machine learning with Python and industry tools",
+      title: "Data Science & Machine Learning",
+      description: "Master data analysis, visualization, and machine learning with Python, TensorFlow, and industry tools. Build predictive models for real-world applications.",
       thumbnail: dataScienceThumbnail,
-      duration: "10 weeks",
+      duration: "16 weeks",
       difficulty: "Advanced" as const,
-      lessons: 42,
+      lessons: 64,
+      link: "data-science-ml",
     },
     {
       id: '3',
@@ -67,15 +71,6 @@ export default function CareerPrograms() {
       duration: "6 weeks",
       difficulty: "Beginner" as const,
       lessons: 24,
-    },
-    {
-      id: '6',
-      title: "Machine Learning Engineering",
-      description: "Build and deploy production-ready ML systems with best practices",
-      thumbnail: aiThumbnail,
-      duration: "16 weeks",
-      difficulty: "Advanced" as const,
-      lessons: 64,
     },
   ];
 
@@ -129,6 +124,8 @@ export default function CareerPrograms() {
               onClick={() => {
                 if (course.link === "full-stack") {
                   setLocation(getFullStackUrl());
+                } else if (course.link === "data-science-ml") {
+                  setLocation(getDataScienceUrl());
                 } else {
                   console.log(`Course clicked: ${course.title}`);
                 }
