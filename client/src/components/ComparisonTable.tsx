@@ -58,11 +58,9 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 {data.columns.map((column, colIndex) => (
                   <th
                     key={colIndex}
-                    className={`p-4 text-left font-semibold text-lg border-b-2 ${
+                    className={`p-4 text-left font-semibold text-lg ${
                       column.highlight
                         ? "bg-primary text-primary-foreground rounded-t-lg"
-                        : colIndex === 0
-                        ? "text-foreground"
                         : "text-muted-foreground"
                     }`}
                     data-testid={`th-column-${colIndex}`}
@@ -76,7 +74,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               {data.rows.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className={`border-b border-border hover:bg-muted/50 transition-colors ${
+                  className={`hover:bg-muted/50 transition-colors ${
                     rowIndex % 2 === 0 ? "bg-primary/5" : ""
                   }`}
                   data-testid={`tr-row-${rowIndex}`}
