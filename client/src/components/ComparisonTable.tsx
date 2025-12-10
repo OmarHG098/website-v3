@@ -47,63 +47,63 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block">
-          <Card className="overflow-hidden p-0 border-t-0">
+          {/* Header row outside the Card */}
+          <div className="flex w-full" style={{ width: '100%' }}>
+            {data.columns.map((column, colIndex) => (
+              <div
+                key={colIndex}
+                className={`flex-1 p-4 text-left font-semibold text-lg ${
+                  column.highlight
+                    ? "bg-primary text-primary-foreground rounded-t-lg"
+                    : "bg-primary/20 text-foreground rounded-t-lg"
+                }`}
+                data-testid={`th-column-${colIndex}`}
+              >
+                {column.name}
+              </div>
+            ))}
+          </div>
+          {/* Card with only the body rows */}
+          <Card className="overflow-hidden p-0 rounded-t-none">
             <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
-            <colgroup>
-              {data.columns.map((_, colIndex) => (
-                <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
-              ))}
-            </colgroup>
-            <thead className="bg-background">
-              <tr>
-                {data.columns.map((column, colIndex) => (
-                  <th
-                    key={colIndex}
-                    className={`p-4 text-left font-semibold text-lg ${
-                      column.highlight
-                        ? "bg-primary text-primary-foreground rounded-t-lg"
-                        : "bg-primary/20 text-foreground"
-                    } ${colIndex === 0 ? "rounded-tl-lg rounded-tr-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tl-lg rounded-tr-lg" : ""}`}
-                    data-testid={`th-column-${colIndex}`}
-                  >
-                    {column.name}
-                  </th>
+              <colgroup>
+                {data.columns.map((_, colIndex) => (
+                  <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.rows.map((row, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  className={`hover:bg-muted/50 transition-colors ${
-                    rowIndex % 2 === 0 ? "bg-primary/5" : ""
-                  }`}
-                  data-testid={`tr-row-${rowIndex}`}
-                >
-                  <td className="p-4 font-medium text-foreground">
-                    {row.feature}
-                    {row.feature_description && (
-                      <p className="text-sm text-muted-foreground font-normal mt-1">
-                        {row.feature_description}
-                      </p>
-                    )}
-                  </td>
-                  {row.values.map((value, valIndex) => (
-                    <td
-                      key={valIndex}
-                      className={`p-4 text-center ${
-                        valIndex === highlightIndex - 1
-                          ? "bg-primary/10 font-semibold text-foreground"
-                          : "text-foreground"
-                      }`}
-                      data-testid={`td-value-${rowIndex}-${valIndex}`}
-                    >
-                      <CellValue value={value} />
+              </colgroup>
+              <tbody>
+                {data.rows.map((row, rowIndex) => (
+                  <tr
+                    key={rowIndex}
+                    className={`hover:bg-muted/50 transition-colors ${
+                      rowIndex % 2 === 0 ? "bg-primary/5" : ""
+                    }`}
+                    data-testid={`tr-row-${rowIndex}`}
+                  >
+                    <td className="p-4 font-medium text-foreground">
+                      {row.feature}
+                      {row.feature_description && (
+                        <p className="text-sm text-muted-foreground font-normal mt-1">
+                          {row.feature_description}
+                        </p>
+                      )}
                     </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
+                    {row.values.map((value, valIndex) => (
+                      <td
+                        key={valIndex}
+                        className={`p-4 text-center ${
+                          valIndex === highlightIndex - 1
+                            ? "bg-primary/10 font-semibold text-foreground"
+                            : "text-foreground"
+                        }`}
+                        data-testid={`td-value-${rowIndex}-${valIndex}`}
+                      >
+                        <CellValue value={value} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </Card>
         </div>
