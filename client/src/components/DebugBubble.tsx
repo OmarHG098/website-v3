@@ -23,6 +23,7 @@ import {
   IconLayoutBottombar,
   IconArrowLeft,
   IconChevronRight,
+  IconChevronDown,
   IconRefresh,
   IconCheck,
   IconSearch,
@@ -32,6 +33,7 @@ import {
   IconBuildingSkyscraper,
   IconCreditCard,
   IconFolderCode,
+  IconFolder,
   IconBook,
   IconSparkles,
   IconChartBar,
@@ -144,6 +146,9 @@ export function DebugBubble() {
     ? new URLSearchParams(window.location.search).get("location") 
     : null;
 
+  // State for expanded folders in sitemap view
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
+
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
 
@@ -213,6 +218,51 @@ export function DebugBubble() {
       url.label.toLowerCase().includes(sitemapSearch.toLowerCase()) ||
       url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
   );
+
+  // Group sitemap URLs into folders
+  interface SitemapFolder {
+    name: string;
+    urls: SitemapUrl[];
+  }
+
+  const groupedSitemapUrls = (): { folders: SitemapFolder[]; rootUrls: SitemapUrl[] } => {
+    const programsEn: SitemapUrl[] = [];
+    const programsEs: SitemapUrl[] = [];
+    const rootUrls: SitemapUrl[] = [];
+
+    filteredSitemapUrls.forEach((url) => {
+      const path = new URL(url.loc).pathname;
+      if (path.startsWith("/us/career-programs/") || path.startsWith("/career-programs/")) {
+        programsEn.push(url);
+      } else if (path.startsWith("/es/career-programs/") || path.startsWith("/es/programas/")) {
+        programsEs.push(url);
+      } else {
+        rootUrls.push(url);
+      }
+    });
+
+    const folders: SitemapFolder[] = [];
+    if (programsEn.length > 0 || programsEs.length > 0) {
+      const allPrograms: SitemapUrl[] = [...programsEn, ...programsEs];
+      folders.push({ name: "Programs", urls: allPrograms });
+    }
+
+    return { folders, rootUrls };
+  };
+
+  const { folders, rootUrls } = groupedSitemapUrls();
+
+  const toggleFolder = (folderName: string) => {
+    setExpandedFolders((prev) => {
+      const next = new Set(prev);
+      if (next.has(folderName)) {
+        next.delete(folderName);
+      } else {
+        next.add(folderName);
+      }
+      return next;
+    });
+  };
 
   // Only show bubble if debug mode is active
   // In dev: always active
@@ -752,23 +802,66 @@ export function DebugBubble() {
                       No URLs found
                     </div>
                   ) : (
-                    filteredSitemapUrls.map((url) => {
-                      const path = new URL(url.loc).pathname;
-                      return (
-                        <a
-                          key={url.loc}
-                          href={path}
-                          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                          data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                        >
-                          <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium">{url.label}</div>
-                            <div className="text-xs text-muted-foreground truncate">{path}</div>
-                          </div>
-                        </a>
-                      );
-                    })
+                    <>
+                      {folders.map((folder) => (
+                        <div key={folder.name} className="mb-1">
+                          <button
+                            onClick={() => toggleFolder(folder.name)}
+                            className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                            data-testid={`button-folder-${folder.name.toLowerCase()}`}
+                          >
+                            {expandedFolders.has(folder.name) ? (
+                              <IconChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            ) : (
+                              <IconChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            )}
+                            <IconFolder className="h-4 w-4 text-primary flex-shrink-0" />
+                            <span className="font-medium">{folder.name}</span>
+                            <span className="text-xs text-muted-foreground ml-auto">
+                              {folder.urls.length}
+                            </span>
+                          </button>
+                          {expandedFolders.has(folder.name) && (
+                            <div className="ml-4 border-l pl-2 space-y-1 mt-1">
+                              {folder.urls.map((url) => {
+                                const path = new URL(url.loc).pathname;
+                                return (
+                                  <a
+                                    key={url.loc}
+                                    href={path}
+                                    className="flex items-center gap-3 px-3 py-1.5 rounded-md text-sm hover-elevate cursor-pointer"
+                                    data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                  >
+                                    <IconMap className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="font-medium text-sm">{url.label}</div>
+                                      <div className="text-xs text-muted-foreground truncate">{path}</div>
+                                    </div>
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {rootUrls.map((url) => {
+                        const path = new URL(url.loc).pathname;
+                        return (
+                          <a
+                            key={url.loc}
+                            href={path}
+                            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                            data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
+                            <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium">{url.label}</div>
+                              <div className="text-xs text-muted-foreground truncate">{path}</div>
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </>
                   )}
                 </div>
               </ScrollArea>
