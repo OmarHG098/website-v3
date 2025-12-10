@@ -6,6 +6,7 @@ import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedStep
 import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
 import * as TablerIcons from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import type { ComponentType } from "react";
 import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
@@ -17,7 +18,7 @@ import heroImage from "@assets/generated_images/Students_collaborating_workspace
 
 const heroData = {
   title: "Get into tech with our Job Guarantee",
-  subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+  subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
   cta_buttons: [
     { text: "Apply now", url: "#apply", variant: "primary" as const, icon: "Rocket" },
     { text: "Download Details", url: "#syllabus", variant: "outline" as const, icon: "Download" },
@@ -227,51 +228,53 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Content */}
-          <div>
-            <h1 
-              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
-              data-testid="text-hero-title"
-            >
-              {data.title}
-            </h1>
-            
-            <p 
-              className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
-              data-testid="text-hero-subtitle"
-            >
-              {data.subtitle}
-            </p>
+        <Card className="p-6 md:p-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Content */}
+            <div>
+              <h1 
+                className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
+                data-testid="text-hero-title"
+              >
+                {data.title}
+              </h1>
+              
+              <p 
+                className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
+                data-testid="text-hero-subtitle"
+              >
+                {data.subtitle}
+              </p>
 
-            <div className="flex flex-wrap gap-4">
-              {data.cta_buttons.map((button, index) => (
-                <Button
-                  key={index}
-                  variant={button.variant === "primary" ? "default" : button.variant}
-                  size="lg"
-                  asChild
-                  data-testid={`button-hero-cta-${index}`}
-                >
-                  <a href={button.url} className="flex items-center gap-2">
-                    {button.icon && getIcon(button.icon)}
-                    {button.text}
-                  </a>
-                </Button>
-              ))}
+              <div className="flex flex-wrap gap-4">
+                {data.cta_buttons.map((button, index) => (
+                  <Button
+                    key={index}
+                    variant={button.variant === "primary" ? "default" : button.variant}
+                    size="lg"
+                    asChild
+                    data-testid={`button-hero-cta-${index}`}
+                  >
+                    <a href={button.url} className="flex items-center gap-2">
+                      {button.icon && getIcon(button.icon)}
+                      {button.text}
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side - Hero Image */}
+            <div className="relative">
+              <img 
+                src={heroImage} 
+                alt="Students collaborating in a tech workspace"
+                className="w-full h-auto rounded-lg shadow-lg"
+                data-testid="img-hero"
+              />
             </div>
           </div>
-
-          {/* Right Side - Hero Image */}
-          <div className="relative">
-            <img 
-              src={heroImage} 
-              alt="Students collaborating in a tech workspace"
-              className="w-full h-auto rounded-lg shadow-lg"
-              data-testid="img-hero"
-            />
-          </div>
-        </div>
+        </Card>
       </div>
     </section>
   );
