@@ -21,7 +21,6 @@ const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const JobGuarantee = lazy(() => import("@/pages/JobGuarantee"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
-const GraduatesAndProjects = lazy(() => import("@/pages/GraduatesAndProjects"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 
 function LoadingFallback() {
@@ -51,8 +50,7 @@ function Router() {
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
         <Route path="/job-guarantee" component={JobGuarantee} />
-        <Route path="/graduates-and-projects" component={GraduatesAndProjects} />
-        <Route path="/component-showcase" component={ComponentShowcase} />
+                <Route path="/component-showcase" component={ComponentShowcase} />
         <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
         <Route path="/us/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />

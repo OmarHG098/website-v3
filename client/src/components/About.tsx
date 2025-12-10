@@ -3,11 +3,10 @@ import type { AboutSection as AboutSectionType } from "@shared/schema";
 
 interface AboutProps {
   data: AboutSectionType;
-  height?: string;
 }
 
-export function About({ data, height = "auto" }: AboutProps) {
-  const { title, description, link_text, link_url, image_src, image_alt } = data;
+export function About({ data }: AboutProps) {
+  const { title, description, link_text, link_url, image_src, image_alt, height = "auto" } = data;
 
   return (
     <section className="py-12 md:py-16 bg-muted" data-testid="section-about">

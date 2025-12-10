@@ -509,6 +509,7 @@ export type ProjectsShowcaseSection = z.infer<typeof projectsShowcaseSectionSche
 export const aboutSectionSchema = z.object({
   type: z.literal("about"),
   version: z.string().optional(),
+  height: z.string().optional(),
   title: z.string(),
   description: z.string(),
   link_text: z.string(),
@@ -546,6 +547,7 @@ export const sectionSchema = z.union([
   ctaBannerSectionSchema,
   projectShowcaseSectionSchema,
   projectsShowcaseSectionSchema,
+  aboutSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
