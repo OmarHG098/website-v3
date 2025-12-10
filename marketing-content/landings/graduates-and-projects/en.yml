@@ -25,7 +25,7 @@ sections:
     title: "See What Our Students Built"
     subtitle: "Explore final projects from 4Geeks Academy graduates: real apps and solutions that showcase the skills, creativity, and career-ready talent of our bootcamp alumni."
 
-  - type: project_showcase
+  - type: projects_showcase
     version: "1.0"
     items:
       - project_title: "Raspberry Sky"
