@@ -7,6 +7,9 @@ import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 import flaskRenderImg from "@assets/flask-render_1765396097392.webp";
 import streamlitRenderImg from "@assets/streamlit-render_1765396163031.webp";
 import mlFinalProjectImg from "@assets/ml-final-project_1765396170981.webp";
+import starWarsImg from "@assets/star-wars_1764729369149.webp";
+import authenticationImg from "@assets/authentication-python_1764729364254.webp";
+import fullstackFinalImg from "@assets/fullstack-user-stories_1764729359334.webp";
 
 interface ProjectsSectionProps {
   data: ProjectsSectionType;
@@ -16,6 +19,9 @@ const projectImages: Record<string, string> = {
   "flask-render": flaskRenderImg,
   "streamlit-render": streamlitRenderImg,
   "ml-final-project": mlFinalProjectImg,
+  "star-wars": starWarsImg,
+  "authentication": authenticationImg,
+  "final-project": fullstackFinalImg,
 };
 
 const difficultyColors: Record<string, string> = {
@@ -129,8 +135,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                     {currentProject.tags.slice(0, MAX_MOBILE_TAGS).map((tag, idx) => (
                       <Badge 
                         key={idx} 
-                        variant="secondary"
-                        className="text-xs font-medium md:hidden"
+                        className="text-xs font-medium md:hidden bg-[#BEE3F8] text-[#2C5282]"
                       >
                         {tag}
                       </Badge>
