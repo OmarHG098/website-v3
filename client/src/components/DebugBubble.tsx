@@ -70,6 +70,7 @@ const componentsList = [
   { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
   { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
   { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
+  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
   { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
   { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
   { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
