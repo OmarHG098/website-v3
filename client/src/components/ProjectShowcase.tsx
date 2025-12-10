@@ -137,7 +137,7 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
         </h3>
 
         <div className={`flex flex-col ${mediaPosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-12 items-start`}>
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-2/5">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
                 {renderMedia()}
@@ -185,7 +185,7 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-3/5">
             <Card className="lg:border-0 lg:shadow-none lg:bg-transparent">
               <CardContent className="p-4 lg:p-0">
                 {detailsContent}
