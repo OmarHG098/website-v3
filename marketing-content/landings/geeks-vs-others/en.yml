@@ -21,8 +21,8 @@ sections:
   - type: hero
     variant: simpleTwoColumn
     version: "1.0"
-    title: "4Geeks vs Others"
-    subtitle: "Compare 4Geeks Academy with other coding bootcamps and see why our unlimited mentorship, career support, and proven outcomes set us apart from the rest."
+    title: "4Geeks Academy vs Other Bootcamps"
+    subtitle: "Discover why 4Geeks Academy is different. Our AI-integrated curriculum, hands-on projects, and personalized mentorship help students launch high-demand, future-proof tech careers—no prior experience needed. With lifetime mentorship and career support, we make sure you keep thriving long after graduation."
     badge: "Why 4Geeks Stands Out"
     image:
       src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
@@ -30,30 +30,29 @@ sections:
 
   - type: comparison_table
     version: "1.0"
-    title: "How 4Geeks Compares"
-    subtitle: "See how our approach stacks up against typical coding bootcamps"
+    title: "Launching Successful Tech Careers in the AI Era"
+    subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"
     columns:
       - name: "Feature"
       - name: "4Geeks Academy"
         highlight: true
-      - name: "Other Bootcamps"
+      - name: "Industry Average / Competitors"
     rows:
-      - feature: "1:1 Mentorship"
-        values: ["Unlimited", "Limited hours"]
-        feature_description: "Get personalized guidance whenever you need it"
-      - feature: "Career Support Duration"
-        values: ["Lifetime", "3-6 months"]
-        feature_description: "We support you throughout your entire career journey"
-      - feature: "Job Guarantee"
-        values: ["Yes", "Varies"]
-        feature_description: "Get hired within 9 months or get your tuition back"
-      - feature: "Class Size"
-        values: ["Small groups", "Large cohorts"]
-        feature_description: "More attention and personalized feedback"
-      - feature: "AI-Focused Curriculum"
-        values: ["Yes", "Limited"]
-        feature_description: "Learn cutting-edge AI and machine learning skills"
-      - feature: "Flexible Financing"
-        values: ["Yes", "Limited options"]
-        feature_description: "Multiple payment plans to fit your budget"
-    footer_note: "* Based on publicly available information from major coding bootcamps as of 2024"
+      - feature: "Career Support"
+        values: ["Personalized support for a lifetime", "Limited, ending with 1st job"]
+      - feature: "Teacher: Student Ratio"
+        values: ["1:7", "1:10+"]
+      - feature: "AI-Powered Feedback"
+        values: ["Personalized to your progress", "Generic or non-existent"]
+      - feature: "1-on-1 Mentoring"
+        values: ["Unlimited and for a lifetime", "Limited sessions"]
+      - feature: "Curriculum"
+        values: ["Continuously updated to match industry needs", "Slow to adapt"]
+      - feature: "% Hiring Rate"
+        values: ["~84% within 6 months", "Often Unknown"]
+      - feature: "Community"
+        values: ["Strong local & global network", "Depends on school"]
+      - feature: "Class Format"
+        values: ["Online, in-person", "Usually only one format"]
+      - feature: "Previous Knowledge"
+        values: ["None", "Entry tests or prior coding experience"]
