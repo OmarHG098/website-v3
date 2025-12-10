@@ -138,7 +138,7 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
 function TestimonialCard({ testimonial }: { testimonial: TestimonialsSlideTestimonial }) {
   return (
     <Card 
-      className="w-[300px] h-[490px] mx-7 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
+      className="w-[300px] h-[490px] -mx-4 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
