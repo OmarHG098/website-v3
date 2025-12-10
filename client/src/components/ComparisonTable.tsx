@@ -46,7 +46,12 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block overflow-x-auto">
-          <table className="w-full border-collapse" data-testid="table-comparison">
+          <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
+            <colgroup>
+              {data.columns.map((_, colIndex) => (
+                <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
+              ))}
+            </colgroup>
             <thead>
               <tr>
                 {data.columns.map((column, colIndex) => (
