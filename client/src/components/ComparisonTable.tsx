@@ -31,7 +31,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
 
   return (
     <section
-      className={`py-16 md:py-24 ${data.background || "bg-background"}`}
+      className={`py-8 ${data.background || "bg-background"}`}
       data-testid="section-comparison-table"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -81,9 +81,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 {data.rows.map((row, rowIndex) => (
                   <tr
                     key={rowIndex}
-                    className={`hover:bg-muted/50 transition-colors ${
-                      rowIndex % 2 === 0 ? "bg-primary/5" : ""
-                    }`}
+                    className={rowIndex % 2 === 0 ? "bg-primary/5" : ""}
                     data-testid={`tr-row-${rowIndex}`}
                   >
                     <td className="p-4 font-medium text-foreground">
@@ -120,7 +118,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <AccordionItem
                 key={rowIndex}
                 value={`row-${rowIndex}`}
-                className="bg-card rounded-lg border border-border px-4"
+                className="bg-card rounded-lg border-t border-l border-r border-border px-4 !border-b-0"
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
                 <AccordionTrigger className="hover:no-underline py-3">
@@ -131,8 +129,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 <AccordionContent>
                   <div className="flex items-stretch gap-2">
                     {/* 4Geeks Academy side - highlighted */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-4 border-l-4 border-primary">
-                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                    <div className="flex-1 bg-primary/10 rounded-lg p-3 border-l-[3px] border-primary">
+                      <p className="text-xs text-foreground/70 mb-1 font-semibold">
                         {data.columns[1]?.name || "4Geeks Academy"}
                       </p>
                       <p className="font-semibold text-foreground text-sm">
@@ -140,12 +138,12 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       </p>
                     </div>
                     {/* VS divider */}
-                    <div className="flex items-center justify-center px-2">
-                      <span className="text-muted-foreground font-semibold text-sm">vs</span>
+                    <div className="flex items-center justify-center">
+                      <span className="text-foreground/50 font-semibold text-sm">vs</span>
                     </div>
                     {/* Competitors side */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-4">
-                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                    <div className="flex-1 bg-primary/10 rounded-lg p-3">
+                      <p className="text-xs text-foreground/70 mb-1 font-semibold">
                         {(data.columns[2]?.name || "Industry Average / Competitors").replace(" / Competitors", "")}
                       </p>
                       <p className="text-foreground text-sm">

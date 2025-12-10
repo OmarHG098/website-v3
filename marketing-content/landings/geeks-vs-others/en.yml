@@ -56,3 +56,110 @@ sections:
         values: ["Online, in-person", "Usually only one format"]
       - feature: "Previous Knowledge"
         values: ["None", "Entry tests or prior coding experience"]
+
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    alignment: "center"
+    gap: "12"
+    left:
+      heading: "Hyperpersonalized Learning & Support That Lasts a Lifetime"
+      description: "Most bootcamps give you a limited number of mentorship hours and generic resources — and leave you once you get hired. At 4Geeks, we built an entire support system around personalization:"
+      bullets:
+        - heading: "Unlimited 1:1 Mentorship with Real Humans"
+          text: "Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role years down the line, our mentors are always just a message away."
+        - heading: "AI-Powered Progress Tracking & Feedback"
+          text: "Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time. You're never left wondering where you stand."
+        - heading: "Career Support That Grows With You"
+          text: "GeekFORCE isn't just for your first job. It's personalized, ongoing career coaching you can tap into again and again, whether you're changing roles, freelancing, or leveling up into leadership."
+      text_align: "left"
+    right:
+      html_content: |
+        <p class="text-lg text-foreground"><strong>The result:</strong> a truly hyperpersonalized learning experience that combines human mentorship with AI intelligence and that's yours for life — something no other bootcamp offers.</p>
+      text_align: "left"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    alignment: "center"
+    gap: "12"
+    background: "bg-muted/30"
+    left:
+      heading: "Making Tech Careers Accessible"
+      description: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
+      bullets:
+        - text: "Among the **most affordable tuition** of any top-ranked bootcamp (recognized by Forbes)."
+        - text: "**Financing options start below $299/month**, so you can learn without financial stress."
+        - text: "**Income-based payment options**, where you only pay once you're earning."
+        - text: "Scholarships available for eligible students."
+      text_align: "left"
+      button:
+        text: "See financing options"
+        url: "/us/financials"
+        variant: "primary"
+    right:
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop"
+      image_alt: "Student looking at financial options"
+      justify: "center"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    alignment: "center"
+    gap: "12"
+    left:
+      heading: "The Confidence of a Job Guarantee"
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      sub_heading: "We can do this because:"
+      bullets:
+        - text: "Our **curriculum is industry-aligned and AI-ready**"
+        - text: "Our **mentorship is unlimited and personalized**"
+        - text: "Our **career support never expires**"
+      text_align: "left"
+      button:
+        text: "Learn More"
+        url: "/us/job-guarantee"
+        variant: "primary"
+    right:
+      html_content: |
+        <p class="text-lg text-foreground">Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp.</p>
+      text_align: "left"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Recognized Globally for Excellence"
+    subtitle: "We don't just say we deliver— recognition from trusted sources proves our worth."
+    columns: 3
+    icon_color: "#0097CD"
+    items:
+      - icon: Trophy
+        title: "Top 5 Coding Bootcamps"
+        description: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
+      - icon: Heart
+        title: "Best Student Support"
+        description: "Consistently recognized for Best Student Support and Best Value for Money"
+      - icon: World
+        title: "20,000+ Students"
+        description: "Trusted by 20,000+ students across the globe"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Results You Can Count On"
+    subtitle: "Numbers matter — and ours speak for themselves."
+    columns: 3
+    background: "bg-muted/30"
+    items:
+      - icon: Briefcase
+        value: "84%"
+        title: "Job placement rate"
+        description: "of graduates were hired"
+      - icon: Clock
+        value: "6 months"
+        title: "Average time to get hired"
+        description: "after graduation"
+      - icon: TrendingUp
+        value: "55%"
+        title: "Salary increase"
+        description: "higher at new job"
