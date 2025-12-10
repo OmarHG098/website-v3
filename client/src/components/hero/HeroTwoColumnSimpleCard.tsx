@@ -20,8 +20,8 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid lg:grid-cols-5 gap-12 items-center">
-          <div className="lg:col-span-2 text-center lg:text-left">
+        <div className="grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-6 text-center lg:text-left">
             <h1 
               className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
               data-testid="text-hero-title"
@@ -37,7 +37,7 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
             />
           </div>
 
-          <div className="lg:col-span-3 text-center lg:text-left">
+          <div className="lg:col-span-6 text-center lg:text-left lg:mt-[4.5rem]">
             {data.subtitle && (
               <p 
                 className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
