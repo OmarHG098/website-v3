@@ -46,8 +46,10 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <Card className="hidden md:block overflow-hidden p-0 border-t-0">
-          <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
+        <div className="hidden md:block relative">
+          <div className="absolute top-0 left-0 right-0 h-14 bg-background" />
+          <Card className="relative overflow-hidden p-0 border-t-0">
+            <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
                 <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
@@ -103,8 +105,9 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </Card>
+            </table>
+          </Card>
+        </div>
 
         <div className="md:hidden space-y-4">
           {data.rows.map((row, rowIndex) => (
