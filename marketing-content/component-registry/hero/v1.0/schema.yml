@@ -20,12 +20,15 @@ variants:
   twoColumn:
     description: "Two column layout with text on left and video on right"
     best_for: "Feature pages, product showcases"
+  twoColumnSimpleCard:
+    description: "Two column layout inside a card with title, subtitle, CTA buttons on left and image on right"
+    best_for: "Guarantee pages, feature announcements, promotional sections"
 
 props:
   variant:
     type: string
     required: true
-    options: ["singleColumn", "showcase", "twoColumn"]
+    options: ["singleColumn", "showcase", "twoColumn", "twoColumnSimpleCard"]
     description: "Layout variant to use"
     example: "singleColumn"
 
@@ -179,3 +182,41 @@ variant_props:
       description: "Video aspect ratio"
       options: ["16:9", "9:12"]
       default: "9:12"
+
+  twoColumnSimpleCard:
+    image:
+      type: object
+      required: true
+      description: "Hero image displayed on the right side"
+      properties:
+        src:
+          type: string
+          required: true
+          description: "Image source URL or path"
+        alt:
+          type: string
+          required: true
+          description: "Image alt text for accessibility"
+    cta_buttons:
+      type: array
+      required: false
+      description: "Call-to-action buttons (recommended: 2 buttons max)"
+      items:
+        text:
+          type: string
+          description: "Button label"
+        url:
+          type: string
+          description: "Link destination"
+        variant:
+          type: string
+          options: ["primary", "outline"]
+        icon:
+          type: string
+          required: false
+          description: "Tabler icon name (without 'Icon' prefix)"
+    background:
+      type: string
+      required: false
+      description: "Background Tailwind class"
+      default: "bg-gradient-to-b from-primary/5 to-background"

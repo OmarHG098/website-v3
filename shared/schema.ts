@@ -90,11 +90,26 @@ export const heroTwoColumnSchema = z.object({
   video_ratio: z.string().optional(),
 }).strict();
 
+export const heroTwoColumnSimpleCardSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("twoColumnSimpleCard"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
+  background: z.string().optional(),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
   heroTwoColumnSchema,
+  heroTwoColumnSimpleCardSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -526,6 +541,7 @@ export const sectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
   heroTwoColumnSchema,
+  heroTwoColumnSimpleCardSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -604,6 +620,7 @@ export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
 export type HeroTwoColumn = z.infer<typeof heroTwoColumnSchema>;
+export type HeroTwoColumnSimpleCard = z.infer<typeof heroTwoColumnSimpleCardSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;

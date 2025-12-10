@@ -1,13 +1,10 @@
 import Header from "@/components/Header";
-import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, FeaturesGridHighlightSection, FeaturesGridDetailedSection } from "@shared/schema";
+import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, FeaturesGridHighlightSection, FeaturesGridDetailedSection, HeroTwoColumnSimpleCard } from "@shared/schema";
 import { FAQSection } from "@/components/career-programs/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
-import * as TablerIcons from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import type { ComponentType } from "react";
+import { Hero } from "@/components/hero/Hero";
 import eligibleImage from "@assets/reservation-es_1764814854635.webp";
 import confidenceImage from "@assets/hombre-joven-con-laptop_1764691956393.webp";
 import heroImage from "@assets/generated_images/Students_collaborating_workspace_d1560810.webp";
@@ -16,12 +13,19 @@ import heroImage from "@assets/generated_images/Students_collaborating_workspace
 // DATA
 // ============================================
 
-const heroData = {
+const heroData: HeroTwoColumnSimpleCard = {
+  type: "hero",
+  version: "1.0",
+  variant: "twoColumnSimpleCard",
   title: "Get into tech with our Job Guarantee",
   subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.",
+  image: {
+    src: heroImage,
+    alt: "Students collaborating in a tech workspace",
+  },
   cta_buttons: [
-    { text: "Apply now", url: "#apply", variant: "primary" as const, icon: "Rocket" },
-    { text: "Download Details", url: "#syllabus", variant: "outline" as const, icon: "Download" },
+    { text: "Apply now", url: "#apply", variant: "primary", icon: "Rocket" },
+    { text: "Download Details", url: "#syllabus", variant: "outline", icon: "Download" },
   ],
 };
 
@@ -212,75 +216,6 @@ const faqData: FAQSectionType = {
 };
 
 // ============================================
-// SECTION COMPONENTS
-// ============================================
-
-function JobGuaranteeHero({ data }: { data: typeof heroData }) {
-  const getIcon = (iconName: string) => {
-    const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
-    const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={20} /> : null;
-  };
-
-  return (
-    <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
-      data-testid="section-hero"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        <Card className="p-6 md:p-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Content */}
-            <div className="text-center lg:text-left">
-              <h1 
-                className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
-                data-testid="text-hero-title"
-              >
-                {data.title}
-              </h1>
-              
-              <p 
-                className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
-                data-testid="text-hero-subtitle"
-              >
-                {data.subtitle}
-              </p>
-
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                {data.cta_buttons.map((button, index) => (
-                  <Button
-                    key={index}
-                    variant={button.variant === "primary" ? "default" : button.variant}
-                    size="lg"
-                    asChild
-                    data-testid={`button-hero-cta-${index}`}
-                  >
-                    <a href={button.url} className="flex items-center gap-2">
-                      {button.icon && getIcon(button.icon)}
-                      {button.text}
-                    </a>
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Side - Hero Image */}
-            <div className="relative">
-              <img 
-                src={heroImage} 
-                alt="Students collaborating in a tech workspace"
-                className="w-full h-auto rounded-lg shadow-lg"
-                data-testid="img-hero"
-              />
-            </div>
-          </div>
-        </Card>
-      </div>
-    </section>
-  );
-}
-
-// ============================================
 // MAIN PAGE COMPONENT
 // ============================================
 
@@ -290,7 +225,7 @@ export default function JobGuarantee() {
       <Header />
       
       <main>
-        <JobGuaranteeHero data={heroData} />
+        <Hero data={heroData} />
         <FeaturesGrid data={statsData} />
         <TwoColumn data={eligibleData} />
         <FeaturesGrid data={programsData} />
