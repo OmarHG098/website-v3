@@ -15,11 +15,37 @@ export function About({ data }: AboutProps) {
           {title}
         </h2>
 
+        {/* Mobile/Tablet: Image above, then text */}
+        <div className="lg:hidden">
+          <div className="mb-6">
+            <img
+              src={image_src}
+              alt={image_alt}
+              className="w-full h-auto object-cover rounded-lg"
+              loading="lazy"
+              data-testid="img-about-mobile"
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-muted-foreground leading-relaxed mb-6" data-testid="text-about-description-mobile">
+              {description}
+            </p>
+            <a
+              href={link_url}
+              className="text-primary hover:underline font-medium"
+              data-testid="link-about-read-more-mobile"
+            >
+              {link_text} {">"}
+            </a>
+          </div>
+        </div>
+
+        {/* Desktop: Side by side with card */}
         <div 
-          className="flex flex-col md:flex-row gap-0 items-stretch"
+          className="hidden lg:flex lg:flex-row gap-0 items-stretch"
           style={{ height: height !== "auto" ? height : undefined }}
         >
-          <Card className="flex-1 p-8 flex flex-col justify-center rounded-r-none md:rounded-l-lg z-10">
+          <Card className="flex-1 p-8 flex flex-col justify-center rounded-r-none lg:rounded-l-lg z-10">
             <p className="text-muted-foreground leading-relaxed text-center mb-6" data-testid="text-about-description">
               {description}
             </p>
@@ -32,11 +58,11 @@ export function About({ data }: AboutProps) {
             </a>
           </Card>
 
-          <div className="flex-1 min-h-[250px] md:min-h-0">
+          <div className="flex-1 min-h-0">
             <img
               src={image_src}
               alt={image_alt}
-              className="w-full h-full object-cover rounded-b-lg md:rounded-b-none md:rounded-r-lg"
+              className="w-full h-full object-cover rounded-r-lg"
               loading="lazy"
               data-testid="img-about"
             />
