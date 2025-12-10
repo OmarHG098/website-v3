@@ -125,13 +125,13 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
           <div className="w-full md:w-1/2 space-y-6">
             <div>
               <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                {">"} MADE BY
+                MADE BY
               </p>
               <div className="space-y-3">
                 {creators.map((creator, index) => (
                   <div key={index} data-testid={`creator-${index}`}>
                     <div className="flex items-center gap-2">
-                      <span className="text-foreground font-medium">{creator.name}</span>
+                      <span className="text-foreground font-medium">{">"} {creator.name}</span>
                       {creator.github_url && (
                         <a
                           href={creator.github_url}
