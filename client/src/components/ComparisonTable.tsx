@@ -45,7 +45,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <div className="hidden md:block overflow-x-auto">
+        <div className="hidden md:block overflow-x-auto bg-primary/5 rounded-lg p-4">
           <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
@@ -62,7 +62,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                         ? "bg-primary text-primary-foreground rounded-t-lg"
                         : colIndex === 0
                         ? "text-foreground"
-                        : "text-muted-foreground bg-muted"
+                        : "text-muted-foreground"
                     }`}
                     data-testid={`th-column-${colIndex}`}
                   >
@@ -91,8 +91,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       key={valIndex}
                       className={`p-4 text-center ${
                         valIndex === highlightIndex - 1
-                          ? "bg-primary/5 font-semibold text-foreground"
-                          : "text-muted-foreground bg-muted/30"
+                          ? "font-semibold text-foreground"
+                          : "text-muted-foreground"
                       }`}
                       data-testid={`td-value-${rowIndex}-${valIndex}`}
                     >
