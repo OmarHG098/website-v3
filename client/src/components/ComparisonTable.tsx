@@ -1,6 +1,12 @@
 import type { ComparisonTableSection } from "@shared/schema";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { Card } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface ComparisonTableProps {
   data: ComparisonTableSection;
@@ -108,36 +114,49 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </Card>
         </div>
 
-        <div className="md:hidden space-y-4">
-          {data.rows.map((row, rowIndex) => (
-            <div
-              key={rowIndex}
-              className="bg-card rounded-lg border border-border p-4"
-              data-testid={`card-comparison-${rowIndex}`}
-            >
-              <h3 className="font-semibold text-foreground mb-3">{row.feature}</h3>
-              {row.feature_description && (
-                <p className="text-sm text-muted-foreground mb-3">{row.feature_description}</p>
-              )}
-              <div className="space-y-2">
-                {data.columns.slice(1).map((column, colIndex) => (
-                  <div
-                    key={colIndex}
-                    className={`flex justify-between items-center p-2 rounded ${
-                      column.highlight ? "bg-primary/10" : "bg-muted/50"
-                    }`}
-                  >
-                    <span className={`text-sm ${column.highlight ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
-                      {column.name}
-                    </span>
-                    <span className={column.highlight ? "font-semibold text-foreground" : "text-muted-foreground"}>
-                      <CellValue value={row.values[colIndex]} />
-                    </span>
+        <div className="md:hidden">
+          <Accordion type="single" collapsible className="space-y-2">
+            {data.rows.map((row, rowIndex) => (
+              <AccordionItem
+                key={rowIndex}
+                value={`row-${rowIndex}`}
+                className="bg-card rounded-lg border border-border px-4"
+                data-testid={`accordion-comparison-${rowIndex}`}
+              >
+                <AccordionTrigger className="hover:no-underline">
+                  <span className="font-semibold text-foreground uppercase text-sm">
+                    {row.feature}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex items-stretch gap-2">
+                    {/* 4Geeks Academy side - highlighted */}
+                    <div className="flex-1 bg-primary/10 rounded-lg p-4 border-l-4 border-primary">
+                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                        {data.columns[1]?.name || "4Geeks Academy"}
+                      </p>
+                      <p className="font-semibold text-foreground">
+                        <CellValue value={row.values[0]} />
+                      </p>
+                    </div>
+                    {/* VS divider */}
+                    <div className="flex items-center justify-center px-2">
+                      <span className="text-muted-foreground font-semibold text-sm">vs</span>
+                    </div>
+                    {/* Competitors side */}
+                    <div className="flex-1 bg-muted/30 rounded-lg p-4">
+                      <p className="text-xs text-muted-foreground mb-1 font-semibold">
+                        {data.columns[2]?.name || "Industry Average / Competitors"}
+                      </p>
+                      <p className="text-foreground">
+                        <CellValue value={row.values[1]} />
+                      </p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
 
         {data.footer_note && (
