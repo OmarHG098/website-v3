@@ -123,13 +123,9 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                     )}
                   </div>
                 )}
-                
-                <p className="text-muted-foreground leading-relaxed mb-4 flex-grow">
-                  {currentProject.description}
-                </p>
 
                 {currentProject.tags && currentProject.tags.length > 0 && (
-                  <div className="flex items-center gap-2 flex-wrap pt-3 border-t">
+                  <div className="flex items-center gap-2 flex-wrap mb-4">
                     {currentProject.tags.slice(0, MAX_MOBILE_TAGS).map((tag, idx) => (
                       <Badge 
                         key={idx} 
@@ -158,6 +154,10 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                     ))}
                   </div>
                 )}
+                
+                <p className="text-muted-foreground leading-relaxed flex-grow">
+                  {currentProject.description}
+                </p>
               </div>
             </div>
           </div>
