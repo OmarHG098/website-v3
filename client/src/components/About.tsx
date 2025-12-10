@@ -17,11 +17,11 @@ export function About({ data }: AboutProps) {
 
         {/* Mobile/Tablet: Image above, then text */}
         <div className="lg:hidden">
-          <div className="mb-6">
+          <div className="mb-6 flex justify-center">
             <img
               src={image_src}
               alt={image_alt}
-              className="w-full h-auto object-cover rounded-lg"
+              className="w-48 h-48 object-cover rounded-lg"
               loading="lazy"
               data-testid="img-about-mobile"
             />
