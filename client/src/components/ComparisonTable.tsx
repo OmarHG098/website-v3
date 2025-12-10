@@ -123,8 +123,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 className="bg-card rounded-lg border border-border px-4"
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
-                <AccordionTrigger className="hover:no-underline">
-                  <span className="font-semibold text-foreground uppercase text-sm">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <span className="font-semibold text-foreground uppercase text-xs">
                     {row.feature}
                   </span>
                 </AccordionTrigger>
