@@ -21,5 +21,8 @@ yaml: |
           text: "Create a full-stack application"
         - heading: "Week 8"
           text: "Deploy an AI-powered project"
+        - heading: "Week 12"
+          text: "Complete your capstone project"
+      bullets_visible: 2
       bullet_icon: "ArrowRight"
       bullet_icon_color: "text-primary"
