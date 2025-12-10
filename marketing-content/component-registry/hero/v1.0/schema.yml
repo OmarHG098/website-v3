@@ -8,7 +8,8 @@ when_to_use: |
   Every page should start with a hero section. Choose the variant that best fits your content:
   - singleColumn: Centered content with optional trust bar and award badges (best for program pages)
   - showcase: 3-column layout with images on sides (best for landing pages)
-  - twoColumn: Text on left with video on right (best for feature pages)
+  - productShowcase: Text on left with video on right (best for product/service introductions)
+  - simpleTwoColumn: Image on left, text with CTAs on right (best for promotions, announcements)
 
 variants:
   singleColumn:
@@ -17,18 +18,18 @@ variants:
   showcase:
     description: "3-column layout with images on left/right, centered content with trust bar"
     best_for: "Landing pages, marketing pages"
-  twoColumn:
-    description: "Two column layout with text on left and video on right"
-    best_for: "Feature pages, product showcases"
-  twoColumnSimpleCard:
-    description: "Two column layout inside a card with title, subtitle, CTA buttons on left and image on right"
+  productShowcase:
+    description: "Two column layout with brand mark, text on left and video on right"
+    best_for: "Product/service introductions, feature pages"
+  simpleTwoColumn:
+    description: "Two column layout with image on left and title, subtitle, CTA buttons on right"
     best_for: "Guarantee pages, feature announcements, promotional sections"
 
 props:
   variant:
     type: string
     required: true
-    options: ["singleColumn", "showcase", "twoColumn", "twoColumnSimpleCard"]
+    options: ["singleColumn", "showcase", "productShowcase", "simpleTwoColumn"]
     description: "Layout variant to use"
     example: "singleColumn"
 
@@ -130,7 +131,7 @@ variant_props:
       required: false
       description: "Show decorative arrow pointing to CTA"
 
-  twoColumn:
+  productShowcase:
     welcome_text:
       type: string
       required: false
@@ -183,7 +184,7 @@ variant_props:
       options: ["16:9", "9:12"]
       default: "9:12"
 
-  twoColumnSimpleCard:
+  simpleTwoColumn:
     badge:
       type: string
       required: false

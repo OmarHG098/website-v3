@@ -76,10 +76,10 @@ export const brandMarkSchema = z.object({
   color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
-export const heroTwoColumnSchema = z.object({
+export const heroProductShowcaseSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
-  variant: z.literal("twoColumn"),
+  variant: z.literal("productShowcase"),
   title: z.string(),
   subtitle: z.string().optional(),
   welcome_text: z.string().optional(),
@@ -90,10 +90,10 @@ export const heroTwoColumnSchema = z.object({
   video_ratio: z.string().optional(),
 }).strict();
 
-export const heroTwoColumnSimpleCardSchema = z.object({
+export const heroSimpleTwoColumnSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
-  variant: z.literal("twoColumnSimpleCard"),
+  variant: z.literal("simpleTwoColumn"),
   title: z.string(),
   subtitle: z.string().optional(),
   badge: z.string().optional(),
@@ -109,8 +109,8 @@ export const heroTwoColumnSimpleCardSchema = z.object({
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
-  heroTwoColumnSchema,
-  heroTwoColumnSimpleCardSchema,
+  heroProductShowcaseSchema,
+  heroSimpleTwoColumnSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -541,8 +541,8 @@ export type AboutSection = z.infer<typeof aboutSectionSchema>;
 export const sectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
-  heroTwoColumnSchema,
-  heroTwoColumnSimpleCardSchema,
+  heroProductShowcaseSchema,
+  heroSimpleTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -620,8 +620,8 @@ export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
-export type HeroTwoColumn = z.infer<typeof heroTwoColumnSchema>;
-export type HeroTwoColumnSimpleCard = z.infer<typeof heroTwoColumnSimpleCardSchema>;
+export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
+export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;

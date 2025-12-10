@@ -387,8 +387,8 @@ function ComponentCard({
                 const variantLabels: Record<string, string> = {
                   singleColumn: 'Single Column',
                   showcase: 'Showcase',
-                  twoColumn: 'Two Column',
-                  twoColumnSimpleCard: 'Two Column Simple Card',
+                  productShowcase: 'Product Showcase',
+                  simpleTwoColumn: 'Simple Two Column',
                 };
                 return (
                   <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -447,7 +447,7 @@ function ComponentCard({
                         return acc;
                       }, {} as Record<string, typeof examples>);
                       
-                      const variantOrder = ['singleColumn', 'showcase', 'twoColumn', 'twoColumnSimpleCard', 'default'];
+                      const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
                       const sortedVariants = Object.keys(grouped).sort((a, b) => {
                         const aIdx = variantOrder.indexOf(a);
                         const bIdx = variantOrder.indexOf(b);
@@ -457,8 +457,8 @@ function ComponentCard({
                       const variantLabels: Record<string, string> = {
                         singleColumn: 'Single Column',
                         showcase: 'Showcase',
-                        twoColumn: 'Two Column',
-                        twoColumnSimpleCard: 'Two Column Simple Card',
+                        productShowcase: 'Product Showcase',
+                        simpleTwoColumn: 'Simple Two Column',
                         default: 'Default',
                       };
                       

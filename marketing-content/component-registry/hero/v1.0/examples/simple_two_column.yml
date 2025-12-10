@@ -1,10 +1,10 @@
-name: "Two Column Simple Card"
-description: "Two column layout inside a card with title, subtitle, CTA buttons on left and image on right. Mobile shows centered text with stacked layout."
-variant: "twoColumnSimpleCard"
+name: "Simple Two Column"
+description: "Two column layout with image on left, title, subtitle, CTA buttons on right. Mobile shows centered text with stacked layout."
+variant: "simpleTwoColumn"
 yaml: |
   - type: hero
     version: "1.0"
-    variant: twoColumnSimpleCard
+    variant: simpleTwoColumn
     title: "Get into tech with our Job Guarantee"
     subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply."
     image:

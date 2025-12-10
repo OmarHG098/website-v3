@@ -1,11 +1,11 @@
-import type { HeroTwoColumn as HeroTwoColumnType } from "@shared/schema";
+import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
 import VideoPlayer from "@/components/VideoPlayer";
 
-interface HeroTwoColumnProps {
-  data: HeroTwoColumnType;
+interface HeroProductShowcaseProps {
+  data: HeroProductShowcaseType;
 }
 
-export function HeroTwoColumn({ data }: HeroTwoColumnProps) {
+export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const colorMap: Record<string, string> = {
     "primary": "hsl(var(--primary))",
     "accent": "hsl(var(--accent))",

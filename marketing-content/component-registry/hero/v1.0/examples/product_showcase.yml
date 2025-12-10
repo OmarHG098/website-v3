@@ -1,10 +1,10 @@
-name: "Two Column with Video"
+name: "Product Showcase"
 description: "Two column layout with welcome text, brand mark, title, description on left and embedded video on right"
-variant: "twoColumn"
+variant: "productShowcase"
 yaml: |
   - type: hero
     version: "1.0"
-    variant: twoColumn
+    variant: productShowcase
     welcome_text: "Welcome to"
     brand_mark:
       prefix: "Geek"

@@ -19,7 +19,7 @@ schema:
 
 sections:
   - type: hero
-    variant: twoColumn
+    variant: productShowcase
     version: "1.0"
     welcome_text: "Welcome to"
     brand_mark:

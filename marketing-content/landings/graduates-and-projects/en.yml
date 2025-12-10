@@ -19,12 +19,12 @@ schema:
 
 sections:
   - type: hero
-    variant: twoColumnSimpleCard
+    variant: simpleTwoColumn
     version: "1.0"
     title: "See What Our Students Built"
     subtitle: "Explore final projects from 4Geeks Academy graduates: real apps and solutions that showcase the skills, creativity, and career-ready talent of our bootcamp alumni."
+    background: "bg-primary/5"
     badge: "Coding Bootcamp Projects & Alumni"
-    background: "bg-primary/10"
     image:
       src: "/attached_assets/caracas-graduates_1765387638222.png"
       alt: "4Geeks Academy graduates holding certificates"

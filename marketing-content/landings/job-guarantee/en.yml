@@ -19,7 +19,7 @@ schema:
 
 sections:
   - type: hero
-    variant: twoColumnSimpleCard
+    variant: simpleTwoColumn
     version: "1.0"
     title: "Get into tech with our Job Guarantee"
     subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply."
