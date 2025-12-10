@@ -144,7 +144,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       <span className="text-muted-foreground font-semibold text-sm">vs</span>
                     </div>
                     {/* Competitors side */}
-                    <div className="flex-1 bg-muted/30 rounded-lg p-4">
+                    <div className="flex-1 bg-primary/10 rounded-lg p-4">
                       <p className="text-xs text-muted-foreground mb-1 font-semibold">
                         {data.columns[2]?.name || "Industry Average / Competitors"}
                       </p>
