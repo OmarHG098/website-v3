@@ -1,7 +1,4 @@
-name: Simple Variant
-description: Compact logo display for hero sections
-
-props:
+- type: award_badges
   variant: simple
   showBorder: true
   items:

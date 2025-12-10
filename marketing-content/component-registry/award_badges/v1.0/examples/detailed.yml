@@ -1,7 +1,4 @@
-name: Detailed Variant
-description: Full award display with descriptions and links
-
-props:
+- type: award_badges
   variant: detailed
   showBorder: false
   items:

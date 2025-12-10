@@ -1,7 +1,4 @@
-name: Text Fallback
-description: Awards without logos display source/name/year as text
-
-props:
+- type: award_badges
   variant: simple
   showBorder: true
   items:
