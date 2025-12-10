@@ -29,6 +29,15 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
               {data.title}
             </h1>
             
+            <img 
+              src={data.image.src} 
+              alt={data.image.alt}
+              className="w-full h-auto rounded-lg shadow-lg"
+              data-testid="img-hero"
+            />
+          </div>
+
+          <div className="lg:col-span-2 text-center lg:text-left">
             {data.subtitle && (
               <p 
                 className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
@@ -56,15 +65,6 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
                 ))}
               </div>
             )}
-          </div>
-
-          <div className="lg:col-span-2 relative">
-            <img 
-              src={data.image.src} 
-              alt={data.image.alt}
-              className="w-full h-auto rounded-lg shadow-lg"
-              data-testid="img-hero"
-            />
           </div>
         </div>
       </div>
