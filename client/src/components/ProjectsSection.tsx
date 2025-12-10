@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IconChevronLeft, IconChevronRight, IconClock } from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight, IconClock, IconCalendar } from "@tabler/icons-react";
 import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
 import flaskRenderImg from "@assets/flask-render_1765396097392.webp";
@@ -23,6 +23,8 @@ const difficultyColors: Record<string, string> = {
   medium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
   hard: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
 };
+
+const MAX_MOBILE_TAGS = 3;
 
 export function ProjectsSection({ data }: ProjectsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -80,11 +82,11 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
         <div className="relative">
           <div 
-            className="bg-card border rounded-lg p-4 md:p-5 md:min-h-[320px]"
+            className="bg-card border rounded-lg p-4 md:p-5 min-h-[480px] md:min-h-[320px]"
             data-testid={`card-project-${currentIndex}`}
           >
-            <div className="flex flex-col md:flex-row gap-5">
-              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg">
+            <div className="flex flex-col md:flex-row gap-5 h-full">
+              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0">
                 <img 
                   src={imageSrc}
                   alt={currentProject.title}
@@ -94,51 +96,68 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
               </div>
               
               <div className="md:w-3/5 flex flex-col">
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {currentProject.tags?.map((tag, idx) => (
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                  {currentProject.title}
+                </h3>
+                
+                {(currentProject.duration || currentProject.date || currentProject.difficulty) && (
+                  <div className="flex items-center gap-3 mb-3 text-sm text-muted-foreground">
+                    {currentProject.difficulty && (
+                      <Badge 
+                        className={`uppercase text-xs font-bold ${difficultyColors[currentProject.difficulty]}`}
+                      >
+                        {currentProject.difficulty}
+                      </Badge>
+                    )}
+                    {currentProject.duration && (
+                      <span className="flex items-center gap-1">
+                        <IconClock size={14} />
+                        {currentProject.duration}
+                      </span>
+                    )}
+                    {currentProject.date && (
+                      <span className="flex items-center gap-1">
+                        <IconCalendar size={14} />
+                        {currentProject.date}
+                      </span>
+                    )}
+                  </div>
+                )}
+                
+                <p className="text-muted-foreground leading-relaxed mb-4 flex-grow">
+                  {currentProject.description}
+                </p>
+
+                {currentProject.tags && currentProject.tags.length > 0 && (
+                  <div className="flex items-center gap-2 flex-wrap pt-3 border-t">
+                    {currentProject.tags.slice(0, MAX_MOBILE_TAGS).map((tag, idx) => (
                       <Badge 
                         key={idx} 
                         variant="secondary"
-                        className="text-xs font-medium"
+                        className="text-xs font-medium md:hidden"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                    {currentProject.tags.length > MAX_MOBILE_TAGS && (
+                      <Badge 
+                        variant="outline"
+                        className="text-xs font-medium md:hidden"
+                      >
+                        +{currentProject.tags.length - MAX_MOBILE_TAGS} more
+                      </Badge>
+                    )}
+                    {currentProject.tags.map((tag, idx) => (
+                      <Badge 
+                        key={idx} 
+                        variant="secondary"
+                        className="text-xs font-medium hidden md:inline-flex"
                       >
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  
-                  {(currentProject.duration || currentProject.date) && (
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground shrink-0">
-                      {currentProject.duration && (
-                        <span className="flex items-center gap-1">
-                          <IconClock size={16} />
-                          {currentProject.duration}
-                        </span>
-                      )}
-                      {currentProject.date && (
-                        <span>{currentProject.date}</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-                  {currentProject.title}
-                </h3>
-                
-                <p className="text-muted-foreground leading-relaxed flex-grow">
-                  {currentProject.description}
-                </p>
-
-                <div className="flex items-center justify-between mt-6 pt-4 border-t">
-                  {currentProject.difficulty && (
-                    <Badge 
-                      className={`uppercase text-xs font-bold ${difficultyColors[currentProject.difficulty]}`}
-                    >
-                      {currentProject.difficulty}
-                    </Badge>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>
