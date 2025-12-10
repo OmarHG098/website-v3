@@ -1,4 +1,5 @@
 import type { HeroTwoColumnSimpleCard as HeroTwoColumnSimpleCardType } from "@shared/schema";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
@@ -19,50 +20,54 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
       className={`py-16 md:py-24 ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
       data-testid="section-hero"
     >
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 
-          className="text-4xl md:text-5xl lg:text-5xl font-bold mb-8 text-foreground leading-tight"
-          data-testid="text-hero-title"
-        >
-          {data.title}
-        </h1>
-        
-        <div className="mb-8 flex justify-center">
-          <img 
-            src={data.image.src} 
-            alt={data.image.alt}
-            className="max-w-md w-full h-auto rounded-lg shadow-lg"
-            data-testid="img-hero"
-          />
-        </div>
-        
-        {data.subtitle && (
-          <p 
-            className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
-            data-testid="text-hero-subtitle"
-          >
-            {data.subtitle}
-          </p>
-        )}
-
-        {data.cta_buttons && data.cta_buttons.length > 0 && (
-          <div className="flex flex-wrap gap-4 justify-center">
-            {data.cta_buttons.map((button, index) => (
-              <Button
-                key={index}
-                variant={button.variant === "primary" ? "default" : button.variant}
-                size="lg"
-                asChild
-                data-testid={`button-hero-cta-${index}`}
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <Card className="p-6 md:p-8 text-right">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
+              data-testid="text-hero-title"
+            >
+              {data.title}
+            </h1>
+            
+            {data.subtitle && (
+              <p 
+                className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
+                data-testid="text-hero-subtitle"
               >
-                <a href={button.url} className="flex items-center gap-2">
-                  {button.icon && getIcon(button.icon)}
-                  {button.text}
-                </a>
-              </Button>
-            ))}
+                {data.subtitle}
+              </p>
+            )}
+
+            {data.cta_buttons && data.cta_buttons.length > 0 && (
+              <div className="flex flex-wrap gap-4 justify-end">
+                {data.cta_buttons.map((button, index) => (
+                  <Button
+                    key={index}
+                    variant={button.variant === "primary" ? "default" : button.variant}
+                    size="lg"
+                    asChild
+                    data-testid={`button-hero-cta-${index}`}
+                  >
+                    <a href={button.url} className="flex items-center gap-2">
+                      {button.icon && getIcon(button.icon)}
+                      {button.text}
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            )}
+          </Card>
+
+          <div className="relative">
+            <img 
+              src={data.image.src} 
+              alt={data.image.alt}
+              className="w-full h-auto rounded-lg shadow-lg"
+              data-testid="img-hero"
+            />
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
