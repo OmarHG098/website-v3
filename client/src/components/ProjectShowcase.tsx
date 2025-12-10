@@ -1,25 +1,26 @@
 import { useState, useCallback } from "react";
-import type { ProjectShowcaseSection } from "@shared/schema";
+import type { ProjectShowcaseSection, ProjectsShowcaseSection, ProjectShowcaseItem } from "@shared/schema";
 import { IconBrandGithub, IconBrandLinkedin, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 
 interface ProjectShowcaseProps {
-  data: ProjectShowcaseSection;
+  data: ProjectShowcaseSection | ProjectsShowcaseSection;
 }
 
-export function ProjectShowcase({ data }: ProjectShowcaseProps) {
+function SingleProjectShowcase({ item, background = "bg-background", alternateBackground = false }: { 
+  item: ProjectShowcaseItem; 
+  background?: string;
+  alternateBackground?: boolean;
+}) {
   const {
     project_title,
+    project_url,
     description,
     creators,
     media,
-    image,
-    video_id,
-    background,
-    media_position = "left",
-  } = data;
+  } = item;
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -34,7 +35,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
     setCurrentIndex((prev) => (prev < mediaItems.length - 1 ? prev + 1 : 0));
   }, [mediaItems.length]);
 
-  const bgClass = background || "bg-background";
+  const bgClass = alternateBackground ? "bg-muted" : background;
 
   const renderMedia = () => {
     if (mediaItems.length > 0) {
@@ -61,31 +62,6 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
         );
       }
     }
-
-    if (video_id) {
-      return (
-        <div className="rounded-lg overflow-hidden h-full">
-          <LiteYouTubeEmbed
-            id={video_id}
-            title={project_title}
-            poster="maxresdefault"
-          />
-        </div>
-      );
-    }
-
-    if (image) {
-      return (
-        <img
-          src={image}
-          alt={project_title}
-          className="w-full h-full rounded-lg object-cover"
-          loading="lazy"
-          data-testid="img-project-showcase"
-        />
-      );
-    }
-
     return null;
   };
 
@@ -96,7 +72,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
           {project_title}
         </h3>
 
-        <div className={`flex flex-col ${media_position === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
           <div className="w-full md:w-1/2">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
@@ -181,7 +157,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
                       )}
                     </div>
                     {creator.role && (
-                      <p className="text-sm text-muted-foreground">{creator.role}</p>
+                      <p className="text-sm text-muted-foreground pl-4">{creator.role}</p>
                     )}
                   </div>
                 ))}
@@ -191,9 +167,54 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
             <p className="text-muted-foreground leading-relaxed" data-testid="text-project-description">
               {description}
             </p>
+
+            {project_url && project_url !== "#" && (
+              <a
+                href={project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-primary hover:underline font-medium"
+                data-testid="link-project-url"
+              >
+                Visit Project →
+              </a>
+            )}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+export function ProjectShowcase({ data }: ProjectShowcaseProps) {
+  // Check if this is a multi-item showcase (projects_showcase type)
+  if ('items' in data && Array.isArray(data.items)) {
+    return (
+      <>
+        {data.items.map((item, index) => (
+          <SingleProjectShowcase 
+            key={index} 
+            item={item} 
+            alternateBackground={index % 2 === 1}
+          />
+        ))}
+      </>
+    );
+  }
+
+  // Single project showcase (project_showcase type)
+  const singleData = data as ProjectShowcaseSection;
+  const item: ProjectShowcaseItem = {
+    project_title: singleData.project_title,
+    description: singleData.description,
+    creators: singleData.creators,
+    media: singleData.media,
+  };
+
+  return (
+    <SingleProjectShowcase 
+      item={item} 
+      background={singleData.background}
+    />
   );
 }

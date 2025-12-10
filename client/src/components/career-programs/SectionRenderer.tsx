@@ -67,6 +67,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
           case "cta_banner":
             return <CTABannerSection key={index} data={section} />;
           case "project_showcase":
+          case "projects_showcase":
             return <ProjectShowcase key={index} data={section} />;
           case "about":
             return <About key={index} data={section} />;
