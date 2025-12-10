@@ -1,4 +1,5 @@
 import type { HeroTwoColumnSimpleCard as HeroTwoColumnSimpleCardType } from "@shared/schema";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
@@ -21,7 +22,7 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-right">
+          <Card className="p-6 md:p-8 text-right">
             <h1 
               className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
               data-testid="text-hero-title"
@@ -39,7 +40,7 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
             )}
 
             {data.cta_buttons && data.cta_buttons.length > 0 && (
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-end">
+              <div className="flex flex-wrap gap-4 justify-end">
                 {data.cta_buttons.map((button, index) => (
                   <Button
                     key={index}
@@ -56,7 +57,7 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
                 ))}
               </div>
             )}
-          </div>
+          </Card>
 
           <div className="relative">
             <img 
