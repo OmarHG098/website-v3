@@ -1,5 +1,6 @@
 import type { ComparisonTableSection } from "@shared/schema";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import { Card } from "@/components/ui/card";
 
 interface ComparisonTableProps {
   data: ComparisonTableSection;
@@ -45,7 +46,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <div className="hidden md:block overflow-x-auto">
+        <Card className="hidden md:block overflow-x-auto p-0">
           <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
@@ -105,7 +106,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               ))}
             </tbody>
           </table>
-        </div>
+        </Card>
 
         <div className="md:hidden space-y-4">
           {data.rows.map((row, rowIndex) => (
