@@ -1,5 +1,5 @@
-name: "Sub Headings with Bullets (Collapsible)"
-description: "Two-column layout using sub_headings with bullet lists that collapse on mobile for better UX"
+name: "Sub Headings with Collapsible Bullets"
+description: "Two-column layout using sub_headings with bullet lists (heading + text format) that collapse on mobile"
 yaml: |
   - type: two_column
     proportions: [7, 5]
@@ -12,21 +12,21 @@ yaml: |
         - heading: "Frontend Development"
           collapse_on_mobile: true
           bullets:
-            - text: "HTML5, CSS3, and modern JavaScript"
-            - text: "React and component-based architecture"
-            - text: "Responsive design and accessibility"
+            - heading: "HTML & CSS"
+              text: "Build beautiful, responsive layouts"
+            - heading: "JavaScript"
+              text: "Master modern ES6+ features"
+            - heading: "React"
+              text: "Create dynamic user interfaces"
         - heading: "Backend Development"
           collapse_on_mobile: true
           bullets:
-            - text: "Node.js and Express framework"
-            - text: "RESTful API design patterns"
-            - text: "Database management with SQL and NoSQL"
-        - heading: "DevOps Essentials"
-          collapse_on_mobile: true
-          bullets:
-            - text: "Git version control and collaboration"
-            - text: "CI/CD pipelines and deployment"
-            - text: "Cloud services and hosting"
+            - heading: "Node.js"
+              text: "Server-side JavaScript runtime"
+            - heading: "REST APIs"
+              text: "Design scalable web services"
+            - heading: "Databases"
+              text: "SQL and NoSQL data management"
       bullet_icon: "IconCheck"
       bullet_icon_color: "text-primary"
     right:
