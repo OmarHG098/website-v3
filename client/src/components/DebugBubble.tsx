@@ -81,6 +81,7 @@ const componentsList = [
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
   { type: "footer_cta", label: "Footer CTA", icon: IconArrowRight, description: "Final call-to-action" },
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
+  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
 type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects";
