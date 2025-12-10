@@ -46,7 +46,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <Card className="hidden md:block overflow-x-auto p-0">
+        <Card className="hidden md:block overflow-x-auto p-4">
           <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
@@ -76,7 +76,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               {data.rows.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className={`border-b border-border hover:bg-muted/50 transition-colors ${
+                  className={`hover:bg-muted/50 transition-colors ${
                     rowIndex % 2 === 0 ? "bg-primary/5" : ""
                   }`}
                   data-testid={`tr-row-${rowIndex}`}
