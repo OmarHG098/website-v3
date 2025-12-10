@@ -46,16 +46,15 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <div className="hidden md:block relative">
-          <div className="absolute top-0 left-0 right-0 h-14 bg-background" />
-          <Card className="relative overflow-hidden p-0 border-t-0">
+        <div className="hidden md:block">
+          <Card className="overflow-hidden p-0 border-t-0">
             <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
                 <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
               ))}
             </colgroup>
-            <thead>
+            <thead className="bg-background">
               <tr>
                 {data.columns.map((column, colIndex) => (
                   <th
