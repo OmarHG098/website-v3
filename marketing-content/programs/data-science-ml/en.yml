@@ -74,30 +74,30 @@ sections:
         description: "Explore deep learning with TensorFlow and Keras, natural language processing, and recommender systems. Learn how to deploy models into production environments with privacy, security, and scalability in mind."
 
   - type: projects
-    title: "Learn by Building Real-Life Projects"
-    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world data science position. Here's a glimpse of what you'll be working on:"
+    title: "Learn by building **real-life projects**"
+    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
-      - title: "ML Web App using Flask"
+      - title: "Machine Learning Final Project"
+        description: "Learn to build your own end-to-end Machine Learning project: define a real-world problem, collect and process data, train and optimize a model, and deploy a web app to showcase it. Work collaboratively, apply your skills, and present your solution like a pro!"
+        image: "ml-final-project"
+        tags: ["HEROKU.COM", "DATA SCIENCE", "SQL", "SEABORN", "STREAMLIT", "SCIKIT-LEARN", "MATPLOTLIB", "WEB SCRAPING", "MACHINE LEARNING", "RENDER"]
+        duration: "2 HOURS"
+        date: "16/1/2023"
+        difficulty: "beginner"
+      - title: "ML web app using Streamlit tutorial"
+        description: "Use Streamlit to build an interactive web application that integrates a machine learning model. This will allow users to input data, make predictions, and visualize results in a user-friendly interface."
+        image: "streamlit-render"
+        tags: ["DATA SCIENCE", "MACHINE LEARNING"]
+        duration: "1 HOURS"
+        date: "16/1/2023"
+        difficulty: "beginner"
+      - title: "ML web app using Flask tutorial"
         description: "Learn how to train and optimize a machine learning model, build a Flask web app to interact with it, and deploy the full application on Render. This hands-on project walks you through data exploration, model creation, app development, and cloud deployment step by step."
-        image: "ml-flask"
-        tags: ["Flask", "ML"]
-        duration: "8 HOURS"
-        date: "02/08/2023"
-        difficulty: "easy"
-      - title: "Fraud Detection System"
-        description: "Build a complete fraud detection system using supervised learning algorithms. Work with real transaction data, handle class imbalance, engineer features, and deploy a model that can identify fraudulent activities in real-time."
-        image: "fraud-detection"
-        tags: ["Classification", "Scikit-learn"]
-        duration: "12 HOURS"
-        date: "15/03/2023"
-        difficulty: "medium"
-      - title: "Data Science Final Project"
-        description: "Design and build your own end-to-end data science project from scratch. Demonstrate your skills with Python, machine learning, data visualization, and model deployment. This capstone project showcases everything you've learned throughout the program."
-        image: "final-project"
-        tags: ["Data Science", "Capstone"]
-        duration: "40 HOURS"
-        date: "01/05/2023"
-        difficulty: "hard"
+        image: "flask-render"
+        tags: ["DATA SCIENCE", "SCIKIT-LEARN", "MACHINE LEARNING", "RENDER", "TENSORFLOW", "KERAS"]
+        duration: "1 HOURS"
+        date: "8/2/2023"
+        difficulty: "beginner"
 
   - type: ai_learning
     version: "1.0"
