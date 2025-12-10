@@ -9,10 +9,11 @@ interface ProjectShowcaseProps {
   data: ProjectShowcaseSection | ProjectsShowcaseSection;
 }
 
-function SingleProjectShowcase({ item, background = "bg-background", alternateBackground = false }: { 
+function SingleProjectShowcase({ item, background = "bg-background", alternateBackground = false, mediaPosition = "left" }: { 
   item: ProjectShowcaseItem; 
   background?: string;
   alternateBackground?: boolean;
+  mediaPosition?: "left" | "right";
 }) {
   const {
     project_title,
@@ -72,7 +73,7 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
           {project_title}
         </h3>
 
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+        <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
           <div className="w-full md:w-1/2">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
@@ -196,6 +197,7 @@ export function ProjectShowcase({ data }: ProjectShowcaseProps) {
             key={index} 
             item={item} 
             alternateBackground={index % 2 === 1}
+            mediaPosition={index % 2 === 1 ? "right" : "left"}
           />
         ))}
       </>
