@@ -46,7 +46,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <Card className="hidden md:block overflow-hidden p-0">
+        <Card className="hidden md:block overflow-hidden p-0 border-t-0">
           <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
@@ -62,7 +62,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       column.highlight
                         ? "bg-primary text-primary-foreground rounded-t-lg"
                         : "bg-primary/20 text-foreground"
-                    } ${colIndex === 0 ? "rounded-tr-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tl-lg" : ""}`}
+                    } ${colIndex === 0 ? "rounded-tl-lg rounded-tr-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tl-lg rounded-tr-lg" : ""}`}
                     data-testid={`th-column-${colIndex}`}
                   >
                     {column.name}
