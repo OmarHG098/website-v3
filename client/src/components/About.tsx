@@ -32,11 +32,11 @@ export function About({ data }: AboutProps) {
             </a>
           </Card>
 
-          <div className="flex-1 min-h-[250px] md:min-h-0">
+          <div className="flex-1 min-h-[180px] md:min-h-[200px] lg:min-h-0">
             <img
               src={image_src}
               alt={image_alt}
-              className="w-full h-full object-cover rounded-b-lg md:rounded-b-none md:rounded-r-lg"
+              className="w-full h-full max-h-[200px] md:max-h-[250px] lg:max-h-none object-cover rounded-b-lg md:rounded-b-none md:rounded-r-lg"
               loading="lazy"
               data-testid="img-about"
             />
