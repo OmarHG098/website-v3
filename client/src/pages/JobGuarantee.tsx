@@ -231,7 +231,7 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
         <Card className="p-6 md:p-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - Content */}
-            <div>
+            <div className="text-center lg:text-left">
               <h1 
                 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-foreground leading-tight"
                 data-testid="text-hero-title"
@@ -246,7 +246,7 @@ function JobGuaranteeHero({ data }: { data: typeof heroData }) {
                 {data.subtitle}
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 {data.cta_buttons.map((button, index) => (
                   <Button
                     key={index}
