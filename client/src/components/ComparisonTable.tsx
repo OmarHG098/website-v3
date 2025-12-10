@@ -124,7 +124,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
                 <AccordionTrigger className="hover:no-underline py-3">
-                  <span className="font-semibold text-foreground uppercase text-xs">
+                  <span className="font-semibold text-foreground uppercase text-sm">
                     {row.feature}
                   </span>
                 </AccordionTrigger>
@@ -135,7 +135,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       <p className="text-xs text-muted-foreground mb-1 font-semibold">
                         {data.columns[1]?.name || "4Geeks Academy"}
                       </p>
-                      <p className="font-semibold text-foreground">
+                      <p className="font-semibold text-foreground text-sm">
                         <CellValue value={row.values[0]} />
                       </p>
                     </div>
@@ -146,9 +146,9 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     {/* Competitors side */}
                     <div className="flex-1 bg-primary/10 rounded-lg p-4">
                       <p className="text-xs text-muted-foreground mb-1 font-semibold">
-                        {data.columns[2]?.name || "Industry Average / Competitors"}
+                        {(data.columns[2]?.name || "Industry Average / Competitors").replace(" / Competitors", "")}
                       </p>
-                      <p className="text-foreground">
+                      <p className="text-foreground text-sm">
                         <CellValue value={row.values[1]} />
                       </p>
                     </div>
