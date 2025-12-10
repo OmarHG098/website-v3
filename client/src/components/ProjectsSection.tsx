@@ -4,18 +4,18 @@ import { Button } from "@/components/ui/button";
 import { IconChevronLeft, IconChevronRight, IconClock } from "@tabler/icons-react";
 import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
-import starWarsImg from "@assets/star-wars_1764729369149.webp";
-import authSystemImg from "@assets/authentication-python_1764729364254.webp";
-import finalProjectImg from "@assets/fullstack-user-stories_1764729359334.webp";
+import flaskRenderImg from "@assets/flask-render_1765396097392.webp";
+import streamlitRenderImg from "@assets/streamlit-render_1765396163031.webp";
+import mlFinalProjectImg from "@assets/ml-final-project_1765396170981.webp";
 
 interface ProjectsSectionProps {
   data: ProjectsSectionType;
 }
 
 const projectImages: Record<string, string> = {
-  "star-wars": starWarsImg,
-  "authentication": authSystemImg,
-  "final-project": finalProjectImg,
+  "flask-render": flaskRenderImg,
+  "streamlit-render": streamlitRenderImg,
+  "ml-final-project": mlFinalProjectImg,
 };
 
 const difficultyColors: Record<string, string> = {
@@ -53,7 +53,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
   const currentProject = items[currentIndex];
   const imageKey = currentProject.image.toLowerCase().replace(/\s+/g, "-");
-  const imageSrc = projectImages[imageKey] || projectImages["final-project"];
+  const imageSrc = projectImages[imageKey] || projectImages["ml-final-project"];
 
   return (
     <section 
