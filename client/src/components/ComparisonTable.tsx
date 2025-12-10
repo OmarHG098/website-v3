@@ -61,7 +61,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     className={`p-4 text-left font-semibold text-lg ${
                       column.highlight
                         ? "bg-primary text-primary-foreground rounded-t-lg"
-                        : "bg-muted-foreground/20 text-foreground"
+                        : "bg-primary/20 text-foreground"
                     }`}
                     data-testid={`th-column-${colIndex}`}
                   >
