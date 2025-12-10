@@ -1,5 +1,6 @@
 import type { ComparisonTableSection } from "@shared/schema";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import { Card } from "@/components/ui/card";
 
 interface ComparisonTableProps {
   data: ComparisonTableSection;
@@ -45,8 +46,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <div className="hidden md:block">
-          <table className="w-full border-separate border-spacing-0 table-fixed" data-testid="table-comparison">
+        <Card className="hidden md:block overflow-hidden p-0">
+          <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
                 <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
@@ -57,11 +58,11 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 {data.columns.map((column, colIndex) => (
                   <th
                     key={colIndex}
-                    className={`p-4 text-left font-semibold text-lg border border-border ${
+                    className={`p-4 text-left font-semibold text-lg ${
                       column.highlight
-                        ? "bg-primary text-primary-foreground rounded-t-lg border-primary"
-                        : "bg-primary/20 text-foreground rounded-t-lg"
-                    }`}
+                        ? "bg-primary text-primary-foreground rounded-t-lg"
+                        : "bg-primary/20 text-foreground"
+                    } ${colIndex === 0 ? "rounded-tr-lg" : ""} ${colIndex === data.columns.length - 1 ? "rounded-tl-lg" : ""}`}
                     data-testid={`th-column-${colIndex}`}
                   >
                     {column.name}
@@ -73,11 +74,12 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               {data.rows.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
+                  className={`hover:bg-muted/50 transition-colors ${
+                    rowIndex % 2 === 0 ? "bg-primary/5" : ""
+                  }`}
                   data-testid={`tr-row-${rowIndex}`}
                 >
-                  <td className={`p-4 font-medium text-foreground border-l border-r border-b border-border bg-card ${
-                    rowIndex % 2 === 0 ? "bg-primary/5" : "bg-card"
-                  } ${rowIndex === data.rows.length - 1 ? "rounded-bl-lg" : ""}`}>
+                  <td className="p-4 font-medium text-foreground">
                     {row.feature}
                     {row.feature_description && (
                       <p className="text-sm text-muted-foreground font-normal mt-1">
@@ -88,11 +90,11 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                   {row.values.map((value, valIndex) => (
                     <td
                       key={valIndex}
-                      className={`p-4 text-center border-l border-r border-b border-border ${
+                      className={`p-4 text-center ${
                         valIndex === highlightIndex - 1
-                          ? "bg-primary/10 font-semibold text-foreground border-primary"
-                          : rowIndex % 2 === 0 ? "bg-primary/5 text-foreground" : "bg-card text-foreground"
-                      } ${rowIndex === data.rows.length - 1 && valIndex === row.values.length - 1 ? "rounded-br-lg" : ""}`}
+                          ? "bg-primary/10 font-semibold text-foreground"
+                          : "text-foreground"
+                      }`}
                       data-testid={`td-value-${rowIndex}-${valIndex}`}
                     >
                       <CellValue value={value} />
@@ -102,7 +104,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               ))}
             </tbody>
           </table>
-        </div>
+        </Card>
 
         <div className="md:hidden space-y-4">
           {data.rows.map((row, rowIndex) => (
