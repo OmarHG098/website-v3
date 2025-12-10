@@ -16,12 +16,8 @@ export default function CareerPrograms() {
   const [, setLocation] = useLocation();
   const { i18n } = useTranslation();
 
-  const getFullStackUrl = () => {
-    return i18n.language === "es" ? "/es/programas-de-carrera/full-stack" : "/us/career-programs/full-stack";
-  };
-
-  const getDataScienceUrl = () => {
-    return i18n.language === "es" ? "/es/programas-de-carrera/data-science-ml" : "/us/career-programs/data-science-ml";
+  const getProgramUrl = (slug: string) => {
+    return i18n.language === "es" ? `/es/programas-de-carrera/${slug}` : `/us/career-programs/${slug}`;
   };
 
   const allCourses = [
@@ -47,6 +43,16 @@ export default function CareerPrograms() {
     },
     {
       id: '3',
+      title: "Cybersecurity",
+      description: "Defend systems and respond to real-world cyber threats. Learn penetration testing, incident response, and security tools like Nessus, Nmap, Wireshark, and Metasploit.",
+      thumbnail: aiThumbnail,
+      duration: "16 weeks",
+      difficulty: "Intermediate" as const,
+      lessons: 48,
+      link: "cybersecurity",
+    },
+    {
+      id: '4',
       title: "Introduction to AI & Machine Learning",
       description: "Understand AI fundamentals and build your first machine learning models",
       thumbnail: aiThumbnail,
@@ -55,7 +61,7 @@ export default function CareerPrograms() {
       lessons: 36,
     },
     {
-      id: '4',
+      id: '5',
       title: "Advanced Web Development",
       description: "Deep dive into advanced React patterns, performance optimization, and architecture",
       thumbnail: webDevThumbnail,
@@ -64,7 +70,7 @@ export default function CareerPrograms() {
       lessons: 52,
     },
     {
-      id: '5',
+      id: '6',
       title: "Python for Beginners",
       description: "Start your programming journey with Python fundamentals and practical projects",
       thumbnail: dataScienceThumbnail,
@@ -122,10 +128,8 @@ export default function CareerPrograms() {
               key={course.id}
               {...course}
               onClick={() => {
-                if (course.link === "full-stack") {
-                  setLocation(getFullStackUrl());
-                } else if (course.link === "data-science-ml") {
-                  setLocation(getDataScienceUrl());
+                if (course.link) {
+                  setLocation(getProgramUrl(course.link));
                 } else {
                   console.log(`Course clicked: ${course.title}`);
                 }
