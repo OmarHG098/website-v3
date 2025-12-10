@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import type { FAQSection as FAQSectionType, TwoColumnSection as TwoColumnSectionType, ItemsShowcaseSection } from "@shared/schema";
-import { FAQSection } from "@/components/career-programs/FAQSection";
+import { FAQSection } from "@/components/FAQSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 import StatsSection, { type StatsSectionData } from "@/components/StatsSection";

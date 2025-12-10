@@ -1,53 +1,104 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
-import { memo } from "react";
+import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
 
-interface Testimonial {
-  id: string;
-  name: string;
-  role: string;
-  course: string;
-  rating: number;
-  comment: string;
-  avatar?: string;
-}
+import profilePic1 from "@assets/profile-pic1_1764775438461.webp";
+import profilePic2 from "@assets/profile-pic2_1764775432918.webp";
+import profilePic3 from "@assets/profile-pic3_1764775528641.webp";
+import profilePic4 from "@assets/profile-pic4_1764775523318.webp";
+import profilePic5 from "@assets/profile-pic5_1764775738827.webp";
+import profilePic6 from "@assets/profile-pic6_1764775742734.webp";
+
+const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4, profilePic5, profilePic6];
 
 interface TestimonialsSectionProps {
-  testimonials: Testimonial[];
+  data: TestimonialsSectionType;
 }
 
-const avatarColors = [
-  "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
-  "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400",
-  "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
-  "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400",
-  "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400",
-  "bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400",
-];
+export function TestimonialsSection({ data }: TestimonialsSectionProps) {
+  return (
+    <section 
+      className="py-16 bg-background"
+      data-testid="section-testimonials"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+          {data.rating_summary && (
+            <div 
+              className="flex items-center justify-center gap-2 mb-4"
+              data-testid="rating-summary"
+            >
+              <IconStarFilled className="w-7 h-7 text-yellow-500" />
+              <span className="text-2xl font-bold text-foreground">
+                {data.rating_summary.average}
+              </span>
+              <span className="text-muted-foreground">
+                / {data.rating_summary.count} Reviews
+              </span>
+            </div>
+          )}
+          
+          <h2 
+            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            data-testid="text-testimonials-title"
+          >
+            {data.title}
+          </h2>
+          
+          {data.subtitle && (
+            <p 
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              data-testid="text-testimonials-subtitle"
+            >
+              {data.subtitle}
+            </p>
+          )}
+        </div>
 
-const TestimonialCard = memo(
-  ({ testimonial, index }: { testimonial: Testimonial; index: number }) => (
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {(data.items || []).slice(0, 3).map((testimonial, index) => (
+            <TestimonialCard key={index} testimonial={testimonial} index={index} />
+          ))}
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {(data.items || []).map((testimonial, index) => (
+            <TestimonialCard key={index} testimonial={testimonial} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialCard({ 
+  testimonial, 
+  index 
+}: { 
+  testimonial: TestimonialsSectionType['items'][0]; 
+  index: number;
+}) {
+  return (
     <Card
-      key={testimonial.id}
-      data-testid={`card-testimonial-${testimonial.id}`}
+      data-testid={`card-testimonial-${index}`}
+      className="h-full"
     >
       <CardContent className="p-6">
         <div className="flex items-center gap-3 mb-4">
-          <Avatar>
-            {testimonial.avatar && (
-              <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-            )}
-            <AvatarFallback className={avatarColors[index % avatarColors.length]}>
-              {testimonial.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </AvatarFallback>
+          <Avatar className="h-10 w-10">
+            <AvatarImage 
+              src={testimonial.avatar || defaultAvatars[index % defaultAvatars.length]} 
+              alt={testimonial.name} 
+            />
           </Avatar>
-          <div>
-            <p className="font-semibold">{testimonial.name}</p>
-            <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-foreground truncate">{testimonial.name}</p>
+            <p className="text-xs text-muted-foreground truncate">
+              {testimonial.role}
+              {testimonial.company && ` at ${testimonial.company}`}
+            </p>
           </div>
         </div>
 
@@ -61,46 +112,18 @@ const TestimonialCard = memo(
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
           {testimonial.comment}
         </p>
 
-        <p className="text-xs text-muted-foreground border-t pt-3">
-          Course: {testimonial.course}
-        </p>
+        {testimonial.outcome && (
+          <div className="pt-3 border-t">
+            <Badge variant="secondary" className="text-xs">
+              {testimonial.outcome}
+            </Badge>
+          </div>
+        )}
       </CardContent>
     </Card>
-  ),
-);
-
-TestimonialCard.displayName = "TestimonialCard";
-
-function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
-  return (
-    <section className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-        <IconStarFilled className="w-7 h-7 text-yellow-500" /> 4.5 Outstanding /
-        1294 Comments
-      </h2>
-      <p className="text-center text-muted-foreground mb-12">
-        See what our students have to say about their experience
-      </p>
-
-      {/* Mobile: Show only first 3 */}
-      <div className="grid grid-cols-1 gap-3 max-w-[77rem] mx-auto md:hidden">
-        {testimonials.slice(0, 3).map((testimonial, index) => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
-        ))}
-      </div>
-
-      {/* Tablet and Desktop: Show all */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[77rem] mx-auto">
-        {testimonials.map((testimonial, index) => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
-        ))}
-      </div>
-    </section>
   );
 }
-
-export default memo(TestimonialsSection);
