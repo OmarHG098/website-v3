@@ -146,8 +146,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                     {currentProject.tags.map((tag, idx) => (
                       <Badge 
                         key={idx} 
-                        variant="secondary"
-                        className="text-xs font-medium hidden md:inline-flex"
+                        className="text-xs font-medium hidden md:inline-flex bg-[#BEE3F8] text-[#2C5282]"
                       >
                         {tag}
                       </Badge>
