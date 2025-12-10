@@ -132,12 +132,12 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
   return (
     <section className={`py-12 md:py-16 ${bgClass}`} data-testid="section-project-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center md:text-left" data-testid="text-project-title">
+        <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-8 text-center lg:text-left" data-testid="text-project-title">
           {project_title}
         </h3>
 
-        <div className={`flex flex-col ${mediaPosition === "right" ? "md:flex-row-reverse" : "md:flex-row"} gap-8 md:gap-12 items-start`}>
-          <div className="w-full md:w-1/2">
+        <div className={`flex flex-col ${mediaPosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-12 items-start`}>
+          <div className="w-full lg:w-1/2">
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden">
                 {renderMedia()}
@@ -185,9 +185,9 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
             </div>
           </div>
 
-          <div className="w-full md:w-1/2">
-            <Card className="md:border-0 md:shadow-none md:bg-transparent">
-              <CardContent className="p-4 md:p-0">
+          <div className="w-full lg:w-1/2">
+            <Card className="lg:border-0 lg:shadow-none lg:bg-transparent">
+              <CardContent className="p-4 lg:p-0">
                 {detailsContent}
               </CardContent>
             </Card>
