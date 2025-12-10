@@ -26,11 +26,6 @@ sections:
     image:
       src: "/attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp"
       alt: "Students collaborating in a tech workspace"
-    cta_buttons:
-      - text: "View Projects"
-        url: "#projects"
-        variant: primary
-        icon: "Code"
 
   - type: projects_showcase
     version: "1.0"
