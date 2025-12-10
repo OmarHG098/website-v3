@@ -27,8 +27,8 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
           {data.title}
         </h1>
         
-        <div className="grid lg:grid-cols-5 gap-12 items-start">
-          <div className="lg:col-span-2">
+        <div className="grid lg:grid-cols-6 gap-12 items-start">
+          <div className="lg:col-span-3">
             <img 
               src={data.image.src} 
               alt={data.image.alt}
