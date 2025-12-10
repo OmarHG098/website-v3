@@ -20,15 +20,10 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <h1 
-          className="text-4xl md:text-5xl lg:text-5xl font-bold mb-8 text-foreground leading-tight text-center lg:text-left"
-          data-testid="text-hero-title"
-        >
-          {data.title}
-        </h1>
+
         
-        <div className="grid lg:grid-cols-6 gap-12 items-start">
-          <div className="lg:col-span-3">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-5">
             <img 
               src={data.image.src} 
               alt={data.image.alt}
@@ -37,14 +32,22 @@ export function HeroTwoColumnSimpleCard({ data }: HeroTwoColumnSimpleCardProps) 
             />
           </div>
 
-          <div className="lg:col-span-3 text-center lg:text-left">
+          <div className="lg:col-span-7 text-center lg:text-left">
             {data.subtitle && (
+            <>
+              <h1 
+                className="text-4xl md:text-5xl lg:text-5xl font-bold mb-4 text-foreground leading-tight text-center lg:text-left"
+                data-testid="text-hero-title"
+              >
+                {data.title}
+              </h1>
               <p 
-                className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
+                className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}
               </p>
+        </>
             )}
 
             {data.cta_buttons && data.cta_buttons.length > 0 && (

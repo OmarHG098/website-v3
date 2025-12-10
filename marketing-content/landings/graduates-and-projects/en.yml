@@ -24,8 +24,8 @@ sections:
     title: "See What Our Students Built"
     subtitle: "Explore final projects from 4Geeks Academy graduates: real apps and solutions that showcase the skills, creativity, and career-ready talent of our bootcamp alumni."
     image:
-      src: "/attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp"
-      alt: "Students collaborating in a tech workspace"
+      src: "/attached_assets/caracas-graduates_1765387638222.png"
+      alt: "4Geeks Academy graduates holding certificates"
 
   - type: projects_showcase
     version: "1.0"
