@@ -26,6 +26,7 @@ export interface NumberedStepsData {
   bullet_icon?: string;
   bullet_icon_color?: string;
   bullet_char?: string;
+  collapsible_mobile?: boolean;
 }
 
 interface NumberedStepsProps {
@@ -90,7 +91,8 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
             const bulletIcon = step.bullet_icon || data.bullet_icon || "Check";
             const bulletIconColor = step.bullet_icon_color || data.bullet_icon_color || "text-primary";
             const isLast = index === (data.steps || []).length - 1;
-            const hasCollapsibleContent = step.title && (step.bullets?.length || step.text);
+            const collapsibleEnabled = data.collapsible_mobile !== false;
+            const hasCollapsibleContent = collapsibleEnabled && step.title && (step.bullets?.length || step.text);
             const isExpanded = expandedSteps[index] || false;
             
             return (
