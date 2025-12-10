@@ -13,11 +13,33 @@ import profilePic6 from "@assets/profile-pic6_1764775742734.webp";
 
 const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4, profilePic5, profilePic6];
 
-interface TestimonialsSectionProps {
-  data: TestimonialsSectionType;
+interface LegacyTestimonial {
+  id: string;
+  name: string;
+  role: string;
+  course?: string;
+  rating: number;
+  comment: string;
 }
 
-export function TestimonialsSection({ data }: TestimonialsSectionProps) {
+interface TestimonialsSectionProps {
+  data?: TestimonialsSectionType;
+  testimonials?: LegacyTestimonial[];
+}
+
+export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
+  const items = data?.items || testimonials?.map(t => ({
+    name: t.name,
+    role: t.role,
+    rating: t.rating,
+    comment: t.comment,
+    company: t.course,
+  })) || [];
+
+  const title = data?.title || "What Our Students Say";
+  const subtitle = data?.subtitle;
+  const ratingSummary = data?.rating_summary;
+
   return (
     <section 
       className="py-16 bg-background"
@@ -25,17 +47,17 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          {data.rating_summary && (
+          {ratingSummary && (
             <div 
               className="flex items-center justify-center gap-2 mb-4"
               data-testid="rating-summary"
             >
               <IconStarFilled className="w-7 h-7 text-yellow-500" />
               <span className="text-2xl font-bold text-foreground">
-                {data.rating_summary.average}
+                {ratingSummary.average}
               </span>
               <span className="text-muted-foreground">
-                / {data.rating_summary.count} Reviews
+                / {ratingSummary.count} Reviews
               </span>
             </div>
           )}
@@ -44,27 +66,27 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
             data-testid="text-testimonials-title"
           >
-            {data.title}
+            {title}
           </h2>
           
-          {data.subtitle && (
+          {subtitle && (
             <p 
               className="text-lg text-muted-foreground max-w-2xl mx-auto"
               data-testid="text-testimonials-subtitle"
             >
-              {data.subtitle}
+              {subtitle}
             </p>
           )}
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:hidden">
-          {(data.items || []).slice(0, 3).map((testimonial, index) => (
+          {items.slice(0, 3).map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} index={index} />
           ))}
         </div>
 
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(data.items || []).map((testimonial, index) => (
+          {items.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} index={index} />
           ))}
         </div>
@@ -73,11 +95,23 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   );
 }
 
+export default TestimonialsSection;
+
+interface TestimonialItem {
+  name: string;
+  role: string;
+  rating: number;
+  comment: string;
+  company?: string;
+  outcome?: string;
+  avatar?: string;
+}
+
 function TestimonialCard({ 
   testimonial, 
   index 
 }: { 
-  testimonial: TestimonialsSectionType['items'][0]; 
+  testimonial: TestimonialItem; 
   index: number;
 }) {
   return (
