@@ -33,10 +33,10 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
           {title}
         </span>
         <span className="text-sm text-primary flex items-center gap-1">
-          <span>{isOpen ? "Hide course details" : "Course details"}</span>
+          <span className="hidden md:inline">{isOpen ? "Hide course details" : "Course details"}</span>
           <ChevronDown 
             className={cn(
-              "h-4 w-4 shrink-0 transition-transform duration-200",
+              "h-5 w-5 shrink-0 transition-transform duration-200",
               isOpen && "rotate-180"
             )}
           />

@@ -74,7 +74,7 @@ sections:
         description: "Explora deep learning con TensorFlow y Keras, procesamiento de lenguaje natural y sistemas de recomendación. Aprende cómo desplegar modelos en ambientes de producción con privacidad, seguridad y escalabilidad en mente."
 
   - type: projects
-    title: "Aprende construyendo **proyectos reales**"
+    title: "Aprende Construyendo Proyectos Reales"
     subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para el éxito. Las tareas que enfrentarás se asemejarán a las de una posición real en tecnología. Aquí hay un vistazo de lo que trabajarás:"
     items:
       - title: "App web de ML con Flask"

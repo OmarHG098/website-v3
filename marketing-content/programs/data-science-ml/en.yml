@@ -74,7 +74,7 @@ sections:
         description: "Explore deep learning with TensorFlow and Keras, natural language processing, and recommender systems. Learn how to deploy models into production environments with privacy, security, and scalability in mind."
 
   - type: projects
-    title: "Learn by building **real-life projects**"
+    title: "Learn by Building Real-Life Projects"
     subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
       - title: "ML web app using Flask tutorial"
