@@ -46,7 +46,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Header from "@/components/Header";
-import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
