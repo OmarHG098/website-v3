@@ -2,27 +2,20 @@ import { useTranslation } from "react-i18next";
 import forbesLogo from "@assets/forbes-new.avif";
 import clarkLogo from "@assets/clark-new.avif";
 import badgesImage from "@assets/badges-new.avif";
-import Autoplay from "embla-carousel-autoplay";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
+import { AwardBadges, type AwardBadgeItem } from "@/components/AwardBadges";
 
 export default function LogoSection() {
   const { t } = useTranslation();
 
-  const awardItems = [
+  const awardItems: AwardBadgeItem[] = [
     {
       id: "forbes",
       logo: forbesLogo,
       alt: "Forbes",
       logoHeight: "h-16",
       description: t("logo.forbesDescription"),
-      linkTestId: "link-forbes-articles",
-      imgTestId: "img-forbes-logo",
+      link: "#",
+      linkText: t("logo.forbesLink"),
     },
     {
       id: "clark",
@@ -30,8 +23,8 @@ export default function LogoSection() {
       alt: "Clark University",
       logoHeight: "h-16",
       description: t("logo.clarkSubtitle"),
-      linkTestId: "link-clark-articles",
-      imgTestId: "img-clark-logo",
+      link: "#",
+      linkText: t("logo.forbesLink"),
     },
     {
       id: "badges",
@@ -39,79 +32,15 @@ export default function LogoSection() {
       alt: "Award Badges - Best Coding Bootcamp",
       logoHeight: "h-24",
       description: t("logo.awardsText"),
-      linkTestId: "link-awards-articles",
-      imgTestId: "img-award-badges",
+      link: "#",
+      linkText: t("logo.forbesLink"),
     },
   ];
 
-  const AwardCard = ({ item }: { item: (typeof awardItems)[0] }) => (
-    <div className="text-center flex flex-col items-center h-full justify-center">
-      <img
-        src={item.logo}
-        alt={item.alt}
-        className={`${item.logoHeight} w-auto object-contain mb-4`}
-        loading="lazy"
-        data-testid={item.imgTestId}
-      />
-      <p className="text-sm text-muted-foreground mb-4 max-w-xs">
-        {item.description}
-      </p>
-      <a
-        href="#"
-        className="text-sm text-primary font-medium hover:underline"
-        data-testid={item.linkTestId}
-      >
-        {t("logo.forbesLink")}
-      </a>
-    </div>
-  );
-
   return (
     <section>
-      <div className="container mx-auto px-4">
-        {/* Mobile Carousel */}
-        <div className="md:hidden">
-          <Carousel
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 5000,
-                stopOnInteraction: true,
-              }),
-            ]}
-            className="w-full max-w-sm mx-auto flex flex-col mt-12"
-          >
-            <div className="h-[240px] flex items-end pb-5">
-              <CarouselContent>
-                {awardItems.map((item) => (
-                  <CarouselItem key={item.id}>
-                    <AwardCard item={item} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </div>
-            <div className="flex justify-center gap-4">
-              <CarouselPrevious
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
-                data-testid="button-award-prev"
-              />
-              <CarouselNext
-                className="!static !translate-y-0 !rounded-lg !bg-primary/10 !border-0 !text-primary hover:!bg-primary/20 !h-11 !w-11 [&>svg]:!h-[22px] [&>svg]:!w-[22px]"
-                data-testid="button-award-next"
-              />
-            </div>
-          </Carousel>
-        </div>
-
-        {/* Desktop Horizontal Layout */}
-        <div className="hidden md:flex justify-center items-center gap-8 max-w-7xl mx-auto">
-          {awardItems.map((item) => (
-            <AwardCard key={item.id} item={item} />
-          ))}
-        </div>
+      <div className="container mx-auto px-4 mt-12">
+        <AwardBadges items={awardItems} variant="detailed" />
       </div>
     </section>
   );
