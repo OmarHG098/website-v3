@@ -137,9 +137,9 @@ function SingleProjectShowcase({ item, background = "bg-background", alternateBa
         </h3>
 
         <div className={`flex flex-col ${mediaPosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-12 items-start`}>
-          <div className="w-full lg:w-1/2">
-            <div className="relative">
-              <div className="aspect-video lg:aspect-[16/9] lg:max-h-[320px] rounded-lg overflow-hidden">
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+            <div className="relative w-full md:max-w-[480px] lg:max-w-none">
+              <div className="aspect-video lg:aspect-[16/9] md:max-h-[320px] rounded-lg overflow-hidden">
                 {renderMedia()}
               </div>
 

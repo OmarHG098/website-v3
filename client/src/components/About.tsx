@@ -21,7 +21,7 @@ export function About({ data }: AboutProps) {
             <img
               src={image_src}
               alt={image_alt}
-              className="w-48 h-48 object-cover rounded-lg"
+              className="w-64 object-cover rounded-lg"
               loading="lazy"
               data-testid="img-about-mobile"
             />
