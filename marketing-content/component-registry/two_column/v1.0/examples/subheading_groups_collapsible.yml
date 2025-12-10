@@ -1,4 +1,4 @@
-name: "Bullet Groups with Collapsible Bullets"
+name: "Subheading Groups with Collapsible Bullets"
 description: "Two-column layout using bullet_groups with titles and bullet lists that collapse on mobile"
 yaml: |
   - type: two_column

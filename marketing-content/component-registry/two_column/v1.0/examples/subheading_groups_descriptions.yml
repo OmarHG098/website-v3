@@ -1,4 +1,4 @@
-name: "Bullet Groups with Descriptions"
+name: "Subheading Groups with Descriptions"
 description: "Two-column layout using bullet_groups with title + description format (no bullet items)"
 yaml: |
   - type: two_column
