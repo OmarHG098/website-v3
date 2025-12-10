@@ -1,8 +1,8 @@
-name: "Sub Headings with Text Only"
-description: "Two-column layout using sub_headings to organize content into labeled sections with descriptions"
+name: "Sub Headings with Descriptions"
+description: "Two-column layout using sub_headings with heading + description format (no bullets)"
 yaml: |
   - type: two_column
-    proportions: [6, 6]
+    proportions: [7, 5]
     alignment: "start"
     gap: "12"
     left:
@@ -16,12 +16,6 @@ yaml: |
         - heading: "Career Support"
           description: "Lifetime access to our career services team and alumni network."
     right:
-      heading: "Program Benefits"
-      description: "Everything you need to succeed in your new tech career."
-      sub_headings:
-        - heading: "Project Portfolio"
-          description: "Graduate with 10+ portfolio-ready projects to showcase to employers."
-        - heading: "Industry Certifications"
-          description: "Earn recognized credentials that validate your skills."
-        - heading: "Job Guarantee"
-          description: "Land a job within 6 months or get your tuition back."
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=500&fit=crop"
+      image_alt: "Team collaboration meeting"
+      justify: "center"
