@@ -46,7 +46,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <Card className="hidden md:block overflow-x-auto p-0 border-muted">
+        <Card className="hidden md:block overflow-x-auto p-0">
           <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
             <colgroup>
               {data.columns.map((_, colIndex) => (
@@ -94,7 +94,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       key={valIndex}
                       className={`p-4 text-center ${
                         valIndex === highlightIndex - 1
-                          ? "font-semibold text-foreground"
+                          ? "bg-primary/10 font-semibold text-foreground"
                           : "text-muted-foreground"
                       }`}
                       data-testid={`td-value-${rowIndex}-${valIndex}`}
