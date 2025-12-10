@@ -1,0 +1,28 @@
+name: Simple Variant
+description: Compact logo display for hero sections
+
+props:
+  variant: simple
+  showBorder: true
+  items:
+    - id: coursereport-1
+      logo: /images/awards/course-report.svg
+      alt: Course Report - Best Coding Bootcamp
+      logoHeight: h-12 md:h-16
+      source: Course Report
+      name: Best Coding Bootcamp
+      year: "2024"
+    - id: switchup-1
+      logo: /images/awards/switchup.svg
+      alt: SwitchUp - Top Bootcamp
+      logoHeight: h-12 md:h-16
+      source: SwitchUp
+      name: Top Bootcamp
+      year: "2024"
+    - id: careerkarma-1
+      logo: /images/awards/career-karma.svg
+      alt: Career Karma - Best Value
+      logoHeight: h-12 md:h-16
+      source: Career Karma
+      name: Best Value
+      year: "2024"

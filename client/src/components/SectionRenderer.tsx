@@ -20,6 +20,7 @@ import { FeaturesGridSection } from "./FeaturesGridSection";
 import { ProgramsListSection } from "./ProgramsListSection";
 import { CTABannerSection } from "./CTABannerSection";
 import ItemsShowcase from "@/components/ItemsShowcase";
+import { AwardBadges } from "@/components/AwardBadges";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -70,6 +71,8 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <CTABannerSection key={index} data={section} />;
           case "items_showcase":
             return <ItemsShowcase key={index} data={section} />;
+          case "award_badges":
+            return <AwardBadges key={index} items={section.items} variant={section.variant} showBorder={section.showBorder} className={section.className} />;
           default: {
             if (process.env.NODE_ENV === "development") {
               console.warn(`Unknown section type: ${(section as { type: string }).type}`);

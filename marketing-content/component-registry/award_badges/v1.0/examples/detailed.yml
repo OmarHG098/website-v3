@@ -1,0 +1,28 @@
+name: Detailed Variant
+description: Full award display with descriptions and links
+
+props:
+  variant: detailed
+  showBorder: false
+  items:
+    - id: coursereport-detailed
+      logo: /images/awards/course-report.svg
+      alt: Course Report - Best Coding Bootcamp
+      logoHeight: h-16
+      description: Recognized as one of the best coding bootcamps worldwide
+      link: https://www.coursereport.com
+      linkText: Read reviews
+    - id: switchup-detailed
+      logo: /images/awards/switchup.svg
+      alt: SwitchUp - Top Bootcamp
+      logoHeight: h-16
+      description: Top-rated bootcamp based on verified student reviews
+      link: https://www.switchup.org
+      linkText: See rankings
+    - id: careerkarma-detailed
+      logo: /images/awards/career-karma.svg
+      alt: Career Karma - Best Value
+      logoHeight: h-16
+      description: Best value for career changers and beginners
+      link: https://careerkarma.com
+      linkText: Learn more

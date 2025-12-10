@@ -1,0 +1,78 @@
+type: award_badges
+version: "1.0"
+description: Displays a collection of award badges with logos or text fallback. Supports mobile carousel with autoplay.
+
+when_to_use:
+  - Display company awards and recognitions
+  - Show certifications or accreditations
+  - Highlight industry rankings or badges
+  - Build trust through third-party validation
+
+props:
+  items:
+    type: array
+    required: true
+    description: Array of award badge items to display
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          required: true
+          description: Unique identifier for the badge
+        logo:
+          type: string
+          required: false
+          description: Path to the logo image (optional - text fallback renders if missing)
+        alt:
+          type: string
+          required: true
+          description: Alt text for the logo image
+        logoHeight:
+          type: string
+          required: false
+          description: Tailwind height class for the logo (e.g., "h-12 md:h-16")
+        description:
+          type: string
+          required: false
+          description: Description text (only shown in detailed variant)
+        link:
+          type: string
+          required: false
+          description: URL link (only shown in detailed variant)
+        linkText:
+          type: string
+          required: false
+          description: Text for the link (defaults to "Learn more")
+        source:
+          type: string
+          required: false
+          description: Source/organization name for text fallback
+        name:
+          type: string
+          required: false
+          description: Award name for text fallback
+        year:
+          type: string
+          required: false
+          description: Year of the award for text fallback
+
+  variant:
+    type: string
+    required: false
+    default: simple
+    enum: [simple, detailed]
+    description: |
+      - simple: Compact logos only (used in hero sections)
+      - detailed: Logos with descriptions and links (used in dedicated sections)
+
+  showBorder:
+    type: boolean
+    required: false
+    default: false
+    description: Whether to show a top border above the badges
+
+  className:
+    type: string
+    required: false
+    description: Additional CSS classes to apply
