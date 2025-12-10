@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { useTranslation } from "react-i18next";
-import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import type { LocationPage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
