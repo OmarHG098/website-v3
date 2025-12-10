@@ -178,7 +178,7 @@ export default function GraduatesAndProjects() {
     <div className="min-h-screen bg-background">
       <HeroSingleColumn data={heroData} />
       <ProjectsShowcase data={projectsData} />
-      <About data={aboutData} />
+      <About data={aboutData} height="420px" />
     </div>
   );
 }

@@ -3,9 +3,10 @@ import type { AboutSection as AboutSectionType } from "@shared/schema";
 
 interface AboutProps {
   data: AboutSectionType;
+  height?: string;
 }
 
-export function About({ data }: AboutProps) {
+export function About({ data, height = "auto" }: AboutProps) {
   const { title, description, link_text, link_url, image_src, image_alt } = data;
 
   return (
@@ -15,7 +16,10 @@ export function About({ data }: AboutProps) {
           {title}
         </h2>
 
-        <div className="flex flex-col md:flex-row gap-0 items-stretch">
+        <div 
+          className="flex flex-col md:flex-row gap-0 items-stretch"
+          style={{ height: height !== "auto" ? height : undefined }}
+        >
           <Card className="flex-1 p-8 flex flex-col justify-center rounded-r-none md:rounded-l-lg z-10">
             <p className="text-muted-foreground leading-relaxed text-center mb-6" data-testid="text-about-description">
               {description}

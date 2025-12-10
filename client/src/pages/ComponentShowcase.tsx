@@ -647,7 +647,7 @@ function ComponentCard({
                   previewViewport === 'mobile' 
                     ? 'w-[375px] shadow-lg border-x' 
                     : previewViewport === 'tablet' 
-                      ? 'w-[769px] shadow-lg border-x' 
+                      ? 'w-[768px] shadow-lg border-x' 
                       : 'w-full'
                 }`}
               >
