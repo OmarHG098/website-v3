@@ -232,9 +232,9 @@ export function DebugBubble() {
 
     filteredSitemapUrls.forEach((url) => {
       const path = new URL(url.loc).pathname;
-      if (path.startsWith("/us/career-programs/") || path.startsWith("/career-programs/")) {
+      if (path.startsWith("/us/career-programs/")) {
         programsEn.push(url);
-      } else if (path.startsWith("/es/career-programs/") || path.startsWith("/es/programas/")) {
+      } else if (path.startsWith("/es/programas-de-carrera/")) {
         programsEs.push(url);
       } else {
         rootUrls.push(url);
