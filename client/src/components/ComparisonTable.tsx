@@ -61,7 +61,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     className={`p-4 text-left font-semibold text-lg ${
                       column.highlight
                         ? "bg-primary text-primary-foreground rounded-t-lg"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground/60"
                     }`}
                     data-testid={`th-column-${colIndex}`}
                   >
@@ -93,7 +93,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       className={`p-4 text-center ${
                         valIndex === highlightIndex - 1
                           ? "bg-primary/10 font-semibold text-foreground"
-                          : "text-muted-foreground"
+                          : "text-foreground"
                       }`}
                       data-testid={`td-value-${rowIndex}-${valIndex}`}
                     >
