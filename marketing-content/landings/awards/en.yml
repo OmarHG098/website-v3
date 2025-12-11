@@ -19,7 +19,7 @@ schema:
 
 sections:
   - type: hero
-    variant: twoColumn
+    variant: simpleTwoColumn
     version: "1.0"
     badge: "Awards & Recognitions"
     title: "Top Coding Bootcamps"
@@ -27,8 +27,6 @@ sections:
     image:
       src: "/assets/Group-original_1765419144159.webp"
       alt: "4Geeks Academy students collaborating"
-    trust_bar:
-      trusted_text: "Trusted by 20,000+ students worldwide"
 
   - type: features_grid
     version: "1.0"
