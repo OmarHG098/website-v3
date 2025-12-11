@@ -647,9 +647,9 @@ function ComponentCard({
               <div 
                 className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
-                    ? 'w-[375px] shadow-lg border-x' 
+                    ? 'w-[375px] shadow-lg' 
                     : previewViewport === 'tablet' 
-                      ? 'w-[768px] shadow-lg border-x' 
+                      ? 'w-[768px] shadow-lg' 
                       : 'w-full'
                 }`}
               >
