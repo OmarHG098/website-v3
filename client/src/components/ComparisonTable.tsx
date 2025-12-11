@@ -52,7 +52,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           </p>
         )}
 
-        <div className="hidden md:block">
+        <div className="hidden md:block border border-border rounded-lg overflow-hidden">
           {/* Header row outside the Card */}
           <div className="flex w-full" style={{ width: '100%' }}>
             {data.columns.map((column, colIndex) => (
@@ -60,8 +60,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 key={colIndex}
                 className={`flex-1 p-4 text-left font-semibold text-lg ${
                   column.highlight
-                    ? "bg-primary text-primary-foreground rounded-t-lg"
-                    : "bg-primary/20 text-foreground rounded-t-lg"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-primary/20 text-foreground"
                 }`}
                 data-testid={`th-column-${colIndex}`}
               >
@@ -70,7 +70,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             ))}
           </div>
           {/* Card with only the body rows */}
-          <Card className="overflow-hidden p-0 rounded-t-none">
+          <Card className="overflow-hidden p-0 rounded-none border-0 shadow-none">
             <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
               <colgroup>
                 {data.columns.map((_, colIndex) => (
