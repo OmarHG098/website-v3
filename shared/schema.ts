@@ -26,8 +26,8 @@ export const ctaButtonSchema = z.object({
 });
 
 export const trustBarSchema = z.object({
-  rating: z.string(),
-  rating_count: z.string(),
+  rating: z.string().optional(),
+  rating_count: z.string().optional(),
   trusted_text: z.string(),
 });
 
@@ -51,7 +51,7 @@ export const heroSingleColumnSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   badge: z.string().optional(),
-  cta_buttons: z.array(ctaButtonSchema).min(1),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
   trust_bar: trustBarSchema.optional(),
   award_badges: z.array(awardBadgeSchema).optional(),
 }).strict();
@@ -73,13 +73,13 @@ export const brandMarkSchema = z.object({
   prefix: z.string().optional(),
   highlight: z.string(),
   suffix: z.string().optional(),
-  color: z.enum(["primary", "accent", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
+  color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
-export const heroTwoColumnSchema = z.object({
+export const heroProductShowcaseSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
-  variant: z.literal("twoColumn"),
+  variant: z.literal("productShowcase"),
   title: z.string(),
   subtitle: z.string().optional(),
   welcome_text: z.string().optional(),
@@ -90,11 +90,27 @@ export const heroTwoColumnSchema = z.object({
   video_ratio: z.string().optional(),
 }).strict();
 
+export const heroSimpleTwoColumnSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("simpleTwoColumn"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  badge: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
+  background: z.string().optional(),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
-  heroTwoColumnSchema,
+  heroProductShowcaseSchema,
+  heroSimpleTwoColumnSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -256,6 +272,12 @@ export const twoColumnBulletSchema = z.object({
   heading: z.string().optional(),
 });
 
+export const bulletGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  bullets: z.array(z.object({ text: z.string() })).optional(),
+});
+
 export const twoColumnColumnSchema = z.object({
   video: z.string().optional(),
   video_height: z.string().optional(),
@@ -273,9 +295,13 @@ export const twoColumnColumnSchema = z.object({
   button: ctaButtonSchema.optional(),
   bullets: z.array(twoColumnBulletSchema).optional(),
   bullets_visible: z.number().optional(),
+  bullets_collapsible: z.boolean().optional(),
   bullet_icon: z.string().optional(),
   bullet_char: z.string().optional(),
   bullet_icon_color: z.string().optional(),
+  bullet_groups: z.array(bulletGroupSchema).optional(),
+  bullet_groups_collapsible: z.boolean().optional(),
+  footer_description: z.string().optional(),
   gap: z.string().optional(),
   justify: z.enum(["start", "center", "end"]).optional(),
   text_align: z.enum(["left", "center", "right"]).optional(),
@@ -291,6 +317,7 @@ export const twoColumnSectionSchema = z.object({
   left: twoColumnColumnSchema.optional(),
   right: twoColumnColumnSchema.optional(),
   reverse_on_mobile: z.boolean().optional(),
+  heading_above_on_md: z.boolean().optional(),
   gap: z.string().optional(),
   padding_left: z.string().optional(),
   padding_right: z.string().optional(),
@@ -351,11 +378,66 @@ export const projectsSectionSchema = z.object({
   items: z.array(projectItemSchema),
 });
 
-export const statsSectionSchema = z.object({
-  type: z.literal("stats_section"),
+// FeaturesGrid - unified component for highlight and detailed card grids
+export const featuresGridHighlightItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string(),
+  icon_color: z.string().optional(),
+  value: z.string().optional(),
+  title: z.string(),
+  description: z.string().optional(),
+});
+
+export const featuresGridDetailedItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string().optional(),
+  icon_color: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }).optional(),
+  category: z.string().optional(),
   title: z.string(),
   description: z.string(),
+  link_url: z.string().optional(),
+  link_text: z.string().optional(),
 });
+
+export const featuresGridHighlightSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("highlight").optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridHighlightItemSchema),
+  columns: z.number().optional(),
+  icon_color: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export const featuresGridDetailedSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("detailed"),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridDetailedItemSchema),
+  columns: z.number().optional(),
+  icon_color: z.string().optional(),
+  collapsible_mobile: z.boolean().optional(),
+  background: z.string().optional(),
+});
+
+export const featuresGridSectionSchema = z.union([
+  featuresGridHighlightSectionSchema,
+  featuresGridDetailedSectionSchema,
+]);
+
+export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
+export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
+export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
+export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
+export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
 
 export const testimonialsSlideTestimonialSchema = z.object({
   name: z.string(),
@@ -377,48 +459,6 @@ export const testimonialsSlideSectionSchema = z.object({
   background: z.string().optional(),
 });
 
-// Location page section types
-export const featuresGridItemSchema = z.object({
-  id: z.string().optional(),
-  icon: z.string(),
-  category: z.string().optional(),
-  title: z.string(),
-  description: z.string(),
-  link_url: z.string().optional(),
-  link_text: z.string().optional(),
-});
-
-export const featuresGridSectionSchema = z.object({
-  type: z.literal("features_grid"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  items: z.array(featuresGridItemSchema),
-  columns: z.number().optional(),
-  collapsible_mobile: z.boolean().optional(),
-  background: z.string().optional(),
-});
-
-export type FeaturesGridItem = z.infer<typeof featuresGridItemSchema>;
-export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
-
-// ItemsShowcase - reuses FeaturesGrid structure with different type literal
-export const itemsShowcaseItemSchema = featuresGridItemSchema;
-
-export const itemsShowcaseSectionSchema = z.object({
-  type: z.literal("items_showcase"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  items: z.array(itemsShowcaseItemSchema),
-  columns: z.number().optional(),
-  collapsible_mobile: z.boolean().optional(),
-  background: z.string().optional(),
-});
-
-export type ItemsShowcaseItem = z.infer<typeof itemsShowcaseItemSchema>;
-export type ItemsShowcaseSection = z.infer<typeof itemsShowcaseSectionSchema>;
-
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
   version: z.string().optional(),
@@ -436,38 +476,105 @@ export const ctaBannerSectionSchema = z.object({
   cta_url: z.string(),
   background: z.string().optional(),
 });
-
-export const awardBadgeItemSchema = z.object({
-  id: z.string(),
-  logo: z.string().optional(),
-  alt: z.string(),
-  logoHeight: z.string().optional(),
-  description: z.string().optional(),
-  link: z.string().optional(),
-  linkText: z.string().optional(),
-  source: z.string().optional(),
-  name: z.string().optional(),
-  year: z.string().optional(),
+// Project Showcase Section - for graduates/projects page
+export const projectShowcaseCreatorSchema = z.object({
+  name: z.string(),
+  role: z.string().optional(),
+  github_url: z.string().optional(),
+  linkedin_url: z.string().optional(),
 });
 
-export const awardBadgesSectionSchema = z.object({
-  type: z.literal("award_badges"),
+export const projectShowcaseMediaSchema = z.object({
+  type: z.enum(["video", "image"]),
+  src: z.string(),
+  alt: z.string().optional(),
+});
+
+export const projectShowcaseItemSchema = z.object({
+  project_title: z.string(),
+  project_url: z.string().optional(),
+  description: z.string(),
+  creators: z.array(projectShowcaseCreatorSchema),
+  media: z.array(projectShowcaseMediaSchema).optional(),
+  image: z.string().optional(),
+  video_id: z.string().optional(),
+});
+
+export const projectShowcaseSectionSchema = z.object({
+  type: z.literal("project_showcase"),
   version: z.string().optional(),
-  items: z.array(awardBadgeItemSchema),
-  variant: z.enum(["simple", "detailed"]).optional(),
-  showBorder: z.boolean().optional(),
-  className: z.string().optional(),
+  project_title: z.string(),
+  description: z.string(),
+  creators: z.array(projectShowcaseCreatorSchema),
+  media: z.array(projectShowcaseMediaSchema).optional(),
+  image: z.string().optional(),
+  video_id: z.string().optional(),
+  background: z.string().optional(),
+  media_position: z.enum(["left", "right"]).optional(),
 });
 
-export type AwardBadgeItem = z.infer<typeof awardBadgeItemSchema>;
-export type AwardBadgesSection = z.infer<typeof awardBadgesSectionSchema>;
+export const projectsShowcaseSectionSchema = z.object({
+  type: z.literal("projects_showcase"),
+  version: z.string().optional(),
+  items: z.array(projectShowcaseItemSchema),
+});
+
+export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;
+export type ProjectShowcaseMedia = z.infer<typeof projectShowcaseMediaSchema>;
+export type ProjectShowcaseItem = z.infer<typeof projectShowcaseItemSchema>;
+export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
+export type ProjectsShowcaseSection = z.infer<typeof projectsShowcaseSectionSchema>;
+
+// About section schema
+export const aboutSectionSchema = z.object({
+  type: z.literal("about"),
+  version: z.string().optional(),
+  height: z.string().optional(),
+  title: z.string(),
+  description: z.string(),
+  link_text: z.string(),
+  link_url: z.string(),
+  image_src: z.string(),
+  image_alt: z.string(),
+});
+
+export type AboutSection = z.infer<typeof aboutSectionSchema>;
+
+// Comparison Table Section
+export const comparisonTableColumnSchema = z.object({
+  name: z.string(),
+  highlight: z.boolean().optional(),
+});
+
+export const comparisonTableRowSchema = z.object({
+  feature: z.string(),
+  values: z.array(z.string()),
+  feature_description: z.string().optional(),
+});
+
+export const comparisonTableSectionSchema = z.object({
+  type: z.literal("comparison_table"),
+  version: z.string().optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  columns: z.array(comparisonTableColumnSchema),
+  rows: z.array(comparisonTableRowSchema),
+  background: z.string().optional(),
+  footer_note: z.string().optional(),
+});
+
+export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;
+export type ComparisonTableRow = z.infer<typeof comparisonTableRowSchema>;
+export type ComparisonTableSection = z.infer<typeof comparisonTableSectionSchema>;
+
 
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
-  heroTwoColumnSchema,
+  heroProductShowcaseSchema,
+  heroSimpleTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -482,13 +589,15 @@ export const sectionSchema = z.union([
   footerSectionSchema,
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
-  statsSectionSchema,
   testimonialsSlideSectionSchema,
-  featuresGridSectionSchema,
+  featuresGridHighlightSectionSchema,
+  featuresGridDetailedSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
-  itemsShowcaseSectionSchema,
-  awardBadgesSectionSchema,
+  projectShowcaseSectionSchema,
+  projectsShowcaseSectionSchema,
+  aboutSectionSchema,
+  comparisonTableSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -544,7 +653,8 @@ export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
-export type HeroTwoColumn = z.infer<typeof heroTwoColumnSchema>;
+export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
+export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;

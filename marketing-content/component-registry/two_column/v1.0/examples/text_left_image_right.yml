@@ -9,15 +9,6 @@ yaml: |
       heading: "Learn By Doing"
       sub_heading: "Hands-on projects from day one"
       description: "Our project-based curriculum ensures you're building real applications while learning core concepts. No more boring tutorials—start creating immediately."
-      bullets:
-        - heading: "Week 1"
-          text: "Build your first website"
-        - heading: "Week 4"
-          text: "Create a full-stack application"
-        - heading: "Week 8"
-          text: "Deploy an AI-powered project"
-      bullet_icon: "ArrowRight"
-      bullet_icon_color: "text-primary"
       text_align: "left"
     right:
       image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop"

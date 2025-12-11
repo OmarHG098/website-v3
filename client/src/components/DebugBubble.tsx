@@ -37,6 +37,7 @@ import {
   IconBook,
   IconSparkles,
   IconChartBar,
+  IconTable,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,14 +67,14 @@ import { locations } from "@/lib/locations";
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
   { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
-  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of feature cards with icons" },
-  { type: "items_showcase", label: "Items Showcase", icon: IconLayoutColumns, description: "Cards with custom icons, collapsible on mobile" },
+  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
+  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight (stats) or detailed variants" },
   { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
-  { type: "stats_section", label: "Stats Section", icon: IconChartBar, description: "Key statistics display" },
   { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
   { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
   { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
   { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
+  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
   { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
   { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
   { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },

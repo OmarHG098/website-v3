@@ -92,18 +92,20 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
             </div>
 
             <div className="flex flex-col items-start gap-0.5">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-foreground">{data.trust_bar.rating}</span>
-                <div className="flex">
-                  {[1, 2, 3, 4].map((i) => (
-                    <IconStarFilled
-                      key={i}
-                      className="text-yellow-500 w-4 h-4"
-                    />
-                  ))}
-                  <IconStar className="text-yellow-500 w-4 h-4" />
+              {data.trust_bar.rating && (
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-foreground">{data.trust_bar.rating}</span>
+                  <div className="flex">
+                    {[1, 2, 3, 4].map((i) => (
+                      <IconStarFilled
+                        key={i}
+                        className="text-yellow-500 w-4 h-4"
+                      />
+                    ))}
+                    <IconStar className="text-yellow-500 w-4 h-4" />
+                  </div>
                 </div>
-              </div>
+              )}
               <span className="text-sm text-muted-foreground">
                 {data.trust_bar.trusted_text}
               </span>

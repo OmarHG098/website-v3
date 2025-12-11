@@ -122,15 +122,96 @@ const getPaddingClass = (padding?: string, side: "left" | "right" = "left"): str
   return padding ? (paddingMap[padding] || "") : "";
 };
 
+interface BulletGroup {
+  title: string;
+  description?: string;
+  bullets?: { text: string }[];
+}
+
+function BulletGroups({ 
+  groups, 
+  bulletChar, 
+  textFontSize,
+  collapsible = true 
+}: { 
+  groups: BulletGroup[]; 
+  bulletChar?: string;
+  textFontSize: string;
+  collapsible?: boolean;
+}) {
+  const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
+
+  const toggleGroup = (index: number) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  return (
+    <div className="w-full space-y-4 pl-4" data-testid="list-two-column-bullet-groups">
+      {groups.map((group, groupIndex) => {
+        const isExpanded = expandedGroups[groupIndex] ?? false;
+        const hasContent = (group.description || (group.bullets && group.bullets.length > 0));
+        
+        return (
+          <div key={groupIndex} className="space-y-2">
+            {collapsible && hasContent ? (
+              <button
+                onClick={() => toggleGroup(groupIndex)}
+                className="lg:hidden flex items-center gap-2 w-full text-left"
+                data-testid={`button-toggle-group-${groupIndex}`}
+              >
+                <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
+                  {group.title}
+                </h4>
+                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground")}
+              </button>
+            ) : null}
+            <h4 className={`font-bold text-foreground uppercase tracking-wide text-sm ${collapsible && hasContent ? "hidden lg:block" : ""}`}>
+              {group.title}
+            </h4>
+            {group.description && (
+              <p className={`text-muted-foreground ${textFontSize} ${collapsible ? (isExpanded ? "" : "hidden lg:block") : ""}`}>
+                {group.description}
+              </p>
+            )}
+            {group.bullets && group.bullets.length > 0 && (
+              <ul className={`space-y-1 pl-1 ${collapsible ? (isExpanded ? "" : "hidden lg:block") : ""}`}>
+                {group.bullets.map((bullet, bulletIndex) => (
+                  <li key={bulletIndex} className="flex items-start gap-2">
+                    <span className="text-foreground mt-1 flex-shrink-0">
+                      {bulletChar || "•"}
+                    </span>
+                    <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
   const [bulletsExpanded, setBulletsExpanded] = useState(false);
+  const [expandedBullets, setExpandedBullets] = useState<Record<number, boolean>>({});
+  
+  const toggleBullet = (index: number) => {
+    setExpandedBullets(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
   const textAlignClass = getTextAlignClass(column.text_align);
   const textFontSize = getTextFontSize(column.font_size);
 
-  const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.button;
+  const hasTextContent = column.heading || column.sub_heading || column.description || column.html_content || column.bullets || column.bullet_groups || column.footer_description || column.button;
 
   return (
     <div className={`flex flex-col ${gapClass}`}>
@@ -138,7 +219,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
         <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
-              className={`text-3xl md:text-4xl font-bold text-foreground text-center md:text-left ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
+              className={`text-3xl md:text-4xl font-bold text-foreground ${column.text_align ? '' : 'text-center md:text-left'} ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
               data-testid="text-two-column-heading"
             >
               {column.heading}
@@ -175,16 +256,21 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
             const visibleCount = column.bullets_visible ?? column.bullets.length;
             const hiddenCount = column.bullets.length - visibleCount;
             const hasHiddenBullets = hiddenCount > 0;
+            const isCollapsible = column.bullets_collapsible !== false;
+            const hasHeadedBullets = column.bullets.some(b => b.heading);
             
             return (
               <div className="w-full pl-2">
                 <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
                   {column.bullets.map((bullet, index) => {
                     const isHiddenOnMobile = !bulletsExpanded && index >= visibleCount;
+                    const isExpanded = expandedBullets[index] ?? false;
+                    const canCollapse = isCollapsible && bullet.heading;
+                    
                     return (
                       <li 
                         key={index} 
-                        className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
+                        className={`flex items-start gap-3 w-full ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
                       >
                         <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
                           {column.bullet_char 
@@ -192,11 +278,28 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                             : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
                           }
                         </span>
-                        <div className="flex flex-col">
-                          {bullet.heading && (
-                            <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                        <div className="flex flex-col flex-1">
+                          {bullet.heading && canCollapse ? (
+                            <>
+                              <button
+                                onClick={() => toggleBullet(index)}
+                                className="lg:hidden flex items-start justify-between w-full text-left"
+                                data-testid={`button-toggle-bullet-${index}`}
+                              >
+                                <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground flex-shrink-0 mt-1")}
+                              </button>
+                              <span className={`font-semibold text-foreground ${textFontSize} hidden lg:block`}>{bullet.heading}</span>
+                              <span className={`text-foreground ${textFontSize} ${isExpanded ? "" : "hidden lg:block"}`}>{bullet.text}</span>
+                            </>
+                          ) : (
+                            <>
+                              {bullet.heading && (
+                                <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                              )}
+                              <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                            </>
                           )}
-                          <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
                         </div>
                       </li>
                     );
@@ -224,6 +327,24 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               </div>
             );
           })()}
+
+          {column.bullet_groups && column.bullet_groups.length > 0 && (
+            <BulletGroups 
+              groups={column.bullet_groups} 
+              bulletChar={column.bullet_char}
+              textFontSize={textFontSize}
+              collapsible={column.bullet_groups_collapsible !== false}
+            />
+          )}
+
+          {column.footer_description && (
+            <p 
+              className={`${textFontSize} text-muted-foreground leading-relaxed italic`}
+              data-testid="text-two-column-footer-description"
+            >
+              {column.footer_description}
+            </p>
+          )}
           
           {column.button && (
             <div className="mt-2">
@@ -305,6 +426,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
 
   const backgroundClass = data.background || "bg-background";
   
+  const headingAboveOnMd = data.heading_above_on_md !== false;
   const tabletHeading = data.left?.heading || data.right?.heading;
   const leftHasHeading = !!data.left?.heading;
   const rightHasHeading = !!data.right?.heading;
@@ -316,7 +438,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
       style={containerStyle}
     >
       <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
-        {tabletHeading && (
+        {headingAboveOnMd && tabletHeading && (
           <h2 
             className="hidden md:block lg:hidden text-3xl md:text-4xl font-bold text-foreground text-center mb-8"
             data-testid="text-two-column-heading-tablet"
@@ -327,13 +449,13 @@ export function TwoColumn({ data }: TwoColumnProps) {
         <div className={`grid grid-cols-1 md:grid-cols-12 ${columnGapClass} ${alignmentClass}`}>
           {data.left && (
             <div className={`col-span-1 ${leftColClass} ${data.reverse_on_mobile ? "order-2 md:order-1" : ""}`}>
-              <ColumnContent column={data.left} hideHeadingOnTablet={leftHasHeading} />
+              <ColumnContent column={data.left} hideHeadingOnTablet={headingAboveOnMd && leftHasHeading} />
             </div>
           )}
           
           {data.right && (
             <div className={`col-span-1 ${rightColClass} ${data.reverse_on_mobile ? "order-1 md:order-2" : ""}`}>
-              <ColumnContent column={data.right} hideHeadingOnTablet={rightHasHeading} />
+              <ColumnContent column={data.right} hideHeadingOnTablet={headingAboveOnMd && rightHasHeading} />
             </div>
           )}
         </div>

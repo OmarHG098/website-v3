@@ -1,7 +1,8 @@
 import type { HeroSection } from "@shared/schema";
 import { HeroSingleColumn } from "./HeroSingleColumn";
 import { HeroShowcase } from "./HeroShowcase";
-import { HeroTwoColumn } from "./HeroTwoColumn";
+import { HeroProductShowcase } from "./HeroProductShowcase";
+import { HeroSimpleTwoColumn } from "./HeroSimpleTwoColumn";
 
 interface HeroProps {
   data: HeroSection;
@@ -13,11 +14,13 @@ export function Hero({ data }: HeroProps) {
       return <HeroSingleColumn data={data} />;
     case "showcase":
       return <HeroShowcase data={data} />;
-    case "twoColumn":
-      return <HeroTwoColumn data={data} />;
+    case "productShowcase":
+      return <HeroProductShowcase data={data} />;
+    case "simpleTwoColumn":
+      return <HeroSimpleTwoColumn data={data} />;
     default:
       return null;
   }
 }
 
-export { HeroSingleColumn, HeroShowcase, HeroTwoColumn };
+export { HeroSingleColumn, HeroShowcase, HeroProductShowcase, HeroSimpleTwoColumn };

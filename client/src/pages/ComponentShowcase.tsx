@@ -142,6 +142,9 @@ function ComponentCard({
   cardRef 
 }: ComponentCardProps) {
   const { toast } = useToast();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeReady, setIframeReady] = useState(false);
+  const [iframeHeight, setIframeHeight] = useState(400);
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
   const [showYaml, setShowYaml] = useState(true);
@@ -250,6 +253,46 @@ function ComponentCard({
     }
   }, [globalPreviewState]);
 
+  // Listen for iframe ready and height messages
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') {
+        setIframeReady(true);
+      }
+      if (event.data?.type === 'preview-height') {
+        setIframeHeight(event.data.height || 400);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  // Send data to iframe when ready or data changes
+  useEffect(() => {
+    if (iframeReady && iframeRef.current?.contentWindow && parsedData) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'preview-update',
+        sections: [parsedData],
+      }, '*');
+    }
+  }, [iframeReady, parsedData]);
+
+  // Send theme to iframe when it changes
+  useEffect(() => {
+    if (iframeReady && iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({
+        type: 'theme-update',
+        theme: isDarkMode ? 'dark' : 'light',
+      }, '*');
+    }
+  }, [iframeReady, isDarkMode]);
+
+  // Reset iframe ready state when viewport changes (iframe remounts)
+  useEffect(() => {
+    setIframeReady(false);
+  }, [previewViewport]);
+
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
     try {
@@ -344,7 +387,8 @@ function ComponentCard({
                 const variantLabels: Record<string, string> = {
                   singleColumn: 'Single Column',
                   showcase: 'Showcase',
-                  twoColumn: 'Two Column',
+                  productShowcase: 'Product Showcase',
+                  simpleTwoColumn: 'Simple Two Column',
                 };
                 return (
                   <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -403,7 +447,7 @@ function ComponentCard({
                         return acc;
                       }, {} as Record<string, typeof examples>);
                       
-                      const variantOrder = ['singleColumn', 'showcase', 'twoColumn', 'default'];
+                      const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
                       const sortedVariants = Object.keys(grouped).sort((a, b) => {
                         const aIdx = variantOrder.indexOf(a);
                         const bIdx = variantOrder.indexOf(b);
@@ -413,7 +457,8 @@ function ComponentCard({
                       const variantLabels: Record<string, string> = {
                         singleColumn: 'Single Column',
                         showcase: 'Showcase',
-                        twoColumn: 'Two Column',
+                        productShowcase: 'Product Showcase',
+                        simpleTwoColumn: 'Simple Two Column',
                         default: 'Default',
                       };
                       
@@ -562,7 +607,7 @@ function ComponentCard({
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
                 <span className="text-xs text-muted-foreground">
-                  {previewViewport === 'mobile' ? '375px' : previewViewport === 'tablet' ? '768px' : '100%'}
+                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '1440 × 900'}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -571,7 +616,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('mobile')}
-                  title="Mobile (375px)"
+                  title="Mobile (375 × 667)"
                   data-testid={`button-viewport-mobile-${componentType}`}
                 >
                   <IconDeviceMobile className="w-4 h-4" />
@@ -581,7 +626,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('tablet')}
-                  title="Tablet (768px)"
+                  title="Tablet (768 × 1024)"
                   data-testid={`button-viewport-tablet-${componentType}`}
                 >
                   <IconDeviceTablet className="w-4 h-4" />
@@ -591,7 +636,7 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => setPreviewViewport('desktop')}
-                  title="Desktop (100%)"
+                  title="Desktop (1440 × 900)"
                   data-testid={`button-viewport-desktop-${componentType}`}
                 >
                   <IconDeviceDesktop className="w-4 h-4" />
@@ -600,7 +645,7 @@ function ComponentCard({
             </div>
             <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
               <div 
-                className={`bg-background transition-all duration-300 ${
+                className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
                     ? 'w-[375px] shadow-lg border-x' 
                     : previewViewport === 'tablet' 
@@ -608,7 +653,21 @@ function ComponentCard({
                       : 'w-full'
                 }`}
               >
-                {parsedData && <SectionRenderer sections={[parsedData]} />}
+                <iframe
+                  ref={iframeRef}
+                  src="/preview-frame?debug=false"
+                  className="w-full border-0"
+                  style={{ 
+                    height: previewViewport === 'mobile' 
+                      ? '667px'  // iPhone SE/8 screen height
+                      : previewViewport === 'tablet'
+                        ? '1024px'  // iPad portrait height
+                        : '900px',  // Desktop height (1440×900)
+                    minHeight: '200px',
+                  }}
+                  title={`Preview ${componentType}`}
+                  data-testid={`iframe-preview-${componentType}`}
+                />
               </div>
             </div>
           </div>

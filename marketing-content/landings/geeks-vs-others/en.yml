@@ -1,0 +1,174 @@
+# Geeks vs Others Landing Page - English
+
+slug: "geeks-vs-others"
+title: "Geeks vs Others"
+
+meta:
+  page_title: "4Geeks vs Other Bootcamps | 4Geeks Academy"
+  description: "Compare 4Geeks Academy with other coding bootcamps. See why our unlimited mentorship, career support, and proven outcomes set us apart."
+  robots: "index, follow"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/geeks-vs-others"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    title: "4Geeks Academy vs Other Bootcamps"
+    subtitle: "Discover why 4Geeks Academy is different. Our AI-integrated curriculum, hands-on projects, and personalized mentorship help students launch high-demand, future-proof tech careers—no prior experience needed. With lifetime mentorship and career support, we make sure you keep thriving long after graduation."
+    badge: "Why 4Geeks Stands Out"
+    image:
+      src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
+      alt: "Students coding together at a table with laptops"
+
+  - type: comparison_table
+    version: "1.0"
+    title: "Launching Successful Tech Careers in the AI Era"
+    subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"
+    columns:
+      - name: "Feature"
+      - name: "4Geeks Academy"
+        highlight: true
+      - name: "Industry Average / Competitors"
+    rows:
+      - feature: "Career Support"
+        values: ["Personalized support for a lifetime", "Limited, ending with 1st job"]
+      - feature: "Teacher: Student Ratio"
+        values: ["1:7", "1:10+"]
+      - feature: "AI-Powered Feedback"
+        values: ["Personalized to your progress", "Generic or non-existent"]
+      - feature: "1-on-1 Mentoring"
+        values: ["Unlimited and for a lifetime", "Limited sessions"]
+      - feature: "Curriculum"
+        values: ["Continuously updated to match industry needs", "Slow to adapt"]
+      - feature: "% Hiring Rate"
+        values: ["~84% within 6 months", "Often Unknown"]
+      - feature: "Community"
+        values: ["Strong local & global network", "Depends on school"]
+      - feature: "Class Format"
+        values: ["Online, in-person", "Usually only one format"]
+      - feature: "Previous Knowledge"
+        values: ["None", "Entry tests or prior coding experience"]
+
+  - type: two_column
+    version: "1.0"
+    proportions: [7, 5]
+    alignment: "center"
+    gap: "4"
+    left:
+      heading: "Hyperpersonalized Learning & Support That Lasts a Lifetime"
+      description: "Most bootcamps give you a limited number of mentorship hours and generic resources — and leave you once you get hired. At 4Geeks, we built an entire support system around personalization:"
+      bullets:
+        - heading: "Unlimited 1:1 Mentorship with Real Humans"
+          text: "Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role years down the line, our mentors are always just a message away."
+        - heading: "AI-Powered Progress Tracking & Feedback"
+          text: "Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time. You're never left wondering where you stand."
+        - heading: "Career Support That Grows With You"
+          text: "GeekFORCE isn't just for your first job. It's personalized, ongoing career coaching you can tap into again and again, whether you're changing roles, freelancing, or leveling up into leadership."
+      bullets_collapsible: true
+      text_align: "left"
+      footer: "The result: a truly hyperpersonalized learning experience that combines human mentorship with AI intelligence and that's yours for life — something no other bootcamp offers."
+    right:
+      image: "/attached_assets/hombre-joven-con-laptop_1764691956393.webp"
+      image_alt: "Young man working on laptop"
+      justify: "center"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    background: "bg-muted/30"
+    right:
+      heading: "Making Tech Careers Accessible"
+      description: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
+      bullets:
+        - text: "Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes)."
+        - text: "Financing options start below $299/month, so you can learn without financial stress."
+        - text: "Income-based payment options, where you only pay once you're earning."
+        - text: "Scholarships available for eligible students."
+      bullets_visible: 2
+      text_align: "left"
+      button:
+        text: "See financing options"
+        url: "/us/financials"
+        variant: "primary"
+    left:
+      image: "/attached_assets/reservation-es_1764814854635.webp"
+      image_alt: "Woman working on laptop"
+      justify: "center"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Results You Can Count On"
+    subtitle: "Numbers matter — and ours speak for themselves."
+    columns: 3
+    items:
+      - icon: "Briefcase"
+        icon_color: "#0097CD"
+        value: "84%"
+        title: "Job placement rate"
+      - icon: "Graduation"
+        icon_color: "#0097CD"
+        value: "3-6 months"
+        title: "Average time to get hired"
+      - icon: "GrowthChart"
+        icon_color: "#0097CD"
+        value: "55%"
+        title: "Salary increase after graduation"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    left:
+      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
+      image_alt: "Happy businesswoman with laptop"
+      justify: "center"
+    right:
+      heading: "The Confidence of a Job Guarantee"
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      sub_heading: "We can do this because:"
+      bullets:
+        - text: "Our curriculum is industry-aligned and AI-ready"
+        - text: "Our mentorship is unlimited and personalized"
+        - text: "Our career support never expires"
+      bullets_visible: 1
+      text_align: "left"
+      button:
+        text: "Learn More"
+        url: "/us/job-guarantee"
+        variant: "primary"
+      footer: "Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp."
+
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    alignment: "center"
+    gap: "12"
+    background: "bg-muted/30"
+    left:
+      heading: "Recognized Globally for Excellence"
+      description: "We don't just say we deliver — recognition from trusted sources proves our worth."
+      bullets:
+        - heading: "Top 5 Coding Bootcamps"
+          text: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
+        - heading: "Best Student Support"
+          text: "Consistently recognized for Best Student Support and Best Value for Money"
+        - heading: "20,000+ Students"
+          text: "Trusted by 20,000+ students across the globe"
+      bullets_collapsible: true
+      text_align: "left"
+    right:
+      image: "/attached_assets/community-support-2_1765406601448.webp"
+      image_alt: "4Geeks Academy community and support"
+      justify: "center"

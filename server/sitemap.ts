@@ -285,20 +285,6 @@ function buildSitemapXml(): string {
     priority: 0.9,
   });
 
-  urls.push({
-    loc: `${getBaseUrl()}/geekforce-career-support`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/geekpal-support`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
   // Dynamic career program pages from YAML (only include indexable pages)
   const programs = getAvailablePrograms();
   for (const program of programs) {
@@ -460,9 +446,6 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
   urls.push({ loc: `${getBaseUrl()}/tool-mastery`, label: "Tool Mastery" });
   urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
   urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
-  urls.push({ loc: `${getBaseUrl()}/job-guarantee`, label: "Job Guarantee" });
-  urls.push({ loc: `${getBaseUrl()}/geekforce-career-support`, label: "GeekForce Career Support" });
-  urls.push({ loc: `${getBaseUrl()}/geekpal-support`, label: "GeekPAL Support" });
 
   // Dynamic career program pages from YAML (only indexable)
   const programs = getAvailablePrograms();
