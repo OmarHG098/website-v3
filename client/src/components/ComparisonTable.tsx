@@ -55,11 +55,11 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           {/* Header row */}
           <div className="flex w-full" style={{ width: '100%' }}>
             {data.columns.map((column, colIndex) => {
-              const isFirst = colIndex === 0;
-              const isLast = colIndex === data.columns.length - 1;
-              const borderClasses = isFirst
+              const feature = colIndex === 0;
+              const comparator = colIndex === data.columns.length - 1;
+              const borderClasses = feature
                 ? "border-t border-l border-border rounded-t-lg"
-                : isLast
+                : comparator
                 ? "border-t border-r border-border rounded-t-lg"
                 : "border-t border-border rounded-t-lg";
               
