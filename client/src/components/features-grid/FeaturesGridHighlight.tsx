@@ -107,19 +107,23 @@ export function FeaturesGridHighlight({ data }: FeaturesGridHighlightProps) {
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 
-            className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
-            data-testid="text-features-grid-title"
-          >
-            {data.title}
-          </h2>
-          {data.subtitle && (
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              {data.subtitle}
-            </p>
-          )}
-        </div>
+        {(data.title || data.subtitle) && (
+          <div className="text-center mb-8">
+            {data.title && (
+              <h2 
+                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                data-testid="text-features-grid-title"
+              >
+                {data.title}
+              </h2>
+            )}
+            {data.subtitle && (
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                {data.subtitle}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
           {data.items.map((item, index) => (
