@@ -65,7 +65,6 @@ sections:
     left:
       heading: "Hyperpersonalized Learning & Support That Lasts a Lifetime"
       description: "Most bootcamps give you a limited number of mentorship hours and generic resources — and leave you once you get hired. At 4Geeks, we built an entire support system around personalization:"
-      font_size: "base"
       bullets:
         - heading: "Unlimited 1:1 Mentorship with Real Humans"
           text: "Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role years down the line, our mentors are always just a message away."
@@ -130,7 +129,7 @@ sections:
     version: "1.0"
     proportions: [5, 7]
     alignment: "center"
-    gap: "8"
+    gap: "12"
     left:
       image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
       image_alt: "Happy businesswoman with laptop"
@@ -139,7 +138,6 @@ sections:
       heading: "The Confidence of a Job Guarantee"
       description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
       sub_heading: "We can do this because:"
-      font_size: "base"
       bullets:
         - text: "Our curriculum is industry-aligned and AI-ready"
         - text: "Our mentorship is unlimited and personalized"
@@ -154,14 +152,13 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [7, 5]
+    proportions: [6, 6]
     alignment: "center"
     gap: "12"
     background: "bg-muted/30"
     left:
       heading: "Recognized Globally for Excellence"
       description: "We don't just say we deliver — recognition from trusted sources proves our worth."
-      font_size: "base"
       bullets:
         - heading: "Top 5 Coding Bootcamps"
           text: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
