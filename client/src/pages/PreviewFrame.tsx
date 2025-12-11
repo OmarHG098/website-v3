@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
+import { SectionRenderer } from "@/components/SectionRenderer";
 import type { Section } from "@shared/schema";
 
 export default function PreviewFrame() {
