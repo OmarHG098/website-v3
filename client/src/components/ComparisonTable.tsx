@@ -61,7 +61,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 ? "border-t border-l border-border rounded-tl-lg"
                 : isLast
                 ? "border-t border-r border-border rounded-tr-lg"
-                : "border-t border-border";
+                : "border-t border-border rounded-t-lg";
               
               return (
                 <div
