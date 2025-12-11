@@ -143,6 +143,7 @@ sections:
     card:
       title: "Cybersecurity Specialist"
       subtitle: "4Geeks Academy Certificate"
+      program_name: "Cybersecurity Specialist"
 
   - type: why_learn_ai
     title: "Cybersecurity Specialists Are in High Demand"

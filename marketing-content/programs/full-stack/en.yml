@@ -143,6 +143,7 @@ sections:
     card:
       title: "Full Stack Developer"
       subtitle: "4Geeks Academy Certificate"
+      program_name: "Full-Stack Developer"
 
   - type: why_learn_ai
     title: "Why Should I Learn to Build and Code with AI?"

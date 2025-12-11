@@ -162,6 +162,8 @@ export const certificateSectionSchema = z.object({
   card: z.object({
     title: z.string(),
     subtitle: z.string(),
+    program_name: z.string().optional(),
+    certificate_label: z.string().optional(),
   }).optional(),
   stats: z.array(statItemSchema).optional(),
 });

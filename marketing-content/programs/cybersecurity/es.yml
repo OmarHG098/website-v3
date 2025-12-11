@@ -143,6 +143,8 @@ sections:
     card:
       title: "Especialista en Ciberseguridad"
       subtitle: "Certificado de 4Geeks Academy"
+      program_name: "Especialista en Ciberseguridad"
+      certificate_label: "Certificado de Finalización"
 
   - type: why_learn_ai
     title: "Los Especialistas en Ciberseguridad Tienen Alta Demanda"

@@ -143,6 +143,8 @@ sections:
     card:
       title: "Científico de Datos"
       subtitle: "Certificado de 4Geeks Academy"
+      program_name: "Ciencia de Datos e IA"
+      certificate_label: "Certificado de Finalización"
 
   - type: why_learn_ai
     title: "¿Por qué Debería Aprender Ciencia de Datos y Machine Learning?"

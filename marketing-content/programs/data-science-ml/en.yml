@@ -143,6 +143,7 @@ sections:
     card:
       title: "Data Scientist"
       subtitle: "4Geeks Academy Certificate"
+      program_name: "Data Science & Machine Learning"
 
   - type: why_learn_ai
     title: "Why Should I Learn Data Science and Machine Learning?"

@@ -143,6 +143,8 @@ sections:
     card:
       title: "Desarrollador Full Stack"
       subtitle: "Certificado 4Geeks Academy"
+      program_name: "Desarrollador Full-Stack"
+      certificate_label: "Certificado de Finalización"
 
   - type: why_learn_ai
     title: "¿Por qué Aprender a Construir y Programar con IA?"
