@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { IconSchool, IconFlag } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
+import { useState, useRef, useCallback } from "react";
 
 export interface TestimonialsSlideTestimonial {
   name: string;
@@ -194,6 +195,23 @@ function TestimonialCard({ testimonial }: { testimonial: TestimonialsSlideTestim
 }
 
 export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleTouchStart = useCallback(() => {
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+      resumeTimeoutRef.current = null;
+    }
+    setIsPlaying(false);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsPlaying(true);
+    }, 300);
+  }, []);
+
   return (
     <section 
       className={`py-12 md:py-16 ${data.background || "bg-sidebar"}`}
@@ -214,16 +232,23 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         </p>
       </div>
       
-      <Marquee 
-        gradient={false} 
-        speed={40} 
-        pauseOnHover={true}
-        data-testid="marquee-testimonials-slide"
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseEnter={handleTouchStart}
+        onMouseLeave={handleTouchEnd}
       >
-        {DEFAULT_TESTIMONIALS.map((testimonial, index) => (
-          <TestimonialCard key={index} testimonial={testimonial} />
-        ))}
-      </Marquee>
+        <Marquee 
+          gradient={false} 
+          speed={40} 
+          play={isPlaying}
+          data-testid="marquee-testimonials-slide"
+        >
+          {DEFAULT_TESTIMONIALS.map((testimonial, index) => (
+            <TestimonialCard key={index} testimonial={testimonial} />
+          ))}
+        </Marquee>
+      </div>
     </section>
   );
 }
