@@ -59,9 +59,9 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [6, 6]
+    proportions: [7, 5]
     alignment: "center"
-    gap: "12"
+    gap: "4"
     left:
       heading: "Hyperpersonalized Learning & Support That Lasts a Lifetime"
       description: "Most bootcamps give you a limited number of mentorship hours and generic resources — and leave you once you get hired. At 4Geeks, we built an entire support system around personalization:"
@@ -82,11 +82,11 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [6, 6]
+    proportions: [5, 7]
     alignment: "center"
     gap: "12"
     background: "bg-muted/30"
-    left:
+    right:
       heading: "Making Tech Careers Accessible"
       description: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
       bullets:
@@ -100,7 +100,7 @@ sections:
         text: "See financing options"
         url: "/us/financials"
         variant: "primary"
-    right:
+    left:
       image: "/attached_assets/reservation-es_1764814854635.webp"
       image_alt: "Woman working on laptop"
       justify: "center"
@@ -127,7 +127,7 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [6, 6]
+    proportions: [5, 7]
     alignment: "center"
     gap: "12"
     left:

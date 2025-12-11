@@ -35,6 +35,7 @@ import {
   IconBook,
   IconSparkles,
   IconChartBar,
+  IconTable,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,6 +65,7 @@ import { locations } from "@/lib/locations";
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
   { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
+  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
   { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight (stats) or detailed variants" },
   { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
   { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
