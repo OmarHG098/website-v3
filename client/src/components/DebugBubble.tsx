@@ -82,7 +82,7 @@ const componentsList = [
   { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
   { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "footer_cta", label: "Footer CTA", icon: IconArrowRight, description: "Final call-to-action" },
+  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];

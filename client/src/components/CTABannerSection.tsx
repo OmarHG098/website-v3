@@ -1,16 +1,15 @@
-import type { z } from "zod";
-import type { ctaBannerSectionSchema } from "@shared/schema";
+import type { CTABannerSection as CTABannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
 import { Link } from "wouter";
 
-type CTABannerSectionData = z.infer<typeof ctaBannerSectionSchema>;
-
 interface CTABannerSectionProps {
-  data: CTABannerSectionData;
+  data: CTABannerSectionType;
 }
 
 export function CTABannerSection({ data }: CTABannerSectionProps) {
+  const hasMultipleButtons = data.buttons && data.buttons.length > 0;
+  
   return (
     <section 
       className="py-16 px-4 bg-primary text-primary-foreground"
@@ -31,17 +30,39 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
             {data.subtitle}
           </p>
         )}
-        <Link href={data.cta_url}>
-          <Button 
-            size="lg" 
-            variant="secondary"
-            className="font-semibold"
-            data-testid="button-cta-banner-action"
-          >
-            {data.cta_text}
-            <IconArrowRight className="w-5 h-5 ml-2" />
-          </Button>
-        </Link>
+        
+        {hasMultipleButtons ? (
+          <div className="flex flex-wrap justify-center gap-4">
+            {data.buttons!.map((button, index) => {
+              const variant = button.variant === "primary" ? "default" : button.variant === "secondary" ? "secondary" : "outline";
+              const outlineStyles = button.variant === "outline" ? "border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10" : "";
+              return (
+                <Button
+                  key={index}
+                  variant={variant}
+                  size="lg"
+                  asChild
+                  className={outlineStyles}
+                  data-testid={`button-cta-banner-${index}`}
+                >
+                  <a href={button.url}>{button.text}</a>
+                </Button>
+              );
+            })}
+          </div>
+        ) : (
+          <Link href={data.cta_url || "#"}>
+            <Button 
+              size="lg" 
+              variant="secondary"
+              className="font-semibold"
+              data-testid="button-cta-banner-action"
+            >
+              {data.cta_text}
+              <IconArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </Link>
+        )}
       </div>
     </section>
   );

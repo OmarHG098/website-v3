@@ -10,7 +10,6 @@ import { PricingSection } from "./PricingSection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { WhosHiringSection } from "./WhosHiringSection";
-import { FooterCTASection } from "./FooterCTASection";
 import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps from "@/components/NumberedSteps";
@@ -52,8 +51,6 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             return <TestimonialsSection key={index} data={section} />;
           case "whos_hiring":
             return <WhosHiringSection key={index} data={section} />;
-          case "footer_cta":
-            return <FooterCTASection key={index} data={section} />;
           case "footer":
             return <FooterSection key={index} data={section} />;
           case "two_column":

@@ -253,13 +253,6 @@ export const whosHiringSectionSchema = z.object({
   logos: z.array(logoItemSchema),
 });
 
-export const footerCtaSectionSchema = z.object({
-  type: z.literal("footer_cta"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  buttons: z.array(ctaButtonSchema),
-});
-
 export const footerSectionSchema = z.object({
   type: z.literal("footer"),
   copyright_text: z.string(),
@@ -472,10 +465,14 @@ export const ctaBannerSectionSchema = z.object({
   version: z.string().optional(),
   title: z.string(),
   subtitle: z.string().optional(),
-  cta_text: z.string(),
-  cta_url: z.string(),
+  cta_text: z.string().optional(),
+  cta_url: z.string().optional(),
+  buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
-});
+}).refine(
+  (data) => (data.cta_text && data.cta_url) || (data.buttons && data.buttons.length > 0),
+  { message: "Either cta_text/cta_url or buttons array must be provided" }
+);
 // Project Showcase Section - for graduates/projects page
 export const projectShowcaseCreatorSchema = z.object({
   name: z.string(),
@@ -585,7 +582,6 @@ export const sectionSchema = z.union([
   faqSectionSchema,
   testimonialsSectionSchema,
   whosHiringSectionSchema,
-  footerCtaSectionSchema,
   footerSectionSchema,
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
@@ -670,8 +666,8 @@ export type TestimonialsSection = z.infer<typeof testimonialsSectionSchema>;
 export type LogoItem = z.infer<typeof logoItemSchema>;
 export type WhosHiringSection = z.infer<typeof whosHiringSectionSchema>;
 export type StatItem = z.infer<typeof statItemSchema>;
-export type FooterCTASection = z.infer<typeof footerCtaSectionSchema>;
 export type FooterSection = z.infer<typeof footerSectionSchema>;
+export type CTABannerSection = z.infer<typeof ctaBannerSectionSchema>;
 export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
 export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
 export type ProjectItem = z.infer<typeof projectItemSchema>;

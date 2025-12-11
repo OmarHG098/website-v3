@@ -312,7 +312,7 @@ sections:
       button_text: "Talk to an Advisor"
       button_url: "/contact"
 
-  - type: footer_cta
+  - type: cta_banner
     version: "1.0"
     title: "Ready to Start Your Tech Career?"
     subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."

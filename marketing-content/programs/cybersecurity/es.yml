@@ -312,7 +312,7 @@ sections:
       button_text: "Habla con un Asesor"
       button_url: "/contact"
 
-  - type: footer_cta
+  - type: cta_banner
     version: "1.0"
     title: "¿Listo para Defender el Mundo Digital?"
     subtitle: "Únete a miles de graduados que han lanzado carreras exitosas en ciberseguridad con 4Geeks."
