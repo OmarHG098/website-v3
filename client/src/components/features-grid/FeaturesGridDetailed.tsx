@@ -31,9 +31,21 @@ function DetailedCard({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
+  const hasImage = item.image?.src;
   
   return (
     <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-feature-${itemId}`}>
+      {hasImage && (
+        <div className="mb-4">
+          <img 
+            src={item.image!.src} 
+            alt={item.image!.alt} 
+            className="w-full h-40 md:h-48 object-cover rounded-md"
+            loading="lazy"
+            data-testid={`img-feature-${itemId}`}
+          />
+        </div>
+      )}
       <div 
         className={`flex justify-between items-start ${collapsible ? 'cursor-pointer md:cursor-default' : ''}`}
         onClick={() => collapsible && setIsOpen(!isOpen)}
@@ -49,9 +61,11 @@ function DetailedCard({
             {item.title}
           </h3>
         </div>
-        <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
-          {getIcon(item.icon, "w-full h-full", iconColor)}
-        </div>
+        {!hasImage && item.icon && (
+          <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
+            {getIcon(item.icon, "w-full h-full", iconColor)}
+          </div>
+        )}
         {collapsible && (
           <TablerIcons.IconChevronDown 
             className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ml-2 ${isOpen ? 'rotate-180' : ''}`}

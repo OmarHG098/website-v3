@@ -390,8 +390,12 @@ export const featuresGridHighlightItemSchema = z.object({
 
 export const featuresGridDetailedItemSchema = z.object({
   id: z.string().optional(),
-  icon: z.string(),
+  icon: z.string().optional(),
   icon_color: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }).optional(),
   category: z.string().optional(),
   title: z.string(),
   description: z.string(),
