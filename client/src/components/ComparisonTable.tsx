@@ -52,21 +52,31 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block">
-          {/* Header row outside the Card */}
+          {/* Header row */}
           <div className="flex w-full" style={{ width: '100%' }}>
-            {data.columns.map((column, colIndex) => (
-              <div
-                key={colIndex}
-                className={`flex-1 p-4 text-left font-semibold text-lg ${
-                  column.highlight
-                    ? "bg-primary text-primary-foreground rounded-t-lg"
-                    : "bg-primary/20 text-foreground rounded-t-lg"
-                }`}
-                data-testid={`th-column-${colIndex}`}
-              >
-                {column.name}
-              </div>
-            ))}
+            {data.columns.map((column, colIndex) => {
+              const isFirst = colIndex === 0;
+              const isLast = colIndex === data.columns.length - 1;
+              const borderClasses = isFirst
+                ? "border-t border-l border-border rounded-tl-lg"
+                : isLast
+                ? "border-t border-r border-border rounded-tr-lg"
+                : "border-t border-border";
+              
+              return (
+                <div
+                  key={colIndex}
+                  className={`flex-1 p-4 text-left font-semibold text-lg ${borderClasses} ${
+                    column.highlight
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-primary/20 text-foreground"
+                  }`}
+                  data-testid={`th-column-${colIndex}`}
+                >
+                  {column.name}
+                </div>
+              );
+            })}
           </div>
           {/* Table body with card background and border */}
           <div className="bg-card rounded-b-lg border border-border border-t-0 overflow-hidden">
