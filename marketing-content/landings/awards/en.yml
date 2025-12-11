@@ -58,7 +58,7 @@ sections:
           src: "/assets/forbes-logo-award_1764709625651.webp"
           alt: "Forbes Award Badge"
         title: "Best Overall Data Science Bootcamp 2025"
-        description: "Our bootcamp was chosen by Forbes as the top option for its hands-on beginner friendly format, verified outcomes and job guarantee."
+        description: "https://4geeksacademy.com/static/4b1a86600c65842dee393d93f360d161/cd7d5/forbes-logo-award.webp"
         link_text: "See article"
         link_url: "https://www.forbes.com/advisor/education/bootcamps/best-data-science-bootcamps/"
       - image:
@@ -105,7 +105,7 @@ sections:
         title: "Education Champion Award 2024"
         description: "Recognized by the South Florida Tech Hub for advancing tech education and career growth across the region."
         link_text: "See article"
-        link_url: "https://techhubsouthflorida.org/"
+        link_url: "https://4geeksacademy.com/static/4b1a86600c65842dee393d93f360d161/cd7d5/forbes-logo-award.webp"
       - icon: "Star"
         title: "Best Bootcamp - eBootcamp 2024"
         description: "We've been nominated by eBootcamp as the top coding bootcamp for 2024."
