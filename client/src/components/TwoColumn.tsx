@@ -283,11 +283,11 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                             <>
                               <button
                                 onClick={() => toggleBullet(index)}
-                                className="lg:hidden flex items-center justify-between w-full text-left"
+                                className="lg:hidden flex items-start justify-between w-full text-left"
                                 data-testid={`button-toggle-bullet-${index}`}
                               >
                                 <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
-                                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground flex-shrink-0")}
+                                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground flex-shrink-0 mt-1")}
                               </button>
                               <span className={`font-semibold text-foreground ${textFontSize} hidden lg:block`}>{bullet.heading}</span>
                               <span className={`text-foreground ${textFontSize} ${isExpanded ? "" : "hidden lg:block"}`}>{bullet.text}</span>
