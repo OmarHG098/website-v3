@@ -72,6 +72,7 @@ sections:
           text: "Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time. You're never left wondering where you stand."
         - heading: "Career Support That Grows With You"
           text: "GeekFORCE isn't just for your first job. It's personalized, ongoing career coaching you can tap into again and again, whether you're changing roles, freelancing, or leveling up into leadership."
+      bullets_collapsible: true
       text_align: "left"
       footer: "The result: a truly hyperpersonalized learning experience that combines human mentorship with AI intelligence and that's yours for life — something no other bootcamp offers."
     right:
@@ -93,6 +94,7 @@ sections:
         - text: "Financing options start below $299/month, so you can learn without financial stress."
         - text: "Income-based payment options, where you only pay once you're earning."
         - text: "Scholarships available for eligible students."
+      bullets_visible: 2
       text_align: "left"
       button:
         text: "See financing options"
@@ -102,6 +104,26 @@ sections:
       image: "/attached_assets/reservation-es_1764814854635.webp"
       image_alt: "Woman working on laptop"
       justify: "center"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Results You Can Count On"
+    subtitle: "Numbers matter — and ours speak for themselves."
+    columns: 3
+    items:
+      - icon: "Briefcase"
+        icon_color: "#0097CD"
+        value: "84%"
+        title: "Job placement rate"
+      - icon: "Graduation"
+        icon_color: "#0097CD"
+        value: "3-6 months"
+        title: "Average time to get hired"
+      - icon: "GrowthChart"
+        icon_color: "#0097CD"
+        value: "55%"
+        title: "Salary increase after graduation"
 
   - type: two_column
     version: "1.0"
@@ -120,6 +142,7 @@ sections:
         - text: "Our curriculum is industry-aligned and AI-ready"
         - text: "Our mentorship is unlimited and personalized"
         - text: "Our career support never expires"
+      bullets_visible: 1
       text_align: "left"
       button:
         text: "Learn More"
@@ -143,28 +166,9 @@ sections:
           text: "Consistently recognized for Best Student Support and Best Value for Money"
         - heading: "20,000+ Students"
           text: "Trusted by 20,000+ students across the globe"
+      bullets_collapsible: true
       text_align: "left"
     right:
       image: "/attached_assets/community-support-2_1765406601448.webp"
       image_alt: "4Geeks Academy community and support"
       justify: "center"
-
-  - type: features_grid
-    version: "1.0"
-    variant: highlight
-    title: "Results You Can Count On"
-    subtitle: "Numbers matter — and ours speak for themselves."
-    columns: 3
-    items:
-      - icon: "Briefcase"
-        icon_color: "#0097CD"
-        value: "84%"
-        title: "Job placement rate"
-      - icon: "Graduation"
-        icon_color: "#0097CD"
-        value: "3-6 months"
-        title: "Average time to get hired"
-      - icon: "GrowthChart"
-        icon_color: "#0097CD"
-        value: "55%"
-        title: "Salary increase after graduation"

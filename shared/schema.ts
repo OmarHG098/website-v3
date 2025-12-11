@@ -295,6 +295,7 @@ export const twoColumnColumnSchema = z.object({
   button: ctaButtonSchema.optional(),
   bullets: z.array(twoColumnBulletSchema).optional(),
   bullets_visible: z.number().optional(),
+  bullets_collapsible: z.boolean().optional(),
   bullet_icon: z.string().optional(),
   bullet_char: z.string().optional(),
   bullet_icon_color: z.string().optional(),

@@ -197,6 +197,14 @@ function BulletGroups({
 
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
   const [bulletsExpanded, setBulletsExpanded] = useState(false);
+  const [expandedBullets, setExpandedBullets] = useState<Record<number, boolean>>({});
+  
+  const toggleBullet = (index: number) => {
+    setExpandedBullets(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
   const bulletIcon = column.bullet_icon || defaultBulletIcon || "Check";
   const bulletIconColor = column.bullet_icon_color || "text-primary";
   const gapClass = getGapClass(column.gap);
@@ -248,16 +256,21 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
             const visibleCount = column.bullets_visible ?? column.bullets.length;
             const hiddenCount = column.bullets.length - visibleCount;
             const hasHiddenBullets = hiddenCount > 0;
+            const isCollapsible = column.bullets_collapsible !== false;
+            const hasHeadedBullets = column.bullets.some(b => b.heading);
             
             return (
               <div className="w-full pl-2">
                 <ul className={`space-y-4 flex flex-col ${column.text_align === "center" ? "items-center" : column.text_align === "right" ? "items-end" : "items-start"}`} data-testid="list-two-column-bullets">
                   {column.bullets.map((bullet, index) => {
                     const isHiddenOnMobile = !bulletsExpanded && index >= visibleCount;
+                    const isExpanded = expandedBullets[index] ?? false;
+                    const canCollapse = isCollapsible && bullet.heading;
+                    
                     return (
                       <li 
                         key={index} 
-                        className={`flex items-start gap-3 ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
+                        className={`flex items-start gap-3 w-full ${isHiddenOnMobile ? "hidden lg:flex" : ""}`}
                       >
                         <span className={`${bulletIconColor} mt-1 flex-shrink-0`}>
                           {column.bullet_char 
@@ -265,11 +278,28 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                             : getIcon(bullet.icon || bulletIcon, "w-5 h-5")
                           }
                         </span>
-                        <div className="flex flex-col">
-                          {bullet.heading && (
-                            <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                        <div className="flex flex-col flex-1">
+                          {bullet.heading && canCollapse ? (
+                            <>
+                              <button
+                                onClick={() => toggleBullet(index)}
+                                className="lg:hidden flex items-center justify-between w-full text-left"
+                                data-testid={`button-toggle-bullet-${index}`}
+                              >
+                                <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                                {getIcon(isExpanded ? "ChevronUp" : "ChevronDown", "w-4 h-4 text-muted-foreground flex-shrink-0")}
+                              </button>
+                              <span className={`font-semibold text-foreground ${textFontSize} hidden lg:block`}>{bullet.heading}</span>
+                              <span className={`text-foreground ${textFontSize} ${isExpanded ? "" : "hidden lg:block"}`}>{bullet.text}</span>
+                            </>
+                          ) : (
+                            <>
+                              {bullet.heading && (
+                                <span className={`font-semibold text-foreground ${textFontSize}`}>{bullet.heading}</span>
+                              )}
+                              <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
+                            </>
                           )}
-                          <span className={`text-foreground ${textFontSize}`}>{bullet.text}</span>
                         </div>
                       </li>
                     );

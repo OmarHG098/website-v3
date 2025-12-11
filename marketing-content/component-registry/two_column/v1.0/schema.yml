@@ -153,6 +153,11 @@ props:
         type: number
         description: "Number of bullets to show on mobile/tablet before 'Show more' toggle. If not set, all bullets are shown."
         example: 2
+      bullets_collapsible:
+        type: boolean
+        description: "Whether bullets with headings are collapsible on mobile/tablet. When true, bullet headings become clickable toggles that expand/collapse the text. On desktop, all content is always visible."
+        default: true
+        example: true
       bullet_icon:
         type: string
         description: "Default Tabler icon for all bullets (e.g., 'Check', 'ArrowRight')"
