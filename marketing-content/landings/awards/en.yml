@@ -25,7 +25,7 @@ sections:
     title: "Top Coding Bootcamps"
     subtitle: "Trusted by Students, Recognized by Experts"
     image:
-      src: "/assets/Group-original_1765419144159.webp"
+      src: "/attached_assets/Group-original_1765419144159.webp"
       alt: "4Geeks Academy students collaborating"
 
   - type: features_grid
