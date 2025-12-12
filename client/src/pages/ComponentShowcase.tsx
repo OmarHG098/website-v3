@@ -405,7 +405,7 @@ function ComponentCard({
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
               <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
+                <SelectTrigger className="w-16" data-testid={`select-version-${componentType}`}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
