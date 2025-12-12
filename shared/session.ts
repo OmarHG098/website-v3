@@ -24,11 +24,8 @@ export interface UTMParams {
   utm_url?: string;
   utm_placement?: string;
   utm_plan?: string;
-  // Ad platform click IDs
-  gclid?: string;      // Google Ads
-  fbclid?: string;     // Facebook/Meta
-  msclkid?: string;    // Microsoft Ads
-  ttclid?: string;     // TikTok Ads
+  // Normalized PPC tracking ID (captures gclid, fbclid, msclkid, ttclid, etc.)
+  ppc_tracking_id?: string;
   // Referral tracking
   ref?: string;
   referral?: string;

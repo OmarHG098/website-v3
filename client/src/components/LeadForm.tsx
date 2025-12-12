@@ -191,11 +191,8 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         utm_term: utm.utm_term,
         utm_placement: utm.utm_placement,
         utm_plan: utm.utm_plan,
-        // Ad platform click IDs
-        gclid: utm.gclid,
-        fbclid: utm.fbclid,
-        msclkid: utm.msclkid,
-        ttclid: utm.ttclid,
+        // Normalized PPC tracking ID
+        ppc_tracking_id: utm.ppc_tracking_id,
         // Referral
         referral: utm.referral || utm.ref,
         // Form configuration

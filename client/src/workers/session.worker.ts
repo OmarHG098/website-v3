@@ -47,10 +47,10 @@ function parseUTMParams(search: string): UTMParams {
   const params = new URLSearchParams(search);
   const utm: UTMParams = {};
   
+  // Standard UTM parameters
   const utmKeys: (keyof UTMParams)[] = [
     'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
     'utm_url', 'utm_placement', 'utm_plan',
-    'gclid', 'fbclid', 'msclkid', 'ttclid',
     'ref', 'referral', 'coupon'
   ];
   
@@ -58,6 +58,16 @@ function parseUTMParams(search: string): UTMParams {
     const value = params.get(key);
     if (value) {
       utm[key] = value;
+    }
+  }
+  
+  // Normalize PPC click IDs into a single field (first one found wins)
+  const ppcClickIds = ['gclid', 'fbclid', 'msclkid', 'ttclid', 'li_fat_id', 'twclid', 'dclid', 'sclid'];
+  for (const clickId of ppcClickIds) {
+    const value = params.get(clickId);
+    if (value) {
+      utm.ppc_tracking_id = value;
+      break;
     }
   }
   
