@@ -278,19 +278,23 @@ export default function ExperimentEditor() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 border rounded-lg p-1">
               {formData?.variants.map((variant) => (
-                <div key={variant.slug} className="flex items-center gap-1">
-                  <Button
-                    variant={selectedVariant === variant.slug ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setSelectedVariant(variant.slug)}
-                    data-testid={`button-variant-${variant.slug}`}
-                  >
-                    {deslugify(variant.slug)}
-                  </Button>
-                  <Badge
-                    variant="secondary"
-                    className="cursor-pointer gap-1"
-                    onClick={() => {
+                <Button
+                  key={variant.slug}
+                  variant={selectedVariant === variant.slug ? "default" : "ghost"}
+                  size="sm"
+                  className="gap-2"
+                  onClick={() => setSelectedVariant(variant.slug)}
+                  data-testid={`button-variant-${variant.slug}`}
+                >
+                  {deslugify(variant.slug)}
+                  <span
+                    className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs cursor-pointer ${
+                      selectedVariant === variant.slug
+                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
                       const allocations: Record<string, number> = {};
                       formData?.variants.forEach((v) => {
                         allocations[v.slug] = v.allocation;
@@ -303,8 +307,8 @@ export default function ExperimentEditor() {
                   >
                     {variant.allocation}%
                     <IconPencil className="h-2.5 w-2.5" />
-                  </Badge>
-                </div>
+                  </span>
+                </Button>
               ))}
             </div>
             <Button
