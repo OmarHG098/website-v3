@@ -11,6 +11,7 @@ import starWarsImg from "@assets/star-wars_1764729369149.webp";
 import authenticationImg from "@assets/authentication-python_1764729364254.webp";
 import fullstackFinalImg from "@assets/fullstack-user-stories_1764729359334.webp";
 import cloneYourselfImg from "@assets/clon-yourself_1765501526533.webp";
+import promptBookAiImg from "@assets/prompt-book-ai_1765501656292.webp";
 
 interface ProjectsSectionProps {
   data: ProjectsSectionType;
@@ -25,6 +26,7 @@ const projectImages: Record<string, string> = {
   "final-project": fullstackFinalImg,
   "chatbot": cloneYourselfImg,
   "clone-yourself": cloneYourselfImg,
+  "prompt-book-ai": promptBookAiImg,
 };
 
 const difficultyColors: Record<string, string> = {
