@@ -55,6 +55,13 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - Debug endpoints: `GET /api/debug/experiments` for stats, `POST /api/debug/clear-experiment-cache` for cache clearing
     - Zero-latency design: In-memory operations with async exposure tracking (<2ms added latency)
     - Cookie persistence: Signed cookies prevent assignment tampering across sessions
+    - **Experiment Editor**: Full-featured editor at `/private/:contentType/:contentSlug/experiment/:experimentSlug` for managing A/B tests
+      - `client/src/pages/ExperimentEditor.tsx`: React component with tabbed interface for experiment configuration
+      - GET `/api/experiments/:contentType/:contentSlug/:experimentSlug`: Fetch experiment details with stats
+      - PATCH endpoint: Update experiment settings with Zod schema validation
+      - `shared/schema.ts`: `experimentUpdateSchema` with .strict() mode for request validation
+      - Validation rules: Variant allocations must sum to 100, YAML file validated before/after writes
+      - DebugBubble integration: SPA navigation via wouter Link to experiment editor from experiments menu
 -   **Inline Editing System**: A capability-based inline editing system designed for both human editors and AI agents. Key components:
     - `shared/schema.ts`: Editing capability types (`content_read`, `content_edit_text`, `content_edit_structure`, `content_edit_media`, `content_publish`) and structured `EditOperation` types
     - `client/src/hooks/useDebugAuth.ts`: Extended to return capabilities from token validation, with `hasCapability()` and `canEdit` helpers
