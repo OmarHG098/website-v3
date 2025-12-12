@@ -368,7 +368,7 @@ function ComponentCard({
     <>
       <header 
         ref={cardRef}
-        className={`sticky top-0 z-50 bg-background border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+        className="sticky top-0 z-50 bg-background border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 pt-[10px] pb-[10px] pl-[0px] pr-[0px]"
         data-testid={`component-card-${componentType}`}
       >
         <div className="flex flex-row items-start justify-between gap-4">
@@ -521,7 +521,6 @@ function ComponentCard({
           </div>
         </div>
       </header>
-
       {!showYaml && (
         <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
           <Button
@@ -536,7 +535,6 @@ function ComponentCard({
           </Button>
         </div>
       )}
-
       <Collapsible open={showYaml}>
         <CollapsibleContent>
           <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
@@ -596,7 +594,6 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
-
       <Collapsible open={showPreview}>
         <CollapsibleContent>
           <div className="border rounded-lg overflow-hidden bg-background -mx-4 sm:-mx-8 lg:-mx-16">
@@ -670,7 +667,6 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
-
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
