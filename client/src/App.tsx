@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import { DebugBubble } from "@/components/DebugBubble";
 import { SessionProvider } from "@/contexts/SessionContext";
+import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import "./i18n";
 
 const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
@@ -66,9 +67,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
         <TooltipProvider>
-          <Toaster />
-          <Router />
-          <DebugBubble />
+          <EditModeWrapper>
+            <Toaster />
+            <Router />
+            <DebugBubble />
+          </EditModeWrapper>
         </TooltipProvider>
       </SessionProvider>
     </QueryClientProvider>
