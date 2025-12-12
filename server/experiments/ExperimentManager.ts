@@ -327,6 +327,41 @@ export class ExperimentManager {
     this.contentCache.clear();
     console.log("[Experiments] Cache cleared");
   }
+
+  /**
+   * Get experiments list for a content type and slug
+   * Used by debug panel to show available experiments
+   */
+  public getExperimentsForContent(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    slug: string
+  ): ExperimentsFile | null {
+    const configPath = path.join(CONTENT_DIR, contentType, slug, "experiments.yml");
+    
+    if (!fs.existsSync(configPath)) {
+      return null;
+    }
+
+    try {
+      const content = fs.readFileSync(configPath, "utf-8");
+      const parsed = yaml.load(content);
+      const validated = experimentsFileSchema.parse(parsed);
+      return validated;
+    } catch (error) {
+      console.error(`[Experiments] Error loading experiments for ${contentType}/${slug}:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Get the file path for experiments config
+   */
+  public getExperimentsFilePath(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    slug: string
+  ): string {
+    return path.join(CONTENT_DIR, contentType, slug, "experiments.yml");
+  }
 }
 
 // Singleton instance

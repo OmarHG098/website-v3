@@ -1,5 +1,6 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
 import {
   IconBug,
@@ -38,6 +39,8 @@ import {
   IconSparkles,
   IconChartBar,
   IconTable,
+  IconFlask,
+  IconPlus,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -88,7 +91,7 @@ const componentsList = [
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
-type MenuView = "main" | "components" | "sitemap";
+type MenuView = "main" | "components" | "sitemap" | "experiments";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -103,11 +106,88 @@ interface RedirectItem {
   type: string;
 }
 
+interface ExperimentVariant {
+  slug: string;
+  version: number;
+  allocation: number;
+}
+
+interface ExperimentConfig {
+  slug: string;
+  status: "planned" | "active" | "paused" | "winner" | "archived";
+  description?: string;
+  variants: ExperimentVariant[];
+  targeting?: Record<string, unknown>;
+  max_visitors?: number;
+  stats?: Record<string, number>;
+}
+
+interface ExperimentsResponse {
+  experiments: ExperimentConfig[];
+  hasExperimentsFile: boolean;
+  filePath: string;
+}
+
+interface ContentInfo {
+  type: "programs" | "pages" | "landings" | "locations" | null;
+  slug: string | null;
+  label: string;
+}
+
+// De-slugify a string (e.g., "hero-messaging-test" -> "Hero Messaging Test")
+function deslugify(slug: string): string {
+  return slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+// Detect content type and slug from URL path
+function detectContentInfo(pathname: string): ContentInfo {
+  // Programs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
+  const programEnMatch = pathname.match(/^\/en\/career-programs\/([^/]+)\/?$/);
+  if (programEnMatch) {
+    return { type: "programs", slug: programEnMatch[1], label: "Program" };
+  }
+  const programEsMatch = pathname.match(/^\/es\/programas-de-carrera\/([^/]+)\/?$/);
+  if (programEsMatch) {
+    return { type: "programs", slug: programEsMatch[1], label: "Program" };
+  }
+
+  // Landings: /landing/:slug
+  const landingMatch = pathname.match(/^\/landing\/([^/]+)\/?$/);
+  if (landingMatch) {
+    return { type: "landings", slug: landingMatch[1], label: "Landing" };
+  }
+
+  // Locations: /en/location/:slug or /es/ubicacion/:slug
+  const locationEnMatch = pathname.match(/^\/en\/location\/([^/]+)\/?$/);
+  if (locationEnMatch) {
+    return { type: "locations", slug: locationEnMatch[1], label: "Location" };
+  }
+  const locationEsMatch = pathname.match(/^\/es\/ubicacion\/([^/]+)\/?$/);
+  if (locationEsMatch) {
+    return { type: "locations", slug: locationEsMatch[1], label: "Location" };
+  }
+
+  // Template pages: /en/:slug or /es/:slug (catch-all for pages)
+  const pageEnMatch = pathname.match(/^\/en\/([^/]+)\/?$/);
+  if (pageEnMatch && !["career-programs", "location"].includes(pageEnMatch[1])) {
+    return { type: "pages", slug: pageEnMatch[1], label: "Page" };
+  }
+  const pageEsMatch = pathname.match(/^\/es\/([^/]+)\/?$/);
+  if (pageEsMatch && !["programas-de-carrera", "ubicacion"].includes(pageEsMatch[1])) {
+    return { type: "pages", slug: pageEsMatch[1], label: "Page" };
+  }
+
+  return { type: null, slug: null, label: "" };
+}
+
 // Get persisted menu view from sessionStorage
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments") {
       return stored;
     }
   }
@@ -151,6 +231,7 @@ export function DebugBubble() {
   const { session } = useSession();
   const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
+  const [pathname] = useLocation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -167,6 +248,13 @@ export function DebugBubble() {
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
+  
+  // Experiments state
+  const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
+  const [experimentsLoading, setExperimentsLoading] = useState(false);
+  
+  // Detect current content info from URL
+  const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
   // Check if location is currently overridden via query string
   const currentLocationOverride = typeof window !== "undefined" 
@@ -212,6 +300,34 @@ export function DebugBubble() {
         .catch(() => {});
     }
   }, []);
+
+  // Fetch experiments when entering experiments view
+  useEffect(() => {
+    if (menuView === "experiments" && contentInfo.type && contentInfo.slug) {
+      setExperimentsLoading(true);
+      fetch(`/api/experiments/${contentInfo.type}/${contentInfo.slug}`)
+        .then((res) => res.json())
+        .then((data: ExperimentsResponse) => {
+          setExperimentsData(data);
+          setExperimentsLoading(false);
+        })
+        .catch(() => {
+          setExperimentsLoading(false);
+          setExperimentsData(null);
+        });
+    }
+  }, [menuView, contentInfo.type, contentInfo.slug]);
+
+  // Reset experiments data and menu view when leaving a content page
+  useEffect(() => {
+    if (!contentInfo.type) {
+      setExperimentsData(null);
+      // Reset menu view to main if currently on experiments view
+      if (menuView === "experiments") {
+        setMenuView("main");
+      }
+    }
+  }, [contentInfo.type, menuView]);
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -568,6 +684,24 @@ export function DebugBubble() {
                 </a>
                 
                 <EditModeToggle />
+                
+                {/* Experiments menu item - only shown on content pages */}
+                {contentInfo.type && contentInfo.slug && (
+                  <button
+                    onClick={() => setMenuView("experiments")}
+                    className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                    data-testid="button-experiments-menu"
+                  >
+                    <div className="flex items-center gap-3">
+                      <IconFlask className="h-4 w-4 text-muted-foreground" />
+                      <span>Experiments</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs text-muted-foreground">{contentInfo.label}</span>
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </button>
+                )}
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -660,6 +794,98 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
+                </div>
+              </ScrollArea>
+            </>
+          ) : menuView === "experiments" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setMenuView("main")}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main-experiments"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                    <div>
+                      <h3 className="font-semibold text-sm">Experiments</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {contentInfo.label}: {contentInfo.slug}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    className="p-1.5 rounded hover-elevate"
+                    title="Create new experiment"
+                    data-testid="button-create-experiment"
+                  >
+                    <IconPlus className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  {experimentsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : !experimentsData?.hasExperimentsFile ? (
+                    <div className="text-center py-8 px-4">
+                      <IconFlask className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground mb-2">No experiments file found</p>
+                      <p className="text-xs text-muted-foreground">
+                        Create <code className="bg-muted px-1 rounded">experiments.yml</code> in the content folder
+                      </p>
+                    </div>
+                  ) : experimentsData.experiments.length === 0 ? (
+                    <div className="text-center py-8 px-4">
+                      <IconFlask className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground">No experiments defined</p>
+                    </div>
+                  ) : (
+                    experimentsData.experiments.map((experiment) => {
+                      const statusColors: Record<string, string> = {
+                        planned: "bg-muted text-muted-foreground",
+                        active: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+                        paused: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
+                        winner: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+                        archived: "bg-muted text-muted-foreground opacity-60",
+                      };
+                      const totalExposures = Object.values(experiment.stats || {}).reduce((a, b) => a + b, 0);
+                      
+                      return (
+                        <button
+                          key={experiment.slug}
+                          className="flex flex-col w-full px-3 py-2.5 rounded-md text-sm hover-elevate cursor-pointer text-left"
+                          data-testid={`button-experiment-${experiment.slug}`}
+                        >
+                          <div className="flex items-center justify-between w-full mb-1">
+                            <span className="font-medium">{deslugify(experiment.slug)}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[experiment.status]}`}>
+                              {experiment.status}
+                            </span>
+                          </div>
+                          {experiment.description && (
+                            <p className="text-xs text-muted-foreground line-clamp-2 mb-1">
+                              {experiment.description}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span>{experiment.variants.length} variants</span>
+                            {totalExposures > 0 && (
+                              <span>{totalExposures} exposures</span>
+                            )}
+                            {experiment.max_visitors && (
+                              <span>max {experiment.max_visitors}</span>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })
+                  )}
                 </div>
               </ScrollArea>
             </>

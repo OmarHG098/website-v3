@@ -564,6 +564,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Experiment cache cleared" });
   });
 
+  // Get experiments for a specific content type and slug
+  app.get("/api/experiments/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    // Validate content type
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ 
+        error: "Invalid content type", 
+        validTypes 
+      });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const experiments = experimentManager.getExperimentsForContent(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      slug
+    );
+    
+    if (!experiments) {
+      res.json({ 
+        experiments: [],
+        hasExperimentsFile: false,
+        filePath: experimentManager.getExperimentsFilePath(
+          contentType as "programs" | "pages" | "landings" | "locations",
+          slug
+        )
+      });
+      return;
+    }
+    
+    // Get stats for each experiment
+    const stats = experimentManager.getStats();
+    const experimentsWithStats = experiments.experiments.map(exp => ({
+      ...exp,
+      stats: stats[exp.slug] || {}
+    }));
+    
+    res.json({
+      experiments: experimentsWithStats,
+      hasExperimentsFile: true,
+      filePath: experimentManager.getExperimentsFilePath(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        slug
+      )
+    });
+  });
+
   // Component Registry API endpoints
   app.get("/api/component-registry", (req, res) => {
     const overview = getRegistryOverview();
