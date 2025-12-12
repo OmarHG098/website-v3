@@ -368,9 +368,11 @@ function ComponentCard({
     <>
       <header 
         ref={cardRef}
-        className="sticky top-0 z-50 border-b mb-4 py-3 bg-background w-[100vw] ml-[calc(-50vw+50%)] px-4 sm:px-8 lg:px-16"
+        className="sticky top-0 z-50 border-b mb-4 py-3 bg-background -mx-4 sm:-mx-8 lg:-mx-16 xl:-mx-[calc((100vw-72rem)/2+4rem)]"
+        style={{ width: 'calc(100% + 2rem)', maxWidth: '100vw' }}
         data-testid={`component-card-${componentType}`}
       >
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-16">
         <div className="flex flex-row items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3">
