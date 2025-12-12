@@ -1005,11 +1005,11 @@ export function DebugBubble() {
                           </button>
                           {expandedFolders.has(folder.name) && (
                             <div className="ml-4 border-l pl-2 space-y-1 mt-1">
-                              {folder.urls.map((url) => {
+                              {folder.urls.map((url, urlIndex) => {
                                 const path = new URL(url.loc).pathname;
                                 return (
                                   <a
-                                    key={url.loc}
+                                    key={`${folder.name}-${urlIndex}-${url.loc}`}
                                     href={path}
                                     className="flex items-center gap-3 px-3 py-1.5 rounded-md text-sm hover-elevate cursor-pointer"
                                     data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1026,11 +1026,11 @@ export function DebugBubble() {
                           )}
                         </div>
                       ))}
-                      {rootUrls.map((url) => {
+                      {rootUrls.map((url, urlIndex) => {
                         const path = new URL(url.loc).pathname;
                         return (
                           <a
-                            key={url.loc}
+                            key={`root-${urlIndex}-${url.loc}`}
                             href={path}
                             className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
                             data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
