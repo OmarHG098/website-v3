@@ -854,7 +854,7 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 pt-[10px] pb-[10px]">
           <div className="max-w-6xl mx-auto">
             <ComponentCard 
               key={componentType} 
