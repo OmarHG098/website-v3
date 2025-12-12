@@ -1,6 +1,6 @@
 import { useParams, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -76,16 +76,36 @@ function deslugify(slug: string): string {
     .join(' ');
 }
 
+interface Suggestion {
+  value: string;
+  label: string;
+}
+
 interface TagInputProps {
   values: string[];
   onChange: (values: string[]) => void;
   placeholder?: string;
   transform?: (value: string) => string;
+  suggestions?: Suggestion[];
   "data-testid"?: string;
 }
 
-function TagInput({ values, onChange, placeholder, transform, "data-testid": testId }: TagInputProps) {
+function TagInput({ values, onChange, placeholder, transform, suggestions, "data-testid": testId }: TagInputProps) {
   const [inputValue, setInputValue] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const filteredSuggestions = useMemo(() => {
+    if (!suggestions || !inputValue.trim()) return [];
+    const query = inputValue.toLowerCase();
+    return suggestions
+      .filter(s => 
+        !values.includes(s.value) && 
+        (s.value.toLowerCase().includes(query) || s.label.toLowerCase().includes(query))
+      )
+      .slice(0, 8);
+  }, [suggestions, inputValue, values]);
 
   const addTag = (value: string) => {
     const trimmed = transform ? transform(value.trim()) : value.trim();
@@ -93,6 +113,8 @@ function TagInput({ values, onChange, placeholder, transform, "data-testid": tes
       onChange([...values, trimmed]);
     }
     setInputValue("");
+    setShowSuggestions(false);
+    setHighlightedIndex(-1);
   };
 
   const removeTag = (index: number) => {
@@ -100,6 +122,26 @@ function TagInput({ values, onChange, placeholder, transform, "data-testid": tes
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (showSuggestions && filteredSuggestions.length > 0) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setHighlightedIndex(i => Math.min(i + 1, filteredSuggestions.length - 1));
+        return;
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setHighlightedIndex(i => Math.max(i - 1, 0));
+        return;
+      } else if (e.key === "Enter" && highlightedIndex >= 0) {
+        e.preventDefault();
+        addTag(filteredSuggestions[highlightedIndex].value);
+        return;
+      } else if (e.key === "Escape") {
+        setShowSuggestions(false);
+        setHighlightedIndex(-1);
+        return;
+      }
+    }
+
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       if (inputValue.trim()) {
@@ -122,43 +164,85 @@ function TagInput({ values, onChange, placeholder, transform, "data-testid": tes
       setInputValue(parts[parts.length - 1]);
     } else {
       setInputValue(value);
+      setShowSuggestions(!!value.trim() && !!suggestions?.length);
+      setHighlightedIndex(-1);
     }
   };
 
+  const getDisplayLabel = (value: string) => {
+    if (suggestions) {
+      const suggestion = suggestions.find(s => s.value === value);
+      return suggestion?.label || value;
+    }
+    return value;
+  };
+
   return (
-    <div className="flex flex-wrap gap-1.5 p-2 min-h-10 border rounded-md bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-      {values.map((tag, index) => (
-        <Badge
-          key={`${tag}-${index}`}
-          variant="secondary"
-          className="gap-1 pr-1"
-          data-testid={`${testId}-tag-${index}`}
-        >
-          {tag}
-          <button
-            type="button"
-            onClick={() => removeTag(index)}
-            className="ml-0.5 rounded-full hover:bg-muted-foreground/20 p-0.5"
-            data-testid={`${testId}-remove-${index}`}
+    <div className="relative">
+      <div className="flex flex-wrap gap-1.5 p-2 min-h-10 border rounded-md bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+        {values.map((tag, index) => (
+          <Badge
+            key={`${tag}-${index}`}
+            variant="secondary"
+            className="gap-1 pr-1"
+            data-testid={`${testId}-tag-${index}`}
           >
-            <IconX className="h-3 w-3" />
-          </button>
-        </Badge>
-      ))}
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        onBlur={() => {
-          if (inputValue.trim()) {
-            addTag(inputValue);
-          }
-        }}
-        placeholder={values.length === 0 ? placeholder : ""}
-        className="flex-1 min-w-20 bg-transparent outline-none text-sm"
-        data-testid={testId}
-      />
+            {getDisplayLabel(tag)}
+            <button
+              type="button"
+              onClick={() => removeTag(index)}
+              className="ml-0.5 rounded-full hover:bg-muted-foreground/20 p-0.5"
+              data-testid={`${testId}-remove-${index}`}
+            >
+              <IconX className="h-3 w-3" />
+            </button>
+          </Badge>
+        ))}
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => {
+            if (inputValue.trim() && suggestions?.length) {
+              setShowSuggestions(true);
+            }
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setShowSuggestions(false);
+              if (inputValue.trim() && !suggestions) {
+                addTag(inputValue);
+              }
+            }, 150);
+          }}
+          placeholder={values.length === 0 ? placeholder : ""}
+          className="flex-1 min-w-20 bg-transparent outline-none text-sm"
+          data-testid={testId}
+        />
+      </div>
+      {showSuggestions && filteredSuggestions.length > 0 && (
+        <div className="absolute z-50 w-full mt-1 bg-popover border rounded-md shadow-md max-h-48 overflow-auto">
+          {filteredSuggestions.map((suggestion, index) => (
+            <button
+              key={suggestion.value}
+              type="button"
+              className={`w-full px-3 py-2 text-left text-sm hover:bg-accent ${
+                index === highlightedIndex ? "bg-accent" : ""
+              }`}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                addTag(suggestion.value);
+              }}
+              data-testid={`${testId}-suggestion-${suggestion.value}`}
+            >
+              <span className="font-medium">{suggestion.label}</span>
+              <span className="text-muted-foreground ml-2 text-xs">({suggestion.value})</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -693,32 +777,16 @@ export default function ExperimentEditor() {
                   <IconMapPin className="h-4 w-4" />
                   Locations
                 </Label>
-                <ScrollArea className="h-32 border rounded-md p-2">
-                  <div className="flex flex-wrap gap-1">
-                    {locationsData?.map((location) => (
-                      <Button
-                        key={location.slug}
-                        variant={
-                          formData?.targeting?.locations?.includes(location.slug)
-                            ? "default"
-                            : "outline"
-                        }
-                        size="sm"
-                        className="h-7 text-xs"
-                        onClick={() => {
-                          const current = formData?.targeting?.locations || [];
-                          const updated = current.includes(location.slug)
-                            ? current.filter((l) => l !== location.slug)
-                            : [...current, location.slug];
-                          updateTargeting("locations", updated.length ? updated : undefined);
-                        }}
-                        data-testid={`button-location-${location.slug}`}
-                      >
-                        {location.city}
-                      </Button>
-                    ))}
-                  </div>
-                </ScrollArea>
+                <TagInput
+                  values={formData?.targeting?.locations || []}
+                  onChange={(values) => updateTargeting("locations", values.length ? values : undefined)}
+                  placeholder="Type city or slug..."
+                  suggestions={locationsData?.map(loc => ({
+                    value: loc.slug,
+                    label: `${loc.city}, ${loc.country}`
+                  })) || []}
+                  data-testid="input-locations"
+                />
               </div>
             </div>
 
