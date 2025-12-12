@@ -1,20 +1,30 @@
-name: "Rigobot AI Showcase"
-description: "Highlights the AI-powered learning experience with Rigobot tutor and LearnPack"
+name: "Rigobot AI Showcase (Full)"
+description: "Complete example with title, description, 3 feature cards, highlight with bullets, and embedded video"
 
 yaml: |
   type: ai_learning
-  badge: "AI-Powered"
-  title: "Learn Faster with AI Support"
-  description: "Get instant feedback and personalized guidance from our AI tutor. Rigobot helps you understand concepts, debug code, and accelerate your learning journey."
+  version: "1.0"
+  badge: "Why 4Geeks?"
+  title: "Why Learn with 4Geeks?"
+  description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
+  video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
   features:
-    - icon: "robot"
-      title: "Rigobot AI Tutor"
-      description: "24/7 AI assistant that explains concepts, reviews your code, and provides personalized guidance tailored to your learning pace."
-    - icon: "code"
-      title: "LearnPack Interactive"
-      description: "Hands-on coding exercises with real-time feedback. Practice in a sandbox environment with auto-grading and hints when you get stuck."
-  chat_example:
-    bot_name: "Rigobot"
-    bot_status: "AI Tutor - Online"
-    user_message: "I don't understand how async/await works in JavaScript"
-    bot_response: "Great question! Async/await is syntactic sugar for Promises. When you use 'async' before a function, it always returns a Promise. The 'await' keyword pauses execution until that Promise resolves. Let me show you an example..."
+    - icon: "Robot"
+      title: "Learn with AI"
+      description: "Our AI reviews your code to give you instant feedback, helps with the exercises, and more!"
+    - icon: "Headset"
+      title: "Unlimited 1:1 mentoring sessions"
+      description: "Access unlimited mentorship sessions with our experts whenever you need guidance."
+    - icon: "Users"
+      title: "Learn with the community"
+      description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
+  highlight:
+    title: "Maximize your Progress with Rigobot and 1:1 Mentorship"
+    description: "Live instruction, unlimited mentorship, and AI tools built for smarter, faster learning."
+    bullets:
+      - text: "Rigobot, our AI coding assistant, follows your progress and gives tailored feedback exactly when and how you need it."
+      - text: "Get unmatched personal attention with our 7:1 student teacher ratio, plus unlimited access to 1:1 sessions with expert mentors and career coaches."
+    cta:
+      text: "Start learning now!"
+      url: "/apply"
+      variant: "primary"

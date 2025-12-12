@@ -1,45 +1,83 @@
 name: "AI Learning Section"
 version: "1.0"
 component: "AILearningSection"
-file: "client/src/components/career-programs/AILearningSection.tsx"
-description: "Showcases AI-powered learning tools with an interactive chat example"
+file: "client/src/components/AILearningSection.tsx"
+description: "Showcases AI-powered learning tools with Rigobot, feature cards, highlight with bullets, and optional video"
 
 when_to_use: |
-  Use to highlight Rigobot AI tutor and LearnPack software.
+  Use to highlight Rigobot AI tutor, mentorship benefits, and community learning.
   Best placed after program overview to emphasize unique learning experience.
+  Includes title/description header, 3 feature cards, and a two-column highlight section with optional video.
 
 props:
   badge:
     type: string
     required: false
-    example: "AI-Powered"
+    example: "Why 4Geeks?"
     
   title:
     type: string
     required: true
-    example: "Learn Faster with AI Support"
+    example: "Why Learn with 4Geeks?"
     
   description:
     type: string
     required: true
-    example: "Our AI tools provide instant feedback and personalized guidance"
+    example: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
+
+  video_url:
+    type: string
+    required: false
+    description: "YouTube video URL for embedded player"
+    example: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
     
   features:
     type: array
     required: true
-    description: "AI features to highlight (recommended: 2)"
+    description: "Feature cards to display (recommended: 3)"
     items:
       icon:
         type: string
+        description: "Tabler icon name (e.g., Robot, Headset, Users)"
       title:
         type: string
       description:
         type: string
+
+  highlight:
+    type: object
+    required: false
+    description: "Two-column highlight section with Rigobot branding"
+    fields:
+      title:
+        type: string
+        example: "Maximize your Progress with Rigobot and 1:1 Mentorship"
+      description:
+        type: string
+        example: "Live instruction, unlimited mentorship, and AI tools built for smarter, faster learning."
+      bullets:
+        type: array
+        required: false
+        description: "Bullet points for key benefits"
+        items:
+          text:
+            type: string
+      cta:
+        type: object
+        required: false
+        fields:
+          text:
+            type: string
+          url:
+            type: string
+          variant:
+            type: string
+            enum: ["primary", "secondary", "outline"]
         
   chat_example:
     type: object
     required: false
-    description: "Interactive chat demo showing AI tutor in action"
+    description: "Interactive chat demo showing AI tutor in action (legacy, optional)"
     fields:
       bot_name:
         type: string
