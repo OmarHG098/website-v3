@@ -111,11 +111,22 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 </div>
                 
                 <p 
-                  className="mb-6 text-[#666666] text-[18px]"
+                  className="mb-6 text-muted-foreground text-[18px]"
                   data-testid="text-highlight-description"
                 >
                   {data.highlight.description}
                 </p>
+
+                {data.highlight.bullets && data.highlight.bullets.length > 0 && (
+                  <ul className="space-y-4 mb-6" data-testid="highlight-bullets">
+                    {data.highlight.bullets.map((bullet, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="text-primary mt-1.5 flex-shrink-0">•</span>
+                        <span className="text-muted-foreground">{bullet.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 
                 {data.highlight.cta && (
                   <Button
