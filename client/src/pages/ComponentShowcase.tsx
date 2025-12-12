@@ -371,10 +371,12 @@ function ComponentCard({
         className={`sticky top-0 z-50 bg-background border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`}
         data-testid={`component-card-${componentType}`}
       >
-        <div className="flex flex-row items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-xl font-semibold">{schema.name}</h1>
-            <Badge variant="secondary">{componentType}</Badge>
+        <div className="flex flex-row items-start justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-semibold">{schema.name}</h1>
+              <Badge variant="secondary">{componentType}</Badge>
+            </div>
             {(() => {
               const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
               if (variants.length === 0) return null;
@@ -388,14 +390,14 @@ function ComponentCard({
                 video: 'Video',
               };
               return (
-                <>
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs text-muted-foreground">Variants:</span>
                   {variants.map(variant => (
                     <Badge key={variant} variant="outline" className="text-xs">
                       {variantLabels[variant as string] || variant}
                     </Badge>
                   ))}
-                </>
+                </div>
               );
             })()}
           </div>
