@@ -273,7 +273,7 @@ export default function ComponentPickerModal({
     }
     const exampleData = examples.find(e => e.slug === selectedExample);
     if (!exampleData) return null;
-    return `/component-preview?type=${selectedComponent.type}&version=${selectedVersion}&example=${encodeURIComponent(exampleData.name)}`;
+    return `/component-preview?type=${selectedComponent.type}&version=${selectedVersion}&example=${encodeURIComponent(exampleData.name)}&debug=false`;
   }, [selectedComponent, selectedVersion, selectedExample, examples]);
 
   const groupedExamples = useMemo(() => {
