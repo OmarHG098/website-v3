@@ -132,3 +132,20 @@ sections:
             value: 21
           - label: "Asia"
             value: 1
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Making Tech Careers Accessible"
+    subtitle: "Tech careers should be open to everyone. That's why we offer:"
+    columns: 3
+    items:
+      - icon: "CurrencyDollar"
+        title: "Affordable Tuition"
+        description: "Lowest among top-rated bootcamps (recognized by Forbes as Best Bootcamp for Students on a Budget)."
+      - icon: "CreditCard"
+        title: "Flexible Financing"
+        description: "Options starting below $299/month, plus affordable loans and income-based payment plans."
+      - icon: "School"
+        title: "Full and Partial Scholarships"
+        description: "Location-based options thanks to important institutional partnerships and government initiatives."
