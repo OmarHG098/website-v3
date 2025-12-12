@@ -90,10 +90,12 @@ sections:
             value: 76
           - label: "Female"
             value: 24
+            color: "chart-5"
       - title: "Region"
         items:
           - label: "North America"
             value: 60
+            color: "chart-5"
           - label: "Lat.Am."
             value: 34
           - label: "Europe"
