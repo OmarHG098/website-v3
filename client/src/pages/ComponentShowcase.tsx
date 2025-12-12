@@ -147,7 +147,7 @@ function ComponentCard({
   const [iframeHeight, setIframeHeight] = useState(400);
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
-  const [showYaml, setShowYaml] = useState(true);
+  const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
   const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
@@ -845,7 +845,7 @@ export default function ComponentShowcase() {
               <p className="text-muted-foreground mb-6">
                 The component "{componentType}" does not exist.
               </p>
-              <Link href="/component-showcase">
+              <Link href="/private/component-showcase">
                 <Button variant="outline" data-testid="link-back-to-showcase">
                   <IconList className="w-4 h-4 mr-2" />
                   View All Components

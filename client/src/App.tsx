@@ -41,8 +41,8 @@ function Router() {
         <Route path="/en/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
-                <Route path="/component-showcase" component={ComponentShowcase} />
-        <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
+                <Route path="/private/component-showcase" component={ComponentShowcase} />
+        <Route path="/private/component-showcase/:componentType" component={ComponentShowcase} />
         <Route path="/en/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
