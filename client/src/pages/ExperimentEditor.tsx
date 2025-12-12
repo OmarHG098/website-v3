@@ -684,7 +684,7 @@ export default function ExperimentEditor() {
 
             <Separator />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label>UTM Sources</Label>
                 <TagInput
@@ -701,6 +701,15 @@ export default function ExperimentEditor() {
                   onChange={(values) => updateTargeting("utm_campaigns", values.length ? values : undefined)}
                   placeholder="Type and press Enter or comma..."
                   data-testid="input-utm-campaigns"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>UTM Mediums</Label>
+                <TagInput
+                  values={formData?.targeting?.utm_mediums || []}
+                  onChange={(values) => updateTargeting("utm_mediums", values.length ? values : undefined)}
+                  placeholder="Type and press Enter or comma..."
+                  data-testid="input-utm-mediums"
                 />
               </div>
             </div>
