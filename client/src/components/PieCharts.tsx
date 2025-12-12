@@ -35,6 +35,16 @@ const chartColors = [
   "hsl(var(--chart-5))",
 ];
 
+function resolveColor(color: string | undefined, fallbackIndex: number): string {
+  if (!color) return chartColors[fallbackIndex % chartColors.length];
+  
+  if (color.match(/^chart-[1-5]$/)) {
+    return `hsl(var(--${color}))`;
+  }
+  
+  return color;
+}
+
 function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData; isVisible: boolean; delayOffset: number }) {
   const [animationProgress, setAnimationProgress] = useState(0);
   const animationRef = useRef<number | null>(null);
@@ -55,7 +65,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
       startAngle,
       endAngle: cumulativeAngle,
       angle,
-      color: item.color || chartColors[index % chartColors.length],
+      color: resolveColor(item.color, index),
     };
   });
 

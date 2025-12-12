@@ -79,6 +79,7 @@ sections:
         items:
           - label: "22-25"
             value: 30
+            color: "chart-5"
           - label: "26-32"
             value: 44
           - label: "33-42"
