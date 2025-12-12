@@ -45,7 +45,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import Header from "@/components/Header";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
@@ -825,7 +824,6 @@ export default function ComponentShowcase() {
     if (singleLoading) {
       return (
         <div className="min-h-screen bg-background">
-          <Header />
           <main className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-muted-foreground">Loading component...</p>
@@ -838,7 +836,6 @@ export default function ComponentShowcase() {
     if (!singleComponent) {
       return (
         <div className="min-h-screen bg-background">
-          <Header />
           <main className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-3xl font-bold mb-4">Component Not Found</h1>
@@ -863,8 +860,6 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <Header />
-        
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <ComponentCard 
@@ -886,7 +881,6 @@ export default function ComponentShowcase() {
   if (registryLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-muted-foreground">Loading components...</p>
@@ -898,8 +892,6 @@ export default function ComponentShowcase() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto mb-8">
           <h1 className="text-3xl font-bold mb-2" data-testid="text-showcase-title">
