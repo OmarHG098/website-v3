@@ -86,6 +86,9 @@ export default function ExperimentEditor() {
   const [hasChanges, setHasChanges] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editDescription, setEditDescription] = useState("");
+  const [allocationDialogOpen, setAllocationDialogOpen] = useState(false);
+  const [editingVariantSlug, setEditingVariantSlug] = useState<string | null>(null);
+  const [tempAllocations, setTempAllocations] = useState<Record<string, number>>({});
 
   const [formData, setFormData] = useState<{
     description: string;
@@ -274,15 +277,33 @@ export default function ExperimentEditor() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 border rounded-lg p-1">
               {formData?.variants.map((variant) => (
-                <Button
-                  key={variant.slug}
-                  variant={selectedVariant === variant.slug ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedVariant(variant.slug)}
-                  data-testid={`button-variant-${variant.slug}`}
-                >
-                  {deslugify(variant.slug)}
-                </Button>
+                <div key={variant.slug} className="flex items-center gap-1">
+                  <Button
+                    variant={selectedVariant === variant.slug ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setSelectedVariant(variant.slug)}
+                    data-testid={`button-variant-${variant.slug}`}
+                  >
+                    {deslugify(variant.slug)}
+                  </Button>
+                  <Badge
+                    variant="secondary"
+                    className="cursor-pointer gap-1"
+                    onClick={() => {
+                      const allocations: Record<string, number> = {};
+                      formData?.variants.forEach((v) => {
+                        allocations[v.slug] = v.allocation;
+                      });
+                      setTempAllocations(allocations);
+                      setEditingVariantSlug(variant.slug);
+                      setAllocationDialogOpen(true);
+                    }}
+                    data-testid={`badge-allocation-${variant.slug}`}
+                  >
+                    {variant.allocation}%
+                    <IconPencil className="h-2.5 w-2.5" />
+                  </Badge>
+                </div>
               ))}
             </div>
             <Button
@@ -704,6 +725,85 @@ export default function ExperimentEditor() {
                 setEditDialogOpen(false);
               }}
               data-testid="button-save-edit"
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={allocationDialogOpen} onOpenChange={setAllocationDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Traffic Allocation</DialogTitle>
+            <DialogDescription>
+              Adjust how traffic is distributed between variants. Total must equal 100%.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            {formData?.variants.map((variant) => (
+              <div key={variant.slug} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>{deslugify(variant.slug)}</Label>
+                  <span className="text-sm font-medium">
+                    {tempAllocations[variant.slug] ?? variant.allocation}%
+                  </span>
+                </div>
+                <Slider
+                  value={[tempAllocations[variant.slug] ?? variant.allocation]}
+                  min={0}
+                  max={100}
+                  step={1}
+                  onValueChange={([value]) => {
+                    setTempAllocations((prev) => ({
+                      ...prev,
+                      [variant.slug]: value,
+                    }));
+                  }}
+                  data-testid={`slider-temp-allocation-${variant.slug}`}
+                />
+              </div>
+            ))}
+            {(() => {
+              const total = Object.values(tempAllocations).reduce((sum, v) => sum + v, 0);
+              if (total !== 100) {
+                return (
+                  <p className="text-sm text-amber-600 dark:text-amber-400">
+                    Total allocation is {total}%, should be 100%
+                  </p>
+                );
+              }
+              return null;
+            })()}
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setAllocationDialogOpen(false)}
+              data-testid="button-cancel-allocation"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                const total = Object.values(tempAllocations).reduce((sum, v) => sum + v, 0);
+                if (total !== 100) {
+                  toast({
+                    title: "Invalid allocation",
+                    description: "Total allocation must equal 100%",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+                const updatedVariants = formData?.variants.map((v) => ({
+                  ...v,
+                  allocation: tempAllocations[v.slug] ?? v.allocation,
+                })) || [];
+                setFormData((prev) => prev ? { ...prev, variants: updatedVariants } : null);
+                setHasChanges(true);
+                setAllocationDialogOpen(false);
+              }}
+              data-testid="button-save-allocation"
             >
               Save
             </Button>
