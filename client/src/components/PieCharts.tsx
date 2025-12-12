@@ -242,7 +242,7 @@ export function PieCharts({ data }: PieChartsProps) {
             key={index} 
             chart={chart} 
             isVisible={isVisible}
-            delayOffset={index * 200}
+            delayOffset={0}
           />
         ))}
       </div>
