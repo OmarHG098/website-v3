@@ -43,39 +43,19 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     const element = containerRef.current;
     if (!element) return;
 
-    const rect = element.getBoundingClientRect();
-    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
-    if (isInitiallyVisible) {
-      // For showcase/iframe: trigger after short delay
-      const timeout = setTimeout(() => setIsVisible(true), 300);
-      
-      // Also listen for scroll as backup
-      const handleScroll = () => {
-        setIsVisible(true);
-        window.removeEventListener("scroll", handleScroll);
-      };
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      
-      return () => {
-        clearTimeout(timeout);
-        window.removeEventListener("scroll", handleScroll);
-      };
-    } else {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setIsVisible(true);
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
-      observer.observe(element);
-      return () => observer.disconnect();
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   return (
