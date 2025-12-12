@@ -383,16 +383,7 @@ export function DebugBubble() {
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          {editMode?.isEditMode ? (
-            <Button
-              variant="default"
-              className="h-12 rounded-full shadow-lg px-4 gap-2"
-              data-testid="button-debug-toggle"
-            >
-              <IconPencil className="h-5 w-5" />
-              <span className="text-sm font-medium">On</span>
-            </Button>
-          ) : (
+          <div className="relative">
             <Button
               size="icon"
               variant="default"
@@ -401,7 +392,16 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-          )}
+            {editMode?.isEditMode && (
+              <div 
+                className="absolute -top-1 -right-1 flex items-center gap-1 bg-primary text-primary-foreground px-2 py-0.5 rounded-full shadow-md text-xs font-medium"
+                data-testid="indicator-edit-mode"
+              >
+                <IconPencil className="h-3 w-3" />
+                <span>On</span>
+              </div>
+            )}
+          </div>
         </PopoverTrigger>
         <PopoverContent 
           side="top" 
