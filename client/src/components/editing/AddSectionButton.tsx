@@ -46,16 +46,16 @@ export function AddSectionButton({
         data-testid={`add-section-zone-${insertIndex}`}
       >
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
-          <div className="flex-1 h-px bg-transparent group-hover:bg-primary/30 transition-colors duration-200" />
+          <div className="flex-1 h-px bg-muted/50 group-hover:bg-primary/30 transition-colors duration-200" />
           <button
             onClick={handleOpenModal}
-            className="mx-4 flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border-2 border-dashed border-muted-foreground/30 text-muted-foreground bg-background hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-200 opacity-0 group-hover:opacity-100"
+            className="mx-2 flex items-center justify-center rounded-full border border-dashed border-muted-foreground/20 text-muted-foreground/40 bg-background/80 transition-all duration-200 scale-75 opacity-60 group-hover:scale-100 group-hover:opacity-100 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 group-hover:px-4 group-hover:py-2 group-hover:gap-2 p-1.5"
             data-testid={`button-add-section-${insertIndex}`}
           >
-            <IconPlus className="h-4 w-4" />
-            <span>Add Section</span>
+            <IconPlus className="h-3.5 w-3.5 group-hover:h-4 group-hover:w-4 transition-all duration-200" />
+            <span className="text-sm font-medium hidden group-hover:inline">Add Section</span>
           </button>
-          <div className="flex-1 h-px bg-transparent group-hover:bg-primary/30 transition-colors duration-200" />
+          <div className="flex-1 h-px bg-muted/50 group-hover:bg-primary/30 transition-colors duration-200" />
         </div>
       </div>
       
