@@ -1,6 +1,5 @@
 name: "Course Landing Page"
 description: "Two column layout ideal for course/program landing pages with bullet points, tutors, and signup card"
-variant: course
 yaml: |
   - type: hero
     version: "1.0"

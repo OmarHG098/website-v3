@@ -106,6 +106,21 @@ export function loadSchema(componentType: string, version: string): ComponentSch
   }
 }
 
+function extractVariantFromYaml(yamlContent: string): string | undefined {
+  try {
+    const parsed = yaml.load(yamlContent);
+    if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.variant) {
+      return parsed[0].variant as string;
+    }
+    if (parsed && typeof parsed === 'object' && 'variant' in parsed) {
+      return (parsed as { variant?: string }).variant;
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return undefined;
+}
+
 export function loadExamples(componentType: string, version: string): ComponentExample[] {
   try {
     const examplesPath = path.join(REGISTRY_PATH, componentType, version, "examples");
@@ -120,11 +135,14 @@ export function loadExamples(componentType: string, version: string): ComponentE
       const content = fs.readFileSync(filePath, "utf8");
       const data = yaml.load(content) as { name?: string; description?: string; yaml?: string; variant?: string };
       
+      const yamlContent = data.yaml || content;
+      const inferredVariant = extractVariantFromYaml(yamlContent);
+      
       return {
         name: data.name || file.replace(/\.(yml|yaml)$/, ''),
         description: data.description || '',
-        yaml: data.yaml || content,
-        variant: data.variant,
+        yaml: yamlContent,
+        variant: inferredVariant || data.variant,
       };
     });
   } catch (error) {

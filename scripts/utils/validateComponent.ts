@@ -28,7 +28,22 @@ interface ExampleFile {
   name?: string;
   description?: string;
   yaml?: string;
-  variant?: string;
+  variant?: string; // Legacy field, now derived from yaml content
+}
+
+function extractVariantFromYaml(yamlContent: string): string | undefined {
+  try {
+    const parsed = yaml.load(yamlContent);
+    if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.variant) {
+      return parsed[0].variant as string;
+    }
+    if (parsed && typeof parsed === 'object' && 'variant' in parsed) {
+      return (parsed as { variant?: string }).variant;
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return undefined;
 }
 
 function loadSchemaWithVariants(componentType: string, version: string): SchemaWithVariants | null {
@@ -155,18 +170,21 @@ export function validateComponent(componentType: string, version?: string): Vali
       });
     }
     
-    if (data.variant) {
-      if (validVariants.length > 0 && !validVariants.includes(data.variant)) {
+    const inferredVariant = data.yaml ? extractVariantFromYaml(data.yaml) : undefined;
+    const effectiveVariant = inferredVariant || data.variant;
+    
+    if (effectiveVariant) {
+      if (validVariants.length > 0 && !validVariants.includes(effectiveVariant)) {
         issues.push({
           type: "error",
-          message: `Invalid variant "${data.variant}". Valid variants are: ${validVariants.join(", ")}`,
+          message: `Invalid variant "${effectiveVariant}" in yaml content. Valid variants are: ${validVariants.join(", ")}`,
           file: examplePath,
         });
       }
     } else if (validVariants.length > 0) {
       issues.push({
         type: "warning",
-        message: `Example missing "variant" field. Consider adding one of: ${validVariants.join(", ")}`,
+        message: `No variant found in yaml content. Consider adding one of: ${validVariants.join(", ")}`,
         file: examplePath,
       });
     }
