@@ -24,12 +24,15 @@ variants:
   simpleTwoColumn:
     description: "Two column layout with image on left and title, subtitle, CTA buttons on right"
     best_for: "Guarantee pages, feature announcements, promotional sections"
+  course:
+    description: "Two column layout with content on left (title, bullet points, tutors) and media + signup card on right"
+    best_for: "Course landing pages, self-paced program pages"
 
 props:
   variant:
     type: string
     required: true
-    options: ["singleColumn", "showcase", "productShowcase", "simpleTwoColumn"]
+    options: ["singleColumn", "showcase", "productShowcase", "simpleTwoColumn", "course"]
     description: "Layout variant to use"
     example: "singleColumn"
 
@@ -226,3 +229,105 @@ variant_props:
       required: false
       description: "Background Tailwind class"
       default: "bg-gradient-to-b from-primary/5 to-background"
+
+  course:
+    students_enrolled:
+      type: object
+      required: false
+      description: "Display enrolled students count with optional avatars"
+      properties:
+        avatars:
+          type: array
+          description: "Array of avatar image URLs"
+        count:
+          type: string
+          description: "Text showing enrollment count"
+          example: "+48 students enrolled"
+    bullet_points:
+      type: array
+      required: false
+      description: "List of key features/benefits with checkmarks"
+      items:
+        type: string
+      example:
+        - "Learn prompt engineering techniques to control AI outputs precisely"
+        - "Create professional images, videos, and documents using AI tools"
+    tutors:
+      type: array
+      required: false
+      description: "List of tutors/instructors"
+      items:
+        name:
+          type: string
+        role:
+          type: string
+        image:
+          type: string
+    tutors_label:
+      type: string
+      required: false
+      description: "Label above tutors section"
+      default: "Your tutors:"
+    description:
+      type: string
+      required: false
+      description: "Extended description paragraph at bottom of left column"
+    media:
+      type: object
+      required: true
+      description: "Video or image displayed at top of right column"
+      properties:
+        type:
+          type: string
+          options: ["video", "image"]
+        src:
+          type: string
+          description: "Video URL or image source"
+        thumbnail:
+          type: string
+          required: false
+          description: "Thumbnail image for video (shows play button overlay)"
+        alt:
+          type: string
+          required: false
+    signup_card:
+      type: object
+      required: true
+      description: "Signup/CTA card below media"
+      properties:
+        title:
+          type: string
+          example: "Sign up to 4Geeks Plus"
+        description:
+          type: string
+          required: false
+        cta_button:
+          type: object
+          properties:
+            text:
+              type: string
+            url:
+              type: string
+            variant:
+              type: string
+        login_link:
+          type: object
+          required: false
+          properties:
+            text:
+              type: string
+            url:
+              type: string
+        features:
+          type: array
+          required: false
+          description: "List of features with icons and optional counts"
+          items:
+            icon:
+              type: string
+              description: "Icon name: book, code, briefcase, robot, users, calendar, play"
+            text:
+              type: string
+            count:
+              type: string
+              required: false

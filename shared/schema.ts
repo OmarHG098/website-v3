@@ -118,6 +118,50 @@ export const heroTwoColumnSchema = z.object({
   background: z.string().optional(),
 }).strict();
 
+export const heroCourseTutorSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  image: z.string(),
+});
+
+export const heroCourseFeatureSchema = z.object({
+  icon: z.string(),
+  text: z.string(),
+  count: z.union([z.string(), z.number()]).optional(),
+});
+
+export const heroCourseSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("course"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  students_enrolled: z.object({
+    avatars: z.array(z.string()).optional(),
+    count: z.string(),
+  }).optional(),
+  bullet_points: z.array(z.string()).optional(),
+  tutors: z.array(heroCourseTutorSchema).optional(),
+  tutors_label: z.string().optional(),
+  description: z.string().optional(),
+  media: z.object({
+    type: z.enum(["video", "image"]),
+    src: z.string(),
+    thumbnail: z.string().optional(),
+    alt: z.string().optional(),
+  }),
+  signup_card: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    cta_button: ctaButtonSchema,
+    login_link: z.object({
+      text: z.string(),
+      url: z.string(),
+    }).optional(),
+    features: z.array(heroCourseFeatureSchema).optional(),
+  }),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
@@ -125,6 +169,7 @@ export const heroSectionSchema = z.union([
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
   heroTwoColumnSchema,
+  heroCourseSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -605,6 +650,7 @@ export const sectionSchema = z.union([
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
   heroTwoColumnSchema,
+  heroCourseSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -685,6 +731,7 @@ export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
 export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
 export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
+export type HeroCourse = z.infer<typeof heroCourseSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
