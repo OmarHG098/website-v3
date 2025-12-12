@@ -65,45 +65,24 @@ export function SectionEditorPanel({
     }
   }, []);
 
-  const handleApply = useCallback(() => {
-    try {
-      const parsed = yamlParser.load(yamlContent) as Section;
-      if (!parsed || typeof parsed !== "object") {
-        setParseError("Invalid section structure");
-        return;
-      }
-      
-      // Update local state for preview
-      onUpdate(parsed);
-      setHasChanges(false);
-      setSaveError(null);
-    } catch (error) {
-      if (error instanceof Error) {
-        setParseError(error.message);
-      }
-    }
-  }, [yamlContent, onUpdate]);
-
-  const handleSave = useCallback(async () => {
-    // If no content info, just close (preview only mode)
+  // Shared save logic - returns true on success
+  const saveToServer = useCallback(async (): Promise<boolean> => {
     if (!contentType || !slug || !locale) {
-      onClose();
-      return;
+      return false;
     }
     
-    // Parse the current YAML content
     let parsed: Section;
     try {
       parsed = yamlParser.load(yamlContent) as Section;
       if (!parsed || typeof parsed !== "object") {
         setParseError("Invalid section structure");
-        return;
+        return false;
       }
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
-      return;
+      return false;
     }
     
     setIsSaving(true);
@@ -133,7 +112,6 @@ export function SectionEditorPanel({
         onUpdate(parsed);
         setHasChanges(false);
         
-        // Invalidate relevant queries to trigger refetch
         const apiPath = contentType === "program" 
           ? "/api/career-programs" 
           : contentType === "landing" 
@@ -141,19 +119,33 @@ export function SectionEditorPanel({
             : "/api/locations";
         
         await queryClient.invalidateQueries({ queryKey: [apiPath, slug] });
-        
-        onClose();
+        return true;
       } else {
         const error = await response.json();
         setSaveError(error.error || "Failed to save changes");
+        return false;
       }
     } catch (error) {
       console.error("Error saving changes:", error);
       setSaveError(error instanceof Error ? error.message : "Network error");
+      return false;
     } finally {
       setIsSaving(false);
     }
-  }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate, onClose]);
+  }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate]);
+
+  // Apply: Save and keep editor open
+  const handleApply = useCallback(async () => {
+    await saveToServer();
+  }, [saveToServer]);
+
+  // Save: Save and close editor
+  const handleSave = useCallback(async () => {
+    const success = await saveToServer();
+    if (success) {
+      onClose();
+    }
+  }, [saveToServer, onClose]);
 
   const sectionType = (section as { type: string }).type || "unknown";
 
@@ -217,8 +209,15 @@ export function SectionEditorPanel({
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
+            onClick={onClose}
+            data-testid="button-cancel-edit"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="secondary"
             onClick={handleApply}
-            disabled={!!parseError || !hasChanges}
+            disabled={!!parseError || isSaving || !hasChanges}
             data-testid="button-apply-changes"
           >
             Apply
