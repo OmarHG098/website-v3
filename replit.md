@@ -40,6 +40,17 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - Geolocation uses ip-api.com with 5-second timeout and graceful fallbacks
     - Nearest campus sorting uses the haversine (great-circle) distance formula
     - Location slugs follow pattern: `{city}-{country}` (e.g., `miami-usa`, `madrid-spain`, `bogota-colombia`)
+-   **Inline Editing System**: A capability-based inline editing system designed for both human editors and AI agents. Key components:
+    - `shared/schema.ts`: Editing capability types (`content_read`, `content_edit_text`, `content_edit_structure`, `content_edit_media`, `content_publish`) and structured `EditOperation` types
+    - `client/src/hooks/useDebugAuth.ts`: Extended to return capabilities from token validation, with `hasCapability()` and `canEdit` helpers
+    - `client/src/contexts/EditModeContext.tsx`: Lazy-loaded context providing `isEditMode`, `toggleEditMode`, pending changes management, and save operations
+    - `client/src/components/editing/EditableSection.tsx`: Wrapper that adds click-to-edit overlays only when edit mode is active
+    - `client/src/components/editing/SectionEditorPanel.tsx`: Slide-in panel with YAML editor (CodeMirror) for editing section content
+    - `client/src/components/editing/EditModeWrapper.tsx`: Conditional provider that only loads when user has edit capabilities (zero overhead otherwise)
+    - `server/content-editor.ts`: Server-side content manipulation with path-based operations
+    - API endpoints: `POST /api/content/edit` (with auth) for structured edit operations, `GET /api/content/:contentType/:slug` for reading content
+    - Edit operations: `update_field` (path-based), `reorder_sections`, `add_item`, `remove_item`, `update_section` - designed for AI agent compatibility
+    - Edit mode toggle available in DebugBubble for users with editing capabilities
 
 ### External Dependencies
 -   **4geeks Breathecode API**: Used for user authentication, profile management, and educational content delivery (future integration).

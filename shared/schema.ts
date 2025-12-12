@@ -680,6 +680,60 @@ export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
 export type LandingPage = z.infer<typeof landingPageSchema>;
 
+// Editing Capabilities
+export const editingCapabilities = [
+  "content_read",
+  "content_edit_text",
+  "content_edit_structure",
+  "content_edit_media",
+  "content_publish",
+] as const;
+
+export type EditingCapability = typeof editingCapabilities[number];
+
+export const capabilitiesSchema = z.object({
+  webmaster: z.boolean().default(false),
+  content_read: z.boolean().default(false),
+  content_edit_text: z.boolean().default(false),
+  content_edit_structure: z.boolean().default(false),
+  content_edit_media: z.boolean().default(false),
+  content_publish: z.boolean().default(false),
+});
+
+export type Capabilities = z.infer<typeof capabilitiesSchema>;
+
+// Edit operations for the editing API
+export const editOperationSchema = z.discriminatedUnion("action", [
+  z.object({
+    action: z.literal("update_field"),
+    path: z.string(),
+    value: z.unknown(),
+  }),
+  z.object({
+    action: z.literal("reorder_sections"),
+    from: z.number(),
+    to: z.number(),
+  }),
+  z.object({
+    action: z.literal("add_item"),
+    path: z.string(),
+    item: z.record(z.unknown()),
+    index: z.number().optional(),
+  }),
+  z.object({
+    action: z.literal("remove_item"),
+    path: z.string(),
+    index: z.number(),
+  }),
+  z.object({
+    action: z.literal("update_section"),
+    index: z.number(),
+    section: z.record(z.unknown()),
+  }),
+]);
+
+export type EditOperation = z.infer<typeof editOperationSchema>;
+
 // Location Page Schema
 export const locationMetaSchema = z.object({
   page_title: z.string(),

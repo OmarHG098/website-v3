@@ -17,6 +17,7 @@ import {
   createNewVersion,
   getExampleFilePath 
 } from "./component-registry";
+import { editContent, getContentForEdit } from "./content-editor";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -210,7 +211,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+      // Check webmaster capability
+      const webmasterResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
         method: "GET",
         headers: {
           "Authorization": `Token ${token}`,
@@ -218,14 +220,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       });
 
-      if (response.status === 200) {
-        res.json({ valid: true });
+      const hasWebmaster = webmasterResponse.status === 200;
+
+      // If has webmaster, they get all capabilities
+      // In future, we could check for more granular capabilities from the API
+      const capabilities = {
+        webmaster: hasWebmaster,
+        content_read: hasWebmaster,
+        content_edit_text: hasWebmaster,
+        content_edit_structure: hasWebmaster,
+        content_edit_media: hasWebmaster,
+        content_publish: hasWebmaster,
+      };
+
+      if (hasWebmaster) {
+        res.json({ valid: true, capabilities });
       } else {
-        res.json({ valid: false });
+        res.json({ valid: false, capabilities });
       }
     } catch (error) {
       console.error("Token validation error:", error);
-      res.json({ valid: false });
+      res.json({ valid: false, capabilities: {} });
     }
   });
 
@@ -474,6 +489,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json({ success: true, newVersion: result.newVersion });
+  });
+
+  // Content editing API
+  app.post("/api/content/edit", async (req, res) => {
+    try {
+      // Validate token and capabilities
+      const authHeader = req.headers.authorization;
+      if (!authHeader?.startsWith("Token ")) {
+        res.status(401).json({ error: "Authorization required" });
+        return;
+      }
+      
+      const token = authHeader.slice(6);
+      
+      // Verify token has edit capabilities
+      const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${token}`,
+          "Academy": "4",
+        },
+      });
+      
+      if (capResponse.status !== 200) {
+        res.status(403).json({ error: "Insufficient permissions" });
+        return;
+      }
+      
+      const { contentType, slug, locale, operations } = req.body;
+      
+      if (!contentType || !slug || !locale || !operations) {
+        res.status(400).json({ error: "Missing required fields" });
+        return;
+      }
+      
+      const result = await editContent({ contentType, slug, locale, operations });
+      
+      if (result.success) {
+        // Clear relevant caches
+        clearSitemapCache();
+        clearRedirectCache();
+        
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ error: result.error });
+      }
+    } catch (error) {
+      console.error("Content edit error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/content/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+    
+    if (!["program", "landing", "location"].includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type" });
+      return;
+    }
+    
+    const result = getContentForEdit(contentType as "program" | "landing" | "location", slug, locale);
+    
+    if (result.content) {
+      res.json(result.content);
+    } else {
+      res.status(404).json({ error: result.error });
+    }
   });
 
   const httpServer = createServer(app);

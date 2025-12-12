@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession } from "@/contexts/SessionContext";
 import {
@@ -6,6 +6,7 @@ import {
   IconMap,
   IconMapPin,
   IconPencil,
+  IconPencilOff,
   IconComponents,
   IconLanguage,
   IconRoute,
@@ -38,6 +39,7 @@ import {
   IconChartBar,
   IconTable,
 } from "@tabler/icons-react";
+import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -111,6 +113,38 @@ const getPersistedMenuView = (): MenuView => {
   }
   return "main";
 };
+
+// Edit Mode Toggle Component - uses optional hook to handle being outside provider
+function EditModeToggle() {
+  const editMode = useEditModeOptional();
+  
+  // If not within EditModeProvider, don't render
+  if (!editMode) {
+    return null;
+  }
+  
+  const { isEditMode, toggleEditMode } = editMode;
+  
+  return (
+    <button
+      onClick={toggleEditMode}
+      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+      data-testid="button-toggle-edit-mode"
+    >
+      <div className="flex items-center gap-3">
+        {isEditMode ? (
+          <IconPencilOff className="h-4 w-4 text-muted-foreground" />
+        ) : (
+          <IconPencil className="h-4 w-4 text-muted-foreground" />
+        )}
+        <span>Edit Mode</span>
+      </div>
+      <span className={`text-xs font-medium px-2 py-1 rounded ${isEditMode ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+        {isEditMode ? "ON" : "OFF"}
+      </span>
+    </button>
+  );
+}
 
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
@@ -515,6 +549,8 @@ export function DebugBubble() {
                   </div>
                   <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
                 </a>
+                
+                <EditModeToggle />
               </div>
 
               <div className="border-t p-2 space-y-1">
