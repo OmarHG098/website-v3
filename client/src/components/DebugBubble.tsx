@@ -394,7 +394,12 @@ export function DebugBubble() {
             </Button>
             {editMode?.isEditMode && (
               <div 
-                className="absolute -top-1 left-full ml-1 flex items-center gap-1 bg-primary text-primary-foreground px-2 py-0.5 rounded-full shadow-md text-xs font-medium"
+                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
+                style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
+                }}
                 data-testid="indicator-edit-mode"
               >
                 <IconPencil className="h-3 w-3" />
