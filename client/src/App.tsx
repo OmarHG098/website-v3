@@ -17,6 +17,7 @@ const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
+const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
 const TemplatePage = lazy(() => import("@/pages/page"));
 
@@ -45,6 +46,7 @@ function Router() {
         <Route path="/en/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
+        <Route path="/component-preview" component={ComponentPreview} />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/:contentType/:contentSlug/experiment/:experimentSlug" component={ExperimentEditor} />
         {/* Template pages - dynamic YAML-based pages */}
