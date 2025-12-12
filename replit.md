@@ -41,8 +41,6 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - Nearest campus sorting uses the haversine (great-circle) distance formula
     - Location slugs follow pattern: `{city}-{country}` (e.g., `miami-usa`, `madrid-spain`, `bogota-colombia`)
 
--   **PostHog Analytics**: Product analytics integration initialized in `client/src/main.tsx`. Configured via `VITE_POSTHOG_KEY` and `VITE_POSTHOG_HOST` environment variables. Features enabled: pageview tracking, page leave tracking, and autocapture. Only initializes when both environment variables are present.
-
 ### External Dependencies
 -   **4geeks Breathecode API**: Used for user authentication, profile management, and educational content delivery (future integration).
 -   **@tabler/icons-react**: Primary icon library.
@@ -53,4 +51,3 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
 -   **wouter**: Small routing library.
 -   **TanStack Query**: Data fetching and state management.
 -   **Express**: Backend server framework.
--   **posthog-js**: Product analytics SDK for tracking user behavior.
