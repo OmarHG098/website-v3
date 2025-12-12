@@ -14,6 +14,7 @@ import {
   IconInfoCircle,
   IconDeviceMobile,
   IconDeviceTablet,
+  IconDeviceLaptop,
   IconDeviceDesktop,
   IconChevronUp,
   IconArrowsMaximize,
@@ -151,7 +152,7 @@ function ComponentCard({
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
-  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
+  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'laptop' | 'desktop'>('mobile');
   const [yamlContent, setYamlContent] = useState('');
   const [parsedData, setParsedData] = useState<Section | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
@@ -602,7 +603,7 @@ function ComponentCard({
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
                 <span className="text-xs text-muted-foreground">
-                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '1440 × 900'}
+                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : previewViewport === 'laptop' ? '1280 × 800' : '1440 × 900'}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -625,6 +626,16 @@ function ComponentCard({
                   data-testid={`button-viewport-tablet-${componentType}`}
                 >
                   <IconDeviceTablet className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={previewViewport === 'laptop' ? 'default' : 'ghost'}
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => setPreviewViewport('laptop')}
+                  title="Laptop (1280 × 800)"
+                  data-testid={`button-viewport-laptop-${componentType}`}
+                >
+                  <IconDeviceLaptop className="w-4 h-4" />
                 </Button>
                 <Button
                   variant={previewViewport === 'desktop' ? 'default' : 'ghost'}
@@ -657,14 +668,16 @@ function ComponentCard({
                 </Button>
               </div>
             </div>
-            <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
+            <div className={`bg-muted/20 ${previewViewport !== 'desktop' && previewViewport !== 'laptop' ? 'flex justify-center py-4' : ''}`}>
               <div 
                 className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
                     ? 'w-[375px] shadow-lg' 
                     : previewViewport === 'tablet' 
                       ? 'w-[768px] shadow-lg' 
-                      : 'w-full'
+                      : previewViewport === 'laptop'
+                        ? 'w-[1280px] shadow-lg'
+                        : 'w-full'
                 }`}
               >
                 <iframe
@@ -676,7 +689,9 @@ function ComponentCard({
                       ? '667px'  // iPhone SE/8 screen height
                       : previewViewport === 'tablet'
                         ? '1024px'  // iPad portrait height
-                        : '900px',  // Desktop height (1440×900)
+                        : previewViewport === 'laptop'
+                          ? '800px'  // Laptop height (1280×800)
+                          : '900px',  // Desktop height (1440×900)
                     minHeight: '200px',
                   }}
                   title={`Preview ${componentType}`}
