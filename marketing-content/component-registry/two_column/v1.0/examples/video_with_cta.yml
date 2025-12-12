@@ -1,5 +1,6 @@
 name: "Video with CTA Button"
 description: "Two-column layout with a YouTube video on the left and text content with a call-to-action button on the right"
+variant: video
 yaml: |
   - type: two_column
     proportions: [6, 6]

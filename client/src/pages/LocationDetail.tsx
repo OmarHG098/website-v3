@@ -11,14 +11,14 @@ import Header from "@/components/Header";
 export default function LocationDetail() {
   const { i18n } = useTranslation();
   
-  const [matchEn, paramsEn] = useRoute("/us/location/:slug");
+  const [matchEn, paramsEn] = useRoute("/en/location/:slug");
   const [matchEs, paramsEs] = useRoute("/es/ubicacion/:slug");
   
   const locale = matchEn ? "en" : matchEs ? "es" : i18n.language;
   const slug = matchEn ? paramsEn?.slug : matchEs ? paramsEs?.slug : undefined;
   const hasValidRoute = matchEn || matchEs;
 
-  const { data: location, isLoading, error } = useQuery<LocationPage>({
+  const { data: location, isLoading, error, refetch } = useQuery<LocationPage>({
     queryKey: ["/api/locations", slug, locale],
     queryFn: async () => {
       const response = await fetch(`/api/locations/${slug}?locale=${locale}`);
@@ -67,7 +67,13 @@ export default function LocationDetail() {
   return (
     <div data-testid="page-location">
       <Header />
-      <SectionRenderer sections={location.sections} />
+      <SectionRenderer 
+        sections={location.sections} 
+        contentType="location"
+        slug={slug}
+        locale={locale}
+        onSectionAdded={() => refetch()}
+      />
     </div>
   );
 }

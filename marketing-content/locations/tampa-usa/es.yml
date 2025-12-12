@@ -8,7 +8,7 @@ meta:
   redirects:
     - /tampa
     - /campus/tampa
-    - /us/tampa
+    - /en/tampa
 schema:
   include:
     - organization

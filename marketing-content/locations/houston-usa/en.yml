@@ -8,7 +8,7 @@ meta:
   redirects:
     - /houston
     - /campus/houston
-    - /us/houston
+    - /en/houston
 schema:
   include:
     - organization

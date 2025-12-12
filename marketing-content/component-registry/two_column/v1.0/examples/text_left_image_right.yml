@@ -1,5 +1,6 @@
 name: "Text Left, Image Right"
 description: "Two-column layout with text content on the left and an image on the right"
+variant: imageText
 yaml: |
   - type: two_column
     proportions: [7, 5]

@@ -8,7 +8,7 @@ meta:
   redirects:
     - /orlando
     - /campus/orlando
-    - /us/orlando
+    - /en/orlando
 schema:
   include:
     - organization

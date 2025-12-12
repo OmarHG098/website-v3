@@ -98,7 +98,7 @@ sections:
       text_align: "left"
       button:
         text: "See financing options"
-        url: "/us/financials"
+        url: "/en/financials"
         variant: "primary"
     left:
       image: "/attached_assets/reservation-es_1764814854635.webp"
@@ -146,7 +146,7 @@ sections:
       text_align: "left"
       button:
         text: "Learn More"
-        url: "/us/job-guarantee"
+        url: "/en/job-guarantee"
         variant: "primary"
       footer: "Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp."
 

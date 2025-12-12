@@ -13,7 +13,7 @@ export default function LandingDetail() {
   const slug = params.slug;
   const locale = i18n.language === "es" ? "es" : "en";
 
-  const { data: landing, isLoading, error } = useQuery<LandingPage>({
+  const { data: landing, isLoading, error, refetch } = useQuery<LandingPage>({
     queryKey: ["/api/landings", slug, locale],
     queryFn: async () => {
       const response = await fetch(`/api/landings/${slug}?locale=${locale}`);
@@ -61,7 +61,13 @@ export default function LandingDetail() {
 
   return (
     <div data-testid="page-landing">
-      <SectionRenderer sections={landing.sections} />
+      <SectionRenderer 
+        sections={landing.sections} 
+        contentType="landing"
+        slug={slug}
+        locale={locale}
+        onSectionAdded={() => refetch()}
+      />
     </div>
   );
 }

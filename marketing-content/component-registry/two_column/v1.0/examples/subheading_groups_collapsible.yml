@@ -1,5 +1,6 @@
 name: "Subheading Groups with Collapsible Bullets"
 description: "Two-column layout using bullet_groups with titles and bullet lists that collapse on mobile"
+variant: bulletGroups
 yaml: |
   - type: two_column
     proportions: [7, 5]

@@ -105,12 +105,26 @@ export const heroSimpleTwoColumnSchema = z.object({
   background: z.string().optional(),
 }).strict();
 
+export const heroTwoColumnSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("twoColumn"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  badge: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
+  background: z.string().optional(),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroTwoColumnSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -566,6 +580,22 @@ export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;
 export type ComparisonTableRow = z.infer<typeof comparisonTableRowSchema>;
 export type ComparisonTableSection = z.infer<typeof comparisonTableSectionSchema>;
 
+// Stats Section (for displaying key metrics/statistics)
+export const statsSectionSchema = z.object({
+  type: z.literal("stats"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  items: z.array(z.object({
+    value: z.string(),
+    label: z.string(),
+    icon: z.string().optional(),
+  })).optional(),
+});
+
+export type StatsSection = z.infer<typeof statsSectionSchema>;
 
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
@@ -574,6 +604,7 @@ export const sectionSchema = z.union([
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -596,6 +627,7 @@ export const sectionSchema = z.union([
   projectsShowcaseSectionSchema,
   aboutSectionSchema,
   comparisonTableSectionSchema,
+  statsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -682,6 +714,60 @@ export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
 export type LandingPage = z.infer<typeof landingPageSchema>;
 
+// Editing Capabilities
+export const editingCapabilities = [
+  "content_read",
+  "content_edit_text",
+  "content_edit_structure",
+  "content_edit_media",
+  "content_publish",
+] as const;
+
+export type EditingCapability = typeof editingCapabilities[number];
+
+export const capabilitiesSchema = z.object({
+  webmaster: z.boolean().default(false),
+  content_read: z.boolean().default(false),
+  content_edit_text: z.boolean().default(false),
+  content_edit_structure: z.boolean().default(false),
+  content_edit_media: z.boolean().default(false),
+  content_publish: z.boolean().default(false),
+});
+
+export type Capabilities = z.infer<typeof capabilitiesSchema>;
+
+// Edit operations for the editing API
+export const editOperationSchema = z.discriminatedUnion("action", [
+  z.object({
+    action: z.literal("update_field"),
+    path: z.string(),
+    value: z.unknown(),
+  }),
+  z.object({
+    action: z.literal("reorder_sections"),
+    from: z.number(),
+    to: z.number(),
+  }),
+  z.object({
+    action: z.literal("add_item"),
+    path: z.string(),
+    item: z.record(z.unknown()),
+    index: z.number().optional(),
+  }),
+  z.object({
+    action: z.literal("remove_item"),
+    path: z.string(),
+    index: z.number(),
+  }),
+  z.object({
+    action: z.literal("update_section"),
+    index: z.number(),
+    section: z.record(z.unknown()),
+  }),
+]);
+
+export type EditOperation = z.infer<typeof editOperationSchema>;
+
 // Location Page Schema
 export const locationMetaSchema = z.object({
   page_title: z.string(),
@@ -728,3 +814,124 @@ export const locationPageSchema = z.object({
 
 export type LocationMeta = z.infer<typeof locationMetaSchema>;
 export type LocationPage = z.infer<typeof locationPageSchema>;
+
+// ============================================
+// Template Page Schema (for marketing-content/pages/)
+// ============================================
+
+export const templatePageMetaSchema = z.object({
+  page_title: z.string(),
+  description: z.string(),
+  robots: z.string().default("index, follow"),
+  og_image: z.string().optional(),
+  priority: z.number().min(0).max(1).default(0.8),
+  change_frequency: z.enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]).default("weekly"),
+  redirects: z.array(z.string()).optional(),
+});
+
+export const templatePageSchema = z.object({
+  slug: z.string(),
+  template: z.string(),
+  title: z.string(),
+  meta: templatePageMetaSchema,
+  schema: schemaRefSchema.optional(),
+  sections: z.array(sectionSchema),
+});
+
+export type TemplatePageMeta = z.infer<typeof templatePageMetaSchema>;
+export type TemplatePage = z.infer<typeof templatePageSchema>;
+
+// ============================================
+// A/B Testing / Experiments System
+// ============================================
+
+// Targeting rules for experiments
+export const experimentTargetingSchema = z.object({
+  regions: z.array(z.string()).optional(),
+  countries: z.array(z.string()).optional(),
+  languages: z.array(z.string()).optional(),
+  locations: z.array(z.string()).optional(),
+  utm_sources: z.array(z.string()).optional(),
+  utm_campaigns: z.array(z.string()).optional(),
+  utm_mediums: z.array(z.string()).optional(),
+  devices: z.array(z.enum(["mobile", "desktop", "tablet"])).optional(),
+  hours: z.array(z.number().min(0).max(23)).optional(),
+  days_of_week: z.array(z.number().min(0).max(6)).optional(),
+});
+
+// Variant definition with allocation percentage
+export const experimentVariantSchema = z.object({
+  slug: z.string(),
+  version: z.number().default(1),
+  allocation: z.number().min(0).max(100),
+});
+
+// Experiment configuration
+export const experimentConfigSchema = z.object({
+  slug: z.string(),
+  status: z.enum(["planned", "active", "paused", "winner", "archived"]),
+  description: z.string().optional(),
+  variants: z.array(experimentVariantSchema),
+  targeting: experimentTargetingSchema.optional(),
+  max_visitors: z.number().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  winner_variant: z.string().optional(),
+  auto_stopped: z.boolean().optional(),
+});
+
+// Experiments file structure (experiments.yml per program)
+export const experimentsFileSchema = z.object({
+  experiments: z.array(experimentConfigSchema),
+});
+
+// Visitor context for experiment assignment
+export const visitorContextSchema = z.object({
+  session_id: z.string(),
+  language: z.string().optional(),
+  region: z.string().optional(),
+  country: z.string().optional(),
+  utm_source: z.string().optional(),
+  utm_campaign: z.string().optional(),
+  utm_medium: z.string().optional(),
+  device: z.enum(["mobile", "desktop", "tablet"]).optional(),
+  hour: z.number().optional(),
+  day_of_week: z.number().optional(),
+});
+
+// Experiment assignment result
+export const experimentAssignmentSchema = z.object({
+  experiment_slug: z.string(),
+  variant_slug: z.string(),
+  variant_version: z.number(),
+  assigned_at: z.number(),
+});
+
+// Cookie structure for persisting assignments
+export const experimentCookieSchema = z.object({
+  assignments: z.array(experimentAssignmentSchema),
+  session_id: z.string(),
+});
+
+// Schema for validating experiment update requests (all fields optional)
+// Variants must be complete objects, but allocation sum is validated at runtime
+export const experimentUpdateSchema = z.object({
+  description: z.string().optional(),
+  status: z.enum(["planned", "active", "paused", "winner", "archived"]).optional(),
+  variants: z.array(experimentVariantSchema).min(1).optional(),
+  targeting: experimentTargetingSchema.partial().optional(),
+  max_visitors: z.number().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  winner_variant: z.string().optional(),
+  auto_stopped: z.boolean().optional(),
+}).strict();
+
+export type ExperimentTargeting = z.infer<typeof experimentTargetingSchema>;
+export type ExperimentVariant = z.infer<typeof experimentVariantSchema>;
+export type ExperimentConfig = z.infer<typeof experimentConfigSchema>;
+export type ExperimentsFile = z.infer<typeof experimentsFileSchema>;
+export type VisitorContext = z.infer<typeof visitorContextSchema>;
+export type ExperimentAssignment = z.infer<typeof experimentAssignmentSchema>;
+export type ExperimentCookie = z.infer<typeof experimentCookieSchema>;
+export type ExperimentUpdate = z.infer<typeof experimentUpdateSchema>;
