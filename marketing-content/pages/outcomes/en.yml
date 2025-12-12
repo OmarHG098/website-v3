@@ -64,6 +64,23 @@ sections:
             value: 45
             displayValue: "45 days"
 
+  - type: stats
+    version: "1.0"
+    title: "Outcomes by the Numbers"
+    subtitle: "Real results from our graduates across different regions"
+    background: "muted"
+    items:
+      - value: "84%"
+        label: "of U.S. graduates hired within 6 months"
+      - value: "+55%"
+        label: "average U.S. salary increase"
+      - value: "+233%"
+        label: "average salary increase in LATAM"
+      - value: "85%"
+        label: "placement rate in Spain"
+      - value: "3-6 months"
+        label: "average time to get hired across all markets"
+
   - type: pie_charts
     version: "1.0"
     title: "Our Student Body at a Glance"
