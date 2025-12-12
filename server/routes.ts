@@ -18,6 +18,13 @@ import {
   getExampleFilePath 
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
+import {
+  getExperimentManager,
+  getOrCreateSessionId,
+  getExperimentCookie,
+  setExperimentCookie,
+  buildVisitorContext,
+} from "./experiments";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -255,14 +262,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
 
-    const program = loadCareerProgram(slug, locale);
+    // Get or create session for experiment tracking
+    const sessionId = getOrCreateSessionId(req, res);
+    const experimentCookie = getExperimentCookie(req);
+    const existingAssignments = experimentCookie?.assignments || [];
+
+    // Check for active experiments
+    const experimentManager = getExperimentManager();
+    const visitorContext = buildVisitorContext(req, sessionId);
+    const assignment = experimentManager.getAssignment(slug, visitorContext, existingAssignments);
+
+    let program: CareerProgram | null = null;
+    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+
+    if (assignment) {
+      // Try to load variant content
+      const variantContent = experimentManager.getVariantContent(slug, assignment, locale);
+      if (variantContent) {
+        program = variantContent;
+        experimentInfo = {
+          experiment: assignment.experiment_slug,
+          variant: assignment.variant_slug,
+          version: assignment.variant_version,
+        };
+
+        // Update cookie with new assignment
+        const updatedAssignments = [...existingAssignments.filter(
+          a => a.experiment_slug !== assignment.experiment_slug
+        ), assignment];
+        setExperimentCookie(res, sessionId, updatedAssignments);
+      }
+    }
+
+    // Fall back to default content
+    if (!program) {
+      program = loadCareerProgram(slug, locale);
+    }
 
     if (!program) {
       res.status(404).json({ error: "Career program not found" });
       return;
     }
 
-    res.json(program);
+    // Include experiment info in response for analytics
+    res.json({
+      ...program,
+      _experiment: experimentInfo,
+    });
   });
 
   // Landing pages API
@@ -422,6 +468,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/debug/clear-schema-cache", (req, res) => {
     clearSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
+  });
+
+  // Experiments API endpoints
+  app.get("/api/debug/experiments", (req, res) => {
+    const experimentManager = getExperimentManager();
+    const stats = experimentManager.getStats();
+    res.json({
+      stats,
+      totalExperiments: Object.keys(stats).length,
+    });
+  });
+
+  app.post("/api/debug/clear-experiment-cache", (req, res) => {
+    const experimentManager = getExperimentManager();
+    experimentManager.clearCache();
+    res.json({ success: true, message: "Experiment cache cleared" });
   });
 
   // Component Registry API endpoints

@@ -1,0 +1,37 @@
+# A/B Testing Experiments for Full Stack Program
+# Status options: planned, active, paused, winner, archived
+
+experiments:
+  # Example: Testing different hero messaging
+  # To use this, create variant files:
+  # - marketing-content/programs/full-stack/career-focus.v1.en.yml
+  # - marketing-content/programs/full-stack/salary-focus.v1.en.yml
+  
+  - slug: hero-messaging-test
+    status: planned  # Change to "active" to enable
+    description: "Test career-focused vs salary-focused hero messaging"
+    variants:
+      - slug: career-focus
+        version: 1
+        allocation: 50
+      - slug: salary-focus
+        version: 1
+        allocation: 50
+    targeting:
+      languages: ["en"]
+    max_visitors: 1000
+    
+  # Example: Regional pricing experiment
+  - slug: latam-pricing
+    status: planned
+    description: "Test different pricing for LATAM visitors"
+    variants:
+      - slug: standard-pricing
+        version: 1
+        allocation: 50
+      - slug: regional-pricing
+        version: 1
+        allocation: 50
+    targeting:
+      regions: ["latam"]
+    max_visitors: 500
