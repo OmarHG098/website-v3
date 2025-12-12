@@ -11,12 +11,6 @@ import { SessionProvider } from "@/contexts/SessionContext";
 import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import "./i18n";
 
-const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
-const LearningPathSelection = lazy(() => import("@/pages/LearningPathSelection"));
-const CareerPaths = lazy(() => import("@/pages/CareerPaths"));
-const SkillBoosters = lazy(() => import("@/pages/SkillBoosters"));
-const ToolMastery = lazy(() => import("@/pages/ToolMastery"));
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
@@ -42,12 +36,6 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/learning-paths" component={LearningPathSelection} />
-        <Route path="/career-paths" component={CareerPaths} />
-        <Route path="/skill-boosters" component={SkillBoosters} />
-        <Route path="/tool-mastery" component={ToolMastery} />
-        <Route path="/career-programs" component={CareerPrograms} />
-        <Route path="/dashboard" component={Dashboard} />
         <Route path="/en/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
