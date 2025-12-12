@@ -80,9 +80,15 @@ export function EditModeWrapper({
   slug, 
   locale 
 }: EditModeWrapperProps) {
-  const { canEdit } = useDebugAuth();
+  const { canEdit, isDebugMode } = useDebugAuth();
   
-  // If user can't edit, don't wrap with provider (zero overhead)
+  // If not in debug mode at all, skip everything (zero overhead for public users)
+  // Debug mode requires ?debug=true in production, or being in development
+  if (!isDebugMode) {
+    return <>{children}</>;
+  }
+  
+  // If in debug mode but user can't edit, still skip the provider
   if (!canEdit) {
     return <>{children}</>;
   }
