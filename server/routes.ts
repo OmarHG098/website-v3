@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
 import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
@@ -611,6 +611,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
         slug
       )
     });
+  });
+
+  // Get single experiment details
+  app.get("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
+    const { contentType, contentSlug, experimentSlug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const experiments = experimentManager.getExperimentsForContent(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      contentSlug
+    );
+    
+    if (!experiments) {
+      res.status(404).json({ error: "Experiments file not found" });
+      return;
+    }
+    
+    const experiment = experiments.experiments.find(exp => exp.slug === experimentSlug);
+    if (!experiment) {
+      res.status(404).json({ error: "Experiment not found" });
+      return;
+    }
+    
+    const stats = experimentManager.getStats();
+    const experimentWithStats = {
+      ...experiment,
+      stats: stats[experimentSlug] || {}
+    };
+    
+    res.json({
+      experiment: experimentWithStats,
+      contentType,
+      contentSlug,
+      filePath: experimentManager.getExperimentsFilePath(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        contentSlug
+      )
+    });
+  });
+
+  // Update experiment settings
+  app.patch("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
+    const { contentType, contentSlug, experimentSlug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    // Validate request body against schema
+    const parseResult = experimentUpdateSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      res.status(400).json({ 
+        error: "Invalid update data",
+        details: parseResult.error.issues.map(i => ({
+          path: i.path.join('.'),
+          message: i.message
+        }))
+      });
+      return;
+    }
+    
+    const validatedUpdates = parseResult.data;
+    
+    const experimentManager = getExperimentManager();
+    try {
+      const result = experimentManager.updateExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        contentSlug,
+        experimentSlug,
+        validatedUpdates
+      );
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ 
+        error: error instanceof Error ? error.message : "Failed to update experiment" 
+      });
+    }
   });
 
   // Component Registry API endpoints

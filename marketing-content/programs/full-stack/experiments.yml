@@ -1,135 +1,7 @@
-# A/B Testing Experiments Configuration
-# =======================================
-#
-# This file defines A/B tests for the full-stack program.
-# Each experiment serves different content variants to visitors
-# based on targeting rules and allocation percentages.
-#
-# EXPERIMENT STATUS OPTIONS:
-# --------------------------
-# - planned    : Experiment is configured but not running
-# - active     : Experiment is live and assigning visitors
-# - paused     : Temporarily stopped, preserves assignments
-# - winner     : Test concluded, winner_variant is served to all
-# - archived   : Historical record, no longer processed
-#
-# VARIANT FILES:
-# --------------
-# Variant content is stored in separate YAML files with naming:
-#   {variant-slug}.v{version}.{locale}.yml
-#
-# Examples:
-#   - career-focus.v1.en.yml
-#   - career-focus.v1.es.yml
-#   - salary-focus.v1.en.yml
-#
-# ALLOCATION:
-# -----------
-# Sum of all variant allocations should equal 100.
-# Each visitor gets deterministically assigned based on their session ID.
-#
-# ============================================================================
-# TARGETING VARIABLES REFERENCE
-# ============================================================================
-#
-# All targeting rules are optional. If omitted, all visitors are eligible.
-# Multiple rules combine with AND logic (visitor must match ALL specified rules).
-#
-# ┌─────────────────┬────────────────────────────────────────────────────────┐
-# │ VARIABLE        │ DESCRIPTION                                            │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ languages       │ ISO language codes from visitor's locale preference    │
-# │                 │ Values: "en", "es"                                     │
-# │                 │ Source: ?locale= query param or browser detection      │
-# │                 │ Example: ["en"] - English visitors only                │
-# │                 │ Example: ["es"] - Spanish visitors only                │
-# │                 │ Example: ["en", "es"] - Both languages                 │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ regions         │ Geographic regions based on IP geolocation             │
-# │                 │ Values: "usa-canada", "europe", "latam"                │
-# │                 │ Source: Session geolocation via ip-api.com             │
-# │                 │ Example: ["latam"] - Latin America visitors            │
-# │                 │ Example: ["usa-canada", "europe"] - North & Europe     │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ countries       │ ISO 3166-1 alpha-2 country codes                       │
-# │                 │ Values: "US", "ES", "MX", "CO", "AR", "CL", etc.       │
-# │                 │ Source: Session geolocation via ip-api.com             │
-# │                 │ Example: ["US", "CA"] - USA and Canada only            │
-# │                 │ Example: ["MX", "CO", "AR"] - Specific LATAM countries │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ devices         │ Device type based on User-Agent parsing                │
-# │                 │ Values: "mobile", "tablet", "desktop"                  │
-# │                 │ Source: Request User-Agent header                      │
-# │                 │ Example: ["mobile"] - Mobile users only                │
-# │                 │ Example: ["mobile", "tablet"] - Non-desktop users      │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ utm_sources     │ Traffic source from UTM parameters                     │
-# │                 │ Values: Any string (google, facebook, linkedin, etc.)  │
-# │                 │ Source: ?utm_source= query parameter                   │
-# │                 │ Example: ["google", "bing"] - Search engine traffic    │
-# │                 │ Example: ["facebook", "instagram"] - Meta ads          │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ utm_campaigns   │ Campaign identifier from UTM parameters                │
-# │                 │ Values: Any string (campaign names you define)         │
-# │                 │ Source: ?utm_campaign= query parameter                 │
-# │                 │ Example: ["black-friday-2024"] - Specific campaign     │
-# │                 │ Example: ["retargeting", "lookalike"] - Audience types │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ utm_mediums     │ Marketing medium from UTM parameters                   │
-# │                 │ Values: Any string (cpc, email, social, organic, etc.) │
-# │                 │ Source: ?utm_medium= query parameter                   │
-# │                 │ Example: ["cpc", "ppc"] - Paid search traffic          │
-# │                 │ Example: ["email"] - Email marketing visitors          │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ hours           │ Hour of day (visitor's server time, UTC)               │
-# │                 │ Values: 0-23 (0 = midnight, 12 = noon, 23 = 11pm)     │
-# │                 │ Source: Server timestamp at request time               │
-# │                 │ Example: [9,10,11,12,13,14,15,16,17] - Business hours  │
-# │                 │ Example: [18,19,20,21,22] - Evening hours              │
-# ├─────────────────┼────────────────────────────────────────────────────────┤
-# │ days_of_week    │ Day of week (visitor's server time, UTC)               │
-# │                 │ Values: 0-6 (0 = Sunday, 1 = Monday, ... 6 = Saturday) │
-# │                 │ Source: Server timestamp at request time               │
-# │                 │ Example: [1,2,3,4,5] - Weekdays only                   │
-# │                 │ Example: [0,6] - Weekends only                         │
-# └─────────────────┴────────────────────────────────────────────────────────┘
-#
-# TARGETING EXAMPLES:
-# -------------------
-#
-# Target English-speaking mobile users from paid search:
-#   targeting:
-#     languages: ["en"]
-#     devices: ["mobile"]
-#     utm_mediums: ["cpc", "ppc"]
-#
-# Target Spanish speakers in Latin America during weekdays:
-#   targeting:
-#     languages: ["es"]
-#     regions: ["latam"]
-#     days_of_week: [1, 2, 3, 4, 5]
-#
-# Target US visitors from Facebook ads during business hours:
-#   targeting:
-#     countries: ["US"]
-#     utm_sources: ["facebook"]
-#     hours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
-#
-# No targeting (all visitors eligible):
-#   targeting: {}   # or omit entirely
-#
-# ============================================================================
-
 experiments:
-  # Example 1: Hero messaging A/B test
-  # Tests career-focused vs salary-focused hero messaging
-  # Create variant files:
-  #   - career-focus.v1.en.yml
-  #   - salary-focus.v1.en.yml
-  
   - slug: hero-messaging-test
-    status: planned  # Change to "active" to enable
-    description: "Test career-focused vs salary-focused hero messaging"
+    status: planned
+    description: Test career-focused vs salary-focused hero messaging
     variants:
       - slug: career-focus
         version: 1
@@ -138,15 +10,12 @@ experiments:
         version: 1
         allocation: 50
     targeting:
-      languages: ["en"]
+      languages:
+        - en
     max_visitors: 1000
-    
-  # Example 2: Regional pricing experiment
-  # Tests different pricing displays for LATAM visitors
-  
   - slug: latam-pricing
     status: planned
-    description: "Test different pricing presentation for LATAM visitors"
+    description: Test different pricing presentation for LATAM visitors
     variants:
       - slug: standard-pricing
         version: 1
@@ -155,16 +24,14 @@ experiments:
         version: 1
         allocation: 50
     targeting:
-      regions: ["latam"]
-      languages: ["es"]
+      regions:
+        - latam
+      languages:
+        - es
     max_visitors: 500
-
-  # Example 3: Mobile-specific CTA test
-  # Tests different call-to-action buttons on mobile devices
-  
   - slug: mobile-cta-test
     status: planned
-    description: "Test CTA button text on mobile devices"
+    description: Test CTA button text on mobile devices
     variants:
       - slug: apply-now
         version: 1
@@ -173,15 +40,12 @@ experiments:
         version: 1
         allocation: 50
     targeting:
-      devices: ["mobile"]
+      devices:
+        - mobile
     max_visitors: 2000
-
-  # Example 4: Paid traffic landing page test
-  # Different layouts for visitors from Google Ads
-  
   - slug: google-ads-layout
     status: planned
-    description: "Test landing page layouts for Google Ads traffic"
+    description: Test landing page layouts for Google Ads traffic
     variants:
       - slug: testimonials-first
         version: 1
@@ -193,6 +57,9 @@ experiments:
         version: 1
         allocation: 34
     targeting:
-      utm_sources: ["google"]
-      utm_mediums: ["cpc", "ppc"]
+      utm_sources:
+        - google
+      utm_mediums:
+        - cpc
+        - ppc
     max_visitors: 3000

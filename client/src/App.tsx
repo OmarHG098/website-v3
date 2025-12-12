@@ -13,6 +13,7 @@ import "./i18n";
 
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
+const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
@@ -45,6 +46,7 @@ function Router() {
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
         <Route path="/private/redirects" component={PrivateRedirects} />
+        <Route path="/private/:contentType/:contentSlug/experiment/:experimentSlug" component={ExperimentEditor} />
         {/* Template pages - dynamic YAML-based pages */}
         <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />

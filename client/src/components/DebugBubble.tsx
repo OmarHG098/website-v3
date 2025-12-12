@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
 import {
   IconBug,
@@ -860,8 +860,9 @@ export function DebugBubble() {
                       const totalExposures = Object.values(experiment.stats || {}).reduce((a, b) => a + b, 0);
                       
                       return (
-                        <button
+                        <Link
                           key={experiment.slug}
+                          href={`/private/${contentInfo.type}/${contentInfo.slug}/experiment/${experiment.slug}`}
                           className="flex flex-col w-full px-3 py-2.5 rounded-md text-sm hover-elevate cursor-pointer text-left"
                           data-testid={`button-experiment-${experiment.slug}`}
                         >
@@ -885,7 +886,7 @@ export function DebugBubble() {
                               <span>max {experiment.max_visitors}</span>
                             )}
                           </div>
-                        </button>
+                        </Link>
                       );
                     })
                   )}

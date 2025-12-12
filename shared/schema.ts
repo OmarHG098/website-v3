@@ -909,6 +909,19 @@ export const experimentCookieSchema = z.object({
   session_id: z.string(),
 });
 
+// Schema for validating experiment update requests (all fields optional)
+// Variants must be complete objects, but allocation sum is validated at runtime
+export const experimentUpdateSchema = z.object({
+  description: z.string().optional(),
+  status: z.enum(["planned", "active", "paused", "winner", "archived"]).optional(),
+  variants: z.array(experimentVariantSchema).min(1).optional(),
+  targeting: experimentTargetingSchema.partial().optional(),
+  max_visitors: z.number().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  winner_variant: z.string().optional(),
+}).strict();
+
 export type ExperimentTargeting = z.infer<typeof experimentTargetingSchema>;
 export type ExperimentVariant = z.infer<typeof experimentVariantSchema>;
 export type ExperimentConfig = z.infer<typeof experimentConfigSchema>;
@@ -916,3 +929,4 @@ export type ExperimentsFile = z.infer<typeof experimentsFileSchema>;
 export type VisitorContext = z.infer<typeof visitorContextSchema>;
 export type ExperimentAssignment = z.infer<typeof experimentAssignmentSchema>;
 export type ExperimentCookie = z.infer<typeof experimentCookieSchema>;
+export type ExperimentUpdate = z.infer<typeof experimentUpdateSchema>;

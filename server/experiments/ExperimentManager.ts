@@ -9,7 +9,7 @@ import type {
   ExperimentVariant,
   CareerProgram,
 } from "@shared/schema";
-import { experimentsFileSchema } from "@shared/schema";
+import { experimentsFileSchema, experimentConfigSchema, type ExperimentUpdate } from "@shared/schema";
 
 const CONTENT_DIR = path.join(process.cwd(), "marketing-content");
 const STATE_FILE = path.join(process.cwd(), "experiments-state.json");
@@ -361,6 +361,103 @@ export class ExperimentManager {
     slug: string
   ): string {
     return path.join(CONTENT_DIR, contentType, slug, "experiments.yml");
+  }
+
+  /**
+   * Update an experiment's settings
+   */
+  public updateExperiment(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    contentSlug: string,
+    experimentSlug: string,
+    updates: ExperimentUpdate
+  ): { success: boolean; experiment: ExperimentConfig } {
+    const configPath = this.getExperimentsFilePath(contentType, contentSlug);
+    
+    if (!fs.existsSync(configPath)) {
+      throw new Error("Experiments file not found");
+    }
+    
+    try {
+      const content = fs.readFileSync(configPath, "utf-8");
+      const rawParsed = yaml.load(content);
+      
+      // Validate loaded YAML structure before accessing
+      const parsedResult = experimentsFileSchema.safeParse(rawParsed);
+      if (!parsedResult.success) {
+        throw new Error("Experiments file has invalid structure");
+      }
+      
+      const parsed = parsedResult.data;
+      
+      const experimentIndex = parsed.experiments.findIndex(
+        (exp: ExperimentConfig) => exp.slug === experimentSlug
+      );
+      
+      if (experimentIndex === -1) {
+        throw new Error("Experiment not found");
+      }
+      
+      // Validate variants allocation sum if variants are being updated
+      if (updates.variants) {
+        const allocationSum = updates.variants.reduce((sum, v) => sum + v.allocation, 0);
+        if (allocationSum !== 100) {
+          throw new Error(`Variant allocations must sum to 100, got ${allocationSum}`);
+        }
+      }
+      
+      // Deep clone existing experiment to avoid mutation
+      const existingExperiment = JSON.parse(JSON.stringify(parsed.experiments[experimentIndex]));
+      
+      // Merge updates with existing experiment (deep merge for targeting)
+      const updatedExperiment = {
+        ...existingExperiment,
+        ...updates,
+        slug: existingExperiment.slug, // Prevent slug modification
+        // Deep merge targeting to preserve unmodified fields
+        targeting: updates.targeting !== undefined 
+          ? { ...existingExperiment.targeting, ...updates.targeting }
+          : existingExperiment.targeting,
+      };
+      
+      // Validate the merged experiment against schema before saving
+      const validationResult = experimentConfigSchema.safeParse(updatedExperiment);
+      if (!validationResult.success) {
+        throw new Error(`Invalid experiment data: ${validationResult.error.message}`);
+      }
+      
+      parsed.experiments[experimentIndex] = validationResult.data;
+      
+      // Validate entire file before writing
+      const fileValidation = experimentsFileSchema.safeParse(parsed);
+      if (!fileValidation.success) {
+        throw new Error(`File validation failed: ${fileValidation.error.message}`);
+      }
+      
+      // Write back to file using validated data
+      const yamlContent = yaml.dump(fileValidation.data, {
+        indent: 2,
+        lineWidth: 120,
+        quotingType: '"',
+        forceQuotes: false,
+      });
+      
+      fs.writeFileSync(configPath, yamlContent, "utf-8");
+      
+      // Clear cache for this content
+      const cacheKey = `${contentType}:${contentSlug}`;
+      this.configCache.delete(cacheKey);
+      
+      console.log(`[Experiments] Updated experiment ${experimentSlug} for ${contentType}/${contentSlug}`);
+      
+      return {
+        success: true,
+        experiment: updatedExperiment,
+      };
+    } catch (error) {
+      console.error(`[Experiments] Error updating experiment:`, error);
+      throw error;
+    }
   }
 }
 
