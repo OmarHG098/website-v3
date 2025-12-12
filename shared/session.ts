@@ -42,6 +42,12 @@ export interface GeoData {
   longitude?: number;
 }
 
+export interface ExperimentData {
+  experiment_slug?: string;
+  variant_slug?: string;
+  variant_version?: number;
+}
+
 export interface Session {
   version: number;
   initialized: boolean;
@@ -50,6 +56,7 @@ export interface Session {
   browserLang: string | null;
   geo: GeoData | null;
   utm: UTMParams;
+  experiment?: ExperimentData;
   consent: {
     geolocation: boolean | null;
   };
