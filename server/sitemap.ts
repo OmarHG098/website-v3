@@ -329,12 +329,6 @@ function buildCanonicalSitemapEntries(): CanonicalSitemapEntry[] {
   // Static pages
   const staticPages: Array<{ path: string; label: string; changefreq: ChangeFreq; priority: number }> = [
     { path: "/", label: "Home", changefreq: "weekly", priority: 1.0 },
-    { path: "/learning-paths", label: "Learning Paths", changefreq: "weekly", priority: 0.9 },
-    { path: "/career-paths", label: "Career Paths", changefreq: "weekly", priority: 0.9 },
-    { path: "/skill-boosters", label: "Skill Boosters", changefreq: "weekly", priority: 0.9 },
-    { path: "/tool-mastery", label: "Tool Mastery", changefreq: "weekly", priority: 0.9 },
-    { path: "/career-programs", label: "Career Programs", changefreq: "weekly", priority: 0.9 },
-    { path: "/dashboard", label: "Dashboard", changefreq: "daily", priority: 0.8 },
   ];
 
   for (const page of staticPages) {
