@@ -1,20 +1,17 @@
-# Job Guarantee Page - English
-# Template: job_guarantee (client/src/pages/job_guarantee.tsx)
+# Job Guarantee Landing Page - English
 
 slug: "job-guarantee"
-template: "job_guarantee"
+template: "default"
 title: "Job Guarantee"
 
 meta:
-  page_title: "Job Guarantee | Get Hired or Get Your Money Back | 4Geeks Academy"
-  description: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Learn about our Job Guarantee program."
+  page_title: "Job Guarantee | 4Geeks Academy"
+  description: "Get into tech with our Job Guarantee. Get hired within 9 months of graduation, or we will refund your tuition."
   robots: "index, follow"
-  og_image: "/images/job-guarantee-og.jpg"
   priority: 0.9
   change_frequency: "weekly"
   redirects:
-    - "/guarantee"
-    - "/job-placement-guarantee"
+    - "/job-guarantee"
 
 schema:
   include:
@@ -23,26 +20,42 @@ schema:
 
 sections:
   - type: hero
-    variant: twoColumn
+    variant: simpleTwoColumn
     version: "1.0"
     title: "Get into tech with our Job Guarantee"
-    subtitle: "Your success is our mission — Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply."
+    subtitle: "Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply."
+    image:
+      src: "/attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp"
+      alt: "Students collaborating in a tech workspace"
     cta_buttons:
       - text: "Apply now"
         url: "#apply"
-        variant: "primary"
+        variant: primary
         icon: "Rocket"
       - text: "Download Details"
         url: "#syllabus"
-        variant: "outline"
+        variant: outline
         icon: "Download"
-    image: "/images/job-guarantee-hero.webp"
-    image_alt: "Students collaborating in a tech workspace"
 
-  - type: stats
+  - type: features_grid
     version: "1.0"
+    variant: highlight
     title: "Does the Job Guarantee deliver results you can count on?"
-    description: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of."
+    subtitle: "Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of."
+    columns: 3
+    items:
+      - icon: "Briefcase"
+        icon_color: "#0097CD"
+        value: "84%"
+        title: "Job placement rate"
+      - icon: "Graduation"
+        icon_color: "#0097CD"
+        value: "3-6 months"
+        title: "Average time to get hired"
+      - icon: "GrowthChart"
+        icon_color: "#0097CD"
+        value: "55%"
+        title: "Salary increase after graduation"
 
   - type: two_column
     version: "1.0"
@@ -60,16 +73,16 @@ sections:
       button:
         text: "Apply"
         url: "#apply"
-        variant: "primary"
+        variant: primary
       font_size: "lg"
     right:
-      image: "/images/eligible-woman-laptop.webp"
+      image: "/attached_assets/reservation-es_1764814854635.webp"
       image_alt: "Woman working on laptop"
       image_max_width: "420px"
 
   - type: features_grid
-    variant: detailed
     version: "1.0"
+    variant: detailed
     title: "Our Job Guarantee is Available for Our Top Tech Programs"
     subtitle: "Choose your career path. Master the skills and get hired."
     columns: 3
@@ -80,21 +93,21 @@ sections:
         title: "Full Stack Development with AI"
         description: "Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career."
         icon: "CodeWindow"
-        link_url: "/career-programs/full-stack"
+        link_url: "#"
         link_text: "Read More"
       - id: "datascience"
         category: "With Python"
         title: "Data Science and Machine Learning with AI"
         description: "Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI."
         icon: "Monitor"
-        link_url: "/career-programs/data-science"
+        link_url: "#"
         link_text: "Read More"
       - id: "cybersecurity"
         category: "For Windows & Linux"
         title: "Cybersecurity"
         description: "Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards."
         icon: "Security"
-        link_url: "/career-programs/cybersecurity"
+        link_url: "#"
         link_text: "Read More"
 
   - type: numbered_steps
@@ -120,7 +133,7 @@ sections:
     gap: "12"
     reverse_on_mobile: true
     left:
-      image: "/images/confident-graduate.webp"
+      image: "/attached_assets/hombre-joven-con-laptop_1764691956393.webp"
       image_alt: "Happy graduate with laptop showing the 4Geeks Academy logo"
       justify: "start"
     right:
@@ -136,7 +149,7 @@ sections:
       button:
         text: "Apply"
         url: "#apply"
-        variant: "primary"
+        variant: primary
 
   - type: faq
     version: "1.0"

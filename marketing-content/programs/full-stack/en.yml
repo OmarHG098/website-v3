@@ -18,24 +18,24 @@ schema:
     - courses:full-stack
 sections:
   - type: hero
-    version: "1.0"
     variant: singleColumn
-    title: Full Stack Development with AI
-    subtitle: Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee.
-    badge: Career Program
-    cta_buttons:
-      - text: Apply Now
-        url: /apply
-        variant: primary
-        icon: Rocket
-      - text: Download Syllabus
-        url: /syllabus/full-stack
-        variant: outline
-        icon: Download
+    version: "1.0"
+    badge: High-Earning Career
+    title: Earn $65K+ as a Full Stack Developer test
+    subtitle: Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available.
     trust_bar:
       rating: "4.5"
       rating_count: 1,294
-      trusted_text: Trusted by 2.5K+ learners
+      trusted_text: $65K average starting salary
+    cta_buttons:
+      - text: See Payment Options
+        url: /apply
+        variant: primary
+        icon: CurrencyDollar
+      - text: Calculate Your ROI
+        url: /roi-calculator
+        variant: outline
+        icon: Calculator
     award_badges:
       - name: Top Coding Bootcamp
         source: Forbes
