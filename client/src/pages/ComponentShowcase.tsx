@@ -471,16 +471,6 @@ function ComponentCard({
                           ))}
                         </div>
                       )}
-                      {validationResult.validVariants.length > 0 && (
-                        <div className="pt-2 border-t">
-                          <p className="text-xs text-muted-foreground mb-1">Valid variants:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {validationResult.validVariants.map(v => (
-                              <Badge key={v} variant="outline" className="text-xs">{v}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </PopoverContent>
                 )}
