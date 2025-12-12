@@ -25,7 +25,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12">
           {/* Left Column */}
           <div className="space-y-6">
             <h1 
