@@ -3,6 +3,7 @@ import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDebugToken } from "@/hooks/useDebugAuth";
+import { queryClient } from "@/lib/queryClient";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -131,6 +132,16 @@ export function SectionEditorPanel({
       if (response.ok) {
         onUpdate(parsed);
         setHasChanges(false);
+        
+        // Invalidate relevant queries to trigger refetch
+        const apiPath = contentType === "program" 
+          ? "/api/career-programs" 
+          : contentType === "landing" 
+            ? "/api/landings" 
+            : "/api/locations";
+        
+        await queryClient.invalidateQueries({ queryKey: [apiPath, slug] });
+        
         onClose();
       } else {
         const error = await response.json();
