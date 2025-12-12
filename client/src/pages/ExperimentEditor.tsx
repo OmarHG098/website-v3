@@ -632,57 +632,7 @@ export default function ExperimentEditor() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <IconCalendar className="h-4 w-4" />
-                  Quick Actions
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button
-                  variant="outline"
-                  className="w-full justify-between"
-                  onClick={() => {
-                    if (formData?.status === "active") {
-                      updateFormData("status", "paused");
-                    } else {
-                      updateFormData("status", "active");
-                    }
-                  }}
-                  data-testid="button-toggle-status"
-                >
-                  {formData?.status === "active" ? "Pause Experiment" : "Activate Experiment"}
-                  <IconChevronRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-between"
-                  disabled={!selectedVariant}
-                  onClick={() => {
-                    if (selectedVariant) {
-                      updateFormData("status", "winner");
-                    }
-                  }}
-                  data-testid="button-declare-winner"
-                >
-                  Declare Winner
-                  <IconChevronRight className="h-4 w-4" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">File Location</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <code className="text-xs bg-muted px-2 py-1 rounded block break-all">
-                  {data.filePath}
-                </code>
-              </CardContent>
-            </Card>
-          </div>
+            </div>
         </div>
       </main>
     </div>
