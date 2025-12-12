@@ -780,3 +780,81 @@ export const locationPageSchema = z.object({
 
 export type LocationMeta = z.infer<typeof locationMetaSchema>;
 export type LocationPage = z.infer<typeof locationPageSchema>;
+
+// ============================================
+// A/B Testing / Experiments System
+// ============================================
+
+// Targeting rules for experiments
+export const experimentTargetingSchema = z.object({
+  regions: z.array(z.string()).optional(),
+  countries: z.array(z.string()).optional(),
+  languages: z.array(z.string()).optional(),
+  utm_sources: z.array(z.string()).optional(),
+  utm_campaigns: z.array(z.string()).optional(),
+  utm_mediums: z.array(z.string()).optional(),
+  devices: z.array(z.enum(["mobile", "desktop", "tablet"])).optional(),
+  hours: z.array(z.number().min(0).max(23)).optional(),
+  days_of_week: z.array(z.number().min(0).max(6)).optional(),
+});
+
+// Variant definition with allocation percentage
+export const experimentVariantSchema = z.object({
+  slug: z.string(),
+  version: z.number().default(1),
+  allocation: z.number().min(0).max(100),
+});
+
+// Experiment configuration
+export const experimentConfigSchema = z.object({
+  slug: z.string(),
+  status: z.enum(["planned", "active", "paused", "winner", "archived"]),
+  description: z.string().optional(),
+  variants: z.array(experimentVariantSchema),
+  targeting: experimentTargetingSchema.optional(),
+  max_visitors: z.number().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  winner_variant: z.string().optional(),
+});
+
+// Experiments file structure (experiments.yml per program)
+export const experimentsFileSchema = z.object({
+  experiments: z.array(experimentConfigSchema),
+});
+
+// Visitor context for experiment assignment
+export const visitorContextSchema = z.object({
+  session_id: z.string(),
+  language: z.string().optional(),
+  region: z.string().optional(),
+  country: z.string().optional(),
+  utm_source: z.string().optional(),
+  utm_campaign: z.string().optional(),
+  utm_medium: z.string().optional(),
+  device: z.enum(["mobile", "desktop", "tablet"]).optional(),
+  hour: z.number().optional(),
+  day_of_week: z.number().optional(),
+});
+
+// Experiment assignment result
+export const experimentAssignmentSchema = z.object({
+  experiment_slug: z.string(),
+  variant_slug: z.string(),
+  variant_version: z.number(),
+  assigned_at: z.number(),
+});
+
+// Cookie structure for persisting assignments
+export const experimentCookieSchema = z.object({
+  assignments: z.array(experimentAssignmentSchema),
+  session_id: z.string(),
+});
+
+export type ExperimentTargeting = z.infer<typeof experimentTargetingSchema>;
+export type ExperimentVariant = z.infer<typeof experimentVariantSchema>;
+export type ExperimentConfig = z.infer<typeof experimentConfigSchema>;
+export type ExperimentsFile = z.infer<typeof experimentsFileSchema>;
+export type VisitorContext = z.infer<typeof visitorContextSchema>;
+export type ExperimentAssignment = z.infer<typeof experimentAssignmentSchema>;
+export type ExperimentCookie = z.infer<typeof experimentCookieSchema>;
