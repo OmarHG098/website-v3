@@ -198,6 +198,10 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         // Form configuration
         tags: data.tags || "website-lead",
         automations: data.automations || "strong",
+        // Experiment tracking (merged at top level for marketing automation)
+        experiment_slug: session.experiment?.experiment_slug,
+        variant_slug: session.experiment?.variant_slug,
+        variant_version: session.experiment?.variant_version,
       };
       
       return apiRequest("POST", "/api/leads", payload);
