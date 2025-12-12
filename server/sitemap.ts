@@ -113,10 +113,15 @@ function getAvailablePrograms(): AvailableProgram[] {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
       if (!fs.statSync(programPath).isDirectory()) continue;
 
-      const files = fs.readdirSync(programPath).filter(f => f.endsWith(".yml"));
+      const files = fs.readdirSync(programPath).filter(f => 
+        f.endsWith(".yml") && !f.includes(".v") // Exclude variant files
+      );
 
       for (const file of files) {
         const locale = file.replace(".yml", "");
+        // Only process locale files (en.yml, es.yml), skip experiments.yml and other config files
+        if (!["en", "es"].includes(locale)) continue;
+        
         const filePath = path.join(programPath, file);
 
         try {
