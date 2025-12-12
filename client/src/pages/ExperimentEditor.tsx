@@ -89,6 +89,7 @@ export default function ExperimentEditor() {
   const [allocationDialogOpen, setAllocationDialogOpen] = useState(false);
   const [editingVariantSlug, setEditingVariantSlug] = useState<string | null>(null);
   const [tempAllocations, setTempAllocations] = useState<Record<string, number>>({});
+  const [targetingDialogOpen, setTargetingDialogOpen] = useState(false);
 
   const [formData, setFormData] = useState<{
     description: string;
@@ -309,15 +310,11 @@ export default function ExperimentEditor() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => {
-                const previewUrl = `${backUrl}?force_variant=${selectedVariant}`;
-                window.open(previewUrl, "_blank");
-              }}
-              disabled={!selectedVariant}
-              data-testid="button-preview"
+              onClick={() => setTargetingDialogOpen(true)}
+              data-testid="button-targeting"
             >
-              <IconEye className="h-4 w-4 mr-1" />
-              Preview
+              <IconTarget className="h-4 w-4 mr-1" />
+              Targeting
             </Button>
             <Button
               size="sm"
@@ -337,210 +334,42 @@ export default function ExperimentEditor() {
       </header>
 
       <main className="container py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <IconTarget className="h-4 w-4" />
-                  Targeting Rules
-                </CardTitle>
-                <CardDescription>
-                  Define which visitors are eligible for this experiment
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
-                      <IconLanguage className="h-4 w-4" />
-                      Languages
-                    </Label>
-                    <div className="flex gap-2">
-                      {["en", "es"].map((lang) => (
-                        <Button
-                          key={lang}
-                          variant={
-                            formData?.targeting?.languages?.includes(lang)
-                              ? "default"
-                              : "outline"
-                          }
-                          size="sm"
-                          onClick={() => {
-                            const current = formData?.targeting?.languages || [];
-                            const updated = current.includes(lang)
-                              ? current.filter((l) => l !== lang)
-                              : [...current, lang];
-                            updateTargeting("languages", updated.length ? updated : undefined);
-                          }}
-                          data-testid={`button-lang-${lang}`}
-                        >
-                          {lang.toUpperCase()}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
-                      <IconWorld className="h-4 w-4" />
-                      Regions
-                    </Label>
-                    <div className="flex flex-wrap gap-2">
-                      {["usa-canada", "latam", "europe"].map((region) => (
-                        <Button
-                          key={region}
-                          variant={
-                            formData?.targeting?.regions?.includes(region)
-                              ? "default"
-                              : "outline"
-                          }
-                          size="sm"
-                          onClick={() => {
-                            const current = formData?.targeting?.regions || [];
-                            const updated = current.includes(region)
-                              ? current.filter((r) => r !== region)
-                              : [...current, region];
-                            updateTargeting("regions", updated.length ? updated : undefined);
-                          }}
-                          data-testid={`button-region-${region}`}
-                        >
-                          {deslugify(region)}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <IconDeviceMobile className="h-4 w-4" />
-                    Devices
-                  </Label>
-                  <div className="flex gap-2">
-                    {(["mobile", "tablet", "desktop"] as const).map((device) => (
-                      <Button
-                        key={device}
-                        variant={
-                          formData?.targeting?.devices?.includes(device)
-                            ? "default"
-                            : "outline"
-                        }
-                        size="sm"
-                        onClick={() => {
-                          const current = formData?.targeting?.devices || [];
-                          const updated = current.includes(device)
-                            ? current.filter((d) => d !== device)
-                            : [...current, device];
-                          updateTargeting(
-                            "devices",
-                            updated.length ? (updated as ("mobile" | "tablet" | "desktop")[]) : undefined
-                          );
-                        }}
-                        data-testid={`button-device-${device}`}
-                      >
-                        {device === "mobile" && <IconDeviceMobile className="h-3 w-3 mr-1" />}
-                        {device === "desktop" && <IconDeviceDesktop className="h-3 w-3 mr-1" />}
-                        {device.charAt(0).toUpperCase() + device.slice(1)}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>UTM Sources</Label>
-                    <Input
-                      placeholder="google, facebook, ..."
-                      value={formData?.targeting?.utm_sources?.join(", ") || ""}
-                      onChange={(e) => {
-                        const values = e.target.value
-                          .split(",")
-                          .map((s) => s.trim())
-                          .filter(Boolean);
-                        updateTargeting("utm_sources", values.length ? values : undefined);
-                      }}
-                      data-testid="input-utm-sources"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>UTM Campaigns</Label>
-                    <Input
-                      placeholder="campaign1, campaign2, ..."
-                      value={formData?.targeting?.utm_campaigns?.join(", ") || ""}
-                      onChange={(e) => {
-                        const values = e.target.value
-                          .split(",")
-                          .map((s) => s.trim())
-                          .filter(Boolean);
-                        updateTargeting("utm_campaigns", values.length ? values : undefined);
-                      }}
-                      data-testid="input-utm-campaigns"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Countries (ISO codes)</Label>
-                  <Input
-                    placeholder="US, CA, MX, ..."
-                    value={formData?.targeting?.countries?.join(", ") || ""}
-                    onChange={(e) => {
-                      const values = e.target.value
-                        .split(",")
-                        .map((s) => s.trim().toUpperCase())
-                        .filter(Boolean);
-                      updateTargeting("countries", values.length ? values : undefined);
-                    }}
-                    data-testid="input-countries"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <IconUsers className="h-4 w-4" />
-                  Statistics
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+        <div className="max-w-md">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <IconUsers className="h-4 w-4" />
+                Statistics
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Total Exposures</span>
+                <span className="font-medium">{totalExposures}</span>
+              </div>
+              {formData?.max_visitors && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Total Exposures</span>
-                  <span className="font-medium">{totalExposures}</span>
+                  <span className="text-sm text-muted-foreground">Max Visitors</span>
+                  <span className="font-medium">{formData.max_visitors}</span>
                 </div>
-                {formData?.max_visitors && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Max Visitors</span>
-                    <span className="font-medium">{formData.max_visitors}</span>
+              )}
+              <Separator />
+              {formData?.variants.map((variant) => {
+                const count = experiment.stats?.[variant.slug] || 0;
+                const percentage = totalExposures > 0 
+                  ? ((count / totalExposures) * 100).toFixed(1) 
+                  : "0";
+                return (
+                  <div key={variant.slug} className="flex items-center justify-between">
+                    <span className="text-sm">{deslugify(variant.slug)}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {count} ({percentage}%)
+                    </span>
                   </div>
-                )}
-                <Separator />
-                {formData?.variants.map((variant) => {
-                  const count = experiment.stats?.[variant.slug] || 0;
-                  const percentage = totalExposures > 0 
-                    ? ((count / totalExposures) * 100).toFixed(1) 
-                    : "0";
-                  return (
-                    <div key={variant.slug} className="flex items-center justify-between">
-                      <span className="text-sm">{deslugify(variant.slug)}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {count} ({percentage}%)
-                      </span>
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-
-            </div>
+                );
+              })}
+            </CardContent>
+          </Card>
         </div>
       </main>
 
@@ -671,6 +500,180 @@ export default function ExperimentEditor() {
               data-testid="button-save-allocation"
             >
               Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={targetingDialogOpen} onOpenChange={setTargetingDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconTarget className="h-4 w-4" />
+              Targeting Rules
+            </DialogTitle>
+            <DialogDescription>
+              Define which visitors are eligible for this experiment
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <IconLanguage className="h-4 w-4" />
+                  Languages
+                </Label>
+                <div className="flex gap-2">
+                  {["en", "es"].map((lang) => (
+                    <Button
+                      key={lang}
+                      variant={
+                        formData?.targeting?.languages?.includes(lang)
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        const current = formData?.targeting?.languages || [];
+                        const updated = current.includes(lang)
+                          ? current.filter((l) => l !== lang)
+                          : [...current, lang];
+                        updateTargeting("languages", updated.length ? updated : undefined);
+                      }}
+                      data-testid={`button-lang-${lang}`}
+                    >
+                      {lang.toUpperCase()}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <IconWorld className="h-4 w-4" />
+                  Regions
+                </Label>
+                <div className="flex flex-wrap gap-2">
+                  {["usa-canada", "latam", "europe"].map((region) => (
+                    <Button
+                      key={region}
+                      variant={
+                        formData?.targeting?.regions?.includes(region)
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        const current = formData?.targeting?.regions || [];
+                        const updated = current.includes(region)
+                          ? current.filter((r) => r !== region)
+                          : [...current, region];
+                        updateTargeting("regions", updated.length ? updated : undefined);
+                      }}
+                      data-testid={`button-region-${region}`}
+                    >
+                      {deslugify(region)}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">
+                <IconDeviceMobile className="h-4 w-4" />
+                Devices
+              </Label>
+              <div className="flex gap-2">
+                {(["mobile", "tablet", "desktop"] as const).map((device) => (
+                  <Button
+                    key={device}
+                    variant={
+                      formData?.targeting?.devices?.includes(device)
+                        ? "default"
+                        : "outline"
+                    }
+                    size="sm"
+                    onClick={() => {
+                      const current = formData?.targeting?.devices || [];
+                      const updated = current.includes(device)
+                        ? current.filter((d) => d !== device)
+                        : [...current, device];
+                      updateTargeting(
+                        "devices",
+                        updated.length ? (updated as ("mobile" | "tablet" | "desktop")[]) : undefined
+                      );
+                    }}
+                    data-testid={`button-device-${device}`}
+                  >
+                    {device === "mobile" && <IconDeviceMobile className="h-3 w-3 mr-1" />}
+                    {device === "desktop" && <IconDeviceDesktop className="h-3 w-3 mr-1" />}
+                    {device.charAt(0).toUpperCase() + device.slice(1)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>UTM Sources</Label>
+                <Input
+                  placeholder="google, facebook, ..."
+                  value={formData?.targeting?.utm_sources?.join(", ") || ""}
+                  onChange={(e) => {
+                    const values = e.target.value
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    updateTargeting("utm_sources", values.length ? values : undefined);
+                  }}
+                  data-testid="input-utm-sources"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>UTM Campaigns</Label>
+                <Input
+                  placeholder="campaign1, campaign2, ..."
+                  value={formData?.targeting?.utm_campaigns?.join(", ") || ""}
+                  onChange={(e) => {
+                    const values = e.target.value
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    updateTargeting("utm_campaigns", values.length ? values : undefined);
+                  }}
+                  data-testid="input-utm-campaigns"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Countries (ISO codes)</Label>
+              <Input
+                placeholder="US, CA, MX, ..."
+                value={formData?.targeting?.countries?.join(", ") || ""}
+                onChange={(e) => {
+                  const values = e.target.value
+                    .split(",")
+                    .map((s) => s.trim().toUpperCase())
+                    .filter(Boolean);
+                  updateTargeting("countries", values.length ? values : undefined);
+                }}
+                data-testid="input-countries"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setTargetingDialogOpen(false)}
+              data-testid="button-close-targeting"
+            >
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
