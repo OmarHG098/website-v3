@@ -70,6 +70,11 @@ function useNoIndex() {
   }, []);
 }
 
+interface VariantInfo {
+  description?: string;
+  best_for?: string;
+}
+
 interface ComponentSchema {
   name: string;
   version: string;
@@ -78,6 +83,14 @@ interface ComponentSchema {
   description: string;
   when_to_use: string;
   props: Record<string, unknown>;
+  variants?: Record<string, VariantInfo>;
+}
+
+function formatVariantLabel(variant: string): string {
+  return variant
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+    .trim();
 }
 
 interface ComponentExample {
@@ -380,24 +393,16 @@ function ComponentCard({
             </div>
             <p className="text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {(() => {
-              const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
+              const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
+              const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
+              const variants = schemaVariants.length > 0 ? schemaVariants : exampleVariants;
               if (variants.length === 0) return null;
-              const variantLabels: Record<string, string> = {
-                singleColumn: 'Single Column',
-                showcase: 'Showcase',
-                productShowcase: 'Product Showcase',
-                simpleTwoColumn: 'Simple Two Column',
-                imageText: 'Image + Text',
-                bulletGroups: 'Bullet Groups',
-                video: 'Video',
-                course: 'Course',
-              };
               return (
                 <div className="flex items-center gap-2 flex-wrap pt-[2px] pb-[2px]">
                   <span className="text-xs text-muted-foreground">Variants:</span>
                   {variants.map(variant => (
                     <Badge key={variant} variant="outline" className="text-xs">
-                      {variantLabels[variant as string] || variant}
+                      {formatVariantLabel(variant)}
                     </Badge>
                   ))}
                 </div>
@@ -448,29 +453,22 @@ function ComponentCard({
                       return acc;
                     }, {} as Record<string, typeof examples>);
                     
-                    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'imageText', 'bulletGroups', 'video', 'course', 'default'];
+                    const schemaVariantOrder = schema.variants ? Object.keys(schema.variants) : [];
                     const sortedVariants = Object.keys(grouped).sort((a, b) => {
-                      const aIdx = variantOrder.indexOf(a);
-                      const bIdx = variantOrder.indexOf(b);
-                      return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+                      if (a === 'default') return 1;
+                      if (b === 'default') return -1;
+                      const aIdx = schemaVariantOrder.indexOf(a);
+                      const bIdx = schemaVariantOrder.indexOf(b);
+                      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+                      if (aIdx === -1) return 1;
+                      if (bIdx === -1) return -1;
+                      return aIdx - bIdx;
                     });
-                    
-                    const variantLabels: Record<string, string> = {
-                      singleColumn: 'Single Column',
-                      showcase: 'Showcase',
-                      productShowcase: 'Product Showcase',
-                      simpleTwoColumn: 'Simple Two Column',
-                      imageText: 'Image + Text',
-                      bulletGroups: 'Bullet Groups',
-                      video: 'Video',
-                      course: 'Course',
-                      default: 'Default',
-                    };
                     
                     return sortedVariants.map(variant => (
                       <SelectGroup key={variant}>
                         <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
-                          {variantLabels[variant] || variant}
+                          {formatVariantLabel(variant)}
                         </SelectLabel>
                         {grouped[variant].map(ex => (
                           <SelectItem key={ex.name} value={ex.name} className="pl-4">

@@ -32,8 +32,7 @@ props:
   variant:
     type: string
     required: true
-    options: ["singleColumn", "showcase", "productShowcase", "simpleTwoColumn", "course"]
-    description: "Layout variant to use"
+    description: "Layout variant to use (valid variants defined in 'variants' section above)"
     example: "singleColumn"
 
   title:
