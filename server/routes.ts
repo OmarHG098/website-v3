@@ -575,10 +575,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Experiments API endpoints
   app.get("/api/debug/experiments", (req, res) => {
     const experimentManager = getExperimentManager();
-    const stats = experimentManager.getStats();
+    const extendedStats = experimentManager.getExtendedStats();
     res.json({
-      stats,
-      totalExperiments: Object.keys(stats).length,
+      stats: extendedStats.experiments,
+      totalExperiments: Object.keys(extendedStats.experiments).length,
     });
   });
 
@@ -620,11 +620,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    // Get stats for each experiment
-    const stats = experimentManager.getStats();
+    // Get stats for each experiment (including unique visitors)
+    const extendedStats = experimentManager.getExtendedStats();
     const experimentsWithStats = experiments.experiments.map(exp => ({
       ...exp,
-      stats: stats[exp.slug] || {}
+      stats: extendedStats.experiments[exp.slug]?.variant_counts || {},
+      unique_visitors: extendedStats.experiments[exp.slug]?.unique_visitors || 0
     }));
     
     res.json({
@@ -664,10 +665,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const stats = experimentManager.getStats();
+    const extendedStats = experimentManager.getExtendedStats();
+    const expStats = extendedStats.experiments[experimentSlug];
     const experimentWithStats = {
       ...experiment,
-      stats: stats[experimentSlug] || {}
+      stats: expStats?.variant_counts || {},
+      unique_visitors: expStats?.unique_visitors || 0
     };
     
     res.json({

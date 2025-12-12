@@ -875,6 +875,7 @@ export const experimentConfigSchema = z.object({
   start_date: z.string().optional(),
   end_date: z.string().optional(),
   winner_variant: z.string().optional(),
+  auto_stopped: z.boolean().optional(),
 });
 
 // Experiments file structure (experiments.yml per program)
@@ -921,6 +922,7 @@ export const experimentUpdateSchema = z.object({
   start_date: z.string().optional(),
   end_date: z.string().optional(),
   winner_variant: z.string().optional(),
+  auto_stopped: z.boolean().optional(),
 }).strict();
 
 export type ExperimentTargeting = z.infer<typeof experimentTargetingSchema>;

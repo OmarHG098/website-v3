@@ -10,6 +10,7 @@ import type {
   CareerProgram,
 } from "@shared/schema";
 import { experimentsFileSchema, experimentConfigSchema, type ExperimentUpdate } from "@shared/schema";
+import { hashVisitorId } from "./cookie-utils";
 
 const CONTENT_DIR = path.join(process.cwd(), "marketing-content");
 const STATE_FILE = path.join(process.cwd(), "experiments-state.json");
@@ -17,8 +18,12 @@ const FLUSH_INTERVAL = 30000; // 30 seconds
 
 interface ExperimentState {
   counts: Record<string, Record<string, number>>; // experiment -> variant -> count
+  visitors: Record<string, string[]>; // experiment -> array of hashed visitor IDs (persisted)
   lastFlushed: number;
 }
+
+// In-memory Set for O(1) visitor dedup lookups
+const visitorSets: Map<string, Set<string>> = new Map();
 
 interface VariantContent {
   slug: string;
@@ -29,8 +34,9 @@ interface VariantContent {
 export class ExperimentManager {
   private configCache: Map<string, ExperimentsFile> = new Map();
   private contentCache: Map<string, VariantContent> = new Map();
-  private state: ExperimentState = { counts: {}, lastFlushed: Date.now() };
+  private state: ExperimentState = { counts: {}, visitors: {}, lastFlushed: Date.now() };
   private flushTimer: NodeJS.Timeout | null = null;
+  private experimentContentMap: Map<string, { contentType: string; contentSlug: string }> = new Map();
 
   constructor() {
     this.loadState();
@@ -41,7 +47,19 @@ export class ExperimentManager {
     try {
       if (fs.existsSync(STATE_FILE)) {
         const data = fs.readFileSync(STATE_FILE, "utf-8");
-        this.state = JSON.parse(data);
+        const loaded = JSON.parse(data);
+        // Migrate old state format (add visitors if missing)
+        this.state = {
+          counts: loaded.counts || {},
+          visitors: loaded.visitors || {},
+          lastFlushed: loaded.lastFlushed || Date.now(),
+        };
+        
+        // Initialize in-memory Sets from persisted arrays for O(1) lookups
+        for (const [expSlug, visitorIds] of Object.entries(this.state.visitors)) {
+          visitorSets.set(expSlug, new Set(visitorIds as string[]));
+        }
+        
         console.log("[Experiments] Loaded state:", Object.keys(this.state.counts).length, "experiments");
       }
     } catch (error) {
@@ -225,24 +243,117 @@ export class ExperimentManager {
   }
 
   /**
-   * Get current visitor count for an experiment
+   * Get current unique visitor count for an experiment
+   * Uses in-memory Set for accurate count
    */
-  private getExperimentCount(experimentSlug: string): number {
-    const expCounts = this.state.counts[experimentSlug] || {};
-    return Object.values(expCounts).reduce((sum, count) => sum + count, 0);
+  public getExperimentVisitorCount(experimentSlug: string): number {
+    return visitorSets.get(experimentSlug)?.size || this.state.visitors[experimentSlug]?.length || 0;
   }
 
   /**
-   * Record an experiment exposure (increment count)
+   * Get variant-level exposure counts (for analytics)
    */
-  private recordExposure(experimentSlug: string, variantSlug: string): void {
+  public getExperimentVariantCounts(experimentSlug: string): Record<string, number> {
+    return this.state.counts[experimentSlug] || {};
+  }
+
+  /**
+   * Check if a visitor has already been counted for an experiment
+   */
+  private isVisitorCounted(experimentSlug: string, visitorId: string): boolean {
+    const hashedId = hashVisitorId(visitorId);
+    return this.state.visitors[experimentSlug]?.includes(hashedId) || false;
+  }
+
+  /**
+   * Record an experiment exposure for a unique visitor
+   * Returns true if this was a new visitor, false if returning visitor
+   * Uses in-memory Set for O(1) lookups to prevent performance degradation
+   */
+  private recordExposure(
+    experimentSlug: string,
+    variantSlug: string,
+    visitorId: string,
+    contentType: string,
+    contentSlug: string,
+    maxVisitors?: number
+  ): boolean {
+    const hashedId = hashVisitorId(visitorId);
+    
+    // Get or create the in-memory Set for this experiment
+    if (!visitorSets.has(experimentSlug)) {
+      visitorSets.set(experimentSlug, new Set());
+    }
+    const visitorSet = visitorSets.get(experimentSlug)!;
+    
+    // O(1) check if this visitor was already counted
+    if (visitorSet.has(hashedId)) {
+      return false; // Returning visitor - skip all state operations
+    }
+    
+    // New unique visitor - add to Set and persist
+    visitorSet.add(hashedId);
+    
+    // Initialize persistence structures if needed
     if (!this.state.counts[experimentSlug]) {
       this.state.counts[experimentSlug] = {};
     }
     if (!this.state.counts[experimentSlug][variantSlug]) {
       this.state.counts[experimentSlug][variantSlug] = 0;
     }
+    if (!this.state.visitors[experimentSlug]) {
+      this.state.visitors[experimentSlug] = [];
+    }
+    
+    // Persist the new visitor
+    this.state.visitors[experimentSlug].push(hashedId);
     this.state.counts[experimentSlug][variantSlug]++;
+    
+    // Store content mapping for auto-stop
+    this.experimentContentMap.set(experimentSlug, { contentType, contentSlug });
+    
+    // Check if we need to auto-stop
+    const visitorCount = visitorSet.size;
+    if (maxVisitors && visitorCount >= maxVisitors) {
+      console.log(`[Experiments] Auto-stopping ${experimentSlug}: reached ${visitorCount}/${maxVisitors} visitors`);
+      this.autoStopExperiment(experimentSlug, contentType, contentSlug);
+    }
+    
+    return true;
+  }
+
+  /**
+   * Auto-stop an experiment when max_visitors is reached
+   * Sets status to "archived" and marks auto_stopped: true
+   */
+  private autoStopExperiment(
+    experimentSlug: string,
+    contentType: string,
+    contentSlug: string
+  ): void {
+    try {
+      // Immediately save state to prevent data loss
+      this.saveState();
+      
+      // Update the experiment status to "archived" with auto-stop flag
+      this.updateExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        contentSlug,
+        experimentSlug,
+        { 
+          status: "archived",
+          auto_stopped: true,
+          description: `Auto-stopped: reached max_visitors limit on ${new Date().toISOString().split('T')[0]}`
+        }
+      );
+      
+      // Clear config cache to ensure fresh read reflects new status
+      this.configCache.delete(`${contentType}:${contentSlug}`);
+      
+      console.log(`[Experiments] Experiment ${experimentSlug} auto-stopped and archived`);
+    } catch (error) {
+      console.error(`[Experiments] Failed to auto-stop experiment ${experimentSlug}:`, error);
+    }
   }
 
   /**
@@ -261,9 +372,9 @@ export class ExperimentManager {
       // Skip non-active experiments
       if (experiment.status !== "active") continue;
 
-      // Check if max visitors reached
+      // Check if max visitors reached (using unique visitor count)
       if (experiment.max_visitors) {
-        const currentCount = this.getExperimentCount(experiment.slug);
+        const currentCount = this.getExperimentVisitorCount(experiment.slug);
         if (currentCount >= experiment.max_visitors) continue;
       }
 
@@ -275,6 +386,16 @@ export class ExperimentManager {
         (a) => a.experiment_slug === experiment.slug
       );
       if (existing) {
+        // Returning visitor with existing assignment - still record for tracking
+        // but don't increment count (recordExposure handles this)
+        this.recordExposure(
+          experiment.slug,
+          existing.variant_slug,
+          context.session_id,
+          "programs",
+          programSlug,
+          experiment.max_visitors
+        );
         return existing;
       }
 
@@ -282,8 +403,15 @@ export class ExperimentManager {
       const variant = this.selectVariant(experiment, context.session_id);
       if (!variant) continue;
 
-      // Record exposure
-      this.recordExposure(experiment.slug, variant.slug);
+      // Record exposure (only counts new unique visitors)
+      this.recordExposure(
+        experiment.slug,
+        variant.slug,
+        context.session_id,
+        "programs",
+        programSlug,
+        experiment.max_visitors
+      );
 
       return {
         experiment_slug: experiment.slug,
@@ -313,10 +441,40 @@ export class ExperimentManager {
   }
 
   /**
-   * Get experiment statistics
+   * Get experiment statistics (variant counts)
    */
   public getStats(): Record<string, Record<string, number>> {
     return { ...this.state.counts };
+  }
+
+  /**
+   * Get extended statistics including unique visitor counts
+   */
+  public getExtendedStats(): {
+    experiments: Record<string, {
+      unique_visitors: number;
+      variant_counts: Record<string, number>;
+    }>;
+  } {
+    const experiments: Record<string, {
+      unique_visitors: number;
+      variant_counts: Record<string, number>;
+    }> = {};
+
+    // Merge all experiment slugs from both counts and visitors
+    const allSlugs = Array.from(new Set([
+      ...Object.keys(this.state.counts),
+      ...Object.keys(this.state.visitors),
+    ]));
+
+    for (const slug of allSlugs) {
+      experiments[slug] = {
+        unique_visitors: this.state.visitors[slug]?.length || 0,
+        variant_counts: this.state.counts[slug] || {},
+      };
+    }
+
+    return { experiments };
   }
 
   /**

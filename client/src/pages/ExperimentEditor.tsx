@@ -50,6 +50,8 @@ import type { ExperimentConfig, ExperimentVariant, ExperimentTargeting } from "@
 
 interface ExperimentWithStats extends ExperimentConfig {
   stats?: Record<string, number>;
+  unique_visitors?: number;
+  auto_stopped?: boolean;
 }
 
 interface ExperimentResponse {
@@ -451,6 +453,26 @@ export default function ExperimentEditor() {
             <Badge className={statusColors[formData?.status || experiment.status]}>
               {formData?.status || experiment.status}
             </Badge>
+            
+            {experiment.auto_stopped && (
+              <Badge variant="outline" className="border-amber-500 text-amber-600 dark:text-amber-400">
+                Auto-stopped
+              </Badge>
+            )}
+            
+            <div 
+              className="flex items-center gap-2 text-sm text-muted-foreground border rounded-md px-2 py-1"
+              data-testid="stat-visitors"
+            >
+              <IconUsers className="h-4 w-4" />
+              <span className="font-medium text-foreground">
+                {experiment.unique_visitors || 0}
+              </span>
+              {formData?.max_visitors && (
+                <span>/ {formData.max_visitors}</span>
+              )}
+              <span className="text-xs">visitors</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">

@@ -1,24 +1,64 @@
 import type { Request, Response } from "express";
+import crypto from "crypto";
 import type { ExperimentAssignment, ExperimentCookie, VisitorContext } from "@shared/schema";
 import { experimentCookieSchema } from "@shared/schema";
 
 const COOKIE_NAME = "4g_experiments";
-const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 days
+const VISITOR_COOKIE_NAME = "4g_visitor_id";
+const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 days for experiments
+const VISITOR_MAX_AGE = 180 * 24 * 60 * 60 * 1000; // 180 days for visitor ID (industry standard)
 
 /**
- * Generate a simple session ID if none exists
+ * Generate a cryptographically secure visitor ID
+ * Uses crypto.randomUUID() for industry-standard uniqueness
  */
-export function getOrCreateSessionId(req: Request, res: Response): string {
-  const existing = req.cookies?.["4g_session_id"];
-  if (existing) return existing;
+function generateVisitorId(): string {
+  return crypto.randomUUID();
+}
 
-  const sessionId = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
-  res.cookie("4g_session_id", sessionId, {
-    maxAge: COOKIE_MAX_AGE,
+/**
+ * Hash a visitor ID for storage (privacy protection)
+ * We don't need to reverse this - just need consistent hashing
+ */
+export function hashVisitorId(visitorId: string): string {
+  return crypto.createHash("sha256").update(visitorId).digest("hex").substring(0, 16);
+}
+
+/**
+ * Get or create a persistent visitor ID (180-day rolling expiry)
+ * This is the primary identifier for A/B testing unique visitor counting
+ */
+export function getOrCreateVisitorId(req: Request, res: Response): string {
+  const existing = req.cookies?.[VISITOR_COOKIE_NAME];
+  
+  if (existing) {
+    // Refresh the cookie expiry on each visit (rolling expiry)
+    res.cookie(VISITOR_COOKIE_NAME, existing, {
+      maxAge: VISITOR_MAX_AGE,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+    return existing;
+  }
+
+  const visitorId = generateVisitorId();
+  res.cookie(VISITOR_COOKIE_NAME, visitorId, {
+    maxAge: VISITOR_MAX_AGE,
     httpOnly: true,
     sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
   });
-  return sessionId;
+  return visitorId;
+}
+
+/**
+ * Legacy: Generate a simple session ID if none exists
+ * @deprecated Use getOrCreateVisitorId for experiment tracking
+ */
+export function getOrCreateSessionId(req: Request, res: Response): string {
+  // Now delegates to the proper visitor ID system
+  return getOrCreateVisitorId(req, res);
 }
 
 /**
