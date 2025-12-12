@@ -20,7 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: FFull Stack Development with AI
+    title: Full Stack Development with AI
     subtitle: Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee.
     badge: Career Program
     cta_buttons:

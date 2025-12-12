@@ -1,8 +1,7 @@
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
-
-const ComponentPickerModal = lazy(() => import("./ComponentPickerModal"));
+import ComponentPickerModal from "./ComponentPickerModal";
 
 interface AddSectionButtonProps {
   insertIndex: number;
@@ -60,17 +59,15 @@ export function AddSectionButton({
       </div>
       
       {isModalOpen && (
-        <Suspense fallback={null}>
-          <ComponentPickerModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            insertIndex={insertIndex}
-            contentType={contentType}
-            slug={slug}
-            locale={locale}
-            onSectionAdded={handleSectionAdded}
-          />
-        </Suspense>
+        <ComponentPickerModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          insertIndex={insertIndex}
+          contentType={contentType}
+          slug={slug}
+          locale={locale}
+          onSectionAdded={handleSectionAdded}
+        />
       )}
     </>
   );

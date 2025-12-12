@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
+import jsYaml from "js-yaml";
 import { 
   IconX, 
   IconRefresh,
@@ -57,10 +58,17 @@ interface ComponentInfo {
   description: string;
 }
 
-interface ExampleFile {
+interface ApiExample {
+  name: string;
+  description: string;
+  yaml: string;
+  variant?: string;
+}
+
+interface ProcessedExample {
   name: string;
   slug: string;
-  variant?: string;
+  variant: string;
   content: Record<string, unknown>;
 }
 
@@ -95,6 +103,31 @@ const variantLabels: Record<string, string> = {
   default: "Default",
 };
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function parseYamlContent(yamlStr: string): Record<string, unknown> | null {
+  try {
+    const parsed = jsYaml.load(yamlStr);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      const section = parsed[0];
+      const { type, ...rest } = section as Record<string, unknown>;
+      return rest;
+    }
+    if (typeof parsed === 'object' && parsed !== null) {
+      const { type, ...rest } = parsed as Record<string, unknown>;
+      return rest;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export default function ComponentPickerModal({
   isOpen,
   onClose,
@@ -108,9 +141,8 @@ export default function ComponentPickerModal({
   const [selectedComponent, setSelectedComponent] = useState<ComponentInfo | null>(null);
   const [versions, setVersions] = useState<string[]>([]);
   const [selectedVersion, setSelectedVersion] = useState<string>("");
-  const [examples, setExamples] = useState<ExampleFile[]>([]);
+  const [examples, setExamples] = useState<ProcessedExample[]>([]);
   const [selectedExample, setSelectedExample] = useState<string>("");
-  const [exampleContent, setExampleContent] = useState<Record<string, unknown> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -137,10 +169,20 @@ export default function ComponentPickerModal({
       fetch(`/api/component-registry/${selectedComponent.type}/${selectedVersion}/examples`)
         .then(res => res.json())
         .then(data => {
-          const exs = data.examples || [];
-          setExamples(exs);
-          if (exs.length > 0) {
-            setSelectedExample(exs[0].slug);
+          const apiExamples: ApiExample[] = data.examples || [];
+          const processed: ProcessedExample[] = apiExamples.map((ex, idx) => {
+            const content = parseYamlContent(ex.yaml);
+            return {
+              name: ex.name,
+              slug: slugify(ex.name) || `example-${idx}`,
+              variant: ex.variant || 'default',
+              content: content || {},
+            };
+          }).filter(ex => Object.keys(ex.content).length > 0);
+          
+          setExamples(processed);
+          if (processed.length > 0) {
+            setSelectedExample(processed[0].slug);
           }
         })
         .catch(() => setExamples([]))
@@ -148,14 +190,9 @@ export default function ComponentPickerModal({
     }
   }, [selectedComponent, selectedVersion]);
 
-  useEffect(() => {
-    if (selectedExample && examples.length > 0) {
-      const example = examples.find(e => e.slug === selectedExample);
-      if (example) {
-        setExampleContent(example.content);
-      }
-    }
-  }, [selectedExample, examples]);
+  const selectedExampleData = useMemo(() => {
+    return examples.find(e => e.slug === selectedExample) || null;
+  }, [examples, selectedExample]);
 
   const handleSelectComponent = useCallback((component: ComponentInfo) => {
     setSelectedComponent(component);
@@ -164,7 +201,6 @@ export default function ComponentPickerModal({
     setExamples([]);
     setSelectedVersion("");
     setSelectedExample("");
-    setExampleContent(null);
   }, []);
 
   const handleBack = useCallback(() => {
@@ -174,11 +210,10 @@ export default function ComponentPickerModal({
     setExamples([]);
     setSelectedVersion("");
     setSelectedExample("");
-    setExampleContent(null);
   }, []);
 
   const handleAddSection = useCallback(async () => {
-    if (!exampleContent || !selectedComponent || !contentType || !slug || !locale) {
+    if (!selectedExampleData || !selectedComponent || !contentType || !slug || !locale) {
       return;
     }
 
@@ -188,7 +223,7 @@ export default function ComponentPickerModal({
       const sectionToAdd = {
         type: selectedComponent.type,
         version: selectedVersion,
-        ...exampleContent,
+        ...selectedExampleData.content,
       };
 
       const token = getDebugToken();
@@ -225,22 +260,24 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [exampleContent, selectedComponent, selectedVersion, contentType, slug, locale, insertIndex, onSectionAdded, onClose]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, insertIndex, onSectionAdded, onClose]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
       return null;
     }
-    return `/component-showcase/${selectedComponent.type}?version=${selectedVersion}&example=${selectedExample}`;
-  }, [selectedComponent, selectedVersion, selectedExample]);
+    const exampleData = examples.find(e => e.slug === selectedExample);
+    if (!exampleData) return null;
+    return `/component-showcase/${selectedComponent.type}?version=${selectedVersion}&example=${encodeURIComponent(exampleData.name)}`;
+  }, [selectedComponent, selectedVersion, selectedExample, examples]);
 
   const groupedExamples = useMemo(() => {
     const grouped = examples.reduce((acc, ex) => {
-      const variant = ex.variant || 'default';
+      const variant = ex.variant;
       if (!acc[variant]) acc[variant] = [];
       acc[variant].push(ex);
       return acc;
-    }, {} as Record<string, ExampleFile[]>);
+    }, {} as Record<string, ProcessedExample[]>);
     
     const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
     const sortedVariants = Object.keys(grouped).sort((a, b) => {
@@ -255,7 +292,7 @@ export default function ComponentPickerModal({
     return { grouped, sortedVariants };
   }, [examples]);
 
-  const renderExampleSelector = () => {
+  const exampleSelectItems = useMemo(() => {
     const { grouped, sortedVariants } = groupedExamples;
     
     if (sortedVariants.length === 0) {
@@ -278,7 +315,7 @@ export default function ComponentPickerModal({
         ))}
       </SelectGroup>
     ));
-  };
+  }, [groupedExamples]);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -350,7 +387,7 @@ export default function ComponentPickerModal({
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
-                      {renderExampleSelector()}
+                      {exampleSelectItems}
                     </SelectContent>
                   </Select>
                 </div>
@@ -358,7 +395,7 @@ export default function ComponentPickerModal({
               
               <Button 
                 onClick={handleAddSection}
-                disabled={!exampleContent || isAdding}
+                disabled={!selectedExampleData || isAdding}
                 data-testid="button-add-component"
               >
                 {isAdding ? (
