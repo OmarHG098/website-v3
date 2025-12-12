@@ -1,0 +1,31 @@
+slug: "outcomes"
+template: "default"
+title: "Student Outcomes"
+
+meta:
+  page_title: "Student Outcomes | 4Geeks Academy"
+  description: "Discover the career outcomes of 4Geeks Academy graduates. See employment rates, salary increases, and success stories from our coding bootcamp alumni."
+  robots: "index, follow"
+
+schema:
+  include:
+    - organization
+    - website
+
+sections:
+  - type: hero
+    version: "1.0"
+    variant: simpleTwoColumn
+    badge: "Career Success"
+    title: "Our Graduates Achieve Real Results"
+    subtitle: "Join thousands of successful alumni who have transformed their careers through our coding bootcamp. See the data behind our student outcomes."
+    image:
+      src: "/attached_assets/outcomes_1765562850573.png"
+      alt: "Student outcomes growth chart"
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply"
+        variant: primary
+      - text: "See Success Stories"
+        url: "/graduates-and-projects"
+        variant: outline
