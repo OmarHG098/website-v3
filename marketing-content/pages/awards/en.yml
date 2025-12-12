@@ -31,25 +31,6 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: highlight
-    title: "Recognition from Industry Leaders"
-    columns: 3
-    items:
-      - icon: "Award"
-        icon_color: "#000000"
-        value: "Top 5"
-        title: "Coding Bootcamps 2025 - SwitchUp"
-      - icon: "Trophy"
-        icon_color: "#000000"
-        value: "#1"
-        title: "Best Data Science Bootcamp - Forbes"
-      - icon: "Star"
-        icon_color: "#000000"
-        value: "4.9"
-        title: "Average Rating Across All Platforms"
-
-  - type: features_grid
-    version: "1.0"
     variant: detailed
     title: "Our Awards"
     subtitle: "Recognized globally for excellence in tech education"

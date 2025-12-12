@@ -105,6 +105,21 @@ export const heroSimpleTwoColumnSchema = z.object({
   background: z.string().optional(),
 }).strict();
 
+export const heroSimpleStackedSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("simpleStacked"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  badge: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
+  background: z.string().optional(),
+}).strict();
+
 export const heroTwoColumnSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
@@ -124,6 +139,7 @@ export const heroSectionSchema = z.union([
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroSimpleStackedSchema,
   heroTwoColumnSchema,
 ]);
 
@@ -683,6 +699,7 @@ export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
 export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
 export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
+export type HeroSimpleStacked = z.infer<typeof heroSimpleStackedSchema>;
 export type CardItem = z.infer<typeof cardItemSchema>;
 export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
 export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;

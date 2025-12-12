@@ -36,7 +36,7 @@ function DetailedCard({
   return (
     <Card className="p-4 md:p-6 hover-elevate" data-testid={`card-feature-${itemId}`}>
       {hasImage && (
-        <div className="mb-4 flex items-center justify-center p-4 h-32 md:h-40">
+        <div className="mb-4 flex items-center justify-center h-32 md:h-40">
           <img 
             src={item.image!.src} 
             alt={item.image!.alt} 
