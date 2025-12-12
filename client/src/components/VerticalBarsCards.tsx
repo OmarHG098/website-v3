@@ -67,10 +67,14 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     }
   }, []);
 
-  const allValues = data.years.flatMap((year) =>
-    year.metrics.map((m) => m.value)
-  );
-  const maxValue = Math.max(...allValues);
+  const metricMaxValues: Record<number, number> = {};
+  if (data.years.length > 0) {
+    const numMetrics = data.years[0].metrics.length;
+    for (let i = 0; i < numMetrics; i++) {
+      const valuesForMetric = data.years.map((y) => y.metrics[i]?.value || 0);
+      metricMaxValues[i] = Math.max(...valuesForMetric);
+    }
+  }
 
   return (
     <section
@@ -113,7 +117,8 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
 
               <div className="flex justify-center items-end gap-4 h-48 mb-4">
                 {yearGroup.metrics.map((metric, metricIndex) => {
-                  const percentage = (metric.value / maxValue) * 100;
+                  const maxForThisMetric = metricMaxValues[metricIndex] || 1;
+                  const percentage = (metric.value / maxForThisMetric) * 100;
                   const delay = yearIndex * 150 + metricIndex * 100;
                   const color =
                     metric.color || defaultColors[metricIndex % defaultColors.length];
