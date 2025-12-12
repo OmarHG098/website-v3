@@ -1138,7 +1138,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       <Dialog open={sessionModalOpen} onOpenChange={setSessionModalOpen}>
         <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -1213,7 +1212,7 @@ export function DebugBubble() {
                   <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.browserLang || 'N/A'}</code>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Location:</span>
+                  <span className="text-muted-foreground">Location Campus:</span>
                   <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.location?.slug || 'N/A'}</code>
                 </div>
                 <div className="flex justify-between">
