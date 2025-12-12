@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Badge } from "@/components/ui/badge";
 
 interface HorizontalBarsItem {
   label: string;
@@ -96,17 +95,17 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
             return (
               <div
                 key={index}
-                className="flex items-center gap-4"
+                className="flex items-center h-10 md:h-12 rounded-md overflow-hidden"
                 data-testid={`bar-item-${index}`}
               >
-                <div className="w-32 md:w-40 flex justify-end">
-                  <Badge variant="secondary" data-testid={`badge-label-${index}`}>
+                <div className="w-20 md:w-24 h-full flex items-center justify-center bg-primary/10 shrink-0">
+                  <span className="text-sm md:text-base font-semibold text-foreground">
                     {item.label}
-                  </Badge>
+                  </span>
                 </div>
-                <div className="flex-1 h-8 md:h-10 bg-muted rounded-md overflow-hidden">
+                <div className="flex-1 h-full bg-muted">
                   <div
-                    className="h-full bg-primary rounded-md flex items-center justify-end pr-3 transition-all duration-1000 ease-out"
+                    className="h-full bg-primary flex items-center justify-end pr-3 transition-all duration-1000 ease-out"
                     style={{
                       width: isVisible ? `${percentage}%` : "0%",
                       transitionDelay: `${delay}ms`,
