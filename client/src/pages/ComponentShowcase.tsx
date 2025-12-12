@@ -368,7 +368,7 @@ function ComponentCard({
     <>
       <nav 
         ref={cardRef}
-        className="border-b mb-4 py-3 bg-background"
+        className="sticky top-0 z-50 border-b py-3 bg-background px-4 sm:px-8 lg:px-16"
         data-testid={`component-card-${componentType}`}
       >
         <div className="flex flex-row items-start justify-between gap-4">
@@ -522,6 +522,7 @@ function ComponentCard({
           </div>
         </div>
       </nav>
+      <div className="px-4 sm:px-8 lg:px-16 py-4">
       {!showYaml && (
         <div className="mb-4">
           <Button
@@ -668,6 +669,7 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
+      </div>
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -855,17 +857,15 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <main className="px-4 sm:px-8 lg:px-16 py-2">
-          <ComponentCard 
-            key={componentType} 
-            componentType={componentType}
-            componentInfo={singleComponent}
-            globalYamlState={true}
-            globalPreviewState={true}
-            isFocused={false}
-            cardRef={cardRefs.current[componentType]}
-          />
-        </main>
+        <ComponentCard 
+          key={componentType} 
+          componentType={componentType}
+          componentInfo={singleComponent}
+          globalYamlState={true}
+          globalPreviewState={true}
+          isFocused={false}
+          cardRef={cardRefs.current[componentType]}
+        />
       </div>
     );
   }
