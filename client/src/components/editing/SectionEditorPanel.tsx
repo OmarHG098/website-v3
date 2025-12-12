@@ -1,7 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { queryClient } from "@/lib/queryClient";
 import type { Section } from "@shared/schema";
@@ -169,30 +168,29 @@ export function SectionEditorPanel({
         </Button>
       </div>
       {/* Editor */}
-      <ScrollArea className="flex-1">
-        <div className="p-4 pl-[0px] pr-[0px] pt-[0px] pb-[0px]">
-          <div className="rounded-md overflow-hidden border">
-            <CodeMirror
-              value={yamlContent}
-              height="400px"
-              extensions={[yaml()]}
-              theme={oneDark}
-              onChange={handleYamlChange}
-              basicSetup={{
-                lineNumbers: true,
-                foldGutter: true,
-                highlightActiveLine: true,
-              }}
-            />
-          </div>
-          
-          {parseError && (
-            <div className="mt-2 p-2 bg-destructive/10 text-destructive text-sm rounded">
-              {parseError}
-            </div>
-          )}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 min-h-0">
+          <CodeMirror
+            value={yamlContent}
+            height="100%"
+            extensions={[yaml()]}
+            theme={oneDark}
+            onChange={handleYamlChange}
+            basicSetup={{
+              lineNumbers: true,
+              foldGutter: true,
+              highlightActiveLine: true,
+            }}
+            className="h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
+          />
         </div>
-      </ScrollArea>
+        
+        {parseError && (
+          <div className="p-2 bg-destructive/10 text-destructive text-sm border-t">
+            {parseError}
+          </div>
+        )}
+      </div>
       {/* Footer */}
       <div className="flex items-center justify-between p-4 border-t bg-muted/30">
         <div className="text-sm">
