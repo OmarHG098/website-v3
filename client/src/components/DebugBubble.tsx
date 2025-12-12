@@ -505,7 +505,7 @@ export function DebugBubble() {
 
   return (
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
-      <Popover open={open} onOpenChange={handleOpenChange}>
+      <Popover open={open} onOpenChange={handleOpenChange} modal={false}>
         <PopoverTrigger asChild>
           <div className="relative">
             <Button
