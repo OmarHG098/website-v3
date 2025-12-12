@@ -28,7 +28,6 @@ import {
   IconCheck,
   IconSearch,
   IconExternalLink,
-  IconWorld,
   IconMessage,
   IconBuildingSkyscraper,
   IconCreditCard,
@@ -87,18 +86,13 @@ const componentsList = [
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects";
+type MenuView = "main" | "components" | "sitemap" | "redirects";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
 interface SitemapUrl {
   loc: string;
   label: string;
-}
-
-interface LandingItem {
-  slug: string;
-  title: string;
 }
 
 interface RedirectItem {
@@ -111,7 +105,7 @@ interface RedirectItem {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings" || stored === "redirects") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "redirects") {
       return stored;
     }
   }
@@ -135,8 +129,6 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
-  const [landingsList, setLandingsList] = useState<LandingItem[]>([]);
-  const [landingsLoading, setLandingsLoading] = useState(false);
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [redirectsLoading, setRedirectsLoading] = useState(false);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
@@ -174,21 +166,6 @@ export function DebugBubble() {
         .catch(() => setSitemapLoading(false));
     }
   }, [menuView]);
-
-  // Fetch landings when entering landings view
-  useEffect(() => {
-    if (menuView === "landings" && landingsList.length === 0) {
-      setLandingsLoading(true);
-      const locale = i18n.language || "en";
-      fetch(`/api/landings?locale=${locale}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setLandingsList(data);
-          setLandingsLoading(false);
-        })
-        .catch(() => setLandingsLoading(false));
-    }
-  }, [menuView, i18n.language]);
 
   // Fetch redirects when entering redirects view
   useEffect(() => {
@@ -531,18 +508,6 @@ export function DebugBubble() {
                 </button>
                 
                 <button
-                  onClick={() => setMenuView("landings")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-landings-menu"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconWorld className="h-4 w-4 text-muted-foreground" />
-                    <span>Landings</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
-                
-                <button
                   onClick={() => setMenuView("redirects")}
                   className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
                   data-testid="button-redirects-menu"
@@ -648,55 +613,6 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
-                </div>
-              </ScrollArea>
-            </>
-          ) : menuView === "landings" ? (
-            <>
-              <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main-landings"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Landing Pages</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {landingsList.length} landing{landingsList.length !== 1 ? 's' : ''} available
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <ScrollArea className="h-[280px]">
-                <div className="p-2 space-y-1">
-                  {landingsLoading ? (
-                    <div className="flex items-center justify-center py-8">
-                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
-                    </div>
-                  ) : landingsList.length === 0 ? (
-                    <div className="text-center py-8 text-sm text-muted-foreground">
-                      No landings found
-                    </div>
-                  ) : (
-                    landingsList.map((landing) => (
-                      <a
-                        key={landing.slug}
-                        href={`/landing/${landing.slug}`}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                        data-testid={`link-landing-${landing.slug}`}
-                      >
-                        <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium">{landing.title}</div>
-                          <div className="text-xs text-muted-foreground truncate">/landing/{landing.slug}</div>
-                        </div>
-                      </a>
-                    ))
-                  )}
                 </div>
               </ScrollArea>
             </>
