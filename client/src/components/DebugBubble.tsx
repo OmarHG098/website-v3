@@ -149,6 +149,7 @@ function EditModeToggle() {
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const { session } = useSession();
+  const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -382,14 +383,25 @@ export function DebugBubble() {
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <Button
-            size="icon"
-            variant="default"
-            className="h-12 w-12 rounded-full shadow-lg"
-            data-testid="button-debug-toggle"
-          >
-            {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
-          </Button>
+          {editMode?.isEditMode ? (
+            <Button
+              variant="default"
+              className="h-12 rounded-full shadow-lg px-4 gap-2"
+              data-testid="button-debug-toggle"
+            >
+              <IconPencil className="h-5 w-5" />
+              <span className="text-sm font-medium">On</span>
+            </Button>
+          ) : (
+            <Button
+              size="icon"
+              variant="default"
+              className="h-12 w-12 rounded-full shadow-lg"
+              data-testid="button-debug-toggle"
+            >
+              {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
+            </Button>
+          )}
         </PopoverTrigger>
         <PopoverContent 
           side="top" 
