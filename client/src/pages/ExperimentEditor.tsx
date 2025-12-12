@@ -337,17 +337,19 @@ export default function ExperimentEditor() {
         </div>
       </header>
 
-      {/* Preview iframe */}
-      <div className="flex-1 overflow-hidden">
-        {selectedVariant && contentType === "programs" && (
+      {/* Preview iframes - all variants rendered but only selected one visible */}
+      <div className="flex-1 overflow-hidden relative">
+        {contentType === "programs" && formData?.variants.map((variant) => (
           <iframe
-            key={`${selectedVariant}-${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}`}
-            src={`/en/career-programs/${contentSlug}?force_variant=${selectedVariant}&force_version=${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}&navbar=false`}
-            className="w-full h-full border-0"
-            title={`Preview: ${deslugify(selectedVariant)}`}
-            data-testid="iframe-preview"
+            key={`${variant.slug}-${variant.version || 1}`}
+            src={`/en/career-programs/${contentSlug}?force_variant=${variant.slug}&force_version=${variant.version || 1}&navbar=false`}
+            className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-150 ${
+              selectedVariant === variant.slug ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+            }`}
+            title={`Preview: ${deslugify(variant.slug)}`}
+            data-testid={`iframe-preview-${variant.slug}`}
           />
-        )}
+        ))}
         {!selectedVariant && (
           <div className="flex items-center justify-center h-full text-muted-foreground">
             Select a variant to preview
