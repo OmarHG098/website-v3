@@ -630,17 +630,18 @@ export const horizontalBarsSectionSchema = z.object({
 export type HorizontalBarsItem = z.infer<typeof horizontalBarsItemSchema>;
 export type HorizontalBarsSection = z.infer<typeof horizontalBarsSectionSchema>;
 
-// Vertical Bars Cards Section (for cards with vertical animated bars per year/group)
-export const verticalBarsMetricSchema = z.object({
-  label: z.string(),
+// Vertical Bars Cards Section (for cards with vertical animated bars comparing years per metric)
+export const verticalBarsYearValueSchema = z.object({
+  year: z.string(),
   value: z.number(),
   displayValue: z.string(),
-  color: z.string().optional(),
 });
 
-export const verticalBarsYearGroupSchema = z.object({
-  year: z.string(),
-  metrics: z.array(verticalBarsMetricSchema),
+export const verticalBarsMetricCardSchema = z.object({
+  title: z.string(),
+  icon: z.string().optional(),
+  unit: z.string().optional(),
+  years: z.array(verticalBarsYearValueSchema),
 });
 
 export const verticalBarsCardsSectionSchema = z.object({
@@ -649,11 +650,11 @@ export const verticalBarsCardsSectionSchema = z.object({
   title: z.string().optional(),
   subtitle: z.string().optional(),
   background: z.string().optional(),
-  years: z.array(verticalBarsYearGroupSchema),
+  metrics: z.array(verticalBarsMetricCardSchema),
 });
 
-export type VerticalBarsMetric = z.infer<typeof verticalBarsMetricSchema>;
-export type VerticalBarsYearGroup = z.infer<typeof verticalBarsYearGroupSchema>;
+export type VerticalBarsYearValue = z.infer<typeof verticalBarsYearValueSchema>;
+export type VerticalBarsMetricCard = z.infer<typeof verticalBarsMetricCardSchema>;
 export type VerticalBarsCardsSection = z.infer<typeof verticalBarsCardsSectionSchema>;
 
 // Section schema using z.union to support hero variants

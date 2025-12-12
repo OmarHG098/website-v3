@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 
-interface MetricItem {
-  label: string;
+interface YearValue {
+  year: string;
   value: number;
   displayValue: string;
-  color?: string;
 }
 
-interface YearGroup {
-  year: string;
-  metrics: MetricItem[];
+interface MetricCard {
+  title: string;
+  icon?: string;
+  unit?: string;
+  years: YearValue[];
 }
 
 interface VerticalBarsCardsData {
@@ -18,7 +19,7 @@ interface VerticalBarsCardsData {
   version?: string;
   title?: string;
   subtitle?: string;
-  years: YearGroup[];
+  metrics: MetricCard[];
   background?: string;
 }
 
@@ -26,10 +27,12 @@ interface VerticalBarsCardsProps {
   data: VerticalBarsCardsData;
 }
 
-const defaultColors = [
-  "hsl(var(--primary))",
+const chartColors = [
+  "hsl(var(--chart-1))",
   "hsl(var(--chart-2))",
   "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
 ];
 
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
@@ -67,15 +70,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     }
   }, []);
 
-  const metricMaxValues: Record<number, number> = {};
-  if (data.years.length > 0) {
-    const numMetrics = data.years[0].metrics.length;
-    for (let i = 0; i < numMetrics; i++) {
-      const valuesForMetric = data.years.map((y) => y.metrics[i]?.value || 0);
-      metricMaxValues[i] = Math.max(...valuesForMetric);
-    }
-  }
-
   return (
     <section
       ref={containerRef}
@@ -104,68 +98,59 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {data.years.map((yearGroup, yearIndex) => (
-            <Card
-              key={yearGroup.year}
-              className="p-6"
-              data-testid={`card-year-${yearGroup.year}`}
-            >
-              <h3 className="text-xl font-bold text-foreground text-center mb-6">
-                {yearGroup.year}
-              </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data.metrics.map((metric, metricIndex) => {
+            const maxValue = Math.max(...metric.years.map((y) => y.value));
 
-              <div className="flex justify-center items-end gap-4 h-48 mb-4">
-                {yearGroup.metrics.map((metric, metricIndex) => {
-                  const maxForThisMetric = metricMaxValues[metricIndex] || 1;
-                  const percentage = (metric.value / maxForThisMetric) * 100;
-                  const delay = yearIndex * 150 + metricIndex * 100;
-                  const color =
-                    metric.color || defaultColors[metricIndex % defaultColors.length];
+            return (
+              <Card
+                key={metricIndex}
+                className="p-6"
+                data-testid={`card-metric-${metricIndex}`}
+              >
+                <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                  {metric.title}
+                </h3>
+                {metric.unit && (
+                  <p className="text-sm text-muted-foreground text-center mb-6">
+                    {metric.unit}
+                  </p>
+                )}
 
-                  return (
-                    <div
-                      key={metricIndex}
-                      className="flex flex-col items-center gap-2 flex-1"
-                    >
-                      <div className="w-full h-40 bg-muted rounded-t-md flex items-end overflow-hidden">
-                        <div
-                          className="w-full rounded-t-md transition-all duration-1000 ease-out"
-                          style={{
-                            height: isVisible ? `${percentage}%` : "0%",
-                            backgroundColor: color,
-                            transitionDelay: `${delay}ms`,
-                          }}
-                        />
-                      </div>
-                      <span className="text-sm font-bold text-foreground whitespace-nowrap">
-                        {metric.displayValue}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+                <div className="flex justify-center items-end gap-6 h-44 mb-4">
+                  {metric.years.map((yearData, yearIndex) => {
+                    const percentage = (yearData.value / maxValue) * 100;
+                    const delay = metricIndex * 150 + yearIndex * 100;
+                    const barColor = chartColors[yearIndex % chartColors.length];
 
-              <div className="flex justify-center gap-4">
-                {yearGroup.metrics.map((metric, metricIndex) => {
-                  const color =
-                    metric.color || defaultColors[metricIndex % defaultColors.length];
-                  return (
-                    <div
-                      key={metricIndex}
-                      className="flex items-center gap-1.5 text-xs text-muted-foreground"
-                    >
+                    return (
                       <div
-                        className="w-2.5 h-2.5 rounded-full shrink-0"
-                        style={{ backgroundColor: color }}
-                      />
-                      <span className="truncate">{metric.label}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-          ))}
+                        key={yearIndex}
+                        className="flex flex-col items-center gap-2"
+                      >
+                        <span className="text-sm font-bold text-foreground">
+                          {yearData.displayValue}
+                        </span>
+                        <div className="w-12 md:w-14 h-36 bg-muted rounded-t-md flex items-end overflow-hidden">
+                          <div
+                            className="w-full rounded-t-md transition-all duration-1000 ease-out"
+                            style={{
+                              height: isVisible ? `${percentage}%` : "0%",
+                              backgroundColor: barColor,
+                              transitionDelay: `${delay}ms`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {yearData.year}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
