@@ -168,10 +168,9 @@ export function SectionEditorPanel({
           <IconX className="h-4 w-4" />
         </Button>
       </div>
-
       {/* Editor */}
       <ScrollArea className="flex-1">
-        <div className="p-4">
+        <div className="p-4 pl-[0px] pr-[0px] pt-[0px] pb-[0px]">
           <div className="rounded-md overflow-hidden border">
             <CodeMirror
               value={yamlContent}
@@ -194,7 +193,6 @@ export function SectionEditorPanel({
           )}
         </div>
       </ScrollArea>
-
       {/* Footer */}
       <div className="flex items-center justify-between p-4 border-t bg-muted/30">
         <div className="text-sm">

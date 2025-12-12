@@ -20,7 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: Desarrolloo Full Stack con IA
+    title: Desarrollo Full Stack con IA
     subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo.
     badge: Programa de Carrera
     cta_buttons:
