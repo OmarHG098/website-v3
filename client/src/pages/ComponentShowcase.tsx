@@ -147,7 +147,7 @@ function ComponentCard({
   const [iframeHeight, setIframeHeight] = useState(400);
   const [selectedVersion, setSelectedVersion] = useState(componentInfo.latestVersion);
   const [selectedExample, setSelectedExample] = useState<string | null>(null);
-  const [showYaml, setShowYaml] = useState(true);
+  const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
   const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
