@@ -36,6 +36,10 @@ const chartColors = [
 ];
 
 function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData; isVisible: boolean; delayOffset: number }) {
+  const [animationProgress, setAnimationProgress] = useState(0);
+  const animationRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+
   const total = chart.items.reduce((sum, item) => sum + item.value, 0);
   let cumulativeAngle = 0;
 
@@ -49,12 +53,51 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
       ...item,
       percentage,
       startAngle,
+      endAngle: cumulativeAngle,
       angle,
       color: item.color || chartColors[index % chartColors.length],
     };
   });
 
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const duration = 1500;
+    const delay = delayOffset;
+
+    const animate = (timestamp: number) => {
+      if (!startTimeRef.current) {
+        startTimeRef.current = timestamp + delay;
+      }
+
+      const elapsed = timestamp - startTimeRef.current;
+      
+      if (elapsed < 0) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setAnimationProgress(eased);
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isVisible, delayOffset]);
+
   const createSlicePath = (startAngle: number, angle: number, radius: number, cx: number, cy: number) => {
+    if (angle <= 0) return "";
+    
     const startRad = (startAngle - 90) * (Math.PI / 180);
     const endRad = (startAngle + angle - 90) * (Math.PI / 180);
     
@@ -73,6 +116,8 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
   const cy = size / 2;
   const radius = size / 2 - 4;
 
+  const currentAngle = animationProgress * 360;
+
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
@@ -86,21 +131,22 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
           viewBox={`0 0 ${size} ${size}`}
           className="drop-shadow-sm"
         >
-          {slices.map((slice, index) => (
-            <path
-              key={index}
-              d={createSlicePath(slice.startAngle, slice.angle, radius, cx, cy)}
-              fill={slice.color}
-              className="transition-all duration-1000 ease-out origin-center"
-              style={{
-                transform: isVisible ? 'scale(1)' : 'scale(0)',
-                transformOrigin: `${cx}px ${cy}px`,
-                transitionDelay: `${delayOffset + index * 100}ms`,
-                opacity: isVisible ? 1 : 0,
-              }}
-              data-testid={`pie-slice-${index}`}
-            />
-          ))}
+          {slices.map((slice, index) => {
+            const visibleStart = Math.max(0, Math.min(slice.startAngle, currentAngle));
+            const visibleEnd = Math.min(slice.endAngle, currentAngle);
+            const visibleAngle = Math.max(0, visibleEnd - slice.startAngle);
+            
+            if (currentAngle <= slice.startAngle) return null;
+            
+            return (
+              <path
+                key={index}
+                d={createSlicePath(slice.startAngle, visibleAngle, radius, cx, cy)}
+                fill={slice.color}
+                data-testid={`pie-slice-${index}`}
+              />
+            );
+          })}
         </svg>
       </div>
 
@@ -110,10 +156,9 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
             key={index} 
             className="flex items-center gap-2 text-sm"
             style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'all 0.5s ease-out',
-              transitionDelay: `${delayOffset + 300 + index * 100}ms`,
+              opacity: animationProgress >= (slice.startAngle / 360) ? 1 : 0,
+              transform: animationProgress >= (slice.startAngle / 360) ? 'translateY(0)' : 'translateY(10px)',
+              transition: 'all 0.3s ease-out',
             }}
             data-testid={`pie-legend-${index}`}
           >
