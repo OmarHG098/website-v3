@@ -22,53 +22,47 @@ sections:
       src: "/attached_assets/outcomes_1765562850573.png"
       alt: "Student outcomes growth chart"
 
-  - type: horizontal_bars
+  - type: vertical_bars_cards
     version: "1.0"
-    use_card: true
-    title: "Job Placement Rate"
-    subtitle: "Graduates hired within 6 months"
-    items:
-      - label: "2023"
-        value: 86
-        displayValue: "86%"
-      - label: "2024"
-        value: 84
-        displayValue: "84%"
-      - label: "2025"
-        value: 82
-        displayValue: "82%"
-
-  - type: horizontal_bars
-    version: "1.0"
-    use_card: true
-    title: "Average Salary Increase"
-    subtitle: "Compared to pre-bootcamp salary"
-    items:
-      - label: "2023"
-        value: 12500
-        displayValue: "$12.5k"
-      - label: "2024"
-        value: 14200
-        displayValue: "$14.2k"
-      - label: "2025"
-        value: 15800
-        displayValue: "$15.8k"
-
-  - type: horizontal_bars
-    version: "1.0"
-    use_card: true
-    title: "Days to First Job"
-    subtitle: "Average time from graduation to offer"
-    items:
-      - label: "2023"
-        value: 52
-        displayValue: "52 days"
-      - label: "2024"
-        value: 48
-        displayValue: "48 days"
-      - label: "2025"
-        value: 45
-        displayValue: "45 days"
+    title: "Graduate Success Metrics"
+    subtitle: "Track our students' career outcomes across recent years"
+    metrics:
+      - title: "Job Placement Rate"
+        unit: "Graduates hired within 6 months"
+        years:
+          - year: "2023"
+            value: 86
+            displayValue: "86%"
+          - year: "2024"
+            value: 84
+            displayValue: "84%"
+          - year: "2025"
+            value: 82
+            displayValue: "82%"
+      - title: "Average Salary Increase"
+        unit: "Compared to pre-bootcamp salary"
+        years:
+          - year: "2023"
+            value: 12500
+            displayValue: "$12.5k"
+          - year: "2024"
+            value: 14200
+            displayValue: "$14.2k"
+          - year: "2025"
+            value: 15800
+            displayValue: "$15.8k"
+      - title: "Days to First Job"
+        unit: "Average time from graduation to offer"
+        years:
+          - year: "2023"
+            value: 52
+            displayValue: "52 days"
+          - year: "2024"
+            value: 48
+            displayValue: "48 days"
+          - year: "2025"
+            value: 45
+            displayValue: "45 days"
 
   - type: pie_charts
     version: "1.0"
