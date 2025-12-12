@@ -27,23 +27,13 @@ interface PieChartsProps {
   data: PieChartsData;
 }
 
-const chartColors = [
+const defaultColors = [
   "hsl(var(--chart-1))",
   "hsl(var(--chart-2))",
   "hsl(var(--chart-3))",
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
 ];
-
-function resolveColor(color: string | undefined, fallbackIndex: number): string {
-  if (!color) return chartColors[fallbackIndex % chartColors.length];
-  
-  if (color.match(/^chart-[1-5]$/)) {
-    return `hsl(var(--${color}))`;
-  }
-  
-  return color;
-}
 
 function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData; isVisible: boolean; delayOffset: number }) {
   const [animationProgress, setAnimationProgress] = useState(0);
@@ -65,7 +55,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
       startAngle,
       endAngle: cumulativeAngle,
       angle,
-      color: resolveColor(item.color, index),
+      color: item.color || defaultColors[index % defaultColors.length],
     };
   });
 
