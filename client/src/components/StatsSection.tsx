@@ -115,7 +115,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
         <div className={`grid grid-cols-2 ${gridCols} gap-8 text-center`}>
           {stats.map((stat, index) => (
             <div key={index} data-testid={`stat-item-${index}`} className="space-y-2">
-              <div className="text-3xl md:text-5xl font-bold text-primary">
+              <div className="text-2xl md:text-3xl font-bold text-primary">
                 {stat.value}
               </div>
               <div className="text-sm md:text-base text-muted-foreground">
