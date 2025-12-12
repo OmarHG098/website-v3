@@ -17,17 +17,10 @@ sections:
     version: "1.0"
     variant: simpleTwoColumn
     title: "Proven Outcomes That Launch Tech Careers"
-    subtitle: "At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it."
+    subtitle: "At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it. Read on to see the details: We keep our reporting transparent, regularly publishing verified placement and salary data across the U.S., Latin America, and Europe."
     image:
       src: "/attached_assets/outcomes_1765562850573.png"
       alt: "Student outcomes growth chart"
-    cta_buttons:
-      - text: "Apply Now"
-        url: "/apply"
-        variant: primary
-      - text: "Download Report"
-        url: "#download"
-        variant: outline
 
   - type: stats
     version: "1.0"
