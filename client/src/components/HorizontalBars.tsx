@@ -138,14 +138,17 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
 
   if (data.use_card) {
     return (
-      <div
+      <section
         ref={containerRef}
+        className={`py-6 ${data.background || "bg-background"}`}
         data-testid="section-horizontal-bars"
       >
-        <Card className="p-6">
-          {barsContent}
-        </Card>
-      </div>
+        <div className="max-w-6xl mx-auto px-4">
+          <Card className="p-6">
+            {barsContent}
+          </Card>
+        </div>
+      </section>
     );
   }
 
