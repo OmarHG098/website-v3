@@ -18,7 +18,7 @@ export default function LocationDetail() {
   const slug = matchEn ? paramsEn?.slug : matchEs ? paramsEs?.slug : undefined;
   const hasValidRoute = matchEn || matchEs;
 
-  const { data: location, isLoading, error } = useQuery<LocationPage>({
+  const { data: location, isLoading, error, refetch } = useQuery<LocationPage>({
     queryKey: ["/api/locations", slug, locale],
     queryFn: async () => {
       const response = await fetch(`/api/locations/${slug}?locale=${locale}`);
@@ -72,6 +72,7 @@ export default function LocationDetail() {
         contentType="location"
         slug={slug}
         locale={locale}
+        onSectionAdded={() => refetch()}
       />
     </div>
   );

@@ -28,6 +28,7 @@ interface SectionRendererProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  onSectionAdded?: () => void;
 }
 
 interface EditableSectionWrapperProps {
@@ -96,7 +97,7 @@ function renderSection(section: Section, index: number): React.ReactNode {
   }
 }
 
-export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
   return (
     <>
       <AddSectionButton
@@ -104,6 +105,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         contentType={contentType}
         slug={slug}
         locale={locale}
+        onSectionAdded={onSectionAdded}
       />
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
@@ -128,6 +130,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
               contentType={contentType}
               slug={slug}
               locale={locale}
+              onSectionAdded={onSectionAdded}
             />
           </div>
         );

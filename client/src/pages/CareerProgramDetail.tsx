@@ -23,7 +23,7 @@ export default function CareerProgramDetail() {
   const forceVariant = searchParams.get("force_variant");
   const forceVersion = searchParams.get("force_version");
 
-  const { data: program, isLoading, error } = useQuery<CareerProgram>({
+  const { data: program, isLoading, error, refetch } = useQuery<CareerProgram>({
     queryKey: ["/api/career-programs", slug, locale, forceVariant, forceVersion],
     queryFn: async () => {
       let url = `/api/career-programs/${slug}?locale=${locale}`;
@@ -80,6 +80,7 @@ export default function CareerProgramDetail() {
         contentType="program"
         slug={slug}
         locale={locale}
+        onSectionAdded={() => refetch()}
       />
     </div>
   );

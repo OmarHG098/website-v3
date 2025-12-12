@@ -14,7 +14,7 @@ export default function Page() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug || "";
 
-  const { data: page, isLoading, error } = useQuery<TemplatePage>({
+  const { data: page, isLoading, error, refetch } = useQuery<TemplatePage>({
     queryKey: ["/api/pages", slug, locale],
     queryFn: async () => {
       const response = await fetch(`/api/pages/${slug}?locale=${locale}`);
@@ -68,6 +68,7 @@ export default function Page() {
         contentType="page"
         slug={slug}
         locale={locale}
+        onSectionAdded={() => refetch()}
       />
     </div>
   );
