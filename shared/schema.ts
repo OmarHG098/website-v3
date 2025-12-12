@@ -848,6 +848,7 @@ export const experimentTargetingSchema = z.object({
   regions: z.array(z.string()).optional(),
   countries: z.array(z.string()).optional(),
   languages: z.array(z.string()).optional(),
+  locations: z.array(z.string()).optional(),
   utm_sources: z.array(z.string()).optional(),
   utm_campaigns: z.array(z.string()).optional(),
   utm_mediums: z.array(z.string()).optional(),

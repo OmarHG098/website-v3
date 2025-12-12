@@ -41,6 +41,7 @@ import {
   IconLanguage,
   IconWorld,
   IconX,
+  IconMapPin,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -191,6 +192,10 @@ export default function ExperimentEditor() {
   const { data, isLoading, error } = useQuery<ExperimentResponse>({
     queryKey: ["/api/experiments", contentType, contentSlug, experimentSlug],
     enabled: !!contentType && !!contentSlug && !!experimentSlug,
+  });
+
+  const { data: locationsData } = useQuery<{ slug: string; name: string; city: string; country: string }[]>({
+    queryKey: ["/api/locations"],
   });
 
   useMemo(() => {
@@ -647,38 +652,73 @@ export default function ExperimentEditor() {
 
             <Separator />
 
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <IconDeviceMobile className="h-4 w-4" />
-                Devices
-              </Label>
-              <div className="flex gap-2">
-                {(["mobile", "tablet", "desktop"] as const).map((device) => (
-                  <Button
-                    key={device}
-                    variant={
-                      formData?.targeting?.devices?.includes(device)
-                        ? "default"
-                        : "outline"
-                    }
-                    size="sm"
-                    onClick={() => {
-                      const current = formData?.targeting?.devices || [];
-                      const updated = current.includes(device)
-                        ? current.filter((d) => d !== device)
-                        : [...current, device];
-                      updateTargeting(
-                        "devices",
-                        updated.length ? (updated as ("mobile" | "tablet" | "desktop")[]) : undefined
-                      );
-                    }}
-                    data-testid={`button-device-${device}`}
-                  >
-                    {device === "mobile" && <IconDeviceMobile className="h-3 w-3 mr-1" />}
-                    {device === "desktop" && <IconDeviceDesktop className="h-3 w-3 mr-1" />}
-                    {device.charAt(0).toUpperCase() + device.slice(1)}
-                  </Button>
-                ))}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <IconDeviceMobile className="h-4 w-4" />
+                  Devices
+                </Label>
+                <div className="flex gap-2">
+                  {(["mobile", "tablet", "desktop"] as const).map((device) => (
+                    <Button
+                      key={device}
+                      variant={
+                        formData?.targeting?.devices?.includes(device)
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        const current = formData?.targeting?.devices || [];
+                        const updated = current.includes(device)
+                          ? current.filter((d) => d !== device)
+                          : [...current, device];
+                        updateTargeting(
+                          "devices",
+                          updated.length ? (updated as ("mobile" | "tablet" | "desktop")[]) : undefined
+                        );
+                      }}
+                      data-testid={`button-device-${device}`}
+                    >
+                      {device === "mobile" && <IconDeviceMobile className="h-3 w-3 mr-1" />}
+                      {device === "desktop" && <IconDeviceDesktop className="h-3 w-3 mr-1" />}
+                      {device.charAt(0).toUpperCase() + device.slice(1)}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <IconMapPin className="h-4 w-4" />
+                  Locations
+                </Label>
+                <ScrollArea className="h-32 border rounded-md p-2">
+                  <div className="flex flex-wrap gap-1">
+                    {locationsData?.map((location) => (
+                      <Button
+                        key={location.slug}
+                        variant={
+                          formData?.targeting?.locations?.includes(location.slug)
+                            ? "default"
+                            : "outline"
+                        }
+                        size="sm"
+                        className="h-7 text-xs"
+                        onClick={() => {
+                          const current = formData?.targeting?.locations || [];
+                          const updated = current.includes(location.slug)
+                            ? current.filter((l) => l !== location.slug)
+                            : [...current, location.slug];
+                          updateTargeting("locations", updated.length ? updated : undefined);
+                        }}
+                        data-testid={`button-location-${location.slug}`}
+                      >
+                        {location.city}
+                      </Button>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
             </div>
 
