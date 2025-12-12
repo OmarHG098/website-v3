@@ -1,6 +1,5 @@
 # AI for Professionals Career Program - Spanish
-# Este archivo define todas las secciones y contenido para la página del programa de carrera AI for Professionals
-# Fusionado de 4geeks.com applied-ai y la página de vista previa
+# Este archivo define todas las secciones y contenido para la página del programa de carrera IA para Profesionales
 
 slug: "ai-for-professionals"
 title: "IA para Profesionales"
@@ -27,7 +26,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
-    badge: "Bootcamp de 6 Semanas"
+    badge: "Programa de Carrera"
     title: "IA para Profesionales"
     subtitle: "Mantente relevante en tu carrera. Lidera con IA. Adquiere las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
     trust_bar:
@@ -39,7 +38,7 @@ sections:
         url: "/apply"
         variant: "primary"
         icon: "Rocket"
-      - text: "Descargar Detalles del Curso"
+      - text: "Descargar Temario"
         url: "/syllabus/ai-for-professionals"
         variant: "outline"
         icon: "Download"
@@ -57,138 +56,77 @@ sections:
         source: "Course Report"
         year: "2025"
 
-  - type: two_column
-    proportions: [1, 1]
-    alignment: center
-    left:
-      heading: "Por Qué Todo Trabajo Necesita Habilidades de IA Ahora"
-      description: "La IA ya no es opcional: ya es una habilidad esencial en el trabajo."
-      bullets:
-        - text: "Los trabajadores con habilidades de IA ganan un promedio de 56% más a nivel global"
-          icon: "TrendingUp"
-        - text: "El uso de IA en el trabajo casi se ha duplicado en dos años, pasando del 21% al 40% de empleados en EE.UU."
-          icon: "BarChart"
-        - text: "Únete a los profesionales que no solo se mantienen al día, sino que lideran con IA"
-          icon: "Award"
-      button:
-        text: "Aplicar Ahora"
-        url: "/apply"
-        variant: "primary"
-    right:
-      video: "0yNgqAIDSXQ"
-      video_height: "315"
-      video_width: "560"
-
-  - type: features_grid
-    variant: highlight
-    title: "Acerca de Este Programa"
-    subtitle: "Nuestro programa de IA para Profesionales está diseñado para cualquiera que quiera aprovechar todo el poder de la IA en su trabajo, no solo explorarla."
-    columns: 4
-    items:
-      - icon: "Clock"
-        title: "Duración"
-        value: "6 Semanas"
-        description: "Experiencia de aprendizaje intensiva"
-      - icon: "Video"
-        title: "Clases"
-        value: "2 por semana"
-        description: "Sesiones en vivo, online"
-      - icon: "Users"
-        title: "Tamaño de Clase"
-        value: "12 máximo"
-        description: "Atención personalizada"
-      - icon: "Award"
-        title: "Certificado"
-        value: "Oficial"
-        description: "Certificado de Completación 4Geeks"
-
   - type: syllabus
-    title: "Detalles del Programa"
+    title: "¡Prepárate con Nuestro Temario!"
     subtitle: "En solo 6 semanas, aprende a aprovechar las herramientas de IA líderes de hoy para optimizar tu flujo de trabajo, mejorar la calidad de tu trabajo y mantenerte adelante en tu carrera."
     modules:
-      - title: "Semana 1: Introducción a la IA"
-        description: "Comprende los conceptos clave de IA y las herramientas generativas. Introducción a los fundamentos de la IA con enfoque especial en IA Generativa. Aprende la estructura del curso y las tecnologías utilizadas."
-      - title: "Semana 2: Sé Más Productivo"
-        description: "Compara las capacidades de IA y humanas en diversas tareas. Identifica cuándo aprovechar la IA, explora prompts relevantes y optimiza la ingeniería de prompts. Diseña flujos de trabajo relevantes integrando IA."
-      - title: "Semana 3: Generación de Texto"
+      - title: "Introducción a la IA"
+        description: "Comprende los conceptos clave de IA y las herramientas generativas. Introducción a los fundamentos de la IA con enfoque especial en IA Generativa. Aprende la estructura del curso y las tecnologías utilizadas incluyendo ChatGPT, Claude, Gemini y más."
+      - title: "Ingeniería de Prompts"
         description: "Aprende a crear prompts efectivos que hagan que las herramientas de IA hagan exactamente lo que quieres. Explora herramientas de generación de texto y comienza a automatizar flujos de trabajo sin programar. Domina técnicas de ingeniería de prompts para resultados profesionales."
-      - title: "Semana 4: Generación de Imágenes"
+      - title: "Open Source vs Cloud"
+        description: "Compara herramientas de IA de código abierto y basadas en la nube. Aprende a probar diferentes herramientas y maximizar su potencial mediante prompting efectivo. Comprende cuándo usar cada tipo para resultados óptimos."
+      - title: "Creación de Contenido con IA"
         description: "Explora herramientas para crear varios tipos de contenido con IA, incluyendo imágenes, videos, avatares, música y más. Aprende a generar contenido visual profesional usando herramientas como Midjourney y DALL-E."
-      - title: "Semanas 5-6: Herramientas y Futuro de la IA"
-        description: "Compara herramientas de IA de código abierto y basadas en la nube. Aprende a probar diferentes herramientas y maximizar su potencial. Construye chatbots, crea sitios web, automatiza flujos de trabajo usando Zapier y herramientas similares, y explora el futuro de la IA en el lugar de trabajo."
+      - title: "Documentos y Automatización de Flujos"
+        description: "Genera documentos profesionales con herramientas de IA, aprende diferentes técnicas de creación de documentos y descubre trucos de markdown para ahorrar horas de trabajo. Usa Zapier y herramientas similares para automatizar tareas repetitivas."
+      - title: "Sitios Web y Chatbots"
+        description: "Crea sitios web profesionales para ti o tus clientes usando herramientas de IA, sin escribir una sola línea de código. Construye chatbots interactivos y aprende los fundamentos de los agentes de IA e interfaces conversacionales."
 
-  - type: two_column
-    proportions: [1, 1]
-    alignment: center
-    background: "muted"
-    left:
-      heading: "Lo Que Aprenderás"
-      sub_heading: "Domina herramientas como ChatGPT, Claude y Midjourney para mejorar tu productividad, creatividad y resolución de problemas."
-      bullets:
-        - text: "Comprende conceptos clave de IA y herramientas generativas"
-          icon: "Brain"
-        - text: "Aprende prompting efectivo para generación de texto e imágenes"
-          icon: "MessageSquare"
-        - text: "Automatiza flujos de trabajo diarios usando herramientas sin código"
-          icon: "Zap"
-        - text: "Crea contenido profesional y sitios web con IA"
-          icon: "Globe"
-        - text: "Construye y despliega chatbots simples y asistentes de IA"
-          icon: "Bot"
-      button:
-        text: "Aplicar Ahora"
-        url: "/apply"
-        variant: "primary"
-    right:
-      image: "/attached_assets/ai-learning.png"
-      image_alt: "Experiencia de Aprendizaje de IA"
-
-  - type: features_grid
-    variant: detailed
-    title: "Todo Lo Que Necesitas Para Aprovechar la IA"
-    columns: 2
+  - type: projects
+    title: "Aprende Construyendo Proyectos Reales"
+    subtitle: "Las tareas que abordarás se asemejarán a las encontradas en un entorno profesional real. Aquí tienes un vistazo de en qué estarás trabajando:"
     items:
-      - icon: "GraduationCap"
-        title: "Guía Experta"
-        description: "Aprende de instructores con experiencia real en IA que pueden guiarte a través de aplicaciones prácticas."
-      - icon: "Users"
-        title: "Ratio Estudiante-Profesor 7:1"
-        description: "Progresa más rápido con atención personalizada y retroalimentación en clases pequeñas."
-      - icon: "Headset"
-        title: "Mentoría 1:1"
-        description: "Recibe apoyo personalizado para desarrollar y aplicar tus habilidades efectivamente con sesiones de mentoría dedicadas."
-      - icon: "Briefcase"
-        title: "Coaching de Carrera"
-        description: "Explora nuestros recursos de carrera o reserva sesiones opcionales 1:1 para fortalecer tu crecimiento profesional."
+      - title: "Clona Tu Personalidad en un Chatbot"
+        description: "Aprende a crear un chatbot que imite tu personalidad y responda como tú usando herramientas de inteligencia artificial. Perfecto para servicio al cliente, marca personal o proyectos creativos."
+        image: "chatbot"
+        tags: ["IA", "Automatización", "Chatbots"]
+        duration: "3 HORAS"
+        date: "26/03/2025"
+        difficulty: "medium"
+      - title: "Pipeline de Contenido Automatizado"
+        description: "Construye un flujo de trabajo de creación de contenido de principio a fin que genera, edita y publica contenido usando herramientas de IA y plataformas de automatización como Zapier."
+        image: "automation"
+        tags: ["Automatización", "Contenido"]
+        duration: "4 HORAS"
+        date: "01/04/2025"
+        difficulty: "easy"
+      - title: "Sitio Web Profesional con IA"
+        description: "Crea un sitio web profesional completo usando herramientas de IA sin escribir código. Aprende a generar copy, imágenes y desplegar un sitio pulido listo para clientes."
+        image: "website"
+        tags: ["No-Code", "Web"]
+        duration: "5 HORAS"
+        date: "15/04/2025"
+        difficulty: "easy"
 
   - type: ai_learning
     version: "1.0"
     badge: "¿Por Qué 4Geeks?"
-    title: "Impulsa Tu Carrera con IA para Profesionales"
-    description: "Escucha a nuestro CEO sobre cómo dominar la IA transformó su productividad y resultados. Da el salto y aprende las habilidades prácticas de IA que asegurarán tu futuro profesional."
+    title: "¿Por Qué Aprender con 4Geeks?"
+    description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te quedes atascado y acelerar tu proceso de aprendizaje."
     video_url: "https://www.youtube.com/watch?v=0yNgqAIDSXQ"
     features:
-      - icon: "Briefcase"
-        title: "Expande Tus Capacidades"
-        description: "Aplica IA en cualquier campo: desde marketing hasta bienes raíces y trabajo creativo."
-      - icon: "Zap"
-        title: "Optimiza Flujos de Trabajo"
-        description: "Usa IA para entregar resultados de mayor calidad desde el primer día."
-      - icon: "FileText"
-        title: "Crea Más Rápido e Inteligente"
-        description: "Genera informes, análisis y estrategias profundas más rápido con IA."
+      - icon: "Robot"
+        title: "Aprende con IA"
+        description: "Nuestra IA revisa tu trabajo para darte retroalimentación instantánea, ayuda con los ejercicios, ¡y más!"
+      - icon: "Headset"
+        title: "Sesiones de mentoría uno a uno"
+        description: "Accede a sesiones de mentoría ilimitadas con nuestros expertos cuando necesites orientación."
+      - icon: "Users"
+        title: "Aprende con la comunidad"
+        description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
     highlight:
       title: "Conoce a Rigobot, Nuestro Tutor de IA"
-      description: "4Geeks.com es la primera plataforma diseñada para maximizar el aprendizaje a tu propio ritmo. Únete a sesiones en vivo cuando puedas, obtén ayuda inmediata de IA y reserva mentorías uno a uno. Todo nuestro contenido es completamente interactivo con video."
+      description: "Rigobot es nuestro tutor de IA diseñado especialmente para autodidactas, listo para abordar cualquier pregunta y equipado con retroalimentación automatizada, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
       cta:
-        text: "¡Empieza a Aprender Ahora!"
+        text: "¡Empieza a aprender ahora!"
         url: "/apply"
         variant: "primary"
 
   - type: certificate
     version: "1.0"
-    title: "Certificado Profesional en IA Aplicada"
-    description: "Tu certificado de 4Geeks abrirá puertas a oportunidades profesionales con nuestra extensa red de empresas en todo el mundo. Respaldado por instituciones internacionales, representa un estándar reconocido globalmente, desbloqueando diversos caminos profesionales."
+    title: "Certificado y Red Profesional"
+    description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
     stats:
       - value: "4,000+"
         label: "Graduados"
@@ -207,6 +145,15 @@ sections:
       subtitle: "Certificado 4Geeks Academy"
       program_name: "Profesional en IA Aplicada"
 
+  - type: why_learn_ai
+    title: "¿Por Qué Debería Aprender IA para Mi Carrera?"
+    subtitle: "La IA Ya No Es Opcional—Es una Habilidad Esencial en el Trabajo"
+    description: "Los trabajadores con habilidades de IA ganan un promedio de 56% más a nivel global. El uso de IA en el trabajo casi se ha duplicado en dos años, pasando del 21% al 40% de empleados en EE.UU. Únete a los profesionales que no solo se mantienen al día, sino que lideran con IA. Ya sea que estés en marketing, bienes raíces, trabajo creativo o cualquier otro campo—las habilidades de IA te diferenciarán."
+    cta:
+      text: "¡Únete ahora!"
+      url: "/apply"
+      variant: "primary"
+
   - type: pricing
     title: "Invierte en Tu Futuro"
     subtitle: "Planes de pago flexibles diseñados para tu presupuesto"
@@ -216,7 +163,7 @@ sections:
       period: "total"
       original_price: "3,300"
     yearly:
-      discount_badge: "PLAN SEMANAL"
+      discount_badge: "SEMANAL"
       price: "550"
       period: "semana"
       original_price: "600"
@@ -234,14 +181,12 @@ sections:
         text: "2 clases en vivo online por semana con instructores expertos"
       - icon: "Users"
         text: "Tamaño de clase pequeño (12 personas máximo) para atención personalizada"
-      - icon: "Headset"
-        text: "Sesiones de mentoría 1:1 ilimitadas"
       - text: "Retroalimentación y apoyo potenciados por IA con Rigobot durante todo tu viaje de aprendizaje"
         use_rigobot_icon: true
+      - icon: "Headset"
+        text: "Sesiones de mentoría 1:1 ilimitadas"
       - icon: "Award"
         text: "Certificado oficial de completación de 4Geeks reconocido por múltiples instituciones"
-      - icon: "Briefcase"
-        text: "Coaching de carrera y recursos de desarrollo profesional"
     cta:
       text: "Aplicar Ahora"
       url: "/apply"
@@ -249,8 +194,8 @@ sections:
 
   - type: whos_hiring
     title: "¿Quién Contrata a Nuestros Graduados?"
-    subtitle: "Las mejores empresas contratan graduados de 4Geeks"
-    description: "El 84% de nuestros graduados consiguen trabajo dentro de los 6 meses de graduación gracias a sus habilidades y nuestro apoyo personalizado de carrera. Nuestros graduados no solo son contratados—lanzan carreras exitosas y consistentemente reciben reconocimiento por su experiencia técnica y profesionalismo."
+    subtitle: "Nuestros egresados trabajan en las mejores empresas del mundo"
+    description: "Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en todas las industrias. El 84% de nuestros graduados consiguen trabajo dentro de los 6 meses de graduación gracias a sus habilidades y nuestro apoyo personalizado de carrera."
     logos:
       - src: "/attached_assets/microsoft_1764719829995.png"
         alt: "Microsoft"
@@ -272,9 +217,37 @@ sections:
         alt: "Twilio"
       - src: "/attached_assets/uber_1764719999685.png"
         alt: "Uber"
+      - src: "/attached_assets/Neo9_1764720006347.png"
+        alt: "Neo9"
+      - src: "/attached_assets/jooble_1764720010702.png"
+        alt: "Jooble"
+      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
+        alt: "KPMG"
+      - src: "/attached_assets/ultimate_1764720025067.png"
+        alt: "Ultimate"
+      - src: "/attached_assets/tcg_1764720028893.png"
+        alt: "TCG"
+      - src: "/attached_assets/razz_1764720036807.png"
+        alt: "Razz"
+      - src: "/attached_assets/overseas_1764720045331.png"
+        alt: "Overseas"
+      - src: "/attached_assets/ds9_1764720051158.png"
+        alt: "DS9"
+      - src: "/attached_assets/coinet_1764720056569.jpg"
+        alt: "Coinet"
+      - src: "/attached_assets/strata_1764720063140.png"
+        alt: "Strata"
+      - src: "/attached_assets/mdc_ce_1764720089793.png"
+        alt: "MDC"
+      - src: "/attached_assets/beacon_council_1764720100166.jpg"
+        alt: "Beacon Council"
+      - src: "/attached_assets/blackstone_1764720124773.png"
+        alt: "Blackstone"
+      - src: "/attached_assets/cemex_1764720131666.png"
+        alt: "Cemex"
 
   - type: testimonials
-    title: "Historias de Éxito"
+    title: "Tu Nueva Carrera Comienza Aquí"
     subtitle: "Mira lo que nuestros graduados dicen sobre su experiencia"
     rating_summary:
       average: "4.9"
@@ -304,6 +277,18 @@ sections:
         rating: 5
         comment: "Desde generar ideas hasta crear visuales, la IA se ha convertido en mi compañera creativa. Este curso me enseñó cómo aprovecharla efectivamente."
         outcome: "Dupliqué capacidad de clientes"
+      - name: "David Kim"
+        role: "Analista Financiero"
+        company: "Firma de Inversión"
+        rating: 5
+        comment: "La IA ha revolucionado cómo analizo datos y creo informes. Lo que antes tomaba días ahora toma horas. Valor increíble."
+        outcome: "+60% eficiencia"
+      - name: "Jessica Martínez"
+        role: "Gerente de RRHH"
+        company: "Enterprise Corp"
+        rating: 4
+        comment: "Gran curso con aplicaciones prácticas para RRHH. Ahora uso IA para descripciones de trabajo, filtrado de candidatos y comunicaciones con empleados."
+        outcome: "Proceso de contratación optimizado"
 
   - type: faq
     version: "1.0"
@@ -317,10 +302,8 @@ sections:
         answer: "Las clases se realizan dos veces por semana online con un máximo de 12 estudiantes por cohorte. Esto asegura atención personalizada y la capacidad de tener tus preguntas respondidas en tiempo real."
       - question: "¿Qué tipo de apoyo está disponible?"
         answer: "Tendrás acceso a sesiones de mentoría 1:1 ilimitadas, nuestro tutor de IA Rigobot para retroalimentación instantánea, y una comunidad de apoyo de compañeros profesionales aprendiendo junto a ti."
-      - question: "¿El certificado es reconocido?"
+      - question: "¿El certificado es reconocido por empleadores?"
         answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. 4Geeks Academy está licenciada por el Departamento de Educación de Florida y ha sido destacada por Forbes, Newsweek y Course Report como uno de los mejores bootcamps."
-      - question: "¿Qué pasa si no puedo asistir a una clase en vivo?"
-        answer: "Todas las sesiones en vivo son grabadas y disponibles para revisión. Puedes ponerte al día con cualquier contenido perdido a tu conveniencia mientras sigues beneficiándote de la experiencia de aprendizaje interactivo."
     cta:
       text: "¿Aún tienes preguntas?"
       button_text: "Habla con un Asesor"
@@ -329,9 +312,9 @@ sections:
   - type: cta_banner
     version: "1.0"
     title: "¿Listo para Liderar con IA?"
-    subtitle: "Únete a los profesionales que se mantienen adelante. Comienza tu viaje de IA hoy."
+    subtitle: "Únete a miles de profesionales que han transformado sus carreras con 4Geeks."
     buttons:
-      - text: "Aplicar Ahora"
+      - text: "Empieza a Aprender Ahora"
         url: "/apply"
         variant: "secondary"
       - text: "Habla con un Asesor"
