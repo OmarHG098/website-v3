@@ -24,39 +24,37 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let hasScrolled = false;
-    
-    const handleScroll = () => {
-      hasScrolled = true;
-      window.removeEventListener("scroll", handleScroll);
-    };
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const element = containerRef.current;
+    if (!element) return;
 
-    const timeoutId = setTimeout(() => {
+    // Check if element is initially visible
+    const rect = element.getBoundingClientRect();
+    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isInitiallyVisible) {
+      // Element is visible on load - wait for scroll then animate
+      const handleScroll = () => {
+        setIsVisible(true);
+        window.removeEventListener("scroll", handleScroll);
+      };
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    } else {
+      // Element is below viewport - use intersection observer
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting && hasScrolled) {
+            if (entry.isIntersecting) {
               setIsVisible(true);
               observer.disconnect();
             }
           });
         },
-        { threshold: 0.3 }
+        { threshold: 0.2 }
       );
-
-      if (containerRef.current) {
-        observer.observe(containerRef.current);
-      }
-
+      observer.observe(element);
       return () => observer.disconnect();
-    }, 100);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutId);
-    };
+    }
   }, []);
 
   const maxValue = Math.max(...data.items.map((item) => item.value));
