@@ -649,9 +649,19 @@ export default function ExperimentEditor() {
             <Button
               variant="outline"
               onClick={() => setTargetingDialogOpen(false)}
-              data-testid="button-close-targeting"
+              data-testid="button-cancel-targeting"
             >
-              Close
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                handleSave();
+                setTargetingDialogOpen(false);
+              }}
+              disabled={updateMutation.isPending}
+              data-testid="button-save-targeting"
+            >
+              {updateMutation.isPending ? "Saving..." : "Save"}
             </Button>
           </DialogFooter>
         </DialogContent>
