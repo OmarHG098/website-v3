@@ -390,6 +390,7 @@ function ComponentCard({
                 imageText: 'Image + Text',
                 bulletGroups: 'Bullet Groups',
                 video: 'Video',
+                course: 'Course',
               };
               return (
                 <div className="flex items-center gap-2 flex-wrap pt-[2px] pb-[2px]">
@@ -447,7 +448,7 @@ function ComponentCard({
                       return acc;
                     }, {} as Record<string, typeof examples>);
                     
-                    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
+                    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'imageText', 'bulletGroups', 'video', 'course', 'default'];
                     const sortedVariants = Object.keys(grouped).sort((a, b) => {
                       const aIdx = variantOrder.indexOf(a);
                       const bIdx = variantOrder.indexOf(b);
@@ -459,6 +460,10 @@ function ComponentCard({
                       showcase: 'Showcase',
                       productShowcase: 'Product Showcase',
                       simpleTwoColumn: 'Simple Two Column',
+                      imageText: 'Image + Text',
+                      bulletGroups: 'Bullet Groups',
+                      video: 'Video',
+                      course: 'Course',
                       default: 'Default',
                     };
                     
