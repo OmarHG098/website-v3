@@ -1,329 +1,317 @@
-# Full Stack Development Career Program - English
-# This file defines all sections and content for the Full Stack career program page
-
-slug: "full-stack"
-title: "Full Stack Development"
-
+slug: full-stack
+title: Full Stack Development
 meta:
-  page_title: "Full Stack Developer Career Program | 4Geeks"
-  description: "Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community."
-  robots: "index, follow"
-  og_image: "/images/programs/full-stack-og.jpg"
+  page_title: Full Stack Developer Career Program | 4Geeks
+  description: Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community.
+  robots: index, follow
+  og_image: /images/programs/full-stack-og.jpg
   priority: 0.9
-  change_frequency: "weekly"
+  change_frequency: weekly
   redirects:
-    - "/bootcamp/full-stack"
-    - "/programs/fullstack-developer"
-    - "/coding-bootcamp/full-stack"
-
+    - /bootcamp/full-stack
+    - /programs/fullstack-developer
+    - /coding-bootcamp/full-stack
 schema:
   include:
-    - "organization"
-    - "website"
-    - "courses:full-stack"
-
+    - organization
+    - website
+    - courses:full-stack
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    badge: "Career Program"
-    title: "Full Stack Development with AI"
-    subtitle: "Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee."
+    variant: singleColumn
+    title: Full Stack Development with AI
+    subtitle: Start a future-proof career with average starting salaries of $65K+. Train on an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hire rate within 6 months, and our job guarantee.
+    badge: Career Program
+    cta_buttons:
+      - text: Apply Now
+        url: /apply
+        variant: primary
+        icon: Rocket
+      - text: Download Syllabus
+        url: /syllabus/full-stack
+        variant: outline
+        icon: Download
     trust_bar:
       rating: "4.5"
-      rating_count: "1,294"
-      trusted_text: "Trusted by 2.5K+ learners"
-    cta_buttons:
-      - text: "Apply Now"
-        url: "/apply"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Download Syllabus"
-        url: "/syllabus/full-stack"
-        variant: "outline"
-        icon: "Download"
+      rating_count: 1,294
+      trusted_text: Trusted by 2.5K+ learners
     award_badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+      - name: Top Coding Bootcamp
+        source: Forbes
         year: "2024"
-      - name: "Best for Spanish Speakers"
-        source: "Fortune"
+      - name: Best for Spanish Speakers
+        source: Fortune
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - name: Top Coding Bootcamp
+        source: Newsweek
         year: "2024"
-      - name: "Best Coding Bootcamp"
-        source: "Course Report"
+      - name: Best Coding Bootcamp
+        source: Course Report
         year: "2025"
-
   - type: syllabus
-    title: "Get Job-Ready with Our Syllabus!"
-    subtitle: "We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech."
+    title: Get Job-Ready with Our Syllabus!
+    subtitle: We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech.
     modules:
-      - title: "Introduction To HTML And CSS"
-        description: "Learn to create web structures with HTML and style them with CSS, essential for building visually appealing and functional websites. Mastering HTML allows you to create the foundation of any web page, while CSS gives you the power to design it to your liking, improving the user experience and site accessibility."
-      - title: "JavaScript"
-        description: "Master the fundamentals of JavaScript, the programming language that powers interactive web experiences. Learn variables, functions, loops, DOM manipulation, and modern ES6+ features to create dynamic, responsive websites."
-      - title: "React"
-        description: "Build modern user interfaces with React, the most popular JavaScript library for creating component-based applications. Learn state management, hooks, routing, and best practices for scalable frontend development."
-      - title: "Python"
-        description: "Dive into Python, a versatile programming language used in web development, data science, and automation. Master core concepts, data structures, and object-oriented programming principles."
-      - title: "Creating APIs"
-        description: "Learn to design and build RESTful APIs using modern frameworks. Understand HTTP methods, authentication, database integration, and API documentation to create robust backend services."
-      - title: "Agile Methodologies"
-        description: "Understand Scrum, Kanban, and other agile frameworks used by development teams worldwide. Learn sprint planning, daily standups, retrospectives, and how to collaborate effectively in modern software development environments."
-
+      - title: Introduction To HTML And CSS
+        description: Learn to create web structures with HTML and style them with CSS, essential for building visually appealing and functional websites. Mastering HTML allows you to create the foundation of any web page, while CSS gives you the power to design it to your liking, improving the user experience and site accessibility.
+      - title: JavaScript
+        description: Master the fundamentals of JavaScript, the programming language that powers interactive web experiences. Learn variables, functions, loops, DOM manipulation, and modern ES6+ features to create dynamic, responsive websites.
+      - title: React
+        description: Build modern user interfaces with React, the most popular JavaScript library for creating component-based applications. Learn state management, hooks, routing, and best practices for scalable frontend development.
+      - title: Python
+        description: Dive into Python, a versatile programming language used in web development, data science, and automation. Master core concepts, data structures, and object-oriented programming principles.
+      - title: Creating APIs
+        description: Learn to design and build RESTful APIs using modern frameworks. Understand HTTP methods, authentication, database integration, and API documentation to create robust backend services.
+      - title: Agile Methodologies
+        description: Understand Scrum, Kanban, and other agile frameworks used by development teams worldwide. Learn sprint planning, daily standups, retrospectives, and how to collaborate effectively in modern software development environments.
   - type: projects
-    title: "Learn by Building Real-Life Projects"
+    title: Learn by Building Real-Life Projects
     subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
-      - title: "Build a StarWars REST API"
-        description: "The StarWars Blog API will let you practice building a REST API using lightweight API frameworks like Express (for node) or Flask (for python) using SQLAlchemy ORM and Python language, while building a fun blog. Ideal for juniors looking to practice API development in python."
-        image: "star-wars"
-        tags: ["REST"]
-        duration: "8 HOURS"
-        date: "15/11/2022"
-        difficulty: "easy"
-      - title: "Authentication System with JWT"
-        description: "Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management patterns used in production applications."
-        image: "authentication"
-        tags: ["Security", "JWT"]
-        duration: "6 HOURS"
-        date: "20/01/2023"
-        difficulty: "medium"
-      - title: "Full-Stack Final Project"
-        description: "Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations. This capstone project showcases everything you've learned."
-        image: "final-project"
-        tags: ["Full-Stack", "Capstone"]
-        duration: "40 HOURS"
-        date: "01/03/2023"
-        difficulty: "hard"
-
+      - title: Build a StarWars REST API
+        description: The StarWars Blog API will let you practice building a REST API using lightweight API frameworks like Express (for node) or Flask (for python) using SQLAlchemy ORM and Python language, while building a fun blog. Ideal for juniors looking to practice API development in python.
+        image: star-wars
+        tags:
+          - REST
+        duration: 8 HOURS
+        date: 15/11/2022
+        difficulty: easy
+      - title: Authentication System with JWT
+        description: Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management patterns used in production applications.
+        image: authentication
+        tags:
+          - Security
+          - JWT
+        duration: 6 HOURS
+        date: 20/01/2023
+        difficulty: medium
+      - title: Full-Stack Final Project
+        description: Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations. This capstone project showcases everything you've learned.
+        image: final-project
+        tags:
+          - Full-Stack
+          - Capstone
+        duration: 40 HOURS
+        date: 01/03/2023
+        difficulty: hard
   - type: ai_learning
     version: "1.0"
-    badge: "Why 4Geeks?"
-    title: "Why Learn with 4Geeks?"
-    description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
-    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
     features:
-      - icon: "Robot"
-        title: "Learn with AI"
-        description: "Our AI reviews your code to give you instant feedback, helps with the exercises, and more!"
-      - icon: "Headset"
-        title: "One-on-one mentoring sessions"
-        description: "Access monthly mentorship sessions with our experts and add extra sessions as needed."
-      - icon: "Users"
-        title: "Learn with the community"
-        description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+      - icon: Headset
+        title: One-on-one mentoring sessions
+        description: Access monthly mentorship sessions with our experts and add extra sessions as needed.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     highlight:
-      title: "Maximize Your Learning Potential with Rigobot"
-      description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
+      title: Maximize Your Learning Potential with Rigobot
+      description: Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!
       cta:
-        text: "Start learning now!"
-        url: "/apply"
-        variant: "primary"
-
+        text: Start learning now!
+        url: /apply
+        variant: primary
   - type: certificate
     version: "1.0"
-    title: "Certificate & Career Network"
-    description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."
+    title: Certificate & Career Network
+    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
     stats:
-      - value: "4,000+"
-        label: "Graduates"
-      - value: "84%"
-        label: "Job Placement"
-      - value: "4.9/5"
-        label: "Student Rating"
-      - value: "20+"
-        label: "Countries"
+      - value: 4,000+
+        label: Graduates
+      - value: 84%
+        label: Job Placement
+      - value: 4.9/5
+        label: Student Rating
+      - value: 20+
+        label: Countries
     benefits:
-      - text: "Recognized by international institutions"
-      - text: "Access to 5,000+ hiring partners"
-      - text: "Lifetime career support"
+      - text: Recognized by international institutions
+      - text: Access to 5,000+ hiring partners
+      - text: Lifetime career support
     card:
-      title: "Full Stack Developer"
-      subtitle: "4Geeks Academy Certificate"
-
+      title: Full Stack Developer
+      subtitle: 4Geeks Academy Certificate
   - type: why_learn_ai
-    title: "Why Should I Learn to Build and Code with AI?"
-    subtitle: "Software Development as You Know It Will Cease to Exist"
-    description: "Coding with AI will become a new standard, but it's a very different profession from traditional software development. While AI can generate a product 400% faster in the short term, building and maintaining a secure, performant codebase with 90% AI-generated code in the long term requires merging yourself with the AI. We are witnessing a new profession come to fruition before our eyes. Are you ready to become an AI Coder?"
+    title: Why Should I Learn to Build and Code with AI?
+    subtitle: Software Development as You Know It Will Cease to Exist
+    description: Coding with AI will become a new standard, but it's a very different profession from traditional software development. While AI can generate a product 400% faster in the short term, building and maintaining a secure, performant codebase with 90% AI-generated code in the long term requires merging yourself with the AI. We are witnessing a new profession come to fruition before our eyes. Are you ready to become an AI Coder?
     cta:
-      text: "Join now!"
-      url: "/signup"
-      variant: "primary"
-
+      text: Join now!
+      url: /signup
+      variant: primary
   - type: pricing
-    title: "Get access to all of our learning database, courses, and services"
-    subtitle: "Earn a new skills every 30 min, never get stuck or lost again."
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
     monthly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "38.99"
-      period: "mo"
+      period: mo
       original_price: "59.99"
     yearly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "311.99"
-      period: "yr"
+      period: yr
       original_price: "479.99"
-      savings_badge: "Save 3 months"
+      savings_badge: Save 3 months
     tech_icons:
-      - "html"
-      - "css"
-      - "javascript"
-      - "react"
-      - "python"
-      - "nodejs"
-      - "git"
-      - "bootstrap"
-      - "api"
-      - "settings"
-    features_title: "Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies"
+      - html
+      - css
+      - javascript
+      - react
+      - python
+      - nodejs
+      - git
+      - bootstrap
+      - api
+      - settings
+    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
     features:
-      - icon: "certificate"
-        text: "Build your portfolio with hundreds of real-world projects."
-      - icon: "cloud"
-        text: "Thousands of and cloud-based coding challenges (no setup needed)."
-      - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
+      - icon: certificate
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of and cloud-based coding challenges (no setup needed).
+      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
         use_rigobot_icon: true
-      - icon: "certificate"
-        text: "Course certificates"
-      - icon: "certificate"
-        text: "Earn certificates from a USA certified school by the florida department of education."
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school by the florida department of education.
     cta:
-      text: "Get plan"
-      url: "/signup"
-      variant: "primary"
-
+      text: Get plan
+      url: /signup
+      variant: primary
   - type: whos_hiring
-    title: "Who's Hiring Our Graduates?"
-    subtitle: "Our alumni work at top companies around the world"
-    description: "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally."
+    title: Who's Hiring Our Graduates?
+    subtitle: Our alumni work at top companies around the world
+    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.
     logos:
-      - src: "/attached_assets/microsoft_1764719829995.png"
-        alt: "Microsoft"
-      - src: "/attached_assets/google-developers_1764719904190.png"
-        alt: "Google Developers"
-      - src: "/attached_assets/boats_1764719939123.jpg"
-        alt: "Boats Group"
-      - src: "/attached_assets/meta-logo_1764719959855.png"
-        alt: "Meta"
-      - src: "/attached_assets/ebay_1764719967118.png"
-        alt: "eBay"
-      - src: "/attached_assets/natgeo_1764719975443.png"
-        alt: "National Geographic"
-      - src: "/attached_assets/evernote_1764719981901.png"
-        alt: "Evernote"
-      - src: "/attached_assets/telefonica_1764719987250.png"
-        alt: "Telefonica"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
-      - src: "/attached_assets/uber_1764719999685.png"
-        alt: "Uber"
-      - src: "/attached_assets/Neo9_1764720006347.png"
-        alt: "Neo9"
-      - src: "/attached_assets/jooble_1764720010702.png"
-        alt: "Jooble"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
-      - src: "/attached_assets/ultimate_1764720025067.png"
-        alt: "Ultimate"
-      - src: "/attached_assets/tcg_1764720028893.png"
-        alt: "TCG"
-      - src: "/attached_assets/razz_1764720036807.png"
-        alt: "Razz"
-      - src: "/attached_assets/overseas_1764720045331.png"
-        alt: "Overseas"
-      - src: "/attached_assets/ds9_1764720051158.png"
-        alt: "DS9"
-      - src: "/attached_assets/coinet_1764720056569.jpg"
-        alt: "Coinet"
-      - src: "/attached_assets/strata_1764720063140.png"
-        alt: "Strata"
-      - src: "/attached_assets/mdc_ce_1764720089793.png"
-        alt: "MDC"
-      - src: "/attached_assets/beacon_council_1764720100166.jpg"
-        alt: "Beacon Council"
-      - src: "/attached_assets/blackstone_1764720124773.png"
-        alt: "Blackstone"
-      - src: "/attached_assets/cemex_1764720131666.png"
-        alt: "Cemex"
-
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: TCG
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: MDC
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
   - type: testimonials
-    title: "Your New Career Starts Here"
-    subtitle: "See what our graduates have to say about their experience"
+    title: Your New Career Starts Here
+    subtitle: See what our graduates have to say about their experience
     rating_summary:
       average: "4.5"
-      count: "1,294"
+      count: 1,294
     items:
-      - name: "Sarah Johnson"
-        role: "Software Engineer"
-        company: "Google"
+      - name: Sarah Johnson
+        role: Software Engineer
+        company: Google
         rating: 5
-        comment: "This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications."
-        outcome: "+55% salary increase"
-      - name: "Michael Chen"
-        role: "Data Analyst"
-        company: "Meta"
+        comment: This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications.
+        outcome: +55% salary increase
+      - name: Michael Chen
+        role: Data Analyst
+        company: Meta
         rating: 5
-        comment: "Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable."
-        outcome: "Hired in 4 months"
-      - name: "Emily Rodriguez"
-        role: "ML Engineer"
-        company: "Amazon"
+        comment: Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable.
+        outcome: Hired in 4 months
+      - name: Emily Rodriguez
+        role: ML Engineer
+        company: Amazon
         rating: 5
-        comment: "Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI."
-        outcome: "+100% salary increase"
-      - name: "David Kim"
-        role: "Full Stack Developer"
-        company: "Startup"
+        comment: Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI.
+        outcome: +100% salary increase
+      - name: David Kim
+        role: Full Stack Developer
+        company: Startup
         rating: 5
-        comment: "From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference."
-        outcome: "Career change success"
-      - name: "Jessica Martinez"
-        role: "Frontend Developer"
-        company: "Spotify"
+        comment: From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference.
+        outcome: Career change success
+      - name: Jessica Martinez
+        role: Frontend Developer
+        company: Spotify
         rating: 4
-        comment: "Great course with practical, real-world projects. The community is supportive and the instructors are always available to help."
-        outcome: "+45% salary increase"
-      - name: "Ryan Thompson"
-        role: "Data Scientist"
-        company: "Tech Startup"
+        comment: Great course with practical, real-world projects. The community is supportive and the instructors are always available to help.
+        outcome: +45% salary increase
+      - name: Ryan Thompson
+        role: Data Scientist
+        company: Tech Startup
         rating: 5
-        comment: "The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout."
-        outcome: "Landed first tech job"
-
+        comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
+        outcome: Landed first tech job
   - type: faq
     version: "1.0"
-    title: "FAQ"
+    title: FAQ
     items:
-      - question: "Are there fixed class times?"
-        answer: "No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction."
-      - question: "How do I stay motivated learning on my own?"
-        answer: "You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes."
-      - question: "Do I need prior coding experience?"
-        answer: "No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts."
-      - question: "How do I schedule mentoring sessions?"
-        answer: "Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with."
-      - question: "Is the certificate recognized by employers?"
-        answer: "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+      - question: Are there fixed class times?
+        answer: No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction.
+      - question: How do I stay motivated learning on my own?
+        answer: You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes.
+      - question: Do I need prior coding experience?
+        answer: No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts.
+      - question: How do I schedule mentoring sessions?
+        answer: Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with.
+      - question: Is the certificate recognized by employers?
+        answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
     cta:
-      text: "Still have questions?"
-      button_text: "Talk to an Advisor"
-      button_url: "/contact"
-
-  - type: footer_cta
+      text: Still have questions?
+      button_text: Talk to an Advisor
+      button_url: /contact
+  - type: cta_banner
     version: "1.0"
-    title: "Ready to Start Your Tech Career?"
-    subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."
+    title: Ready to Start Your Tech Career?
+    subtitle: Join thousands of graduates who have transformed their careers with 4Geeks.
     buttons:
-      - text: "Start Learning Now"
-        url: "/signup"
-        variant: "secondary"
-      - text: "Talk to an Advisor"
-        url: "/contact"
-        variant: "outline"
-
+      - text: Start Learning Now
+        url: /signup
+        variant: secondary
+      - text: Talk to an Advisor
+        url: /contact
+        variant: outline
   - type: footer
     version: "1.0"
-    copyright_text: "2024 4Geeks. All rights reserved."
+    copyright_text: 2024 4Geeks. All rights reserved.

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useTranslation } from "react-i18next";
-import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
+import { SectionRenderer } from "@/components/SectionRenderer";
 import type { LandingPage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -13,7 +13,7 @@ export default function LandingDetail() {
   const slug = params.slug;
   const locale = i18n.language === "es" ? "es" : "en";
 
-  const { data: landing, isLoading, error } = useQuery<LandingPage>({
+  const { data: landing, isLoading, error, refetch } = useQuery<LandingPage>({
     queryKey: ["/api/landings", slug, locale],
     queryFn: async () => {
       const response = await fetch(`/api/landings/${slug}?locale=${locale}`);
@@ -61,7 +61,13 @@ export default function LandingDetail() {
 
   return (
     <div data-testid="page-landing">
-      <SectionRenderer sections={landing.sections} />
+      <SectionRenderer 
+        sections={landing.sections} 
+        contentType="landing"
+        slug={slug}
+        locale={locale}
+        onSectionAdded={() => refetch()}
+      />
     </div>
   );
 }

@@ -46,7 +46,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Header from "@/components/Header";
-import { SectionRenderer } from "@/components/career-programs/SectionRenderer";
+import { SectionRenderer } from "@/components/SectionRenderer";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -647,9 +647,9 @@ function ComponentCard({
               <div 
                 className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
-                    ? 'w-[375px] shadow-lg border-x' 
+                    ? 'w-[375px] shadow-lg' 
                     : previewViewport === 'tablet' 
-                      ? 'w-[768px] shadow-lg border-x' 
+                      ? 'w-[768px] shadow-lg' 
                       : 'w-full'
                 }`}
               >

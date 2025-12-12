@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
 import {
   IconBug,
   IconMap,
   IconMapPin,
   IconPencil,
+  IconPencilOff,
   IconComponents,
   IconLanguage,
   IconRoute,
@@ -23,20 +25,24 @@ import {
   IconLayoutBottombar,
   IconArrowLeft,
   IconChevronRight,
+  IconChevronDown,
   IconRefresh,
   IconCheck,
   IconSearch,
   IconExternalLink,
-  IconWorld,
   IconMessage,
   IconBuildingSkyscraper,
   IconCreditCard,
   IconFolderCode,
+  IconFolder,
   IconBook,
   IconSparkles,
   IconChartBar,
   IconTable,
+  IconFlask,
+  IconPlus,
 } from "@tabler/icons-react";
+import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -80,11 +86,12 @@ const componentsList = [
   { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
   { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "footer_cta", label: "Footer CTA", icon: IconArrowRight, description: "Final call-to-action" },
+  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
+  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "landings" | "redirects";
+type MenuView = "main" | "components" | "sitemap" | "experiments";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -93,32 +100,154 @@ interface SitemapUrl {
   label: string;
 }
 
-interface LandingItem {
-  slug: string;
-  title: string;
-}
-
 interface RedirectItem {
   from: string;
   to: string;
   type: string;
 }
 
+interface ExperimentVariant {
+  slug: string;
+  version: number;
+  allocation: number;
+}
+
+interface ExperimentConfig {
+  slug: string;
+  status: "planned" | "active" | "paused" | "winner" | "archived";
+  description?: string;
+  variants: ExperimentVariant[];
+  targeting?: Record<string, unknown>;
+  max_visitors?: number;
+  stats?: Record<string, number>;
+}
+
+interface ExperimentsResponse {
+  experiments: ExperimentConfig[];
+  hasExperimentsFile: boolean;
+  filePath: string;
+}
+
+interface ContentInfo {
+  type: "programs" | "pages" | "landings" | "locations" | null;
+  slug: string | null;
+  label: string;
+}
+
+// De-slugify a string (e.g., "hero-messaging-test" -> "Hero Messaging Test")
+function deslugify(slug: string): string {
+  return slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+// Detect content type and slug from URL path
+function detectContentInfo(pathname: string): ContentInfo {
+  // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
+  const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
+  if (experimentMatch) {
+    const typeLabels: Record<string, string> = {
+      programs: "Program",
+      pages: "Page",
+      landings: "Landing",
+      locations: "Location",
+    };
+    return { 
+      type: experimentMatch[1] as ContentInfo["type"], 
+      slug: experimentMatch[2], 
+      label: typeLabels[experimentMatch[1]] || "Content" 
+    };
+  }
+
+  // Programs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
+  const programEnMatch = pathname.match(/^\/en\/career-programs\/([^/]+)\/?$/);
+  if (programEnMatch) {
+    return { type: "programs", slug: programEnMatch[1], label: "Program" };
+  }
+  const programEsMatch = pathname.match(/^\/es\/programas-de-carrera\/([^/]+)\/?$/);
+  if (programEsMatch) {
+    return { type: "programs", slug: programEsMatch[1], label: "Program" };
+  }
+
+  // Landings: /landing/:slug
+  const landingMatch = pathname.match(/^\/landing\/([^/]+)\/?$/);
+  if (landingMatch) {
+    return { type: "landings", slug: landingMatch[1], label: "Landing" };
+  }
+
+  // Locations: /en/location/:slug or /es/ubicacion/:slug
+  const locationEnMatch = pathname.match(/^\/en\/location\/([^/]+)\/?$/);
+  if (locationEnMatch) {
+    return { type: "locations", slug: locationEnMatch[1], label: "Location" };
+  }
+  const locationEsMatch = pathname.match(/^\/es\/ubicacion\/([^/]+)\/?$/);
+  if (locationEsMatch) {
+    return { type: "locations", slug: locationEsMatch[1], label: "Location" };
+  }
+
+  // Template pages: /en/:slug or /es/:slug (catch-all for pages)
+  const pageEnMatch = pathname.match(/^\/en\/([^/]+)\/?$/);
+  if (pageEnMatch && !["career-programs", "location"].includes(pageEnMatch[1])) {
+    return { type: "pages", slug: pageEnMatch[1], label: "Page" };
+  }
+  const pageEsMatch = pathname.match(/^\/es\/([^/]+)\/?$/);
+  if (pageEsMatch && !["programas-de-carrera", "ubicacion"].includes(pageEsMatch[1])) {
+    return { type: "pages", slug: pageEsMatch[1], label: "Page" };
+  }
+
+  return { type: null, slug: null, label: "" };
+}
+
 // Get persisted menu view from sessionStorage
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "landings" || stored === "redirects") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments") {
       return stored;
     }
   }
   return "main";
 };
 
+// Edit Mode Toggle Component - uses optional hook to handle being outside provider
+function EditModeToggle() {
+  const editMode = useEditModeOptional();
+  
+  // If not within EditModeProvider, don't render
+  if (!editMode) {
+    return null;
+  }
+  
+  const { isEditMode, toggleEditMode } = editMode;
+  
+  return (
+    <button
+      onClick={toggleEditMode}
+      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+      data-testid="button-toggle-edit-mode"
+    >
+      <div className="flex items-center gap-3">
+        {isEditMode ? (
+          <IconPencilOff className="h-4 w-4 text-muted-foreground" />
+        ) : (
+          <IconPencil className="h-4 w-4 text-muted-foreground" />
+        )}
+        <span>Edit Mode</span>
+      </div>
+      <span className={`text-xs font-medium px-2 py-1 rounded ${isEditMode ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+        {isEditMode ? "ON" : "OFF"}
+      </span>
+    </button>
+  );
+}
+
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const { session } = useSession();
+  const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
+  const [pathname] = useLocation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -132,17 +261,24 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
-  const [landingsList, setLandingsList] = useState<LandingItem[]>([]);
-  const [landingsLoading, setLandingsLoading] = useState(false);
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
-  const [redirectsLoading, setRedirectsLoading] = useState(false);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
+  
+  // Experiments state
+  const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
+  const [experimentsLoading, setExperimentsLoading] = useState(false);
+  
+  // Detect current content info from URL
+  const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
   // Check if location is currently overridden via query string
   const currentLocationOverride = typeof window !== "undefined" 
     ? new URLSearchParams(window.location.search).get("location") 
     : null;
+
+  // State for expanded folders in sitemap view
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
@@ -154,6 +290,13 @@ export function DebugBubble() {
       sessionStorage.setItem(STORAGE_KEY, view);
     }
   };
+
+  // Auto-open experiments menu when URL contains "experiment"
+  useEffect(() => {
+    if (pathname.includes("experiment") && contentInfo.type && contentInfo.slug) {
+      setMenuViewState("experiments");
+    }
+  }, [pathname, contentInfo.type, contentInfo.slug]);
 
   // Fetch sitemap URLs when entering sitemap view
   useEffect(() => {
@@ -169,34 +312,45 @@ export function DebugBubble() {
     }
   }, [menuView]);
 
-  // Fetch landings when entering landings view
+  // Fetch redirects count on mount
   useEffect(() => {
-    if (menuView === "landings" && landingsList.length === 0) {
-      setLandingsLoading(true);
-      const locale = i18n.language || "en";
-      fetch(`/api/landings?locale=${locale}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setLandingsList(data);
-          setLandingsLoading(false);
-        })
-        .catch(() => setLandingsLoading(false));
-    }
-  }, [menuView, i18n.language]);
-
-  // Fetch redirects when entering redirects view
-  useEffect(() => {
-    if (menuView === "redirects" && redirectsList.length === 0) {
-      setRedirectsLoading(true);
+    if (redirectsList.length === 0) {
       fetch("/api/debug/redirects")
         .then((res) => res.json())
         .then((data) => {
           setRedirectsList(data.redirects || []);
-          setRedirectsLoading(false);
         })
-        .catch(() => setRedirectsLoading(false));
+        .catch(() => {});
     }
-  }, [menuView]);
+  }, []);
+
+  // Fetch experiments when entering experiments view
+  useEffect(() => {
+    if (menuView === "experiments" && contentInfo.type && contentInfo.slug) {
+      setExperimentsLoading(true);
+      fetch(`/api/experiments/${contentInfo.type}/${contentInfo.slug}`)
+        .then((res) => res.json())
+        .then((data: ExperimentsResponse) => {
+          setExperimentsData(data);
+          setExperimentsLoading(false);
+        })
+        .catch(() => {
+          setExperimentsLoading(false);
+          setExperimentsData(null);
+        });
+    }
+  }, [menuView, contentInfo.type, contentInfo.slug]);
+
+  // Reset experiments data and menu view when leaving a content page
+  useEffect(() => {
+    if (!contentInfo.type) {
+      setExperimentsData(null);
+      // Reset menu view to main if currently on experiments view
+      if (menuView === "experiments") {
+        setMenuView("main");
+      }
+    }
+  }, [contentInfo.type, menuView]);
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -213,6 +367,67 @@ export function DebugBubble() {
       url.label.toLowerCase().includes(sitemapSearch.toLowerCase()) ||
       url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
   );
+
+  // Group sitemap URLs into nested folders based on URL path structure
+  interface SitemapFolder {
+    name: string;
+    path: string; // Full path to this folder level
+    urls: SitemapUrl[]; // URLs that terminate at this folder level
+    subfolders: SitemapFolder[];
+  }
+
+  const groupedSitemapUrls = (): { folders: SitemapFolder[]; rootUrls: SitemapUrl[] } => {
+    const rootUrls: SitemapUrl[] = [];
+    const folderMap = new Map<string, SitemapFolder>();
+
+    filteredSitemapUrls.forEach((url) => {
+      const path = new URL(url.loc).pathname;
+      const segments = path.split('/').filter(Boolean);
+      
+      // Root level pages (e.g., "/", "/about")
+      if (segments.length <= 1) {
+        rootUrls.push(url);
+        return;
+      }
+
+      // Build folder path from all segments except the last (the page)
+      const folderSegments = segments.slice(0, -1);
+      const folderPath = '/' + folderSegments.join('/');
+      
+      // Create or get the folder
+      if (!folderMap.has(folderPath)) {
+        folderMap.set(folderPath, {
+          name: folderSegments.join('/'),
+          path: folderPath,
+          urls: [],
+          subfolders: [],
+        });
+      }
+      
+      folderMap.get(folderPath)!.urls.push(url);
+    });
+
+    // Convert map to sorted array
+    const folders = Array.from(folderMap.values()).sort((a, b) => 
+      a.path.localeCompare(b.path)
+    );
+
+    return { folders, rootUrls };
+  };
+
+  const { folders, rootUrls } = groupedSitemapUrls();
+
+  const toggleFolder = (folderName: string) => {
+    setExpandedFolders((prev) => {
+      const next = new Set(prev);
+      if (next.has(folderName)) {
+        next.delete(folderName);
+      } else {
+        next.add(folderName);
+      }
+      return next;
+    });
+  };
 
   // Only show bubble if debug mode is active
   // In dev: always active
@@ -307,14 +522,30 @@ export function DebugBubble() {
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <Button
-            size="icon"
-            variant="default"
-            className="h-12 w-12 rounded-full shadow-lg"
-            data-testid="button-debug-toggle"
-          >
-            {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
-          </Button>
+          <div className="relative">
+            <Button
+              size="icon"
+              variant="default"
+              className="h-12 w-12 rounded-full shadow-lg"
+              data-testid="button-debug-toggle"
+            >
+              {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
+            </Button>
+            {editMode?.isEditMode && (
+              <div 
+                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
+                style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
+                }}
+                data-testid="indicator-edit-mode"
+              >
+                <IconPencil className="h-3 w-3" />
+                <span>On</span>
+              </div>
+            )}
+          </div>
         </PopoverTrigger>
         <PopoverContent 
           side="top" 
@@ -463,32 +694,38 @@ export function DebugBubble() {
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
                 
-                <button
-                  onClick={() => setMenuView("landings")}
+                <a
+                  href="/private/redirects"
                   className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-landings-menu"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconWorld className="h-4 w-4 text-muted-foreground" />
-                    <span>Landings</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
-                
-                <button
-                  onClick={() => setMenuView("redirects")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-redirects-menu"
+                  data-testid="link-redirects-page"
                 >
                   <div className="flex items-center gap-3">
                     <IconRoute className="h-4 w-4 text-muted-foreground" />
                     <span>Redirects</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
                     <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
-                </button>
+                </a>
+                
+                {/* Experiments menu item - only shown on content pages */}
+                {contentInfo.type && contentInfo.slug && (
+                  <button
+                    onClick={() => setMenuView("experiments")}
+                    className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                    data-testid="button-experiments-menu"
+                  >
+                    <div className="flex items-center gap-3">
+                      <IconFlask className="h-4 w-4 text-muted-foreground" />
+                      <span>Experiments</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs text-muted-foreground">{contentInfo.label}</span>
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </button>
+                )}
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -542,6 +779,8 @@ export function DebugBubble() {
                   </div>
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
+                
+                <EditModeToggle />
               </div>
             </>
           ) : menuView === "components" ? (
@@ -584,102 +823,95 @@ export function DebugBubble() {
                 </div>
               </ScrollArea>
             </>
-          ) : menuView === "landings" ? (
+          ) : menuView === "experiments" ? (
             <>
               <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main-landings"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Landing Pages</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {landingsList.length} landing{landingsList.length !== 1 ? 's' : ''} available
-                    </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setMenuView("main")}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main-experiments"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                    <div>
+                      <h3 className="font-semibold text-sm">Experiments</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {contentInfo.label}: {contentInfo.slug}
+                      </p>
+                    </div>
                   </div>
+                  <button
+                    className="p-1.5 rounded hover-elevate"
+                    title="Create new experiment"
+                    data-testid="button-create-experiment"
+                  >
+                    <IconPlus className="h-4 w-4 text-muted-foreground" />
+                  </button>
                 </div>
               </div>
               
               <ScrollArea className="h-[280px]">
                 <div className="p-2 space-y-1">
-                  {landingsLoading ? (
+                  {experimentsLoading ? (
                     <div className="flex items-center justify-center py-8">
                       <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
                     </div>
-                  ) : landingsList.length === 0 ? (
-                    <div className="text-center py-8 text-sm text-muted-foreground">
-                      No landings found
+                  ) : !experimentsData?.hasExperimentsFile ? (
+                    <div className="text-center py-8 px-4">
+                      <IconFlask className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground mb-2">No experiments file found</p>
+                      <p className="text-xs text-muted-foreground">
+                        Create <code className="bg-muted px-1 rounded">experiments.yml</code> in the content folder
+                      </p>
+                    </div>
+                  ) : experimentsData.experiments.length === 0 ? (
+                    <div className="text-center py-8 px-4">
+                      <IconFlask className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground">No experiments defined</p>
                     </div>
                   ) : (
-                    landingsList.map((landing) => (
-                      <a
-                        key={landing.slug}
-                        href={`/landing/${landing.slug}`}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                        data-testid={`link-landing-${landing.slug}`}
-                      >
-                        <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium">{landing.title}</div>
-                          <div className="text-xs text-muted-foreground truncate">/landing/{landing.slug}</div>
-                        </div>
-                      </a>
-                    ))
-                  )}
-                </div>
-              </ScrollArea>
-            </>
-          ) : menuView === "redirects" ? (
-            <>
-              <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main-redirects"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Active Redirects</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {redirectsList.length} 301 redirect{redirectsList.length !== 1 ? 's' : ''} configured
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <ScrollArea className="h-[280px]">
-                <div className="p-2 space-y-1">
-                  {redirectsLoading ? (
-                    <div className="flex items-center justify-center py-8">
-                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
-                    </div>
-                  ) : redirectsList.length === 0 ? (
-                    <div className="text-center py-8 text-sm text-muted-foreground">
-                      No redirects configured
-                    </div>
-                  ) : (
-                    redirectsList.map((redirect, index) => (
-                      <div
-                        key={`${redirect.from}-${index}`}
-                        className="px-3 py-2 rounded-md text-sm bg-muted/50"
-                        data-testid={`redirect-item-${index}`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.from}</code>
-                          <IconArrowRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.to}</code>
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-1">
-                          Type: {redirect.type}
-                        </div>
-                      </div>
-                    ))
+                    experimentsData.experiments.map((experiment) => {
+                      const statusColors: Record<string, string> = {
+                        planned: "bg-muted text-muted-foreground",
+                        active: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+                        paused: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
+                        winner: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+                        archived: "bg-muted text-muted-foreground opacity-60",
+                      };
+                      const totalExposures = Object.values(experiment.stats || {}).reduce((a, b) => a + b, 0);
+                      
+                      return (
+                        <Link
+                          key={experiment.slug}
+                          href={`/private/${contentInfo.type}/${contentInfo.slug}/experiment/${experiment.slug}`}
+                          className="flex flex-col w-full px-3 py-2.5 rounded-md text-sm hover-elevate cursor-pointer text-left"
+                          data-testid={`button-experiment-${experiment.slug}`}
+                        >
+                          <div className="flex items-center justify-between w-full mb-1">
+                            <span className="font-medium">{deslugify(experiment.slug)}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[experiment.status]}`}>
+                              {experiment.status}
+                            </span>
+                          </div>
+                          {experiment.description && (
+                            <p className="text-xs text-muted-foreground line-clamp-2 mb-1">
+                              {experiment.description}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span>{experiment.variants.length} variants</span>
+                            {totalExposures > 0 && (
+                              <span>{totalExposures} exposures</span>
+                            )}
+                            {experiment.max_visitors && (
+                              <span>max {experiment.max_visitors}</span>
+                            )}
+                          </div>
+                        </Link>
+                      );
+                    })
                   )}
                 </div>
               </ScrollArea>
@@ -752,23 +984,66 @@ export function DebugBubble() {
                       No URLs found
                     </div>
                   ) : (
-                    filteredSitemapUrls.map((url) => {
-                      const path = new URL(url.loc).pathname;
-                      return (
-                        <a
-                          key={url.loc}
-                          href={path}
-                          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                          data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                        >
-                          <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium">{url.label}</div>
-                            <div className="text-xs text-muted-foreground truncate">{path}</div>
-                          </div>
-                        </a>
-                      );
-                    })
+                    <>
+                      {folders.map((folder) => (
+                        <div key={folder.name} className="mb-1">
+                          <button
+                            onClick={() => toggleFolder(folder.name)}
+                            className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                            data-testid={`button-folder-${folder.name.toLowerCase()}`}
+                          >
+                            {expandedFolders.has(folder.name) ? (
+                              <IconChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            ) : (
+                              <IconChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            )}
+                            <IconFolder className="h-4 w-4 text-primary flex-shrink-0" />
+                            <span className="font-medium">{folder.name}</span>
+                            <span className="text-xs text-muted-foreground ml-auto">
+                              {folder.urls.length}
+                            </span>
+                          </button>
+                          {expandedFolders.has(folder.name) && (
+                            <div className="ml-4 border-l pl-2 space-y-1 mt-1">
+                              {folder.urls.map((url, urlIndex) => {
+                                const path = new URL(url.loc).pathname;
+                                return (
+                                  <a
+                                    key={`${folder.name}-${urlIndex}-${url.loc}`}
+                                    href={path}
+                                    className="flex items-center gap-3 px-3 py-1.5 rounded-md text-sm hover-elevate cursor-pointer"
+                                    data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                  >
+                                    <IconMap className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="font-medium text-sm">{url.label}</div>
+                                      <div className="text-xs text-muted-foreground truncate">{path}</div>
+                                    </div>
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {rootUrls.map((url, urlIndex) => {
+                        const path = new URL(url.loc).pathname;
+                        return (
+                          <a
+                            key={`root-${urlIndex}-${url.loc}`}
+                            href={path}
+                            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                            data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
+                            <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium">{url.label}</div>
+                              <div className="text-xs text-muted-foreground truncate">{path}</div>
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </>
                   )}
                 </div>
               </ScrollArea>

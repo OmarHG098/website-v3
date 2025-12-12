@@ -80,7 +80,7 @@ sections:
       - question: "¿Habrá una grabación?"
         answer: "Sí, todos los asistentes registrados recibirán una grabación después de la sesión en vivo."
 
-  - type: footer_cta
+  - type: cta_banner
     version: "1.0"
     title: "¿Listo para Transformar tu Aprendizaje?"
     subtitle: "Reserva tu lugar gratis ahora. ¡Cupos limitados!"

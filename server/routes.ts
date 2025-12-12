@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, landingPageSchema, locationPageSchema, type CareerProgram, type LandingPage, type LocationPage } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
 import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
@@ -17,12 +17,21 @@ import {
   createNewVersion,
   getExampleFilePath 
 } from "./component-registry";
+import { editContent, getContentForEdit } from "./content-editor";
+import {
+  getExperimentManager,
+  getOrCreateSessionId,
+  getExperimentCookie,
+  setExperimentCookie,
+  buildVisitorContext,
+} from "./experiments";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
+const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -197,6 +206,62 @@ function listLocationPages(locale: string): Array<{ slug: string; name: string; 
   }
 }
 
+// Template Pages (marketing-content/pages/)
+function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
+  try {
+    const pageDir = path.join(PAGES_CONTENT_PATH, slug);
+    const localePath = path.join(pageDir, `${locale}.yml`);
+
+    if (!fs.existsSync(localePath)) {
+      return null;
+    }
+
+    const localeContent = fs.readFileSync(localePath, "utf8");
+    const data = yaml.load(localeContent) as Record<string, unknown>;
+
+    const result = templatePageSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for template page ${slug}/${locale}:`, result.error);
+      return null;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading template page ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
+  try {
+    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
+      return [];
+    }
+
+    const pages: Array<{ slug: string; template: string; title: string }> = [];
+    const entries = fs.readdirSync(PAGES_CONTENT_PATH, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const slug = entry.name;
+        const page = loadTemplatePage(slug, locale);
+        if (page) {
+          pages.push({
+            slug: page.slug,
+            template: page.template,
+            title: page.title,
+          });
+        }
+      }
+    }
+
+    return pages;
+  } catch (error) {
+    console.error("Error listing template pages:", error);
+    return [];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Apply redirect middleware for 301 redirects from YAML content
   app.use(redirectMiddleware);
@@ -210,7 +275,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      const response = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+      // Check webmaster capability
+      const webmasterResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
         method: "GET",
         headers: {
           "Authorization": `Token ${token}`,
@@ -218,14 +284,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       });
 
-      if (response.status === 200) {
-        res.json({ valid: true });
+      const hasWebmaster = webmasterResponse.status === 200;
+
+      // If has webmaster, they get all capabilities
+      // In future, we could check for more granular capabilities from the API
+      const capabilities = {
+        webmaster: hasWebmaster,
+        content_read: hasWebmaster,
+        content_edit_text: hasWebmaster,
+        content_edit_structure: hasWebmaster,
+        content_edit_media: hasWebmaster,
+        content_publish: hasWebmaster,
+      };
+
+      if (hasWebmaster) {
+        res.json({ valid: true, capabilities });
       } else {
-        res.json({ valid: false });
+        res.json({ valid: false, capabilities });
       }
     } catch (error) {
       console.error("Token validation error:", error);
-      res.json({ valid: false });
+      res.json({ valid: false, capabilities: {} });
     }
   });
 
@@ -239,15 +318,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/career-programs/:slug", (req, res) => {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
+    const forceVariant = req.query.force_variant as string | undefined;
+    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
 
-    const program = loadCareerProgram(slug, locale);
+    let program: CareerProgram | null = null;
+    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+
+    // If force_variant is provided, load that variant directly (for preview)
+    if (forceVariant && forceVersion !== undefined) {
+      const experimentManager = getExperimentManager();
+      const forcedContent = experimentManager.getVariantContent(slug, {
+        experiment_slug: "preview",
+        variant_slug: forceVariant,
+        variant_version: forceVersion,
+        assigned_at: Date.now(),
+      }, locale);
+      if (forcedContent) {
+        program = forcedContent;
+        experimentInfo = {
+          experiment: "preview",
+          variant: forceVariant,
+          version: forceVersion,
+        };
+      }
+    }
+
+    // Normal experiment flow if not forcing a variant
+    if (!program) {
+      // Get or create session for experiment tracking
+      const sessionId = getOrCreateSessionId(req, res);
+      const experimentCookie = getExperimentCookie(req);
+      const existingAssignments = experimentCookie?.assignments || [];
+
+      // Check for active experiments
+      const experimentManager = getExperimentManager();
+      const visitorContext = buildVisitorContext(req, sessionId);
+      const assignment = experimentManager.getAssignment(slug, visitorContext, existingAssignments);
+
+      if (assignment) {
+        // Try to load variant content
+        const variantContent = experimentManager.getVariantContent(slug, assignment, locale);
+        if (variantContent) {
+          program = variantContent;
+          experimentInfo = {
+            experiment: assignment.experiment_slug,
+            variant: assignment.variant_slug,
+            version: assignment.variant_version,
+          };
+
+          // Update cookie with new assignment
+          const updatedAssignments = [...existingAssignments.filter(
+            a => a.experiment_slug !== assignment.experiment_slug
+          ), assignment];
+          setExperimentCookie(res, sessionId, updatedAssignments);
+        }
+      }
+    }
+
+    // Fall back to default content
+    if (!program) {
+      program = loadCareerProgram(slug, locale);
+    }
 
     if (!program) {
       res.status(404).json({ error: "Career program not found" });
       return;
     }
 
-    res.json(program);
+    // Include experiment info in response for analytics
+    res.json({
+      ...program,
+      _experiment: experimentInfo,
+    });
   });
 
   // Landing pages API
@@ -296,6 +438,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     res.json(location);
+  });
+
+  // Template Pages API
+  app.get("/api/pages", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const pages = listTemplatePages(locale);
+    res.json(pages);
+  });
+
+  app.get("/api/pages/:slug", (req, res) => {
+    const { slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+
+    const page = loadTemplatePage(slug, locale);
+
+    if (!page) {
+      res.status(404).json({ error: "Template page not found" });
+      return;
+    }
+
+    res.json(page);
   });
 
   // Dynamic sitemap with caching
@@ -409,6 +572,159 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Schema cache cleared" });
   });
 
+  // Experiments API endpoints
+  app.get("/api/debug/experiments", (req, res) => {
+    const experimentManager = getExperimentManager();
+    const extendedStats = experimentManager.getExtendedStats();
+    res.json({
+      stats: extendedStats.experiments,
+      totalExperiments: Object.keys(extendedStats.experiments).length,
+    });
+  });
+
+  app.post("/api/debug/clear-experiment-cache", (req, res) => {
+    const experimentManager = getExperimentManager();
+    experimentManager.clearCache();
+    res.json({ success: true, message: "Experiment cache cleared" });
+  });
+
+  // Get experiments for a specific content type and slug
+  app.get("/api/experiments/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    // Validate content type
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ 
+        error: "Invalid content type", 
+        validTypes 
+      });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const experiments = experimentManager.getExperimentsForContent(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      slug
+    );
+    
+    if (!experiments) {
+      res.json({ 
+        experiments: [],
+        hasExperimentsFile: false,
+        filePath: experimentManager.getExperimentsFilePath(
+          contentType as "programs" | "pages" | "landings" | "locations",
+          slug
+        )
+      });
+      return;
+    }
+    
+    // Get stats for each experiment (including unique visitors)
+    const extendedStats = experimentManager.getExtendedStats();
+    const experimentsWithStats = experiments.experiments.map(exp => ({
+      ...exp,
+      stats: extendedStats.experiments[exp.slug]?.variant_counts || {},
+      unique_visitors: extendedStats.experiments[exp.slug]?.unique_visitors || 0
+    }));
+    
+    res.json({
+      experiments: experimentsWithStats,
+      hasExperimentsFile: true,
+      filePath: experimentManager.getExperimentsFilePath(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        slug
+      )
+    });
+  });
+
+  // Get single experiment details
+  app.get("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
+    const { contentType, contentSlug, experimentSlug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const experiments = experimentManager.getExperimentsForContent(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      contentSlug
+    );
+    
+    if (!experiments) {
+      res.status(404).json({ error: "Experiments file not found" });
+      return;
+    }
+    
+    const experiment = experiments.experiments.find(exp => exp.slug === experimentSlug);
+    if (!experiment) {
+      res.status(404).json({ error: "Experiment not found" });
+      return;
+    }
+    
+    const extendedStats = experimentManager.getExtendedStats();
+    const expStats = extendedStats.experiments[experimentSlug];
+    const experimentWithStats = {
+      ...experiment,
+      stats: expStats?.variant_counts || {},
+      unique_visitors: expStats?.unique_visitors || 0
+    };
+    
+    res.json({
+      experiment: experimentWithStats,
+      contentType,
+      contentSlug,
+      filePath: experimentManager.getExperimentsFilePath(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        contentSlug
+      )
+    });
+  });
+
+  // Update experiment settings
+  app.patch("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
+    const { contentType, contentSlug, experimentSlug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    // Validate request body against schema
+    const parseResult = experimentUpdateSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      res.status(400).json({ 
+        error: "Invalid update data",
+        details: parseResult.error.issues.map(i => ({
+          path: i.path.join('.'),
+          message: i.message
+        }))
+      });
+      return;
+    }
+    
+    const validatedUpdates = parseResult.data;
+    
+    const experimentManager = getExperimentManager();
+    try {
+      const result = experimentManager.updateExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        contentSlug,
+        experimentSlug,
+        validatedUpdates
+      );
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ 
+        error: error instanceof Error ? error.message : "Failed to update experiment" 
+      });
+    }
+  });
+
   // Component Registry API endpoints
   app.get("/api/component-registry", (req, res) => {
     const overview = getRegistryOverview();
@@ -474,6 +790,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json({ success: true, newVersion: result.newVersion });
+  });
+
+  // Content editing API
+  app.post("/api/content/edit", async (req, res) => {
+    try {
+      // Validate token and capabilities
+      const authHeader = req.headers.authorization;
+      if (!authHeader?.startsWith("Token ")) {
+        res.status(401).json({ error: "Authorization required" });
+        return;
+      }
+      
+      const token = authHeader.slice(6);
+      
+      // Verify token has edit capabilities
+      const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+        method: "GET",
+        headers: {
+          "Authorization": `Token ${token}`,
+          "Academy": "4",
+        },
+      });
+      
+      if (capResponse.status !== 200) {
+        res.status(403).json({ error: "Insufficient permissions" });
+        return;
+      }
+      
+      const { contentType, slug, locale, operations } = req.body;
+      
+      if (!contentType || !slug || !locale || !operations) {
+        res.status(400).json({ error: "Missing required fields" });
+        return;
+      }
+      
+      const result = await editContent({ contentType, slug, locale, operations });
+      
+      if (result.success) {
+        // Clear relevant caches
+        clearSitemapCache();
+        clearRedirectCache();
+        
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ error: result.error });
+      }
+    } catch (error) {
+      console.error("Content edit error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/content/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+    
+    if (!["program", "landing", "location"].includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type" });
+      return;
+    }
+    
+    const result = getContentForEdit(contentType as "program" | "landing" | "location", slug, locale);
+    
+    if (result.content) {
+      res.json(result.content);
+    } else {
+      res.status(404).json({ error: result.error });
+    }
   });
 
   const httpServer = createServer(app);

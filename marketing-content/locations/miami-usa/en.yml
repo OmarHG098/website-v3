@@ -8,7 +8,7 @@ meta:
   redirects:
     - /miami
     - /campus/miami
-    - /us/miami
+    - /en/miami
 schema:
   include:
     - organization

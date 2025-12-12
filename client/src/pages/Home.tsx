@@ -3,7 +3,7 @@ import LandingHero from "@/components/LandingHero";
 import LogoSection from "@/components/LogoSection";
 import PersonalizedLearningSection from "@/components/PersonalizedLearningSection";
 import FeatureSection from "@/components/FeatureSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import IconFeatureGrid from "@/components/IconFeatureGrid";
 import ImageTextSection from "@/components/ImageTextSection";
 import SchemaOrg from "@/components/SchemaOrg";

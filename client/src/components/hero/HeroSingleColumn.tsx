@@ -15,6 +15,7 @@ import fortuneLogo from "@assets/fortune-logo_1764709618095.webp";
 import newsweekLogoEn from "@assets/newsweek_1764709608255.webp";
 import newsweekLogoEs from "@assets/newsweek-es_1764709602003.webp";
 import courseReportLogo from "@assets/Course-Report-Badge-2025_1764709632231.webp";
+import { AwardBadges, type AwardBadgeItem } from "@/components/AwardBadges";
 
 interface HeroSingleColumnProps {
   data: HeroSingleColumn;
@@ -132,38 +133,22 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
         )}
 
         {data.award_badges && data.award_badges.length > 0 && (
-          <div 
-            className="flex flex-wrap justify-center items-center gap-8 pt-8 border-t border-border"
-            data-testid="award-badges"
-          >
-            {data.award_badges.map((award, index) => {
+          <AwardBadges 
+            items={data.award_badges.map((award, index) => {
               const logoSrc = awardLogos[award.source];
-              return (
-                <div 
-                  key={index}
-                  className="flex items-center justify-center transition-transform duration-200 hover:scale-110"
-                  data-testid={`award-badge-${index}`}
-                >
-                  {logoSrc ? (
-                    <img 
-                      src={logoSrc} 
-                      alt={`${award.source} - ${award.name}`}
-                      className="h-12 md:h-16 w-auto object-contain pl-[40px] pr-[40px]"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center text-center">
-                      <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                        {award.source} {award.year && `${award.year}`}
-                      </span>
-                      <span className="text-sm font-medium text-foreground mt-0.5">
-                        {award.name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              );
+              return {
+                id: `${award.source}-${index}`,
+                logo: logoSrc,
+                alt: `${award.source} - ${award.name}`,
+                logoHeight: "h-12 md:h-16",
+                source: award.source,
+                name: award.name,
+                year: award.year,
+              };
             })}
-          </div>
+            variant="simple"
+            showBorder
+          />
         )}
       </div>
     </section>

@@ -9,7 +9,7 @@ meta:
     - /los-angeles
     - /losangeles
     - /campus/los-angeles
-    - /us/los-angeles
+    - /en/los-angeles
 schema:
   include:
     - organization

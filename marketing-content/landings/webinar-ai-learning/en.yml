@@ -80,7 +80,7 @@ sections:
       - question: "Will there be a recording?"
         answer: "Yes, all registered attendees will receive a recording after the live session."
 
-  - type: footer_cta
+  - type: cta_banner
     version: "1.0"
     title: "Ready to Transform Your Learning?"
     subtitle: "Reserve your free spot now. Limited seats available!"

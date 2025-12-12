@@ -109,7 +109,7 @@ function getCanonicalUrl(file: ContentFile): string {
   if (file.type === "program") {
     return file.locale === "es"
       ? `/es/programas-de-carrera/${file.slug}`
-      : `/us/career-programs/${file.slug}`;
+      : `/en/career-programs/${file.slug}`;
   } else {
     return `/landing/${file.slug}`;
   }

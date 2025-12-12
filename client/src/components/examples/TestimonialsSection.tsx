@@ -1,4 +1,4 @@
-import TestimonialsSection from '../TestimonialsSection';
+import { TestimonialsSection } from '../TestimonialsSection';
 
 export default function TestimonialsSectionExample() {
   const testimonials = [

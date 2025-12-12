@@ -15,7 +15,7 @@ const languages = [
 ];
 
 const routeMappings = [
-  { en: '/us/career-programs/', es: '/es/programas-de-carrera/' },
+  { en: '/en/career-programs/', es: '/es/programas-de-carrera/' },
 ];
 
 function getLocalizedPath(currentPath: string, targetLang: string): string | null {

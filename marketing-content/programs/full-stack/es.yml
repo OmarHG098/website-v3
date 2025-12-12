@@ -1,329 +1,317 @@
-# Programa de Carrera Full Stack - Español
-# Este archivo define todas las secciones y contenido para la página del programa Full Stack
-
-slug: "full-stack"
-title: "Desarrollo Full Stack"
-
+slug: full-stack
+title: Desarrollo Full Stack
 meta:
-  page_title: "Programa de Carrera Desarrollador Full Stack | 4Geeks"
-  description: "Aprende desarrollo full stack a tu propio ritmo con herramientas de IA, mentoría ilimitada y una comunidad global."
-  robots: "index, follow"
-  og_image: "/images/programs/full-stack-og.jpg"
+  page_title: Programa de Carrera Desarrollador Full Stack | 4Geeks
+  description: Aprende desarrollo full stack a tu propio ritmo con herramientas de IA, mentoría ilimitada y una comunidad global.
+  robots: index, follow
+  og_image: /images/programs/full-stack-og.jpg
   priority: 0.9
-  change_frequency: "weekly"
+  change_frequency: weekly
   redirects:
-    - "/bootcamp/full-stack-es"
-    - "/programas/desarrollador-fullstack"
-    - "/cursos/full-stack"
-
+    - /bootcamp/full-stack-es
+    - /programas/desarrollador-fullstack
+    - /cursos/full-stack
 schema:
   include:
-    - "organization"
-    - "website"
-    - "courses:full-stack"
-
+    - organization
+    - website
+    - courses:full-stack
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    badge: "Programa de Carrera"
-    title: "Desarrollo Full Stack con IA"
-    subtitle: "Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo."
+    variant: singleColumn
+    title: Desarrollo Full Stack con IA
+    subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo.
+    badge: Programa de Carrera
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /aplicar
+        variant: primary
+        icon: Rocket
+      - text: Descargar Programa
+        url: /programa/full-stack
+        variant: outline
+        icon: Download
     trust_bar:
       rating: "4.5"
-      rating_count: "1,294"
-      trusted_text: "Confiado por más de 2.5K estudiantes"
-    cta_buttons:
-      - text: "Aplicar Ahora"
-        url: "/aplicar"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Descargar Programa"
-        url: "/programa/full-stack"
-        variant: "outline"
-        icon: "Download"
+      rating_count: 1,294
+      trusted_text: Confiado por más de 2.5K estudiantes
     award_badges:
-      - name: "Mejor Bootcamp de Código"
-        source: "Forbes"
+      - name: Mejor Bootcamp de Código
+        source: Forbes
         year: "2024"
-      - name: "Mejor para Hispanohablantes"
-        source: "Fortune"
+      - name: Mejor para Hispanohablantes
+        source: Fortune
         year: "2024"
-      - name: "Top Bootcamp de Código"
-        source: "Newsweek"
+      - name: Top Bootcamp de Código
+        source: Newsweek
         year: "2024"
-      - name: "Mejor Bootcamp de Código"
-        source: "Course Report"
+      - name: Mejor Bootcamp de Código
+        source: Course Report
         year: "2025"
-
   - type: syllabus
-    title: "¡Prepárate para el Trabajo con Nuestro Programa!"
-    subtitle: "Hemos ajustado nuestro contenido del curso con cientos de posiciones laborales para prepararte para una entrada exitosa en tecnología."
+    title: ¡Prepárate para el Trabajo con Nuestro Programa!
+    subtitle: Hemos ajustado nuestro contenido del curso con cientos de posiciones laborales para prepararte para una entrada exitosa en tecnología.
     modules:
-      - title: "Introducción a HTML y CSS"
-        description: "Aprende a crear estructuras web con HTML y estilizarlas con CSS, esencial para construir sitios web visualmente atractivos y funcionales. Dominar HTML te permite crear la base de cualquier página web, mientras que CSS te da el poder de diseñarla a tu gusto, mejorando la experiencia del usuario y la accesibilidad del sitio."
-      - title: "JavaScript"
-        description: "Domina los fundamentos de JavaScript, el lenguaje de programación que impulsa experiencias web interactivas. Aprende variables, funciones, bucles, manipulación del DOM y características modernas de ES6+ para crear sitios web dinámicos y responsivos."
-      - title: "React"
-        description: "Construye interfaces de usuario modernas con React, la biblioteca JavaScript más popular para crear aplicaciones basadas en componentes. Aprende gestión de estado, hooks, enrutamiento y mejores prácticas para desarrollo frontend escalable."
-      - title: "Python"
-        description: "Sumérgete en Python, un lenguaje de programación versátil utilizado en desarrollo web, ciencia de datos y automatización. Domina conceptos fundamentales, estructuras de datos y principios de programación orientada a objetos."
-      - title: "Creación de APIs"
-        description: "Aprende a diseñar y construir APIs RESTful usando frameworks modernos. Comprende métodos HTTP, autenticación, integración de bases de datos y documentación de API para crear servicios backend robustos."
-      - title: "Metodologías Ágiles"
-        description: "Comprende Scrum, Kanban y otros frameworks ágiles utilizados por equipos de desarrollo en todo el mundo. Aprende planificación de sprints, reuniones diarias, retrospectivas y cómo colaborar efectivamente en entornos modernos de desarrollo de software."
-
+      - title: Introducción a HTML y CSS
+        description: Aprende a crear estructuras web con HTML y estilizarlas con CSS, esencial para construir sitios web visualmente atractivos y funcionales. Dominar HTML te permite crear la base de cualquier página web, mientras que CSS te da el poder de diseñarla a tu gusto, mejorando la experiencia del usuario y la accesibilidad del sitio.
+      - title: JavaScript
+        description: Domina los fundamentos de JavaScript, el lenguaje de programación que impulsa experiencias web interactivas. Aprende variables, funciones, bucles, manipulación del DOM y características modernas de ES6+ para crear sitios web dinámicos y responsivos.
+      - title: React
+        description: Construye interfaces de usuario modernas con React, la biblioteca JavaScript más popular para crear aplicaciones basadas en componentes. Aprende gestión de estado, hooks, enrutamiento y mejores prácticas para desarrollo frontend escalable.
+      - title: Python
+        description: Sumérgete en Python, un lenguaje de programación versátil utilizado en desarrollo web, ciencia de datos y automatización. Domina conceptos fundamentales, estructuras de datos y principios de programación orientada a objetos.
+      - title: Creación de APIs
+        description: Aprende a diseñar y construir APIs RESTful usando frameworks modernos. Comprende métodos HTTP, autenticación, integración de bases de datos y documentación de API para crear servicios backend robustos.
+      - title: Metodologías Ágiles
+        description: Comprende Scrum, Kanban y otros frameworks ágiles utilizados por equipos de desarrollo en todo el mundo. Aprende planificación de sprints, reuniones diarias, retrospectivas y cómo colaborar efectivamente en entornos modernos de desarrollo de software.
   - type: projects
-    title: "Aprende Construyendo Proyectos Reales"
+    title: Aprende Construyendo Proyectos Reales
     subtitle: "Cuando aprendes a tu propio ritmo, tener acceso a tutoriales en video, ejemplos de código y retroalimentación continua en tiempo real es crucial para tener éxito. Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto tecnológico real. Aquí tienes un vistazo de lo que trabajarás:"
     items:
-      - title: "Construye una API REST de StarWars"
-        description: "La API del Blog de StarWars te permitirá practicar la construcción de una API REST usando frameworks ligeros como Express (para node) o Flask (para python) usando SQLAlchemy ORM y lenguaje Python, mientras construyes un blog divertido. Ideal para juniors que buscan practicar desarrollo de API en python."
-        image: "star-wars"
-        tags: ["REST"]
-        duration: "8 HORAS"
-        date: "15/11/2022"
-        difficulty: "easy"
-      - title: "Sistema de Autenticación con JWT"
-        description: "Crea un sistema de autenticación completo con tokens JWT, frontend React y backend Python. Aprende mejores prácticas de seguridad y patrones de gestión de sesiones utilizados en aplicaciones de producción."
-        image: "authentication"
-        tags: ["Seguridad", "JWT"]
-        duration: "6 HORAS"
-        date: "20/01/2023"
-        difficulty: "medium"
-      - title: "Proyecto Final Full-Stack"
-        description: "Diseña y construye tu propia aplicación full-stack desde cero. Demuestra tus habilidades con React, Flask, SQLAlchemy e integraciones de API de terceros. Este proyecto final muestra todo lo que has aprendido."
-        image: "final-project"
-        tags: ["Full-Stack", "Final"]
-        duration: "40 HORAS"
-        date: "01/03/2023"
-        difficulty: "hard"
-
+      - title: Construye una API REST de StarWars
+        description: La API del Blog de StarWars te permitirá practicar la construcción de una API REST usando frameworks ligeros como Express (para node) o Flask (para python) usando SQLAlchemy ORM y lenguaje Python, mientras construyes un blog divertido. Ideal para juniors que buscan practicar desarrollo de API en python.
+        image: star-wars
+        tags:
+          - REST
+        duration: 8 HORAS
+        date: 15/11/2022
+        difficulty: easy
+      - title: Sistema de Autenticación con JWT
+        description: Crea un sistema de autenticación completo con tokens JWT, frontend React y backend Python. Aprende mejores prácticas de seguridad y patrones de gestión de sesiones utilizados en aplicaciones de producción.
+        image: authentication
+        tags:
+          - Seguridad
+          - JWT
+        duration: 6 HORAS
+        date: 20/01/2023
+        difficulty: medium
+      - title: Proyecto Final Full-Stack
+        description: Diseña y construye tu propia aplicación full-stack desde cero. Demuestra tus habilidades con React, Flask, SQLAlchemy e integraciones de API de terceros. Este proyecto final muestra todo lo que has aprendido.
+        image: final-project
+        tags:
+          - Full-Stack
+          - Final
+        duration: 40 HORAS
+        date: 01/03/2023
+        difficulty: hard
   - type: ai_learning
     version: "1.0"
-    badge: "Por qué 4Geeks?"
-    title: "¿Por qué Aprender con 4Geeks?"
-    description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
-    video_url: "https://www.youtube.com/watch?v=cOFm_deKj6Q"
+    badge: Por qué 4Geeks?
+    title: ¿Por qué Aprender con 4Geeks?
+    description: Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje.
+    video_url: https://www.youtube.com/watch?v=cOFm_deKj6Q
     features:
-      - icon: "Robot"
-        title: "Aprende con IA"
-        description: "Nuestra IA revisa tu código para darte retroalimentación instantánea, ayuda con ejercicios, ¡y más!"
-      - icon: "Headset"
-        title: "Sesiones de mentoría 1 a 1"
-        description: "Accede a sesiones mensuales de mentoría con nuestros expertos y añade sesiones extra según necesites."
-      - icon: "Users"
-        title: "Aprende con la comunidad"
-        description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
+      - icon: Robot
+        title: Aprende con IA
+        description: Nuestra IA revisa tu código para darte retroalimentación instantánea, ayuda con ejercicios, ¡y más!
+      - icon: Headset
+        title: Sesiones de mentoría 1 a 1
+        description: Accede a sesiones mensuales de mentoría con nuestros expertos y añade sesiones extra según necesites.
+      - icon: Users
+        title: Aprende con la comunidad
+        description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
     highlight:
-      title: "Maximiza Tu Potencial con Rigobot"
-      description: "Rigobot es nuestro tutor IA diseñado para autodidactas, listo para abordar cualquier problema relacionado con código y equipado con pruebas automatizadas para retroalimentación inmediata, permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
+      title: Maximiza Tu Potencial con Rigobot
+      description: Rigobot es nuestro tutor IA diseñado para autodidactas, listo para abordar cualquier problema relacionado con código y equipado con pruebas automatizadas para retroalimentación inmediata, permitiendo una experiencia de aprendizaje interactiva en cualquier momento!
       cta:
-        text: "¡Comienza a aprender ahora!"
-        url: "/apply"
-        variant: "primary"
-
+        text: ¡Comienza a aprender ahora!
+        url: /apply
+        variant: primary
   - type: certificate
     version: "1.0"
-    title: "Certificado y Red de Carreras"
-    description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo."
+    title: Certificado y Red de Carreras
+    description: Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo.
     stats:
-      - value: "4,000+"
-        label: "Graduados"
-      - value: "84%"
-        label: "Colocación Laboral"
-      - value: "4.9/5"
-        label: "Calificación"
-      - value: "20+"
-        label: "Países"
+      - value: 4,000+
+        label: Graduados
+      - value: 84%
+        label: Colocación Laboral
+      - value: 4.9/5
+        label: Calificación
+      - value: 20+
+        label: Países
     benefits:
-      - text: "Reconocido por instituciones internacionales"
-      - text: "Acceso a más de 5,000 socios de contratación"
-      - text: "Soporte de carrera de por vida"
+      - text: Reconocido por instituciones internacionales
+      - text: Acceso a más de 5,000 socios de contratación
+      - text: Soporte de carrera de por vida
     card:
-      title: "Desarrollador Full Stack"
-      subtitle: "Certificado 4Geeks Academy"
-
+      title: Desarrollador Full Stack
+      subtitle: Certificado 4Geeks Academy
   - type: why_learn_ai
-    title: "¿Por qué Aprender a Construir y Programar con IA?"
-    subtitle: "El Desarrollo de Software Como lo Conoces Dejará de Existir"
-    description: "Programar con IA se convertirá en un nuevo estándar, pero es una profesión muy diferente al desarrollo de software tradicional. Mientras que la IA puede generar un producto 400% más rápido a corto plazo, construir y mantener un código seguro y eficiente con 90% de código generado por IA a largo plazo requiere fusionarte con la IA. Estamos presenciando una nueva profesión nacer ante nuestros ojos. ¿Estás listo para convertirte en un Programador de IA?"
+    title: ¿Por qué Aprender a Construir y Programar con IA?
+    subtitle: El Desarrollo de Software Como lo Conoces Dejará de Existir
+    description: Programar con IA se convertirá en un nuevo estándar, pero es una profesión muy diferente al desarrollo de software tradicional. Mientras que la IA puede generar un producto 400% más rápido a corto plazo, construir y mantener un código seguro y eficiente con 90% de código generado por IA a largo plazo requiere fusionarte con la IA. Estamos presenciando una nueva profesión nacer ante nuestros ojos. ¿Estás listo para convertirte en un Programador de IA?
     cta:
-      text: "¡Únete ahora!"
-      url: "/registro"
-      variant: "primary"
-
+      text: ¡Únete ahora!
+      url: /registro
+      variant: primary
   - type: pricing
-    title: "Accede a toda nuestra base de datos de aprendizaje, cursos y servicios"
-    subtitle: "Aprende nuevas habilidades cada 30 min, nunca te quedes atascado o perdido."
+    title: Accede a toda nuestra base de datos de aprendizaje, cursos y servicios
+    subtitle: Aprende nuevas habilidades cada 30 min, nunca te quedes atascado o perdido.
     monthly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "38.99"
-      period: "mes"
+      period: mes
       original_price: "59.99"
     yearly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "311.99"
-      period: "año"
+      period: año
       original_price: "479.99"
-      savings_badge: "Ahorra 3 meses"
+      savings_badge: Ahorra 3 meses
     tech_icons:
-      - "html"
-      - "css"
-      - "javascript"
-      - "react"
-      - "python"
-      - "nodejs"
-      - "git"
-      - "bootstrap"
-      - "api"
-      - "settings"
-    features_title: "Accede a cientos de ejercicios, tutoriales de proyectos y cursos en las tecnologías más demandadas"
+      - html
+      - css
+      - javascript
+      - react
+      - python
+      - nodejs
+      - git
+      - bootstrap
+      - api
+      - settings
+    features_title: Accede a cientos de ejercicios, tutoriales de proyectos y cursos en las tecnologías más demandadas
     features:
-      - icon: "certificate"
-        text: "Construye tu portafolio con cientos de proyectos del mundo real."
-      - icon: "cloud"
-        text: "Miles de desafíos de código en la nube (sin configuración necesaria)."
-      - text: "Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
+      - icon: certificate
+        text: Construye tu portafolio con cientos de proyectos del mundo real.
+      - icon: cloud
+        text: Miles de desafíos de código en la nube (sin configuración necesaria).
+      - text: Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas.
         use_rigobot_icon: true
-      - icon: "certificate"
-        text: "Certificados de cursos"
-      - icon: "certificate"
-        text: "Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida."
+      - icon: certificate
+        text: Certificados de cursos
+      - icon: certificate
+        text: Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida.
     cta:
-      text: "Obtener plan"
-      url: "/registro"
-      variant: "primary"
-
+      text: Obtener plan
+      url: /registro
+      variant: primary
   - type: whos_hiring
-    title: "¿Quién Contrata a Nuestros Graduados?"
-    subtitle: "Nuestros egresados trabajan en las mejores empresas del mundo"
-    description: "Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en diversas industrias. Nuestro apoyo profesional y sólida red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y grandes corporaciones a nivel global."
+    title: ¿Quién Contrata a Nuestros Graduados?
+    subtitle: Nuestros egresados trabajan en las mejores empresas del mundo
+    description: Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en diversas industrias. Nuestro apoyo profesional y sólida red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y grandes corporaciones a nivel global.
     logos:
-      - src: "/attached_assets/microsoft_1764719829995.png"
-        alt: "Microsoft"
-      - src: "/attached_assets/google-developers_1764719904190.png"
-        alt: "Google Developers"
-      - src: "/attached_assets/boats_1764719939123.jpg"
-        alt: "Boats Group"
-      - src: "/attached_assets/meta-logo_1764719959855.png"
-        alt: "Meta"
-      - src: "/attached_assets/ebay_1764719967118.png"
-        alt: "eBay"
-      - src: "/attached_assets/natgeo_1764719975443.png"
-        alt: "National Geographic"
-      - src: "/attached_assets/evernote_1764719981901.png"
-        alt: "Evernote"
-      - src: "/attached_assets/telefonica_1764719987250.png"
-        alt: "Telefonica"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
-      - src: "/attached_assets/uber_1764719999685.png"
-        alt: "Uber"
-      - src: "/attached_assets/Neo9_1764720006347.png"
-        alt: "Neo9"
-      - src: "/attached_assets/jooble_1764720010702.png"
-        alt: "Jooble"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
-      - src: "/attached_assets/ultimate_1764720025067.png"
-        alt: "Ultimate"
-      - src: "/attached_assets/tcg_1764720028893.png"
-        alt: "TCG"
-      - src: "/attached_assets/razz_1764720036807.png"
-        alt: "Razz"
-      - src: "/attached_assets/overseas_1764720045331.png"
-        alt: "Overseas"
-      - src: "/attached_assets/ds9_1764720051158.png"
-        alt: "DS9"
-      - src: "/attached_assets/coinet_1764720056569.jpg"
-        alt: "Coinet"
-      - src: "/attached_assets/strata_1764720063140.png"
-        alt: "Strata"
-      - src: "/attached_assets/mdc_ce_1764720089793.png"
-        alt: "MDC"
-      - src: "/attached_assets/beacon_council_1764720100166.jpg"
-        alt: "Beacon Council"
-      - src: "/attached_assets/blackstone_1764720124773.png"
-        alt: "Blackstone"
-      - src: "/attached_assets/cemex_1764720131666.png"
-        alt: "Cemex"
-
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: TCG
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: MDC
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
   - type: testimonials
-    title: "Tu Nueva Carrera Comienza Aquí"
-    subtitle: "Mira lo que nuestros graduados tienen que decir sobre su experiencia"
+    title: Tu Nueva Carrera Comienza Aquí
+    subtitle: Mira lo que nuestros graduados tienen que decir sobre su experiencia
     rating_summary:
       average: "4.5"
-      count: "1,294"
+      count: 1,294
     items:
-      - name: "María González"
-        role: "Ingeniera de Software"
-        company: "Google"
+      - name: María González
+        role: Ingeniera de Software
+        company: Google
         rating: 5
-        comment: "Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones del mundo real."
-        outcome: "+55% aumento salarial"
-      - name: "Carlos Martínez"
-        role: "Analista de Datos"
-        company: "Meta"
+        comment: Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones del mundo real.
+        outcome: +55% aumento salarial
+      - name: Carlos Martínez
+        role: Analista de Datos
+        company: Meta
         rating: 5
-        comment: "La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el apoyo profesional fueron invaluables."
-        outcome: "Contratado en 4 meses"
-      - name: "Ana Rodríguez"
-        role: "Ingeniera ML"
-        company: "Amazon"
+        comment: La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el apoyo profesional fueron invaluables.
+        outcome: Contratado en 4 meses
+      - name: Ana Rodríguez
+        role: Ingeniera ML
+        company: Amazon
         rating: 5
-        comment: "Excelente contenido y gran apoyo de los mentores. Los proyectos fueron desafiantes pero gratificantes, y ahora trabajo en IA de vanguardia."
-        outcome: "+100% aumento salarial"
-      - name: "Diego Hernández"
-        role: "Desarrollador Full Stack"
-        company: "Startup"
+        comment: Excelente contenido y gran apoyo de los mentores. Los proyectos fueron desafiantes pero gratificantes, y ahora trabajo en IA de vanguardia.
+        outcome: +100% aumento salarial
+      - name: Diego Hernández
+        role: Desarrollador Full Stack
+        company: Startup
         rating: 5
-        comment: "De cero conocimiento en programación a conseguir mi trabajo soñado en 4 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia."
-        outcome: "Cambio de carrera exitoso"
-      - name: "Laura Sánchez"
-        role: "Desarrolladora Frontend"
-        company: "Spotify"
+        comment: De cero conocimiento en programación a conseguir mi trabajo soñado en 4 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia.
+        outcome: Cambio de carrera exitoso
+      - name: Laura Sánchez
+        role: Desarrolladora Frontend
+        company: Spotify
         rating: 4
-        comment: "Excelente curso con proyectos prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar."
-        outcome: "+45% aumento salarial"
-      - name: "Roberto Torres"
-        role: "Científico de Datos"
-        company: "Tech Startup"
+        comment: Excelente curso con proyectos prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar.
+        outcome: +45% aumento salarial
+      - name: Roberto Torres
+        role: Científico de Datos
+        company: Tech Startup
         rating: 5
-        comment: "La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional."
-        outcome: "Primer trabajo en tech"
-
+        comment: La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional.
+        outcome: Primer trabajo en tech
   - type: faq
     version: "1.0"
-    title: "FAQ"
+    title: FAQ
     items:
-      - question: "¿Hay horarios de clase fijos?"
-        answer: "No, el bootcamp a tu ritmo está diseñado para aprender cuando quieras. Puedes acceder a todos los materiales 24/7 y avanzar en el plan de estudios cuando te convenga. Los talleres en vivo opcionales están disponibles en varios horarios si deseas interacción en tiempo real."
-      - question: "¿Cómo me mantengo motivado aprendiendo solo?"
-        answer: "¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales."
-      - question: "¿Necesito experiencia previa en programación?"
-        answer: "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados."
-      - question: "¿Cómo agendo sesiones de mentoría?"
-        answer: "Simplemente ve a tu panel, selecciona el servicio de mentoría, elige tu mentor preferido y escoge un día y hora que te funcione. Cada sesión es de 45 minutos y puede usarse para cualquier tema en el que necesites ayuda."
-      - question: "¿El certificado es reconocido por empleadores?"
-        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación."
+      - question: ¿Hay horarios de clase fijos?
+        answer: No, el bootcamp a tu ritmo está diseñado para aprender cuando quieras. Puedes acceder a todos los materiales 24/7 y avanzar en el plan de estudios cuando te convenga. Los talleres en vivo opcionales están disponibles en varios horarios si deseas interacción en tiempo real.
+      - question: ¿Cómo me mantengo motivado aprendiendo solo?
+        answer: ¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales.
+      - question: ¿Necesito experiencia previa en programación?
+        answer: No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados.
+      - question: ¿Cómo agendo sesiones de mentoría?
+        answer: Simplemente ve a tu panel, selecciona el servicio de mentoría, elige tu mentor preferido y escoge un día y hora que te funcione. Cada sesión es de 45 minutos y puede usarse para cualquier tema en el que necesites ayuda.
+      - question: ¿El certificado es reconocido por empleadores?
+        answer: ¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación.
     cta:
-      text: "¿Aún tienes preguntas?"
-      button_text: "Habla con un Asesor"
-      button_url: "/contacto"
-
-  - type: footer_cta
+      text: ¿Aún tienes preguntas?
+      button_text: Habla con un Asesor
+      button_url: /contacto
+  - type: cta_banner
     version: "1.0"
-    title: "¿Listo para Iniciar tu Carrera Tech?"
-    subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."
+    title: ¿Listo para Iniciar tu Carrera Tech?
+    subtitle: Únete a miles de graduados que han transformado sus carreras con 4Geeks.
     buttons:
-      - text: "Comienza Ahora"
-        url: "/registro"
-        variant: "secondary"
-      - text: "Habla con un Asesor"
-        url: "/contacto"
-        variant: "outline"
-
+      - text: Comienza Ahora
+        url: /registro
+        variant: secondary
+      - text: Habla con un Asesor
+        url: /contacto
+        variant: outline
   - type: footer
     version: "1.0"
-    copyright_text: "2024 4Geeks. Todos los derechos reservados."
+    copyright_text: 2024 4Geeks. Todos los derechos reservados.

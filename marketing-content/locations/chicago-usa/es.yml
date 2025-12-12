@@ -8,7 +8,7 @@ meta:
   redirects:
     - /chicago
     - /campus/chicago
-    - /us/chicago
+    - /en/chicago
 schema:
   include:
     - organization
