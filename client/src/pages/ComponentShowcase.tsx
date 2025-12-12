@@ -523,7 +523,7 @@ function ComponentCard({
         </div>
       </nav>
       {!showYaml && (
-        <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+        <div className="mb-4">
           <Button
             variant="outline"
             size="sm"
@@ -538,7 +538,7 @@ function ComponentCard({
       )}
       <Collapsible open={showYaml}>
         <CollapsibleContent>
-          <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="mb-4">
             <Card>
               <CardContent className="p-0">
                 <div className="rounded-lg overflow-hidden">
@@ -597,7 +597,7 @@ function ComponentCard({
       </Collapsible>
       <Collapsible open={showPreview}>
         <CollapsibleContent>
-          <div className="border rounded-lg overflow-hidden bg-background -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="border rounded-lg overflow-hidden bg-background">
             <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
@@ -855,18 +855,16 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <main className="container mx-auto px-4 py-8 pt-[10px] pb-[10px]">
-          <div className="max-w-6xl mx-auto">
-            <ComponentCard 
-              key={componentType} 
-              componentType={componentType}
-              componentInfo={singleComponent}
-              globalYamlState={true}
-              globalPreviewState={true}
-              isFocused={false}
-              cardRef={cardRefs.current[componentType]}
-            />
-          </div>
+        <main className="px-4 sm:px-8 lg:px-16 py-2">
+          <ComponentCard 
+            key={componentType} 
+            componentType={componentType}
+            componentInfo={singleComponent}
+            globalYamlState={true}
+            globalPreviewState={true}
+            isFocused={false}
+            cardRef={cardRefs.current[componentType]}
+          />
         </main>
       </div>
     );
