@@ -240,6 +240,10 @@ export function DebugBubble() {
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
   const [experimentsLoading, setExperimentsLoading] = useState(false);
   
+  // Components search state
+  const [componentsSearch, setComponentsSearch] = useState("");
+  const [showComponentsSearch, setShowComponentsSearch] = useState(false);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -329,8 +333,18 @@ export function DebugBubble() {
     if (!newOpen) {
       setSitemapSearch("");
       setShowSitemapSearch(false);
+      setComponentsSearch("");
+      setShowComponentsSearch(false);
     }
   };
+
+  // Filter components list by search
+  const filteredComponentsList = componentsList.filter(
+    (component) =>
+      component.label.toLowerCase().includes(componentsSearch.toLowerCase()) ||
+      component.description.toLowerCase().includes(componentsSearch.toLowerCase()) ||
+      component.type.toLowerCase().includes(componentsSearch.toLowerCase())
+  );
 
   // Filter sitemap URLs by search
   const filteredSitemapUrls = sitemapUrls.filter(
@@ -803,24 +817,55 @@ export function DebugBubble() {
           ) : menuView === "components" ? (
             <>
               <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Components</h3>
-                    <p className="text-xs text-muted-foreground">Select a component to view</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setMenuView("main")}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                    <div>
+                      <h3 className="font-semibold text-sm">Components</h3>
+                      <p className="text-xs text-muted-foreground">{componentsList.length} components</p>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => setShowComponentsSearch(!showComponentsSearch)}
+                    className={`p-1.5 rounded hover-elevate ${showComponentsSearch ? 'bg-muted' : ''}`}
+                    title="Toggle search"
+                    data-testid="button-toggle-components-search"
+                  >
+                    <IconSearch className="h-4 w-4 text-muted-foreground" />
+                  </button>
                 </div>
               </div>
               
-              <ScrollArea className="h-[280px]">
+              {showComponentsSearch && (
+                <div className="p-2 border-b">
+                  <div className="relative">
+                    <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <input
+                      type="text"
+                      placeholder="Search components..."
+                      value={componentsSearch}
+                      onChange={(e) => setComponentsSearch(e.target.value)}
+                      className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-components-search"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <ScrollArea className={showComponentsSearch ? "h-[240px]" : "h-[280px]"}>
                 <div className="p-2 space-y-1">
-                  {componentsList.map((component) => {
+                  {filteredComponentsList.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No components found
+                    </div>
+                  ) : filteredComponentsList.map((component) => {
                     const Icon = component.icon;
                     return (
                       <a
