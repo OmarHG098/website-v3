@@ -6,7 +6,7 @@ import type { EditOperation } from "@shared/schema";
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
 interface ContentEditRequest {
-  contentType: "program" | "landing" | "location";
+  contentType: "program" | "landing" | "location" | "page";
   slug: string;
   locale: string;
   operations: EditOperation[];
@@ -20,6 +20,8 @@ function getContentPath(contentType: string, slug: string, locale: string): stri
       return path.join(CONTENT_BASE_PATH, "landings", slug, `${locale}.yml`);
     case "location":
       return path.join(CONTENT_BASE_PATH, "locations", slug, `${locale}.yml`);
+    case "page":
+      return path.join(CONTENT_BASE_PATH, "pages", slug, `${locale}.yml`);
     default:
       throw new Error(`Unknown content type: ${contentType}`);
   }

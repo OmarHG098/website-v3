@@ -239,9 +239,7 @@ export default function ComponentPickerModal({
           ...(token ? { "Authorization": `Token ${token}` } : {}),
         },
         body: JSON.stringify({
-          contentType: contentType === "program" ? "programs" : 
-                       contentType === "landing" ? "landings" :
-                       contentType === "location" ? "locations" : "pages",
+          contentType,
           slug,
           locale,
           operations: [{
