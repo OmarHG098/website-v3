@@ -173,7 +173,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
               style={{ backgroundColor: slice.color }}
             />
             <span className="text-muted-foreground">
-              {slice.label}: {slice.displayValue || `${Math.round(slice.percentage)}%`}
+              {slice.label} ({slice.displayValue || `${Math.round(slice.percentage)}%`})
             </span>
           </div>
         ))}
