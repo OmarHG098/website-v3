@@ -20,6 +20,7 @@ import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
+import AwardsRow from "@/components/AwardsRow";
 import { HorizontalBars } from "@/components/HorizontalBars";
 import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
@@ -91,6 +92,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <ComparisonTable key={index} data={section as Parameters<typeof ComparisonTable>[0]["data"]} />;
     case "stats":
       return <StatsSection key={index} data={section as Parameters<typeof StatsSection>[0]["data"]} />;
+    case "awards_row":
+      return <AwardsRow key={index} data={section as Parameters<typeof AwardsRow>[0]["data"]} />;
     case "horizontal_bars":
       return <HorizontalBars key={index} data={section as Parameters<typeof HorizontalBars>[0]["data"]} />;
     case "vertical_bars_cards":

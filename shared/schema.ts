@@ -611,6 +611,24 @@ export const statsSectionSchema = z.object({
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
+// Awards Row Section (for displaying award badges in a row)
+export const awardsRowSectionSchema = z.object({
+  type: z.literal("awards_row"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  link_text: z.string().optional(),
+  link_url: z.string().optional(),
+  badges: z.array(z.object({
+    name: z.string(),
+    source: z.string(),
+    year: z.string().optional(),
+  })).optional(),
+});
+
+export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
+
 // Horizontal Bars Section (for animated bar charts)
 export const horizontalBarsItemSchema = z.object({
   label: z.string(),
@@ -718,6 +736,7 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
+  awardsRowSectionSchema,
   horizontalBarsSectionSchema,
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
