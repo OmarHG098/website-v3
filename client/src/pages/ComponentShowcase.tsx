@@ -377,7 +377,7 @@ function ComponentCard({
               <h1 className="text-xl font-semibold">{schema.name}</h1>
               <Badge variant="secondary">{componentType}</Badge>
             </div>
-            <p className="text-sm text-muted-foreground">{schema.description}</p>
+            <p className="text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {(() => {
               const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
               if (variants.length === 0) return null;
