@@ -391,7 +391,7 @@ function ComponentCard({
                 video: 'Video',
               };
               return (
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap pt-[2px] pb-[2px]">
                   <span className="text-xs text-muted-foreground">Variants:</span>
                   {variants.map(variant => (
                     <Badge key={variant} variant="outline" className="text-xs">
