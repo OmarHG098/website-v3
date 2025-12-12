@@ -659,6 +659,33 @@ export type VerticalBarsYearValue = z.infer<typeof verticalBarsYearValueSchema>;
 export type VerticalBarsMetricCard = z.infer<typeof verticalBarsMetricCardSchema>;
 export type VerticalBarsCardsSection = z.infer<typeof verticalBarsCardsSectionSchema>;
 
+// Pie Charts Section (for multiple pie charts showing distributions)
+export const pieChartItemSchema = z.object({
+  label: z.string(),
+  value: z.number(),
+  displayValue: z.string().optional(),
+  color: z.string().optional(),
+});
+
+export const pieChartDataSchema = z.object({
+  title: z.string(),
+  items: z.array(pieChartItemSchema),
+});
+
+export const pieChartsSectionSchema = z.object({
+  type: z.literal("pie_charts"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  use_card: z.boolean().optional(),
+  charts: z.array(pieChartDataSchema),
+});
+
+export type PieChartItem = z.infer<typeof pieChartItemSchema>;
+export type PieChartData = z.infer<typeof pieChartDataSchema>;
+export type PieChartsSection = z.infer<typeof pieChartsSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -693,6 +720,7 @@ export const sectionSchema = z.union([
   statsSectionSchema,
   horizontalBarsSectionSchema,
   verticalBarsCardsSectionSchema,
+  pieChartsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

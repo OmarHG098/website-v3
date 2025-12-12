@@ -69,3 +69,33 @@ sections:
       - label: "2025"
         value: 45
         displayValue: "45 days"
+
+  - type: pie_charts
+    version: "1.0"
+    title: "Our Student Body at a Glance"
+    subtitle: "These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions."
+    charts:
+      - title: "Age"
+        items:
+          - label: "22-25"
+            value: 30
+          - label: "26-32"
+            value: 44
+          - label: "33-42"
+            value: 26
+      - title: "Gender"
+        items:
+          - label: "Male"
+            value: 76
+          - label: "Female"
+            value: 24
+      - title: "Region"
+        items:
+          - label: "North America"
+            value: 60
+          - label: "Lat.Am."
+            value: 34
+          - label: "Europe"
+            value: 25
+          - label: "Asia"
+            value: 1
