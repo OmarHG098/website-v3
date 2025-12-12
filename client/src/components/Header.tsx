@@ -19,6 +19,12 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Hide navbar if navbar=false query parameter is present
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('navbar') === 'false') {
+    return null;
+  }
   
   return (
     <header className={`sticky top-0 z-50 w-full bg-background transition-colors ${isScrolled ? 'border-b' : 'border-b border-background'}`}>

@@ -342,7 +342,7 @@ export default function ExperimentEditor() {
         {selectedVariant && contentType === "programs" && (
           <iframe
             key={`${selectedVariant}-${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}`}
-            src={`/en/career-programs/${contentSlug}?force_variant=${selectedVariant}&force_version=${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}`}
+            src={`/en/career-programs/${contentSlug}?force_variant=${selectedVariant}&force_version=${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}&navbar=false`}
             className="w-full h-full border-0"
             title={`Preview: ${deslugify(selectedVariant)}`}
             data-testid="iframe-preview"
