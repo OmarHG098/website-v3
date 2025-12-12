@@ -21,6 +21,7 @@ import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
 import { EditableSection } from "@/components/editing/EditableSection";
+import { AddSectionButton } from "@/components/editing/AddSectionButton";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -98,6 +99,12 @@ function renderSection(section: Section, index: number): React.ReactNode {
 export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
   return (
     <>
+      <AddSectionButton
+        insertIndex={0}
+        contentType={contentType}
+        slug={slug}
+        locale={locale}
+      />
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSection(section, index);
@@ -105,17 +112,24 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         if (!renderedSection) return null;
         
         return (
-          <EditableSection
-            key={index}
-            section={section}
-            index={index}
-            sectionType={sectionType}
-            contentType={contentType}
-            slug={slug}
-            locale={locale}
-          >
-            {renderedSection}
-          </EditableSection>
+          <div key={index}>
+            <EditableSection
+              section={section}
+              index={index}
+              sectionType={sectionType}
+              contentType={contentType}
+              slug={slug}
+              locale={locale}
+            >
+              {renderedSection}
+            </EditableSection>
+            <AddSectionButton
+              insertIndex={index + 1}
+              contentType={contentType}
+              slug={slug}
+              locale={locale}
+            />
+          </div>
         );
       })}
     </>
