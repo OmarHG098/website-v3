@@ -618,6 +618,7 @@ export const sectionSchema = z.union([
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroSimpleStackedSchema,
   heroTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
