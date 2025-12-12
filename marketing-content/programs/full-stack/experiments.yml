@@ -12,6 +12,8 @@ experiments:
     targeting:
       languages:
         - en
+      devices:
+        - mobile
     max_visitors: 1000
   - slug: latam-pricing
     status: planned

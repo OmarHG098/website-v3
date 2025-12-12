@@ -40,6 +40,7 @@ import {
   IconDeviceMobile,
   IconLanguage,
   IconWorld,
+  IconX,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -72,6 +73,93 @@ function deslugify(slug: string): string {
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+}
+
+interface TagInputProps {
+  values: string[];
+  onChange: (values: string[]) => void;
+  placeholder?: string;
+  transform?: (value: string) => string;
+  "data-testid"?: string;
+}
+
+function TagInput({ values, onChange, placeholder, transform, "data-testid": testId }: TagInputProps) {
+  const [inputValue, setInputValue] = useState("");
+
+  const addTag = (value: string) => {
+    const trimmed = transform ? transform(value.trim()) : value.trim();
+    if (trimmed && !values.includes(trimmed)) {
+      onChange([...values, trimmed]);
+    }
+    setInputValue("");
+  };
+
+  const removeTag = (index: number) => {
+    onChange(values.filter((_, i) => i !== index));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      if (inputValue.trim()) {
+        addTag(inputValue);
+      }
+    } else if (e.key === "Backspace" && !inputValue && values.length > 0) {
+      removeTag(values.length - 1);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.includes(",")) {
+      const parts = value.split(",");
+      parts.forEach((part, i) => {
+        if (i < parts.length - 1 && part.trim()) {
+          addTag(part);
+        }
+      });
+      setInputValue(parts[parts.length - 1]);
+    } else {
+      setInputValue(value);
+    }
+  };
+
+  return (
+    <div className="flex flex-wrap gap-1.5 p-2 min-h-10 border rounded-md bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+      {values.map((tag, index) => (
+        <Badge
+          key={`${tag}-${index}`}
+          variant="secondary"
+          className="gap-1 pr-1"
+          data-testid={`${testId}-tag-${index}`}
+        >
+          {tag}
+          <button
+            type="button"
+            onClick={() => removeTag(index)}
+            className="ml-0.5 rounded-full hover:bg-muted-foreground/20 p-0.5"
+            data-testid={`${testId}-remove-${index}`}
+          >
+            <IconX className="h-3 w-3" />
+          </button>
+        </Badge>
+      ))}
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={() => {
+          if (inputValue.trim()) {
+            addTag(inputValue);
+          }
+        }}
+        placeholder={values.length === 0 ? placeholder : ""}
+        className="flex-1 min-w-20 bg-transparent outline-none text-sm"
+        data-testid={testId}
+      />
+    </div>
+  );
 }
 
 export default function ExperimentEditor() {
@@ -599,31 +687,19 @@ export default function ExperimentEditor() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>UTM Sources</Label>
-                <Input
-                  placeholder="google, facebook, ..."
-                  value={formData?.targeting?.utm_sources?.join(", ") || ""}
-                  onChange={(e) => {
-                    const values = e.target.value
-                      .split(",")
-                      .map((s) => s.trim())
-                      .filter(Boolean);
-                    updateTargeting("utm_sources", values.length ? values : undefined);
-                  }}
+                <TagInput
+                  values={formData?.targeting?.utm_sources || []}
+                  onChange={(values) => updateTargeting("utm_sources", values.length ? values : undefined)}
+                  placeholder="Type and press Enter or comma..."
                   data-testid="input-utm-sources"
                 />
               </div>
               <div className="space-y-2">
                 <Label>UTM Campaigns</Label>
-                <Input
-                  placeholder="campaign1, campaign2, ..."
-                  value={formData?.targeting?.utm_campaigns?.join(", ") || ""}
-                  onChange={(e) => {
-                    const values = e.target.value
-                      .split(",")
-                      .map((s) => s.trim())
-                      .filter(Boolean);
-                    updateTargeting("utm_campaigns", values.length ? values : undefined);
-                  }}
+                <TagInput
+                  values={formData?.targeting?.utm_campaigns || []}
+                  onChange={(values) => updateTargeting("utm_campaigns", values.length ? values : undefined)}
+                  placeholder="Type and press Enter or comma..."
                   data-testid="input-utm-campaigns"
                 />
               </div>
@@ -631,16 +707,11 @@ export default function ExperimentEditor() {
 
             <div className="space-y-2">
               <Label>Countries (ISO codes)</Label>
-              <Input
-                placeholder="US, CA, MX, ..."
-                value={formData?.targeting?.countries?.join(", ") || ""}
-                onChange={(e) => {
-                  const values = e.target.value
-                    .split(",")
-                    .map((s) => s.trim().toUpperCase())
-                    .filter(Boolean);
-                  updateTargeting("countries", values.length ? values : undefined);
-                }}
+              <TagInput
+                values={formData?.targeting?.countries || []}
+                onChange={(values) => updateTargeting("countries", values.length ? values : undefined)}
+                placeholder="Type country codes (US, CA, MX)..."
+                transform={(v) => v.toUpperCase()}
                 data-testid="input-countries"
               />
             </div>
