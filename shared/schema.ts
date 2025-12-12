@@ -630,6 +630,32 @@ export const horizontalBarsSectionSchema = z.object({
 export type HorizontalBarsItem = z.infer<typeof horizontalBarsItemSchema>;
 export type HorizontalBarsSection = z.infer<typeof horizontalBarsSectionSchema>;
 
+// Vertical Bars Cards Section (for cards with vertical animated bars per year/group)
+export const verticalBarsMetricSchema = z.object({
+  label: z.string(),
+  value: z.number(),
+  displayValue: z.string(),
+  color: z.string().optional(),
+});
+
+export const verticalBarsYearGroupSchema = z.object({
+  year: z.string(),
+  metrics: z.array(verticalBarsMetricSchema),
+});
+
+export const verticalBarsCardsSectionSchema = z.object({
+  type: z.literal("vertical_bars_cards"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  years: z.array(verticalBarsYearGroupSchema),
+});
+
+export type VerticalBarsMetric = z.infer<typeof verticalBarsMetricSchema>;
+export type VerticalBarsYearGroup = z.infer<typeof verticalBarsYearGroupSchema>;
+export type VerticalBarsCardsSection = z.infer<typeof verticalBarsCardsSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -663,6 +689,7 @@ export const sectionSchema = z.union([
   comparisonTableSectionSchema,
   statsSectionSchema,
   horizontalBarsSectionSchema,
+  verticalBarsCardsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

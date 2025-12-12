@@ -21,6 +21,7 @@ import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
 import { HorizontalBars } from "@/components/HorizontalBars";
+import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 
@@ -91,6 +92,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <StatsSection key={index} data={section as Parameters<typeof StatsSection>[0]["data"]} />;
     case "horizontal_bars":
       return <HorizontalBars key={index} data={section as Parameters<typeof HorizontalBars>[0]["data"]} />;
+    case "vertical_bars_cards":
+      return <VerticalBarsCards key={index} data={section as Parameters<typeof VerticalBarsCards>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
