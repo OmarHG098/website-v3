@@ -375,6 +375,29 @@ function ComponentCard({
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="text-xl font-semibold">{schema.name}</h1>
             <Badge variant="secondary">{componentType}</Badge>
+            {(() => {
+              const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
+              if (variants.length === 0) return null;
+              const variantLabels: Record<string, string> = {
+                singleColumn: 'Single Column',
+                showcase: 'Showcase',
+                productShowcase: 'Product Showcase',
+                simpleTwoColumn: 'Simple Two Column',
+                imageText: 'Image + Text',
+                bulletGroups: 'Bullet Groups',
+                video: 'Video',
+              };
+              return (
+                <>
+                  <span className="text-xs text-muted-foreground">Variants:</span>
+                  {variants.map(variant => (
+                    <Badge key={variant} variant="outline" className="text-xs">
+                      {variantLabels[variant as string] || variant}
+                    </Badge>
+                  ))}
+                </>
+              );
+            })()}
           </div>
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
