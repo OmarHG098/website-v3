@@ -683,8 +683,6 @@ export function DebugBubble() {
                   <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
                 </a>
                 
-                <EditModeToggle />
-                
                 {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
                   <button
@@ -755,6 +753,8 @@ export function DebugBubble() {
                   </div>
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
+                
+                <EditModeToggle />
               </div>
             </>
           ) : menuView === "components" ? (
