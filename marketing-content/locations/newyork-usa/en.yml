@@ -10,7 +10,7 @@ meta:
     - /newyork
     - /nyc
     - /campus/new-york
-    - /us/new-york
+    - /en/new-york
 schema:
   include:
     - organization

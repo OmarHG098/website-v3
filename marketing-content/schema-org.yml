@@ -246,7 +246,7 @@ local_business:
     type: "LocalBusiness"
     additional_type: "EducationalOrganization"
     name: "4Geeks Academy Miami"
-    url: "https://4geeks.com/us/location/miami"
+    url: "https://4geeks.com/en/location/miami"
     logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
     telephone: "+1 786-416-6640"
     address:
@@ -273,7 +273,7 @@ local_business:
     type: "LocalBusiness"
     additional_type: "EducationalOrganization"
     name: "4Geeks Academy Madrid"
-    url: "https://4geeks.com/us/location/madrid"
+    url: "https://4geeks.com/en/location/madrid"
     logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
     telephone: "+34 910 86 69 83"
     address:
@@ -299,7 +299,7 @@ local_business:
     type: "LocalBusiness"
     additional_type: "EducationalOrganization"
     name: "4Geeks Academy Mexico City"
-    url: "https://4geeks.com/us/location/mexico-city"
+    url: "https://4geeks.com/en/location/mexico-city"
     logo: "https://4geeks.com/wp-content/uploads/2024/01/4geeks-logo.png"
     telephone: "+52 55 1234 5678"
     address:

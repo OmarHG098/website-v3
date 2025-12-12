@@ -11,7 +11,7 @@ import Header from "@/components/Header";
 export default function LocationDetail() {
   const { i18n } = useTranslation();
   
-  const [matchEn, paramsEn] = useRoute("/us/location/:slug");
+  const [matchEn, paramsEn] = useRoute("/en/location/:slug");
   const [matchEs, paramsEs] = useRoute("/es/ubicacion/:slug");
   
   const locale = matchEn ? "en" : matchEs ? "es" : i18n.language;

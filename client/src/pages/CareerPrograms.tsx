@@ -17,7 +17,7 @@ export default function CareerPrograms() {
   const { i18n } = useTranslation();
 
   const getProgramUrl = (slug: string) => {
-    return i18n.language === "es" ? `/es/programas-de-carrera/${slug}` : `/us/career-programs/${slug}`;
+    return i18n.language === "es" ? `/es/programas-de-carrera/${slug}` : `/en/career-programs/${slug}`;
   };
 
   const allCourses = [

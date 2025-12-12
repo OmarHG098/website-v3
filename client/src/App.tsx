@@ -48,17 +48,17 @@ function Router() {
         <Route path="/tool-mastery" component={ToolMastery} />
         <Route path="/career-programs" component={CareerPrograms} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/us/career-programs/:slug" component={CareerProgramDetail} />
+        <Route path="/en/career-programs/:slug" component={CareerProgramDetail} />
         <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
                 <Route path="/component-showcase" component={ComponentShowcase} />
         <Route path="/component-showcase/:componentType" component={ComponentShowcase} />
-        <Route path="/us/location/:slug" component={LocationDetail} />
+        <Route path="/en/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
         <Route path="/private/redirects" component={PrivateRedirects} />
         {/* Template pages - dynamic YAML-based pages */}
-        <Route path="/us/:slug" component={TemplatePage} />
+        <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />
         <Route component={NotFound} />
       </Switch>

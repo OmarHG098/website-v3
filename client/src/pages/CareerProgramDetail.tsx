@@ -11,7 +11,7 @@ import Header from "@/components/Header";
 export default function CareerProgramDetail() {
   const { i18n } = useTranslation();
   
-  const [matchEn, paramsEn] = useRoute("/us/career-programs/:slug");
+  const [matchEn, paramsEn] = useRoute("/en/career-programs/:slug");
   const [matchEs, paramsEs] = useRoute("/es/programas-de-carrera/:slug");
   
   const locale = matchEn ? "en" : matchEs ? "es" : i18n.language;

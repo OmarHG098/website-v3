@@ -234,7 +234,7 @@ interface AvailableTemplatePage {
 // Template pages URL routing (slug to URL path mapping)
 const templatePageRoutes: Record<string, { en: string; es: string }> = {
   "job-guarantee": {
-    en: "/us/job-guarantee",
+    en: "/en/job-guarantee",
     es: "/es/garantia-empleo",
   },
 };
@@ -366,7 +366,7 @@ function buildSitemapXml(): string {
 
     const url = program.locale === "es"
       ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
-      : `${getBaseUrl()}/us/career-programs/${program.slug}`;
+      : `${getBaseUrl()}/en/career-programs/${program.slug}`;
 
     urls.push({
       loc: url,
@@ -411,7 +411,7 @@ function buildSitemapXml(): string {
 
     const url = location.locale === "es"
       ? `${getBaseUrl()}/es/ubicacion/${location.slug}`
-      : `${getBaseUrl()}/us/location/${location.slug}`;
+      : `${getBaseUrl()}/en/location/${location.slug}`;
 
     urls.push({
       loc: url,
@@ -439,7 +439,7 @@ function buildSitemapXml(): string {
       // Default routing pattern
       url = page.locale === "es"
         ? `${getBaseUrl()}/es/${page.slug}`
-        : `${getBaseUrl()}/us/${page.slug}`;
+        : `${getBaseUrl()}/en/${page.slug}`;
     }
 
     urls.push({
@@ -553,7 +553,7 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
 
     const url = program.locale === "es"
       ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
-      : `${getBaseUrl()}/us/career-programs/${program.slug}`;
+      : `${getBaseUrl()}/en/career-programs/${program.slug}`;
     const localeLabel = program.locale === "es" ? "ES" : "EN";
 
     urls.push({

@@ -31,7 +31,7 @@ function getCanonicalUrl(type: "program" | "landing", slug: string, locale: stri
   if (type === "program") {
     return locale === "es"
       ? `/es/programas-de-carrera/${slug}`
-      : `/us/career-programs/${slug}`;
+      : `/en/career-programs/${slug}`;
   } else {
     return `/landing/${slug}`;
   }

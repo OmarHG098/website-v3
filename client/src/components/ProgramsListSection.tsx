@@ -40,7 +40,7 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
   const programUrl = (slug: string) => 
     locale === "es" 
       ? `/es/programas-de-carrera/${slug}` 
-      : `/us/career-programs/${slug}`;
+      : `/en/career-programs/${slug}`;
 
   return (
     <section 

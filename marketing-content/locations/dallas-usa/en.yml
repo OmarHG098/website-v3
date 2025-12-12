@@ -8,7 +8,7 @@ meta:
   redirects:
     - /dallas
     - /campus/dallas
-    - /us/dallas
+    - /en/dallas
 schema:
   include:
     - organization
