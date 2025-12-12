@@ -368,7 +368,7 @@ function ComponentCard({
     <>
       <nav 
         ref={cardRef}
-        className="sticky top-0 z-50 border-b py-3 bg-background px-4 sm:px-8 lg:px-16"
+        className="sticky top-0 z-50 border-b py-3 bg-background px-4 sm:px-8 lg:px-16 pl-[15px] pr-[15px]"
         data-testid={`component-card-${componentType}`}
       >
         <div className="flex flex-row items-start justify-between gap-4">
