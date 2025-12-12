@@ -18,7 +18,6 @@ import {
   getExampleFilePath 
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
-import { gitService } from "./git-service";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -423,39 +422,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/debug/clear-schema-cache", (req, res) => {
     clearSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
-  });
-
-  // Git status and commit endpoints
-  app.get("/api/git/status", async (req, res) => {
-    try {
-      const status = await gitService.getStatus();
-      res.json(status);
-    } catch (error) {
-      console.error("Error getting git status:", error);
-      res.status(500).json({ error: "Failed to get git status" });
-    }
-  });
-
-  app.post("/api/git/commit", async (req, res) => {
-    const { message } = req.body;
-    
-    if (!message || typeof message !== "string" || !message.trim()) {
-      res.status(400).json({ error: "Commit message is required" });
-      return;
-    }
-
-    try {
-      const result = await gitService.commit(message.trim());
-      
-      if (result.success) {
-        res.json(result);
-      } else {
-        res.status(400).json({ error: result.error });
-      }
-    } catch (error) {
-      console.error("Error committing changes:", error);
-      res.status(500).json({ error: "Failed to commit changes" });
-    }
   });
 
   // Component Registry API endpoints
