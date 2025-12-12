@@ -220,33 +220,49 @@ export function DebugBubble() {
       url.loc.toLowerCase().includes(sitemapSearch.toLowerCase())
   );
 
-  // Group sitemap URLs into folders
+  // Group sitemap URLs into nested folders based on URL path structure
   interface SitemapFolder {
     name: string;
-    urls: SitemapUrl[];
+    path: string; // Full path to this folder level
+    urls: SitemapUrl[]; // URLs that terminate at this folder level
+    subfolders: SitemapFolder[];
   }
 
   const groupedSitemapUrls = (): { folders: SitemapFolder[]; rootUrls: SitemapUrl[] } => {
-    const programsEn: SitemapUrl[] = [];
-    const programsEs: SitemapUrl[] = [];
     const rootUrls: SitemapUrl[] = [];
+    const folderMap = new Map<string, SitemapFolder>();
 
     filteredSitemapUrls.forEach((url) => {
       const path = new URL(url.loc).pathname;
-      if (path.startsWith("/us/career-programs/")) {
-        programsEn.push(url);
-      } else if (path.startsWith("/es/programas-de-carrera/")) {
-        programsEs.push(url);
-      } else {
+      const segments = path.split('/').filter(Boolean);
+      
+      // Root level pages (e.g., "/", "/about")
+      if (segments.length <= 1) {
         rootUrls.push(url);
+        return;
       }
+
+      // Build folder path from all segments except the last (the page)
+      const folderSegments = segments.slice(0, -1);
+      const folderPath = '/' + folderSegments.join('/');
+      
+      // Create or get the folder
+      if (!folderMap.has(folderPath)) {
+        folderMap.set(folderPath, {
+          name: folderSegments.join('/'),
+          path: folderPath,
+          urls: [],
+          subfolders: [],
+        });
+      }
+      
+      folderMap.get(folderPath)!.urls.push(url);
     });
 
-    const folders: SitemapFolder[] = [];
-    if (programsEn.length > 0 || programsEs.length > 0) {
-      const allPrograms: SitemapUrl[] = [...programsEn, ...programsEs];
-      folders.push({ name: "Programs", urls: allPrograms });
-    }
+    // Convert map to sorted array
+    const folders = Array.from(folderMap.values()).sort((a, b) => 
+      a.path.localeCompare(b.path)
+    );
 
     return { folders, rootUrls };
   };
