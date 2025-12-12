@@ -46,7 +46,7 @@ function Router() {
         <Route path="/en/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
-        <Route path="/component-preview" component={ComponentPreview} />
+        <Route path="/private/component-showcase/:componentType/preview" component={ComponentPreview} />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/:contentType/:contentSlug/experiment/:experimentSlug" component={ExperimentEditor} />
         {/* Template pages - dynamic YAML-based pages */}

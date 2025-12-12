@@ -642,10 +642,12 @@ function ComponentCard({
                   size="icon"
                   className="h-7 w-7"
                   onClick={() => {
-                    if (parsedData) {
+                    if (selectedExample) {
+                      window.location.href = `/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}&example=${encodeURIComponent(selectedExample)}`;
+                    } else if (parsedData) {
                       sessionStorage.setItem('preview-sections', JSON.stringify([parsedData]));
                       sessionStorage.setItem('preview-theme', isDarkMode ? 'dark' : 'light');
-                      window.location.href = '/preview-frame?debug=false';
+                      window.location.href = `/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}`;
                     }
                   }}
                   title="Full page preview"
@@ -667,7 +669,7 @@ function ComponentCard({
               >
                 <iframe
                   ref={iframeRef}
-                  src="/preview-frame?debug=false"
+                  src={`/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}&example=${encodeURIComponent(selectedExample || '')}`}
                   className="w-full border-0"
                   style={{ 
                     height: previewViewport === 'mobile' 
