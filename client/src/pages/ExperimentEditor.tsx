@@ -775,7 +775,7 @@ export default function ExperimentEditor() {
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <IconMapPin className="h-4 w-4" />
-                  Locations
+                  Campus Locations
                 </Label>
                 <TagInput
                   values={formData?.targeting?.locations || []}
