@@ -20,7 +20,7 @@ schema:
 
 sections:
   - type: hero
-    variant: simpleTwoColumn
+    variant: simpleStacked
     version: "1.0"
     badge: "Awards & Recognitions"
     title: "Top Coding Bootcamps"
