@@ -40,6 +40,16 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
     - Geolocation uses ip-api.com with 5-second timeout and graceful fallbacks
     - Nearest campus sorting uses the haversine (great-circle) distance formula
     - Location slugs follow pattern: `{city}-{country}` (e.g., `miami-usa`, `madrid-spain`, `bogota-colombia`)
+-   **A/B Testing Experiment System**: A performant, cookie-based A/B testing system for content variants. Key components:
+    - `server/experiments/ExperimentManager.ts`: Core class with in-memory caching, deterministic bucketing, and lifecycle management
+    - `server/experiments/cookie-utils.ts`: Cookie signing/parsing and visitor context extraction
+    - `marketing-content/programs/{program-slug}/experiments.yml`: Experiment configurations per program
+    - Variant content files: `{variant-slug}.v{version}.{locale}.yml` (e.g., `career-focus.v1.en.yml`)
+    - Experiment statuses: `planned`, `active`, `paused`, `winner`, `archived`
+    - Targeting variables: `languages`, `regions`, `countries`, `devices`, `utm_sources`, `utm_campaigns`, `utm_mediums`, `hours`, `days_of_week`
+    - Debug endpoints: `GET /api/debug/experiments` for stats, `POST /api/debug/clear-experiment-cache` for cache clearing
+    - Zero-latency design: In-memory operations with async exposure tracking (<2ms added latency)
+    - Cookie persistence: Signed cookies prevent assignment tampering across sessions
 -   **Inline Editing System**: A capability-based inline editing system designed for both human editors and AI agents. Key components:
     - `shared/schema.ts`: Editing capability types (`content_read`, `content_edit_text`, `content_edit_structure`, `content_edit_media`, `content_publish`) and structured `EditOperation` types
     - `client/src/hooks/useDebugAuth.ts`: Extended to return capabilities from token validation, with `hasCapability()` and `canEdit` helpers
