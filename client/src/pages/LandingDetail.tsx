@@ -61,7 +61,12 @@ export default function LandingDetail() {
 
   return (
     <div data-testid="page-landing">
-      <SectionRenderer sections={landing.sections} />
+      <SectionRenderer 
+        sections={landing.sections} 
+        contentType="landing"
+        slug={slug}
+        locale={locale}
+      />
     </div>
   );
 }

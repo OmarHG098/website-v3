@@ -12,9 +12,12 @@ interface EditableSectionProps {
   section: Section;
   index: number;
   sectionType: string;
+  contentType?: "program" | "landing" | "location";
+  slug?: string;
+  locale?: string;
 }
 
-export function EditableSection({ children, section, index, sectionType }: EditableSectionProps) {
+export function EditableSection({ children, section, index, sectionType, contentType, slug, locale }: EditableSectionProps) {
   const editMode = useEditModeOptional();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
@@ -101,6 +104,9 @@ export function EditableSection({ children, section, index, sectionType }: Edita
           <SectionEditorPanel
             section={currentSection}
             sectionIndex={index}
+            contentType={contentType}
+            slug={slug}
+            locale={locale}
             onUpdate={handleUpdate}
             onClose={handleCloseEditor}
           />

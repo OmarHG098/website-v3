@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from "react";
 import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEditMode } from "@/contexts/EditModeContext";
+import { getDebugToken } from "@/hooks/useDebugAuth";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -28,15 +28,11 @@ export function SectionEditorPanel({
   onUpdate,
   onClose,
 }: SectionEditorPanelProps) {
-  const editModeContext = useEditMode();
-  const { addPendingChange, saveChanges, isSaving } = editModeContext || { 
-    addPendingChange: () => {}, 
-    saveChanges: async () => false, 
-    isSaving: false 
-  };
   const [yamlContent, setYamlContent] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Initialize YAML content from section
   useEffect(() => {
@@ -76,46 +72,77 @@ export function SectionEditorPanel({
         return;
       }
       
-      // Add pending change if we have content info
-      if (contentType && slug && locale) {
-        const pageKey = `${contentType}:${slug}:${locale}`;
-        addPendingChange(pageKey, {
-          action: "update_section",
-          index: sectionIndex,
-          section: parsed as Record<string, unknown>,
-        });
-      }
-      
-      // Update local state
+      // Update local state for preview
       onUpdate(parsed);
       setHasChanges(false);
+      setSaveError(null);
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
     }
-  }, [yamlContent, sectionIndex, contentType, slug, locale, addPendingChange, onUpdate]);
+  }, [yamlContent, onUpdate]);
 
   const handleSave = useCallback(async () => {
-    // First apply any pending changes
-    if (hasChanges) {
-      handleApply();
-    }
-    
     // If no content info, just close (preview only mode)
     if (!contentType || !slug || !locale) {
       onClose();
       return;
     }
     
-    // Then save to server
-    const pageKey = `${contentType}:${slug}:${locale}`;
-    const success = await saveChanges(pageKey, contentType, slug, locale);
-    
-    if (success) {
-      onClose();
+    // Parse the current YAML content
+    let parsed: Section;
+    try {
+      parsed = yamlParser.load(yamlContent) as Section;
+      if (!parsed || typeof parsed !== "object") {
+        setParseError("Invalid section structure");
+        return;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setParseError(error.message);
+      }
+      return;
     }
-  }, [hasChanges, handleApply, saveChanges, contentType, slug, locale, onClose]);
+    
+    setIsSaving(true);
+    setSaveError(null);
+    
+    try {
+      const token = getDebugToken();
+      const response = await fetch("/api/content/edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Token ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          contentType,
+          slug,
+          locale,
+          operations: [{
+            action: "update_section",
+            index: sectionIndex,
+            section: parsed as Record<string, unknown>,
+          }],
+        }),
+      });
+
+      if (response.ok) {
+        onUpdate(parsed);
+        setHasChanges(false);
+        onClose();
+      } else {
+        const error = await response.json();
+        setSaveError(error.error || "Failed to save changes");
+      }
+    } catch (error) {
+      console.error("Error saving changes:", error);
+      setSaveError(error instanceof Error ? error.message : "Network error");
+    } finally {
+      setIsSaving(false);
+    }
+  }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate, onClose]);
 
   const sectionType = (section as { type: string }).type || "unknown";
 
@@ -167,8 +194,14 @@ export function SectionEditorPanel({
 
       {/* Footer */}
       <div className="flex items-center justify-between p-4 border-t bg-muted/30">
-        <div className="text-sm text-muted-foreground">
-          {hasChanges ? "Unsaved changes" : "No changes"}
+        <div className="text-sm">
+          {saveError ? (
+            <span className="text-destructive">{saveError}</span>
+          ) : hasChanges ? (
+            <span className="text-muted-foreground">Unsaved changes</span>
+          ) : (
+            <span className="text-muted-foreground">No changes</span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <Button

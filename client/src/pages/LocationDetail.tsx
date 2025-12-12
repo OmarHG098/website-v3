@@ -67,7 +67,12 @@ export default function LocationDetail() {
   return (
     <div data-testid="page-location">
       <Header />
-      <SectionRenderer sections={location.sections} />
+      <SectionRenderer 
+        sections={location.sections} 
+        contentType="location"
+        slug={slug}
+        locale={locale}
+      />
     </div>
   );
 }

@@ -67,7 +67,12 @@ export default function CareerProgramDetail() {
   return (
     <div data-testid="page-career-program">
       <Header />
-      <SectionRenderer sections={program.sections} />
+      <SectionRenderer 
+        sections={program.sections} 
+        contentType="program"
+        slug={slug}
+        locale={locale}
+      />
     </div>
   );
 }

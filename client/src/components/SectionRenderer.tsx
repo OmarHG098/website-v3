@@ -28,6 +28,16 @@ interface SectionRendererProps {
   locale?: string;
 }
 
+interface EditableSectionWrapperProps {
+  section: Section;
+  index: number;
+  sectionType: string;
+  contentType?: "program" | "landing" | "location";
+  slug?: string;
+  locale?: string;
+  children: React.ReactNode;
+}
+
 function renderSection(section: Section, index: number): React.ReactNode {
   const sectionType = (section as { type: string }).type;
   
@@ -82,7 +92,7 @@ function renderSection(section: Section, index: number): React.ReactNode {
   }
 }
 
-export function SectionRenderer({ sections }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
   return (
     <>
       {sections.map((section, index) => {
@@ -97,6 +107,9 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
             section={section}
             index={index}
             sectionType={sectionType}
+            contentType={contentType}
+            slug={slug}
+            locale={locale}
           >
             {renderedSection}
           </EditableSection>
