@@ -659,7 +659,7 @@ export function DebugBubble() {
                       }}
                       className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
                         !editMode.isEditMode 
-                          ? "bg-background text-foreground shadow-sm" 
+                          ? "bg-foreground text-background shadow-sm" 
                           : "text-muted-foreground"
                       }`}
                       data-testid="button-read-mode"
