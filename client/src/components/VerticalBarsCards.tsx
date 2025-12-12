@@ -47,12 +47,20 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
 
     if (isInitiallyVisible) {
+      // For showcase/iframe: trigger after short delay
+      const timeout = setTimeout(() => setIsVisible(true), 300);
+      
+      // Also listen for scroll as backup
       const handleScroll = () => {
         setIsVisible(true);
         window.removeEventListener("scroll", handleScroll);
       };
       window.addEventListener("scroll", handleScroll, { passive: true });
-      return () => window.removeEventListener("scroll", handleScroll);
+      
+      return () => {
+        clearTimeout(timeout);
+        window.removeEventListener("scroll", handleScroll);
+      };
     } else {
       const observer = new IntersectionObserver(
         (entries) => {
