@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
 import type { Section, EditOperation } from "@shared/schema";
 
 interface EditModeContextValue {
@@ -22,8 +22,14 @@ interface EditModeProviderProps {
   children: React.ReactNode;
 }
 
+// Check if edit_mode=true is in URL params
+function shouldAutoEnableEditMode(): boolean {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('edit_mode') === 'true';
+}
+
 export function EditModeProvider({ children }: EditModeProviderProps) {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(shouldAutoEnableEditMode);
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
   const [pendingChanges, setPendingChanges] = useState<Map<string, EditOperation[]>>(new Map());
   const [isSaving, setIsSaving] = useState(false);
