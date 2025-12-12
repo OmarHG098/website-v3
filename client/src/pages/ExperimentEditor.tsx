@@ -333,45 +333,6 @@ export default function ExperimentEditor() {
         </div>
       </header>
 
-      <main className="container py-6">
-        <div className="max-w-md">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base flex items-center gap-2">
-                <IconUsers className="h-4 w-4" />
-                Statistics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Total Exposures</span>
-                <span className="font-medium">{totalExposures}</span>
-              </div>
-              {formData?.max_visitors && (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Max Visitors</span>
-                  <span className="font-medium">{formData.max_visitors}</span>
-                </div>
-              )}
-              <Separator />
-              {formData?.variants.map((variant) => {
-                const count = experiment.stats?.[variant.slug] || 0;
-                const percentage = totalExposures > 0 
-                  ? ((count / totalExposures) * 100).toFixed(1) 
-                  : "0";
-                return (
-                  <div key={variant.slug} className="flex items-center justify-between">
-                    <span className="text-sm">{deslugify(variant.slug)}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {count} ({percentage}%)
-                    </span>
-                  </div>
-                );
-              })}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
 
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <DialogContent>
