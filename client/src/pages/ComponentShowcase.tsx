@@ -18,7 +18,10 @@ import {
   IconDeviceDesktop,
   IconChevronUp,
   IconArrowsMaximize,
-  IconX
+  IconX,
+  IconTestPipe,
+  IconCircleCheck,
+  IconCircleX
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -122,6 +125,19 @@ interface RegistryOverview {
   }>;
 }
 
+interface ValidationIssue {
+  type: 'error' | 'warning';
+  message: string;
+  file?: string;
+}
+
+interface ValidationResult {
+  componentType: string;
+  version: string;
+  issues: ValidationIssue[];
+  validVariants: string[];
+}
+
 function generateDefaultYaml(componentType: string, schema: ComponentSchema): string {
   const example: Record<string, unknown> = { type: componentType };
   
@@ -174,6 +190,8 @@ function ComponentCard({
   );
   const [isFullscreen, setIsFullscreen] = useState(false);
   const fullscreenIframeRef = useRef<HTMLIFrameElement>(null);
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
 
   const currentVersionData = componentInfo.versions.find(v => v.version === selectedVersion);
   const schema = currentVersionData?.schema;
@@ -372,6 +390,24 @@ function ComponentCard({
     }
   };
 
+  const handleValidate = useCallback(async () => {
+    setIsValidating(true);
+    setValidationResult(null);
+    try {
+      const response = await fetch(`/api/component-registry/${componentType}/validate?version=${selectedVersion}`);
+      const result = await response.json() as ValidationResult;
+      setValidationResult(result);
+    } catch (error) {
+      toast({
+        title: "Validation failed",
+        description: error instanceof Error ? error.message : "Unknown error",
+        variant: "destructive",
+      });
+    } finally {
+      setIsValidating(false);
+    }
+  }, [componentType, selectedVersion, toast]);
+
   const examplePath = `marketing-content/component-registry/${componentType}/${selectedVersion}/examples/`;
 
   if (!schema) {
@@ -390,6 +426,65 @@ function ComponentCard({
             <div className="flex items-center gap-3">
               <h1 className="text-xl font-semibold">{schema.name}</h1>
               <Badge variant="secondary">{componentType}</Badge>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleValidate}
+                    disabled={isValidating}
+                    className="h-6 px-2 text-xs"
+                    data-testid={`button-test-integrity-${componentType}`}
+                  >
+                    <IconTestPipe className="w-3 h-3 mr-1" />
+                    {isValidating ? 'Testing...' : 'Test'}
+                  </Button>
+                </PopoverTrigger>
+                {validationResult && (
+                  <PopoverContent className="w-80 text-sm">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">Validation Results</span>
+                        <Badge variant={validationResult.issues.filter(i => i.type === 'error').length > 0 ? 'destructive' : 'secondary'}>
+                          {validationResult.version}
+                        </Badge>
+                      </div>
+                      {validationResult.issues.length === 0 ? (
+                        <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                          <IconCircleCheck className="w-4 h-4" />
+                          <span>All checks passed!</span>
+                        </div>
+                      ) : (
+                        <div className="space-y-1 max-h-48 overflow-y-auto">
+                          {validationResult.issues.map((issue, idx) => (
+                            <div key={idx} className={`flex items-start gap-2 text-xs ${issue.type === 'error' ? 'text-destructive' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                              {issue.type === 'error' ? (
+                                <IconCircleX className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <IconAlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              )}
+                              <div>
+                                <p>{issue.message}</p>
+                                {issue.file && <p className="text-muted-foreground font-mono">{issue.file}</p>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {validationResult.validVariants.length > 0 && (
+                        <div className="pt-2 border-t">
+                          <p className="text-xs text-muted-foreground mb-1">Valid variants:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {validationResult.validVariants.map(v => (
+                              <Badge key={v} variant="outline" className="text-xs">{v}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                )}
+              </Popover>
             </div>
             <p className="text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {(() => {
