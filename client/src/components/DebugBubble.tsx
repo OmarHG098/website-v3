@@ -211,37 +211,6 @@ const getPersistedMenuView = (): MenuView => {
   return "main";
 };
 
-// Edit Mode Toggle Component - uses optional hook to handle being outside provider
-function EditModeToggle() {
-  const editMode = useEditModeOptional();
-  
-  // If not within EditModeProvider, don't render
-  if (!editMode) {
-    return null;
-  }
-  
-  const { isEditMode, toggleEditMode } = editMode;
-  
-  return (
-    <button
-      onClick={toggleEditMode}
-      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-      data-testid="button-toggle-edit-mode"
-    >
-      <div className="flex items-center gap-3">
-        {isEditMode ? (
-          <IconPencilOff className="h-4 w-4 text-muted-foreground" />
-        ) : (
-          <IconPencil className="h-4 w-4 text-muted-foreground" />
-        )}
-        <span>Edit Mode</span>
-      </div>
-      <span className={`text-xs font-medium px-2 py-1 rounded ${isEditMode ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
-        {isEditMode ? "ON" : "OFF"}
-      </span>
-    </button>
-  );
-}
 
 export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
@@ -643,9 +612,30 @@ export function DebugBubble() {
             </div>)
           ) : menuView === "main" ? (
             <>
-              <div className="p-3 border-b">
-                <h3 className="font-semibold text-sm">Debug Tools</h3>
-                <p className="text-xs text-muted-foreground">Development utilities</p>
+              <div className="p-3 border-b flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-sm">Dev Tools</h3>
+                  <p className="text-xs text-muted-foreground">Development utilities</p>
+                </div>
+                {editMode && (
+                  <button
+                    onClick={editMode.toggleEditMode}
+                    className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                      editMode.isEditMode 
+                        ? "bg-primary text-primary-foreground" 
+                        : "bg-muted text-muted-foreground hover-elevate"
+                    }`}
+                    data-testid="button-toggle-edit-mode"
+                    title="Toggle Edit Mode"
+                  >
+                    {editMode.isEditMode ? (
+                      <IconPencil className="h-3 w-3" />
+                    ) : (
+                      <IconPencilOff className="h-3 w-3" />
+                    )}
+                    <span>{editMode.isEditMode ? "Edit" : "View"}</span>
+                  </button>
+                )}
               </div>
               
               <div className="p-2 space-y-1">
@@ -731,40 +721,57 @@ export function DebugBubble() {
               </div>
 
               <div className="border-t p-2 space-y-1">
-                <button
-                  onClick={() => {
-                    setSelectedLocationSlug(session.location?.slug || "");
-                    setLocationModalOpen(true);
-                  }}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-location-override"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconMapPin className="h-4 w-4 text-muted-foreground" />
-                    <span>Location</span>
-                    {currentLocationOverride && (
-                      <span className="text-xs text-muted-foreground">(override)</span>
-                    )}
+                {/* Session Group */}
+                <div className="space-y-0.5">
+                  <div className="flex items-center justify-between px-3 py-1.5">
+                    <div className="flex items-center gap-2">
+                      <IconDatabase className="h-3.5 w-3.5 text-muted-foreground" />
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Session</span>
+                    </div>
+                    <button
+                      onClick={() => setSessionModalOpen(true)}
+                      className="p-1 rounded hover-elevate"
+                      data-testid="button-session-view"
+                      title="View session data"
+                    >
+                      <IconPencil className="h-3.5 w-3.5 text-muted-foreground" />
+                    </button>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
-                      {session.location?.name || 'Detecting...'}
-                    </code>
-                    <IconPencil className="h-3 w-3 text-muted-foreground" />
+                  
+                  <div className="pl-2 space-y-0.5">
+                    <button
+                      onClick={() => {
+                        setSelectedLocationSlug(session.location?.slug || "");
+                        setLocationModalOpen(true);
+                      }}
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="button-location-override"
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconMapPin className="h-4 w-4 text-muted-foreground" />
+                        <span>Location</span>
+                        {currentLocationOverride && (
+                          <span className="text-xs text-muted-foreground">(override)</span>
+                        )}
+                      </div>
+                      <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
+                        {session.location?.name || 'Detecting...'}
+                      </code>
+                    </button>
+                    
+                    <button
+                      onClick={toggleLanguage}
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="button-toggle-language"
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconLanguage className="h-4 w-4 text-muted-foreground" />
+                        <span>Language</span>
+                      </div>
+                      <span className="text-xs font-medium bg-muted px-2 py-1 rounded">{currentLang}</span>
+                    </button>
                   </div>
-                </button>
-                
-                <button
-                  onClick={toggleLanguage}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-toggle-language"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconLanguage className="h-4 w-4 text-muted-foreground" />
-                    <span>Language</span>
-                  </div>
-                  <span className="text-xs font-medium bg-muted px-2 py-1 rounded">{currentLang}</span>
-                </button>
+                </div>
                 
                 <button
                   onClick={toggleTheme}
@@ -781,25 +788,6 @@ export function DebugBubble() {
                   </div>
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
-                
-                <button
-                  onClick={() => setSessionModalOpen(true)}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-session-view"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconDatabase className="h-4 w-4 text-muted-foreground" />
-                    <span>Session</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
-                      {session.geo?.country_code || '...'} | {session.utm?.utm_source || 'organic'}
-                    </code>
-                    <IconPencil className="h-3 w-3 text-muted-foreground" />
-                  </div>
-                </button>
-                
-                <EditModeToggle />
               </div>
             </>
           ) : menuView === "components" ? (
