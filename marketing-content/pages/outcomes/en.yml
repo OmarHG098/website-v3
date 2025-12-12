@@ -94,11 +94,11 @@ sections:
       - title: "Region"
         items:
           - label: "North America"
-            value: 60
+            value: 50
             color: "chart-5"
           - label: "Lat.Am."
-            value: 34
+            value: 28
           - label: "Europe"
-            value: 25
+            value: 21
           - label: "Asia"
             value: 1
