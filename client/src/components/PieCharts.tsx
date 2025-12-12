@@ -47,11 +47,10 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
-  const total = chart.items.reduce((sum, item) => sum + item.value, 0);
   let cumulativeAngle = 0;
 
   const slices = chart.items.map((item, index) => {
-    const percentage = (item.value / total) * 100;
+    const percentage = item.value;
     const angle = (percentage / 100) * 360;
     const startAngle = cumulativeAngle;
     cumulativeAngle += angle;
@@ -174,7 +173,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
               style={{ backgroundColor: slice.color }}
             />
             <span className="text-muted-foreground">
-              {slice.label}: {slice.displayValue || `${slice.value} (${Math.round(slice.percentage)}%)`}
+              {slice.label}: {slice.displayValue || `${Math.round(slice.percentage)}%`}
             </span>
           </div>
         ))}
