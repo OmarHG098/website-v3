@@ -1,7 +1,11 @@
-import { useCallback } from "react";
+import { useState, useCallback, lazy, Suspense } from "react";
 import { IconPencil, IconGripVertical } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
+
+const SectionEditorPanel = lazy(() => 
+  import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
+);
 
 interface EditableSectionProps {
   children: React.ReactNode;
@@ -12,19 +16,26 @@ interface EditableSectionProps {
 
 export function EditableSection({ children, section, index, sectionType }: EditableSectionProps) {
   const editMode = useEditModeOptional();
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [currentSection, setCurrentSection] = useState<Section>(section);
   
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
     return <>{children}</>;
   }
   
-  const { selectedSectionIndex, setSelectedSectionIndex } = editMode;
-  const isSelected = selectedSectionIndex === index;
-  
-  const handleClick = useCallback((e: React.MouseEvent) => {
+  const handleOpenEditor = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setSelectedSectionIndex(index);
-  }, [index, setSelectedSectionIndex]);
+    setIsEditorOpen(true);
+  }, []);
+  
+  const handleCloseEditor = useCallback(() => {
+    setIsEditorOpen(false);
+  }, []);
+  
+  const handleUpdate = useCallback((updatedSection: Section) => {
+    setCurrentSection(updatedSection);
+  }, []);
   
   return (
     <div 
@@ -36,7 +47,7 @@ export function EditableSection({ children, section, index, sectionType }: Edita
       <div 
         className={`
           absolute inset-0 z-40 pointer-events-none transition-all duration-150
-          ${isSelected 
+          ${isEditorOpen 
             ? "ring-2 ring-primary ring-offset-2" 
             : "group-hover:ring-2 group-hover:ring-primary/50 group-hover:ring-offset-1"
           }
@@ -48,11 +59,11 @@ export function EditableSection({ children, section, index, sectionType }: Edita
         className={`
           absolute top-2 right-2 z-50 flex items-center gap-1 
           transition-opacity duration-150
-          ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+          ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
         `}
       >
         <button
-          onClick={handleClick}
+          onClick={handleOpenEditor}
           className="p-2 bg-primary text-primary-foreground rounded-md shadow-lg hover-elevate flex items-center gap-1.5"
           data-testid={`button-edit-section-${index}`}
         >
@@ -73,7 +84,7 @@ export function EditableSection({ children, section, index, sectionType }: Edita
           absolute bottom-2 left-2 z-50 
           px-2 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs text-muted-foreground
           transition-opacity duration-150
-          ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+          ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
         `}
       >
         Section {index + 1}
@@ -83,6 +94,18 @@ export function EditableSection({ children, section, index, sectionType }: Edita
       <div className="relative">
         {children}
       </div>
+      
+      {/* Editor Panel - slides in when open */}
+      {isEditorOpen && (
+        <Suspense fallback={null}>
+          <SectionEditorPanel
+            section={currentSection}
+            sectionIndex={index}
+            onUpdate={handleUpdate}
+            onClose={handleCloseEditor}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

@@ -12,9 +12,9 @@ import * as yamlParser from "js-yaml";
 interface SectionEditorPanelProps {
   section: Section;
   sectionIndex: number;
-  contentType: "program" | "landing" | "location";
-  slug: string;
-  locale: string;
+  contentType?: "program" | "landing" | "location";
+  slug?: string;
+  locale?: string;
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
 }
@@ -28,7 +28,12 @@ export function SectionEditorPanel({
   onUpdate,
   onClose,
 }: SectionEditorPanelProps) {
-  const { addPendingChange, saveChanges, isSaving } = useEditMode();
+  const editModeContext = useEditMode();
+  const { addPendingChange, saveChanges, isSaving } = editModeContext || { 
+    addPendingChange: () => {}, 
+    saveChanges: async () => false, 
+    isSaving: false 
+  };
   const [yamlContent, setYamlContent] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -71,13 +76,15 @@ export function SectionEditorPanel({
         return;
       }
       
-      // Add pending change
-      const pageKey = `${contentType}:${slug}:${locale}`;
-      addPendingChange(pageKey, {
-        action: "update_section",
-        index: sectionIndex,
-        section: parsed as Record<string, unknown>,
-      });
+      // Add pending change if we have content info
+      if (contentType && slug && locale) {
+        const pageKey = `${contentType}:${slug}:${locale}`;
+        addPendingChange(pageKey, {
+          action: "update_section",
+          index: sectionIndex,
+          section: parsed as Record<string, unknown>,
+        });
+      }
       
       // Update local state
       onUpdate(parsed);
@@ -93,6 +100,12 @@ export function SectionEditorPanel({
     // First apply any pending changes
     if (hasChanges) {
       handleApply();
+    }
+    
+    // If no content info, just close (preview only mode)
+    if (!contentType || !slug || !locale) {
+      onClose();
+      return;
     }
     
     // Then save to server
