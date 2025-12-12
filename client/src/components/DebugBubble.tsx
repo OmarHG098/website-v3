@@ -86,7 +86,7 @@ const componentsList = [
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "redirects";
+type MenuView = "main" | "components" | "sitemap";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -105,7 +105,7 @@ interface RedirectItem {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "redirects") {
+    if (stored === "main" || stored === "components" || stored === "sitemap") {
       return stored;
     }
   }
@@ -130,7 +130,6 @@ export function DebugBubble() {
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
-  const [redirectsLoading, setRedirectsLoading] = useState(false);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
 
@@ -167,19 +166,17 @@ export function DebugBubble() {
     }
   }, [menuView]);
 
-  // Fetch redirects when entering redirects view
+  // Fetch redirects count on mount
   useEffect(() => {
-    if (menuView === "redirects" && redirectsList.length === 0) {
-      setRedirectsLoading(true);
+    if (redirectsList.length === 0) {
       fetch("/api/debug/redirects")
         .then((res) => res.json())
         .then((data) => {
           setRedirectsList(data.redirects || []);
-          setRedirectsLoading(false);
         })
-        .catch(() => setRedirectsLoading(false));
+        .catch(() => {});
     }
-  }, [menuView]);
+  }, []);
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -507,20 +504,17 @@ export function DebugBubble() {
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
                 
-                <button
-                  onClick={() => setMenuView("redirects")}
+                <a
+                  href="/private/redirects"
                   className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-redirects-menu"
+                  data-testid="link-redirects-page"
                 >
                   <div className="flex items-center gap-3">
                     <IconRoute className="h-4 w-4 text-muted-foreground" />
                     <span>Redirects</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                </button>
+                  <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                </a>
               </div>
 
               <div className="border-t p-2 space-y-1">
@@ -613,57 +607,6 @@ export function DebugBubble() {
                       </a>
                     );
                   })}
-                </div>
-              </ScrollArea>
-            </>
-          ) : menuView === "redirects" ? (
-            <>
-              <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main-redirects"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Active Redirects</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {redirectsList.length} 301 redirect{redirectsList.length !== 1 ? 's' : ''} configured
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <ScrollArea className="h-[280px]">
-                <div className="p-2 space-y-1">
-                  {redirectsLoading ? (
-                    <div className="flex items-center justify-center py-8">
-                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
-                    </div>
-                  ) : redirectsList.length === 0 ? (
-                    <div className="text-center py-8 text-sm text-muted-foreground">
-                      No redirects configured
-                    </div>
-                  ) : (
-                    redirectsList.map((redirect, index) => (
-                      <div
-                        key={`${redirect.from}-${index}`}
-                        className="px-3 py-2 rounded-md text-sm bg-muted/50"
-                        data-testid={`redirect-item-${index}`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.from}</code>
-                          <IconArrowRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded flex-1 min-w-0 truncate">{redirect.to}</code>
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-1">
-                          Type: {redirect.type}
-                        </div>
-                      </div>
-                    ))
-                  )}
                 </div>
               </ScrollArea>
             </>
