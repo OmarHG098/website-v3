@@ -1,5 +1,6 @@
 name: "Subheading Groups with Descriptions"
 description: "Two-column layout using bullet_groups with title + description format (no bullet items)"
+variant: bulletGroups
 yaml: |
   - type: two_column
     proportions: [7, 5]

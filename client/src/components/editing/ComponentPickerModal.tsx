@@ -100,6 +100,11 @@ const variantLabels: Record<string, string> = {
   showcase: "Showcase",
   productShowcase: "Product Showcase",
   simpleTwoColumn: "Two Column",
+  imageText: "Image + Text",
+  bulletGroups: "Bullet Groups",
+  video: "Video",
+  highlight: "Highlight",
+  detailed: "Detailed",
   default: "Default",
 };
 
