@@ -368,7 +368,7 @@ function ComponentCard({
     <>
       <header 
         ref={cardRef}
-        className="sticky top-0 z-50 bg-background border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 pt-[10px] pb-[10px] pl-[0px] pr-[0px]"
+        className="sticky top-0 z-50 border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 pt-[10px] pb-[10px] pl-[0px] pr-[0px] bg-[#ffffff]"
         data-testid={`component-card-${componentType}`}
       >
         <div className="flex flex-row items-start justify-between gap-4">
