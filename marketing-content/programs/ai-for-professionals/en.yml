@@ -1,0 +1,343 @@
+# AI for Professionals Career Program - English
+# This file defines all sections and content for the AI for Professionals career program page
+# Merged from 4geeks.com applied-ai and the preview page
+
+slug: "ai-for-professionals"
+title: "AI for Professionals"
+
+meta:
+  page_title: "AI for Professionals | 4Geeks Academy"
+  description: "Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
+  robots: "index, follow"
+  og_image: "/images/programs/ai-for-professionals-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+  redirects:
+    - "/bootcamp/applied-ai"
+    - "/programs/ai-for-professionals"
+    - "/coding-bootcamp/applied-ai-course"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "courses:ai-for-professionals"
+
+sections:
+  - type: hero
+    variant: singleColumn
+    version: "1.0"
+    badge: "6-Week Bootcamp"
+    title: "AI for Professionals"
+    subtitle: "Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
+    trust_bar:
+      rating: "4.9"
+      rating_count: "1,294"
+      trusted_text: "Trusted by professionals worldwide"
+    cta_buttons:
+      - text: "Apply Now"
+        url: "/apply"
+        variant: "primary"
+        icon: "Rocket"
+      - text: "Download Course Details"
+        url: "/syllabus/ai-for-professionals"
+        variant: "outline"
+        icon: "Download"
+    award_badges:
+      - name: "Top Online Bootcamp"
+        source: "Forbes"
+        year: "2024"
+      - name: "Best for Spanish Speakers"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Best Coding Bootcamp"
+        source: "Course Report"
+        year: "2025"
+
+  - type: two_column
+    proportions: [1, 1]
+    alignment: center
+    left:
+      heading: "Why Every Job Needs AI Skills Now"
+      description: "AI isn't optional anymore: it's already a core workplace skill."
+      bullets:
+        - text: "Workers with AI skills earn an average 56% wage premium globally"
+          icon: "TrendingUp"
+        - text: "AI use at work has nearly doubled in two years, rising from 21% to 40% of U.S. employees"
+          icon: "BarChart"
+        - text: "Join the professionals who aren't just keeping up, but taking the lead with AI"
+          icon: "Award"
+      button:
+        text: "Apply Now"
+        url: "/apply"
+        variant: "primary"
+    right:
+      video: "0yNgqAIDSXQ"
+      video_height: "315"
+      video_width: "560"
+
+  - type: features_grid
+    variant: highlight
+    title: "About This Program"
+    subtitle: "Our AI for Professionals program is designed for anyone who wants to harness the full power of AI in their work, not just explore it."
+    columns: 4
+    items:
+      - icon: "Clock"
+        title: "Duration"
+        value: "6 Weeks"
+        description: "Intensive learning experience"
+      - icon: "Video"
+        title: "Classes"
+        value: "2 per week"
+        description: "Live, online sessions"
+      - icon: "Users"
+        title: "Class Size"
+        value: "12 max"
+        description: "Personalized attention"
+      - icon: "Award"
+        title: "Certificate"
+        value: "Official"
+        description: "4Geeks Completion Certificate"
+
+  - type: syllabus
+    title: "Program Details"
+    subtitle: "In just 6 weeks, learn how to leverage today's leading AI tools to optimize your workflow, improve output quality, and stay ahead in your career."
+    modules:
+      - title: "Week 1: Introduction to AI"
+        description: "Understand key AI concepts and generative tools. Introduction to the fundamentals of AI with a special focus on Generative AI. Learn the structure of the course and the technologies used."
+      - title: "Week 2: Be More Productive"
+        description: "Compare AI and human capacities in various tasks. Identify when to leverage AI, explore relevant prompts, and optimize prompt engineering. Design job-relevant workflows integrating AI."
+      - title: "Week 3: Text Generation"
+        description: "Learn to create effective prompts that make AI tools do exactly what you want. Explore text generation tools and start automating workflows without coding. Master prompt engineering techniques for professional outputs."
+      - title: "Week 4: Image Generation"
+        description: "Explore tools for creating various types of content with AI, including images, videos, avatars, music, and more. Learn to generate professional visual content using tools like Midjourney and DALL-E."
+      - title: "Weeks 5-6: Tools & Future of AI"
+        description: "Compare open-source and cloud-based AI tools. Learn to test different tools and maximize their potential. Build chatbots, create websites, automate workflows using Zapier and similar tools, and explore the future of AI in the workplace."
+
+  - type: two_column
+    proportions: [1, 1]
+    alignment: center
+    background: "muted"
+    left:
+      heading: "What You'll Learn"
+      sub_heading: "Master tools like ChatGPT, Claude, and Midjourney to enhance your productivity, creativity, and problem-solving."
+      bullets:
+        - text: "Understand key AI concepts and generative tools"
+          icon: "Brain"
+        - text: "Learn effective prompting for text and image generation"
+          icon: "MessageSquare"
+        - text: "Automate everyday workflows using no-code tools"
+          icon: "Zap"
+        - text: "Create professional content and websites with AI"
+          icon: "Globe"
+        - text: "Build and deploy simple chatbots and AI assistants"
+          icon: "Bot"
+      button:
+        text: "Apply Now"
+        url: "/apply"
+        variant: "primary"
+    right:
+      image: "/attached_assets/ai-learning.png"
+      image_alt: "AI Learning Experience"
+
+  - type: features_grid
+    variant: detailed
+    title: "Everything You Need to Leverage AI"
+    columns: 2
+    items:
+      - icon: "GraduationCap"
+        title: "Expert Guidance"
+        description: "Learn from instructors with real-world AI experience who can guide you through practical applications."
+      - icon: "Users"
+        title: "7:1 Student-Teacher Ratio"
+        description: "Progress faster with personalized attention and feedback in small class settings."
+      - icon: "Headset"
+        title: "1:1 Mentorship"
+        description: "Receive tailored support to build and apply your skills effectively with dedicated mentorship sessions."
+      - icon: "Briefcase"
+        title: "Career Coaching"
+        description: "Explore our career resources or book optional 1:1 sessions to strengthen your professional growth."
+
+  - type: ai_learning
+    version: "1.0"
+    badge: "Why 4Geeks?"
+    title: "Boost Your Career with AI for Professionals"
+    description: "Hear from our CEO on how mastering AI transformed his productivity and results. Take the leap and learn the practical AI skills that will future-proof your career."
+    video_url: "https://www.youtube.com/watch?v=0yNgqAIDSXQ"
+    features:
+      - icon: "Briefcase"
+        title: "Expand Your Capabilities"
+        description: "Apply AI across any field: from marketing to real estate to creative work."
+      - icon: "Zap"
+        title: "Streamline Workflows"
+        description: "Use AI to deliver higher-quality results from day one."
+      - icon: "FileText"
+        title: "Create Faster & Smarter"
+        description: "Generate reports, analyses, and in-depth strategies faster with AI."
+    highlight:
+      title: "Meet Rigobot, Our AI Tutor"
+      description: "4Geeks.com is the first platform designed to maximize self-paced learning. Join live sessions when you can, get immediate AI help, and book one-on-one mentorships. All our content is fully interactive with video."
+      cta:
+        text: "Start Learning Now!"
+        url: "/apply"
+        variant: "primary"
+
+  - type: certificate
+    version: "1.0"
+    title: "Professional Certificate in Applied AI"
+    description: "Your 4Geeks certificate will open doors to professional opportunities with our extensive network of companies worldwide. Backed by international institutions, it represents a globally recognized standard, unlocking diverse career paths."
+    stats:
+      - value: "4,000+"
+        label: "Graduates"
+      - value: "84%"
+        label: "Job Placement"
+      - value: "4.9/5"
+        label: "Student Rating"
+      - value: "56%"
+        label: "Wage Premium"
+    benefits:
+      - text: "Recognized by international institutions"
+      - text: "Access to 5,000+ hiring partners"
+      - text: "Lifetime career support"
+    card:
+      title: "AI for Professionals"
+      subtitle: "4Geeks Academy Certificate"
+      program_name: "Applied AI Professional"
+
+  - type: pricing
+    title: "Invest in Your Future"
+    subtitle: "Flexible payment plans designed to fit your budget"
+    monthly:
+      discount_badge: "BEST DEAL"
+      price: "2,999"
+      period: "total"
+      original_price: "3,300"
+    yearly:
+      discount_badge: "WEEKLY PLAN"
+      price: "550"
+      period: "week"
+      original_price: "600"
+      savings_badge: "6 weeks"
+    tech_icons:
+      - "openai"
+      - "brain"
+      - "robot"
+      - "sparkles"
+      - "zap"
+      - "messageSquare"
+    features_title: "What's included in your AI for Professionals program"
+    features:
+      - icon: "Video"
+        text: "2 live online classes per week with expert instructors"
+      - icon: "Users"
+        text: "Small class size (12 people max) for personalized attention"
+      - icon: "Headset"
+        text: "Unlimited 1:1 mentorship sessions"
+      - text: "AI-powered feedback and support with Rigobot throughout your learning journey"
+        use_rigobot_icon: true
+      - icon: "Award"
+        text: "Official 4Geeks completion certificate recognized by multiple institutions"
+      - icon: "Briefcase"
+        text: "Career coaching and professional development resources"
+    cta:
+      text: "Apply Now"
+      url: "/apply"
+      variant: "primary"
+
+  - type: whos_hiring
+    title: "Who's Hiring Our Graduates?"
+    subtitle: "Top companies hire 4Geeks graduates"
+    description: "84% of our graduates land jobs within 6 months of graduation thanks to their skills and our personalized career support. Our grads don't just get hired—they launch successful careers and consistently earn recognition for their technical expertise and professionalism."
+    logos:
+      - src: "/attached_assets/microsoft_1764719829995.png"
+        alt: "Microsoft"
+      - src: "/attached_assets/google-developers_1764719904190.png"
+        alt: "Google Developers"
+      - src: "/attached_assets/boats_1764719939123.jpg"
+        alt: "Boats Group"
+      - src: "/attached_assets/meta-logo_1764719959855.png"
+        alt: "Meta"
+      - src: "/attached_assets/ebay_1764719967118.png"
+        alt: "eBay"
+      - src: "/attached_assets/natgeo_1764719975443.png"
+        alt: "National Geographic"
+      - src: "/attached_assets/evernote_1764719981901.png"
+        alt: "Evernote"
+      - src: "/attached_assets/telefonica_1764719987250.png"
+        alt: "Telefonica"
+      - src: "/attached_assets/twilio_1764719992371.png"
+        alt: "Twilio"
+      - src: "/attached_assets/uber_1764719999685.png"
+        alt: "Uber"
+
+  - type: testimonials
+    title: "Success Stories"
+    subtitle: "See what our graduates have to say about their experience"
+    rating_summary:
+      average: "4.9"
+      count: "1,294"
+    items:
+      - name: "Carlos Mendez"
+        role: "Marketing Director"
+        company: "Tech Startup"
+        rating: 5
+        comment: "This AI course completely transformed how I work. I now automate repetitive tasks and create content 3x faster. The ROI was immediate."
+        outcome: "3x productivity increase"
+      - name: "Sarah Johnson"
+        role: "Real Estate Agent"
+        company: "RE/MAX"
+        rating: 5
+        comment: "I was skeptical about AI, but this course showed me practical applications for my business. Now I use AI for market analysis and client communications."
+        outcome: "50% time savings"
+      - name: "Michael Chen"
+        role: "Product Manager"
+        company: "Fortune 500"
+        rating: 5
+        comment: "The hands-on approach was exactly what I needed. No fluff, just practical skills I could apply the next day at work."
+        outcome: "Promoted within 3 months"
+      - name: "Emily Rodriguez"
+        role: "Content Creator"
+        company: "Freelance"
+        rating: 5
+        comment: "From generating ideas to creating visuals, AI has become my creative partner. This course taught me how to leverage it effectively."
+        outcome: "Doubled client capacity"
+
+  - type: faq
+    version: "1.0"
+    title: "Frequently Asked Questions"
+    items:
+      - question: "Do I need any technical background?"
+        answer: "No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there."
+      - question: "What tools will I learn to use?"
+        answer: "You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier."
+      - question: "How are the live classes structured?"
+        answer: "Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time."
+      - question: "What kind of support is available?"
+        answer: "You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot for instant feedback, and a supportive community of fellow professionals learning alongside you."
+      - question: "Is the certificate recognized?"
+        answer: "Yes! Our certificate is recognized by employers worldwide. 4Geeks Academy is licensed by the Florida Department of Education and has been featured by Forbes, Newsweek, and Course Report as one of the top bootcamps."
+      - question: "What if I can't attend a live class?"
+        answer: "All live sessions are recorded and available for review. You can catch up on any missed content at your convenience while still benefiting from the interactive learning experience."
+    cta:
+      text: "Still have questions?"
+      button_text: "Talk to an Advisor"
+      button_url: "/contact"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Ready to Lead with AI?"
+    subtitle: "Join professionals who are staying ahead of the curve. Start your AI journey today."
+    buttons:
+      - text: "Apply Now"
+        url: "/apply"
+        variant: "secondary"
+      - text: "Talk to an Advisor"
+        url: "/contact"
+        variant: "outline"
+
+  - type: footer
+    version: "1.0"
+    copyright_text: "2024 4Geeks. All rights reserved."

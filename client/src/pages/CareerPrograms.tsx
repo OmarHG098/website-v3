@@ -53,6 +53,16 @@ export default function CareerPrograms() {
     },
     {
       id: '4',
+      title: "AI for Professionals",
+      description: "Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.",
+      thumbnail: aiThumbnail,
+      duration: "6 weeks",
+      difficulty: "Beginner" as const,
+      lessons: 12,
+      link: "ai-for-professionals",
+    },
+    {
+      id: '5',
       title: "Introduction to AI & Machine Learning",
       description: "Understand AI fundamentals and build your first machine learning models",
       thumbnail: aiThumbnail,
@@ -61,7 +71,7 @@ export default function CareerPrograms() {
       lessons: 36,
     },
     {
-      id: '5',
+      id: '6',
       title: "Advanced Web Development",
       description: "Deep dive into advanced React patterns, performance optimization, and architecture",
       thumbnail: webDevThumbnail,
@@ -70,7 +80,7 @@ export default function CareerPrograms() {
       lessons: 52,
     },
     {
-      id: '6',
+      id: '7',
       title: "Python for Beginners",
       description: "Start your programming journey with Python fundamentals and practical projects",
       thumbnail: dataScienceThumbnail,
