@@ -1,0 +1,331 @@
+slug: ai-engineering
+title: AI Engineering
+meta:
+  page_title: AI Engineer Career Program | 4Geeks
+  description: Become an AI Engineer in 20 weeks with unlimited 1:1 mentorship, career guidance, and hands-on projects. Launch a career with $95K-$135K starting salaries.
+  robots: index, follow
+  og_image: /images/programs/ai-engineering-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+  redirects:
+    - /bootcamp/ai-engineering
+    - /programs/ai-engineer
+    - /coding-bootcamp/ai-engineering
+schema:
+  include:
+    - organization
+    - website
+    - courses:ai-engineering
+sections:
+  - type: hero
+    variant: singleColumn
+    version: "1.0"
+    badge: Career Program
+    title: Become an AI Engineer
+    subtitle: Get AI-ready in 20 weeks with unlimited 1:1 mentorship and career guidance. Launch a career with $95K-$135K starting salaries.
+    trust_bar:
+      rating: "4.5"
+      rating_count: 1,294
+      trusted_text: $95K+ average starting salary
+    cta_buttons:
+      - text: Apply Now
+        url: /apply
+        variant: primary
+        icon: Rocket
+      - text: Download Syllabus
+        url: /syllabus/ai-engineering
+        variant: outline
+        icon: Download
+    award_badges:
+      - name: Top Coding Bootcamp
+        source: Forbes
+        year: "2024"
+      - name: Best for Spanish Speakers
+        source: Fortune
+        year: "2024"
+      - name: Top Coding Bootcamp
+        source: Newsweek
+        year: "2024"
+      - name: Best Coding Bootcamp
+        source: Course Report
+        year: "2025"
+
+  - type: syllabus
+    title: What You'll Build in 20 Weeks
+    subtitle: Learn to build and scale an entire AI-native business, not just individual features. Every milestone builds on the last, giving you real end-to-end engineering experience.
+    modules:
+      - title: AI-Assisted Frontend
+        description: Modern React application with AI-powered components. Build intelligent user interfaces that leverage AI for enhanced user experiences, auto-completion, and smart suggestions.
+      - title: Production Backend
+        description: REST APIs, authentication, serverless functions. Create scalable backend services with secure authentication, API design patterns, and cloud-native deployment strategies.
+      - title: Data Systems
+        description: Telemetry, pipelines, automated reporting. Design and implement data collection systems, ETL pipelines, and automated analytics dashboards for real-time insights.
+      - title: RAG Knowledge Layer
+        description: Vector search, embeddings, contextual document retrieval. Build sophisticated retrieval-augmented generation systems that connect LLMs to your proprietary data.
+      - title: Multi-Agent Systems
+        description: Intelligent agents with memory, task routing, and tool calling. Create AI systems that can plan, reason, and execute complex multi-step tasks autonomously.
+      - title: Workflow Automation
+        description: AI-generated processes deployed via n8n, queues, and scheduled tasks. Automate business workflows with AI-driven decision making and orchestration.
+      - title: Real-Time Systems
+        description: WebSockets, streaming AI responses, event-driven architecture. Build responsive applications with real-time AI interactions and streaming capabilities.
+
+  - type: projects
+    title: Learn by Building Real-Life Projects
+    subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world AI engineering position. Here's a glimpse of what you'll be working on:"
+    items:
+      - title: Build a RAG-Powered Knowledge Base
+        description: Create a full-stack application that lets users query documents using natural language. Implement vector embeddings, semantic search, and integrate with OpenAI for intelligent responses.
+        image: ml-final-project
+        tags:
+          - RAG
+          - Vector DB
+          - LLM
+        duration: 12 HOURS
+        date: 15/01/2025
+        difficulty: medium
+      - title: Multi-Agent Task Orchestrator
+        description: Design and implement a system where multiple AI agents collaborate to complete complex tasks. Learn agent memory, tool calling, and task routing patterns.
+        image: authentication
+        tags:
+          - Agents
+          - LangChain
+        duration: 16 HOURS
+        date: 20/02/2025
+        difficulty: hard
+      - title: AI-Native Full-Stack Application
+        description: Build a complete AI-native business application from scratch. Combine frontend, backend, RAG, agents, and automation into a production-ready product.
+        image: final-project
+        tags:
+          - Full-Stack
+          - Capstone
+        duration: 40 HOURS
+        date: 01/04/2025
+        difficulty: hard
+
+  - type: ai_learning
+    version: "1.0"
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+      - icon: Headset
+        title: Unlimited 1:1 mentoring sessions
+        description: Access unlimited mentorship sessions with our AI engineering experts whenever you need guidance.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+    highlight:
+      title: Maximize Your Learning Potential with Rigobot
+      description: Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!
+      cta:
+        text: Start learning now!
+        url: /apply
+        variant: primary
+
+  - type: certificate
+    version: "1.0"
+    title: Certificate & Career Network
+    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
+    stats:
+      - value: 4,000+
+        label: Graduates
+      - value: 84%
+        label: Job Placement
+      - value: 4.9/5
+        label: Student Rating
+      - value: 20+
+        label: Countries
+    benefits:
+      - text: Recognized by international institutions
+      - text: Access to 5,000+ hiring partners
+      - text: Lifetime career support
+    card:
+      title: "AI Engineer"
+      subtitle: "4Geeks Academy Certificate"
+      program_name: "AI Engineering"
+
+  - type: why_learn_ai
+    title: Why Should I Become an AI Engineer?
+    subtitle: AI Engineering is the Fastest-Growing Tech Career
+    description: AI Engineers are in unprecedented demand as companies race to integrate AI into their products. With starting salaries of $95K-$135K and the field growing 40% annually, there's never been a better time to enter this career. Our comprehensive 20-week program prepares you to build production AI systems from day one.
+    cta:
+      text: Join now!
+      url: /signup
+      variant: primary
+
+  - type: pricing
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
+    monthly:
+      discount_badge: 35% OFF
+      price: "38.99"
+      period: mo
+      original_price: "59.99"
+    yearly:
+      discount_badge: 35% OFF
+      price: "311.99"
+      period: yr
+      original_price: "479.99"
+      savings_badge: Save 3 months
+    tech_icons:
+      - openai
+      - python
+      - react
+      - nodejs
+      - api
+      - brain
+      - robot
+      - settings
+    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+    features:
+      - icon: certificate
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of and cloud-based coding challenges (no setup needed).
+      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
+        use_rigobot_icon: true
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school by the florida department of education.
+    cta:
+      text: Get plan
+      url: /signup
+      variant: primary
+
+  - type: whos_hiring
+    title: Who's Hiring Our Graduates?
+    subtitle: Our alumni work at top companies around the world
+    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.
+    logos:
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: TCG
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: MDC
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
+
+  - type: testimonials
+    title: Your New Career Starts Here
+    subtitle: See what our graduates have to say about their experience
+    rating_summary:
+      average: "4.5"
+      count: 1,294
+    items:
+      - name: Sarah Johnson
+        role: AI Engineer
+        company: Google
+        rating: 5
+        comment: This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world AI applications.
+        outcome: +55% salary increase
+      - name: Michael Chen
+        role: ML Engineer
+        company: Meta
+        rating: 5
+        comment: Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable.
+        outcome: Hired in 4 months
+      - name: Emily Rodriguez
+        role: AI Engineer
+        company: Amazon
+        rating: 5
+        comment: Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI.
+        outcome: +100% salary increase
+      - name: David Kim
+        role: AI Developer
+        company: Startup
+        rating: 5
+        comment: From zero AI knowledge to landing my dream job in 5 months. The structured curriculum and hands-on projects made all the difference.
+        outcome: Career change success
+      - name: Jessica Martinez
+        role: AI Engineer
+        company: Spotify
+        rating: 4
+        comment: Great course with practical, real-world projects. The community is supportive and the instructors are always available to help.
+        outcome: +45% salary increase
+      - name: Ryan Thompson
+        role: ML Engineer
+        company: Tech Startup
+        rating: 5
+        comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
+        outcome: Landed first tech job
+
+  - type: faq
+    version: "1.0"
+    title: FAQ
+    items:
+      - question: What prerequisites do I need for AI Engineering?
+        answer: Basic programming knowledge is recommended but not required. Our program starts with foundational concepts and builds up to advanced AI engineering. If you're new to coding, we have preparatory materials to help you get started.
+      - question: How long does the program take?
+        answer: The AI Engineering program is designed to be completed in 20 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
+      - question: What kind of projects will I build?
+        answer: You'll build production-ready AI applications including RAG systems, multi-agent orchestrators, real-time AI applications, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
+      - question: Do I need expensive hardware for AI development?
+        answer: No! All exercises and projects run in the cloud. We provide access to cloud-based development environments and AI APIs, so you can learn with just a laptop and internet connection.
+      - question: Is the certificate recognized by employers?
+        answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
+    cta:
+      text: Still have questions?
+      button_text: Talk to an Advisor
+      button_url: /contact
+
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Become an AI Engineer?
+    subtitle: Join thousands of graduates who have transformed their careers with 4Geeks.
+    buttons:
+      - text: Start Learning Now
+        url: /signup
+        variant: secondary
+      - text: Talk to an Advisor
+        url: /contact
+        variant: outline
+
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. All rights reserved.
