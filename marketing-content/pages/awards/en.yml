@@ -1,0 +1,187 @@
+# Awards Landing Page - English
+
+slug: "awards"
+template: "default"
+title: "Awards & Recognitions"
+
+meta:
+  page_title: "Awards & Recognitions | 4Geeks Academy"
+  description: "Discover why 4Geeks Academy is a top-rated coding bootcamp. See our awards from Forbes, Newsweek, Course Report, SwitchUp, and more."
+  robots: "index, follow"
+  priority: 0.8
+  change_frequency: "monthly"
+  redirects:
+    - "/awards"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    badge: "Awards & Recognitions"
+    title: "Top Coding Bootcamps"
+    subtitle: "Trusted by Students, Recognized by Experts"
+    image:
+      src: "/attached_assets/Group-original_1765419144159.webp"
+      alt: "4Geeks Academy students collaborating"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Recognition from Industry Leaders"
+    columns: 3
+    items:
+      - icon: "Award"
+        icon_color: "#000000"
+        value: "Top 5"
+        title: "Coding Bootcamps 2025 - SwitchUp"
+      - icon: "Trophy"
+        icon_color: "#000000"
+        value: "#1"
+        title: "Best Data Science Bootcamp - Forbes"
+      - icon: "Star"
+        icon_color: "#000000"
+        value: "4.9"
+        title: "Average Rating Across All Platforms"
+
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: "Our Awards"
+    subtitle: "Recognized globally for excellence in tech education"
+    columns: 3
+    items:
+      - image:
+          src: "/attached_assets/forbes-logo-award_1764709625651.webp"
+          alt: "Forbes Award Badge"
+        title: "Best Overall Data Science and Machine Learning Bootcamp 2025"
+        description: "Our bootcamp was chosen as the top option for its hands-on beginner friendly format, verified outcomes and job guarantee."
+        link_text: "See article"
+        link_url: "https://www.forbes.com/advisor/education/bootcamps/best-data-science-bootcamps/#4geeks_academy_data_science_and_machine_learning_course_section"
+      - image:
+          src: "/attached_assets/badges-new.avif"
+          alt: "SwitchUp Top Bootcamp Badge"
+        title: "Top 5 Coding Bootcamps on Switchup 2025"
+        description: "SwitchUp has honored 4Geeks Academy by featuring it on their prestigious list of top coding bootcamps for 2025."
+        link_text: "See website"
+        link_url: "https://www.switchup.org/rankings/best-coding-bootcamps"
+      - image:
+          src: "/attached_assets/fortune-logo_1764709618095.webp"
+          alt: "Fortune Education Award"
+        title: "Excellence in Education for Spanish Speakers"
+        description: "4Geeks Academy has been recognized by Fortune as one of the top coding bootcamps for Spanish speakers, highlighting our commitment to inclusive and accessible education."
+        link_text: "See website"
+        link_url: "https://fortune.com/education/articles/best-software-engineering-bootcamps/#4Geeks-Academy"
+      - image:
+          src: "/attached_assets/arp-logo-certification_1765548854924.png"
+          alt: "ARP Certification Badge"
+        title: "Institutional Quality Online Education"
+        description: "4Geeks Academy has earned the ARP certification, distinguishing it as a leader in online coding education."
+        link_text: "See website"
+        link_url: "https://arpcertificate.com/listado-de-cursos/programa-full-stack-development/"
+      - image:
+          src: "/attached_assets/forbes-logo-award_1764709625651.webp"
+          alt: "Forbes Award Badge"
+        title: "Top Online Full-Stack Bootcamps Of 2024"
+        description: "We have been selected as one of the Top Online Coding Bootcamps by Forbes."
+        link_text: "See article"
+        link_url: "https://www.forbes.com/advisor/education/bootcamps/best-full-stack-developer-bootcamp/#4geeks_academy_full_stack_developer_bootcamp_section"
+      - image:
+          src: "/attached_assets/Course-Report-Badge-2025_1764709632231.webp"
+          alt: "Course Report Badge 2025"
+        title: "Best Bootcamp for Course Report 2025"
+        description: "We have been selected as one of the Top Coding Bootcamps globally for 3 years in a row"
+        link_text: "See article"
+        link_url: "https://www.coursereport.com/best-coding-bootcamps"
+      - image:
+          src: "/attached_assets/south-florida-tech-hub_1765548979070.jpeg"
+          alt: "South Florida Tech Hub Logo"
+        title: "Education Champion Award 2024"
+        description: "Recognized by the South Florida Tech Hub for advancing tech education and career growth across the region."
+        link_text: "See article"
+        link_url: "https://techhubsouthflorida.org/tech-hub-announces-the-2nd-annual-golden-palm-gala-award-2024-honorees/"
+      - image:
+          src: "/attached_assets/ebootcamp-top_1765549056325.png"
+          alt: "eBootcamp Top Bootcamp 2024"
+        title: "Best Bootcamp Ebootcamp for 2024"
+        description: "We've been nominated by eBootcamp as the top coding bootcamp for 2024"
+        link_text: "See article"
+        link_url: "https://ebootcamp.net/top-bootcamps-programacion/"
+      - image:
+          src: "/attached_assets/badges-new.avif"
+          alt: "SwitchUp Top Bootcamp Badge"
+        title: "Best Bootcamp according to Switchup 2023"
+        description: "Not only in Florida, but over each of our campus 4Geeks is constantly keeping a ~5 star rating that makes us one of the top bootcamp in the world"
+        link_text: "See article"
+        link_url: "https://www.switchup.org/bootcamps/4geeks-academy"
+      - image:
+          src: "/attached_assets/premios_tecnologia_sigloxxi_1765549146476.png"
+          alt: "Premios Tecnología Siglo XXI"
+        title: "Winners of the Premios Tecnologia Siglo XXI mention 'Formación'"
+        description: "Our campus in Spain was awarded with the Premio Tecnología Siglo XXI on the 'Formation' category in 2023"
+        link_text: "See article"
+        link_url: "https://www.elsuplemento.es/premiado/4geeks-academy-premio-nacional-de-tecnologia-2023-en-la-categoria-formacion"
+      - image:
+          src: "/attached_assets/newsweek_1764709608255.webp"
+          alt: "Newsweek Award"
+        title: "Top Coding School according to Newsweek"
+        description: "4Geeks Academy has been recognized as one of the top 10 coding bootcamps in the United States according to Newsweek."
+        link_text: "See article"
+        link_url: "https://starthubcenters.com/4geeks-academy-named-top-coding-school-2017/"
+      - image:
+          src: "/attached_assets/exelencia-educativa-es_1765549347699.png"
+          alt: "Premios Excelencia Educativa"
+        title: "Best Coding Bootcamp Program 2022"
+        description: "We are pleased to announce that we have been distinguished with the Excellence in Education Award for Best Coding Bootcamp Program of 2022. This recognition highlights our commitment to excellence in technology education."
+      - image:
+          src: "/attached_assets/exelencia-educativa-es_1765549347699.png"
+          alt: "Premios Excelencia Educativa"
+        title: "Best Educational Program 2022"
+        description: "We have been awarded the Excellence in Education Award for Best Educational Program 2022. This recognition is a testament to our commitment to quality and innovation in education."
+      - image:
+          src: "/attached_assets/exelencia-educativa-es_1765549347699.png"
+          alt: "Premios Excelencia Educativa"
+        title: "Best International Scholarship Program 2022"
+        description: "We have been awarded the Excellence in Education Award for the Best International Scholarship Program 2022! It recognizes our effort to offer global educational opportunities to talented students, regardless of their financial situation."
+      - image:
+          src: "/attached_assets/exelencia-educativa-es_1765549347699.png"
+          alt: "Premios Excelencia Educativa"
+        title: "Best On-site Bootcamp Awards 2022"
+        description: "Our campus in Spain has been honored with the Excellence in Education Award for Best On-site Bootcamp 2022. This recognition is a testament to our unwavering commitment to excellence in on-site education in the field of technology."
+      - image:
+          src: "/attached_assets/exelencia-educativa-es_1765549347699.png"
+          alt: "Premios Excelencia Educativa"
+        title: "International Trajectory Recognition"
+        description: "As part of the Excellence in Education Awards 2022, we are proud to have been awarded the International Trajectory Outstanding Award in the field of Software Development School."
+      - image:
+          src: "/attached_assets/pee-career_1765549482702.png"
+          alt: "Mejor Programa de Inserción Laboral 2021"
+        title: "Best Career Oriented Educational Program"
+        description: "Educational Excellence Awards 2021 to the Best Career Oriented Educational Program specialized in Coding Bootcamps"
+        link_text: "See article"
+        link_url: "https://premiosexcelenciaeducativa.org/wp-content/uploads/2016/05/PALMARE%CC%81S-EXCELENCIA-2020-1.pdf"
+      - image:
+          src: "/attached_assets/pee-innovation_1765549510015.png"
+          alt: "Mejor Innovación Coding Bootcamp 2021"
+        title: "Most Innovative Program"
+        description: "Educational Excellence Awards 2021 to the most innovative coding bootcamp school"
+        link_text: "See article"
+        link_url: "https://premiosexcelenciaeducativa.org/wp-content/uploads/2016/05/PALMARE%CC%81S-EXCELENCIA-2020-1.pdf"
+      - image:
+          src: "/attached_assets/pee-trajectory_1765549529048.png"
+          alt: "Mejor Trayectoria Internacional 2021"
+        title: "Best International Trajectory"
+        description: "Educational Excellence Awards 2021 to the best international trajectory school"
+        link_text: "See article"
+        link_url: "https://premiosexcelenciaeducativa.org/wp-content/uploads/2016/05/PALMARE%CC%81S-EXCELENCIA-2020-1.pdf"
+      - image:
+          src: "/attached_assets/reviews_1765549549051.png"
+          alt: "4.9 Reviews Badge"
+        title: "4.9 on all reviews"
+        description: "4.9 in all Course Report, Switchup and Google reviews."
+        link_text: "See article"
+        link_url: "https://www.switchup.org/bootcamps/4geeks-academy"

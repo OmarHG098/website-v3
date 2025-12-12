@@ -275,7 +275,7 @@ function ComponentCard({
         sections: [parsedData],
       }, '*');
     }
-  }, [iframeReady, parsedData]);
+  }, [iframeReady, parsedData, selectedExample]);
 
   // Send theme to iframe when it changes
   useEffect(() => {
@@ -366,166 +366,165 @@ function ComponentCard({
 
   return (
     <>
-      <div className="-mx-4 sm:-mx-8 lg:-mx-16 mb-4">
-        <Card 
-          ref={cardRef}
-          className={`transition-all duration-500 ${isFocused ? 'ring-2 ring-primary ring-offset-2' : ''}`} 
-          data-testid={`component-card-${componentType}`}
-        >
-        <CardHeader className="flex flex-col gap-4">
-          <div className="flex flex-row items-start justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2 flex-wrap">
-                <CardTitle className="text-xl">{schema.name}</CardTitle>
-                <Badge variant="secondary">{componentType}</Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">{schema.description}</p>
+      <nav 
+        ref={cardRef}
+        className="sticky top-0 z-50 border-b py-3 px-4 sm:px-8 lg:px-16 bg-[#ffffff] pl-[15px] pr-[15px]"
+        data-testid={`component-card-${componentType}`}
+      >
+        <div className="flex flex-row items-start justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-semibold">{schema.name}</h1>
+              <Badge variant="secondary">{componentType}</Badge>
+            </div>
+            <p className="text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
+            {(() => {
+              const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
+              if (variants.length === 0) return null;
+              const variantLabels: Record<string, string> = {
+                singleColumn: 'Single Column',
+                showcase: 'Showcase',
+                productShowcase: 'Product Showcase',
+                simpleTwoColumn: 'Simple Two Column',
+                imageText: 'Image + Text',
+                bulletGroups: 'Bullet Groups',
+                video: 'Video',
+              };
+              return (
+                <div className="flex items-center gap-2 flex-wrap pt-[2px] pb-[2px]">
+                  <span className="text-xs text-muted-foreground">Variants:</span>
+                  {variants.map(variant => (
+                    <Badge key={variant} variant="outline" className="text-xs">
+                      {variantLabels[variant as string] || variant}
+                    </Badge>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Version:</span>
+              <Select value={selectedVersion} onValueChange={handleVersionChange}>
+                <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {componentInfo.versions.map(v => (
+                    <SelectItem key={v.version} value={v.version}>
+                      {v.version}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="__add_new__" className="text-primary">
+                    <div className="flex items-center gap-1">
+                      <IconPlus className="w-3 h-3" />
+                      Add new version
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Example:</span>
+              <Select 
+                value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
+                onValueChange={handleExampleChange}
+              >
+                <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
+                  <SelectValue placeholder="Default" />
+                </SelectTrigger>
+                <SelectContent className="min-w-[280px]">
+                  {examples.length === 0 && (
+                    <SelectItem value="__default__">Default (from schema)</SelectItem>
+                  )}
+                  {(() => {
+                    // Group examples by variant
+                    const grouped = examples.reduce((acc, ex) => {
+                      const variant = ex.variant || 'default';
+                      if (!acc[variant]) acc[variant] = [];
+                      acc[variant].push(ex);
+                      return acc;
+                    }, {} as Record<string, typeof examples>);
+                    
+                    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
+                    const sortedVariants = Object.keys(grouped).sort((a, b) => {
+                      const aIdx = variantOrder.indexOf(a);
+                      const bIdx = variantOrder.indexOf(b);
+                      return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+                    });
+                    
+                    const variantLabels: Record<string, string> = {
+                      singleColumn: 'Single Column',
+                      showcase: 'Showcase',
+                      productShowcase: 'Product Showcase',
+                      simpleTwoColumn: 'Simple Two Column',
+                      default: 'Default',
+                    };
+                    
+                    return sortedVariants.map(variant => (
+                      <SelectGroup key={variant}>
+                        <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
+                          {variantLabels[variant] || variant}
+                        </SelectLabel>
+                        {grouped[variant].map(ex => (
+                          <SelectItem key={ex.name} value={ex.name} className="pl-4">
+                            <span className="flex items-center gap-2">
+                              {ex.name}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ));
+                  })()}
+                  <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
+                    <div className="flex items-center gap-1">
+                      <IconPlus className="w-3 h-3" />
+                      Add new example
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               {(() => {
-                const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
-                if (variants.length === 0) return null;
-                const variantLabels: Record<string, string> = {
-                  singleColumn: 'Single Column',
-                  showcase: 'Showcase',
-                  productShowcase: 'Product Showcase',
-                  simpleTwoColumn: 'Simple Two Column',
-                };
+                const currentExample = examples.find(ex => ex.name === selectedExample);
+                if (!currentExample?.description) return null;
                 return (
-                  <div className="flex items-center gap-2 mt-2 flex-wrap">
-                    <span className="text-xs text-muted-foreground">Variants:</span>
-                    {variants.map(variant => (
-                      <Badge key={variant} variant="outline" className="text-xs">
-                        {variantLabels[variant as string] || variant}
-                      </Badge>
-                    ))}
-                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        data-testid={`button-example-info-${componentType}`}
+                      >
+                        <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-64 text-sm">
+                      <p className="font-medium mb-1">{currentExample.name}</p>
+                      <p className="text-muted-foreground">{currentExample.description}</p>
+                    </PopoverContent>
+                  </Popover>
                 );
               })()}
-            </div>
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Version:</span>
-                <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                  <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {componentInfo.versions.map(v => (
-                      <SelectItem key={v.version} value={v.version}>
-                        {v.version}
-                      </SelectItem>
-                    ))}
-                    <SelectItem value="__add_new__" className="text-primary">
-                      <div className="flex items-center gap-1">
-                        <IconPlus className="w-3 h-3" />
-                        Add new version
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Example:</span>
-                <Select 
-                  value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
-                  onValueChange={handleExampleChange}
-                >
-                  <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
-                    <SelectValue placeholder="Default" />
-                  </SelectTrigger>
-                  <SelectContent className="min-w-[280px]">
-                    {examples.length === 0 && (
-                      <SelectItem value="__default__">Default (from schema)</SelectItem>
-                    )}
-                    {(() => {
-                      // Group examples by variant
-                      const grouped = examples.reduce((acc, ex) => {
-                        const variant = ex.variant || 'default';
-                        if (!acc[variant]) acc[variant] = [];
-                        acc[variant].push(ex);
-                        return acc;
-                      }, {} as Record<string, typeof examples>);
-                      
-                      const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
-                      const sortedVariants = Object.keys(grouped).sort((a, b) => {
-                        const aIdx = variantOrder.indexOf(a);
-                        const bIdx = variantOrder.indexOf(b);
-                        return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
-                      });
-                      
-                      const variantLabels: Record<string, string> = {
-                        singleColumn: 'Single Column',
-                        showcase: 'Showcase',
-                        productShowcase: 'Product Showcase',
-                        simpleTwoColumn: 'Simple Two Column',
-                        default: 'Default',
-                      };
-                      
-                      return sortedVariants.map(variant => (
-                        <SelectGroup key={variant}>
-                          <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
-                            {variantLabels[variant] || variant}
-                          </SelectLabel>
-                          {grouped[variant].map(ex => (
-                            <SelectItem key={ex.name} value={ex.name} className="pl-4">
-                              <span className="flex items-center gap-2">
-                                {ex.name}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      ));
-                    })()}
-                    <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
-                      <div className="flex items-center gap-1">
-                        <IconPlus className="w-3 h-3" />
-                        Add new example
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                {(() => {
-                  const currentExample = examples.find(ex => ex.name === selectedExample);
-                  if (!currentExample?.description) return null;
-                  return (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8"
-                          data-testid={`button-example-info-${componentType}`}
-                        >
-                          <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-64 text-sm">
-                        <p className="font-medium mb-1">{currentExample.name}</p>
-                        <p className="text-muted-foreground">{currentExample.description}</p>
-                      </PopoverContent>
-                    </Popover>
-                  );
-                })()}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
-                  }}
-                  title="Reload examples"
-                  data-testid={`button-reload-examples-${componentType}`}
-                >
-                  <IconRefresh className="w-4 h-4" />
-                </Button>
-              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+                }}
+                title="Reload examples"
+                data-testid={`button-reload-examples-${componentType}`}
+              >
+                <IconRefresh className="w-4 h-4" />
+              </Button>
             </div>
           </div>
-        </CardHeader>
-        </Card>
-      </div>
-
+        </div>
+      </nav>
+      <div className="px-4 sm:px-8 lg:px-16 py-4">
       {!showYaml && (
-        <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+        <div className="mb-4">
           <Button
             variant="outline"
             size="sm"
@@ -538,10 +537,9 @@ function ComponentCard({
           </Button>
         </div>
       )}
-
       <Collapsible open={showYaml}>
         <CollapsibleContent>
-          <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="mb-4">
             <Card>
               <CardContent className="p-0">
                 <div className="rounded-lg overflow-hidden">
@@ -598,10 +596,9 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
-
       <Collapsible open={showPreview}>
         <CollapsibleContent>
-          <div className="border rounded-lg overflow-hidden bg-background -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="border rounded-lg overflow-hidden bg-background">
             <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
@@ -672,7 +669,7 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
-
+      </div>
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -860,19 +857,15 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <main className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <ComponentCard 
-              key={componentType} 
-              componentType={componentType}
-              componentInfo={singleComponent}
-              globalYamlState={true}
-              globalPreviewState={true}
-              isFocused={false}
-              cardRef={cardRefs.current[componentType]}
-            />
-          </div>
-        </main>
+        <ComponentCard 
+          key={componentType} 
+          componentType={componentType}
+          componentInfo={singleComponent}
+          globalYamlState={true}
+          globalPreviewState={true}
+          isFocused={false}
+          cardRef={cardRefs.current[componentType]}
+        />
       </div>
     );
   }
