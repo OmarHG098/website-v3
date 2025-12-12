@@ -24,23 +24,39 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
+    let hasScrolled = false;
+    
+    const handleScroll = () => {
+      hasScrolled = true;
+      window.removeEventListener("scroll", handleScroll);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
+    const timeoutId = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && hasScrolled) {
+              setIsVisible(true);
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
 
-    return () => observer.disconnect();
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, 100);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const maxValue = Math.max(...data.items.map((item) => item.value));
