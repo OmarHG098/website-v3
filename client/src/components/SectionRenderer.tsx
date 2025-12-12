@@ -20,6 +20,7 @@ import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
+import { LeadForm } from "@/components/LeadForm";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 
@@ -88,6 +89,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <ComparisonTable key={index} data={section as Parameters<typeof ComparisonTable>[0]["data"]} />;
     case "stats":
       return <StatsSection key={index} data={section as Parameters<typeof StatsSection>[0]["data"]} />;
+    case "lead_form":
+      return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

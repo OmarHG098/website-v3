@@ -21,9 +21,18 @@ export interface UTMParams {
   utm_campaign?: string;
   utm_content?: string;
   utm_term?: string;
-  gclid?: string;
-  fbclid?: string;
+  utm_url?: string;
+  utm_placement?: string;
+  utm_plan?: string;
+  // Ad platform click IDs
+  gclid?: string;      // Google Ads
+  fbclid?: string;     // Facebook/Meta
+  msclkid?: string;    // Microsoft Ads
+  ttclid?: string;     // TikTok Ads
+  // Referral tracking
+  ref?: string;
   referral?: string;
+  coupon?: string;
 }
 
 export interface GeoData {

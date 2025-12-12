@@ -860,6 +860,158 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Lead Form API endpoints
+  
+  // Get form options (programs and locations for dropdowns)
+  app.get("/api/form-options", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    // Get all programs for dropdown
+    const programs = listCareerPrograms(locale).map(p => ({
+      slug: p.slug,
+      title: p.title,
+    }));
+    
+    // Get all visible locations grouped by region
+    const locationsPath = path.join(process.cwd(), "marketing-content", "locations");
+    const locationsList: Array<{
+      slug: string;
+      name: string;
+      city: string;
+      country: string;
+      region: string;
+    }> = [];
+    
+    try {
+      if (fs.existsSync(locationsPath)) {
+        const dirs = fs.readdirSync(locationsPath);
+        for (const dir of dirs) {
+          const campusPath = path.join(locationsPath, dir, "campus.yml");
+          if (fs.existsSync(campusPath)) {
+            const campusData = yaml.load(fs.readFileSync(campusPath, "utf8")) as {
+              slug: string;
+              name: string;
+              city: string;
+              country: string;
+              region?: string;
+              visibility?: string;
+            };
+            if (campusData && campusData.visibility !== "unlisted") {
+              locationsList.push({
+                slug: campusData.slug,
+                name: campusData.name,
+                city: campusData.city,
+                country: campusData.country,
+                region: campusData.region || "other",
+              });
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading locations:", error);
+    }
+    
+    // Group locations by region
+    const regions = [
+      { slug: "usa-canada", label: locale === "es" ? "EE.UU. y Canadá" : "USA & Canada" },
+      { slug: "latam", label: locale === "es" ? "Latinoamérica" : "Latin America" },
+      { slug: "europe", label: locale === "es" ? "Europa" : "Europe" },
+      { slug: "online", label: "Online" },
+    ];
+    
+    res.json({
+      programs,
+      locations: locationsList,
+      regions,
+    });
+  });
+  
+  // Submit lead form
+  app.post("/api/leads", async (req, res) => {
+    try {
+      const leadData = req.body;
+      
+      // Validate required fields
+      if (!leadData.email) {
+        res.status(400).json({ error: "Email is required" });
+        return;
+      }
+      
+      // Build the payload for Breathecode API
+      const payload = {
+        first_name: leadData.first_name || null,
+        last_name: leadData.last_name || null,
+        phone: leadData.phone || null,
+        email: leadData.email,
+        location: leadData.location || null,
+        course: leadData.program || null,
+        consent: leadData.consent_whatsapp || false,
+        sms_consent: leadData.sms_consent || false,
+        comment: leadData.comment || null,
+        // Session/tracking data
+        utm_url: leadData.utm_url || null,
+        utm_source: leadData.utm_source || null,
+        utm_medium: leadData.utm_medium || null,
+        utm_campaign: leadData.utm_campaign || null,
+        utm_content: leadData.utm_content || null,
+        utm_term: leadData.utm_term || null,
+        utm_placement: leadData.utm_placement || null,
+        utm_plan: leadData.utm_plan || null,
+        // Ad platform click IDs
+        gclid: leadData.gclid || null,
+        fbclid: leadData.fbclid || null,
+        msclkid: leadData.msclkid || null,
+        ttclid: leadData.ttclid || null,
+        // Referral
+        referral: leadData.referral || leadData.ref || null,
+        coupon: leadData.coupon || null,
+        // Geo data
+        latitude: leadData.latitude || null,
+        longitude: leadData.longitude || null,
+        city: leadData.city || null,
+        country: leadData.country || null,
+        // Language
+        language: leadData.language || "en",
+        utm_language: leadData.language || "en",
+        browser_lang: leadData.browser_lang || null,
+        // Tags and automation
+        tags: leadData.tags || "website-lead",
+        automations: leadData.automations || "strong",
+        action: "submit",
+        // Experiment tracking
+        experiment_slug: leadData.experiment_slug || null,
+        experiment_variant: leadData.experiment_variant || null,
+        experiment_version: leadData.experiment_version || null,
+      };
+      
+      // Post to Breathecode API
+      const response = await fetch(`${BREATHECODE_HOST}/v1/marketing/lead`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Breathecode API error:", response.status, errorText);
+        res.status(response.status).json({ 
+          error: "Failed to submit lead",
+          details: errorText 
+        });
+        return;
+      }
+      
+      const result = await response.json();
+      res.json({ success: true, data: result });
+    } catch (error) {
+      console.error("Lead submission error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

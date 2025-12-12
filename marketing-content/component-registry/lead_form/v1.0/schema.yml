@@ -1,0 +1,232 @@
+name: "Lead Form"
+version: "1.0"
+component: "LeadForm"
+file: "client/src/components/LeadForm.tsx"
+description: "Lead capture form with configurable fields, auto-detection from session, and consent checkboxes. Submits to marketing API."
+
+when_to_use: |
+  Use this component when you need to collect user information for lead generation:
+  - Program signup pages
+  - Landing pages with contact forms
+  - Request information sections
+  - Newsletter signups with extended data collection
+
+variants:
+  stacked:
+    description: "Form fields stacked vertically, ideal for sidebar or narrow layouts"
+    best_for: "Sidebar widgets, mobile-first designs, single-column pages"
+  inline:
+    description: "Form fields arranged in rows, compact horizontal layout"
+    best_for: "Wide sections, embedded forms, multi-column layouts"
+
+props:
+  variant:
+    type: string
+    required: false
+    options: ["stacked", "inline"]
+    default: "stacked"
+    description: "Layout variant to use"
+    example: "stacked"
+
+  title:
+    type: string
+    required: false
+    description: "Form heading"
+    example: "Start Your Tech Career Today"
+
+  subtitle:
+    type: string
+    required: false
+    description: "Supporting text below title"
+    example: "Get free information about our programs"
+
+  submit_label:
+    type: string
+    required: false
+    default: "Get Information"
+    description: "Text for the submit button"
+    example: "Request Info"
+
+  tags:
+    type: string
+    required: false
+    default: "website-lead"
+    description: "Tags to associate with the lead"
+    example: "website-lead,landing-page"
+
+  automations:
+    type: string
+    required: false
+    default: "strong"
+    description: "Automation level for the lead"
+    example: "strong"
+
+  fields:
+    type: object
+    required: false
+    description: "Configuration for each form field. Each field can have visible, required, and default properties."
+    properties:
+      email:
+        type: object
+        description: "Email field (always required when visible)"
+        properties:
+          visible:
+            type: boolean
+            default: true
+          required:
+            type: boolean
+            default: true
+          default:
+            type: string
+            description: "Use 'auto' for auto-detection or a static value"
+      first_name:
+        type: object
+        description: "First name field"
+        properties:
+          visible:
+            type: boolean
+            default: true
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+      last_name:
+        type: object
+        description: "Last name field"
+        properties:
+          visible:
+            type: boolean
+            default: false
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+      phone:
+        type: object
+        description: "Phone number field"
+        properties:
+          visible:
+            type: boolean
+            default: true
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+      program:
+        type: object
+        description: "Program selection dropdown"
+        properties:
+          visible:
+            type: boolean
+            default: true
+          required:
+            type: boolean
+            default: true
+          default:
+            type: string
+            description: "Use 'auto' for page context detection or program slug"
+      region:
+        type: object
+        description: "Region dropdown (auto-detected from session)"
+        properties:
+          visible:
+            type: boolean
+            default: false
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+            default: "auto"
+      location:
+        type: object
+        description: "Campus location dropdown (auto-detected from session)"
+        properties:
+          visible:
+            type: boolean
+            default: true
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+            default: "auto"
+      coupon:
+        type: object
+        description: "Coupon code field (can be pre-filled from URL)"
+        properties:
+          visible:
+            type: boolean
+            default: false
+          required:
+            type: boolean
+            default: false
+          default:
+            type: string
+            default: "auto"
+      comment:
+        type: object
+        description: "Free-form comment textarea"
+        properties:
+          visible:
+            type: boolean
+            default: false
+          required:
+            type: boolean
+            default: false
+
+  success:
+    type: object
+    required: false
+    description: "What happens after successful submission"
+    properties:
+      url:
+        type: string
+        required: false
+        description: "Redirect URL after success"
+        example: "/thank-you"
+      message:
+        type: string
+        required: false
+        description: "Success message to display (if no url)"
+        example: "Thanks! We'll contact you within 24 hours."
+
+  terms_url:
+    type: string
+    required: false
+    default: "/terms"
+    description: "URL for Terms and Conditions link"
+
+  privacy_url:
+    type: string
+    required: false
+    default: "/privacy"
+    description: "URL for Privacy Policy link"
+
+notes: |
+  ## Auto-detection Fields
+  Fields with `default: "auto"` will be populated from:
+  - **location**: Nearest campus from session geolocation
+  - **region**: User's detected region (usa-canada, latam, europe)
+  - **program**: Current page's program context (if on a program page)
+  - **coupon**: Coupon code from URL params if present
+
+  ## Hidden Fields (always collected)
+  The form automatically collects from session:
+  - language, browser_lang
+  - latitude, longitude, city, country
+  - UTM params (source, medium, campaign, content, term, url, placement, plan)
+  - Ad click IDs (gclid, fbclid, msclkid, ttclid)
+  - Referral codes, coupon
+  - Experiment context (slug, variant, version)
+
+  ## Consent Checkboxes
+  Two standardized consent checkboxes are always shown:
+  - **SMS Consent**: Agreement to receive text messages
+  - **WhatsApp/Email Consent**: Agreement to receive communications via email/WhatsApp
+
+  ## Footer
+  Form always shows: "By signing up, you agree to the Terms and Conditions and Privacy Policy"
