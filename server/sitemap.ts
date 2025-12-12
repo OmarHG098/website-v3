@@ -23,24 +23,38 @@ function getBaseUrl(): string {
   return "http://localhost:5000";
 }
 
+// ============================================================================
+// CANONICAL SITEMAP ENTRY - Single Source of Truth
+// ============================================================================
+
+type ChangeFreq = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+type EntryType = "static" | "program" | "landing" | "location" | "template_page";
+
+interface CanonicalSitemapEntry {
+  loc: string;
+  lastmod: string;
+  changefreq: ChangeFreq;
+  priority: number;
+  label: string;
+  type: EntryType;
+  locale?: string;
+}
+
 interface SitemapCache {
-  xml: string;
+  entries: CanonicalSitemapEntry[];
   generatedAt: number;
 }
 
 let sitemapCache: SitemapCache | null = null;
 
-interface SitemapUrl {
-  loc: string;
-  lastmod: string;
-  changefreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-  priority: number;
-}
+// ============================================================================
+// Content Meta Interfaces
+// ============================================================================
 
 interface ContentMeta {
   robots?: string;
   priority?: number;
-  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  change_frequency?: ChangeFreq;
   redirects?: string[];
 }
 
@@ -50,6 +64,41 @@ interface AvailableProgram {
   title: string;
   meta: ContentMeta;
 }
+
+interface AvailableLanding {
+  slug: string;
+  locale: string;
+  title: string;
+  meta: ContentMeta;
+}
+
+interface AvailableLocation {
+  slug: string;
+  locale: string;
+  name: string;
+  visibility: string;
+  meta: ContentMeta;
+}
+
+interface AvailableTemplatePage {
+  slug: string;
+  locale: string;
+  template: string;
+  title: string;
+  meta: ContentMeta;
+}
+
+// Template pages URL routing (slug to URL path mapping)
+const templatePageRoutes: Record<string, { en: string; es: string }> = {
+  "job-guarantee": {
+    en: "/en/job-guarantee",
+    es: "/es/garantia-empleo",
+  },
+};
+
+// ============================================================================
+// Data Fetchers
+// ============================================================================
 
 function getAvailablePrograms(): AvailableProgram[] {
   try {
@@ -69,7 +118,6 @@ function getAvailablePrograms(): AvailableProgram[] {
       for (const file of files) {
         const locale = file.replace(".yml", "");
         const filePath = path.join(programPath, file);
-
 
         try {
           const content = fs.readFileSync(filePath, "utf-8");
@@ -98,19 +146,6 @@ function getAvailablePrograms(): AvailableProgram[] {
   }
 }
 
-interface LandingMeta {
-  robots?: string;
-  priority?: number;
-  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-}
-
-interface AvailableLanding {
-  slug: string;
-  locale: string;
-  title: string;
-  meta: LandingMeta;
-}
-
 function getAvailableLandings(): AvailableLanding[] {
   try {
     if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
@@ -134,7 +169,7 @@ function getAvailableLandings(): AvailableLanding[] {
             const data = yaml.load(content) as { 
               slug: string; 
               title: string; 
-              meta?: LandingMeta 
+              meta?: ContentMeta;
             };
 
             landings.push({
@@ -155,20 +190,6 @@ function getAvailableLandings(): AvailableLanding[] {
     console.error("Error scanning landings:", error);
     return [];
   }
-}
-
-interface LocationMeta {
-  robots?: string;
-  priority?: number;
-  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-}
-
-interface AvailableLocation {
-  slug: string;
-  locale: string;
-  name: string;
-  visibility: string;
-  meta: LocationMeta;
 }
 
 function getAvailableLocations(): AvailableLocation[] {
@@ -192,7 +213,7 @@ function getAvailableLocations(): AvailableLocation[] {
           slug?: string;
           name?: string;
           visibility?: string;
-          meta?: LocationMeta;
+          meta?: ContentMeta;
         };
 
         if (data.visibility === "listed") {
@@ -215,29 +236,6 @@ function getAvailableLocations(): AvailableLocation[] {
     return [];
   }
 }
-
-// Template pages interface
-interface TemplateMeta {
-  robots?: string;
-  priority?: number;
-  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-}
-
-interface AvailableTemplatePage {
-  slug: string;
-  locale: string;
-  template: string;
-  title: string;
-  meta: TemplateMeta;
-}
-
-// Template pages URL routing (slug to URL path mapping)
-const templatePageRoutes: Record<string, { en: string; es: string }> = {
-  "job-guarantee": {
-    en: "/en/job-guarantee",
-    es: "/es/garantia-empleo",
-  },
-};
 
 function getAvailableTemplatePages(): AvailableTemplatePage[] {
   try {
@@ -269,7 +267,7 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
             slug?: string;
             template?: string;
             title?: string;
-            meta?: TemplateMeta;
+            meta?: ContentMeta;
           };
 
           pages.push({
@@ -292,6 +290,10 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
   }
 }
 
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
 function shouldIndex(robots?: string): boolean {
   if (!robots) return true;
   return !robots.toLowerCase().includes("noindex");
@@ -301,64 +303,54 @@ function getCurrentDate(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function buildSitemapXml(): string {
+function resolveTemplatePageUrl(slug: string, locale: string): string {
+  const routes = templatePageRoutes[slug];
+  if (routes) {
+    return `${getBaseUrl()}${routes[locale as "en" | "es"] || routes.en}`;
+  }
+  // Default routing pattern
+  return locale === "es"
+    ? `${getBaseUrl()}/es/${slug}`
+    : `${getBaseUrl()}/en/${slug}`;
+}
+
+function formatLocaleLabel(locale: string): string {
+  return locale === "es" ? "ES" : "EN";
+}
+
+// ============================================================================
+// CANONICAL BUILDER - Single Source of Truth
+// ============================================================================
+
+function buildCanonicalSitemapEntries(): CanonicalSitemapEntry[] {
   const today = getCurrentDate();
-  const urls: SitemapUrl[] = [];
+  const entries: CanonicalSitemapEntry[] = [];
 
   // Static pages
-  urls.push({
-    loc: `${getBaseUrl()}/`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 1.0,
-  });
+  const staticPages: Array<{ path: string; label: string; changefreq: ChangeFreq; priority: number }> = [
+    { path: "/", label: "Home", changefreq: "weekly", priority: 1.0 },
+    { path: "/learning-paths", label: "Learning Paths", changefreq: "weekly", priority: 0.9 },
+    { path: "/career-paths", label: "Career Paths", changefreq: "weekly", priority: 0.9 },
+    { path: "/skill-boosters", label: "Skill Boosters", changefreq: "weekly", priority: 0.9 },
+    { path: "/tool-mastery", label: "Tool Mastery", changefreq: "weekly", priority: 0.9 },
+    { path: "/career-programs", label: "Career Programs", changefreq: "weekly", priority: 0.9 },
+    { path: "/dashboard", label: "Dashboard", changefreq: "daily", priority: 0.8 },
+  ];
 
-  urls.push({
-    loc: `${getBaseUrl()}/learning-paths`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
+  for (const page of staticPages) {
+    entries.push({
+      loc: `${getBaseUrl()}${page.path}`,
+      lastmod: today,
+      changefreq: page.changefreq,
+      priority: page.priority,
+      label: page.label,
+      type: "static",
+    });
+  }
 
-  urls.push({
-    loc: `${getBaseUrl()}/career-paths`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/skill-boosters`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/tool-mastery`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/career-programs`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/dashboard`,
-    lastmod: today,
-    changefreq: "daily",
-    priority: 0.8,
-  });
-
-  // Dynamic career program pages from YAML (only include indexable pages)
+  // Dynamic career program pages
   const programs = getAvailablePrograms();
   for (const program of programs) {
-    // Skip pages marked as noindex
     if (!shouldIndex(program.meta.robots)) {
       console.log(`[Sitemap] Skipping noindex program: ${program.slug} (${program.locale})`);
       continue;
@@ -368,23 +360,23 @@ function buildSitemapXml(): string {
       ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
       : `${getBaseUrl()}/en/career-programs/${program.slug}`;
 
-    urls.push({
+    entries.push({
       loc: url,
       lastmod: today,
       changefreq: program.meta.change_frequency || "weekly",
       priority: program.meta.priority || 0.8,
+      label: `${program.title} (${formatLocaleLabel(program.locale)})`,
+      type: "program",
+      locale: program.locale,
     });
   }
 
-  // Dynamic landing pages from YAML (only include indexable pages)
+  // Dynamic landing pages (deduplicated by slug)
   const landings = getAvailableLandings();
   const processedLandingSlugs = new Set<string>();
 
   for (const landing of landings) {
-    // Skip if already processed (avoid duplicates for multi-locale landings)
     if (processedLandingSlugs.has(landing.slug)) continue;
-
-    // Skip pages marked as noindex
     if (!shouldIndex(landing.meta.robots)) {
       console.log(`[Sitemap] Skipping noindex landing: ${landing.slug}`);
       continue;
@@ -392,18 +384,19 @@ function buildSitemapXml(): string {
 
     processedLandingSlugs.add(landing.slug);
 
-    urls.push({
+    entries.push({
       loc: `${getBaseUrl()}/landing/${landing.slug}`,
       lastmod: today,
       changefreq: landing.meta.change_frequency || "weekly",
       priority: landing.meta.priority || 0.8,
+      label: `Landing: ${landing.title}`,
+      type: "landing",
     });
   }
 
-  // Dynamic location pages from YAML (only include indexable pages)
+  // Dynamic location pages
   const locations = getAvailableLocations();
   for (const location of locations) {
-    // Skip pages marked as noindex
     if (!shouldIndex(location.meta.robots)) {
       console.log(`[Sitemap] Skipping noindex location: ${location.slug} (${location.locale})`);
       continue;
@@ -413,51 +406,51 @@ function buildSitemapXml(): string {
       ? `${getBaseUrl()}/es/ubicacion/${location.slug}`
       : `${getBaseUrl()}/en/location/${location.slug}`;
 
-    urls.push({
+    entries.push({
       loc: url,
       lastmod: today,
       changefreq: location.meta.change_frequency || "monthly",
       priority: location.meta.priority || 0.8,
+      label: `Location: ${location.name} (${formatLocaleLabel(location.locale)})`,
+      type: "location",
+      locale: location.locale,
     });
   }
 
-  // Dynamic template pages from YAML (marketing-content/pages/)
+  // Dynamic template pages
   const templatePages = getAvailableTemplatePages();
   for (const page of templatePages) {
-    // Skip pages marked as noindex
     if (!shouldIndex(page.meta.robots)) {
       console.log(`[Sitemap] Skipping noindex template page: ${page.slug} (${page.locale})`);
       continue;
     }
 
-    // Get URL from routing map, or generate default
-    const routes = templatePageRoutes[page.slug];
-    let url: string;
-    if (routes) {
-      url = `${getBaseUrl()}${routes[page.locale as "en" | "es"] || routes.en}`;
-    } else {
-      // Default routing pattern
-      url = page.locale === "es"
-        ? `${getBaseUrl()}/es/${page.slug}`
-        : `${getBaseUrl()}/en/${page.slug}`;
-    }
-
-    urls.push({
-      loc: url,
+    entries.push({
+      loc: resolveTemplatePageUrl(page.slug, page.locale),
       lastmod: today,
       changefreq: page.meta.change_frequency || "weekly",
       priority: page.meta.priority || 0.8,
+      label: `Page: ${page.title} (${formatLocaleLabel(page.locale)})`,
+      type: "template_page",
+      locale: page.locale,
     });
   }
 
-  // Build XML
-  const urlEntries = urls
+  return entries;
+}
+
+// ============================================================================
+// Output Transformers - Derive from Canonical Source
+// ============================================================================
+
+function entriesToXml(entries: CanonicalSitemapEntry[]): string {
+  const urlEntries = entries
     .map(
-      (url) => `  <url>
-    <loc>${url.loc}</loc>
-    <lastmod>${url.lastmod}</lastmod>
-    <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
+      (entry) => `  <url>
+    <loc>${entry.loc}</loc>
+    <lastmod>${entry.lastmod}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
   </url>`
     )
     .join("\n");
@@ -468,25 +461,50 @@ ${urlEntries}
 </urlset>`;
 }
 
-export function getSitemap(): string {
+function entriesToHumanReadable(entries: CanonicalSitemapEntry[]): Array<{ loc: string; label: string }> {
+  return entries.map(entry => ({
+    loc: entry.loc,
+    label: entry.label,
+  }));
+}
+
+// ============================================================================
+// Cached Access - Both outputs derive from same canonical data
+// ============================================================================
+
+function getCanonicalEntries(): CanonicalSitemapEntry[] {
   const now = Date.now();
 
   // Check if cache exists and is still valid
   if (sitemapCache && (now - sitemapCache.generatedAt) < CACHE_TTL_MS) {
     console.log("[Sitemap] Serving from cache");
-    return sitemapCache.xml;
+    return sitemapCache.entries;
   }
 
-  // Generate fresh sitemap
-  console.log("[Sitemap] Generating fresh sitemap");
-  const xml = buildSitemapXml();
+  // Generate fresh entries
+  console.log("[Sitemap] Generating fresh sitemap entries");
+  const entries = buildCanonicalSitemapEntries();
 
   sitemapCache = {
-    xml,
+    entries,
     generatedAt: now,
   };
 
-  return xml;
+  return entries;
+}
+
+// ============================================================================
+// Public API
+// ============================================================================
+
+export function getSitemap(): string {
+  const entries = getCanonicalEntries();
+  return entriesToXml(entries);
+}
+
+export function getSitemapUrls(): Array<{ loc: string; label: string }> {
+  const entries = getCanonicalEntries();
+  return entriesToHumanReadable(entries);
 }
 
 export function clearSitemapCache(): { success: boolean; message: string } {
@@ -512,6 +530,7 @@ export function getSitemapCacheStatus(): {
   generatedAt: number | null;
   ageMinutes: number | null;
   expiresInMinutes: number | null;
+  entryCount: number | null;
 } {
   if (!sitemapCache) {
     return {
@@ -519,6 +538,7 @@ export function getSitemapCacheStatus(): {
       generatedAt: null,
       ageMinutes: null,
       expiresInMinutes: null,
+      entryCount: null,
     };
   }
 
@@ -531,73 +551,6 @@ export function getSitemapCacheStatus(): {
     generatedAt: sitemapCache.generatedAt,
     ageMinutes: Math.round(ageMs / 1000 / 60),
     expiresInMinutes: Math.max(0, Math.round(expiresInMs / 1000 / 60)),
+    entryCount: sitemapCache.entries.length,
   };
-}
-
-export function getSitemapUrls(): Array<{ loc: string; label: string }> {
-  const urls: Array<{ loc: string; label: string }> = [];
-
-  // Static pages
-  urls.push({ loc: `${getBaseUrl()}/`, label: "Home" });
-  urls.push({ loc: `${getBaseUrl()}/learning-paths`, label: "Learning Paths" });
-  urls.push({ loc: `${getBaseUrl()}/career-paths`, label: "Career Paths" });
-  urls.push({ loc: `${getBaseUrl()}/skill-boosters`, label: "Skill Boosters" });
-  urls.push({ loc: `${getBaseUrl()}/tool-mastery`, label: "Tool Mastery" });
-  urls.push({ loc: `${getBaseUrl()}/career-programs`, label: "Career Programs" });
-  urls.push({ loc: `${getBaseUrl()}/dashboard`, label: "Dashboard" });
-
-  // Dynamic career program pages from YAML (only indexable)
-  const programs = getAvailablePrograms();
-  for (const program of programs) {
-    if (!shouldIndex(program.meta.robots)) continue;
-
-    const url = program.locale === "es"
-      ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
-      : `${getBaseUrl()}/en/career-programs/${program.slug}`;
-    const localeLabel = program.locale === "es" ? "ES" : "EN";
-
-    urls.push({
-      loc: url,
-      label: `${program.title} (${localeLabel})`,
-    });
-  }
-
-  // Dynamic landing pages from YAML (only indexable)
-  const landings = getAvailableLandings();
-  const processedLandingSlugs = new Set<string>();
-
-  for (const landing of landings) {
-    if (processedLandingSlugs.has(landing.slug)) continue;
-    if (!shouldIndex(landing.meta.robots)) continue;
-
-    processedLandingSlugs.add(landing.slug);
-    urls.push({
-      loc: `${getBaseUrl()}/landing/${landing.slug}`,
-      label: `Landing: ${landing.title}`,
-    });
-  }
-
-  // Dynamic template pages from YAML (only indexable)
-  const templatePages = getAvailableTemplatePages();
-  for (const page of templatePages) {
-    if (!shouldIndex(page.meta.robots)) continue;
-
-    const routes = templatePageRoutes[page.slug];
-    let url: string;
-    if (routes) {
-      url = `${getBaseUrl()}${routes[page.locale as "en" | "es"] || routes.en}`;
-    } else {
-      url = page.locale === "es"
-        ? `${getBaseUrl()}/es/${page.slug}`
-        : `${getBaseUrl()}/en/${page.slug}`;
-    }
-    const localeLabel = page.locale === "es" ? "ES" : "EN";
-
-    urls.push({
-      loc: url,
-      label: `Page: ${page.title} (${localeLabel})`,
-    });
-  }
-
-  return urls;
 }
