@@ -97,7 +97,7 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
         </div>
       )}
 
-      <div className="flex gap-4 justify-center items-end h-48">
+      <div className="space-y-4">
         {data.items.map((item, index) => {
           const percentage = (item.value / maxValue) * 100;
           const delay = index * 150;
@@ -107,25 +107,28 @@ export function HorizontalBars({ data }: HorizontalBarsProps) {
           return (
             <div
               key={index}
-              className="flex flex-col items-center gap-2"
+              className="flex items-center h-10 md:h-12 rounded-md overflow-hidden"
               data-testid={`bar-item-${index}`}
             >
-              <span className="text-sm font-bold text-foreground whitespace-nowrap">
-                {displayText}
-              </span>
-              <div className="w-16 md:w-20 h-36 bg-muted rounded-t-md overflow-hidden flex items-end">
+              <div className="w-20 md:w-24 h-full flex items-center justify-center bg-primary/10 shrink-0 rounded-l-md">
+                <span className="text-sm md:text-base font-semibold text-foreground">
+                  {item.label}
+                </span>
+              </div>
+              <div className="flex-1 h-full bg-muted rounded-r-md overflow-hidden">
                 <div
-                  className="w-full transition-all duration-1000 ease-out rounded-t-md"
+                  className="h-full flex items-center justify-end pr-3 transition-all duration-1000 ease-out rounded-r-md"
                   style={{
-                    height: isVisible ? `${percentage}%` : "0%",
+                    width: isVisible ? `${percentage}%` : "0%",
                     transitionDelay: `${delay}ms`,
                     backgroundColor: barColor,
                   }}
-                />
+                >
+                  <span className="text-sm md:text-base font-bold text-primary-foreground whitespace-nowrap">
+                    {displayText}
+                  </span>
+                </div>
               </div>
-              <span className="text-sm font-semibold text-foreground">
-                {item.label}
-              </span>
             </div>
           );
         })}
