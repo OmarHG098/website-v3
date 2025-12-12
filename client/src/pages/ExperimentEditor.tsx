@@ -19,21 +19,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   IconArrowLeft,
   IconFlask,
   IconDeviceFloppy,
   IconRefresh,
   IconEye,
-  IconChevronRight,
+  IconPencil,
   IconUsers,
   IconPercentage,
   IconTarget,
-  IconCalendar,
   IconDeviceDesktop,
   IconDeviceMobile,
   IconLanguage,
   IconWorld,
-  IconClock,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -78,6 +84,8 @@ export default function ExperimentEditor() {
 
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editDescription, setEditDescription] = useState("");
 
   const [formData, setFormData] = useState<{
     description: string;
@@ -236,9 +244,23 @@ export default function ExperimentEditor() {
             <div className="flex items-center gap-3">
               <IconFlask className="h-5 w-5 text-primary" />
               <div>
-                <h1 className="font-semibold text-sm" data-testid="text-experiment-title">
-                  {deslugify(experiment.slug)}
-                </h1>
+                <div className="flex items-center gap-1">
+                  <h1 className="font-semibold text-sm" data-testid="text-experiment-title">
+                    {deslugify(experiment.slug)}
+                  </h1>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={() => {
+                      setEditDescription(formData?.description || "");
+                      setEditDialogOpen(true);
+                    }}
+                    data-testid="button-edit-title"
+                  >
+                    <IconPencil className="h-3 w-3" />
+                  </Button>
+                </div>
                 <p className="text-xs text-muted-foreground">
                   {deslugify(contentType || "")} / {deslugify(contentSlug || "")}
                 </p>
@@ -635,6 +657,59 @@ export default function ExperimentEditor() {
             </div>
         </div>
       </main>
+
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Experiment</DialogTitle>
+            <DialogDescription>
+              Update the description for this experiment.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label>Title</Label>
+              <Input
+                value={deslugify(experiment.slug)}
+                disabled
+                className="bg-muted"
+              />
+              <p className="text-xs text-muted-foreground">
+                The experiment slug cannot be changed.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea
+                id="edit-description"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                placeholder="Describe what this experiment tests..."
+                rows={4}
+                data-testid="input-edit-description"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setEditDialogOpen(false)}
+              data-testid="button-cancel-edit"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                updateFormData("description", editDescription);
+                setEditDialogOpen(false);
+              }}
+              data-testid="button-save-edit"
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
