@@ -577,5 +577,27 @@ export function getSitemapUrls(): Array<{ loc: string; label: string }> {
     });
   }
 
+  // Dynamic template pages from YAML (only indexable)
+  const templatePages = getAvailableTemplatePages();
+  for (const page of templatePages) {
+    if (!shouldIndex(page.meta.robots)) continue;
+
+    const routes = templatePageRoutes[page.slug];
+    let url: string;
+    if (routes) {
+      url = `${getBaseUrl()}${routes[page.locale as "en" | "es"] || routes.en}`;
+    } else {
+      url = page.locale === "es"
+        ? `${getBaseUrl()}/es/${page.slug}`
+        : `${getBaseUrl()}/en/${page.slug}`;
+    }
+    const localeLabel = page.locale === "es" ? "ES" : "EN";
+
+    urls.push({
+      loc: url,
+      label: `Page: ${page.title} (${localeLabel})`,
+    });
+  }
+
   return urls;
 }
