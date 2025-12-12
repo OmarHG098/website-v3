@@ -41,6 +41,7 @@ import {
   IconTable,
   IconFlask,
   IconPlus,
+  IconDatabase,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -264,6 +265,7 @@ export function DebugBubble() {
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
+  const [sessionModalOpen, setSessionModalOpen] = useState(false);
   
   // Experiments state
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
@@ -780,6 +782,23 @@ export function DebugBubble() {
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
                 
+                <button
+                  onClick={() => setSessionModalOpen(true)}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-session-view"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconDatabase className="h-4 w-4 text-muted-foreground" />
+                    <span>Session</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
+                      {session.geo?.country_code || '...'} | {session.utm?.utm_source || 'organic'}
+                    </code>
+                    <IconPencil className="h-3 w-3 text-muted-foreground" />
+                  </div>
+                </button>
+                
                 <EditModeToggle />
               </div>
             </>
@@ -1115,6 +1134,103 @@ export function DebugBubble() {
               data-testid="button-confirm-location-override"
             >
               Override Location
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <Dialog open={sessionModalOpen} onOpenChange={setSessionModalOpen}>
+        <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Session Data</DialogTitle>
+            <DialogDescription>
+              Current session values captured from browser, geolocation, and URL parameters.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Geolocation</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Country:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.country || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">City:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.city || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Region:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.region || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Timezone:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.timezone || 'N/A'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">UTM Parameters</h4>
+              <div className="space-y-1.5 text-sm">
+                {(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_placement', 'utm_plan'] as const).map(key => (
+                  <div key={key} className="flex justify-between">
+                    <span className="text-muted-foreground">{key}:</span>
+                    <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.[key] || '—'}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Tracking</h4>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">PPC Tracking ID:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs max-w-[150px] truncate">{session.utm?.ppc_tracking_id || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Referral:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.referral || session.utm?.ref || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Coupon:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.coupon || '—'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Session Info</h4>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Language:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.language}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Browser Lang:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.browserLang || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Location:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.location?.slug || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Initialized:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.initialized ? 'Yes' : 'No'}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setSessionModalOpen(false)}
+              data-testid="button-close-session-modal"
+            >
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
