@@ -275,7 +275,7 @@ function ComponentCard({
         sections: [parsedData],
       }, '*');
     }
-  }, [iframeReady, parsedData]);
+  }, [iframeReady, parsedData, selectedExample]);
 
   // Send theme to iframe when it changes
   useEffect(() => {
