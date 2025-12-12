@@ -743,6 +743,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(info);
   });
 
+  app.get("/api/component-registry/:componentType/validate", (req, res) => {
+    const { componentType } = req.params;
+    const version = req.query.version as string | undefined;
+    
+    // Dynamic import to avoid circular dependencies
+    import("../scripts/utils/validateComponent").then(({ validateComponent }) => {
+      const result = validateComponent(componentType, version);
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error: "Failed to load validation module", details: String(error) });
+    });
+  });
+
   app.get("/api/component-registry/:componentType/versions", (req, res) => {
     const { componentType } = req.params;
     const versions = listVersions(componentType);
