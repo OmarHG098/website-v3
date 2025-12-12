@@ -15,7 +15,9 @@ import {
   IconDeviceMobile,
   IconDeviceTablet,
   IconDeviceDesktop,
-  IconChevronUp
+  IconChevronUp,
+  IconArrowsMaximize,
+  IconX
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -156,6 +158,8 @@ function ComponentCard({
   const [isDarkMode, setIsDarkMode] = useState(() => 
     typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
   );
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const fullscreenIframeRef = useRef<HTMLIFrameElement>(null);
 
   const currentVersionData = componentInfo.versions.find(v => v.version === selectedVersion);
   const schema = currentVersionData?.schema;
@@ -631,6 +635,23 @@ function ComponentCard({
                   data-testid={`button-viewport-desktop-${componentType}`}
                 >
                   <IconDeviceDesktop className="w-4 h-4" />
+                </Button>
+                <div className="w-px h-4 bg-border mx-1" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => {
+                    if (parsedData) {
+                      sessionStorage.setItem('preview-sections', JSON.stringify([parsedData]));
+                      sessionStorage.setItem('preview-theme', isDarkMode ? 'dark' : 'light');
+                      window.location.href = '/preview-frame?debug=false';
+                    }
+                  }}
+                  title="Full page preview"
+                  data-testid={`button-fullpage-preview-${componentType}`}
+                >
+                  <IconArrowsMaximize className="w-4 h-4" />
                 </Button>
               </div>
             </div>
