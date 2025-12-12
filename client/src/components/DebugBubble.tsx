@@ -618,23 +618,33 @@ export function DebugBubble() {
                   <p className="text-xs text-muted-foreground">Development utilities</p>
                 </div>
                 {editMode && (
-                  <button
-                    onClick={editMode.toggleEditMode}
-                    className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
-                      editMode.isEditMode 
-                        ? "bg-primary text-primary-foreground" 
-                        : "bg-muted text-muted-foreground hover-elevate"
-                    }`}
-                    data-testid="button-toggle-edit-mode"
-                    title="Toggle Edit Mode"
+                  <div 
+                    className="flex items-center bg-muted rounded-full p-0.5"
+                    data-testid="toggle-edit-mode"
                   >
-                    {editMode.isEditMode ? (
-                      <IconPencil className="h-3 w-3" />
-                    ) : (
-                      <IconPencilOff className="h-3 w-3" />
-                    )}
-                    <span>{editMode.isEditMode ? "Edit" : "View"}</span>
-                  </button>
+                    <button
+                      onClick={() => !editMode.isEditMode && editMode.toggleEditMode()}
+                      className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                        editMode.isEditMode 
+                          ? "bg-primary text-primary-foreground" 
+                          : "text-muted-foreground"
+                      }`}
+                      data-testid="button-edit-mode"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => editMode.isEditMode && editMode.toggleEditMode()}
+                      className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                        !editMode.isEditMode 
+                          ? "bg-background text-foreground shadow-sm" 
+                          : "text-primary-foreground/70"
+                      }`}
+                      data-testid="button-read-mode"
+                    >
+                      Read
+                    </button>
+                  </div>
                 )}
               </div>
               
