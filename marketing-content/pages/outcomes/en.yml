@@ -1,9 +1,9 @@
 slug: "outcomes"
 template: "default"
-title: "Student Outcomes"
+title: "Outcomes Report"
 
 meta:
-  page_title: "Student Outcomes | 4Geeks Academy"
+  page_title: "4Geeks Academy Outcomes Report | Career Success Data"
   description: "Discover the career outcomes of 4Geeks Academy graduates. See employment rates, salary increases, and success stories from our coding bootcamp alumni."
   robots: "index, follow"
 
@@ -16,9 +16,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    badge: "Career Success"
-    title: "Our Graduates Achieve Real Results"
-    subtitle: "Join thousands of successful alumni who have transformed their careers through our coding bootcamp. See the data behind our student outcomes."
+    title: "Proven Outcomes That Launch Tech Careers"
+    subtitle: "At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it."
     image:
       src: "/attached_assets/outcomes_1765562850573.png"
       alt: "Student outcomes growth chart"
@@ -26,6 +25,85 @@ sections:
       - text: "Apply Now"
         url: "/apply"
         variant: primary
-      - text: "See Success Stories"
-        url: "/graduates-and-projects"
+      - text: "Download Report"
+        url: "#download"
+        variant: outline
+
+  - type: stats
+    version: "1.0"
+    title: "Outcomes by the Numbers"
+    subtitle: "We keep our reporting transparent, regularly publishing verified placement and salary data across the U.S., Latin America, and Europe."
+    items:
+      - value: "84%"
+        label: "of U.S. graduates hired within 6 months"
+      - value: "+55%"
+        label: "average U.S. salary increase"
+      - value: "+233%"
+        label: "average salary increase in LATAM"
+      - value: "85%"
+        label: "placement rate in Spain"
+      - value: "3-6"
+        label: "months average time to get hired in 2025"
+
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: "The Global Picture"
+    subtitle: "Your career shouldn't depend on one year or one market trend. At 4Geeks, we've helped thousands of graduates launch successful tech careers worldwide."
+    items:
+      - title: "U.S. Outcomes"
+        description: "84% of job-seekers hired within 6 months with an average 55% salary increase. Our graduates consistently outperform industry averages."
+        icon: "Usa"
+      - title: "LATAM Outcomes"
+        description: "86% hired with +233% salary increase in 2024. In 2025, even faster placements (91 days) with +282% salary growth."
+        icon: "World"
+      - title: "Spain Outcomes"
+        description: "85% of job-seekers hired with +30% salary increase. Even in cooler markets, grads still hired in 92 days on average."
+        icon: "MapPin"
+
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: "Why Students Get Results with Us"
+    subtitle: "We don't just teach skills — we make sure you can turn them into a career. Every 4Geeks student gets:"
+    items:
+      - title: "GeekFORCE Career Support"
+        description: "Unlimited 1:1 career mentorship, interview training, resume/portfolio coaching, and expert job search strategies — for life."
+        icon: "Briefcase"
+      - title: "GeekPAL Mentorship"
+        description: "Unlimited coding help from real human mentors for life. Never get stuck on a problem again."
+        icon: "Users"
+      - title: "AI-Powered Support"
+        description: "24/7 personalized coding feedback and career development tools powered by artificial intelligence."
+        icon: "Robot"
+      - title: "5,000+ Hiring Partners"
+        description: "A global network of companies that trust and hire 4Geeks graduates across all our programs."
+        icon: "Building"
+
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: "Making Tech Careers Accessible"
+    subtitle: "Tech careers should be open to everyone. That's why we offer flexible options:"
+    items:
+      - title: "Affordable Tuition"
+        description: "Lowest among top-rated bootcamps. Recognized by Forbes as Best Bootcamp for Students on a Budget."
+        icon: "CurrencyDollar"
+      - title: "Flexible Financing"
+        description: "Options starting below $299/month, plus affordable loans and income-based payment plans."
+        icon: "Calculator"
+      - title: "Full and Partial Scholarships"
+        description: "Location-based options thanks to important institutional partnerships and government initiatives."
+        icon: "Award"
+
+  - type: cta_banner
+    version: "1.0"
+    title: "Extra Confidence: The Job Guarantee"
+    subtitle: "Get hired within 9 months of graduation, or we'll refund 100% of your tuition. We're that confident in our program's effectiveness."
+    buttons:
+      - text: "Learn About Job Guarantee"
+        url: "/p/job-guarantee"
+        variant: primary
+      - text: "Apply Now"
+        url: "/apply"
         variant: outline
