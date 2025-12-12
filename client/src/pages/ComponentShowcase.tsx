@@ -287,11 +287,7 @@ function ComponentCard({
     }
   }, [iframeReady, isDarkMode]);
 
-  // Reset iframe ready state when viewport changes (iframe remounts)
-  useEffect(() => {
-    setIframeReady(false);
-  }, [previewViewport]);
-
+  
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
     try {
