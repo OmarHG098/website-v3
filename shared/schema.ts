@@ -615,6 +615,7 @@ export type StatsSection = z.infer<typeof statsSectionSchema>;
 export const horizontalBarsItemSchema = z.object({
   label: z.string(),
   value: z.number(),
+  displayValue: z.string().optional(),
   color: z.string().optional(),
 });
 
@@ -624,6 +625,7 @@ export const horizontalBarsSectionSchema = z.object({
   title: z.string().optional(),
   subtitle: z.string().optional(),
   background: z.string().optional(),
+  use_card: z.boolean().optional(),
   items: z.array(horizontalBarsItemSchema),
 });
 
