@@ -23,6 +23,7 @@ const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
+const TemplatePage = lazy(() => import("@/pages/page"));
 
 function LoadingFallback() {
   return (
@@ -56,6 +57,9 @@ function Router() {
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
         <Route path="/private/redirects" component={PrivateRedirects} />
+        {/* Template pages - dynamic YAML-based pages */}
+        <Route path="/us/:slug" component={TemplatePage} />
+        <Route path="/es/:slug" component={TemplatePage} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

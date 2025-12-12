@@ -19,11 +19,12 @@ import { CTABannerSection } from "./CTABannerSection";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
+import StatsSection from "@/components/StatsSection";
 import { EditableSection } from "@/components/editing/EditableSection";
 
 interface SectionRendererProps {
   sections: Section[];
-  contentType?: "program" | "landing" | "location";
+  contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
 }
@@ -32,7 +33,7 @@ interface EditableSectionWrapperProps {
   section: Section;
   index: number;
   sectionType: string;
-  contentType?: "program" | "landing" | "location";
+  contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
   children: React.ReactNode;
@@ -83,6 +84,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <About key={index} data={section as Parameters<typeof About>[0]["data"]} />;
     case "comparison_table":
       return <ComparisonTable key={index} data={section as Parameters<typeof ComparisonTable>[0]["data"]} />;
+    case "stats":
+      return <StatsSection key={index} data={section as Parameters<typeof StatsSection>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

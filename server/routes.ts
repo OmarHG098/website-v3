@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
-import { careerProgramSchema, landingPageSchema, locationPageSchema, type CareerProgram, type LandingPage, type LocationPage } from "@shared/schema";
+import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
 import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
@@ -31,6 +31,7 @@ const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breatheco
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
+const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
@@ -205,6 +206,62 @@ function listLocationPages(locale: string): Array<{ slug: string; name: string; 
   }
 }
 
+// Template Pages (marketing-content/pages/)
+function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
+  try {
+    const pageDir = path.join(PAGES_CONTENT_PATH, slug);
+    const localePath = path.join(pageDir, `${locale}.yml`);
+
+    if (!fs.existsSync(localePath)) {
+      return null;
+    }
+
+    const localeContent = fs.readFileSync(localePath, "utf8");
+    const data = yaml.load(localeContent) as Record<string, unknown>;
+
+    const result = templatePageSchema.safeParse(data);
+    if (!result.success) {
+      console.error(`Invalid YAML structure for template page ${slug}/${locale}:`, result.error);
+      return null;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error(`Error loading template page ${slug}/${locale}:`, error);
+    return null;
+  }
+}
+
+function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
+  try {
+    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
+      return [];
+    }
+
+    const pages: Array<{ slug: string; template: string; title: string }> = [];
+    const entries = fs.readdirSync(PAGES_CONTENT_PATH, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const slug = entry.name;
+        const page = loadTemplatePage(slug, locale);
+        if (page) {
+          pages.push({
+            slug: page.slug,
+            template: page.template,
+            title: page.title,
+          });
+        }
+      }
+    }
+
+    return pages;
+  } catch (error) {
+    console.error("Error listing template pages:", error);
+    return [];
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Apply redirect middleware for 301 redirects from YAML content
   app.use(redirectMiddleware);
@@ -357,6 +414,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     res.json(location);
+  });
+
+  // Template Pages API
+  app.get("/api/pages", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const pages = listTemplatePages(locale);
+    res.json(pages);
+  });
+
+  app.get("/api/pages/:slug", (req, res) => {
+    const { slug } = req.params;
+    const locale = (req.query.locale as string) || "en";
+
+    const page = loadTemplatePage(slug, locale);
+
+    if (!page) {
+      res.status(404).json({ error: "Template page not found" });
+      return;
+    }
+
+    res.json(page);
   });
 
   // Dynamic sitemap with caching

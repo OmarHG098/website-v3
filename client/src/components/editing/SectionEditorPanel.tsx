@@ -12,7 +12,7 @@ import * as yamlParser from "js-yaml";
 interface SectionEditorPanelProps {
   section: Section;
   sectionIndex: number;
-  contentType?: "program" | "landing" | "location";
+  contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
   onUpdate: (updatedSection: Section) => void;

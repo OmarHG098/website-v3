@@ -5,6 +5,7 @@ import * as yaml from "js-yaml";
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
 const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
+const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function getBaseUrl(): string {
@@ -215,6 +216,82 @@ function getAvailableLocations(): AvailableLocation[] {
   }
 }
 
+// Template pages interface
+interface TemplateMeta {
+  robots?: string;
+  priority?: number;
+  change_frequency?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+}
+
+interface AvailableTemplatePage {
+  slug: string;
+  locale: string;
+  template: string;
+  title: string;
+  meta: TemplateMeta;
+}
+
+// Template pages URL routing (slug to URL path mapping)
+const templatePageRoutes: Record<string, { en: string; es: string }> = {
+  "job-guarantee": {
+    en: "/us/job-guarantee",
+    es: "/es/garantia-empleo",
+  },
+};
+
+function getAvailableTemplatePages(): AvailableTemplatePage[] {
+  try {
+    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
+      return [];
+    }
+
+    const pages: AvailableTemplatePage[] = [];
+    const dirs = fs.readdirSync(PAGES_CONTENT_PATH);
+
+    for (const dir of dirs) {
+      const pagePath = path.join(PAGES_CONTENT_PATH, dir);
+      if (!fs.statSync(pagePath).isDirectory()) continue;
+
+      const files = fs.readdirSync(pagePath).filter(f => 
+        f.endsWith(".yml") && !f.includes(".v") // Exclude variant files
+      );
+
+      for (const file of files) {
+        const locale = file.replace(".yml", "");
+        // Only process locale files (en.yml, es.yml)
+        if (!["en", "es"].includes(locale)) continue;
+
+        const filePath = path.join(pagePath, file);
+
+        try {
+          const content = fs.readFileSync(filePath, "utf-8");
+          const data = yaml.load(content) as {
+            slug?: string;
+            template?: string;
+            title?: string;
+            meta?: TemplateMeta;
+          };
+
+          pages.push({
+            slug: data.slug || dir,
+            locale,
+            template: data.template || dir.replace(/-/g, "_"),
+            title: data.title || dir,
+            meta: data.meta || {},
+          });
+        } catch (parseError) {
+          console.error(`Error parsing template page ${filePath}:`, parseError);
+        }
+      }
+    }
+
+    return pages;
+  } catch (error) {
+    console.error("Error scanning template pages:", error);
+    return [];
+  }
+}
+
 function shouldIndex(robots?: string): boolean {
   if (!robots) return true;
   return !robots.toLowerCase().includes("noindex");
@@ -276,13 +353,6 @@ function buildSitemapXml(): string {
     lastmod: today,
     changefreq: "daily",
     priority: 0.8,
-  });
-
-  urls.push({
-    loc: `${getBaseUrl()}/job-guarantee`,
-    lastmod: today,
-    changefreq: "weekly",
-    priority: 0.9,
   });
 
   // Dynamic career program pages from YAML (only include indexable pages)
@@ -348,6 +418,35 @@ function buildSitemapXml(): string {
       lastmod: today,
       changefreq: location.meta.change_frequency || "monthly",
       priority: location.meta.priority || 0.8,
+    });
+  }
+
+  // Dynamic template pages from YAML (marketing-content/pages/)
+  const templatePages = getAvailableTemplatePages();
+  for (const page of templatePages) {
+    // Skip pages marked as noindex
+    if (!shouldIndex(page.meta.robots)) {
+      console.log(`[Sitemap] Skipping noindex template page: ${page.slug} (${page.locale})`);
+      continue;
+    }
+
+    // Get URL from routing map, or generate default
+    const routes = templatePageRoutes[page.slug];
+    let url: string;
+    if (routes) {
+      url = `${getBaseUrl()}${routes[page.locale as "en" | "es"] || routes.en}`;
+    } else {
+      // Default routing pattern
+      url = page.locale === "es"
+        ? `${getBaseUrl()}/es/${page.slug}`
+        : `${getBaseUrl()}/us/${page.slug}`;
+    }
+
+    urls.push({
+      loc: url,
+      lastmod: today,
+      changefreq: page.meta.change_frequency || "weekly",
+      priority: page.meta.priority || 0.8,
     });
   }
 

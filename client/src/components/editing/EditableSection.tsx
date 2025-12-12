@@ -12,7 +12,7 @@ interface EditableSectionProps {
   section: Section;
   index: number;
   sectionType: string;
-  contentType?: "program" | "landing" | "location";
+  contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
 }

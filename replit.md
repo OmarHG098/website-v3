@@ -16,14 +16,19 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
 
 **Key Architectural Decisions & Features:**
 -   **Design System**: Employs a clean, card-based layout with a strict semantic color system using predefined Tailwind classes. Typography uses the Lato font family. All icons must be from `@tabler/icons-react`.
--   **Content Management System (CMS)**: A YAML-based system allows marketing teams to manage content for career programs, landing pages, and location pages without code changes. Content is stored in:
+-   **Content Management System (CMS)**: A YAML-based system allows marketing teams to manage content for career programs, landing pages, location pages, and template pages without code changes. Content is stored in:
     - `marketing-content/programs/{program-slug}/{locale}.yml` for career programs
     - `marketing-content/landings/{landing-slug}/{locale}.yml` for landing pages
     - `marketing-content/locations/{slug}/` for location pages with:
       - `campus.yml` - Non-translated campus info (slug, name, city, country, coordinates, phone, address, available_programs, catalog with admission_advisors)
       - `en.yml` - English translated content (meta, schema, sections)
       - `es.yml` - Spanish translated content (meta, schema, sections)
+    - `marketing-content/pages/{page-slug}/` for template pages with:
+      - `en.yml` - English content (meta, schema, sections)
+      - `es.yml` - Spanish content (meta, schema, sections)
+      - `experiments.yml` - Optional A/B testing configuration
     All content types share the same structure with `meta`, `schema`, and `sections` properties, dynamically rendered by a unified `SectionRenderer` component. Location-specific section types include `features_grid`, `programs_list`, and `cta_banner`.
+-   **Template Pages System**: A single generic page template (`client/src/pages/page.tsx`) dynamically renders all YAML-based pages from `marketing-content/pages/`. Routes follow the pattern `/us/:slug` (English) and `/es/:slug` (Spanish). The API endpoint `GET /api/pages/:slug?locale=en|es` loads content with experiment support. Sitemap generation automatically includes template pages with configurable priorities and change frequencies from YAML meta properties.
 -   **Internationalization (i18n)**: Supports English (default) and Spanish using `react-i18next`, with automatic browser language detection and a language switcher.
 -   **SEO & Performance**: Comprehensive SEO includes meta tags, Open Graph, Twitter Cards, Schema.org JSON-LD, `robots.txt` allowing AI crawlers, and dynamic sitemaps. Performance optimizations include route-level code splitting, self-hosted WOFF2 fonts with `font-display: swap`, server-side Gzip compression, React component memoization, and native lazy loading for images.
 -   **Schema.org System**: Centralized in `marketing-content/schema-org.yml` for managing structured data. Pages reference schemas via `schema.include: ["organization", "website", "courses:full-stack"]` and can override properties with `schema.overrides`. The `useSchemaOrg` React hook fetches and injects JSON-LD into page heads with proper cleanup between navigations. Nested schemas use prefix notation (e.g., `courses:full-stack`, `item_lists:career-programs`). **Location pages automatically include the organization schema as parentOrganization** - no need to define it in each location YAML file.

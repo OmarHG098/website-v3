@@ -105,12 +105,26 @@ export const heroSimpleTwoColumnSchema = z.object({
   background: z.string().optional(),
 }).strict();
 
+export const heroTwoColumnSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("twoColumn"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  badge: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  cta_buttons: z.array(ctaButtonSchema).optional(),
+  background: z.string().optional(),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroTwoColumnSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -564,6 +578,22 @@ export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;
 export type ComparisonTableRow = z.infer<typeof comparisonTableRowSchema>;
 export type ComparisonTableSection = z.infer<typeof comparisonTableSectionSchema>;
 
+// Stats Section (for displaying key metrics/statistics)
+export const statsSectionSchema = z.object({
+  type: z.literal("stats"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  items: z.array(z.object({
+    value: z.string(),
+    label: z.string(),
+    icon: z.string().optional(),
+  })).optional(),
+});
+
+export type StatsSection = z.infer<typeof statsSectionSchema>;
 
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
@@ -572,6 +602,7 @@ export const sectionSchema = z.union([
   heroShowcaseSchema,
   heroProductShowcaseSchema,
   heroSimpleTwoColumnSchema,
+  heroTwoColumnSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -594,6 +625,7 @@ export const sectionSchema = z.union([
   projectsShowcaseSectionSchema,
   aboutSectionSchema,
   comparisonTableSectionSchema,
+  statsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -780,6 +812,32 @@ export const locationPageSchema = z.object({
 
 export type LocationMeta = z.infer<typeof locationMetaSchema>;
 export type LocationPage = z.infer<typeof locationPageSchema>;
+
+// ============================================
+// Template Page Schema (for marketing-content/pages/)
+// ============================================
+
+export const templatePageMetaSchema = z.object({
+  page_title: z.string(),
+  description: z.string(),
+  robots: z.string().default("index, follow"),
+  og_image: z.string().optional(),
+  priority: z.number().min(0).max(1).default(0.8),
+  change_frequency: z.enum(["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]).default("weekly"),
+  redirects: z.array(z.string()).optional(),
+});
+
+export const templatePageSchema = z.object({
+  slug: z.string(),
+  template: z.string(),
+  title: z.string(),
+  meta: templatePageMetaSchema,
+  schema: schemaRefSchema.optional(),
+  sections: z.array(sectionSchema),
+});
+
+export type TemplatePageMeta = z.infer<typeof templatePageMetaSchema>;
+export type TemplatePage = z.infer<typeof templatePageSchema>;
 
 // ============================================
 // A/B Testing / Experiments System
