@@ -89,6 +89,8 @@ const componentsList = [
   { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
+  { type: "horizontal_bars", label: "Horizontal Bars", icon: IconChartBar, description: "Animated horizontal bar chart" },
+  { type: "vertical_bars_cards", label: "Vertical Bars Cards", icon: IconChartBar, description: "Cards with vertical bars comparing years" },
 ];
 
 type MenuView = "main" | "components" | "sitemap" | "experiments";
