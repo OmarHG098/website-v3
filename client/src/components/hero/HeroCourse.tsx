@@ -78,7 +78,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   {data.tutors.map((tutor, index) => (
-                    <div key={index} className="flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2">
+                    <div key={index} className="flex items-center gap-3 bg-muted rounded-lg px-3 py-2">
                       <Avatar className="w-10 h-10">
                         <AvatarImage src={tutor.image} alt={tutor.name} />
                         <AvatarFallback>{tutor.name.charAt(0)}</AvatarFallback>
@@ -153,6 +153,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
               <Button 
                 className="w-full mb-3" 
                 size="lg"
+                variant={data.signup_card.cta_button.variant === "outline" ? "outline" : data.signup_card.cta_button.variant === "secondary" ? "secondary" : "default"}
                 data-testid="button-hero-cta"
                 asChild
               >
