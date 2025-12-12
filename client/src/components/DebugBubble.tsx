@@ -637,7 +637,11 @@ export function DebugBubble() {
                     data-testid="toggle-edit-mode"
                   >
                     <button
-                      onClick={() => !editMode.isEditMode && editMode.toggleEditMode()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (!editMode.isEditMode) editMode.toggleEditMode();
+                      }}
                       className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
                         editMode.isEditMode 
                           ? "bg-primary text-primary-foreground" 
@@ -648,7 +652,11 @@ export function DebugBubble() {
                       Edit
                     </button>
                     <button
-                      onClick={() => editMode.isEditMode && editMode.toggleEditMode()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (editMode.isEditMode) editMode.toggleEditMode();
+                      }}
                       className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
                         !editMode.isEditMode 
                           ? "bg-background text-foreground shadow-sm" 
