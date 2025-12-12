@@ -22,43 +22,37 @@ sections:
       src: "/attached_assets/outcomes_1765562850573.png"
       alt: "Student outcomes growth chart"
 
-  - type: two_column
+  - type: horizontal_bars
     version: "1.0"
-    layout: "equal"
-    left:
-      type: content
-      content:
-        - type: horizontal_bars
-          use_card: true
-          title: "Job Placement Rate"
-          subtitle: "Graduates hired within 6 months"
-          items:
-            - label: "2023"
-              value: 86
-              displayValue: "86%"
-            - label: "2024"
-              value: 84
-              displayValue: "84%"
-            - label: "2025"
-              value: 82
-              displayValue: "82%"
-    right:
-      type: content
-      content:
-        - type: horizontal_bars
-          use_card: true
-          title: "Average Salary Increase"
-          subtitle: "Compared to pre-bootcamp salary"
-          items:
-            - label: "2023"
-              value: 12500
-              displayValue: "$12.5k"
-            - label: "2024"
-              value: 14200
-              displayValue: "$14.2k"
-            - label: "2025"
-              value: 15800
-              displayValue: "$15.8k"
+    use_card: true
+    title: "Job Placement Rate"
+    subtitle: "Graduates hired within 6 months"
+    items:
+      - label: "2023"
+        value: 86
+        displayValue: "86%"
+      - label: "2024"
+        value: 84
+        displayValue: "84%"
+      - label: "2025"
+        value: 82
+        displayValue: "82%"
+
+  - type: horizontal_bars
+    version: "1.0"
+    use_card: true
+    title: "Average Salary Increase"
+    subtitle: "Compared to pre-bootcamp salary"
+    items:
+      - label: "2023"
+        value: 12500
+        displayValue: "$12.5k"
+      - label: "2024"
+        value: 14200
+        displayValue: "$14.2k"
+      - label: "2025"
+        value: 15800
+        displayValue: "$15.8k"
 
   - type: horizontal_bars
     version: "1.0"

@@ -23,8 +23,15 @@ props:
   background:
     type: string
     required: false
-    description: "Tailwind CSS class for background color"
+    description: "Tailwind CSS class for background color (only applies when use_card is false)"
     example: "bg-muted"
+    
+  use_card:
+    type: boolean
+    required: false
+    default: false
+    description: "When true, wraps the chart in a Card component with compact styling. Ideal for displaying multiple bar charts side by side or vertically stacked."
+    example: true
     
   items:
     type: array
@@ -39,8 +46,13 @@ props:
       value:
         type: number
         required: true
-        description: "Numeric value (0-100 for percentages)"
+        description: "Numeric value used to calculate bar width relative to the maximum value in the dataset"
         example: 84
+      displayValue:
+        type: string
+        required: false
+        description: "Custom display text shown on the bar. If omitted, defaults to 'value%'. Use for non-percentage values like '$12.5k' or '45 days'."
+        example: "$12.5k"
       color:
         type: string
         required: false
