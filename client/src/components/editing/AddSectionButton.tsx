@@ -46,16 +46,16 @@ export function AddSectionButton({
         data-testid={`add-section-zone-${insertIndex}`}
       >
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
-          <div className="flex-1 h-px bg-muted/50 group-hover:bg-primary/30 transition-colors duration-200" />
+          <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
           <button
             onClick={handleOpenModal}
-            className="mx-2 flex items-center justify-center rounded-full border border-dashed border-muted-foreground/20 text-muted-foreground/40 bg-background/80 transition-all duration-200 scale-75 opacity-60 group-hover:scale-100 group-hover:opacity-100 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/5 group-hover:px-4 group-hover:py-2 group-hover:gap-2 p-1.5"
+            className="mx-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground/70 bg-background transition-all duration-200 group-hover:scale-105 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/10 group-hover:px-4 group-hover:py-2 group-hover:gap-2"
             data-testid={`button-add-section-${insertIndex}`}
           >
-            <IconPlus className="h-3.5 w-3.5 group-hover:h-4 group-hover:w-4 transition-all duration-200" />
-            <span className="text-sm font-medium hidden group-hover:inline">Add Section</span>
+            <IconPlus className="h-4 w-4" />
+            <span className="text-xs font-medium group-hover:text-sm transition-all duration-200">Add</span>
           </button>
-          <div className="flex-1 h-px bg-muted/50 group-hover:bg-primary/30 transition-colors duration-200" />
+          <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
         </div>
       </div>
       
