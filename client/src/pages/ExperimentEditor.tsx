@@ -320,19 +320,7 @@ export default function ExperimentEditor() {
               <IconTarget className="h-4 w-4 mr-1" />
               Targeting
             </Button>
-            <Button
-              size="sm"
-              onClick={handleSave}
-              disabled={!hasChanges || updateMutation.isPending}
-              data-testid="button-save"
-            >
-              {updateMutation.isPending ? (
-                <IconRefresh className="h-4 w-4 mr-1 animate-spin" />
-              ) : (
-                <IconDeviceFloppy className="h-4 w-4 mr-1" />
-              )}
-              Save Changes
-            </Button>
+            
           </div>
         </div>
       </header>
