@@ -611,6 +611,25 @@ export const statsSectionSchema = z.object({
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
+// Horizontal Bars Section (for animated bar charts)
+export const horizontalBarsItemSchema = z.object({
+  label: z.string(),
+  value: z.number(),
+  color: z.string().optional(),
+});
+
+export const horizontalBarsSectionSchema = z.object({
+  type: z.literal("horizontal_bars"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  items: z.array(horizontalBarsItemSchema),
+});
+
+export type HorizontalBarsItem = z.infer<typeof horizontalBarsItemSchema>;
+export type HorizontalBarsSection = z.infer<typeof horizontalBarsSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -643,6 +662,7 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
+  horizontalBarsSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
