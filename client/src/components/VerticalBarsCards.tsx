@@ -43,19 +43,41 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     const element = containerRef.current;
     if (!element) return;
 
+    let hasScrolled = false;
+    let isInView = false;
+
+    const checkAndTrigger = () => {
+      if (hasScrolled && isInView) {
+        setIsVisible(true);
+        observer.disconnect();
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+
+    const onScroll = () => {
+      hasScrolled = true;
+      checkAndTrigger();
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.disconnect();
+          isInView = entry.isIntersecting;
+          if (isInView) {
+            checkAndTrigger();
           }
         });
       },
       { threshold: 0.2 }
     );
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
