@@ -680,7 +680,10 @@ export function DebugBubble() {
                     <IconRoute className="h-4 w-4 text-muted-foreground" />
                     <span>Redirects</span>
                   </div>
-                  <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
                 </a>
                 
                 {/* Experiments menu item - only shown on content pages */}
