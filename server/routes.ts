@@ -318,36 +318,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/career-programs/:slug", (req, res) => {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
-
-    // Get or create session for experiment tracking
-    const sessionId = getOrCreateSessionId(req, res);
-    const experimentCookie = getExperimentCookie(req);
-    const existingAssignments = experimentCookie?.assignments || [];
-
-    // Check for active experiments
-    const experimentManager = getExperimentManager();
-    const visitorContext = buildVisitorContext(req, sessionId);
-    const assignment = experimentManager.getAssignment(slug, visitorContext, existingAssignments);
+    const forceVariant = req.query.force_variant as string | undefined;
+    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
 
     let program: CareerProgram | null = null;
     let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
 
-    if (assignment) {
-      // Try to load variant content
-      const variantContent = experimentManager.getVariantContent(slug, assignment, locale);
-      if (variantContent) {
-        program = variantContent;
+    // If force_variant is provided, load that variant directly (for preview)
+    if (forceVariant && forceVersion !== undefined) {
+      const experimentManager = getExperimentManager();
+      const forcedContent = experimentManager.getVariantContent(slug, {
+        experiment_slug: "preview",
+        variant_slug: forceVariant,
+        variant_version: forceVersion,
+        assigned_at: Date.now(),
+      }, locale);
+      if (forcedContent) {
+        program = forcedContent;
         experimentInfo = {
-          experiment: assignment.experiment_slug,
-          variant: assignment.variant_slug,
-          version: assignment.variant_version,
+          experiment: "preview",
+          variant: forceVariant,
+          version: forceVersion,
         };
+      }
+    }
 
-        // Update cookie with new assignment
-        const updatedAssignments = [...existingAssignments.filter(
-          a => a.experiment_slug !== assignment.experiment_slug
-        ), assignment];
-        setExperimentCookie(res, sessionId, updatedAssignments);
+    // Normal experiment flow if not forcing a variant
+    if (!program) {
+      // Get or create session for experiment tracking
+      const sessionId = getOrCreateSessionId(req, res);
+      const experimentCookie = getExperimentCookie(req);
+      const existingAssignments = experimentCookie?.assignments || [];
+
+      // Check for active experiments
+      const experimentManager = getExperimentManager();
+      const visitorContext = buildVisitorContext(req, sessionId);
+      const assignment = experimentManager.getAssignment(slug, visitorContext, existingAssignments);
+
+      if (assignment) {
+        // Try to load variant content
+        const variantContent = experimentManager.getVariantContent(slug, assignment, locale);
+        if (variantContent) {
+          program = variantContent;
+          experimentInfo = {
+            experiment: assignment.experiment_slug,
+            variant: assignment.variant_slug,
+            version: assignment.variant_version,
+          };
+
+          // Update cookie with new assignment
+          const updatedAssignments = [...existingAssignments.filter(
+            a => a.experiment_slug !== assignment.experiment_slug
+          ), assignment];
+          setExperimentCookie(res, sessionId, updatedAssignments);
+        }
       }
     }
 

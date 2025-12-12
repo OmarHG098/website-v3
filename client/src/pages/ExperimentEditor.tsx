@@ -233,7 +233,7 @@ export default function ExperimentEditor() {
   const experiment = data.experiment;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center justify-between">
           <div className="flex items-center gap-4">
@@ -337,6 +337,23 @@ export default function ExperimentEditor() {
         </div>
       </header>
 
+      {/* Preview iframe */}
+      <div className="flex-1 overflow-hidden">
+        {selectedVariant && contentType === "programs" && (
+          <iframe
+            key={`${selectedVariant}-${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}`}
+            src={`/en/career/${contentSlug}?force_variant=${selectedVariant}&force_version=${formData?.variants.find(v => v.slug === selectedVariant)?.version || 1}`}
+            className="w-full h-full border-0"
+            title={`Preview: ${deslugify(selectedVariant)}`}
+            data-testid="iframe-preview"
+          />
+        )}
+        {!selectedVariant && (
+          <div className="flex items-center justify-center h-full text-muted-foreground">
+            Select a variant to preview
+          </div>
+        )}
+      </div>
 
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <DialogContent>
