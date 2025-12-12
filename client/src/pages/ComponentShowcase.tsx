@@ -845,7 +845,7 @@ export default function ComponentShowcase() {
               <p className="text-muted-foreground mb-6">
                 The component "{componentType}" does not exist.
               </p>
-              <Link href="/component-showcase">
+              <Link href="/private/component-showcase">
                 <Button variant="outline" data-testid="link-back-to-showcase">
                   <IconList className="w-4 h-4 mr-2" />
                   View All Components
