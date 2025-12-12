@@ -144,6 +144,22 @@ function deslugify(slug: string): string {
 
 // Detect content type and slug from URL path
 function detectContentInfo(pathname: string): ContentInfo {
+  // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
+  const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
+  if (experimentMatch) {
+    const typeLabels: Record<string, string> = {
+      programs: "Program",
+      pages: "Page",
+      landings: "Landing",
+      locations: "Location",
+    };
+    return { 
+      type: experimentMatch[1] as ContentInfo["type"], 
+      slug: experimentMatch[2], 
+      label: typeLabels[experimentMatch[1]] || "Content" 
+    };
+  }
+
   // Programs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
   const programEnMatch = pathname.match(/^\/en\/career-programs\/([^/]+)\/?$/);
   if (programEnMatch) {
@@ -274,6 +290,13 @@ export function DebugBubble() {
       sessionStorage.setItem(STORAGE_KEY, view);
     }
   };
+
+  // Auto-open experiments menu when URL contains "experiment"
+  useEffect(() => {
+    if (pathname.includes("experiment") && contentInfo.type && contentInfo.slug) {
+      setMenuViewState("experiments");
+    }
+  }, [pathname, contentInfo.type, contentInfo.slug]);
 
   // Fetch sitemap URLs when entering sitemap view
   useEffect(() => {
