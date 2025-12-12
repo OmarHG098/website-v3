@@ -25,17 +25,19 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEditMode } from "@/contexts/EditModeContext";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 
 interface ComponentPickerModalProps {
@@ -58,6 +60,7 @@ interface ComponentInfo {
 interface ExampleFile {
   name: string;
   slug: string;
+  variant?: string;
   content: Record<string, unknown>;
 }
 
@@ -84,6 +87,14 @@ const componentsList: ComponentInfo[] = [
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
 ];
 
+const variantLabels: Record<string, string> = {
+  singleColumn: "Single Column",
+  showcase: "Showcase",
+  productShowcase: "Product Showcase",
+  simpleTwoColumn: "Two Column",
+  default: "Default",
+};
+
 export default function ComponentPickerModal({
   isOpen,
   onClose,
@@ -93,8 +104,6 @@ export default function ComponentPickerModal({
   locale,
   onSectionAdded,
 }: ComponentPickerModalProps) {
-  const { addPendingChange } = useEditMode();
-  
   const [step, setStep] = useState<"select" | "configure">("select");
   const [selectedComponent, setSelectedComponent] = useState<ComponentInfo | null>(null);
   const [versions, setVersions] = useState<string[]>([]);
@@ -225,6 +234,52 @@ export default function ComponentPickerModal({
     return `/component-showcase/${selectedComponent.type}?version=${selectedVersion}&example=${selectedExample}`;
   }, [selectedComponent, selectedVersion, selectedExample]);
 
+  const groupedExamples = useMemo(() => {
+    const grouped = examples.reduce((acc, ex) => {
+      const variant = ex.variant || 'default';
+      if (!acc[variant]) acc[variant] = [];
+      acc[variant].push(ex);
+      return acc;
+    }, {} as Record<string, ExampleFile[]>);
+    
+    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
+    const sortedVariants = Object.keys(grouped).sort((a, b) => {
+      const aIdx = variantOrder.indexOf(a);
+      const bIdx = variantOrder.indexOf(b);
+      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+      if (aIdx === -1) return 1;
+      if (bIdx === -1) return -1;
+      return aIdx - bIdx;
+    });
+    
+    return { grouped, sortedVariants };
+  }, [examples]);
+
+  const renderExampleSelector = () => {
+    const { grouped, sortedVariants } = groupedExamples;
+    
+    if (sortedVariants.length === 0) {
+      return null;
+    }
+    
+    if (sortedVariants.length === 1 && sortedVariants[0] === 'default') {
+      return grouped['default'].map(ex => (
+        <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
+      ));
+    }
+    
+    return sortedVariants.map(variant => (
+      <SelectGroup key={variant}>
+        <SelectLabel className="text-xs text-muted-foreground uppercase tracking-wide">
+          {variantLabels[variant] || variant}
+        </SelectLabel>
+        {grouped[variant].map(ex => (
+          <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
+        ))}
+      </SelectGroup>
+    ));
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0">
@@ -237,6 +292,9 @@ export default function ComponentPickerModal({
               <IconX className="h-4 w-4" />
             </Button>
           </div>
+          <DialogDescription className="sr-only">
+            {step === "select" ? "Select a component type to add to the page" : "Configure the component version and example"}
+          </DialogDescription>
         </DialogHeader>
         
         {step === "select" ? (
@@ -265,12 +323,12 @@ export default function ComponentPickerModal({
           </ScrollArea>
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b flex items-center gap-4 flex-shrink-0">
+            <div className="p-4 border-b flex items-center gap-4 flex-shrink-0 flex-wrap">
               <Button variant="ghost" size="sm" onClick={handleBack}>
                 Back
               </Button>
               
-              <div className="flex items-center gap-4 flex-1">
+              <div className="flex items-center gap-4 flex-1 flex-wrap">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">Version:</span>
                   <Select value={selectedVersion} onValueChange={setSelectedVersion}>
@@ -288,13 +346,11 @@ export default function ComponentPickerModal({
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">Example:</span>
                   <Select value={selectedExample} onValueChange={setSelectedExample}>
-                    <SelectTrigger className="w-40" data-testid="select-example">
+                    <SelectTrigger className="w-64" data-testid="select-example">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
-                      {examples.map((ex) => (
-                        <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
-                      ))}
+                      {renderExampleSelector()}
                     </SelectContent>
                   </Select>
                 </div>
