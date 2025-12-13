@@ -110,7 +110,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                           {[1, 2, 3, 4, 5].map((star) => (
                             <IconStarFilled 
                               key={star} 
-                              className={`h-4 w-4 ${
+                              className={`h-6 w-6 ${
                                 star <= Math.floor(parseFloat(data.trust_bar!.rating || "0"))
                                   ? "text-yellow-400"
                                   : "text-muted"
