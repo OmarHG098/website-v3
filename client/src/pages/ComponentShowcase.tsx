@@ -448,7 +448,7 @@ function ComponentCard({
                 <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                 <Select value={selectedVersion} onValueChange={handleVersionChange}>
                   <SelectTrigger className="h-7 px-2 text-sm font-medium w-auto" data-testid={`breadcrumb-version-${componentType}`}>
-                    <SelectValue>v{selectedVersion}</SelectValue>
+                    <SelectValue>{selectedVersion}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {componentInfo.versions.map(v => (
