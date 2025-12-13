@@ -56,36 +56,38 @@ export default function MediaGallery() {
                 </span>
               </div>
             </div>
-            <div className="relative w-64">
-              <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-9"
-                data-testid="input-search"
-              />
+            <div className="flex flex-col items-end gap-2">
+              <div className="relative w-64">
+                <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-10 h-9"
+                  data-testid="input-search"
+                />
+              </div>
+              {registry && (
+                <div className="flex flex-wrap gap-1.5 justify-end">
+                  {Object.keys(registry.presets).map((name) => (
+                    <Badge
+                      key={name}
+                      variant="outline"
+                      className="cursor-pointer text-xs"
+                      onClick={() => setSearch(name)}
+                      data-testid={`badge-preset-${name}`}
+                    >
+                      {name}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-6 max-w-7xl">
-        {registry && (
-          <div className="mb-4 flex flex-wrap gap-1.5">
-            {Object.keys(registry.presets).map((name) => (
-              <Badge
-                key={name}
-                variant="outline"
-                className="cursor-pointer text-xs"
-                onClick={() => setSearch(name)}
-                data-testid={`badge-preset-${name}`}
-              >
-                {name}
-              </Badge>
-            ))}
-          </div>
-        )}
 
         {isLoading && (
           <div className="flex items-center justify-center py-16">
