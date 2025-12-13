@@ -21,7 +21,7 @@ yaml: |-
       helper_text: "Keep work and life separate by using your work email"
     trust_bar:
       rating: "4.5"
-      review_count: "Based on 5149+ reviews:"
+      review_count: "Based on 5149+ reviews"
       review_logos:
         - name: "Google"
           logo: "/attached_assets/google_1765590146414.webp"
