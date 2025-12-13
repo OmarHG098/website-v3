@@ -955,7 +955,7 @@ export function DebugBubble() {
                       <IconFlask className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                       <p className="text-sm text-muted-foreground mb-2">No experiments file found</p>
                       <p className="text-xs text-muted-foreground">
-                        Create <code className="bg-muted px-1 rounded">experiments.yml</code> in the content folder
+                        Create <code className="bg-muted px-1 rounded">marketing-content/{contentInfo.type}s/{contentInfo.slug}/experiments.yml</code>
                       </p>
                     </div>
                   ) : experimentsData.experiments.length === 0 ? (

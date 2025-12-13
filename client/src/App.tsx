@@ -26,8 +26,13 @@ function LoadingFallback() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="text-center">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
         </div>
       </div>
     </div>
@@ -39,18 +44,36 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/en/career-programs/:slug" component={CareerProgramDetail} />
-        <Route path="/es/programas-de-carrera/:slug" component={CareerProgramDetail} />
+        <Route
+          path="/en/career-programs/:slug"
+          component={CareerProgramDetail}
+        />
+        <Route
+          path="/es/programas-de-carrera/:slug"
+          component={CareerProgramDetail}
+        />
         <Route path="/landing/:slug" component={LandingDetail} />
-                <Route path="/private/component-showcase" component={ComponentShowcase} />
-        <Route path="/private/component-showcase/:componentType" component={ComponentShowcase} />
         <Route path="/en/location/:slug" component={LocationDetail} />
         <Route path="/es/ubicacion/:slug" component={LocationDetail} />
         <Route path="/preview-frame" component={PreviewFrame} />
-        <Route path="/private/component-showcase/:componentType/preview" component={ComponentPreview} />
+        <Route
+          path="/private/component-showcase"
+          component={ComponentShowcase}
+        />
+        <Route
+          path="/private/component-showcase/:componentType"
+          component={ComponentShowcase}
+        />
+        <Route
+          path="/private/component-showcase/:componentType/preview"
+          component={ComponentPreview}
+        />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/media-gallery" component={MediaGallery} />
-        <Route path="/private/:contentType/:contentSlug/experiment/:experimentSlug" component={ExperimentEditor} />
+        <Route
+          path="/private/:contentType/:contentSlug/experiment/:experimentSlug"
+          component={ExperimentEditor}
+        />
         {/* Template pages - dynamic YAML-based pages */}
         <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />
