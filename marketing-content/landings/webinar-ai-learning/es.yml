@@ -52,22 +52,16 @@ sections:
         title: "Demo en Vivo"
         description: "Mira una demostración en vivo de nuestro asistente de programación con IA en acción"
 
-  - type: credibility
+  - type: stats
     version: "1.0"
     title: "Únete a más de 50,000 Estudiantes"
-    stats:
+    items:
       - value: "50,000+"
         label: "Estudiantes en el Mundo"
       - value: "4.8/5"
         label: "Calificación Promedio"
       - value: "1,500+"
         label: "Asistentes a Webinars"
-    featured_in:
-      label: "Destacados En"
-      logos:
-        - "Forbes"
-        - "TechCrunch"
-        - "Wired"
 
   - type: faq
     version: "1.0"

@@ -52,22 +52,16 @@ sections:
         title: "Live Demo"
         description: "Watch a live demonstration of our AI coding assistant in action"
 
-  - type: credibility
+  - type: stats
     version: "1.0"
     title: "Join 50,000+ Learners"
-    stats:
+    items:
       - value: "50,000+"
         label: "Students Worldwide"
       - value: "4.8/5"
         label: "Average Rating"
       - value: "1,500+"
         label: "Webinar Attendees"
-    featured_in:
-      label: "Featured In"
-      logos:
-        - "Forbes"
-        - "TechCrunch"
-        - "Wired"
 
   - type: faq
     version: "1.0"
