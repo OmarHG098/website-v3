@@ -41,7 +41,7 @@ export default function MediaGallery() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="flex items-center justify-between h-14">
+          <div className="flex items-center justify-between py-3">
             <div className="flex items-center gap-3">
               <Link href="/">
                 <Button variant="ghost" size="icon" data-testid="button-back-home">
