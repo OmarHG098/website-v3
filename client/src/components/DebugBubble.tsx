@@ -549,7 +549,14 @@ export function DebugBubble() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-sm mb-1">No token detected</h3>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL
+                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL, or{" "}
+                    <a 
+                      href={`https://breathecode.herokuapp.com/v1/auth/view/login?url=${encodeURIComponent(window.location.href)}`}
+                      className="text-primary underline hover:no-underline"
+                      data-testid="link-login"
+                    >
+                      click here to login
+                    </a>
                   </p>
                   <div className="flex gap-2">
                     <input
