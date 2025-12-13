@@ -118,6 +118,15 @@ export const leadFormDataSchema = z.object({
 // Alias for backward compatibility - productShowcaseFormSchema now uses LeadFormData
 export const productShowcaseFormSchema = leadFormDataSchema;
 
+export const videoConfigSchema = z.object({
+  url: z.string(),
+  ratio: z.string().optional(),
+  muted: z.boolean().optional(),
+  autoplay: z.boolean().optional(),
+  loop: z.boolean().optional(),
+  preview_image_url: z.string().optional(),
+});
+
 export const reviewLogoSchema = z.object({
   name: z.string(),
   logo: z.string().optional(),
@@ -138,10 +147,7 @@ export const heroProductShowcaseSchema = z.object({
   welcome_text: z.string().optional(),
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
-  video_id: z.string().optional(),
-  video_url: z.string().optional(),
-  video_title: z.string().optional(),
-  video_ratio: z.string().optional(),
+  video: videoConfigSchema.optional(),
   image: z.object({
     src: z.string(),
     alt: z.string(),
@@ -790,6 +796,7 @@ export type LeadFormFieldConfig = z.infer<typeof leadFormFieldConfigSchema>;
 export type LeadFormData = z.infer<typeof leadFormDataSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
+export type VideoConfig = z.infer<typeof videoConfigSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
 export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
