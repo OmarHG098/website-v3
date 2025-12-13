@@ -107,16 +107,37 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                     {data.trust_bar.rating && (
                       <div className="flex items-center gap-1">
                         <div className="flex">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <IconStarFilled 
-                              key={star} 
-                              className={`h-6 w-6 ${
-                                star <= Math.floor(parseFloat(data.trust_bar!.rating || "0"))
-                                  ? "text-yellow-400"
-                                  : "text-muted"
-                              }`}
-                            />
-                          ))}
+                          {[1, 2, 3, 4, 5].map((star) => {
+                            const rating = parseFloat(data.trust_bar!.rating || "0");
+                            const fullStars = Math.floor(rating);
+                            const hasHalf = rating % 1 >= 0.5;
+                            const isHalfStar = hasHalf && star === fullStars + 1;
+                            
+                            if (star <= fullStars) {
+                              return (
+                                <IconStarFilled 
+                                  key={star} 
+                                  className="h-6 w-6 text-yellow-400"
+                                />
+                              );
+                            } else if (isHalfStar) {
+                              return (
+                                <div key={star} className="relative h-6 w-6">
+                                  <IconStarFilled className="h-6 w-6 text-muted" />
+                                  <div className="absolute inset-0 overflow-hidden" style={{ width: '50%' }}>
+                                    <IconStarFilled className="h-6 w-6 text-yellow-400" />
+                                  </div>
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <IconStarFilled 
+                                  key={star} 
+                                  className="h-6 w-6 text-muted"
+                                />
+                              );
+                            }
+                          })}
                         </div>
                       </div>
                     )}
