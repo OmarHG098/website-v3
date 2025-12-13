@@ -434,7 +434,7 @@ function ComponentCard({
                     window.location.href = `/private/component-showcase/${value}`;
                   }}
                 >
-                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden" data-testid={`breadcrumb-component-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium" data-testid={`breadcrumb-component-${componentType}`}>
                     <SelectValue>{schema.name}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
@@ -447,7 +447,7 @@ function ComponentCard({
                 </Select>
                 <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                 <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden w-auto" data-testid={`breadcrumb-version-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-auto" data-testid={`breadcrumb-version-${componentType}`}>
                     <SelectValue>v{selectedVersion}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
@@ -469,7 +469,7 @@ function ComponentCard({
                   value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
                   onValueChange={handleExampleChange}
                 >
-                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden w-auto max-w-[200px]" data-testid={`breadcrumb-example-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-auto max-w-[200px]" data-testid={`breadcrumb-example-${componentType}`}>
                     <SelectValue placeholder="Default">{selectedExample || 'Default'}</SelectValue>
                   </SelectTrigger>
                   <SelectContent className="min-w-[280px]">
