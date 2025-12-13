@@ -76,6 +76,23 @@ export const brandMarkSchema = z.object({
   color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
+export const productShowcaseFormSchema = z.object({
+  placeholder: z.string(),
+  button_text: z.string(),
+  helper_text: z.string().optional(),
+});
+
+export const reviewLogoSchema = z.object({
+  name: z.string(),
+  logo: z.string().optional(),
+});
+
+export const productShowcaseTrustBarSchema = z.object({
+  rating: z.string().optional(),
+  review_count: z.string().optional(),
+  review_logos: z.array(reviewLogoSchema).optional(),
+});
+
 export const heroProductShowcaseSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
@@ -85,9 +102,16 @@ export const heroProductShowcaseSchema = z.object({
   welcome_text: z.string().optional(),
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
-  video_id: z.string(),
+  video_id: z.string().optional(),
   video_title: z.string().optional(),
   video_ratio: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }).optional(),
+  form: productShowcaseFormSchema.optional(),
+  cta_button: ctaButtonSchema.optional(),
+  trust_bar: productShowcaseTrustBarSchema.optional(),
 }).strict();
 
 export const heroSimpleTwoColumnSchema = z.object({
