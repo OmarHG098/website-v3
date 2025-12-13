@@ -15,7 +15,8 @@ import {
   loadSchema, 
   loadExamples, 
   createNewVersion,
-  getExampleFilePath 
+  getExampleFilePath,
+  saveExample,
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
 import {
@@ -803,6 +804,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json({ success: true, newVersion: result.newVersion });
+  });
+
+  app.post("/api/component-registry/:componentType/:version/save-example", (req, res) => {
+    const { componentType, version } = req.params;
+    const { exampleName, yamlContent } = req.body;
+    
+    if (!exampleName || !yamlContent) {
+      res.status(400).json({ error: "exampleName and yamlContent required" });
+      return;
+    }
+    
+    const result = saveExample(componentType, version, exampleName, yamlContent);
+    
+    if (!result.success) {
+      res.status(400).json({ error: result.error });
+      return;
+    }
+    
+    res.json({ success: true });
   });
 
   // Content editing API

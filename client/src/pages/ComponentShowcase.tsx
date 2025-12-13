@@ -22,7 +22,8 @@ import {
   IconX,
   IconTestPipe,
   IconCircleCheck,
-  IconCircleX
+  IconCircleX,
+  IconDeviceFloppy
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -222,6 +223,31 @@ function ComponentCard({
     onError: (error: Error) => {
       toast({
         title: "Failed to create version",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const saveExampleMutation = useMutation({
+    mutationFn: async () => {
+      if (!selectedExample) throw new Error("No example selected");
+      const result = await apiRequest('POST', `/api/component-registry/${componentType}/${selectedVersion}/save-example`, {
+        exampleName: selectedExample,
+        yamlContent: yamlContent,
+      });
+      return result as unknown as { success: boolean };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+      toast({
+        title: "Example saved",
+        description: `Saved changes to "${selectedExample}"`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to save example",
         description: error.message,
         variant: "destructive",
       });
@@ -647,6 +673,17 @@ function ComponentCard({
                 <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
                   <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
                   <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => saveExampleMutation.mutate()}
+                      disabled={!selectedExample || saveExampleMutation.isPending || !!parseError}
+                      className="h-6 px-2 text-xs"
+                      data-testid={`button-save-yaml-${componentType}`}
+                    >
+                      <IconDeviceFloppy className="w-3 h-3 mr-1" />
+                      {saveExampleMutation.isPending ? "Saving..." : "Save"}
+                    </Button>
                     <Button
                       variant="ghost"
                       size="sm"
