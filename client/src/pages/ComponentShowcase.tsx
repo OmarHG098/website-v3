@@ -580,10 +580,10 @@ function ComponentCard({
               const variants = schemaVariants.length > 0 ? schemaVariants : exampleVariants;
               if (variants.length === 0) return null;
               return (
-                <div className="flex items-center gap-2 flex-wrap pt-[2px] pb-[2px]">
-                  <span className="text-xs text-muted-foreground">Variants:</span>
+                <div className="flex items-center gap-2 pt-[2px] pb-[2px] overflow-x-auto scrollbar-none">
+                  <span className="text-xs text-muted-foreground flex-shrink-0">Variants:</span>
                   {variants.map(variant => (
-                    <Badge key={variant} variant="outline" className="text-xs">
+                    <Badge key={variant} variant="outline" className="text-xs flex-shrink-0">
                       {formatVariantLabel(variant)}
                     </Badge>
                   ))}
