@@ -982,7 +982,7 @@ export default function ComponentShowcase() {
           key={componentType} 
           componentType={componentType}
           componentInfo={singleComponent}
-          globalYamlState={true}
+          globalYamlState={null}
           globalPreviewState={true}
           isFocused={false}
           cardRef={cardRefs.current[componentType]}
