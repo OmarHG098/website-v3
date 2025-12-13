@@ -39,51 +39,53 @@ export default function MediaGallery() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <div className="flex items-center gap-4 mb-8">
-          <Link href="/">
-            <Button variant="ghost" size="icon" data-testid="button-back-home">
-              <IconArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <div className="flex items-center gap-3">
-            <IconPhoto className="h-8 w-8 text-primary" />
-            <div>
-              <h1 className="text-2xl font-bold" data-testid="text-page-title">Media Gallery</h1>
-              <p className="text-sm text-muted-foreground">
-                {filteredImages.length} images in the registry
-              </p>
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex items-center justify-between h-14">
+            <div className="flex items-center gap-3">
+              <Link href="/">
+                <Button variant="ghost" size="icon" data-testid="button-back-home">
+                  <IconArrowLeft className="h-5 w-5" />
+                </Button>
+              </Link>
+              <div className="flex items-center gap-2">
+                <IconPhoto className="h-5 w-5 text-primary" />
+                <h1 className="text-lg font-semibold" data-testid="text-page-title">Media Gallery</h1>
+                <span className="text-sm text-muted-foreground hidden sm:inline">
+                  ({filteredImages.length})
+                </span>
+              </div>
+            </div>
+            <div className="relative w-64">
+              <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-10 h-9"
+                data-testid="input-search"
+              />
             </div>
           </div>
         </div>
+      </header>
 
-        <div className="mb-6 flex flex-wrap items-center gap-4">
-          <div className="relative max-w-md flex-1">
-            <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by ID, alt text, or tag..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
-              data-testid="input-search"
-            />
+      <div className="container mx-auto px-4 py-6 max-w-7xl">
+        {registry && (
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {Object.keys(registry.presets).map((name) => (
+              <Badge
+                key={name}
+                variant="outline"
+                className="cursor-pointer text-xs"
+                onClick={() => setSearch(name)}
+                data-testid={`badge-preset-${name}`}
+              >
+                {name}
+              </Badge>
+            ))}
           </div>
-          {registry && (
-            <div className="flex flex-wrap gap-1.5">
-              {Object.keys(registry.presets).map((name) => (
-                <Badge
-                  key={name}
-                  variant="outline"
-                  className="cursor-pointer text-xs"
-                  onClick={() => setSearch(name)}
-                  data-testid={`badge-preset-${name}`}
-                >
-                  {name}
-                </Badge>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
 
         {isLoading && (
           <div className="flex items-center justify-center py-16">
