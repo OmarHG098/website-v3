@@ -480,15 +480,15 @@ function ComponentCard({
       >
         <div className="flex flex-row items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
-              <nav className="flex items-center gap-1 text-sm" data-testid={`breadcrumb-${componentType}`}>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <nav className="flex items-center gap-1 text-sm w-full sm:w-auto" data-testid={`breadcrumb-${componentType}`}>
                 <Select 
                   value={componentType} 
                   onValueChange={(value) => {
                     window.location.href = `/private/component-showcase/${value}`;
                   }}
                 >
-                  <SelectTrigger className="h-7 px-2 text-sm font-medium" data-testid={`breadcrumb-component-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-[30%] sm:w-auto" data-testid={`breadcrumb-component-${componentType}`}>
                     <SelectValue>{schema.name}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
@@ -523,7 +523,7 @@ function ComponentCard({
                   value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
                   onValueChange={handleExampleChange}
                 >
-                  <SelectTrigger className="h-7 px-2 text-sm font-medium min-w-[280px]" data-testid={`breadcrumb-example-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-[30%] sm:w-auto sm:min-w-[280px]" data-testid={`breadcrumb-example-${componentType}`}>
                     <SelectValue placeholder="Default">{selectedExample || 'Default'}</SelectValue>
                   </SelectTrigger>
                   <SelectContent className="min-w-[280px]">
