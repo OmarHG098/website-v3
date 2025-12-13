@@ -163,6 +163,7 @@ interface ComponentCardProps {
   globalPreviewState: boolean | null;
   isFocused?: boolean;
   cardRef?: React.RefObject<HTMLDivElement>;
+  allComponents?: Array<{ type: string; name: string; }>;
 }
 
 function ComponentCard({ 
@@ -171,7 +172,8 @@ function ComponentCard({
   globalYamlState, 
   globalPreviewState, 
   isFocused, 
-  cardRef 
+  cardRef,
+  allComponents = []
 }: ComponentCardProps) {
   const { toast } = useToast();
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -424,19 +426,98 @@ function ComponentCard({
       >
         <div className="flex flex-row items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <nav className="flex items-center gap-1 text-sm" data-testid={`breadcrumb-${componentType}`}>
-                <span className="text-xl font-semibold">{schema.name}</span>
-                <IconChevronRight className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">v{selectedVersion}</span>
-                {selectedExample && (
-                  <>
-                    <IconChevronRight className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">{selectedExample}</span>
-                  </>
-                )}
+                <Select 
+                  value={componentType} 
+                  onValueChange={(value) => {
+                    window.location.href = `/private/component-showcase/${value}`;
+                  }}
+                >
+                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden" data-testid={`breadcrumb-component-${componentType}`}>
+                    <SelectValue>{schema.name}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {allComponents.map(comp => (
+                      <SelectItem key={comp.type} value={comp.type}>
+                        {comp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                <Select value={selectedVersion} onValueChange={handleVersionChange}>
+                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden w-auto" data-testid={`breadcrumb-version-${componentType}`}>
+                    <SelectValue>v{selectedVersion}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {componentInfo.versions.map(v => (
+                      <SelectItem key={v.version} value={v.version}>
+                        v{v.version}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value="__add_new__" className="text-primary">
+                      <div className="flex items-center gap-1">
+                        <IconPlus className="w-3 h-3" />
+                        Add new version
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                <Select 
+                  value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
+                  onValueChange={handleExampleChange}
+                >
+                  <SelectTrigger className="h-auto p-0 text-sm font-medium border-none shadow-none bg-transparent focus:ring-0 focus:ring-offset-0 hover:underline cursor-pointer [&>svg]:hidden w-auto max-w-[200px]" data-testid={`breadcrumb-example-${componentType}`}>
+                    <SelectValue placeholder="Default">{selectedExample || 'Default'}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="min-w-[280px]">
+                    {examples.length === 0 && (
+                      <SelectItem value="__default__">Default (from schema)</SelectItem>
+                    )}
+                    {(() => {
+                      const grouped = examples.reduce((acc, ex) => {
+                        const variant = ex.variant || 'default';
+                        if (!acc[variant]) acc[variant] = [];
+                        acc[variant].push(ex);
+                        return acc;
+                      }, {} as Record<string, typeof examples>);
+                      
+                      const schemaVariantOrder = schema.variants ? Object.keys(schema.variants) : [];
+                      const sortedVariants = Object.keys(grouped).sort((a, b) => {
+                        if (a === 'default') return 1;
+                        if (b === 'default') return -1;
+                        const aIdx = schemaVariantOrder.indexOf(a);
+                        const bIdx = schemaVariantOrder.indexOf(b);
+                        if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+                        if (aIdx === -1) return 1;
+                        if (bIdx === -1) return -1;
+                        return aIdx - bIdx;
+                      });
+                      
+                      return sortedVariants.map(variant => (
+                        <SelectGroup key={variant}>
+                          <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
+                            {formatVariantLabel(variant)}
+                          </SelectLabel>
+                          {grouped[variant].map(ex => (
+                            <SelectItem key={ex.name} value={ex.name} className="pl-4">
+                              {ex.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ));
+                    })()}
+                    <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
+                      <div className="flex items-center gap-1">
+                        <IconPlus className="w-3 h-3" />
+                        Add new example
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </nav>
-              <Badge variant="secondary">{componentType}</Badge>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -505,119 +586,40 @@ function ComponentCard({
               );
             })()}
           </div>
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2">
-              <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                <SelectTrigger className="w-20" data-testid={`select-version-${componentType}`}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {componentInfo.versions.map(v => (
-                    <SelectItem key={v.version} value={v.version}>
-                      {v.version}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="__add_new__" className="text-primary">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new version
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Example:</span>
-              <Select 
-                value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
-                onValueChange={handleExampleChange}
-              >
-                <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
-                  <SelectValue placeholder="Default" />
-                </SelectTrigger>
-                <SelectContent className="min-w-[280px]">
-                  {examples.length === 0 && (
-                    <SelectItem value="__default__">Default (from schema)</SelectItem>
-                  )}
-                  {(() => {
-                    // Group examples by variant
-                    const grouped = examples.reduce((acc, ex) => {
-                      const variant = ex.variant || 'default';
-                      if (!acc[variant]) acc[variant] = [];
-                      acc[variant].push(ex);
-                      return acc;
-                    }, {} as Record<string, typeof examples>);
-                    
-                    const schemaVariantOrder = schema.variants ? Object.keys(schema.variants) : [];
-                    const sortedVariants = Object.keys(grouped).sort((a, b) => {
-                      if (a === 'default') return 1;
-                      if (b === 'default') return -1;
-                      const aIdx = schemaVariantOrder.indexOf(a);
-                      const bIdx = schemaVariantOrder.indexOf(b);
-                      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
-                      if (aIdx === -1) return 1;
-                      if (bIdx === -1) return -1;
-                      return aIdx - bIdx;
-                    });
-                    
-                    return sortedVariants.map(variant => (
-                      <SelectGroup key={variant}>
-                        <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
-                          {formatVariantLabel(variant)}
-                        </SelectLabel>
-                        {grouped[variant].map(ex => (
-                          <SelectItem key={ex.name} value={ex.name} className="pl-4">
-                            <span className="flex items-center gap-2">
-                              {ex.name}
-                            </span>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    ));
-                  })()}
-                  <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new example
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              {(() => {
-                const currentExample = examples.find(ex => ex.name === selectedExample);
-                if (!currentExample?.description) return null;
-                return (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        data-testid={`button-example-info-${componentType}`}
-                      >
-                        <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-64 text-sm">
-                      <p className="font-medium mb-1">{currentExample.name}</p>
-                      <p className="text-muted-foreground">{currentExample.description}</p>
-                    </PopoverContent>
-                  </Popover>
-                );
-              })()}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
-                }}
-                title="Reload examples"
-                data-testid={`button-reload-examples-${componentType}`}
-              >
-                <IconRefresh className="w-4 h-4" />
-              </Button>
-            </div>
+          <div className="flex items-center gap-2">
+            {(() => {
+              const currentExample = examples.find(ex => ex.name === selectedExample);
+              if (!currentExample?.description) return null;
+              return (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      data-testid={`button-example-info-${componentType}`}
+                    >
+                      <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-64 text-sm">
+                    <p className="font-medium mb-1">{currentExample.name}</p>
+                    <p className="text-muted-foreground">{currentExample.description}</p>
+                  </PopoverContent>
+                </Popover>
+              );
+            })()}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+              }}
+              title="Reload examples"
+              data-testid={`button-reload-examples-${componentType}`}
+            >
+              <IconRefresh className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </nav>
@@ -997,6 +999,7 @@ export default function ComponentShowcase() {
           globalPreviewState={true}
           isFocused={false}
           cardRef={cardRefs.current[componentType]}
+          allComponents={components.map(c => ({ type: c.type, name: c.name }))}
         />
       </div>
     );
@@ -1090,6 +1093,7 @@ function AllComponentsLoader({
   highlightedComponent,
   cardRefs 
 }: AllComponentsLoaderProps) {
+  const allComponents = components.map(c => ({ type: c.type, name: c.name }));
   return (
     <>
       {components.map((comp) => (
@@ -1100,6 +1104,7 @@ function AllComponentsLoader({
           globalPreviewState={globalPreviewState}
           isFocused={highlightedComponent === comp.type}
           cardRef={cardRefs.current[comp.type]}
+          allComponents={allComponents}
         />
       ))}
     </>
@@ -1112,6 +1117,7 @@ interface ComponentCardLoaderProps {
   globalPreviewState: boolean | null;
   isFocused: boolean;
   cardRef?: React.RefObject<HTMLDivElement>;
+  allComponents?: Array<{ type: string; name: string; }>;
 }
 
 function ComponentCardLoader({ 
@@ -1119,7 +1125,8 @@ function ComponentCardLoader({
   globalYamlState, 
   globalPreviewState, 
   isFocused,
-  cardRef 
+  cardRef,
+  allComponents = []
 }: ComponentCardLoaderProps) {
   const { data: componentInfo, isLoading } = useQuery<ComponentInfo>({
     queryKey: ['/api/component-registry', componentType],
@@ -1148,6 +1155,7 @@ function ComponentCardLoader({
       globalPreviewState={globalPreviewState}
       isFocused={isFocused}
       cardRef={cardRef}
+      allComponents={allComponents}
     />
   );
 }
