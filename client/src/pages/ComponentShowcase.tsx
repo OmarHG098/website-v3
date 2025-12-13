@@ -574,6 +574,91 @@ function ComponentCard({
               </nav>
             </div>
             <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
+            {/* Mobile-only buttons row */}
+            <div className="flex sm:hidden items-center gap-2 pt-[3px] pb-[3px]">
+              {(() => {
+                const currentExample = examples.find(ex => ex.name === selectedExample);
+                if (!currentExample?.description) return null;
+                return (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        data-testid={`button-example-info-mobile-${componentType}`}
+                      >
+                        <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-64 text-sm">
+                      <p className="font-medium mb-1">{currentExample.name}</p>
+                      <p className="text-muted-foreground">{currentExample.description}</p>
+                    </PopoverContent>
+                  </Popover>
+                );
+              })()}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleValidate}
+                    disabled={isValidating}
+                    className="h-8 px-2 text-xs"
+                    data-testid={`button-test-integrity-mobile-${componentType}`}
+                  >
+                    <IconTestPipe className="w-4 h-4 mr-1" />
+                    {isValidating ? 'Testing...' : 'Test'}
+                  </Button>
+                </PopoverTrigger>
+                {validationResult && (
+                  <PopoverContent className="w-80 text-sm">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">Validation Results</span>
+                        <Badge variant={validationResult.issues.filter(i => i.type === 'error').length > 0 ? 'destructive' : 'secondary'}>
+                          {validationResult.version}
+                        </Badge>
+                      </div>
+                      {validationResult.issues.length === 0 ? (
+                        <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                          <IconCircleCheck className="w-4 h-4" />
+                          <span>All checks passed!</span>
+                        </div>
+                      ) : (
+                        <div className="space-y-1 max-h-48 overflow-y-auto">
+                          {validationResult.issues.map((issue, idx) => (
+                            <div key={idx} className={`flex items-start gap-2 text-xs ${issue.type === 'error' ? 'text-destructive' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                              {issue.type === 'error' ? (
+                                <IconCircleX className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <IconAlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              )}
+                              <div>
+                                <p>{issue.message}</p>
+                                {issue.file && <p className="text-muted-foreground font-mono">{issue.file}</p>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                )}
+              </Popover>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+                }}
+                title="Reload examples"
+                data-testid={`button-reload-examples-mobile-${componentType}`}
+              >
+                <IconRefresh className="w-4 h-4" />
+              </Button>
+            </div>
             {(() => {
               const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
               const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
@@ -591,7 +676,8 @@ function ComponentCard({
               );
             })()}
           </div>
-          <div className="flex items-center gap-2">
+          {/* Desktop-only buttons */}
+          <div className="hidden sm:flex items-center gap-2">
             {(() => {
               const currentExample = examples.find(ex => ex.name === selectedExample);
               if (!currentExample?.description) return null;
