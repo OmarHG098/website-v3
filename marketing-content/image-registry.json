@@ -1,0 +1,90 @@
+{
+  "presets": {
+    "hero-wide": {
+      "aspect_ratio": "16:9",
+      "widths": [640, 960, 1280, 1920],
+      "quality": 85,
+      "description": "Full-width hero images"
+    },
+    "hero-tall": {
+      "aspect_ratio": "9:16",
+      "widths": [360, 480, 640],
+      "quality": 85,
+      "description": "Vertical hero images for mobile-style content"
+    },
+    "card": {
+      "aspect_ratio": "4:3",
+      "widths": [320, 480, 640],
+      "quality": 80,
+      "description": "Standard card thumbnails"
+    },
+    "card-wide": {
+      "aspect_ratio": "16:9",
+      "widths": [320, 480, 640],
+      "quality": 80,
+      "description": "Wide card thumbnails"
+    },
+    "avatar": {
+      "aspect_ratio": "1:1",
+      "widths": [64, 128, 256],
+      "quality": 85,
+      "description": "Profile pictures and avatars"
+    },
+    "logo": {
+      "aspect_ratio": null,
+      "widths": [120, 240],
+      "quality": 90,
+      "description": "Company logos, preserves original aspect ratio"
+    },
+    "icon": {
+      "aspect_ratio": "1:1",
+      "widths": [32, 64, 128],
+      "quality": 90,
+      "description": "Small icons and badges"
+    },
+    "full": {
+      "aspect_ratio": null,
+      "widths": [640, 960, 1280, 1920],
+      "quality": 85,
+      "description": "Full-size images, preserves original aspect ratio"
+    }
+  },
+  "images": {
+    "placeholder_hero": {
+      "src": "/attached_assets/placeholder-hero.jpg",
+      "alt": "Hero placeholder image",
+      "focal_point": "center",
+      "tags": ["placeholder", "hero"]
+    },
+    "placeholder_card": {
+      "src": "/attached_assets/placeholder-card.jpg",
+      "alt": "Card placeholder image",
+      "focal_point": "center",
+      "tags": ["placeholder", "card"]
+    },
+    "placeholder_avatar": {
+      "src": "/attached_assets/placeholder-avatar.jpg",
+      "alt": "Avatar placeholder",
+      "focal_point": "center",
+      "tags": ["placeholder", "avatar"]
+    },
+    "logo_4geeks": {
+      "src": "/attached_assets/4geeks-logo.svg",
+      "alt": "4Geeks Academy logo",
+      "focal_point": "center",
+      "tags": ["logo", "brand"]
+    },
+    "logo_google": {
+      "src": "/attached_assets/google-logo.svg",
+      "alt": "Google logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_coursereport": {
+      "src": "/attached_assets/coursereport-logo.svg",
+      "alt": "Course Report logo",
+      "focal_point": "center",
+      "tags": ["logo", "review"]
+    }
+  }
+}

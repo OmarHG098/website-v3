@@ -26,6 +26,7 @@ import {
   setExperimentCookie,
   buildVisitorContext,
 } from "./experiments";
+import { loadImageRegistry } from "./image-registry";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -1043,6 +1044,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Lead submission error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
+  });
+
+  // Image Registry API endpoint
+  app.get("/api/image-registry", (req, res) => {
+    const registry = loadImageRegistry();
+    if (!registry) {
+      res.status(500).json({ error: "Failed to load image registry" });
+      return;
+    }
+    res.json(registry);
   });
 
   const httpServer = createServer(app);

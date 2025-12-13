@@ -127,6 +127,40 @@ export const videoConfigSchema = z.object({
   preview_image_url: z.string().optional(),
 });
 
+export type VideoConfig = z.infer<typeof videoConfigSchema>;
+
+// Image Registry Schemas
+export const imagePresetSchema = z.object({
+  aspect_ratio: z.string().nullable(),
+  widths: z.array(z.number()),
+  quality: z.number(),
+  description: z.string(),
+});
+
+export const imageEntrySchema = z.object({
+  src: z.string(),
+  alt: z.string(),
+  focal_point: z.enum(["center", "top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"]).optional(),
+  tags: z.array(z.string()).optional(),
+});
+
+export const imageRegistrySchema = z.object({
+  presets: z.record(z.string(), imagePresetSchema),
+  images: z.record(z.string(), imageEntrySchema),
+});
+
+export const imageRefSchema = z.object({
+  id: z.string(),
+  preset: z.enum(["hero-wide", "hero-tall", "card", "card-wide", "avatar", "logo", "icon", "full"]).optional(),
+  alt: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export type ImagePreset = z.infer<typeof imagePresetSchema>;
+export type ImageEntry = z.infer<typeof imageEntrySchema>;
+export type ImageRegistry = z.infer<typeof imageRegistrySchema>;
+export type ImageRef = z.infer<typeof imageRefSchema>;
+
 export const reviewLogoSchema = z.object({
   name: z.string(),
   logo: z.string().optional(),
@@ -796,7 +830,6 @@ export type LeadFormFieldConfig = z.infer<typeof leadFormFieldConfigSchema>;
 export type LeadFormData = z.infer<typeof leadFormDataSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
-export type VideoConfig = z.infer<typeof videoConfigSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
 export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
 export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
