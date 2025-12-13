@@ -469,7 +469,7 @@ function ComponentCard({
                   value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
                   onValueChange={handleExampleChange}
                 >
-                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-auto max-w-[200px]" data-testid={`breadcrumb-example-${componentType}`}>
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium min-w-[280px]" data-testid={`breadcrumb-example-${componentType}`}>
                     <SelectValue placeholder="Default">{selectedExample || 'Default'}</SelectValue>
                   </SelectTrigger>
                   <SelectContent className="min-w-[280px]">
@@ -567,7 +567,7 @@ function ComponentCard({
                   size="sm"
                   onClick={handleValidate}
                   disabled={isValidating}
-                  className="h-8 px-6 min-w-[120px] text-xs"
+                  className="h-8 px-2 text-xs"
                   data-testid={`button-test-integrity-${componentType}`}
                 >
                   <IconTestPipe className="w-4 h-4 mr-1" />
