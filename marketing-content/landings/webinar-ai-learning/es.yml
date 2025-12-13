@@ -37,11 +37,11 @@ sections:
         variant: "outline"
         icon: "Player"
 
-  - type: program_overview
+  - type: features_grid
     version: "1.0"
     title: "Lo Que Aprenderás"
     subtitle: "En solo 1 hora, descubre las herramientas que hacen el aprendizaje más rápido y fácil"
-    cards:
+    items:
       - icon: "Brain"
         title: "Aprendizaje con IA"
         description: "Mira cómo los tutores de IA proporcionan retroalimentación instantánea y orientación personalizada 24/7"

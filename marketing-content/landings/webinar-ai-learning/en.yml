@@ -37,11 +37,11 @@ sections:
         variant: "outline"
         icon: "Player"
 
-  - type: program_overview
+  - type: features_grid
     version: "1.0"
     title: "What You'll Learn"
     subtitle: "In just 1 hour, discover the tools that make learning faster and easier"
-    cards:
+    items:
       - icon: "Brain"
         title: "AI-Powered Learning"
         description: "See how AI tutors provide instant feedback and personalized guidance 24/7"
