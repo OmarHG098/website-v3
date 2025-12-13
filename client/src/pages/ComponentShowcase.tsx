@@ -573,7 +573,7 @@ function ComponentCard({
                 </Select>
               </nav>
             </div>
-            <p className="text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
+            <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {(() => {
               const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
               const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
