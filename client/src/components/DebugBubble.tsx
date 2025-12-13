@@ -137,6 +137,23 @@ interface ContentInfo {
   label: string;
 }
 
+interface VariantInfo {
+  filename: string;
+  name: string;
+  variantSlug: string;
+  version: number | null;
+  locale: string;
+  displayName: string;
+  isPromoted: boolean;
+}
+
+interface VariantsResponse {
+  variants: VariantInfo[];
+  contentType: string;
+  slug: string;
+  folderPath: string;
+}
+
 // De-slugify a string (e.g., "hero-messaging-test" -> "Hero Messaging Test")
 function deslugify(slug: string): string {
   return slug
@@ -243,6 +260,14 @@ export function DebugBubble() {
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
   const [experimentsLoading, setExperimentsLoading] = useState(false);
   
+  // Create experiment dialog state
+  const [createExperimentOpen, setCreateExperimentOpen] = useState(false);
+  const [variantsData, setVariantsData] = useState<VariantsResponse | null>(null);
+  const [variantsLoading, setVariantsLoading] = useState(false);
+  const [selectedVariantA, setSelectedVariantA] = useState<string>("");
+  const [selectedVariantB, setSelectedVariantB] = useState<string>("");
+  const [experimentName, setExperimentName] = useState("");
+  
   // Components search state
   const [componentsSearch, setComponentsSearch] = useState("");
   const [showComponentsSearch, setShowComponentsSearch] = useState(false);
@@ -339,6 +364,38 @@ export function DebugBubble() {
       setComponentsSearch("");
       setShowComponentsSearch(false);
     }
+  };
+
+  // Handle create experiment dialog open
+  const handleOpenCreateExperiment = () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    
+    setCreateExperimentOpen(true);
+    setVariantsLoading(true);
+    setSelectedVariantA("");
+    setSelectedVariantB("");
+    setExperimentName("");
+    
+    fetch(`/api/variants/${contentInfo.type}/${contentInfo.slug}`)
+      .then((res) => res.json())
+      .then((data: VariantsResponse) => {
+        setVariantsData(data);
+        setVariantsLoading(false);
+      })
+      .catch(() => {
+        setVariantsLoading(false);
+        setVariantsData(null);
+      });
+  };
+
+  // Generate experiment slug from name
+  const generateExperimentSlug = (name: string): string => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
   };
 
   // Filter components list by search
@@ -935,6 +992,7 @@ export function DebugBubble() {
                     </div>
                   </div>
                   <button
+                    onClick={handleOpenCreateExperiment}
                     className="p-1.5 rounded hover-elevate"
                     title="Create new experiment"
                     data-testid="button-create-experiment"
@@ -1352,6 +1410,154 @@ export function DebugBubble() {
               data-testid="button-close-session-modal"
             >
               Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Create New Experiment</DialogTitle>
+            <DialogDescription>
+              Select two variants to compare in an A/B test. Variants are YAML files from{' '}
+              <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                marketing-content/{contentInfo.type}s/{contentInfo.slug}/
+              </code>
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            {variantsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+              </div>
+            ) : !variantsData || variantsData.variants.length === 0 ? (
+              <div className="text-center py-4 text-sm text-muted-foreground">
+                No variants found in this folder
+              </div>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Experiment Name</label>
+                  <input
+                    type="text"
+                    placeholder="e.g., Hero Messaging Test"
+                    value={experimentName}
+                    onChange={(e) => setExperimentName(e.target.value)}
+                    className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                    data-testid="input-experiment-name"
+                  />
+                  {experimentName && (
+                    <p className="text-xs text-muted-foreground">
+                      Slug: <code className="bg-muted px-1 rounded">{generateExperimentSlug(experimentName)}</code>
+                    </p>
+                  )}
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Variant A (Control)</label>
+                  <Select value={selectedVariantA} onValueChange={setSelectedVariantA}>
+                    <SelectTrigger data-testid="select-variant-a">
+                      <SelectValue placeholder="Select control variant..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {variantsData.variants.map((variant) => (
+                        <SelectItem 
+                          key={variant.filename} 
+                          value={variant.filename}
+                          disabled={variant.filename === selectedVariantB}
+                        >
+                          <div className="flex items-center gap-2">
+                            {variant.isPromoted && (
+                              <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                            )}
+                            <span>{variant.displayName}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Variant B (Treatment)</label>
+                  <Select value={selectedVariantB} onValueChange={setSelectedVariantB}>
+                    <SelectTrigger data-testid="select-variant-b">
+                      <SelectValue placeholder="Select treatment variant..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {variantsData.variants.map((variant) => (
+                        <SelectItem 
+                          key={variant.filename} 
+                          value={variant.filename}
+                          disabled={variant.filename === selectedVariantA}
+                        >
+                          <div className="flex items-center gap-2">
+                            {variant.isPromoted && (
+                              <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                            )}
+                            <span>{variant.displayName}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {selectedVariantA && selectedVariantB && experimentName && (
+                  <div className="p-3 rounded-md bg-muted/50 border">
+                    <p className="text-xs text-muted-foreground mb-2">Experiment YAML to add:</p>
+                    <pre className="text-xs font-mono bg-background p-2 rounded border overflow-x-auto">
+{`- slug: ${generateExperimentSlug(experimentName)}
+  status: planned
+  description: "${experimentName}"
+  variants:
+    - slug: ${variantsData.variants.find(v => v.filename === selectedVariantA)?.variantSlug || 'control'}
+      version: ${variantsData.variants.find(v => v.filename === selectedVariantA)?.version || 1}
+      allocation: 50
+    - slug: ${variantsData.variants.find(v => v.filename === selectedVariantB)?.variantSlug || 'treatment'}
+      version: ${variantsData.variants.find(v => v.filename === selectedVariantB)?.version || 1}
+      allocation: 50`}
+                    </pre>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setCreateExperimentOpen(false)}
+              data-testid="button-cancel-create-experiment"
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={!selectedVariantA || !selectedVariantB || !experimentName}
+              onClick={() => {
+                // Copy the YAML to clipboard
+                if (selectedVariantA && selectedVariantB && experimentName && variantsData) {
+                  const variantA = variantsData.variants.find(v => v.filename === selectedVariantA);
+                  const variantB = variantsData.variants.find(v => v.filename === selectedVariantB);
+                  const yaml = `- slug: ${generateExperimentSlug(experimentName)}
+  status: planned
+  description: "${experimentName}"
+  variants:
+    - slug: ${variantA?.variantSlug || 'control'}
+      version: ${variantA?.version || 1}
+      allocation: 50
+    - slug: ${variantB?.variantSlug || 'treatment'}
+      version: ${variantB?.version || 1}
+      allocation: 50`;
+                  navigator.clipboard.writeText(yaml);
+                  setCreateExperimentOpen(false);
+                }
+              }}
+              data-testid="button-copy-experiment-yaml"
+            >
+              <IconCopy className="h-4 w-4 mr-2" />
+              Copy YAML
             </Button>
           </DialogFooter>
         </DialogContent>

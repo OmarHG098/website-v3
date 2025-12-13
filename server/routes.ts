@@ -590,6 +590,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Experiment cache cleared" });
   });
 
+  // Get available variants for a content type and slug
+  app.get("/api/variants/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const result = experimentManager.getAvailableVariants(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      slug
+    );
+    
+    if (!result) {
+      res.status(404).json({ error: "Content folder not found" });
+      return;
+    }
+    
+    res.json(result);
+  });
+
   // Get experiments for a specific content type and slug
   app.get("/api/experiments/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;

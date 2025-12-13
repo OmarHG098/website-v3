@@ -522,6 +522,107 @@ export class ExperimentManager {
   }
 
   /**
+   * Get available variants for a content type and slug
+   * Parses YAML files in the content folder following naming conventions:
+   * - {locale}.yml = "promoted" variant (e.g., en.yml, es.yml)
+   * - {variant-slug}.v{version}.{locale}.yml = named variant (e.g., salary-focus.v1.en.yml)
+   */
+  public getAvailableVariants(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    slug: string
+  ): {
+    variants: Array<{
+      filename: string;
+      name: string;
+      variantSlug: string;
+      version: number | null;
+      locale: string;
+      displayName: string;
+      isPromoted: boolean;
+    }>;
+    contentType: string;
+    slug: string;
+    folderPath: string;
+  } | null {
+    const contentDir = path.join(CONTENT_DIR, contentType, slug);
+    
+    if (!fs.existsSync(contentDir)) {
+      return null;
+    }
+    
+    try {
+      const files = fs.readdirSync(contentDir);
+      
+      const variants = files
+        .filter(file => file.endsWith('.yml') && file !== 'experiments.yml')
+        .map(file => {
+          const name = file.replace('.yml', '');
+          const parts = name.split('.');
+          
+          // Simple locale file like "en.yml" or "es.yml" = promoted variant
+          if (parts.length === 1) {
+            return {
+              filename: file,
+              name,
+              variantSlug: 'promoted',
+              version: null,
+              locale: parts[0],
+              displayName: `Promoted (${parts[0].toUpperCase()})`,
+              isPromoted: true
+            };
+          }
+          
+          // Pattern: {variant-slug}.v{version}.{locale}.yml
+          // e.g., salary-focus.v1.en.yml
+          const locale = parts[parts.length - 1];
+          const versionMatch = parts[parts.length - 2]?.match(/^v(\d+)$/);
+          
+          if (versionMatch) {
+            const version = parseInt(versionMatch[1], 10);
+            const variantSlug = parts.slice(0, -2).join('.');
+            return {
+              filename: file,
+              name,
+              variantSlug,
+              version,
+              locale,
+              displayName: `${variantSlug} v${version} (${locale.toUpperCase()})`,
+              isPromoted: false
+            };
+          }
+          
+          // Fallback for other patterns
+          return {
+            filename: file,
+            name,
+            variantSlug: parts.slice(0, -1).join('.') || parts[0],
+            version: null,
+            locale: parts[parts.length - 1],
+            displayName: name,
+            isPromoted: false
+          };
+        })
+        .sort((a, b) => {
+          // Sort promoted variants first, then by variant slug, then by version
+          if (a.isPromoted !== b.isPromoted) return a.isPromoted ? -1 : 1;
+          if (a.variantSlug !== b.variantSlug) return a.variantSlug.localeCompare(b.variantSlug);
+          if (a.version !== b.version) return (a.version || 0) - (b.version || 0);
+          return a.locale.localeCompare(b.locale);
+        });
+      
+      return {
+        variants,
+        contentType,
+        slug,
+        folderPath: `marketing-content/${contentType}/${slug}`
+      };
+    } catch (error) {
+      console.error(`[Experiments] Error getting variants for ${contentType}/${slug}:`, error);
+      return null;
+    }
+  }
+
+  /**
    * Update an experiment's settings
    */
   public updateExperiment(
