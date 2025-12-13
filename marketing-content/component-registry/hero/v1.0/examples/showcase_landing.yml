@@ -1,6 +1,5 @@
 name: "Showcase Landing Hero"
 description: "3-column showcase layout with images on both sides, centered content with trust bar"
-variant: "showcase"
 yaml: |
   - type: hero
     version: "1.0"

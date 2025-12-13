@@ -1,6 +1,5 @@
 name: "Product Showcase"
 description: "Two column layout with welcome text, brand mark, title, description on left and embedded video on right"
-variant: "productShowcase"
 yaml: |
   - type: hero
     version: "1.0"

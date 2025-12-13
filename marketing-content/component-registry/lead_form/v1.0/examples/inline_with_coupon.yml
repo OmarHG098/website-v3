@@ -1,6 +1,5 @@
 name: "Inline With Coupon"
 description: "Inline form with visible coupon field for promotions"
-variant: "inline"
 yaml: |
   - type: lead_form
     version: "1.0"
