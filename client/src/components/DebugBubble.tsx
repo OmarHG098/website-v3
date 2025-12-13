@@ -43,6 +43,7 @@ import {
   IconPlus,
   IconDatabase,
   IconPhoto,
+  IconCopy,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -236,6 +237,7 @@ export function DebugBubble() {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
+  const [tokenCopied, setTokenCopied] = useState(false);
   
   // Experiments state
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
@@ -1219,7 +1221,38 @@ export function DebugBubble() {
           </DialogHeader>
           
           <div className="space-y-4 py-4">
-            <div className="space-y-3">
+            {hasToken && getDebugToken() && (
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-foreground">Authentication Token</h4>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 bg-muted px-2 py-1.5 rounded text-xs font-mono truncate" data-testid="text-session-token">
+                    {getDebugToken()}
+                  </code>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 flex-shrink-0"
+                    onClick={() => {
+                      const token = getDebugToken();
+                      if (token) {
+                        navigator.clipboard.writeText(token);
+                        setTokenCopied(true);
+                        setTimeout(() => setTokenCopied(false), 2000);
+                      }
+                    }}
+                    data-testid="button-copy-token"
+                  >
+                    {tokenCopied ? (
+                      <IconCheck className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <IconCopy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+            
+            <div className={`space-y-3 ${hasToken && getDebugToken() ? 'border-t pt-3' : ''}`}>
               <h4 className="text-sm font-semibold text-foreground">Geolocation</h4>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="flex justify-between">
