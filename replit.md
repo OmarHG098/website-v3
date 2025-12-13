@@ -10,6 +10,7 @@ The AI Reskilling Platform is a minimalistic Learning Management System (LMS) we
 - Testing: NEVER use playwright for testing - it takes too much time. User prefers manual verification only.
 - Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
 - Colors: ONLY semantic tokens - NEVER use hardcoded colors like `bg-blue-500`, `text-red-600`, or arbitrary hex values. Only use semantic classes: `bg-primary`, `text-foreground`, `bg-muted`, etc.
+- Video: ALWAYS use the `UniversalVideo` component (`client/src/components/UniversalVideo.tsx`) for ALL video content. NEVER use raw `<video>` tags, `<iframe>` embeds, or other video libraries directly.
 
 ### System Architecture
 The platform is built with a modern web stack: React with TypeScript, Vite for the frontend, Tailwind CSS and shadcn UI for styling, wouter for routing, and TanStack Query for state management. The backend uses Express, currently with in-memory storage, slated for integration with the 4geeks Breathecode API.
@@ -68,6 +69,22 @@ The platform is built with a modern web stack: React with TypeScript, Vite for t
       - Validation rules: Variant allocations must sum to 100, YAML file validated before/after writes
       - DebugBubble integration: SPA navigation via wouter Link to experiment editor from experiments menu
       - Live preview: Multiple iframes render variants simultaneously with `force_variant` and `force_version` query parameters
+-   **UniversalVideo Component**: A performant, unified video player component at `client/src/components/UniversalVideo.tsx`. This is the ONLY way to embed videos on the platform.
+    - **Local videos** (.mp4, .webm, .mov): Uses lightweight native HTML5 `<video>` element
+    - **External videos** (YouTube, Vimeo, etc.): Lazy-loads `react-player` via React.lazy() for optimal performance
+    - **Preview images**: Optional thumbnail with play button overlay (click to play)
+    - **YAML configuration structure**:
+      ```yaml
+      video:
+        url: "/path/to/video.mp4"     # or YouTube/Vimeo URL
+        ratio: "16:9"                  # aspect ratio (default: 16:9)
+        muted: true                    # default: true
+        loop: true                     # default: true
+        autoplay: false                # default: false
+        preview_image_url: "/thumb.jpg" # optional preview thumbnail
+      ```
+    - **Schema**: `videoConfigSchema` in `shared/schema.ts` validates video configuration
+    - **Usage**: `<UniversalVideo {...videoConfig} className="..." />`
 -   **Inline Editing System**: A capability-based inline editing system designed for both human editors and AI agents. Key components:
     - `shared/schema.ts`: Editing capability types (`content_read`, `content_edit_text`, `content_edit_structure`, `content_edit_media`, `content_publish`) and structured `EditOperation` types
     - `client/src/hooks/useDebugAuth.ts`: Extended to return capabilities from token validation, with `hasCapability()` and `canEdit` helpers
