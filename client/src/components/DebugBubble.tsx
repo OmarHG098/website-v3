@@ -45,6 +45,21 @@ import {
   IconPhoto,
   IconCopy,
 } from "@tabler/icons-react";
+import { US, ES, PT, FR, DE, IT } from "country-flag-icons/react/3x2";
+
+const LocaleFlag = ({ locale, className = "w-4 h-3" }: { locale: string; className?: string }) => {
+  const flags: Record<string, React.ComponentType<{ className?: string }>> = {
+    en: US,
+    es: ES,
+    pt: PT,
+    fr: FR,
+    de: DE,
+    it: IT,
+  };
+  const FlagComponent = flags[locale.toLowerCase()];
+  if (!FlagComponent) return <span className="text-xs">{locale.toUpperCase()}</span>;
+  return <FlagComponent className={className} />;
+};
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -1475,6 +1490,7 @@ export function DebugBubble() {
                           disabled={variant.filename === selectedVariantB}
                         >
                           <div className="flex items-center gap-2">
+                            <LocaleFlag locale={variant.locale} />
                             {variant.isPromoted && (
                               <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
                             )}
@@ -1505,6 +1521,7 @@ export function DebugBubble() {
                               disabled={variant.filename === selectedVariantA}
                             >
                               <div className="flex items-center gap-2">
+                                <LocaleFlag locale={variant.locale} />
                                 {variant.isPromoted && (
                                   <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
                                 )}
