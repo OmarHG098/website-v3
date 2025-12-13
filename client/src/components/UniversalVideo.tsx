@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from "react";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
 
-const ReactPlayer = lazy(() => import("react-player/lazy"));
+const ReactPlayer = lazy(() => import("react-player"));
 
 export interface VideoConfig {
   url: string;
