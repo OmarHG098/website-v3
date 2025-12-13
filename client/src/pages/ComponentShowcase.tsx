@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useSearch, useParams, Link } from "wouter";
+import { useSearch, useParams, Link, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { 
   IconCode, 
@@ -177,6 +177,7 @@ function ComponentCard({
   allComponents = []
 }: ComponentCardProps) {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeReady, setIframeReady] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(400);
@@ -200,6 +201,30 @@ function ComponentCard({
   const currentVersionData = componentInfo.versions.find(v => v.version === selectedVersion);
   const schema = currentVersionData?.schema;
   const examples = currentVersionData?.examples || [];
+
+  const updateUrl = useCallback((newVersion?: string, newExample?: string | null) => {
+    const v = newVersion || selectedVersion;
+    const e = newExample !== undefined ? newExample : selectedExample;
+    let url = `/private/component-showcase/${componentType}`;
+    const params = new URLSearchParams();
+    if (v) params.set('version', v);
+    if (e) params.set('example', e);
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+    setLocation(url, { replace: true });
+  }, [componentType, selectedVersion, selectedExample, setLocation]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlVersion = params.get('version');
+    const urlExample = params.get('example');
+    if (urlVersion && componentInfo.versions.some(v => v.version === urlVersion)) {
+      setSelectedVersion(urlVersion);
+    }
+    if (urlExample) {
+      setSelectedExample(urlExample);
+    }
+  }, [componentInfo.versions]);
 
   const createVersionMutation = useMutation({
     mutationFn: async (baseVersion: string) => {
@@ -406,6 +431,7 @@ function ComponentCard({
     } else {
       setSelectedVersion(version);
       setSelectedExample(null);
+      updateUrl(version, null);
     }
   };
 
@@ -414,8 +440,10 @@ function ComponentCard({
       setShowAddExampleModal(true);
     } else if (example === '__default__') {
       setSelectedExample(null);
+      updateUrl(undefined, null);
     } else {
       setSelectedExample(example);
+      updateUrl(undefined, example);
     }
   };
 
