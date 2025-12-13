@@ -103,26 +103,28 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {data.trust_bar && (
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                  {data.trust_bar.rating && (
-                    <div className="flex items-center gap-1">
-                      <div className="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <IconStarFilled 
-                            key={star} 
-                            className={`h-4 w-4 ${
-                              star <= Math.floor(parseFloat(data.trust_bar!.rating || "0"))
-                                ? "text-yellow-400"
-                                : "text-muted"
-                            }`}
-                          />
-                        ))}
+                  <div className="flex flex-col gap-1">
+                    {data.trust_bar.rating && (
+                      <div className="flex items-center gap-1">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <IconStarFilled 
+                              key={star} 
+                              className={`h-4 w-4 ${
+                                star <= Math.floor(parseFloat(data.trust_bar!.rating || "0"))
+                                  ? "text-yellow-400"
+                                  : "text-muted"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="font-medium">{data.trust_bar.rating}</span>
                       </div>
-                      <span className="font-medium">{data.trust_bar.rating}</span>
-                    </div>
-                  )}
-                  {data.trust_bar.review_count && (
-                    <span>{data.trust_bar.review_count}</span>
-                  )}
+                    )}
+                    {data.trust_bar.review_count && (
+                      <span>{data.trust_bar.review_count}</span>
+                    )}
+                  </div>
                   {data.trust_bar.review_logos && data.trust_bar.review_logos.length > 0 && (
                     <div className="flex items-center gap-3">
                       {data.trust_bar.review_logos.map((logo, index) => (
