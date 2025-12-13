@@ -117,7 +117,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                               return (
                                 <IconStarFilled 
                                   key={star} 
-                                  className="h-6 w-6 text-yellow-400"
+                                  className="h-6 w-6 text-yellow-500"
                                 />
                               );
                             } else if (isHalfStar) {
@@ -125,7 +125,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                                 <div key={star} className="relative h-6 w-6">
                                   <IconStarFilled className="h-6 w-6 text-muted" />
                                   <div className="absolute inset-0 overflow-hidden" style={{ width: '50%' }}>
-                                    <IconStarFilled className="h-6 w-6 text-yellow-400" />
+                                    <IconStarFilled className="h-6 w-6 text-yellow-500" />
                                   </div>
                                 </div>
                               );
