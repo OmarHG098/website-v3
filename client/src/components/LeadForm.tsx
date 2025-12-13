@@ -262,7 +262,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       <div className={data.className} data-testid="lead-form">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-start">
               <FormField
                 control={form.control}
                 name="email"
