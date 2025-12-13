@@ -172,8 +172,8 @@ variant_props:
       description: "Longer description text below subtitle"
     video_id:
       type: string
-      required: true
-      description: "YouTube video ID"
+      required: false
+      description: "YouTube video ID (optional if using image instead)"
       example: "dQw4w9WgXcQ"
     video_title:
       type: string
@@ -185,6 +185,70 @@ variant_props:
       description: "Video aspect ratio"
       options: ["16:9", "9:12"]
       default: "9:12"
+    image:
+      type: object
+      required: false
+      description: "Alternative to video - static image on right side"
+      properties:
+        src:
+          type: string
+          required: true
+          description: "Image source URL or path"
+        alt:
+          type: string
+          required: true
+          description: "Image alt text for accessibility"
+    form:
+      type: object
+      required: false
+      description: "Email signup form with input and button"
+      properties:
+        placeholder:
+          type: string
+          description: "Input placeholder text"
+          example: "Enter your work email"
+        button_text:
+          type: string
+          description: "Submit button text"
+          example: "Sign up free →"
+        helper_text:
+          type: string
+          required: false
+          description: "Helper text below the form"
+    cta_button:
+      type: object
+      required: false
+      description: "Alternative to form - single CTA button"
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+        variant:
+          type: string
+          options: ["primary", "outline"]
+    trust_bar:
+      type: object
+      required: false
+      description: "Social proof with ratings and review logos"
+      properties:
+        rating:
+          type: string
+          example: "4.5"
+        review_count:
+          type: string
+          example: "Based on 5149+ reviews:"
+        review_logos:
+          type: array
+          description: "List of review platform logos"
+          items:
+            name:
+              type: string
+              description: "Platform name (e.g., GetApp, Capterra)"
+            logo:
+              type: string
+              required: false
+              description: "Optional logo URL"
 
   simpleTwoColumn:
     badge:

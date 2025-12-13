@@ -1,0 +1,22 @@
+name: "Product Showcase with Image"
+description: "Two column layout with form, trust bar, and product image on right (no video)"
+variant: productShowcase
+yaml: |
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    title: "Take ideas from better to best"
+    subtitle: "Your team's visual platform to connect, collaborate, and create — together."
+    form:
+      placeholder: "Enter your work email"
+      button_text: "Sign up free →"
+      helper_text: "Keep work and life separate by using your work email"
+    trust_bar:
+      rating: "4.5"
+      review_count: "Based on 5149+ reviews:"
+      review_logos:
+        - name: "GetApp"
+        - name: "Capterra"
+    image:
+      src: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800"
+      alt: "Product dashboard screenshot"
