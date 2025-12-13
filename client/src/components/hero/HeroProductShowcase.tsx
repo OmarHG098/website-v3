@@ -102,7 +102,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.trust_bar && (
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-background rounded-lg p-4 shadow-sm">
+                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-background rounded-lg p-4 shadow-sm">
                   <div className="flex flex-col gap-1">
                     {data.trust_bar.rating && (
                       <div className="flex items-center gap-1">
