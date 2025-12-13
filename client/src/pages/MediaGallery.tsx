@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck } from "@tabler/icons-react";
@@ -11,6 +10,7 @@ import type { ImageRegistry } from "@shared/schema";
 export default function MediaGallery() {
   const [search, setSearch] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
 
   const { data: registry, isLoading, error } = useQuery<ImageRegistry>({
     queryKey: ["/api/image-registry"],
@@ -20,6 +20,10 @@ export default function MediaGallery() {
     navigator.clipboard.writeText(id);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleImageError = (id: string) => {
+    setFailedImages(prev => new Set(prev).add(id));
   };
 
   const filteredImages = registry?.images
@@ -35,7 +39,7 @@ export default function MediaGallery() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="flex items-center gap-4 mb-8">
           <Link href="/">
             <Button variant="ghost" size="icon" data-testid="button-back-home">
@@ -47,14 +51,14 @@ export default function MediaGallery() {
             <div>
               <h1 className="text-2xl font-bold" data-testid="text-page-title">Media Gallery</h1>
               <p className="text-sm text-muted-foreground">
-                Images from the centralized image registry
+                {filteredImages.length} images in the registry
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mb-6">
-          <div className="relative max-w-md">
+        <div className="mb-6 flex flex-wrap items-center gap-4">
+          <div className="relative max-w-md flex-1">
             <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by ID, alt text, or tag..."
@@ -64,6 +68,21 @@ export default function MediaGallery() {
               data-testid="input-search"
             />
           </div>
+          {registry && (
+            <div className="flex flex-wrap gap-1.5">
+              {Object.keys(registry.presets).map((name) => (
+                <Badge
+                  key={name}
+                  variant="outline"
+                  className="cursor-pointer text-xs"
+                  onClick={() => setSearch(name)}
+                  data-testid={`badge-preset-${name}`}
+                >
+                  {name}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
 
         {isLoading && (
@@ -76,91 +95,81 @@ export default function MediaGallery() {
         )}
 
         {error && (
-          <Card className="border-destructive">
-            <CardContent className="pt-6">
-              <p className="text-destructive" data-testid="text-error">
-                Failed to load image registry
-              </p>
-            </CardContent>
-          </Card>
+          <div className="rounded-md border border-destructive p-6">
+            <p className="text-destructive" data-testid="text-error">
+              Failed to load image registry
+            </p>
+          </div>
         )}
 
         {registry && (
           <>
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold mb-2">Presets</h2>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(registry.presets).map(([name, preset]) => (
-                  <Badge
-                    key={name}
-                    variant="secondary"
-                    className="cursor-default"
-                    data-testid={`badge-preset-${name}`}
-                  >
-                    {name}
-                    {preset.aspect_ratio && (
-                      <span className="ml-1 opacity-70">({preset.aspect_ratio})</span>
-                    )}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div 
+              className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
+              style={{ columnFill: 'balance' }}
+            >
               {filteredImages.map(([id, img]) => (
-                <Card key={id} className="overflow-hidden" data-testid={`card-image-${id}`}>
-                  <div className="aspect-video bg-muted relative overflow-hidden">
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = "none";
-                        target.parentElement?.classList.add("flex", "items-center", "justify-center");
-                        const placeholder = document.createElement("div");
-                        placeholder.className = "text-muted-foreground text-sm";
-                        placeholder.textContent = "Image not found";
-                        target.parentElement?.appendChild(placeholder);
-                      }}
-                    />
-                  </div>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <CardTitle className="text-sm font-mono truncate" data-testid={`text-image-id-${id}`}>
-                        {id}
-                      </CardTitle>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 flex-shrink-0"
-                        onClick={() => handleCopyId(id)}
-                        data-testid={`button-copy-${id}`}
-                      >
-                        {copiedId === id ? (
-                          <IconCheck className="h-3.5 w-3.5 text-green-600" />
-                        ) : (
-                          <IconCopy className="h-3.5 w-3.5" />
-                        )}
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-muted-foreground mb-2 line-clamp-2" data-testid={`text-image-alt-${id}`}>
-                      {img.alt}
-                    </p>
-                    {img.tags && img.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {img.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
+                <div 
+                  key={id} 
+                  className="break-inside-avoid mb-4 group"
+                  data-testid={`card-image-${id}`}
+                >
+                  <div className="rounded-lg overflow-hidden bg-muted border hover-elevate transition-shadow">
+                    {failedImages.has(id) ? (
+                      <div className="aspect-video flex items-center justify-center bg-muted">
+                        <div className="text-center p-4">
+                          <IconPhoto className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                          <p className="text-xs text-muted-foreground">Not found</p>
+                        </div>
                       </div>
+                    ) : (
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        className="w-full h-auto"
+                        loading="lazy"
+                        onError={() => handleImageError(id)}
+                      />
                     )}
-                  </CardContent>
-                </Card>
+                    <div className="p-3">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <code className="text-xs font-mono truncate text-foreground" data-testid={`text-image-id-${id}`}>
+                          {id}
+                        </code>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-6 w-6 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => handleCopyId(id)}
+                          data-testid={`button-copy-${id}`}
+                        >
+                          {copiedId === id ? (
+                            <IconCheck className="h-3 w-3 text-green-600" />
+                          ) : (
+                            <IconCopy className="h-3 w-3" />
+                          )}
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mb-2" data-testid={`text-image-alt-${id}`}>
+                        {img.alt}
+                      </p>
+                      {img.tags && img.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {img.tags.map((tag) => (
+                            <Badge 
+                              key={tag} 
+                              variant="secondary" 
+                              className="text-xs px-1.5 py-0 cursor-pointer"
+                              onClick={() => setSearch(tag)}
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
 
