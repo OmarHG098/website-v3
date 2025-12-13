@@ -122,7 +122,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                       </div>
                     )}
                     {data.trust_bar.review_count && (
-                      <span>{data.trust_bar.review_count}</span>
+                      <span className="text-[12px] font-bold">{data.trust_bar.review_count}</span>
                     )}
                   </div>
                   {data.trust_bar.review_logos && data.trust_bar.review_logos.length > 0 && (
