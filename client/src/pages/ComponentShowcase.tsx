@@ -507,7 +507,7 @@ function ComponentCard({
                   <SelectContent>
                     {componentInfo.versions.map(v => (
                       <SelectItem key={v.version} value={v.version}>
-                        v{v.version}
+                        {v.version}
                       </SelectItem>
                     ))}
                     <SelectItem value="__add_new__" className="text-primary">
