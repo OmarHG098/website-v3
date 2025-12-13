@@ -132,7 +132,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                             key={index}
                             src={logo.logo} 
                             alt={logo.name}
-                            className="h-5 object-contain"
+                            className="h-10 object-contain"
                             data-testid={`img-review-logo-${index}`}
                           />
                         ) : (
