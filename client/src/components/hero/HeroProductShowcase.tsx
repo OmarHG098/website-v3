@@ -170,7 +170,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           </div>
           
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
-            {data.video_id ? (
+            {data.video_url ? (
+              <video
+                src={data.video_url}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-[280px] md:w-full md:max-w-[400px] rounded-lg shadow-lg object-cover"
+                data-testid="video-hero-product"
+              />
+            ) : data.video_id ? (
               <VideoPlayer 
                 videoId={data.video_id} 
                 title={data.video_title || data.title}

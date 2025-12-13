@@ -29,6 +29,4 @@ yaml: |-
           logo: "/attached_assets/course-report_1765590146414.webp"
         - name: "SwitchUp"
           logo: "/attached_assets/switchup_1765590146414.webp"
-    image:
-      src: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800"
-      alt: "Product dashboard screenshot"
+    video_url: "/attached_assets/ai-engineering_1765593572918.mp4"
