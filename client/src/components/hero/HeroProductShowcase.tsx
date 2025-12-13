@@ -118,7 +118,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                             />
                           ))}
                         </div>
-                        <span className="font-medium">{data.trust_bar.rating}</span>
                       </div>
                     )}
                     {data.trust_bar.review_count && (
