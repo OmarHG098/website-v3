@@ -17,6 +17,7 @@ import {
   IconDeviceLaptop,
   IconDeviceDesktop,
   IconChevronUp,
+  IconChevronRight,
   IconArrowsMaximize,
   IconX,
   IconTestPipe,
@@ -424,7 +425,17 @@ function ComponentCard({
         <div className="flex flex-row items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold">{schema.name}</h1>
+              <nav className="flex items-center gap-1 text-sm" data-testid={`breadcrumb-${componentType}`}>
+                <span className="text-xl font-semibold">{schema.name}</span>
+                <IconChevronRight className="w-4 h-4 text-muted-foreground" />
+                <span className="text-muted-foreground">v{selectedVersion}</span>
+                {selectedExample && (
+                  <>
+                    <IconChevronRight className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">{selectedExample}</span>
+                  </>
+                )}
+              </nav>
               <Badge variant="secondary">{componentType}</Badge>
               <Popover>
                 <PopoverTrigger asChild>
