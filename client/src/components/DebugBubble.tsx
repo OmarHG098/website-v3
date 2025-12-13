@@ -42,6 +42,7 @@ import {
   IconFlask,
   IconPlus,
   IconDatabase,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -731,6 +732,18 @@ export function DebugBubble() {
                     <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
                     <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
+                </a>
+                
+                <a
+                  href="/private/media-gallery"
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-media-gallery"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                    <span>Media</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </a>
                 
                 {/* Experiments menu item - only shown on content pages */}
