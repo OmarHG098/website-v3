@@ -201,20 +201,86 @@ variant_props:
     form:
       type: object
       required: false
-      description: "Email signup form with input and button"
+      description: "Lead capture form using the LeadForm component. Supports inline (email + button on one line) or stacked (labeled fields) variants."
       properties:
-        placeholder:
-          type: string
-          description: "Input placeholder text"
-          example: "Enter your work email"
-        button_text:
-          type: string
-          description: "Submit button text"
-          example: "Sign up free →"
-        helper_text:
+        variant:
           type: string
           required: false
-          description: "Helper text below the form"
+          options: ["inline", "stacked"]
+          default: "inline"
+          description: "Form layout variant. Use 'inline' for compact hero forms."
+        submit_label:
+          type: string
+          required: false
+          description: "Submit button text"
+          example: "Sign up free →"
+        show_consent:
+          type: boolean
+          required: false
+          default: false
+          description: "Whether to show SMS/WhatsApp consent checkboxes"
+        show_terms:
+          type: boolean
+          required: false
+          default: false
+          description: "Whether to show terms and privacy links"
+        tags:
+          type: string
+          required: false
+          description: "Comma-separated tags for lead categorization"
+          example: "website-lead,hero-signup"
+        automations:
+          type: string
+          required: false
+          description: "Automation trigger name"
+          example: "strong"
+        fields:
+          type: object
+          required: false
+          description: "Configure which fields to show and their settings"
+          properties:
+            email:
+              type: object
+              description: "Email field configuration (visible by default)"
+              properties:
+                visible:
+                  type: boolean
+                  default: true
+                required:
+                  type: boolean
+                  default: true
+                placeholder:
+                  type: string
+                  example: "Enter your work email"
+                helper_text:
+                  type: string
+                  description: "Helper text displayed below the form"
+            first_name:
+              type: object
+              description: "First name field (hidden by default)"
+            last_name:
+              type: object
+              description: "Last name field (hidden by default)"
+            phone:
+              type: object
+              description: "Phone field (hidden by default)"
+            program:
+              type: object
+              description: "Program selector (hidden by default, use default: 'auto' to auto-fill from context)"
+            location:
+              type: object
+              description: "Campus location selector (hidden by default, use default: 'auto' for geo-detection)"
+        success:
+          type: object
+          required: false
+          description: "Success behavior after form submission"
+          properties:
+            url:
+              type: string
+              description: "Redirect URL after successful submission"
+            message:
+              type: string
+              description: "Success message if no redirect"
     cta_button:
       type: object
       required: false

@@ -1,8 +1,8 @@
 import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
 import VideoPlayer from "@/components/VideoPlayer";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
+import { LeadForm, type LeadFormData } from "@/components/LeadForm";
 
 interface HeroProductShowcaseProps {
   data: HeroProductShowcaseType;
@@ -74,24 +74,15 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.form && (
-                <div className="w-full max-w-md mb-6">
-                  <div className="flex gap-2">
-                    <Input
-                      type="email"
-                      placeholder={data.form.placeholder}
-                      className="flex-1"
-                      data-testid="input-hero-email"
-                    />
-                    <Button data-testid="button-hero-signup">
-                      {data.form.button_text}
-                    </Button>
-                  </div>
-                  {data.form.helper_text && (
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {data.form.helper_text}
-                    </p>
-                  )}
-                </div>
+                <LeadForm 
+                  data={{
+                    ...data.form,
+                    variant: data.form.variant || "inline",
+                    show_consent: data.form.show_consent ?? false,
+                    show_terms: data.form.show_terms ?? false,
+                    className: "w-full max-w-md mb-6",
+                  } as LeadFormData}
+                />
               )}
 
               {data.cta_button && !data.form && (

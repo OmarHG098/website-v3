@@ -76,11 +76,47 @@ export const brandMarkSchema = z.object({
   color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
-export const productShowcaseFormSchema = z.object({
-  placeholder: z.string(),
-  button_text: z.string(),
+// Field config for LeadForm fields
+export const leadFormFieldConfigSchema = z.object({
+  visible: z.boolean().optional(),
+  required: z.boolean().optional(),
+  default: z.string().optional(),
   helper_text: z.string().optional(),
+  placeholder: z.string().optional(),
 });
+
+// LeadForm data schema - used for forms that capture leads
+export const leadFormDataSchema = z.object({
+  variant: z.enum(["stacked", "inline"]).optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  submit_label: z.string().optional(),
+  tags: z.string().optional(),
+  automations: z.string().optional(),
+  fields: z.object({
+    email: leadFormFieldConfigSchema.optional(),
+    first_name: leadFormFieldConfigSchema.optional(),
+    last_name: leadFormFieldConfigSchema.optional(),
+    phone: leadFormFieldConfigSchema.optional(),
+    program: leadFormFieldConfigSchema.optional(),
+    region: leadFormFieldConfigSchema.optional(),
+    location: leadFormFieldConfigSchema.optional(),
+    coupon: leadFormFieldConfigSchema.optional(),
+    comment: leadFormFieldConfigSchema.optional(),
+  }).optional(),
+  success: z.object({
+    url: z.string().optional(),
+    message: z.string().optional(),
+  }).optional(),
+  terms_url: z.string().optional(),
+  privacy_url: z.string().optional(),
+  show_consent: z.boolean().optional(),
+  show_terms: z.boolean().optional(),
+  className: z.string().optional(),
+});
+
+// Alias for backward compatibility - productShowcaseFormSchema now uses LeadFormData
+export const productShowcaseFormSchema = leadFormDataSchema;
 
 export const reviewLogoSchema = z.object({
   name: z.string(),
@@ -749,6 +785,8 @@ export type SchemaRef = z.infer<typeof schemaRefSchema>;
 export type CareerProgramMeta = z.infer<typeof careerProgramMetaSchema>;
 export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
+export type LeadFormFieldConfig = z.infer<typeof leadFormFieldConfigSchema>;
+export type LeadFormData = z.infer<typeof leadFormDataSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
