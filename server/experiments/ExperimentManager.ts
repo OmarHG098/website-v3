@@ -29,7 +29,7 @@ const visitorSets: Map<string, Set<string>> = new Map();
 interface VariantContent {
   slug: string;
   version: number;
-  content: CareerProgram;
+  content: unknown;
 }
 
 export class ExperimentManager {
@@ -122,20 +122,21 @@ export class ExperimentManager {
    * Load variant content file
    */
   private loadVariantContent(
-    programSlug: string,
+    slug: string,
     variantSlug: string,
     version: number,
-    locale: string
-  ): CareerProgram | null {
-    const cacheKey = `${programSlug}:${variantSlug}.v${version}.${locale}`;
+    locale: string,
+    contentType: "programs" | "pages" | "landings" | "locations" = "programs"
+  ): unknown | null {
+    const cacheKey = `${contentType}:${slug}:${variantSlug}.v${version}.${locale}`;
     
     if (this.contentCache.has(cacheKey)) {
       return this.contentCache.get(cacheKey)!.content;
     }
 
-    const programDir = path.join(CONTENT_DIR, "programs", programSlug);
-    const commonPath = path.join(programDir, "_common.yml");
-    const filePath = path.join(programDir, `${variantSlug}.v${version}.${locale}.yml`);
+    const contentDir = path.join(CONTENT_DIR, contentType, slug);
+    const commonPath = path.join(contentDir, "_common.yml");
+    const filePath = path.join(contentDir, `${variantSlug}.v${version}.${locale}.yml`);
 
     if (!fs.existsSync(filePath)) {
       console.warn(`[Experiments] Variant file not found: ${filePath}`);
@@ -155,7 +156,7 @@ export class ExperimentManager {
       const variantData = yaml.load(content) as Record<string, unknown>;
 
       // Deep merge common data with variant data (variant takes precedence)
-      const merged = deepMerge(commonData, variantData) as CareerProgram;
+      const merged = deepMerge(commonData, variantData);
 
       this.contentCache.set(cacheKey, {
         slug: variantSlug,
@@ -438,15 +439,17 @@ export class ExperimentManager {
    * Get variant content for an assignment
    */
   public getVariantContent(
-    programSlug: string,
+    slug: string,
     assignment: ExperimentAssignment,
-    locale: string
-  ): CareerProgram | null {
+    locale: string,
+    contentType: "programs" | "pages" | "landings" | "locations" = "programs"
+  ): unknown | null {
     return this.loadVariantContent(
-      programSlug,
+      slug,
       assignment.variant_slug,
       assignment.variant_version,
-      locale
+      locale,
+      contentType
     );
   }
 

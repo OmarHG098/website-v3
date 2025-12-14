@@ -302,19 +302,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/landings/:slug", (req, res) => {
     const { slug } = req.params;
+    const forceVariant = req.query.force_variant as string | undefined;
+    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
 
-    const landing = loadLandingPage(slug);
+    // Get locale from _common.yml
+    const commonData = loadCommonData("landings", slug);
+    const locale = (commonData?.locale as string) || "en";
+
+    let landing: LandingPage | null = null;
+    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+
+    // If force_variant is provided, load that variant directly (for preview)
+    if (forceVariant && forceVersion !== undefined) {
+      const experimentManager = getExperimentManager();
+      const forcedContent = experimentManager.getVariantContent(slug, {
+        experiment_slug: "preview",
+        variant_slug: forceVariant,
+        variant_version: forceVersion,
+        assigned_at: Date.now(),
+      }, locale, "landings");
+      if (forcedContent) {
+        landing = forcedContent as LandingPage;
+        experimentInfo = {
+          experiment: "preview",
+          variant: forceVariant,
+          version: forceVersion,
+        };
+      }
+    }
+
+    // Fall back to default content
+    if (!landing) {
+      landing = loadLandingPage(slug);
+    }
 
     if (!landing) {
       res.status(404).json({ error: "Landing page not found" });
       return;
     }
 
-    // Get locale from _common.yml
-    const commonData = loadCommonData("landings", slug);
-    const locale = (commonData?.locale as string) || "en";
-
-    res.json({ ...landing, locale });
+    res.json({ ...landing, locale, _experiment: experimentInfo });
   });
 
   // Locations API

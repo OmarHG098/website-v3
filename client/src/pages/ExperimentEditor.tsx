@@ -527,9 +527,20 @@ export default function ExperimentEditor() {
 
       {/* Preview iframes - all variants rendered but only selected one visible */}
       <div className="flex-1 overflow-hidden relative">
-        {contentType === "programs" && formData?.variants.map((variant) => {
+        {formData?.variants.map((variant) => {
           const token = getDebugToken();
-          const baseUrl = `/en/career-programs/${contentSlug}?force_variant=${variant.slug}&force_version=${variant.version || 1}&navbar=false&debug=true&edit_mode=true`;
+          // Build base URL based on content type
+          let basePath = "";
+          if (contentType === "programs") {
+            basePath = `/en/career-programs/${contentSlug}`;
+          } else if (contentType === "landings") {
+            basePath = `/landing/${contentSlug}`;
+          } else if (contentType === "locations") {
+            basePath = `/en/location/${contentSlug}`;
+          } else if (contentType === "pages") {
+            basePath = `/en/${contentSlug}`;
+          }
+          const baseUrl = `${basePath}?force_variant=${variant.slug}&force_version=${variant.version || 1}&navbar=false&debug=true&edit_mode=true`;
           const iframeSrc = token ? `${baseUrl}&token=${encodeURIComponent(token)}` : baseUrl;
           return (
             <iframe
