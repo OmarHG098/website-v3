@@ -1,8 +1,9 @@
-import { useState, useCallback, useEffect, lazy, Suspense } from "react";
+import { useState, useCallback, useEffect, useRef, lazy, Suspense } from "react";
 import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2 } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -38,100 +39,141 @@ export function EditableSection({ children, section, index, sectionType, content
   
   // Swap popover state
   const [swapPopoverOpen, setSwapPopoverOpen] = useState(false);
-  const [variants, setVariants] = useState<string[]>([]); // All component types
-  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [versions, setVersions] = useState<string[]>([]);
-  const [selectedExample, setSelectedExample] = useState("");
+  const [selectedVersion, setSelectedVersion] = useState<string>("");
+  const [variants, setVariants] = useState<string[]>([]); // Unique variant slugs from examples
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, content: Section}[]>([]);
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
-  const selectedVariant = variants[selectedVariantIndex] || sectionType;
+  const selectedVariant = variants[selectedVariantIndex] || "";
 
-  // Fetch all component types (variants) when popover opens
+  // Get current section's version from the section object
+  const currentSectionVersion = (section as { version?: string }).version || "";
+  
+  // Ref to track active version for race condition prevention
+  const activeVersionRef = useRef<string>("");
+
+  // Fetch versions when popover opens
   useEffect(() => {
-    if (!swapPopoverOpen) return;
+    if (!swapPopoverOpen || !sectionType) return;
     setIsLoadingSwap(true);
     const token = getDebugToken();
-    fetch(`/api/component-registry`, {
+    fetch(`/api/component-registry/${sectionType}/versions`, {
       headers: token ? { 'X-Debug-Token': token } : {}
     })
       .then(res => res.json())
       .then(data => {
-        // API returns components as an array of {type: string, ...} objects
-        const componentsArray = data.components || [];
-        const componentTypes = componentsArray.map((c: { type: string }) => c.type);
-        setVariants(componentTypes);
-        // Start at the current section type
-        const currentIdx = componentTypes.indexOf(sectionType);
-        setSelectedVariantIndex(currentIdx >= 0 ? currentIdx : 0);
-      })
-      .catch(() => setVariants([]))
-      .finally(() => setIsLoadingSwap(false));
-  }, [swapPopoverOpen, sectionType]);
-
-  // Fetch versions when variant changes, auto-select LAST (latest) version
-  useEffect(() => {
-    if (!swapPopoverOpen || variants.length === 0) return;
-    const variantName = variants[selectedVariantIndex];
-    if (!variantName || typeof variantName !== 'string') return;
-    
-    setIsLoadingSwap(true);
-    const token = getDebugToken();
-    fetch(`/api/component-registry/${variantName}/versions`, {
-      headers: token ? { 'X-Debug-Token': token } : {}
-    })
-      .then(res => res.json())
-      .then(data => {
-        const vers = data.versions || [];
+        const vers: string[] = data.versions || [];
         setVersions(vers);
-        // Auto-fetch examples using the LAST (latest) version
-        if (vers.length > 0) {
-          const latestVersion = vers[vers.length - 1];
-          fetch(`/api/component-registry/${variantName}/${latestVersion}/examples`, {
-            headers: token ? { 'X-Debug-Token': token } : {}
-          })
-            .then(res => res.json())
-            .then(exData => {
-              const exs = exData.examples || [];
-              // Auto-select FIRST example (check for valid filename)
-              const firstExample = exs[0];
-              if (firstExample && firstExample.filename) {
-                setSelectedExample(firstExample.filename);
-                // Fetch example content for preview
-                fetch(`/api/component-registry/${variantName}/${latestVersion}/examples/${firstExample.filename}`, {
-                  headers: token ? { 'X-Debug-Token': token } : {}
-                })
-                  .then(res => res.json())
-                  .then(contentData => {
-                    if (contentData.content) {
-                      setPreviewSection({ type: variantName, ...contentData.content } as Section);
-                    }
-                  })
-                  .catch(() => setPreviewSection(null));
-              } else {
-                setSelectedExample("");
-                setPreviewSection(null);
-              }
-            })
-            .catch(() => {
-              setSelectedExample("");
-              setPreviewSection(null);
-            });
-        } else {
-          setSelectedExample("");
-          setPreviewSection(null);
+        // Use current section's version if available, otherwise use latest
+        if (currentSectionVersion && vers.includes(currentSectionVersion)) {
+          setSelectedVersion(currentSectionVersion);
+        } else if (vers.length > 0) {
+          setSelectedVersion(vers[vers.length - 1]);
         }
       })
-      .catch(() => {
-        setVersions([]);
-        setSelectedExample("");
-        setPreviewSection(null);
-      })
+      .catch(() => setVersions([]))
       .finally(() => setIsLoadingSwap(false));
-  }, [swapPopoverOpen, variants, selectedVariantIndex]);
+  }, [swapPopoverOpen, sectionType, currentSectionVersion]);
 
-  // Cycle through variants (component types)
+  // Fetch examples and extract variants when version changes
+  useEffect(() => {
+    if (!swapPopoverOpen || !sectionType || !selectedVersion) return;
+    
+    // Reset state immediately when version changes to prevent stale data
+    setExamplesWithVariants([]);
+    setVariants([]);
+    setPreviewSection(null);
+    setIsLoadingSwap(true);
+    
+    // Track this as the active version request
+    const requestedVersion = selectedVersion;
+    activeVersionRef.current = requestedVersion;
+    
+    const token = getDebugToken();
+    
+    fetch(`/api/component-registry/${sectionType}/${selectedVersion}/examples`, {
+      headers: token ? { 'X-Debug-Token': token } : {}
+    })
+      .then(res => res.json())
+      .then(async (data) => {
+        // Bail if a newer version request has started
+        if (activeVersionRef.current !== requestedVersion) return;
+        
+        const exs: {name: string, filename: string}[] = data.examples || [];
+        
+        // Fetch each example to extract its variant
+        const examplesData: {filename: string, variant: string, content: Section}[] = [];
+        
+        for (const ex of exs) {
+          // Check before each fetch if still active
+          if (activeVersionRef.current !== requestedVersion) return;
+          if (!ex.filename) continue;
+          try {
+            const res = await fetch(`/api/component-registry/${sectionType}/${requestedVersion}/examples/${ex.filename}`, {
+              headers: token ? { 'X-Debug-Token': token } : {}
+            });
+            const exContent = await res.json();
+            if (exContent.content) {
+              const variantSlug = exContent.content.variant || "default";
+              examplesData.push({
+                filename: ex.filename,
+                variant: variantSlug,
+                content: { type: sectionType, ...exContent.content } as Section
+              });
+            }
+          } catch {
+            // Skip failed examples
+          }
+        }
+        
+        // Final check before updating state
+        if (activeVersionRef.current !== requestedVersion) return;
+        
+        setExamplesWithVariants(examplesData);
+        
+        // Extract unique variants
+        const uniqueVariants = Array.from(new Set(examplesData.map(e => e.variant)));
+        setVariants(uniqueVariants);
+        
+        // Try to select current section's variant, or first available
+        const currentVariant = (section as { variant?: string }).variant || "default";
+        const currentIdx = uniqueVariants.indexOf(currentVariant);
+        setSelectedVariantIndex(currentIdx >= 0 ? currentIdx : 0);
+      })
+      .catch(() => {
+        if (activeVersionRef.current === requestedVersion) {
+          setExamplesWithVariants([]);
+          setVariants([]);
+        }
+      })
+      .finally(() => {
+        if (activeVersionRef.current === requestedVersion) {
+          setIsLoadingSwap(false);
+        }
+      });
+  }, [swapPopoverOpen, sectionType, selectedVersion, section]);
+
+  // Update preview when variant changes
+  useEffect(() => {
+    if (examplesWithVariants.length === 0 || variants.length === 0) {
+      setPreviewSection(null);
+      return;
+    }
+    const variantSlug = variants[selectedVariantIndex];
+    // Find first example with this variant
+    const example = examplesWithVariants.find(e => e.variant === variantSlug);
+    if (example) {
+      setPreviewSection(example.content);
+    } else {
+      setPreviewSection(null);
+    }
+  }, [examplesWithVariants, variants, selectedVariantIndex]);
+
+  // Cycle through variants
   const cycleVariant = useCallback((direction: number) => {
     if (variants.length === 0) return;
     setSelectedVariantIndex(prev => {
@@ -275,27 +317,43 @@ export function EditableSection({ children, section, index, sectionType, content
                 <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
                   <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
                 </div>
-              ) : variants.length === 0 ? (
-                <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No component variants available.</p>
+              ) : versions.length === 0 ? (
+                <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
               ) : (
                 <>
-                  <div className="flex items-center justify-between gap-2">
-                    <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
-                      <IconChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
-                      {selectedVariant}
-                    </span>
-                    <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
-                      <IconChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  {versions.length > 0 && (
-                    <div className="text-xs text-muted-foreground text-center" data-testid={`text-version-${index}`}>
-                      v{versions[versions.length - 1]}
+                  <div className="text-xs text-muted-foreground mb-1">Component: {sectionType}</div>
+                  {versions.length > 1 ? (
+                    <Select value={selectedVersion} onValueChange={setSelectedVersion}>
+                      <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
+                        <SelectValue placeholder="Select version" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {versions.map(ver => (
+                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>v{ver}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <div className="text-sm text-muted-foreground text-center py-1" data-testid={`text-version-${index}`}>
+                      Version: v{versions[0]}
                     </div>
                   )}
-                  <Button className="w-full" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
+                  {variants.length > 0 ? (
+                    <div className="flex items-center justify-between gap-2 mt-2">
+                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                        <IconChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
+                        {selectedVariant || "default"}
+                      </span>
+                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
+                        <IconChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-muted-foreground text-center py-2">No variants found</div>
+                  )}
+                  <Button className="w-full mt-2" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
                     {isConfirming ? (
                       <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
                     ) : (
