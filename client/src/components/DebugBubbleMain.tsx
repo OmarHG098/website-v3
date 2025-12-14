@@ -565,6 +565,7 @@ export function DebugBubble() {
                         color: '#000', 
                         boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)' 
                       }}
+                      onClick={(e) => e.stopPropagation()}
                       data-testid="indicator-edit-badge"
                     >
                       <IconPencil className="h-3 w-3" />
