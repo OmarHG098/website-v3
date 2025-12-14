@@ -1,9 +1,6 @@
 # Cybersecurity Career Program - Spanish
 # This file defines all sections and content for the Cybersecurity career program page
 
-slug: "cybersecurity"
-title: "Ciberseguridad"
-
 meta:
   page_title: "Bootcamp de Ciberseguridad | 4Geeks"
   description: "Inicia una carrera bien remunerada en ciberseguridad. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad."
@@ -15,12 +12,6 @@ meta:
     - "/bootcamp/ciberseguridad"
     - "/programas/especialista-ciberseguridad"
     - "/coding-bootcamp/ciberseguridad"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:cybersecurity"
 
 sections:
   - type: hero

@@ -1,9 +1,6 @@
 # AI for Professionals Career Program - English
 # This file defines all sections and content for the AI for Professionals career program page
 
-slug: "ai-for-professionals"
-title: "AI for Professionals"
-
 meta:
   page_title: "AI for Professionals | 4Geeks Academy"
   description: "Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
@@ -15,12 +12,6 @@ meta:
     - "/bootcamp/applied-ai"
     - "/programs/ai-for-professionals"
     - "/coding-bootcamp/applied-ai-course"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:ai-for-professionals"
 
 sections:
   - type: hero

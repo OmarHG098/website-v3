@@ -1,9 +1,6 @@
 # Data Science and Machine Learning Career Program - English
 # This file defines all sections and content for the Data Science & ML career program page
 
-slug: "data-science-ml"
-title: "Data Science and Machine Learning"
-
 meta:
   page_title: "Data Science and Machine Learning Career Program | 4Geeks"
   description: "Learn data science and machine learning at your own pace with AI-powered tools, unlimited mentorship, and a global community. Master Python, TensorFlow, and predictive modeling."
@@ -15,12 +12,6 @@ meta:
     - "/bootcamp/data-science"
     - "/programs/datascience-machine-learning"
     - "/coding-bootcamp/machine-learning"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:data-science-ml"
 
 sections:
   - type: hero

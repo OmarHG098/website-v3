@@ -1,5 +1,3 @@
-slug: cybersecurity
-title: Cybersecurity
 meta:
   page_title: Cybersecurity Bootcamp | 4Geeks
   description: Launch a high-paying career in cybersecurity. Learn to defend systems and respond to real-world cyber threats with a hands-on, AI-integrated curriculum—designed by leading cybersecurity experts.
@@ -11,11 +9,6 @@ meta:
     - /bootcamp/cybersecurity
     - /programs/cybersecurity-specialist
     - /coding-bootcamp/cybersecurity
-schema:
-  include:
-    - organization
-    - website
-    - courses:cybersecurity
 sections:
   - type: hero
     variant: singleColumn
