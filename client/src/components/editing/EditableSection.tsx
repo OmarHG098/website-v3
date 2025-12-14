@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
 import { renderSection } from "@/components/SectionRenderer";
+import yaml from "js-yaml";
 
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
@@ -44,7 +45,7 @@ export function EditableSection({ children, section, index, sectionType, content
   const [selectedVersion, setSelectedVersion] = useState<string>("");
   const [variants, setVariants] = useState<string[]>([]); // Unique variant slugs from examples
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string}[]>([]);
+  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string, yaml: string}[]>([]);
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -104,17 +105,18 @@ export function EditableSection({ children, section, index, sectionType, content
         // Bail if a newer version request has started
         if (activeVersionRef.current !== requestedVersion) return;
         
-        // API returns examples with variant property directly
+        // API returns examples with variant and yaml properties
         const exs: {name: string, filename?: string, variant?: string, yaml?: string}[] = data.examples || [];
         
-        // Map examples to our format - variant is directly on the example object
+        // Map examples to our format - include yaml for parsing
         const examplesData = exs.map(ex => ({
           filename: ex.filename || ex.name?.toLowerCase().replace(/\s+/g, '-') + '.yml',
           variant: ex.variant || "default",
-          name: ex.name || ""
+          name: ex.name || "",
+          yaml: ex.yaml || ""
         }));
         
-        setExamplesWithVariants(examplesData as any);
+        setExamplesWithVariants(examplesData);
         
         // Extract unique variants
         const uniqueVariants = Array.from(new Set(examplesData.map(e => e.variant)));
@@ -138,35 +140,39 @@ export function EditableSection({ children, section, index, sectionType, content
       });
   }, [swapPopoverOpen, sectionType, selectedVersion, section]);
 
-  // Update preview when variant changes - fetch example content
+  // Update preview when variant changes - parse YAML content locally
   useEffect(() => {
-    if (!swapPopoverOpen || !sectionType || !selectedVersion || examplesWithVariants.length === 0 || variants.length === 0) {
+    if (!swapPopoverOpen || !sectionType || examplesWithVariants.length === 0 || variants.length === 0) {
       setPreviewSection(null);
       return;
     }
     const variantSlug = variants[selectedVariantIndex];
     // Find first example with this variant
     const example = examplesWithVariants.find(e => e.variant === variantSlug);
-    if (!example) {
+    if (!example || !example.yaml) {
       setPreviewSection(null);
       return;
     }
     
-    // Fetch the example content
-    const token = getDebugToken();
-    fetch(`/api/component-registry/${sectionType}/${selectedVersion}/examples/${example.filename}`, {
-      headers: token ? { 'X-Debug-Token': token } : {}
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.content) {
-          setPreviewSection({ type: sectionType, ...data.content } as Section);
-        } else {
-          setPreviewSection(null);
-        }
-      })
-      .catch(() => setPreviewSection(null));
-  }, [swapPopoverOpen, sectionType, selectedVersion, examplesWithVariants, variants, selectedVariantIndex]);
+    // Parse YAML content locally
+    try {
+      const parsed = yaml.load(example.yaml);
+      // Handle both array format (sections list) and object format (single section)
+      let sectionData: Record<string, unknown>;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        sectionData = parsed[0] as Record<string, unknown>;
+      } else if (parsed && typeof parsed === 'object') {
+        sectionData = parsed as Record<string, unknown>;
+      } else {
+        setPreviewSection(null);
+        return;
+      }
+      setPreviewSection({ type: sectionType, ...sectionData } as Section);
+    } catch (err) {
+      console.error("Failed to parse example YAML:", err);
+      setPreviewSection(null);
+    }
+  }, [swapPopoverOpen, sectionType, examplesWithVariants, variants, selectedVariantIndex]);
 
   // Cycle through variants
   const cycleVariant = useCallback((direction: number) => {
