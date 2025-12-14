@@ -52,6 +52,7 @@ let sitemapCache: SitemapCache | null = null;
 // ============================================================================
 
 interface ContentMeta {
+  page_title?: string;
   robots?: string;
   priority?: number;
   change_frequency?: ChangeFreq;
@@ -146,11 +147,13 @@ function getAvailablePrograms(): AvailableProgram[] {
           };
 
           // Merge common data with locale data (locale takes precedence)
+          // Use meta.page_title for the localized title, with fallback chain
+          const meta = data.meta || {};
           programs.push({
             slug: data.slug || commonData.slug || dir,
             locale,
-            title: data.title || commonData.title || dir,
-            meta: data.meta || {},
+            title: meta.page_title || data.title || commonData.title || dir,
+            meta,
           });
         } catch (parseError) {
           console.error(`Error parsing program ${filePath}:`, parseError);
@@ -204,11 +207,13 @@ function getAvailableLandings(): AvailableLanding[] {
             };
 
             // Merge common data with locale data (locale takes precedence)
+            // Use meta.page_title for the localized title, with fallback chain
+            const meta = data.meta || {};
             landings.push({
               slug: data.slug || commonData.slug || dir,
               locale,
-              title: data.title || commonData.title || dir,
-              meta: data.meta || {},
+              title: meta.page_title || data.title || commonData.title || dir,
+              meta,
             });
           } catch (parseError) {
             console.error(`Error parsing landing ${filePath}:`, parseError);
@@ -249,12 +254,14 @@ function getAvailableLocations(): AvailableLocation[] {
         };
 
         if (data.visibility === "listed") {
+          // Use meta.page_title for the localized name, with fallback chain
+          const meta = data.meta || {};
           locations.push({
             slug: data.slug || slug,
             locale,
-            name: data.name || slug,
+            name: meta.page_title || data.name || slug,
             visibility: data.visibility || "listed",
-            meta: data.meta || {},
+            meta,
           });
         }
       } catch (parseError) {
@@ -302,12 +309,14 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
             meta?: ContentMeta;
           };
 
+          // Use meta.page_title for the localized title, with fallback chain
+          const meta = data.meta || {};
           pages.push({
             slug: data.slug || dir,
             locale,
             template: data.template || dir.replace(/-/g, "_"),
-            title: data.title || dir,
-            meta: data.meta || {},
+            title: meta.page_title || data.title || dir,
+            meta,
           });
         } catch (parseError) {
           console.error(`Error parsing template page ${filePath}:`, parseError);
