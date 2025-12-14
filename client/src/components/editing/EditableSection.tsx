@@ -334,7 +334,13 @@ export function EditableSection({ children, section, index, sectionType, content
           <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
             <div className="space-y-3">
               <h4 className="font-medium text-sm flex items-center gap-2 flex-wrap">
-                <span>Choose variant for {sectionType}</span>
+                <span>Choose variant for</span>
+                <span 
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-muted"
+                  data-testid={`badge-component-${index}`}
+                >
+                  {sectionType}
+                </span>
                 <span 
                   className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-muted ${versions.length > 1 ? 'cursor-pointer hover-elevate' : ''}`}
                   onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
