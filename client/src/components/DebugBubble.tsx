@@ -1491,8 +1491,16 @@ export function DebugBubble() {
       <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader className="space-y-0">
-            <div className="flex items-center gap-3">
-              <DialogTitle>Create New Experiment</DialogTitle>
+            <div className="flex items-center justify-between">
+              {/* Title and description */}
+              <div className="space-y-1">
+                <DialogTitle>Create New Experiment</DialogTitle>
+                <DialogDescription>
+                  {wizardStep === 1 && "Configure variants and traffic distribution"}
+                  {wizardStep === 2 && "Create a new variant file"}
+                  {wizardStep === 3 && "Set targeting rules (optional)"}
+                </DialogDescription>
+              </div>
               {/* Step indicator */}
               <div className="flex items-center gap-1.5">
                 {[1, 2, 3].map((step) => {
@@ -1521,11 +1529,6 @@ export function DebugBubble() {
                 })}
               </div>
             </div>
-            <DialogDescription>
-              {wizardStep === 1 && "Configure variants and traffic distribution"}
-              {wizardStep === 2 && "Create a new variant file"}
-              {wizardStep === 3 && "Set targeting rules (optional)"}
-            </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4 min-h-[280px]">
