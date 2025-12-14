@@ -53,7 +53,7 @@ async function sendEditOperation(
   return response.json();
 }
 
-function renderSection(section: Section, index: number): React.ReactNode {
+export function renderSection(section: Section, index: number): React.ReactNode {
   const sectionType = (section as { type: string }).type;
   
   switch (sectionType) {

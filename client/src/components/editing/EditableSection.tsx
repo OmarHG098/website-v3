@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useRef, lazy, Suspense } from "react";
-import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2 } from "@tabler/icons-react";
+import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } from "react";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
+import { renderSection } from "@/components/SectionRenderer";
 
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
@@ -374,9 +375,51 @@ export function EditableSection({ children, section, index, sectionType, content
         Section {index + 1}
       </div>
       
-      {/* Content with pointer events enabled */}
+      {/* Content with pointer events enabled - show preview section when cycling variants */}
       <div className="relative">
-        {children}
+        {swapPopoverOpen ? (
+          <>
+            {/* Preview indicator banner */}
+            <div className="absolute top-0 left-0 right-0 z-30 bg-primary/90 text-primary-foreground text-xs px-3 py-1.5 flex items-center justify-between gap-2">
+              <span className="font-medium flex items-center gap-2">
+                {isLoadingSwap ? (
+                  <>
+                    <IconLoader2 className="h-3 w-3 animate-spin" />
+                    Loading preview...
+                  </>
+                ) : (
+                  <>Preview: {selectedVariant || "default"}</>
+                )}
+              </span>
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                className="h-5 px-1.5 text-primary-foreground hover:bg-primary-foreground/20"
+                onClick={() => setSwapPopoverOpen(false)}
+              >
+                <IconX className="h-3 w-3 mr-1" />
+                Cancel
+              </Button>
+            </div>
+            {/* Render the preview section or original with loading overlay */}
+            <div className="pt-8 relative">
+              {previewSection ? (
+                renderSection(previewSection, index)
+              ) : (
+                <>
+                  {children}
+                  {isLoadingSwap && (
+                    <div className="absolute inset-0 bg-background/50 flex items-center justify-center">
+                      <IconLoader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </>
+        ) : (
+          children
+        )}
       </div>
       
       {/* Editor Panel - slides in when open */}
