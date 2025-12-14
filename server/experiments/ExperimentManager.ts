@@ -564,7 +564,7 @@ export class ExperimentManager {
       const files = fs.readdirSync(contentDir);
       
       const variants = files
-        .filter(file => file.endsWith('.yml') && file !== 'experiments.yml')
+        .filter(file => file.endsWith('.yml') && file !== 'experiments.yml' && !file.startsWith('_'))
         .map(file => {
           const name = file.replace('.yml', '');
           const parts = name.split('.');
