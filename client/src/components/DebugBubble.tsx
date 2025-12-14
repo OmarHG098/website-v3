@@ -1490,12 +1490,12 @@ export function DebugBubble() {
                             value={variant.filename}
                             disabled={variant.filename === selectedVariantB}
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
                               <LocaleFlag locale={variant.locale} />
                               {variant.isPromoted && (
-                                <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                                <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
                               )}
-                              <span>{variant.displayName}</span>
+                              <span className="truncate">{variant.displayName}</span>
                             </div>
                           </SelectItem>
                         ))}
@@ -1522,12 +1522,12 @@ export function DebugBubble() {
                                   value={variant.filename}
                                   disabled={variant.filename === selectedVariantA}
                                 >
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-2 min-w-0">
                                     <LocaleFlag locale={variant.locale} />
                                     {variant.isPromoted && (
-                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
                                     )}
-                                    <span>{variant.displayName}</span>
+                                    <span className="truncate">{variant.displayName}</span>
                                   </div>
                                 </SelectItem>
                               ));
