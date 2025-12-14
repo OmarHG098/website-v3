@@ -1490,8 +1490,8 @@ export function DebugBubble() {
       </Dialog>
       <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
         <DialogContent className="sm:max-w-lg">
-          <DialogHeader className="flex flex-row items-start justify-between gap-4">
-            <div className="flex-1">
+          <DialogHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
+            <div className="flex-1 space-y-1.5">
               <DialogTitle>Create New Experiment</DialogTitle>
               <DialogDescription>
                 {wizardStep === 1 && "Configure variants and traffic distribution"}
@@ -1500,7 +1500,7 @@ export function DebugBubble() {
               </DialogDescription>
             </div>
             {/* Step indicator */}
-            <div className="flex items-center gap-1.5 pt-1">
+            <div className="flex items-center gap-1.5 shrink-0">
               {[1, 2, 3].map((step) => {
                 const isActive = wizardStep === step;
                 const isCompleted = wizardStep > step;
