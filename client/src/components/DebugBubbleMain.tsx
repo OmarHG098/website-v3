@@ -721,7 +721,14 @@ export function DebugBubble() {
                       onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
-                        if (!editMode.isEditMode) editMode.toggleEditMode();
+                        if (!editMode.isEditMode) {
+                          editMode.toggleEditMode();
+                          // Navigate to preview route if on a content page
+                          if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
+                            const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${contentInfo.locale || 'en'}`;
+                            navigate(previewUrl);
+                          }
+                        }
                       }}
                       className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
                         editMode.isEditMode 
