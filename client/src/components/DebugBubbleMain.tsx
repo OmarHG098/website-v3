@@ -267,7 +267,7 @@ export function DebugBubble() {
     if (!contentInfo.type || !contentInfo.slug) return;
     setEditVariantsLoading(true);
     try {
-      const res = await fetch(`/api/variants/${contentInfo.type}s/${contentInfo.slug}`);
+      const res = await fetch(`/api/variants/${contentInfo.type}/${contentInfo.slug}`);
       const data = await res.json();
       setEditVariants(data.variants || []);
     } catch (e) {
