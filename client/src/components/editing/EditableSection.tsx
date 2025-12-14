@@ -313,7 +313,7 @@ export function EditableSection({ children, section, index, sectionType, content
           </PopoverTrigger>
           <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
             <div className="space-y-3">
-              <h4 className="font-medium text-sm">Swap component variant</h4>
+              <h4 className="font-medium text-sm">Choose another variant or example for {sectionType} {selectedVersion || versions[0] || ""}</h4>
               {isLoadingSwap ? (
                 <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
                   <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -322,7 +322,6 @@ export function EditableSection({ children, section, index, sectionType, content
                 <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
               ) : (
                 <>
-                  <div className="text-xs text-muted-foreground mb-1">Component: {sectionType}</div>
                   {versions.length > 1 ? (
                     <Select value={selectedVersion} onValueChange={setSelectedVersion}>
                       <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
