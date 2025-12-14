@@ -283,6 +283,20 @@ export function DebugBubble() {
   const [selectedVariantB, setSelectedVariantB] = useState<string>("");
   const [experimentName, setExperimentName] = useState("");
   
+  // Wizard state
+  const [wizardStep, setWizardStep] = useState<1 | 2 | 3>(1);
+  const [allocationA, setAllocationA] = useState(50);
+  const [maxVisitors, setMaxVisitors] = useState(1000);
+  const [newVariantTitle, setNewVariantTitle] = useState("");
+  const [newVariantSlug, setNewVariantSlug] = useState("");
+  
+  // Targeting state
+  const [targetDevices, setTargetDevices] = useState<string[]>([]);
+  const [targetCountries, setTargetCountries] = useState<string[]>([]);
+  const [targetLanguages, setTargetLanguages] = useState<string[]>([]);
+  const [targetUtmSources, setTargetUtmSources] = useState<string[]>([]);
+  const [targetUtmMediums, setTargetUtmMediums] = useState<string[]>([]);
+  
   // Components search state
   const [componentsSearch, setComponentsSearch] = useState("");
   const [showComponentsSearch, setShowComponentsSearch] = useState(false);
@@ -390,6 +404,16 @@ export function DebugBubble() {
     setSelectedVariantA("");
     setSelectedVariantB("");
     setExperimentName("");
+    setWizardStep(1);
+    setAllocationA(50);
+    setMaxVisitors(1000);
+    setNewVariantTitle("");
+    setNewVariantSlug("");
+    setTargetDevices([]);
+    setTargetCountries([]);
+    setTargetLanguages([]);
+    setTargetUtmSources([]);
+    setTargetUtmMediums([]);
     
     fetch(`/api/variants/${contentInfo.type}/${contentInfo.slug}`)
       .then((res) => res.json())
@@ -401,6 +425,21 @@ export function DebugBubble() {
         setVariantsLoading(false);
         setVariantsData(null);
       });
+  };
+
+  // Check if new variant is selected
+  const isNewVariantSelected = selectedVariantB === "__new_variant__";
+  
+  // Determine if wizard needs step 2 (new variant creation)
+  const needsStep2 = isNewVariantSelected;
+  
+  // Get the effective step count
+  const totalSteps = needsStep2 ? 3 : 2;
+  
+  // Calculate effective step for display (skip step 2 if not needed)
+  const getDisplayStep = (step: number) => {
+    if (!needsStep2 && step === 3) return 2;
+    return step;
   };
 
   // Generate experiment slug from name
@@ -1430,18 +1469,45 @@ export function DebugBubble() {
         </DialogContent>
       </Dialog>
       <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Create New Experiment</DialogTitle>
             <DialogDescription>
-              Select two variants to compare in an A/B test. Variants are YAML files from{' '}
-              <code className="text-xs bg-muted px-1 py-0.5 rounded">
-                marketing-content/{contentInfo.type}s/{contentInfo.slug}/
-              </code>
+              {wizardStep === 1 && "Configure variants and traffic distribution"}
+              {wizardStep === 2 && "Create a new variant file"}
+              {wizardStep === 3 && "Set targeting rules (optional)"}
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4 py-4">
+          {/* Step indicator */}
+          <div className="flex items-center justify-center gap-2 py-2">
+            {[1, 2, 3].map((step) => {
+              const isActive = wizardStep === step;
+              const isCompleted = wizardStep > step;
+              const isHidden = step === 2 && !needsStep2;
+              if (isHidden) return null;
+              return (
+                <div key={step} className="flex items-center gap-2">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : isCompleted
+                        ? "bg-primary/20 text-primary"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {isCompleted ? <IconCheck className="h-4 w-4" /> : getDisplayStep(step)}
+                  </div>
+                  {step < 3 && !(step === 2 && !needsStep2) && (
+                    <div className={`w-8 h-0.5 ${isCompleted ? "bg-primary/20" : "bg-muted"}`} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          
+          <div className="space-y-4 py-4 min-h-[280px]">
             {variantsLoading ? (
               <div className="flex items-center justify-center py-8">
                 <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -1452,126 +1518,272 @@ export function DebugBubble() {
               </div>
             ) : (
               <>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Experiment Name</label>
-                  <input
-                    type="text"
-                    placeholder="e.g., Hero Messaging Test"
-                    value={experimentName}
-                    onChange={(e) => setExperimentName(e.target.value)}
-                    className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                    data-testid="input-experiment-name"
-                  />
-                  {experimentName && (
-                    <p className="text-xs text-muted-foreground">
-                      Slug: <code className="bg-muted px-1 rounded">{generateExperimentSlug(experimentName)}</code>
-                    </p>
-                  )}
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Variant A (Control)</label>
-                    <Select value={selectedVariantA} onValueChange={(value) => {
-                      const newVariant = variantsData.variants.find(v => v.filename === value);
-                      const currentB = variantsData.variants.find(v => v.filename === selectedVariantB);
-                      if (currentB && newVariant && currentB.locale !== newVariant.locale) {
-                        setSelectedVariantB("");
-                      }
-                      setSelectedVariantA(value);
-                    }}>
-                      <SelectTrigger data-testid="select-variant-a">
-                        <SelectValue placeholder="Select control variant..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {variantsData.variants.map((variant) => (
-                          <SelectItem 
-                            key={variant.filename} 
-                            value={variant.filename}
-                            disabled={variant.filename === selectedVariantB}
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              {contentInfo.type !== 'landings' && <LocaleFlag locale={variant.locale} />}
-                              {variant.isPromoted && (
-                                <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
-                              )}
-                              <span className="truncate">{variant.displayName}</span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  {selectedVariantA && (
+                {/* Step 1: Variants & Traffic */}
+                {wizardStep === 1 && (
+                  <div className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Variant B (Treatment)</label>
-                      <Select value={selectedVariantB} onValueChange={(value) => {
-                        if (value === "__new_variant__") {
-                          const isLanding = contentInfo.type === 'landings';
-                          const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
-                          const locale = selectedAVariant?.locale || "en";
-                          const baseName = isLanding ? `new-variant.v1.yml` : `new-variant.v1.${locale}.yml`;
-                          const convention = isLanding ? `{variant-name}.v{version}.yml` : `{variant-name}.v{version}.{locale}.yml`;
-                          alert(`To create a new variant, copy an existing YAML file in:\n${variantsData.folderPath}\n\nNaming convention:\n• ${convention}\n• Example: ${baseName}`);
-                          return;
-                        }
-                        setSelectedVariantB(value);
-                      }}>
-                        <SelectTrigger data-testid="select-variant-b">
-                          <SelectValue placeholder="Select treatment variant..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {(() => {
-                            const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
-                            const selectedLocale = selectedAVariant?.locale;
-                            const isLanding = contentInfo.type === 'landings';
-                            return variantsData.variants
-                              .filter(variant => isLanding || !selectedLocale || variant.locale === selectedLocale)
-                              .map((variant) => (
-                                <SelectItem 
-                                  key={variant.filename} 
-                                  value={variant.filename}
-                                  disabled={variant.filename === selectedVariantA}
-                                >
-                                  <div className="flex items-center gap-2 min-w-0">
-                                    {!isLanding && <LocaleFlag locale={variant.locale} />}
-                                    {variant.isPromoted && (
-                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
-                                    )}
-                                    <span className="truncate">{variant.displayName}</span>
-                                  </div>
-                                </SelectItem>
-                              ));
-                          })()}
-                          <div className="border-t my-1" />
-                          <SelectItem value="__new_variant__">
-                            <div className="flex items-center gap-2 text-primary">
-                              <IconPlus className="h-4 w-4" />
-                              <span>New variant</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <label className="text-sm font-medium">Experiment Name</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., Hero Messaging Test"
+                        value={experimentName}
+                        onChange={(e) => setExperimentName(e.target.value)}
+                        className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                        data-testid="input-experiment-name"
+                      />
+                      {experimentName && (
+                        <p className="text-xs text-muted-foreground">
+                          Slug: <code className="bg-muted px-1 rounded">{generateExperimentSlug(experimentName)}</code>
+                        </p>
+                      )}
                     </div>
-                  )}
-                </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Variant A (Control)</label>
+                        <Select value={selectedVariantA} onValueChange={(value) => {
+                          const newVariant = variantsData.variants.find(v => v.filename === value);
+                          const currentB = variantsData.variants.find(v => v.filename === selectedVariantB);
+                          if (currentB && newVariant && currentB.locale !== newVariant.locale) {
+                            setSelectedVariantB("");
+                          }
+                          setSelectedVariantA(value);
+                        }}>
+                          <SelectTrigger data-testid="select-variant-a">
+                            <SelectValue placeholder="Select control..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {variantsData.variants.map((variant) => (
+                              <SelectItem 
+                                key={variant.filename} 
+                                value={variant.filename}
+                                disabled={variant.filename === selectedVariantB && selectedVariantB !== "__new_variant__"}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  {contentInfo.type !== 'landings' && <LocaleFlag locale={variant.locale} />}
+                                  {variant.isPromoted && (
+                                    <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
+                                  )}
+                                  <span className="truncate">{variant.displayName}</span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Variant B (Treatment)</label>
+                        <Select value={selectedVariantB} onValueChange={setSelectedVariantB}>
+                          <SelectTrigger data-testid="select-variant-b">
+                            <SelectValue placeholder="Select treatment..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {(() => {
+                              const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
+                              const selectedLocale = selectedAVariant?.locale;
+                              const isLanding = contentInfo.type === 'landings';
+                              return variantsData.variants
+                                .filter(variant => isLanding || !selectedLocale || variant.locale === selectedLocale)
+                                .map((variant) => (
+                                  <SelectItem 
+                                    key={variant.filename} 
+                                    value={variant.filename}
+                                    disabled={variant.filename === selectedVariantA}
+                                  >
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      {!isLanding && <LocaleFlag locale={variant.locale} />}
+                                      {variant.isPromoted && (
+                                        <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
+                                      )}
+                                      <span className="truncate">{variant.displayName}</span>
+                                    </div>
+                                  </SelectItem>
+                                ));
+                            })()}
+                            <div className="border-t my-1" />
+                            <SelectItem value="__new_variant__">
+                              <div className="flex items-center gap-2 text-primary">
+                                <IconPlus className="h-4 w-4" />
+                                <span>New variant</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    
+                    {selectedVariantA && selectedVariantB && (
+                      <>
+                        <div className="space-y-3">
+                          <label className="text-sm font-medium">Traffic Split</label>
+                          <div className="flex items-center gap-4">
+                            <div className="flex-1">
+                              <input
+                                type="range"
+                                min="10"
+                                max="90"
+                                step="5"
+                                value={allocationA}
+                                onChange={(e) => setAllocationA(parseInt(e.target.value))}
+                                className="w-full"
+                                data-testid="slider-allocation"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">A: <span className="font-medium text-foreground">{allocationA}%</span></span>
+                            <span className="text-muted-foreground">B: <span className="font-medium text-foreground">{100 - allocationA}%</span></span>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Traffic Goal</label>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="number"
+                              min="100"
+                              step="100"
+                              value={maxVisitors}
+                              onChange={(e) => setMaxVisitors(parseInt(e.target.value) || 1000)}
+                              className="w-32 px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                              data-testid="input-max-visitors"
+                            />
+                            <span className="text-sm text-muted-foreground">unique visitors</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
                 
-                {selectedVariantA && selectedVariantB && experimentName && (
-                  <div className="p-3 rounded-md bg-muted/50 border">
-                    <p className="text-xs text-muted-foreground mb-2">Experiment YAML to add:</p>
-                    <pre className="text-xs font-mono bg-background p-2 rounded border overflow-x-auto">
-{`- slug: ${generateExperimentSlug(experimentName)}
-  status: planned
-  description: "${experimentName}"
-  variants:
-    - slug: ${variantsData.variants.find(v => v.filename === selectedVariantA)?.variantSlug || 'control'}
-      version: ${variantsData.variants.find(v => v.filename === selectedVariantA)?.version || 1}
-      allocation: 50
-    - slug: ${variantsData.variants.find(v => v.filename === selectedVariantB)?.variantSlug || 'treatment'}
-      version: ${variantsData.variants.find(v => v.filename === selectedVariantB)?.version || 1}
-      allocation: 50`}
-                    </pre>
+                {/* Step 2: New Variant Creation (only if new variant selected) */}
+                {wizardStep === 2 && needsStep2 && (
+                  <div className="space-y-4">
+                    <div className="p-3 rounded-md bg-muted/50 border">
+                      <p className="text-sm text-muted-foreground">
+                        Create a new variant file in{' '}
+                        <code className="text-xs bg-background px-1 py-0.5 rounded">
+                          {variantsData.folderPath}/
+                        </code>
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Variant Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., Salary Focus Messaging"
+                        value={newVariantTitle}
+                        onChange={(e) => {
+                          setNewVariantTitle(e.target.value);
+                          setNewVariantSlug(generateExperimentSlug(e.target.value));
+                        }}
+                        className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                        data-testid="input-new-variant-title"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Variant Slug</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., salary-focus"
+                        value={newVariantSlug}
+                        onChange={(e) => setNewVariantSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'))}
+                        className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring font-mono"
+                        data-testid="input-new-variant-slug"
+                      />
+                      {newVariantSlug && (
+                        <p className="text-xs text-muted-foreground">
+                          File: <code className="bg-muted px-1 rounded">
+                            {newVariantSlug}.v1.{contentInfo.type === 'landings' ? '' : (variantsData.variants.find(v => v.filename === selectedVariantA)?.locale || 'en') + '.'}yml
+                          </code>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Step 3: Targeting */}
+                {wizardStep === 3 && (
+                  <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      Leave empty to target all visitors, or select specific audiences.
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Devices</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['desktop', 'mobile', 'tablet'].map((device) => (
+                          <Button
+                            key={device}
+                            type="button"
+                            variant={targetDevices.includes(device) ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => {
+                              setTargetDevices(prev => 
+                                prev.includes(device) 
+                                  ? prev.filter(d => d !== device)
+                                  : [...prev, device]
+                              );
+                            }}
+                            data-testid={`button-device-${device}`}
+                          >
+                            {device}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Languages</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['en', 'es'].map((lang) => (
+                          <Button
+                            key={lang}
+                            type="button"
+                            variant={targetLanguages.includes(lang) ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => {
+                              setTargetLanguages(prev => 
+                                prev.includes(lang) 
+                                  ? prev.filter(l => l !== lang)
+                                  : [...prev, lang]
+                              );
+                            }}
+                            data-testid={`button-language-${lang}`}
+                          >
+                            <LocaleFlag locale={lang} className="w-4 h-3 mr-1" />
+                            {lang.toUpperCase()}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">UTM Sources</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., google, facebook (comma-separated)"
+                        value={targetUtmSources.join(', ')}
+                        onChange={(e) => setTargetUtmSources(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                        className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                        data-testid="input-utm-sources"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">UTM Mediums</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., cpc, organic (comma-separated)"
+                        value={targetUtmMediums.join(', ')}
+                        onChange={(e) => setTargetUtmMediums(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                        className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                        data-testid="input-utm-mediums"
+                      />
+                    </div>
                   </div>
                 )}
               </>
@@ -1579,39 +1791,87 @@ export function DebugBubble() {
           </div>
 
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button
-              variant="outline"
-              onClick={() => setCreateExperimentOpen(false)}
-              data-testid="button-cancel-create-experiment"
-            >
-              Cancel
-            </Button>
-            <Button
-              disabled={!selectedVariantA || !selectedVariantB || !experimentName}
-              onClick={() => {
-                // Copy the YAML to clipboard
-                if (selectedVariantA && selectedVariantB && experimentName && variantsData) {
-                  const variantA = variantsData.variants.find(v => v.filename === selectedVariantA);
-                  const variantB = variantsData.variants.find(v => v.filename === selectedVariantB);
-                  const yaml = `- slug: ${generateExperimentSlug(experimentName)}
+            {wizardStep > 1 && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (wizardStep === 3 && !needsStep2) {
+                    setWizardStep(1);
+                  } else {
+                    setWizardStep((wizardStep - 1) as 1 | 2 | 3);
+                  }
+                }}
+                data-testid="button-wizard-back"
+              >
+                <IconArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Button>
+            )}
+            {wizardStep === 1 && (
+              <Button
+                variant="outline"
+                onClick={() => setCreateExperimentOpen(false)}
+                data-testid="button-cancel-create-experiment"
+              >
+                Cancel
+              </Button>
+            )}
+            {wizardStep < 3 && (
+              <Button
+                disabled={
+                  wizardStep === 1 && (!selectedVariantA || !selectedVariantB || !experimentName) ||
+                  wizardStep === 2 && (!newVariantTitle || !newVariantSlug)
+                }
+                onClick={() => {
+                  if (wizardStep === 1 && !needsStep2) {
+                    setWizardStep(3);
+                  } else {
+                    setWizardStep((wizardStep + 1) as 1 | 2 | 3);
+                  }
+                }}
+                data-testid="button-wizard-next"
+              >
+                Next
+                <IconArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            )}
+            {wizardStep === 3 && (
+              <Button
+                onClick={() => {
+                  if (selectedVariantA && selectedVariantB && experimentName && variantsData) {
+                    const variantA = variantsData.variants.find(v => v.filename === selectedVariantA);
+                    const variantBData = isNewVariantSelected 
+                      ? { variantSlug: newVariantSlug, version: 1 }
+                      : variantsData.variants.find(v => v.filename === selectedVariantB);
+                    
+                    const targetingYaml = [
+                      targetLanguages.length > 0 ? `    languages:\n${targetLanguages.map(l => `      - ${l}`).join('\n')}` : '',
+                      targetDevices.length > 0 ? `    devices:\n${targetDevices.map(d => `      - ${d}`).join('\n')}` : '',
+                      targetUtmSources.length > 0 ? `    utm_sources:\n${targetUtmSources.map(s => `      - ${s}`).join('\n')}` : '',
+                      targetUtmMediums.length > 0 ? `    utm_mediums:\n${targetUtmMediums.map(m => `      - ${m}`).join('\n')}` : '',
+                    ].filter(Boolean).join('\n');
+                    
+                    const yaml = `- slug: ${generateExperimentSlug(experimentName)}
   status: planned
   description: "${experimentName}"
   variants:
     - slug: ${variantA?.variantSlug || 'control'}
       version: ${variantA?.version || 1}
-      allocation: 50
-    - slug: ${variantB?.variantSlug || 'treatment'}
-      version: ${variantB?.version || 1}
-      allocation: 50`;
-                  navigator.clipboard.writeText(yaml);
-                  setCreateExperimentOpen(false);
-                }
-              }}
-              data-testid="button-copy-experiment-yaml"
-            >
-              <IconCopy className="h-4 w-4 mr-2" />
-              Copy YAML
-            </Button>
+      allocation: ${allocationA}
+    - slug: ${variantBData?.variantSlug || 'treatment'}
+      version: ${variantBData?.version || 1}
+      allocation: ${100 - allocationA}
+  max_visitors: ${maxVisitors}${targetingYaml ? `\n  targeting:\n${targetingYaml}` : ''}`;
+                    navigator.clipboard.writeText(yaml);
+                    setCreateExperimentOpen(false);
+                  }
+                }}
+                data-testid="button-copy-experiment-yaml"
+              >
+                <IconCopy className="h-4 w-4 mr-2" />
+                Copy YAML
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
