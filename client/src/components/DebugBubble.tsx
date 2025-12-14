@@ -1491,7 +1491,7 @@ export function DebugBubble() {
       <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
-            <div className="flex-1 space-y-1.5">
+            <div className="space-y-1.5">
               <DialogTitle>Create New Experiment</DialogTitle>
               <DialogDescription>
                 {wizardStep === 1 && "Configure variants and traffic distribution"}
