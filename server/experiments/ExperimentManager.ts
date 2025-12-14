@@ -728,6 +728,208 @@ export class ExperimentManager {
       throw error;
     }
   }
+
+  /**
+   * Create a new experiment and optionally create a new variant file
+   */
+  public createExperiment(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    contentSlug: string,
+    experimentConfig: {
+      experimentName: string;
+      experimentSlug: string;
+      variantA: { filename: string; slug: string; version: number };
+      variantB: { filename: string; slug: string; version: number } | null;
+      newVariant: { title: string; slug: string } | null;
+      allocationA: number;
+      maxVisitors: number;
+      targeting: {
+        regions?: string[];
+        devices?: ("mobile" | "desktop" | "tablet")[];
+        locations?: string[];
+        utm_sources?: string[];
+        utm_campaigns?: string[];
+        utm_mediums?: string[];
+        countries?: string[];
+      };
+    }
+  ): { success: boolean; experimentSlug: string; newVariantFilename?: string } {
+    const contentDir = path.join(CONTENT_DIR, contentType, contentSlug);
+    const configPath = path.join(contentDir, "experiments.yml");
+    
+    if (!fs.existsSync(contentDir)) {
+      throw new Error(`Content folder not found: ${contentType}/${contentSlug}`);
+    }
+    
+    // Determine variant B details
+    let variantBSlug: string;
+    let variantBVersion: number;
+    let newVariantFilename: string | undefined;
+    
+    if (experimentConfig.variantB) {
+      // Use existing variant B
+      variantBSlug = experimentConfig.variantB.slug;
+      variantBVersion = experimentConfig.variantB.version;
+    } else if (experimentConfig.newVariant) {
+      // Create new variant by copying from variant A
+      const variantAPath = path.join(contentDir, experimentConfig.variantA.filename);
+      if (!fs.existsSync(variantAPath)) {
+        throw new Error(`Variant A file not found: ${experimentConfig.variantA.filename}`);
+      }
+      
+      // Extract locale from variant A filename
+      const localeMatch = experimentConfig.variantA.filename.match(/\.([a-z]{2})\.yml$/);
+      const locale = localeMatch ? localeMatch[1] : "en";
+      
+      // Create new variant filename: {slug}.v1.{locale}.yml
+      variantBSlug = experimentConfig.newVariant.slug;
+      variantBVersion = 1;
+      newVariantFilename = `${variantBSlug}.v${variantBVersion}.${locale}.yml`;
+      const newVariantPath = path.join(contentDir, newVariantFilename);
+      
+      // Check if file already exists
+      if (fs.existsSync(newVariantPath)) {
+        throw new Error(`Variant file already exists: ${newVariantFilename}`);
+      }
+      
+      // Copy content from variant A and update title
+      const variantAContent = fs.readFileSync(variantAPath, "utf-8");
+      const variantAData = yaml.load(variantAContent) as Record<string, unknown>;
+      
+      // Update title if provided
+      if (experimentConfig.newVariant.title) {
+        variantAData.title = experimentConfig.newVariant.title;
+      }
+      
+      // Write new variant file
+      const newVariantContent = yaml.dump(variantAData, {
+        indent: 2,
+        lineWidth: 120,
+        quotingType: '"',
+        forceQuotes: false,
+      });
+      fs.writeFileSync(newVariantPath, newVariantContent, "utf-8");
+      
+      console.log(`[Experiments] Created new variant file: ${newVariantFilename}`);
+    } else {
+      throw new Error("Either variantB or newVariant must be provided");
+    }
+    
+    // Build the experiment config
+    const allocationB = 100 - experimentConfig.allocationA;
+    
+    const newExperiment: ExperimentConfig = {
+      slug: experimentConfig.experimentSlug,
+      status: "planned",
+      description: experimentConfig.experimentName,
+      max_visitors: experimentConfig.maxVisitors,
+      variants: [
+        {
+          slug: experimentConfig.variantA.slug,
+          version: experimentConfig.variantA.version,
+          allocation: experimentConfig.allocationA,
+        },
+        {
+          slug: variantBSlug,
+          version: variantBVersion,
+          allocation: allocationB,
+        },
+      ],
+      targeting: this.buildTargetingObject(experimentConfig.targeting),
+    };
+    
+    // Validate the new experiment
+    const experimentValidation = experimentConfigSchema.safeParse(newExperiment);
+    if (!experimentValidation.success) {
+      throw new Error(`Invalid experiment config: ${experimentValidation.error.message}`);
+    }
+    
+    // Load or create experiments.yml
+    let experimentsFile: ExperimentsFile;
+    
+    if (fs.existsSync(configPath)) {
+      const content = fs.readFileSync(configPath, "utf-8");
+      const parsed = yaml.load(content);
+      const validated = experimentsFileSchema.safeParse(parsed);
+      
+      if (!validated.success) {
+        throw new Error(`Invalid experiments file: ${validated.error.message}`);
+      }
+      
+      experimentsFile = validated.data;
+      
+      // Check if experiment slug already exists
+      if (experimentsFile.experiments.some(exp => exp.slug === experimentConfig.experimentSlug)) {
+        throw new Error(`Experiment with slug "${experimentConfig.experimentSlug}" already exists`);
+      }
+      
+      // Add new experiment
+      experimentsFile.experiments.push(experimentValidation.data);
+    } else {
+      // Create new experiments file
+      experimentsFile = {
+        experiments: [experimentValidation.data],
+      };
+    }
+    
+    // Validate entire file
+    const fileValidation = experimentsFileSchema.safeParse(experimentsFile);
+    if (!fileValidation.success) {
+      throw new Error(`File validation failed: ${fileValidation.error.message}`);
+    }
+    
+    // Write experiments.yml
+    const yamlContent = yaml.dump(fileValidation.data, {
+      indent: 2,
+      lineWidth: 120,
+      quotingType: '"',
+      forceQuotes: false,
+    });
+    
+    fs.writeFileSync(configPath, yamlContent, "utf-8");
+    
+    // Clear cache
+    const cacheKey = `${contentType}:${contentSlug}`;
+    this.configCache.delete(cacheKey);
+    
+    console.log(`[Experiments] Created experiment ${experimentConfig.experimentSlug} for ${contentType}/${contentSlug}`);
+    
+    return {
+      success: true,
+      experimentSlug: experimentConfig.experimentSlug,
+      newVariantFilename,
+    };
+  }
+  
+  /**
+   * Build targeting object, filtering out empty arrays
+   */
+  private buildTargetingObject(targeting: {
+    regions?: string[];
+    devices?: ("mobile" | "desktop" | "tablet")[];
+    locations?: string[];
+    utm_sources?: string[];
+    utm_campaigns?: string[];
+    utm_mediums?: string[];
+    countries?: string[];
+  }): ExperimentConfig["targeting"] | undefined {
+    const result: ExperimentConfig["targeting"] = {};
+    
+    if (targeting.regions?.length) result.regions = targeting.regions;
+    if (targeting.devices?.length) result.devices = targeting.devices;
+    if (targeting.locations?.length) result.locations = targeting.locations;
+    if (targeting.utm_sources?.length) result.utm_sources = targeting.utm_sources;
+    if (targeting.utm_campaigns?.length) result.utm_campaigns = targeting.utm_campaigns;
+    if (targeting.utm_mediums?.length) result.utm_mediums = targeting.utm_mediums;
+    if (targeting.countries?.length) result.countries = targeting.countries;
+    
+    // Return undefined if no targeting rules
+    if (Object.keys(result).length === 0) {
+      return undefined;
+    }
+    
+    return result;
+  }
 }
 
 // Singleton instance

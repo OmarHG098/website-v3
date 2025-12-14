@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import * as fs from "fs";
 import * as path from "path";
+import * as yaml from "js-yaml";
 import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
@@ -648,6 +649,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       res.status(400).json({ 
         error: error instanceof Error ? error.message : "Failed to update experiment" 
+      });
+    }
+  });
+
+  // Create new experiment
+  app.post("/api/experiments/:contentType/:slug/create", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const {
+      experimentName,
+      experimentSlug,
+      variantA,
+      variantB,
+      newVariant,
+      allocationA,
+      maxVisitors,
+      targeting,
+    } = req.body;
+    
+    // Basic validation
+    if (!experimentName || !experimentSlug || !variantA) {
+      res.status(400).json({ 
+        error: "Missing required fields: experimentName, experimentSlug, variantA" 
+      });
+      return;
+    }
+    
+    if (!variantB && !newVariant) {
+      res.status(400).json({ 
+        error: "Either variantB or newVariant must be provided" 
+      });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    try {
+      const result = experimentManager.createExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        slug,
+        {
+          experimentName,
+          experimentSlug,
+          variantA,
+          variantB: variantB || null,
+          newVariant: newVariant || null,
+          allocationA: allocationA ?? 50,
+          maxVisitors: maxVisitors ?? 1000,
+          targeting: targeting || {},
+        }
+      );
+      
+      res.json({
+        ...result,
+        redirectPath: `/private/${contentType}/${slug}/experiment/${experimentSlug}`,
+      });
+    } catch (error) {
+      res.status(400).json({ 
+        error: error instanceof Error ? error.message : "Failed to create experiment" 
       });
     }
   });

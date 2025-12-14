@@ -86,6 +86,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
@@ -513,7 +514,8 @@ export function DebugBubble() {
   const { session } = useSession();
   const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
-  const [pathname] = useLocation();
+  const [pathname, navigate] = useLocation();
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -564,6 +566,9 @@ export function DebugBubble() {
   // Components search state
   const [componentsSearch, setComponentsSearch] = useState("");
   const [showComponentsSearch, setShowComponentsSearch] = useState(false);
+  
+  // Create experiment API state
+  const [isCreatingExperiment, setIsCreatingExperiment] = useState(false);
   
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
@@ -2037,42 +2042,82 @@ export function DebugBubble() {
             )}
             {wizardStep === 3 && (
               <Button
-                onClick={() => {
-                  if (selectedVariantA && selectedVariantB && experimentName && variantsData) {
+                disabled={isCreatingExperiment}
+                onClick={async () => {
+                  if (selectedVariantA && selectedVariantB && experimentName && variantsData && contentInfo.type && contentInfo.slug) {
+                    setIsCreatingExperiment(true);
+                    
                     const variantA = variantsData.variants.find(v => v.filename === selectedVariantA);
                     const variantBData = isNewVariantSelected 
-                      ? { variantSlug: newVariantSlug, version: 1 }
+                      ? null
                       : variantsData.variants.find(v => v.filename === selectedVariantB);
                     
-                    const targetingYaml = [
-                      targetRegions.length > 0 ? `    regions:\n${targetRegions.map(r => `      - ${r}`).join('\n')}` : '',
-                      targetDevices.length > 0 ? `    devices:\n${targetDevices.map(d => `      - ${d}`).join('\n')}` : '',
-                      targetLocations.length > 0 ? `    locations:\n${targetLocations.map(l => `      - ${l}`).join('\n')}` : '',
-                      targetUtmSources.length > 0 ? `    utm_sources:\n${targetUtmSources.map(s => `      - ${s}`).join('\n')}` : '',
-                      targetUtmCampaigns.length > 0 ? `    utm_campaigns:\n${targetUtmCampaigns.map(c => `      - ${c}`).join('\n')}` : '',
-                      targetUtmMediums.length > 0 ? `    utm_mediums:\n${targetUtmMediums.map(m => `      - ${m}`).join('\n')}` : '',
-                      targetCountries.length > 0 ? `    countries:\n${targetCountries.map(c => `      - ${c}`).join('\n')}` : '',
-                    ].filter(Boolean).join('\n');
+                    const targeting: Record<string, string[]> = {};
+                    if (targetRegions.length > 0) targeting.regions = targetRegions;
+                    if (targetDevices.length > 0) targeting.devices = targetDevices;
+                    if (targetLocations.length > 0) targeting.locations = targetLocations;
+                    if (targetUtmSources.length > 0) targeting.utm_sources = targetUtmSources;
+                    if (targetUtmCampaigns.length > 0) targeting.utm_campaigns = targetUtmCampaigns;
+                    if (targetUtmMediums.length > 0) targeting.utm_mediums = targetUtmMediums;
+                    if (targetCountries.length > 0) targeting.countries = targetCountries;
                     
-                    const yaml = `- slug: ${generateExperimentSlug(experimentName)}
-  status: planned
-  description: "${experimentName}"
-  variants:
-    - slug: ${variantA?.variantSlug || 'control'}
-      version: ${variantA?.version || 1}
-      allocation: ${allocationA}
-    - slug: ${variantBData?.variantSlug || 'treatment'}
-      version: ${variantBData?.version || 1}
-      allocation: ${100 - allocationA}
-  max_visitors: ${maxVisitors}${targetingYaml ? `\n  targeting:\n${targetingYaml}` : ''}`;
-                    navigator.clipboard.writeText(yaml);
-                    setCreateExperimentOpen(false);
+                    try {
+                      const response = await fetch(`/api/experiments/${contentInfo.type}/${contentInfo.slug}/create`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          experimentName,
+                          experimentSlug: generateExperimentSlug(experimentName),
+                          variantA: {
+                            slug: variantA?.variantSlug || 'control',
+                            version: variantA?.version || 1,
+                          },
+                          variantB: variantBData ? {
+                            slug: variantBData.variantSlug,
+                            version: variantBData.version || 1,
+                          } : null,
+                          newVariant: isNewVariantSelected ? {
+                            title: newVariantTitle,
+                            slug: newVariantSlug,
+                            baseVariant: variantA?.variantSlug || 'control',
+                            baseVersion: variantA?.version || 1,
+                          } : null,
+                          allocationA,
+                          maxVisitors,
+                          targeting: Object.keys(targeting).length > 0 ? targeting : undefined,
+                        }),
+                      });
+                      
+                      const result = await response.json();
+                      
+                      if (!response.ok) {
+                        throw new Error(result.error || "Failed to create experiment");
+                      }
+                      
+                      setCreateExperimentOpen(false);
+                      toast({
+                        title: "Experiment created",
+                        description: `${experimentName} has been created successfully.`,
+                      });
+                      
+                      if (result.redirectPath) {
+                        navigate(result.redirectPath);
+                      }
+                    } catch (error) {
+                      toast({
+                        title: "Error",
+                        description: error instanceof Error ? error.message : "Failed to create experiment",
+                        variant: "destructive",
+                      });
+                    } finally {
+                      setIsCreatingExperiment(false);
+                    }
                   }
                 }}
-                data-testid="button-copy-experiment-yaml"
+                data-testid="button-create-experiment-yaml"
               >
-                <IconCopy className="h-4 w-4 mr-2" />
-                Copy YAML
+                <IconPlus className="h-4 w-4 mr-2" />
+                {isCreatingExperiment ? "Creating..." : "Create YAML"}
               </Button>
             )}
           </DialogFooter>
