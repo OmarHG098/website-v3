@@ -11,6 +11,7 @@ import type {
 } from "@shared/schema";
 import { experimentsFileSchema, experimentConfigSchema, type ExperimentUpdate } from "@shared/schema";
 import { hashVisitorId } from "./cookie-utils";
+import { deepMerge } from "../utils/deepMerge";
 
 const CONTENT_DIR = path.join(process.cwd(), "marketing-content");
 const STATE_FILE = path.join(process.cwd(), "experiments-state.json");
@@ -153,8 +154,8 @@ export class ExperimentManager {
       const content = fs.readFileSync(filePath, "utf-8");
       const variantData = yaml.load(content) as Record<string, unknown>;
 
-      // Merge common data with variant data (variant takes precedence)
-      const merged = { ...commonData, ...variantData } as CareerProgram;
+      // Deep merge common data with variant data (variant takes precedence)
+      const merged = deepMerge(commonData, variantData) as CareerProgram;
 
       this.contentCache.set(cacheKey, {
         slug: variantSlug,

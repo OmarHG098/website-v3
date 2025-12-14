@@ -27,6 +27,7 @@ import {
   buildVisitorContext,
 } from "./experiments";
 import { loadImageRegistry } from "./image-registry";
+import { deepMerge } from "./utils/deepMerge";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -56,8 +57,8 @@ function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
     const localeContent = fs.readFileSync(localePath, "utf8");
     const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    // Merge common data with locale data (locale data takes precedence)
-    const mergedData = { ...commonData, ...localeData };
+    // Deep merge common data with locale data (locale data takes precedence)
+    const mergedData = deepMerge(commonData, localeData);
 
     const result = careerProgramSchema.safeParse(mergedData);
     if (!result.success) {
@@ -111,12 +112,12 @@ function loadLandingPage(slug: string, locale: string): LandingPage | null {
     const localeContent = fs.readFileSync(localePath, "utf8");
     const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    // Merge with _common.yml if it exists
+    // Deep merge with _common.yml if it exists
     let mergedData = localeData;
     if (fs.existsSync(commonPath)) {
       const commonContent = fs.readFileSync(commonPath, "utf8");
       const commonData = yaml.load(commonContent) as Record<string, unknown>;
-      mergedData = { ...commonData, ...localeData };
+      mergedData = deepMerge(commonData, localeData);
     }
 
     const result = landingPageSchema.safeParse(mergedData);
@@ -174,7 +175,8 @@ function loadLocationPage(slug: string, locale: string): LocationPage | null {
     const commonData = yaml.load(commonContent) as Record<string, unknown>;
     const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    const mergedData = { ...commonData, ...localeData };
+    // Deep merge common data with locale data (locale data takes precedence)
+    const mergedData = deepMerge(commonData, localeData);
 
     const result = locationPageSchema.safeParse(mergedData);
     if (!result.success) {
