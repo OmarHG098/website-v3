@@ -177,7 +177,19 @@ function getAvailableLandings(): AvailableLanding[] {
     for (const dir of dirs) {
       const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
       if (fs.statSync(landingPath).isDirectory()) {
-        const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml"));
+        const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml") && f !== "_common.yml");
+        const commonPath = path.join(landingPath, "_common.yml");
+
+        // Load common data if it exists
+        let commonData: { slug?: string; title?: string } = {};
+        if (fs.existsSync(commonPath)) {
+          try {
+            const commonContent = fs.readFileSync(commonPath, "utf-8");
+            commonData = yaml.load(commonContent) as { slug?: string; title?: string };
+          } catch (commonParseError) {
+            console.error(`Error parsing landing common ${commonPath}:`, commonParseError);
+          }
+        }
 
         for (const file of files) {
           const locale = file.replace(".yml", "");
@@ -186,15 +198,16 @@ function getAvailableLandings(): AvailableLanding[] {
           try {
             const content = fs.readFileSync(filePath, "utf-8");
             const data = yaml.load(content) as { 
-              slug: string; 
-              title: string; 
+              slug?: string; 
+              title?: string; 
               meta?: ContentMeta;
             };
 
+            // Merge common data with locale data (locale takes precedence)
             landings.push({
-              slug: data.slug || dir,
+              slug: data.slug || commonData.slug || dir,
               locale,
-              title: data.title || dir,
+              title: data.title || commonData.title || dir,
               meta: data.meta || {},
             });
           } catch (parseError) {
