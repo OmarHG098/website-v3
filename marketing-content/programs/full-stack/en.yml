@@ -125,9 +125,9 @@ sections:
       - text: Access to 5,000+ hiring partners
       - text: Lifetime career support
     card:
-      title: "Full Stack Developer"
-      subtitle: "4Geeks Academy Certificate"
-      program_name: "Full-Stack Developer"
+      title: Full Stack Developer
+      subtitle: 4Geeks Academy Certificate
+      program_name: Full-Stack Developer
   - type: why_learn_ai
     title: Why Should I Learn to Build and Code with AI?
     subtitle: Software Development as You Know It Will Cease to Exist

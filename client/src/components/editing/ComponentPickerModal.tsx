@@ -243,9 +243,9 @@ export default function ComponentPickerModal({
           slug,
           locale,
           operations: [{
-            type: "add_item",
+            action: "add_item",
             path: "sections",
-            value: sectionToAdd,
+            item: sectionToAdd,
             index: insertIndex,
           }],
         }),
