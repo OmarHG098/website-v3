@@ -354,7 +354,7 @@ export function EditableSection({ children, section, index, sectionType, content
                   onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
                   data-testid={`badge-version-${index}`}
                 >
-                  v{selectedVersion || versions[0] || ""}
+                  {selectedVersion || versions[0] || ""}
                   {versions.length > 1 && <IconPencil className="h-3 w-3" />}
                 </span>
               </h4>
@@ -373,7 +373,7 @@ export function EditableSection({ children, section, index, sectionType, content
                       </SelectTrigger>
                       <SelectContent>
                         {versions.map(ver => (
-                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>v{ver}</SelectItem>
+                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>{ver}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
