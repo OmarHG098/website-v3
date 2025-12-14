@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
-import { DebugBubble } from "@/components/DebugBubble";
+import { DebugBubble } from "@/components/DebugBubbleMain";
 import { SessionProvider } from "@/contexts/SessionContext";
 import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import "./i18n";
