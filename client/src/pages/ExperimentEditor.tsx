@@ -697,36 +697,6 @@ export default function ExperimentEditor() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
-                  <IconLanguage className="h-4 w-4" />
-                  Languages
-                </Label>
-                <div className="flex gap-2">
-                  {["en", "es"].map((lang) => (
-                    <Button
-                      key={lang}
-                      variant={
-                        formData?.targeting?.languages?.includes(lang)
-                          ? "default"
-                          : "outline"
-                      }
-                      size="sm"
-                      onClick={() => {
-                        const current = formData?.targeting?.languages || [];
-                        const updated = current.includes(lang)
-                          ? current.filter((l) => l !== lang)
-                          : [...current, lang];
-                        updateTargeting("languages", updated.length ? updated : undefined);
-                      }}
-                      data-testid={`button-lang-${lang}`}
-                    >
-                      {lang.toUpperCase()}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
                   <IconWorld className="h-4 w-4" />
                   Regions
                 </Label>
@@ -754,11 +724,7 @@ export default function ExperimentEditor() {
                   ))}
                 </div>
               </div>
-            </div>
 
-            <Separator />
-
-            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <IconDeviceMobile className="h-4 w-4" />
@@ -793,23 +759,25 @@ export default function ExperimentEditor() {
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <IconMapPin className="h-4 w-4" />
-                  Campus Locations
-                </Label>
-                <TagInput
-                  values={formData?.targeting?.locations || []}
-                  onChange={(values) => updateTargeting("locations", values.length ? values : undefined)}
-                  placeholder="Type city or slug..."
-                  suggestions={locationsData?.map(loc => ({
-                    value: loc.slug,
-                    label: `${loc.city}, ${loc.country}`
-                  })) || []}
-                  data-testid="input-locations"
-                />
-              </div>
+            <Separator />
+
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">
+                <IconMapPin className="h-4 w-4" />
+                Campus Locations
+              </Label>
+              <TagInput
+                values={formData?.targeting?.locations || []}
+                onChange={(values) => updateTargeting("locations", values.length ? values : undefined)}
+                placeholder="Type city or slug..."
+                suggestions={locationsData?.map(loc => ({
+                  value: loc.slug,
+                  label: `${loc.city}, ${loc.country}`
+                })) || []}
+                data-testid="input-locations"
+              />
             </div>
 
             <Separator />

@@ -44,6 +44,9 @@ import {
   IconDatabase,
   IconPhoto,
   IconCopy,
+  IconWorld,
+  IconDeviceMobile,
+  IconDeviceDesktop,
 } from "@tabler/icons-react";
 import { US, ES, PT, FR, DE, IT } from "country-flag-icons/react/3x2";
 
@@ -292,10 +295,12 @@ export function DebugBubble() {
   
   // Targeting state
   const [targetDevices, setTargetDevices] = useState<string[]>([]);
-  const [targetCountries, setTargetCountries] = useState<string[]>([]);
-  const [targetLanguages, setTargetLanguages] = useState<string[]>([]);
+  const [targetRegions, setTargetRegions] = useState<string[]>([]);
+  const [targetLocations, setTargetLocations] = useState<string[]>([]);
   const [targetUtmSources, setTargetUtmSources] = useState<string[]>([]);
+  const [targetUtmCampaigns, setTargetUtmCampaigns] = useState<string[]>([]);
   const [targetUtmMediums, setTargetUtmMediums] = useState<string[]>([]);
+  const [targetCountries, setTargetCountries] = useState<string[]>([]);
   
   // Components search state
   const [componentsSearch, setComponentsSearch] = useState("");
@@ -410,10 +415,12 @@ export function DebugBubble() {
     setNewVariantTitle("");
     setNewVariantSlug("");
     setTargetDevices([]);
-    setTargetCountries([]);
-    setTargetLanguages([]);
+    setTargetRegions([]);
+    setTargetLocations([]);
     setTargetUtmSources([]);
+    setTargetUtmCampaigns([]);
     setTargetUtmMediums([]);
+    setTargetCountries([]);
     
     fetch(`/api/variants/${contentInfo.type}/${contentInfo.slug}`)
       .then((res) => res.json())
@@ -1725,51 +1732,126 @@ export function DebugBubble() {
                       Leave empty to target all visitors, or select specific audiences.
                     </p>
                     
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Devices</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['desktop', 'mobile', 'tablet'].map((device) => (
-                          <Button
-                            key={device}
-                            type="button"
-                            variant={targetDevices.includes(device) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => {
-                              setTargetDevices(prev => 
-                                prev.includes(device) 
-                                  ? prev.filter(d => d !== device)
-                                  : [...prev, device]
-                              );
-                            }}
-                            data-testid={`button-device-${device}`}
-                          >
-                            {device}
-                          </Button>
-                        ))}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium flex items-center gap-2">
+                          <IconWorld className="h-4 w-4" />
+                          Regions
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {['usa-canada', 'latam', 'europe'].map((region) => (
+                            <Button
+                              key={region}
+                              type="button"
+                              variant={targetRegions.includes(region) ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => {
+                                setTargetRegions(prev => 
+                                  prev.includes(region) 
+                                    ? prev.filter(r => r !== region)
+                                    : [...prev, region]
+                                );
+                              }}
+                              data-testid={`button-region-${region}`}
+                            >
+                              {deslugify(region)}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium flex items-center gap-2">
+                          <IconDeviceMobile className="h-4 w-4" />
+                          Devices
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {(['mobile', 'tablet', 'desktop'] as const).map((device) => (
+                            <Button
+                              key={device}
+                              type="button"
+                              variant={targetDevices.includes(device) ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => {
+                                setTargetDevices(prev => 
+                                  prev.includes(device) 
+                                    ? prev.filter(d => d !== device)
+                                    : [...prev, device]
+                                );
+                              }}
+                              data-testid={`button-device-${device}`}
+                            >
+                              {device === 'mobile' && <IconDeviceMobile className="h-3 w-3 mr-1" />}
+                              {device === 'desktop' && <IconDeviceDesktop className="h-3 w-3 mr-1" />}
+                              {device.charAt(0).toUpperCase() + device.slice(1)}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">UTM Sources</label>
+                      <label className="text-sm font-medium flex items-center gap-2">
+                        <IconMapPin className="h-4 w-4" />
+                        Campus Locations
+                      </label>
                       <input
                         type="text"
-                        placeholder="e.g., google, facebook (comma-separated)"
-                        value={targetUtmSources.join(', ')}
-                        onChange={(e) => setTargetUtmSources(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                        placeholder="e.g., miami, madrid-spain (comma-separated)"
+                        value={targetLocations.join(', ')}
+                        onChange={(e) => setTargetLocations(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
                         className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                        data-testid="input-utm-sources"
+                        data-testid="input-locations"
                       />
                     </div>
                     
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">UTM Sources</label>
+                        <input
+                          type="text"
+                          placeholder="google, facebook..."
+                          value={targetUtmSources.join(', ')}
+                          onChange={(e) => setTargetUtmSources(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                          className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-utm-sources"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">UTM Campaigns</label>
+                        <input
+                          type="text"
+                          placeholder="summer-2024..."
+                          value={targetUtmCampaigns.join(', ')}
+                          onChange={(e) => setTargetUtmCampaigns(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                          className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-utm-campaigns"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">UTM Mediums</label>
+                        <input
+                          type="text"
+                          placeholder="cpc, organic..."
+                          value={targetUtmMediums.join(', ')}
+                          onChange={(e) => setTargetUtmMediums(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                          className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-utm-mediums"
+                        />
+                      </div>
+                    </div>
+                    
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">UTM Mediums</label>
+                      <label className="text-sm font-medium">Countries (ISO codes)</label>
                       <input
                         type="text"
-                        placeholder="e.g., cpc, organic (comma-separated)"
-                        value={targetUtmMediums.join(', ')}
-                        onChange={(e) => setTargetUtmMediums(e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                        placeholder="US, CA, MX..."
+                        value={targetCountries.join(', ')}
+                        onChange={(e) => setTargetCountries(e.target.value.split(',').map(s => s.trim().toUpperCase()).filter(Boolean))}
                         className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                        data-testid="input-utm-mediums"
+                        data-testid="input-countries"
                       />
                     </div>
                   </div>
@@ -1821,9 +1903,13 @@ export function DebugBubble() {
                       : variantsData.variants.find(v => v.filename === selectedVariantB);
                     
                     const targetingYaml = [
+                      targetRegions.length > 0 ? `    regions:\n${targetRegions.map(r => `      - ${r}`).join('\n')}` : '',
                       targetDevices.length > 0 ? `    devices:\n${targetDevices.map(d => `      - ${d}`).join('\n')}` : '',
+                      targetLocations.length > 0 ? `    locations:\n${targetLocations.map(l => `      - ${l}`).join('\n')}` : '',
                       targetUtmSources.length > 0 ? `    utm_sources:\n${targetUtmSources.map(s => `      - ${s}`).join('\n')}` : '',
+                      targetUtmCampaigns.length > 0 ? `    utm_campaigns:\n${targetUtmCampaigns.map(c => `      - ${c}`).join('\n')}` : '',
                       targetUtmMediums.length > 0 ? `    utm_mediums:\n${targetUtmMediums.map(m => `      - ${m}`).join('\n')}` : '',
+                      targetCountries.length > 0 ? `    countries:\n${targetCountries.map(c => `      - ${c}`).join('\n')}` : '',
                     ].filter(Boolean).join('\n');
                     
                     const yaml = `- slug: ${generateExperimentSlug(experimentName)}
