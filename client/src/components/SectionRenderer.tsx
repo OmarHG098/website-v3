@@ -122,8 +122,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     ]);
     
     if (result.success) {
-      toast({ title: "Section moved up", description: "Refreshing page..." });
+      toast({ title: "Section moved up" });
       onSectionAdded?.();
+      window.location.reload();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
     }
@@ -137,8 +138,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     ]);
     
     if (result.success) {
-      toast({ title: "Section moved down", description: "Refreshing page..." });
+      toast({ title: "Section moved down" });
       onSectionAdded?.();
+      window.location.reload();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
     }
@@ -156,8 +158,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     ]);
     
     if (result.success) {
-      toast({ title: "Section deleted", description: "Refreshing page..." });
+      toast({ title: "Section deleted" });
       onSectionAdded?.();
+      window.location.reload();
     } else {
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
     }

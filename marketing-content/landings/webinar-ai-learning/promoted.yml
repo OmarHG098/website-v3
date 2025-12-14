@@ -1,79 +1,70 @@
-# Webinar Landing Page - English
-# This file defines all sections and content for an AI learning webinar landing page
-
 meta:
   page_title: "Free Webinar: Learn to Code with AI | 4Geeks"
-  description: "Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!"
+  description: Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!
   redirects:
-    - "/webinar/ai-learning"
-    - "/events/ai-coding-webinar"
-
+    - /webinar/ai-learning
+    - /events/ai-coding-webinar
 sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
-    badge: "Free Webinar"
-    title: "Learn to Code with AI in 2024"
-    subtitle: "Discover how AI-powered tools are revolutionizing tech education. Join our free 1-hour webinar and see the future of learning."
+    badge: Free Webinar
+    title: Learn to Code with AI in 2024
+    subtitle: Discover how AI-powered tools are revolutionizing tech education. Join our free 1-hour webinar and see the future of learning.
     cta_buttons:
-      - text: "Reserve Your Spot"
-        url: "/signup?event=webinar"
-        variant: "primary"
-        icon: "Calendar"
-      - text: "Watch Preview"
+      - text: Reserve Your Spot
+        url: /signup?event=webinar
+        variant: primary
+        icon: Calendar
+      - text: Watch Preview
         url: "#preview"
-        variant: "outline"
-        icon: "Player"
-
+        variant: outline
+        icon: Player
   - type: features_grid
     version: "1.0"
-    title: "What You'll Learn"
-    subtitle: "In just 1 hour, discover the tools that make learning faster and easier"
+    title: What You'll Learn
+    subtitle: In just 1 hour, discover the tools that make learning faster and easier
     items:
-      - icon: "Brain"
-        title: "AI-Powered Learning"
-        description: "See how AI tutors provide instant feedback and personalized guidance 24/7"
-      - icon: "Rocket"
-        title: "Accelerated Progress"
-        description: "Learn how students are completing courses 3x faster with AI assistance"
-      - icon: "Code"
-        title: "Live Demo"
-        description: "Watch a live demonstration of our AI coding assistant in action"
-
+      - icon: Brain
+        title: AI-Powered Learning
+        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: Rocket
+        title: Accelerated Progress
+        description: Learn how students are completing courses 3x faster with AI assistance
+      - icon: Code
+        title: Live Demo
+        description: Watch a live demonstration of our AI coding assistant in action
   - type: stats
     version: "1.0"
-    title: "Join 50,000+ Learners"
+    title: Join 50,000+ Learners
     items:
-      - value: "50,000+"
-        label: "Students Worldwide"
-      - value: "4.8/5"
-        label: "Average Rating"
-      - value: "1,500+"
-        label: "Webinar Attendees"
-
+      - value: 50,000+
+        label: Students Worldwide
+      - value: 4.8/5
+        label: Average Rating
+      - value: 1,500+
+        label: Webinar Attendees
   - type: faq
     version: "1.0"
-    title: "Frequently Asked Questions"
+    title: Frequently Asked Questions
     items:
-      - question: "Is this webinar really free?"
-        answer: "Yes! This webinar is completely free. We want to show you how AI is changing education."
-      - question: "Do I need any coding experience?"
-        answer: "No prior experience needed. This webinar is designed for complete beginners."
-      - question: "Will there be a recording?"
-        answer: "Yes, all registered attendees will receive a recording after the live session."
-
+      - question: Is this webinar really free?
+        answer: Yes! This webinar is completely free. We want to show you how AI is changing education.
+      - question: Do I need any coding experience?
+        answer: No prior experience needed. This webinar is designed for complete beginners.
+      - question: Will there be a recording?
+        answer: Yes, all registered attendees will receive a recording after the live session.
   - type: cta_banner
     version: "1.0"
-    title: "Ready to Transform Your Learning?"
-    subtitle: "Reserve your free spot now. Limited seats available!"
+    title: Ready to Transform Your Learning?
+    subtitle: Reserve your free spot now. Limited seats available!
     buttons:
-      - text: "Register Now"
-        url: "/signup?event=webinar"
-        variant: "primary"
-      - text: "Ask a Question"
-        url: "/contact"
-        variant: "outline"
-
+      - text: Register Now
+        url: /signup?event=webinar
+        variant: primary
+      - text: Ask a Question
+        url: /contact
+        variant: outline
   - type: footer
     version: "1.0"
-    copyright_text: "2024 4Geeks. All rights reserved."
+    copyright_text: 2024 4Geeks. All rights reserved.
