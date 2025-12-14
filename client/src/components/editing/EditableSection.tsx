@@ -246,9 +246,11 @@ export function EditableSection({ children, section, index, sectionType, content
       <div 
         className={`
           absolute inset-0 z-40 pointer-events-none transition-all duration-150
-          ${isEditorOpen || swapPopoverOpen
+          ${isEditorOpen 
             ? "ring-2 ring-primary ring-offset-2" 
-            : "group-hover:ring-2 group-hover:ring-primary/50 group-hover:ring-offset-1"
+            : swapPopoverOpen
+              ? "border-l-2 border-r-2 border-b-2 border-primary"
+              : "group-hover:ring-2 group-hover:ring-primary/50 group-hover:ring-offset-1"
           }
         `}
       />
