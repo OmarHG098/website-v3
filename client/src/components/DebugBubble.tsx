@@ -1469,69 +1469,73 @@ export function DebugBubble() {
                   )}
                 </div>
                 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Variant A (Control)</label>
-                  <Select value={selectedVariantA} onValueChange={(value) => {
-                    const newVariant = variantsData.variants.find(v => v.filename === value);
-                    const currentB = variantsData.variants.find(v => v.filename === selectedVariantB);
-                    if (currentB && newVariant && currentB.locale !== newVariant.locale) {
-                      setSelectedVariantB("");
-                    }
-                    setSelectedVariantA(value);
-                  }}>
-                    <SelectTrigger data-testid="select-variant-a">
-                      <SelectValue placeholder="Select control variant..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {variantsData.variants.map((variant) => (
-                        <SelectItem 
-                          key={variant.filename} 
-                          value={variant.filename}
-                          disabled={variant.filename === selectedVariantB}
-                        >
-                          <div className="flex items-center gap-2">
-                            <LocaleFlag locale={variant.locale} />
-                            {variant.isPromoted && (
-                              <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
-                            )}
-                            <span>{variant.displayName}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Variant B (Treatment)</label>
-                  <Select value={selectedVariantB} onValueChange={setSelectedVariantB}>
-                    <SelectTrigger data-testid="select-variant-b">
-                      <SelectValue placeholder="Select treatment variant..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {(() => {
-                        const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
-                        const selectedLocale = selectedAVariant?.locale;
-                        return variantsData.variants
-                          .filter(variant => !selectedLocale || variant.locale === selectedLocale)
-                          .map((variant) => (
-                            <SelectItem 
-                              key={variant.filename} 
-                              value={variant.filename}
-                              disabled={variant.filename === selectedVariantA}
-                            >
-                              <div className="flex items-center gap-2">
-                                <LocaleFlag locale={variant.locale} />
-                                {variant.isPromoted && (
-                                  <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
-                                )}
-                                <span>{variant.displayName}</span>
-                              </div>
-                            </SelectItem>
-                          ));
-                      })()}
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Variant A (Control)</label>
+                    <Select value={selectedVariantA} onValueChange={(value) => {
+                      const newVariant = variantsData.variants.find(v => v.filename === value);
+                      const currentB = variantsData.variants.find(v => v.filename === selectedVariantB);
+                      if (currentB && newVariant && currentB.locale !== newVariant.locale) {
+                        setSelectedVariantB("");
+                      }
+                      setSelectedVariantA(value);
+                    }}>
+                      <SelectTrigger data-testid="select-variant-a">
+                        <SelectValue placeholder="Select control variant..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {variantsData.variants.map((variant) => (
+                          <SelectItem 
+                            key={variant.filename} 
+                            value={variant.filename}
+                            disabled={variant.filename === selectedVariantB}
+                          >
+                            <div className="flex items-center gap-2">
+                              <LocaleFlag locale={variant.locale} />
+                              {variant.isPromoted && (
+                                <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                              )}
+                              <span>{variant.displayName}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  {selectedVariantA && (
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Variant B (Treatment)</label>
+                      <Select value={selectedVariantB} onValueChange={setSelectedVariantB}>
+                        <SelectTrigger data-testid="select-variant-b">
+                          <SelectValue placeholder="Select treatment variant..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(() => {
+                            const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
+                            const selectedLocale = selectedAVariant?.locale;
+                            return variantsData.variants
+                              .filter(variant => !selectedLocale || variant.locale === selectedLocale)
+                              .map((variant) => (
+                                <SelectItem 
+                                  key={variant.filename} 
+                                  value={variant.filename}
+                                  disabled={variant.filename === selectedVariantA}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <LocaleFlag locale={variant.locale} />
+                                    {variant.isPromoted && (
+                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">base</span>
+                                    )}
+                                    <span>{variant.displayName}</span>
+                                  </div>
+                                </SelectItem>
+                              ));
+                          })()}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
                 </div>
                 
                 {selectedVariantA && selectedVariantB && experimentName && (
