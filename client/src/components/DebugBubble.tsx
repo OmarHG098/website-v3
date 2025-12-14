@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
@@ -7,7 +7,6 @@ import {
   IconMap,
   IconMapPin,
   IconPencil,
-  IconPencilOff,
   IconComponents,
   IconLanguage,
   IconRoute,
@@ -15,55 +14,19 @@ import {
   IconMoon,
   IconX,
   IconAlertTriangle,
-  IconLayoutColumns,
-  IconRocket,
-  IconBrain,
-  IconUsers,
-  IconCertificate,
-  IconQuestionMark,
-  IconArrowRight,
-  IconLayoutBottombar,
   IconArrowLeft,
   IconChevronRight,
   IconChevronDown,
   IconRefresh,
   IconCheck,
   IconSearch,
-  IconExternalLink,
-  IconMessage,
-  IconBuildingSkyscraper,
-  IconCreditCard,
-  IconFolderCode,
-  IconFolder,
-  IconBook,
-  IconSparkles,
-  IconChartBar,
-  IconTable,
   IconFlask,
   IconPlus,
   IconDatabase,
   IconPhoto,
   IconCopy,
-  IconWorld,
-  IconDeviceMobile,
-  IconDeviceDesktop,
-  IconFile,
+  IconFolder,
 } from "@tabler/icons-react";
-import { US, ES, PT, FR, DE, IT } from "country-flag-icons/react/3x2";
-
-const LocaleFlag = ({ locale, className = "w-4 h-3" }: { locale: string; className?: string }) => {
-  const flags: Record<string, React.ComponentType<{ className?: string }>> = {
-    en: US,
-    es: ES,
-    pt: PT,
-    fr: FR,
-    de: DE,
-    it: IT,
-  };
-  const FlagComponent = flags[locale.toLowerCase()];
-  if (!FlagComponent) return <span className="text-xs">{locale.toUpperCase()}</span>;
-  return <FlagComponent className={className} />;
-};
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -91,99 +54,27 @@ import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
-const componentsList = [
-  { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
-  { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
-  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
-  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight (stats) or detailed variants" },
-  { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
-  { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
-  { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
-  { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
-  { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
-  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
-  { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
-  { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
-  { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
-  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo carousel of hiring companies" },
-  { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
-  { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
-  { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
-  { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
-  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
-];
+import {
+  type MenuView,
+  type SitemapUrl,
+  type RedirectItem,
+  type ExperimentVariant,
+  type ExperimentConfig,
+  type ExperimentsResponse,
+  type ContentInfo,
+  type VariantInfo,
+  type VariantsResponse,
+  STORAGE_KEY,
+  deslugify,
+  detectContentInfo,
+  getContentFilePath,
+  getPersistedMenuView,
+  componentsList,
+  TagInput,
+  TargetingStep,
+  LocaleFlag,
+} from "./DebugBubble";
 
-type MenuView = "main" | "components" | "sitemap" | "experiments";
-
-const STORAGE_KEY = "debug-bubble-menu-view";
-
-interface SitemapUrl {
-  loc: string;
-  label: string;
-}
-
-interface RedirectItem {
-  from: string;
-  to: string;
-  type: string;
-}
-
-interface ExperimentVariant {
-  slug: string;
-  version: number;
-  allocation: number;
-}
-
-interface ExperimentConfig {
-  slug: string;
-  status: "planned" | "active" | "paused" | "winner" | "archived";
-  description?: string;
-  variants: ExperimentVariant[];
-  targeting?: Record<string, unknown>;
-  max_visitors?: number;
-  stats?: Record<string, number>;
-}
-
-interface ExperimentsResponse {
-  experiments: ExperimentConfig[];
-  hasExperimentsFile: boolean;
-  filePath: string;
-}
-
-interface ContentInfo {
-  type: "programs" | "pages" | "landings" | "locations" | null;
-  slug: string | null;
-  label: string;
-  locale: string | null;
-  variant: string | null;
-  version: number | null;
-}
-
-interface VariantInfo {
-  filename: string;
-  name: string;
-  variantSlug: string;
-  version: number | null;
-  locale: string;
-  displayName: string;
-  isPromoted: boolean;
-}
-
-interface VariantsResponse {
-  variants: VariantInfo[];
-  contentType: string;
-  slug: string;
-  folderPath: string;
-}
-
-// De-slugify a string (e.g., "hero-messaging-test" -> "Hero Messaging Test")
-function deslugify(slug: string): string {
-  return slug
-    .split("-")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
 
 // Detect content type and slug from URL path
 function detectContentInfo(pathname: string, searchParams?: URLSearchParams): ContentInfo {
