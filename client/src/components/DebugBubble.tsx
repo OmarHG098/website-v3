@@ -1491,7 +1491,7 @@ export function DebugBubble() {
                             disabled={variant.filename === selectedVariantB}
                           >
                             <div className="flex items-center gap-2 min-w-0">
-                              <LocaleFlag locale={variant.locale} />
+                              {contentInfo.type !== 'landing' && <LocaleFlag locale={variant.locale} />}
                               {variant.isPromoted && (
                                 <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
                               )}
@@ -1508,10 +1508,12 @@ export function DebugBubble() {
                       <label className="text-sm font-medium">Variant B (Treatment)</label>
                       <Select value={selectedVariantB} onValueChange={(value) => {
                         if (value === "__new_variant__") {
+                          const isLanding = contentInfo.type === 'landing';
                           const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
                           const locale = selectedAVariant?.locale || "en";
-                          const baseName = `new-variant.v1.${locale}.yml`;
-                          alert(`To create a new variant, copy an existing YAML file in:\n${variantsData.folderPath}\n\nNaming convention:\n• {variant-name}.v{version}.{locale}.yml\n• Example: ${baseName}`);
+                          const baseName = isLanding ? `new-variant.v1.yml` : `new-variant.v1.${locale}.yml`;
+                          const convention = isLanding ? `{variant-name}.v{version}.yml` : `{variant-name}.v{version}.{locale}.yml`;
+                          alert(`To create a new variant, copy an existing YAML file in:\n${variantsData.folderPath}\n\nNaming convention:\n• ${convention}\n• Example: ${baseName}`);
                           return;
                         }
                         setSelectedVariantB(value);
@@ -1523,8 +1525,9 @@ export function DebugBubble() {
                           {(() => {
                             const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
                             const selectedLocale = selectedAVariant?.locale;
+                            const isLanding = contentInfo.type === 'landing';
                             return variantsData.variants
-                              .filter(variant => !selectedLocale || variant.locale === selectedLocale)
+                              .filter(variant => isLanding || !selectedLocale || variant.locale === selectedLocale)
                               .map((variant) => (
                                 <SelectItem 
                                   key={variant.filename} 
@@ -1532,7 +1535,7 @@ export function DebugBubble() {
                                   disabled={variant.filename === selectedVariantA}
                                 >
                                   <div className="flex items-center gap-2 min-w-0">
-                                    <LocaleFlag locale={variant.locale} />
+                                    {!isLanding && <LocaleFlag locale={variant.locale} />}
                                     {variant.isPromoted && (
                                       <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
                                     )}
