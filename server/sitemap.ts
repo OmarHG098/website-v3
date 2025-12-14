@@ -113,7 +113,25 @@ function getAvailablePrograms(): AvailableProgram[] {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
       if (!fs.statSync(programPath).isDirectory()) continue;
 
-      const files = fs.readdirSync(programPath).filter(f => f.endsWith(".yml"));
+      // Load _common.yml for shared properties (slug, title, schema)
+      const commonPath = path.join(programPath, "_common.yml");
+      let commonData: { slug?: string; title?: string } = {};
+      if (fs.existsSync(commonPath)) {
+        try {
+          const commonContent = fs.readFileSync(commonPath, "utf-8");
+          commonData = yaml.load(commonContent) as { slug?: string; title?: string };
+        } catch (parseError) {
+          console.error(`Error parsing _common.yml for ${dir}:`, parseError);
+        }
+      }
+
+      // Only process locale files (en.yml, es.yml) - skip _common.yml, experiments.yml, and variant files
+      const files = fs.readdirSync(programPath).filter(f => 
+        f.endsWith(".yml") && 
+        !f.startsWith("_") && 
+        !f.includes(".v") && 
+        f !== "experiments.yml"
+      );
 
       for (const file of files) {
         const locale = file.replace(".yml", "");
@@ -127,10 +145,11 @@ function getAvailablePrograms(): AvailableProgram[] {
             meta?: ContentMeta;
           };
 
+          // Merge common data with locale data (locale takes precedence)
           programs.push({
-            slug: data.slug || dir,
+            slug: data.slug || commonData.slug || dir,
             locale,
-            title: data.title || dir,
+            title: data.title || commonData.title || dir,
             meta: data.meta || {},
           });
         } catch (parseError) {

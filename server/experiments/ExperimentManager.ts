@@ -132,12 +132,9 @@ export class ExperimentManager {
       return this.contentCache.get(cacheKey)!.content;
     }
 
-    const filePath = path.join(
-      CONTENT_DIR,
-      "programs",
-      programSlug,
-      `${variantSlug}.v${version}.${locale}.yml`
-    );
+    const programDir = path.join(CONTENT_DIR, "programs", programSlug);
+    const commonPath = path.join(programDir, "_common.yml");
+    const filePath = path.join(programDir, `${variantSlug}.v${version}.${locale}.yml`);
 
     if (!fs.existsSync(filePath)) {
       console.warn(`[Experiments] Variant file not found: ${filePath}`);
@@ -145,14 +142,26 @@ export class ExperimentManager {
     }
 
     try {
+      // Load _common.yml if it exists (contains slug, title, schema)
+      let commonData: Record<string, unknown> = {};
+      if (fs.existsSync(commonPath)) {
+        const commonContent = fs.readFileSync(commonPath, "utf-8");
+        commonData = yaml.load(commonContent) as Record<string, unknown>;
+      }
+
+      // Load variant content
       const content = fs.readFileSync(filePath, "utf-8");
-      const parsed = yaml.load(content) as CareerProgram;
+      const variantData = yaml.load(content) as Record<string, unknown>;
+
+      // Merge common data with variant data (variant takes precedence)
+      const merged = { ...commonData, ...variantData } as CareerProgram;
+
       this.contentCache.set(cacheKey, {
         slug: variantSlug,
         version,
-        content: parsed,
+        content: merged,
       });
-      return parsed;
+      return merged;
     } catch (error) {
       console.error(`[Experiments] Error loading variant content:`, error);
       return null;

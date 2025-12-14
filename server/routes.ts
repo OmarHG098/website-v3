@@ -37,16 +37,29 @@ const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages"
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   try {
-    const filePath = path.join(MARKETING_CONTENT_PATH, slug, `${locale}.yml`);
+    const programDir = path.join(MARKETING_CONTENT_PATH, slug);
+    const commonPath = path.join(programDir, "_common.yml");
+    const localePath = path.join(programDir, `${locale}.yml`);
 
-    if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(localePath)) {
       return null;
     }
 
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
+    // Load _common.yml if it exists (contains slug, title, schema)
+    let commonData: Record<string, unknown> = {};
+    if (fs.existsSync(commonPath)) {
+      const commonContent = fs.readFileSync(commonPath, "utf8");
+      commonData = yaml.load(commonContent) as Record<string, unknown>;
+    }
 
-    const result = careerProgramSchema.safeParse(data);
+    // Load locale-specific content
+    const localeContent = fs.readFileSync(localePath, "utf8");
+    const localeData = yaml.load(localeContent) as Record<string, unknown>;
+
+    // Merge common data with locale data (locale data takes precedence)
+    const mergedData = { ...commonData, ...localeData };
+
+    const result = careerProgramSchema.safeParse(mergedData);
     if (!result.success) {
       console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
       return null;
@@ -138,20 +151,20 @@ function listLandingPages(locale: string): Array<{ slug: string; title: string }
 function loadLocationPage(slug: string, locale: string): LocationPage | null {
   try {
     const locationDir = path.join(LOCATIONS_CONTENT_PATH, slug);
-    const campusPath = path.join(locationDir, "campus.yml");
+    const commonPath = path.join(locationDir, "_common.yml");
     const localePath = path.join(locationDir, `${locale}.yml`);
 
-    if (!fs.existsSync(campusPath) || !fs.existsSync(localePath)) {
+    if (!fs.existsSync(commonPath) || !fs.existsSync(localePath)) {
       return null;
     }
 
-    const campusContent = fs.readFileSync(campusPath, "utf8");
+    const commonContent = fs.readFileSync(commonPath, "utf8");
     const localeContent = fs.readFileSync(localePath, "utf8");
     
-    const campusData = yaml.load(campusContent) as Record<string, unknown>;
+    const commonData = yaml.load(commonContent) as Record<string, unknown>;
     const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    const mergedData = { ...campusData, ...localeData };
+    const mergedData = { ...commonData, ...localeData };
 
     const result = locationPageSchema.safeParse(mergedData);
     if (!result.success) {
