@@ -433,14 +433,27 @@ export function DebugBubble() {
   // Determine if wizard needs step 2 (new variant creation)
   const needsStep2 = isNewVariantSelected;
   
-  // Get the effective step count
-  const totalSteps = needsStep2 ? 3 : 2;
+  // Get next/prev step accounting for skipping step 2
+  const getNextStep = (current: number): 1 | 2 | 3 => {
+    if (current === 1) return needsStep2 ? 2 : 3;
+    if (current === 2) return 3;
+    return 3;
+  };
   
-  // Calculate effective step for display (skip step 2 if not needed)
+  const getPrevStep = (current: number): 1 | 2 | 3 => {
+    if (current === 3) return needsStep2 ? 2 : 1;
+    if (current === 2) return 1;
+    return 1;
+  };
+  
+  // Calculate effective step number for display (renumber when skipping step 2)
   const getDisplayStep = (step: number) => {
     if (!needsStep2 && step === 3) return 2;
     return step;
   };
+  
+  // Total visible steps
+  const totalVisibleSteps = needsStep2 ? 3 : 2;
 
   // Generate experiment slug from name
   const generateExperimentSlug = (name: string): string => {
@@ -1794,13 +1807,7 @@ export function DebugBubble() {
             {wizardStep > 1 && (
               <Button
                 variant="outline"
-                onClick={() => {
-                  if (wizardStep === 3 && !needsStep2) {
-                    setWizardStep(1);
-                  } else {
-                    setWizardStep((wizardStep - 1) as 1 | 2 | 3);
-                  }
-                }}
+                onClick={() => setWizardStep(getPrevStep(wizardStep))}
                 data-testid="button-wizard-back"
               >
                 <IconArrowLeft className="h-4 w-4 mr-2" />
@@ -1816,19 +1823,13 @@ export function DebugBubble() {
                 Cancel
               </Button>
             )}
-            {wizardStep < 3 && (
+            {wizardStep !== 3 && (
               <Button
                 disabled={
                   wizardStep === 1 && (!selectedVariantA || !selectedVariantB || !experimentName) ||
                   wizardStep === 2 && (!newVariantTitle || !newVariantSlug)
                 }
-                onClick={() => {
-                  if (wizardStep === 1 && !needsStep2) {
-                    setWizardStep(3);
-                  } else {
-                    setWizardStep((wizardStep + 1) as 1 | 2 | 3);
-                  }
-                }}
+                onClick={() => setWizardStep(getNextStep(wizardStep))}
                 data-testid="button-wizard-next"
               >
                 Next
