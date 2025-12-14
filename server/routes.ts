@@ -1,7 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
 import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
@@ -27,266 +26,141 @@ import {
   buildVisitorContext,
 } from "./experiments";
 import { loadImageRegistry } from "./image-registry";
-import { deepMerge } from "./utils/deepMerge";
+import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
-const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
-const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
-const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
-const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
-
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
-  try {
-    const programDir = path.join(MARKETING_CONTENT_PATH, slug);
-    const commonPath = path.join(programDir, "_common.yml");
-    const localePath = path.join(programDir, `${locale}.yml`);
-
-    if (!fs.existsSync(localePath)) {
-      return null;
-    }
-
-    // Load _common.yml if it exists (contains slug, title, schema)
-    let commonData: Record<string, unknown> = {};
-    if (fs.existsSync(commonPath)) {
-      const commonContent = fs.readFileSync(commonPath, "utf8");
-      commonData = yaml.load(commonContent) as Record<string, unknown>;
-    }
-
-    // Load locale-specific content
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    const localeData = yaml.load(localeContent) as Record<string, unknown>;
-
-    // Deep merge common data with locale data (locale data takes precedence)
-    const mergedData = deepMerge(commonData, localeData);
-
-    const result = careerProgramSchema.safeParse(mergedData);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading career program ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "programs",
+    slug,
+    schema: careerProgramSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listCareerPrograms(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("programs");
+  const programs: Array<{ slug: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const program = loadCareerProgram(slug, locale);
+    if (program) {
+      programs.push({ slug: program.slug, title: program.title });
     }
-
-    const programs: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const programPath = path.join(MARKETING_CONTENT_PATH, dir);
-      if (fs.statSync(programPath).isDirectory()) {
-        const program = loadCareerProgram(dir, locale);
-        if (program) {
-          programs.push({ slug: program.slug, title: program.title });
-        }
-      }
-    }
-
-    return programs;
-  } catch (error) {
-    console.error("Error listing career programs:", error);
-    return [];
   }
+  
+  return programs;
 }
 
-function loadLandingPage(slug: string, locale: string): LandingPage | null {
-  try {
-    const landingDir = path.join(LANDINGS_CONTENT_PATH, slug);
-    const commonPath = path.join(landingDir, "_common.yml");
-    const localePath = path.join(landingDir, `${locale}.yml`);
-
-    if (!fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    const localeData = yaml.load(localeContent) as Record<string, unknown>;
-
-    // Deep merge with _common.yml if it exists
-    let mergedData = localeData;
-    if (fs.existsSync(commonPath)) {
-      const commonContent = fs.readFileSync(commonPath, "utf8");
-      const commonData = yaml.load(commonContent) as Record<string, unknown>;
-      mergedData = deepMerge(commonData, localeData);
-    }
-
-    const result = landingPageSchema.safeParse(mergedData);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading landing page ${slug}/${locale}:`, error);
+function loadLandingPage(slug: string): LandingPage | null {
+  const result = loadContent({
+    contentType: "landings",
+    slug,
+    schema: landingPageSchema,
+    localeOrVariant: "promoted",
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
-function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
-      return [];
+function listLandingPages(): Array<{ slug: string; title: string; locale: string }> {
+  const slugs = listContentSlugs("landings");
+  const landings: Array<{ slug: string; title: string; locale: string }> = [];
+  
+  for (const slug of slugs) {
+    const landing = loadLandingPage(slug);
+    if (landing) {
+      const commonData = loadCommonData("landings", slug);
+      const locale = (commonData?.locale as string) || "en";
+      landings.push({ slug: landing.slug, title: landing.title, locale });
     }
-
-    const landings: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
-      if (fs.statSync(landingPath).isDirectory()) {
-        const landing = loadLandingPage(dir, locale);
-        if (landing) {
-          landings.push({ slug: landing.slug, title: landing.title });
-        }
-      }
-    }
-
-    return landings;
-  } catch (error) {
-    console.error("Error listing landing pages:", error);
-    return [];
   }
+  
+  return landings;
 }
 
 function loadLocationPage(slug: string, locale: string): LocationPage | null {
-  try {
-    const locationDir = path.join(LOCATIONS_CONTENT_PATH, slug);
-    const commonPath = path.join(locationDir, "_common.yml");
-    const localePath = path.join(locationDir, `${locale}.yml`);
-
-    if (!fs.existsSync(commonPath) || !fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const commonContent = fs.readFileSync(commonPath, "utf8");
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    
-    const commonData = yaml.load(commonContent) as Record<string, unknown>;
-    const localeData = yaml.load(localeContent) as Record<string, unknown>;
-
-    // Deep merge common data with locale data (locale data takes precedence)
-    const mergedData = deepMerge(commonData, localeData);
-
-    const result = locationPageSchema.safeParse(mergedData);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for location ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    // Automatically inject organization schema as parentOrganization for all locations
-    const locationData = result.data;
-    if (!locationData.schema) {
-      locationData.schema = { include: ["organization"] };
-    } else if (!locationData.schema.include) {
-      locationData.schema.include = ["organization"];
-    } else if (!locationData.schema.include.includes("organization")) {
-      locationData.schema.include = ["organization", ...locationData.schema.include];
-    }
-
-    return locationData;
-  } catch (error) {
-    console.error(`Error loading location page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "locations",
+    slug,
+    schema: locationPageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listLocationPages(locale: string): Array<{ slug: string; name: string; city: string; country: string; region: string }> {
-  try {
-    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("locations");
+  const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
+  
+  for (const slug of slugs) {
+    const location = loadLocationPage(slug, locale);
+    if (location && location.visibility === "listed") {
+      locations.push({
+        slug: location.slug,
+        name: location.name,
+        city: location.city,
+        country: location.country,
+        region: location.region,
+      });
     }
-
-    const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
-    const entries = fs.readdirSync(LOCATIONS_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const location = loadLocationPage(slug, locale);
-        if (location && location.visibility === "listed") {
-          locations.push({
-            slug: location.slug,
-            name: location.name,
-            city: location.city,
-            country: location.country,
-            region: location.region,
-          });
-        }
-      }
-    }
-
-    return locations;
-  } catch (error) {
-    console.error("Error listing location pages:", error);
-    return [];
   }
+  
+  return locations;
 }
 
 // Template Pages (marketing-content/pages/)
 function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
-  try {
-    const pageDir = path.join(PAGES_CONTENT_PATH, slug);
-    const localePath = path.join(pageDir, `${locale}.yml`);
-
-    if (!fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    const data = yaml.load(localeContent) as Record<string, unknown>;
-
-    const result = templatePageSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for template page ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading template page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "pages",
+    slug,
+    schema: templatePageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
-  try {
-    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("pages");
+  const pages: Array<{ slug: string; template: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const page = loadTemplatePage(slug, locale);
+    if (page) {
+      pages.push({
+        slug: page.slug,
+        template: page.template,
+        title: page.title,
+      });
     }
-
-    const pages: Array<{ slug: string; template: string; title: string }> = [];
-    const entries = fs.readdirSync(PAGES_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const page = loadTemplatePage(slug, locale);
-        if (page) {
-          pages.push({
-            slug: page.slug,
-            template: page.template,
-            title: page.title,
-          });
-        }
-      }
-    }
-
-    return pages;
-  } catch (error) {
-    console.error("Error listing template pages:", error);
-    return [];
   }
+  
+  return pages;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -420,24 +294,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Landing pages API
-  app.get("/api/landings", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
-    const landings = listLandingPages(locale);
+  app.get("/api/landings", (_req, res) => {
+    const landings = listLandingPages();
     res.json(landings);
   });
 
   app.get("/api/landings/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
 
-    const landing = loadLandingPage(slug, locale);
+    const landing = loadLandingPage(slug);
 
     if (!landing) {
       res.status(404).json({ error: "Landing page not found" });
       return;
     }
 
-    res.json(landing);
+    // Get locale from _common.yml
+    const commonData = loadCommonData("landings", slug);
+    const locale = (commonData?.locale as string) || "en";
+
+    res.json({ ...landing, locale });
   });
 
   // Locations API
