@@ -341,7 +341,7 @@ export function EditableSection({ children, section, index, sectionType, content
                 <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
               ) : (
                 <>
-                  {versions.length > 1 ? (
+                  {versions.length > 1 && (
                     <Select value={selectedVersion} onValueChange={setSelectedVersion}>
                       <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
                         <SelectValue placeholder="Select version" />
@@ -352,10 +352,6 @@ export function EditableSection({ children, section, index, sectionType, content
                         ))}
                       </SelectContent>
                     </Select>
-                  ) : (
-                    <div className="text-sm text-muted-foreground text-center py-1" data-testid={`text-version-${index}`}>
-                      Version: v{versions[0]}
-                    </div>
                   )}
                   {variants.length > 0 ? (
                     <>
