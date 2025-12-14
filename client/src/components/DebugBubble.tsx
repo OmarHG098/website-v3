@@ -156,6 +156,8 @@ interface ContentInfo {
   slug: string | null;
   label: string;
   locale: string | null;
+  variant: string | null;
+  version: number | null;
 }
 
 interface VariantInfo {
@@ -184,7 +186,14 @@ function deslugify(slug: string): string {
 }
 
 // Detect content type and slug from URL path
-function detectContentInfo(pathname: string): ContentInfo {
+function detectContentInfo(pathname: string, searchParams?: URLSearchParams): ContentInfo {
+  // Extract variant/version from URL params
+  const forceVariant = searchParams?.get("force_variant") || null;
+  const forceVersionStr = searchParams?.get("force_version");
+  const parsedVersion = forceVersionStr ? parseInt(forceVersionStr, 10) : null;
+  // Ensure version is a valid finite number, otherwise null
+  const forceVersion = parsedVersion !== null && Number.isFinite(parsedVersion) ? parsedVersion : null;
+
   // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
   const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
   if (experimentMatch) {
@@ -198,47 +207,67 @@ function detectContentInfo(pathname: string): ContentInfo {
       type: experimentMatch[1] as ContentInfo["type"], 
       slug: experimentMatch[2], 
       label: typeLabels[experimentMatch[1]] || "Content",
-      locale: null
+      locale: null,
+      variant: forceVariant,
+      version: forceVersion
     };
   }
 
   // Programs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
   const programEnMatch = pathname.match(/^\/en\/career-programs\/([^/]+)\/?$/);
   if (programEnMatch) {
-    return { type: "programs", slug: programEnMatch[1], label: "Program", locale: "en" };
+    return { type: "programs", slug: programEnMatch[1], label: "Program", locale: "en", variant: forceVariant, version: forceVersion };
   }
   const programEsMatch = pathname.match(/^\/es\/programas-de-carrera\/([^/]+)\/?$/);
   if (programEsMatch) {
-    return { type: "programs", slug: programEsMatch[1], label: "Program", locale: "es" };
+    return { type: "programs", slug: programEsMatch[1], label: "Program", locale: "es", variant: forceVariant, version: forceVersion };
   }
 
   // Landings: /landing/:slug (landings use "promoted" variant)
   const landingMatch = pathname.match(/^\/landing\/([^/]+)\/?$/);
   if (landingMatch) {
-    return { type: "landings", slug: landingMatch[1], label: "Landing", locale: "promoted" };
+    return { type: "landings", slug: landingMatch[1], label: "Landing", locale: "promoted", variant: forceVariant, version: forceVersion };
   }
 
   // Locations: /en/location/:slug or /es/ubicacion/:slug
   const locationEnMatch = pathname.match(/^\/en\/location\/([^/]+)\/?$/);
   if (locationEnMatch) {
-    return { type: "locations", slug: locationEnMatch[1], label: "Location", locale: "en" };
+    return { type: "locations", slug: locationEnMatch[1], label: "Location", locale: "en", variant: forceVariant, version: forceVersion };
   }
   const locationEsMatch = pathname.match(/^\/es\/ubicacion\/([^/]+)\/?$/);
   if (locationEsMatch) {
-    return { type: "locations", slug: locationEsMatch[1], label: "Location", locale: "es" };
+    return { type: "locations", slug: locationEsMatch[1], label: "Location", locale: "es", variant: forceVariant, version: forceVersion };
   }
 
   // Template pages: /en/:slug or /es/:slug (catch-all for pages)
   const pageEnMatch = pathname.match(/^\/en\/([^/]+)\/?$/);
   if (pageEnMatch && !["career-programs", "location"].includes(pageEnMatch[1])) {
-    return { type: "pages", slug: pageEnMatch[1], label: "Page", locale: "en" };
+    return { type: "pages", slug: pageEnMatch[1], label: "Page", locale: "en", variant: forceVariant, version: forceVersion };
   }
   const pageEsMatch = pathname.match(/^\/es\/([^/]+)\/?$/);
   if (pageEsMatch && !["programas-de-carrera", "ubicacion"].includes(pageEsMatch[1])) {
-    return { type: "pages", slug: pageEsMatch[1], label: "Page", locale: "es" };
+    return { type: "pages", slug: pageEsMatch[1], label: "Page", locale: "es", variant: forceVariant, version: forceVersion };
   }
 
-  return { type: null, slug: null, label: "", locale: null };
+  return { type: null, slug: null, label: "", locale: null, variant: null, version: null };
+}
+
+// Helper to get the file path string for display
+function getContentFilePath(info: ContentInfo): string {
+  if (!info.type || !info.slug) return "";
+  
+  // If variant and version are specified, show the variant file path
+  if (info.variant && info.version !== null && info.locale) {
+    return `${info.type}/${info.slug}/${info.variant}.v${info.version}.${info.locale}.yml`;
+  }
+  
+  // Default file path (only if locale exists)
+  if (info.locale) {
+    return `${info.type}/${info.slug}/${info.locale}.yml`;
+  }
+  
+  // Fallback for experiment views without locale
+  return `${info.type}/${info.slug}/`;
 }
 
 // Get persisted menu view from sessionStorage
@@ -574,7 +603,14 @@ export function DebugBubble() {
   const [isCreatingExperiment, setIsCreatingExperiment] = useState(false);
   
   // Detect current content info from URL
-  const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
+  const searchParams = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return new URLSearchParams(window.location.search);
+    }
+    return new URLSearchParams();
+  }, [pathname]);
+  
+  const contentInfo = useMemo(() => detectContentInfo(pathname, searchParams), [pathname, searchParams]);
 
   // Check if location is currently overridden via query string
   const currentLocationOverride = typeof window !== "undefined" 
@@ -937,7 +973,7 @@ export function DebugBubble() {
                     data-testid="indicator-edit-file"
                   >
                     <IconFile className="h-3 w-3" />
-                    <span>{contentInfo.type}/{contentInfo.locale}.yml</span>
+                    <span>{getContentFilePath(contentInfo)}</span>
                   </div>
                 )}
               </div>

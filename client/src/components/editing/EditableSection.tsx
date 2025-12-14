@@ -15,9 +15,11 @@ interface EditableSectionProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  variant?: string;
+  version?: number;
 }
 
-export function EditableSection({ children, section, index, sectionType, contentType, slug, locale }: EditableSectionProps) {
+export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version }: EditableSectionProps) {
   const editMode = useEditModeOptional();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
@@ -107,6 +109,8 @@ export function EditableSection({ children, section, index, sectionType, content
             contentType={contentType}
             slug={slug}
             locale={locale}
+            variant={variant}
+            version={version}
             onUpdate={handleUpdate}
             onClose={handleCloseEditor}
           />

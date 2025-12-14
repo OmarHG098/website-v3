@@ -48,6 +48,8 @@ interface ComponentPickerModalProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  variant?: string;
+  version?: number;
   onSectionAdded?: () => void;
 }
 
@@ -140,6 +142,8 @@ export default function ComponentPickerModal({
   contentType,
   slug,
   locale,
+  variant,
+  version,
   onSectionAdded,
 }: ComponentPickerModalProps) {
   const [step, setStep] = useState<"select" | "configure">("select");
@@ -242,6 +246,8 @@ export default function ComponentPickerModal({
           contentType,
           slug,
           locale,
+          variant,
+          version,
           operations: [{
             action: "add_item",
             path: "sections",
@@ -263,7 +269,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, insertIndex, onSectionAdded, onClose]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
