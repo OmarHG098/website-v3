@@ -47,6 +47,7 @@ import {
   IconWorld,
   IconDeviceMobile,
   IconDeviceDesktop,
+  IconFile,
 } from "@tabler/icons-react";
 import { US, ES, PT, FR, DE, IT } from "country-flag-icons/react/3x2";
 
@@ -154,6 +155,7 @@ interface ContentInfo {
   type: "programs" | "pages" | "landings" | "locations" | null;
   slug: string | null;
   label: string;
+  locale: string | null;
 }
 
 interface VariantInfo {
@@ -195,47 +197,48 @@ function detectContentInfo(pathname: string): ContentInfo {
     return { 
       type: experimentMatch[1] as ContentInfo["type"], 
       slug: experimentMatch[2], 
-      label: typeLabels[experimentMatch[1]] || "Content" 
+      label: typeLabels[experimentMatch[1]] || "Content",
+      locale: null
     };
   }
 
   // Programs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
   const programEnMatch = pathname.match(/^\/en\/career-programs\/([^/]+)\/?$/);
   if (programEnMatch) {
-    return { type: "programs", slug: programEnMatch[1], label: "Program" };
+    return { type: "programs", slug: programEnMatch[1], label: "Program", locale: "en" };
   }
   const programEsMatch = pathname.match(/^\/es\/programas-de-carrera\/([^/]+)\/?$/);
   if (programEsMatch) {
-    return { type: "programs", slug: programEsMatch[1], label: "Program" };
+    return { type: "programs", slug: programEsMatch[1], label: "Program", locale: "es" };
   }
 
-  // Landings: /landing/:slug
+  // Landings: /landing/:slug (landings use "promoted" variant)
   const landingMatch = pathname.match(/^\/landing\/([^/]+)\/?$/);
   if (landingMatch) {
-    return { type: "landings", slug: landingMatch[1], label: "Landing" };
+    return { type: "landings", slug: landingMatch[1], label: "Landing", locale: "promoted" };
   }
 
   // Locations: /en/location/:slug or /es/ubicacion/:slug
   const locationEnMatch = pathname.match(/^\/en\/location\/([^/]+)\/?$/);
   if (locationEnMatch) {
-    return { type: "locations", slug: locationEnMatch[1], label: "Location" };
+    return { type: "locations", slug: locationEnMatch[1], label: "Location", locale: "en" };
   }
   const locationEsMatch = pathname.match(/^\/es\/ubicacion\/([^/]+)\/?$/);
   if (locationEsMatch) {
-    return { type: "locations", slug: locationEsMatch[1], label: "Location" };
+    return { type: "locations", slug: locationEsMatch[1], label: "Location", locale: "es" };
   }
 
   // Template pages: /en/:slug or /es/:slug (catch-all for pages)
   const pageEnMatch = pathname.match(/^\/en\/([^/]+)\/?$/);
   if (pageEnMatch && !["career-programs", "location"].includes(pageEnMatch[1])) {
-    return { type: "pages", slug: pageEnMatch[1], label: "Page" };
+    return { type: "pages", slug: pageEnMatch[1], label: "Page", locale: "en" };
   }
   const pageEsMatch = pathname.match(/^\/es\/([^/]+)\/?$/);
   if (pageEsMatch && !["programas-de-carrera", "ubicacion"].includes(pageEsMatch[1])) {
-    return { type: "pages", slug: pageEsMatch[1], label: "Page" };
+    return { type: "pages", slug: pageEsMatch[1], label: "Page", locale: "es" };
   }
 
-  return { type: null, slug: null, label: "" };
+  return { type: null, slug: null, label: "", locale: null };
 }
 
 // Get persisted menu view from sessionStorage
@@ -915,17 +918,28 @@ export function DebugBubble() {
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
             {editMode?.isEditMode && (
-              <div 
-                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
-                style={{
-                  backgroundColor: '#fbbf24',
-                  color: '#000',
-                  boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
-                }}
-                data-testid="indicator-edit-mode"
-              >
-                <IconPencil className="h-3 w-3" />
-                <span>On</span>
+              <div className="absolute -top-1 left-full ml-1 flex flex-col gap-1">
+                <div 
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
+                  style={{
+                    backgroundColor: '#fbbf24',
+                    color: '#000',
+                    boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
+                  }}
+                  data-testid="indicator-edit-mode"
+                >
+                  <IconPencil className="h-3 w-3" />
+                  <span>On</span>
+                </div>
+                {contentInfo.type && contentInfo.slug && contentInfo.locale && (
+                  <div 
+                    className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-muted border whitespace-nowrap"
+                    data-testid="indicator-edit-file"
+                  >
+                    <IconFile className="h-3 w-3" />
+                    <span>{contentInfo.type}/{contentInfo.locale}.yml</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
