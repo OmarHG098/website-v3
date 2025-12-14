@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useRoute, useSearch } from "wouter";
+import { useRoute } from "wouter";
 import { useTranslation } from "react-i18next";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { CareerProgram } from "@shared/schema";
@@ -10,8 +10,6 @@ import Header from "@/components/Header";
 
 export default function CareerProgramDetail() {
   const { i18n } = useTranslation();
-  const searchString = useSearch();
-  const searchParams = new URLSearchParams(searchString);
   
   const [matchEn, paramsEn] = useRoute("/en/career-programs/:slug");
   const [matchEs, paramsEs] = useRoute("/es/programas-de-carrera/:slug");
@@ -19,16 +17,11 @@ export default function CareerProgramDetail() {
   const locale = matchEn ? "en" : matchEs ? "es" : i18n.language;
   const slug = matchEn ? paramsEn?.slug : matchEs ? paramsEs?.slug : undefined;
   const hasValidRoute = matchEn || matchEs;
-  
-  const forceVariant = searchParams.get("force_variant");
-  const forceVersion = searchParams.get("force_version");
 
   const { data: program, isLoading, error, refetch } = useQuery<CareerProgram>({
-    queryKey: ["/api/career-programs", slug, locale, forceVariant, forceVersion],
+    queryKey: ["/api/career-programs", slug, locale],
     queryFn: async () => {
-      let url = `/api/career-programs/${slug}?locale=${locale}`;
-      if (forceVariant) url += `&force_variant=${forceVariant}`;
-      if (forceVersion) url += `&force_version=${forceVersion}`;
+      const url = `/api/career-programs/${slug}?locale=${locale}`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Program not found");

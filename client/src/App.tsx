@@ -20,6 +20,7 @@ const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
 const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
+const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
 const TemplatePage = lazy(() => import("@/pages/page"));
 
 function LoadingFallback() {
@@ -70,6 +71,10 @@ function Router() {
         />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/media-gallery" component={MediaGallery} />
+        <Route
+          path="/private/preview/:contentType/:slug"
+          component={PrivatePreview}
+        />
         <Route
           path="/private/:contentType/:contentSlug/experiment/:experimentSlug"
           component={ExperimentEditor}

@@ -277,19 +277,18 @@ export function DebugBubble() {
     }
   }, [contentInfo.type, contentInfo.slug]);
 
-  // Handle variant switching from edit badge
+  // Handle variant switching from edit badge - navigates to private preview route
   const handleSwitchVariant = useCallback((variant: VariantInfo) => {
     setEditBadgeOpen(false);
-    const url = new URL(window.location.href);
+    if (!contentInfo.type || !contentInfo.slug) return;
+    
+    // Build preview URL with query params
+    let previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${contentInfo.locale || 'en'}`;
     if (variant.variantSlug && variant.version !== null) {
-      url.searchParams.set('force_variant', variant.variantSlug);
-      url.searchParams.set('force_version', String(variant.version));
-    } else {
-      url.searchParams.delete('force_variant');
-      url.searchParams.delete('force_version');
+      previewUrl += `&variant=${variant.variantSlug}&version=${variant.version}`;
     }
-    window.location.href = url.toString();
-  }, []);
+    navigate(previewUrl);
+  }, [contentInfo, navigate]);
 
   // Check if a variant is the currently active one
   const isCurrentVariant = useCallback((v: VariantInfo) => {
