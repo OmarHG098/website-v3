@@ -1,12 +1,10 @@
 # Common properties shared across all language variants
-# These properties are merged with locale-specific files (en.yml, es.yml, etc.)
-
-slug: "webinar-ai-learning"
-title: "Free Webinar: Learn to Code with AI"
+slug: "job-guarantee"
+template: "default"
+title: "Job Guarantee"
 
 meta:
   robots: "index, follow"
-  og_image: "/images/webinar-og.jpg"
   priority: 0.9
   change_frequency: "weekly"
 

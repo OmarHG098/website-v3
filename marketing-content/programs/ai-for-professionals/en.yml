@@ -4,10 +4,6 @@
 meta:
   page_title: "AI for Professionals | 4Geeks Academy"
   description: "Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
-  robots: "index, follow"
-  og_image: "/images/programs/ai-for-professionals-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/bootcamp/applied-ai"
     - "/programs/ai-for-professionals"

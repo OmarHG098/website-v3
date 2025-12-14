@@ -4,10 +4,6 @@
 meta:
   page_title: "Programa de Ciencia de Datos y Machine Learning | 4Geeks"
   description: "Aprende ciencia de datos y machine learning a tu propio ritmo con herramientas potenciadas por IA, mentoría ilimitada y una comunidad global. Domina Python, TensorFlow y modelado predictivo."
-  robots: "index, follow"
-  og_image: "/images/programs/data-science-ml-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/bootcamp/ciencia-de-datos"
     - "/programas/datascience-machine-learning"

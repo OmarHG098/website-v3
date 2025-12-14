@@ -1,22 +1,10 @@
 # Job Guarantee Landing Page - English
 
-slug: "job-guarantee"
-template: "default"
-title: "Job Guarantee"
-
 meta:
   page_title: "Job Guarantee | 4Geeks Academy"
   description: "Get into tech with our Job Guarantee. Get hired within 9 months of graduation, or we will refund your tuition."
-  robots: "index, follow"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/job-guarantee"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

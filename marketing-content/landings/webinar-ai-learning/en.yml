@@ -4,10 +4,6 @@
 meta:
   page_title: "Free Webinar: Learn to Code with AI | 4Geeks"
   description: "Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!"
-  robots: "index, follow"
-  og_image: "/images/webinar-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/webinar/ai-learning"
     - "/events/ai-coding-webinar"

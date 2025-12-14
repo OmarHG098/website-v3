@@ -2,6 +2,12 @@
 slug: full-stack
 title: Full Stack Development
 
+meta:
+  robots: index, follow
+  og_image: /images/programs/full-stack-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+
 schema:
   include:
     - organization

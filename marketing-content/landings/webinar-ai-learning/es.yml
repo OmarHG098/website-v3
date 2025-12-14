@@ -4,10 +4,6 @@
 meta:
   page_title: "Webinar Gratis: Aprende a Programar con IA | 4Geeks"
   description: "Únete a nuestro webinar gratuito y descubre cómo la IA está revolucionando la forma en que aprendemos a programar. ¡Reserva tu lugar ahora!"
-  robots: "index, follow"
-  og_image: "/images/webinar-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/webinar/aprender-ia"
     - "/eventos/webinar-programacion-ia"

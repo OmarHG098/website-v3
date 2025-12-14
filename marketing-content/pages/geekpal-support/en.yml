@@ -1,22 +1,10 @@
 # GeekPAL Support Landing Page - English
 
-slug: "geekpal-support"
-template: "default"
-title: "GeekPAL Support"
-
 meta:
   page_title: "GeekPAL Support | 4Geeks Academy"
   description: "Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community."
-  robots: "index, follow"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/geekpal-support"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

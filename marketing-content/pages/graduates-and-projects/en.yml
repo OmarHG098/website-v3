@@ -1,22 +1,10 @@
 # Graduates and Projects Landing Page - English
 
-slug: "graduates-and-projects"
-template: "default"
-title: "Graduates and Projects"
-
 meta:
   page_title: "Graduate Projects & Alumni | 4Geeks Academy"
   description: "Explore final projects from 4Geeks Academy graduates: real apps and solutions that showcase the skills, creativity, and career-ready talent of our bootcamp alumni."
-  robots: "index, follow"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/graduates-and-projects"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

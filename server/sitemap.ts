@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
+import { deepMerge } from "./utils/deepMerge";
 
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
 const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
@@ -114,13 +115,13 @@ function getAvailablePrograms(): AvailableProgram[] {
       const programPath = path.join(MARKETING_CONTENT_PATH, dir);
       if (!fs.statSync(programPath).isDirectory()) continue;
 
-      // Load _common.yml for shared properties (slug, title, schema)
+      // Load _common.yml for shared properties (slug, title, schema, meta)
       const commonPath = path.join(programPath, "_common.yml");
-      let commonData: { slug?: string; title?: string } = {};
+      let commonData: Record<string, unknown> = {};
       if (fs.existsSync(commonPath)) {
         try {
           const commonContent = fs.readFileSync(commonPath, "utf-8");
-          commonData = yaml.load(commonContent) as { slug?: string; title?: string };
+          commonData = yaml.load(commonContent) as Record<string, unknown>;
         } catch (parseError) {
           console.error(`Error parsing _common.yml for ${dir}:`, parseError);
         }
@@ -140,19 +141,21 @@ function getAvailablePrograms(): AvailableProgram[] {
 
         try {
           const content = fs.readFileSync(filePath, "utf-8");
-          const data = yaml.load(content) as {
+          const localeData = yaml.load(content) as Record<string, unknown>;
+
+          // Deep merge common data with locale data (locale takes precedence)
+          const merged = deepMerge(commonData, localeData) as {
             slug?: string;
             title?: string;
             meta?: ContentMeta;
           };
 
-          // Merge common data with locale data (locale takes precedence)
           // Use meta.page_title for the localized title, with fallback chain
-          const meta = data.meta || {};
+          const meta = merged.meta || {};
           programs.push({
-            slug: data.slug || commonData.slug || dir,
+            slug: merged.slug || dir,
             locale,
-            title: meta.page_title || data.title || commonData.title || dir,
+            title: meta.page_title || merged.title || dir,
             meta,
           });
         } catch (parseError) {
@@ -179,45 +182,52 @@ function getAvailableLandings(): AvailableLanding[] {
 
     for (const dir of dirs) {
       const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
-      if (fs.statSync(landingPath).isDirectory()) {
-        const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml") && f !== "_common.yml");
-        const commonPath = path.join(landingPath, "_common.yml");
+      if (!fs.statSync(landingPath).isDirectory()) continue;
 
-        // Load common data if it exists
-        let commonData: { slug?: string; title?: string } = {};
-        if (fs.existsSync(commonPath)) {
-          try {
-            const commonContent = fs.readFileSync(commonPath, "utf-8");
-            commonData = yaml.load(commonContent) as { slug?: string; title?: string };
-          } catch (commonParseError) {
-            console.error(`Error parsing landing common ${commonPath}:`, commonParseError);
-          }
+      // Load _common.yml for shared properties
+      const commonPath = path.join(landingPath, "_common.yml");
+      let commonData: Record<string, unknown> = {};
+      if (fs.existsSync(commonPath)) {
+        try {
+          const commonContent = fs.readFileSync(commonPath, "utf-8");
+          commonData = yaml.load(commonContent) as Record<string, unknown>;
+        } catch (commonParseError) {
+          console.error(`Error parsing landing common ${commonPath}:`, commonParseError);
         }
+      }
 
-        for (const file of files) {
-          const locale = file.replace(".yml", "");
-          const filePath = path.join(landingPath, file);
+      // Only process locale files (en.yml, es.yml) - skip _common.yml and variant files
+      const files = fs.readdirSync(landingPath).filter(f => 
+        f.endsWith(".yml") && 
+        !f.startsWith("_") && 
+        !f.includes(".v")
+      );
 
-          try {
-            const content = fs.readFileSync(filePath, "utf-8");
-            const data = yaml.load(content) as { 
-              slug?: string; 
-              title?: string; 
-              meta?: ContentMeta;
-            };
+      for (const file of files) {
+        const locale = file.replace(".yml", "");
+        const filePath = path.join(landingPath, file);
 
-            // Merge common data with locale data (locale takes precedence)
-            // Use meta.page_title for the localized title, with fallback chain
-            const meta = data.meta || {};
-            landings.push({
-              slug: data.slug || commonData.slug || dir,
-              locale,
-              title: meta.page_title || data.title || commonData.title || dir,
-              meta,
-            });
-          } catch (parseError) {
-            console.error(`Error parsing landing ${filePath}:`, parseError);
-          }
+        try {
+          const content = fs.readFileSync(filePath, "utf-8");
+          const localeData = yaml.load(content) as Record<string, unknown>;
+
+          // Deep merge common data with locale data (locale takes precedence)
+          const merged = deepMerge(commonData, localeData) as {
+            slug?: string;
+            title?: string;
+            meta?: ContentMeta;
+          };
+
+          // Use meta.page_title for the localized title, with fallback chain
+          const meta = merged.meta || {};
+          landings.push({
+            slug: merged.slug || dir,
+            locale,
+            title: meta.page_title || merged.title || dir,
+            meta,
+          });
+        } catch (parseError) {
+          console.error(`Error parsing landing ${filePath}:`, parseError);
         }
       }
     }
@@ -289,8 +299,23 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
       const pagePath = path.join(PAGES_CONTENT_PATH, dir);
       if (!fs.statSync(pagePath).isDirectory()) continue;
 
+      // Load _common.yml for shared properties
+      const commonPath = path.join(pagePath, "_common.yml");
+      let commonData: Record<string, unknown> = {};
+      if (fs.existsSync(commonPath)) {
+        try {
+          const commonContent = fs.readFileSync(commonPath, "utf-8");
+          commonData = yaml.load(commonContent) as Record<string, unknown>;
+        } catch (commonParseError) {
+          console.error(`Error parsing template page common ${commonPath}:`, commonParseError);
+        }
+      }
+
+      // Only process locale files (en.yml, es.yml) - skip _common.yml and variant files
       const files = fs.readdirSync(pagePath).filter(f => 
-        f.endsWith(".yml") && !f.includes(".v") // Exclude variant files
+        f.endsWith(".yml") && 
+        !f.startsWith("_") && 
+        !f.includes(".v")
       );
 
       for (const file of files) {
@@ -302,7 +327,10 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
 
         try {
           const content = fs.readFileSync(filePath, "utf-8");
-          const data = yaml.load(content) as {
+          const localeData = yaml.load(content) as Record<string, unknown>;
+
+          // Deep merge common data with locale data (locale takes precedence)
+          const merged = deepMerge(commonData, localeData) as {
             slug?: string;
             template?: string;
             title?: string;
@@ -310,12 +338,12 @@ function getAvailableTemplatePages(): AvailableTemplatePage[] {
           };
 
           // Use meta.page_title for the localized title, with fallback chain
-          const meta = data.meta || {};
+          const meta = merged.meta || {};
           pages.push({
-            slug: data.slug || dir,
+            slug: merged.slug || dir,
             locale,
-            template: data.template || dir.replace(/-/g, "_"),
-            title: meta.page_title || data.title || dir,
+            template: merged.template || dir.replace(/-/g, "_"),
+            title: meta.page_title || merged.title || dir,
             meta,
           });
         } catch (parseError) {

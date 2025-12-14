@@ -4,10 +4,6 @@
 meta:
   page_title: "Data Science and Machine Learning Career Program | 4Geeks"
   description: "Learn data science and machine learning at your own pace with AI-powered tools, unlimited mentorship, and a global community. Master Python, TensorFlow, and predictive modeling."
-  robots: "index, follow"
-  og_image: "/images/programs/data-science-ml-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/bootcamp/data-science"
     - "/programs/datascience-machine-learning"
