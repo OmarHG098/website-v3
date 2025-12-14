@@ -105,14 +105,14 @@ export function EditableSection({ children, section, index, sectionType, content
       .catch(() => setPreviewSection(null));
   }, [swapPopoverOpen, selectedExample, versions, selectedVersionIndex, sectionType]);
 
-  const cycleVersion = useCallback((direction: number) => {
-    setSelectedVersionIndex(prev => {
-      const next = prev + direction;
-      if (next < 0) return versions.length - 1;
-      if (next >= versions.length) return 0;
-      return next;
-    });
-  }, [versions.length]);
+  const cycleExample = useCallback((direction: number) => {
+    if (examples.length === 0) return;
+    const currentIdx = examples.findIndex(ex => ex.filename === selectedExample);
+    let nextIdx = currentIdx + direction;
+    if (nextIdx < 0) nextIdx = examples.length - 1;
+    if (nextIdx >= examples.length) nextIdx = 0;
+    setSelectedExample(examples[nextIdx].filename);
+  }, [examples, selectedExample]);
 
   const handleConfirmSwap = useCallback(async () => {
     if (!previewSection || !contentType || !slug) return;
@@ -147,11 +147,6 @@ export function EditableSection({ children, section, index, sectionType, content
     }
   }, [previewSection, contentType, slug, locale, variant, version, index, toast]);
   
-  // If not in edit mode context or edit mode is not active, render children directly
-  if (!editMode || !editMode.isEditMode) {
-    return <>{children}</>;
-  }
-  
   const handleOpenEditor = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setIsEditorOpen(true);
@@ -164,6 +159,11 @@ export function EditableSection({ children, section, index, sectionType, content
   const handleUpdate = useCallback((updatedSection: Section) => {
     setCurrentSection(updatedSection);
   }, []);
+  
+  // If not in edit mode context or edit mode is not active, render children directly
+  if (!editMode || !editMode.isEditMode) {
+    return <>{children}</>;
+  }
   
   return (
     <div 
@@ -251,26 +251,33 @@ export function EditableSection({ children, section, index, sectionType, content
                 <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No variants available for this component.</p>
               ) : (
                 <>
-                  <div className="flex items-center justify-between">
-                    <Button size="icon" variant="ghost" onClick={() => cycleVersion(-1)} disabled={versions.length <= 1} data-testid={`button-version-prev-${index}`}>
-                      <IconChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <span className="text-sm font-medium" data-testid={`text-version-${index}`}>{versions[selectedVersionIndex] || 'v1'}</span>
-                    <Button size="icon" variant="ghost" onClick={() => cycleVersion(1)} disabled={versions.length <= 1} data-testid={`button-version-next-${index}`}>
-                      <IconChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  {examples.length > 0 && (
-                    <Select value={selectedExample} onValueChange={setSelectedExample}>
-                      <SelectTrigger data-testid={`select-example-${index}`}>
-                        <SelectValue placeholder="Select example" />
+                  {versions.length > 1 && (
+                    <Select value={versions[selectedVersionIndex] || ''} onValueChange={(val) => setSelectedVersionIndex(versions.indexOf(val))}>
+                      <SelectTrigger data-testid={`select-version-${index}`}>
+                        <SelectValue placeholder="Select version" />
                       </SelectTrigger>
                       <SelectContent>
-                        {examples.map(ex => (
-                          <SelectItem key={ex.filename} value={ex.filename} data-testid={`option-example-${ex.filename}-${index}`}>{ex.name}</SelectItem>
+                        {versions.map(ver => (
+                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>{ver}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
+                  )}
+                  {versions.length === 1 && (
+                    <div className="text-sm text-muted-foreground text-center" data-testid={`text-version-${index}`}>Version: {versions[0]}</div>
+                  )}
+                  {examples.length > 0 && (
+                    <div className="flex items-center justify-between gap-2">
+                      <Button size="icon" variant="ghost" onClick={() => cycleExample(-1)} disabled={examples.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                        <IconChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
+                        {examples.find(ex => ex.filename === selectedExample)?.name || 'Select variant'}
+                      </span>
+                      <Button size="icon" variant="ghost" onClick={() => cycleExample(1)} disabled={examples.length <= 1} data-testid={`button-variant-next-${index}`}>
+                        <IconChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
                   )}
                   <Button className="w-full" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
                     {isConfirming ? (
