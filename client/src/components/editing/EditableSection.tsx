@@ -43,7 +43,7 @@ export function EditableSection({ children, section, index, sectionType, content
   const [selectedVersion, setSelectedVersion] = useState<string>("");
   const [variants, setVariants] = useState<string[]>([]); // Unique variant slugs from examples
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, content: Section}[]>([]);
+  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string}[]>([]);
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -99,41 +99,21 @@ export function EditableSection({ children, section, index, sectionType, content
       headers: token ? { 'X-Debug-Token': token } : {}
     })
       .then(res => res.json())
-      .then(async (data) => {
+      .then((data) => {
         // Bail if a newer version request has started
         if (activeVersionRef.current !== requestedVersion) return;
         
-        const exs: {name: string, filename: string}[] = data.examples || [];
+        // API returns examples with variant property directly
+        const exs: {name: string, filename?: string, variant?: string, yaml?: string}[] = data.examples || [];
         
-        // Fetch each example to extract its variant
-        const examplesData: {filename: string, variant: string, content: Section}[] = [];
+        // Map examples to our format - variant is directly on the example object
+        const examplesData = exs.map(ex => ({
+          filename: ex.filename || ex.name?.toLowerCase().replace(/\s+/g, '-') + '.yml',
+          variant: ex.variant || "default",
+          name: ex.name || ""
+        }));
         
-        for (const ex of exs) {
-          // Check before each fetch if still active
-          if (activeVersionRef.current !== requestedVersion) return;
-          if (!ex.filename) continue;
-          try {
-            const res = await fetch(`/api/component-registry/${sectionType}/${requestedVersion}/examples/${ex.filename}`, {
-              headers: token ? { 'X-Debug-Token': token } : {}
-            });
-            const exContent = await res.json();
-            if (exContent.content) {
-              const variantSlug = exContent.content.variant || "default";
-              examplesData.push({
-                filename: ex.filename,
-                variant: variantSlug,
-                content: { type: sectionType, ...exContent.content } as Section
-              });
-            }
-          } catch {
-            // Skip failed examples
-          }
-        }
-        
-        // Final check before updating state
-        if (activeVersionRef.current !== requestedVersion) return;
-        
-        setExamplesWithVariants(examplesData);
+        setExamplesWithVariants(examplesData as any);
         
         // Extract unique variants
         const uniqueVariants = Array.from(new Set(examplesData.map(e => e.variant)));
@@ -157,21 +137,35 @@ export function EditableSection({ children, section, index, sectionType, content
       });
   }, [swapPopoverOpen, sectionType, selectedVersion, section]);
 
-  // Update preview when variant changes
+  // Update preview when variant changes - fetch example content
   useEffect(() => {
-    if (examplesWithVariants.length === 0 || variants.length === 0) {
+    if (!swapPopoverOpen || !sectionType || !selectedVersion || examplesWithVariants.length === 0 || variants.length === 0) {
       setPreviewSection(null);
       return;
     }
     const variantSlug = variants[selectedVariantIndex];
     // Find first example with this variant
     const example = examplesWithVariants.find(e => e.variant === variantSlug);
-    if (example) {
-      setPreviewSection(example.content);
-    } else {
+    if (!example) {
       setPreviewSection(null);
+      return;
     }
-  }, [examplesWithVariants, variants, selectedVariantIndex]);
+    
+    // Fetch the example content
+    const token = getDebugToken();
+    fetch(`/api/component-registry/${sectionType}/${selectedVersion}/examples/${example.filename}`, {
+      headers: token ? { 'X-Debug-Token': token } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          setPreviewSection({ type: sectionType, ...data.content } as Section);
+        } else {
+          setPreviewSection(null);
+        }
+      })
+      .catch(() => setPreviewSection(null));
+  }, [swapPopoverOpen, sectionType, selectedVersion, examplesWithVariants, variants, selectedVariantIndex]);
 
   // Cycle through variants
   const cycleVariant = useCallback((direction: number) => {
