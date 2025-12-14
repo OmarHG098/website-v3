@@ -44,7 +44,7 @@ export function AddSectionButton({
         className="relative py-4 group"
         data-testid={`add-section-zone-${insertIndex}`}
       >
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center mt-[-15px] mb-[-15px]">
           <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
           <button
             onClick={handleOpenModal}
@@ -57,7 +57,6 @@ export function AddSectionButton({
           <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
         </div>
       </div>
-      
       {isModalOpen && (
         <ComponentPickerModal
           isOpen={isModalOpen}
