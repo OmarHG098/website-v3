@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 1401 Elm St
+        addressLocality: Dallas
+        addressRegion: TX
+        postalCode: "75202"
+        addressCountry: US

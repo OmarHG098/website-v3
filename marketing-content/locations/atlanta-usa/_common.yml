@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 191 Peachtree St NE
+        addressLocality: Atlanta
+        addressRegion: GA
+        postalCode: "30303"
+        addressCountry: US

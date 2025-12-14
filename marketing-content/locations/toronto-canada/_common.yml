@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 100 King St W
+        addressLocality: Toronto
+        addressRegion: "ON"
+        postalCode: M5X 1A9
+        addressCountry: CA

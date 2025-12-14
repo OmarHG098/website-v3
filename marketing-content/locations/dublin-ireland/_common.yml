@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 1 Grand Canal Square
+        addressLocality: Dublin
+        postalCode: Dublin 2
+        addressCountry: IE

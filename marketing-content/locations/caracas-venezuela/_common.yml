@@ -21,3 +21,15 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Francisco de Miranda
+        addressLocality: Caracas
+        addressCountry: VE

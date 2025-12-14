@@ -9,17 +9,6 @@ meta:
     - /caracas
     - /campus/caracas
     - /ve/caracas
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Av. Francisco de Miranda
-        addressLocality: Caracas
-        addressCountry: VE
 sections:
   - type: hero
     variant: singleColumn

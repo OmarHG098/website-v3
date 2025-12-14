@@ -9,19 +9,6 @@ meta:
     - /miami
     - /campus/miami
     - /en/miami
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 1395 Brickell Ave
-        addressLocality: Miami
-        addressRegion: FL
-        postalCode: "33131"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

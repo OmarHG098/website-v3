@@ -9,19 +9,6 @@ meta:
     - /houston
     - /campus/houston
     - /en/houston
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 1000 Main St
-        addressLocality: Houston
-        addressRegion: TX
-        postalCode: "77002"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

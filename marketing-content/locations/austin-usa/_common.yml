@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 701 Brazos St
+        addressLocality: Austin
+        addressRegion: TX
+        postalCode: "78701"
+        addressCountry: US

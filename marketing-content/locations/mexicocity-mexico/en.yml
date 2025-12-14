@@ -11,18 +11,6 @@ meta:
     - /cdmx
     - /campus/mexico-city
     - /mx/mexico-city
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Paseo de la Reforma 222
-        addressLocality: Ciudad de México
-        postalCode: "06600"
-        addressCountry: MX
 sections:
   - type: hero
     variant: singleColumn

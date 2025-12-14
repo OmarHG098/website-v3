@@ -10,17 +10,6 @@ meta:
     - /lapaz
     - /campus/la-paz
     - /bo/la-paz
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Av. 16 de Julio
-        addressLocality: La Paz
-        addressCountry: BO
 sections:
   - type: hero
     variant: singleColumn

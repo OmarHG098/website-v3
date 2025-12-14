@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle Larios 12
+        addressLocality: Málaga
+        postalCode: "29005"
+        addressCountry: ES

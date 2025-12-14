@@ -9,19 +9,6 @@ meta:
     - /dallas
     - /campus/dallas
     - /en/dallas
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 1401 Elm St
-        addressLocality: Dallas
-        addressRegion: TX
-        postalCode: "75202"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

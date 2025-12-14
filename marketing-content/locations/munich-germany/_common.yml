@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Marienplatz 1
+        addressLocality: München
+        postalCode: "80331"
+        addressCountry: DE

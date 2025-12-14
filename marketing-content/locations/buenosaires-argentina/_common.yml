@@ -21,3 +21,15 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Corrientes 1234
+        addressLocality: Buenos Aires
+        addressCountry: AR

@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle Colón 48
+        addressLocality: Valencia
+        postalCode: "46004"
+        addressCountry: ES

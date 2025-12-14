@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Carrer de Balmes 200
+        addressLocality: Barcelona
+        addressRegion: Catalonia
+        postalCode: "08006"
+        addressCountry: ES

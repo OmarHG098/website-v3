@@ -21,3 +21,15 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Avenida Central
+        addressLocality: San José
+        addressCountry: CR

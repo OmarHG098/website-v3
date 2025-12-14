@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Apoquindo 3000
+        addressLocality: Santiago
+        addressRegion: Región Metropolitana
+        addressCountry: CL

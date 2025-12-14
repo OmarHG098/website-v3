@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle de Alcalá 54
+        addressLocality: Madrid
+        postalCode: "28014"
+        addressCountry: ES

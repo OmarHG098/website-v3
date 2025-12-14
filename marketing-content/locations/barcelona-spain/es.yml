@@ -9,19 +9,6 @@ meta:
     - /barcelona
     - /campus/barcelona
     - /es/barcelona
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Carrer de Balmes 200
-        addressLocality: Barcelona
-        addressRegion: Cataluña
-        postalCode: "08006"
-        addressCountry: ES
 sections:
   - type: hero
     variant: singleColumn

@@ -9,18 +9,6 @@ meta:
     - /valencia
     - /campus/valencia
     - /es/valencia
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Calle Colón 48
-        addressLocality: Valencia
-        postalCode: "46004"
-        addressCountry: ES
 sections:
   - type: hero
     variant: singleColumn

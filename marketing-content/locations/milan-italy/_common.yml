@@ -21,3 +21,16 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Via Montenapoleone 8
+        addressLocality: Milano
+        postalCode: "20121"
+        addressCountry: IT

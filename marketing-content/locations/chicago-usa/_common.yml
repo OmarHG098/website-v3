@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 233 S Wacker Dr
+        addressLocality: Chicago
+        addressRegion: IL
+        postalCode: "60606"
+        addressCountry: US

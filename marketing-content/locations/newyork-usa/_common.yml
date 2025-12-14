@@ -21,3 +21,17 @@ catalog:
       languages:
         - "en"
         - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 350 5th Ave
+        addressLocality: New York
+        addressRegion: NY
+        postalCode: "10118"
+        addressCountry: US
