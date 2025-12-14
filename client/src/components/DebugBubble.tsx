@@ -2069,18 +2069,18 @@ export function DebugBubble() {
                           experimentName,
                           experimentSlug: generateExperimentSlug(experimentName),
                           variantA: {
+                            filename: selectedVariantA,
                             slug: variantA?.variantSlug || 'control',
                             version: variantA?.version || 1,
                           },
                           variantB: variantBData ? {
+                            filename: selectedVariantB,
                             slug: variantBData.variantSlug,
                             version: variantBData.version || 1,
                           } : null,
                           newVariant: isNewVariantSelected ? {
                             title: newVariantTitle,
                             slug: newVariantSlug,
-                            baseVariant: variantA?.variantSlug || 'control',
-                            baseVersion: variantA?.version || 1,
                           } : null,
                           allocationA,
                           maxVisitors,
