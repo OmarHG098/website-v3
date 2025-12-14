@@ -1490,42 +1490,42 @@ export function DebugBubble() {
       </Dialog>
       <Dialog open={createExperimentOpen} onOpenChange={setCreateExperimentOpen}>
         <DialogContent className="sm:max-w-lg">
-          <DialogHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
-            <div className="space-y-1.5">
+          <DialogHeader className="space-y-0">
+            <div className="flex items-center gap-3">
               <DialogTitle>Create New Experiment</DialogTitle>
-              <DialogDescription>
-                {wizardStep === 1 && "Configure variants and traffic distribution"}
-                {wizardStep === 2 && "Create a new variant file"}
-                {wizardStep === 3 && "Set targeting rules (optional)"}
-              </DialogDescription>
-            </div>
-            {/* Step indicator */}
-            <div className="flex items-center gap-1.5 shrink-0">
-              {[1, 2, 3].map((step) => {
-                const isActive = wizardStep === step;
-                const isCompleted = wizardStep > step;
-                const isHidden = step === 2 && !needsStep2;
-                if (isHidden) return null;
-                return (
-                  <div key={step} className="flex items-center gap-1.5">
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
-                        isActive
-                          ? "bg-primary text-primary-foreground"
-                          : isCompleted
-                          ? "bg-primary/20 text-primary"
-                          : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {isCompleted ? <IconCheck className="h-3 w-3" /> : getDisplayStep(step)}
+              {/* Step indicator */}
+              <div className="flex items-center gap-1.5">
+                {[1, 2, 3].map((step) => {
+                  const isActive = wizardStep === step;
+                  const isCompleted = wizardStep > step;
+                  const isHidden = step === 2 && !needsStep2;
+                  if (isHidden) return null;
+                  return (
+                    <div key={step} className="flex items-center gap-1.5">
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : isCompleted
+                            ? "bg-primary/20 text-primary"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {isCompleted ? <IconCheck className="h-3 w-3" /> : getDisplayStep(step)}
+                      </div>
+                      {step < 3 && !(step === 2 && !needsStep2) && (
+                        <div className={`w-3 h-0.5 ${isCompleted ? "bg-primary/20" : "bg-muted"}`} />
+                      )}
                     </div>
-                    {step < 3 && !(step === 2 && !needsStep2) && (
-                      <div className={`w-4 h-0.5 ${isCompleted ? "bg-primary/20" : "bg-muted"}`} />
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
+            <DialogDescription>
+              {wizardStep === 1 && "Configure variants and traffic distribution"}
+              {wizardStep === 2 && "Create a new variant file"}
+              {wizardStep === 3 && "Set targeting rules (optional)"}
+            </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4 min-h-[280px]">
