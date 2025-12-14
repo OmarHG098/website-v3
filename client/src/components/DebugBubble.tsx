@@ -742,8 +742,9 @@ export function DebugBubble() {
     if (contentInfo.variant && contentInfo.version !== null) {
       return v.variantSlug === contentInfo.variant && v.version === contentInfo.version;
     }
-    // If no variant is forced, the base variant (no variantSlug) is current
-    return !v.variantSlug || v.variantSlug === '';
+    // If no variant is forced, the base/promoted variant is considered current
+    // Handle cases where API returns baseline with "promoted" or empty variantSlug
+    return !v.variantSlug || v.variantSlug === '' || v.isPromoted;
   }, [contentInfo.variant, contentInfo.version]);
 
   // Handle create experiment dialog open
@@ -996,7 +997,7 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {editMode?.isEditMode && contentInfo.type && contentInfo.slug && contentInfo.locale && (
+            {editMode?.isEditMode && contentInfo.type && contentInfo.slug && (
               <div className="absolute -top-1 left-full ml-1">
                 <Popover open={editBadgeOpen} onOpenChange={(open) => {
                   setEditBadgeOpen(open);
