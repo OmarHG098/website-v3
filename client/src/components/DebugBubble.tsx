@@ -1491,7 +1491,7 @@ export function DebugBubble() {
                             disabled={variant.filename === selectedVariantB}
                           >
                             <div className="flex items-center gap-2 min-w-0">
-                              {contentInfo.type !== 'landing' && <LocaleFlag locale={variant.locale} />}
+                              {contentInfo.type !== 'landings' && <LocaleFlag locale={variant.locale} />}
                               {variant.isPromoted && (
                                 <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded shrink-0">base</span>
                               )}
@@ -1508,7 +1508,7 @@ export function DebugBubble() {
                       <label className="text-sm font-medium">Variant B (Treatment)</label>
                       <Select value={selectedVariantB} onValueChange={(value) => {
                         if (value === "__new_variant__") {
-                          const isLanding = contentInfo.type === 'landing';
+                          const isLanding = contentInfo.type === 'landings';
                           const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
                           const locale = selectedAVariant?.locale || "en";
                           const baseName = isLanding ? `new-variant.v1.yml` : `new-variant.v1.${locale}.yml`;
@@ -1525,7 +1525,7 @@ export function DebugBubble() {
                           {(() => {
                             const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
                             const selectedLocale = selectedAVariant?.locale;
-                            const isLanding = contentInfo.type === 'landing';
+                            const isLanding = contentInfo.type === 'landings';
                             return variantsData.variants
                               .filter(variant => isLanding || !selectedLocale || variant.locale === selectedLocale)
                               .map((variant) => (
