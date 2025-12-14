@@ -354,14 +354,20 @@ export function EditableSection({ children, section, index, sectionType, content
                   ) : (
                     <div className="text-sm text-muted-foreground text-center py-2">No variants found</div>
                   )}
-                  <Button className="w-full mt-2" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
-                    {isConfirming ? (
-                      <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : (
-                      <IconCheck className="h-4 w-4 mr-2" />
-                    )}
-                    Confirm
-                  </Button>
+                  <div className="flex gap-2 mt-2">
+                    <Button variant="outline" className="flex-1" onClick={() => setSwapPopoverOpen(false)} data-testid={`button-cancel-swap-${index}`}>
+                      <IconX className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                    <Button className="flex-1" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
+                      {isConfirming ? (
+                        <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <IconCheck className="h-4 w-4 mr-2" />
+                      )}
+                      Confirm
+                    </Button>
+                  </div>
                 </>
               )}
             </div>
