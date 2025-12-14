@@ -1,5 +1,5 @@
 import { useState, useCallback, lazy, Suspense } from "react";
-import { IconPencil, IconGripVertical } from "@tabler/icons-react";
+import { IconPencil, IconGripVertical, IconTrash, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 
@@ -17,12 +17,19 @@ interface EditableSectionProps {
   locale?: string;
   variant?: string;
   version?: number;
+  totalSections?: number;
+  onMoveUp?: (index: number) => void;
+  onMoveDown?: (index: number) => void;
+  onDelete?: (index: number) => void;
 }
 
-export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version }: EditableSectionProps) {
+export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete }: EditableSectionProps) {
   const editMode = useEditModeOptional();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
+  
+  const canMoveUp = index > 0;
+  const canMoveDown = totalSections > 0 && index < totalSections - 1;
   
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
@@ -75,6 +82,38 @@ export function EditableSection({ children, section, index, sectionType, content
           <IconPencil className="h-4 w-4" />
           <span className="text-xs font-medium">{sectionType}</span>
         </button>
+        {onMoveUp && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onMoveUp(index); }}
+            disabled={!canMoveUp}
+            className={`p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate ${!canMoveUp ? 'opacity-40 cursor-not-allowed' : ''}`}
+            data-testid={`button-move-up-section-${index}`}
+            title="Move section up"
+          >
+            <IconArrowUp className="h-4 w-4" />
+          </button>
+        )}
+        {onMoveDown && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onMoveDown(index); }}
+            disabled={!canMoveDown}
+            className={`p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate ${!canMoveDown ? 'opacity-40 cursor-not-allowed' : ''}`}
+            data-testid={`button-move-down-section-${index}`}
+            title="Move section down"
+          >
+            <IconArrowDown className="h-4 w-4" />
+          </button>
+        )}
+        {onDelete && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(index); }}
+            className="p-2 bg-destructive text-destructive-foreground rounded-md shadow-lg hover-elevate"
+            data-testid={`button-delete-section-${index}`}
+            title="Delete section"
+          >
+            <IconTrash className="h-4 w-4" />
+          </button>
+        )}
         <button
           className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate cursor-grab"
           data-testid={`button-drag-section-${index}`}
