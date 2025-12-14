@@ -50,6 +50,7 @@ export function EditableSection({ children, section, index, sectionType, content
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [showVersionPicker, setShowVersionPicker] = useState(false);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -332,7 +333,17 @@ export function EditableSection({ children, section, index, sectionType, content
           </PopoverTrigger>
           <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
             <div className="space-y-3">
-              <h4 className="font-medium text-sm">Choose another variant or example for {sectionType} {selectedVersion || versions[0] || ""}</h4>
+              <h4 className="font-medium text-sm flex items-center gap-2 flex-wrap">
+                <span>Choose variant for {sectionType}</span>
+                <span 
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-muted ${versions.length > 1 ? 'cursor-pointer hover-elevate' : ''}`}
+                  onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
+                  data-testid={`badge-version-${index}`}
+                >
+                  v{selectedVersion || versions[0] || ""}
+                  {versions.length > 1 && <IconPencil className="h-3 w-3" />}
+                </span>
+              </h4>
               {isLoadingSwap ? (
                 <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
                   <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -341,8 +352,8 @@ export function EditableSection({ children, section, index, sectionType, content
                 <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
               ) : (
                 <>
-                  {versions.length > 1 && (
-                    <Select value={selectedVersion} onValueChange={setSelectedVersion}>
+                  {showVersionPicker && versions.length > 1 && (
+                    <Select value={selectedVersion} onValueChange={(val) => { setSelectedVersion(val); setShowVersionPicker(false); }}>
                       <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
                         <SelectValue placeholder="Select version" />
                       </SelectTrigger>
