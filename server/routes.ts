@@ -28,6 +28,7 @@ import {
 } from "./experiments";
 import { loadImageRegistry } from "./image-registry";
 import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
+import { getValidationService } from "../scripts/validation/service";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -1071,6 +1072,115 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     res.json(registry);
+  });
+
+  // ============================================
+  // Validation API Endpoints
+  // ============================================
+
+  // List available validators
+  app.get("/api/validation/validators", (_req, res) => {
+    const service = getValidationService();
+    const validators = service.getAvailableValidators();
+    res.json({
+      validators,
+      total: validators.length,
+    });
+  });
+
+  // Run all or specific validators
+  app.post("/api/validation/run", async (req, res) => {
+    try {
+      const { validators: validatorNames, includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runValidators({
+        validators: validatorNames,
+        includeArtifacts: includeArtifacts ?? false,
+      });
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Run a single validator
+  app.post("/api/validation/run/:name", async (req, res) => {
+    try {
+      const { name } = req.params;
+      const { includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runSingleValidator(name, includeArtifacts ?? false);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Get validation context info (for debugging)
+  app.get("/api/validation/context", async (_req, res) => {
+    try {
+      const service = getValidationService();
+      let context = service.getContext();
+      
+      if (!context) {
+        await service.buildContext();
+        context = service.getContext();
+      }
+      
+      if (!context) {
+        res.status(500).json({ error: "Failed to build context" });
+        return;
+      }
+      
+      // contentFiles is a flat array - count by type
+      const contentFiles = context.contentFiles;
+      const typeCounts = {
+        programs: contentFiles.filter(f => f.type === "program").length,
+        landings: contentFiles.filter(f => f.type === "landing").length,
+        locations: contentFiles.filter(f => f.type === "location").length,
+        pages: contentFiles.filter(f => f.type === "page").length,
+      };
+      
+      res.json({
+        contentFiles: typeCounts,
+        totalFiles: contentFiles.length,
+        validUrls: context.validUrls.size,
+        availableSchemas: context.availableSchemas.length,
+        redirects: context.redirectMap.size,
+      });
+    } catch (error) {
+      console.error("Context build error:", error);
+      res.status(500).json({ error: "Failed to get context" });
+    }
+  });
+
+  // Clear validation cache
+  app.post("/api/validation/clear-cache", (_req, res) => {
+    const service = getValidationService();
+    service.clearContext();
+    res.json({ success: true, message: "Validation cache cleared" });
   });
 
   const httpServer = createServer(app);
