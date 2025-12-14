@@ -1,0 +1,9 @@
+# Common properties shared across all variants
+slug: cybersecurity
+title: Cybersecurity
+
+schema:
+  include:
+    - organization
+    - website
+    - courses:cybersecurity

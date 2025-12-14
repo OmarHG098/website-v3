@@ -1,0 +1,9 @@
+# Common properties shared across all variants
+slug: full-stack
+title: Full Stack Development
+
+schema:
+  include:
+    - organization
+    - website
+    - courses:full-stack
