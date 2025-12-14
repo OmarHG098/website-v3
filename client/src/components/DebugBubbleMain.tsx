@@ -1187,7 +1187,7 @@ export function DebugBubble() {
                                   >
                                     <IconMap className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
                                     <div className="flex-1 min-w-0">
-                                      <div className="font-medium text-sm">{url.label}</div>
+                                      <div className="font-medium text-sm truncate">{url.label}</div>
                                       <div className="text-xs text-muted-foreground truncate">{path}</div>
                                     </div>
                                   </a>
