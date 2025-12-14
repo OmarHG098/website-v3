@@ -1680,15 +1680,6 @@ export function DebugBubble() {
                 {/* Step 2: New Variant Creation (only if new variant selected) */}
                 {wizardStep === 2 && needsStep2 && (
                   <div className="space-y-4">
-                    <div className="p-3 rounded-md bg-muted/50 border">
-                      <p className="text-sm text-muted-foreground">
-                        Create a new variant file in{' '}
-                        <code className="text-xs bg-background px-1 py-0.5 rounded">
-                          {variantsData.folderPath}/
-                        </code>
-                      </p>
-                    </div>
-                    
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Variant Title</label>
                       <input
@@ -1714,14 +1705,18 @@ export function DebugBubble() {
                         className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring font-mono"
                         data-testid="input-new-variant-slug"
                       />
-                      {newVariantSlug && (
-                        <p className="text-xs text-muted-foreground">
-                          File: <code className="bg-muted px-1 rounded">
-                            {newVariantSlug}.v1.{contentInfo.type === 'landings' ? '' : (variantsData.variants.find(v => v.filename === selectedVariantA)?.locale || 'en') + '.'}yml
+                    </div>
+                    
+                    {newVariantSlug && (
+                      <div className="p-3 rounded-md bg-muted/50 border">
+                        <p className="text-sm text-muted-foreground">
+                          This will create:{' '}
+                          <code className="text-xs bg-background px-1 py-0.5 rounded">
+                            {variantsData.folderPath}/{newVariantSlug}.v1.{contentInfo.type === 'landings' ? '' : (variantsData.variants.find(v => v.filename === selectedVariantA)?.locale || 'en') + '.'}yml
                           </code>
                         </p>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 )}
                 
