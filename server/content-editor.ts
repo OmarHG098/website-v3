@@ -38,6 +38,11 @@ function getContentPath(contentType: string, slug: string, locale: string, varia
     return path.join(folder, `${variant}.v${version}.${locale}.yml`);
   }
   
+  // Landings use promoted.yml instead of {locale}.yml
+  if (contentType === "landing") {
+    return path.join(folder, "promoted.yml");
+  }
+  
   return path.join(folder, `${locale}.yml`);
 }
 
