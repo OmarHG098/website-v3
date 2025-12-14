@@ -392,7 +392,7 @@ export function EditableSection({ children, section, index, sectionType, content
         {swapPopoverOpen ? (
           <>
             {/* Preview indicator banner */}
-            <div className="absolute top-0 left-0 right-0 z-30 bg-primary/90 text-primary-foreground text-xs px-3 py-1.5 flex items-center justify-between gap-2">
+            <div className="absolute top-0 left-0 right-0 z-30 bg-primary/90 text-primary-foreground text-xs px-3 py-1.5">
               <span className="font-medium flex items-center gap-2">
                 {isLoadingSwap ? (
                   <>
@@ -403,15 +403,6 @@ export function EditableSection({ children, section, index, sectionType, content
                   <>Preview: {selectedVariant || "default"}</>
                 )}
               </span>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="h-5 px-1.5 text-primary-foreground hover:bg-primary-foreground/20"
-                onClick={() => setSwapPopoverOpen(false)}
-              >
-                <IconX className="h-3 w-3 mr-1" />
-                Cancel
-              </Button>
             </div>
             {/* Render the preview section or original with loading overlay */}
             <div className="pt-8 relative">
