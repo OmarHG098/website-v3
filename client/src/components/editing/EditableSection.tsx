@@ -10,6 +10,14 @@ import { useToast } from "@/hooks/use-toast";
 import { renderSection } from "@/components/SectionRenderer";
 import yaml from "js-yaml";
 
+// Convert slug/camelCase to human readable format
+function deslugify(str: string): string {
+  return str
+    .replace(/[-_]/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
 );
@@ -377,7 +385,7 @@ export function EditableSection({ children, section, index, sectionType, content
                           <IconChevronLeft className="h-4 w-4" />
                         </Button>
                         <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
-                          {selectedVariant || "default"}
+                          {deslugify(selectedVariant || "default")}
                         </span>
                         <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
                           <IconChevronRight className="h-4 w-4" />
