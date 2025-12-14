@@ -1502,7 +1502,7 @@ export function DebugBubble() {
                 </DialogDescription>
               </div>
               {/* Step indicator */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mr-[30px]">
                 {[1, 2, 3].map((step) => {
                   const isActive = wizardStep === step;
                   const isCompleted = wizardStep > step;
