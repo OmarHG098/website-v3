@@ -1,7 +1,12 @@
-import { useState, useCallback, lazy, Suspense } from "react";
-import { IconPencil, IconGripVertical, IconTrash, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
+import { useState, useCallback, useEffect, lazy, Suspense } from "react";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2 } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { getDebugToken } from "@/hooks/useDebugAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
@@ -25,11 +30,122 @@ interface EditableSectionProps {
 
 export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete }: EditableSectionProps) {
   const editMode = useEditModeOptional();
+  const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
   
   const canMoveUp = index > 0;
   const canMoveDown = totalSections > 0 && index < totalSections - 1;
+  
+  // Swap popover state
+  const [swapPopoverOpen, setSwapPopoverOpen] = useState(false);
+  const [versions, setVersions] = useState<string[]>([]);
+  const [selectedVersionIndex, setSelectedVersionIndex] = useState(0);
+  const [examples, setExamples] = useState<{name: string, filename: string}[]>([]);
+  const [selectedExample, setSelectedExample] = useState("");
+  const [previewSection, setPreviewSection] = useState<Section | null>(null);
+  const [isLoadingSwap, setIsLoadingSwap] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  // Fetch versions when popover opens
+  useEffect(() => {
+    if (!swapPopoverOpen || !sectionType) return;
+    setIsLoadingSwap(true);
+    const token = getDebugToken();
+    fetch(`/api/component-registry/${sectionType}/versions`, {
+      headers: token ? { 'X-Debug-Token': token } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        setVersions(data.versions || []);
+        setSelectedVersionIndex(0);
+      })
+      .catch(() => setVersions([]))
+      .finally(() => setIsLoadingSwap(false));
+  }, [swapPopoverOpen, sectionType]);
+
+  // Fetch examples when version changes
+  useEffect(() => {
+    if (!swapPopoverOpen || versions.length === 0) return;
+    const ver = versions[selectedVersionIndex];
+    if (!ver) return;
+    setIsLoadingSwap(true);
+    const token = getDebugToken();
+    fetch(`/api/component-registry/${sectionType}/${ver}/examples`, {
+      headers: token ? { 'X-Debug-Token': token } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        const exs = data.examples || [];
+        setExamples(exs);
+        setSelectedExample(exs.length > 0 ? exs[0].filename : "");
+      })
+      .catch(() => setExamples([]))
+      .finally(() => setIsLoadingSwap(false));
+  }, [swapPopoverOpen, versions, selectedVersionIndex, sectionType]);
+
+  // Fetch example content for preview
+  useEffect(() => {
+    if (!swapPopoverOpen || !selectedExample || versions.length === 0) {
+      setPreviewSection(null);
+      return;
+    }
+    const ver = versions[selectedVersionIndex];
+    if (!ver) return;
+    const token = getDebugToken();
+    fetch(`/api/component-registry/${sectionType}/${ver}/examples/${selectedExample}`, {
+      headers: token ? { 'X-Debug-Token': token } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.content) {
+          setPreviewSection({ type: sectionType, ...data.content } as Section);
+        }
+      })
+      .catch(() => setPreviewSection(null));
+  }, [swapPopoverOpen, selectedExample, versions, selectedVersionIndex, sectionType]);
+
+  const cycleVersion = useCallback((direction: number) => {
+    setSelectedVersionIndex(prev => {
+      const next = prev + direction;
+      if (next < 0) return versions.length - 1;
+      if (next >= versions.length) return 0;
+      return next;
+    });
+  }, [versions.length]);
+
+  const handleConfirmSwap = useCallback(async () => {
+    if (!previewSection || !contentType || !slug) return;
+    setIsConfirming(true);
+    try {
+      const token = getDebugToken();
+      const res = await fetch('/api/content/edit', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(token ? { 'X-Debug-Token': token } : {})
+        },
+        body: JSON.stringify({
+          operation: 'update_section',
+          contentType,
+          slug,
+          locale: locale || 'en',
+          variant: variant || 'default',
+          version: version || 1,
+          sectionIndex: index,
+          sectionData: previewSection
+        })
+      });
+      if (!res.ok) throw new Error('Failed to swap section');
+      setCurrentSection(previewSection);
+      setSwapPopoverOpen(false);
+      toast({ title: "Section swapped", description: "The section variant has been updated. Refresh the page to see changes." });
+    } catch (err) {
+      toast({ title: "Error", description: "Failed to swap section variant.", variant: "destructive" });
+    } finally {
+      setIsConfirming(false);
+    }
+  }, [previewSection, contentType, slug, locale, variant, version, index, toast]);
   
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
@@ -114,12 +230,61 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconTrash className="h-4 w-4" />
           </button>
         )}
-        <button
-          className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate cursor-grab"
-          data-testid={`button-drag-section-${index}`}
-        >
-          <IconGripVertical className="h-4 w-4" />
-        </button>
+        <Popover open={swapPopoverOpen} onOpenChange={setSwapPopoverOpen}>
+          <PopoverTrigger asChild>
+            <button 
+              className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate" 
+              title="Swap variant"
+              data-testid={`button-swap-section-${index}`}
+            >
+              <IconArrowsExchange className="h-4 w-4" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
+            <div className="space-y-3">
+              <h4 className="font-medium text-sm">Swap component variant</h4>
+              {isLoadingSwap ? (
+                <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
+                  <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                </div>
+              ) : versions.length === 0 ? (
+                <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No variants available for this component.</p>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <Button size="icon" variant="ghost" onClick={() => cycleVersion(-1)} disabled={versions.length <= 1} data-testid={`button-version-prev-${index}`}>
+                      <IconChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-sm font-medium" data-testid={`text-version-${index}`}>{versions[selectedVersionIndex] || 'v1'}</span>
+                    <Button size="icon" variant="ghost" onClick={() => cycleVersion(1)} disabled={versions.length <= 1} data-testid={`button-version-next-${index}`}>
+                      <IconChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {examples.length > 0 && (
+                    <Select value={selectedExample} onValueChange={setSelectedExample}>
+                      <SelectTrigger data-testid={`select-example-${index}`}>
+                        <SelectValue placeholder="Select example" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {examples.map(ex => (
+                          <SelectItem key={ex.filename} value={ex.filename} data-testid={`option-example-${ex.filename}-${index}`}>{ex.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                  <Button className="w-full" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
+                    {isConfirming ? (
+                      <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <IconCheck className="h-4 w-4 mr-2" />
+                    )}
+                    Confirm
+                  </Button>
+                </>
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
       
       {/* Section label - bottom left */}
