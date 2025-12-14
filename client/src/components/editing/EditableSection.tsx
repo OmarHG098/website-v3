@@ -45,12 +45,20 @@ export function EditableSection({ children, section, index, sectionType, content
   const [selectedVersion, setSelectedVersion] = useState<string>("");
   const [variants, setVariants] = useState<string[]>([]); // Unique variant slugs from examples
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const [selectedExampleIndex, setSelectedExampleIndex] = useState(0); // Index within current variant's examples
   const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string, yaml: string}[]>([]);
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
+  
+  // Get examples for the currently selected variant
+  const examplesForCurrentVariant = useMemo(() => {
+    return examplesWithVariants.filter(e => e.variant === selectedVariant);
+  }, [examplesWithVariants, selectedVariant]);
+  
+  const currentExample = examplesForCurrentVariant[selectedExampleIndex] || null;
 
   // Get current section's version from the section object
   const currentSectionVersion = (section as { version?: string }).version || "";
@@ -140,23 +148,21 @@ export function EditableSection({ children, section, index, sectionType, content
       });
   }, [swapPopoverOpen, sectionType, selectedVersion, section]);
 
-  // Update preview when variant changes - parse YAML content locally
+  // Reset example index when variant changes
   useEffect(() => {
-    if (!swapPopoverOpen || !sectionType || examplesWithVariants.length === 0 || variants.length === 0) {
-      setPreviewSection(null);
-      return;
-    }
-    const variantSlug = variants[selectedVariantIndex];
-    // Find first example with this variant
-    const example = examplesWithVariants.find(e => e.variant === variantSlug);
-    if (!example || !example.yaml) {
+    setSelectedExampleIndex(0);
+  }, [selectedVariantIndex]);
+
+  // Update preview when variant or example changes - parse YAML content locally
+  useEffect(() => {
+    if (!swapPopoverOpen || !sectionType || !currentExample || !currentExample.yaml) {
       setPreviewSection(null);
       return;
     }
     
     // Parse YAML content locally
     try {
-      const parsed = yaml.load(example.yaml);
+      const parsed = yaml.load(currentExample.yaml);
       // Handle both array format (sections list) and object format (single section)
       let sectionData: Record<string, unknown>;
       if (Array.isArray(parsed) && parsed.length > 0) {
@@ -172,7 +178,7 @@ export function EditableSection({ children, section, index, sectionType, content
       console.error("Failed to parse example YAML:", err);
       setPreviewSection(null);
     }
-  }, [swapPopoverOpen, sectionType, examplesWithVariants, variants, selectedVariantIndex]);
+  }, [swapPopoverOpen, sectionType, currentExample]);
 
   // Cycle through variants
   const cycleVariant = useCallback((direction: number) => {
@@ -184,6 +190,17 @@ export function EditableSection({ children, section, index, sectionType, content
       return next;
     });
   }, [variants.length]);
+
+  // Cycle through examples within current variant
+  const cycleExample = useCallback((direction: number) => {
+    if (examplesForCurrentVariant.length <= 1) return;
+    setSelectedExampleIndex(prev => {
+      let next = prev + direction;
+      if (next < 0) next = examplesForCurrentVariant.length - 1;
+      if (next >= examplesForCurrentVariant.length) next = 0;
+      return next;
+    });
+  }, [examplesForCurrentVariant.length]);
 
   const handleConfirmSwap = useCallback(async () => {
     if (!previewSection || !contentType || !slug) return;
@@ -341,17 +358,33 @@ export function EditableSection({ children, section, index, sectionType, content
                     </div>
                   )}
                   {variants.length > 0 ? (
-                    <div className="flex items-center justify-between gap-2 mt-2">
-                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
-                        <IconChevronLeft className="h-4 w-4" />
-                      </Button>
-                      <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
-                        {selectedVariant || "default"}
-                      </span>
-                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
-                        <IconChevronRight className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    <>
+                      <div className="flex items-center justify-between gap-2 mt-2">
+                        <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                          <IconChevronLeft className="h-4 w-4" />
+                        </Button>
+                        <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
+                          {selectedVariant || "default"}
+                        </span>
+                        <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
+                          <IconChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      {/* Secondary selector for examples within variant */}
+                      {examplesForCurrentVariant.length > 1 && (
+                        <div className="flex items-center justify-between gap-2 mt-1 px-2">
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
+                            <IconChevronLeft className="h-3 w-3" />
+                          </Button>
+                          <span className="text-xs text-muted-foreground flex-1 text-center truncate" data-testid={`text-example-${index}`}>
+                            {currentExample?.name || `Example ${selectedExampleIndex + 1}`} ({selectedExampleIndex + 1}/{examplesForCurrentVariant.length})
+                          </span>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
+                            <IconChevronRight className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <div className="text-sm text-muted-foreground text-center py-2">No variants found</div>
                   )}
@@ -401,7 +434,7 @@ export function EditableSection({ children, section, index, sectionType, content
                     Loading preview...
                   </>
                 ) : (
-                  <>Preview: {selectedVariant || "default"}</>
+                  <>Preview: {selectedVariant || "default"}{examplesForCurrentVariant.length > 1 && currentExample?.name ? ` - ${currentExample.name}` : ""}</>
                 )}
               </span>
             </div>
