@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useMemo } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
@@ -602,6 +602,11 @@ export function DebugBubble() {
   // Create experiment API state
   const [isCreatingExperiment, setIsCreatingExperiment] = useState(false);
   
+  // Edit badge variant picker state
+  const [editBadgeOpen, setEditBadgeOpen] = useState(false);
+  const [editVariants, setEditVariants] = useState<VariantInfo[]>([]);
+  const [editVariantsLoading, setEditVariantsLoading] = useState(false);
+  
   // Detect current content info from URL
   const searchParams = useMemo(() => {
     if (typeof window !== "undefined") {
@@ -702,6 +707,44 @@ export function DebugBubble() {
       setShowComponentsSearch(false);
     }
   };
+
+  // Fetch variants for edit badge popover
+  const fetchEditVariants = useCallback(async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setEditVariantsLoading(true);
+    try {
+      const res = await fetch(`/api/content/${contentInfo.type}/${contentInfo.slug}/variants`);
+      const data = await res.json();
+      setEditVariants(data.variants || []);
+    } catch (e) {
+      console.error('Failed to fetch variants:', e);
+    } finally {
+      setEditVariantsLoading(false);
+    }
+  }, [contentInfo.type, contentInfo.slug]);
+
+  // Handle variant switching from edit badge
+  const handleSwitchVariant = useCallback((variant: VariantInfo) => {
+    setEditBadgeOpen(false);
+    const url = new URL(window.location.href);
+    if (variant.variantSlug && variant.version !== null) {
+      url.searchParams.set('force_variant', variant.variantSlug);
+      url.searchParams.set('force_version', String(variant.version));
+    } else {
+      url.searchParams.delete('force_variant');
+      url.searchParams.delete('force_version');
+    }
+    window.location.href = url.toString();
+  }, []);
+
+  // Check if a variant is the currently active one
+  const isCurrentVariant = useCallback((v: VariantInfo) => {
+    if (contentInfo.variant && contentInfo.version !== null) {
+      return v.variantSlug === contentInfo.variant && v.version === contentInfo.version;
+    }
+    // If no variant is forced, the base variant (no variantSlug) is current
+    return !v.variantSlug || v.variantSlug === '';
+  }, [contentInfo.variant, contentInfo.version]);
 
   // Handle create experiment dialog open
   const handleOpenCreateExperiment = () => {
@@ -953,29 +996,57 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {editMode?.isEditMode && (
-              <div className="absolute -top-1 left-full ml-1 flex flex-col gap-1">
-                <div 
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
-                  style={{
-                    backgroundColor: '#fbbf24',
-                    color: '#000',
-                    boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
-                  }}
-                  data-testid="indicator-edit-mode"
-                >
-                  <IconPencil className="h-3 w-3" />
-                  <span>On</span>
-                </div>
-                {contentInfo.type && contentInfo.slug && contentInfo.locale && (
-                  <div 
-                    className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-muted border whitespace-nowrap"
-                    data-testid="indicator-edit-file"
-                  >
-                    <IconFile className="h-3 w-3" />
-                    <span>{getContentFilePath(contentInfo)}</span>
-                  </div>
-                )}
+            {editMode?.isEditMode && contentInfo.type && contentInfo.slug && contentInfo.locale && (
+              <div className="absolute -top-1 left-full ml-1">
+                <Popover open={editBadgeOpen} onOpenChange={(open) => {
+                  setEditBadgeOpen(open);
+                  if (open) fetchEditVariants();
+                }}>
+                  <PopoverTrigger asChild>
+                    <button 
+                      className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse whitespace-nowrap cursor-pointer"
+                      style={{ 
+                        backgroundColor: '#fbbf24', 
+                        color: '#000', 
+                        boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)' 
+                      }}
+                      data-testid="indicator-edit-badge"
+                    >
+                      <IconPencil className="h-3 w-3" />
+                      <span>Edit: {getContentFilePath(contentInfo)}</span>
+                      <IconChevronDown className="h-3 w-3" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-72 p-2">
+                    <div className="text-xs font-medium text-muted-foreground mb-2">Switch variant</div>
+                    {editVariantsLoading ? (
+                      <div className="flex justify-center py-4">
+                        <IconRefresh className="h-4 w-4 animate-spin" />
+                      </div>
+                    ) : editVariants.length === 0 ? (
+                      <div className="text-xs text-muted-foreground py-2">No variants available</div>
+                    ) : (
+                      <div className="space-y-1 max-h-60 overflow-y-auto">
+                        {editVariants.map(v => (
+                          <button
+                            key={v.filename}
+                            onClick={() => handleSwitchVariant(v)}
+                            className={`w-full text-left px-2 py-1.5 rounded text-sm hover-elevate ${
+                              isCurrentVariant(v) ? 'bg-primary/10 text-primary' : ''
+                            }`}
+                            data-testid={`button-variant-${v.filename}`}
+                          >
+                            <div className="font-medium flex items-center gap-1">
+                              {v.displayName}
+                              {isCurrentVariant(v) && <IconCheck className="h-3 w-3" />}
+                            </div>
+                            <div className="text-xs text-muted-foreground">{v.filename}</div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </PopoverContent>
+                </Popover>
               </div>
             )}
           </div>
