@@ -1506,7 +1506,16 @@ export function DebugBubble() {
                   {selectedVariantA && (
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Variant B (Treatment)</label>
-                      <Select value={selectedVariantB} onValueChange={setSelectedVariantB}>
+                      <Select value={selectedVariantB} onValueChange={(value) => {
+                        if (value === "__new_variant__") {
+                          const selectedAVariant = variantsData.variants.find(v => v.filename === selectedVariantA);
+                          const locale = selectedAVariant?.locale || "en";
+                          const baseName = `new-variant.v1.${locale}.yml`;
+                          alert(`To create a new variant, copy an existing YAML file in:\n${variantsData.folderPath}\n\nNaming convention:\n• {variant-name}.v{version}.{locale}.yml\n• Example: ${baseName}`);
+                          return;
+                        }
+                        setSelectedVariantB(value);
+                      }}>
                         <SelectTrigger data-testid="select-variant-b">
                           <SelectValue placeholder="Select treatment variant..." />
                         </SelectTrigger>
@@ -1532,6 +1541,13 @@ export function DebugBubble() {
                                 </SelectItem>
                               ));
                           })()}
+                          <div className="border-t my-1" />
+                          <SelectItem value="__new_variant__">
+                            <div className="flex items-center gap-2 text-primary">
+                              <IconPlus className="h-4 w-4" />
+                              <span>New variant</span>
+                            </div>
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
