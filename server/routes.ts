@@ -100,16 +100,26 @@ function listCareerPrograms(locale: string): Array<{ slug: string; title: string
 
 function loadLandingPage(slug: string, locale: string): LandingPage | null {
   try {
-    const filePath = path.join(LANDINGS_CONTENT_PATH, slug, `${locale}.yml`);
+    const landingDir = path.join(LANDINGS_CONTENT_PATH, slug);
+    const commonPath = path.join(landingDir, "_common.yml");
+    const localePath = path.join(landingDir, `${locale}.yml`);
 
-    if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(localePath)) {
       return null;
     }
 
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
+    const localeContent = fs.readFileSync(localePath, "utf8");
+    const localeData = yaml.load(localeContent) as Record<string, unknown>;
 
-    const result = landingPageSchema.safeParse(data);
+    // Merge with _common.yml if it exists
+    let mergedData = localeData;
+    if (fs.existsSync(commonPath)) {
+      const commonContent = fs.readFileSync(commonPath, "utf8");
+      const commonData = yaml.load(commonContent) as Record<string, unknown>;
+      mergedData = { ...commonData, ...localeData };
+    }
+
+    const result = landingPageSchema.safeParse(mergedData);
     if (!result.success) {
       console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
       return null;

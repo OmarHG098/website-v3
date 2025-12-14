@@ -1,9 +1,6 @@
 # Webinar Landing Page - Spanish
 # Este archivo define todas las secciones y contenido para la página de aterrizaje del webinar de IA
 
-slug: "webinar-ai-learning"
-title: "Webinar Gratis: Aprende a Programar con IA"
-
 meta:
   page_title: "Webinar Gratis: Aprende a Programar con IA | 4Geeks"
   description: "Únete a nuestro webinar gratuito y descubre cómo la IA está revolucionando la forma en que aprendemos a programar. ¡Reserva tu lugar ahora!"
@@ -14,11 +11,6 @@ meta:
   redirects:
     - "/webinar/aprender-ia"
     - "/eventos/webinar-programacion-ia"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

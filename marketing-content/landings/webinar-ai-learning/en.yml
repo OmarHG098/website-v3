@@ -1,9 +1,6 @@
 # Webinar Landing Page - English
 # This file defines all sections and content for an AI learning webinar landing page
 
-slug: "webinar-ai-learning"
-title: "Free Webinar: Learn to Code with AI"
-
 meta:
   page_title: "Free Webinar: Learn to Code with AI | 4Geeks"
   description: "Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!"
@@ -14,11 +11,6 @@ meta:
   redirects:
     - "/webinar/ai-learning"
     - "/events/ai-coding-webinar"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero
