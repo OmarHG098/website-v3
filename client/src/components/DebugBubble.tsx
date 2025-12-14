@@ -1750,31 +1750,6 @@ export function DebugBubble() {
                     </div>
                     
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Languages</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['en', 'es'].map((lang) => (
-                          <Button
-                            key={lang}
-                            type="button"
-                            variant={targetLanguages.includes(lang) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => {
-                              setTargetLanguages(prev => 
-                                prev.includes(lang) 
-                                  ? prev.filter(l => l !== lang)
-                                  : [...prev, lang]
-                              );
-                            }}
-                            data-testid={`button-language-${lang}`}
-                          >
-                            <LocaleFlag locale={lang} className="w-4 h-3 mr-1" />
-                            {lang.toUpperCase()}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
                       <label className="text-sm font-medium">UTM Sources</label>
                       <input
                         type="text"
@@ -1846,7 +1821,6 @@ export function DebugBubble() {
                       : variantsData.variants.find(v => v.filename === selectedVariantB);
                     
                     const targetingYaml = [
-                      targetLanguages.length > 0 ? `    languages:\n${targetLanguages.map(l => `      - ${l}`).join('\n')}` : '',
                       targetDevices.length > 0 ? `    devices:\n${targetDevices.map(d => `      - ${d}`).join('\n')}` : '',
                       targetUtmSources.length > 0 ? `    utm_sources:\n${targetUtmSources.map(s => `      - ${s}`).join('\n')}` : '',
                       targetUtmMediums.length > 0 ? `    utm_mediums:\n${targetUtmMediums.map(m => `      - ${m}`).join('\n')}` : '',
