@@ -125,8 +125,15 @@ Respond with a JSON object that matches the target component structure.`;
         // Continue with cleaned content, letting downstream validation handle issues
       }
 
+      // Build content with variant field if applicable
+      // Spread cleanedContent first, then override with enforced variant
+      const cleanedContent = validation.cleaned || {};
+      const contentWithVariant = context.targetVariant 
+        ? { ...cleanedContent, variant: context.targetVariant }
+        : cleanedContent;
+
       // Convert to YAML
-      const adaptedYaml = yaml.dump(validation.cleaned, { 
+      const adaptedYaml = yaml.dump(contentWithVariant, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -206,7 +213,15 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       // Additional schema validation for the retry
       const parsed = retryValidation.parsed as Record<string, unknown>;
       const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-      const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+      
+      // Build content with variant field if applicable
+      // Spread cleanedContent first, then override with enforced variant
+      const retryCleanedContent = schemaValidation.cleaned || {};
+      const retryContentWithVariant = context.targetVariant
+        ? { ...retryCleanedContent, variant: context.targetVariant }
+        : retryCleanedContent;
+      
+      const finalYaml = yaml.dump(retryContentWithVariant, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -230,7 +245,15 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
     // Validate parsed YAML against component schema
     const parsed = validation.parsed as Record<string, unknown>;
     const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-    const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+    
+    // Build content with variant field if applicable
+    // Spread cleanedContent first, then override with enforced variant
+    const cleanedContent = schemaValidation.cleaned || {};
+    const contentWithVariant = context.targetVariant
+      ? { ...cleanedContent, variant: context.targetVariant }
+      : cleanedContent;
+    
+    const finalYaml = yaml.dump(contentWithVariant, { 
       indent: 2, 
       lineWidth: 120,
       noRefs: true,
