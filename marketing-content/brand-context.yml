@@ -71,11 +71,22 @@ messaging_priorities:
       - "Mastery-based progression"
 
 forbidden_phrases:
-  - "guaranteed job" # Use "Job Guarantee program (conditions apply)" instead
-  - "easy" or "simple" # Learning to code is challenging
-  - "no experience needed" # Use "beginners welcome" instead
-  - "get rich" or "six-figure salary" # Avoid unrealistic promises
-  - "overnight" or "instant" # Learning takes time
+  - phrase: "guaranteed job"
+    reason: "Use 'Job Guarantee program (conditions apply)' instead"
+  - phrase: "easy"
+    reason: "Learning to code is challenging"
+  - phrase: "simple"
+    reason: "Learning to code is challenging"
+  - phrase: "no experience needed"
+    reason: "Use 'beginners welcome' instead"
+  - phrase: "get rich"
+    reason: "Avoid unrealistic promises"
+  - phrase: "six-figure salary"
+    reason: "Avoid unrealistic promises"
+  - phrase: "overnight"
+    reason: "Learning takes time"
+  - phrase: "instant"
+    reason: "Learning takes time"
 
 required_disclaimers:
   job_guarantee: "Conditions apply. See program details."
