@@ -1,128 +1,148 @@
-# GeekPAL Support Landing Page - English
-
-slug: "geekpal-support"
-template: "default"
-title: "GeekPAL Support"
-
+slug: geekpal-support
+template: default
+title: GeekPAL Support
 meta:
-  page_title: "GeekPAL Support | 4Geeks Academy"
-  description: "Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community."
+  page_title: GeekPAL Support | 4Geeks Academy
+  description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community.
   redirects:
-    - "/geekpal-support"
-
+    - /geekpal-support
 sections:
   - type: hero
     variant: productShowcase
-    version: "1.0"
-    welcome_text: "Welcome to"
+    title: Career Development for the AI Era
+    subtitle: Unlimited 1:1 career support tailored to your goals—for life. Enhance your resume, portfolio, and interview skills with AI-driven platforms.
+    welcome_text: Welcome to
     brand_mark:
-      prefix: "Geek"
-      highlight: "PAL"
+      prefix: Geek
+      highlight: FORCE
       suffix: ":"
-      color: "destructive"
-    title: "Lifetime Mentorship"
-    subtitle: "& AI-Powered Coding Support"
-    description: "Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community, all designed to help you learn faster, stay motivated, and thrive in tech for life."
-    video_id: "D5nUZNL52-Q"
-    video_title: "GeekPAL Support"
-    video_ratio: "9:12"
-
+      color: chart-5
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      autoplay: false
+      loop: true
+    form:
+      variant: inline
+      title: Join Us
+      subtitle: Enter your work email to start your journey
+      submit_label: Sign up free →
+      tags: career, AI, support
+      automations: email_subscription
+      fields:
+        email:
+          placeholder: Enter your work email
+      success:
+        message: Thank you for signing up!
+      terms_url: /terms
+      privacy_url: /privacy
+      show_consent: true
+      show_terms: true
+    trust_bar:
+      rating: "4.5"
+      review_count: Based on 5149+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
   - type: features_grid
     version: "1.0"
     variant: highlight
-    title: "Advance Faster, Never Lose Momentum"
+    title: Advance Faster, Never Lose Momentum
     subtitle: "The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help you with your challenges— so you never lose momentum and keep advancing fast."
     columns: 4
-    background: "bg-primary/5"
+    background: bg-primary/5
     items:
-      - icon: "PeopleGroup"
+      - icon: PeopleGroup
         icon_color: "#0097CD"
-        title: "7:1 Student–Teacher Ratio"
-        description: "Individual attention in every class."
-      - icon: "Handshake"
+        title: 7:1 Student–Teacher Ratio
+        description: Individual attention in every class.
+      - icon: Handshake
         icon_color: "#BE8BFF"
-        title: "Unlimited 1:1 Mentorship"
-        description: "From day one — and for a lifetime."
-      - icon: "Rocket"
+        title: Unlimited 1:1 Mentorship
+        description: From day one — and for a lifetime.
+      - icon: Rocket
         icon_color: "#FFB718"
-        title: "24/7 AI Coding Assistant (Rigobot)"
-        description: "Instant feedback while you code."
-      - icon: "HandsGroup"
+        title: 24/7 AI Coding Assistant (Rigobot)
+        description: Instant feedback while you code.
+      - icon: HandsGroup
         icon_color: "#E74C3C"
-        title: "Real Community Support"
-        description: "Mentors, alumni & peers always ready to help."
-
-  # Human + AI Support Duo Section - Shows mentorship and Rigobot benefits side by side
+        title: Real Community Support
+        description: Mentors, alumni & peers always ready to help.
   - type: support_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
-    description: "Learning works best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey."
+    description: Learning works best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey.
     bullet_groups:
       - title: "Our Team of Expert Mentors:"
-        image: "/attached_assets/profile-pic6_1764775742734.webp"
+        image: /attached_assets/profile-pic6_1764775742734.webp
         bullets:
-          - text: "Provides personalized guidance on coding challenges and best practices"
-            icon: "CircleCheck"
-          - text: "Offers live troubleshooting and debugging support"
-            icon: "Bug"
-          - text: "Expert bug fixing assistance"
-            icon: "Settings"
-          - text: "Shares industry insights, career advice, and learning strategies"
-            icon: "Bulb"
+          - text: Provides personalized guidance on coding challenges and best practices
+            icon: CircleCheck
+          - text: Offers live troubleshooting and debugging support
+            icon: Bug
+          - text: Expert bug fixing assistance
+            icon: Settings
+          - text: Shares industry insights, career advice, and learning strategies
+            icon: Bulb
       - title: "Rigobot + Learnpack:"
         bullets:
-          - text: "Provides instant feedback and tutoring while you code"
-            icon: "Message"
-          - text: "Tracks your skills and progress"
-            icon: "ChartBar"
-          - text: "Helps with debugging and problem-solving tasks"
-            icon: "Puzzle"
-          - text: "Hundreds of hands-on coding exercises and structured practice on Learnpack"
-            icon: "Code"
-    footer_description: "Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence."
-    image: "/attached_assets/Group_6685_(1)_1765300162049.png"
-    image_alt: "Woman working on laptop in cafe"
-    background: "bg-background"
-
+          - text: Provides instant feedback and tutoring while you code
+            icon: Message
+          - text: Tracks your skills and progress
+            icon: ChartBar
+          - text: Helps with debugging and problem-solving tasks
+            icon: Puzzle
+          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
+            icon: Code
+    footer_description: Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence.
+    image: /attached_assets/Group_6685_(1)_1765300162049.png
+    image_alt: Woman working on laptop in cafe
+    background: bg-background
   - type: support_duo
     version: "1.0"
-    variant: "grid"
-    heading: "A Global Developer Community Supporting Your Growth"
-    description: "4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career."
-    background: "bg-primary/5"
-    image: "/attached_assets/Group-6606.webp"
-    image_alt: "4Geeks global developer community"
+    variant: grid
+    heading: A Global Developer Community Supporting Your Growth
+    description: 4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
+    background: bg-primary/5
+    image: /attached_assets/Group-6606.webp
+    image_alt: 4Geeks global developer community
     bullet_groups:
-      - title: "Slack Community"
-        badge: "6,000+ Members"
-        icon: "BrandSlack"
-        accent_color: "primary"
-        description: "Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!)."
+      - title: Slack Community
+        badge: 6,000+ Members
+        icon: BrandSlack
+        accent_color: primary
+        description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
         button:
-          text: "Join Now"
-          url: "https://4geeks.com/slack"
-          variant: "primary"
-      - title: "4Geeks.com"
-        icon: "Rigobot"
-        accent_color: "primary"
-        description: "Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go."
+          text: Join Now
+          url: https://4geeks.com/slack
+          variant: primary
+      - title: 4Geeks.com
+        icon: Rigobot
+        accent_color: primary
+        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
         button:
-          text: "Visit Now"
-          url: "https://4geeks.com"
-          variant: "primary"
-
+          text: Visit Now
+          url: https://4geeks.com
+          variant: primary
   - type: two_column
     version: "1.0"
-    proportions: [12, 0]
-    background: "bg-background"
-    alignment: "center"
+    proportions:
+      - 12
+      - 0
+    background: bg-background
+    alignment: center
     gap: "8"
     heading_above_on_md: false
     left:
-      heading: "Hear From One of Our Graduates"
-      description: "Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career."
-      font_size: "lg"
-      justify: "center"
-      text_align: "center"
-      video: "MBXqEnhodx0"
-      video_width: "900px"
+      heading: Hear From One of Our Graduates
+      description: Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career.
+      font_size: lg
+      justify: center
+      text_align: center
+      video: MBXqEnhodx0
+      video_width: 900px

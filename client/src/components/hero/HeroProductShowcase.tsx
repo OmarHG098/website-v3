@@ -1,5 +1,6 @@
 import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
 import VideoPlayer from "@/components/VideoPlayer";
+import UniversalVideo from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
@@ -170,7 +171,16 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           </div>
           
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
-            {data.video_id ? (
+            {data.video ? (
+              <UniversalVideo 
+                url={data.video.url}
+                ratio={data.video.ratio || "16:9"}
+                muted={data.video.muted ?? true}
+                autoplay={data.video.autoplay ?? false}
+                loop={data.video.loop ?? false}
+                className="w-[280px] md:w-full md:max-w-[400px] rounded-lg overflow-hidden shadow-lg"
+              />
+            ) : data.video_id ? (
               <VideoPlayer 
                 videoId={data.video_id}
                 title={data.video_title || "Video"}
