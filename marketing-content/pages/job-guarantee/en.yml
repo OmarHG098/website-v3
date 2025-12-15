@@ -15,9 +15,9 @@ sections:
       suffix: ":"
       color: chart-5
     description: With lifetime 1:1 mentorship, AI-powered learning tools, and career support that never expires, you're never coding alone. Build your skills through hands-on projects and take the next step toward a tech career.
-    video_id: ai-engineering_1765593572918
-    video_title: Learn AI-Powered Engineering
-    video_ratio: "16:9"
+    video:
+      url: ai-engineering_1765593572918
+      ratio: "16:9"
     cta_button:
       text: Start Your Journey
       url: /apply
