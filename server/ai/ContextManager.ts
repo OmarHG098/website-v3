@@ -164,9 +164,10 @@ export class ContextManager {
         name,
         version,
         description: schema.description as string | undefined,
-        when_to_use: (schema.context as Record<string, unknown>)?.when_to_use as string | undefined,
+        when_to_use: schema.when_to_use as string | undefined || (schema.context as Record<string, unknown>)?.when_to_use as string | undefined,
         variants: schema.variants as ComponentContext["variants"],
         props: schema.props as ComponentContext["props"] || {},
+        variant_props: schema.variant_props as ComponentContext["variant_props"],
       };
       
       this.componentCache.set(cacheKey, componentContext, currentMtime);
@@ -191,6 +192,7 @@ export class ContextManager {
       brand,
       content,
       component,
+      targetVariant: options.targetVariant,
       userOverrides: options.userOverrides,
     };
   }

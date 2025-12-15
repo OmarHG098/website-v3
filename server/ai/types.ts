@@ -55,6 +55,16 @@ export interface ContentContext {
   };
 }
 
+// Component property definition
+export interface PropDefinition {
+  type: string;
+  required?: boolean;
+  description?: string;
+  default?: unknown;
+  properties?: Record<string, PropDefinition>;
+  items?: Record<string, PropDefinition>;
+}
+
 // Component-level context from component registry schema.yml
 export interface ComponentContext {
   name: string;
@@ -64,13 +74,10 @@ export interface ComponentContext {
   variants?: Record<string, {
     description?: string;
     when_to_use?: string;
+    best_for?: string;
   }>;
-  props: Record<string, {
-    type: string;
-    required?: boolean;
-    description?: string;
-    default?: unknown;
-  }>;
+  props: Record<string, PropDefinition>;
+  variant_props?: Record<string, Record<string, PropDefinition>>;
 }
 
 // Full layered context for AI adaptation
@@ -78,6 +85,7 @@ export interface FullContext {
   brand: BrandContext;
   content: ContentContext;
   component: ComponentContext;
+  targetVariant?: string;
   userOverrides?: {
     tone?: string;
     targetAudience?: string;
@@ -91,6 +99,7 @@ export interface AdaptOptions {
   contentSlug: string;
   targetComponent: string;
   targetVersion: string;
+  targetVariant?: string;
   sourceYaml: string;
   targetStructure?: Record<string, unknown>;
   userOverrides?: FullContext["userOverrides"];

@@ -79,26 +79,72 @@ Component: ${component.name} v${component.version}`;
 }
 
 /**
- * Build the target structure block describing the expected output format
+ * Format a property definition for the prompt
  */
-export function buildTargetStructureBlock(component: ComponentContext): string {
+function formatProp(name: string, prop: { type: string; required?: boolean; description?: string; properties?: Record<string, unknown> }, isRequired: boolean): string {
+  const reqStr = isRequired ? "" : " (optional)";
+  const descStr = prop.description ? ` - ${prop.description}` : "";
+  let propLine = `  ${name}: # ${prop.type}${reqStr}${descStr}`;
+  
+  if (prop.properties) {
+    const nestedProps = Object.entries(prop.properties)
+      .map(([n, p]) => `    ${n}: # ${(p as { type?: string }).type || 'string'}`)
+      .join("\n");
+    propLine += `\n${nestedProps}`;
+  }
+  
+  return propLine;
+}
+
+/**
+ * Build the target structure block describing the expected output format
+ * Now includes variant-specific required properties
+ */
+export function buildTargetStructureBlock(component: ComponentContext, targetVariant?: string): string {
   const requiredProps = Object.entries(component.props)
     .filter(([_, prop]) => prop.required)
-    .map(([name, prop]) => `  ${name}: # ${prop.type}${prop.description ? ` - ${prop.description}` : ""}`);
+    .map(([name, prop]) => formatProp(name, prop, true));
 
   const optionalProps = Object.entries(component.props)
     .filter(([_, prop]) => !prop.required)
-    .map(([name, prop]) => `  ${name}: # ${prop.type} (optional)${prop.description ? ` - ${prop.description}` : ""}`);
+    .map(([name, prop]) => formatProp(name, prop, false));
 
-  return `## TARGET STRUCTURE
+  let structureBlock = `## TARGET STRUCTURE
 
 The output must be valid YAML matching this structure:
 
-Required properties:
+Required properties (common):
 ${requiredProps.join("\n")}
 
-Optional properties:
+Optional properties (common):
 ${optionalProps.join("\n")}`;
+
+  if (targetVariant && component.variant_props?.[targetVariant]) {
+    const variantProps = component.variant_props[targetVariant];
+    const variantRequired = Object.entries(variantProps)
+      .filter(([_, prop]) => prop.required)
+      .map(([name, prop]) => formatProp(name, prop, true));
+    
+    const variantOptional = Object.entries(variantProps)
+      .filter(([_, prop]) => !prop.required)
+      .map(([name, prop]) => formatProp(name, prop, false));
+    
+    if (variantRequired.length > 0) {
+      structureBlock += `
+
+REQUIRED properties for variant "${targetVariant}" (YOU MUST INCLUDE THESE):
+${variantRequired.join("\n")}`;
+    }
+    
+    if (variantOptional.length > 0) {
+      structureBlock += `
+
+Optional properties for variant "${targetVariant}":
+${variantOptional.join("\n")}`;
+    }
+  }
+
+  return structureBlock;
 }
 
 /**
@@ -110,7 +156,7 @@ export function buildAdaptationPrompt(
   targetStructure?: Record<string, unknown>
 ): string {
   const contextBlock = buildContextBlock(context);
-  const structureBlock = buildTargetStructureBlock(context.component);
+  const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
 
   let prompt = `${contextBlock}
 
@@ -152,18 +198,28 @@ Respond with ONLY the adapted YAML content. No explanations, no markdown code bl
 /**
  * Build a validation prompt to check if output matches schema
  */
-export function buildValidationPrompt(yamlContent: string, component: ComponentContext): string {
-  return `Validate this YAML content against the ${component.name} component schema.
+export function buildValidationPrompt(yamlContent: string, component: ComponentContext, targetVariant?: string): string {
+  const commonRequired = Object.entries(component.props)
+    .filter(([_, prop]) => prop.required)
+    .map(([name]) => name);
+  
+  let variantRequired: string[] = [];
+  if (targetVariant && component.variant_props?.[targetVariant]) {
+    variantRequired = Object.entries(component.variant_props[targetVariant])
+      .filter(([_, prop]) => prop.required)
+      .map(([name]) => name);
+  }
+  
+  const allRequired = [...commonRequired, ...variantRequired];
+  
+  return `Validate this YAML content against the ${component.name} component schema${targetVariant ? ` (variant: ${targetVariant})` : ''}.
 
 YAML to validate:
 \`\`\`yaml
 ${yamlContent}
 \`\`\`
 
-Required properties: ${Object.entries(component.props)
-    .filter(([_, prop]) => prop.required)
-    .map(([name]) => name)
-    .join(", ")}
+Required properties: ${allRequired.join(", ")}
 
 Respond with ONLY "VALID" if the YAML is valid, or respond with a corrected version of the YAML if there are issues.`;
 }
