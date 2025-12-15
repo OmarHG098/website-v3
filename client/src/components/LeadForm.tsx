@@ -247,8 +247,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const isInline = variant === "inline";
   const emailConfig = getFieldConfig("email");
 
-  const hasVisibleFieldsBeyondEmail = 
-    getFieldConfig("first_name").visible ||
+  const hasVisibleFieldsBeyondEmailAndFirstName = 
     getFieldConfig("last_name").visible ||
     getFieldConfig("phone").visible ||
     getFieldConfig("program").visible ||
@@ -257,12 +256,33 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     getFieldConfig("coupon").visible ||
     getFieldConfig("comment").visible;
 
-  if (isInline && !hasVisibleFieldsBeyondEmail) {
+  const firstNameConfig = getFieldConfig("first_name");
+
+  if (isInline && !hasVisibleFieldsBeyondEmailAndFirstName) {
     return (
       <div className={data.className} data-testid="lead-form">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-2 items-start">
+            <div className="flex gap-2 items-start flex-wrap">
+              {firstNameConfig.visible && (
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  rules={{ required: firstNameConfig.required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
+                  render={({ field }) => (
+                    <FormItem className="flex-1 min-w-[140px]">
+                      <FormControl>
+                        <Input 
+                          placeholder={firstNameConfig.placeholder || (locale === "es" ? "Tu nombre" : "Your name")} 
+                          {...field} 
+                          data-testid="input-first-name"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
               <FormField
                 control={form.control}
                 name="email"
@@ -274,7 +294,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   }
                 }}
                 render={({ field }) => (
-                  <FormItem className="flex-1">
+                  <FormItem className="flex-1 min-w-[180px]">
                     <FormControl>
                       <Input 
                         type="email" 

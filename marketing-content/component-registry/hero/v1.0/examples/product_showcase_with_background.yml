@@ -16,10 +16,7 @@ yaml: |
     background_image:
       src: "/attached_assets/ai-engineering-light_1765830844948.jpg"
       alt: "AI Engineering Background"
-    video:
-      url: "https://www.youtube.com/shorts/2ZvlgDnltc"
-      title: "GeekForce Career Support"
-      ratio: "9:12"
+
     form:
       variant: inline
       submit_label: "Get Started →"

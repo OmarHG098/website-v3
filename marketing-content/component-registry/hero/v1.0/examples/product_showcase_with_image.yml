@@ -29,9 +29,10 @@ yaml: |-
           logo: "/attached_assets/course-report_1765590146414.webp"
         - name: "SwitchUp"
           logo: "/attached_assets/switchup_1765590146414.webp"
-    
+
+
     video:
-      url: "https://www.youtube.com/shorts/2ZvlgDnltc"
+      url: "https://www.youtube.com/shorts/2ZvlgDnltc-"
       title: "GeekForce Career Support"
       ratio: "9:12"
       muted: true
