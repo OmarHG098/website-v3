@@ -104,7 +104,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
               {data.bullet_groups.map((group, groupIndex) => {
                 const isDescExpanded = expandedGroups[`desc-${groupIndex}`] ?? false;
                 return (
-                  <Card key={groupIndex} className="p-6 space-y-3">
+                  <div key={groupIndex} className="space-y-3">
                     <div className="flex items-center gap-3">
                       {group.icon ? (
                         <span className="text-primary flex-shrink-0">
@@ -177,7 +177,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                         </a>
                       </div>
                     )}
-                  </Card>
+                  </div>
                 );
               })}
             </div>
