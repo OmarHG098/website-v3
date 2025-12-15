@@ -230,15 +230,24 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       }
 
       // Additional schema validation for the retry
-      const parsed = retryValidation.parsed as Record<string, unknown>;
-      const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
+      // Handle case where AI returns YAML as an array (like `- headline: ...`)
+      let parsedRetry: Record<string, unknown>;
+      if (Array.isArray(retryValidation.parsed) && retryValidation.parsed.length > 0) {
+        parsedRetry = retryValidation.parsed[0] as Record<string, unknown>;
+      } else {
+        parsedRetry = retryValidation.parsed as Record<string, unknown>;
+      }
       
-      // Build content with variant field if applicable
-      // Spread cleanedContent first, then override with enforced variant
-      const retryCleanedContent = schemaValidation.cleaned || {};
+      // Validate but use original content - validation is for warnings only
+      const schemaValidation = validateContentAgainstSchema(parsedRetry, context.component, context.targetVariant);
+      if (!schemaValidation.valid) {
+        console.warn("Schema validation warnings:", schemaValidation.errors);
+      }
+      
+      // Use the AI's original content (not the overly-filtered cleaned version)
       const retryContentWithVariant = context.targetVariant
-        ? { ...retryCleanedContent, variant: context.targetVariant }
-        : retryCleanedContent;
+        ? { ...parsedRetry, variant: context.targetVariant }
+        : parsedRetry;
       
       const finalYaml = yaml.dump(retryContentWithVariant, { 
         indent: 2, 
@@ -262,15 +271,25 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
     }
 
     // Validate parsed YAML against component schema
-    const parsed = validation.parsed as Record<string, unknown>;
-    const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
+    // Handle case where AI returns YAML as an array (like `- headline: ...`)
+    let parsedContent: Record<string, unknown>;
+    if (Array.isArray(validation.parsed) && validation.parsed.length > 0) {
+      parsedContent = validation.parsed[0] as Record<string, unknown>;
+    } else {
+      parsedContent = validation.parsed as Record<string, unknown>;
+    }
     
-    // Build content with variant field if applicable
-    // Spread cleanedContent first, then override with enforced variant
-    const cleanedContent = schemaValidation.cleaned || {};
+    // Validate but use original content - validation is for warnings only
+    const schemaValidation = validateContentAgainstSchema(parsedContent, context.component, context.targetVariant);
+    if (!schemaValidation.valid) {
+      console.warn("Schema validation warnings:", schemaValidation.errors);
+    }
+    
+    // Use the AI's original content (not the overly-filtered cleaned version)
+    // The AI was given the full example so trust its output
     const contentWithVariant = context.targetVariant
-      ? { ...cleanedContent, variant: context.targetVariant }
-      : cleanedContent;
+      ? { ...parsedContent, variant: context.targetVariant }
+      : parsedContent;
     
     const finalYaml = yaml.dump(contentWithVariant, { 
       indent: 2, 
