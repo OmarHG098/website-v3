@@ -423,104 +423,114 @@ export function EditableSection({ children, section, index, sectionType, content
               <IconArrowsExchange className="h-4 w-4" />
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
-            <div className="space-y-3">
-              <h4 className="font-medium text-sm flex items-center gap-2 flex-wrap">
-                <span>Choose variant for</span>
-                <span 
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-muted"
-                  data-testid={`badge-component-${index}`}
-                >
-                  {sectionType}
-                </span>
-                <span 
-                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-muted ${versions.length > 1 ? 'cursor-pointer hover-elevate' : ''}`}
-                  onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
-                  data-testid={`badge-version-${index}`}
-                >
-                  {selectedVersion || versions[0] || ""}
-                  {versions.length > 1 && <IconPencil className="h-3 w-3" />}
-                </span>
-              </h4>
-              {isLoadingSwap ? (
-                <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
-                  <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          <PopoverContent className="w-auto min-w-[500px] max-w-[700px] p-2" onClick={(e) => e.stopPropagation()}>
+            {isLoadingSwap ? (
+              <div className="flex items-center justify-center py-2 px-4" data-testid={`loader-swap-section-${index}`}>
+                <IconLoader2 className="h-4 w-4 animate-spin text-muted-foreground mr-2" />
+                <span className="text-xs text-muted-foreground">Loading variants...</span>
+              </div>
+            ) : versions.length === 0 ? (
+              <p className="text-xs text-muted-foreground px-2" data-testid={`text-no-variants-${index}`}>No versions available</p>
+            ) : (
+              <div className="flex items-center gap-3">
+                {/* Left: Component + Version badges */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span 
+                    className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted"
+                    data-testid={`badge-component-${index}`}
+                  >
+                    {sectionType}
+                  </span>
+                  <span 
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs bg-muted ${versions.length > 1 ? 'cursor-pointer hover-elevate' : ''}`}
+                    onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
+                    data-testid={`badge-version-${index}`}
+                  >
+                    {selectedVersion || versions[0] || ""}
+                    {versions.length > 1 && <IconPencil className="h-3 w-3" />}
+                  </span>
                 </div>
-              ) : versions.length === 0 ? (
-                <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
-              ) : (
-                <>
-                  {showVersionPicker && versions.length > 1 && (
-                    <Select value={selectedVersion} onValueChange={(val) => { setSelectedVersion(val); setShowVersionPicker(false); }}>
-                      <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
-                        <SelectValue placeholder="Select version" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {versions.map(ver => (
-                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>{ver}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                  {variants.length > 0 ? (
-                    <>
-                      <div className="flex items-center justify-between gap-2 mt-2">
-                        <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
-                          <IconChevronLeft className="h-4 w-4" />
-                        </Button>
-                        <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
-                          {deslugify(selectedVariant || "default")}
-                        </span>
-                        <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
-                          <IconChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      {/* Secondary selector for examples within variant */}
-                      {examplesForCurrentVariant.length > 1 && (
-                        <div className="flex items-center justify-between gap-2 mt-1 px-2">
-                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
-                            <IconChevronLeft className="h-3 w-3" />
-                          </Button>
-                          <span className="text-xs text-muted-foreground flex-1 text-center truncate" data-testid={`text-example-${index}`}>
-                            {currentExample?.name || `Example ${selectedExampleIndex + 1}`} ({selectedExampleIndex + 1}/{examplesForCurrentVariant.length})
-                          </span>
-                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
-                            <IconChevronRight className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="text-sm text-muted-foreground text-center py-2">No variants found</div>
-                  )}
-                  <div className="flex gap-2 mt-2">
-                    <Button variant="outline" className="flex-1" onClick={() => { setSwapPopoverOpen(false); setAdaptedSection(null); setHasAdapted(false); }} data-testid={`button-cancel-swap-${index}`}>
-                      <IconX className="h-4 w-4 mr-2" />
-                      Cancel
+                
+                {/* Divider */}
+                <div className="w-px h-6 bg-border shrink-0" />
+                
+                {/* Center: Variant navigation */}
+                {variants.length > 0 ? (
+                  <div className="flex items-center gap-1 min-w-0 flex-1">
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                      <IconChevronLeft className="h-4 w-4" />
                     </Button>
-                    {hasAdapted ? (
-                      <Button className="flex-1" onClick={handleConfirmSwap} disabled={!adaptedSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
-                        {isConfirming ? (
-                          <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
-                        ) : (
-                          <IconCheck className="h-4 w-4 mr-2" />
-                        )}
-                        Confirm
-                      </Button>
-                    ) : (
-                      <Button className="flex-1" onClick={handleAdaptWithAI} disabled={!previewSection || isAdapting} data-testid={`button-adapt-ai-${index}`}>
-                        {isAdapting ? (
-                          <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
-                        ) : (
-                          <IconSparkles className="h-4 w-4 mr-2" />
-                        )}
-                        {isAdapting ? 'Adapting...' : 'Adapt with AI'}
-                      </Button>
+                    <span className="text-xs font-medium truncate min-w-[80px] text-center" data-testid={`text-variant-${index}`}>
+                      {deslugify(selectedVariant || "default")}
+                      {examplesForCurrentVariant.length > 1 && (
+                        <span className="text-muted-foreground ml-1">({selectedExampleIndex + 1}/{examplesForCurrentVariant.length})</span>
+                      )}
+                    </span>
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
+                      <IconChevronRight className="h-4 w-4" />
+                    </Button>
+                    {/* Example navigation (only if multiple examples in variant) */}
+                    {examplesForCurrentVariant.length > 1 && (
+                      <>
+                        <div className="w-px h-4 bg-border/50 shrink-0" />
+                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
+                          <IconChevronLeft className="h-3 w-3" />
+                        </Button>
+                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
+                          <IconChevronRight className="h-3 w-3" />
+                        </Button>
+                      </>
                     )}
                   </div>
-                </>
-              )}
-            </div>
+                ) : (
+                  <span className="text-xs text-muted-foreground">No variants</span>
+                )}
+                
+                {/* Divider */}
+                <div className="w-px h-6 bg-border shrink-0" />
+                
+                {/* Right: Action buttons */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => { setSwapPopoverOpen(false); setAdaptedSection(null); setHasAdapted(false); }} data-testid={`button-cancel-swap-${index}`} title="Cancel">
+                    <IconX className="h-4 w-4" />
+                  </Button>
+                  {hasAdapted ? (
+                    <Button size="sm" className="h-7 px-3" onClick={handleConfirmSwap} disabled={!adaptedSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
+                      {isConfirming ? (
+                        <IconLoader2 className="h-3 w-3 animate-spin mr-1" />
+                      ) : (
+                        <IconCheck className="h-3 w-3 mr-1" />
+                      )}
+                      Confirm
+                    </Button>
+                  ) : (
+                    <Button size="sm" className="h-7 px-3" onClick={handleAdaptWithAI} disabled={!previewSection || isAdapting} data-testid={`button-adapt-ai-${index}`}>
+                      {isAdapting ? (
+                        <IconLoader2 className="h-3 w-3 animate-spin mr-1" />
+                      ) : (
+                        <IconSparkles className="h-3 w-3 mr-1" />
+                      )}
+                      {isAdapting ? 'Adapting...' : 'Adapt'}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* Version picker dropdown (shown conditionally) */}
+            {showVersionPicker && versions.length > 1 && (
+              <div className="mt-2 pt-2 border-t">
+                <Select value={selectedVersion} onValueChange={(val) => { setSelectedVersion(val); setShowVersionPicker(false); }}>
+                  <SelectTrigger className="w-full h-8 text-xs" data-testid={`select-version-${index}`}>
+                    <SelectValue placeholder="Select version" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {versions.map(ver => (
+                      <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>{ver}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </PopoverContent>
         </Popover>
       </div>
