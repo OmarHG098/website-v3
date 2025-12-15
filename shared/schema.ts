@@ -46,6 +46,7 @@ export { leadFormDataSchema as productShowcaseFormSchema } from "../marketing-co
 
 // ============================================
 // Re-export Hero Schemas from Component Registry
+// Only export unified schema and shared sub-schemas (not individual variants)
 // ============================================
 export {
   trustBarSchema,
@@ -56,12 +57,6 @@ export {
   productShowcaseTrustBarSchema,
   heroCourseTutorSchema,
   heroCourseFeatureSchema,
-  heroSingleColumnSchema,
-  heroShowcaseSchema,
-  heroProductShowcaseSchema,
-  heroSimpleTwoColumnSchema,
-  heroTwoColumnSchema,
-  heroCourseSchema,
   heroSectionSchema,
   type TrustBar,
   type AwardBadge,
@@ -71,13 +66,17 @@ export {
   type ProductShowcaseTrustBar,
   type HeroCourseTutor,
   type HeroCourseFeature,
-  type HeroSingleColumn,
-  type HeroShowcase,
-  type HeroProductShowcase,
-  type HeroSimpleTwoColumn,
-  type HeroTwoColumn,
-  type HeroCourse,
   type HeroSection,
+} from "../marketing-content/component-registry/hero/v1.0/schema";
+
+// Variant types for type narrowing (schemas are internal to component registry)
+export type {
+  HeroSingleColumn,
+  HeroShowcase,
+  HeroProductShowcase,
+  HeroSimpleTwoColumn,
+  HeroTwoColumn,
+  HeroCourse,
 } from "../marketing-content/component-registry/hero/v1.0/schema";
 
 // ============================================
@@ -215,18 +214,21 @@ export {
 
 // ============================================
 // Re-export Features Grid Schemas from Component Registry
+// Only export unified schema and item schemas (not individual variants)
 // ============================================
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
-  featuresGridHighlightSectionSchema,
-  featuresGridDetailedSectionSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
-  type FeaturesGridHighlightSection,
-  type FeaturesGridDetailedSection,
   type FeaturesGridSection,
+} from "../marketing-content/component-registry/features_grid/v1.0/schema";
+
+// Variant types for type narrowing (schemas are internal to component registry)
+export type {
+  FeaturesGridHighlightSection,
+  FeaturesGridDetailedSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
 // ============================================
@@ -363,9 +365,9 @@ export type StatsSection = z.infer<typeof statsSectionSchema>;
 
 // ============================================
 // Section Schema Union
-// Import section schemas for use in union
+// Import unified section schemas for use in union
 // ============================================
-import { heroSingleColumnSchema, heroShowcaseSchema, heroProductShowcaseSchema, heroSimpleTwoColumnSchema, heroTwoColumnSchema, heroCourseSchema } from "../marketing-content/component-registry/hero/v1.0/schema";
+import { heroSectionSchema as heroSchema } from "../marketing-content/component-registry/hero/v1.0/schema";
 import { aiLearningSectionSchema } from "../marketing-content/component-registry/ai_learning/v1.0/schema";
 import { mentorshipSectionSchema } from "../marketing-content/component-registry/mentorship/v1.0/schema";
 import { certificateSectionSchema } from "../marketing-content/component-registry/certificate/v1.0/schema";
@@ -379,19 +381,15 @@ import { twoColumnSectionSchema } from "../marketing-content/component-registry/
 import { numberedStepsSectionSchema } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
 import { syllabusSectionSchema } from "../marketing-content/component-registry/syllabus/v1.0/schema";
 import { projectsSectionSchema } from "../marketing-content/component-registry/projects/v1.0/schema";
-import { featuresGridHighlightSectionSchema, featuresGridDetailedSectionSchema } from "../marketing-content/component-registry/features_grid/v1.0/schema";
+import { featuresGridSectionSchema as featuresGridSchema } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 import { testimonialsSlideSectionSchema } from "../marketing-content/component-registry/testimonials_slide/v1.0/schema";
 import { ctaBannerSectionSchema } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
 import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../marketing-content/component-registry/project_showcase/v1.0/schema";
 import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
 
 export const sectionSchema = z.union([
-  heroSingleColumnSchema,
-  heroShowcaseSchema,
-  heroProductShowcaseSchema,
-  heroSimpleTwoColumnSchema,
-  heroTwoColumnSchema,
-  heroCourseSchema,
+  heroSchema,
+  featuresGridSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -406,8 +404,6 @@ export const sectionSchema = z.union([
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
   testimonialsSlideSectionSchema,
-  featuresGridHighlightSectionSchema,
-  featuresGridDetailedSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
   projectShowcaseSectionSchema,
