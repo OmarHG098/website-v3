@@ -1,462 +1,749 @@
-name: "Hero Section"
+name: Hero Section
 version: "1.0"
-component: "Hero"
-file: "client/src/components/hero/Hero.tsx"
-description: "Main banner at the top of the page with title, subtitle, and call-to-action. Supports multiple layout variants."
-
+component: Hero
+file: client/src/components/hero/Hero.tsx
+description: Main banner at the top of the page with title, subtitle, and call-to-action. Supports multiple layout variants.
 when_to_use: |
   Every page should start with a hero section. Choose the variant that best fits your content:
   - singleColumn: Centered content with optional trust bar and award badges (best for program pages)
   - showcase: 3-column layout with images on sides (best for landing pages)
   - productShowcase: Text on left with video on right (best for product/service introductions)
   - simpleTwoColumn: Image on left, text with CTAs on right (best for promotions, announcements)
-
 variants:
   singleColumn:
-    description: "Centered single column with badge, title, subtitle, CTAs, trust bar, and award badges"
-    best_for: "Program pages, course pages"
+    description: Centered single column with badge, title, subtitle, CTAs, trust bar, and award badges
+    best_for: Program pages, course pages
   showcase:
-    description: "3-column layout with images on left/right, centered content with trust bar"
-    best_for: "Landing pages, marketing pages"
+    description: 3-column layout with images on left/right, centered content with trust bar
+    best_for: Landing pages, marketing pages
   productShowcase:
-    description: "Two column layout with brand mark, text on left and video on right"
-    best_for: "Product/service introductions, feature pages"
+    description: Two column layout with brand mark, text on left and video on right
+    best_for: Product/service introductions, feature pages
   simpleTwoColumn:
-    description: "Two column layout with image on left and title, subtitle, CTA buttons on right"
-    best_for: "Guarantee pages, feature announcements, promotional sections"
+    description: Two column layout with image on left and title, subtitle, CTA buttons on right
+    best_for: Guarantee pages, feature announcements, promotional sections
   course:
-    description: "Two column layout with content on left (title, bullet points, tutors) and media + signup card on right"
-    best_for: "Course landing pages, self-paced program pages"
-
-props:
-  variant:
-    type: string
-    required: true
-    description: "Layout variant to use (valid variants defined in 'variants' section above)"
-    example: "singleColumn"
-
-  title:
-    type: string
-    required: true
-    description: "Main headline (keep under 60 characters for best display)"
-    example: "Full Stack Development with AI"
-
-  subtitle:
-    type: string
-    required: false
-    description: "Supporting text below title explaining the value proposition"
-    example: "Learn at your own pace with AI-powered tools and unlimited mentorship"
-
+    description: Two column layout with content on left (title, bullet points, tutors) and media + signup card on right
+    best_for: Course landing pages, self-paced program pages
+  twoColumn: {}
 variant_props:
   singleColumn:
     badge:
       type: string
       required: false
-      description: "Small label displayed above the title"
-      example: "Career Program"
+      description: Small label displayed above the title
+      example: Career Program
     cta_buttons:
       type: array
-      required: true
-      description: "Call-to-action buttons (recommended: 2 buttons max)"
+      required: false
       items:
         text:
           type: string
-          description: "Button label"
+          required: true
+          description: Button label
         url:
           type: string
-          description: "Link destination"
+          required: true
+          description: Link destination
         variant:
           type: string
-          options: ["primary", "outline"]
+          required: true
+          options:
+            - primary
+            - secondary
+            - outline
         icon:
           type: string
           required: false
-          description: "Tabler icon name (without 'Icon' prefix)"
+          description: Tabler icon name (without 'Icon' prefix)
+      description: "Call-to-action buttons (recommended: 2 buttons max)"
     trust_bar:
       type: object
       required: false
-      description: "Social proof with ratings"
       properties:
         rating:
           type: string
-          example: "4.8/5"
+          required: false
+          example: 4.8/5
         rating_count:
           type: string
-          example: "2,500+"
+          required: false
+          example: 2,500+
         trusted_text:
           type: string
-          example: "Trusted by 10,000+ students"
+          required: true
+          example: Trusted by 10,000+ students
+      description: Social proof with ratings
     award_badges:
       type: array
       required: false
-      description: "Award logos to display"
       items:
         name:
           type: string
+          required: true
         source:
           type: string
+          required: true
         year:
           type: string
           required: false
-
+      description: Award logos to display
   showcase:
-    cta_button:
-      type: object
-      required: true
-      description: "Single call-to-action button"
-      properties:
-        text:
-          type: string
-        url:
-          type: string
-        variant:
-          type: string
     trust_bar:
       type: object
       required: false
-      description: "Social proof with ratings"
+      properties:
+        rating:
+          type: string
+          required: false
+        rating_count:
+          type: string
+          required: false
+        trusted_text:
+          type: string
+          required: true
+      description: Social proof with ratings
+    cta_button:
+      type: object
+      required: true
+      properties:
+        text:
+          type: string
+          required: true
+        url:
+          type: string
+          required: true
+        variant:
+          type: string
+          required: true
+          options:
+            - primary
+            - secondary
+            - outline
+        icon:
+          type: string
+          required: false
+      description: Single call-to-action button
     left_images:
       type: array
       required: false
-      description: "Images to display on the left side"
       items:
         src:
           type: string
+          required: true
         alt:
           type: string
+          required: true
+      description: Images to display on the left side
     right_images:
       type: array
       required: false
-      description: "Images to display on the right side"
+      items:
+        src:
+          type: string
+          required: true
+        alt:
+          type: string
+          required: true
+      description: Images to display on the right side
     show_arrow:
       type: boolean
       required: false
-      description: "Show decorative arrow pointing to CTA"
-
+      description: Show decorative arrow pointing to CTA
   productShowcase:
     welcome_text:
       type: string
       required: false
-      description: "Text displayed above the title"
-      example: "Welcome to"
+      description: Text displayed above the title
+      example: Welcome to
     brand_mark:
       type: object
       required: false
-      description: "Configurable brand text with colored highlight"
       properties:
         prefix:
           type: string
           required: false
-          description: "Text before the highlighted portion"
-          example: "Geek"
+          description: Text before the highlighted portion
+          example: Geek
         highlight:
           type: string
           required: true
-          description: "The highlighted/colored portion of the brand"
-          example: "FORCE"
+          description: The highlighted/colored portion of the brand
+          example: FORCE
         suffix:
           type: string
           required: false
-          description: "Text after the highlighted portion"
+          description: Text after the highlighted portion
           example: ":"
         color:
           type: string
           required: false
-          options: ["primary", "accent", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
-          default: "primary"
-          description: "Semantic color token for the highlight"
-          example: "chart-5"
+          options:
+            - primary
+            - accent
+            - destructive
+            - chart-1
+            - chart-2
+            - chart-3
+            - chart-4
+            - chart-5
+          description: Semantic color token for the highlight
+          example: chart-5
+      description: Configurable brand text with colored highlight
     description:
       type: string
       required: false
-      description: "Longer description text below subtitle"
-    video_id:
-      type: string
+      description: Longer description text below subtitle
+    video:
+      type: object
       required: false
-      description: "YouTube video ID (optional if using image instead)"
-      example: "dQw4w9WgXcQ"
-    video_title:
-      type: string
-      required: false
-      description: "Accessible title for the video"
-    video_ratio:
-      type: string
-      required: false
-      description: "Video aspect ratio"
-      options: ["16:9", "9:12"]
-      default: "9:12"
+      properties:
+        url:
+          type: string
+          required: true
+        ratio:
+          type: string
+          required: false
+        muted:
+          type: boolean
+          required: false
+        autoplay:
+          type: boolean
+          required: false
+        loop:
+          type: boolean
+          required: false
+        preview_image_url:
+          type: string
+          required: false
     image:
       type: object
       required: false
-      description: "Alternative to video - static image on right side"
       properties:
         src:
           type: string
           required: true
-          description: "Image source URL or path"
+          description: Image source URL or path
         alt:
           type: string
           required: true
-          description: "Image alt text for accessibility"
+          description: Image alt text for accessibility
+      description: Alternative to video - static image on right side
     form:
       type: object
       required: false
-      description: "Lead capture form using the LeadForm component. Supports inline (email + button on one line) or stacked (labeled fields) variants."
       properties:
         variant:
           type: string
           required: false
-          options: ["inline", "stacked"]
-          default: "inline"
-          description: "Form layout variant. Use 'inline' for compact hero forms."
+          options:
+            - stacked
+            - inline
+          description: Form layout variant. Use 'inline' for compact hero forms.
+        title:
+          type: string
+          required: false
+        subtitle:
+          type: string
+          required: false
         submit_label:
           type: string
           required: false
-          description: "Submit button text"
-          example: "Sign up free →"
-        show_consent:
-          type: boolean
-          required: false
-          default: false
-          description: "Whether to show SMS/WhatsApp consent checkboxes"
-        show_terms:
-          type: boolean
-          required: false
-          default: false
-          description: "Whether to show terms and privacy links"
+          description: Submit button text
+          example: Sign up free →
         tags:
           type: string
           required: false
-          description: "Comma-separated tags for lead categorization"
-          example: "website-lead,hero-signup"
+          description: Comma-separated tags for lead categorization
+          example: website-lead,hero-signup
         automations:
           type: string
           required: false
-          description: "Automation trigger name"
-          example: "strong"
+          description: Automation trigger name
+          example: strong
         fields:
           type: object
           required: false
-          description: "Configure which fields to show and their settings"
           properties:
             email:
               type: object
-              description: "Email field configuration (visible by default)"
+              required: false
               properties:
                 visible:
                   type: boolean
-                  default: true
+                  required: false
                 required:
                   type: boolean
-                  default: true
-                placeholder:
+                  required: false
+                default:
                   type: string
-                  example: "Enter your work email"
+                  required: false
                 helper_text:
                   type: string
-                  description: "Helper text displayed below the form"
+                  required: false
+                  description: Helper text displayed below the form
+                placeholder:
+                  type: string
+                  required: false
+                  example: Enter your work email
+              description: Email field configuration (visible by default)
             first_name:
               type: object
-              description: "First name field (hidden by default)"
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
+              description: First name field (hidden by default)
             last_name:
               type: object
-              description: "Last name field (hidden by default)"
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
+              description: Last name field (hidden by default)
             phone:
               type: object
-              description: "Phone field (hidden by default)"
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
+              description: Phone field (hidden by default)
             program:
               type: object
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
               description: "Program selector (hidden by default, use default: 'auto' to auto-fill from context)"
+            region:
+              type: object
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
             location:
               type: object
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
               description: "Campus location selector (hidden by default, use default: 'auto' for geo-detection)"
+            coupon:
+              type: object
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
+            comment:
+              type: object
+              required: false
+              properties:
+                visible:
+                  type: boolean
+                  required: false
+                required:
+                  type: boolean
+                  required: false
+                default:
+                  type: string
+                  required: false
+                helper_text:
+                  type: string
+                  required: false
+                placeholder:
+                  type: string
+                  required: false
+          description: Configure which fields to show and their settings
         success:
           type: object
           required: false
-          description: "Success behavior after form submission"
           properties:
             url:
               type: string
-              description: "Redirect URL after successful submission"
+              required: false
+              description: Redirect URL after successful submission
             message:
               type: string
-              description: "Success message if no redirect"
+              required: false
+              description: Success message if no redirect
+          description: Success behavior after form submission
+        terms_url:
+          type: string
+          required: false
+        privacy_url:
+          type: string
+          required: false
+        show_consent:
+          type: boolean
+          required: false
+          description: Whether to show SMS/WhatsApp consent checkboxes
+        show_terms:
+          type: boolean
+          required: false
+          description: Whether to show terms and privacy links
+        className:
+          type: string
+          required: false
+      description: >-
+        Lead capture form using the LeadForm component. Supports inline (email + button on one line) or stacked (labeled
+        fields) variants.
     cta_button:
       type: object
       required: false
-      description: "Alternative to form - single CTA button"
       properties:
         text:
           type: string
+          required: true
         url:
           type: string
+          required: true
         variant:
           type: string
-          options: ["primary", "outline"]
+          required: true
+          options:
+            - primary
+            - secondary
+            - outline
+        icon:
+          type: string
+          required: false
+      description: Alternative to form - single CTA button
     trust_bar:
       type: object
       required: false
-      description: "Social proof with ratings and review logos"
       properties:
         rating:
           type: string
+          required: false
           example: "4.5"
         review_count:
           type: string
+          required: false
           example: "Based on 5149+ reviews:"
         review_logos:
           type: array
-          description: "List of review platform logos"
+          required: false
           items:
             name:
               type: string
-              description: "Platform name (e.g., GetApp, Capterra)"
+              required: true
+              description: Platform name (e.g., GetApp, Capterra)
             logo:
               type: string
               required: false
-              description: "Optional logo URL"
-
+              description: Optional logo URL
+          description: List of review platform logos
+      description: Social proof with ratings and review logos
   simpleTwoColumn:
     badge:
       type: string
       required: false
-      description: "Small label displayed below the subtitle"
-      example: "Coding Bootcamp Projects & Alumni"
+      description: Small label displayed below the subtitle
+      example: Coding Bootcamp Projects & Alumni
     image:
       type: object
       required: true
-      description: "Hero image displayed on the right side"
       properties:
         src:
           type: string
           required: true
-          description: "Image source URL or path"
+          description: Image source URL or path
         alt:
           type: string
           required: true
-          description: "Image alt text for accessibility"
+          description: Image alt text for accessibility
+      description: Hero image displayed on the right side
     cta_buttons:
       type: array
       required: false
-      description: "Call-to-action buttons (recommended: 2 buttons max)"
       items:
         text:
           type: string
-          description: "Button label"
+          required: true
+          description: Button label
         url:
           type: string
-          description: "Link destination"
+          required: true
+          description: Link destination
         variant:
           type: string
-          options: ["primary", "outline"]
+          required: true
+          options:
+            - primary
+            - secondary
+            - outline
         icon:
           type: string
           required: false
-          description: "Tabler icon name (without 'Icon' prefix)"
+          description: Tabler icon name (without 'Icon' prefix)
+      description: "Call-to-action buttons (recommended: 2 buttons max)"
     background:
       type: string
       required: false
-      description: "Background Tailwind class"
-      default: "bg-gradient-to-b from-primary/5 to-background"
-
+      description: Background Tailwind class
+  twoColumn:
+    badge:
+      type: string
+      required: false
+    image:
+      type: string
+      required: false
+    image_alt:
+      type: string
+      required: false
+    cta_buttons:
+      type: array
+      required: false
+      items:
+        text:
+          type: string
+          required: true
+        url:
+          type: string
+          required: true
+        variant:
+          type: string
+          required: true
+          options:
+            - primary
+            - secondary
+            - outline
+        icon:
+          type: string
+          required: false
+    background:
+      type: string
+      required: false
   course:
     students_enrolled:
       type: object
       required: false
-      description: "Display enrolled students count with optional avatars"
       properties:
         avatars:
           type: array
-          description: "Array of avatar image URLs"
+          required: false
+          items:
+            type:
+              type: string
+              required: true
+          description: Array of avatar image URLs
         count:
           type: string
-          description: "Text showing enrollment count"
-          example: "+48 students enrolled"
+          required: true
+          description: Text showing enrollment count
+          example: +48 students enrolled
+      description: Display enrolled students count with optional avatars
     bullet_points:
       type: array
       required: false
-      description: "List of key features/benefits with checkmarks"
       items:
-        type: string
+        type:
+          type: string
+          required: true
+      description: List of key features/benefits with checkmarks
       example:
-        - "Learn prompt engineering techniques to control AI outputs precisely"
-        - "Create professional images, videos, and documents using AI tools"
+        - Learn prompt engineering techniques to control AI outputs precisely
+        - Create professional images, videos, and documents using AI tools
     tutors:
       type: array
       required: false
-      description: "List of tutors/instructors"
       items:
         name:
           type: string
+          required: true
         role:
           type: string
+          required: true
         image:
           type: string
+          required: true
+      description: List of tutors/instructors
     tutors_label:
       type: string
       required: false
-      description: "Label above tutors section"
-      default: "Your tutors:"
+      description: Label above tutors section
     description:
       type: string
       required: false
-      description: "Extended description paragraph at bottom of left column"
+      description: Extended description paragraph at bottom of left column
     media:
       type: object
       required: true
-      description: "Video or image displayed at top of right column"
       properties:
         type:
           type: string
-          options: ["video", "image"]
+          required: true
+          options:
+            - video
+            - image
         src:
           type: string
-          description: "Video URL or image source"
+          required: true
+          description: Video URL or image source
         thumbnail:
           type: string
           required: false
-          description: "Thumbnail image for video (shows play button overlay)"
+          description: Thumbnail image for video (shows play button overlay)
         alt:
           type: string
           required: false
+      description: Video or image displayed at top of right column
     signup_card:
       type: object
       required: true
-      description: "Signup/CTA card below media"
       properties:
         title:
           type: string
-          example: "Sign up to 4Geeks Plus"
+          required: true
+          example: Sign up to 4Geeks Plus
         description:
           type: string
           required: false
         cta_button:
           type: object
+          required: true
           properties:
             text:
               type: string
+              required: true
             url:
               type: string
+              required: true
             variant:
               type: string
+              required: true
+              options:
+                - primary
+                - secondary
+                - outline
+            icon:
+              type: string
+              required: false
         login_link:
           type: object
           required: false
           properties:
             text:
               type: string
+              required: true
             url:
               type: string
+              required: true
         features:
           type: array
           required: false
-          description: "List of features with icons and optional counts"
           items:
             icon:
               type: string
+              required: true
               description: "Icon name: book, code, briefcase, robot, users, calendar, play"
             text:
               type: string
+              required: true
             count:
               type: string
               required: false
+          description: List of features with icons and optional counts
+      description: Signup/CTA card below media
+props:
+  title:
+    type: string
+    required: true
+    description: Main headline (keep under 60 characters for best display)
+    example: Full Stack Development with AI
+  subtitle:
+    type: string
+    required: false
+    description: Supporting text below title explaining the value proposition
+    example: Learn at your own pace with AI-powered tools and unlimited mentorship
