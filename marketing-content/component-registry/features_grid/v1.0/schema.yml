@@ -1,124 +1,80 @@
 name: FeaturesGrid
-description: A unified grid component with two variants - "highlight" for stats/metrics cards and "detailed" for full feature cards with descriptions and links.
-when_to_use: |
-  Use the "highlight" variant (default) when showcasing key metrics, statistics, or simple features with optional values.
-  Use the "detailed" variant when showcasing programs, services, or features that need full descriptions, categories, and action links.
+version: "1.0"
+component: FeaturesGrid
+file: client/src/components/features_grid/FeaturesGrid.tsx
+description: >-
+  A unified grid component with two variants - "highlight" for stats/metrics cards and "detailed" for full feature cards
+  with descriptions and links.
+when_to_use: >
+  Use the "highlight" variant (default) when showcasing key metrics, statistics, or simple features with optional
+  values.
 
+  Use the "detailed" variant when showcasing programs, services, or features that need full descriptions, categories,
+  and action links.
+variants:
+  detailed: {}
+variant_props:
+  detailed: {}
 props:
-  type:
-    type: string
-    required: true
-    description: Must be "features_grid"
-    
-  version:
-    type: string
-    required: false
-    description: Component version for registry tracking
-    
-  variant:
-    type: string
-    required: false
-    default: highlight
-    description: Card style - "highlight" for stats/metrics cards, "detailed" for full feature cards with descriptions and links
-    
   title:
     type: string
-    required: true
+    required: false
     description: Main heading for the section
-    
   subtitle:
     type: string
     required: false
     description: Supporting text below the title
-    
+  items:
+    type: array
+    required: true
+    items:
+      id:
+        type: string
+        required: false
+      icon:
+        type: string
+        required: false
+      icon_color:
+        type: string
+        required: false
+      image:
+        type: object
+        required: false
+        properties:
+          src:
+            type: string
+            required: true
+          alt:
+            type: string
+            required: true
+      category:
+        type: string
+        required: false
+      title:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      link_url:
+        type: string
+        required: false
+      link_text:
+        type: string
+        required: false
+    description: Array of items to display (structure varies by variant)
   columns:
     type: number
     required: false
-    default: 3
     description: Number of columns on desktop (1-4)
-    
-  background:
-    type: string
-    required: false
-    description: Background color class (e.g., "bg-muted/30", "bg-primary/5")
-
   icon_color:
     type: string
     required: false
     description: Hex color for all icons in this grid (e.g., "#0097CD" for blue). If not specified, icons use their default colors.
-
-  items:
-    type: array
-    required: true
-    description: Array of items to display (structure varies by variant)
-
-highlight_item_props:
-  description: Item structure for variant "highlight" (default)
-  props:
-    id:
-      type: string
-      required: false
-      description: Unique identifier for the item
-    icon:
-      type: string
-      required: true
-      description: Icon name - checks custom icons first, then falls back to Tabler icons
-    icon_color:
-      type: string
-      required: false
-      description: Hex color for this item's icon (e.g., "#0097CD"). Overrides section-level icon_color.
-    value:
-      type: string
-      required: false
-      description: The prominent metric/stat value (e.g., "84%", "3-6 months"). If omitted, shows icon + title + description style.
-    title:
-      type: string
-      required: true
-      description: Label or title for the card
-    description:
-      type: string
-      required: false
-      description: Optional description text below the title
-
-detailed_item_props:
-  description: Item structure for variant "detailed"
-  props:
-    id:
-      type: string
-      required: false
-      description: Unique identifier for the item
-    icon:
-      type: string
-      required: true
-      description: Icon name - checks custom icons first, then falls back to Tabler icons
-    icon_color:
-      type: string
-      required: false
-      description: Hex color for this item's icon (e.g., "#0097CD"). Overrides section-level icon_color.
-    category:
-      type: string
-      required: false
-      description: Small category label shown above the title
-    title:
-      type: string
-      required: true
-      description: Main title for the feature card
-    description:
-      type: string
-      required: true
-      description: Full descriptive text for the feature
-    link_url:
-      type: string
-      required: false
-      description: URL for the action link
-    link_text:
-      type: string
-      required: false
-      description: Text for the link (defaults to "Read More")
-
-detailed_only_props:
   collapsible_mobile:
     type: boolean
     required: false
-    default: true
-    description: Whether detailed cards collapse on mobile with a toggle arrow (only for "detailed" variant)
+  background:
+    type: string
+    required: false
+    description: Background color class (e.g., "bg-muted/30", "bg-primary/5")

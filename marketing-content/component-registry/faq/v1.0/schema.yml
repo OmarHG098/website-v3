@@ -1,27 +1,39 @@
-name: "FAQ Section"
+name: FAQ Section
 version: "1.0"
-component: "FAQSection"
-file: "client/src/components/career-programs/FAQSection.tsx"
-description: "Collapsible accordion with frequently asked questions"
-
+component: FAQSection
+file: client/src/components/career-programs/FAQSection.tsx
+description: Collapsible accordion with frequently asked questions
 when_to_use: |
   Use to address common objections and questions.
   Helps with SEO and reduces support inquiries.
-
 props:
   title:
     type: string
     required: true
-    example: "Frequently Asked Questions"
-    
+    example: Frequently Asked Questions
   items:
     type: array
     required: true
-    description: "Q&A pairs (recommended: 5-7 items)"
     items:
       question:
         type: string
-        example: "Do I need prior coding experience?"
+        required: true
+        example: Do I need prior coding experience?
       answer:
         type: string
-        example: "No prior experience is required. We start from the fundamentals."
+        required: true
+        example: No prior experience is required. We start from the fundamentals.
+    description: "Q&A pairs (recommended: 5-7 items)"
+  cta:
+    type: object
+    required: false
+    properties:
+      text:
+        type: string
+        required: true
+      button_text:
+        type: string
+        required: true
+      button_url:
+        type: string
+        required: true
