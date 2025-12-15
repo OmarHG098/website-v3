@@ -229,6 +229,19 @@ variant_props:
           required: true
           description: Image alt text for accessibility
       description: Alternative to video - static image on right side
+    background_image:
+      type: object
+      required: false
+      properties:
+        src:
+          type: string
+          required: true
+          description: Background image source URL or path
+        alt:
+          type: string
+          required: false
+          description: Background image alt text for accessibility
+      description: Full-width background image for the section
     form:
       type: object
       required: false
