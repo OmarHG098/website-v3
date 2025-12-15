@@ -1183,6 +1183,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Validation cache cleared" });
   });
 
+  // ============================================
+  // AI Content Adaptation API
+  // ============================================
+
+  // Adapt content using AI with layered context
+  app.post("/api/content/adapt-with-ai", async (req, res) => {
+    try {
+      const { getContentAdapter } = await import("./ai");
+      
+      const {
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      } = req.body;
+
+      // Validate required fields
+      if (!contentType || !contentSlug || !targetComponent || !targetVersion || !sourceYaml) {
+        res.status(400).json({
+          error: "Missing required fields",
+          required: ["contentType", "contentSlug", "targetComponent", "targetVersion", "sourceYaml"],
+        });
+        return;
+      }
+
+      // Validate content type
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({
+          error: "Invalid content type",
+          validTypes,
+        });
+        return;
+      }
+
+      const adapter = getContentAdapter();
+      const result = await adapter.adapt({
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      });
+
+      res.json(result);
+    } catch (error) {
+      console.error("AI adaptation error:", error);
+      res.status(500).json({
+        error: "AI adaptation failed",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
+  // Clear AI context cache
+  app.post("/api/content/clear-ai-cache", (_req, res) => {
+    try {
+      const { getContentAdapter } = require("./ai");
+      const adapter = getContentAdapter();
+      adapter.clearCache();
+      res.json({ success: true, message: "AI context cache cleared" });
+    } catch (error) {
+      res.status(500).json({
+        error: "Failed to clear cache",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
