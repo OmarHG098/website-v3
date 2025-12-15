@@ -101,7 +101,7 @@ sections:
           url: "https://4geeks.com/slack"
           variant: "primary"
       - title: "4Geeks.com"
-        icon: "World"
+        icon: "Rigobot"
         description: "Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go."
         button:
           text: "Visit Now"
