@@ -340,7 +340,11 @@ export function EditableSection({ children, section, index, sectionType, content
   
   const handleUpdate = useCallback((updatedSection: Section) => {
     setCurrentSection(updatedSection);
-  }, []);
+    // Also update the context so the page re-renders with the new data
+    if (editMode?.updateSection) {
+      editMode.updateSection(index, updatedSection);
+    }
+  }, [editMode, index]);
   
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
