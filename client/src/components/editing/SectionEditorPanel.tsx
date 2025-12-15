@@ -19,6 +19,7 @@ interface SectionEditorPanelProps {
   version?: number;
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
+  onPreviewChange?: (previewSection: Section | null) => void;
 }
 
 export function SectionEditorPanel({
@@ -31,6 +32,7 @@ export function SectionEditorPanel({
   version,
   onUpdate,
   onClose,
+  onPreviewChange,
 }: SectionEditorPanelProps) {
   const [yamlContent, setYamlContent] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
@@ -57,16 +59,21 @@ export function SectionEditorPanel({
     setYamlContent(value);
     setHasChanges(true);
     
-    // Validate YAML on change
+    // Validate YAML on change and trigger live preview
     try {
-      yamlParser.load(value);
+      const parsed = yamlParser.load(value) as Section;
       setParseError(null);
+      
+      // Trigger live preview if valid section
+      if (parsed && typeof parsed === "object" && onPreviewChange) {
+        onPreviewChange(parsed);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
     }
-  }, []);
+  }, [onPreviewChange]);
 
   // Shared save logic - returns true on success
   const saveToServer = useCallback(async (): Promise<boolean> => {

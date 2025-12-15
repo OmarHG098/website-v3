@@ -64,6 +64,9 @@ export function EditableSection({ children, section, index, sectionType, content
   const [isAdapting, setIsAdapting] = useState(false);
   const [adaptedSection, setAdaptedSection] = useState<Section | null>(null);
   const [hasAdapted, setHasAdapted] = useState(false);
+  
+  // Live editor preview state
+  const [editorPreviewSection, setEditorPreviewSection] = useState<Section | null>(null);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -356,6 +359,7 @@ export function EditableSection({ children, section, index, sectionType, content
   
   const handleCloseEditor = useCallback(() => {
     setIsEditorOpen(false);
+    setEditorPreviewSection(null);
   }, []);
   
   const handleUpdate = useCallback((updatedSection: Section) => {
@@ -620,6 +624,8 @@ export function EditableSection({ children, section, index, sectionType, content
               )}
             </div>
           </>
+        ) : isEditorOpen && editorPreviewSection ? (
+          renderSection(editorPreviewSection, index)
         ) : (
           children
         )}
@@ -638,6 +644,7 @@ export function EditableSection({ children, section, index, sectionType, content
             version={version}
             onUpdate={handleUpdate}
             onClose={handleCloseEditor}
+            onPreviewChange={setEditorPreviewSection}
           />
         </Suspense>
       )}

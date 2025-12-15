@@ -18,10 +18,39 @@ sections:
     description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
     video:
       url: /attached_assets/ai-engineering_1765593572918.mp4
+      title: AI Engineering Overview
       ratio: "9:16"
       muted: true
+      autoplay: false
       loop: true
-    form: {}
+      preview_image_url: /attached_assets/ai-preview_1765593572918.jpg
+    background_image:
+      src: /attached_assets/ai-engineering-light_1765830844948.jpg
+      alt: AI Engineering Background
+    form:
+      variant: inline
+      title: Start Your Journey
+      subtitle: Join thousands of learners building their tech careers
+      submit_label: Get Started →
+      tags: website-lead,personalized-support
+      automations: welcome-email
+      fields:
+        email:
+          visible: true
+          helper_text: Join 10,000+ professionals advancing their careers
+          placeholder: Enter your work email
+      success:
+        message: Thank you for signing up! We'll be in touch soon.
+      terms_url: /terms-and-conditions
+      privacy_url: /privacy-policy
+      show_consent: true
+      show_terms: true
+      className: inline-form
+    cta_button:
+      text: Explore Programs
+      url: /programs
+      variant: primary
+      icon: arrow-right
     trust_bar:
       rating: "4.5"
       review_count: Based on 5149+ reviews
