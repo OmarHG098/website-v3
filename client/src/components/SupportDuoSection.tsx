@@ -111,7 +111,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                 return (
                   <div 
                     key={groupIndex} 
-                    className="space-y-3 pl-4 border-l-4"
+                    className="space-y-3 pl-4 border-l-4 rounded-lg"
                     style={{ borderLeftColor: accentColor }}
                   >
                     <div className="flex items-center gap-3">
