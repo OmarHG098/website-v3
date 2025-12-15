@@ -128,7 +128,7 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
   }
 }
 
-export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string }> {
+export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string; updatedSections?: unknown[] }> {
   const { contentType, slug, locale, operations, variant, version } = request;
   
   // Validate variant/version are used together and version is valid
@@ -165,7 +165,10 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     
     fs.writeFileSync(filePath, updatedYaml, "utf-8");
     
-    return { success: true };
+    // Return the updated sections array for immediate UI update
+    const updatedSections = Array.isArray(content.sections) ? content.sections : undefined;
+    
+    return { success: true, updatedSections };
   } catch (error) {
     console.error("Content edit error:", error);
     return { success: false, error: error instanceof Error ? error.message : "Unknown error" };

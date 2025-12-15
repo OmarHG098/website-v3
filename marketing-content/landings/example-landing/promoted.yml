@@ -7,7 +7,7 @@ meta:
 sections:
   - type: hero
     variant: singleColumn
-    title: You are not alone anymore for the AI Era
+    title: You are not alone for the AI Era
     subtitle: Receive personalized career support tailored to your goals
     cta_buttons:
       - text: Get Started

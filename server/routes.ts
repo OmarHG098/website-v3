@@ -922,7 +922,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clearSitemapCache();
         clearRedirectCache();
         
-        res.json({ success: true });
+        // Return success with updated sections for immediate UI update
+        res.json({ success: true, updatedSections: result.updatedSections });
       } else {
         res.status(400).json({ error: result.error });
       }

@@ -114,9 +114,17 @@ export function SectionEditorPanel({
       });
 
       if (response.ok) {
-        onUpdate(parsed);
+        const result = await response.json();
+        
+        // Use server-confirmed section data if available, fallback to local parsed
+        const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
+        if (!confirmedSection) {
+          console.warn("Server did not return updated section, using local parsed data");
+        }
+        onUpdate(confirmedSection || parsed);
         setHasChanges(false);
         
+        // Still invalidate queries to ensure cache consistency
         const apiPath = contentType === "program" 
           ? "/api/career-programs" 
           : contentType === "landing" 
