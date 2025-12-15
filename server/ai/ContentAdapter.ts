@@ -8,7 +8,7 @@ import type { AdaptOptions, AdaptResult, FullContext } from "./types";
 import { getContextManager, type ContextManager } from "./ContextManager";
 import { getLLMService, type LLMService } from "./LLMService";
 import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock } from "./prompts";
-import { componentToJsonSchema, getValidProperties, getRequiredProperties } from "./SchemaConverter";
+import { componentToJsonSchema, validateContentAgainstSchema } from "./SchemaConverter";
 
 // Singleton instance
 let instance: ContentAdapter | null = null;
@@ -67,41 +67,6 @@ export class ContentAdapter {
     }
   }
 
-  /**
-   * Validate object against component schema
-   * Checks required properties and removes invalid ones
-   */
-  private validateAgainstSchema(
-    content: Record<string, unknown>,
-    context: FullContext
-  ): { valid: boolean; cleaned: Record<string, unknown>; errors: string[] } {
-    const errors: string[] = [];
-    const validProps = getValidProperties(context.component, context.targetVariant);
-    const requiredProps = getRequiredProperties(context.component, context.targetVariant);
-
-    // Check for missing required properties
-    for (const prop of requiredProps) {
-      if (!(prop in content) || content[prop] === null || content[prop] === undefined) {
-        errors.push(`Missing required property: ${prop}`);
-      }
-    }
-
-    // Remove invalid properties (properties not in schema)
-    const cleaned: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(content)) {
-      if (validProps.includes(key)) {
-        cleaned[key] = value;
-      } else {
-        console.warn(`Removing invalid property not in schema: ${key}`);
-      }
-    }
-
-    return {
-      valid: errors.length === 0,
-      cleaned,
-      errors,
-    };
-  }
 
   /**
    * Adapt content using AI with structured output enforcement
@@ -152,8 +117,8 @@ Respond with a JSON object that matches the target component structure.`;
         }
       );
 
-      // Validate the structured output against our schema
-      const validation = this.validateAgainstSchema(result.content, context);
+      // Validate the structured output against our schema (recursive validation)
+      const validation = validateContentAgainstSchema(result.content, context.component, context.targetVariant);
       
       if (!validation.valid) {
         console.warn("Structured output missing required fields:", validation.errors);
@@ -240,7 +205,7 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
 
       // Additional schema validation for the retry
       const parsed = retryValidation.parsed as Record<string, unknown>;
-      const schemaValidation = this.validateAgainstSchema(parsed, context);
+      const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
       const finalYaml = yaml.dump(schemaValidation.cleaned, { 
         indent: 2, 
         lineWidth: 120,
@@ -264,7 +229,7 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
 
     // Validate parsed YAML against component schema
     const parsed = validation.parsed as Record<string, unknown>;
-    const schemaValidation = this.validateAgainstSchema(parsed, context);
+    const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
     const finalYaml = yaml.dump(schemaValidation.cleaned, { 
       indent: 2, 
       lineWidth: 120,
