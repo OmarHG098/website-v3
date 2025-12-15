@@ -240,6 +240,14 @@ export function EditableSection({ children, section, index, sectionType, content
         'page': 'pages'
       };
       
+      // Convert the ORIGINAL section (from the page) to YAML for AI adaptation
+      // This preserves the user's current content when adapting to a new variant
+      const originalSectionYaml = yaml.dump(currentSection, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      
       const res = await fetch('/api/content/adapt-with-ai', {
         method: 'POST',
         headers: { 
@@ -252,7 +260,7 @@ export function EditableSection({ children, section, index, sectionType, content
           targetComponent: sectionType,
           targetVersion: selectedVersion || 'v1.0',
           targetVariant: selectedVariant || currentExample.variant || 'default',
-          sourceYaml: currentExample.yaml
+          sourceYaml: originalSectionYaml
         })
       });
       
@@ -289,7 +297,7 @@ export function EditableSection({ children, section, index, sectionType, content
     } finally {
       setIsAdapting(false);
     }
-  }, [currentExample, contentType, slug, sectionType, selectedVersion, toast]);
+  }, [currentExample, currentSection, contentType, slug, sectionType, selectedVersion, selectedVariant, toast]);
 
   const handleConfirmSwap = useCallback(async () => {
     // Use adapted section if available, otherwise use preview section
