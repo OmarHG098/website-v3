@@ -847,37 +847,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Content editing API
   app.post("/api/content/edit", async (req, res) => {
     try {
-      // Validate token and capabilities
+      // In development mode, allow without token (using X-Debug-Token or no auth)
+      const isDevelopment = process.env.NODE_ENV !== "production";
       const authHeader = req.headers.authorization;
-      if (!authHeader?.startsWith("Token ")) {
-        res.status(401).json({ error: "Authorization required" });
+      const debugToken = req.headers['x-debug-token'] as string | undefined;
+      
+      // Get token from Authorization header or X-Debug-Token
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+      
+      // In production, require valid token
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        
+        // Verify token has edit capabilities
+        const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+          method: "GET",
+          headers: {
+            "Authorization": `Token ${token}`,
+            "Academy": "4",
+          },
+        });
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "Insufficient permissions" });
+          return;
+        }
+      }
+      
+      // Support both formats:
+      // 1. Original: { contentType, slug, locale, operations: [...] }
+      // 2. Simplified: { contentType, slug, locale, operation, sectionIndex, sectionData, variant, version }
+      const { contentType, slug, locale, operations, operation, sectionIndex, sectionData, variant, version } = req.body;
+      
+      if (!contentType || !slug || !locale) {
+        res.status(400).json({ error: "Missing required fields: contentType, slug, locale" });
         return;
       }
       
-      const token = authHeader.slice(6);
+      // Build operations array if using simplified format
+      let finalOperations = operations;
+      if (!operations && operation) {
+        finalOperations = [{
+          action: operation,
+          index: sectionIndex,
+          section: sectionData,
+        }];
+      }
       
-      // Verify token has edit capabilities
-      const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
-        method: "GET",
-        headers: {
-          "Authorization": `Token ${token}`,
-          "Academy": "4",
-        },
-      });
-      
-      if (capResponse.status !== 200) {
-        res.status(403).json({ error: "Insufficient permissions" });
+      if (!finalOperations || !Array.isArray(finalOperations) || finalOperations.length === 0) {
+        res.status(400).json({ error: "Missing operations" });
         return;
       }
       
-      const { contentType, slug, locale, operations } = req.body;
-      
-      if (!contentType || !slug || !locale || !operations) {
-        res.status(400).json({ error: "Missing required fields" });
-        return;
-      }
-      
-      const result = await editContent({ contentType, slug, locale, operations });
+      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant, version });
       
       if (result.success) {
         // Clear relevant caches
