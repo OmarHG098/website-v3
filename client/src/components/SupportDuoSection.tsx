@@ -167,24 +167,14 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                     )}
                     {group.button && (
                       <div className="mt-4">
-                        {/* Mobile: Text link with arrow */}
                         <a 
                           href={group.button.url}
-                          className="md:hidden text-primary hover:underline inline-flex items-center gap-1 font-medium"
+                          className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
                           data-testid={`link-bullet-group-${groupIndex}`}
                         >
                           {group.button.text}
                           {getIcon("ArrowRight", "", 16)}
                         </a>
-                        {/* Tablet/Desktop: Button */}
-                        <Button
-                          variant={group.button.variant === "primary" ? "default" : group.button.variant || "default"}
-                          asChild
-                          className="hidden md:inline-flex"
-                          data-testid={`button-bullet-group-${groupIndex}`}
-                        >
-                          <a href={group.button.url}>{group.button.text}</a>
-                        </Button>
                       </div>
                     )}
                   </div>
