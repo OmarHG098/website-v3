@@ -6,16 +6,33 @@ meta:
     - /demo/landing-page
 sections:
   - type: hero
-    variant: singleColumn
-    title: You are not alone anymore for the AI Era
+    version: "1.0"
+    title: You Are Not Alone Anymore
     subtitle: Receive personalized career support tailored to your goals
-    cta_buttons:
-      - text: Get Started
-        url: /signup
-        variant: primary
+    welcome_text: Welcome to
+    brand_mark:
+      prefix: Personalized
+      highlight: Support
+      suffix: "for the AI Era:"
+      color: chart-5
+    description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      loop: true
+    form: {}
     trust_bar:
       rating: "4.5"
-      trusted_text: Trusted by thousands of students
+      review_count: Based on 5149+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+    variant: productShowcase
   - type: features_grid
     version: "1.0"
     title: What You'll Learn

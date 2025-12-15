@@ -106,6 +106,10 @@ export const heroProductShowcaseSchema = z.object({
     src: z.string(),
     alt: z.string(),
   }).optional(),
+  background_image: z.object({
+    src: z.string(),
+    alt: z.string().optional(),
+  }).optional(),
   form: leadFormDataSchema.optional(),
   cta_button: ctaButtonSchema.optional(),
   trust_bar: productShowcaseTrustBarSchema.optional(),

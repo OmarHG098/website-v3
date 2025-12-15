@@ -22,9 +22,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
   return (
     <section 
-      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
+      className="py-16 md:py-20 relative overflow-hidden"
+      style={data.background_image ? {
+        backgroundImage: `url(${data.background_image.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      } : undefined}
       data-testid="section-hero"
     >
+      {!data.background_image && (
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
+      )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
