@@ -38,15 +38,15 @@ interface SupportDuoSectionProps {
   data: SupportDuoData;
 }
 
-const getIcon = (iconName: string, className?: string, size?: number) => {
+const getIcon = (iconName: string, className?: string, size?: number, color?: string) => {
   const CustomIcon = getCustomIcon(iconName);
   if (CustomIcon) {
     const sizeStr = size ? `${size}px` : "20px";
-    return <CustomIcon width={sizeStr} height={sizeStr} className={className} />;
+    return <CustomIcon width={sizeStr} height={sizeStr} className={className} color={color} />;
   }
-  const icons = TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>;
+  const icons = TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number; color?: string }>>;
   const IconComponent = icons[`Icon${iconName}`];
-  return IconComponent ? <IconComponent className={className} size={size || 20} /> : null;
+  return IconComponent ? <IconComponent className={className} size={size || 20} color={color} /> : null;
 };
 
 // Human + AI Support Duo Section - Displays mentorship and Rigobot benefits
@@ -117,7 +117,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                     <div className="flex items-center gap-3">
                       {group.icon ? (
                         <span className="flex-shrink-0" style={{ color: accentColor }}>
-                          {getIcon(group.icon, "", 32)}
+                          {getIcon(group.icon, "", 32, accentColor)}
                         </span>
                       ) : group.image ? (
                         <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
