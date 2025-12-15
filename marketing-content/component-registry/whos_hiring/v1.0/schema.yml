@@ -1,45 +1,40 @@
-name: "Who's Hiring Section"
+name: Who's Hiring Section
 version: "1.0"
-component: "WhosHiringSection"
-file: "client/src/components/career-programs/WhosHiringSection.tsx"
-description: "Display a scrolling marquee of company logos showing where graduates are hired"
-
+component: WhosHiringSection
+file: client/src/components/career-programs/WhosHiringSection.tsx
+description: Display a scrolling marquee of company logos showing where graduates are hired
 when_to_use: |
   Use this section to build trust by showcasing real employers who have hired your graduates.
   Place after why_learn_ai and before testimonials for maximum social proof impact.
   Include 8-12 logos for optimal carousel display; the marquee will loop continuously.
-
 props:
   title:
     type: string
     required: true
-    description: "Section heading"
-    example: "Who's Hiring Our Graduates?"
-    
+    description: Section heading
+    example: Who's Hiring Our Graduates?
   subtitle:
     type: string
     required: false
-    description: "Supporting text below the title"
-    example: "Our alumni work at top companies around the world"
-    
+    description: Supporting text below the title
+    example: Our alumni work at top companies around the world
   description:
     type: string
     required: false
-    description: "Longer explanatory text about hiring partners and career outcomes"
-    example: "From startups to Fortune 500 companies, our graduates are making an impact across industries."
-    
+    description: Longer explanatory text about hiring partners and career outcomes
+    example: From startups to Fortune 500 companies, our graduates are making an impact across industries.
   logos:
     type: array
     required: true
-    description: "List of company logos (recommended: 8-12 for smooth carousel)"
     items:
       src:
         type: string
         required: true
-        description: "URL path to the logo image"
-        example: "/attached_assets/microsoft_1764719829995.png"
+        description: URL path to the logo image
+        example: /attached_assets/microsoft_1764719829995.png
       alt:
         type: string
         required: true
-        description: "Company name for accessibility"
-        example: "Microsoft"
+        description: Company name for accessibility
+        example: Microsoft
+    description: "List of company logos (recommended: 8-12 for smooth carousel)"

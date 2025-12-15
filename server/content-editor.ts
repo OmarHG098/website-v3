@@ -34,7 +34,8 @@ function getContentPath(contentType: string, slug: string, locale: string, varia
   }
   
   // If variant and version are specified, use variant file path
-  if (variant && version !== undefined) {
+  // "default" variant means base content, not a variant file
+  if (variant && variant !== "default" && version !== undefined) {
     return path.join(folder, `${variant}.v${version}.${locale}.yml`);
   }
   

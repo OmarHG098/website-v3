@@ -1,79 +1,60 @@
+name: Comparison table Section
 version: "1.0"
-
-component: "ComparisonTable"
-file: "client/src/components/ComparisonTable.tsx"
-description: "A responsive comparison table showing features across different options. Supports highlighting a preferred column, checkmarks for yes/no values, and mobile-friendly card layout."
-
+component: ComparisonTable
+file: client/src/components/ComparisonTable.tsx
+description: >-
+  A responsive comparison table showing features across different options. Supports highlighting a preferred column,
+  checkmarks for yes/no values, and mobile-friendly card layout.
 when_to_use: |
   Use the comparison table when you need to show side-by-side comparisons:
   - Comparing your product/service with competitors
   - Showing feature availability across different plans
   - Highlighting advantages over alternatives
-
 props:
-  type:
-    type: string
-    required: true
-    value: "comparison_table"
-    description: "Section type identifier"
-
-  version:
-    type: string
-    required: false
-    default: "1.0"
-    description: "Component version"
-
   title:
     type: string
     required: true
-    description: "Section heading"
-    example: "How We Compare"
-
+    description: Section heading
+    example: How We Compare
   subtitle:
     type: string
     required: false
-    description: "Explanatory text below the title"
-    example: "See how our approach stacks up against typical alternatives"
-
+    description: Explanatory text below the title
+    example: See how our approach stacks up against typical alternatives
   columns:
     type: array
     required: true
-    description: "Table columns (first column is typically 'Feature')"
     items:
       name:
         type: string
         required: true
-        description: "Column header text"
+        description: Column header text
       highlight:
         type: boolean
         required: false
-        description: "Whether to highlight this column (typically your brand)"
-
+        description: Whether to highlight this column (typically your brand)
+    description: Table columns (first column is typically 'Feature')
   rows:
     type: array
     required: true
-    description: "Comparison rows"
     items:
       feature:
         type: string
         required: true
-        description: "Feature name (first column)"
+        description: Feature name (first column)
       values:
         type: array
         required: true
-        description: "Values for each non-feature column. Use 'Yes'/'No' for checkmark/X display."
+        items:
+          type:
+            type: string
+            required: true
+        description: Values for each non-feature column. Use 'Yes'/'No' for checkmark/X display.
       feature_description:
         type: string
         required: false
-        description: "Optional description shown below the feature name"
-
-  background:
+        description: Optional description shown below the feature name
+    description: Comparison rows
+  footnote:
     type: string
     required: false
-    default: "bg-background"
-    description: "Background Tailwind class"
-
-  footer_note:
-    type: string
-    required: false
-    description: "Small disclaimer text at the bottom"

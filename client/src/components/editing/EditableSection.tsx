@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } from "react";
-import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX } from "@tabler/icons-react";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles } from "@tabler/icons-react";
 import type { Section } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -8,6 +8,15 @@ import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
 import { renderSection } from "@/components/SectionRenderer";
+import yaml from "js-yaml";
+
+// Convert slug/camelCase to human readable format
+function deslugify(str: string): string {
+  return str
+    .replace(/[-_]/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
 
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
@@ -44,12 +53,26 @@ export function EditableSection({ children, section, index, sectionType, content
   const [selectedVersion, setSelectedVersion] = useState<string>("");
   const [variants, setVariants] = useState<string[]>([]); // Unique variant slugs from examples
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string}[]>([]);
+  const [selectedExampleIndex, setSelectedExampleIndex] = useState(0); // Index within current variant's examples
+  const [examplesWithVariants, setExamplesWithVariants] = useState<{filename: string, variant: string, name: string, yaml: string}[]>([]);
   const [previewSection, setPreviewSection] = useState<Section | null>(null);
   const [isLoadingSwap, setIsLoadingSwap] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [showVersionPicker, setShowVersionPicker] = useState(false);
+  
+  // AI adaptation state
+  const [isAdapting, setIsAdapting] = useState(false);
+  const [adaptedSection, setAdaptedSection] = useState<Section | null>(null);
+  const [hasAdapted, setHasAdapted] = useState(false);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
+  
+  // Get examples for the currently selected variant
+  const examplesForCurrentVariant = useMemo(() => {
+    return examplesWithVariants.filter(e => e.variant === selectedVariant);
+  }, [examplesWithVariants, selectedVariant]);
+  
+  const currentExample = examplesForCurrentVariant[selectedExampleIndex] || null;
 
   // Get current section's version from the section object
   const currentSectionVersion = (section as { version?: string }).version || "";
@@ -104,17 +127,18 @@ export function EditableSection({ children, section, index, sectionType, content
         // Bail if a newer version request has started
         if (activeVersionRef.current !== requestedVersion) return;
         
-        // API returns examples with variant property directly
+        // API returns examples with variant and yaml properties
         const exs: {name: string, filename?: string, variant?: string, yaml?: string}[] = data.examples || [];
         
-        // Map examples to our format - variant is directly on the example object
+        // Map examples to our format - include yaml for parsing
         const examplesData = exs.map(ex => ({
           filename: ex.filename || ex.name?.toLowerCase().replace(/\s+/g, '-') + '.yml',
           variant: ex.variant || "default",
-          name: ex.name || ""
+          name: ex.name || "",
+          yaml: ex.yaml || ""
         }));
         
-        setExamplesWithVariants(examplesData as any);
+        setExamplesWithVariants(examplesData);
         
         // Extract unique variants
         const uniqueVariants = Array.from(new Set(examplesData.map(e => e.variant)));
@@ -138,35 +162,45 @@ export function EditableSection({ children, section, index, sectionType, content
       });
   }, [swapPopoverOpen, sectionType, selectedVersion, section]);
 
-  // Update preview when variant changes - fetch example content
+  // Reset example index and adaptation state when variant changes
   useEffect(() => {
-    if (!swapPopoverOpen || !sectionType || !selectedVersion || examplesWithVariants.length === 0 || variants.length === 0) {
-      setPreviewSection(null);
-      return;
-    }
-    const variantSlug = variants[selectedVariantIndex];
-    // Find first example with this variant
-    const example = examplesWithVariants.find(e => e.variant === variantSlug);
-    if (!example) {
+    setSelectedExampleIndex(0);
+    setAdaptedSection(null);
+    setHasAdapted(false);
+  }, [selectedVariantIndex]);
+  
+  // Reset adaptation state when example changes
+  useEffect(() => {
+    setAdaptedSection(null);
+    setHasAdapted(false);
+  }, [selectedExampleIndex]);
+
+  // Update preview when variant or example changes - parse YAML content locally
+  useEffect(() => {
+    if (!swapPopoverOpen || !sectionType || !currentExample || !currentExample.yaml) {
       setPreviewSection(null);
       return;
     }
     
-    // Fetch the example content
-    const token = getDebugToken();
-    fetch(`/api/component-registry/${sectionType}/${selectedVersion}/examples/${example.filename}`, {
-      headers: token ? { 'X-Debug-Token': token } : {}
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.content) {
-          setPreviewSection({ type: sectionType, ...data.content } as Section);
-        } else {
-          setPreviewSection(null);
-        }
-      })
-      .catch(() => setPreviewSection(null));
-  }, [swapPopoverOpen, sectionType, selectedVersion, examplesWithVariants, variants, selectedVariantIndex]);
+    // Parse YAML content locally
+    try {
+      const parsed = yaml.load(currentExample.yaml);
+      // Handle both array format (sections list) and object format (single section)
+      let sectionData: Record<string, unknown>;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        sectionData = parsed[0] as Record<string, unknown>;
+      } else if (parsed && typeof parsed === 'object') {
+        sectionData = parsed as Record<string, unknown>;
+      } else {
+        setPreviewSection(null);
+        return;
+      }
+      setPreviewSection({ type: sectionType, ...sectionData } as Section);
+    } catch (err) {
+      console.error("Failed to parse example YAML:", err);
+      setPreviewSection(null);
+    }
+  }, [swapPopoverOpen, sectionType, currentExample]);
 
   // Cycle through variants
   const cycleVariant = useCallback((direction: number) => {
@@ -179,8 +213,89 @@ export function EditableSection({ children, section, index, sectionType, content
     });
   }, [variants.length]);
 
+  // Cycle through examples within current variant
+  const cycleExample = useCallback((direction: number) => {
+    if (examplesForCurrentVariant.length <= 1) return;
+    setSelectedExampleIndex(prev => {
+      let next = prev + direction;
+      if (next < 0) next = examplesForCurrentVariant.length - 1;
+      if (next >= examplesForCurrentVariant.length) next = 0;
+      return next;
+    });
+  }, [examplesForCurrentVariant.length]);
+
+  // Handle AI adaptation of the selected variant
+  const handleAdaptWithAI = useCallback(async () => {
+    if (!currentExample?.yaml || !contentType || !slug || !sectionType) return;
+    
+    setIsAdapting(true);
+    try {
+      const token = getDebugToken();
+      
+      // Map contentType prop format to API format
+      const contentTypeMap: Record<string, string> = {
+        'program': 'programs',
+        'landing': 'landings',
+        'location': 'locations',
+        'page': 'pages'
+      };
+      
+      const res = await fetch('/api/content/adapt-with-ai', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(token ? { 'X-Debug-Token': token } : {})
+        },
+        body: JSON.stringify({
+          contentType: contentTypeMap[contentType] || contentType,
+          contentSlug: slug,
+          targetComponent: sectionType,
+          targetVersion: selectedVersion || 'v1.0',
+          targetVariant: selectedVariant || currentExample.variant || 'default',
+          sourceYaml: currentExample.yaml
+        })
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to adapt content with AI');
+      }
+      
+      const data = await res.json();
+      
+      // Parse the adapted YAML
+      const adaptedYaml = data.adaptedYaml || data.yaml;
+      if (!adaptedYaml) {
+        throw new Error('No adapted content returned');
+      }
+      
+      const parsed = yaml.load(adaptedYaml);
+      let sectionData: Record<string, unknown>;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        sectionData = parsed[0] as Record<string, unknown>;
+      } else if (parsed && typeof parsed === 'object') {
+        sectionData = parsed as Record<string, unknown>;
+      } else {
+        throw new Error('Invalid adapted content format');
+      }
+      
+      const adapted = { type: sectionType, ...sectionData } as Section;
+      setAdaptedSection(adapted);
+      setHasAdapted(true);
+      toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to adapt content';
+      toast({ title: "AI Adaptation Error", description: message, variant: "destructive" });
+    } finally {
+      setIsAdapting(false);
+    }
+  }, [currentExample, contentType, slug, sectionType, selectedVersion, toast]);
+
   const handleConfirmSwap = useCallback(async () => {
-    if (!previewSection || !contentType || !slug) return;
+    // Use adapted section if available, otherwise use preview section
+    const sectionToSave = hasAdapted && adaptedSection ? adaptedSection : previewSection;
+    if (!sectionToSave || !contentType || !slug) return;
+    
     setIsConfirming(true);
     try {
       const token = getDebugToken();
@@ -198,19 +313,21 @@ export function EditableSection({ children, section, index, sectionType, content
           variant: variant || 'default',
           version: version || 1,
           sectionIndex: index,
-          sectionData: previewSection
+          sectionData: sectionToSave
         })
       });
       if (!res.ok) throw new Error('Failed to swap section');
-      setCurrentSection(previewSection);
+      setCurrentSection(sectionToSave);
       setSwapPopoverOpen(false);
+      setAdaptedSection(null);
+      setHasAdapted(false);
       toast({ title: "Section swapped", description: "The section variant has been updated. Refresh the page to see changes." });
     } catch (err) {
       toast({ title: "Error", description: "Failed to swap section variant.", variant: "destructive" });
     } finally {
       setIsConfirming(false);
     }
-  }, [previewSection, contentType, slug, locale, variant, version, index, toast]);
+  }, [previewSection, adaptedSection, hasAdapted, contentType, slug, locale, variant, version, index, toast]);
   
   const handleOpenEditor = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -242,7 +359,9 @@ export function EditableSection({ children, section, index, sectionType, content
           absolute inset-0 z-40 pointer-events-none transition-all duration-150
           ${isEditorOpen 
             ? "ring-2 ring-primary ring-offset-2" 
-            : "group-hover:ring-2 group-hover:ring-primary/50 group-hover:ring-offset-1"
+            : swapPopoverOpen
+              ? "border-l-2 border-r-2 border-b-2 border-primary"
+              : "group-hover:ring-2 group-hover:ring-primary/50 group-hover:ring-offset-1"
           }
         `}
       />
@@ -305,60 +424,114 @@ export function EditableSection({ children, section, index, sectionType, content
               <IconArrowsExchange className="h-4 w-4" />
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-72" onClick={(e) => e.stopPropagation()}>
-            <div className="space-y-3">
-              <h4 className="font-medium text-sm">Swap component variant</h4>
-              {isLoadingSwap ? (
-                <div className="flex items-center justify-center py-4" data-testid={`loader-swap-section-${index}`}>
-                  <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          <PopoverContent className="w-auto min-w-[500px] max-w-[700px] p-2" onClick={(e) => e.stopPropagation()}>
+            {isLoadingSwap ? (
+              <div className="flex items-center justify-center py-2 px-4" data-testid={`loader-swap-section-${index}`}>
+                <IconLoader2 className="h-4 w-4 animate-spin text-muted-foreground mr-2" />
+                <span className="text-xs text-muted-foreground">Loading variants...</span>
+              </div>
+            ) : versions.length === 0 ? (
+              <p className="text-xs text-muted-foreground px-2" data-testid={`text-no-variants-${index}`}>No versions available</p>
+            ) : (
+              <div className="flex items-center gap-3">
+                {/* Left: Component + Version badges */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span 
+                    className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-muted"
+                    data-testid={`badge-component-${index}`}
+                  >
+                    {sectionType}
+                  </span>
+                  <span 
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs bg-muted ${versions.length > 1 ? 'cursor-pointer hover-elevate' : ''}`}
+                    onClick={() => versions.length > 1 && setShowVersionPicker(!showVersionPicker)}
+                    data-testid={`badge-version-${index}`}
+                  >
+                    {selectedVersion || versions[0] || ""}
+                    {versions.length > 1 && <IconPencil className="h-3 w-3" />}
+                  </span>
                 </div>
-              ) : versions.length === 0 ? (
-                <p className="text-sm text-muted-foreground" data-testid={`text-no-variants-${index}`}>No versions available for this component.</p>
-              ) : (
-                <>
-                  <div className="text-xs text-muted-foreground mb-1">Component: {sectionType}</div>
-                  {versions.length > 1 ? (
-                    <Select value={selectedVersion} onValueChange={setSelectedVersion}>
-                      <SelectTrigger className="w-full" data-testid={`select-version-${index}`}>
-                        <SelectValue placeholder="Select version" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {versions.map(ver => (
-                          <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>v{ver}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  ) : (
-                    <div className="text-sm text-muted-foreground text-center py-1" data-testid={`text-version-${index}`}>
-                      Version: v{versions[0]}
-                    </div>
-                  )}
-                  {variants.length > 0 ? (
-                    <div className="flex items-center justify-between gap-2 mt-2">
-                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
-                        <IconChevronLeft className="h-4 w-4" />
-                      </Button>
-                      <span className="text-sm font-medium flex-1 text-center truncate" data-testid={`text-variant-${index}`}>
-                        {selectedVariant || "default"}
-                      </span>
-                      <Button size="icon" variant="ghost" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
-                        <IconChevronRight className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="text-sm text-muted-foreground text-center py-2">No variants found</div>
-                  )}
-                  <Button className="w-full mt-2" onClick={handleConfirmSwap} disabled={!previewSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
-                    {isConfirming ? (
-                      <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : (
-                      <IconCheck className="h-4 w-4 mr-2" />
+                
+                {/* Divider */}
+                <div className="w-px h-6 bg-border shrink-0" />
+                
+                {/* Center: Variant navigation */}
+                {variants.length > 0 ? (
+                  <div className="flex items-center gap-1 min-w-0 flex-1">
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                      <IconChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-xs font-medium truncate min-w-[80px] text-center" data-testid={`text-variant-${index}`}>
+                      {deslugify(selectedVariant || "default")}
+                      {examplesForCurrentVariant.length > 1 && (
+                        <span className="text-muted-foreground ml-1">({selectedExampleIndex + 1}/{examplesForCurrentVariant.length})</span>
+                      )}
+                    </span>
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
+                      <IconChevronRight className="h-4 w-4" />
+                    </Button>
+                    {/* Example navigation (only if multiple examples in variant) */}
+                    {examplesForCurrentVariant.length > 1 && (
+                      <>
+                        <div className="w-px h-4 bg-border/50 shrink-0" />
+                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
+                          <IconChevronLeft className="h-3 w-3" />
+                        </Button>
+                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
+                          <IconChevronRight className="h-3 w-3" />
+                        </Button>
+                      </>
                     )}
-                    Confirm
+                  </div>
+                ) : (
+                  <span className="text-xs text-muted-foreground">No variants</span>
+                )}
+                
+                {/* Divider */}
+                <div className="w-px h-6 bg-border shrink-0" />
+                
+                {/* Right: Action buttons */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => { setSwapPopoverOpen(false); setAdaptedSection(null); setHasAdapted(false); }} data-testid={`button-cancel-swap-${index}`} title="Cancel">
+                    <IconX className="h-4 w-4" />
                   </Button>
-                </>
-              )}
-            </div>
+                  {hasAdapted ? (
+                    <Button size="sm" className="h-7 px-3" onClick={handleConfirmSwap} disabled={!adaptedSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
+                      {isConfirming ? (
+                        <IconLoader2 className="h-3 w-3 animate-spin mr-1" />
+                      ) : (
+                        <IconCheck className="h-3 w-3 mr-1" />
+                      )}
+                      Confirm
+                    </Button>
+                  ) : (
+                    <Button size="sm" className="h-7 px-3" onClick={handleAdaptWithAI} disabled={!previewSection || isAdapting} data-testid={`button-adapt-ai-${index}`}>
+                      {isAdapting ? (
+                        <IconLoader2 className="h-3 w-3 animate-spin mr-1" />
+                      ) : (
+                        <IconSparkles className="h-3 w-3 mr-1" />
+                      )}
+                      {isAdapting ? 'Adapting...' : 'Adapt'}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* Version picker dropdown (shown conditionally) */}
+            {showVersionPicker && versions.length > 1 && (
+              <div className="mt-2 pt-2 border-t">
+                <Select value={selectedVersion} onValueChange={(val) => { setSelectedVersion(val); setShowVersionPicker(false); }}>
+                  <SelectTrigger className="w-full h-8 text-xs" data-testid={`select-version-${index}`}>
+                    <SelectValue placeholder="Select version" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {versions.map(ver => (
+                      <SelectItem key={ver} value={ver} data-testid={`option-version-${ver}-${index}`}>{ver}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </PopoverContent>
         </Popover>
       </div>
@@ -380,37 +553,43 @@ export function EditableSection({ children, section, index, sectionType, content
         {swapPopoverOpen ? (
           <>
             {/* Preview indicator banner */}
-            <div className="absolute top-0 left-0 right-0 z-30 bg-primary/90 text-primary-foreground text-xs px-3 py-1.5 flex items-center justify-between gap-2">
+            <div className={`absolute top-0 left-0 right-0 z-30 text-xs px-3 py-1.5 ${hasAdapted ? 'bg-green-600' : 'bg-primary/90'} text-primary-foreground`}>
               <span className="font-medium flex items-center gap-2">
                 {isLoadingSwap ? (
                   <>
                     <IconLoader2 className="h-3 w-3 animate-spin" />
                     Loading preview...
                   </>
+                ) : isAdapting ? (
+                  <>
+                    <IconLoader2 className="h-3 w-3 animate-spin" />
+                    Adapting content with AI...
+                  </>
+                ) : hasAdapted ? (
+                  <>
+                    <IconSparkles className="h-3 w-3" />
+                    AI Adapted: {selectedVariant || "default"}{examplesForCurrentVariant.length > 1 && currentExample?.name ? ` - ${currentExample.name}` : ""}
+                  </>
                 ) : (
-                  <>Preview: {selectedVariant || "default"}</>
+                  <>Preview: {selectedVariant || "default"}{examplesForCurrentVariant.length > 1 && currentExample?.name ? ` - ${currentExample.name}` : ""}</>
                 )}
               </span>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="h-5 px-1.5 text-primary-foreground hover:bg-primary-foreground/20"
-                onClick={() => setSwapPopoverOpen(false)}
-              >
-                <IconX className="h-3 w-3 mr-1" />
-                Cancel
-              </Button>
             </div>
             {/* Render the preview section or original with loading overlay */}
             <div className="pt-8 relative">
-              {previewSection ? (
+              {hasAdapted && adaptedSection ? (
+                renderSection(adaptedSection, index)
+              ) : previewSection ? (
                 renderSection(previewSection, index)
               ) : (
                 <>
                   {children}
-                  {isLoadingSwap && (
+                  {(isLoadingSwap || isAdapting) && (
                     <div className="absolute inset-0 bg-background/50 flex items-center justify-center">
-                      <IconLoader2 className="h-8 w-8 animate-spin text-primary" />
+                      <div className="flex flex-col items-center gap-2">
+                        <IconLoader2 className="h-8 w-8 animate-spin text-primary" />
+                        {isAdapting && <span className="text-sm text-muted-foreground">Adapting with AI...</span>}
+                      </div>
                     </div>
                   )}
                 </>

@@ -28,6 +28,7 @@ import {
 } from "./experiments";
 import { loadImageRegistry } from "./image-registry";
 import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
+import { getValidationService } from "../scripts/validation/service";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
@@ -846,37 +847,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Content editing API
   app.post("/api/content/edit", async (req, res) => {
     try {
-      // Validate token and capabilities
+      // In development mode, allow without token (using X-Debug-Token or no auth)
+      const isDevelopment = process.env.NODE_ENV !== "production";
       const authHeader = req.headers.authorization;
-      if (!authHeader?.startsWith("Token ")) {
-        res.status(401).json({ error: "Authorization required" });
+      const debugToken = req.headers['x-debug-token'] as string | undefined;
+      
+      // Get token from Authorization header or X-Debug-Token
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+      
+      // In production, require valid token
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        
+        // Verify token has edit capabilities
+        const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+          method: "GET",
+          headers: {
+            "Authorization": `Token ${token}`,
+            "Academy": "4",
+          },
+        });
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "Insufficient permissions" });
+          return;
+        }
+      }
+      
+      // Support both formats:
+      // 1. Original: { contentType, slug, locale, operations: [...] }
+      // 2. Simplified: { contentType, slug, locale, operation, sectionIndex, sectionData, variant, version }
+      const { contentType, slug, locale, operations, operation, sectionIndex, sectionData, variant, version } = req.body;
+      
+      if (!contentType || !slug || !locale) {
+        res.status(400).json({ error: "Missing required fields: contentType, slug, locale" });
         return;
       }
       
-      const token = authHeader.slice(6);
+      // Build operations array if using simplified format (only for update_section)
+      let finalOperations = operations;
+      if (!operations && operation === 'update_section') {
+        if (sectionIndex === undefined || sectionData === undefined || sectionData === null) {
+          res.status(400).json({ error: "update_section requires sectionIndex and sectionData" });
+          return;
+        }
+        finalOperations = [{
+          action: 'update_section',
+          index: sectionIndex,
+          section: sectionData,
+        }];
+      }
       
-      // Verify token has edit capabilities
-      const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
-        method: "GET",
-        headers: {
-          "Authorization": `Token ${token}`,
-          "Academy": "4",
-        },
-      });
-      
-      if (capResponse.status !== 200) {
-        res.status(403).json({ error: "Insufficient permissions" });
+      if (!finalOperations || !Array.isArray(finalOperations) || finalOperations.length === 0) {
+        res.status(400).json({ error: "Missing operations" });
         return;
       }
       
-      const { contentType, slug, locale, operations } = req.body;
+      // Only pass variant/version if both are meaningful (not "default" or undefined)
+      const effectiveVariant = variant && variant !== 'default' ? variant : undefined;
+      const effectiveVersion = effectiveVariant && version !== undefined ? version : undefined;
       
-      if (!contentType || !slug || !locale || !operations) {
-        res.status(400).json({ error: "Missing required fields" });
-        return;
-      }
-      
-      const result = await editContent({ contentType, slug, locale, operations });
+      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant: effectiveVariant, version: effectiveVersion });
       
       if (result.success) {
         // Clear relevant caches
@@ -1071,6 +1110,192 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     res.json(registry);
+  });
+
+  // ============================================
+  // Validation API Endpoints
+  // ============================================
+
+  // List available validators
+  app.get("/api/validation/validators", (_req, res) => {
+    const service = getValidationService();
+    const validators = service.getAvailableValidators();
+    res.json({
+      validators,
+      total: validators.length,
+    });
+  });
+
+  // Run all or specific validators
+  app.post("/api/validation/run", async (req, res) => {
+    try {
+      const { validators: validatorNames, includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runValidators({
+        validators: validatorNames,
+        includeArtifacts: includeArtifacts ?? false,
+      });
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Run a single validator
+  app.post("/api/validation/run/:name", async (req, res) => {
+    try {
+      const { name } = req.params;
+      const { includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runSingleValidator(name, includeArtifacts ?? false);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Get validation context info (for debugging)
+  app.get("/api/validation/context", async (_req, res) => {
+    try {
+      const service = getValidationService();
+      let context = service.getContext();
+      
+      if (!context) {
+        await service.buildContext();
+        context = service.getContext();
+      }
+      
+      if (!context) {
+        res.status(500).json({ error: "Failed to build context" });
+        return;
+      }
+      
+      // contentFiles is a flat array - count by type
+      const contentFiles = context.contentFiles;
+      const typeCounts = {
+        programs: contentFiles.filter(f => f.type === "program").length,
+        landings: contentFiles.filter(f => f.type === "landing").length,
+        locations: contentFiles.filter(f => f.type === "location").length,
+        pages: contentFiles.filter(f => f.type === "page").length,
+      };
+      
+      res.json({
+        contentFiles: typeCounts,
+        totalFiles: contentFiles.length,
+        validUrls: context.validUrls.size,
+        availableSchemas: context.availableSchemas.length,
+        redirects: context.redirectMap.size,
+      });
+    } catch (error) {
+      console.error("Context build error:", error);
+      res.status(500).json({ error: "Failed to get context" });
+    }
+  });
+
+  // Clear validation cache
+  app.post("/api/validation/clear-cache", (_req, res) => {
+    const service = getValidationService();
+    service.clearContext();
+    res.json({ success: true, message: "Validation cache cleared" });
+  });
+
+  // ============================================
+  // AI Content Adaptation API
+  // ============================================
+
+  // Adapt content using AI with layered context
+  app.post("/api/content/adapt-with-ai", async (req, res) => {
+    try {
+      const { getContentAdapter } = await import("./ai");
+      
+      const {
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        targetVariant,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      } = req.body;
+
+      // Validate required fields
+      if (!contentType || !contentSlug || !targetComponent || !targetVersion || !sourceYaml) {
+        res.status(400).json({
+          error: "Missing required fields",
+          required: ["contentType", "contentSlug", "targetComponent", "targetVersion", "sourceYaml"],
+        });
+        return;
+      }
+
+      // Validate content type
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({
+          error: "Invalid content type",
+          validTypes,
+        });
+        return;
+      }
+
+      const adapter = getContentAdapter();
+      // Use structured output for schema-enforced AI responses
+      const result = await adapter.adaptStructured({
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        targetVariant,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      });
+
+      res.json(result);
+    } catch (error) {
+      console.error("AI adaptation error:", error);
+      res.status(500).json({
+        error: "AI adaptation failed",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
+  // Clear AI context cache
+  app.post("/api/content/clear-ai-cache", (_req, res) => {
+    try {
+      const { getContentAdapter } = require("./ai");
+      const adapter = getContentAdapter();
+      adapter.clearCache();
+      res.json({ success: true, message: "AI context cache cleared" });
+    } catch (error) {
+      res.status(500).json({
+        error: "Failed to clear cache",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
   });
 
   const httpServer = createServer(app);
