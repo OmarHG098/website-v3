@@ -112,7 +112,7 @@ Respond with a JSON object that matches the target component structure.`;
         SYSTEM_PROMPT,
         prompt,
         {
-          jsonSchema: jsonSchema as Record<string, unknown>,
+          jsonSchema: jsonSchema as unknown as Record<string, unknown>,
           schemaName: `${options.targetComponent}_${options.targetVariant || 'default'}`.replace(/[^a-zA-Z0-9_]/g, '_'),
         }
       );
