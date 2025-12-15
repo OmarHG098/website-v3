@@ -6,14 +6,15 @@ meta:
     - /demo/landing-page
 sections:
   - type: hero
-    variant: simple
+    variant: singleColumn
     title: Career Development for the AI Era
     subtitle: Receive personalized career support tailored to your goals
-    description: From resume building to mastering AI-powered hiring tools, our commitment to your success lasts a lifetime.
-    cta_button:
-      text: Get Started
-      url: /signup
+    cta_buttons:
+      - text: Get Started
+        url: /signup
+        variant: primary
     trust_bar:
+      trusted_text: Trusted by thousands of students
       rating: "4.5"
       review_count: Based on 5149+ reviews
       review_logos:
