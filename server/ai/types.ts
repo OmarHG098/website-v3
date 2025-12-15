@@ -133,6 +133,12 @@ export interface LLMOptions {
   systemPrompt?: string;
 }
 
+// Structured output options
+export interface StructuredOutputOptions extends Omit<LLMOptions, "systemPrompt"> {
+  jsonSchema: Record<string, unknown>;
+  schemaName?: string;
+}
+
 // Cache interface with mtime tracking
 export interface ICache<T> {
   get(key: string): { value: T; mtime: number } | null;
