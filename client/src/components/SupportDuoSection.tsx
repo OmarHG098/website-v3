@@ -112,91 +112,96 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                 return (
                   <div 
                     key={groupIndex} 
-                    className="space-y-3 pl-4 border-l-4"
-                    style={{ borderLeftColor: accentColor }}
+                    className="flex gap-4"
                   >
-                    <div className="flex items-center gap-3">
-                      {group.icon ? (
-                        <span className="flex-shrink-0" style={{ color: accentColor }}>
-                          {getIcon(group.icon, "", 32, accentColor)}
-                        </span>
-                      ) : group.image ? (
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
-                          <img 
-                            src={group.image} 
-                            alt="Group icon" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ) : null}
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
-                          {group.title}
-                        </h4>
-                        {group.badge && (
-                          <span 
-                            className="text-xs font-medium px-2 py-0.5 rounded-full text-white"
-                            style={{ backgroundColor: accentColor }}
-                          >
-                            {group.badge}
+                    <div 
+                      className="w-1 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: accentColor }}
+                    />
+                    <div className="space-y-3 flex-1">
+                      <div className="flex items-center gap-3">
+                        {group.icon ? (
+                          <span className="flex-shrink-0" style={{ color: accentColor }}>
+                            {getIcon(group.icon, "", 32, accentColor)}
                           </span>
-                        )}
-                      </div>
-                    </div>
-                    {group.description && (
-                      <>
-                        {/* Mobile: Collapsible description */}
-                        <div className="md:hidden">
-                          <button
-                            onClick={() => setExpandedGroups(prev => ({ ...prev, [`desc-${groupIndex}`]: !prev[`desc-${groupIndex}`] }))}
-                            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                            data-testid={`button-toggle-description-${groupIndex}`}
-                          >
-                            <span className="flex-shrink-0">
-                              {getIcon(isDescExpanded ? "ChevronUp" : "ChevronDown", "", 16)}
+                        ) : group.image ? (
+                          <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
+                            <img 
+                              src={group.image} 
+                              alt="Group icon" 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : null}
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
+                            {group.title}
+                          </h4>
+                          {group.badge && (
+                            <span 
+                              className="text-xs font-medium px-2 py-0.5 rounded-full text-white"
+                              style={{ backgroundColor: accentColor }}
+                            >
+                              {group.badge}
                             </span>
-                            <span className="text-sm">{isDescExpanded ? "Hide details" : "Show details"}</span>
-                          </button>
-                          {isDescExpanded && (
-                            <p className="text-muted-foreground text-base leading-relaxed mt-2">
-                              {group.description}
-                            </p>
                           )}
                         </div>
-                        {/* Tablet/Desktop: Static description */}
-                        <p className="hidden md:block text-muted-foreground text-base leading-relaxed">
-                          {group.description}
-                        </p>
-                      </>
-                    )}
-                    {group.bullets && group.bullets.length > 0 && (
-                      <ul className="space-y-2 mt-2">
-                        {group.bullets.map((bullet, bulletIndex) => (
-                          <li key={bulletIndex} className="flex items-start gap-3">
-                            {bullet.icon ? (
-                              <span className="text-primary mt-0.5 flex-shrink-0">
-                                {getIcon(bullet.icon)}
-                              </span>
-                            ) : (
-                              <span className="text-foreground mt-1 flex-shrink-0">•</span>
-                            )}
-                            <span className="text-foreground text-base">{bullet.text}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {group.button && (
-                      <div className="mt-4">
-                        <a 
-                          href={group.button.url}
-                          className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
-                          data-testid={`link-bullet-group-${groupIndex}`}
-                        >
-                          {group.button.text}
-                          {getIcon("ArrowRight", "", 16)}
-                        </a>
                       </div>
-                    )}
+                      {group.description && (
+                        <>
+                          {/* Mobile: Collapsible description */}
+                          <div className="md:hidden">
+                            <button
+                              onClick={() => setExpandedGroups(prev => ({ ...prev, [`desc-${groupIndex}`]: !prev[`desc-${groupIndex}`] }))}
+                              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                              data-testid={`button-toggle-description-${groupIndex}`}
+                            >
+                              <span className="flex-shrink-0">
+                                {getIcon(isDescExpanded ? "ChevronUp" : "ChevronDown", "", 16)}
+                              </span>
+                              <span className="text-sm">{isDescExpanded ? "Hide details" : "Show details"}</span>
+                            </button>
+                            {isDescExpanded && (
+                              <p className="text-muted-foreground text-base leading-relaxed mt-2">
+                                {group.description}
+                              </p>
+                            )}
+                          </div>
+                          {/* Tablet/Desktop: Static description */}
+                          <p className="hidden md:block text-muted-foreground text-base leading-relaxed">
+                            {group.description}
+                          </p>
+                        </>
+                      )}
+                      {group.bullets && group.bullets.length > 0 && (
+                        <ul className="space-y-2 mt-2">
+                          {group.bullets.map((bullet, bulletIndex) => (
+                            <li key={bulletIndex} className="flex items-start gap-3">
+                              {bullet.icon ? (
+                                <span className="text-primary mt-0.5 flex-shrink-0">
+                                  {getIcon(bullet.icon)}
+                                </span>
+                              ) : (
+                                <span className="text-foreground mt-1 flex-shrink-0">•</span>
+                              )}
+                              <span className="text-foreground text-base">{bullet.text}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {group.button && (
+                        <div className="mt-4">
+                          <a 
+                            href={group.button.url}
+                            className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
+                            data-testid={`link-bullet-group-${groupIndex}`}
+                          >
+                            {group.button.text}
+                            {getIcon("ArrowRight", "", 16)}
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })}
