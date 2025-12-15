@@ -94,9 +94,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
         {isGrid ? (
           <div className="space-y-10">
             {/* Bullet groups displayed side by side without cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative" data-testid="list-support-duo-groups">
-              {/* Vertical separator between bullet groups */}
-              <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-muted-foreground/40 -translate-x-1/2" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" data-testid="list-support-duo-groups">
               {data.bullet_groups.map((group, groupIndex) => {
                 const isDescExpanded = expandedGroups[`desc-${groupIndex}`] ?? false;
                 return (
