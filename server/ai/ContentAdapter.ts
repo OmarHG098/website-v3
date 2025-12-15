@@ -1,12 +1,14 @@
 /**
  * Content Adapter - Orchestrates AI-powered content adaptation
+ * Uses OpenAI structured outputs for schema-enforced responses
  */
 
 import * as yaml from "js-yaml";
 import type { AdaptOptions, AdaptResult, FullContext } from "./types";
 import { getContextManager, type ContextManager } from "./ContextManager";
 import { getLLMService, type LLMService } from "./LLMService";
-import { SYSTEM_PROMPT, buildAdaptationPrompt } from "./prompts";
+import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock } from "./prompts";
+import { componentToJsonSchema, getValidProperties, getRequiredProperties } from "./SchemaConverter";
 
 // Singleton instance
 let instance: ContentAdapter | null = null;
@@ -34,7 +36,6 @@ export class ContentAdapter {
   private cleanYamlOutput(content: string): string {
     let cleaned = content.trim();
 
-    // Remove markdown code blocks
     if (cleaned.startsWith("```yaml")) {
       cleaned = cleaned.slice(7);
     } else if (cleaned.startsWith("```")) {
@@ -67,7 +68,128 @@ export class ContentAdapter {
   }
 
   /**
-   * Adapt content using AI
+   * Validate object against component schema
+   * Checks required properties and removes invalid ones
+   */
+  private validateAgainstSchema(
+    content: Record<string, unknown>,
+    context: FullContext
+  ): { valid: boolean; cleaned: Record<string, unknown>; errors: string[] } {
+    const errors: string[] = [];
+    const validProps = getValidProperties(context.component, context.targetVariant);
+    const requiredProps = getRequiredProperties(context.component, context.targetVariant);
+
+    // Check for missing required properties
+    for (const prop of requiredProps) {
+      if (!(prop in content) || content[prop] === null || content[prop] === undefined) {
+        errors.push(`Missing required property: ${prop}`);
+      }
+    }
+
+    // Remove invalid properties (properties not in schema)
+    const cleaned: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(content)) {
+      if (validProps.includes(key)) {
+        cleaned[key] = value;
+      } else {
+        console.warn(`Removing invalid property not in schema: ${key}`);
+      }
+    }
+
+    return {
+      valid: errors.length === 0,
+      cleaned,
+      errors,
+    };
+  }
+
+  /**
+   * Adapt content using AI with structured output enforcement
+   * Primary method - uses JSON schema to enforce valid output structure
+   */
+  async adaptStructured(options: AdaptOptions): Promise<AdaptResult> {
+    const model = "gpt-4o";
+    
+    // Build full context
+    const context = await this.contextManager.buildAdaptationContext(options);
+
+    // Generate JSON schema for the component
+    const jsonSchema = componentToJsonSchema(context.component, context.targetVariant);
+
+    // Build the prompt (simpler since structure is enforced by schema)
+    const contextBlock = buildContextBlock(context);
+    const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
+    
+    const prompt = `${contextBlock}
+
+${structureBlock}
+
+## SOURCE CONTENT TO ADAPT
+
+\`\`\`yaml
+${options.sourceYaml}
+\`\`\`
+
+## INSTRUCTIONS
+
+Transform the source content to match the target component structure while:
+1. Maintaining the core message and value proposition
+2. Adapting language to match brand voice guidelines
+3. Ensuring all required properties are filled with appropriate content
+4. Using appropriate content from the source or generating contextually appropriate content
+5. Following the component's when_to_use guidance
+
+Respond with a JSON object that matches the target component structure.`;
+
+    try {
+      // Try structured output first
+      const result = await this.llmService.adaptContentStructured(
+        SYSTEM_PROMPT,
+        prompt,
+        {
+          jsonSchema: jsonSchema as Record<string, unknown>,
+          schemaName: `${options.targetComponent}_${options.targetVariant || 'default'}`.replace(/[^a-zA-Z0-9_]/g, '_'),
+        }
+      );
+
+      // Validate the structured output against our schema
+      const validation = this.validateAgainstSchema(result.content, context);
+      
+      if (!validation.valid) {
+        console.warn("Structured output missing required fields:", validation.errors);
+        // Continue with cleaned content, letting downstream validation handle issues
+      }
+
+      // Convert to YAML
+      const adaptedYaml = yaml.dump(validation.cleaned, { 
+        indent: 2, 
+        lineWidth: 120,
+        noRefs: true,
+        sortKeys: false,
+      });
+
+      return {
+        adaptedYaml,
+        context: this.buildContextSummary(context),
+        model,
+        tokens: result.usage
+          ? {
+              prompt: result.usage.prompt_tokens,
+              completion: result.usage.completion_tokens,
+              total: result.usage.total_tokens,
+            }
+          : undefined,
+      };
+    } catch (error) {
+      // If structured output fails (e.g., schema too complex), fall back to text-based approach
+      console.warn("Structured output failed, falling back to text-based adaptation:", error);
+      return this.adapt(options);
+    }
+  }
+
+  /**
+   * Adapt content using AI (legacy text-based approach)
+   * Fallback method when structured outputs aren't available
    */
   async adapt(options: AdaptOptions): Promise<AdaptResult> {
     const model = "gpt-4o";
@@ -93,7 +215,6 @@ export class ContentAdapter {
       // Try to fix by resending full context with error information
       console.warn("Invalid YAML output, attempting to fix:", validation.error);
       
-      // Build a correction prompt that includes full context + the invalid output + error
       const fixPrompt = `${prompt}
 
 ---
@@ -117,8 +238,18 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
         throw new Error(`Failed to generate valid YAML: ${retryValidation.error}`);
       }
 
+      // Additional schema validation for the retry
+      const parsed = retryValidation.parsed as Record<string, unknown>;
+      const schemaValidation = this.validateAgainstSchema(parsed, context);
+      const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+        indent: 2, 
+        lineWidth: 120,
+        noRefs: true,
+        sortKeys: false,
+      });
+
       return {
-        adaptedYaml: retryCleanedYaml,
+        adaptedYaml: finalYaml,
         context: this.buildContextSummary(context),
         model,
         tokens: result.usage
@@ -131,8 +262,18 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       };
     }
 
+    // Validate parsed YAML against component schema
+    const parsed = validation.parsed as Record<string, unknown>;
+    const schemaValidation = this.validateAgainstSchema(parsed, context);
+    const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+      indent: 2, 
+      lineWidth: 120,
+      noRefs: true,
+      sortKeys: false,
+    });
+
     return {
-      adaptedYaml: cleanedYaml,
+      adaptedYaml: finalYaml,
       context: this.buildContextSummary(context),
       model,
       tokens: result.usage

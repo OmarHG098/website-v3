@@ -1261,7 +1261,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const adapter = getContentAdapter();
-      const result = await adapter.adapt({
+      // Use structured output for schema-enforced AI responses
+      const result = await adapter.adaptStructured({
         contentType,
         contentSlug,
         targetComponent,

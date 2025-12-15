@@ -11,6 +11,7 @@ export { getContextManager, ContextManager } from "./ContextManager";
 export { getLLMService, LLMService } from "./LLMService";
 export { getContentAdapter, ContentAdapter } from "./ContentAdapter";
 export { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock } from "./prompts";
+export { componentToJsonSchema, getValidProperties, getRequiredProperties } from "./SchemaConverter";
 
 export type {
   BrandContext,
