@@ -475,6 +475,8 @@ export const supportDuoBulletGroupSchema = z.object({
   title: z.string(),
   image: z.string().optional(),
   icon: z.string().optional(),
+  badge: z.string().optional(),
+  accent_color: z.string().optional(),
   description: z.string().optional(),
   bullets: z.array(supportDuoBulletSchema).optional(),
   button: z.object({
