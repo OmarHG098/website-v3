@@ -260,7 +260,8 @@ export function EditableSection({ children, section, index, sectionType, content
           targetComponent: sectionType,
           targetVersion: selectedVersion || 'v1.0',
           targetVariant: selectedVariant || currentExample.variant || 'default',
-          sourceYaml: originalSectionYaml
+          sourceYaml: originalSectionYaml,
+          targetExampleYaml: currentExample.yaml
         })
       });
       

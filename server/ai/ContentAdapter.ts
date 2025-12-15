@@ -85,11 +85,28 @@ export class ContentAdapter {
     const contextBlock = buildContextBlock(context);
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
+    // Build target example section if provided
+    const targetExampleSection = options.targetExampleYaml 
+      ? `## TARGET VARIANT EXAMPLE
+
+This is a fully-populated example of the target variant. Your output MUST include ALL properties shown in this example:
+
+\`\`\`yaml
+${options.targetExampleYaml}
+\`\`\`
+
+IMPORTANT: Populate EVERY property present in this example. Do not omit any fields - generate appropriate content for any property that exists in the example but not in the source.
+`
+      : '';
+
     const prompt = `${contextBlock}
 
 ${structureBlock}
 
+${targetExampleSection}
 ## SOURCE CONTENT TO ADAPT
+
+This is the original content. Preserve its core message and value proposition while restructuring it to match the target variant:
 
 \`\`\`yaml
 ${options.sourceYaml}
@@ -98,13 +115,14 @@ ${options.sourceYaml}
 ## INSTRUCTIONS
 
 Transform the source content to match the target component structure while:
-1. Maintaining the core message and value proposition
+1. Maintaining the core message and value proposition from the source
 2. Adapting language to match brand voice guidelines
-3. Ensuring all required properties are filled with appropriate content
-4. Using appropriate content from the source or generating contextually appropriate content
+3. POPULATING ALL PROPERTIES shown in the target variant example - do not leave any optional fields empty
+4. For properties that exist in the target but not the source, generate contextually appropriate content that matches the brand voice
 5. Following the component's when_to_use guidance
+6. If the target has arrays (like badges, logos, CTAs), populate them with the same number of items as the example
 
-Respond with a JSON object that matches the target component structure.`;
+Respond with a JSON object that matches the target component structure with ALL properties populated.`;
 
     try {
       // Try structured output first
@@ -169,11 +187,12 @@ Respond with a JSON object that matches the target component structure.`;
     // Build full context
     const context = await this.contextManager.buildAdaptationContext(options);
 
-    // Build the prompt
+    // Build the prompt with target example for complete property population
     const prompt = buildAdaptationPrompt(
       context,
       options.sourceYaml,
-      options.targetStructure
+      options.targetStructure,
+      options.targetExampleYaml
     );
 
     // Call LLM

@@ -1238,6 +1238,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         targetVersion,
         targetVariant,
         sourceYaml,
+        targetExampleYaml,
         targetStructure,
         userOverrides,
       } = req.body;
@@ -1270,6 +1271,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         targetVersion,
         targetVariant,
         sourceYaml,
+        targetExampleYaml,
         targetStructure,
         userOverrides,
       });
