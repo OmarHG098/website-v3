@@ -7,23 +7,15 @@ meta:
 sections:
   - type: hero
     variant: singleColumn
-    title: Career Development for the AI Era
+    title: You are not alone for the AI Era
     subtitle: Receive personalized career support tailored to your goals
     cta_buttons:
       - text: Get Started
         url: /signup
         variant: primary
     trust_bar:
-      trusted_text: Trusted by thousands of students
       rating: "4.5"
-      review_count: Based on 5149+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
+      trusted_text: Trusted by thousands of students
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
