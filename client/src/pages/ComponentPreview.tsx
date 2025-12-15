@@ -1,25 +1,93 @@
-import { useState, useEffect } from "react";
-import { useSearch } from "wouter";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useSearch, useParams } from "wouter";
 import jsYaml from "js-yaml";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { Section } from "@shared/schema";
-import { IconRefresh } from "@tabler/icons-react";
+import { IconRefresh, IconArrowLeft } from "@tabler/icons-react";
 
 export default function ComponentPreview() {
+  const { componentType } = useParams<{ componentType: string }>();
   const searchString = useSearch();
   const searchParams = new URLSearchParams(searchString);
   
-  const componentType = searchParams.get("type");
-  const version = searchParams.get("version") || "v1.0";
+  const version = searchParams.get("version") || "1.0";
   const exampleName = searchParams.get("example");
+  const debug = searchParams.get("debug") !== "false";
   
   const [sections, setSections] = useState<Section[]>([]);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const reportHeight = useCallback(() => {
+    if (containerRef.current && window.parent !== window) {
+      const height = containerRef.current.scrollHeight;
+      window.parent.postMessage({ type: 'preview-height', height }, '*');
+    }
+  }, []);
 
   useEffect(() => {
-    if (!componentType || !exampleName) {
-      setError("Missing type or example parameter");
+    const isInIframe = window.parent !== window;
+    setIsStandalone(!isInIframe);
+
+    if (document.documentElement.classList.contains('dark')) {
+      setTheme('dark');
+    }
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-update') {
+        setSections(event.data.sections || []);
+        setIsLoading(false);
+        setError(null);
+      }
+      if (event.data?.type === 'theme-update') {
+        setTheme(event.data.theme || 'light');
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    if (isInIframe) {
+      window.parent.postMessage({ type: 'preview-ready' }, '*');
+    }
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    if (!componentType) {
+      setError("Missing component type in URL");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!exampleName) {
+      const storedSections = sessionStorage.getItem('preview-sections');
+      const storedTheme = sessionStorage.getItem('preview-theme');
+      
+      if (storedSections) {
+        try {
+          const parsed = JSON.parse(storedSections);
+          setSections(Array.isArray(parsed) ? parsed : [parsed]);
+          if (storedTheme === 'dark' || storedTheme === 'light') {
+            setTheme(storedTheme);
+          }
+        } catch {
+          // Ignore parse errors
+        }
+      }
       setIsLoading(false);
       return;
     }
@@ -45,7 +113,7 @@ export default function ComponentPreview() {
           } else if (parsed && typeof parsed === 'object') {
             setSections([parsed as Section]);
           }
-        } catch (e) {
+        } catch {
           setError("Failed to parse example YAML");
         }
       })
@@ -54,11 +122,28 @@ export default function ComponentPreview() {
   }, [componentType, version, exampleName]);
 
   useEffect(() => {
-    const isDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-    if (isDark) {
-      document.documentElement.classList.add('dark');
+    if (sections.length > 0) {
+      const timeouts = [50, 200, 500, 1000].map(delay => 
+        setTimeout(reportHeight, delay)
+      );
+      return () => timeouts.forEach(clearTimeout);
     }
-  }, []);
+  }, [sections, reportHeight]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const observer = new ResizeObserver(() => {
+      reportHeight();
+    });
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [reportHeight]);
+
+  const handleGoBack = () => {
+    window.history.back();
+  };
 
   if (isLoading) {
     return (
@@ -77,12 +162,24 @@ export default function ComponentPreview() {
   }
 
   return (
-    <div className="bg-background">
+    <div ref={containerRef} className="bg-background min-h-screen">
+      {isStandalone && !debug && (
+        <div className="fixed top-4 left-4 z-50">
+          <button
+            onClick={handleGoBack}
+            className="flex items-center gap-2 px-3 py-2 text-sm bg-background/80 backdrop-blur border rounded-md shadow-lg hover:bg-muted transition-colors"
+            data-testid="button-back-from-preview"
+          >
+            <IconArrowLeft className="w-4 h-4" />
+            Back to Showcase
+          </button>
+        </div>
+      )}
       {sections.length > 0 ? (
         <SectionRenderer sections={sections} />
       ) : (
         <div className="flex items-center justify-center min-h-[200px] text-muted-foreground text-sm">
-          No content to display
+          {exampleName ? "No content to display" : "Waiting for content..."}
         </div>
       )}
     </div>

@@ -1,22 +1,10 @@
 # Geeks vs Others Landing Page - English
 
-slug: "geeks-vs-others"
-template: "default"
-title: "Geeks vs Others"
-
 meta:
   page_title: "4Geeks vs Other Bootcamps | 4Geeks Academy"
   description: "Compare 4Geeks Academy with other coding bootcamps. See why our unlimited mentorship, career support, and proven outcomes set us apart."
-  robots: "index, follow"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/geeks-vs-others"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

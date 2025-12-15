@@ -1,4 +1,5 @@
-import type { Section } from "@shared/schema";
+import { useCallback } from "react";
+import type { Section, EditOperation } from "@shared/schema";
 import { Hero } from "@/components/hero/Hero";
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
@@ -24,8 +25,12 @@ import AwardsRow from "@/components/AwardsRow";
 import { HorizontalBars } from "@/components/HorizontalBars";
 import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
+import { LeadForm } from "@/components/LeadForm";
+import { SupportDuoSection } from "@/components/SupportDuoSection";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
+import { useToast } from "@/hooks/use-toast";
+import { getDebugToken } from "@/hooks/useDebugAuth";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -35,17 +40,25 @@ interface SectionRendererProps {
   onSectionAdded?: () => void;
 }
 
-interface EditableSectionWrapperProps {
-  section: Section;
-  index: number;
-  sectionType: string;
-  contentType?: "program" | "landing" | "location" | "page";
-  slug?: string;
-  locale?: string;
-  children: React.ReactNode;
+async function sendEditOperation(
+  contentType: string,
+  slug: string,
+  locale: string,
+  operations: EditOperation[]
+): Promise<{ success: boolean; error?: string }> {
+  const token = getDebugToken();
+  const response = await fetch("/api/content/edit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Token ${token}` } : {}),
+    },
+    body: JSON.stringify({ contentType, slug, locale, operations }),
+  });
+  return response.json();
 }
 
-function renderSection(section: Section, index: number): React.ReactNode {
+export function renderSection(section: Section, index: number): React.ReactNode {
   const sectionType = (section as { type: string }).type;
   
   switch (sectionType) {
@@ -73,6 +86,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <FooterSection key={index} data={section as Parameters<typeof FooterSection>[0]["data"]} />;
     case "two_column":
       return <TwoColumn key={index} data={section as Parameters<typeof TwoColumn>[0]["data"]} />;
+    case "support_duo":
+      return <SupportDuoSection key={index} data={section as Parameters<typeof SupportDuoSection>[0]["data"]} />;
     case "numbered_steps":
       return <NumberedSteps key={index} data={section as Parameters<typeof NumberedSteps>[0]["data"]} />;
     case "testimonials_slide":
@@ -100,6 +115,8 @@ function renderSection(section: Section, index: number): React.ReactNode {
       return <VerticalBarsCards key={index} data={section as Parameters<typeof VerticalBarsCards>[0]["data"]} />;
     case "pie_charts":
       return <PieCharts key={index} data={section as Parameters<typeof PieCharts>[0]["data"]} />;
+    case "lead_form":
+      return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
@@ -110,6 +127,57 @@ function renderSection(section: Section, index: number): React.ReactNode {
 }
 
 export function SectionRenderer({ sections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
+  const { toast } = useToast();
+  
+  const handleMoveUp = useCallback(async (index: number) => {
+    if (!contentType || !slug || !locale || index <= 0) return;
+    
+    const result = await sendEditOperation(contentType, slug, locale, [
+      { action: "reorder_sections", from: index, to: index - 1 }
+    ]);
+    
+    if (result.success) {
+      toast({ title: "Section moved up" });
+      onSectionAdded?.();
+    } else {
+      toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
+    }
+  }, [contentType, slug, locale, toast, onSectionAdded]);
+  
+  const handleMoveDown = useCallback(async (index: number) => {
+    if (!contentType || !slug || !locale || index >= sections.length - 1) return;
+    
+    const result = await sendEditOperation(contentType, slug, locale, [
+      { action: "reorder_sections", from: index, to: index + 1 }
+    ]);
+    
+    if (result.success) {
+      toast({ title: "Section moved down" });
+      onSectionAdded?.();
+    } else {
+      toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
+    }
+  }, [contentType, slug, locale, sections.length, toast, onSectionAdded]);
+  
+  const handleDelete = useCallback(async (index: number) => {
+    if (!contentType || !slug || !locale) return;
+    
+    if (!window.confirm("Are you sure you want to delete this section? This cannot be undone.")) {
+      return;
+    }
+    
+    const result = await sendEditOperation(contentType, slug, locale, [
+      { action: "remove_item", path: "sections", index }
+    ]);
+    
+    if (result.success) {
+      toast({ title: "Section deleted" });
+      onSectionAdded?.();
+    } else {
+      toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
+    }
+  }, [contentType, slug, locale, toast, onSectionAdded]);
+
   return (
     <>
       <AddSectionButton
@@ -134,6 +202,10 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
               contentType={contentType}
               slug={slug}
               locale={locale}
+              totalSections={sections.length}
+              onMoveUp={handleMoveUp}
+              onMoveDown={handleMoveDown}
+              onDelete={handleDelete}
             >
               {renderedSection}
             </EditableSection>

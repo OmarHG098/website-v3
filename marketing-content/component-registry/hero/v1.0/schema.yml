@@ -24,13 +24,15 @@ variants:
   simpleTwoColumn:
     description: "Two column layout with image on left and title, subtitle, CTA buttons on right"
     best_for: "Guarantee pages, feature announcements, promotional sections"
+  course:
+    description: "Two column layout with content on left (title, bullet points, tutors) and media + signup card on right"
+    best_for: "Course landing pages, self-paced program pages"
 
 props:
   variant:
     type: string
     required: true
-    options: ["singleColumn", "showcase", "productShowcase", "simpleTwoColumn"]
-    description: "Layout variant to use"
+    description: "Layout variant to use (valid variants defined in 'variants' section above)"
     example: "singleColumn"
 
   title:
@@ -170,8 +172,8 @@ variant_props:
       description: "Longer description text below subtitle"
     video_id:
       type: string
-      required: true
-      description: "YouTube video ID"
+      required: false
+      description: "YouTube video ID (optional if using image instead)"
       example: "dQw4w9WgXcQ"
     video_title:
       type: string
@@ -183,6 +185,136 @@ variant_props:
       description: "Video aspect ratio"
       options: ["16:9", "9:12"]
       default: "9:12"
+    image:
+      type: object
+      required: false
+      description: "Alternative to video - static image on right side"
+      properties:
+        src:
+          type: string
+          required: true
+          description: "Image source URL or path"
+        alt:
+          type: string
+          required: true
+          description: "Image alt text for accessibility"
+    form:
+      type: object
+      required: false
+      description: "Lead capture form using the LeadForm component. Supports inline (email + button on one line) or stacked (labeled fields) variants."
+      properties:
+        variant:
+          type: string
+          required: false
+          options: ["inline", "stacked"]
+          default: "inline"
+          description: "Form layout variant. Use 'inline' for compact hero forms."
+        submit_label:
+          type: string
+          required: false
+          description: "Submit button text"
+          example: "Sign up free →"
+        show_consent:
+          type: boolean
+          required: false
+          default: false
+          description: "Whether to show SMS/WhatsApp consent checkboxes"
+        show_terms:
+          type: boolean
+          required: false
+          default: false
+          description: "Whether to show terms and privacy links"
+        tags:
+          type: string
+          required: false
+          description: "Comma-separated tags for lead categorization"
+          example: "website-lead,hero-signup"
+        automations:
+          type: string
+          required: false
+          description: "Automation trigger name"
+          example: "strong"
+        fields:
+          type: object
+          required: false
+          description: "Configure which fields to show and their settings"
+          properties:
+            email:
+              type: object
+              description: "Email field configuration (visible by default)"
+              properties:
+                visible:
+                  type: boolean
+                  default: true
+                required:
+                  type: boolean
+                  default: true
+                placeholder:
+                  type: string
+                  example: "Enter your work email"
+                helper_text:
+                  type: string
+                  description: "Helper text displayed below the form"
+            first_name:
+              type: object
+              description: "First name field (hidden by default)"
+            last_name:
+              type: object
+              description: "Last name field (hidden by default)"
+            phone:
+              type: object
+              description: "Phone field (hidden by default)"
+            program:
+              type: object
+              description: "Program selector (hidden by default, use default: 'auto' to auto-fill from context)"
+            location:
+              type: object
+              description: "Campus location selector (hidden by default, use default: 'auto' for geo-detection)"
+        success:
+          type: object
+          required: false
+          description: "Success behavior after form submission"
+          properties:
+            url:
+              type: string
+              description: "Redirect URL after successful submission"
+            message:
+              type: string
+              description: "Success message if no redirect"
+    cta_button:
+      type: object
+      required: false
+      description: "Alternative to form - single CTA button"
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+        variant:
+          type: string
+          options: ["primary", "outline"]
+    trust_bar:
+      type: object
+      required: false
+      description: "Social proof with ratings and review logos"
+      properties:
+        rating:
+          type: string
+          example: "4.5"
+        review_count:
+          type: string
+          example: "Based on 5149+ reviews:"
+        review_logos:
+          type: array
+          description: "List of review platform logos"
+          items:
+            name:
+              type: string
+              description: "Platform name (e.g., GetApp, Capterra)"
+            logo:
+              type: string
+              required: false
+              description: "Optional logo URL"
 
   simpleTwoColumn:
     badge:
@@ -226,3 +358,105 @@ variant_props:
       required: false
       description: "Background Tailwind class"
       default: "bg-gradient-to-b from-primary/5 to-background"
+
+  course:
+    students_enrolled:
+      type: object
+      required: false
+      description: "Display enrolled students count with optional avatars"
+      properties:
+        avatars:
+          type: array
+          description: "Array of avatar image URLs"
+        count:
+          type: string
+          description: "Text showing enrollment count"
+          example: "+48 students enrolled"
+    bullet_points:
+      type: array
+      required: false
+      description: "List of key features/benefits with checkmarks"
+      items:
+        type: string
+      example:
+        - "Learn prompt engineering techniques to control AI outputs precisely"
+        - "Create professional images, videos, and documents using AI tools"
+    tutors:
+      type: array
+      required: false
+      description: "List of tutors/instructors"
+      items:
+        name:
+          type: string
+        role:
+          type: string
+        image:
+          type: string
+    tutors_label:
+      type: string
+      required: false
+      description: "Label above tutors section"
+      default: "Your tutors:"
+    description:
+      type: string
+      required: false
+      description: "Extended description paragraph at bottom of left column"
+    media:
+      type: object
+      required: true
+      description: "Video or image displayed at top of right column"
+      properties:
+        type:
+          type: string
+          options: ["video", "image"]
+        src:
+          type: string
+          description: "Video URL or image source"
+        thumbnail:
+          type: string
+          required: false
+          description: "Thumbnail image for video (shows play button overlay)"
+        alt:
+          type: string
+          required: false
+    signup_card:
+      type: object
+      required: true
+      description: "Signup/CTA card below media"
+      properties:
+        title:
+          type: string
+          example: "Sign up to 4Geeks Plus"
+        description:
+          type: string
+          required: false
+        cta_button:
+          type: object
+          properties:
+            text:
+              type: string
+            url:
+              type: string
+            variant:
+              type: string
+        login_link:
+          type: object
+          required: false
+          properties:
+            text:
+              type: string
+            url:
+              type: string
+        features:
+          type: array
+          required: false
+          description: "List of features with icons and optional counts"
+          items:
+            icon:
+              type: string
+              description: "Icon name: book, code, briefcase, robot, users, calendar, play"
+            text:
+              type: string
+            count:
+              type: string
+              required: false

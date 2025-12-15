@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { IconCheck } from "@tabler/icons-react";
 import type { CertificateSection as CertificateSectionType } from "@shared/schema";
-import certificatePreview from "@assets/certificate-preview_1764706363525.webp";
+import { CertificateCard } from "./CertificateCard";
 
 interface CertificateSectionProps {
   data: CertificateSectionType;
@@ -39,19 +39,12 @@ export function CertificateSection({ data }: CertificateSectionProps) {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {data.card && (
             <div className="flex justify-center">
-              <Card 
-                className="w-full max-w-md overflow-hidden"
-                data-testid="card-certificate-preview"
-              >
-                <CardContent className="p-0">
-                  <img 
-                    src={certificatePreview} 
-                    alt={data.card.title}
-                    className="w-full h-auto"
-                    data-testid="img-certificate-preview"
-                  />
-                </CardContent>
-              </Card>
+              <div className="w-full max-w-md">
+                <CertificateCard 
+                  programName={data.card.program_name || data.card.title}
+                  certificateLabel={data.card.certificate_label}
+                />
+              </div>
             </div>
           )}
           
@@ -64,7 +57,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             </h2>
             
             <p 
-              className="text-lg mb-8 leading-relaxed text-[#1a1a1a] font-bold"
+              className="text-lg mb-8 leading-relaxed text-foreground"
               data-testid="text-certificate-description"
             >
               {data.description}

@@ -1,0 +1,17 @@
+# Common properties shared across all variants
+# For landings, locale is defined here (not in filenames)
+
+slug: "webinar-ai-learning"
+title: "Free Webinar: Learn to Code with AI"
+locale: "en"
+
+meta:
+  robots: "index, follow"
+  og_image: "/images/webinar-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+
+schema:
+  include:
+    - "organization"
+    - "website"

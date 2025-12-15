@@ -1,6 +1,5 @@
 name: "Wide Text, Narrow Image (8-4)"
 description: "Two-column layout with larger text area (8 columns) and smaller image (4 columns) for content-heavy sections"
-variant: imageText
 yaml: |
   - type: two_column
     proportions: [8, 4]

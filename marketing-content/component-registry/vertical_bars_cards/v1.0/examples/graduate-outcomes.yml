@@ -12,7 +12,7 @@ metrics:
       - year: "2024"
         value: 84
         displayValue: "84%"
-      - year: "2025"
+      - year: "Mid 2025"
         value: 82
         displayValue: "82%"
   - title: "Average Salary Increase"
@@ -24,7 +24,7 @@ metrics:
       - year: "2024"
         value: 14200
         displayValue: "$14.2k"
-      - year: "2025"
+      - year: "Mid 2025"
         value: 15800
         displayValue: "$15.8k"
   - title: "Days to First Job"
@@ -36,6 +36,6 @@ metrics:
       - year: "2024"
         value: 48
         displayValue: "48 days"
-      - year: "2025"
+      - year: "Mid 2025"
         value: 45
         displayValue: "45 days"

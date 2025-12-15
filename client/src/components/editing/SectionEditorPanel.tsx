@@ -15,6 +15,8 @@ interface SectionEditorPanelProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  variant?: string;
+  version?: number;
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
 }
@@ -25,6 +27,8 @@ export function SectionEditorPanel({
   contentType,
   slug,
   locale,
+  variant,
+  version,
   onUpdate,
   onClose,
 }: SectionEditorPanelProps) {
@@ -99,6 +103,8 @@ export function SectionEditorPanel({
           contentType,
           slug,
           locale,
+          variant,
+          version,
           operations: [{
             action: "update_section",
             index: sectionIndex,

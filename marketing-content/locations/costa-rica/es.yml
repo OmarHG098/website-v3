@@ -10,17 +10,6 @@ meta:
     - /costarica
     - /san-jose
     - /campus/costa-rica
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Avenida Central
-        addressLocality: San José
-        addressCountry: CR
 sections:
   - type: hero
     variant: singleColumn

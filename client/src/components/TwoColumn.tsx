@@ -394,17 +394,19 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
       })()}
       
       {column.video && (
-        <div 
-          className={`w-full ${getJustifyClass(column.justify)}`}
-          style={{ 
-            width: column.video_width || "100%"
-          }}
-        >
-          <VideoPlayer
-            videoId={column.video}
-            title="Video"
-            ratio={column.video_height ? undefined : "16:9"}
-          />
+        <div className={`w-full flex ${getJustifyClass(column.justify)}`}>
+          <div 
+            style={{ 
+              width: column.video_width || "100%",
+              maxWidth: "100%"
+            }}
+          >
+            <VideoPlayer
+              videoId={column.video}
+              title="Video"
+              ratio={column.video_height ? undefined : "16:9"}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -18,13 +18,14 @@ sections:
     variant: simpleTwoColumn
     title: "Proven Outcomes That Launch Tech Careers"
     subtitle: "At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it."
+    badge: "4Geeks Academy Outcomes Report"
     image:
       src: "/attached_assets/outcomes_1765562850573.png"
       alt: "Student outcomes growth chart"
 
   - type: vertical_bars_cards
     version: "1.0"
-    title: "Graduate Success Metrics"
+    title: "Hired Success Metrics"
     subtitle: "Track our students' career outcomes across recent years"
     metrics:
       - title: "Job Placement Rate"
@@ -36,7 +37,7 @@ sections:
           - year: "2024"
             value: 84
             displayValue: "84%"
-          - year: "2025"
+          - year: "Mid 2025"
             value: 82
             displayValue: "82%"
       - title: "Average Salary Increase"
@@ -48,7 +49,7 @@ sections:
           - year: "2024"
             value: 14200
             displayValue: "$14.2k"
-          - year: "2025"
+          - year: "Mid 2025"
             value: 15800
             displayValue: "$15.8k"
       - title: "Days to First Job"
@@ -60,7 +61,7 @@ sections:
           - year: "2024"
             value: 48
             displayValue: "48 days"
-          - year: "2025"
+          - year: "Mid 2025"
             value: 45
             displayValue: "45 days"
 
@@ -98,7 +99,7 @@ sections:
         year: "2024"
       - name: "Best Coding Bootcamp"
         source: "Course Report"
-        year: "2025"
+        year: "Mid 2025"
 
   - type: pie_charts
     version: "1.0"

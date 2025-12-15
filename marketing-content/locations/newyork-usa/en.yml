@@ -11,19 +11,6 @@ meta:
     - /nyc
     - /campus/new-york
     - /en/new-york
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 350 5th Ave
-        addressLocality: New York
-        addressRegion: NY
-        postalCode: "10118"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

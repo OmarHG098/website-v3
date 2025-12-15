@@ -1,7 +1,7 @@
 # The AI Reskilling Platform
 
 ### Overview
-The AI Reskilling Platform is a minimalistic Learning Management System (LMS) web application designed as a marketing-focused landing page. It aims to offer a user-friendly interface for career path selection and skill acquisition, similar to leading tech bootcamps. The platform integrates with the 4geeks Breathecode API for authentication, profile management, and content delivery. Its business vision is to provide accessible, high-quality AI-focused education, targeting a global market with a scalable, content-driven architecture.
+The AI Reskilling Platform is a minimalistic Learning Management System (LMS) web application functioning as a marketing-focused landing page. Its primary goal is to offer a user-friendly interface for career path selection and skill acquisition, targeting AI-focused education. The platform aims to provide accessible, high-quality education to a global market through a scalable, content-driven architecture, eventually integrating with the 4geeks Breathecode API for authentication, profile management, and content delivery.
 
 ### User Preferences
 - Icon library: @tabler/icons-react (NEVER lucide-react)
@@ -10,83 +10,35 @@ The AI Reskilling Platform is a minimalistic Learning Management System (LMS) we
 - Testing: NEVER use playwright for testing - it takes too much time. User prefers manual verification only.
 - Font system: Noto Color Emoji for consistent emoji rendering across all operating systems
 - Colors: ONLY semantic tokens - NEVER use hardcoded colors like `bg-blue-500`, `text-red-600`, or arbitrary hex values. Only use semantic classes: `bg-primary`, `text-foreground`, `bg-muted`, etc.
+- Video: ALWAYS use the `UniversalVideo` component (`client/src/components/UniversalVideo.tsx`) for ALL video content. NEVER use raw `<video>` tags, `<iframe>` embeds, or other video libraries directly.
+- Images: ALWAYS use the `UniversalImage` component (`client/src/components/UniversalImage.tsx`) for ALL image content. Reference images by ID from the centralized registry (`marketing-content/image-registry.json`). NEVER use hardcoded image paths in components.
 
 ### System Architecture
-The platform is built with a modern web stack: React with TypeScript, Vite for the frontend, Tailwind CSS and shadcn UI for styling, wouter for routing, and TanStack Query for state management. The backend uses Express, currently with in-memory storage, slated for integration with the 4geeks Breathecode API.
+The platform utilizes a modern web stack: React with TypeScript, Vite, Tailwind CSS, shadcn UI, wouter, and TanStack Query. The backend is built with Express, designed for integration with the 4geeks Breathecode API.
 
 **Key Architectural Decisions & Features:**
--   **Design System**: Employs a clean, card-based layout with a strict semantic color system using predefined Tailwind classes. Typography uses the Lato font family. All icons must be from `@tabler/icons-react`.
--   **Content Management System (CMS)**: A YAML-based system allows marketing teams to manage content for career programs, landing pages, location pages, and template pages without code changes. Content is stored in:
-    - `marketing-content/programs/{program-slug}/{locale}.yml` for career programs
-    - `marketing-content/landings/{landing-slug}/{locale}.yml` for landing pages
-    - `marketing-content/locations/{slug}/` for location pages with:
-      - `campus.yml` - Non-translated campus info (slug, name, city, country, coordinates, phone, address, available_programs, catalog with admission_advisors)
-      - `en.yml` - English translated content (meta, schema, sections)
-      - `es.yml` - Spanish translated content (meta, schema, sections)
-    - `marketing-content/pages/{page-slug}/` for template pages with:
-      - `en.yml` - English content (meta, schema, sections)
-      - `es.yml` - Spanish content (meta, schema, sections)
-      - `experiments.yml` - Optional A/B testing configuration
-    All content types share the same structure with `meta`, `schema`, and `sections` properties, dynamically rendered by a unified `SectionRenderer` component. Location-specific section types include `features_grid`, `programs_list`, and `cta_banner`.
--   **Template Pages System**: A single generic page template (`client/src/pages/page.tsx`) dynamically renders all YAML-based pages from `marketing-content/pages/`. Routes follow the pattern `/us/:slug` (English) and `/es/:slug` (Spanish). The API endpoint `GET /api/pages/:slug?locale=en|es` loads content with experiment support. Sitemap generation automatically includes template pages with configurable priorities and change frequencies from YAML meta properties.
--   **Internationalization (i18n)**: Supports English (default) and Spanish using `react-i18next`, with automatic browser language detection and a language switcher.
--   **SEO & Performance**: Comprehensive SEO includes meta tags, Open Graph, Twitter Cards, Schema.org JSON-LD, `robots.txt` allowing AI crawlers, and dynamic sitemaps. Performance optimizations include route-level code splitting, self-hosted WOFF2 fonts with `font-display: swap`, server-side Gzip compression, React component memoization, and native lazy loading for images.
--   **Schema.org System**: Centralized in `marketing-content/schema-org.yml` for managing structured data. Pages reference schemas via `schema.include: ["organization", "website", "courses:full-stack"]` and can override properties with `schema.overrides`. The `useSchemaOrg` React hook fetches and injects JSON-LD into page heads with proper cleanup between navigations. Nested schemas use prefix notation (e.g., `courses:full-stack`, `item_lists:career-programs`). **Location pages automatically include the organization schema as parentOrganization** - no need to define it in each location YAML file.
--   **URL Redirects System**: A robust system handles 301 redirects defined in YAML meta properties, with a validation script (`scripts/validate-content.ts`) to prevent conflicts and ensure target existence.
--   **Debug Mode**: A `DebugBubble` component provides development utilities like theme toggle, language switcher, sitemap viewer, and component showcase, visible in development or via a `?debug=true` URL parameter in production.
--   **Versioned Component Registry**: A filesystem-based registry at `marketing-content/component-registry/{component}/v{version}/` stores versioned component schemas and examples. Each version folder contains a `schema.yml` (defining props, descriptions, when-to-use guidance) and an `examples/` subfolder with individual YAML example files. The API at `/api/component-registry` enables listing components, loading schemas/examples by version, and creating new versions via folder cloning. The ComponentShowcase page (`/showcase`) consumes this API with version/example dropdowns, live YAML editing with preview, and guided modals for adding new examples. YAML content files reference component versions via `version: "1.0"` in each section.
--   **Session Management System**: A hybrid client-side session system provides IP-based geolocation, nearest campus calculation, UTM parameter tracking, and language detection. Key components:
-    - `shared/session.ts`: Type definitions for Session, Location, UTMParams, GeoData
-    - `client/src/workers/session.worker.ts`: Web worker for deferred heavy processing (IP lookup, haversine distance calculation)
-    - `client/src/contexts/SessionContext.tsx`: React context with `useSession`, `useLocation`, `useLanguage`, `useUTM`, `useRegion` hooks
-    - `client/src/lib/locations.ts`: Static campus data with coordinates for 33 locations across USA, Canada, LATAM, and Europe
-    - `marketing-content/locations/{slug}/`: Location folders with campus.yml + locale files
-    - Session data is cached in localStorage with versioning for cache invalidation (24-hour stale threshold)
-    - Geolocation uses ip-api.com with 5-second timeout and graceful fallbacks
-    - Nearest campus sorting uses the haversine (great-circle) distance formula
-    - Location slugs follow pattern: `{city}-{country}` (e.g., `miami-usa`, `madrid-spain`, `bogota-colombia`)
--   **A/B Testing Experiment System**: A performant, cookie-based A/B testing system for content variants. Key components:
-    - `server/experiments/ExperimentManager.ts`: Core class with in-memory caching, deterministic bucketing, and lifecycle management
-    - `server/experiments/cookie-utils.ts`: Cookie signing/parsing, visitor context extraction, and visitor ID management
-    - `marketing-content/programs/{program-slug}/experiments.yml`: Experiment configurations per program
-    - Variant content files: `{variant-slug}.v{version}.{locale}.yml` (e.g., `career-focus.v1.en.yml`)
-    - Experiment statuses: `planned`, `active`, `paused`, `winner`, `archived`
-    - Targeting variables: `languages`, `regions`, `countries`, `devices`, `utm_sources`, `utm_campaigns`, `utm_mediums`, `hours`, `days_of_week`, `locations` (campus slugs)
-    - Debug endpoints: `GET /api/debug/experiments` for stats with unique visitor counts, `POST /api/debug/clear-experiment-cache` for cache clearing
-    - Zero-latency design: In-memory operations with async exposure tracking (<2ms added latency)
-    - Cookie persistence: Signed cookies prevent assignment tampering across sessions
-    - **Visitor Tracking System**: Industry-standard 180-day rolling cookie (`4g_visitor_id`) with crypto.randomUUID() generation
-      - Unique visitor counting per experiment using hashed visitor IDs (SHA-256, truncated for privacy)
-      - In-memory Set for O(1) visitor dedup lookups, persisted to `experiments-state.json`
-      - Auto-stop: Experiments automatically archive when `max_visitors` threshold is reached
-      - `auto_stopped: true` flag distinguishes auto-archived from manually archived experiments
-    - **Experiment Editor**: Full-featured editor at `/private/:contentType/:contentSlug/experiment/:experimentSlug` for managing A/B tests
-      - `client/src/pages/ExperimentEditor.tsx`: React component with tabbed interface for experiment configuration
-      - GET `/api/experiments/:contentType/:contentSlug/:experimentSlug`: Fetch experiment details with stats and unique_visitors count
-      - PATCH endpoint: Update experiment settings with Zod schema validation
-      - `shared/schema.ts`: `experimentUpdateSchema` with .strict() mode for request validation
-      - Validation rules: Variant allocations must sum to 100, YAML file validated before/after writes
-      - DebugBubble integration: SPA navigation via wouter Link to experiment editor from experiments menu
-      - Live preview: Multiple iframes render variants simultaneously with `force_variant` and `force_version` query parameters
--   **Inline Editing System**: A capability-based inline editing system designed for both human editors and AI agents. Key components:
-    - `shared/schema.ts`: Editing capability types (`content_read`, `content_edit_text`, `content_edit_structure`, `content_edit_media`, `content_publish`) and structured `EditOperation` types
-    - `client/src/hooks/useDebugAuth.ts`: Extended to return capabilities from token validation, with `hasCapability()` and `canEdit` helpers
-    - `client/src/contexts/EditModeContext.tsx`: Lazy-loaded context providing `isEditMode`, `toggleEditMode`, pending changes management, and save operations
-    - `client/src/components/editing/EditableSection.tsx`: Wrapper that adds click-to-edit overlays only when edit mode is active
-    - `client/src/components/editing/SectionEditorPanel.tsx`: Slide-in panel with YAML editor (CodeMirror) for editing section content
-    - `client/src/components/editing/EditModeWrapper.tsx`: Conditional provider that only loads when user has edit capabilities (zero overhead otherwise)
-    - `server/content-editor.ts`: Server-side content manipulation with path-based operations
-    - API endpoints: `POST /api/content/edit` (with auth) for structured edit operations, `GET /api/content/:contentType/:slug` for reading content
-    - Edit operations: `update_field` (path-based), `reorder_sections`, `add_item`, `remove_item`, `update_section` - designed for AI agent compatibility
-    - Edit mode toggle available in DebugBubble for users with editing capabilities
+-   **Design System**: Features a clean, card-based layout with a semantic color system, Lato typography, and `@tabler/icons-react` for all icons.
+-   **Content Management System (CMS)**: A YAML-based system enables marketing teams to manage content for career programs, landing pages, location pages, and template pages. Content is stored in a structured directory `marketing-content/` with specific YAML files for different content types, all dynamically rendered by a unified `SectionRenderer` component.
+-   **Template Pages System**: A single generic page template (`client/src/pages/page.tsx`) renders all YAML-based pages, supporting `/us/:slug` and `/es/:slug` routes. An API endpoint (`GET /api/pages/:slug?locale=en|es`) fetches content, with sitemap generation automatically including template pages.
+-   **Internationalization (i18n)**: Supports English and Spanish using `react-i18next`, with browser language detection and a language switcher.
+-   **SEO & Performance**: Includes comprehensive meta tags, Open Graph, Twitter Cards, Schema.org JSON-LD, `robots.txt`, dynamic sitemaps, route-level code splitting, self-hosted WOFF2 fonts, server-side Gzip compression, React component memoization, and native lazy loading.
+-   **Schema.org System**: Centralized in `marketing-content/schema-org.yml` for structured data, allowing pages to reference and override schemas. The `useSchemaOrg` hook injects JSON-LD.
+-   **URL Redirects System**: Handles 301 redirects defined in YAML meta properties, with a validation script to prevent conflicts.
+-   **Debug Mode**: A `DebugBubble` component offers development utilities and is accessible in development or via a `?debug=true` URL parameter.
+-   **Versioned Component Registry**: A filesystem-based registry at `marketing-content/component-registry/` stores versioned component schemas and examples. An API at `/api/component-registry` allows listing, loading, and creating new versions, consumed by a `ComponentShowcase` page.
+-   **Session Management System**: A hybrid client-side system provides IP-based geolocation, nearest campus calculation, UTM parameter tracking, and language detection. It uses a Web Worker for heavy processing, `SessionContext` for React hooks, and caches data in localStorage.
+-   **A/B Testing Experiment System**: A performant, cookie-based system for content variants, managed by `ExperimentManager.ts`. It supports various targeting variables, debug endpoints, zero-latency design, and a comprehensive `Experiment Editor` for managing tests with live preview. It includes a `Visitor Tracking System` for unique visitor counting and experiment auto-stopping.
+-   **UniversalVideo Component**: A mandatory component (`client/src/components/UniversalVideo.tsx`) for all video content, handling local videos natively and lazy-loading `react-player` for external sources. Configurable via YAML with schema validation.
+-   **UniversalImage Component**: A mandatory component (`client/src/components/UniversalImage.tsx`) for all image content, referencing an `image-registry.json` for metadata and supporting presets and lazy loading.
+-   **Inline Editing System**: A capability-based system for human editors and AI agents, enabling content modification directly on the site. It includes an `EditModeContext`, `EditableSection` wrappers, a `SectionEditorPanel` with YAML editor, and server-side content manipulation via API endpoints.
 
 ### External Dependencies
--   **4geeks Breathecode API**: Used for user authentication, profile management, and educational content delivery (future integration).
--   **@tabler/icons-react**: Primary icon library.
--   **react-i18next**: For internationalization and localization.
+-   **4geeks Breathecode API**: Intended for user authentication, profile management, and educational content delivery.
+-   **@tabler/icons-react**: Icon library.
+-   **react-i18next**: Internationalization library.
 -   **Vite**: Frontend build tool.
--   **Tailwind CSS**: Utility-first CSS framework.
+-   **Tailwind CSS**: CSS framework.
 -   **shadcn UI**: UI component library.
--   **wouter**: Small routing library.
+-   **wouter**: Routing library.
 -   **TanStack Query**: Data fetching and state management.
 -   **Express**: Backend server framework.

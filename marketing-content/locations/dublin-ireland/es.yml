@@ -9,18 +9,6 @@ meta:
     - /dublin
     - /campus/dublin
     - /ie/dublin
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 1 Grand Canal Square
-        addressLocality: Dublin
-        postalCode: Dublin 2
-        addressCountry: IE
 sections:
   - type: hero
     variant: singleColumn

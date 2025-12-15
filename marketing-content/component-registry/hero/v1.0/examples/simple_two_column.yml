@@ -1,6 +1,5 @@
 name: "Simple Two Column"
 description: "Two column layout with image on left, title, subtitle, CTA buttons on right. Mobile shows centered text with stacked layout."
-variant: "simpleTwoColumn"
 yaml: |
   - type: hero
     version: "1.0"

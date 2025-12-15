@@ -1,0 +1,22 @@
+{
+    "examples": [
+        {
+            "name": "Highlighted Values",
+            "description": "Grid showing key statistics with large value numbers and icons",
+            "yaml": "- type: features_grid\n  version: \"1.0\"\n  variant: highlight\n  title: Does the Job Guarantee deliver results you can count on?\n  subtitle: Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.\n  columns: 3\n  icon_color: \"#0097CD\"\n  items:\n    - icon: Briefcase\n      value: \"84%\"\n      title: Job placement rate\n      \n    - icon: Graduation\n      value: \"3-6 months\"\n      title: Average time to get hired\n      \n    - icon: GrowthChart\n      value: \"55%\"\n      title: Salary increase after graduation\n",
+            "variant": "highlight"
+        },
+        {
+            "name": "Program Cards",
+            "description": "Detailed program cards with icons, descriptions, and links",
+            "yaml": "- type: features_grid\n  version: \"1.0\"\n  variant: detailed\n  title: Programs with Job Guarantee\n  subtitle: Our career-focused programs come with a Job Guarantee - if you're not hired within 9 months, we refund your tuition.\n  columns: 3\n  collapsible_mobile: true\n  items:\n    - id: fullstack\n      icon: CodeWindow\n      category: Full Stack\n      title: Full Stack Development with AI\n      description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.\n      link_url: /programs/full-stack\n      link_text: Read More\n      \n    - id: datascience\n      icon: Monitor\n      category: With Python\n      title: Data Science and Machine Learning with AI\n      description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.\n      link_url: /programs/data-science\n      link_text: Read More\n      \n    - id: cybersecurity\n      icon: Security\n      category: For Windows & Linux\n      title: Cybersecurity\n      description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.\n      link_url: /programs/cybersecurity\n      link_text: Read More\n",
+            "variant": "detailed"
+        },
+        {
+            "name": "With Information",
+            "description": "Feature grid with icons, titles, and descriptions for each item",
+            "yaml": "- type: features_grid\n  version: \"1.0\"\n  variant: highlight\n  title: Advance Faster, Never Lose Momentum\n  subtitle: The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help.\n  columns: 4\n  icon_color: \"#0097CD\"\n  items:\n    - icon: PeopleGroup\n      title: \"7:1 Student-Teacher Ratio\"\n      description: Individual attention in every class.\n      \n    - icon: Handshake\n      title: Unlimited 1:1 Mentorship\n      description: From day one — and for a lifetime.\n      \n    - icon: Rocket\n      title: 24/7 AI Coding Assistant\n      description: Instant feedback while you code.\n      \n    - icon: HandsGroup\n      title: Real Community Support\n      description: Mentors, alumni & peers always ready to help.\n",
+            "variant": "highlight"
+        }
+    ]
+}

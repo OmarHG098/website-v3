@@ -19,6 +19,7 @@ interface VerticalBarsCardsData {
   version?: string;
   title?: string;
   subtitle?: string;
+  footer_description?: string;
   metrics: MetricCard[];
   background?: string;
 }
@@ -162,6 +163,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
             );
           })}
         </div>
+        {data.footer_description && (
+          <p className="text-base text-muted-foreground leading-relaxed italic text-center mt-8 max-w-3xl mx-auto">
+            {data.footer_description}
+          </p>
+        )}
       </div>
     </section>
   );

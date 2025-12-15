@@ -1,26 +1,13 @@
 # Cybersecurity Career Program - Spanish
 # This file defines all sections and content for the Cybersecurity career program page
 
-slug: "cybersecurity"
-title: "Ciberseguridad"
-
 meta:
   page_title: "Bootcamp de Ciberseguridad | 4Geeks"
   description: "Inicia una carrera bien remunerada en ciberseguridad. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad."
-  robots: "index, follow"
-  og_image: "/images/programs/cybersecurity-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/bootcamp/ciberseguridad"
     - "/programas/especialista-ciberseguridad"
     - "/coding-bootcamp/ciberseguridad"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:cybersecurity"
 
 sections:
   - type: hero
@@ -143,6 +130,8 @@ sections:
     card:
       title: "Especialista en Ciberseguridad"
       subtitle: "Certificado de 4Geeks Academy"
+      program_name: "Especialista en Ciberseguridad"
+      certificate_label: "Certificado de Finalización"
 
   - type: why_learn_ai
     title: "Los Especialistas en Ciberseguridad Tienen Alta Demanda"

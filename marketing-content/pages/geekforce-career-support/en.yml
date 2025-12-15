@@ -7,16 +7,8 @@ title: "GeekForce Career Support"
 meta:
   page_title: "GeekForce Career Support | 4Geeks Academy"
   description: "Get unlimited 1:1 career support designed for your unique profile and goals, for life. From resume and portfolio building to interviews and AI-driven hiring platforms."
-  robots: "index, follow"
-  priority: 0.9
-  change_frequency: "weekly"
   redirects:
     - "/geekforce-career-support"
-
-schema:
-  include:
-    - "organization"
-    - "website"
 
 sections:
   - type: hero

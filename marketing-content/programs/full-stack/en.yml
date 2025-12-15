@@ -1,21 +1,10 @@
-slug: full-stack
-title: Full Stack Development
 meta:
   page_title: Full Stack Developer Career Program | 4Geeks
   description: Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community.
-  robots: index, follow
-  og_image: /images/programs/full-stack-og.jpg
-  priority: 0.9
-  change_frequency: weekly
   redirects:
     - /bootcamp/full-stack
     - /programs/fullstack-developer
     - /coding-bootcamp/full-stack
-schema:
-  include:
-    - organization
-    - website
-    - courses:full-stack
 sections:
   - type: hero
     variant: singleColumn
@@ -138,6 +127,7 @@ sections:
     card:
       title: Full Stack Developer
       subtitle: 4Geeks Academy Certificate
+      program_name: Full-Stack Developer
   - type: why_learn_ai
     title: Why Should I Learn to Build and Code with AI?
     subtitle: Software Development as You Know It Will Cease to Exist

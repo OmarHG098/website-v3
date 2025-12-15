@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useSearch, useParams, Link } from "wouter";
+import { useSearch, useParams, Link, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { 
   IconCode, 
@@ -14,8 +14,16 @@ import {
   IconInfoCircle,
   IconDeviceMobile,
   IconDeviceTablet,
+  IconDeviceLaptop,
   IconDeviceDesktop,
-  IconChevronUp
+  IconChevronUp,
+  IconChevronRight,
+  IconArrowsMaximize,
+  IconX,
+  IconTestPipe,
+  IconCircleCheck,
+  IconCircleX,
+  IconDeviceFloppy
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -67,6 +75,11 @@ function useNoIndex() {
   }, []);
 }
 
+interface VariantInfo {
+  description?: string;
+  best_for?: string;
+}
+
 interface ComponentSchema {
   name: string;
   version: string;
@@ -75,6 +88,14 @@ interface ComponentSchema {
   description: string;
   when_to_use: string;
   props: Record<string, unknown>;
+  variants?: Record<string, VariantInfo>;
+}
+
+function formatVariantLabel(variant: string): string {
+  return variant
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+    .trim();
 }
 
 interface ComponentExample {
@@ -106,6 +127,19 @@ interface RegistryOverview {
   }>;
 }
 
+interface ValidationIssue {
+  type: 'error' | 'warning';
+  message: string;
+  file?: string;
+}
+
+interface ValidationResult {
+  componentType: string;
+  version: string;
+  issues: ValidationIssue[];
+  validVariants: string[];
+}
+
 function generateDefaultYaml(componentType: string, schema: ComponentSchema): string {
   const example: Record<string, unknown> = { type: componentType };
   
@@ -130,6 +164,7 @@ interface ComponentCardProps {
   globalPreviewState: boolean | null;
   isFocused?: boolean;
   cardRef?: React.RefObject<HTMLDivElement>;
+  allComponents?: Array<{ type: string; name: string; }>;
 }
 
 function ComponentCard({ 
@@ -138,9 +173,11 @@ function ComponentCard({
   globalYamlState, 
   globalPreviewState, 
   isFocused, 
-  cardRef 
+  cardRef,
+  allComponents = []
 }: ComponentCardProps) {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeReady, setIframeReady] = useState(false);
   const [iframeHeight, setIframeHeight] = useState(400);
@@ -149,17 +186,45 @@ function ComponentCard({
   const [showYaml, setShowYaml] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [showAddExampleModal, setShowAddExampleModal] = useState(false);
-  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
+  const [previewViewport, setPreviewViewport] = useState<'mobile' | 'tablet' | 'laptop' | 'desktop'>('mobile');
   const [yamlContent, setYamlContent] = useState('');
   const [parsedData, setParsedData] = useState<Section | null>(null);
   const [parseError, setParseError] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(() => 
     typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
   );
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const fullscreenIframeRef = useRef<HTMLIFrameElement>(null);
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
 
   const currentVersionData = componentInfo.versions.find(v => v.version === selectedVersion);
   const schema = currentVersionData?.schema;
   const examples = currentVersionData?.examples || [];
+
+  const updateUrl = useCallback((newVersion?: string, newExample?: string | null) => {
+    const v = newVersion || selectedVersion;
+    const e = newExample !== undefined ? newExample : selectedExample;
+    let url = `/private/component-showcase/${componentType}`;
+    const params = new URLSearchParams();
+    if (v) params.set('version', v);
+    if (e) params.set('example', e);
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+    setLocation(url, { replace: true });
+  }, [componentType, selectedVersion, selectedExample, setLocation]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlVersion = params.get('version');
+    const urlExample = params.get('example');
+    if (urlVersion && componentInfo.versions.some(v => v.version === urlVersion)) {
+      setSelectedVersion(urlVersion);
+    }
+    if (urlExample) {
+      setSelectedExample(urlExample);
+    }
+  }, [componentInfo.versions]);
 
   const createVersionMutation = useMutation({
     mutationFn: async (baseVersion: string) => {
@@ -183,6 +248,31 @@ function ComponentCard({
     onError: (error: Error) => {
       toast({
         title: "Failed to create version",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const saveExampleMutation = useMutation({
+    mutationFn: async () => {
+      if (!selectedExample) throw new Error("No example selected");
+      const result = await apiRequest('POST', `/api/component-registry/${componentType}/${selectedVersion}/save-example`, {
+        exampleName: selectedExample,
+        yamlContent: yamlContent,
+      });
+      return result as unknown as { success: boolean };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+      toast({
+        title: "Example saved",
+        description: `Saved changes to "${selectedExample}"`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to save example",
         description: error.message,
         variant: "destructive",
       });
@@ -275,7 +365,7 @@ function ComponentCard({
         sections: [parsedData],
       }, '*');
     }
-  }, [iframeReady, parsedData]);
+  }, [iframeReady, parsedData, selectedExample]);
 
   // Send theme to iframe when it changes
   useEffect(() => {
@@ -287,11 +377,7 @@ function ComponentCard({
     }
   }, [iframeReady, isDarkMode]);
 
-  // Reset iframe ready state when viewport changes (iframe remounts)
-  useEffect(() => {
-    setIframeReady(false);
-  }, [previewViewport]);
-
+  
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
     try {
@@ -345,6 +431,7 @@ function ComponentCard({
     } else {
       setSelectedVersion(version);
       setSelectedExample(null);
+      updateUrl(version, null);
     }
   };
 
@@ -353,10 +440,30 @@ function ComponentCard({
       setShowAddExampleModal(true);
     } else if (example === '__default__') {
       setSelectedExample(null);
+      updateUrl(undefined, null);
     } else {
       setSelectedExample(example);
+      updateUrl(undefined, example);
     }
   };
+
+  const handleValidate = useCallback(async () => {
+    setIsValidating(true);
+    setValidationResult(null);
+    try {
+      const response = await fetch(`/api/component-registry/${componentType}/validate?version=${selectedVersion}`);
+      const result = await response.json() as ValidationResult;
+      setValidationResult(result);
+    } catch (error) {
+      toast({
+        title: "Validation failed",
+        description: error instanceof Error ? error.message : "Unknown error",
+        variant: "destructive",
+      });
+    } finally {
+      setIsValidating(false);
+    }
+  }, [componentType, selectedVersion, toast]);
 
   const examplePath = `marketing-content/component-registry/${componentType}/${selectedVersion}/examples/`;
 
@@ -366,9 +473,9 @@ function ComponentCard({
 
   return (
     <>
-      <header 
+      <nav 
         ref={cardRef}
-        className="sticky top-0 z-50 bg-background border-b mb-4 -mx-4 sm:-mx-8 lg:-mx-16 px-4 sm:px-8 lg:px-16 py-3 transition-all duration-500 pt-[10px] pb-[10px] pl-[0px] pr-[0px]"
+        className="sticky top-0 z-50 border-b py-3 px-[15px] bg-[#ffffff]"
         data-testid={`component-card-${componentType}`}
       >
         <div className="flex flex-row items-start justify-between gap-4">
@@ -415,76 +522,65 @@ function ComponentCard({
                       {v.version}
                     </SelectItem>
                   ))}
-                  <SelectItem value="__add_new__" className="text-primary">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new version
-                    </div>
-                  </SelectItem>
                 </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Example:</span>
-              <Select 
-                value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
-                onValueChange={handleExampleChange}
-              >
-                <SelectTrigger className="w-48" data-testid={`select-example-${componentType}`}>
-                  <SelectValue placeholder="Default" />
-                </SelectTrigger>
-                <SelectContent className="min-w-[280px]">
-                  {examples.length === 0 && (
-                    <SelectItem value="__default__">Default (from schema)</SelectItem>
-                  )}
-                  {(() => {
-                    // Group examples by variant
-                    const grouped = examples.reduce((acc, ex) => {
-                      const variant = ex.variant || 'default';
-                      if (!acc[variant]) acc[variant] = [];
-                      acc[variant].push(ex);
-                      return acc;
-                    }, {} as Record<string, typeof examples>);
-                    
-                    const variantOrder = ['singleColumn', 'showcase', 'productShowcase', 'simpleTwoColumn', 'default'];
-                    const sortedVariants = Object.keys(grouped).sort((a, b) => {
-                      const aIdx = variantOrder.indexOf(a);
-                      const bIdx = variantOrder.indexOf(b);
-                      return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
-                    });
-                    
-                    const variantLabels: Record<string, string> = {
-                      singleColumn: 'Single Column',
-                      showcase: 'Showcase',
-                      productShowcase: 'Product Showcase',
-                      simpleTwoColumn: 'Simple Two Column',
-                      default: 'Default',
-                    };
-                    
-                    return sortedVariants.map(variant => (
-                      <SelectGroup key={variant}>
-                        <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
-                          {variantLabels[variant] || variant}
-                        </SelectLabel>
-                        {grouped[variant].map(ex => (
-                          <SelectItem key={ex.name} value={ex.name} className="pl-4">
-                            <span className="flex items-center gap-2">
+                </Select>
+                <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                <Select 
+                  value={selectedExample || (examples.length > 0 ? examples[0].name : '__default__')} 
+                  onValueChange={handleExampleChange}
+                >
+                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-[30%] sm:w-auto sm:min-w-[280px]" data-testid={`breadcrumb-example-${componentType}`}>
+                    <SelectValue placeholder="Default">{selectedExample || 'Default'}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="min-w-[280px]">
+                    {examples.length === 0 && (
+                      <SelectItem value="__default__">Default (from schema)</SelectItem>
+                    )}
+                    {(() => {
+                      const grouped = examples.reduce((acc, ex) => {
+                        const variant = ex.variant || 'default';
+                        if (!acc[variant]) acc[variant] = [];
+                        acc[variant].push(ex);
+                        return acc;
+                      }, {} as Record<string, typeof examples>);
+                      
+                      const schemaVariantOrder = schema.variants ? Object.keys(schema.variants) : [];
+                      const sortedVariants = Object.keys(grouped).sort((a, b) => {
+                        if (a === 'default') return 1;
+                        if (b === 'default') return -1;
+                        const aIdx = schemaVariantOrder.indexOf(a);
+                        const bIdx = schemaVariantOrder.indexOf(b);
+                        if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+                        if (aIdx === -1) return 1;
+                        if (bIdx === -1) return -1;
+                        return aIdx - bIdx;
+                      });
+                      
+                      return sortedVariants.map(variant => (
+                        <SelectGroup key={variant}>
+                          <SelectLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 pt-3 pb-1">
+                            {formatVariantLabel(variant)}
+                          </SelectLabel>
+                          {grouped[variant].map(ex => (
+                            <SelectItem key={ex.name} value={ex.name} className="pl-4">
                               {ex.name}
-                            </span>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    ));
-                  })()}
-                  <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
-                    <div className="flex items-center gap-1">
-                      <IconPlus className="w-3 h-3" />
-                      Add new example
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ));
+                    })()}
+                    <SelectItem value="__add_new__" className="text-primary mt-2 border-t border-border/50 pt-2">
+                      <div className="flex items-center gap-1">
+                        <IconPlus className="w-3 h-3" />
+                        Add new example
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+            </div>
+            <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
+            {/* Mobile-only buttons row */}
+            <div className="flex sm:hidden items-center gap-2 pt-[3px] pb-[3px]">
               {(() => {
                 const currentExample = examples.find(ex => ex.name === selectedExample);
                 if (!currentExample?.description) return null;
@@ -495,7 +591,7 @@ function ComponentCard({
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8"
-                        data-testid={`button-example-info-${componentType}`}
+                        data-testid={`button-example-info-mobile-${componentType}`}
                       >
                         <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
                       </Button>
@@ -507,6 +603,55 @@ function ComponentCard({
                   </Popover>
                 );
               })()}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleValidate}
+                    disabled={isValidating}
+                    className="h-8 px-2 text-xs"
+                    data-testid={`button-test-integrity-mobile-${componentType}`}
+                  >
+                    <IconTestPipe className="w-4 h-4 mr-1" />
+                    {isValidating ? 'Testing...' : 'Test'}
+                  </Button>
+                </PopoverTrigger>
+                {validationResult && (
+                  <PopoverContent className="w-80 text-sm">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">Validation Results</span>
+                        <Badge variant={validationResult.issues.filter(i => i.type === 'error').length > 0 ? 'destructive' : 'secondary'}>
+                          {validationResult.version}
+                        </Badge>
+                      </div>
+                      {validationResult.issues.length === 0 ? (
+                        <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                          <IconCircleCheck className="w-4 h-4" />
+                          <span>All checks passed!</span>
+                        </div>
+                      ) : (
+                        <div className="space-y-1 max-h-48 overflow-y-auto">
+                          {validationResult.issues.map((issue, idx) => (
+                            <div key={idx} className={`flex items-start gap-2 text-xs ${issue.type === 'error' ? 'text-destructive' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                              {issue.type === 'error' ? (
+                                <IconCircleX className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <IconAlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                              )}
+                              <div>
+                                <p>{issue.message}</p>
+                                {issue.file && <p className="text-muted-foreground font-mono">{issue.file}</p>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                )}
+              </Popover>
               <Button
                 variant="ghost"
                 size="icon"
@@ -514,16 +659,118 @@ function ComponentCard({
                   queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
                 }}
                 title="Reload examples"
-                data-testid={`button-reload-examples-${componentType}`}
+                data-testid={`button-reload-examples-mobile-${componentType}`}
               >
                 <IconRefresh className="w-4 h-4" />
               </Button>
             </div>
+            {(() => {
+              const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
+              const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
+              const variants = schemaVariants.length > 0 ? schemaVariants : exampleVariants;
+              if (variants.length === 0) return null;
+              return (
+                <div className="flex items-center gap-2 pt-[2px] pb-[2px] overflow-x-auto scrollbar-none">
+                  <span className="text-xs text-muted-foreground flex-shrink-0">Variants:</span>
+                  {variants.map(variant => (
+                    <Badge key={variant} variant="outline" className="text-xs flex-shrink-0">
+                      {formatVariantLabel(variant)}
+                    </Badge>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+          {/* Desktop-only buttons */}
+          <div className="hidden sm:flex items-center gap-2">
+            {(() => {
+              const currentExample = examples.find(ex => ex.name === selectedExample);
+              if (!currentExample?.description) return null;
+              return (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      data-testid={`button-example-info-${componentType}`}
+                    >
+                      <IconInfoCircle className="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-64 text-sm">
+                    <p className="font-medium mb-1">{currentExample.name}</p>
+                    <p className="text-muted-foreground">{currentExample.description}</p>
+                  </PopoverContent>
+                </Popover>
+              );
+            })()}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleValidate}
+                  disabled={isValidating}
+                  className="h-8 px-2 text-xs"
+                  data-testid={`button-test-integrity-${componentType}`}
+                >
+                  <IconTestPipe className="w-4 h-4 mr-1" />
+                  {isValidating ? 'Testing...' : 'Test'}
+                </Button>
+              </PopoverTrigger>
+              {validationResult && (
+                <PopoverContent className="w-80 text-sm">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">Validation Results</span>
+                      <Badge variant={validationResult.issues.filter(i => i.type === 'error').length > 0 ? 'destructive' : 'secondary'}>
+                        {validationResult.version}
+                      </Badge>
+                    </div>
+                    {validationResult.issues.length === 0 ? (
+                      <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                        <IconCircleCheck className="w-4 h-4" />
+                        <span>All checks passed!</span>
+                      </div>
+                    ) : (
+                      <div className="space-y-1 max-h-48 overflow-y-auto">
+                        {validationResult.issues.map((issue, idx) => (
+                          <div key={idx} className={`flex items-start gap-2 text-xs ${issue.type === 'error' ? 'text-destructive' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                            {issue.type === 'error' ? (
+                              <IconCircleX className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                            ) : (
+                              <IconAlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                            )}
+                            <div>
+                              <p>{issue.message}</p>
+                              {issue.file && <p className="text-muted-foreground font-mono">{issue.file}</p>}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </PopoverContent>
+              )}
+            </Popover>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                queryClient.invalidateQueries({ queryKey: ['/api/component-registry', componentType] });
+              }}
+              title="Reload examples"
+              data-testid={`button-reload-examples-${componentType}`}
+            >
+              <IconRefresh className="w-4 h-4" />
+            </Button>
           </div>
         </div>
-      </header>
+      </nav>
+      <div className="px-4 sm:px-8 lg:px-16 py-4">
       {!showYaml && (
-        <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+        <div className="mb-4">
           <Button
             variant="outline"
             size="sm"
@@ -538,13 +785,24 @@ function ComponentCard({
       )}
       <Collapsible open={showYaml}>
         <CollapsibleContent>
-          <div className="mb-4 -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="mb-4">
             <Card>
               <CardContent className="p-0">
                 <div className="rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-3 py-2 bg-muted border-b border-border">
                   <span className="text-xs font-medium text-muted-foreground">YAML Editor</span>
                   <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => saveExampleMutation.mutate()}
+                      disabled={!selectedExample || saveExampleMutation.isPending || !!parseError}
+                      className="h-6 px-2 text-xs"
+                      data-testid={`button-save-yaml-${componentType}`}
+                    >
+                      <IconDeviceFloppy className="w-3 h-3 mr-1" />
+                      {saveExampleMutation.isPending ? "Saving..." : "Save"}
+                    </Button>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -597,12 +855,12 @@ function ComponentCard({
       </Collapsible>
       <Collapsible open={showPreview}>
         <CollapsibleContent>
-          <div className="border rounded-lg overflow-hidden bg-background -mx-4 sm:-mx-8 lg:-mx-16">
+          <div className="border rounded-lg overflow-hidden bg-background">
             <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Preview</span>
                 <span className="text-xs text-muted-foreground">
-                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : '1440 × 900'}
+                  {previewViewport === 'mobile' ? '375 × 667' : previewViewport === 'tablet' ? '768 × 1024' : previewViewport === 'laptop' ? '1280 × 800' : '1440 × 900'}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -627,6 +885,16 @@ function ComponentCard({
                   <IconDeviceTablet className="w-4 h-4" />
                 </Button>
                 <Button
+                  variant={previewViewport === 'laptop' ? 'default' : 'ghost'}
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => setPreviewViewport('laptop')}
+                  title="Laptop (1280 × 800)"
+                  data-testid={`button-viewport-laptop-${componentType}`}
+                >
+                  <IconDeviceLaptop className="w-4 h-4" />
+                </Button>
+                <Button
                   variant={previewViewport === 'desktop' ? 'default' : 'ghost'}
                   size="icon"
                   className="h-7 w-7"
@@ -636,28 +904,51 @@ function ComponentCard({
                 >
                   <IconDeviceDesktop className="w-4 h-4" />
                 </Button>
+                <div className="w-px h-4 bg-border mx-1" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={() => {
+                    if (selectedExample) {
+                      window.location.href = `/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}&example=${encodeURIComponent(selectedExample)}`;
+                    } else if (parsedData) {
+                      sessionStorage.setItem('preview-sections', JSON.stringify([parsedData]));
+                      sessionStorage.setItem('preview-theme', isDarkMode ? 'dark' : 'light');
+                      window.location.href = `/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}`;
+                    }
+                  }}
+                  title="Full page preview"
+                  data-testid={`button-fullpage-preview-${componentType}`}
+                >
+                  <IconArrowsMaximize className="w-4 h-4" />
+                </Button>
               </div>
             </div>
-            <div className={`bg-muted/20 ${previewViewport !== 'desktop' ? 'flex justify-center py-4' : ''}`}>
+            <div className={`bg-muted/20 ${previewViewport !== 'desktop' && previewViewport !== 'laptop' ? 'flex justify-center py-4' : ''}`}>
               <div 
                 className={`bg-background transition-all duration-300 overflow-hidden ${
                   previewViewport === 'mobile' 
                     ? 'w-[375px] shadow-lg' 
                     : previewViewport === 'tablet' 
                       ? 'w-[768px] shadow-lg' 
-                      : 'w-full'
+                      : previewViewport === 'laptop'
+                        ? 'w-[1280px] shadow-lg'
+                        : 'w-full'
                 }`}
               >
                 <iframe
                   ref={iframeRef}
-                  src="/preview-frame?debug=false"
+                  src={`/private/component-showcase/${componentType}/preview?debug=false&version=${selectedVersion}&example=${encodeURIComponent(selectedExample || '')}`}
                   className="w-full border-0"
                   style={{ 
                     height: previewViewport === 'mobile' 
                       ? '667px'  // iPhone SE/8 screen height
                       : previewViewport === 'tablet'
                         ? '1024px'  // iPad portrait height
-                        : '900px',  // Desktop height (1440×900)
+                        : previewViewport === 'laptop'
+                          ? '800px'  // Laptop height (1280×800)
+                          : '900px',  // Desktop height (1440×900)
                     minHeight: '200px',
                   }}
                   title={`Preview ${componentType}`}
@@ -668,6 +959,7 @@ function ComponentCard({
           </div>
         </CollapsibleContent>
       </Collapsible>
+      </div>
       <Dialog open={showAddExampleModal} onOpenChange={setShowAddExampleModal}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -855,19 +1147,16 @@ export default function ComponentShowcase() {
 
     return (
       <div className="min-h-screen bg-background">
-        <main className="container mx-auto px-4 py-8 pt-[10px] pb-[10px]">
-          <div className="max-w-6xl mx-auto">
-            <ComponentCard 
-              key={componentType} 
-              componentType={componentType}
-              componentInfo={singleComponent}
-              globalYamlState={true}
-              globalPreviewState={true}
-              isFocused={false}
-              cardRef={cardRefs.current[componentType]}
-            />
-          </div>
-        </main>
+        <ComponentCard 
+          key={componentType} 
+          componentType={componentType}
+          componentInfo={singleComponent}
+          globalYamlState={null}
+          globalPreviewState={true}
+          isFocused={false}
+          cardRef={cardRefs.current[componentType]}
+          allComponents={components.map(c => ({ type: c.type, name: c.name }))}
+        />
       </div>
     );
   }
@@ -960,6 +1249,7 @@ function AllComponentsLoader({
   highlightedComponent,
   cardRefs 
 }: AllComponentsLoaderProps) {
+  const allComponents = components.map(c => ({ type: c.type, name: c.name }));
   return (
     <>
       {components.map((comp) => (
@@ -970,6 +1260,7 @@ function AllComponentsLoader({
           globalPreviewState={globalPreviewState}
           isFocused={highlightedComponent === comp.type}
           cardRef={cardRefs.current[comp.type]}
+          allComponents={allComponents}
         />
       ))}
     </>
@@ -982,6 +1273,7 @@ interface ComponentCardLoaderProps {
   globalPreviewState: boolean | null;
   isFocused: boolean;
   cardRef?: React.RefObject<HTMLDivElement>;
+  allComponents?: Array<{ type: string; name: string; }>;
 }
 
 function ComponentCardLoader({ 
@@ -989,7 +1281,8 @@ function ComponentCardLoader({
   globalYamlState, 
   globalPreviewState, 
   isFocused,
-  cardRef 
+  cardRef,
+  allComponents = []
 }: ComponentCardLoaderProps) {
   const { data: componentInfo, isLoading } = useQuery<ComponentInfo>({
     queryKey: ['/api/component-registry', componentType],
@@ -1018,6 +1311,7 @@ function ComponentCardLoader({
       globalPreviewState={globalPreviewState}
       isFocused={isFocused}
       cardRef={cardRef}
+      allComponents={allComponents}
     />
   );
 }

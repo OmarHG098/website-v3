@@ -1,21 +1,10 @@
-slug: cybersecurity
-title: Cybersecurity
 meta:
   page_title: Cybersecurity Bootcamp | 4Geeks
   description: Launch a high-paying career in cybersecurity. Learn to defend systems and respond to real-world cyber threats with a hands-on, AI-integrated curriculum—designed by leading cybersecurity experts.
-  robots: index, follow
-  og_image: /images/programs/cybersecurity-og.jpg
-  priority: 0.9
-  change_frequency: weekly
   redirects:
     - /bootcamp/cybersecurity
     - /programs/cybersecurity-specialist
     - /coding-bootcamp/cybersecurity
-schema:
-  include:
-    - organization
-    - website
-    - courses:cybersecurity
 sections:
   - type: hero
     variant: singleColumn
@@ -137,8 +126,10 @@ sections:
       - text: CEH certification pathway
       - text: Lifetime career support
     card:
-      title: Cybersecurity Specialist
-      subtitle: 4Geeks Academy Certificate
+      title: "Cybersecurity Specialist"
+      subtitle: "4Geeks Academy Certificate"
+      program_name: "Cybersecurity Specialist"
+
   - type: why_learn_ai
     title: Cybersecurity Specialists Are in High Demand
     subtitle: The demand for cybersecurity professionals continues to surge

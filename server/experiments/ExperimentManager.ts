@@ -11,6 +11,7 @@ import type {
 } from "@shared/schema";
 import { experimentsFileSchema, experimentConfigSchema, type ExperimentUpdate } from "@shared/schema";
 import { hashVisitorId } from "./cookie-utils";
+import { deepMerge } from "../utils/deepMerge";
 
 const CONTENT_DIR = path.join(process.cwd(), "marketing-content");
 const STATE_FILE = path.join(process.cwd(), "experiments-state.json");
@@ -28,7 +29,7 @@ const visitorSets: Map<string, Set<string>> = new Map();
 interface VariantContent {
   slug: string;
   version: number;
-  content: CareerProgram;
+  content: unknown;
 }
 
 export class ExperimentManager {
@@ -121,23 +122,21 @@ export class ExperimentManager {
    * Load variant content file
    */
   private loadVariantContent(
-    programSlug: string,
+    slug: string,
     variantSlug: string,
     version: number,
-    locale: string
-  ): CareerProgram | null {
-    const cacheKey = `${programSlug}:${variantSlug}.v${version}.${locale}`;
+    locale: string,
+    contentType: "programs" | "pages" | "landings" | "locations" = "programs"
+  ): unknown | null {
+    const cacheKey = `${contentType}:${slug}:${variantSlug}.v${version}.${locale}`;
     
     if (this.contentCache.has(cacheKey)) {
       return this.contentCache.get(cacheKey)!.content;
     }
 
-    const filePath = path.join(
-      CONTENT_DIR,
-      "programs",
-      programSlug,
-      `${variantSlug}.v${version}.${locale}.yml`
-    );
+    const contentDir = path.join(CONTENT_DIR, contentType, slug);
+    const commonPath = path.join(contentDir, "_common.yml");
+    const filePath = path.join(contentDir, `${variantSlug}.v${version}.${locale}.yml`);
 
     if (!fs.existsSync(filePath)) {
       console.warn(`[Experiments] Variant file not found: ${filePath}`);
@@ -145,14 +144,26 @@ export class ExperimentManager {
     }
 
     try {
+      // Load _common.yml if it exists (contains slug, title, schema)
+      let commonData: Record<string, unknown> = {};
+      if (fs.existsSync(commonPath)) {
+        const commonContent = fs.readFileSync(commonPath, "utf-8");
+        commonData = yaml.load(commonContent) as Record<string, unknown>;
+      }
+
+      // Load variant content
       const content = fs.readFileSync(filePath, "utf-8");
-      const parsed = yaml.load(content) as CareerProgram;
+      const variantData = yaml.load(content) as Record<string, unknown>;
+
+      // Deep merge common data with variant data (variant takes precedence)
+      const merged = deepMerge(commonData, variantData);
+
       this.contentCache.set(cacheKey, {
         slug: variantSlug,
         version,
-        content: parsed,
+        content: merged,
       });
-      return parsed;
+      return merged;
     } catch (error) {
       console.error(`[Experiments] Error loading variant content:`, error);
       return null;
@@ -428,15 +439,17 @@ export class ExperimentManager {
    * Get variant content for an assignment
    */
   public getVariantContent(
-    programSlug: string,
+    slug: string,
     assignment: ExperimentAssignment,
-    locale: string
-  ): CareerProgram | null {
+    locale: string,
+    contentType: "programs" | "pages" | "landings" | "locations" = "programs"
+  ): unknown | null {
     return this.loadVariantContent(
-      programSlug,
+      slug,
       assignment.variant_slug,
       assignment.variant_version,
-      locale
+      locale,
+      contentType
     );
   }
 
@@ -519,6 +532,107 @@ export class ExperimentManager {
     slug: string
   ): string {
     return path.join(CONTENT_DIR, contentType, slug, "experiments.yml");
+  }
+
+  /**
+   * Get available variants for a content type and slug
+   * Parses YAML files in the content folder following naming conventions:
+   * - {locale}.yml = "promoted" variant (e.g., en.yml, es.yml)
+   * - {variant-slug}.v{version}.{locale}.yml = named variant (e.g., salary-focus.v1.en.yml)
+   */
+  public getAvailableVariants(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    slug: string
+  ): {
+    variants: Array<{
+      filename: string;
+      name: string;
+      variantSlug: string;
+      version: number | null;
+      locale: string;
+      displayName: string;
+      isPromoted: boolean;
+    }>;
+    contentType: string;
+    slug: string;
+    folderPath: string;
+  } | null {
+    const contentDir = path.join(CONTENT_DIR, contentType, slug);
+    
+    if (!fs.existsSync(contentDir)) {
+      return null;
+    }
+    
+    try {
+      const files = fs.readdirSync(contentDir);
+      
+      const variants = files
+        .filter(file => file.endsWith('.yml') && file !== 'experiments.yml' && !file.startsWith('_'))
+        .map(file => {
+          const name = file.replace('.yml', '');
+          const parts = name.split('.');
+          
+          // Simple locale file like "en.yml" or "es.yml" = promoted variant
+          if (parts.length === 1) {
+            return {
+              filename: file,
+              name,
+              variantSlug: 'promoted',
+              version: null,
+              locale: parts[0],
+              displayName: `Promoted (${parts[0].toUpperCase()})`,
+              isPromoted: true
+            };
+          }
+          
+          // Pattern: {variant-slug}.v{version}.{locale}.yml
+          // e.g., salary-focus.v1.en.yml
+          const locale = parts[parts.length - 1];
+          const versionMatch = parts[parts.length - 2]?.match(/^v(\d+)$/);
+          
+          if (versionMatch) {
+            const version = parseInt(versionMatch[1], 10);
+            const variantSlug = parts.slice(0, -2).join('.');
+            return {
+              filename: file,
+              name,
+              variantSlug,
+              version,
+              locale,
+              displayName: `${variantSlug} v${version} (${locale.toUpperCase()})`,
+              isPromoted: false
+            };
+          }
+          
+          // Fallback for other patterns
+          return {
+            filename: file,
+            name,
+            variantSlug: parts.slice(0, -1).join('.') || parts[0],
+            version: null,
+            locale: parts[parts.length - 1],
+            displayName: name,
+            isPromoted: false
+          };
+        })
+        .sort((a, b) => {
+          // Sort promoted variants first, then by variant slug, then by version
+          if (a.isPromoted !== b.isPromoted) return a.isPromoted ? -1 : 1;
+          if (a.variantSlug !== b.variantSlug) return a.variantSlug.localeCompare(b.variantSlug);
+          if (a.version !== b.version) return (a.version || 0) - (b.version || 0);
+          return a.locale.localeCompare(b.locale);
+        });
+      
+      return {
+        variants,
+        contentType,
+        slug,
+        folderPath: `marketing-content/${contentType}/${slug}`
+      };
+    } catch (error) {
+      console.error(`[Experiments] Error getting variants for ${contentType}/${slug}:`, error);
+      return null;
+    }
   }
 
   /**
@@ -616,6 +730,208 @@ export class ExperimentManager {
       console.error(`[Experiments] Error updating experiment:`, error);
       throw error;
     }
+  }
+
+  /**
+   * Create a new experiment and optionally create a new variant file
+   */
+  public createExperiment(
+    contentType: "programs" | "pages" | "landings" | "locations",
+    contentSlug: string,
+    experimentConfig: {
+      experimentName: string;
+      experimentSlug: string;
+      variantA: { filename: string; slug: string; version: number };
+      variantB: { filename: string; slug: string; version: number } | null;
+      newVariant: { title: string; slug: string } | null;
+      allocationA: number;
+      maxVisitors: number;
+      targeting: {
+        regions?: string[];
+        devices?: ("mobile" | "desktop" | "tablet")[];
+        locations?: string[];
+        utm_sources?: string[];
+        utm_campaigns?: string[];
+        utm_mediums?: string[];
+        countries?: string[];
+      };
+    }
+  ): { success: boolean; experimentSlug: string; newVariantFilename?: string } {
+    const contentDir = path.join(CONTENT_DIR, contentType, contentSlug);
+    const configPath = path.join(contentDir, "experiments.yml");
+    
+    if (!fs.existsSync(contentDir)) {
+      throw new Error(`Content folder not found: ${contentType}/${contentSlug}`);
+    }
+    
+    // Determine variant B details
+    let variantBSlug: string;
+    let variantBVersion: number;
+    let newVariantFilename: string | undefined;
+    
+    if (experimentConfig.variantB) {
+      // Use existing variant B
+      variantBSlug = experimentConfig.variantB.slug;
+      variantBVersion = experimentConfig.variantB.version;
+    } else if (experimentConfig.newVariant) {
+      // Create new variant by copying from variant A
+      const variantAPath = path.join(contentDir, experimentConfig.variantA.filename);
+      if (!fs.existsSync(variantAPath)) {
+        throw new Error(`Variant A file not found: ${experimentConfig.variantA.filename}`);
+      }
+      
+      // Extract locale from variant A filename
+      const localeMatch = experimentConfig.variantA.filename.match(/\.([a-z]{2})\.yml$/);
+      const locale = localeMatch ? localeMatch[1] : "en";
+      
+      // Create new variant filename: {slug}.v1.{locale}.yml
+      variantBSlug = experimentConfig.newVariant.slug;
+      variantBVersion = 1;
+      newVariantFilename = `${variantBSlug}.v${variantBVersion}.${locale}.yml`;
+      const newVariantPath = path.join(contentDir, newVariantFilename);
+      
+      // Check if file already exists
+      if (fs.existsSync(newVariantPath)) {
+        throw new Error(`Variant file already exists: ${newVariantFilename}`);
+      }
+      
+      // Copy content from variant A and update title
+      const variantAContent = fs.readFileSync(variantAPath, "utf-8");
+      const variantAData = yaml.load(variantAContent) as Record<string, unknown>;
+      
+      // Update title if provided
+      if (experimentConfig.newVariant.title) {
+        variantAData.title = experimentConfig.newVariant.title;
+      }
+      
+      // Write new variant file
+      const newVariantContent = yaml.dump(variantAData, {
+        indent: 2,
+        lineWidth: 120,
+        quotingType: '"',
+        forceQuotes: false,
+      });
+      fs.writeFileSync(newVariantPath, newVariantContent, "utf-8");
+      
+      console.log(`[Experiments] Created new variant file: ${newVariantFilename}`);
+    } else {
+      throw new Error("Either variantB or newVariant must be provided");
+    }
+    
+    // Build the experiment config
+    const allocationB = 100 - experimentConfig.allocationA;
+    
+    const newExperiment: ExperimentConfig = {
+      slug: experimentConfig.experimentSlug,
+      status: "planned",
+      description: experimentConfig.experimentName,
+      max_visitors: experimentConfig.maxVisitors,
+      variants: [
+        {
+          slug: experimentConfig.variantA.slug,
+          version: experimentConfig.variantA.version,
+          allocation: experimentConfig.allocationA,
+        },
+        {
+          slug: variantBSlug,
+          version: variantBVersion,
+          allocation: allocationB,
+        },
+      ],
+      targeting: this.buildTargetingObject(experimentConfig.targeting),
+    };
+    
+    // Validate the new experiment
+    const experimentValidation = experimentConfigSchema.safeParse(newExperiment);
+    if (!experimentValidation.success) {
+      throw new Error(`Invalid experiment config: ${experimentValidation.error.message}`);
+    }
+    
+    // Load or create experiments.yml
+    let experimentsFile: ExperimentsFile;
+    
+    if (fs.existsSync(configPath)) {
+      const content = fs.readFileSync(configPath, "utf-8");
+      const parsed = yaml.load(content);
+      const validated = experimentsFileSchema.safeParse(parsed);
+      
+      if (!validated.success) {
+        throw new Error(`Invalid experiments file: ${validated.error.message}`);
+      }
+      
+      experimentsFile = validated.data;
+      
+      // Check if experiment slug already exists
+      if (experimentsFile.experiments.some(exp => exp.slug === experimentConfig.experimentSlug)) {
+        throw new Error(`Experiment with slug "${experimentConfig.experimentSlug}" already exists`);
+      }
+      
+      // Add new experiment
+      experimentsFile.experiments.push(experimentValidation.data);
+    } else {
+      // Create new experiments file
+      experimentsFile = {
+        experiments: [experimentValidation.data],
+      };
+    }
+    
+    // Validate entire file
+    const fileValidation = experimentsFileSchema.safeParse(experimentsFile);
+    if (!fileValidation.success) {
+      throw new Error(`File validation failed: ${fileValidation.error.message}`);
+    }
+    
+    // Write experiments.yml
+    const yamlContent = yaml.dump(fileValidation.data, {
+      indent: 2,
+      lineWidth: 120,
+      quotingType: '"',
+      forceQuotes: false,
+    });
+    
+    fs.writeFileSync(configPath, yamlContent, "utf-8");
+    
+    // Clear cache
+    const cacheKey = `${contentType}:${contentSlug}`;
+    this.configCache.delete(cacheKey);
+    
+    console.log(`[Experiments] Created experiment ${experimentConfig.experimentSlug} for ${contentType}/${contentSlug}`);
+    
+    return {
+      success: true,
+      experimentSlug: experimentConfig.experimentSlug,
+      newVariantFilename,
+    };
+  }
+  
+  /**
+   * Build targeting object, filtering out empty arrays
+   */
+  private buildTargetingObject(targeting: {
+    regions?: string[];
+    devices?: ("mobile" | "desktop" | "tablet")[];
+    locations?: string[];
+    utm_sources?: string[];
+    utm_campaigns?: string[];
+    utm_mediums?: string[];
+    countries?: string[];
+  }): ExperimentConfig["targeting"] | undefined {
+    const result: ExperimentConfig["targeting"] = {};
+    
+    if (targeting.regions?.length) result.regions = targeting.regions;
+    if (targeting.devices?.length) result.devices = targeting.devices;
+    if (targeting.locations?.length) result.locations = targeting.locations;
+    if (targeting.utm_sources?.length) result.utm_sources = targeting.utm_sources;
+    if (targeting.utm_campaigns?.length) result.utm_campaigns = targeting.utm_campaigns;
+    if (targeting.utm_mediums?.length) result.utm_mediums = targeting.utm_mediums;
+    if (targeting.countries?.length) result.countries = targeting.countries;
+    
+    // Return undefined if no targeting rules
+    if (Object.keys(result).length === 0) {
+      return undefined;
+    }
+    
+    return result;
   }
 }
 

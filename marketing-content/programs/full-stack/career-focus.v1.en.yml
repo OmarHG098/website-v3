@@ -1,20 +1,11 @@
 # Full Stack Development - Career Focus Variant
 # Experiment variant emphasizing career growth and job opportunities
 
-slug: "full-stack"
-title: "Full Stack Development"
-
 meta:
   page_title: "Full Stack Developer Career Program | 4Geeks"
   description: "Launch your tech career with our Full Stack Development program. Get hired in 6 months with our job guarantee."
   robots: "index, follow"
   og_image: "/images/programs/full-stack-og.jpg"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:full-stack"
 
 sections:
   - type: hero

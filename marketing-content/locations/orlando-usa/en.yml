@@ -9,19 +9,6 @@ meta:
     - /orlando
     - /campus/orlando
     - /en/orlando
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 100 S Orange Ave
-        addressLocality: Orlando
-        addressRegion: FL
-        postalCode: "32801"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

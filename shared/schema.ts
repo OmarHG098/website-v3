@@ -76,6 +76,102 @@ export const brandMarkSchema = z.object({
   color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
 });
 
+// Field config for LeadForm fields
+export const leadFormFieldConfigSchema = z.object({
+  visible: z.boolean().optional(),
+  required: z.boolean().optional(),
+  default: z.string().optional(),
+  helper_text: z.string().optional(),
+  placeholder: z.string().optional(),
+});
+
+// LeadForm data schema - used for forms that capture leads
+export const leadFormDataSchema = z.object({
+  variant: z.enum(["stacked", "inline"]).optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  submit_label: z.string().optional(),
+  tags: z.string().optional(),
+  automations: z.string().optional(),
+  fields: z.object({
+    email: leadFormFieldConfigSchema.optional(),
+    first_name: leadFormFieldConfigSchema.optional(),
+    last_name: leadFormFieldConfigSchema.optional(),
+    phone: leadFormFieldConfigSchema.optional(),
+    program: leadFormFieldConfigSchema.optional(),
+    region: leadFormFieldConfigSchema.optional(),
+    location: leadFormFieldConfigSchema.optional(),
+    coupon: leadFormFieldConfigSchema.optional(),
+    comment: leadFormFieldConfigSchema.optional(),
+  }).optional(),
+  success: z.object({
+    url: z.string().optional(),
+    message: z.string().optional(),
+  }).optional(),
+  terms_url: z.string().optional(),
+  privacy_url: z.string().optional(),
+  show_consent: z.boolean().optional(),
+  show_terms: z.boolean().optional(),
+  className: z.string().optional(),
+});
+
+// Alias for backward compatibility - productShowcaseFormSchema now uses LeadFormData
+export const productShowcaseFormSchema = leadFormDataSchema;
+
+export const videoConfigSchema = z.object({
+  url: z.string(),
+  ratio: z.string().optional(),
+  muted: z.boolean().optional(),
+  autoplay: z.boolean().optional(),
+  loop: z.boolean().optional(),
+  preview_image_url: z.string().optional(),
+});
+
+export type VideoConfig = z.infer<typeof videoConfigSchema>;
+
+// Image Registry Schemas
+export const imagePresetSchema = z.object({
+  aspect_ratio: z.string().nullable(),
+  widths: z.array(z.number()),
+  quality: z.number(),
+  description: z.string(),
+});
+
+export const imageEntrySchema = z.object({
+  src: z.string(),
+  alt: z.string(),
+  focal_point: z.enum(["center", "top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"]).optional(),
+  tags: z.array(z.string()).optional(),
+});
+
+export const imageRegistrySchema = z.object({
+  presets: z.record(z.string(), imagePresetSchema),
+  images: z.record(z.string(), imageEntrySchema),
+});
+
+export const imageRefSchema = z.object({
+  id: z.string(),
+  preset: z.enum(["hero-wide", "hero-tall", "card", "card-wide", "avatar", "logo", "icon", "full"]).optional(),
+  alt: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export type ImagePreset = z.infer<typeof imagePresetSchema>;
+export type ImageEntry = z.infer<typeof imageEntrySchema>;
+export type ImageRegistry = z.infer<typeof imageRegistrySchema>;
+export type ImageRef = z.infer<typeof imageRefSchema>;
+
+export const reviewLogoSchema = z.object({
+  name: z.string(),
+  logo: z.string().optional(),
+});
+
+export const productShowcaseTrustBarSchema = z.object({
+  rating: z.string().optional(),
+  review_count: z.string().optional(),
+  review_logos: z.array(reviewLogoSchema).optional(),
+});
+
 export const heroProductShowcaseSchema = z.object({
   type: z.literal("hero"),
   version: z.string().optional(),
@@ -85,9 +181,17 @@ export const heroProductShowcaseSchema = z.object({
   welcome_text: z.string().optional(),
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
-  video_id: z.string(),
+  video: videoConfigSchema.optional(),
+  video_id: z.string().optional(),
   video_title: z.string().optional(),
   video_ratio: z.string().optional(),
+  image: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }).optional(),
+  form: productShowcaseFormSchema.optional(),
+  cta_button: ctaButtonSchema.optional(),
+  trust_bar: productShowcaseTrustBarSchema.optional(),
 }).strict();
 
 export const heroSimpleTwoColumnSchema = z.object({
@@ -133,6 +237,50 @@ export const heroTwoColumnSchema = z.object({
   background: z.string().optional(),
 }).strict();
 
+export const heroCourseTutorSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  image: z.string(),
+});
+
+export const heroCourseFeatureSchema = z.object({
+  icon: z.string(),
+  text: z.string(),
+  count: z.union([z.string(), z.number()]).optional(),
+});
+
+export const heroCourseSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("course"),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  students_enrolled: z.object({
+    avatars: z.array(z.string()).optional(),
+    count: z.string(),
+  }).optional(),
+  bullet_points: z.array(z.string()).optional(),
+  tutors: z.array(heroCourseTutorSchema).optional(),
+  tutors_label: z.string().optional(),
+  description: z.string().optional(),
+  media: z.object({
+    type: z.enum(["video", "image"]),
+    src: z.string(),
+    thumbnail: z.string().optional(),
+    alt: z.string().optional(),
+  }),
+  signup_card: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    cta_button: ctaButtonSchema,
+    login_link: z.object({
+      text: z.string(),
+      url: z.string(),
+    }).optional(),
+    features: z.array(heroCourseFeatureSchema).optional(),
+  }),
+}).strict();
+
 // Combined hero section schema - union of all variants
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
@@ -141,6 +289,7 @@ export const heroSectionSchema = z.union([
   heroSimpleTwoColumnSchema,
   heroSimpleStackedSchema,
   heroTwoColumnSchema,
+  heroCourseSchema,
 ]);
 
 export const cardItemSchema = z.object({
@@ -192,6 +341,8 @@ export const certificateSectionSchema = z.object({
   card: z.object({
     title: z.string(),
     subtitle: z.string(),
+    program_name: z.string().optional(),
+    certificate_label: z.string().optional(),
   }).optional(),
   stats: z.array(statItemSchema).optional(),
 });
@@ -345,6 +496,37 @@ export const twoColumnSectionSchema = z.object({
   padding_left: z.string().optional(),
   padding_right: z.string().optional(),
 });
+
+export const supportDuoBulletGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  bullets: z.array(z.object({ 
+    text: z.string(),
+    icon: z.string().optional(),
+  })).optional(),
+  button: z.object({
+    text: z.string(),
+    url: z.string(),
+    variant: z.enum(["primary", "secondary", "outline"]).optional(),
+  }).optional(),
+});
+
+export const supportDuoSectionSchema = z.object({
+  type: z.literal("support_duo"),
+  version: z.string().optional(),
+  variant: z.enum(["default", "grid"]).optional(),
+  heading: z.string(),
+  description: z.string(),
+  bullet_groups: z.array(supportDuoBulletGroupSchema),
+  footer_description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
 
 export const numberedStepsStepSchema = z.object({
   icon: z.string(),
@@ -669,6 +851,7 @@ export const verticalBarsCardsSectionSchema = z.object({
   version: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
+  footer_description: z.string().optional(),
   background: z.string().optional(),
   metrics: z.array(verticalBarsMetricCardSchema),
 });
@@ -713,6 +896,7 @@ export const sectionSchema = z.union([
   heroSimpleTwoColumnSchema,
   heroSimpleStackedSchema,
   heroTwoColumnSchema,
+  heroCourseSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -740,6 +924,7 @@ export const sectionSchema = z.union([
   horizontalBarsSectionSchema,
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
+  supportDuoSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
@@ -791,6 +976,8 @@ export type SchemaRef = z.infer<typeof schemaRefSchema>;
 export type CareerProgramMeta = z.infer<typeof careerProgramMetaSchema>;
 export type CTAButton = z.infer<typeof ctaButtonSchema>;
 export type TrustBar = z.infer<typeof trustBarSchema>;
+export type LeadFormFieldConfig = z.infer<typeof leadFormFieldConfigSchema>;
+export type LeadFormData = z.infer<typeof leadFormDataSchema>;
 export type AwardBadge = z.infer<typeof awardBadgeSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;

@@ -1,9 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
+import * as yaml from "js-yaml";
 import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
@@ -15,7 +15,8 @@ import {
   loadSchema, 
   loadExamples, 
   createNewVersion,
-  getExampleFilePath 
+  getExampleFilePath,
+  saveExample,
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
 import {
@@ -25,241 +26,142 @@ import {
   setExperimentCookie,
   buildVisitorContext,
 } from "./experiments";
+import { loadImageRegistry } from "./image-registry";
+import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
-const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
-const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
-const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
-const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
-
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
-  try {
-    const filePath = path.join(MARKETING_CONTENT_PATH, slug, `${locale}.yml`);
-
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
-
-    const result = careerProgramSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading career program ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "programs",
+    slug,
+    schema: careerProgramSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listCareerPrograms(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("programs");
+  const programs: Array<{ slug: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const program = loadCareerProgram(slug, locale);
+    if (program) {
+      programs.push({ slug: program.slug, title: program.title });
     }
-
-    const programs: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const programPath = path.join(MARKETING_CONTENT_PATH, dir);
-      if (fs.statSync(programPath).isDirectory()) {
-        const program = loadCareerProgram(dir, locale);
-        if (program) {
-          programs.push({ slug: program.slug, title: program.title });
-        }
-      }
-    }
-
-    return programs;
-  } catch (error) {
-    console.error("Error listing career programs:", error);
-    return [];
   }
+  
+  return programs;
 }
 
-function loadLandingPage(slug: string, locale: string): LandingPage | null {
-  try {
-    const filePath = path.join(LANDINGS_CONTENT_PATH, slug, `${locale}.yml`);
-
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
-
-    const result = landingPageSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading landing page ${slug}/${locale}:`, error);
+function loadLandingPage(slug: string): LandingPage | null {
+  const result = loadContent({
+    contentType: "landings",
+    slug,
+    schema: landingPageSchema,
+    localeOrVariant: "promoted",
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
-function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
-      return [];
+function listLandingPages(): Array<{ slug: string; title: string; locale: string }> {
+  const slugs = listContentSlugs("landings");
+  const landings: Array<{ slug: string; title: string; locale: string }> = [];
+  
+  for (const slug of slugs) {
+    const landing = loadLandingPage(slug);
+    if (landing) {
+      const commonData = loadCommonData("landings", slug);
+      const locale = (commonData?.locale as string) || "en";
+      landings.push({ slug: landing.slug, title: landing.title, locale });
     }
-
-    const landings: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
-      if (fs.statSync(landingPath).isDirectory()) {
-        const landing = loadLandingPage(dir, locale);
-        if (landing) {
-          landings.push({ slug: landing.slug, title: landing.title });
-        }
-      }
-    }
-
-    return landings;
-  } catch (error) {
-    console.error("Error listing landing pages:", error);
-    return [];
   }
+  
+  return landings;
 }
 
 function loadLocationPage(slug: string, locale: string): LocationPage | null {
-  try {
-    const locationDir = path.join(LOCATIONS_CONTENT_PATH, slug);
-    const campusPath = path.join(locationDir, "campus.yml");
-    const localePath = path.join(locationDir, `${locale}.yml`);
-
-    if (!fs.existsSync(campusPath) || !fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const campusContent = fs.readFileSync(campusPath, "utf8");
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    
-    const campusData = yaml.load(campusContent) as Record<string, unknown>;
-    const localeData = yaml.load(localeContent) as Record<string, unknown>;
-
-    const mergedData = { ...campusData, ...localeData };
-
-    const result = locationPageSchema.safeParse(mergedData);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for location ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    // Automatically inject organization schema as parentOrganization for all locations
-    const locationData = result.data;
-    if (!locationData.schema) {
-      locationData.schema = { include: ["organization"] };
-    } else if (!locationData.schema.include) {
-      locationData.schema.include = ["organization"];
-    } else if (!locationData.schema.include.includes("organization")) {
-      locationData.schema.include = ["organization", ...locationData.schema.include];
-    }
-
-    return locationData;
-  } catch (error) {
-    console.error(`Error loading location page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "locations",
+    slug,
+    schema: locationPageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listLocationPages(locale: string): Array<{ slug: string; name: string; city: string; country: string; region: string }> {
-  try {
-    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("locations");
+  const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
+  
+  for (const slug of slugs) {
+    const location = loadLocationPage(slug, locale);
+    if (location && location.visibility === "listed") {
+      locations.push({
+        slug: location.slug,
+        name: location.name,
+        city: location.city,
+        country: location.country,
+        region: location.region,
+      });
     }
-
-    const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
-    const entries = fs.readdirSync(LOCATIONS_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const location = loadLocationPage(slug, locale);
-        if (location && location.visibility === "listed") {
-          locations.push({
-            slug: location.slug,
-            name: location.name,
-            city: location.city,
-            country: location.country,
-            region: location.region,
-          });
-        }
-      }
-    }
-
-    return locations;
-  } catch (error) {
-    console.error("Error listing location pages:", error);
-    return [];
   }
+  
+  return locations;
 }
 
 // Template Pages (marketing-content/pages/)
 function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
-  try {
-    const pageDir = path.join(PAGES_CONTENT_PATH, slug);
-    const localePath = path.join(pageDir, `${locale}.yml`);
-
-    if (!fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    const data = yaml.load(localeContent) as Record<string, unknown>;
-
-    const result = templatePageSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for template page ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading template page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "pages",
+    slug,
+    schema: templatePageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
-  try {
-    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("pages");
+  const pages: Array<{ slug: string; template: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const page = loadTemplatePage(slug, locale);
+    if (page) {
+      pages.push({
+        slug: page.slug,
+        template: page.template,
+        title: page.title,
+      });
     }
-
-    const pages: Array<{ slug: string; template: string; title: string }> = [];
-    const entries = fs.readdirSync(PAGES_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const page = loadTemplatePage(slug, locale);
-        if (page) {
-          pages.push({
-            slug: page.slug,
-            template: page.template,
-            title: page.title,
-          });
-        }
-      }
-    }
-
-    return pages;
-  } catch (error) {
-    console.error("Error listing template pages:", error);
-    return [];
   }
+  
+  return pages;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -393,24 +295,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Landing pages API
-  app.get("/api/landings", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
-    const landings = listLandingPages(locale);
+  app.get("/api/landings", (_req, res) => {
+    const landings = listLandingPages();
     res.json(landings);
   });
 
   app.get("/api/landings/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const forceVariant = req.query.force_variant as string | undefined;
+    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
 
-    const landing = loadLandingPage(slug, locale);
+    // Get locale from _common.yml
+    const commonData = loadCommonData("landings", slug);
+    const locale = (commonData?.locale as string) || "en";
+
+    let landing: LandingPage | null = null;
+    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+
+    // If force_variant is provided, load that variant directly (for preview)
+    if (forceVariant && forceVersion !== undefined) {
+      const experimentManager = getExperimentManager();
+      const forcedContent = experimentManager.getVariantContent(slug, {
+        experiment_slug: "preview",
+        variant_slug: forceVariant,
+        variant_version: forceVersion,
+        assigned_at: Date.now(),
+      }, locale, "landings");
+      if (forcedContent) {
+        landing = forcedContent as LandingPage;
+        experimentInfo = {
+          experiment: "preview",
+          variant: forceVariant,
+          version: forceVersion,
+        };
+      }
+    }
+
+    // Fall back to default content
+    if (!landing) {
+      landing = loadLandingPage(slug);
+    }
 
     if (!landing) {
       res.status(404).json({ error: "Landing page not found" });
       return;
     }
 
-    res.json(landing);
+    res.json({ ...landing, locale, _experiment: experimentInfo });
   });
 
   // Locations API
@@ -588,6 +519,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Experiment cache cleared" });
   });
 
+  // Get available variants for a content type and slug
+  app.get("/api/variants/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const result = experimentManager.getAvailableVariants(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      slug
+    );
+    
+    if (!result) {
+      res.status(404).json({ error: "Content folder not found" });
+      return;
+    }
+    
+    res.json(result);
+  });
+
   // Get experiments for a specific content type and slug
   app.get("/api/experiments/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
@@ -725,6 +680,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create new experiment
+  app.post("/api/experiments/:contentType/:slug/create", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const {
+      experimentName,
+      experimentSlug,
+      variantA,
+      variantB,
+      newVariant,
+      allocationA,
+      maxVisitors,
+      targeting,
+    } = req.body;
+    
+    // Basic validation
+    if (!experimentName || !experimentSlug || !variantA) {
+      res.status(400).json({ 
+        error: "Missing required fields: experimentName, experimentSlug, variantA" 
+      });
+      return;
+    }
+    
+    if (!variantB && !newVariant) {
+      res.status(400).json({ 
+        error: "Either variantB or newVariant must be provided" 
+      });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    try {
+      const result = experimentManager.createExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        slug,
+        {
+          experimentName,
+          experimentSlug,
+          variantA,
+          variantB: variantB || null,
+          newVariant: newVariant || null,
+          allocationA: allocationA ?? 50,
+          maxVisitors: maxVisitors ?? 1000,
+          targeting: targeting || {},
+        }
+      );
+      
+      res.json({
+        ...result,
+        redirectPath: `/private/${contentType}/${slug}/experiment/${experimentSlug}`,
+      });
+    } catch (error) {
+      res.status(400).json({ 
+        error: error instanceof Error ? error.message : "Failed to create experiment" 
+      });
+    }
+  });
+
   // Component Registry API endpoints
   app.get("/api/component-registry", (req, res) => {
     const overview = getRegistryOverview();
@@ -741,6 +760,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(info);
+  });
+
+  app.get("/api/component-registry/:componentType/validate", (req, res) => {
+    const { componentType } = req.params;
+    const version = req.query.version as string | undefined;
+    
+    // Dynamic import to avoid circular dependencies
+    import("../scripts/utils/validateComponent").then(({ validateComponent }) => {
+      const result = validateComponent(componentType, version);
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error: "Failed to load validation module", details: String(error) });
+    });
   });
 
   app.get("/api/component-registry/:componentType/versions", (req, res) => {
@@ -790,6 +822,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json({ success: true, newVersion: result.newVersion });
+  });
+
+  app.post("/api/component-registry/:componentType/:version/save-example", (req, res) => {
+    const { componentType, version } = req.params;
+    const { exampleName, yamlContent } = req.body;
+    
+    if (!exampleName || !yamlContent) {
+      res.status(400).json({ error: "exampleName and yamlContent required" });
+      return;
+    }
+    
+    const result = saveExample(componentType, version, exampleName, yamlContent);
+    
+    if (!result.success) {
+      res.status(400).json({ error: result.error });
+      return;
+    }
+    
+    res.json({ success: true });
   });
 
   // Content editing API
@@ -858,6 +909,168 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } else {
       res.status(404).json({ error: result.error });
     }
+  });
+
+  // Lead Form API endpoints
+  
+  // Get form options (programs and locations for dropdowns)
+  app.get("/api/form-options", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    // Get all programs for dropdown
+    const programs = listCareerPrograms(locale).map(p => ({
+      slug: p.slug,
+      title: p.title,
+    }));
+    
+    // Get all visible locations grouped by region
+    const locationsPath = path.join(process.cwd(), "marketing-content", "locations");
+    const locationsList: Array<{
+      slug: string;
+      name: string;
+      city: string;
+      country: string;
+      region: string;
+    }> = [];
+    
+    try {
+      if (fs.existsSync(locationsPath)) {
+        const dirs = fs.readdirSync(locationsPath);
+        for (const dir of dirs) {
+          const campusPath = path.join(locationsPath, dir, "campus.yml");
+          if (fs.existsSync(campusPath)) {
+            const campusData = yaml.load(fs.readFileSync(campusPath, "utf8")) as {
+              slug: string;
+              name: string;
+              city: string;
+              country: string;
+              region?: string;
+              visibility?: string;
+            };
+            if (campusData && campusData.visibility !== "unlisted") {
+              locationsList.push({
+                slug: campusData.slug,
+                name: campusData.name,
+                city: campusData.city,
+                country: campusData.country,
+                region: campusData.region || "other",
+              });
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading locations:", error);
+    }
+    
+    // Group locations by region
+    const regions = [
+      { slug: "usa-canada", label: locale === "es" ? "EE.UU. y Canadá" : "USA & Canada" },
+      { slug: "latam", label: locale === "es" ? "Latinoamérica" : "Latin America" },
+      { slug: "europe", label: locale === "es" ? "Europa" : "Europe" },
+      { slug: "online", label: "Online" },
+    ];
+    
+    res.json({
+      programs,
+      locations: locationsList,
+      regions,
+    });
+  });
+  
+  // Submit lead form
+  app.post("/api/leads", async (req, res) => {
+    try {
+      const leadData = req.body;
+      
+      // Validate required fields
+      if (!leadData.email) {
+        res.status(400).json({ error: "Email is required" });
+        return;
+      }
+      
+      // Build the payload for Breathecode API
+      const payload = {
+        first_name: leadData.first_name || null,
+        last_name: leadData.last_name || null,
+        phone: leadData.phone || null,
+        email: leadData.email,
+        location: leadData.location || null,
+        course: leadData.program || null,
+        consent: leadData.consent_whatsapp || false,
+        sms_consent: leadData.sms_consent || false,
+        comment: leadData.comment || null,
+        // Session/tracking data
+        utm_url: leadData.utm_url || null,
+        utm_source: leadData.utm_source || null,
+        utm_medium: leadData.utm_medium || null,
+        utm_campaign: leadData.utm_campaign || null,
+        utm_content: leadData.utm_content || null,
+        utm_term: leadData.utm_term || null,
+        utm_placement: leadData.utm_placement || null,
+        utm_plan: leadData.utm_plan || null,
+        // Ad platform click IDs
+        gclid: leadData.gclid || null,
+        fbclid: leadData.fbclid || null,
+        msclkid: leadData.msclkid || null,
+        ttclid: leadData.ttclid || null,
+        // Referral
+        referral: leadData.referral || leadData.ref || null,
+        coupon: leadData.coupon || null,
+        // Geo data
+        latitude: leadData.latitude || null,
+        longitude: leadData.longitude || null,
+        city: leadData.city || null,
+        country: leadData.country || null,
+        // Language
+        language: leadData.language || "en",
+        utm_language: leadData.language || "en",
+        browser_lang: leadData.browser_lang || null,
+        // Tags and automation
+        tags: leadData.tags || "website-lead",
+        automations: leadData.automations || "strong",
+        action: "submit",
+        // Experiment tracking
+        experiment_slug: leadData.experiment_slug || null,
+        experiment_variant: leadData.experiment_variant || null,
+        experiment_version: leadData.experiment_version || null,
+      };
+      
+      // Post to Breathecode API
+      const response = await fetch(`${BREATHECODE_HOST}/v1/marketing/lead`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Breathecode API error:", response.status, errorText);
+        res.status(response.status).json({ 
+          error: "Failed to submit lead",
+          details: errorText 
+        });
+        return;
+      }
+      
+      const result = await response.json();
+      res.json({ success: true, data: result });
+    } catch (error) {
+      console.error("Lead submission error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Image Registry API endpoint
+  app.get("/api/image-registry", (req, res) => {
+    const registry = loadImageRegistry();
+    if (!registry) {
+      res.status(500).json({ error: "Failed to load image registry" });
+      return;
+    }
+    res.json(registry);
   });
 
   const httpServer = createServer(app);

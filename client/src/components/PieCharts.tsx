@@ -231,7 +231,7 @@ export function PieCharts({ data }: PieChartsProps) {
             </h2>
           )}
           {data.subtitle && (
-            <p className="text-muted-foreground" data-testid="text-pie-charts-subtitle">
+            <p className="text-muted-foreground text-lg" data-testid="text-pie-charts-subtitle">
               {data.subtitle}
             </p>
           )}

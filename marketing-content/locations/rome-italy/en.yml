@@ -10,18 +10,6 @@ meta:
     - /roma
     - /campus/rome
     - /it/rome
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Via del Corso 123
-        addressLocality: Roma
-        postalCode: "00186"
-        addressCountry: IT
 sections:
   - type: hero
     variant: singleColumn

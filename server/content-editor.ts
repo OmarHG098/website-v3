@@ -10,21 +10,40 @@ interface ContentEditRequest {
   slug: string;
   locale: string;
   operations: EditOperation[];
+  variant?: string;
+  version?: number;
 }
 
-function getContentPath(contentType: string, slug: string, locale: string): string {
+function getContentPath(contentType: string, slug: string, locale: string, variant?: string, version?: number): string {
+  let folder: string;
   switch (contentType) {
     case "program":
-      return path.join(CONTENT_BASE_PATH, "programs", slug, `${locale}.yml`);
+      folder = path.join(CONTENT_BASE_PATH, "programs", slug);
+      break;
     case "landing":
-      return path.join(CONTENT_BASE_PATH, "landings", slug, `${locale}.yml`);
+      folder = path.join(CONTENT_BASE_PATH, "landings", slug);
+      break;
     case "location":
-      return path.join(CONTENT_BASE_PATH, "locations", slug, `${locale}.yml`);
+      folder = path.join(CONTENT_BASE_PATH, "locations", slug);
+      break;
     case "page":
-      return path.join(CONTENT_BASE_PATH, "pages", slug, `${locale}.yml`);
+      folder = path.join(CONTENT_BASE_PATH, "pages", slug);
+      break;
     default:
       throw new Error(`Unknown content type: ${contentType}`);
   }
+  
+  // If variant and version are specified, use variant file path
+  if (variant && version !== undefined) {
+    return path.join(folder, `${variant}.v${version}.${locale}.yml`);
+  }
+  
+  // Landings use promoted.yml instead of {locale}.yml
+  if (contentType === "landing") {
+    return path.join(folder, "promoted.yml");
+  }
+  
+  return path.join(folder, `${locale}.yml`);
 }
 
 function getValueAtPath(obj: Record<string, unknown>, pathStr: string): unknown {
@@ -109,10 +128,17 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
 }
 
 export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string }> {
-  const { contentType, slug, locale, operations } = request;
+  const { contentType, slug, locale, operations, variant, version } = request;
+  
+  // Validate variant/version are used together and version is valid
+  const hasVariant = variant !== undefined && variant !== null && variant !== "";
+  const hasValidVersion = version !== undefined && version !== null && Number.isFinite(version);
+  if (hasVariant !== hasValidVersion) {
+    return { success: false, error: "Both variant and version must be provided together" };
+  }
   
   try {
-    const filePath = getContentPath(contentType, slug, locale);
+    const filePath = getContentPath(contentType, slug, locale, variant, version);
     
     // Check if file exists
     if (!fs.existsSync(filePath)) {
@@ -148,10 +174,19 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
 export function getContentForEdit(
   contentType: "program" | "landing" | "location",
   slug: string,
-  locale: string
+  locale: string,
+  variant?: string,
+  version?: number
 ): { content: Record<string, unknown> | null; error?: string } {
+  // Validate variant/version are used together and version is valid
+  const hasVariant = variant !== undefined && variant !== null && variant !== "";
+  const hasValidVersion = version !== undefined && version !== null && Number.isFinite(version);
+  if (hasVariant !== hasValidVersion) {
+    return { content: null, error: "Both variant and version must be provided together" };
+  }
+  
   try {
-    const filePath = getContentPath(contentType, slug, locale);
+    const filePath = getContentPath(contentType, slug, locale, variant, version);
     
     if (!fs.existsSync(filePath)) {
       return { content: null, error: `Content file not found` };

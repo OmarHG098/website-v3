@@ -1,21 +1,10 @@
-slug: full-stack
-title: Desarrollo Full Stack
 meta:
   page_title: Programa de Carrera Desarrollador Full Stack | 4Geeks
   description: Aprende desarrollo full stack a tu propio ritmo con herramientas de IA, mentoría ilimitada y una comunidad global.
-  robots: index, follow
-  og_image: /images/programs/full-stack-og.jpg
-  priority: 0.9
-  change_frequency: weekly
   redirects:
     - /bootcamp/full-stack-es
     - /programas/desarrollador-fullstack
     - /cursos/full-stack
-schema:
-  include:
-    - organization
-    - website
-    - courses:full-stack
 sections:
   - type: hero
     version: "1.0"
@@ -136,8 +125,10 @@ sections:
       - text: Acceso a más de 5,000 socios de contratación
       - text: Soporte de carrera de por vida
     card:
-      title: Desarrollador Full Stack
-      subtitle: Certificado 4Geeks Academy
+      title: "Desarrollador Full Stack"
+      subtitle: "Certificado 4Geeks Academy"
+      program_name: "Desarrollador Full-Stack"
+      certificate_label: "Certificado de Finalización"
   - type: why_learn_ai
     title: ¿Por qué Aprender a Construir y Programar con IA?
     subtitle: El Desarrollo de Software Como lo Conoces Dejará de Existir

@@ -48,6 +48,8 @@ interface ComponentPickerModalProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  variant?: string;
+  version?: number;
   onSectionAdded?: () => void;
 }
 
@@ -140,6 +142,8 @@ export default function ComponentPickerModal({
   contentType,
   slug,
   locale,
+  variant,
+  version,
   onSectionAdded,
 }: ComponentPickerModalProps) {
   const [step, setStep] = useState<"select" | "configure">("select");
@@ -242,10 +246,12 @@ export default function ComponentPickerModal({
           contentType,
           slug,
           locale,
+          variant,
+          version,
           operations: [{
-            type: "add_item",
+            action: "add_item",
             path: "sections",
-            value: sectionToAdd,
+            item: sectionToAdd,
             index: insertIndex,
           }],
         }),
@@ -263,7 +269,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, insertIndex, onSectionAdded, onClose]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
@@ -271,7 +277,7 @@ export default function ComponentPickerModal({
     }
     const exampleData = examples.find(e => e.slug === selectedExample);
     if (!exampleData) return null;
-    return `/component-preview?type=${selectedComponent.type}&version=${selectedVersion}&example=${encodeURIComponent(exampleData.name)}&debug=false`;
+    return `/private/component-showcase/${selectedComponent.type}/preview?version=${selectedVersion}&example=${encodeURIComponent(exampleData.name)}&debug=false`;
   }, [selectedComponent, selectedVersion, selectedExample, examples]);
 
   const groupedExamples = useMemo(() => {

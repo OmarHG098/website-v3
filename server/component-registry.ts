@@ -106,6 +106,21 @@ export function loadSchema(componentType: string, version: string): ComponentSch
   }
 }
 
+function extractVariantFromYaml(yamlContent: string): string | undefined {
+  try {
+    const parsed = yaml.load(yamlContent);
+    if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]?.variant) {
+      return parsed[0].variant as string;
+    }
+    if (parsed && typeof parsed === 'object' && 'variant' in parsed) {
+      return (parsed as { variant?: string }).variant;
+    }
+  } catch {
+    // Ignore parse errors
+  }
+  return undefined;
+}
+
 export function loadExamples(componentType: string, version: string): ComponentExample[] {
   try {
     const examplesPath = path.join(REGISTRY_PATH, componentType, version, "examples");
@@ -120,11 +135,14 @@ export function loadExamples(componentType: string, version: string): ComponentE
       const content = fs.readFileSync(filePath, "utf8");
       const data = yaml.load(content) as { name?: string; description?: string; yaml?: string; variant?: string };
       
+      const yamlContent = data.yaml || content;
+      const inferredVariant = extractVariantFromYaml(yamlContent);
+      
       return {
         name: data.name || file.replace(/\.(yml|yaml)$/, ''),
         description: data.description || '',
-        yaml: data.yaml || content,
-        variant: data.variant,
+        yaml: yamlContent,
+        variant: inferredVariant || data.variant,
       };
     });
   } catch (error) {
@@ -224,4 +242,70 @@ export function createNewVersion(componentType: string, baseVersion: string): { 
 
 export function getExampleFilePath(componentType: string, version: string): string {
   return path.join("marketing-content", "component-registry", componentType, version, "examples");
+}
+
+export function saveExample(
+  componentType: string, 
+  version: string, 
+  exampleName: string, 
+  yamlContent: string
+): { success: boolean; error?: string } {
+  try {
+    const examplesPath = path.join(REGISTRY_PATH, componentType, version, "examples");
+    
+    if (!fs.existsSync(examplesPath)) {
+      return { success: false, error: `Examples path not found for ${componentType}/${version}` };
+    }
+    
+    // Find the example file by name
+    const exampleFiles = fs.readdirSync(examplesPath)
+      .filter(file => file.endsWith('.yml') || file.endsWith('.yaml'));
+    
+    let targetFile: string | null = null;
+    
+    for (const file of exampleFiles) {
+      const filePath = path.join(examplesPath, file);
+      const content = fs.readFileSync(filePath, "utf8");
+      const data = yaml.load(content) as { name?: string };
+      
+      if (data.name === exampleName) {
+        targetFile = file;
+        break;
+      }
+    }
+    
+    if (!targetFile) {
+      return { success: false, error: `Example "${exampleName}" not found` };
+    }
+    
+    const filePath = path.join(examplesPath, targetFile);
+    const existingContent = fs.readFileSync(filePath, "utf8");
+    const existingData = yaml.load(existingContent) as { name?: string; description?: string; variant?: string };
+    
+    // Preserve the example metadata and update the yaml content
+    const newContent = {
+      name: existingData.name || exampleName,
+      description: existingData.description || '',
+      variant: existingData.variant,
+      yaml: yamlContent,
+    };
+    
+    // Remove undefined variant
+    if (!newContent.variant) {
+      delete (newContent as { variant?: string }).variant;
+    }
+    
+    const yamlOutput = yaml.dump(newContent, { 
+      lineWidth: -1,
+      quotingType: '"',
+      forceQuotes: false,
+    });
+    
+    fs.writeFileSync(filePath, yamlOutput);
+    
+    return { success: true };
+  } catch (error) {
+    console.error(`Error saving example for ${componentType}/${version}:`, error);
+    return { success: false, error: String(error) };
+  }
 }

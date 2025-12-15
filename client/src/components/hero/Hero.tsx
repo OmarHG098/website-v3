@@ -4,6 +4,7 @@ import { HeroShowcase } from "./HeroShowcase";
 import { HeroProductShowcase } from "./HeroProductShowcase";
 import { HeroSimpleTwoColumn } from "./HeroSimpleTwoColumn";
 import { HeroSimpleStacked } from "./HeroSimpleStacked";
+import { HeroCourse } from "./HeroCourse";
 
 interface HeroProps {
   data: HeroSection;
@@ -21,9 +22,11 @@ export function Hero({ data }: HeroProps) {
       return <HeroSimpleTwoColumn data={data} />;
     case "simpleStacked":
       return <HeroSimpleStacked data={data} />;
+    case "course":
+      return <HeroCourse data={data} />;
     default:
       return null;
   }
 }
 
-export { HeroSingleColumn, HeroShowcase, HeroProductShowcase, HeroSimpleTwoColumn, HeroSimpleStacked };
+export { HeroSingleColumn, HeroShowcase, HeroProductShowcase, HeroSimpleTwoColumn, HeroSimpleStacked, HeroCourse };

@@ -1,0 +1,36 @@
+slug: berlin-germany
+name: Berlin
+city: Berlin
+country: Germany
+country_code: DE
+latitude: 52.52
+longitude: 13.405
+region: europe
+default_language: en
+timezone: Europe/Berlin
+visibility: listed
+phone: +49 30 555 0100
+address: Friedrichstraße 123, 10117 Berlin
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Friedrichstraße 123
+        addressLocality: Berlin
+        postalCode: "10117"
+        addressCountry: DE

@@ -41,23 +41,22 @@ export function AddSectionButton({
   return (
     <>
       <div 
-        className="relative py-4 group"
+        className="relative h-0 group z-30"
         data-testid={`add-section-zone-${insertIndex}`}
       >
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
-          <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
+        <div className="absolute inset-x-0 top-0 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="flex-1 h-px bg-primary/40" />
           <button
             onClick={handleOpenModal}
-            className="mx-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground/70 bg-background transition-all duration-200 group-hover:scale-105 group-hover:border-primary group-hover:text-primary group-hover:bg-primary/10 group-hover:px-4 group-hover:py-2 group-hover:gap-2"
+            className="mx-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-primary text-primary bg-background shadow-sm hover:bg-primary/10 hover:px-4 hover:py-2 hover:gap-2 transition-all duration-200"
             data-testid={`button-add-section-${insertIndex}`}
           >
             <IconPlus className="h-4 w-4" />
-            <span className="text-xs font-medium group-hover:text-sm transition-all duration-200">Add</span>
+            <span className="text-xs font-medium">Add</span>
           </button>
-          <div className="flex-1 h-px bg-border group-hover:bg-primary/40 transition-colors duration-200" />
+          <div className="flex-1 h-px bg-primary/40" />
         </div>
       </div>
-      
       {isModalOpen && (
         <ComponentPickerModal
           isOpen={isModalOpen}

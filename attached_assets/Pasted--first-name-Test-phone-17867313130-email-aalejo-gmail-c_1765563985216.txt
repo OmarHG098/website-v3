@@ -1,0 +1,20 @@
+{
+    "first_name": "Test",
+    "phone": "+17867313130",
+    "email": "aalejo@gmail.com",
+    "location": "caracas-venezuela",
+    "consent": true,
+    "course": "full-stack",
+    "utm_url": "https://4geeksacademy.com/us/index",
+    "token": "03AAYGu2Tjo8FwqJ_fiOya8IvJ4NghKcCA8Jc9O5YkVaRjF56ZUBOZok-88h6e0sZE4FsVGGS5mypjuHY_jMpN2EFq-XKJnbJDg_MvYKpMuDvWLojldEgav5Hz2NFGpNHxECKcY3sri3fpKPWfVPHzHP_rmu-jHKL7kaJZO5KdhRXrLQLgrk1CMxD7LVIn1eXjFpBypnw0CF9dYZhL4oALflXP5mRlCui8U1fEIkBEpZERF6kjFUsv-lYaZ0mwMvoyIxnYJmfkKKpntOM0S_BI3Cud39NFuL3y-q7lXZY5TKUfvu8OO50GxQxqXpneCQZkqAZJp_PEIsMFfEGpEOYIqm32GgOgt83fH02PoZqGHzXNGbqxworJks_q8ldsIb_7jTPaRwL2w-_l2J4CnejGxdqAr7yLHguclSp5GmEFiyw1GIJbtL_gOFMr6RNvj5H1Y1fwL7j4yaIDjrWatan9qRMJUHTgQMInbq3wgfC1gD9jVHoKoycYso2KbxozgVvKfHml7loo5IIXZuYyJq3s13j_whQxDi4Dcc3jcFs_qoAnZoTKqXXKnAe1Y4gX5EVP9Wxve89p3-R8OCGQGRCIPYgUyGJB7iQHarOVgXqGo6vJ1pby-Na3LfI8Qg2H1eHs5YQT_SpaRI4qa785CbPydzCgpsX36f6WxLsvo-nvZSUCA1TKvZBcaHleW3bjrCtf0uOljS0XgzKbf6nNIV88s6tlBXslDjjn5njY-UMs5IPj0hXZE4mjVH5GC6uzvI6z2ALnJubMJnr1TTNxOGxTS6ssjWF3vFbr2D_2ZG7lM7s0ZIArNjZbwZPEE6kvowSfIZykDIFRmrwrokpGXHB7tg7yO8DhyfHXGu470j0RcbyDKQoy_k-D8nIYY2XoTdaJxey4nSQNe15DRjr7KtFADJ6uahGAcS7xiABNmZ_mgplrebm3EkgZr-vMgL9FheJnnf-j9nCUmDeV8Cpscks_ZemaoiGXvS1rlhUR3QXOz0fiN8wVqo66Poq06NkTd_Le89MAecqNs-TQmqJdt5JaUMT0W2xG7vIzmF8Td6jJ4jBPNnzgj2ZzGxykqPjbDuQT2n7xRQeILk1KkITdp2lBAN4AXIErprFxs9qKclSuvDNIX250stJmEKF03P6YKJpZ93Lpqn6K012Bv9d70dwP6hWfWj7pMMilTKzpCBa71zRBeBCC0ADNnJccTblyTuRNDZEGITuqoS0M6b5Dcw8dn7JxeNPMz544LDpoBqE8pAtSAQ7kUqyPVtEYg7Colk4MVIb4hnZWtalWtjKPOPdp_G09N4mm5eQkd7jElIav2Ulq8f0Ul-KYSqK3zWZ1OarD3SMJQDxz-zAkRy4uZDnm3H7zvi7NAWYafxvAMQ0QY0GJA8HgZbwZevxCEpB3C3SGobHTwmjKyaHf7WHp6hu1Ua2eD1OLXfQ87wN8ofpG_V1C50zDpXj0F-JM010sPxjrLD4IPfUPw5Vlw41J1N7U0oCvUemuOuEIIw",
+    "action": "submit",
+    "tags": "website-lead",
+    "automations": "strong",
+    "utm_language": "us",
+    "language": "us",
+    "latitude": "25.760158",
+    "longitude": "-80.200154",
+    "browser_lang": null,
+    "city": "Miami",
+    "country": "USA"
+}

@@ -1,6 +1,5 @@
 name: "Hero with CTA Buttons"
 description: "Single column hero section with badge, two call-to-action buttons, and award badges"
-variant: "singleColumn"
 yaml: |
   - type: hero
     version: "1.0"

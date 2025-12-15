@@ -21,9 +21,15 @@ export interface UTMParams {
   utm_campaign?: string;
   utm_content?: string;
   utm_term?: string;
-  gclid?: string;
-  fbclid?: string;
+  utm_url?: string;
+  utm_placement?: string;
+  utm_plan?: string;
+  // Normalized PPC tracking ID (captures gclid, fbclid, msclkid, ttclid, etc.)
+  ppc_tracking_id?: string;
+  // Referral tracking
+  ref?: string;
   referral?: string;
+  coupon?: string;
 }
 
 export interface GeoData {
@@ -36,6 +42,12 @@ export interface GeoData {
   longitude?: number;
 }
 
+export interface ExperimentData {
+  experiment_slug?: string;
+  variant_slug?: string;
+  variant_version?: number;
+}
+
 export interface Session {
   version: number;
   initialized: boolean;
@@ -44,6 +56,7 @@ export interface Session {
   browserLang: string | null;
   geo: GeoData | null;
   utm: UTMParams;
+  experiment?: ExperimentData;
   consent: {
     geolocation: boolean | null;
   };

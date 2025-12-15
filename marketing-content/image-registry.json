@@ -1,0 +1,420 @@
+{
+  "presets": {
+    "hero-wide": {
+      "aspect_ratio": "16:9",
+      "widths": [640, 960, 1280, 1920],
+      "quality": 85,
+      "description": "Full-width hero images"
+    },
+    "hero-tall": {
+      "aspect_ratio": "9:16",
+      "widths": [360, 480, 640],
+      "quality": 85,
+      "description": "Vertical hero images for mobile-style content"
+    },
+    "card": {
+      "aspect_ratio": "4:3",
+      "widths": [320, 480, 640],
+      "quality": 80,
+      "description": "Standard card thumbnails"
+    },
+    "card-wide": {
+      "aspect_ratio": "16:9",
+      "widths": [320, 480, 640],
+      "quality": 80,
+      "description": "Wide card thumbnails"
+    },
+    "avatar": {
+      "aspect_ratio": "1:1",
+      "widths": [64, 128, 256],
+      "quality": 85,
+      "description": "Profile pictures and avatars"
+    },
+    "logo": {
+      "aspect_ratio": null,
+      "widths": [120, 240],
+      "quality": 90,
+      "description": "Company logos, preserves original aspect ratio"
+    },
+    "icon": {
+      "aspect_ratio": "1:1",
+      "widths": [32, 64, 128],
+      "quality": 90,
+      "description": "Small icons and badges"
+    },
+    "full": {
+      "aspect_ratio": null,
+      "widths": [640, 960, 1280, 1920],
+      "quality": 85,
+      "description": "Full-size images, preserves original aspect ratio"
+    }
+  },
+  "images": {
+    "arp_logo_certification": {
+      "src": "/attached_assets/arp-logo-certification_1765548854924.png",
+      "alt": "ARP Certification Logo",
+      "focal_point": "center",
+      "tags": ["logo", "certification", "award"]
+    },
+    "badges_new": {
+      "src": "/attached_assets/badges-new.avif",
+      "alt": "Award badges",
+      "focal_point": "center",
+      "tags": ["badge", "award"]
+    },
+    "logo_beacon_council": {
+      "src": "/attached_assets/beacon_council_1764720100166.jpg",
+      "alt": "Beacon Council logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_blackstone": {
+      "src": "/attached_assets/blackstone_1764720124773.png",
+      "alt": "Blackstone logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_boats": {
+      "src": "/attached_assets/boats_1764719939123.jpg",
+      "alt": "Boats company logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "caracas_graduates": {
+      "src": "/attached_assets/caracas-graduates_1765387638222.png",
+      "alt": "Caracas graduates celebration",
+      "focal_point": "center",
+      "tags": ["photo", "graduates", "location"]
+    },
+    "logo_cemex": {
+      "src": "/attached_assets/cemex_1764720131666.png",
+      "alt": "CEMEX logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_coinet": {
+      "src": "/attached_assets/coinet_1764720056569.jpg",
+      "alt": "Coinet logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "community": {
+      "src": "/attached_assets/community_1764717588840.png",
+      "alt": "Community illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "community"]
+    },
+    "community_support": {
+      "src": "/attached_assets/community-support-2_1765406601448.webp",
+      "alt": "Community support image",
+      "focal_point": "center",
+      "tags": ["photo", "community", "support"]
+    },
+    "course_report_badge": {
+      "src": "/attached_assets/Course-Report-Badge-2025_1764709632231.webp",
+      "alt": "Course Report Badge 2025",
+      "focal_point": "center",
+      "tags": ["badge", "award", "course-report"]
+    },
+    "logo_course_report": {
+      "src": "/attached_assets/course-report_1765590146414.webp",
+      "alt": "Course Report logo",
+      "focal_point": "center",
+      "tags": ["logo", "review"]
+    },
+    "logo_ds9": {
+      "src": "/attached_assets/ds9_1764720051158.png",
+      "alt": "DS9 logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_ebay": {
+      "src": "/attached_assets/ebay_1764719967118.png",
+      "alt": "eBay logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "ebootcamp_top": {
+      "src": "/attached_assets/ebootcamp-top_1765549056325.png",
+      "alt": "eBootcamp Top Award",
+      "focal_point": "center",
+      "tags": ["badge", "award"]
+    },
+    "logo_evernote": {
+      "src": "/attached_assets/evernote_1764719981901.png",
+      "alt": "Evernote logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "exelencia_educativa": {
+      "src": "/attached_assets/exelencia-educativa-es_1765549347699.png",
+      "alt": "Excelencia Educativa award",
+      "focal_point": "center",
+      "tags": ["badge", "award", "spanish"]
+    },
+    "feliz_empresario_laptop": {
+      "src": "/attached_assets/feliz-empresario-laptop_1765406479465.png",
+      "alt": "Happy professional with laptop",
+      "focal_point": "center",
+      "tags": ["photo", "professional", "hero"]
+    },
+    "fernando_funez": {
+      "src": "/attached_assets/fernando-funez_1765315920677.jpg",
+      "alt": "Fernando Funez testimonial",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "avatar"]
+    },
+    "forbes_logo_award": {
+      "src": "/attached_assets/forbes-logo-award_1764709625651.webp",
+      "alt": "Forbes Award logo",
+      "focal_point": "center",
+      "tags": ["badge", "award", "forbes"]
+    },
+    "fortune_logo": {
+      "src": "/attached_assets/fortune-logo_1764709618095.webp",
+      "alt": "Fortune logo",
+      "focal_point": "center",
+      "tags": ["badge", "award", "fortune"]
+    },
+    "students_collaborating": {
+      "src": "/attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp",
+      "alt": "Students collaborating in workspace",
+      "focal_point": "center",
+      "tags": ["photo", "students", "hero"]
+    },
+    "logo_google": {
+      "src": "/attached_assets/google_1765590146414.webp",
+      "alt": "Google logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_google_developers": {
+      "src": "/attached_assets/google-developers_1764719904190.png",
+      "alt": "Google Developers logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "group_career_support": {
+      "src": "/attached_assets/Group-6663_1764711021914.png",
+      "alt": "Career support illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "career"]
+    },
+    "group_geekpal": {
+      "src": "/attached_assets/Group_6685_(1)_1765300162049.png",
+      "alt": "GeekPal support illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "support"]
+    },
+    "group_original": {
+      "src": "/attached_assets/Group-original_1765419144159.webp",
+      "alt": "Original group illustration",
+      "focal_point": "center",
+      "tags": ["illustration"]
+    },
+    "hombre_joven_laptop": {
+      "src": "/attached_assets/hombre-joven-con-laptop_1764691956393.webp",
+      "alt": "Young man with laptop",
+      "focal_point": "center",
+      "tags": ["photo", "student", "hero"]
+    },
+    "image_geekpal_support": {
+      "src": "/attached_assets/image_1765300905942.png",
+      "alt": "GeekPal support feature",
+      "focal_point": "center",
+      "tags": ["illustration", "support"]
+    },
+    "image_feature_1": {
+      "src": "/attached_assets/image_1765310359129.png",
+      "alt": "Feature illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "feature"]
+    },
+    "image_feature_2": {
+      "src": "/attached_assets/image_1765318479754.png",
+      "alt": "Feature illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "feature"]
+    },
+    "image_feature_3": {
+      "src": "/attached_assets/image_1765318521904.png",
+      "alt": "Feature illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "feature"]
+    },
+    "image_feature_4": {
+      "src": "/attached_assets/image_1765318556862.png",
+      "alt": "Feature illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "feature"]
+    },
+    "image_feature_5": {
+      "src": "/attached_assets/image_1765318600261.png",
+      "alt": "Feature illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "feature"]
+    },
+    "logo_jooble": {
+      "src": "/attached_assets/jooble_1764720010702.png",
+      "alt": "Jooble logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_kpmg": {
+      "src": "/attached_assets/kpmg-logo1_1764720019827.png",
+      "alt": "KPMG logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_mdc": {
+      "src": "/attached_assets/mdc_ce_1764720089793.png",
+      "alt": "MDC CE logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_meta": {
+      "src": "/attached_assets/meta-logo_1764719959855.png",
+      "alt": "Meta logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_microsoft": {
+      "src": "/attached_assets/microsoft_1764719829995.png",
+      "alt": "Microsoft logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_natgeo": {
+      "src": "/attached_assets/natgeo_1764719975443.png",
+      "alt": "National Geographic logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_neo9": {
+      "src": "/attached_assets/Neo9_1764720006347.png",
+      "alt": "Neo9 logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "newsweek_badge": {
+      "src": "/attached_assets/newsweek_1764709608255.webp",
+      "alt": "Newsweek award badge",
+      "focal_point": "center",
+      "tags": ["badge", "award", "newsweek"]
+    },
+    "our_story": {
+      "src": "/attached_assets/our-story_1765323971104.webp",
+      "alt": "Our story image",
+      "focal_point": "center",
+      "tags": ["photo", "about"]
+    },
+    "logo_overseas": {
+      "src": "/attached_assets/overseas_1764720045331.png",
+      "alt": "Overseas logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "pee_career": {
+      "src": "/attached_assets/pee-career_1765549482702.png",
+      "alt": "Career excellence award",
+      "focal_point": "center",
+      "tags": ["badge", "award"]
+    },
+    "pee_innovation": {
+      "src": "/attached_assets/pee-innovation_1765549510015.png",
+      "alt": "Innovation excellence award",
+      "focal_point": "center",
+      "tags": ["badge", "award"]
+    },
+    "pee_trajectory": {
+      "src": "/attached_assets/pee-trajectory_1765549529048.png",
+      "alt": "Trajectory excellence award",
+      "focal_point": "center",
+      "tags": ["badge", "award"]
+    },
+    "premios_tecnologia": {
+      "src": "/attached_assets/premios_tecnologia_sigloxxi_1765549146476.png",
+      "alt": "Technology Awards XXI Century",
+      "focal_point": "center",
+      "tags": ["badge", "award", "spanish"]
+    },
+    "logo_razz": {
+      "src": "/attached_assets/razz_1764720036807.png",
+      "alt": "Razz logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "reservation_form": {
+      "src": "/attached_assets/reservation-es_1764814854635.webp",
+      "alt": "Reservation form illustration",
+      "focal_point": "center",
+      "tags": ["illustration", "form"]
+    },
+    "reviews_badge": {
+      "src": "/attached_assets/reviews_1765549549051.png",
+      "alt": "Reviews badge",
+      "focal_point": "center",
+      "tags": ["badge", "reviews"]
+    },
+    "screenshot_project": {
+      "src": "/attached_assets/Screenshot_2023-05-11_at_5.59_1_1765310496047.png",
+      "alt": "Project screenshot",
+      "focal_point": "center",
+      "tags": ["screenshot", "project"]
+    },
+    "south_florida_tech_hub": {
+      "src": "/attached_assets/south-florida-tech-hub_1765548979070.jpeg",
+      "alt": "South Florida Tech Hub",
+      "focal_point": "center",
+      "tags": ["photo", "location", "miami"]
+    },
+    "logo_strata": {
+      "src": "/attached_assets/strata_1764720063140.png",
+      "alt": "Strata logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_switchup": {
+      "src": "/attached_assets/switchup_1765590146414.webp",
+      "alt": "SwitchUp logo",
+      "focal_point": "center",
+      "tags": ["logo", "review"]
+    },
+    "logo_tcg": {
+      "src": "/attached_assets/tcg_1764720028893.png",
+      "alt": "TCG logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_telefonica": {
+      "src": "/attached_assets/telefonica_1764719987250.png",
+      "alt": "Telefonica logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_twilio": {
+      "src": "/attached_assets/twilio_1764719992371.png",
+      "alt": "Twilio logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_uber": {
+      "src": "/attached_assets/uber_1764719999685.png",
+      "alt": "Uber logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "logo_ultimate": {
+      "src": "/attached_assets/ultimate_1764720025067.png",
+      "alt": "Ultimate logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"]
+    },
+    "unsplash_workspace": {
+      "src": "/attached_assets/unsplash_QckxruozjRg_1765395521123.png",
+      "alt": "Workspace image",
+      "focal_point": "center",
+      "tags": ["photo", "workspace"]
+    }
+  }
+}

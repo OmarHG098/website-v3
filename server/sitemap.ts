@@ -1,11 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
+import { deepMerge } from "./utils/deepMerge";
+import { 
+  listContentSlugs, 
+  getAvailableLocalesOrVariants, 
+  loadCommonData,
+  MARKETING_CONTENT_PATH as BASE_CONTENT_PATH 
+} from "./utils/contentLoader";
 
-const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
-const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
-const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
-const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function getBaseUrl(): string {
@@ -52,6 +55,7 @@ let sitemapCache: SitemapCache | null = null;
 // ============================================================================
 
 interface ContentMeta {
+  page_title?: string;
   robots?: string;
   priority?: number;
   change_frequency?: ChangeFreq;
@@ -88,54 +92,56 @@ interface AvailableTemplatePage {
   meta: ContentMeta;
 }
 
-// Template pages URL routing (slug to URL path mapping)
-const templatePageRoutes: Record<string, { en: string; es: string }> = {
-  "job-guarantee": {
-    en: "/en/job-guarantee",
-    es: "/es/garantia-empleo",
-  },
-};
 
 // ============================================================================
-// Data Fetchers
+// Data Fetchers - Using shared contentLoader helpers
 // ============================================================================
+
+function loadMergedContent(contentType: string, slug: string, localeOrVariant: string): Record<string, unknown> | null {
+  const contentDir = path.join(BASE_CONTENT_PATH, contentType, slug);
+  const commonPath = path.join(contentDir, "_common.yml");
+  const contentPath = path.join(contentDir, `${localeOrVariant}.yml`);
+
+  if (!fs.existsSync(contentPath)) {
+    return null;
+  }
+
+  try {
+    let commonData: Record<string, unknown> = {};
+    if (fs.existsSync(commonPath)) {
+      const commonContent = fs.readFileSync(commonPath, "utf-8");
+      commonData = yaml.load(commonContent) as Record<string, unknown>;
+    }
+
+    const content = fs.readFileSync(contentPath, "utf-8");
+    const contentData = yaml.load(content) as Record<string, unknown>;
+
+    return deepMerge(commonData, contentData) as Record<string, unknown>;
+  } catch (error) {
+    console.error(`Error loading ${contentType}/${slug}/${localeOrVariant}:`, error);
+    return null;
+  }
+}
 
 function getAvailablePrograms(): AvailableProgram[] {
   try {
-    if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
-      return [];
-    }
-
     const programs: AvailableProgram[] = [];
-    const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
+    const slugs = listContentSlugs("programs");
 
-    for (const dir of dirs) {
-      const programPath = path.join(MARKETING_CONTENT_PATH, dir);
-      if (!fs.statSync(programPath).isDirectory()) continue;
+    for (const slug of slugs) {
+      const locales = getAvailableLocalesOrVariants("programs", slug);
+      
+      for (const locale of locales) {
+        const merged = loadMergedContent("programs", slug, locale);
+        if (!merged) continue;
 
-      const files = fs.readdirSync(programPath).filter(f => f.endsWith(".yml"));
-
-      for (const file of files) {
-        const locale = file.replace(".yml", "");
-        const filePath = path.join(programPath, file);
-
-        try {
-          const content = fs.readFileSync(filePath, "utf-8");
-          const data = yaml.load(content) as {
-            slug?: string;
-            title?: string;
-            meta?: ContentMeta;
-          };
-
-          programs.push({
-            slug: data.slug || dir,
-            locale,
-            title: data.title || dir,
-            meta: data.meta || {},
-          });
-        } catch (parseError) {
-          console.error(`Error parsing program ${filePath}:`, parseError);
-        }
+        const meta = (merged.meta as ContentMeta) || {};
+        programs.push({
+          slug: (merged.slug as string) || slug,
+          locale,
+          title: meta.page_title || (merged.title as string) || slug,
+          meta,
+        });
       }
     }
 
@@ -148,41 +154,39 @@ function getAvailablePrograms(): AvailableProgram[] {
 
 function getAvailableLandings(): AvailableLanding[] {
   try {
-    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
-      return [];
-    }
-
     const landings: AvailableLanding[] = [];
-    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
+    const slugs = listContentSlugs("landings");
 
-    for (const dir of dirs) {
-      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
-      if (fs.statSync(landingPath).isDirectory()) {
-        const files = fs.readdirSync(landingPath).filter(f => f.endsWith(".yml"));
-
-        for (const file of files) {
-          const locale = file.replace(".yml", "");
-          const filePath = path.join(landingPath, file);
-
-          try {
-            const content = fs.readFileSync(filePath, "utf-8");
-            const data = yaml.load(content) as { 
-              slug: string; 
-              title: string; 
-              meta?: ContentMeta;
-            };
-
-            landings.push({
-              slug: data.slug || dir,
-              locale,
-              title: data.title || dir,
-              meta: data.meta || {},
-            });
-          } catch (parseError) {
-            console.error(`Error parsing landing ${filePath}:`, parseError);
-          }
+    for (const slug of slugs) {
+      // For landings, we use "promoted" as the content file
+      // and get locale from _common.yml
+      const merged = loadMergedContent("landings", slug, "promoted");
+      if (!merged) {
+        // Fallback: try to load en.yml for backward compatibility
+        const legacyMerged = loadMergedContent("landings", slug, "en");
+        if (legacyMerged) {
+          const meta = (legacyMerged.meta as ContentMeta) || {};
+          landings.push({
+            slug: (legacyMerged.slug as string) || slug,
+            locale: "en",
+            title: meta.page_title || (legacyMerged.title as string) || slug,
+            meta,
+          });
         }
+        continue;
       }
+
+      // Get locale from _common.yml
+      const commonData = loadCommonData("landings", slug);
+      const locale = (commonData?.locale as string) || "en";
+      const meta = (merged.meta as ContentMeta) || {};
+      
+      landings.push({
+        slug: (merged.slug as string) || slug,
+        locale,
+        title: meta.page_title || (merged.title as string) || slug,
+        meta,
+      });
     }
 
     return landings;
@@ -194,39 +198,27 @@ function getAvailableLandings(): AvailableLanding[] {
 
 function getAvailableLocations(): AvailableLocation[] {
   try {
-    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
-      return [];
-    }
-
     const locations: AvailableLocation[] = [];
-    const files = fs.readdirSync(LOCATIONS_CONTENT_PATH).filter(f => f.endsWith(".yml"));
+    const slugs = listContentSlugs("locations");
 
-    for (const file of files) {
-      const filePath = path.join(LOCATIONS_CONTENT_PATH, file);
-      const parts = file.replace(".yml", "").split(".");
-      const locale = parts.pop() || "en";
-      const slug = parts.join(".");
+    for (const slug of slugs) {
+      const locales = getAvailableLocalesOrVariants("locations", slug);
+      
+      for (const locale of locales) {
+        const merged = loadMergedContent("locations", slug, locale);
+        if (!merged) continue;
 
-      try {
-        const content = fs.readFileSync(filePath, "utf-8");
-        const data = yaml.load(content) as {
-          slug?: string;
-          name?: string;
-          visibility?: string;
-          meta?: ContentMeta;
-        };
+        const visibility = (merged.visibility as string) || "listed";
+        if (visibility !== "listed") continue;
 
-        if (data.visibility === "listed") {
-          locations.push({
-            slug: data.slug || slug,
-            locale,
-            name: data.name || slug,
-            visibility: data.visibility || "listed",
-            meta: data.meta || {},
-          });
-        }
-      } catch (parseError) {
-        console.error(`Error parsing location ${filePath}:`, parseError);
+        const meta = (merged.meta as ContentMeta) || {};
+        locations.push({
+          slug: (merged.slug as string) || slug,
+          locale,
+          name: meta.page_title || (merged.name as string) || slug,
+          visibility,
+          meta,
+        });
       }
     }
 
@@ -239,47 +231,27 @@ function getAvailableLocations(): AvailableLocation[] {
 
 function getAvailableTemplatePages(): AvailableTemplatePage[] {
   try {
-    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
-      return [];
-    }
-
     const pages: AvailableTemplatePage[] = [];
-    const dirs = fs.readdirSync(PAGES_CONTENT_PATH);
+    const slugs = listContentSlugs("pages");
 
-    for (const dir of dirs) {
-      const pagePath = path.join(PAGES_CONTENT_PATH, dir);
-      if (!fs.statSync(pagePath).isDirectory()) continue;
-
-      const files = fs.readdirSync(pagePath).filter(f => 
-        f.endsWith(".yml") && !f.includes(".v") // Exclude variant files
-      );
-
-      for (const file of files) {
-        const locale = file.replace(".yml", "");
-        // Only process locale files (en.yml, es.yml)
+    for (const dirSlug of slugs) {
+      const locales = getAvailableLocalesOrVariants("pages", dirSlug);
+      
+      for (const locale of locales) {
+        // Only process locale files (en, es)
         if (!["en", "es"].includes(locale)) continue;
 
-        const filePath = path.join(pagePath, file);
+        const merged = loadMergedContent("pages", dirSlug, locale);
+        if (!merged) continue;
 
-        try {
-          const content = fs.readFileSync(filePath, "utf-8");
-          const data = yaml.load(content) as {
-            slug?: string;
-            template?: string;
-            title?: string;
-            meta?: ContentMeta;
-          };
-
-          pages.push({
-            slug: data.slug || dir,
-            locale,
-            template: data.template || dir.replace(/-/g, "_"),
-            title: data.title || dir,
-            meta: data.meta || {},
-          });
-        } catch (parseError) {
-          console.error(`Error parsing template page ${filePath}:`, parseError);
-        }
+        const meta = (merged.meta as ContentMeta) || {};
+        pages.push({
+          slug: (merged.slug as string) || dirSlug,
+          locale,
+          template: (merged.template as string) || dirSlug.replace(/-/g, "_"),
+          title: meta.page_title || (merged.title as string) || dirSlug,
+          meta,
+        });
       }
     }
 
@@ -304,11 +276,7 @@ function getCurrentDate(): string {
 }
 
 function resolveTemplatePageUrl(slug: string, locale: string): string {
-  const routes = templatePageRoutes[slug];
-  if (routes) {
-    return `${getBaseUrl()}${routes[locale as "en" | "es"] || routes.en}`;
-  }
-  // Default routing pattern
+  // Use slug directly for URL path
   return locale === "es"
     ? `${getBaseUrl()}/es/${slug}`
     : `${getBaseUrl()}/en/${slug}`;

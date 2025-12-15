@@ -1,0 +1,83 @@
+meta:
+  page_title: "Free Webinar: Learn to Code with AI | 4Geeks"
+  description: Join our free webinar and discover how AI is revolutionizing the way we learn to code. Reserve your spot now!
+  redirects:
+    - /webinar/ai-learning
+    - /events/ai-coding-webinar
+sections:
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    title: Career Development
+    subtitle: for the AI Era
+    welcome_text: Welcome to
+    brand_mark:
+      prefix: Geek
+      highlight: FORCE
+      suffix: ":"
+      color: chart-5
+    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      loop: true
+    form: {}
+    trust_bar:
+      rating: "4.5"
+      review_count: Based on 5149+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+  - type: features_grid
+    version: "1.0"
+    title: What You'll Learn
+    subtitle: In just 1 hour, discover the tools that make learning faster and easier
+    items:
+      - icon: Brain
+        title: AI-Powered Learning
+        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: Rocket
+        title: Accelerated Progress
+        description: Learn how students are completing courses 3x faster with AI assistance
+      - icon: Code
+        title: Live Demo
+        description: Watch a live demonstration of our AI coding assistant in action
+  - type: stats
+    version: "1.0"
+    title: Join 50,000+ Learners
+    items:
+      - value: 50,000+
+        label: Students Worldwide
+      - value: 4.8/5
+        label: Average Rating
+      - value: 1,500+
+        label: Webinar Attendees
+  - type: faq
+    version: "1.0"
+    title: Frequently Asked Questions
+    items:
+      - question: Is this webinar really free?
+        answer: Yes! This webinar is completely free. We want to show you how AI is changing education.
+      - question: Do I need any coding experience?
+        answer: No prior experience needed. This webinar is designed for complete beginners.
+      - question: Will there be a recording?
+        answer: Yes, all registered attendees will receive a recording after the live session.
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Transform Your Learning?
+    subtitle: Reserve your free spot now. Limited seats available!
+    buttons:
+      - text: Register Now
+        url: /signup?event=webinar
+        variant: primary
+      - text: Ask a Question
+        url: /contact
+        variant: outline
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. All rights reserved.
