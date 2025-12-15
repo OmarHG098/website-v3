@@ -70,6 +70,8 @@ export class ContentAdapter {
    * Adapt content using AI
    */
   async adapt(options: AdaptOptions): Promise<AdaptResult> {
+    const model = "gpt-4o";
+    
     // Build full context
     const context = await this.contextManager.buildAdaptationContext(options);
 
@@ -88,13 +90,24 @@ export class ContentAdapter {
     const validation = this.validateYaml(cleanedYaml);
 
     if (!validation.valid) {
-      // Try to fix common issues and retry once
+      // Try to fix by resending full context with error information
       console.warn("Invalid YAML output, attempting to fix:", validation.error);
       
-      const fixPrompt = `The previous output was not valid YAML. Error: ${validation.error}
+      // Build a correction prompt that includes full context + the invalid output + error
+      const fixPrompt = `${prompt}
 
-Please output ONLY valid YAML content that matches the ${options.targetComponent} component structure.
-No explanations, no markdown code blocks, just the YAML content:`;
+---
+CORRECTION REQUIRED:
+
+Your previous response was:
+\`\`\`
+${result.content}
+\`\`\`
+
+This output is not valid YAML. Error: ${validation.error}
+
+Please try again. Output ONLY valid YAML content that matches the ${options.targetComponent} component structure.
+No explanations, no markdown code blocks, just the corrected YAML content:`;
 
       const retryResult = await this.llmService.adaptContent(SYSTEM_PROMPT, fixPrompt);
       const retryCleanedYaml = this.cleanYamlOutput(retryResult.content);
@@ -107,7 +120,7 @@ No explanations, no markdown code blocks, just the YAML content:`;
       return {
         adaptedYaml: retryCleanedYaml,
         context: this.buildContextSummary(context),
-        model: "gpt-4o",
+        model,
         tokens: result.usage
           ? {
               prompt: result.usage.prompt_tokens + (retryResult.usage?.prompt_tokens || 0),
@@ -121,7 +134,7 @@ No explanations, no markdown code blocks, just the YAML content:`;
     return {
       adaptedYaml: cleanedYaml,
       context: this.buildContextSummary(context),
-      model: "gpt-4o",
+      model,
       tokens: result.usage
         ? {
             prompt: result.usage.prompt_tokens,
