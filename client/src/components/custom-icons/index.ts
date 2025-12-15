@@ -9,7 +9,7 @@ import HandsGroup from "./HandsGroup";
 import Handshake from "./Handshake";
 import Monitor from "./Monitor";
 import PeopleGroup from "./PeopleGroup";
-import RigobotDevice from "./RigobotDevice";
+import Rigobot from "./Rigobot";
 import RigobotIconTiny from "./RigobotIconTiny";
 import Rocket from "./Rocket";
 import Security from "./Security";
@@ -33,7 +33,7 @@ const customIcons: Record<string, React.ComponentType<{
   Handshake,
   Monitor,
   PeopleGroup,
-  RigobotDevice,
+  Rigobot,
   RigobotIconTiny,
   Rocket,
   Security,
@@ -56,7 +56,7 @@ export {
   Handshake,
   Monitor,
   PeopleGroup,
-  RigobotDevice,
+  Rigobot,
   RigobotIconTiny,
   Rocket,
   Security,

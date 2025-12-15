@@ -1,4 +1,4 @@
-interface RigobotDeviceProps {
+interface RigobotProps {
   width?: string;
   height?: string;
   color?: string;
@@ -7,14 +7,14 @@ interface RigobotDeviceProps {
   className?: string;
 }
 
-export default function RigobotDevice({
+export default function Rigobot({
   width = "59px",
   height = "38px",
   color = "#0097CF",
   secondColor = "#fff",
   style,
   className,
-}: RigobotDeviceProps) {
+}: RigobotProps) {
   return (
     <svg
       width={width}

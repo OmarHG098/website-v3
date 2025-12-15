@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
+import { getCustomIcon } from "@/components/custom-icons";
 
 interface BulletGroup {
   title: string;
@@ -36,6 +37,11 @@ interface SupportDuoSectionProps {
 }
 
 const getIcon = (iconName: string, className?: string, size?: number) => {
+  const CustomIcon = getCustomIcon(iconName);
+  if (CustomIcon) {
+    const sizeStr = size ? `${size}px` : "20px";
+    return <CustomIcon width={sizeStr} height={sizeStr} className={className} />;
+  }
   const icons = TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>;
   const IconComponent = icons[`Icon${iconName}`];
   return IconComponent ? <IconComponent className={className} size={size || 20} /> : null;
