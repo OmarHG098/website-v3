@@ -3,6 +3,9 @@ import { pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// ============================================
+// Database Schemas
+// ============================================
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
@@ -17,119 +20,271 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
-// Career Program Section Types
-export const ctaButtonSchema = z.object({
-  text: z.string(),
-  url: z.string(),
-  variant: z.enum(["primary", "secondary", "outline"]),
-  icon: z.string().optional(),
-});
+// ============================================
+// Re-export Common Schemas from Component Registry
+// ============================================
+export {
+  ctaButtonSchema,
+  videoConfigSchema,
+  imageSchema,
+  leadFormFieldConfigSchema,
+  leadFormDataSchema,
+  cardItemSchema,
+  statItemSchema,
+  logoItemSchema,
+  type CtaButton,
+  type VideoConfig,
+  type ImageDef,
+  type LeadFormData,
+  type CardItem,
+  type StatItem,
+  type LogoItem,
+} from "../marketing-content/component-registry/common/schema";
 
-export const trustBarSchema = z.object({
-  rating: z.string().optional(),
-  rating_count: z.string().optional(),
-  trusted_text: z.string(),
-});
+// Alias for backward compatibility
+export { leadFormDataSchema as productShowcaseFormSchema } from "../marketing-content/component-registry/common/schema";
 
-export const awardBadgeSchema = z.object({
-  name: z.string(),
-  source: z.string(),
-  year: z.string().optional(),
-});
+// ============================================
+// Re-export Hero Schemas from Component Registry
+// Only export unified schema and shared sub-schemas (not individual variants)
+// ============================================
+export {
+  trustBarSchema,
+  awardBadgeSchema,
+  heroImageSchema,
+  brandMarkSchema,
+  reviewLogoSchema,
+  productShowcaseTrustBarSchema,
+  heroCourseTutorSchema,
+  heroCourseFeatureSchema,
+  heroSectionSchema,
+  type TrustBar,
+  type AwardBadge,
+  type HeroImage,
+  type BrandMark,
+  type ReviewLogo,
+  type ProductShowcaseTrustBar,
+  type HeroCourseTutor,
+  type HeroCourseFeature,
+  type HeroSection,
+} from "../marketing-content/component-registry/hero/v1.0/schema";
 
-export const heroImageSchema = z.object({
-  src: z.string(),
-  alt: z.string(),
-});
+// Variant types for type narrowing (schemas are internal to component registry)
+export type {
+  HeroSingleColumn,
+  HeroShowcase,
+  HeroProductShowcase,
+  HeroSimpleTwoColumn,
+  HeroTwoColumn,
+  HeroCourse,
+} from "../marketing-content/component-registry/hero/v1.0/schema";
 
-// Hero variant schemas - each with required fields for that variant
-// Using .strict() to prevent mixing variant-specific fields
-export const heroSingleColumnSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("singleColumn"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  badge: z.string().optional(),
-  cta_buttons: z.array(ctaButtonSchema).optional(),
-  trust_bar: trustBarSchema.optional(),
-  award_badges: z.array(awardBadgeSchema).optional(),
-}).strict();
+// ============================================
+// Re-export AI Learning Schemas from Component Registry
+// ============================================
+export {
+  chatExampleSchema,
+  aiLearningSectionSchema,
+  type ChatExample,
+  type AiLearningSection,
+} from "../marketing-content/component-registry/ai_learning/v1.0/schema";
 
-export const heroShowcaseSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("showcase"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  trust_bar: trustBarSchema.optional(),
-  cta_button: ctaButtonSchema,
-  left_images: z.array(heroImageSchema).optional(),
-  right_images: z.array(heroImageSchema).optional(),
-  show_arrow: z.boolean().optional(),
-}).strict();
+// Type alias for backward compatibility
+export type AILearningSection = import("../marketing-content/component-registry/ai_learning/v1.0/schema").AiLearningSection;
 
-export const brandMarkSchema = z.object({
-  prefix: z.string().optional(),
-  highlight: z.string(),
-  suffix: z.string().optional(),
-  color: z.enum(["primary", "accent", "destructive", "chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]).optional(),
-});
+// ============================================
+// Re-export Mentorship Schemas from Component Registry
+// ============================================
+export {
+  mentorshipSectionSchema,
+  type MentorshipSection,
+} from "../marketing-content/component-registry/mentorship/v1.0/schema";
 
-// Field config for LeadForm fields
-export const leadFormFieldConfigSchema = z.object({
-  visible: z.boolean().optional(),
-  required: z.boolean().optional(),
-  default: z.string().optional(),
-  helper_text: z.string().optional(),
-  placeholder: z.string().optional(),
-});
+// ============================================
+// Re-export Certificate Schemas from Component Registry
+// ============================================
+export {
+  certificateSectionSchema,
+  type CertificateSection,
+} from "../marketing-content/component-registry/certificate/v1.0/schema";
 
-// LeadForm data schema - used for forms that capture leads
-export const leadFormDataSchema = z.object({
-  variant: z.enum(["stacked", "inline"]).optional(),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  submit_label: z.string().optional(),
-  tags: z.string().optional(),
-  automations: z.string().optional(),
-  fields: z.object({
-    email: leadFormFieldConfigSchema.optional(),
-    first_name: leadFormFieldConfigSchema.optional(),
-    last_name: leadFormFieldConfigSchema.optional(),
-    phone: leadFormFieldConfigSchema.optional(),
-    program: leadFormFieldConfigSchema.optional(),
-    region: leadFormFieldConfigSchema.optional(),
-    location: leadFormFieldConfigSchema.optional(),
-    coupon: leadFormFieldConfigSchema.optional(),
-    comment: leadFormFieldConfigSchema.optional(),
-  }).optional(),
-  success: z.object({
-    url: z.string().optional(),
-    message: z.string().optional(),
-  }).optional(),
-  terms_url: z.string().optional(),
-  privacy_url: z.string().optional(),
-  show_consent: z.boolean().optional(),
-  show_terms: z.boolean().optional(),
-  className: z.string().optional(),
-});
+// ============================================
+// Re-export Why Learn AI Schemas from Component Registry
+// ============================================
+export {
+  whyLearnAISectionSchema,
+  type WhyLearnAISection,
+} from "../marketing-content/component-registry/why_learn_ai/v1.0/schema";
 
-// Alias for backward compatibility - productShowcaseFormSchema now uses LeadFormData
-export const productShowcaseFormSchema = leadFormDataSchema;
+// ============================================
+// Re-export Pricing Schemas from Component Registry
+// ============================================
+export {
+  pricingFeatureSchema,
+  pricingPlanSchema,
+  pricingSectionSchema,
+  type PricingFeature,
+  type PricingPlan,
+  type PricingSection,
+} from "../marketing-content/component-registry/pricing/v1.0/schema";
 
-export const videoConfigSchema = z.object({
-  url: z.string(),
-  ratio: z.string().optional(),
-  muted: z.boolean().optional(),
-  autoplay: z.boolean().optional(),
-  loop: z.boolean().optional(),
-  preview_image_url: z.string().optional(),
-});
+// ============================================
+// Re-export FAQ Schemas from Component Registry
+// ============================================
+export {
+  faqItemSchema,
+  faqSectionSchema,
+  type FaqItem,
+  type FaqSection,
+} from "../marketing-content/component-registry/faq/v1.0/schema";
 
-export type VideoConfig = z.infer<typeof videoConfigSchema>;
+// Type alias for backward compatibility
+export type FAQItem = import("../marketing-content/component-registry/faq/v1.0/schema").FaqItem;
+export type FAQSection = import("../marketing-content/component-registry/faq/v1.0/schema").FaqSection;
 
-// Image Registry Schemas
+// ============================================
+// Re-export Testimonials Schemas from Component Registry
+// ============================================
+export {
+  testimonialItemSchema,
+  testimonialsSectionSchema,
+  type TestimonialItem,
+  type TestimonialsSection,
+} from "../marketing-content/component-registry/testimonials/v1.0/schema";
+
+// ============================================
+// Re-export Who's Hiring Schemas from Component Registry
+// ============================================
+export {
+  whosHiringSectionSchema,
+  type WhosHiringSection,
+} from "../marketing-content/component-registry/whos_hiring/v1.0/schema";
+
+// ============================================
+// Re-export Footer Schemas from Component Registry
+// ============================================
+export {
+  footerSectionSchema,
+  type FooterSection,
+} from "../marketing-content/component-registry/footer/v1.0/schema";
+
+// ============================================
+// Re-export Two Column Schemas from Component Registry
+// ============================================
+export {
+  twoColumnBulletSchema,
+  bulletGroupSchema,
+  twoColumnColumnSchema,
+  twoColumnSectionSchema,
+  type TwoColumnBullet,
+  type BulletGroup,
+  type TwoColumnColumn,
+  type TwoColumnSection,
+} from "../marketing-content/component-registry/two_column/v1.0/schema";
+
+// ============================================
+// Re-export Numbered Steps Schemas from Component Registry
+// ============================================
+export {
+  numberedStepsStepSchema,
+  numberedStepsSectionSchema,
+  type NumberedStepsStep,
+  type NumberedStepsSection,
+} from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
+
+// ============================================
+// Re-export Syllabus Schemas from Component Registry
+// ============================================
+export {
+  syllabusModuleSchema,
+  syllabusSectionSchema,
+  type SyllabusModule,
+  type SyllabusSection,
+} from "../marketing-content/component-registry/syllabus/v1.0/schema";
+
+// ============================================
+// Re-export Projects Schemas from Component Registry
+// ============================================
+export {
+  projectItemSchema,
+  projectsSectionSchema,
+  type ProjectItem,
+  type ProjectsSection,
+} from "../marketing-content/component-registry/projects/v1.0/schema";
+
+// ============================================
+// Re-export Features Grid Schemas from Component Registry
+// Only export unified schema and item schemas (not individual variants)
+// ============================================
+export {
+  featuresGridHighlightItemSchema,
+  featuresGridDetailedItemSchema,
+  featuresGridSectionSchema,
+  type FeaturesGridHighlightItem,
+  type FeaturesGridDetailedItem,
+  type FeaturesGridSection,
+} from "../marketing-content/component-registry/features_grid/v1.0/schema";
+
+// Variant types for type narrowing (schemas are internal to component registry)
+export type {
+  FeaturesGridHighlightSection,
+  FeaturesGridDetailedSection,
+} from "../marketing-content/component-registry/features_grid/v1.0/schema";
+
+// ============================================
+// Re-export Testimonials Slide Schemas from Component Registry
+// ============================================
+export {
+  testimonialsSlideTestimonialSchema,
+  testimonialsSlideSectionSchema,
+  type TestimonialsSlideTestimonial,
+  type TestimonialsSlideSection,
+} from "../marketing-content/component-registry/testimonials_slide/v1.0/schema";
+
+// ============================================
+// Re-export CTA Banner Schemas from Component Registry
+// ============================================
+export {
+  ctaBannerSectionSchema,
+  type CtaBannerSection,
+} from "../marketing-content/component-registry/cta_banner/v1.0/schema";
+
+// Type alias for backward compatibility
+export type CTABannerSection = import("../marketing-content/component-registry/cta_banner/v1.0/schema").CtaBannerSection;
+export type CTAButton = import("../marketing-content/component-registry/common/schema").CtaButton;
+export type LeadFormFieldConfig = z.infer<typeof import("../marketing-content/component-registry/common/schema").leadFormFieldConfigSchema>;
+
+// ============================================
+// Re-export Project Showcase Schemas from Component Registry
+// ============================================
+export {
+  projectShowcaseCreatorSchema,
+  projectShowcaseMediaSchema,
+  projectShowcaseItemSchema,
+  projectShowcaseSectionSchema,
+  projectsShowcaseSectionSchema,
+  type ProjectShowcaseCreator,
+  type ProjectShowcaseMedia,
+  type ProjectShowcaseItem,
+  type ProjectShowcaseSection,
+  type ProjectsShowcaseSection,
+} from "../marketing-content/component-registry/project_showcase/v1.0/schema";
+
+// ============================================
+// Re-export Comparison Table Schemas from Component Registry
+// ============================================
+export {
+  comparisonTableColumnSchema,
+  comparisonTableRowSchema,
+  comparisonTableSectionSchema,
+  type ComparisonTableColumn,
+  type ComparisonTableRow,
+  type ComparisonTableSection,
+} from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+
+// ============================================
+// Image Registry Schemas (not in component registry)
+// ============================================
 export const imagePresetSchema = z.object({
   aspect_ratio: z.string().nullable(),
   widths: z.array(z.number()),
@@ -161,509 +316,9 @@ export type ImageEntry = z.infer<typeof imageEntrySchema>;
 export type ImageRegistry = z.infer<typeof imageRegistrySchema>;
 export type ImageRef = z.infer<typeof imageRefSchema>;
 
-export const reviewLogoSchema = z.object({
-  name: z.string(),
-  logo: z.string().optional(),
-});
-
-export const productShowcaseTrustBarSchema = z.object({
-  rating: z.string().optional(),
-  review_count: z.string().optional(),
-  review_logos: z.array(reviewLogoSchema).optional(),
-});
-
-export const heroProductShowcaseSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("productShowcase"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  welcome_text: z.string().optional(),
-  brand_mark: brandMarkSchema.optional(),
-  description: z.string().optional(),
-  video: videoConfigSchema.optional(),
-  video_id: z.string().optional(),
-  video_title: z.string().optional(),
-  video_ratio: z.string().optional(),
-  image: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }).optional(),
-  form: productShowcaseFormSchema.optional(),
-  cta_button: ctaButtonSchema.optional(),
-  trust_bar: productShowcaseTrustBarSchema.optional(),
-}).strict();
-
-export const heroSimpleTwoColumnSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("simpleTwoColumn"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  badge: z.string().optional(),
-  image: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }),
-  cta_buttons: z.array(ctaButtonSchema).optional(),
-  background: z.string().optional(),
-}).strict();
-
-export const heroSimpleStackedSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("simpleStacked"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  badge: z.string().optional(),
-  image: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }),
-  cta_buttons: z.array(ctaButtonSchema).optional(),
-  background: z.string().optional(),
-}).strict();
-
-export const heroTwoColumnSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("twoColumn"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  badge: z.string().optional(),
-  image: z.string().optional(),
-  image_alt: z.string().optional(),
-  cta_buttons: z.array(ctaButtonSchema).optional(),
-  background: z.string().optional(),
-}).strict();
-
-export const heroCourseTutorSchema = z.object({
-  name: z.string(),
-  role: z.string(),
-  image: z.string(),
-});
-
-export const heroCourseFeatureSchema = z.object({
-  icon: z.string(),
-  text: z.string(),
-  count: z.union([z.string(), z.number()]).optional(),
-});
-
-export const heroCourseSchema = z.object({
-  type: z.literal("hero"),
-  version: z.string().optional(),
-  variant: z.literal("course"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  students_enrolled: z.object({
-    avatars: z.array(z.string()).optional(),
-    count: z.string(),
-  }).optional(),
-  bullet_points: z.array(z.string()).optional(),
-  tutors: z.array(heroCourseTutorSchema).optional(),
-  tutors_label: z.string().optional(),
-  description: z.string().optional(),
-  media: z.object({
-    type: z.enum(["video", "image"]),
-    src: z.string(),
-    thumbnail: z.string().optional(),
-    alt: z.string().optional(),
-  }),
-  signup_card: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    cta_button: ctaButtonSchema,
-    login_link: z.object({
-      text: z.string(),
-      url: z.string(),
-    }).optional(),
-    features: z.array(heroCourseFeatureSchema).optional(),
-  }),
-}).strict();
-
-// Combined hero section schema - union of all variants
-export const heroSectionSchema = z.union([
-  heroSingleColumnSchema,
-  heroShowcaseSchema,
-  heroProductShowcaseSchema,
-  heroSimpleTwoColumnSchema,
-  heroSimpleStackedSchema,
-  heroTwoColumnSchema,
-  heroCourseSchema,
-]);
-
-export const cardItemSchema = z.object({
-  icon: z.string(),
-  title: z.string(),
-  description: z.string(),
-});
-
-export const chatExampleSchema = z.object({
-  bot_name: z.string(),
-  bot_status: z.string(),
-  user_message: z.string(),
-  bot_response: z.string(),
-});
-
-export const aiLearningSectionSchema = z.object({
-  type: z.literal("ai_learning"),
-  badge: z.string().optional(),
-  title: z.string(),
-  description: z.string(),
-  features: z.array(cardItemSchema),
-  chat_example: chatExampleSchema.optional(),
-  video_url: z.string().optional(),
-  highlight: z.object({
-    title: z.string(),
-    description: z.string(),
-    bullets: z.array(z.object({ text: z.string() })).optional(),
-    cta: ctaButtonSchema.optional(),
-  }).optional(),
-});
-
-export const mentorshipSectionSchema = z.object({
-  type: z.literal("mentorship"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  cards: z.array(cardItemSchema),
-});
-
-export const statItemSchema = z.object({
-  value: z.string(),
-  label: z.string(),
-});
-
-export const certificateSectionSchema = z.object({
-  type: z.literal("certificate"),
-  title: z.string(),
-  description: z.string(),
-  benefits: z.array(z.object({ text: z.string() })),
-  card: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    program_name: z.string().optional(),
-    certificate_label: z.string().optional(),
-  }).optional(),
-  stats: z.array(statItemSchema).optional(),
-});
-
-export const whyLearnAISectionSchema = z.object({
-  type: z.literal("why_learn_ai"),
-  title: z.string(),
-  subtitle: z.string(),
-  description: z.string(),
-  cta: ctaButtonSchema.optional(),
-});
-
-// Pricing Section Types
-export const pricingFeatureSchema = z.object({
-  icon: z.string().optional(),
-  text: z.string(),
-  use_rigobot_icon: z.boolean().optional(),
-});
-
-export const pricingPlanSchema = z.object({
-  discount_badge: z.string(),
-  price: z.string(),
-  period: z.string(),
-  original_price: z.string().optional(),
-  savings_badge: z.string().optional(),
-});
-
-export const pricingSectionSchema = z.object({
-  type: z.literal("pricing"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  monthly: pricingPlanSchema,
-  yearly: pricingPlanSchema,
-  tech_icons: z.array(z.string()).optional(),
-  features_title: z.string().optional(),
-  features: z.array(pricingFeatureSchema),
-  cta: ctaButtonSchema,
-});
-
-export const faqItemSchema = z.object({
-  question: z.string(),
-  answer: z.string(),
-});
-
-export const faqSectionSchema = z.object({
-  type: z.literal("faq"),
-  title: z.string(),
-  items: z.array(faqItemSchema),
-  cta: z.object({
-    text: z.string(),
-    button_text: z.string(),
-    button_url: z.string(),
-  }).optional(),
-});
-
-export const testimonialItemSchema = z.object({
-  name: z.string(),
-  role: z.string(),
-  company: z.string().optional(),
-  rating: z.number(),
-  comment: z.string(),
-  outcome: z.string().optional(),
-  avatar: z.string().optional(),
-});
-
-export const testimonialsSectionSchema = z.object({
-  type: z.literal("testimonials"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  rating_summary: z.object({
-    average: z.string(),
-    count: z.string(),
-  }).optional(),
-  items: z.array(testimonialItemSchema).optional(),
-  filter_by_location: z.string().optional(),
-});
-
-export const logoItemSchema = z.object({
-  src: z.string(),
-  alt: z.string(),
-});
-
-export const whosHiringSectionSchema = z.object({
-  type: z.literal("whos_hiring"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  description: z.string().optional(),
-  logos: z.array(logoItemSchema),
-});
-
-export const footerSectionSchema = z.object({
-  type: z.literal("footer"),
-  copyright_text: z.string(),
-});
-
-// TwoColumn Section Types
-export const twoColumnBulletSchema = z.object({
-  text: z.string(),
-  icon: z.string().optional(),
-  heading: z.string().optional(),
-});
-
-export const bulletGroupSchema = z.object({
-  title: z.string(),
-  description: z.string().optional(),
-  bullets: z.array(z.object({ text: z.string() })).optional(),
-});
-
-export const twoColumnColumnSchema = z.object({
-  video: z.string().optional(),
-  video_height: z.string().optional(),
-  video_width: z.string().optional(),
-  image: z.string().optional(),
-  image_alt: z.string().optional(),
-  image_max_width: z.string().optional(),
-  image_max_height: z.string().optional(),
-  image_mobile_max_width: z.string().optional(),
-  image_mobile_max_height: z.string().optional(),
-  heading: z.string().optional(),
-  sub_heading: z.string().optional(),
-  description: z.string().optional(),
-  html_content: z.string().optional(),
-  button: ctaButtonSchema.optional(),
-  bullets: z.array(twoColumnBulletSchema).optional(),
-  bullets_visible: z.number().optional(),
-  bullets_collapsible: z.boolean().optional(),
-  bullet_icon: z.string().optional(),
-  bullet_char: z.string().optional(),
-  bullet_icon_color: z.string().optional(),
-  bullet_groups: z.array(bulletGroupSchema).optional(),
-  bullet_groups_collapsible: z.boolean().optional(),
-  footer_description: z.string().optional(),
-  gap: z.string().optional(),
-  justify: z.enum(["start", "center", "end"]).optional(),
-  text_align: z.enum(["left", "center", "right"]).optional(),
-  font_size: z.enum(["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"]).optional(),
-});
-
-export const twoColumnSectionSchema = z.object({
-  type: z.literal("two_column"),
-  proportions: z.tuple([z.number(), z.number()]).optional(),
-  background: z.string().optional(),
-  alignment: z.enum(["start", "center", "end"]).optional(),
-  container_style: z.record(z.string(), z.string()).optional(),
-  left: twoColumnColumnSchema.optional(),
-  right: twoColumnColumnSchema.optional(),
-  reverse_on_mobile: z.boolean().optional(),
-  heading_above_on_md: z.boolean().optional(),
-  gap: z.string().optional(),
-  padding_left: z.string().optional(),
-  padding_right: z.string().optional(),
-});
-
-export const supportDuoBulletGroupSchema = z.object({
-  title: z.string(),
-  description: z.string().optional(),
-  image: z.string().optional(),
-  icon: z.string().optional(),
-  bullets: z.array(z.object({ 
-    text: z.string(),
-    icon: z.string().optional(),
-  })).optional(),
-  button: z.object({
-    text: z.string(),
-    url: z.string(),
-    variant: z.enum(["primary", "secondary", "outline"]).optional(),
-  }).optional(),
-});
-
-export const supportDuoSectionSchema = z.object({
-  type: z.literal("support_duo"),
-  version: z.string().optional(),
-  variant: z.enum(["default", "grid"]).optional(),
-  heading: z.string(),
-  description: z.string(),
-  bullet_groups: z.array(supportDuoBulletGroupSchema),
-  footer_description: z.string().optional(),
-  image: z.string().optional(),
-  image_alt: z.string().optional(),
-  background: z.string().optional(),
-});
-
-export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
-
-export const numberedStepsStepSchema = z.object({
-  icon: z.string(),
-  text: z.string().optional(),
-  title: z.string().optional(),
-  bullets: z.array(z.string()).optional(),
-  bullet_icon: z.string().optional(),
-  bullet_icon_color: z.string().optional(),
-  bullet_char: z.string().optional(),
-});
-
-export const numberedStepsSectionSchema = z.object({
-  type: z.literal("numbered_steps"),
-  version: z.string().optional(),
-  title: z.string(),
-  description: z.string().optional(),
-  description_link: z.object({
-    text: z.string(),
-    url: z.string(),
-  }).optional(),
-  steps: z.array(numberedStepsStepSchema),
-  background: z.string().optional(),
-  bullet_icon: z.string().optional(),
-  bullet_icon_color: z.string().optional(),
-  bullet_char: z.string().optional(),
-});
-
-export const syllabusModuleSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-});
-
-export const syllabusSectionSchema = z.object({
-  type: z.literal("syllabus"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  modules: z.array(syllabusModuleSchema),
-});
-
-export const projectItemSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  image: z.string(),
-  tags: z.array(z.string()).optional(),
-  duration: z.string().optional(),
-  difficulty: z.enum(["easy", "medium", "hard"]).optional(),
-  date: z.string().optional(),
-});
-
-export const projectsSectionSchema = z.object({
-  type: z.literal("projects"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  items: z.array(projectItemSchema),
-});
-
-// FeaturesGrid - unified component for highlight and detailed card grids
-export const featuresGridHighlightItemSchema = z.object({
-  id: z.string().optional(),
-  icon: z.string(),
-  icon_color: z.string().optional(),
-  value: z.string().optional(),
-  title: z.string(),
-  description: z.string().optional(),
-});
-
-export const featuresGridDetailedItemSchema = z.object({
-  id: z.string().optional(),
-  icon: z.string().optional(),
-  icon_color: z.string().optional(),
-  image: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }).optional(),
-  category: z.string().optional(),
-  title: z.string(),
-  description: z.string(),
-  link_url: z.string().optional(),
-  link_text: z.string().optional(),
-});
-
-export const featuresGridHighlightSectionSchema = z.object({
-  type: z.literal("features_grid"),
-  version: z.string().optional(),
-  variant: z.literal("highlight").optional(),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  items: z.array(featuresGridHighlightItemSchema),
-  columns: z.number().optional(),
-  icon_color: z.string().optional(),
-  background: z.string().optional(),
-});
-
-export const featuresGridDetailedSectionSchema = z.object({
-  type: z.literal("features_grid"),
-  version: z.string().optional(),
-  variant: z.literal("detailed"),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  items: z.array(featuresGridDetailedItemSchema),
-  columns: z.number().optional(),
-  icon_color: z.string().optional(),
-  collapsible_mobile: z.boolean().optional(),
-  background: z.string().optional(),
-});
-
-export const featuresGridSectionSchema = z.union([
-  featuresGridHighlightSectionSchema,
-  featuresGridDetailedSectionSchema,
-]);
-
-export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
-export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
-export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
-export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
-export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
-
-export const testimonialsSlideTestimonialSchema = z.object({
-  name: z.string(),
-  img: z.string(),
-  status: z.string().optional(),
-  country: z.object({
-    name: z.string(),
-    iso: z.string(),
-  }),
-  contributor: z.string(),
-  description: z.string(),
-  achievement: z.string().optional(),
-});
-
-export const testimonialsSlideSectionSchema = z.object({
-  type: z.literal("testimonials_slide"),
-  title: z.string(),
-  description: z.string(),
-  background: z.string().optional(),
-});
-
+// ============================================
+// Programs List Section (not in component registry yet)
+// ============================================
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
   version: z.string().optional(),
@@ -672,69 +327,9 @@ export const programsListSectionSchema = z.object({
   filter_by_location: z.string().optional(),
 });
 
-export const ctaBannerSectionSchema = z.object({
-  type: z.literal("cta_banner"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  cta_text: z.string().optional(),
-  cta_url: z.string().optional(),
-  buttons: z.array(ctaButtonSchema).optional(),
-  background: z.string().optional(),
-}).refine(
-  (data) => (data.cta_text && data.cta_url) || (data.buttons && data.buttons.length > 0),
-  { message: "Either cta_text/cta_url or buttons array must be provided" }
-);
-// Project Showcase Section - for graduates/projects page
-export const projectShowcaseCreatorSchema = z.object({
-  name: z.string(),
-  role: z.string().optional(),
-  github_url: z.string().optional(),
-  linkedin_url: z.string().optional(),
-});
-
-export const projectShowcaseMediaSchema = z.object({
-  type: z.enum(["video", "image"]),
-  src: z.string(),
-  alt: z.string().optional(),
-});
-
-export const projectShowcaseItemSchema = z.object({
-  project_title: z.string(),
-  project_url: z.string().optional(),
-  description: z.string(),
-  creators: z.array(projectShowcaseCreatorSchema),
-  media: z.array(projectShowcaseMediaSchema).optional(),
-  image: z.string().optional(),
-  video_id: z.string().optional(),
-});
-
-export const projectShowcaseSectionSchema = z.object({
-  type: z.literal("project_showcase"),
-  version: z.string().optional(),
-  project_title: z.string(),
-  description: z.string(),
-  creators: z.array(projectShowcaseCreatorSchema),
-  media: z.array(projectShowcaseMediaSchema).optional(),
-  image: z.string().optional(),
-  video_id: z.string().optional(),
-  background: z.string().optional(),
-  media_position: z.enum(["left", "right"]).optional(),
-});
-
-export const projectsShowcaseSectionSchema = z.object({
-  type: z.literal("projects_showcase"),
-  version: z.string().optional(),
-  items: z.array(projectShowcaseItemSchema),
-});
-
-export type ProjectShowcaseCreator = z.infer<typeof projectShowcaseCreatorSchema>;
-export type ProjectShowcaseMedia = z.infer<typeof projectShowcaseMediaSchema>;
-export type ProjectShowcaseItem = z.infer<typeof projectShowcaseItemSchema>;
-export type ProjectShowcaseSection = z.infer<typeof projectShowcaseSectionSchema>;
-export type ProjectsShowcaseSection = z.infer<typeof projectsShowcaseSectionSchema>;
-
-// About section schema
+// ============================================
+// About Section (not in component registry yet)
+// ============================================
 export const aboutSectionSchema = z.object({
   type: z.literal("about"),
   version: z.string().optional(),
@@ -749,34 +344,9 @@ export const aboutSectionSchema = z.object({
 
 export type AboutSection = z.infer<typeof aboutSectionSchema>;
 
-// Comparison Table Section
-export const comparisonTableColumnSchema = z.object({
-  name: z.string(),
-  highlight: z.boolean().optional(),
-});
-
-export const comparisonTableRowSchema = z.object({
-  feature: z.string(),
-  values: z.array(z.string()),
-  feature_description: z.string().optional(),
-});
-
-export const comparisonTableSectionSchema = z.object({
-  type: z.literal("comparison_table"),
-  version: z.string().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  columns: z.array(comparisonTableColumnSchema),
-  rows: z.array(comparisonTableRowSchema),
-  background: z.string().optional(),
-  footer_note: z.string().optional(),
-});
-
-export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;
-export type ComparisonTableRow = z.infer<typeof comparisonTableRowSchema>;
-export type ComparisonTableSection = z.infer<typeof comparisonTableSectionSchema>;
-
-// Stats Section (for displaying key metrics/statistics)
+// ============================================
+// Stats Section (not in component registry yet)
+// ============================================
 export const statsSectionSchema = z.object({
   type: z.literal("stats"),
   version: z.string().optional(),
@@ -793,32 +363,9 @@ export const statsSectionSchema = z.object({
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
-// Awards Row Section (for displaying award badges in a row)
-export const awardsRowSectionSchema = z.object({
-  type: z.literal("awards_row"),
-  version: z.string().optional(),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  background: z.string().optional(),
-  link_text: z.string().optional(),
-  link_url: z.string().optional(),
-  badges: z.array(z.object({
-    name: z.string(),
-    source: z.string(),
-    year: z.string().optional(),
-  })).optional(),
-});
-
-export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
-
-// Horizontal Bars Section (for animated bar charts)
-export const horizontalBarsItemSchema = z.object({
-  label: z.string(),
-  value: z.number(),
-  displayValue: z.string().optional(),
-  color: z.string().optional(),
-});
-
+// ============================================
+// Horizontal Bars Section (chart component)
+// ============================================
 export const horizontalBarsSectionSchema = z.object({
   type: z.literal("horizontal_bars"),
   version: z.string().optional(),
@@ -826,13 +373,19 @@ export const horizontalBarsSectionSchema = z.object({
   subtitle: z.string().optional(),
   background: z.string().optional(),
   use_card: z.boolean().optional(),
-  items: z.array(horizontalBarsItemSchema),
+  items: z.array(z.object({
+    label: z.string(),
+    value: z.number(),
+    displayValue: z.string().optional(),
+    color: z.string().optional(),
+  })),
 });
 
-export type HorizontalBarsItem = z.infer<typeof horizontalBarsItemSchema>;
 export type HorizontalBarsSection = z.infer<typeof horizontalBarsSectionSchema>;
 
-// Vertical Bars Cards Section (for cards with vertical animated bars comparing years per metric)
+// ============================================
+// Vertical Bars Cards Section (chart component)
+// ============================================
 export const verticalBarsYearValueSchema = z.object({
   year: z.string(),
   value: z.number(),
@@ -841,8 +394,8 @@ export const verticalBarsYearValueSchema = z.object({
 
 export const verticalBarsMetricCardSchema = z.object({
   title: z.string(),
-  icon: z.string().optional(),
   unit: z.string().optional(),
+  icon: z.string().optional(),
   years: z.array(verticalBarsYearValueSchema),
 });
 
@@ -851,8 +404,8 @@ export const verticalBarsCardsSectionSchema = z.object({
   version: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
-  footer_description: z.string().optional(),
   background: z.string().optional(),
+  footer_description: z.string().optional(),
   metrics: z.array(verticalBarsMetricCardSchema),
 });
 
@@ -860,7 +413,9 @@ export type VerticalBarsYearValue = z.infer<typeof verticalBarsYearValueSchema>;
 export type VerticalBarsMetricCard = z.infer<typeof verticalBarsMetricCardSchema>;
 export type VerticalBarsCardsSection = z.infer<typeof verticalBarsCardsSectionSchema>;
 
-// Pie Charts Section (for multiple pie charts showing distributions)
+// ============================================
+// Pie Charts Section (chart component)
+// ============================================
 export const pieChartItemSchema = z.object({
   label: z.string(),
   value: z.number(),
@@ -887,16 +442,88 @@ export type PieChartItem = z.infer<typeof pieChartItemSchema>;
 export type PieChartData = z.infer<typeof pieChartDataSchema>;
 export type PieChartsSection = z.infer<typeof pieChartsSectionSchema>;
 
-// Section schema using z.union to support hero variants
-// Each hero variant has the same type: "hero" but different variant-specific required fields
+// ============================================
+// Awards Row Section
+// ============================================
+export const awardsRowSectionSchema = z.object({
+  type: z.literal("awards_row"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  background: z.string().optional(),
+  link_text: z.string().optional(),
+  link_url: z.string().optional(),
+  badges: z.array(z.object({
+    name: z.string(),
+    source: z.string(),
+    year: z.string().optional(),
+    logo: z.string().optional(),
+  })),
+});
+
+export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
+
+// ============================================
+// Support Duo Section
+// ============================================
+export const supportDuoSectionSchema = z.object({
+  type: z.literal("support_duo"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  left: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    icon: z.string().optional(),
+    features: z.array(z.object({
+      icon: z.string().optional(),
+      title: z.string(),
+      description: z.string().optional(),
+    })).optional(),
+  }).optional(),
+  right: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    icon: z.string().optional(),
+    features: z.array(z.object({
+      icon: z.string().optional(),
+      title: z.string(),
+      description: z.string().optional(),
+    })).optional(),
+  }).optional(),
+});
+
+export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
+
+// ============================================
+// Section Schema Union
+// Import unified section schemas for use in union
+// ============================================
+import { heroSectionSchema as heroSchema } from "../marketing-content/component-registry/hero/v1.0/schema";
+import { aiLearningSectionSchema } from "../marketing-content/component-registry/ai_learning/v1.0/schema";
+import { mentorshipSectionSchema } from "../marketing-content/component-registry/mentorship/v1.0/schema";
+import { certificateSectionSchema } from "../marketing-content/component-registry/certificate/v1.0/schema";
+import { whyLearnAISectionSchema } from "../marketing-content/component-registry/why_learn_ai/v1.0/schema";
+import { pricingSectionSchema } from "../marketing-content/component-registry/pricing/v1.0/schema";
+import { faqSectionSchema } from "../marketing-content/component-registry/faq/v1.0/schema";
+import { testimonialsSectionSchema } from "../marketing-content/component-registry/testimonials/v1.0/schema";
+import { whosHiringSectionSchema } from "../marketing-content/component-registry/whos_hiring/v1.0/schema";
+import { footerSectionSchema } from "../marketing-content/component-registry/footer/v1.0/schema";
+import { twoColumnSectionSchema } from "../marketing-content/component-registry/two_column/v1.0/schema";
+import { numberedStepsSectionSchema } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
+import { syllabusSectionSchema } from "../marketing-content/component-registry/syllabus/v1.0/schema";
+import { projectsSectionSchema } from "../marketing-content/component-registry/projects/v1.0/schema";
+import { featuresGridSectionSchema as featuresGridSchema } from "../marketing-content/component-registry/features_grid/v1.0/schema";
+import { testimonialsSlideSectionSchema } from "../marketing-content/component-registry/testimonials_slide/v1.0/schema";
+import { ctaBannerSectionSchema } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
+import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../marketing-content/component-registry/project_showcase/v1.0/schema";
+import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+
 export const sectionSchema = z.union([
-  heroSingleColumnSchema,
-  heroShowcaseSchema,
-  heroProductShowcaseSchema,
-  heroSimpleTwoColumnSchema,
-  heroSimpleStackedSchema,
-  heroTwoColumnSchema,
-  heroCourseSchema,
+  heroSchema,
+  featuresGridSchema,
   syllabusSectionSchema,
   projectsSectionSchema,
   aiLearningSectionSchema,
@@ -911,8 +538,6 @@ export const sectionSchema = z.union([
   twoColumnSectionSchema,
   numberedStepsSectionSchema,
   testimonialsSlideSectionSchema,
-  featuresGridHighlightSectionSchema,
-  featuresGridDetailedSectionSchema,
   programsListSectionSchema,
   ctaBannerSectionSchema,
   projectShowcaseSectionSchema,
@@ -920,18 +545,28 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
-  awardsRowSectionSchema,
   horizontalBarsSectionSchema,
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
+  awardsRowSectionSchema,
   supportDuoSectionSchema,
 ]);
 
+export type Section = z.infer<typeof sectionSchema>;
+
+// ============================================
+// Schema Reference
+// ============================================
 export const schemaRefSchema = z.object({
   include: z.array(z.string()).optional(),
   overrides: z.record(z.string(), z.record(z.string(), z.unknown())).optional(),
 });
 
+export type SchemaRef = z.infer<typeof schemaRefSchema>;
+
+// ============================================
+// Career Program Page Schema
+// ============================================
 export const careerProgramMetaSchema = z.object({
   page_title: z.string(),
   description: z.string(),
@@ -952,6 +587,12 @@ export const careerProgramSchema = z.object({
   sections: z.array(sectionSchema),
 });
 
+export type CareerProgramMeta = z.infer<typeof careerProgramMetaSchema>;
+export type CareerProgram = z.infer<typeof careerProgramSchema>;
+
+// ============================================
+// Landing Page Schema
+// ============================================
 export const landingPageMetaSchema = z.object({
   page_title: z.string(),
   description: z.string(),
@@ -972,49 +613,12 @@ export const landingPageSchema = z.object({
   sections: z.array(sectionSchema),
 });
 
-export type SchemaRef = z.infer<typeof schemaRefSchema>;
-export type CareerProgramMeta = z.infer<typeof careerProgramMetaSchema>;
-export type CTAButton = z.infer<typeof ctaButtonSchema>;
-export type TrustBar = z.infer<typeof trustBarSchema>;
-export type LeadFormFieldConfig = z.infer<typeof leadFormFieldConfigSchema>;
-export type LeadFormData = z.infer<typeof leadFormDataSchema>;
-export type AwardBadge = z.infer<typeof awardBadgeSchema>;
-export type HeroSection = z.infer<typeof heroSectionSchema>;
-export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
-export type HeroShowcase = z.infer<typeof heroShowcaseSchema>;
-export type HeroProductShowcase = z.infer<typeof heroProductShowcaseSchema>;
-export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
-export type HeroSimpleStacked = z.infer<typeof heroSimpleStackedSchema>;
-export type CardItem = z.infer<typeof cardItemSchema>;
-export type AILearningSection = z.infer<typeof aiLearningSectionSchema>;
-export type MentorshipSection = z.infer<typeof mentorshipSectionSchema>;
-export type CertificateSection = z.infer<typeof certificateSectionSchema>;
-export type WhyLearnAISection = z.infer<typeof whyLearnAISectionSchema>;
-export type PricingFeature = z.infer<typeof pricingFeatureSchema>;
-export type PricingPlan = z.infer<typeof pricingPlanSchema>;
-export type PricingSection = z.infer<typeof pricingSectionSchema>;
-export type FAQItem = z.infer<typeof faqItemSchema>;
-export type FAQSection = z.infer<typeof faqSectionSchema>;
-export type TestimonialItem = z.infer<typeof testimonialItemSchema>;
-export type TestimonialsSection = z.infer<typeof testimonialsSectionSchema>;
-export type LogoItem = z.infer<typeof logoItemSchema>;
-export type WhosHiringSection = z.infer<typeof whosHiringSectionSchema>;
-export type StatItem = z.infer<typeof statItemSchema>;
-export type FooterSection = z.infer<typeof footerSectionSchema>;
-export type CTABannerSection = z.infer<typeof ctaBannerSectionSchema>;
-export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
-export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
-export type ProjectItem = z.infer<typeof projectItemSchema>;
-export type ProjectsSection = z.infer<typeof projectsSectionSchema>;
-export type TwoColumnBullet = z.infer<typeof twoColumnBulletSchema>;
-export type TwoColumnColumn = z.infer<typeof twoColumnColumnSchema>;
-export type TwoColumnSection = z.infer<typeof twoColumnSectionSchema>;
-export type Section = z.infer<typeof sectionSchema>;
-export type CareerProgram = z.infer<typeof careerProgramSchema>;
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
 export type LandingPage = z.infer<typeof landingPageSchema>;
 
+// ============================================
 // Editing Capabilities
+// ============================================
 export const editingCapabilities = [
   "content_read",
   "content_edit_text",
@@ -1036,7 +640,9 @@ export const capabilitiesSchema = z.object({
 
 export type Capabilities = z.infer<typeof capabilitiesSchema>;
 
-// Edit operations for the editing API
+// ============================================
+// Edit Operations
+// ============================================
 export const editOperationSchema = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("update_field"),
@@ -1068,7 +674,9 @@ export const editOperationSchema = z.discriminatedUnion("action", [
 
 export type EditOperation = z.infer<typeof editOperationSchema>;
 
+// ============================================
 // Location Page Schema
+// ============================================
 export const locationMetaSchema = z.object({
   page_title: z.string(),
   description: z.string(),
@@ -1116,9 +724,8 @@ export type LocationMeta = z.infer<typeof locationMetaSchema>;
 export type LocationPage = z.infer<typeof locationPageSchema>;
 
 // ============================================
-// Template Page Schema (for marketing-content/pages/)
+// Template Page Schema
 // ============================================
-
 export const templatePageMetaSchema = z.object({
   page_title: z.string(),
   description: z.string(),
@@ -1144,8 +751,6 @@ export type TemplatePage = z.infer<typeof templatePageSchema>;
 // ============================================
 // A/B Testing / Experiments System
 // ============================================
-
-// Targeting rules for experiments
 export const experimentTargetingSchema = z.object({
   regions: z.array(z.string()).optional(),
   countries: z.array(z.string()).optional(),
@@ -1159,14 +764,12 @@ export const experimentTargetingSchema = z.object({
   days_of_week: z.array(z.number().min(0).max(6)).optional(),
 });
 
-// Variant definition with allocation percentage
 export const experimentVariantSchema = z.object({
   slug: z.string(),
   version: z.number().default(1),
   allocation: z.number().min(0).max(100),
 });
 
-// Experiment configuration
 export const experimentConfigSchema = z.object({
   slug: z.string(),
   status: z.enum(["planned", "active", "paused", "winner", "archived"]),
@@ -1180,12 +783,10 @@ export const experimentConfigSchema = z.object({
   auto_stopped: z.boolean().optional(),
 });
 
-// Experiments file structure (experiments.yml per program)
 export const experimentsFileSchema = z.object({
   experiments: z.array(experimentConfigSchema),
 });
 
-// Visitor context for experiment assignment
 export const visitorContextSchema = z.object({
   session_id: z.string(),
   language: z.string().optional(),
@@ -1199,7 +800,6 @@ export const visitorContextSchema = z.object({
   day_of_week: z.number().optional(),
 });
 
-// Experiment assignment result
 export const experimentAssignmentSchema = z.object({
   experiment_slug: z.string(),
   variant_slug: z.string(),
@@ -1207,14 +807,11 @@ export const experimentAssignmentSchema = z.object({
   assigned_at: z.number(),
 });
 
-// Cookie structure for persisting assignments
 export const experimentCookieSchema = z.object({
   assignments: z.array(experimentAssignmentSchema),
   session_id: z.string(),
 });
 
-// Schema for validating experiment update requests (all fields optional)
-// Variants must be complete objects, but allocation sum is validated at runtime
 export const experimentUpdateSchema = z.object({
   description: z.string().optional(),
   status: z.enum(["planned", "active", "paused", "winner", "archived"]).optional(),
