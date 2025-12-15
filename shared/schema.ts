@@ -75,6 +75,7 @@ export type {
   HeroShowcase,
   HeroProductShowcase,
   HeroSimpleTwoColumn,
+  HeroSimpleStacked,
   HeroTwoColumn,
   HeroCourse,
 } from "../marketing-content/component-registry/hero/v1.0/schema";
@@ -364,6 +365,143 @@ export const statsSectionSchema = z.object({
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
 // ============================================
+// Horizontal Bars Section (chart component)
+// ============================================
+export const horizontalBarsSectionSchema = z.object({
+  type: z.literal("horizontal_bars"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  use_card: z.boolean().optional(),
+  items: z.array(z.object({
+    label: z.string(),
+    value: z.number(),
+    displayValue: z.string().optional(),
+    color: z.string().optional(),
+  })),
+});
+
+export type HorizontalBarsSection = z.infer<typeof horizontalBarsSectionSchema>;
+
+// ============================================
+// Vertical Bars Cards Section (chart component)
+// ============================================
+export const verticalBarsYearValueSchema = z.object({
+  year: z.string(),
+  value: z.number(),
+  displayValue: z.string(),
+});
+
+export const verticalBarsMetricCardSchema = z.object({
+  title: z.string(),
+  unit: z.string().optional(),
+  icon: z.string().optional(),
+  years: z.array(verticalBarsYearValueSchema),
+});
+
+export const verticalBarsCardsSectionSchema = z.object({
+  type: z.literal("vertical_bars_cards"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  footer_description: z.string().optional(),
+  metrics: z.array(verticalBarsMetricCardSchema),
+});
+
+export type VerticalBarsYearValue = z.infer<typeof verticalBarsYearValueSchema>;
+export type VerticalBarsMetricCard = z.infer<typeof verticalBarsMetricCardSchema>;
+export type VerticalBarsCardsSection = z.infer<typeof verticalBarsCardsSectionSchema>;
+
+// ============================================
+// Pie Charts Section (chart component)
+// ============================================
+export const pieChartItemSchema = z.object({
+  label: z.string(),
+  value: z.number(),
+  displayValue: z.string().optional(),
+  color: z.string().optional(),
+});
+
+export const pieChartDataSchema = z.object({
+  title: z.string(),
+  items: z.array(pieChartItemSchema),
+});
+
+export const pieChartsSectionSchema = z.object({
+  type: z.literal("pie_charts"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  background: z.string().optional(),
+  use_card: z.boolean().optional(),
+  charts: z.array(pieChartDataSchema),
+});
+
+export type PieChartItem = z.infer<typeof pieChartItemSchema>;
+export type PieChartData = z.infer<typeof pieChartDataSchema>;
+export type PieChartsSection = z.infer<typeof pieChartsSectionSchema>;
+
+// ============================================
+// Awards Row Section
+// ============================================
+export const awardsRowSectionSchema = z.object({
+  type: z.literal("awards_row"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  background: z.string().optional(),
+  link_text: z.string().optional(),
+  link_url: z.string().optional(),
+  badges: z.array(z.object({
+    name: z.string(),
+    source: z.string(),
+    year: z.string().optional(),
+    logo: z.string().optional(),
+  })),
+});
+
+export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
+
+// ============================================
+// Support Duo Section
+// ============================================
+export const supportDuoBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+});
+
+export const supportDuoBulletGroupSchema = z.object({
+  title: z.string(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  description: z.string().optional(),
+  bullets: z.array(supportDuoBulletSchema).optional(),
+  button: z.object({
+    text: z.string(),
+    url: z.string(),
+    variant: z.string().optional(),
+  }).optional(),
+});
+
+export const supportDuoSectionSchema = z.object({
+  type: z.literal("support_duo"),
+  version: z.string().optional(),
+  variant: z.enum(["default", "grid"]).optional(),
+  heading: z.string().optional(),
+  description: z.string().optional(),
+  background: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  footer_description: z.string().optional(),
+  bullet_groups: z.array(supportDuoBulletGroupSchema).optional(),
+});
+
+export type SupportDuoBullet = z.infer<typeof supportDuoBulletSchema>;
+export type SupportDuoBulletGroup = z.infer<typeof supportDuoBulletGroupSchema>;
+export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
+
+// ============================================
 // Section Schema Union
 // Import unified section schemas for use in union
 // ============================================
@@ -411,6 +549,11 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
+  horizontalBarsSectionSchema,
+  verticalBarsCardsSectionSchema,
+  pieChartsSectionSchema,
+  awardsRowSectionSchema,
+  supportDuoSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;
