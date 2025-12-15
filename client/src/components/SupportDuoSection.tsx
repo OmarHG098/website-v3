@@ -70,18 +70,23 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
         {isGrid && (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center mb-8">
             <div className="col-span-1 md:col-span-8 text-center md:text-start order-2 md:order-1">
-              <h2 
-                className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-                data-testid="text-support-duo-heading"
-              >
-                {data.heading}
-              </h2>
-              <p 
-                className="text-lg text-muted-foreground leading-relaxed"
-                data-testid="text-support-duo-description"
-              >
-                {data.description}
-              </p>
+              <div className="bg-muted/50 rounded-md p-6 md:p-8">
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
+                  Our Community
+                </span>
+                <h2 
+                  className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+                  data-testid="text-support-duo-heading"
+                >
+                  {data.heading}
+                </h2>
+                <p 
+                  className="text-lg text-muted-foreground leading-relaxed"
+                  data-testid="text-support-duo-description"
+                >
+                  {data.description}
+                </p>
+              </div>
             </div>
             {data.image && (
               <div className="col-span-1 md:col-span-4 order-1 md:order-2">
