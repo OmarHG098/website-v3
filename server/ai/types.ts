@@ -120,6 +120,7 @@ export interface AdaptResult {
     completion: number;
     total: number;
   };
+  warnings?: string[];
 }
 
 // LLM client interface

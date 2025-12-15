@@ -291,7 +291,18 @@ export function EditableSection({ children, section, index, sectionType, content
       const adapted = { type: sectionType, ...sectionData } as Section;
       setAdaptedSection(adapted);
       setHasAdapted(true);
-      toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
+      
+      // Show success toast, with warnings if any
+      const warnings = data.warnings as string[] | undefined;
+      if (warnings && warnings.length > 0) {
+        toast({ 
+          title: "Content adapted with warnings", 
+          description: `${warnings.length} validation warning(s): ${warnings.slice(0, 2).join(", ")}${warnings.length > 2 ? "..." : ""}`,
+          variant: "default"
+        });
+      } else {
+        toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to adapt content';
       toast({ title: "AI Adaptation Error", description: message, variant: "destructive" });

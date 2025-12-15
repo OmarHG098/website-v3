@@ -138,17 +138,29 @@ Respond with a JSON object that matches the target component structure with ALL 
       // Validate the structured output against our schema (recursive validation)
       const validation = validateContentAgainstSchema(result.content, context.component, context.targetVariant);
       
-      if (!validation.valid) {
-        console.warn("Structured output missing required fields:", validation.errors);
-        // Continue with cleaned content, letting downstream validation handle issues
+      // Build warnings list
+      const warnings: string[] = [];
+      if (validation.errors.length > 0) {
+        warnings.push(...validation.errors);
+      }
+      if (validation.unknownProps && validation.unknownProps.length > 0) {
+        for (const prop of validation.unknownProps) {
+          warnings.push(`Unknown property not in schema: "${prop}"`);
+        }
+      }
+      
+      // Merge cleaned properties with unknown properties (preserve AI output)
+      const mergedContent: Record<string, unknown> = { ...validation.cleaned };
+      for (const prop of validation.unknownProps || []) {
+        if (result.content[prop] !== undefined) {
+          mergedContent[prop] = result.content[prop];
+        }
       }
 
-      // Build content with variant field if applicable
-      // Spread cleanedContent first, then override with enforced variant
-      const cleanedContent = validation.cleaned || {};
+      // Add variant if applicable
       const contentWithVariant = context.targetVariant 
-        ? { ...cleanedContent, variant: context.targetVariant }
-        : cleanedContent;
+        ? { ...mergedContent, variant: context.targetVariant }
+        : mergedContent;
 
       // Convert to YAML
       const adaptedYaml = yaml.dump(contentWithVariant, { 
@@ -169,6 +181,7 @@ Respond with a JSON object that matches the target component structure with ALL 
               total: result.usage.total_tokens,
             }
           : undefined,
+        warnings: warnings.length > 0 ? warnings : undefined,
       };
     } catch (error) {
       // If structured output fails (e.g., schema too complex), fall back to text-based approach
@@ -238,16 +251,32 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
         parsedRetry = retryValidation.parsed as Record<string, unknown>;
       }
       
-      // Validate but use original content - validation is for warnings only
+      // Validate and get cleaned content + unknown properties
       const schemaValidation = validateContentAgainstSchema(parsedRetry, context.component, context.targetVariant);
-      if (!schemaValidation.valid) {
-        console.warn("Schema validation warnings:", schemaValidation.errors);
+      
+      // Build warnings list
+      const warnings: string[] = [];
+      if (schemaValidation.errors.length > 0) {
+        warnings.push(...schemaValidation.errors);
+      }
+      if (schemaValidation.unknownProps && schemaValidation.unknownProps.length > 0) {
+        for (const prop of schemaValidation.unknownProps) {
+          warnings.push(`Unknown property not in schema: "${prop}"`);
+        }
       }
       
-      // Use the AI's original content (not the overly-filtered cleaned version)
+      // Merge cleaned properties with unknown properties (preserve AI output)
+      const mergedContent: Record<string, unknown> = { ...schemaValidation.cleaned };
+      for (const prop of schemaValidation.unknownProps || []) {
+        if (parsedRetry[prop] !== undefined) {
+          mergedContent[prop] = parsedRetry[prop];
+        }
+      }
+      
+      // Add variant if applicable
       const retryContentWithVariant = context.targetVariant
-        ? { ...parsedRetry, variant: context.targetVariant }
-        : parsedRetry;
+        ? { ...mergedContent, variant: context.targetVariant }
+        : mergedContent;
       
       const finalYaml = yaml.dump(retryContentWithVariant, { 
         indent: 2, 
@@ -267,6 +296,7 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
               total: result.usage.total_tokens + (retryResult.usage?.total_tokens || 0),
             }
           : undefined,
+        warnings: warnings.length > 0 ? warnings : undefined,
       };
     }
 
@@ -279,17 +309,32 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       parsedContent = validation.parsed as Record<string, unknown>;
     }
     
-    // Validate but use original content - validation is for warnings only
+    // Validate and get cleaned content + unknown properties
     const schemaValidation = validateContentAgainstSchema(parsedContent, context.component, context.targetVariant);
-    if (!schemaValidation.valid) {
-      console.warn("Schema validation warnings:", schemaValidation.errors);
+    
+    // Build warnings list
+    const warnings: string[] = [];
+    if (schemaValidation.errors.length > 0) {
+      warnings.push(...schemaValidation.errors);
+    }
+    if (schemaValidation.unknownProps && schemaValidation.unknownProps.length > 0) {
+      for (const prop of schemaValidation.unknownProps) {
+        warnings.push(`Unknown property not in schema: "${prop}"`);
+      }
     }
     
-    // Use the AI's original content (not the overly-filtered cleaned version)
-    // The AI was given the full example so trust its output
+    // Merge cleaned properties with unknown properties (preserve AI output)
+    const mergedContent: Record<string, unknown> = { ...schemaValidation.cleaned };
+    for (const prop of schemaValidation.unknownProps || []) {
+      if (parsedContent[prop] !== undefined) {
+        mergedContent[prop] = parsedContent[prop];
+      }
+    }
+    
+    // Add variant if applicable
     const contentWithVariant = context.targetVariant
-      ? { ...parsedContent, variant: context.targetVariant }
-      : parsedContent;
+      ? { ...mergedContent, variant: context.targetVariant }
+      : mergedContent;
     
     const finalYaml = yaml.dump(contentWithVariant, { 
       indent: 2, 
@@ -309,6 +354,7 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
             total: result.usage.total_tokens,
           }
         : undefined,
+      warnings: warnings.length > 0 ? warnings : undefined,
     };
   }
 

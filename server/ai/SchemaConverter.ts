@@ -379,7 +379,7 @@ export function validateContentAgainstSchema(
   content: Record<string, unknown>,
   component: ComponentContext,
   targetVariant?: string
-): { valid: boolean; cleaned: Record<string, unknown>; errors: string[] } {
+): { valid: boolean; cleaned: Record<string, unknown>; errors: string[]; unknownProps: string[] } {
   const errors: string[] = [];
   const cleaned: Record<string, unknown> = {};
   const validProps = getValidProperties(component, targetVariant);
@@ -410,12 +410,13 @@ export function validateContentAgainstSchema(
     }
   }
 
-  // Warn about unknown properties
+  // Track unknown properties (don't remove them, just warn)
+  const unknownProps: string[] = [];
   for (const key of Object.keys(content)) {
     if (!validProps.includes(key)) {
-      console.warn(`Removing unknown property not in schema: ${key}`);
+      unknownProps.push(key);
     }
   }
 
-  return { valid: errors.length === 0, cleaned, errors };
+  return { valid: errors.length === 0, cleaned, errors, unknownProps };
 }
