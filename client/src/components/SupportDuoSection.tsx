@@ -11,6 +11,8 @@ interface BulletGroup {
   description?: string;
   image?: string;
   icon?: string;
+  badge?: string;
+  accent_color?: string;
   bullets?: { text: string; icon?: string }[];
   button?: {
     text: string;
@@ -103,15 +105,20 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8" data-testid="list-support-duo-groups">
               {data.bullet_groups.map((group, groupIndex) => {
                 const isDescExpanded = expandedGroups[`desc-${groupIndex}`] ?? false;
+                const accentColor = group.accent_color || "#0097CF";
                 return (
-                  <div key={groupIndex} className="space-y-3">
+                  <div 
+                    key={groupIndex} 
+                    className="space-y-3 pl-4 border-l-4"
+                    style={{ borderLeftColor: accentColor }}
+                  >
                     <div className="flex items-center gap-3">
                       {group.icon ? (
-                        <span className="text-primary flex-shrink-0">
-                          {getIcon(group.icon, "w-7 h-7")}
+                        <span className="flex-shrink-0" style={{ color: accentColor }}>
+                          {getIcon(group.icon, "", 32)}
                         </span>
                       ) : group.image ? (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full overflow-hidden">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
                           <img 
                             src={group.image} 
                             alt="Group icon" 
@@ -119,9 +126,19 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
                           />
                         </div>
                       ) : null}
-                      <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
-                        {group.title}
-                      </h4>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">
+                          {group.title}
+                        </h4>
+                        {group.badge && (
+                          <span 
+                            className="text-xs font-medium px-2 py-0.5 rounded-full text-white"
+                            style={{ backgroundColor: accentColor }}
+                          >
+                            {group.badge}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     {group.description && (
                       <>
