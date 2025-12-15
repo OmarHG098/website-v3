@@ -147,12 +147,7 @@ export function SectionEditorPanel({
     }
   }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate]);
 
-  // Apply: Save and keep editor open
-  const handleApply = useCallback(async () => {
-    await saveToServer();
-  }, [saveToServer]);
-
-  // Save: Save and close editor
+  // Save and close editor
   const handleSave = useCallback(async () => {
     const success = await saveToServer();
     if (success) {
@@ -223,14 +218,6 @@ export function SectionEditorPanel({
             data-testid="button-cancel-edit"
           >
             Cancel
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={handleApply}
-            disabled={!!parseError || isSaving || !hasChanges}
-            data-testid="button-apply-changes"
-          >
-            Apply
           </Button>
           <Button
             onClick={handleSave}
