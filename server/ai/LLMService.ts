@@ -19,20 +19,26 @@ export class LLMService implements ILLMClient {
   private client: OpenAI;
 
   private constructor() {
-    // Use Replit AI Integrations environment variables
-    const baseURL = process.env.AI_INTEGRATIONS_OPENAI_BASE_URL;
-    const apiKey = process.env.AI_INTEGRATIONS_OPENAI_API_KEY;
+    // Support both Replit AI Integrations and custom OpenAI API key
+    const replitBaseURL = process.env.AI_INTEGRATIONS_OPENAI_BASE_URL;
+    const replitApiKey = process.env.AI_INTEGRATIONS_OPENAI_API_KEY;
+    const customApiKey = process.env.OPENAI_API_KEY;
 
-    if (!baseURL || !apiKey) {
+    // Prefer custom API key, fall back to Replit integration
+    if (customApiKey) {
+      this.client = new OpenAI({
+        apiKey: customApiKey,
+      });
+    } else if (replitBaseURL && replitApiKey) {
+      this.client = new OpenAI({
+        baseURL: replitBaseURL,
+        apiKey: replitApiKey,
+      });
+    } else {
       throw new Error(
-        "OpenAI integration not configured. Please set up Replit AI Integrations."
+        "OpenAI not configured. Please set OPENAI_API_KEY in Secrets or set up Replit AI Integrations."
       );
     }
-
-    this.client = new OpenAI({
-      baseURL,
-      apiKey,
-    });
   }
 
   static getInstance(): LLMService {
