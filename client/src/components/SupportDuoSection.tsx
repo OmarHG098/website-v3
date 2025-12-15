@@ -105,7 +105,9 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8" data-testid="list-support-duo-groups">
               {data.bullet_groups.map((group, groupIndex) => {
                 const isDescExpanded = expandedGroups[`desc-${groupIndex}`] ?? false;
-                const accentColor = group.accent_color || "#0097CF";
+                const rawColor = group.accent_color || "primary";
+                const isHex = rawColor.startsWith("#");
+                const accentColor = isHex ? rawColor : `hsl(var(--${rawColor}))`;
                 return (
                   <div 
                     key={groupIndex} 

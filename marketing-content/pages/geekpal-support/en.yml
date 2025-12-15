@@ -96,7 +96,7 @@ sections:
       - title: "Slack Community"
         badge: "6,000+ Members"
         icon: "BrandSlack"
-        accent_color: "#0097CF"
+        accent_color: "primary"
         description: "Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!)."
         button:
           text: "Join Now"
@@ -104,7 +104,7 @@ sections:
           variant: "primary"
       - title: "4Geeks.com"
         icon: "Rigobot"
-        accent_color: "#0097CF"
+        accent_color: "primary"
         description: "Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go."
         button:
           text: "Visit Now"
