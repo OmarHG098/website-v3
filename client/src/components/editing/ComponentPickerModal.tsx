@@ -20,6 +20,7 @@ import {
   IconChartBar,
   IconTable,
   IconCheck,
+  IconWand,
 } from "@tabler/icons-react";
 import {
   Dialog,
@@ -39,7 +40,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { getDebugToken } from "@/hooks/useDebugAuth";
+import { useToast } from "@/hooks/use-toast";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -154,6 +163,9 @@ export default function ComponentPickerModal({
   const [selectedExample, setSelectedExample] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [useAiAdaptation, setUseAiAdaptation] = useState(false);
+  const [isAdapting, setIsAdapting] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (selectedComponent) {
@@ -229,10 +241,70 @@ export default function ComponentPickerModal({
     setIsAdding(true);
     
     try {
+      let finalContent = selectedExampleData.content;
+      
+      // If AI adaptation is enabled, call the AI adaptation API
+      if (useAiAdaptation) {
+        setIsAdapting(true);
+        try {
+          // Convert content type to API format
+          const apiContentType = contentType === "program" ? "programs" 
+            : contentType === "landing" ? "landings"
+            : contentType === "location" ? "locations"
+            : "pages";
+          
+          // Convert example content to YAML for AI adaptation
+          const sourceYaml = jsYaml.dump(selectedExampleData.content);
+          
+          const token = getDebugToken();
+          const adaptResponse = await fetch("/api/content/adapt-with-ai", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { "Authorization": `Token ${token}` } : {}),
+            },
+            body: JSON.stringify({
+              contentType: apiContentType,
+              contentSlug: slug,
+              targetComponent: selectedComponent.type,
+              targetVersion: selectedVersion,
+              sourceYaml,
+            }),
+          });
+          
+          if (adaptResponse.ok) {
+            const adaptResult = await adaptResponse.json();
+            // Parse the adapted YAML back to an object
+            const adaptedContent = jsYaml.load(adaptResult.adaptedYaml) as Record<string, unknown>;
+            finalContent = adaptedContent;
+            toast({
+              title: "Content adapted with AI",
+              description: `Used ${adaptResult.context.brand} brand context`,
+            });
+          } else {
+            const errorData = await adaptResponse.json().catch(() => ({}));
+            toast({
+              title: "AI adaptation failed",
+              description: errorData.error || "Using original example content",
+              variant: "destructive",
+            });
+          }
+        } catch (adaptError) {
+          console.error("AI adaptation error:", adaptError);
+          toast({
+            title: "AI adaptation error",
+            description: "Using original example content",
+            variant: "destructive",
+          });
+        } finally {
+          setIsAdapting(false);
+        }
+      }
+      
       const sectionToAdd = {
         type: selectedComponent.type,
         version: selectedVersion,
-        ...selectedExampleData.content,
+        ...finalContent,
       };
 
       const token = getDebugToken();
@@ -269,7 +341,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose, useAiAdaptation, toast]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
@@ -402,12 +474,40 @@ export default function ComponentPickerModal({
                 </div>
               </div>
               
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-2">
+                    <Switch 
+                      id="ai-adaptation"
+                      checked={useAiAdaptation}
+                      onCheckedChange={setUseAiAdaptation}
+                      data-testid="switch-ai-adaptation"
+                    />
+                    <Label 
+                      htmlFor="ai-adaptation" 
+                      className="flex items-center gap-1 text-sm cursor-pointer"
+                    >
+                      <IconWand className="h-4 w-4" />
+                      AI Adapt
+                    </Label>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p>Use AI to adapt the example content to match this page's context, brand voice, and target audience.</p>
+                </TooltipContent>
+              </Tooltip>
+              
               <Button 
                 onClick={handleAddSection}
-                disabled={!selectedExampleData || isAdding}
+                disabled={!selectedExampleData || isAdding || isAdapting}
                 data-testid="button-add-component"
               >
-                {isAdding ? (
+                {isAdapting ? (
+                  <>
+                    <IconWand className="h-4 w-4 mr-2 animate-pulse" />
+                    Adapting...
+                  </>
+                ) : isAdding ? (
                   <>
                     <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
                     Adding...
