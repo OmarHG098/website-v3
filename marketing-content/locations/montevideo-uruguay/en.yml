@@ -9,17 +9,6 @@ meta:
     - /montevideo
     - /campus/montevideo
     - /uy/montevideo
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 18 de Julio 1234
-        addressLocality: Montevideo
-        addressCountry: UY
 sections:
   - type: hero
     variant: singleColumn

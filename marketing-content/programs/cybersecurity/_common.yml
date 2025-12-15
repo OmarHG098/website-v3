@@ -1,0 +1,15 @@
+# Common properties shared across all variants
+slug: cybersecurity
+title: Cybersecurity
+
+meta:
+  robots: index, follow
+  og_image: /images/programs/cybersecurity-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+
+schema:
+  include:
+    - organization
+    - website
+    - courses:cybersecurity

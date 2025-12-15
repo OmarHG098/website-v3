@@ -1,6 +1,5 @@
 name: "Inline Compact"
 description: "Compact inline form for wide sections, fewer fields"
-variant: "inline"
 yaml: |
   - type: lead_form
     version: "1.0"

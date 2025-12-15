@@ -9,17 +9,6 @@ meta:
     - /quito
     - /campus/quito
     - /ec/quito
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Av. Amazonas N21-147
-        addressLocality: Quito
-        addressCountry: EC
 sections:
   - type: hero
     variant: singleColumn

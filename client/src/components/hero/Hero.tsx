@@ -3,6 +3,7 @@ import { HeroSingleColumn } from "./HeroSingleColumn";
 import { HeroShowcase } from "./HeroShowcase";
 import { HeroProductShowcase } from "./HeroProductShowcase";
 import { HeroSimpleTwoColumn } from "./HeroSimpleTwoColumn";
+import { HeroCourse } from "./HeroCourse";
 
 interface HeroProps {
   data: HeroSection;
@@ -18,9 +19,11 @@ export function Hero({ data }: HeroProps) {
       return <HeroProductShowcase data={data} />;
     case "simpleTwoColumn":
       return <HeroSimpleTwoColumn data={data} />;
+    case "course":
+      return <HeroCourse data={data} />;
     default:
       return null;
   }
 }
 
-export { HeroSingleColumn, HeroShowcase, HeroProductShowcase, HeroSimpleTwoColumn };
+export { HeroSingleColumn, HeroShowcase, HeroProductShowcase, HeroSimpleTwoColumn, HeroCourse };

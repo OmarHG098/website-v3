@@ -9,18 +9,6 @@ meta:
     - /berlin
     - /campus/berlin
     - /de/berlin
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Friedrichstraße 123
-        addressLocality: Berlin
-        postalCode: "10117"
-        addressCountry: DE
 sections:
   - type: hero
     variant: singleColumn

@@ -10,18 +10,6 @@ meta:
     - /munchen
     - /campus/munich
     - /de/munich
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Marienplatz 1
-        addressLocality: München
-        postalCode: "80331"
-        addressCountry: DE
 sections:
   - type: hero
     variant: singleColumn

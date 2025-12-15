@@ -9,19 +9,6 @@ meta:
     - /tampa
     - /campus/tampa
     - /en/tampa
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 100 N Tampa St
-        addressLocality: Tampa
-        addressRegion: FL
-        postalCode: "33602"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

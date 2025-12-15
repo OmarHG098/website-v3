@@ -10,19 +10,6 @@ meta:
     - /losangeles
     - /campus/los-angeles
     - /en/los-angeles
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: 315 W 9th St
-        addressLocality: Los Angeles
-        addressRegion: CA
-        postalCode: "90015"
-        addressCountry: US
 sections:
   - type: hero
     variant: singleColumn

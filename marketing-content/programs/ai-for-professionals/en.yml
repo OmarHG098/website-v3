@@ -1,326 +1,323 @@
-# AI for Professionals Career Program - English
-# This file defines all sections and content for the AI for Professionals career program page
-
-slug: "ai-for-professionals"
-title: "AI for Professionals"
-
 meta:
-  page_title: "AI for Professionals | 4Geeks Academy"
-  description: "Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
-  robots: "index, follow"
-  og_image: "/images/programs/ai-for-professionals-og.jpg"
-  priority: 0.9
-  change_frequency: "weekly"
+  page_title: AI for Professionals | 4Geeks Academy
+  description: Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.
   redirects:
-    - "/bootcamp/applied-ai"
-    - "/programs/ai-for-professionals"
-    - "/coding-bootcamp/applied-ai-course"
-
-schema:
-  include:
-    - "organization"
-    - "website"
-    - "courses:ai-for-professionals"
-
+    - /bootcamp/applied-ai
+    - /programs/ai-for-professionals
+    - /coding-bootcamp/applied-ai-course
 sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
-    badge: "Career Program"
-    title: "AI for Professionals"
-    subtitle: "Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
+    badge: Career Program
+    title: AI for Professionals
+    subtitle: Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.
     trust_bar:
       rating: "4.9"
-      rating_count: "1,294"
-      trusted_text: "Trusted by professionals worldwide"
+      rating_count: 1,294
+      trusted_text: Trusted by professionals worldwide
     cta_buttons:
-      - text: "Apply Now"
-        url: "/apply"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Download Syllabus"
-        url: "/syllabus/ai-for-professionals"
-        variant: "outline"
-        icon: "Download"
+      - text: Apply Now
+        url: /apply
+        variant: primary
+        icon: Rocket
+      - text: Download Syllabus
+        url: /syllabus/ai-for-professionals
+        variant: outline
+        icon: Download
     award_badges:
-      - name: "Top Online Bootcamp"
-        source: "Forbes"
+      - name: Top Online Bootcamp
+        source: Forbes
         year: "2024"
-      - name: "Best for Spanish Speakers"
-        source: "Fortune"
+      - name: Best for Spanish Speakers
+        source: Fortune
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - name: Top Coding Bootcamp
+        source: Newsweek
         year: "2024"
-      - name: "Best Coding Bootcamp"
-        source: "Course Report"
+      - name: Best Coding Bootcamp
+        source: Course Report
         year: "2025"
-
+  - type: numbered_steps
+    version: "1.0"
+    title: How the Refund Works
+    description: Our commitment to your success is backed by a simple, transparent refund policy. If you've put in the work and followed our proven methodology, but haven't landed a job within 180 days of graduation, you're eligible for a full tuition refund.
+    description_link:
+      text: Conditions Apply.
+      url: /terms-and-conditions
+    background: bg-muted/30
+    steps:
+      - icon: School
+        text: Complete our intensive coding bootcamp and graduate within 180 days of your program start date.
+      - icon: Briefcase
+        text: Actively apply for jobs using our career services, attend all coaching sessions, and follow our job search methodology.
+      - icon: Cash
+        text: If you haven't received a qualifying job offer within 180 days of graduation, request your full tuition refund.
   - type: syllabus
-    title: "Get Job-Ready with Our Syllabus!"
-    subtitle: "In just 6 weeks, learn how to leverage today's leading AI tools to optimize your workflow, improve output quality, and stay ahead in your career."
+    title: Get Job-Ready with Our Syllabus!
+    subtitle: In just 6 weeks, learn how to leverage today's leading AI tools to optimize your workflow, improve output quality, and stay ahead in your career.
     modules:
-      - title: "Introduction to AI"
-        description: "Understand key AI concepts and generative tools. Introduction to the fundamentals of AI with a special focus on Generative AI. Learn the structure of the course and the technologies used including ChatGPT, Claude, Gemini, and more."
-      - title: "Prompt Engineering"
-        description: "Learn to create effective prompts that make AI tools do exactly what you want. Explore text generation tools and start automating workflows without coding. Master prompt engineering techniques for professional outputs."
-      - title: "Open Source vs Cloud"
-        description: "Compare open-source and cloud-based AI tools. Learn to test different tools and maximize their potential through effective prompting. Understand when to use each type for optimal results."
-      - title: "Content Creation with AI"
-        description: "Explore tools for creating various types of content with AI, including images, videos, avatars, music, and more. Learn to generate professional visual content using tools like Midjourney and DALL-E."
-      - title: "Documents & Workflow Automation"
-        description: "Generate professional documents with AI tools, learn different document creation techniques, and discover markdown tricks to save hours of work. Use Zapier and similar tools to automate repetitive tasks."
-      - title: "Websites & Chatbots"
-        description: "Create professional websites for yourself or your clients using AI tools, without writing a single line of code. Build interactive chatbots and learn the fundamentals of AI agents and conversational interfaces."
-
+      - title: Introduction to AI
+        description: Understand key AI concepts and generative tools. Introduction to the fundamentals of AI with a special focus on Generative AI. Learn the structure of the course and the technologies used including ChatGPT, Claude, Gemini, and more.
+      - title: Prompt Engineering
+        description: Learn to create effective prompts that make AI tools do exactly what you want. Explore text generation tools and start automating workflows without coding. Master prompt engineering techniques for professional outputs.
+      - title: Open Source vs Cloud
+        description: Compare open-source and cloud-based AI tools. Learn to test different tools and maximize their potential through effective prompting. Understand when to use each type for optimal results.
+      - title: Content Creation with AI
+        description: Explore tools for creating various types of content with AI, including images, videos, avatars, music, and more. Learn to generate professional visual content using tools like Midjourney and DALL-E.
+      - title: Documents & Workflow Automation
+        description: Generate professional documents with AI tools, learn different document creation techniques, and discover markdown tricks to save hours of work. Use Zapier and similar tools to automate repetitive tasks.
+      - title: Websites & Chatbots
+        description: Create professional websites for yourself or your clients using AI tools, without writing a single line of code. Build interactive chatbots and learn the fundamentals of AI agents and conversational interfaces.
   - type: projects
-    title: "Learn by Building Real-Life Projects"
+    title: Learn by Building Real-Life Projects
     subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world professional setting. Here's a glimpse of what you'll be working on:"
     items:
-      - title: "Clone Your Personality in a Chatbot"
-        description: "Learn to create a chatbot that mimics your personality and responds like you using artificial intelligence tools. Perfect for customer service, personal branding, or creative projects."
-        image: "chatbot"
-        tags: ["AI", "Automation", "Chatbots"]
-        duration: "3 HOURS"
-        date: "26/03/2025"
-        difficulty: "medium"
-      - title: "Prompt Book AI"
-        description: "Create an effective Prompt Book to document your creative process while using generative AI tools. Learn how to organize prompts, reflect on iterations, and present your journey in a professional way."
-        image: "prompt-book-ai"
-        tags: ["KREA.AI", "ChatGPT", "Gamma AI", "Runway", "Hostinger"]
-        duration: "7 HOURS"
-        date: "28/11/2024"
-        difficulty: "medium"
-      - title: "AI-Powered Professional Website"
-        description: "Create a complete professional website using AI tools without writing code. Learn to generate copy, images, and deploy a polished site ready for clients."
-        image: "website"
-        tags: ["No-Code", "Web"]
-        duration: "5 HOURS"
-        date: "15/04/2025"
-        difficulty: "easy"
-
+      - title: Clone Your Personality in a Chatbot
+        description: Learn to create a chatbot that mimics your personality and responds like you using artificial intelligence tools. Perfect for customer service, personal branding, or creative projects.
+        image: chatbot
+        tags:
+          - AI
+          - Automation
+          - Chatbots
+        duration: 3 HOURS
+        date: 26/03/2025
+        difficulty: medium
+      - title: Prompt Book AI
+        description: Create an effective Prompt Book to document your creative process while using generative AI tools. Learn how to organize prompts, reflect on iterations, and present your journey in a professional way.
+        image: prompt-book-ai
+        tags:
+          - KREA.AI
+          - ChatGPT
+          - Gamma AI
+          - Runway
+          - Hostinger
+        duration: 7 HOURS
+        date: 28/11/2024
+        difficulty: medium
+      - title: AI-Powered Professional Website
+        description: Create a complete professional website using AI tools without writing code. Learn to generate copy, images, and deploy a polished site ready for clients.
+        image: website
+        tags:
+          - No-Code
+          - Web
+        duration: 5 HOURS
+        date: 15/04/2025
+        difficulty: easy
   - type: ai_learning
     version: "1.0"
-    badge: "Why 4Geeks?"
-    title: "Why Learn with 4Geeks?"
-    description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
-    video_url: "https://www.youtube.com/watch?v=0yNgqAIDSXQ"
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
+    video_url: https://www.youtube.com/watch?v=0yNgqAIDSXQ
     features:
-      - icon: "Robot"
-        title: "Learn with AI"
-        description: "Our AI reviews your work to give you instant feedback, helps with exercises, and more!"
-      - icon: "Headset"
-        title: "One-on-one mentoring sessions"
-        description: "Access unlimited mentorship sessions with our experts whenever you need guidance."
-      - icon: "Users"
-        title: "Learn with the community"
-        description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your work to give you instant feedback, helps with exercises, and more!
+      - icon: Headset
+        title: One-on-one mentoring sessions
+        description: Access unlimited mentorship sessions with our experts whenever you need guidance.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     highlight:
-      title: "Meet Rigobot, Our AI Tutor"
-      description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any questions and equipped with automated feedback, allowing for an interactive learning experience anytime!"
+      title: Meet Rigobot, Our AI Tutor
+      description: Rigobot is our custom-designed AI tutor for self-learners, ready to address any questions and equipped with automated feedback, allowing for an interactive learning experience anytime!
       cta:
-        text: "Start learning now!"
-        url: "/apply"
-        variant: "primary"
-
+        text: Start learning now!
+        url: /apply
+        variant: primary
   - type: certificate
     version: "1.0"
-    title: "Certificate & Career Network"
-    description: "Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide."
+    title: Certificate & Career Network
+    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
     stats:
-      - value: "4,000+"
-        label: "Graduates"
-      - value: "84%"
-        label: "Job Placement"
-      - value: "4.9/5"
-        label: "Student Rating"
-      - value: "56%"
-        label: "Wage Premium"
+      - value: 4,000+
+        label: Graduates
+      - value: 84%
+        label: Job Placement
+      - value: 4.9/5
+        label: Student Rating
+      - value: 56%
+        label: Wage Premium
     benefits:
-      - text: "Recognized by international institutions"
-      - text: "Access to 5,000+ hiring partners"
-      - text: "Lifetime career support"
+      - text: Recognized by international institutions
+      - text: Access to 5,000+ hiring partners
+      - text: Lifetime career support
     card:
-      title: "AI for Professionals"
-      subtitle: "4Geeks Academy Certificate"
-      program_name: "Applied AI Professional"
-
+      title: AI for Professionals
+      subtitle: 4Geeks Academy Certificate
+      program_name: Applied AI Professional
   - type: why_learn_ai
-    title: "Why Should I Learn AI for My Career?"
-    subtitle: "AI Isn't Optional Anymore—It's a Core Workplace Skill"
-    description: "Workers with AI skills earn an average 56% wage premium globally. AI use at work has nearly doubled in two years, rising from 21% to 40% of U.S. employees. Join the professionals who aren't just keeping up, but taking the lead with AI. Whether you're in marketing, real estate, creative work, or any other field—AI skills will set you apart."
+    title: Why Should I Learn AI for My Career?
+    subtitle: AI Isn't Optional Anymore—It's a Core Workplace Skill
+    description: Workers with AI skills earn an average 56% wage premium globally. AI use at work has nearly doubled in two years, rising from 21% to 40% of U.S. employees. Join the professionals who aren't just keeping up, but taking the lead with AI. Whether you're in marketing, real estate, creative work, or any other field—AI skills will set you apart.
     cta:
-      text: "Join now!"
-      url: "/apply"
-      variant: "primary"
-
+      text: Join now!
+      url: /apply
+      variant: primary
   - type: pricing
-    title: "Get access to all of our learning database, courses, and services"
-    subtitle: "Earn a new skills every 30 min, never get stuck or lost again."
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
     monthly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "38.99"
-      period: "mo"
+      period: mo
       original_price: "59.99"
     yearly:
-      discount_badge: "35% OFF"
+      discount_badge: 35% OFF
       price: "311.99"
-      period: "yr"
+      period: yr
       original_price: "479.99"
-      savings_badge: "Save 3 months"
+      savings_badge: Save 3 months
     tech_icons:
-      - "openai"
-      - "brain"
-      - "robot"
-      - "sparkles"
-      - "zap"
-      - "messageSquare"
-    features_title: "Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies"
+      - openai
+      - brain
+      - robot
+      - sparkles
+      - zap
+      - messageSquare
+    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
     features:
-      - icon: "certificate"
-        text: "Build your portfolio with hundreds of real-world projects."
-      - icon: "cloud"
-        text: "Thousands of and cloud-based coding challenges (no setup needed)."
-      - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
+      - icon: certificate
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of and cloud-based coding challenges (no setup needed).
+      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
         use_rigobot_icon: true
-      - icon: "certificate"
-        text: "Course certificates"
-      - icon: "certificate"
-        text: "Earn certificates from a USA certified school by the florida department of education."
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school by the florida department of education.
     cta:
-      text: "Get plan"
-      url: "/signup"
-      variant: "primary"
-
+      text: Get plan
+      url: /signup
+      variant: primary
   - type: whos_hiring
-    title: "Who's Hiring Our Graduates?"
-    subtitle: "Our alumni work at top companies around the world"
-    description: "From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. 84% of our graduates land jobs within 6 months of graduation thanks to their skills and our personalized career support."
+    title: Who's Hiring Our Graduates?
+    subtitle: Our alumni work at top companies around the world
+    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. 84% of our graduates land jobs within 6 months of graduation thanks to their skills and our personalized career support.
     logos:
-      - src: "/attached_assets/microsoft_1764719829995.png"
-        alt: "Microsoft"
-      - src: "/attached_assets/google-developers_1764719904190.png"
-        alt: "Google Developers"
-      - src: "/attached_assets/boats_1764719939123.jpg"
-        alt: "Boats Group"
-      - src: "/attached_assets/meta-logo_1764719959855.png"
-        alt: "Meta"
-      - src: "/attached_assets/ebay_1764719967118.png"
-        alt: "eBay"
-      - src: "/attached_assets/natgeo_1764719975443.png"
-        alt: "National Geographic"
-      - src: "/attached_assets/evernote_1764719981901.png"
-        alt: "Evernote"
-      - src: "/attached_assets/telefonica_1764719987250.png"
-        alt: "Telefonica"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
-      - src: "/attached_assets/uber_1764719999685.png"
-        alt: "Uber"
-      - src: "/attached_assets/Neo9_1764720006347.png"
-        alt: "Neo9"
-      - src: "/attached_assets/jooble_1764720010702.png"
-        alt: "Jooble"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
-      - src: "/attached_assets/ultimate_1764720025067.png"
-        alt: "Ultimate"
-      - src: "/attached_assets/tcg_1764720028893.png"
-        alt: "TCG"
-      - src: "/attached_assets/razz_1764720036807.png"
-        alt: "Razz"
-      - src: "/attached_assets/overseas_1764720045331.png"
-        alt: "Overseas"
-      - src: "/attached_assets/ds9_1764720051158.png"
-        alt: "DS9"
-      - src: "/attached_assets/coinet_1764720056569.jpg"
-        alt: "Coinet"
-      - src: "/attached_assets/strata_1764720063140.png"
-        alt: "Strata"
-      - src: "/attached_assets/mdc_ce_1764720089793.png"
-        alt: "MDC"
-      - src: "/attached_assets/beacon_council_1764720100166.jpg"
-        alt: "Beacon Council"
-      - src: "/attached_assets/blackstone_1764720124773.png"
-        alt: "Blackstone"
-      - src: "/attached_assets/cemex_1764720131666.png"
-        alt: "Cemex"
-
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: TCG
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: MDC
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
   - type: testimonials
-    title: "Your New Career Starts Here"
-    subtitle: "See what our graduates have to say about their experience"
+    title: Your New Career Starts Here
+    subtitle: See what our graduates have to say about their experience
     rating_summary:
       average: "4.9"
-      count: "1,294"
+      count: 1,294
     items:
-      - name: "Carlos Mendez"
-        role: "Marketing Director"
-        company: "Tech Startup"
+      - name: Carlos Mendez
+        role: Marketing Director
+        company: Tech Startup
         rating: 5
-        comment: "This AI course completely transformed how I work. I now automate repetitive tasks and create content 3x faster. The ROI was immediate."
-        outcome: "3x productivity increase"
-      - name: "Sarah Johnson"
-        role: "Real Estate Agent"
-        company: "RE/MAX"
+        comment: This AI course completely transformed how I work. I now automate repetitive tasks and create content 3x faster. The ROI was immediate.
+        outcome: 3x productivity increase
+      - name: Sarah Johnson
+        role: Real Estate Agent
+        company: RE/MAX
         rating: 5
-        comment: "I was skeptical about AI, but this course showed me practical applications for my business. Now I use AI for market analysis and client communications."
-        outcome: "50% time savings"
-      - name: "Michael Chen"
-        role: "Product Manager"
-        company: "Fortune 500"
+        comment: I was skeptical about AI, but this course showed me practical applications for my business. Now I use AI for market analysis and client communications.
+        outcome: 50% time savings
+      - name: Michael Chen
+        role: Product Manager
+        company: Fortune 500
         rating: 5
-        comment: "The hands-on approach was exactly what I needed. No fluff, just practical skills I could apply the next day at work."
-        outcome: "Promoted within 3 months"
-      - name: "Emily Rodriguez"
-        role: "Content Creator"
-        company: "Freelance"
+        comment: The hands-on approach was exactly what I needed. No fluff, just practical skills I could apply the next day at work.
+        outcome: Promoted within 3 months
+      - name: Emily Rodriguez
+        role: Content Creator
+        company: Freelance
         rating: 5
-        comment: "From generating ideas to creating visuals, AI has become my creative partner. This course taught me how to leverage it effectively."
-        outcome: "Doubled client capacity"
-      - name: "David Kim"
-        role: "Financial Analyst"
-        company: "Investment Firm"
+        comment: From generating ideas to creating visuals, AI has become my creative partner. This course taught me how to leverage it effectively.
+        outcome: Doubled client capacity
+      - name: David Kim
+        role: Financial Analyst
+        company: Investment Firm
         rating: 5
-        comment: "AI has revolutionized how I analyze data and create reports. What used to take days now takes hours. Incredible value."
-        outcome: "+60% efficiency"
-      - name: "Jessica Martinez"
-        role: "HR Manager"
-        company: "Enterprise Corp"
+        comment: AI has revolutionized how I analyze data and create reports. What used to take days now takes hours. Incredible value.
+        outcome: +60% efficiency
+      - name: Jessica Martinez
+        role: HR Manager
+        company: Enterprise Corp
         rating: 4
-        comment: "Great course with practical applications for HR. Now I use AI for job descriptions, candidate screening, and employee communications."
-        outcome: "Streamlined hiring process"
-
+        comment: Great course with practical applications for HR. Now I use AI for job descriptions, candidate screening, and employee communications.
+        outcome: Streamlined hiring process
   - type: faq
     version: "1.0"
-    title: "FAQ"
+    title: FAQ
     items:
-      - question: "Do I need any technical background?"
-        answer: "No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there."
-      - question: "What tools will I learn to use?"
-        answer: "You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier."
-      - question: "How are the live classes structured?"
-        answer: "Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time."
-      - question: "What kind of support is available?"
-        answer: "You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot for instant feedback, and a supportive community of fellow professionals learning alongside you."
-      - question: "Is the certificate recognized by employers?"
-        answer: "Yes! Our certificate is recognized by employers worldwide. 4Geeks Academy is licensed by the Florida Department of Education and has been featured by Forbes, Newsweek, and Course Report as one of the top bootcamps."
+      - question: Do I need any technical background?
+        answer: No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there.
+      - question: What tools will I learn to use?
+        answer: You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier.
+      - question: How are the live classes structured?
+        answer: Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time.
+      - question: What kind of support is available?
+        answer: You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot for instant feedback, and a supportive community of fellow professionals learning alongside you.
+      - question: Is the certificate recognized by employers?
+        answer: Yes! Our certificate is recognized by employers worldwide. 4Geeks Academy is licensed by the Florida Department of Education and has been featured by Forbes, Newsweek, and Course Report as one of the top bootcamps.
     cta:
-      text: "Still have questions?"
-      button_text: "Talk to an Advisor"
-      button_url: "/contact"
-
+      text: Still have questions?
+      button_text: Talk to an Advisor
+      button_url: /contact
   - type: cta_banner
     version: "1.0"
-    title: "Ready to Lead with AI?"
-    subtitle: "Join thousands of professionals who have transformed their careers with 4Geeks."
+    title: Ready to Lead with AI?
+    subtitle: Join thousands of professionals who have transformed their careers with 4Geeks.
     buttons:
-      - text: "Start Learning Now"
-        url: "/apply"
-        variant: "secondary"
-      - text: "Talk to an Advisor"
-        url: "/contact"
-        variant: "outline"
-
+      - text: Start Learning Now
+        url: /apply
+        variant: secondary
+      - text: Talk to an Advisor
+        url: /contact
+        variant: outline
   - type: footer
     version: "1.0"
-    copyright_text: "2024 4Geeks. All rights reserved."
+    copyright_text: 2024 4Geeks. All rights reserved.

@@ -1,0 +1,35 @@
+slug: panamacity-panama
+name: Panama City
+city: Panama City
+country: Panama
+country_code: PA
+latitude: 8.9824
+longitude: -79.5199
+region: latam
+default_language: es
+timezone: America/Panama
+visibility: listed
+phone: +507 123 4567
+address: Calle 50, Panama City
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle 50
+        addressLocality: Ciudad de Panamá
+        addressCountry: PA

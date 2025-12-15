@@ -1,0 +1,36 @@
+slug: madrid-spain
+name: Madrid
+city: Madrid
+country: Spain
+country_code: ES
+latitude: 40.4168
+longitude: -3.7038
+region: europe
+default_language: es
+timezone: Europe/Madrid
+visibility: listed
+phone: +34 910 86 69 83
+address: Calle de Alcalá 54, 28014 Madrid
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Calle de Alcalá 54
+        addressLocality: Madrid
+        postalCode: "28014"
+        addressCountry: ES

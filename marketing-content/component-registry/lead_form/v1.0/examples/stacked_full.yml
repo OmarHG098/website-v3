@@ -1,6 +1,5 @@
 name: "Stacked Full Form"
 description: "Complete form with all visible fields in stacked layout"
-variant: "stacked"
 yaml: |
   - type: lead_form
     version: "1.0"

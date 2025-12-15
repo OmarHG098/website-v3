@@ -1,9 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import * as yaml from "js-yaml";
 import * as fs from "fs";
 import * as path from "path";
+import * as yaml from "js-yaml";
 import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
 import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
 import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
@@ -15,7 +15,8 @@ import {
   loadSchema, 
   loadExamples, 
   createNewVersion,
-  getExampleFilePath 
+  getExampleFilePath,
+  saveExample,
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
 import {
@@ -25,241 +26,143 @@ import {
   setExperimentCookie,
   buildVisitorContext,
 } from "./experiments";
+import { loadImageRegistry } from "./image-registry";
+import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
+import { getValidationService } from "../scripts/validation/service";
 
 const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
-const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "programs");
-const LANDINGS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "landings");
-const LOCATIONS_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "locations");
-const PAGES_CONTENT_PATH = path.join(process.cwd(), "marketing-content", "pages");
-
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
-  try {
-    const filePath = path.join(MARKETING_CONTENT_PATH, slug, `${locale}.yml`);
-
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
-
-    const result = careerProgramSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading career program ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "programs",
+    slug,
+    schema: careerProgramSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listCareerPrograms(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(MARKETING_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("programs");
+  const programs: Array<{ slug: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const program = loadCareerProgram(slug, locale);
+    if (program) {
+      programs.push({ slug: program.slug, title: program.title });
     }
-
-    const programs: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(MARKETING_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const programPath = path.join(MARKETING_CONTENT_PATH, dir);
-      if (fs.statSync(programPath).isDirectory()) {
-        const program = loadCareerProgram(dir, locale);
-        if (program) {
-          programs.push({ slug: program.slug, title: program.title });
-        }
-      }
-    }
-
-    return programs;
-  } catch (error) {
-    console.error("Error listing career programs:", error);
-    return [];
   }
+  
+  return programs;
 }
 
-function loadLandingPage(slug: string, locale: string): LandingPage | null {
-  try {
-    const filePath = path.join(LANDINGS_CONTENT_PATH, slug, `${locale}.yml`);
-
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = yaml.load(fileContent);
-
-    const result = landingPageSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for landing ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading landing page ${slug}/${locale}:`, error);
+function loadLandingPage(slug: string): LandingPage | null {
+  const result = loadContent({
+    contentType: "landings",
+    slug,
+    schema: landingPageSchema,
+    localeOrVariant: "promoted",
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
-function listLandingPages(locale: string): Array<{ slug: string; title: string }> {
-  try {
-    if (!fs.existsSync(LANDINGS_CONTENT_PATH)) {
-      return [];
+function listLandingPages(): Array<{ slug: string; title: string; locale: string }> {
+  const slugs = listContentSlugs("landings");
+  const landings: Array<{ slug: string; title: string; locale: string }> = [];
+  
+  for (const slug of slugs) {
+    const landing = loadLandingPage(slug);
+    if (landing) {
+      const commonData = loadCommonData("landings", slug);
+      const locale = (commonData?.locale as string) || "en";
+      landings.push({ slug: landing.slug, title: landing.title, locale });
     }
-
-    const landings: Array<{ slug: string; title: string }> = [];
-    const dirs = fs.readdirSync(LANDINGS_CONTENT_PATH);
-
-    for (const dir of dirs) {
-      const landingPath = path.join(LANDINGS_CONTENT_PATH, dir);
-      if (fs.statSync(landingPath).isDirectory()) {
-        const landing = loadLandingPage(dir, locale);
-        if (landing) {
-          landings.push({ slug: landing.slug, title: landing.title });
-        }
-      }
-    }
-
-    return landings;
-  } catch (error) {
-    console.error("Error listing landing pages:", error);
-    return [];
   }
+  
+  return landings;
 }
 
 function loadLocationPage(slug: string, locale: string): LocationPage | null {
-  try {
-    const locationDir = path.join(LOCATIONS_CONTENT_PATH, slug);
-    const campusPath = path.join(locationDir, "campus.yml");
-    const localePath = path.join(locationDir, `${locale}.yml`);
-
-    if (!fs.existsSync(campusPath) || !fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const campusContent = fs.readFileSync(campusPath, "utf8");
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    
-    const campusData = yaml.load(campusContent) as Record<string, unknown>;
-    const localeData = yaml.load(localeContent) as Record<string, unknown>;
-
-    const mergedData = { ...campusData, ...localeData };
-
-    const result = locationPageSchema.safeParse(mergedData);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for location ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    // Automatically inject organization schema as parentOrganization for all locations
-    const locationData = result.data;
-    if (!locationData.schema) {
-      locationData.schema = { include: ["organization"] };
-    } else if (!locationData.schema.include) {
-      locationData.schema.include = ["organization"];
-    } else if (!locationData.schema.include.includes("organization")) {
-      locationData.schema.include = ["organization", ...locationData.schema.include];
-    }
-
-    return locationData;
-  } catch (error) {
-    console.error(`Error loading location page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "locations",
+    slug,
+    schema: locationPageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listLocationPages(locale: string): Array<{ slug: string; name: string; city: string; country: string; region: string }> {
-  try {
-    if (!fs.existsSync(LOCATIONS_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("locations");
+  const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
+  
+  for (const slug of slugs) {
+    const location = loadLocationPage(slug, locale);
+    if (location && location.visibility === "listed") {
+      locations.push({
+        slug: location.slug,
+        name: location.name,
+        city: location.city,
+        country: location.country,
+        region: location.region,
+      });
     }
-
-    const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
-    const entries = fs.readdirSync(LOCATIONS_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const location = loadLocationPage(slug, locale);
-        if (location && location.visibility === "listed") {
-          locations.push({
-            slug: location.slug,
-            name: location.name,
-            city: location.city,
-            country: location.country,
-            region: location.region,
-          });
-        }
-      }
-    }
-
-    return locations;
-  } catch (error) {
-    console.error("Error listing location pages:", error);
-    return [];
   }
+  
+  return locations;
 }
 
 // Template Pages (marketing-content/pages/)
 function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
-  try {
-    const pageDir = path.join(PAGES_CONTENT_PATH, slug);
-    const localePath = path.join(pageDir, `${locale}.yml`);
-
-    if (!fs.existsSync(localePath)) {
-      return null;
-    }
-
-    const localeContent = fs.readFileSync(localePath, "utf8");
-    const data = yaml.load(localeContent) as Record<string, unknown>;
-
-    const result = templatePageSchema.safeParse(data);
-    if (!result.success) {
-      console.error(`Invalid YAML structure for template page ${slug}/${locale}:`, result.error);
-      return null;
-    }
-
-    return result.data;
-  } catch (error) {
-    console.error(`Error loading template page ${slug}/${locale}:`, error);
+  const result = loadContent({
+    contentType: "pages",
+    slug,
+    schema: templatePageSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
     return null;
   }
+  
+  return result.data;
 }
 
 function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
-  try {
-    if (!fs.existsSync(PAGES_CONTENT_PATH)) {
-      return [];
+  const slugs = listContentSlugs("pages");
+  const pages: Array<{ slug: string; template: string; title: string }> = [];
+  
+  for (const slug of slugs) {
+    const page = loadTemplatePage(slug, locale);
+    if (page) {
+      pages.push({
+        slug: page.slug,
+        template: page.template,
+        title: page.title,
+      });
     }
-
-    const pages: Array<{ slug: string; template: string; title: string }> = [];
-    const entries = fs.readdirSync(PAGES_CONTENT_PATH, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const page = loadTemplatePage(slug, locale);
-        if (page) {
-          pages.push({
-            slug: page.slug,
-            template: page.template,
-            title: page.title,
-          });
-        }
-      }
-    }
-
-    return pages;
-  } catch (error) {
-    console.error("Error listing template pages:", error);
-    return [];
   }
+  
+  return pages;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -393,24 +296,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Landing pages API
-  app.get("/api/landings", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
-    const landings = listLandingPages(locale);
+  app.get("/api/landings", (_req, res) => {
+    const landings = listLandingPages();
     res.json(landings);
   });
 
   app.get("/api/landings/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const forceVariant = req.query.force_variant as string | undefined;
+    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
 
-    const landing = loadLandingPage(slug, locale);
+    // Get locale from _common.yml
+    const commonData = loadCommonData("landings", slug);
+    const locale = (commonData?.locale as string) || "en";
+
+    let landing: LandingPage | null = null;
+    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+
+    // If force_variant is provided, load that variant directly (for preview)
+    if (forceVariant && forceVersion !== undefined) {
+      const experimentManager = getExperimentManager();
+      const forcedContent = experimentManager.getVariantContent(slug, {
+        experiment_slug: "preview",
+        variant_slug: forceVariant,
+        variant_version: forceVersion,
+        assigned_at: Date.now(),
+      }, locale, "landings");
+      if (forcedContent) {
+        landing = forcedContent as LandingPage;
+        experimentInfo = {
+          experiment: "preview",
+          variant: forceVariant,
+          version: forceVersion,
+        };
+      }
+    }
+
+    // Fall back to default content
+    if (!landing) {
+      landing = loadLandingPage(slug);
+    }
 
     if (!landing) {
       res.status(404).json({ error: "Landing page not found" });
       return;
     }
 
-    res.json(landing);
+    res.json({ ...landing, locale, _experiment: experimentInfo });
   });
 
   // Locations API
@@ -588,6 +520,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Experiment cache cleared" });
   });
 
+  // Get available variants for a content type and slug
+  app.get("/api/variants/:contentType/:slug", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    const result = experimentManager.getAvailableVariants(
+      contentType as "programs" | "pages" | "landings" | "locations",
+      slug
+    );
+    
+    if (!result) {
+      res.status(404).json({ error: "Content folder not found" });
+      return;
+    }
+    
+    res.json(result);
+  });
+
   // Get experiments for a specific content type and slug
   app.get("/api/experiments/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
@@ -725,6 +681,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create new experiment
+  app.post("/api/experiments/:contentType/:slug/create", (req, res) => {
+    const { contentType, slug } = req.params;
+    
+    const validTypes = ["programs", "pages", "landings", "locations"];
+    if (!validTypes.includes(contentType)) {
+      res.status(400).json({ error: "Invalid content type", validTypes });
+      return;
+    }
+    
+    const {
+      experimentName,
+      experimentSlug,
+      variantA,
+      variantB,
+      newVariant,
+      allocationA,
+      maxVisitors,
+      targeting,
+    } = req.body;
+    
+    // Basic validation
+    if (!experimentName || !experimentSlug || !variantA) {
+      res.status(400).json({ 
+        error: "Missing required fields: experimentName, experimentSlug, variantA" 
+      });
+      return;
+    }
+    
+    if (!variantB && !newVariant) {
+      res.status(400).json({ 
+        error: "Either variantB or newVariant must be provided" 
+      });
+      return;
+    }
+    
+    const experimentManager = getExperimentManager();
+    try {
+      const result = experimentManager.createExperiment(
+        contentType as "programs" | "pages" | "landings" | "locations",
+        slug,
+        {
+          experimentName,
+          experimentSlug,
+          variantA,
+          variantB: variantB || null,
+          newVariant: newVariant || null,
+          allocationA: allocationA ?? 50,
+          maxVisitors: maxVisitors ?? 1000,
+          targeting: targeting || {},
+        }
+      );
+      
+      res.json({
+        ...result,
+        redirectPath: `/private/${contentType}/${slug}/experiment/${experimentSlug}`,
+      });
+    } catch (error) {
+      res.status(400).json({ 
+        error: error instanceof Error ? error.message : "Failed to create experiment" 
+      });
+    }
+  });
+
   // Component Registry API endpoints
   app.get("/api/component-registry", (req, res) => {
     const overview = getRegistryOverview();
@@ -741,6 +761,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(info);
+  });
+
+  app.get("/api/component-registry/:componentType/validate", (req, res) => {
+    const { componentType } = req.params;
+    const version = req.query.version as string | undefined;
+    
+    // Dynamic import to avoid circular dependencies
+    import("../scripts/utils/validateComponent").then(({ validateComponent }) => {
+      const result = validateComponent(componentType, version);
+      res.json(result);
+    }).catch((error) => {
+      res.status(500).json({ error: "Failed to load validation module", details: String(error) });
+    });
   });
 
   app.get("/api/component-registry/:componentType/versions", (req, res) => {
@@ -792,40 +825,97 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, newVersion: result.newVersion });
   });
 
+  app.post("/api/component-registry/:componentType/:version/save-example", (req, res) => {
+    const { componentType, version } = req.params;
+    const { exampleName, yamlContent } = req.body;
+    
+    if (!exampleName || !yamlContent) {
+      res.status(400).json({ error: "exampleName and yamlContent required" });
+      return;
+    }
+    
+    const result = saveExample(componentType, version, exampleName, yamlContent);
+    
+    if (!result.success) {
+      res.status(400).json({ error: result.error });
+      return;
+    }
+    
+    res.json({ success: true });
+  });
+
   // Content editing API
   app.post("/api/content/edit", async (req, res) => {
     try {
-      // Validate token and capabilities
+      // In development mode, allow without token (using X-Debug-Token or no auth)
+      const isDevelopment = process.env.NODE_ENV !== "production";
       const authHeader = req.headers.authorization;
-      if (!authHeader?.startsWith("Token ")) {
-        res.status(401).json({ error: "Authorization required" });
+      const debugToken = req.headers['x-debug-token'] as string | undefined;
+      
+      // Get token from Authorization header or X-Debug-Token
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+      
+      // In production, require valid token
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        
+        // Verify token has edit capabilities
+        const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
+          method: "GET",
+          headers: {
+            "Authorization": `Token ${token}`,
+            "Academy": "4",
+          },
+        });
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "Insufficient permissions" });
+          return;
+        }
+      }
+      
+      // Support both formats:
+      // 1. Original: { contentType, slug, locale, operations: [...] }
+      // 2. Simplified: { contentType, slug, locale, operation, sectionIndex, sectionData, variant, version }
+      const { contentType, slug, locale, operations, operation, sectionIndex, sectionData, variant, version } = req.body;
+      
+      if (!contentType || !slug || !locale) {
+        res.status(400).json({ error: "Missing required fields: contentType, slug, locale" });
         return;
       }
       
-      const token = authHeader.slice(6);
+      // Build operations array if using simplified format (only for update_section)
+      let finalOperations = operations;
+      if (!operations && operation === 'update_section') {
+        if (sectionIndex === undefined || sectionData === undefined || sectionData === null) {
+          res.status(400).json({ error: "update_section requires sectionIndex and sectionData" });
+          return;
+        }
+        finalOperations = [{
+          action: 'update_section',
+          index: sectionIndex,
+          section: sectionData,
+        }];
+      }
       
-      // Verify token has edit capabilities
-      const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
-        method: "GET",
-        headers: {
-          "Authorization": `Token ${token}`,
-          "Academy": "4",
-        },
-      });
-      
-      if (capResponse.status !== 200) {
-        res.status(403).json({ error: "Insufficient permissions" });
+      if (!finalOperations || !Array.isArray(finalOperations) || finalOperations.length === 0) {
+        res.status(400).json({ error: "Missing operations" });
         return;
       }
       
-      const { contentType, slug, locale, operations } = req.body;
+      // Only pass variant/version if both are meaningful (not "default" or undefined)
+      const effectiveVariant = variant && variant !== 'default' ? variant : undefined;
+      const effectiveVersion = effectiveVariant && version !== undefined ? version : undefined;
       
-      if (!contentType || !slug || !locale || !operations) {
-        res.status(400).json({ error: "Missing required fields" });
-        return;
-      }
-      
-      const result = await editContent({ contentType, slug, locale, operations });
+      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant: effectiveVariant, version: effectiveVersion });
       
       if (result.success) {
         // Clear relevant caches
@@ -1009,6 +1099,202 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Lead submission error:", error);
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Image Registry API endpoint
+  app.get("/api/image-registry", (req, res) => {
+    const registry = loadImageRegistry();
+    if (!registry) {
+      res.status(500).json({ error: "Failed to load image registry" });
+      return;
+    }
+    res.json(registry);
+  });
+
+  // ============================================
+  // Validation API Endpoints
+  // ============================================
+
+  // List available validators
+  app.get("/api/validation/validators", (_req, res) => {
+    const service = getValidationService();
+    const validators = service.getAvailableValidators();
+    res.json({
+      validators,
+      total: validators.length,
+    });
+  });
+
+  // Run all or specific validators
+  app.post("/api/validation/run", async (req, res) => {
+    try {
+      const { validators: validatorNames, includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runValidators({
+        validators: validatorNames,
+        includeArtifacts: includeArtifacts ?? false,
+      });
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Run a single validator
+  app.post("/api/validation/run/:name", async (req, res) => {
+    try {
+      const { name } = req.params;
+      const { includeArtifacts } = req.body;
+      
+      const service = getValidationService();
+      
+      // Clear previous context to get fresh data
+      service.clearContext();
+      await service.buildContext();
+      
+      const result = await service.runSingleValidator(name, includeArtifacts ?? false);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Validation error:", error);
+      res.status(500).json({ 
+        error: "Validation failed",
+        message: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Get validation context info (for debugging)
+  app.get("/api/validation/context", async (_req, res) => {
+    try {
+      const service = getValidationService();
+      let context = service.getContext();
+      
+      if (!context) {
+        await service.buildContext();
+        context = service.getContext();
+      }
+      
+      if (!context) {
+        res.status(500).json({ error: "Failed to build context" });
+        return;
+      }
+      
+      // contentFiles is a flat array - count by type
+      const contentFiles = context.contentFiles;
+      const typeCounts = {
+        programs: contentFiles.filter(f => f.type === "program").length,
+        landings: contentFiles.filter(f => f.type === "landing").length,
+        locations: contentFiles.filter(f => f.type === "location").length,
+        pages: contentFiles.filter(f => f.type === "page").length,
+      };
+      
+      res.json({
+        contentFiles: typeCounts,
+        totalFiles: contentFiles.length,
+        validUrls: context.validUrls.size,
+        availableSchemas: context.availableSchemas.length,
+        redirects: context.redirectMap.size,
+      });
+    } catch (error) {
+      console.error("Context build error:", error);
+      res.status(500).json({ error: "Failed to get context" });
+    }
+  });
+
+  // Clear validation cache
+  app.post("/api/validation/clear-cache", (_req, res) => {
+    const service = getValidationService();
+    service.clearContext();
+    res.json({ success: true, message: "Validation cache cleared" });
+  });
+
+  // ============================================
+  // AI Content Adaptation API
+  // ============================================
+
+  // Adapt content using AI with layered context
+  app.post("/api/content/adapt-with-ai", async (req, res) => {
+    try {
+      const { getContentAdapter } = await import("./ai");
+      
+      const {
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        targetVariant,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      } = req.body;
+
+      // Validate required fields
+      if (!contentType || !contentSlug || !targetComponent || !targetVersion || !sourceYaml) {
+        res.status(400).json({
+          error: "Missing required fields",
+          required: ["contentType", "contentSlug", "targetComponent", "targetVersion", "sourceYaml"],
+        });
+        return;
+      }
+
+      // Validate content type
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({
+          error: "Invalid content type",
+          validTypes,
+        });
+        return;
+      }
+
+      const adapter = getContentAdapter();
+      // Use structured output for schema-enforced AI responses
+      const result = await adapter.adaptStructured({
+        contentType,
+        contentSlug,
+        targetComponent,
+        targetVersion,
+        targetVariant,
+        sourceYaml,
+        targetStructure,
+        userOverrides,
+      });
+
+      res.json(result);
+    } catch (error) {
+      console.error("AI adaptation error:", error);
+      res.status(500).json({
+        error: "AI adaptation failed",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
+  // Clear AI context cache
+  app.post("/api/content/clear-ai-cache", (_req, res) => {
+    try {
+      const { getContentAdapter } = require("./ai");
+      const adapter = getContentAdapter();
+      adapter.clearCache();
+      res.json({ success: true, message: "AI context cache cleared" });
+    } catch (error) {
+      res.status(500).json({
+        error: "Failed to clear cache",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
   });
 

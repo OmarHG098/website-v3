@@ -5,6 +5,7 @@ import type { Section } from "@shared/schema";
 export default function PreviewFrame() {
   const [sections, setSections] = useState<Section[]>([]);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [isStandalone, setIsStandalone] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const reportHeight = useCallback(() => {
@@ -15,6 +16,29 @@ export default function PreviewFrame() {
   }, []);
 
   useEffect(() => {
+    const isInIframe = window.parent !== window;
+    setIsStandalone(!isInIframe);
+
+    if (!isInIframe) {
+      const storedSections = sessionStorage.getItem('preview-sections');
+      const storedTheme = sessionStorage.getItem('preview-theme');
+      
+      if (storedSections) {
+        try {
+          const parsed = JSON.parse(storedSections);
+          setSections(Array.isArray(parsed) ? parsed : [parsed]);
+        } catch {
+          // Ignore parse errors
+        }
+      }
+      
+      if (storedTheme === 'dark' || storedTheme === 'light') {
+        setTheme(storedTheme);
+      } else if (document.documentElement.classList.contains('dark')) {
+        setTheme('dark');
+      }
+    }
+
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type === 'preview-update') {
         setSections(event.data.sections || []);
@@ -26,7 +50,7 @@ export default function PreviewFrame() {
 
     window.addEventListener('message', handleMessage);
 
-    if (window.parent !== window) {
+    if (isInIframe) {
       window.parent.postMessage({ type: 'preview-ready' }, '*');
     }
 
@@ -66,8 +90,28 @@ export default function PreviewFrame() {
     return () => observer.disconnect();
   }, [reportHeight]);
 
+  const handleGoBack = () => {
+    sessionStorage.removeItem('preview-sections');
+    sessionStorage.removeItem('preview-theme');
+    window.history.back();
+  };
+
   return (
-    <div ref={containerRef} className="bg-background">
+    <div ref={containerRef} className="bg-background min-h-screen">
+      {isStandalone && (
+        <div className="fixed top-4 left-4 z-50">
+          <button
+            onClick={handleGoBack}
+            className="flex items-center gap-2 px-3 py-2 text-sm bg-background/80 backdrop-blur border rounded-md shadow-lg hover:bg-muted transition-colors"
+            data-testid="button-back-from-preview"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Showcase
+          </button>
+        </div>
+      )}
       {sections.length > 0 ? (
         <SectionRenderer sections={sections} />
       ) : (

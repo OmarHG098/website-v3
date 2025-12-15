@@ -1,0 +1,74 @@
+meta:
+  page_title: Example Landing Page | 4Geeks
+  description: This is an example landing page demonstrating the various section types and layouts available.
+  redirects:
+    - /example/landing
+    - /demo/landing-page
+sections:
+  - type: hero
+    variant: singleColumn
+    title: Career Development for the AI Era
+    subtitle: Receive personalized career support tailored to your goals
+    cta_buttons:
+      - text: Get Started
+        url: /signup
+        variant: primary
+    trust_bar:
+      trusted_text: Trusted by thousands of students
+      rating: "4.5"
+      review_count: Based on 5149+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+  - type: features_grid
+    version: "1.0"
+    title: What You'll Learn
+    subtitle: Discover the tools that make learning faster and easier
+    items:
+      - icon: Brain
+        title: AI-Powered Learning
+        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: Rocket
+        title: Accelerated Progress
+        description: Learn how students are completing courses 3x faster with AI assistance
+      - icon: Code
+        title: Live Demo
+        description: Watch a live demonstration of our AI coding assistant in action
+  - type: stats
+    version: "1.0"
+    title: Join 50,000+ Learners
+    items:
+      - value: 50,000+
+        label: Students Worldwide
+      - value: 4.8/5
+        label: Average Rating
+      - value: 1,500+
+        label: Success Stories
+  - type: faq
+    version: "1.0"
+    title: Frequently Asked Questions
+    items:
+      - question: Is this program really free?
+        answer: Yes! We offer free introductory content to help you get started.
+      - question: Do I need any coding experience?
+        answer: No prior experience needed. This program is designed for complete beginners.
+      - question: Will there be support available?
+        answer: Yes, all students have access to mentors and a supportive community.
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Transform Your Learning?
+    subtitle: Get started today. Limited spots available!
+    buttons:
+      - text: Get Started
+        url: /signup
+        variant: primary
+      - text: Ask a Question
+        url: /contact
+        variant: outline
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. All rights reserved.

@@ -13,7 +13,15 @@ const getIcon = (iconName: string) => {
   return IconComponent ? <IconComponent className="w-5 h-5" /> : null;
 };
 
+// Default placeholder image when none is provided
+const DEFAULT_IMAGE = {
+  src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+  alt: "Students learning together"
+};
+
 export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
+  const image = data.image || DEFAULT_IMAGE;
+  
   return (
     <section 
       className={`py-16 md:py-24 ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
@@ -25,8 +33,8 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5">
             <img 
-              src={data.image.src} 
-              alt={data.image.alt}
+              src={image.src} 
+              alt={image.alt}
               className="w-full h-auto rounded-lg shadow-lg"
               data-testid="img-hero"
             />

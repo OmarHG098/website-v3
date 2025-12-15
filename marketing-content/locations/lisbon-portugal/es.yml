@@ -10,18 +10,6 @@ meta:
     - /lisboa
     - /campus/lisbon
     - /pt/lisbon
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Avenida da Liberdade 110
-        addressLocality: Lisboa
-        postalCode: 1250-146
-        addressCountry: PT
 sections:
   - type: hero
     variant: singleColumn

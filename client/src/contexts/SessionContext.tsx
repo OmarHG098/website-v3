@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
-import type { Session, Location, UTMParams, WorkerMessage, WorkerResponse } from '@shared/session';
+import type { Session, Location, UTMParams, WorkerMessage, WorkerResponse, ExperimentData } from '@shared/session';
 import { defaultSession } from '@shared/session';
 import { 
   getCachedSession, 
@@ -7,6 +7,24 @@ import {
   getNavigatorInfo
 } from '../lib/sessionBootstrap';
 import { locations, getLocationBySlug } from '../lib/locations';
+
+function parseExperimentCookies(): ExperimentData | undefined {
+  if (typeof document === 'undefined') return undefined;
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name.startsWith('4g_exp_')) {
+      const experimentSlug = name.replace('4g_exp_', '');
+      const [variantSlug, version] = (value || '').split(':');
+      return {
+        experiment_slug: experimentSlug,
+        variant_slug: variantSlug,
+        variant_version: version ? parseInt(version, 10) : undefined,
+      };
+    }
+  }
+  return undefined;
+}
 
 function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   if (lat1 === lat2 && lon1 === lon2) return 0;
@@ -42,7 +60,10 @@ interface SessionProviderProps {
 export function SessionProvider({ children }: SessionProviderProps) {
   const [session, setSession] = useState<Session>(() => {
     const cached = getCachedSession();
-    return cached || defaultSession;
+    const baseSession = cached || defaultSession;
+    // Parse experiment cookies on initial load
+    const experimentData = parseExperimentCookies();
+    return experimentData ? { ...baseSession, experiment: experimentData } : baseSession;
   });
   const [isLoading, setIsLoading] = useState(true);
   const workerRef = useRef<Worker | null>(null);
@@ -62,10 +83,14 @@ export function SessionProvider({ children }: SessionProviderProps) {
         workerRef.current.onmessage = (event: MessageEvent<WorkerResponse>) => {
           if (event.data.type === 'SESSION_READY') {
             const newSession = event.data.payload;
-            setSession(newSession);
-            saveSession(newSession);
+            // Parse experiment cookies and add to session
+            const experimentData = parseExperimentCookies();
+            const sessionWithExperiment = experimentData 
+              ? { ...newSession, experiment: experimentData }
+              : newSession;
+            setSession(sessionWithExperiment);
+            saveSession(sessionWithExperiment);
             setIsLoading(false);
-
           }
         };
 

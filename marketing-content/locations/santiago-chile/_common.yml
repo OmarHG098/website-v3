@@ -1,0 +1,36 @@
+slug: santiago-chile
+name: Santiago
+city: Santiago
+country: Chile
+country_code: CL
+latitude: -33.4489
+longitude: -70.6693
+region: latam
+default_language: es
+timezone: America/Santiago
+visibility: listed
+phone: +56 2 1234 5678
+address: Av. Apoquindo 3000, Las Condes, Santiago
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Apoquindo 3000
+        addressLocality: Santiago
+        addressRegion: Región Metropolitana
+        addressCountry: CL

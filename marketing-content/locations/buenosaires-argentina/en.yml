@@ -10,17 +10,6 @@ meta:
     - /buenosaires
     - /campus/buenos-aires
     - /ar/buenos-aires
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Av. Corrientes 1234
-        addressLocality: Buenos Aires
-        addressCountry: AR
 sections:
   - type: hero
     variant: singleColumn

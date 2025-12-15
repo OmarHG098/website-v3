@@ -1,0 +1,35 @@
+slug: lima-peru
+name: Lima
+city: Lima
+country: Peru
+country_code: PE
+latitude: -12.0464
+longitude: -77.0428
+region: latam
+default_language: es
+timezone: America/Lima
+visibility: listed
+phone: +51 1 123 4567
+address: Av. Javier Prado Este 123, Lima
+available_programs:
+  - "full-stack"
+catalog:
+  admission_advisors:
+    - name: "Admissions Team"
+      email: "admissions@4geeks.com"
+      calendar_url: "https://calendly.com/4geeks-admissions"
+      languages:
+        - "en"
+        - "es"
+
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: Av. Javier Prado Este 123
+        addressLocality: Lima
+        addressCountry: PE

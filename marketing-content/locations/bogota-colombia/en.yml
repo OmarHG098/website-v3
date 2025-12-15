@@ -9,17 +9,6 @@ meta:
     - /bogota
     - /campus/bogota
     - /co/bogota
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: "Carrera 7 #71-21"
-        addressLocality: Bogotá
-        addressCountry: CO
 sections:
   - type: hero
     variant: singleColumn

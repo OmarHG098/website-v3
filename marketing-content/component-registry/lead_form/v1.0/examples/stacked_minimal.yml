@@ -1,6 +1,5 @@
 name: "Stacked Minimal"
 description: "Simple form with just email and name, auto-detects location"
-variant: "stacked"
 yaml: |
   - type: lead_form
     version: "1.0"

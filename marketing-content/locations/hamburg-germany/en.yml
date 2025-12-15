@@ -9,18 +9,6 @@ meta:
     - /hamburg
     - /campus/hamburg
     - /de/hamburg
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Jungfernstieg 1
-        addressLocality: Hamburg
-        postalCode: "20095"
-        addressCountry: DE
 sections:
   - type: hero
     variant: singleColumn

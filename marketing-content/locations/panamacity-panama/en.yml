@@ -10,17 +10,6 @@ meta:
     - /panamacity
     - /panama
     - /campus/panama
-schema:
-  include:
-    - organization
-    - website
-  overrides:
-    organization:
-      address:
-        "@type": PostalAddress
-        streetAddress: Calle 50
-        addressLocality: Ciudad de Panamá
-        addressCountry: PA
 sections:
   - type: hero
     variant: singleColumn

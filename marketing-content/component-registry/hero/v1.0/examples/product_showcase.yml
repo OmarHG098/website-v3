@@ -1,6 +1,5 @@
 name: "Product Showcase"
-description: "Two column layout with welcome text, brand mark, title, description on left and embedded video on right"
-variant: "productShowcase"
+description: "Two column layout with welcome text, brand mark, title, description on left and embedded video on right. Includes optional lead capture form."
 yaml: |
   - type: hero
     version: "1.0"
@@ -17,3 +16,14 @@ yaml: |
     video_id: "-2ZvlgDnltc"
     video_title: "GeekForce Career Support"
     video_ratio: "9:12"
+    form:
+      variant: inline
+      submit_label: "Get Started →"
+      show_consent: false
+      show_terms: false
+      tags: "website-lead,geekforce"
+      fields:
+        email:
+          visible: true
+          placeholder: "Enter your work email"
+          helper_text: "Join 10,000+ professionals advancing their careers"

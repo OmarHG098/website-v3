@@ -1,6 +1,5 @@
 name: "Basic Comparison"
 description: "Simple three-column comparison table with feature descriptions and footer note"
-variant: "default"
 yaml: |
   - type: comparison_table
     version: "1.0"
