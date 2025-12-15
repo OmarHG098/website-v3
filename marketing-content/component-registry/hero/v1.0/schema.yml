@@ -201,21 +201,31 @@ variant_props:
         url:
           type: string
           required: true
+          description: Video URL (YouTube, Vimeo, or local video path)
+        title:
+          type: string
+          required: false
+          description: Video title for accessibility
         ratio:
           type: string
           required: false
+          description: Aspect ratio (e.g., "16:9", "9:12")
         muted:
           type: boolean
           required: false
+          description: Whether video should be muted
         autoplay:
           type: boolean
           required: false
+          description: Whether video should autoplay
         loop:
           type: boolean
           required: false
+          description: Whether video should loop
         preview_image_url:
           type: string
           required: false
+          description: Thumbnail image URL
     image:
       type: object
       required: false
