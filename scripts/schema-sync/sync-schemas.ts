@@ -11,7 +11,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
-import { z, ZodObject, ZodType, ZodOptional, ZodArray, ZodEnum, ZodLiteral, ZodUnion, ZodString, ZodNumber, ZodBoolean, ZodRecord, ZodTuple } from "zod";
+import { z, ZodObject, ZodType, ZodOptional, ZodArray, ZodEnum, ZodLiteral, ZodUnion, ZodString, ZodNumber, ZodBoolean, ZodRecord, ZodTuple, ZodEffects } from "zod";
 
 const REGISTRY_PATH = path.join(process.cwd(), "marketing-content/component-registry");
 
@@ -39,9 +39,24 @@ interface SchemaYml {
 }
 
 /**
+ * Unwrap ZodEffects (from .refine(), .transform(), etc) to get inner schema
+ */
+function unwrapEffects(schema: ZodType): ZodType {
+  if (schema instanceof ZodEffects) {
+    return unwrapEffects(schema._def.schema);
+  }
+  return schema;
+}
+
+/**
  * Extract type information from a Zod schema
  */
 function zodToType(schema: ZodType): { type: string; optional: boolean; items?: Record<string, PropDef>; properties?: Record<string, PropDef>; options?: string[] } {
+  // Handle ZodEffects wrapper (from .refine(), .transform())
+  if (schema instanceof ZodEffects) {
+    return zodToType(schema._def.schema);
+  }
+
   // Handle optional wrapper
   if (schema instanceof ZodOptional) {
     const inner = zodToType(schema._def.innerType);
@@ -79,7 +94,18 @@ function zodToType(schema: ZodType): { type: string; optional: boolean; items?: 
     if (itemType.type === "object" && itemType.properties) {
       return { type: "array", optional: false, items: itemType.properties };
     }
-    return { type: "array", optional: false, items: { type: { type: itemType.type, required: true } } };
+    // For scalar arrays (string[], number[], etc), use a simple item type descriptor
+    return { 
+      type: "array", 
+      optional: false, 
+      items: { 
+        type: { 
+          type: itemType.type, 
+          required: true,
+          ...(itemType.options && { options: itemType.options })
+        } 
+      } 
+    };
   }
 
   // Object
@@ -225,26 +251,30 @@ async function processComponent(componentPath: string, dryRun: boolean): Promise
     let variantSchemas: Record<string, ZodObject<Record<string, ZodType>>> = {};
 
     for (const [exportName, exportValue] of Object.entries(module)) {
-      if (!(exportValue instanceof ZodObject) && !(exportValue instanceof ZodUnion)) continue;
+      // Unwrap ZodEffects to get the underlying schema
+      const unwrapped = unwrapEffects(exportValue as ZodType);
+      
+      if (!(unwrapped instanceof ZodObject) && !(unwrapped instanceof ZodUnion)) continue;
 
       // Check if it's a union schema (has variants)
-      if (exportValue instanceof ZodUnion) {
-        const options = exportValue._def.options;
+      if (unwrapped instanceof ZodUnion) {
+        const options = unwrapped._def.options;
         for (const opt of options) {
-          if (opt instanceof ZodObject) {
-            const shape = opt._def.shape();
+          const unwrappedOpt = unwrapEffects(opt);
+          if (unwrappedOpt instanceof ZodObject) {
+            const shape = unwrappedOpt._def.shape();
             if (shape.variant instanceof ZodLiteral) {
               const variantName = shape.variant._def.value;
-              variantSchemas[variantName] = opt;
+              variantSchemas[variantName] = unwrappedOpt;
             }
           }
         }
         continue;
       }
 
-      // Check if it's the main section schema
-      if (exportName.endsWith("SectionSchema") && !exportName.includes("Slide")) {
-        mainSchema = exportValue;
+      // Check if it's the main section schema (ends with SectionSchema)
+      if (exportName.endsWith("SectionSchema")) {
+        mainSchema = unwrapped as ZodObject<Record<string, ZodType>>;
       }
     }
 
