@@ -892,11 +892,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
       
-      // Build operations array if using simplified format
+      // Build operations array if using simplified format (only for update_section)
       let finalOperations = operations;
-      if (!operations && operation) {
+      if (!operations && operation === 'update_section') {
+        if (sectionIndex === undefined || sectionData === undefined || sectionData === null) {
+          res.status(400).json({ error: "update_section requires sectionIndex and sectionData" });
+          return;
+        }
         finalOperations = [{
-          action: operation,
+          action: 'update_section',
           index: sectionIndex,
           section: sectionData,
         }];
@@ -907,7 +911,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
       
-      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant, version });
+      // Only pass variant/version if both are meaningful (not "default" or undefined)
+      const effectiveVariant = variant && variant !== 'default' ? variant : undefined;
+      const effectiveVersion = effectiveVariant && version !== undefined ? version : undefined;
+      
+      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant: effectiveVariant, version: effectiveVersion });
       
       if (result.success) {
         // Clear relevant caches
