@@ -8,14 +8,14 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    welcome_text: Limited Spots Available
+    title: Thrive in Today’s Tech and Shape Tomorrow’s.
+    subtitle: null
+    welcome_text: null
     brand_mark:
       prefix: Become an
       highlight: AI Engineer
       color: primary
-    title: Launch Your AI Career in 20 Weeks
-    subtitle: Master AI engineering with hands-on projects and unlimited mentorship
-    description: Join the AI revolution. Learn to build production-ready AI applications, from RAG systems to multi-agent orchestrators. Get personalized 1:1 mentorship and career support that lasts for life.
+    description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
     background_image:
       src: /attached_assets/ai-engineering-light_1765830844948.jpg
       alt: AI Engineering Background
