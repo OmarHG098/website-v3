@@ -549,6 +549,28 @@ export type AccordionCardBullet = z.infer<typeof accordionCardBulletSchema>;
 export type AccordionCardSection = z.infer<typeof accordionCardSectionSchema>;
 
 // ============================================
+// Spotlight With Bubble Text Section Schema
+// ============================================
+export const spotlightStepSchema = z.object({
+  icon: z.string().optional(),
+  title: z.string().optional(),
+  text: z.string().optional(),
+  bullets: z.array(z.string()).optional(),
+});
+
+export const spotlightWithBubbleTextSectionSchema = z.object({
+  type: z.literal("spotlight_with_bubble_text"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  background: z.string().optional(),
+  steps: z.array(spotlightStepSchema).optional(),
+});
+
+export type SpotlightStep = z.infer<typeof spotlightStepSchema>;
+export type SpotlightWithBubbleTextSection = z.infer<typeof spotlightWithBubbleTextSectionSchema>;
+
+// ============================================
 // Section Schema Union
 // Import unified section schemas for use in union
 // ============================================
@@ -603,6 +625,7 @@ export const sectionSchema = z.union([
   supportDuoSectionSchema,
   cardGridSectionSchema,
   accordionCardSectionSchema,
+  spotlightWithBubbleTextSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;
