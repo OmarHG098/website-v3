@@ -18,15 +18,11 @@ schema:
     - courses:ai-engineering
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    badge: Programa de Carrera
+    variant: singleColumn
     title: Conviértete en Ingeniero de IA
-    subtitle: Prepárate para la IA en 20 semanas con mentoría ilimitada 1:1 y orientación profesional. Inicia una carrera con salarios iniciales de $95K-$135K.
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $95K+ salario inicial promedio
+    subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas con mentoría personalizada 1:1 y orientación experta. Conviértete en el profesional que las empresas no pueden esperar a contratar.
+    badge: Programa de Carrera
     cta_buttons:
       - text: Aplicar Ahora
         url: /aplicar
@@ -36,6 +32,10 @@ sections:
         url: /programa/ai-engineering
         variant: outline
         icon: Download
+    trust_bar:
+      rating: "4.5"
+      rating_count: 1,294
+      trusted_text: $95K+ salario inicial promedio
     award_badges:
       - name: Mejor Bootcamp de Código
         source: Forbes
@@ -49,10 +49,26 @@ sections:
       - name: Mejor Bootcamp de Código
         source: Course Report
         year: "2025"
-
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
+    subtitle: Sí, y tenemos los números para respaldarlo. Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general.
+    items:
+      - icon: Briefcase
+        value: "3.5"
+        title: Roles relacionados con IA esperados para 2026
+      - icon: Graduation
+        value: "47%"
+        title: Crecimiento año tras año en ofertas de trabajo de IA
+      - icon: GrowthChart
+        value: "20-40%"
+        title: Primas salariales por habilidades de ingeniería de IA
+    columns: 3
+    icon_color: "#0097CD"
   - type: syllabus
     title: Lo Que Construirás en 20 Semanas
-    subtitle: Aprende a construir y escalar un negocio nativo de IA completo, no solo funciones individuales. Cada hito se basa en el anterior, dándote experiencia real de ingeniería de punta a punta.
+    subtitle: "Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA."
     modules:
       - title: Frontend Asistido por IA
         description: Aplicación React moderna con componentes potenciados por IA. Construye interfaces de usuario inteligentes que aprovechan la IA para experiencias de usuario mejoradas, autocompletado y sugerencias inteligentes.
@@ -68,7 +84,6 @@ sections:
         description: Procesos generados por IA desplegados vía n8n, colas y tareas programadas. Automatiza flujos de trabajo empresariales con toma de decisiones y orquestación impulsadas por IA.
       - title: Sistemas en Tiempo Real
         description: WebSockets, respuestas de IA en streaming, arquitectura orientada a eventos. Construye aplicaciones responsivas con interacciones de IA en tiempo real y capacidades de streaming.
-
   - type: projects
     title: Aprende Construyendo Proyectos Reales
     subtitle: "Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto real de ingeniería de IA. Aquí tienes un vistazo de lo que trabajarás:"
@@ -101,7 +116,6 @@ sections:
         duration: 40 HORAS
         date: 01/04/2025
         difficulty: hard
-
   - type: ai_learning
     version: "1.0"
     badge: ¿Por qué 4Geeks?
@@ -128,38 +142,27 @@ sections:
         text: ¡Comienza a aprender ahora!
         url: /aplicar
         variant: primary
-
   - type: certificate
-    version: "1.0"
     title: Certificado y Red de Carreras
-    description: Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en todo el mundo.
-    stats:
-      - value: 4,000+
-        label: Graduados
-      - value: 84%
-        label: Colocación Laboral
-      - value: 4.9/5
-        label: Calificación
-      - value: 20+
-        label: Países
+    description: "Obtén un certificado reconocido por la industria, acreditado por el Departamento de Educación de Florida y accede a roles de alta demanda como:"
     benefits:
-      - text: Reconocido por instituciones internacionales
-      - text: Acceso a más de 5,000 socios de contratación
-      - text: Soporte de carrera de por vida
+      - text: "Ingeniero de Software IA: $95K–$135K"
+      - text: "Ingeniero Full-Stack (Fluente en IA): $100K–$145K"
+      - text: "Ingeniero de Agentes / Ingeniero de Automatización de Flujos: $105K–$155K"
+      - text: "Ingeniero de Automatización de Flujos: $85K–$120K"
     card:
-      title: "Ingeniero de IA"
-      subtitle: "Certificado 4Geeks Academy"
-      program_name: "Ingeniería de IA"
-
-  - type: why_learn_ai
-    title: ¿Por Qué Debería Convertirme en Ingeniero de IA?
-    subtitle: La Ingeniería de IA es la Carrera Tech de Mayor Crecimiento
-    description: Los Ingenieros de IA tienen una demanda sin precedentes mientras las empresas compiten por integrar IA en sus productos. Con salarios iniciales de $95K-$135K y el campo creciendo 40% anualmente, nunca ha habido un mejor momento para entrar en esta carrera. Nuestro programa integral de 20 semanas te prepara para construir sistemas de IA de producción desde el primer día.
-    cta:
-      text: ¡Únete ahora!
-      url: /registro
-      variant: primary
-
+      title: Ingeniero de IA
+      subtitle: Certificado 4Geeks Academy
+      program_name: Ingeniería de IA
+    stats:
+      - value: 84%
+        label: Tasa de contratación
+      - value: 3-6 meses
+        label: Tiempo para ser contratado
+      - value: 55%
+        label: Aumento salarial promedio
+      - value: 5,000+
+        label: Socios de contratación
   - type: pricing
     version: "1.0"
     variant: product
@@ -167,7 +170,7 @@ sections:
     subtitle: Ofrecemos múltiples formas de financiar tu inscripción. Elige la opción que mejor funcione para ti.
     discount_text: "Descuento por Pago Completo: Ahorra 10% con pago por adelantado."
     financing_text: "Financiamiento Basado en Crédito: desde"
-    financing_amount: "$299"
+    financing_amount: $299
     tech_icons:
       - openai
       - python
@@ -193,7 +196,6 @@ sections:
       text: Obtener plan
       url: /registro
       variant: primary
-
   - type: whos_hiring
     title: ¿Quién Contrata a Nuestros Graduados?
     subtitle: Nuestros egresados trabajan en las mejores empresas del mundo
@@ -247,7 +249,6 @@ sections:
         alt: Blackstone
       - src: /attached_assets/cemex_1764720131666.png
         alt: Cemex
-
   - type: testimonials
     title: Tu Nueva Carrera Comienza Aquí
     subtitle: Mira lo que nuestros graduados tienen que decir sobre su experiencia
@@ -291,7 +292,6 @@ sections:
         rating: 5
         comment: La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional.
         outcome: Primer trabajo en tech
-
   - type: faq
     version: "1.0"
     title: FAQ
@@ -310,7 +310,6 @@ sections:
       text: ¿Aún tienes preguntas?
       button_text: Habla con un Asesor
       button_url: /contacto
-
   - type: cta_banner
     version: "1.0"
     title: ¿Listo para Convertirte en Ingeniero de IA?
@@ -322,7 +321,6 @@ sections:
       - text: Habla con un Asesor
         url: /contacto
         variant: outline
-
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. Todos los derechos reservados.

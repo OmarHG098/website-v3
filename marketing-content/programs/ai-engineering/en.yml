@@ -59,10 +59,10 @@ sections:
         value: "3.5"
         title: AI-related roles expected by 2026
       - icon: Graduation
-        value: "47%"
+        value: 47%
         title: year-over-year growth in AI job postings
       - icon: GrowthChart
-        value: "20-40%"
+        value: 20-40%
         title: Salary premiums for AI engineering skills
     columns: 3
     icon_color: "#0097CD"
@@ -84,38 +84,6 @@ sections:
         description: AI-generated processes deployed via n8n, queues, and scheduled tasks. Automate business workflows with AI-driven decision making and orchestration.
       - title: Real-Time Systems
         description: WebSockets, streaming AI responses, event-driven architecture. Build responsive applications with real-time AI interactions and streaming capabilities.
-  - type: projects
-    title: Learn by Building Real-Life Projects
-    subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world AI engineering position. Here's a glimpse of what you'll be working on:"
-    items:
-      - title: Build a RAG-Powered Knowledge Base
-        description: Create a full-stack application that lets users query documents using natural language. Implement vector embeddings, semantic search, and integrate with OpenAI for intelligent responses.
-        image: ml-final-project
-        tags:
-          - RAG
-          - Vector DB
-          - LLM
-        duration: 12 HOURS
-        date: 15/01/2025
-        difficulty: medium
-      - title: Multi-Agent Task Orchestrator
-        description: Design and implement a system where multiple AI agents collaborate to complete complex tasks. Learn agent memory, tool calling, and task routing patterns.
-        image: authentication
-        tags:
-          - Agents
-          - LangChain
-        duration: 16 HOURS
-        date: 20/02/2025
-        difficulty: hard
-      - title: AI-Native Full-Stack Application
-        description: Build a complete AI-native business application from scratch. Combine frontend, backend, RAG, agents, and automation into a production-ready product.
-        image: final-project
-        tags:
-          - Full-Stack
-          - Capstone
-        duration: 40 HOURS
-        date: 01/04/2025
-        difficulty: hard
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
