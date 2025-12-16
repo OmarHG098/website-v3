@@ -757,31 +757,6 @@ export const statsSectionSchema = z.object({
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
-// Award Badges Section (standalone section for displaying award badges)
-export const awardBadgeItemSchema = z.object({
-  id: z.string(),
-  alt: z.string(),
-  logo: z.string().optional(),
-  logoHeight: z.string().optional(),
-  source: z.string().optional(),
-  name: z.string().optional(),
-  year: z.string().optional(),
-  description: z.string().optional(),
-  link: z.string().optional(),
-  linkText: z.string().optional(),
-});
-
-export const awardBadgesSectionSchema = z.object({
-  type: z.literal("award_badges"),
-  version: z.string().optional(),
-  variant: z.enum(["simple", "detailed"]).optional(),
-  showBorder: z.boolean().optional(),
-  items: z.array(awardBadgeItemSchema),
-});
-
-export type AwardBadgeItem = z.infer<typeof awardBadgeItemSchema>;
-export type AwardBadgesSection = z.infer<typeof awardBadgesSectionSchema>;
-
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -814,7 +789,6 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
-  awardBadgesSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({

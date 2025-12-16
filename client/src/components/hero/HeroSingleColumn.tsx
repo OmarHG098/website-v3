@@ -5,16 +5,26 @@ import * as TablerIcons from "@tabler/icons-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { HeroSingleColumn } from "@shared/schema";
 import type { ComponentType } from "react";
+import { useTranslation } from "react-i18next";
 import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
+import forbesLogo from "@assets/forbes-logo-award_1764709625651.webp";
+import fortuneLogo from "@assets/fortune-logo_1764709618095.webp";
+import newsweekLogoEn from "@assets/newsweek_1764709608255.webp";
+import newsweekLogoEs from "@assets/newsweek-es_1764709602003.webp";
+import courseReportLogo from "@assets/Course-Report-Badge-2025_1764709632231.webp";
+import { AwardBadges, type AwardBadgeItem } from "@/components/AwardBadges";
 
 interface HeroSingleColumnProps {
   data: HeroSingleColumn;
 }
 
 export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language?.startsWith('es');
+
   const getIcon = (iconName: string) => {
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number }>>;
     const IconComponent = icons[`Icon${iconName}`];
@@ -22,6 +32,13 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
   };
 
   const avatars = [avatar1, avatar2, avatar3, avatar4];
+
+  const awardLogos: Record<string, string> = {
+    "Forbes": forbesLogo,
+    "Fortune": fortuneLogo,
+    "Newsweek": isSpanish ? newsweekLogoEs : newsweekLogoEn,
+    "Course Report": courseReportLogo,
+  };
 
   return (
     <section 
@@ -113,6 +130,25 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
               </Button>
             ))}
           </div>
+        )}
+
+        {data.award_badges && data.award_badges.length > 0 && (
+          <AwardBadges 
+            items={data.award_badges.map((award, index) => {
+              const logoSrc = awardLogos[award.source];
+              return {
+                id: `${award.source}-${index}`,
+                logo: logoSrc,
+                alt: `${award.source} - ${award.name}`,
+                logoHeight: "h-12 md:h-16",
+                source: award.source,
+                name: award.name,
+                year: award.year,
+              };
+            })}
+            variant="simple"
+            showBorder
+          />
         )}
       </div>
     </section>

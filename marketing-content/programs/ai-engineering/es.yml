@@ -36,30 +36,20 @@ sections:
         url: /programa/ai-engineering
         variant: outline
         icon: Download
-  - type: award_badges
-    variant: simple
-    showBorder: true
-    items:
-      - id: forbes-2024
-        alt: Forbes - Mejor Bootcamp de Código
+    award_badges:
+      - name: Mejor Bootcamp de Código
         source: Forbes
-        name: Mejor Bootcamp de Código
         year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
+      - name: Mejor para Hispanohablantes
         source: Fortune
-        name: Mejor para Hispanohablantes
         year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Bootcamp de Código
+      - name: Top Bootcamp de Código
         source: Newsweek
-        name: Top Bootcamp de Código
         year: "2024"
-      - id: coursereport-2025
-        alt: Course Report - Mejor Bootcamp de Código
+      - name: Mejor Bootcamp de Código
         source: Course Report
-        name: Mejor Bootcamp de Código
         year: "2025"
+
   - type: syllabus
     title: Lo Que Construirás en 20 Semanas
     subtitle: Aprende a construir y escalar un negocio nativo de IA completo, no solo funciones individuales. Cada hito se basa en el anterior, dándote experiencia real de ingeniería de punta a punta.

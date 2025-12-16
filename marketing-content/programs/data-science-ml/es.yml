@@ -29,30 +29,20 @@ sections:
         url: "/syllabus/data-science-ml"
         variant: "outline"
         icon: "Download"
-  - type: award_badges
-    variant: simple
-    showBorder: true
-    items:
-      - id: forbes-2024
-        alt: Forbes - Top Coding Bootcamp
-        source: Forbes
-        name: Top Coding Bootcamp
+    award_badges:
+      - name: "Top Coding Bootcamp"
+        source: "Forbes"
         year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
-        source: Fortune
-        name: Mejor para Hispanohablantes
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
         year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
         year: "2024"
-      - id: coursereport-2025
-        alt: Course Report - Mejor Coding Bootcamp
-        source: Course Report
-        name: Mejor Coding Bootcamp
+      - name: "Mejor Coding Bootcamp"
+        source: "Course Report"
         year: "2025"
+
   - type: syllabus
     title: "¡Prepárate para el Trabajo con Nuestro Syllabus!"
     subtitle: "Hemos ajustado nuestro contenido con cientos de posiciones laborales para prepararte para una entrada exitosa en ciencia de datos y machine learning."

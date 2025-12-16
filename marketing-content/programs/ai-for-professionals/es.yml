@@ -29,30 +29,20 @@ sections:
         url: "/syllabus/ai-for-professionals"
         variant: "outline"
         icon: "Download"
-  - type: award_badges
-    variant: simple
-    showBorder: true
-    items:
-      - id: forbes-2024
-        alt: Forbes - Mejor Bootcamp Online
-        source: Forbes
-        name: Mejor Bootcamp Online
+    award_badges:
+      - name: "Mejor Bootcamp Online"
+        source: "Forbes"
         year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
-        source: Fortune
-        name: Mejor para Hispanohablantes
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
         year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Mejor Bootcamp de Coding
-        source: Newsweek
-        name: Mejor Bootcamp de Coding
+      - name: "Mejor Bootcamp de Coding"
+        source: "Newsweek"
         year: "2024"
-      - id: coursereport-2025
-        alt: Course Report - Mejor Bootcamp de Coding
-        source: Course Report
-        name: Mejor Bootcamp de Coding
+      - name: "Mejor Bootcamp de Coding"
+        source: "Course Report"
         year: "2025"
+
   - type: syllabus
     title: "¡Prepárate con Nuestro Temario!"
     subtitle: "En solo 6 semanas, aprende a aprovechar las herramientas de IA líderes de hoy para optimizar tu flujo de trabajo, mejorar la calidad de tu trabajo y mantenerte adelante en tu carrera."
