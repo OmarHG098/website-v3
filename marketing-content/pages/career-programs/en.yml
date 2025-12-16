@@ -1,0 +1,68 @@
+# Career Programs Listing Page - English
+
+meta:
+  page_title: "Career Programs | 4Geeks Academy"
+  description: "Explore our comprehensive career programs in coding, data science, AI, and cybersecurity. Launch your tech career with hands-on training and job placement support."
+  redirects:
+    - "/career-programs"
+    - "/courses"
+    - "/programs"
+
+page_content:
+  hero_title: "All Courses"
+  hero_subtitle: "Explore our comprehensive course catalog"
+  search_placeholder: "Search courses..."
+  difficulty_label: "Difficulty"
+  difficulty_all: "All Levels"
+  difficulty_beginner: "Beginner"
+  difficulty_intermediate: "Intermediate"
+  difficulty_advanced: "Advanced"
+  no_results: "No courses found matching your criteria."
+
+courses:
+  - id: "1"
+    title: "Full Stack Web Development"
+    description: "Learn to build modern web applications from scratch using React, Node.js, and databases"
+    duration: "12 weeks"
+    difficulty: "Intermediate"
+    lessons: 48
+    link: "full-stack"
+  - id: "2"
+    title: "Data Science & Machine Learning"
+    description: "Master data analysis, visualization, and machine learning with Python, TensorFlow, and industry tools. Build predictive models for real-world applications."
+    duration: "16 weeks"
+    difficulty: "Advanced"
+    lessons: 64
+    link: "data-science-ml"
+  - id: "3"
+    title: "Cybersecurity"
+    description: "Defend systems and respond to real-world cyber threats. Learn penetration testing, incident response, and security tools like Nessus, Nmap, Wireshark, and Metasploit."
+    duration: "16 weeks"
+    difficulty: "Intermediate"
+    lessons: 48
+    link: "cybersecurity"
+  - id: "4"
+    title: "AI for Professionals"
+    description: "Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact."
+    duration: "6 weeks"
+    difficulty: "Beginner"
+    lessons: 12
+    link: "ai-for-professionals"
+  - id: "5"
+    title: "Introduction to AI & Machine Learning"
+    description: "Understand AI fundamentals and build your first machine learning models"
+    duration: "8 weeks"
+    difficulty: "Beginner"
+    lessons: 36
+  - id: "6"
+    title: "Advanced Web Development"
+    description: "Deep dive into advanced React patterns, performance optimization, and architecture"
+    duration: "14 weeks"
+    difficulty: "Advanced"
+    lessons: 52
+  - id: "7"
+    title: "Python for Beginners"
+    description: "Start your programming journey with Python fundamentals and practical projects"
+    duration: "6 weeks"
+    difficulty: "Beginner"
+    lessons: 24

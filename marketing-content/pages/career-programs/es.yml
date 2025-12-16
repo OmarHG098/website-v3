@@ -1,0 +1,68 @@
+# Career Programs Listing Page - Spanish
+
+meta:
+  page_title: "Programas de Carrera | 4Geeks Academy"
+  description: "Explora nuestros programas de carrera en programación, ciencia de datos, IA y ciberseguridad. Inicia tu carrera tecnológica con formación práctica y apoyo en colocación laboral."
+  redirects:
+    - "/programas-de-carrera"
+    - "/cursos"
+    - "/programas"
+
+page_content:
+  hero_title: "Todos los Cursos"
+  hero_subtitle: "Explora nuestro catálogo completo de cursos"
+  search_placeholder: "Buscar cursos..."
+  difficulty_label: "Dificultad"
+  difficulty_all: "Todos los Niveles"
+  difficulty_beginner: "Principiante"
+  difficulty_intermediate: "Intermedio"
+  difficulty_advanced: "Avanzado"
+  no_results: "No se encontraron cursos que coincidan con tu búsqueda."
+
+courses:
+  - id: "1"
+    title: "Desarrollo Web Full Stack"
+    description: "Aprende a construir aplicaciones web modernas desde cero usando React, Node.js y bases de datos"
+    duration: "12 semanas"
+    difficulty: "Intermedio"
+    lessons: 48
+    link: "full-stack"
+  - id: "2"
+    title: "Ciencia de Datos y Machine Learning"
+    description: "Domina el análisis de datos, visualización y machine learning con Python, TensorFlow y herramientas de la industria. Construye modelos predictivos para aplicaciones del mundo real."
+    duration: "16 semanas"
+    difficulty: "Avanzado"
+    lessons: 64
+    link: "data-science-ml"
+  - id: "3"
+    title: "Ciberseguridad"
+    description: "Defiende sistemas y responde a amenazas cibernéticas reales. Aprende pruebas de penetración, respuesta a incidentes y herramientas de seguridad como Nessus, Nmap, Wireshark y Metasploit."
+    duration: "16 semanas"
+    difficulty: "Intermedio"
+    lessons: 48
+    link: "cybersecurity"
+  - id: "4"
+    title: "IA para Profesionales"
+    description: "Mantente relevante en tu carrera. Lidera con IA. Obtén las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
+    duration: "6 semanas"
+    difficulty: "Principiante"
+    lessons: 12
+    link: "ai-for-professionals"
+  - id: "5"
+    title: "Introducción a IA y Machine Learning"
+    description: "Comprende los fundamentos de IA y construye tus primeros modelos de machine learning"
+    duration: "8 semanas"
+    difficulty: "Principiante"
+    lessons: 36
+  - id: "6"
+    title: "Desarrollo Web Avanzado"
+    description: "Profundiza en patrones avanzados de React, optimización de rendimiento y arquitectura"
+    duration: "14 semanas"
+    difficulty: "Avanzado"
+    lessons: 52
+  - id: "7"
+    title: "Python para Principiantes"
+    description: "Comienza tu viaje de programación con fundamentos de Python y proyectos prácticos"
+    duration: "6 semanas"
+    difficulty: "Principiante"
+    lessons: 24
