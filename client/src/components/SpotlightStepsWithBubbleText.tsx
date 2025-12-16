@@ -56,9 +56,9 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
   // Determine bubble pointer direction based on active step
   const getBubblePointerClass = () => {
     switch (activeStep) {
-      case 0: return "before:left-0 before:-translate-x-1/2 before:rotate-45"; // Points left (to step 1)
+      case 0: return "before:left-0 before:-translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45"; // Points left (to step 1)
       case 1: return "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45"; // Points up (to step 2)
-      case 2: return "before:right-0 before:translate-x-1/2 before:rotate-45"; // Points right (to step 3)
+      case 2: return "before:right-0 before:translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45"; // Points right (to step 3)
       default: return "";
     }
   };
@@ -217,9 +217,9 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               <div
                 className={`relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm transition-all duration-300 
                   before:content-[''] before:absolute before:w-4 before:h-4 before:bg-card before:border-2 before:border-primary/30 
-                  before:top-1/2 before:-translate-y-1/2 ${getBubblePointerClass()}
+                  ${getBubblePointerClass()}
                   ${activeStep === 0 ? "before:border-r-0 before:border-t-0" : ""}
-                  ${activeStep === 1 ? "before:border-b-0 before:border-r-0 before:top-0" : ""}
+                  ${activeStep === 1 ? "before:border-b-0 before:border-r-0" : ""}
                   ${activeStep === 2 ? "before:border-l-0 before:border-b-0" : ""}
                 `}
                 data-testid="bubble-content"
