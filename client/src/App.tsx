@@ -12,6 +12,7 @@ import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import "./i18n";
 
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
+const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
@@ -45,6 +46,7 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/career-programs" component={CareerPrograms} />
         <Route
           path="/en/career-programs/:slug"
           component={CareerProgramDetail}

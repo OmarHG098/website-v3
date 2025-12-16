@@ -297,6 +297,7 @@
         // Static pages
         const staticPages: Array<{ path: string; label: string; changefreq: ChangeFreq; priority: number }> = [
           { path: "/", label: "Home", changefreq: "weekly", priority: 1.0 },
+          { path: "/career-programs", label: "Career Programs", changefreq: "weekly", priority: 0.9 },
         ];
 
         for (const page of staticPages) {
