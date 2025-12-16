@@ -73,11 +73,9 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                 className="h-full"
                 data-testid={`card-bullet-${index}`}
               >
-                <CardContent className="p-5 flex gap-3">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <IconComponent className="w-5 h-5 text-primary" />
-                    </div>
+                <CardContent className="p-5 flex flex-col items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <IconComponent className="w-6 h-6 text-primary" />
                   </div>
                   <p className="text-foreground text-sm md:text-base">
                     {card.text}
