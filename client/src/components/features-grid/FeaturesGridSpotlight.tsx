@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type KeyboardEvent } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, type KeyboardEvent } from "react";
 import type { FeaturesGridSpotlightSection, FeaturesGridHighlightItem } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
@@ -101,8 +101,10 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
   
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [isPaused, setIsPaused] = useState(false);
+  const [gridHeight, setGridHeight] = useState<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const measurementDone = useRef(false);
   
   const itemCount = data.items.length;
   const columns = data.columns || 3;
@@ -138,6 +140,23 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
     }
     return () => clearTimer();
   }, [isPaused, startTimer, clearTimer, autoRotateMs, itemCount]);
+
+  useLayoutEffect(() => {
+    if (measurementDone.current || !containerRef.current) return;
+    
+    const measureHeight = () => {
+      if (containerRef.current) {
+        const height = containerRef.current.offsetHeight;
+        if (height > 0) {
+          setGridHeight(height);
+          measurementDone.current = true;
+        }
+      }
+    };
+
+    const timeoutId = setTimeout(measureHeight, 600);
+    return () => clearTimeout(timeoutId);
+  }, [activeIndex]);
 
   const handleMouseEnter = useCallback((index: number) => {
     if (pauseOnHover) {
@@ -219,6 +238,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
         <div 
           ref={containerRef}
           className={`grid grid-cols-1 ${gridColsClass} gap-6 items-center outline-none`}
+          style={gridHeight ? { minHeight: `${gridHeight}px` } : undefined}
           tabIndex={0}
           onKeyDown={handleKeyDown}
           onFocus={handleContainerFocus}
