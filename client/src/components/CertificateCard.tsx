@@ -16,32 +16,27 @@ export function CertificateCard({ programName = "Full-Stack Developer", studentN
       {/* Top colored bar accents */}
       <div className="absolute top-0 left-1/4 w-16 h-3 bg-cyan-400 z-0" />
       <div className="absolute top-0 left-1/2 w-20 h-3 bg-yellow-400 z-0" />
-      
       {/* Top right corner */}
       <div className="absolute top-3 right-0 z-0">
         <div className="absolute top-0 right-0 w-8 h-16 bg-cyan-400 rounded-bl-full" />
         <div className="absolute top-12 right-0 w-12 h-20 bg-yellow-400 rounded-l-full" />
       </div>
-      
       {/* Bottom right corner */}
       <div className="absolute bottom-0 right-0 z-0">
         <div className="absolute bottom-0 right-0 w-16 h-16 bg-blue-600" />
         <div className="absolute bottom-0 right-12 w-6 h-10 bg-orange-500" />
         <div className="absolute bottom-6 right-6 w-6 h-6 bg-red-500" />
       </div>
-      
       {/* Left side decoration */}
       <div className="absolute left-0 top-1/4 z-0">
         <div className="absolute left-0 top-0 w-4 h-12 bg-green-400 rounded-r-full" />
         <div className="absolute left-0 top-10 w-5 h-14 bg-blue-400 rounded-r-full" />
       </div>
-
       {/* Bottom left corner */}
       <div className="absolute bottom-0 left-0 z-0">
         <div className="absolute bottom-0 left-0 w-10 h-10 bg-red-500 rounded-tr-full" />
         <div className="absolute bottom-8 left-0 w-6 h-8 bg-blue-400" />
       </div>
-
       {/* White certificate area with thin colorful border going all around */}
       <div className="absolute top-4 left-4 right-4 bottom-4 z-[1]">
         {/* Rainbow gradient border */}
@@ -69,41 +64,41 @@ export function CertificateCard({ programName = "Full-Stack Developer", studentN
               </div>
             </div>
 
-            {/* Certificate content - centered */}
-            <div className="flex-1 flex flex-col items-center justify-center px-6 text-center relative">
+            {/* Certificate content - positioned at top, not centered */}
+            <div className="flex-1 flex flex-col items-center px-6 text-center relative pt-2">
               {/* Title stack */}
-              <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-widest uppercase mb-0">
+              <h2 className="text-[11px] md:text-sm font-bold text-foreground tracking-[0.2em] uppercase mb-0">
                 Certificate
               </h2>
-              <p className="text-xs md:text-sm text-muted-foreground uppercase tracking-[0.2em] mb-3">
+              <p className="text-[8px] md:text-[10px] text-muted-foreground uppercase tracking-[0.15em] mb-1.5">
                 of Achievement
               </p>
               
               {/* Program name with chevrons */}
-              <div className="flex items-center gap-2 mb-5">
-                <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <div className="flex items-center gap-1.5 mb-3">
+                <svg className="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
-                <span className="text-base md:text-lg font-bold text-foreground uppercase tracking-wide">
+                <span className="text-[10px] md:text-xs font-bold text-foreground uppercase tracking-wide">
                   {programName}
                 </span>
-                <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </div>
 
               {/* Presentation line */}
-              <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2">
+              <p className="text-[7px] md:text-[9px] text-muted-foreground uppercase tracking-[0.1em] mb-1">
                 This certificate is presented to
               </p>
 
               {/* Student name */}
-              <h3 className="text-lg md:text-2xl font-bold text-foreground mb-4">
+              <h3 className="text-sm md:text-lg font-bold text-foreground mb-2">
                 {studentName}
               </h3>
 
-              {/* Watermark badge at bottom */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-20 opacity-[0.15]">
+              {/* Watermark badge centered below content */}
+              <div className="w-14 h-14 md:w-16 md:h-16 opacity-[0.12] mt-auto mb-2">
                 <svg viewBox="0 0 200 200" className="w-full h-full text-primary">
                   {/* Outer gear circle with teeth */}
                   <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="3" fill="none"/>
