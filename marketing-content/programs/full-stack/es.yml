@@ -141,13 +141,19 @@ sections:
       url: /registro
       variant: primary
   - type: pricing
-    version: "1.0"
-    variant: product
-    title: Financia Tu Inversión
-    subtitle: Ofrecemos múltiples formas de financiar tu inscripción. Elige la opción que mejor funcione para ti.
-    discount_text: "Descuento por Pago Completo: Ahorra 10% con pago por adelantado."
-    financing_text: "Financiamiento Basado en Crédito: desde"
-    financing_amount: "$150"
+    title: Accede a toda nuestra base de datos de aprendizaje, cursos y servicios
+    subtitle: Aprende nuevas habilidades cada 30 min, nunca te quedes atascado o perdido.
+    monthly:
+      discount_badge: 35% OFF
+      price: "38.99"
+      period: mes
+      original_price: "59.99"
+    yearly:
+      discount_badge: 35% OFF
+      price: "311.99"
+      period: año
+      original_price: "479.99"
+      savings_badge: Ahorra 3 meses
     tech_icons:
       - html
       - css

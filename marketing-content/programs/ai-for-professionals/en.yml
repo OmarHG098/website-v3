@@ -157,13 +157,19 @@ sections:
       url: /apply
       variant: primary
   - type: pricing
-    version: "1.0"
-    variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
-    financing_amount: "$99"
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
+    monthly:
+      discount_badge: 35% OFF
+      price: "38.99"
+      period: mo
+      original_price: "59.99"
+    yearly:
+      discount_badge: 35% OFF
+      price: "311.99"
+      period: yr
+      original_price: "479.99"
+      savings_badge: Save 3 months
     tech_icons:
       - openai
       - brain
