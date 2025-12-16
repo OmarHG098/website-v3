@@ -69,6 +69,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
             const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
             const TablerIcon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
             
+            // Feature card with bottom primary border and custom/Tabler icon
             return (
               <Card 
                 key={index} 
