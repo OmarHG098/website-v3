@@ -61,7 +61,11 @@ export interface LeadFormData {
   };
   terms_url?: string;
   privacy_url?: string;
-  show_consent?: boolean;
+  consent?: {
+    email?: boolean;
+    sms?: boolean;
+    whatsapp?: boolean;
+  };
   show_terms?: boolean;
   className?: string;
   turnstile?: {
@@ -92,7 +96,8 @@ interface FormValues {
   location: string;
   coupon: string;
   comment: string;
-  sms_consent: boolean;
+  consent_email: boolean;
+  consent_sms: boolean;
   consent_whatsapp: boolean;
 }
 
@@ -117,7 +122,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const variant = data.variant || "stacked";
   const fields = data.fields || {};
-  const showConsent = data.show_consent !== false;
+  const consent = data.consent || {};
   const showTerms = data.show_terms !== false;
 
   const getFieldConfig = (fieldName: keyof NonNullable<LeadFormData["fields"]>): FieldConfig => {
@@ -169,7 +174,8 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       location: resolveDefault("location", getFieldConfig("location").default),
       coupon: resolveDefault("coupon", getFieldConfig("coupon").default),
       comment: "",
-      sms_consent: false,
+      consent_email: false,
+      consent_sms: false,
       consent_whatsapp: false,
     },
   });
@@ -196,8 +202,15 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
       }
 
+      // Map consent fields to backend field names
+      const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
+      
       const payload = {
-        ...values,
+        ...restValues,
+        // Consent fields mapped to backend names
+        consent_email: consent_email || false,
+        sms_consent: consent_sms || false,
+        consent_whatsapp: consent_whatsapp || false,
         location: values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
         region: values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
         coupon: values.coupon || utm.coupon || resolveDefault("coupon", getFieldConfig("coupon").default),
@@ -413,6 +426,31 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               <p className="text-sm text-muted-foreground mt-2" data-testid="text-email-helper">
                 {emailConfig.helper_text}
               </p>
+            )}
+            {consent.email && (
+              <FormField
+                control={form.control}
+                name="consent_email"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 mt-3">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        data-testid="checkbox-consent-email"
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                        {locale === "es"
+                          ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing."
+                          : "I agree to receive information via email about workshops, events, courses, and other marketing materials."
+                        }
+                      </Label>
+                    </div>
+                  </FormItem>
+                )}
+              />
             )}
           </form>
         </Form>
@@ -714,55 +752,85 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             />
           )}
 
-          {showConsent && (
+          {(consent.email || consent.sms || consent.whatsapp) && (
             <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="sms_consent"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        data-testid="checkbox-sms-consent"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="sms_consent">
-                        {locale === "es" 
-                          ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                          : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
-                        }
-                      </Label>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {consent.email && (
+                <FormField
+                  control={form.control}
+                  name="consent_email"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-email"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                          {locale === "es"
+                            ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="consent_whatsapp"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        data-testid="checkbox-consent-whatsapp"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_whatsapp">
-                        {locale === "es"
-                          ? "Acepto recibir información a través de correo electrónico, WhatsApp y/u otros canales sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                          : "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
-                        }
-                      </Label>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {consent.sms && (
+                <FormField
+                  control={form.control}
+                  name="consent_sms"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-sms"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_sms">
+                          {locale === "es" 
+                            ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {consent.whatsapp && (
+                <FormField
+                  control={form.control}
+                  name="consent_whatsapp"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-whatsapp"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_whatsapp">
+                          {locale === "es"
+                            ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
           )}
 

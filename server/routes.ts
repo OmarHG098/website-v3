@@ -1289,6 +1289,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         course: leadData.program || null,
         consent: leadData.consent_whatsapp || false,
         sms_consent: leadData.sms_consent || false,
+        consent_email: leadData.consent_email || false,
         comment: leadData.comment || null,
         // Session/tracking data
         utm_url: leadData.utm_url || null,
