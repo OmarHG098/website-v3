@@ -7,107 +7,136 @@ interface CertificateCardProps {
 export function CertificateCard({ programName = "Full-Stack Developer", studentName, certificateLabel = "Certificate of Completion" }: CertificateCardProps) {
   return (
     <div 
-      className="relative w-full aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-lg border border-border"
+      className="relative w-full aspect-[4/3] bg-[#485c6e] rounded-lg overflow-hidden shadow-lg"
       data-testid="certificate-card-dynamic"
     >
-      {/* Blue header bar */}
-      <div className="absolute top-0 left-0 right-0 h-12 bg-primary flex items-center px-4">
+      {/* Blue header bar - outside the certificate border */}
+      <div className="absolute top-0 left-0 right-0 h-10 bg-primary flex items-center px-4 z-10">
         <div className="flex items-center gap-2">
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="32" height="32" rx="4" fill="white"/>
             <path d="M8 12h4v8H8v-8zm6 0h4v8h-4v-8zm6 0h4v8h-4v-8z" fill="#0D6EFD"/>
             <path d="M16 8c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z" fill="#0D6EFD"/>
           </svg>
-          <span className="text-white font-bold text-lg">4Geeks</span>
+          <span className="text-white font-bold text-base">4Geeks</span>
         </div>
-        {/* Window buttons */}
+        {/* Window dots - outside the border */}
         <div className="ml-auto flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-yellow-400" />
-          <div className="w-3 h-3 rounded-full bg-green-400" />
-          <div className="w-3 h-3 rounded-full bg-red-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
         </div>
       </div>
 
-      {/* Colorful corner decorations */}
-      {/* Top right */}
-      <div className="absolute top-12 right-0 w-16 h-32">
-        <div className="absolute top-0 right-0 w-8 h-16 bg-cyan-400 rounded-bl-full" />
-        <div className="absolute top-12 right-0 w-12 h-20 bg-yellow-400 rounded-l-full" />
+      {/* Colorful corner decorations - outside the white certificate area */}
+      {/* Top right corner */}
+      <div className="absolute top-10 right-0 z-0">
+        <div className="absolute top-0 right-0 w-6 h-14 bg-cyan-400 rounded-bl-full" />
+        <div className="absolute top-10 right-0 w-10 h-16 bg-yellow-400 rounded-l-full" />
       </div>
       
-      {/* Bottom right */}
-      <div className="absolute bottom-0 right-0 w-20 h-20">
-        <div className="absolute bottom-0 right-0 w-16 h-16 bg-blue-500" />
-        <div className="absolute bottom-2 right-2 w-8 h-8 bg-orange-500 rounded-tl-lg" />
-        <div className="absolute bottom-0 right-8 w-4 h-8 bg-red-500" />
+      {/* Bottom right corner */}
+      <div className="absolute bottom-0 right-0 z-0">
+        <div className="absolute bottom-0 right-0 w-14 h-14 bg-blue-500" />
+        <div className="absolute bottom-2 right-2 w-6 h-6 bg-orange-500 rounded-tl-lg" />
+        <div className="absolute bottom-0 right-10 w-3 h-6 bg-red-500" />
       </div>
       
       {/* Left side decoration */}
-      <div className="absolute left-0 top-1/3 w-6 h-24">
-        <div className="absolute left-0 top-0 w-4 h-12 bg-green-400 rounded-r-full" />
-        <div className="absolute left-0 top-10 w-5 h-14 bg-blue-400 rounded-r-full" />
+      <div className="absolute left-0 top-1/3 z-0">
+        <div className="absolute left-0 top-0 w-3 h-10 bg-green-400 rounded-r-full" />
+        <div className="absolute left-0 top-8 w-4 h-12 bg-blue-400 rounded-r-full" />
       </div>
 
-      {/* Center watermark seal */}
-      <div className="absolute inset-0 flex items-center justify-center pt-8">
-        <div className="relative w-48 h-48 opacity-20">
-          {/* Outer gear/cog ring */}
-          <svg viewBox="0 0 200 200" className="w-full h-full text-primary">
-            {/* Laurel wreath left */}
-            <g transform="translate(30, 50)">
-              <path d="M40 100c-20-10-35-30-38-55 5 20 20 40 38 55zm-5-10c-15-8-25-25-28-45 4 15 15 32 28 45zm-5-10c-12-6-20-20-22-38 3 12 12 26 22 38z" 
-                fill="currentColor" opacity="0.6"/>
-            </g>
-            {/* Laurel wreath right */}
-            <g transform="translate(130, 50) scale(-1, 1)">
-              <path d="M40 100c-20-10-35-30-38-55 5 20 20 40 38 55zm-5-10c-15-8-25-25-28-45 4 15 15 32 28 45zm-5-10c-12-6-20-20-22-38 3 12 12 26 22 38z" 
-                fill="currentColor" opacity="0.6"/>
-            </g>
-            {/* Outer dashed circle */}
-            <circle cx="100" cy="100" r="85" stroke="currentColor" strokeWidth="1" fill="none" strokeDasharray="4 2" opacity="0.4"/>
-            {/* Text arc - 4GEEKS */}
-            <text>
-              <textPath href="#topArc" className="text-xs font-bold" fill="currentColor">
-                4GEEKS
-              </textPath>
-            </text>
-            <defs>
-              <path id="topArc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
-              <path id="bottomArc" d="M 170 100 A 70 70 0 0 1 30 100" fill="none"/>
-            </defs>
-            {/* Text arc - CODE WILL SET YOU FREE */}
-            <text>
-              <textPath href="#bottomArc" className="text-xs font-bold" fill="currentColor">
-                CODE WILL SET YOU FREE
-              </textPath>
-            </text>
-            {/* Inner gear circle */}
-            <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.5"/>
-            {/* Gear teeth */}
-            {[...Array(16)].map((_, i) => {
-              const angle = (i * 360 / 16) * Math.PI / 180;
-              const x1 = 100 + 48 * Math.cos(angle);
-              const y1 = 100 + 48 * Math.sin(angle);
-              const x2 = 100 + 56 * Math.cos(angle);
-              const y2 = 100 + 56 * Math.sin(angle);
-              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="4" opacity="0.5"/>;
-            })}
-            {/* Center emblem */}
-            <circle cx="100" cy="100" r="35" fill="currentColor" opacity="0.15"/>
-            <circle cx="100" cy="100" r="28" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.4"/>
-          </svg>
+      {/* Bottom left corner */}
+      <div className="absolute bottom-0 left-0 z-0">
+        <div className="absolute bottom-0 left-0 w-8 h-8 bg-red-500 rounded-tr-full" />
+      </div>
+
+      {/* White certificate area with thin colorful border going all around */}
+      <div className="absolute top-12 left-2 right-2 bottom-2 z-[1]">
+        {/* Rainbow gradient border */}
+        <div 
+          className="absolute inset-0 rounded-md"
+          style={{
+            background: 'linear-gradient(90deg, #22c55e 0%, #06b6d4 20%, #3b82f6 40%, #f59e0b 60%, #ef4444 80%, #ec4899 100%)',
+            padding: '3px'
+          }}
+        >
+          {/* White inner area */}
+          <div className="w-full h-full bg-white rounded-[4px] relative overflow-hidden">
+            {/* Center watermark seal */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-44 h-44 opacity-[0.12]">
+                <svg viewBox="0 0 200 200" className="w-full h-full text-primary">
+                  {/* Laurel wreath left */}
+                  <g transform="translate(20, 40)">
+                    <path d="M35 120c-25-12-42-35-45-65 6 25 25 48 45 65z" fill="currentColor"/>
+                    <path d="M32 105c-20-10-32-30-35-55 5 20 18 40 35 55z" fill="currentColor"/>
+                    <path d="M28 90c-15-8-25-22-28-42 4 16 14 32 28 42z" fill="currentColor"/>
+                    <path d="M24 75c-12-6-18-18-20-35 3 12 10 25 20 35z" fill="currentColor"/>
+                    <path d="M20 60c-8-5-14-14-15-28 2 10 7 20 15 28z" fill="currentColor"/>
+                  </g>
+                  {/* Laurel wreath right */}
+                  <g transform="translate(180, 40) scale(-1, 1)">
+                    <path d="M35 120c-25-12-42-35-45-65 6 25 25 48 45 65z" fill="currentColor"/>
+                    <path d="M32 105c-20-10-32-30-35-55 5 20 18 40 35 55z" fill="currentColor"/>
+                    <path d="M28 90c-15-8-25-22-28-42 4 16 14 32 28 42z" fill="currentColor"/>
+                    <path d="M24 75c-12-6-18-18-20-35 3 12 10 25 20 35z" fill="currentColor"/>
+                    <path d="M20 60c-8-5-14-14-15-28 2 10 7 20 15 28z" fill="currentColor"/>
+                  </g>
+                  {/* Text arc paths */}
+                  <defs>
+                    <path id="topArc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
+                    <path id="bottomArc" d="M 170 115 A 65 65 0 0 1 35 115" fill="none"/>
+                  </defs>
+                  {/* 4GEEKS text top */}
+                  <text fill="currentColor" fontSize="14" fontWeight="bold" letterSpacing="8">
+                    <textPath href="#topArc" startOffset="50%" textAnchor="middle">
+                      4GEEKS
+                    </textPath>
+                  </text>
+                  {/* CODE WILL SET YOU FREE text bottom */}
+                  <text fill="currentColor" fontSize="9" fontWeight="bold" letterSpacing="2">
+                    <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
+                      CODE WILL SET YOU FREE
+                    </textPath>
+                  </text>
+                  {/* Outer gear circle with teeth */}
+                  <circle cx="100" cy="100" r="55" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  {/* Gear teeth */}
+                  {[...Array(20)].map((_, i) => {
+                    const angle = (i * 360 / 20) * Math.PI / 180;
+                    const x1 = 100 + 53 * Math.cos(angle);
+                    const y1 = 100 + 53 * Math.sin(angle);
+                    const x2 = 100 + 62 * Math.cos(angle);
+                    const y2 = 100 + 62 * Math.sin(angle);
+                    return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>;
+                  })}
+                  {/* Inner circle */}
+                  <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  {/* Center 4Geeks icon placeholder */}
+                  <g transform="translate(75, 80)">
+                    {/* Simplified 4Geeks logo shape */}
+                    <rect x="5" y="5" width="40" height="30" rx="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                    <path d="M15 12v16M25 12v16M35 12v16" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            {/* Certificate content */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+              <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">{certificateLabel}</p>
+              <h3 className="text-2xl font-bold text-foreground mb-1">{programName}</h3>
+              {studentName && (
+                <p className="text-lg text-muted-foreground mt-4">
+                  Awarded to: <span className="font-semibold text-foreground">{studentName}</span>
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Certificate content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pt-16 px-8 text-center">
-        <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">{certificateLabel}</p>
-        <h3 className="text-2xl font-bold text-foreground mb-1">{programName}</h3>
-        {studentName && (
-          <p className="text-lg text-muted-foreground mt-4">
-            Awarded to: <span className="font-semibold text-foreground">{studentName}</span>
-          </p>
-        )}
       </div>
     </div>
   );
