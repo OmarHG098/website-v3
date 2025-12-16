@@ -70,35 +70,30 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
 interface FocusAreaCardProps {
   title: string;
   icon?: string;
-  isActive: boolean;
-  onSelect: () => void;
   testId: string;
 }
 
-function FocusAreaCard({ title, icon, isActive, onSelect, testId }: FocusAreaCardProps) {
+function FocusAreaCard({ title, icon, testId }: FocusAreaCardProps) {
   return (
     <Card
       className={cn(
-        "cursor-pointer transition-all duration-200 overflow-hidden",
-        "border-l-4",
-        isActive 
-          ? "border-l-primary bg-card shadow-md" 
-          : "border-l-primary/30 bg-card/80 hover:bg-card hover:border-l-primary/60"
+        "transition-all duration-200 overflow-hidden group",
+        "border-l-4 border-l-primary/40",
+        "bg-card hover:bg-muted hover:border-l-primary hover:shadow-md"
       )}
-      onClick={onSelect}
       data-testid={testId}
-      data-active={isActive}
     >
-      <div className="flex items-center gap-3 p-4">
+      <div className="flex items-center gap-4 p-5">
         <div className={cn(
           "flex-shrink-0 transition-colors duration-200",
-          isActive ? "text-primary" : "text-muted-foreground"
+          "text-muted-foreground group-hover:text-primary"
         )}>
-          {getIcon(icon || "Sparkles", "w-5 h-5")}
+          {getIcon(icon || "Sparkles", "w-6 h-6")}
         </div>
         <span className={cn(
-          "text-sm font-medium transition-colors duration-200",
-          isActive ? "text-foreground" : "text-muted-foreground"
+          "text-base transition-all duration-200",
+          "text-muted-foreground font-medium",
+          "group-hover:text-foreground group-hover:font-semibold"
         )}>
           {title}
         </span>
@@ -166,7 +161,6 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 }
 
 function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
   const focusAreas = data.focus_areas || [];
 
   if (focusAreas.length === 0) {
@@ -185,7 +179,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
       data-testid="section-syllabus-landing"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
+        <div className="mb-10">
           <h2 
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
             data-testid="text-syllabus-title"
@@ -210,14 +204,12 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {focusAreas.map((area, index) => (
             <FocusAreaCard
               key={index}
               title={area.title}
               icon={area.icon}
-              isActive={activeIndex === index}
-              onSelect={() => setActiveIndex(index)}
               testId={`syllabus-focus-${index}`}
             />
           ))}
