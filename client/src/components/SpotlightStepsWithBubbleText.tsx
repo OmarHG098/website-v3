@@ -142,17 +142,21 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
         {/* Desktop: CSS Grid Triangle layout with background and connectors */}
         <div className="hidden md:block relative">
-          {/* Subtle radial gradient background */}
+          {/* Mid-moon background */}
           <div 
-            className="absolute inset-0 pointer-events-none"
+            className="absolute pointer-events-none bg-primary/10 rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.05) 0%, transparent 70%)",
+              width: "500px",
+              height: "500px",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -40%)",
             }}
           />
 
           {/* SVG Curved Connector Lines - temporarily hidden */}
 
-          <div className="relative grid grid-cols-3 grid-rows-2 gap-4" style={{ minHeight: "400px" }}>
+          <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-2 gap-8" style={{ minHeight: "420px" }}>
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
             {steps[1] && (
               <div
@@ -193,7 +197,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             {/* Step 1 - Bottom Left (row 2, col 1) - Title to LEFT of circle */}
             {steps[0] && (
               <div
-                className={`col-start-1 row-start-2 flex items-center justify-end gap-4 h-full transition-opacity duration-300 ${getStepOpacity(0)}`}
+                className={`col-start-1 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(0)}`}
                 data-testid="spotlight-step-1"
               >
                 <div className="flex items-center gap-3">
@@ -231,45 +235,45 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             <div
               className="col-start-2 row-start-2 flex items-center justify-center"
             >
-              {activeContent && (
-                <div
-                  key={activeStep}
-                  className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-8 shadow-lg w-80 
-                    animate-in fade-in zoom-in-95 duration-300
-                    before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
-                    after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
-                    ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
-                    ${activeStep === 1 ? "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-b-0 before:border-r-0 after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/3" : ""}
-                    ${activeStep === 2 ? "before:right-0 before:top-1/2 before:translate-x-1/2 before:-translate-y-1/2 before:border-l-0 before:border-b-0 after:right-0 after:top-1/2 after:translate-x-1/3 after:-translate-y-1/2" : ""}
-                  `}
-                  data-testid="bubble-content"
-                >
-                  {activeContent.title && (
-                    <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-                      <span className="text-primary font-bold text-2xl">
-                        {String(activeStep + 1).padStart(2, "0")}
-                      </span>
-                      {activeContent.title}
-                    </h4>
-                  )}
-                  {activeContent.text && (
-                    <p className="text-muted-foreground mb-4 text-base">{activeContent.text}</p>
-                  )}
-                  {activeContent.bullets.length > 0 && (
-                    <ul className="space-y-3">
-                      {activeContent.bullets.map((bullet, bulletIndex) => (
-                        <li
-                          key={bulletIndex}
-                          className="flex gap-2 items-start text-base text-muted-foreground"
-                        >
-                          <span className="text-primary flex-shrink-0 mt-1">•</span>
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
+              <div
+                className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-8 shadow-lg w-[420px] min-h-[280px] flex flex-col
+                  before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
+                  after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
+                  ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
+                  ${activeStep === 1 ? "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-b-0 before:border-r-0 after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/3" : ""}
+                  ${activeStep === 2 ? "before:right-0 before:top-1/2 before:translate-x-1/2 before:-translate-y-1/2 before:border-l-0 before:border-b-0 after:right-0 after:top-1/2 after:translate-x-1/3 after:-translate-y-1/2" : ""}
+                `}
+                data-testid="bubble-content"
+              >
+                {activeContent && (
+                  <div key={activeStep} className="animate-in fade-in duration-300">
+                    {activeContent.title && (
+                      <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                        <span className="text-primary font-bold text-2xl">
+                          {String(activeStep + 1).padStart(2, "0")}
+                        </span>
+                        {activeContent.title}
+                      </h4>
+                    )}
+                    {activeContent.text && (
+                      <p className="text-muted-foreground mb-4 text-base">{activeContent.text}</p>
+                    )}
+                    {activeContent.bullets.length > 0 && (
+                      <ul className="space-y-3">
+                        {activeContent.bullets.map((bullet, bulletIndex) => (
+                          <li
+                            key={bulletIndex}
+                            className="flex gap-2 items-start text-base text-muted-foreground"
+                          >
+                            <span className="text-primary flex-shrink-0 mt-1">•</span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Step 3 - Bottom Right (row 2, col 3) - Title to RIGHT of circle */}
