@@ -154,13 +154,23 @@ export function SectionEditorPanel({
     }
   }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate]);
 
-  // Save and close editor
+  // Save without closing editor
   const handleSave = useCallback(async () => {
-    const success = await saveToServer();
-    if (success) {
-      onClose();
+    await saveToServer();
+  }, [saveToServer]);
+  
+  // Handle close with unsaved changes warning
+  const handleClose = useCallback(() => {
+    if (hasChanges) {
+      const confirmed = window.confirm("You have unsaved changes. Are you sure you want to close without saving?");
+      if (!confirmed) return;
     }
-  }, [saveToServer, onClose]);
+    // Clear live preview when closing
+    if (onPreviewChange) {
+      onPreviewChange(null);
+    }
+    onClose();
+  }, [hasChanges, onClose, onPreviewChange]);
 
   const sectionType = (section as { type: string }).type || "unknown";
 
@@ -177,7 +187,7 @@ export function SectionEditorPanel({
         <Button
           size="icon"
           variant="ghost"
-          onClick={onClose}
+          onClick={handleClose}
           data-testid="button-close-editor"
         >
           <IconX className="h-4 w-4" />
@@ -221,7 +231,7 @@ export function SectionEditorPanel({
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={handleClose}
             data-testid="button-cancel-edit"
           >
             Cancel

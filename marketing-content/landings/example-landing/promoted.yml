@@ -7,23 +7,15 @@ meta:
 sections:
   - type: hero
     version: "1.0"
-    title: You Are Not Alone Anymore
-    subtitle: Receive personalized career support tailored to your goals
+    variant: productShowcase
     welcome_text: Welcome to
     brand_mark:
       prefix: Personalized
       highlight: Support
-      suffix: "for the AI Era:"
       color: chart-5
+    title: You Are Not Alone Anymore
+    subtitle: Receive personalized career support tailored to your goals
     description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
-    video:
-      url: /attached_assets/ai-engineering_1765593572918.mp4
-      title: AI Engineering Overview
-      ratio: "9:16"
-      muted: true
-      autoplay: false
-      loop: true
-      preview_image_url: /attached_assets/ai-preview_1765593572918.jpg
     background_image:
       src: /attached_assets/ai-engineering-light_1765830844948.jpg
       alt: AI Engineering Background
@@ -61,7 +53,6 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-    variant: productShowcase
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
