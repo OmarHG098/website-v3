@@ -9,9 +9,10 @@ interface CTABannerSectionProps {
 }
 
 export function CTABannerSection({ data }: CTABannerSectionProps) {
-  const { session } = useSession();
+  const sessionContext = useSession();
+  const session = sessionContext?.session;
   
-  const isUS = session.geo?.country_code === 'US' || session.location?.country_code === 'US';
+  const isUS = session?.geo?.country_code === 'US' || session?.location?.country_code === 'US';
   
   const filteredButtons = data.buttons?.filter(button => {
     if (button.us_only && !isUS) {
@@ -62,8 +63,8 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
               );
             })}
           </div>
-        ) : (
-          <Link href={data.cta_url || "#"}>
+        ) : data.cta_text && data.cta_url ? (
+          <Link href={data.cta_url}>
             <Button 
               size="lg" 
               variant="secondary"
@@ -74,7 +75,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
               <IconArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
-        )}
+        ) : null}
       </div>
     </section>
   );
