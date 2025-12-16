@@ -7,6 +7,7 @@ import Graduation from "./Graduation";
 import GrowthChart from "./GrowthChart";
 import HandsGroup from "./HandsGroup";
 import Handshake from "./Handshake";
+import Mentor2 from "./Mentor2";
 import Monitor from "./Monitor";
 import PeopleGroup from "./PeopleGroup";
 import Rigobot from "./Rigobot";
@@ -14,6 +15,7 @@ import RigobotIconTiny from "./RigobotIconTiny";
 import Rocket from "./Rocket";
 import Security from "./Security";
 import StairsWithFlag from "./StairsWithFlag";
+import Target from "./Target";
 
 const customIcons: Record<string, React.ComponentType<{
   width?: string;
@@ -31,6 +33,7 @@ const customIcons: Record<string, React.ComponentType<{
   GrowthChart,
   HandsGroup,
   Handshake,
+  Mentor2,
   Monitor,
   PeopleGroup,
   Rigobot,
@@ -38,6 +41,7 @@ const customIcons: Record<string, React.ComponentType<{
   Rocket,
   Security,
   StairsWithFlag,
+  Target,
 };
 
 export function getCustomIcon(name: string) {
@@ -54,6 +58,7 @@ export {
   GrowthChart,
   HandsGroup,
   Handshake,
+  Mentor2,
   Monitor,
   PeopleGroup,
   Rigobot,
@@ -61,4 +66,5 @@ export {
   Rocket,
   Security,
   StairsWithFlag,
+  Target,
 };
