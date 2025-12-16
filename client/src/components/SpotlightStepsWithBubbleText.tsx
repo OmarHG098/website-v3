@@ -34,15 +34,15 @@ function getIcon(iconName?: string) {
 }
 
 export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWithBubbleTextProps) {
-  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState<number>(0);
   const steps = data.steps || [];
 
   const handleStepInteraction = (index: number) => {
-    setActiveStep(activeStep === index ? null : index);
+    setActiveStep(index);
   };
 
   const getActiveContent = () => {
-    if (activeStep === null || !steps[activeStep]) return null;
+    if (!steps[activeStep]) return null;
     const step = steps[activeStep];
     return {
       title: step.title,
@@ -52,6 +52,16 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
   };
 
   const activeContent = getActiveContent();
+
+  // Determine bubble pointer direction based on active step
+  const getBubblePointerClass = () => {
+    switch (activeStep) {
+      case 0: return "before:left-0 before:-translate-x-1/2 before:rotate-45"; // Points left (to step 1)
+      case 1: return "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45"; // Points up (to step 2)
+      case 2: return "before:right-0 before:translate-x-1/2 before:rotate-45"; // Points right (to step 3)
+      default: return "";
+    }
+  };
 
   return (
     <section
@@ -203,15 +213,21 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
           <div
             className="col-start-2 row-start-2 flex items-center justify-center"
           >
-            {activeContent ? (
+            {activeContent && (
               <div
-                className="relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm transition-all duration-300 animate-in fade-in zoom-in-95"
+                className={`relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm transition-all duration-300 
+                  before:content-[''] before:absolute before:w-4 before:h-4 before:bg-card before:border-2 before:border-primary/30 
+                  before:top-1/2 before:-translate-y-1/2 ${getBubblePointerClass()}
+                  ${activeStep === 0 ? "before:border-r-0 before:border-t-0" : ""}
+                  ${activeStep === 1 ? "before:border-b-0 before:border-r-0 before:top-0" : ""}
+                  ${activeStep === 2 ? "before:border-l-0 before:border-b-0" : ""}
+                `}
                 data-testid="bubble-content"
               >
                 {activeContent.title && (
                   <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
                     <span className="text-primary font-bold">
-                      {String((activeStep ?? 0) + 1).padStart(2, "0")}
+                      {String(activeStep + 1).padStart(2, "0")}
                     </span>
                     {activeContent.title}
                   </h4>
@@ -232,15 +248,6 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     ))}
                   </ul>
                 )}
-              </div>
-            ) : (
-              <div
-                className="bg-muted/50 border-2 border-dashed border-muted-foreground/30 rounded-xl p-6 max-w-sm text-center"
-                data-testid="bubble-placeholder"
-              >
-                <p className="text-muted-foreground">
-                  Hover or click on a step to see details
-                </p>
               </div>
             )}
           </div>
