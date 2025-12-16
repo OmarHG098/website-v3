@@ -58,7 +58,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
               
               <h1 
-                className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
+                className="text-4xl lg:text-5xl font-medium text-foreground mt-[16px] mb-[16px]"
                 data-testid="text-hero-title"
               >
                 {data.title}
