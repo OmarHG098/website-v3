@@ -92,19 +92,19 @@ sections:
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
-    title: Learn Smarter, Not Harder
-    description: Our AI-powered platform and unlimited mentorship accelerate your learning journey.
+    title: Why Learn with 4Geeks?
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
     features:
       - icon: Robot
-        title: AI-Powered Feedback
-        description: Get instant code reviews and personalized guidance 24/7 from our AI tutor.
+        title: Progress faster with AI
+        description: Rigobot gives personalized feedback and keeps you moving forward.
       - icon: Headset
-        title: Unlimited 1:1 Mentorship
-        description: Book as many sessions as you need with AI engineering experts.
+        title: One-on-one mentoring sessions
+        description: Unlimited access to 1:1 mentorship and career coaching, for life.
       - icon: Users
-        title: Active Community
-        description: Learn alongside motivated peers and accelerate your progress.
+        title: Peer-driven learning
+        description: Learn faster with an active community that keeps you accountable.
     highlight:
       title: Maximize Your Progress
       description: Live instruction, unlimited mentorship, and AI tools built for smarter learning.
