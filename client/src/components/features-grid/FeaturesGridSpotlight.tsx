@@ -45,8 +45,8 @@ function SpotlightCard({
         p-4 md:p-6 cursor-pointer outline-none
         transition-all duration-300 ease-out
         ${isActive 
-          ? 'shadow-lg z-10 bg-card border-primary/20' 
-          : 'opacity-60 bg-card/50 hover:opacity-80'
+          ? 'scale-105 shadow-lg z-10 bg-card border-primary/20' 
+          : 'scale-95 opacity-60 bg-card/50 hover:opacity-80'
         }
       `}
       onMouseEnter={onMouseEnter}
@@ -212,7 +212,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
 
         <div 
           ref={containerRef}
-          className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch outline-none`}
+          className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch outline-none py-4`}
           tabIndex={0}
           onKeyDown={handleKeyDown}
           onFocus={handleContainerFocus}
