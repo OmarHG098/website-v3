@@ -345,19 +345,18 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               </Button>
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
-              <div className="mt-3 empty:hidden" data-testid="turnstile-widget">
-                <Turnstile
-                  siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={setTurnstileToken}
-                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-                  onExpire={() => setTurnstileToken(null)}
-                  options={{
-                    theme: data.turnstile?.theme || "auto",
-                    size: data.turnstile?.size || "compact",
-                    appearance: "interaction-only",
-                  }}
-                />
-              </div>
+              <Turnstile
+                siteKey={turnstileSiteKey.siteKey}
+                onSuccess={setTurnstileToken}
+                onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+                onExpire={() => setTurnstileToken(null)}
+                className="mt-3 empty:hidden"
+                options={{
+                  theme: data.turnstile?.theme || "auto",
+                  size: data.turnstile?.size || "compact",
+                  appearance: "interaction-only",
+                }}
+              />
             )}
             {turnstileError && (
               <p className="text-sm text-destructive mt-2" data-testid="text-turnstile-error">
@@ -722,19 +721,18 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
-            <div className="flex justify-center empty:hidden" data-testid="turnstile-widget">
-              <Turnstile
-                siteKey={turnstileSiteKey.siteKey}
-                onSuccess={setTurnstileToken}
-                onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-                onExpire={() => setTurnstileToken(null)}
-                options={{
-                  theme: data.turnstile?.theme || "auto",
-                  size: data.turnstile?.size || "normal",
-                  appearance: "interaction-only",
-                }}
-              />
-            </div>
+            <Turnstile
+              siteKey={turnstileSiteKey.siteKey}
+              onSuccess={setTurnstileToken}
+              onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+              onExpire={() => setTurnstileToken(null)}
+              className="flex justify-center empty:hidden"
+              options={{
+                theme: data.turnstile?.theme || "auto",
+                size: data.turnstile?.size || "normal",
+                appearance: "interaction-only",
+              }}
+            />
           )}
 
           {turnstileError && (
