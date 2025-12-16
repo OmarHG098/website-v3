@@ -14,6 +14,13 @@ interface EditModeContextValue {
   hasPendingChanges: boolean;
   isSaving: boolean;
   saveChanges: (pageKey: string, contentType: "program" | "landing" | "location", slug: string, locale: string) => Promise<boolean>;
+  // Live sections state for instant updates
+  sections: Section[];
+  setSections: (sections: Section[]) => void;
+  updateSection: (index: number, section: Section) => void;
+  // Track which page the sections belong to
+  pageKey: string;
+  setPageKey: (key: string) => void;
 }
 
 const EditModeContext = createContext<EditModeContextValue | null>(null);
@@ -33,6 +40,16 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
   const [pendingChanges, setPendingChanges] = useState<Map<string, EditOperation[]>>(new Map());
   const [isSaving, setIsSaving] = useState(false);
+  const [sections, setSections] = useState<Section[]>([]);
+  const [pageKey, setPageKey] = useState<string>("");
+
+  const updateSection = useCallback((index: number, section: Section) => {
+    setSections(prev => {
+      const next = [...prev];
+      next[index] = section;
+      return next;
+    });
+  }, []);
 
   const enableEditMode = useCallback(() => {
     setIsEditMode(true);
@@ -41,12 +58,16 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
   const disableEditMode = useCallback(() => {
     setIsEditMode(false);
     setSelectedSectionIndex(null);
+    setSections([]); // Reset sections when exiting edit mode
+    setPageKey(""); // Reset page key for clean re-entry
   }, []);
 
   const toggleEditMode = useCallback(() => {
     setIsEditMode(prev => {
       if (prev) {
         setSelectedSectionIndex(null);
+        setSections([]); // Reset sections when toggling off
+        setPageKey(""); // Reset page key for clean re-entry
       }
       return !prev;
     });
@@ -130,6 +151,11 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     hasPendingChanges,
     isSaving,
     saveChanges,
+    sections,
+    setSections,
+    updateSection,
+    pageKey,
+    setPageKey,
   }), [
     isEditMode,
     enableEditMode,
@@ -142,6 +168,9 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     hasPendingChanges,
     isSaving,
     saveChanges,
+    sections,
+    updateSection,
+    pageKey,
   ]);
 
   return (

@@ -201,21 +201,31 @@ variant_props:
         url:
           type: string
           required: true
+          description: Video URL (YouTube, Vimeo, or local video path)
+        title:
+          type: string
+          required: false
+          description: Video title for accessibility
         ratio:
           type: string
           required: false
+          description: Aspect ratio (e.g., "16:9", "9:12")
         muted:
           type: boolean
           required: false
+          description: Whether video should be muted
         autoplay:
           type: boolean
           required: false
+          description: Whether video should autoplay
         loop:
           type: boolean
           required: false
+          description: Whether video should loop
         preview_image_url:
           type: string
           required: false
+          description: Thumbnail image URL
     image:
       type: object
       required: false
@@ -229,6 +239,19 @@ variant_props:
           required: true
           description: Image alt text for accessibility
       description: Alternative to video - static image on right side
+    background_image:
+      type: object
+      required: false
+      properties:
+        src:
+          type: string
+          required: true
+          description: Background image source URL or path
+        alt:
+          type: string
+          required: false
+          description: Background image alt text for accessibility
+      description: Full-width background image for the section
     form:
       type: object
       required: false

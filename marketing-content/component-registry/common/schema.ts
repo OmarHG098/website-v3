@@ -17,6 +17,7 @@ export type CtaButton = z.infer<typeof ctaButtonSchema>;
 // Video configuration - used in hero, two_column, etc.
 export const videoConfigSchema = z.object({
   url: z.string(),
+  title: z.string().optional(),
   ratio: z.string().optional(),
   muted: z.boolean().optional(),
   autoplay: z.boolean().optional(),
@@ -42,6 +43,15 @@ export const leadFormFieldConfigSchema = z.object({
   helper_text: z.string().optional(),
   placeholder: z.string().optional(),
 });
+
+// Turnstile configuration schema
+export const turnstileConfigSchema = z.object({
+  enabled: z.boolean().optional(),
+  theme: z.enum(["light", "dark", "auto"]).optional(),
+  size: z.enum(["normal", "compact"]).optional(),
+});
+
+export type TurnstileConfig = z.infer<typeof turnstileConfigSchema>;
 
 // Lead Form data schema
 export const leadFormDataSchema = z.object({
@@ -71,6 +81,7 @@ export const leadFormDataSchema = z.object({
   show_consent: z.boolean().optional(),
   show_terms: z.boolean().optional(),
   className: z.string().optional(),
+  turnstile: turnstileConfigSchema.optional(),
 });
 
 export type LeadFormData = z.infer<typeof leadFormDataSchema>;

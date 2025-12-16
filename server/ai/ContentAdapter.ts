@@ -85,11 +85,28 @@ export class ContentAdapter {
     const contextBlock = buildContextBlock(context);
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
+    // Build target example section if provided
+    const targetExampleSection = options.targetExampleYaml 
+      ? `## TARGET VARIANT EXAMPLE
+
+This is a fully-populated example of the target variant. Your output MUST include ALL properties shown in this example:
+
+\`\`\`yaml
+${options.targetExampleYaml}
+\`\`\`
+
+IMPORTANT: Populate EVERY property present in this example. Do not omit any fields - generate appropriate content for any property that exists in the example but not in the source.
+`
+      : '';
+
     const prompt = `${contextBlock}
 
 ${structureBlock}
 
+${targetExampleSection}
 ## SOURCE CONTENT TO ADAPT
+
+This is the original content. Preserve its core message and value proposition while restructuring it to match the target variant:
 
 \`\`\`yaml
 ${options.sourceYaml}
@@ -98,13 +115,14 @@ ${options.sourceYaml}
 ## INSTRUCTIONS
 
 Transform the source content to match the target component structure while:
-1. Maintaining the core message and value proposition
+1. Maintaining the core message and value proposition from the source
 2. Adapting language to match brand voice guidelines
-3. Ensuring all required properties are filled with appropriate content
-4. Using appropriate content from the source or generating contextually appropriate content
+3. POPULATING ALL PROPERTIES shown in the target variant example - do not leave any optional fields empty
+4. For properties that exist in the target but not the source, generate contextually appropriate content that matches the brand voice
 5. Following the component's when_to_use guidance
+6. If the target has arrays (like badges, logos, CTAs), populate them with the same number of items as the example
 
-Respond with a JSON object that matches the target component structure.`;
+Respond with a JSON object that matches the target component structure with ALL properties populated.`;
 
     try {
       // Try structured output first
@@ -120,13 +138,32 @@ Respond with a JSON object that matches the target component structure.`;
       // Validate the structured output against our schema (recursive validation)
       const validation = validateContentAgainstSchema(result.content, context.component, context.targetVariant);
       
-      if (!validation.valid) {
-        console.warn("Structured output missing required fields:", validation.errors);
-        // Continue with cleaned content, letting downstream validation handle issues
+      // Build warnings list
+      const warnings: string[] = [];
+      if (validation.errors.length > 0) {
+        warnings.push(...validation.errors);
+      }
+      if (validation.unknownProps && validation.unknownProps.length > 0) {
+        for (const prop of validation.unknownProps) {
+          warnings.push(`Unknown property not in schema: "${prop}"`);
+        }
+      }
+      
+      // Merge cleaned properties with unknown properties (preserve AI output)
+      const mergedContent: Record<string, unknown> = { ...validation.cleaned };
+      for (const prop of validation.unknownProps || []) {
+        if (result.content[prop] !== undefined) {
+          mergedContent[prop] = result.content[prop];
+        }
       }
 
+      // Add variant if applicable
+      const contentWithVariant = context.targetVariant 
+        ? { ...mergedContent, variant: context.targetVariant }
+        : mergedContent;
+
       // Convert to YAML
-      const adaptedYaml = yaml.dump(validation.cleaned, { 
+      const adaptedYaml = yaml.dump(contentWithVariant, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -144,6 +181,7 @@ Respond with a JSON object that matches the target component structure.`;
               total: result.usage.total_tokens,
             }
           : undefined,
+        warnings: warnings.length > 0 ? warnings : undefined,
       };
     } catch (error) {
       // If structured output fails (e.g., schema too complex), fall back to text-based approach
@@ -162,11 +200,12 @@ Respond with a JSON object that matches the target component structure.`;
     // Build full context
     const context = await this.contextManager.buildAdaptationContext(options);
 
-    // Build the prompt
+    // Build the prompt with target example for complete property population
     const prompt = buildAdaptationPrompt(
       context,
       options.sourceYaml,
-      options.targetStructure
+      options.targetStructure,
+      options.targetExampleYaml
     );
 
     // Call LLM
@@ -204,9 +243,42 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       }
 
       // Additional schema validation for the retry
-      const parsed = retryValidation.parsed as Record<string, unknown>;
-      const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-      const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+      // Handle case where AI returns YAML as an array (like `- headline: ...`)
+      let parsedRetry: Record<string, unknown>;
+      if (Array.isArray(retryValidation.parsed) && retryValidation.parsed.length > 0) {
+        parsedRetry = retryValidation.parsed[0] as Record<string, unknown>;
+      } else {
+        parsedRetry = retryValidation.parsed as Record<string, unknown>;
+      }
+      
+      // Validate and get cleaned content + unknown properties
+      const schemaValidation = validateContentAgainstSchema(parsedRetry, context.component, context.targetVariant);
+      
+      // Build warnings list
+      const warnings: string[] = [];
+      if (schemaValidation.errors.length > 0) {
+        warnings.push(...schemaValidation.errors);
+      }
+      if (schemaValidation.unknownProps && schemaValidation.unknownProps.length > 0) {
+        for (const prop of schemaValidation.unknownProps) {
+          warnings.push(`Unknown property not in schema: "${prop}"`);
+        }
+      }
+      
+      // Merge cleaned properties with unknown properties (preserve AI output)
+      const mergedContent: Record<string, unknown> = { ...schemaValidation.cleaned };
+      for (const prop of schemaValidation.unknownProps || []) {
+        if (parsedRetry[prop] !== undefined) {
+          mergedContent[prop] = parsedRetry[prop];
+        }
+      }
+      
+      // Add variant if applicable
+      const retryContentWithVariant = context.targetVariant
+        ? { ...mergedContent, variant: context.targetVariant }
+        : mergedContent;
+      
+      const finalYaml = yaml.dump(retryContentWithVariant, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -224,13 +296,47 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
               total: result.usage.total_tokens + (retryResult.usage?.total_tokens || 0),
             }
           : undefined,
+        warnings: warnings.length > 0 ? warnings : undefined,
       };
     }
 
     // Validate parsed YAML against component schema
-    const parsed = validation.parsed as Record<string, unknown>;
-    const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-    const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+    // Handle case where AI returns YAML as an array (like `- headline: ...`)
+    let parsedContent: Record<string, unknown>;
+    if (Array.isArray(validation.parsed) && validation.parsed.length > 0) {
+      parsedContent = validation.parsed[0] as Record<string, unknown>;
+    } else {
+      parsedContent = validation.parsed as Record<string, unknown>;
+    }
+    
+    // Validate and get cleaned content + unknown properties
+    const schemaValidation = validateContentAgainstSchema(parsedContent, context.component, context.targetVariant);
+    
+    // Build warnings list
+    const warnings: string[] = [];
+    if (schemaValidation.errors.length > 0) {
+      warnings.push(...schemaValidation.errors);
+    }
+    if (schemaValidation.unknownProps && schemaValidation.unknownProps.length > 0) {
+      for (const prop of schemaValidation.unknownProps) {
+        warnings.push(`Unknown property not in schema: "${prop}"`);
+      }
+    }
+    
+    // Merge cleaned properties with unknown properties (preserve AI output)
+    const mergedContent: Record<string, unknown> = { ...schemaValidation.cleaned };
+    for (const prop of schemaValidation.unknownProps || []) {
+      if (parsedContent[prop] !== undefined) {
+        mergedContent[prop] = parsedContent[prop];
+      }
+    }
+    
+    // Add variant if applicable
+    const contentWithVariant = context.targetVariant
+      ? { ...mergedContent, variant: context.targetVariant }
+      : mergedContent;
+    
+    const finalYaml = yaml.dump(contentWithVariant, { 
       indent: 2, 
       lineWidth: 120,
       noRefs: true,
@@ -248,6 +354,7 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
             total: result.usage.total_tokens,
           }
         : undefined,
+      warnings: warnings.length > 0 ? warnings : undefined,
     };
   }
 
