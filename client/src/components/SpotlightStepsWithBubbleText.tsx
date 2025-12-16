@@ -142,7 +142,30 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
         {/* Desktop: CSS Grid Triangle layout with background and connectors */}
         <div className="hidden md:block relative">
-          {/* SVG Curved Connector Lines - temporarily hidden */}
+          {/* SVG Curved Connector Lines */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            fill="none"
+          >
+            {/* Step 1 (bottom-left ~18%, 75%) to Step 2 (top-center ~50%, 42%) */}
+            <path
+              d="M 18 75 C 25 50, 40 42, 50 42"
+              className="stroke-primary/30"
+              strokeWidth="0.4"
+              strokeLinecap="round"
+              fill="none"
+            />
+            {/* Step 2 (top-center ~50%, 42%) to Step 3 (bottom-right ~82%, 75%) */}
+            <path
+              d="M 50 42 C 60 42, 75 50, 82 75"
+              className="stroke-primary/30"
+              strokeWidth="0.4"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
 
           <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-2 gap-8" style={{ minHeight: "420px" }}>
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
