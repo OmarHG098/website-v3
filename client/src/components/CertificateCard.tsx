@@ -3,10 +3,9 @@ import logoImage from "@assets/4geeks-logo.png";
 interface CertificateCardProps {
   programName?: string;
   studentName?: string;
-  certificateLabel?: string;
 }
 
-export function CertificateCard({ programName = "Full-Stack Developer", studentName, certificateLabel = "Certificate of Completion" }: CertificateCardProps) {
+export function CertificateCard({ programName = "Full-Stack Developer", studentName = "Pedro Fuentes Escaloso de los Lobos" }: CertificateCardProps) {
   return (
     <div 
       className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-lg"
@@ -53,104 +52,90 @@ export function CertificateCard({ programName = "Full-Stack Developer", studentN
           }}
         >
           {/* White inner area */}
-          <div className="w-full h-full bg-white rounded-[2px] relative overflow-hidden">
-            {/* Header inside white area: Logo and dots */}
-            <div className="absolute top-3 left-4 right-4 flex items-center justify-between z-10">
+          <div className="w-full h-full bg-white rounded-[2px] relative overflow-hidden flex flex-col">
+            {/* Header row: Logo and dots */}
+            <div className="flex items-center justify-between px-4 py-3">
               {/* 4Geeks Logo */}
               <img 
                 src={logoImage} 
                 alt="4Geeks" 
-                className="h-6 w-auto"
+                className="h-5 w-auto"
               />
               {/* Window dots */}
               <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
               </div>
             </div>
 
-            {/* Center watermark seal */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-56 h-56 opacity-[0.08]">
-                <svg viewBox="0 0 200 200" className="w-full h-full text-primary">
-                  {/* Laurel wreath left */}
-                  <g transform="translate(15, 35)">
-                    <path d="M38 130c-28-14-47-40-50-72 7 28 28 54 50 72z" fill="currentColor"/>
-                    <path d="M34 112c-22-11-36-33-39-60 5 22 20 44 39 60z" fill="currentColor"/>
-                    <path d="M30 95c-17-9-28-25-31-47 4 18 16 35 31 47z" fill="currentColor"/>
-                    <path d="M26 78c-13-7-20-20-22-38 3 14 11 28 22 38z" fill="currentColor"/>
-                    <path d="M22 62c-9-5-15-15-17-30 2 11 8 22 17 30z" fill="currentColor"/>
-                  </g>
-                  {/* Laurel wreath right */}
-                  <g transform="translate(185, 35) scale(-1, 1)">
-                    <path d="M38 130c-28-14-47-40-50-72 7 28 28 54 50 72z" fill="currentColor"/>
-                    <path d="M34 112c-22-11-36-33-39-60 5 22 20 44 39 60z" fill="currentColor"/>
-                    <path d="M30 95c-17-9-28-25-31-47 4 18 16 35 31 47z" fill="currentColor"/>
-                    <path d="M26 78c-13-7-20-20-22-38 3 14 11 28 22 38z" fill="currentColor"/>
-                    <path d="M22 62c-9-5-15-15-17-30 2 11 8 22 17 30z" fill="currentColor"/>
-                  </g>
-                  {/* Text arc paths */}
-                  <defs>
-                    <path id="topArc" d="M 25 100 A 75 75 0 0 1 175 100" fill="none"/>
-                    <path id="bottomArc" d="M 175 115 A 70 70 0 0 1 25 115" fill="none"/>
-                  </defs>
-                  {/* 4GEEKS text top */}
-                  <text fill="currentColor" fontSize="15" fontWeight="bold" letterSpacing="10">
-                    <textPath href="#topArc" startOffset="50%" textAnchor="middle">
-                      4GEEKS
-                    </textPath>
-                  </text>
-                  {/* CODE WILL SET YOU FREE text bottom */}
-                  <text fill="currentColor" fontSize="10" fontWeight="bold" letterSpacing="3">
-                    <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
-                      CODE WILL SET YOU FREE
-                    </textPath>
-                  </text>
-                  {/* Outer gear circle with teeth */}
-                  <circle cx="100" cy="100" r="58" stroke="currentColor" strokeWidth="2.5" fill="none"/>
-                  {/* Gear teeth */}
-                  {[...Array(24)].map((_, i) => {
-                    const angle = (i * 360 / 24) * Math.PI / 180;
-                    const x1 = 100 + 56 * Math.cos(angle);
-                    const y1 = 100 + 56 * Math.sin(angle);
-                    const x2 = 100 + 66 * Math.cos(angle);
-                    const y2 = 100 + 66 * Math.sin(angle);
-                    return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>;
-                  })}
-                  {/* Inner circle with 4Geeks badge */}
-                  <circle cx="100" cy="100" r="42" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  {/* 4GEEKS text inside badge */}
-                  <text x="100" y="78" fill="currentColor" fontSize="8" fontWeight="bold" textAnchor="middle">
-                    4GEEKS
-                  </text>
-                  {/* CODE WILL SET YOU FREE inside badge */}
-                  <text x="100" y="130" fill="currentColor" fontSize="5" fontWeight="bold" textAnchor="middle">
-                    CODE WILL SET YOU FREE
-                  </text>
-                  {/* Center geek face icon */}
-                  <g transform="translate(72, 85)">
-                    {/* Head outline */}
-                    <path d="M28 0c-5 0-9 2-12 5-3-2-6-3-10-3-8 0-14 6-14 14v12c0 3 2 5 5 5h42c3 0 5-2 5-5V16c0-8-6-14-14-14h-2z" 
-                      fill="currentColor"/>
-                    {/* Glasses */}
-                    <rect x="4" y="12" width="18" height="14" rx="2" fill="white"/>
-                    <rect x="34" y="12" width="18" height="14" rx="2" fill="white"/>
-                    <rect x="22" y="16" width="12" height="3" fill="currentColor"/>
-                  </g>
+            {/* Certificate content - centered */}
+            <div className="flex-1 flex flex-col items-center justify-center px-6 text-center relative">
+              {/* Title stack */}
+              <h2 className="text-xl md:text-2xl font-bold text-foreground tracking-widest uppercase mb-0">
+                Certificate
+              </h2>
+              <p className="text-xs md:text-sm text-muted-foreground uppercase tracking-[0.2em] mb-3">
+                of Achievement
+              </p>
+              
+              {/* Program name with chevrons */}
+              <div className="flex items-center gap-2 mb-5">
+                <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span className="text-base md:text-lg font-bold text-foreground uppercase tracking-wide">
+                  {programName}
+                </span>
+                <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
               </div>
-            </div>
 
-            {/* Certificate content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center pt-8">
-              <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">{certificateLabel}</p>
-              <h3 className="text-2xl font-bold text-foreground mb-1">{programName}</h3>
-              {studentName && (
-                <p className="text-lg text-muted-foreground mt-4">
-                  Awarded to: <span className="font-semibold text-foreground">{studentName}</span>
-                </p>
-              )}
+              {/* Presentation line */}
+              <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2">
+                This certificate is presented to
+              </p>
+
+              {/* Student name */}
+              <h3 className="text-lg md:text-2xl font-bold text-foreground mb-4">
+                {studentName}
+              </h3>
+
+              {/* Watermark badge at bottom */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-20 opacity-[0.15]">
+                <svg viewBox="0 0 200 200" className="w-full h-full text-primary">
+                  {/* Outer gear circle with teeth */}
+                  <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="3" fill="none"/>
+                  {/* Gear teeth */}
+                  {[...Array(20)].map((_, i) => {
+                    const angle = (i * 360 / 20) * Math.PI / 180;
+                    const x1 = 100 + 68 * Math.cos(angle);
+                    const y1 = 100 + 68 * Math.sin(angle);
+                    const x2 = 100 + 82 * Math.cos(angle);
+                    const y2 = 100 + 82 * Math.sin(angle);
+                    return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>;
+                  })}
+                  {/* Inner circle */}
+                  <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  {/* 4GEEKS text */}
+                  <text x="100" y="80" fill="currentColor" fontSize="14" fontWeight="bold" textAnchor="middle">
+                    4GEEKS
+                  </text>
+                  {/* Center geek icon */}
+                  <g transform="translate(75, 88)">
+                    <path d="M25 0c-4 0-8 2-10 4-2-1-5-2-8-2-7 0-12 5-12 12v10c0 2 2 4 4 4h36c2 0 4-2 4-4V14c0-7-5-12-12-12h-2z" 
+                      fill="currentColor"/>
+                    <rect x="4" y="10" width="15" height="11" rx="2" fill="white"/>
+                    <rect x="30" y="10" width="15" height="11" rx="2" fill="white"/>
+                    <rect x="19" y="13" width="11" height="3" fill="currentColor"/>
+                  </g>
+                  {/* CODE WILL SET YOU FREE */}
+                  <text x="100" y="145" fill="currentColor" fontSize="8" fontWeight="bold" textAnchor="middle">
+                    CODE WILL SET YOU FREE
+                  </text>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
