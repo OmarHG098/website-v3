@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as TablerIcons from "@tabler/icons-react";
+import { getCustomIcon } from "./custom-icons";
 
 interface Step {
   icon?: string;
@@ -25,6 +26,14 @@ const { IconCheck } = TablerIcons;
 
 function getIcon(iconName?: string) {
   if (!iconName) return <IconCheck className="w-8 h-8 text-primary" />;
+  
+  // Check custom icons first
+  const CustomIcon = getCustomIcon(iconName);
+  if (CustomIcon) {
+    return <CustomIcon width="32px" height="32px" className="w-8 h-8" />;
+  }
+  
+  // Fall back to Tabler icons
   const fullIconName = `Icon${iconName}`;
   const Icon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullIconName];
   if (Icon) {
