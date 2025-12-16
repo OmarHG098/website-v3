@@ -251,7 +251,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               className="col-start-2 row-start-2 flex items-center justify-center"
             >
               <div
-                className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-8 shadow-lg w-[420px] min-h-[280px] flex flex-col
+                className={`relative bg-card border-2 border-primary/30 rounded-[6rem] p-10 shadow-lg w-[420px] min-h-[280px] flex flex-col
                   before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
                   after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
                   ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
