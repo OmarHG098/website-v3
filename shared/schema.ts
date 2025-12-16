@@ -198,8 +198,14 @@ export {
 // ============================================
 export {
   syllabusModuleSchema,
+  focusAreaSchema,
+  syllabusDefaultSchema,
+  syllabusLandingSchema,
   syllabusSectionSchema,
   type SyllabusModule,
+  type FocusArea,
+  type SyllabusDefault,
+  type SyllabusLanding,
   type SyllabusSection,
 } from "../marketing-content/component-registry/syllabus/v1.0/schema";
 

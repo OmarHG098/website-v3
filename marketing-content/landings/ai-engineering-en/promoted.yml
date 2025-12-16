@@ -74,21 +74,23 @@ sections:
       auto_rotate_ms: 4000
       pause_on_hover: true
   - type: syllabus
-    title: What You'll Master in 20 Weeks
-    subtitle: Build real AI systems from day one. Choose a company to transform with AI — yours or one you imagine — and create a fully operational, AI-powered business.
-    modules:
-      - title: AI-Assisted Frontend
-        description: Modern React apps with AI-powered components, auto-completion, and smart suggestions.
-      - title: Production Backend
-        description: REST APIs, authentication, serverless functions, and cloud-native deployment.
-      - title: RAG Knowledge Layer
-        description: Vector search, embeddings, and retrieval-augmented generation systems.
-      - title: Multi-Agent Systems
-        description: Intelligent agents with memory, task routing, and autonomous execution.
-      - title: Workflow Automation
-        description: AI-driven business process automation with n8n and scheduled tasks.
-      - title: Real-Time AI Systems
-        description: WebSockets, streaming responses, and event-driven architecture.
+    variant: landing-syllabus
+    title: What You'll Build and Master
+    description: From day one, you'll choose one company. Yours, one you want to build, or one you want to reimagine. Over 20 weeks, you'll transform it into a fully operational, AI-powered business.
+    emphasis: Every milestone upgrades the same company
+    focus_areas:
+      - title: AI-first system and product design
+        icon: Bulb
+      - title: Intelligent user interfaces and real-time applications
+        icon: DeviceDesktop
+      - title: APIs, infrastructure, and scalable backend systems
+        icon: Server
+      - title: Data pipelines, telemetry, and decision layers
+        icon: ChartBar
+      - title: Retrieval, embeddings, and production-ready AI agents
+        icon: Robot
+      - title: End-to-end automation across real business workflows
+        icon: Settings
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
