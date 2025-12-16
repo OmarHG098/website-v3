@@ -184,7 +184,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
             {steps[1] && (
               <div
-                className={`col-start-2 row-start-1 flex flex-col items-center justify-end transition-opacity duration-300 ${getStepOpacity(1)}`}
+                className={`col-start-2 row-start-1 flex flex-col items-center justify-center transition-opacity duration-300 ${getStepOpacity(1)}`}
                 data-testid="spotlight-step-2"
               >
                 <div className="mb-4 flex items-center gap-3">
