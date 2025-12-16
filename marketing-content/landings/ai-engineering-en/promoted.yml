@@ -55,8 +55,8 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: spotlight
-    title: Why AI Engineering Is the Hottest Career in Tech
-    subtitle: The numbers speak for themselves
+    title: Why AI Engineering Now
+    subtitle: The talent shortage is your opportunity
     items:
       - icon: Briefcase
         value: 3.5M
