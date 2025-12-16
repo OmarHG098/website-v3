@@ -16,7 +16,7 @@ sections:
       prefix: Geek
       highlight: PAL
       suffix: ":"
-      color: chart-5
+      color: destructive
     video_id: D5nUZNL52-Q
     video_ratio: "3:4"
     form:
