@@ -142,30 +142,29 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
         {/* Desktop: CSS Grid Triangle layout with background and connectors */}
         <div className="hidden md:block relative">
-          {/* SVG Curved Connector Lines */}
+          {/* SVG Curved Connector Lines - Dotted */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             fill="none"
-            style={{ shapeRendering: "geometricPrecision" }}
           >
-            {/* Step 1 (bottom-left) to Step 2 (top-center, moved up) */}
+            {/* Step 1 (bottom-left) to Step 2 (top-center) */}
             <path
-              d="M 18 75 C 25 45, 40 35, 50 35"
-              stroke="hsl(var(--primary) / 0.3)"
+              d="M 18 75 C 25 50, 40 40, 50 40"
+              stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="0.5"
               strokeLinecap="round"
-              strokeLinejoin="round"
+              strokeDasharray="1.5 1"
               fill="none"
             />
             {/* Step 2 (top-center) to Step 3 (bottom-right) */}
             <path
-              d="M 50 35 C 60 35, 75 45, 82 75"
-              stroke="hsl(var(--primary) / 0.3)"
+              d="M 50 40 C 60 40, 75 50, 82 75"
+              stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="0.5"
               strokeLinecap="round"
-              strokeLinejoin="round"
+              strokeDasharray="1.5 1"
               fill="none"
             />
           </svg>
