@@ -78,7 +78,11 @@ export const leadFormDataSchema = z.object({
   }).optional(),
   terms_url: z.string().optional(),
   privacy_url: z.string().optional(),
-  show_consent: z.boolean().optional(),
+  consent: z.object({
+    email: z.boolean().optional(),
+    sms: z.boolean().optional(),
+    whatsapp: z.boolean().optional(),
+  }).optional(),
   show_terms: z.boolean().optional(),
   className: z.string().optional(),
   turnstile: turnstileConfigSchema.optional(),

@@ -35,7 +35,8 @@ sections:
         message: Thank you for signing up! We'll be in touch soon.
       terms_url: /terms-and-conditions
       privacy_url: /privacy-policy
-      show_consent: true
+      consent:
+        email: true
       show_terms: true
       className: inline-form
     cta_button:

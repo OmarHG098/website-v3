@@ -86,7 +86,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   data={{
                     ...data.form,
                     variant: data.form.variant || "inline",
-                    show_consent: data.form.show_consent ?? false,
+                    consent: data.form.consent,
                     show_terms: data.form.show_terms ?? false,
                     className: "w-full max-w-md mb-6",
                   } as LeadFormData}

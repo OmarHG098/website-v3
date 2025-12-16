@@ -20,7 +20,6 @@ yaml: |
     form:
       variant: inline
       submit_label: "Get Started →"
-      show_consent: false
       show_terms: false
       tags: "website-lead,geekforce"
       fields:
