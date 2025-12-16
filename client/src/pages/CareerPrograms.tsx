@@ -45,13 +45,11 @@ interface CareerProgramsPageData {
 }
 
 const thumbnailMap: Record<string, string> = {
-  "1": webDevThumbnail,
-  "2": dataScienceThumbnail,
-  "3": aiThumbnail,
-  "4": aiThumbnail,
-  "5": aiThumbnail,
-  "6": webDevThumbnail,
-  "7": dataScienceThumbnail,
+  "1": webDevThumbnail,       // Full Stack Development
+  "2": dataScienceThumbnail,  // Data Science & ML
+  "3": aiThumbnail,           // Cybersecurity
+  "4": aiThumbnail,           // AI Engineering
+  "5": aiThumbnail,           // AI for Professionals
 };
 
 export default function CareerPrograms() {
