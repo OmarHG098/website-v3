@@ -150,7 +150,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             }}
           />
 
-          {/* SVG Curved Connector Lines */}
+          {/* SVG Curved Connector Lines - Timeline flow */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             style={{ minHeight: "400px" }}
@@ -164,35 +164,25 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
               </linearGradient>
             </defs>
-            {/* Curved line from Step 1 (bottom-left) to Step 2 (top-center) */}
+            {/* Smooth curve from Step 1 (bottom-left) to Step 2 (top-center) */}
             <path
-              d="M 25 75 Q 30 50, 50 30"
+              d="M 20 78 C 28 55, 38 38, 50 28"
               fill="none"
               stroke="url(#lineGradient)"
-              strokeWidth="0.4"
+              strokeWidth="0.5"
               strokeDasharray="2 1"
               className="transition-opacity duration-300"
-              style={{ opacity: activeStep === 0 || activeStep === 1 ? 0.8 : 0.3 }}
+              style={{ opacity: 0.6 }}
             />
-            {/* Curved line from Step 2 (top-center) to Step 3 (bottom-right) */}
+            {/* Smooth curve from Step 2 (top-center) to Step 3 (bottom-right) */}
             <path
-              d="M 50 30 Q 70 50, 75 75"
+              d="M 50 28 C 62 38, 72 55, 80 78"
               fill="none"
               stroke="url(#lineGradient)"
-              strokeWidth="0.4"
+              strokeWidth="0.5"
               strokeDasharray="2 1"
               className="transition-opacity duration-300"
-              style={{ opacity: activeStep === 1 || activeStep === 2 ? 0.8 : 0.3 }}
-            />
-            {/* Curved line from Step 3 (bottom-right) to Step 1 (bottom-left) */}
-            <path
-              d="M 75 75 Q 50 85, 25 75"
-              fill="none"
-              stroke="url(#lineGradient)"
-              strokeWidth="0.4"
-              strokeDasharray="2 1"
-              className="transition-opacity duration-300"
-              style={{ opacity: activeStep === 0 || activeStep === 2 ? 0.8 : 0.3 }}
+              style={{ opacity: 0.6 }}
             />
           </svg>
 
@@ -278,14 +268,8 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               {activeContent && (
                 <div
                   key={activeStep}
-                  className={`relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm 
-                    animate-in fade-in zoom-in-95 duration-300
-                    before:content-[''] before:absolute before:w-4 before:h-4 before:bg-card before:border-2 before:border-primary/30 
-                    ${getBubblePointerClass()}
-                    ${activeStep === 0 ? "before:border-r-0 before:border-t-0" : ""}
-                    ${activeStep === 1 ? "before:border-b-0 before:border-r-0" : ""}
-                    ${activeStep === 2 ? "before:border-l-0 before:border-b-0" : ""}
-                  `}
+                  className="relative bg-card border-2 border-primary/30 rounded-[2rem] p-6 shadow-lg w-72 
+                    animate-in fade-in zoom-in-95 duration-300"
                   data-testid="bubble-content"
                 >
                   {activeContent.title && (
