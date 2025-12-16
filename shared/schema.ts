@@ -526,6 +526,29 @@ export type CardGridCard = z.infer<typeof cardGridCardSchema>;
 export type CardGridSection = z.infer<typeof cardGridSectionSchema>;
 
 // ============================================
+// Accordion Card Section Schema
+// ============================================
+export const accordionCardBulletSchema = z.object({
+  heading: z.string(),
+  text: z.string(),
+});
+
+export const accordionCardSectionSchema = z.object({
+  type: z.literal("accordion_card"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  bullets: z.array(accordionCardBulletSchema).optional(),
+  footer: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  reverse: z.boolean().optional(),
+});
+
+export type AccordionCardBullet = z.infer<typeof accordionCardBulletSchema>;
+export type AccordionCardSection = z.infer<typeof accordionCardSectionSchema>;
+
+// ============================================
 // Section Schema Union
 // Import unified section schemas for use in union
 // ============================================
@@ -579,6 +602,7 @@ export const sectionSchema = z.union([
   awardsRowSectionSchema,
   supportDuoSectionSchema,
   cardGridSectionSchema,
+  accordionCardSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;
