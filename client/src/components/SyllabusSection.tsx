@@ -102,12 +102,6 @@ function FocusAreaCard({ title, icon, isActive, onSelect, testId }: FocusAreaCar
         )}>
           {title}
         </span>
-        <ChevronDown 
-          className={cn(
-            "ml-auto h-4 w-4 flex-shrink-0 transition-transform duration-200",
-            isActive ? "text-primary rotate-180" : "text-muted-foreground"
-          )}
-        />
       </div>
     </Card>
   );
