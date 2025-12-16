@@ -354,6 +354,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   options={{
                     theme: data.turnstile?.theme || "auto",
                     size: data.turnstile?.size || "compact",
+                    appearance: "interaction-only",
                   }}
                 />
               </div>
@@ -730,6 +731,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 options={{
                   theme: data.turnstile?.theme || "auto",
                   size: data.turnstile?.size || "normal",
+                  appearance: "interaction-only",
                 }}
               />
             </div>
