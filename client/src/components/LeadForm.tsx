@@ -106,6 +106,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
+  const [showTurnstileModal, setShowTurnstileModal] = useState(false);
   
   const turnstileEnabled = data.turnstile?.enabled ?? true;
   
@@ -345,13 +346,17 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               </Button>
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm [&:has(iframe:not([style*='display: none']))]:flex [&:not(:has(iframe:not([style*='display: none'])))]:hidden">
+              <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
                 <div className="bg-card p-6 rounded-lg shadow-lg">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
-                    onSuccess={setTurnstileToken}
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                      setShowTurnstileModal(false);
+                    }}
                     onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                     onExpire={() => setTurnstileToken(null)}
+                    onBeforeInteractive={() => setShowTurnstileModal(true)}
                     options={{
                       theme: data.turnstile?.theme || "auto",
                       size: data.turnstile?.size || "compact",
@@ -724,13 +729,17 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm [&:has(iframe:not([style*='display: none']))]:flex [&:not(:has(iframe:not([style*='display: none'])))]:hidden">
+            <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
               <div className="bg-card p-6 rounded-lg shadow-lg">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={setTurnstileToken}
+                  onSuccess={(token) => {
+                    setTurnstileToken(token);
+                    setShowTurnstileModal(false);
+                  }}
                   onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                   onExpire={() => setTurnstileToken(null)}
+                  onBeforeInteractive={() => setShowTurnstileModal(true)}
                   options={{
                     theme: data.turnstile?.theme || "auto",
                     size: data.turnstile?.size || "normal",
