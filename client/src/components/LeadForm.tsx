@@ -191,11 +191,8 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
-      // Verify Turnstile token if enabled
-      if (turnstileEnabled && turnstileToken) {
-        // apiRequest throws on non-2xx responses, so verification failure will throw
-        await apiRequest("POST", "/api/turnstile/verify", { token: turnstileToken });
-      } else if (turnstileEnabled && !turnstileToken) {
+      // Check that Turnstile token exists if enabled (verification happens at Breathecode API)
+      if (turnstileEnabled && !turnstileToken) {
         throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
       }
 
