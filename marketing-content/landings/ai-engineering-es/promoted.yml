@@ -1,0 +1,181 @@
+meta:
+  page_title: Conviértete en Ingeniero de IA en 20 Semanas | 4Geeks Academy
+  description: Lanza tu carrera en IA con entrenamiento práctico, mentoría 1:1 ilimitada y garantía de empleo. Comienza ganando $95K-$135K como Ingeniero de IA.
+  redirects:
+    - /landing/ai-engineering-es
+    - /campana/ingeniero-ia
+
+sections:
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    welcome_text: Cupos Limitados
+    brand_mark:
+      prefix: Conviértete en
+      highlight: Ingeniero de IA
+      color: primary
+    title: Lanza Tu Carrera en IA en 20 Semanas
+    subtitle: Domina la ingeniería de IA con proyectos prácticos y mentoría ilimitada
+    description: Únete a la revolución de IA. Aprende a construir aplicaciones de IA listas para producción, desde sistemas RAG hasta orquestadores multi-agente. Obtén mentoría 1:1 personalizada y apoyo profesional de por vida.
+    background_image:
+      src: /attached_assets/ai-engineering-light_1765830844948.jpg
+      alt: Fondo de Ingeniería de IA
+    form:
+      variant: inline
+      title: Comienza Tu Carrera en IA
+      subtitle: Únete a 10,000+ graduados construyendo carreras tech exitosas
+      submit_label: Aplicar Ahora →
+      tags: website-lead,ai-engineering-campaign-es
+      automations: welcome-email
+      fields:
+        email:
+          visible: true
+          helper_text: Recibe el programa de estudios gratis
+          placeholder: Ingresa tu email
+      success:
+        message: ¡Revisa tu bandeja de entrada! Tu programa está en camino.
+      terms_url: /terminos-condiciones
+      privacy_url: /politica-privacidad
+      show_consent: true
+      show_terms: true
+    cta_button:
+      text: Descargar Programa
+      url: /programa/ai-engineering
+      variant: outline
+      icon: Download
+    trust_bar:
+      rating: "4.5"
+      review_count: Basado en 1,294+ reseñas
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: Por Qué Ingeniería de IA Es la Carrera Más Demandada
+    subtitle: Los números hablan por sí mismos
+    items:
+      - icon: Briefcase
+        value: 3.5M
+        title: Roles de IA esperados para 2026
+      - icon: Graduation
+        value: 47%
+        title: Crecimiento anual en ofertas de trabajo de IA
+      - icon: GrowthChart
+        value: $95K-$135K
+        title: Salario inicial promedio para Ingenieros de IA
+    columns: 3
+    icon_color: "#0097CD"
+
+  - type: syllabus
+    title: Lo Que Dominarás en 20 Semanas
+    subtitle: Construye sistemas de IA reales desde el día uno. Elige una empresa para transformar con IA — la tuya o una que imagines — y crea un negocio completamente operativo impulsado por IA.
+    modules:
+      - title: Frontend Asistido por IA
+        description: Apps React modernas con componentes de IA, autocompletado y sugerencias inteligentes.
+      - title: Backend de Producción
+        description: APIs REST, autenticación, funciones serverless y despliegue nativo en la nube.
+      - title: Capa de Conocimiento RAG
+        description: Búsqueda vectorial, embeddings y sistemas de generación aumentada por recuperación.
+      - title: Sistemas Multi-Agente
+        description: Agentes inteligentes con memoria, enrutamiento de tareas y ejecución autónoma.
+      - title: Automatización de Flujos
+        description: Automatización de procesos empresariales con IA usando n8n y tareas programadas.
+      - title: Sistemas de IA en Tiempo Real
+        description: WebSockets, respuestas en streaming y arquitectura orientada a eventos.
+
+  - type: ai_learning
+    version: "1.0"
+    badge: ¿Por qué 4Geeks?
+    title: Aprende Más Rápido, No Más Difícil
+    description: Nuestra plataforma potenciada por IA y mentoría ilimitada aceleran tu aprendizaje.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: Retroalimentación con IA
+        description: Obtén revisiones de código instantáneas y orientación personalizada 24/7.
+      - icon: Headset
+        title: Mentoría 1:1 Ilimitada
+        description: Agenda todas las sesiones que necesites con expertos en ingeniería de IA.
+      - icon: Users
+        title: Comunidad Activa
+        description: Aprende junto a compañeros motivados y acelera tu progreso.
+    highlight:
+      title: Maximiza Tu Progreso
+      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA para un aprendizaje más inteligente.
+      bullets:
+        - text: Rigobot sigue tu progreso y te da retroalimentación personalizada cuando la necesitas.
+        - text: Proporción 7:1 estudiante-profesor más acceso ilimitado a mentores expertos y coaches de carrera.
+      cta:
+        text: Comienza Ahora
+        url: /es/aplica?program=ai-engineering
+        variant: primary
+
+  - type: certificate
+    title: Certificado y Red de Carreras
+    description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien pagados:"
+    benefits:
+      - text: "Ingeniero de Software IA: $95K–$135K"
+      - text: "Ingeniero Full-Stack (IA): $100K–$145K"
+      - text: "Ingeniero de Agentes: $105K–$155K"
+      - text: "Ingeniero de Automatización: $85K–$120K"
+    card:
+      title: Ingeniero de IA
+      subtitle: Certificado 4Geeks Academy
+      program_name: Ingeniería de IA
+    stats:
+      - value: 84%
+        label: Tasa de contratación
+      - value: 3-6 meses
+        label: Tiempo para ser contratado
+      - value: 55%
+        label: Aumento salarial promedio
+      - value: 5,000+
+        label: Socios de contratación
+
+  - type: testimonials
+    title: Resultados Reales de Graduados Reales
+    subtitle: Únete a miles que han transformado sus carreras
+    rating_summary:
+      average: "4.5"
+      count: 1,294
+    items:
+      - name: Sara García
+        role: Ingeniera de IA
+        company: Google
+        rating: 5
+        comment: Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo es perfecto para aplicaciones de IA del mundo real.
+        outcome: +55% aumento salarial
+      - name: Miguel Chen
+        role: Ingeniero ML
+        company: Meta
+        rating: 5
+        comment: ¡La mejor inversión que he hecho! Recibí una oferta de trabajo antes de terminar el programa.
+        outcome: Contratado en 4 meses
+      - name: Elena Rodríguez
+        role: Ingeniera de IA
+        company: Amazon
+        rating: 5
+        comment: Excelente contenido y gran apoyo de mentores. Ahora trabajo en IA de vanguardia.
+        outcome: +100% aumento salarial
+
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Convertirte en Ingeniero de IA?
+    subtitle: Cupos limitados. Comienza tu transformación hoy.
+    buttons:
+      - text: Aplicar Ahora
+        url: /es/aplica?program=ai-engineering
+        variant: secondary
+      - text: Habla con un Asesor
+        url: /contacto
+        variant: outline
+
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. Todos los derechos reservados.

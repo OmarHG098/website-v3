@@ -1,0 +1,181 @@
+meta:
+  page_title: Become an AI Engineer in 20 Weeks | 4Geeks Academy
+  description: Launch your AI career with hands-on training, unlimited 1:1 mentorship, and job guarantee. Start earning $95K-$135K as an AI Engineer.
+  redirects:
+    - /landing/ai-engineering
+    - /campaign/ai-engineer
+
+sections:
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    welcome_text: Limited Spots Available
+    brand_mark:
+      prefix: Become an
+      highlight: AI Engineer
+      color: primary
+    title: Launch Your AI Career in 20 Weeks
+    subtitle: Master AI engineering with hands-on projects and unlimited mentorship
+    description: Join the AI revolution. Learn to build production-ready AI applications, from RAG systems to multi-agent orchestrators. Get personalized 1:1 mentorship and career support that lasts for life.
+    background_image:
+      src: /attached_assets/ai-engineering-light_1765830844948.jpg
+      alt: AI Engineering Background
+    form:
+      variant: inline
+      title: Start Your AI Journey
+      subtitle: Join 10,000+ graduates building successful tech careers
+      submit_label: Apply Now →
+      tags: website-lead,ai-engineering-campaign
+      automations: welcome-email
+      fields:
+        email:
+          visible: true
+          helper_text: Get your free AI Engineering syllabus
+          placeholder: Enter your email
+      success:
+        message: Check your inbox! Your syllabus is on the way.
+      terms_url: /terms-and-conditions
+      privacy_url: /privacy-policy
+      show_consent: true
+      show_terms: true
+    cta_button:
+      text: Download Syllabus
+      url: /syllabus/ai-engineering
+      variant: outline
+      icon: Download
+    trust_bar:
+      rating: "4.5"
+      review_count: Based on 1,294+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: Why AI Engineering Is the Hottest Career in Tech
+    subtitle: The numbers speak for themselves
+    items:
+      - icon: Briefcase
+        value: 3.5M
+        title: AI-related roles expected by 2026
+      - icon: Graduation
+        value: 47%
+        title: Year-over-year growth in AI job postings
+      - icon: GrowthChart
+        value: $95K-$135K
+        title: Average starting salary for AI Engineers
+    columns: 3
+    icon_color: "#0097CD"
+
+  - type: syllabus
+    title: What You'll Master in 20 Weeks
+    subtitle: Build real AI systems from day one. Choose a company to transform with AI — yours or one you imagine — and create a fully operational, AI-powered business.
+    modules:
+      - title: AI-Assisted Frontend
+        description: Modern React apps with AI-powered components, auto-completion, and smart suggestions.
+      - title: Production Backend
+        description: REST APIs, authentication, serverless functions, and cloud-native deployment.
+      - title: RAG Knowledge Layer
+        description: Vector search, embeddings, and retrieval-augmented generation systems.
+      - title: Multi-Agent Systems
+        description: Intelligent agents with memory, task routing, and autonomous execution.
+      - title: Workflow Automation
+        description: AI-driven business process automation with n8n and scheduled tasks.
+      - title: Real-Time AI Systems
+        description: WebSockets, streaming responses, and event-driven architecture.
+
+  - type: ai_learning
+    version: "1.0"
+    badge: Why 4Geeks?
+    title: Learn Smarter, Not Harder
+    description: Our AI-powered platform and unlimited mentorship accelerate your learning journey.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: AI-Powered Feedback
+        description: Get instant code reviews and personalized guidance 24/7 from our AI tutor.
+      - icon: Headset
+        title: Unlimited 1:1 Mentorship
+        description: Book as many sessions as you need with AI engineering experts.
+      - icon: Users
+        title: Active Community
+        description: Learn alongside motivated peers and accelerate your progress.
+    highlight:
+      title: Maximize Your Progress
+      description: Live instruction, unlimited mentorship, and AI tools built for smarter learning.
+      bullets:
+        - text: Rigobot follows your progress and gives tailored feedback exactly when you need it.
+        - text: 7:1 student-to-teacher ratio plus unlimited access to expert mentors and career coaches.
+      cta:
+        text: Start Learning Now
+        url: /en/apply?program=ai-engineering
+        variant: primary
+
+  - type: certificate
+    title: Certificate & Career Network
+    description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
+    benefits:
+      - text: "AI Software Engineer: $95K–$135K"
+      - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
+      - text: "Agent Engineer: $105K–$155K"
+      - text: "Workflow Automation Engineer: $85K–$120K"
+    card:
+      title: AI Engineer
+      subtitle: 4Geeks Academy Certificate
+      program_name: AI Engineering
+    stats:
+      - value: 84%
+        label: Hiring rate
+      - value: 3-6 months
+        label: Time to get hired
+      - value: 55%
+        label: Average salary increase
+      - value: 5,000+
+        label: Hiring Partners
+
+  - type: testimonials
+    title: Real Results from Real Graduates
+    subtitle: Join thousands who've transformed their careers
+    rating_summary:
+      average: "4.5"
+      count: 1,294
+    items:
+      - name: Sarah Johnson
+        role: AI Engineer
+        company: Google
+        rating: 5
+        comment: This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfect for real-world AI applications.
+        outcome: +55% salary increase
+      - name: Michael Chen
+        role: ML Engineer
+        company: Meta
+        rating: 5
+        comment: Best investment I ever made. Got a job offer before even finishing the program!
+        outcome: Hired in 4 months
+      - name: Emily Rodriguez
+        role: AI Engineer
+        company: Amazon
+        rating: 5
+        comment: Excellent content and great mentor support. Now I'm working on cutting-edge AI.
+        outcome: +100% salary increase
+
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Become an AI Engineer?
+    subtitle: Limited spots available. Start your transformation today.
+    buttons:
+      - text: Apply Now
+        url: /en/apply?program=ai-engineering
+        variant: secondary
+      - text: Talk to an Advisor
+        url: /contact
+        variant: outline
+
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. All rights reserved.
