@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { IconCheck } from "@tabler/icons-react";
+import { getCustomIcon } from "@/components/custom-icons";
 
 interface CardGridSectionData {
   type: "card_grid";
@@ -64,8 +65,9 @@ export function CardGridSection({ data }: CardGridSectionProps) {
 
         <div className="grid md:grid-cols-3 gap-4">
           {data.cards.map((card, index) => {
+            const CustomIcon = card.icon ? getCustomIcon(card.icon) : null;
             const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
-            const IconComponent = (TablerIcons as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
+            const TablerIcon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
             
             return (
               <Card 
@@ -74,7 +76,11 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                 data-testid={`card-bullet-${index}`}
               >
                 <CardContent className="p-5 flex flex-col items-start gap-3">
-                  <IconComponent className="w-8 h-8 text-primary" />
+                  {CustomIcon ? (
+                    <CustomIcon width="32" height="32" className="w-8 h-8" />
+                  ) : (
+                    <TablerIcon className="w-8 h-8 text-primary" />
+                  )}
                   <p className="text-foreground text-sm md:text-base">
                     {card.text}
                   </p>
