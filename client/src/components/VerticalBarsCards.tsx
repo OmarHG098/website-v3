@@ -176,7 +176,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                         {data.metrics[hoveredIndex].unit}
                       </p>
                     )}
-                    {renderBars(data.metrics[hoveredIndex], hoveredIndex, true)}
+                    {renderBars(data.metrics[hoveredIndex], hoveredIndex, false)}
                   </div>
 
                   {/* Right side: Description */}
