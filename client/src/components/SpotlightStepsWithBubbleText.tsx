@@ -53,14 +53,17 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
   const activeContent = getActiveContent();
 
-  // Determine bubble pointer direction based on active step
   const getBubblePointerClass = () => {
     switch (activeStep) {
-      case 0: return "before:left-0 before:-translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45"; // Points left (to step 1)
-      case 1: return "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45"; // Points up (to step 2)
-      case 2: return "before:right-0 before:translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45"; // Points right (to step 3)
+      case 0: return "before:left-0 before:-translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45";
+      case 1: return "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45";
+      case 2: return "before:right-0 before:translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45";
       default: return "";
     }
+  };
+
+  const getStepOpacity = (stepIndex: number) => {
+    return activeStep === stepIndex ? "opacity-100" : "opacity-50 hover:opacity-80";
   };
 
   return (
@@ -89,7 +92,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
           {steps.map((step, index) => (
             <div
               key={index}
-              className="flex flex-col items-center"
+              className={`flex flex-col items-center transition-opacity duration-300 ${getStepOpacity(index)}`}
               data-testid={`spotlight-step-mobile-${index + 1}`}
             >
               <button
@@ -119,7 +122,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 )}
               </div>
               {activeStep === index && step.bullets && (
-                <div className="mt-4 p-4 bg-card border rounded-lg w-full">
+                <div className="mt-4 p-4 bg-card border rounded-lg w-full animate-in fade-in slide-in-from-top-2 duration-300">
                   <ul className="space-y-2">
                     {step.bullets.map((bullet, bulletIndex) => (
                       <li
@@ -137,155 +140,215 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
           ))}
         </div>
 
-        {/* Desktop: CSS Grid Triangle layout */}
-        <div className="hidden md:grid grid-cols-3 grid-rows-2 gap-4" style={{ minHeight: "400px" }}>
-          {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
-          {steps[1] && (
-            <div
-              className="col-start-2 row-start-1 flex flex-col items-center justify-end"
-              data-testid="spotlight-step-2"
-            >
-              {/* Title above circle */}
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                  <span className="text-3xl font-bold text-primary leading-none">02</span>
-                </div>
-                {steps[1].title && (
-                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
-                    {steps[1].title}
-                  </h3>
-                )}
-              </div>
-              <button
-                onClick={() => handleStepInteraction(1)}
-                onMouseEnter={() => setActiveStep(1)}
-                aria-label={steps[1].title || "Step 2"}
-                aria-expanded={activeStep === 1}
-                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 1
-                    ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                }`}
-                data-testid="button-spotlight-step-2"
-              >
-                {getIcon(steps[1].icon)}
-              </button>
-            </div>
-          )}
+        {/* Desktop: CSS Grid Triangle layout with background and connectors */}
+        <div className="hidden md:block relative">
+          {/* Subtle radial gradient background */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.05) 0%, transparent 70%)",
+            }}
+          />
 
-          {/* Step 1 - Bottom Left (row 2, col 1) - Title to LEFT of circle */}
-          {steps[0] && (
-            <div
-              className="col-start-1 row-start-2 flex items-center justify-end gap-4 h-full"
-              data-testid="spotlight-step-1"
-            >
-              {/* Title to the left */}
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                  <span className="text-3xl font-bold text-primary leading-none">01</span>
-                </div>
-                {steps[0].title && (
-                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
-                    {steps[0].title}
-                  </h3>
-                )}
-              </div>
-              <button
-                onClick={() => handleStepInteraction(0)}
-                onMouseEnter={() => setActiveStep(0)}
-                aria-label={steps[0].title || "Step 1"}
-                aria-expanded={activeStep === 0}
-                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
-                  activeStep === 0
-                    ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                }`}
-                data-testid="button-spotlight-step-1"
-              >
-                {getIcon(steps[0].icon)}
-              </button>
-            </div>
-          )}
-
-          {/* Center Bubble - row 2, col 2 */}
-          <div
-            className="col-start-2 row-start-2 flex items-center justify-center"
+          {/* SVG Connector Lines */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            style={{ minHeight: "400px" }}
+            preserveAspectRatio="none"
           >
-            {activeContent && (
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+            {/* Line from Step 1 (bottom-left) to Step 2 (top-center) */}
+            <line
+              x1="25%"
+              y1="75%"
+              x2="50%"
+              y2="30%"
+              stroke="url(#lineGradient)"
+              strokeWidth="2"
+              strokeDasharray="8 4"
+              className="transition-opacity duration-300"
+              style={{ opacity: activeStep === 0 || activeStep === 1 ? 0.8 : 0.3 }}
+            />
+            {/* Line from Step 2 (top-center) to Step 3 (bottom-right) */}
+            <line
+              x1="50%"
+              y1="30%"
+              x2="75%"
+              y2="75%"
+              stroke="url(#lineGradient)"
+              strokeWidth="2"
+              strokeDasharray="8 4"
+              className="transition-opacity duration-300"
+              style={{ opacity: activeStep === 1 || activeStep === 2 ? 0.8 : 0.3 }}
+            />
+            {/* Line from Step 3 (bottom-right) to Step 1 (bottom-left) */}
+            <line
+              x1="75%"
+              y1="75%"
+              x2="25%"
+              y2="75%"
+              stroke="url(#lineGradient)"
+              strokeWidth="2"
+              strokeDasharray="8 4"
+              className="transition-opacity duration-300"
+              style={{ opacity: activeStep === 0 || activeStep === 2 ? 0.8 : 0.3 }}
+            />
+          </svg>
+
+          <div className="relative grid grid-cols-3 grid-rows-2 gap-4" style={{ minHeight: "400px" }}>
+            {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
+            {steps[1] && (
               <div
-                className={`relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm transition-all duration-300 
-                  before:content-[''] before:absolute before:w-4 before:h-4 before:bg-card before:border-2 before:border-primary/30 
-                  ${getBubblePointerClass()}
-                  ${activeStep === 0 ? "before:border-r-0 before:border-t-0" : ""}
-                  ${activeStep === 1 ? "before:border-b-0 before:border-r-0" : ""}
-                  ${activeStep === 2 ? "before:border-l-0 before:border-b-0" : ""}
-                `}
-                data-testid="bubble-content"
+                className={`col-start-2 row-start-1 flex flex-col items-center justify-end transition-opacity duration-300 ${getStepOpacity(1)}`}
+                data-testid="spotlight-step-2"
               >
-                {activeContent.title && (
-                  <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-primary font-bold">
-                      {String(activeStep + 1).padStart(2, "0")}
-                    </span>
-                    {activeContent.title}
-                  </h4>
-                )}
-                {activeContent.text && (
-                  <p className="text-muted-foreground mb-3">{activeContent.text}</p>
-                )}
-                {activeContent.bullets.length > 0 && (
-                  <ul className="space-y-2">
-                    {activeContent.bullets.map((bullet, bulletIndex) => (
-                      <li
-                        key={bulletIndex}
-                        className="flex gap-2 items-start text-sm text-muted-foreground"
-                      >
-                        <span className="text-primary flex-shrink-0 mt-0.5">•</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                    <span className="text-3xl font-bold text-primary leading-none">02</span>
+                  </div>
+                  {steps[1].title && (
+                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                      {steps[1].title}
+                    </h3>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleStepInteraction(1)}
+                  onMouseEnter={() => setActiveStep(1)}
+                  aria-label={steps[1].title || "Step 2"}
+                  aria-expanded={activeStep === 1}
+                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                    activeStep === 1
+                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                  }`}
+                  data-testid="button-spotlight-step-2"
+                >
+                  {getIcon(steps[1].icon)}
+                </button>
+              </div>
+            )}
+
+            {/* Step 1 - Bottom Left (row 2, col 1) - Title to LEFT of circle */}
+            {steps[0] && (
+              <div
+                className={`col-start-1 row-start-2 flex items-center justify-end gap-4 h-full transition-opacity duration-300 ${getStepOpacity(0)}`}
+                data-testid="spotlight-step-1"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                    <span className="text-3xl font-bold text-primary leading-none">01</span>
+                  </div>
+                  {steps[0].title && (
+                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                      {steps[0].title}
+                    </h3>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleStepInteraction(0)}
+                  onMouseEnter={() => setActiveStep(0)}
+                  aria-label={steps[0].title || "Step 1"}
+                  aria-expanded={activeStep === 0}
+                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
+                    activeStep === 0
+                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                  }`}
+                  data-testid="button-spotlight-step-1"
+                >
+                  {getIcon(steps[0].icon)}
+                </button>
+              </div>
+            )}
+
+            {/* Center Bubble - row 2, col 2 */}
+            <div
+              className="col-start-2 row-start-2 flex items-center justify-center"
+            >
+              {activeContent && (
+                <div
+                  key={activeStep}
+                  className={`relative bg-card border-2 border-primary/30 rounded-xl p-6 shadow-lg max-w-sm 
+                    animate-in fade-in zoom-in-95 duration-300
+                    before:content-[''] before:absolute before:w-4 before:h-4 before:bg-card before:border-2 before:border-primary/30 
+                    ${getBubblePointerClass()}
+                    ${activeStep === 0 ? "before:border-r-0 before:border-t-0" : ""}
+                    ${activeStep === 1 ? "before:border-b-0 before:border-r-0" : ""}
+                    ${activeStep === 2 ? "before:border-l-0 before:border-b-0" : ""}
+                  `}
+                  data-testid="bubble-content"
+                >
+                  {activeContent.title && (
+                    <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <span className="text-primary font-bold">
+                        {String(activeStep + 1).padStart(2, "0")}
+                      </span>
+                      {activeContent.title}
+                    </h4>
+                  )}
+                  {activeContent.text && (
+                    <p className="text-muted-foreground mb-3">{activeContent.text}</p>
+                  )}
+                  {activeContent.bullets.length > 0 && (
+                    <ul className="space-y-2">
+                      {activeContent.bullets.map((bullet, bulletIndex) => (
+                        <li
+                          key={bulletIndex}
+                          className="flex gap-2 items-start text-sm text-muted-foreground"
+                        >
+                          <span className="text-primary flex-shrink-0 mt-0.5">•</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Step 3 - Bottom Right (row 2, col 3) - Title to RIGHT of circle */}
+            {steps[2] && (
+              <div
+                className={`col-start-3 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(2)}`}
+                data-testid="spotlight-step-3"
+              >
+                <button
+                  onClick={() => handleStepInteraction(2)}
+                  onMouseEnter={() => setActiveStep(2)}
+                  aria-label={steps[2].title || "Step 3"}
+                  aria-expanded={activeStep === 2}
+                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
+                    activeStep === 2
+                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                  }`}
+                  data-testid="button-spotlight-step-3"
+                >
+                  {getIcon(steps[2].icon)}
+                </button>
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                    <span className="text-3xl font-bold text-primary leading-none">03</span>
+                  </div>
+                  {steps[2].title && (
+                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                      {steps[2].title}
+                    </h3>
+                  )}
+                </div>
               </div>
             )}
           </div>
-
-          {/* Step 3 - Bottom Right (row 2, col 3) - Title to RIGHT of circle */}
-          {steps[2] && (
-            <div
-              className="col-start-3 row-start-2 flex items-center justify-start gap-4 h-full"
-              data-testid="spotlight-step-3"
-            >
-              <button
-                onClick={() => handleStepInteraction(2)}
-                onMouseEnter={() => setActiveStep(2)}
-                aria-label={steps[2].title || "Step 3"}
-                aria-expanded={activeStep === 2}
-                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
-                  activeStep === 2
-                    ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                }`}
-                data-testid="button-spotlight-step-3"
-              >
-                {getIcon(steps[2].icon)}
-              </button>
-              {/* Title to the right */}
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                  <span className="text-3xl font-bold text-primary leading-none">03</span>
-                </div>
-                {steps[2].title && (
-                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
-                    {steps[2].title}
-                  </h3>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>
