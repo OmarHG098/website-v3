@@ -17,6 +17,31 @@ import * as yaml from "js-yaml";
 import type { ZodSchema } from "zod";
 import { deepMerge } from "./deepMerge";
 
+/**
+ * Recursively strip null values from an object, converting them to undefined.
+ * This is needed because YAML files may have explicit null values, but Zod
+ * schemas use .optional() which only accepts undefined, not null.
+ */
+function stripNullValues<T>(obj: T): T {
+  if (obj === null) {
+    return undefined as unknown as T;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(item => stripNullValues(item)) as unknown as T;
+  }
+  if (typeof obj === "object" && obj !== null) {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== null) {
+        result[key] = stripNullValues(value);
+      }
+      // If value is null, we simply don't include the key, making it undefined
+    }
+    return result as T;
+  }
+  return obj;
+}
+
 const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content");
 
 export type ContentType = "programs" | "pages" | "locations" | "landings";
@@ -75,8 +100,11 @@ export function loadContent<T>(options: LoadContentOptions<T>): LoadContentResul
     // Deep merge: common data as base, content data overrides
     const mergedData = deepMerge(commonData, contentData);
 
+    // Strip null values from merged data (YAML null -> undefined for Zod .optional())
+    const cleanedData = stripNullValues(mergedData);
+
     // Validate against schema
-    const result = schema.safeParse(mergedData);
+    const result = schema.safeParse(cleanedData);
     if (!result.success) {
       return { 
         success: false, 
