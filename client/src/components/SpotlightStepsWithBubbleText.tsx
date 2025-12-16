@@ -189,6 +189,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     </h3>
                   )}
                 </div>
+                {/* Step 2 circle button with icon */}
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full bg-background" />
                   <button
