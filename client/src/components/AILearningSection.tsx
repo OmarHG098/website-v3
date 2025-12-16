@@ -63,7 +63,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {(data.features || []).slice(0, 3).map((feature, index) => {
-            const isRigobot = feature.title.toLowerCase().includes('rigobot');
+            const isRigobot = feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
               <Card 
                 key={index} 
