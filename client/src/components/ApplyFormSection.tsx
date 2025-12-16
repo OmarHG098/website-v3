@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import type { Country } from "react-phone-number-input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-input";
 import {
   Form,
   FormControl,
@@ -21,8 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IconCheck, IconMail, IconPhone, IconUser, IconSend } from "@tabler/icons-react";
+import { IconCheck, IconMail, IconUser, IconSend } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from "@/contexts/SessionContext";
 
 interface ApplyFormSectionData {
   type: "apply_form";
@@ -96,6 +99,10 @@ export function ApplyFormSection({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { session } = useSession();
+
+  const defaultCountry = (session.geo?.country_code || session.location?.country_code || "US") as Country;
+  const isUS = defaultCountry === "US";
 
   const form = useForm<ApplyFormValues>({
     resolver: zodResolver(applyFormSchema),
@@ -342,16 +349,13 @@ export function ApplyFormSection({
                             {data.form.phone_label}
                           </FormLabel>
                           <FormControl>
-                            <div className="relative">
-                              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                              <Input 
-                                {...field} 
-                                type="tel"
-                                placeholder={data.form.phone_placeholder}
-                                className="pl-10"
-                                data-testid="input-phone"
-                              />
-                            </div>
+                            <PhoneInput
+                              value={field.value}
+                              onChange={field.onChange}
+                              defaultCountry={defaultCountry}
+                              placeholder={data.form.phone_placeholder}
+                              data-testid="input-phone"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -378,24 +382,26 @@ export function ApplyFormSection({
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="consentSms"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                                data-testid="checkbox-consent-sms"
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm text-muted-foreground font-normal leading-relaxed cursor-pointer">
-                              {data.form.consent_sms}
-                            </FormLabel>
-                          </FormItem>
-                        )}
-                      />
+                      {isUS && (
+                        <FormField
+                          control={form.control}
+                          name="consentSms"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                  data-testid="checkbox-consent-sms"
+                                />
+                              </FormControl>
+                              <FormLabel className="text-sm text-muted-foreground font-normal leading-relaxed cursor-pointer">
+                                {data.form.consent_sms}
+                              </FormLabel>
+                            </FormItem>
+                          )}
+                        />
+                      )}
                     </div>
 
                     <Button 
