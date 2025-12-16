@@ -90,11 +90,7 @@ function FocusAreaCard({ title, icon, testId }: FocusAreaCardProps) {
         )}>
           {getIcon(icon || "Sparkles", "w-6 h-6")}
         </div>
-        <span className={cn(
-          "text-base transition-all duration-200",
-          "text-muted-foreground font-medium",
-          "group-hover:text-foreground group-hover:font-semibold"
-        )}>
+        <span className="transition-all duration-200 text-muted-foreground font-medium group-hover:text-foreground group-hover:font-semibold text-[18px]">
           {title}
         </span>
       </div>
