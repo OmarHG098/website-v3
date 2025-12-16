@@ -153,16 +153,34 @@ ${variantOptional.join("\n")}`;
 export function buildAdaptationPrompt(
   context: FullContext,
   sourceYaml: string,
-  targetStructure?: Record<string, unknown>
+  targetStructure?: Record<string, unknown>,
+  targetExampleYaml?: string
 ): string {
   const contextBlock = buildContextBlock(context);
   const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
+
+  // Build target example section if provided
+  const targetExampleSection = targetExampleYaml 
+    ? `## TARGET VARIANT EXAMPLE
+
+This is a fully-populated example of the target variant. Your output MUST include ALL properties shown in this example:
+
+\`\`\`yaml
+${targetExampleYaml}
+\`\`\`
+
+IMPORTANT: Populate EVERY property present in this example. Do not omit any fields - generate appropriate content for any property that exists in the example but not in the source.
+`
+    : '';
 
   let prompt = `${contextBlock}
 
 ${structureBlock}
 
+${targetExampleSection}
 ## SOURCE CONTENT TO ADAPT
+
+This is the original content. Preserve its core message and value proposition while restructuring it to match the target variant:
 
 \`\`\`yaml
 ${sourceYaml}
@@ -171,11 +189,12 @@ ${sourceYaml}
 ## INSTRUCTIONS
 
 Transform the source content to match the target structure while:
-1. Maintaining the core message and value proposition
+1. Maintaining the core message and value proposition from the source
 2. Adapting language to match brand voice guidelines
-3. Ensuring all required properties are filled
-4. Using appropriate content from the source or generating contextually appropriate content
-5. Following the component's when_to_use guidance`;
+3. POPULATING ALL PROPERTIES shown in the target variant example - do not leave any optional fields empty
+4. For properties that exist in the target but not the source, generate contextually appropriate content that matches the brand voice
+5. Following the component's when_to_use guidance
+6. If the target has arrays (like badges, logos, CTAs), populate them with the same number of items as the example`;
 
   if (targetStructure) {
     prompt += `
@@ -190,7 +209,7 @@ ${JSON.stringify(targetStructure, null, 2)}
 
 ## OUTPUT
 
-Respond with ONLY the adapted YAML content. No explanations, no markdown code blocks, just valid YAML:`;
+Respond with ONLY the adapted YAML content. No explanations, no markdown code blocks, just valid YAML with ALL properties populated:`;
 
   return prompt;
 }

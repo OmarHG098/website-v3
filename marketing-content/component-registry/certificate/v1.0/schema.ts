@@ -1,0 +1,21 @@
+/**
+ * Certificate Component Schemas - v1.0
+ */
+import { z } from "zod";
+import { statItemSchema } from "../../common/schema";
+
+export const certificateSectionSchema = z.object({
+  type: z.literal("certificate"),
+  title: z.string(),
+  description: z.string(),
+  benefits: z.array(z.object({ text: z.string() })),
+  card: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    program_name: z.string().optional(),
+    certificate_label: z.string().optional(),
+  }).optional(),
+  stats: z.array(statItemSchema).optional(),
+});
+
+export type CertificateSection = z.infer<typeof certificateSectionSchema>;

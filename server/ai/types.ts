@@ -101,6 +101,7 @@ export interface AdaptOptions {
   targetVersion: string;
   targetVariant?: string;
   sourceYaml: string;
+  targetExampleYaml?: string;
   targetStructure?: Record<string, unknown>;
   userOverrides?: FullContext["userOverrides"];
 }
@@ -119,6 +120,7 @@ export interface AdaptResult {
     completion: number;
     total: number;
   };
+  warnings?: string[];
 }
 
 // LLM client interface

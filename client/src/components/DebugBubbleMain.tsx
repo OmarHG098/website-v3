@@ -58,17 +58,15 @@ import {
   ContentInfo,
   VariantInfo,
   VariantsResponse,
-} from "./DebugBubble";
-import {
   deslugify,
   detectContentInfo,
   getContentFilePath,
   getPersistedMenuView,
-} from "./DebugBubble";
-import { componentsList } from "./DebugBubble";
-import { TagInput } from "./DebugBubble";
-import { TargetingStep } from "./DebugBubble";
-import { LocaleFlag } from "./DebugBubble";
+  componentsList,
+  TagInput,
+  TargetingStep,
+  LocaleFlag,
+} from "./DebugBubble/index";
 import { Button } from "@/components/ui/button";
 import {
   Popover,

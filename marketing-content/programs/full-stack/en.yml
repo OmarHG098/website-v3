@@ -7,15 +7,12 @@ meta:
     - /coding-bootcamp/full-stack
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
     badge: High-Earning Career
     title: Full Stack Development with AI
+    variant: singleColumn
     subtitle: Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available.
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $65K average starting salary
+    badge: High-Earning Career
     cta_buttons:
       - text: See Payment Options
         url: /en/apply
@@ -25,6 +22,10 @@ sections:
         url: /roi-calculator
         variant: outline
         icon: Calculator
+    trust_bar:
+      rating: "4.5"
+      rating_count: 1,294
+      trusted_text: $65K average starting salary
     award_badges:
       - name: Top Coding Bootcamp
         source: Forbes

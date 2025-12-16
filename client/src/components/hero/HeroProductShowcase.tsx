@@ -22,9 +22,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
   return (
     <section 
-      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
+      className="py-16 md:py-20 relative overflow-hidden"
+      style={data.background_image ? {
+        backgroundImage: `url(${data.background_image.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      } : undefined}
       data-testid="section-hero"
     >
+      {!data.background_image && (
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
+      )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
@@ -172,7 +180,13 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
             {data.video ? (
               <UniversalVideo 
-                {...data.video}
+                url={data.video.url}
+                title={data.video.title}
+                ratio={data.video.ratio || "16:9"}
+                muted={data.video.muted}
+                autoplay={data.video.autoplay}
+                loop={data.video.loop}
+                preview_image_url={data.video.preview_image_url}
                 className="w-[280px] md:w-full md:max-w-[400px]"
               />
             ) : data.image ? (

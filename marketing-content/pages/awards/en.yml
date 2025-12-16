@@ -1,5 +1,9 @@
 # Awards Landing Page - English
 
+slug: "awards"
+template: "default"
+title: "Awards"
+
 meta:
   page_title: "Awards & Recognitions | 4Geeks Academy"
   description: "Discover why 4Geeks Academy is a top-rated coding bootcamp. See our awards from Forbes, Newsweek, Course Report, SwitchUp, and more."
@@ -8,7 +12,7 @@ meta:
 
 sections:
   - type: hero
-    variant: simpleTwoColumn
+    variant: simpleStacked
     version: "1.0"
     badge: "Awards & Recognitions"
     title: "Top Coding Bootcamps"
@@ -16,25 +20,6 @@ sections:
     image:
       src: "/attached_assets/Group-original_1765419144159.webp"
       alt: "4Geeks Academy students collaborating"
-
-  - type: features_grid
-    version: "1.0"
-    variant: highlight
-    title: "Recognition from Industry Leaders"
-    columns: 3
-    items:
-      - icon: "Award"
-        icon_color: "#000000"
-        value: "Top 5"
-        title: "Coding Bootcamps 2025 - SwitchUp"
-      - icon: "Trophy"
-        icon_color: "#000000"
-        value: "#1"
-        title: "Best Data Science Bootcamp - Forbes"
-      - icon: "Star"
-        icon_color: "#000000"
-        value: "4.9"
-        title: "Average Rating Across All Platforms"
 
   - type: features_grid
     version: "1.0"

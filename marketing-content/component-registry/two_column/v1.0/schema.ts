@@ -1,0 +1,67 @@
+/**
+ * TwoColumn Component Schemas - v1.0
+ */
+import { z } from "zod";
+import { ctaButtonSchema } from "../../common/schema";
+
+export const twoColumnBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+  heading: z.string().optional(),
+});
+
+export const bulletGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  bullets: z.array(z.object({ text: z.string() })).optional(),
+});
+
+export const twoColumnColumnSchema = z.object({
+  video: z.string().optional(),
+  video_height: z.string().optional(),
+  video_width: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  image_max_width: z.string().optional(),
+  image_max_height: z.string().optional(),
+  image_mobile_max_width: z.string().optional(),
+  image_mobile_max_height: z.string().optional(),
+  heading: z.string().optional(),
+  sub_heading: z.string().optional(),
+  description: z.string().optional(),
+  html_content: z.string().optional(),
+  button: ctaButtonSchema.optional(),
+  bullets: z.array(twoColumnBulletSchema).optional(),
+  bullets_visible: z.number().optional(),
+  bullets_collapsible: z.boolean().optional(),
+  bullet_icon: z.string().optional(),
+  bullet_char: z.string().optional(),
+  bullet_icon_color: z.string().optional(),
+  bullet_groups: z.array(bulletGroupSchema).optional(),
+  bullet_groups_collapsible: z.boolean().optional(),
+  footer_description: z.string().optional(),
+  gap: z.string().optional(),
+  justify: z.enum(["start", "center", "end"]).optional(),
+  text_align: z.enum(["left", "center", "right"]).optional(),
+  font_size: z.enum(["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"]).optional(),
+});
+
+export const twoColumnSectionSchema = z.object({
+  type: z.literal("two_column"),
+  proportions: z.tuple([z.number(), z.number()]).optional(),
+  background: z.string().optional(),
+  alignment: z.enum(["start", "center", "end"]).optional(),
+  container_style: z.record(z.string(), z.string()).optional(),
+  left: twoColumnColumnSchema.optional(),
+  right: twoColumnColumnSchema.optional(),
+  reverse_on_mobile: z.boolean().optional(),
+  heading_above_on_md: z.boolean().optional(),
+  gap: z.string().optional(),
+  padding_left: z.string().optional(),
+  padding_right: z.string().optional(),
+});
+
+export type TwoColumnBullet = z.infer<typeof twoColumnBulletSchema>;
+export type BulletGroup = z.infer<typeof bulletGroupSchema>;
+export type TwoColumnColumn = z.infer<typeof twoColumnColumnSchema>;
+export type TwoColumnSection = z.infer<typeof twoColumnSectionSchema>;

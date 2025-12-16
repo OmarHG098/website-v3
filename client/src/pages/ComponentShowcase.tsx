@@ -480,43 +480,49 @@ function ComponentCard({
       >
         <div className="flex flex-row items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <nav className="flex items-center gap-1 text-sm w-full sm:w-auto" data-testid={`breadcrumb-${componentType}`}>
-                <Select 
-                  value={componentType} 
-                  onValueChange={(value) => {
-                    window.location.href = `/private/component-showcase/${value}`;
-                  }}
-                >
-                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-[30%] sm:w-auto" data-testid={`breadcrumb-component-${componentType}`}>
-                    <SelectValue>{schema.name}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {allComponents.map(comp => (
-                      <SelectItem key={comp.type} value={comp.type}>
-                        {comp.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                <Select value={selectedVersion} onValueChange={handleVersionChange}>
-                  <SelectTrigger className="h-7 px-2 text-sm font-medium w-auto" data-testid={`breadcrumb-version-${componentType}`}>
-                    <SelectValue>{selectedVersion}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {componentInfo.versions.map(v => (
-                      <SelectItem key={v.version} value={v.version}>
-                        {v.version}
-                      </SelectItem>
-                    ))}
-                    <SelectItem value="__add_new__" className="text-primary">
-                      <div className="flex items-center gap-1">
-                        <IconPlus className="w-3 h-3" />
-                        Add new version
-                      </div>
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-semibold">{schema.name}</h1>
+              <Badge variant="secondary">{componentType}</Badge>
+            </div>
+            <p className="text-sm text-muted-foreground">{schema.description}</p>
+            {(() => {
+              const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
+              if (variants.length === 0) return null;
+              const variantLabels: Record<string, string> = {
+                singleColumn: 'Single Column',
+                showcase: 'Showcase',
+                productShowcase: 'Product Showcase',
+                simpleTwoColumn: 'Simple Two Column',
+                imageText: 'Image + Text',
+                bulletGroups: 'Bullet Groups',
+                video: 'Video',
+              };
+              return (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs text-muted-foreground">Variants:</span>
+                  {variants.map(variant => (
+                    <Badge key={variant} variant="outline" className="text-xs">
+                      {variantLabels[variant as string] || variant}
+                    </Badge>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Version:</span>
+              <Select value={selectedVersion} onValueChange={handleVersionChange}>
+                <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {componentInfo.versions.map(v => (
+                    <SelectItem key={v.version} value={v.version}>
+                      {v.version}
                     </SelectItem>
-                  </SelectContent>
+                  ))}
+                </SelectContent>
                 </Select>
                 <IconChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                 <Select 
@@ -571,7 +577,6 @@ function ComponentCard({
                     </SelectItem>
                   </SelectContent>
                 </Select>
-              </nav>
             </div>
             <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {/* Mobile-only buttons row */}

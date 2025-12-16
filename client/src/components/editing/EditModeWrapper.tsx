@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense, useCallback } from "react";
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { EditModeProvider } from "@/contexts/EditModeContext";
@@ -20,21 +20,11 @@ interface EditModeWrapperProps {
 // Inner component that uses the edit mode context
 function EditModeInner({ 
   children, 
-  sections, 
   contentType, 
   slug, 
   locale 
 }: EditModeWrapperProps) {
   const editMode = useEditModeOptional();
-  const [localSections, setLocalSections] = useState<Section[]>(sections || []);
-  
-  const handleSectionUpdate = useCallback((index: number, updatedSection: Section) => {
-    setLocalSections(prev => {
-      const next = [...prev];
-      next[index] = updatedSection;
-      return next;
-    });
-  }, []);
   
   const handleCloseEditor = useCallback(() => {
     if (editMode) {
@@ -47,8 +37,8 @@ function EditModeInner({
     return <>{children}</>;
   }
   
-  const { selectedSectionIndex } = editMode;
-  const selectedSection = selectedSectionIndex !== null ? localSections[selectedSectionIndex] : null;
+  const { selectedSectionIndex, sections, updateSection } = editMode;
+  const selectedSection = selectedSectionIndex !== null ? sections[selectedSectionIndex] : null;
   
   return (
     <>
@@ -63,7 +53,7 @@ function EditModeInner({
             contentType={contentType}
             slug={slug}
             locale={locale}
-            onUpdate={(updated) => handleSectionUpdate(selectedSectionIndex, updated)}
+            onUpdate={(updated) => updateSection(selectedSectionIndex, updated)}
             onClose={handleCloseEditor}
           />
         </Suspense>

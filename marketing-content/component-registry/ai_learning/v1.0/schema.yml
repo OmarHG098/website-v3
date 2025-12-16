@@ -1,13 +1,13 @@
-name: "AI Learning Section"
+name: AI Learning Section
 version: "1.0"
 component: "AILearningSection"
 file: "client/src/components/AILearningSection.tsx"
 description: "Showcases AI-powered learning tools with Rigobot, feature cards, highlight with bullets, and optional video"
-
 when_to_use: |
   Use to highlight Rigobot AI tutor, mentorship benefits, and community learning.
   Best placed after program overview to emphasize unique learning experience.
   Includes title/description header, 3 feature cards, and a two-column highlight section with optional video.
+
 
 props:
   badge:
@@ -41,9 +41,10 @@ props:
         description: "Tabler icon name (e.g., Robot, Headset, Users)"
       title:
         type: string
+        required: true
       description:
         type: string
-
+        
   highlight:
     type: object
     required: false
@@ -79,13 +80,57 @@ props:
     required: false
     description: "Interactive chat demo showing AI tutor in action (legacy, optional)"
     fields:
+
       bot_name:
         type: string
-        example: "Rigobot"
+        required: true
       bot_status:
         type: string
-        example: "AI Tutor - Online"
+        required: true
       user_message:
         type: string
+        required: true
       bot_response:
         type: string
+        required: true
+    description: Interactive chat demo showing AI tutor in action
+  video_url:
+    type: string
+    required: false
+  highlight:
+    type: object
+    required: false
+    properties:
+      title:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      bullets:
+        type: array
+        required: false
+        items:
+          text:
+            type: string
+            required: true
+      cta:
+        type: object
+        required: false
+        properties:
+          text:
+            type: string
+            required: true
+          url:
+            type: string
+            required: true
+          variant:
+            type: string
+            required: true
+            options:
+              - primary
+              - secondary
+              - outline
+          icon:
+            type: string
+            required: false
