@@ -504,6 +504,28 @@ export type SupportDuoBulletGroup = z.infer<typeof supportDuoBulletGroupSchema>;
 export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
 
 // ============================================
+// Card Grid Section Schema
+// ============================================
+export const cardGridCardSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+});
+
+export const cardGridSectionSchema = z.object({
+  type: z.literal("card_grid"),
+  version: z.string().optional(),
+  background: z.string().optional(),
+  heading: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  cards: z.array(cardGridCardSchema),
+});
+
+export type CardGridCard = z.infer<typeof cardGridCardSchema>;
+export type CardGridSection = z.infer<typeof cardGridSectionSchema>;
+
+// ============================================
 // Section Schema Union
 // Import unified section schemas for use in union
 // ============================================
@@ -556,6 +578,7 @@ export const sectionSchema = z.union([
   pieChartsSectionSchema,
   awardsRowSectionSchema,
   supportDuoSectionSchema,
+  cardGridSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;
