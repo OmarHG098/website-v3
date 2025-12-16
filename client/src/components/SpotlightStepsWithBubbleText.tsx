@@ -95,12 +95,15 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(step.icon)}
               </button>
-              <div className="mt-3 text-center">
-                <span className="text-sm font-bold text-primary">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                  <span className="text-2xl font-bold text-primary leading-none">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
                 {step.title && (
-                  <h3 className="text-base font-semibold text-foreground mt-1">
+                  <h3 className="text-base font-semibold text-foreground leading-tight">
                     {step.title}
                   </h3>
                 )}
@@ -146,10 +149,13 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(steps[1].icon)}
               </button>
-              <div className="mt-3 text-center">
-                <span className="text-lg font-bold text-primary">02</span>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                  <span className="text-3xl font-bold text-primary leading-none">02</span>
+                </div>
                 {steps[1].title && (
-                  <h3 className="text-base font-semibold text-foreground mt-1">
+                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                     {steps[1].title}
                   </h3>
                 )}
@@ -177,10 +183,13 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(steps[0].icon)}
               </button>
-              <div className="mt-3 text-center">
-                <span className="text-lg font-bold text-primary">01</span>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                  <span className="text-3xl font-bold text-primary leading-none">01</span>
+                </div>
                 {steps[0].title && (
-                  <h3 className="text-base font-semibold text-foreground mt-1">
+                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                     {steps[0].title}
                   </h3>
                 )}
@@ -254,10 +263,13 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(steps[2].icon)}
               </button>
-              <div className="mt-3 text-center">
-                <span className="text-lg font-bold text-primary">03</span>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                  <span className="text-3xl font-bold text-primary leading-none">03</span>
+                </div>
                 {steps[2].title && (
-                  <h3 className="text-base font-semibold text-foreground mt-1">
+                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                     {steps[2].title}
                   </h3>
                 )}
