@@ -226,6 +226,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         experiment_slug: session.experiment?.experiment_slug,
         variant_slug: session.experiment?.variant_slug,
         variant_version: session.experiment?.variant_version,
+        token: turnstileToken,
       };
       
       return apiRequest("POST", "/api/leads", payload);
