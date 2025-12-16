@@ -73,7 +73,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
                     <IconCheck size={14} className="text-green-600 dark:text-green-400" />
                   </div>
-                  <span className="text-foreground font-semibold">{benefit.text}</span>
+                  <span className="text-foreground font-semibold text-[18px]">{benefit.text}</span>
                 </li>
               ))}
             </ul>
