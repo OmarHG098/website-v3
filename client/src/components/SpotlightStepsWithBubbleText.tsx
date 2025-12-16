@@ -160,7 +160,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
           >
             {/* Step 1 (bottom-left) to Step 2 (top-center) */}
             <path
-              d="M 18 68 C 25 40, 40 22, 50 22"
+              d="M 18 68 C 20 10, 45 5, 50 18"
               stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="2"
               strokeLinecap="round"
@@ -170,7 +170,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             />
             {/* Step 2 (top-center) to Step 3 (bottom-right) */}
             <path
-              d="M 50 22 C 60 22, 75 40, 82 68"
+              d="M 50 18 C 55 5, 80 10, 82 68"
               stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="2"
               strokeLinecap="round"
@@ -260,7 +260,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               className="col-start-2 row-start-2 flex items-center justify-center"
             >
               <div
-                className={`relative bg-card border-2 border-primary/30 rounded-[3rem] lg:rounded-[6rem] p-6 lg:p-10 shadow-lg w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col
+                className={`relative bg-card border-2 border-primary/30 rounded-[6rem] lg:rounded-[6rem] p-6 lg:p-10 shadow-lg w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col
                   before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
                   after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
                   ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
