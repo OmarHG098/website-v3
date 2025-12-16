@@ -44,6 +44,7 @@ function SpotlightCard({
       className={`
         p-4 md:p-6 cursor-pointer outline-none
         transition-all duration-500 ease-out
+        min-h-[200px] md:min-h-[240px]
         ${isActive 
           ? 'scale-105 shadow-lg z-10 bg-card border-primary/20' 
           : 'scale-95 opacity-60 bg-card/50 hover:opacity-80'
@@ -55,7 +56,7 @@ function SpotlightCard({
       data-testid={`card-spotlight-${itemId}`}
       data-active={isActive}
     >
-      <div className="flex flex-col items-center text-center gap-3">
+      <div className="flex flex-col items-center justify-center text-center gap-3 h-full">
         <div className={`
           transition-all duration-500
           ${isActive ? 'w-16 h-16 md:w-20 md:h-20' : 'w-12 h-12 md:w-14 md:h-14'}
@@ -79,11 +80,12 @@ function SpotlightCard({
           {item.title}
         </div>
         
-        {item.description && isActive && (
-          <div className="text-sm text-muted-foreground mt-1 animate-in fade-in duration-300">
-            {item.description}
-          </div>
-        )}
+        <div className={`
+          text-sm text-muted-foreground mt-1 transition-all duration-300
+          ${isActive && item.description ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}
+        `}>
+          {item.description || '\u00A0'}
+        </div>
       </div>
     </Card>
   );
