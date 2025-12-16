@@ -5,32 +5,6 @@ meta:
     - /landing/ai-engineering
     - /campaign/ai-engineer
 sections:
-  - type: award_badges
-    version: v1.0
-    variant: simple
-    showBorder: true
-    items:
-      - id: coursereport-1
-        logo: /images/awards/course-report.svg
-        alt: Course Report - Best Coding Bootcamp
-        logoHeight: h-12 md:h-16
-        source: Course Report
-        name: Best Coding Bootcamp
-        year: "2024"
-      - id: switchup-1
-        logo: /images/awards/switchup.svg
-        alt: SwitchUp - Top Bootcamp
-        logoHeight: h-12 md:h-16
-        source: SwitchUp
-        name: Top Bootcamp
-        year: "2024"
-      - id: careerkarma-1
-        logo: /images/awards/career-karma.svg
-        alt: Career Karma - Best Value
-        logoHeight: h-12 md:h-16
-        source: Career Karma
-        name: Best Value
-        year: "2024"
   - type: hero
     version: "1.0"
     variant: productShowcase
@@ -80,7 +54,7 @@ sections:
           logo: /attached_assets/switchup_1765590146414.webp
   - type: features_grid
     version: "1.0"
-    variant: highlight
+    variant: spotlight
     title: Why AI Engineering Is the Hottest Career in Tech
     subtitle: The numbers speak for themselves
     items:
@@ -95,6 +69,10 @@ sections:
         title: Average starting salary for AI Engineers
     columns: 3
     icon_color: "#0097CD"
+    spotlight_config:
+      initial_index: 0
+      auto_rotate_ms: 4000
+      pause_on_hover: true
   - type: syllabus
     title: What You'll Master in 20 Weeks
     subtitle: Build real AI systems from day one. Choose a company to transform with AI — yours or one you imagine — and create a fully operational, AI-powered business.

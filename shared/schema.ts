@@ -230,6 +230,8 @@ export {
 export type {
   FeaturesGridHighlightSection,
   FeaturesGridDetailedSection,
+  FeaturesGridSpotlightSection,
+  SpotlightConfig,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
 // ============================================

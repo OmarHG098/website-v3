@@ -3,18 +3,40 @@ version: "1.0"
 component: FeaturesGrid
 file: client/src/components/features_grid/FeaturesGrid.tsx
 description: >-
-  A unified grid component with two variants - "highlight" for stats/metrics cards and "detailed" for full feature cards
-  with descriptions and links.
+  A unified grid component with three variants - "highlight" for stats/metrics cards, "detailed" for full feature cards
+  with descriptions and links, and "spotlight" for interactive cards with auto-rotation and hover highlighting.
 when_to_use: >
   Use the "highlight" variant (default) when showcasing key metrics, statistics, or simple features with optional
   values.
 
   Use the "detailed" variant when showcasing programs, services, or features that need full descriptions, categories,
   and action links.
+
+  Use the "spotlight" variant when you want one card to be prominently highlighted while others appear faded,
+  with automatic rotation between cards and hover interaction support.
 variants:
   detailed: {}
+  spotlight: {}
 variant_props:
   detailed: {}
+  spotlight:
+    spotlight_config:
+      type: object
+      required: false
+      description: Configuration for the spotlight behavior
+      properties:
+        initial_index:
+          type: number
+          required: false
+          description: Which item to highlight initially (0-indexed). Defaults to 0.
+        auto_rotate_ms:
+          type: number
+          required: false
+          description: Milliseconds between auto-rotation. Defaults to 4000. Set to 0 to disable.
+        pause_on_hover:
+          type: boolean
+          required: false
+          description: Whether to pause auto-rotation when user hovers. Defaults to true.
 props:
   title:
     type: string

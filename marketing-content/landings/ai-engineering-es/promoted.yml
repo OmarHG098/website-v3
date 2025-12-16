@@ -56,7 +56,7 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: highlight
+    variant: spotlight
     title: Por Qué Ingeniería de IA Es la Carrera Más Demandada
     subtitle: Los números hablan por sí mismos
     items:
@@ -71,6 +71,10 @@ sections:
         title: Salario inicial promedio para Ingenieros de IA
     columns: 3
     icon_color: "#0097CD"
+    spotlight_config:
+      initial_index: 0
+      auto_rotate_ms: 4000
+      pause_on_hover: true
 
   - type: syllabus
     title: Lo Que Dominarás en 20 Semanas
