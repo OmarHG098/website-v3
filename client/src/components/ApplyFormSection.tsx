@@ -114,7 +114,7 @@ export function ApplyFormSection({
   const onSubmit = async (values: ApplyFormValues) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/apply", {
+      const response = await fetch("/api/apply/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
