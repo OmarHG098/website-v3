@@ -180,7 +180,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             />
           </svg>
 
-          <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
+          <div className="relative grid grid-cols-[1fr_minmax(200px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
             {steps[1] && (
               <div
