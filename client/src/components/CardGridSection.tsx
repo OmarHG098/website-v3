@@ -72,7 +72,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
             return (
               <Card 
                 key={index} 
-                className="h-full"
+                className="h-full border-b-4 border-b-primary"
                 data-testid={`card-bullet-${index}`}
               >
                 <CardContent className="p-5 flex flex-col items-start gap-3">
