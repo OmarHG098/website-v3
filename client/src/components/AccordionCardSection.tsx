@@ -33,7 +33,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
       <div className="max-w-6xl mx-auto px-4">
         <Card className="overflow-hidden">
           <CardContent className="p-0">
-            <div className={`grid grid-cols-1 md:grid-cols-12 md:min-h-[500px] ${reverse ? "md:flex-row-reverse" : ""}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-12 md:min-h-[580px] ${reverse ? "md:flex-row-reverse" : ""}`}>
               <div className={`col-span-1 md:col-span-7 p-6 md:p-10 flex flex-col justify-center ${reverse ? "md:order-2" : "md:order-1"}`}>
                 {title && (
                   <h2 
@@ -54,7 +54,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
                 )}
 
                 {bullets && bullets.length > 0 && (
-                  <Accordion type="single" collapsible className="w-full" data-testid="accordion-bullets">
+                  <Accordion type="single" collapsible defaultValue="item-0" className="w-full" data-testid="accordion-bullets">
                     {bullets.map((bullet, index) => (
                       <AccordionItem key={index} value={`item-${index}`}>
                         <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
