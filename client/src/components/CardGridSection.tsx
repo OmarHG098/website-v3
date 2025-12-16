@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import * as TablerIcons from "@tabler/icons-react";
 import { IconCheck } from "@tabler/icons-react";
 
 interface CardGridSectionData {
@@ -62,24 +63,29 @@ export function CardGridSection({ data }: CardGridSectionProps) {
         </Card>
 
         <div className="grid md:grid-cols-3 gap-4">
-          {data.cards.map((card, index) => (
-            <Card 
-              key={index} 
-              className="h-full"
-              data-testid={`card-bullet-${index}`}
-            >
-              <CardContent className="p-5 flex gap-3">
-                <div className="flex-shrink-0 mt-0.5">
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                    <IconCheck className="w-4 h-4 text-primary" />
+          {data.cards.map((card, index) => {
+            const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
+            const IconComponent = (TablerIcons as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
+            
+            return (
+              <Card 
+                key={index} 
+                className="h-full"
+                data-testid={`card-bullet-${index}`}
+              >
+                <CardContent className="p-5 flex gap-3">
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <IconComponent className="w-5 h-5 text-primary" />
+                    </div>
                   </div>
-                </div>
-                <p className="text-foreground text-sm md:text-base">
-                  {card.text}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+                  <p className="text-foreground text-sm md:text-base">
+                    {card.text}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
