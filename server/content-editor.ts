@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
 import type { EditOperation } from "@shared/schema";
+import { sectionSchema } from "@shared/schema";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -153,6 +154,47 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     // Apply all operations
     for (const operation of operations) {
       applyOperation(content, operation);
+    }
+    
+    // Validate sections after applying operations
+    const sections = content.sections;
+    if (!Array.isArray(sections)) {
+      return { 
+        success: false, 
+        error: "Content must have a 'sections' array" 
+      };
+    }
+    
+    const validationErrors: string[] = [];
+    
+    for (let i = 0; i < sections.length; i++) {
+      const section = sections[i] as Record<string, unknown>;
+      const result = sectionSchema.safeParse(section);
+      
+      if (!result.success) {
+        const sectionType = section?.type || "unknown";
+        // Create user-friendly error message
+        const issues = result.error.issues.slice(0, 3); // Limit to first 3 issues
+        const issueMessages = issues.map(issue => {
+          const path = issue.path.join(".");
+          if (issue.code === "invalid_literal" || issue.code === "invalid_enum_value") {
+            return `Unknown section type "${sectionType}". Check spelling or use a valid section type.`;
+          }
+          if (issue.code === "invalid_type" && issue.message === "Required") {
+            return `Missing required field: ${path}`;
+          }
+          return `${path}: ${issue.message}`;
+        });
+        const uniqueMessages = Array.from(new Set(issueMessages));
+        validationErrors.push(`Section ${i + 1} (${sectionType}): ${uniqueMessages[0]}`);
+      }
+    }
+    
+    if (validationErrors.length > 0) {
+      return { 
+        success: false, 
+        error: `Cannot save - validation failed:\n${validationErrors.join("\n")}` 
+      };
     }
     
     // Write back to file
