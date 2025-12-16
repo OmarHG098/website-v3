@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -64,11 +63,6 @@ export interface LeadFormData {
   show_consent?: boolean;
   show_terms?: boolean;
   className?: string;
-  turnstile?: {
-    enabled?: boolean;
-    theme?: "light" | "dark" | "auto";
-    size?: "normal" | "compact";
-  };
 }
 
 interface LeadFormProps {
@@ -104,15 +98,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const utm = useUTM();
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileError, setTurnstileError] = useState<string | null>(null);
-  
-  const turnstileEnabled = data.turnstile?.enabled ?? true;
-  
-  const { data: turnstileSiteKey } = useQuery<{ siteKey: string }>({
-    queryKey: ["/api/turnstile/site-key"],
-    enabled: turnstileEnabled,
-  });
 
   const variant = data.variant || "stacked";
   const fields = data.fields || {};
@@ -190,14 +175,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
-      // Verify Turnstile token if enabled
-      if (turnstileEnabled && turnstileToken) {
-        // apiRequest throws on non-2xx responses, so verification failure will throw
-        await apiRequest("POST", "/api/turnstile/verify", { token: turnstileToken });
-      } else if (turnstileEnabled && !turnstileToken) {
-        throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
-      }
-
       const payload = {
         ...values,
         location: values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
@@ -241,12 +218,10 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     },
     onError: (error: Error) => {
       console.error("Lead submission error:", error);
-      setTurnstileError(error.message);
     },
   });
 
   const onSubmit = (values: FormValues) => {
-    setTurnstileError(null);
     submitMutation.mutate(values);
   };
 
@@ -272,7 +247,8 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const isInline = variant === "inline";
   const emailConfig = getFieldConfig("email");
 
-  const hasVisibleFieldsBeyondEmailAndFirstName = 
+  const hasVisibleFieldsBeyondEmail = 
+    getFieldConfig("first_name").visible ||
     getFieldConfig("last_name").visible ||
     getFieldConfig("phone").visible ||
     getFieldConfig("program").visible ||
@@ -281,33 +257,12 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     getFieldConfig("coupon").visible ||
     getFieldConfig("comment").visible;
 
-  const firstNameConfig = getFieldConfig("first_name");
-
-  if (isInline && !hasVisibleFieldsBeyondEmailAndFirstName) {
+  if (isInline && !hasVisibleFieldsBeyondEmail) {
     return (
       <div className={data.className} data-testid="lead-form">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-2 items-start flex-wrap">
-              {firstNameConfig.visible && (
-                <FormField
-                  control={form.control}
-                  name="first_name"
-                  rules={{ required: firstNameConfig.required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
-                  render={({ field }) => (
-                    <FormItem className="flex-1 min-w-[140px]">
-                      <FormControl>
-                        <Input 
-                          placeholder={firstNameConfig.placeholder || (locale === "es" ? "Tu nombre" : "Your name")} 
-                          {...field} 
-                          data-testid="input-first-name"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
+            <div className="flex gap-2 items-start">
               <FormField
                 control={form.control}
                 name="email"
@@ -319,7 +274,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   }
                 }}
                 render={({ field }) => (
-                  <FormItem className="flex-1 min-w-[180px]">
+                  <FormItem className="flex-1">
                     <FormControl>
                       <Input 
                         type="email" 
@@ -334,7 +289,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
               <Button 
                 type="submit" 
-                disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+                disabled={submitMutation.isPending}
                 data-testid="button-submit"
               >
                 {submitMutation.isPending ? (
@@ -344,25 +299,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 )}
               </Button>
             </div>
-            {turnstileEnabled && turnstileSiteKey?.siteKey && (
-              <div className="mt-3" data-testid="turnstile-widget">
-                <Turnstile
-                  siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={setTurnstileToken}
-                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-                  onExpire={() => setTurnstileToken(null)}
-                  options={{
-                    theme: data.turnstile?.theme || "auto",
-                    size: data.turnstile?.size || "compact",
-                  }}
-                />
-              </div>
-            )}
-            {turnstileError && (
-              <p className="text-sm text-destructive mt-2" data-testid="text-turnstile-error">
-                {turnstileError}
-              </p>
-            )}
             {emailConfig.helper_text && (
               <p className="text-sm text-muted-foreground mt-2" data-testid="text-email-helper">
                 {emailConfig.helper_text}
@@ -720,31 +656,10 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             </div>
           )}
 
-          {turnstileEnabled && turnstileSiteKey?.siteKey && (
-            <div className="flex justify-center" data-testid="turnstile-widget">
-              <Turnstile
-                siteKey={turnstileSiteKey.siteKey}
-                onSuccess={setTurnstileToken}
-                onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-                onExpire={() => setTurnstileToken(null)}
-                options={{
-                  theme: data.turnstile?.theme || "auto",
-                  size: data.turnstile?.size || "normal",
-                }}
-              />
-            </div>
-          )}
-
-          {turnstileError && (
-            <p className="text-sm text-destructive text-center" data-testid="text-turnstile-error">
-              {turnstileError}
-            </p>
-          )}
-
           <Button 
             type="submit" 
             className="w-full"
-            disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+            disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
             {submitMutation.isPending ? (

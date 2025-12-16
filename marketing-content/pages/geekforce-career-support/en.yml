@@ -17,9 +17,13 @@ sections:
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms, we’ll give you the personalized mentorship you need to land your first job and keep thriving in today’s tech.
-    video_id: "-2ZvlgDnltc"
-    video_ratio: "3:4"
+    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      autoplay: false
+      loop: true
     form:
       variant: inline
       title: Sign up for lifetime support

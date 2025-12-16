@@ -10,12 +10,8 @@ experiments:
         version: 1
         allocation: 50
     targeting:
-      regions:
-        - latam
       languages:
         - en
-      utm_sources:
-        - google
       devices:
         - mobile
     max_visitors: 1000

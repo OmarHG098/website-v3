@@ -211,57 +211,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Cloudflare Turnstile endpoints
-  app.get("/api/turnstile/site-key", (_req, res) => {
-    const siteKey = process.env.TURNSTILE_SITE_KEY;
-    if (!siteKey) {
-      res.status(500).json({ error: "Turnstile site key not configured" });
-      return;
-    }
-    res.json({ siteKey });
-  });
-
-  app.post("/api/turnstile/verify", async (req, res) => {
-    try {
-      const { token } = req.body;
-      const secretKey = process.env.TURNSTILE_SECRET_KEY;
-
-      if (!token) {
-        res.status(400).json({ success: false, error: "Token required" });
-        return;
-      }
-
-      if (!secretKey) {
-        res.status(500).json({ success: false, error: "Turnstile secret key not configured" });
-        return;
-      }
-
-      const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          secret: secretKey,
-          response: token,
-        }),
-      });
-
-      const result = await verifyResponse.json() as { success: boolean; "error-codes"?: string[] };
-
-      if (result.success) {
-        res.json({ success: true });
-      } else {
-        res.status(400).json({ 
-          success: false, 
-          error: "Verification failed", 
-          codes: result["error-codes"] 
-        });
-      }
-    } catch (error) {
-      console.error("Turnstile verification error:", error);
-      res.status(500).json({ success: false, error: "Verification failed" });
-    }
-  });
-
   app.get("/api/career-programs", (req, res) => {
     const locale = (req.query.locale as string) || "en";
     const _location = req.query.location as string | undefined;
@@ -973,8 +922,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clearSitemapCache();
         clearRedirectCache();
         
-        // Return success with updated sections for immediate UI update
-        res.json({ success: true, updatedSections: result.updatedSections });
+        res.json({ success: true });
       } else {
         res.status(400).json({ error: result.error });
       }
@@ -1289,7 +1237,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         targetVersion,
         targetVariant,
         sourceYaml,
-        targetExampleYaml,
         targetStructure,
         userOverrides,
       } = req.body;
@@ -1322,7 +1269,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         targetVersion,
         targetVariant,
         sourceYaml,
-        targetExampleYaml,
         targetStructure,
         userOverrides,
       });

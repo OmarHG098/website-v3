@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import type { Section, EditOperation } from "@shared/schema";
-import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Hero } from "@/components/hero/Hero";
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
@@ -133,53 +132,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
-export function SectionRenderer({ sections: propSections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
   const { toast } = useToast();
-  const editMode = useEditModeOptional();
-  
-  // Track the last propSections reference to detect backend refetches
-  const lastPropSectionsRef = useRef<Section[] | null>(null);
-  
-  // Build unique page key from content type, slug, and locale
-  // Use window.location.pathname as fallback for pages without explicit slug/locale
-  const currentPageKey = contentType && slug && locale 
-    ? `${contentType}:${slug}:${locale}` 
-    : `path:${typeof window !== 'undefined' ? window.location.pathname : 'ssr'}`;
-  
-  // Initialize context sections when page changes, context is empty, or backend refetch occurs
-  useEffect(() => {
-    // Only seed context when in edit mode
-    if (!editMode || !editMode.isEditMode || !propSections) return;
-    
-    // Check if this is a new propSections reference (from backend refetch)
-    const isNewPropsRef = lastPropSectionsRef.current !== propSections;
-    lastPropSectionsRef.current = propSections;
-    
-    // If page has changed, reinitialize (even for empty arrays)
-    if (editMode.pageKey !== currentPageKey) {
-      editMode.setPageKey(currentPageKey);
-      editMode.setSections(propSections);
-      return;
-    }
-    
-    // If context is empty and props has sections, initialize
-    if (editMode.sections.length === 0 && propSections.length > 0) {
-      editMode.setSections(propSections);
-      return;
-    }
-    
-    // Only resync from props when backend refetched (new reference)
-    // This preserves local edits from updateSection while catching add/remove/reorder
-    // Also handles empty array (all sections deleted)
-    if (isNewPropsRef) {
-      editMode.setSections(propSections);
-    }
-  }, [editMode, propSections, currentPageKey]);
-  
-  // Use context sections when in edit mode, otherwise use prop sections
-  const sections = (editMode?.isEditMode && editMode.sections.length > 0) 
-    ? editMode.sections 
-    : propSections;
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;

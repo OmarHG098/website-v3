@@ -5,7 +5,6 @@ const ReactPlayer = lazy(() => import("react-player"));
 
 export interface VideoConfig {
   url: string;
-  title?: string;
   ratio?: string;
   muted?: boolean;
   autoplay?: boolean;
@@ -35,7 +34,6 @@ const parseRatio = (ratio?: string): { paddingTop: string } => {
 
 export function UniversalVideo({
   url,
-  title,
   ratio = "16:9",
   muted = true,
   autoplay = false,

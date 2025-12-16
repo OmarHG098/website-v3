@@ -99,13 +99,12 @@ export const heroProductShowcaseSchema = z.object({
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
   video: videoConfigSchema.optional(),
+  video_id: z.string().optional(),
+  video_title: z.string().optional(),
+  video_ratio: z.string().optional(),
   image: z.object({
     src: z.string(),
     alt: z.string(),
-  }).optional(),
-  background_image: z.object({
-    src: z.string(),
-    alt: z.string().optional(),
   }).optional(),
   form: leadFormDataSchema.optional(),
   cta_button: ctaButtonSchema.optional(),

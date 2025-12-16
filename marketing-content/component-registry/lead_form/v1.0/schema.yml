@@ -264,27 +264,3 @@ props:
   className:
     type: string
     required: false
-  turnstile:
-    type: object
-    required: false
-    properties:
-      enabled:
-        type: boolean
-        required: false
-        description: Enable Cloudflare Turnstile verification (default true)
-      theme:
-        type: string
-        required: false
-        options:
-          - light
-          - dark
-          - auto
-        description: Turnstile widget theme
-      size:
-        type: string
-        required: false
-        options:
-          - normal
-          - compact
-        description: Turnstile widget size
-    description: Cloudflare Turnstile bot protection configuration
