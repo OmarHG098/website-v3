@@ -160,7 +160,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
           >
             {/* Step 1 (bottom-left) to Step 2 (top-center) */}
             <path
-              d="M 18 75 C 25 48, 40 38, 50 38"
+              d="M 18 68 C 25 40, 40 22, 50 22"
               stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="2"
               strokeLinecap="round"
@@ -170,7 +170,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             />
             {/* Step 2 (top-center) to Step 3 (bottom-right) */}
             <path
-              d="M 50 38 C 60 38, 75 48, 82 75"
+              d="M 50 22 C 60 22, 75 40, 82 68"
               stroke="hsl(var(--primary) / 0.4)"
               strokeWidth="2"
               strokeLinecap="round"
