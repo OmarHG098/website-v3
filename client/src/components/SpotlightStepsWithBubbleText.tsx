@@ -180,7 +180,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             />
           </svg>
 
-          <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-2 gap-8" style={{ minHeight: "420px" }}>
+          <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-2 gap-4" style={{ minHeight: "340px" }}>
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
             {steps[1] && (
               <div
@@ -205,7 +205,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     onMouseEnter={() => setActiveStep(1)}
                     aria-label={steps[1].title || "Step 2"}
                     aria-expanded={activeStep === 1}
-                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                    className={`relative w-24 h-24 p-5 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
                       activeStep === 1
                         ? "border-primary bg-primary/20 scale-110 shadow-lg"
                         : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
