@@ -150,41 +150,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             }}
           />
 
-          {/* SVG Curved Connector Lines - Timeline flow */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            style={{ minHeight: "400px" }}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-              </linearGradient>
-            </defs>
-            {/* Smooth curve from Step 1 (bottom-left) to Step 2 (top-center) */}
-            <path
-              d="M 20 78 C 28 55, 38 38, 50 28"
-              fill="none"
-              stroke="url(#lineGradient)"
-              strokeWidth="0.5"
-              strokeDasharray="2 1"
-              className="transition-opacity duration-300"
-              style={{ opacity: 0.6 }}
-            />
-            {/* Smooth curve from Step 2 (top-center) to Step 3 (bottom-right) */}
-            <path
-              d="M 50 28 C 62 38, 72 55, 80 78"
-              fill="none"
-              stroke="url(#lineGradient)"
-              strokeWidth="0.5"
-              strokeDasharray="2 1"
-              className="transition-opacity duration-300"
-              style={{ opacity: 0.6 }}
-            />
-          </svg>
+          {/* SVG Curved Connector Lines - temporarily hidden */}
 
           <div className="relative grid grid-cols-3 grid-rows-2 gap-4" style={{ minHeight: "400px" }}>
             {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
