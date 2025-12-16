@@ -14,6 +14,13 @@ export function CertificateSection({ data }: CertificateSectionProps) {
       data-testid="section-certificate"
     >
       <div className="max-w-6xl mx-auto px-4">
+        <h2 
+          className="text-3xl md:text-4xl font-bold mb-10 text-foreground text-center"
+          data-testid="text-certificate-title"
+        >
+          {data.title}
+        </h2>
+
         {data.stats && data.stats.length > 0 && (
           <div 
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
@@ -49,21 +56,14 @@ export function CertificateSection({ data }: CertificateSectionProps) {
           )}
           
           <div>
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
-              data-testid="text-certificate-title"
-            >
-              {data.title}
-            </h2>
-            
             <p 
-              className="text-lg mb-8 leading-relaxed text-foreground"
+              className="text-xl mb-8 leading-relaxed text-foreground"
               data-testid="text-certificate-description"
             >
               {data.description}
             </p>
             
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {(data.benefits || []).map((benefit, index) => (
                 <li 
                   key={index} 
@@ -73,7 +73,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
                     <IconCheck size={14} className="text-green-600 dark:text-green-400" />
                   </div>
-                  <span className="text-foreground">{benefit.text}</span>
+                  <span className="text-foreground font-semibold">{benefit.text}</span>
                 </li>
               ))}
             </ul>
