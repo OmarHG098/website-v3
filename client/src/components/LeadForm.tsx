@@ -279,11 +279,28 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     return loc.region === selectedRegion;
   }) || [];
 
+  const isInline = variant === "inline";
+
   if (isSuccess) {
+    // Inline variant: compact horizontal success message
+    if (isInline) {
+      return (
+        <div className="flex items-center gap-2" data-testid="lead-form-success">
+          <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+            <IconCheck className="w-4 h-4 text-green-500" />
+          </div>
+          <p className="text-foreground text-sm" data-testid="text-success-message">
+            {successMessage}
+          </p>
+        </div>
+      );
+    }
+    
+    // Stacked variant: centered success message
     return (
       <div className="text-center" data-testid="lead-form-success">
-        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center">
-          <IconCheck className="w-6 h-6 text-primary" />
+        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-green-500/20 flex items-center justify-center">
+          <IconCheck className="w-6 h-6 text-green-500" />
         </div>
         <p className="text-foreground" data-testid="text-success-message">
           {successMessage}
@@ -292,7 +309,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     );
   }
 
-  const isInline = variant === "inline";
   const emailConfig = getFieldConfig("email");
 
   const hasVisibleFieldsBeyondEmailAndFirstName = 
