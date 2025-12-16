@@ -243,7 +243,31 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     },
     onError: (error: Error) => {
       console.error("Lead submission error:", error);
-      setTurnstileError(error.message);
+      
+      // Try to parse the error message to extract details
+      let errorMessage = error.message;
+      try {
+        // Error format: "400: {json}"
+        const jsonMatch = error.message.match(/^\d+:\s*(.+)$/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[1]);
+          if (parsed.details) {
+            // Details may be a JSON string itself
+            try {
+              const details = JSON.parse(parsed.details);
+              errorMessage = details.detail || details.message || parsed.error || error.message;
+            } catch {
+              errorMessage = parsed.details || parsed.error || error.message;
+            }
+          } else if (parsed.error) {
+            errorMessage = parsed.error;
+          }
+        }
+      } catch {
+        // Keep original message if parsing fails
+      }
+      
+      setTurnstileError(errorMessage);
     },
   });
 
