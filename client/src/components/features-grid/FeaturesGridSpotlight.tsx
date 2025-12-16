@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef, useCallback, type KeyboardEvent } from "react";
+import { useState, useEffect, useRef, useCallback, type KeyboardEvent } from "react";
 import type { FeaturesGridSpotlightSection, FeaturesGridHighlightItem } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
@@ -43,11 +43,10 @@ function SpotlightCard({
     <Card 
       className={`
         p-4 md:p-6 cursor-pointer outline-none
-        transition-all duration-500 ease-out
-        min-h-[200px] md:min-h-[240px]
+        transition-all duration-300 ease-out
         ${isActive 
-          ? 'scale-105 shadow-lg z-10 bg-card border-primary/20' 
-          : 'scale-95 opacity-60 bg-card/50 hover:opacity-80'
+          ? 'shadow-lg z-10 bg-card border-primary/20' 
+          : 'opacity-60 bg-card/50 hover:opacity-80'
         }
       `}
       onMouseEnter={onMouseEnter}
@@ -56,35 +55,28 @@ function SpotlightCard({
       data-testid={`card-spotlight-${itemId}`}
       data-active={isActive}
     >
-      <div className="flex flex-col items-center justify-center text-center gap-3 h-full">
-        <div className={`
-          transition-all duration-500
-          ${isActive ? 'w-16 h-16 md:w-20 md:h-20' : 'w-12 h-12 md:w-14 md:h-14'}
-        `}>
+      <div className="flex flex-col items-center justify-center text-center gap-2 h-[180px] md:h-[200px]">
+        <div className="w-12 h-12 md:w-14 md:h-14 flex-shrink-0">
           {getIcon(item.icon, "w-full h-full", iconColor)}
         </div>
         
         {item.value && (
-          <div className={`
-            font-bold text-foreground transition-all duration-500
-            ${isActive ? 'text-3xl md:text-4xl' : 'text-xl md:text-2xl'}
-          `}>
+          <div className="font-bold text-foreground text-xl md:text-2xl flex-shrink-0">
             {item.value}
           </div>
         )}
         
-        <div className={`
-          font-semibold text-foreground transition-all duration-500
-          ${isActive ? 'text-base md:text-lg' : 'text-sm md:text-base'}
-        `}>
+        <div className="font-semibold text-foreground text-xs md:text-sm flex-shrink-0 line-clamp-2">
           {item.title}
         </div>
         
-        <div className={`
-          text-sm text-muted-foreground mt-1 transition-all duration-300
-          ${isActive && item.description ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}
-        `}>
-          {item.description || '\u00A0'}
+        <div className="h-[32px] md:h-[40px] flex items-start justify-center overflow-hidden flex-shrink-0">
+          <div className={`
+            text-xs text-muted-foreground transition-opacity duration-300 line-clamp-2
+            ${isActive && item.description ? 'opacity-100' : 'opacity-0'}
+          `}>
+            {item.description || ''}
+          </div>
         </div>
       </div>
     </Card>
@@ -103,10 +95,8 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
   
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [isPaused, setIsPaused] = useState(false);
-  const [gridHeight, setGridHeight] = useState<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const measurementDone = useRef(false);
   
   const itemCount = data.items.length;
   const columns = data.columns || 3;
@@ -142,23 +132,6 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
     }
     return () => clearTimer();
   }, [isPaused, startTimer, clearTimer, autoRotateMs, itemCount]);
-
-  useLayoutEffect(() => {
-    if (measurementDone.current || !containerRef.current) return;
-    
-    const measureHeight = () => {
-      if (containerRef.current) {
-        const height = containerRef.current.offsetHeight;
-        if (height > 0) {
-          setGridHeight(height);
-          measurementDone.current = true;
-        }
-      }
-    };
-
-    const timeoutId = setTimeout(measureHeight, 600);
-    return () => clearTimeout(timeoutId);
-  }, [activeIndex]);
 
   const handleMouseEnter = useCallback((index: number) => {
     if (pauseOnHover) {
@@ -239,8 +212,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
 
         <div 
           ref={containerRef}
-          className={`grid grid-cols-1 ${gridColsClass} gap-6 items-center outline-none`}
-          style={gridHeight ? { minHeight: `${gridHeight}px` } : undefined}
+          className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch outline-none`}
           tabIndex={0}
           onKeyDown={handleKeyDown}
           onFocus={handleContainerFocus}
