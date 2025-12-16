@@ -345,18 +345,21 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               </Button>
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
-              <Turnstile
-                siteKey={turnstileSiteKey.siteKey}
-                onSuccess={setTurnstileToken}
-                onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-                onExpire={() => setTurnstileToken(null)}
-                className="mt-3 empty:hidden"
-                options={{
-                  theme: data.turnstile?.theme || "auto",
-                  size: data.turnstile?.size || "compact",
-                  appearance: "interaction-only",
-                }}
-              />
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm [&:has(iframe:not([style*='display: none']))]:flex [&:not(:has(iframe:not([style*='display: none'])))]:hidden">
+                <div className="bg-card p-6 rounded-lg shadow-lg">
+                  <Turnstile
+                    siteKey={turnstileSiteKey.siteKey}
+                    onSuccess={setTurnstileToken}
+                    onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+                    onExpire={() => setTurnstileToken(null)}
+                    options={{
+                      theme: data.turnstile?.theme || "auto",
+                      size: data.turnstile?.size || "compact",
+                      appearance: "interaction-only",
+                    }}
+                  />
+                </div>
+              </div>
             )}
             {turnstileError && (
               <p className="text-sm text-destructive mt-2" data-testid="text-turnstile-error">
@@ -721,18 +724,21 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
-            <Turnstile
-              siteKey={turnstileSiteKey.siteKey}
-              onSuccess={setTurnstileToken}
-              onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
-              onExpire={() => setTurnstileToken(null)}
-              className="flex justify-center empty:hidden"
-              options={{
-                theme: data.turnstile?.theme || "auto",
-                size: data.turnstile?.size || "normal",
-                appearance: "interaction-only",
-              }}
-            />
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm [&:has(iframe:not([style*='display: none']))]:flex [&:not(:has(iframe:not([style*='display: none'])))]:hidden">
+              <div className="bg-card p-6 rounded-lg shadow-lg">
+                <Turnstile
+                  siteKey={turnstileSiteKey.siteKey}
+                  onSuccess={setTurnstileToken}
+                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+                  onExpire={() => setTurnstileToken(null)}
+                  options={{
+                    theme: data.turnstile?.theme || "auto",
+                    size: data.turnstile?.size || "normal",
+                    appearance: "interaction-only",
+                  }}
+                />
+              </div>
+            </div>
           )}
 
           {turnstileError && (
