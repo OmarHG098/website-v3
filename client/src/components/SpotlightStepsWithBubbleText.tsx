@@ -188,6 +188,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                       {steps[1].title}
                     </h3>
                   )}
+                {/* End of step label section */}
                 </div>
                 {/* Step 2 circle button with icon */}
                 <div className="relative">
