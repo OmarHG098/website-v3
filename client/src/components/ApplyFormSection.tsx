@@ -101,8 +101,9 @@ export function ApplyFormSection({
   const { toast } = useToast();
   const { session } = useSession();
 
-  const defaultCountry = (session.geo?.country_code || session.location?.country_code || "US") as Country;
-  const isUS = defaultCountry === "US";
+  const countryCode = session?.geo?.country_code || session?.location?.country_code || "US";
+  const defaultCountry = countryCode as Country;
+  const isUS = countryCode === "US";
 
   const form = useForm<ApplyFormValues>({
     resolver: zodResolver(applyFormSchema),
