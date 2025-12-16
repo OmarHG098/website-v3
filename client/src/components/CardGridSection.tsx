@@ -33,7 +33,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
         <Card className="mb-8 overflow-hidden">
           <CardContent className="p-0">
             <div className="grid md:grid-cols-12 gap-0">
-              <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-center">
+              <div className="md:col-span-8 p-6 md:p-8 flex flex-col justify-center">
                 <h2 
                   className="text-2xl md:text-3xl font-bold text-foreground mb-4"
                   data-testid="text-card-grid-heading"
@@ -50,7 +50,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                 )}
               </div>
               {data.image && (
-                <div className="md:col-span-5 flex items-center justify-center p-6 md:p-8">
+                <div className="md:col-span-4 flex items-center justify-center p-6 md:p-8">
                   <img
                     src={data.image}
                     alt={data.image_alt || ""}
