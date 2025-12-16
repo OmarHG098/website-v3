@@ -123,7 +123,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   if (modules.length === 0) {
     return (
-      <section className="py-16 bg-primary/5" data-testid="section-syllabus">
+      <section className="py-20 md:py-24 bg-primary/5" data-testid="section-syllabus">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -133,7 +133,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   return (
     <section 
-      className="py-16 bg-primary/5"
+      className="py-20 md:py-24 bg-primary/5"
       data-testid="section-syllabus"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -177,7 +177,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   if (focusAreas.length === 0) {
     return (
-      <section className="py-16 bg-primary/5" data-testid="section-syllabus-landing">
+      <section className="py-20 md:py-24 bg-primary/5" data-testid="section-syllabus-landing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one focus area
         </div>
@@ -187,7 +187,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   return (
     <section 
-      className="py-16 bg-primary/5"
+      className="py-20 md:py-24 bg-primary/5"
       data-testid="section-syllabus-landing"
     >
       <div className="max-w-6xl mx-auto px-4">

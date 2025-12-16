@@ -46,13 +46,13 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               {data.brand_mark && (
                 <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
                   {data.brand_mark.prefix && (
-                    <span className="text-foreground">{data.brand_mark.prefix}</span>
+                    <span className="text-foreground">{data.brand_mark.prefix}{" "}</span>
                   )}
                   <span style={{ color: colorMap[data.brand_mark.color || "primary"] }}>
                     {data.brand_mark.highlight}
                   </span>
                   {data.brand_mark.suffix && (
-                    <span className="text-foreground">{data.brand_mark.suffix}</span>
+                    <span className="text-foreground">{" "}{data.brand_mark.suffix}</span>
                   )}
                 </p>
               )}

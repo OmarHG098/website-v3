@@ -10,7 +10,7 @@ interface CertificateSectionProps {
 export function CertificateSection({ data }: CertificateSectionProps) {
   return (
     <section 
-      className="py-16 bg-muted/30"
+      className="py-20 md:py-24 bg-muted/30"
       data-testid="section-certificate"
     >
       <div className="max-w-6xl mx-auto px-4">

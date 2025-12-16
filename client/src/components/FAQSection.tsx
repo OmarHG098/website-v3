@@ -22,7 +22,7 @@ export function FAQSection({ data }: FAQSectionProps) {
   
   return (
     <section 
-      className="py-16 bg-[#e8f4fc] dark:bg-muted/30"
+      className="py-20 md:py-24 bg-[#e8f4fc] dark:bg-muted/30"
       data-testid="section-faq"
     >
       <div className="max-w-6xl mx-auto px-4">

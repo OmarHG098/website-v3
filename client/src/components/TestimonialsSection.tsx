@@ -42,7 +42,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   return (
     <section 
-      className="py-16 bg-background"
+      className="py-20 md:py-24 bg-background"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">

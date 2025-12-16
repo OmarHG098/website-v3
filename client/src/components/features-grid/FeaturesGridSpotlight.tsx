@@ -186,7 +186,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
 
   return (
     <section 
-      className={`py-14 ${data.background || ''}`}
+      className={`py-20 md:py-24 ${data.background || ''}`}
       data-testid="section-features-grid-spotlight"
       aria-label={data.title || "Feature highlights"}
       aria-roledescription="carousel"
