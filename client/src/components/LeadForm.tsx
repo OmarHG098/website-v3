@@ -345,7 +345,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               </Button>
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
-              <div className="mt-3" data-testid="turnstile-widget">
+              <div className="mt-3 empty:hidden" data-testid="turnstile-widget">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
                   onSuccess={setTurnstileToken}
@@ -722,7 +722,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
-            <div className="flex justify-center" data-testid="turnstile-widget">
+            <div className="flex justify-center empty:hidden" data-testid="turnstile-widget">
               <Turnstile
                 siteKey={turnstileSiteKey.siteKey}
                 onSuccess={setTurnstileToken}
