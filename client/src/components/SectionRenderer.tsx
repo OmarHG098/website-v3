@@ -29,6 +29,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { SupportDuoSection } from "@/components/SupportDuoSection";
 import { CardGridSection } from "@/components/CardGridSection";
 import AccordionCardSection from "@/components/AccordionCardSection";
+import SpotlightWithBubbleText from "@/components/SpotlightWithBubbleText";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -123,6 +124,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <CardGridSection key={index} data={section as Parameters<typeof CardGridSection>[0]["data"]} />;
     case "accordion_card":
       return <AccordionCardSection key={index} data={section as Parameters<typeof AccordionCardSection>[0]["data"]} />;
+    case "spotlight_with_bubble_text":
+      return <SpotlightWithBubbleText key={index} data={section as unknown as Parameters<typeof SpotlightWithBubbleText>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

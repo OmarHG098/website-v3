@@ -30,7 +30,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
       data-testid="section-card-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <Card className="mb-8 overflow-hidden">
+        <Card className="mb-8 overflow-hidden border-t-4 border-t-primary/20">
           <CardContent className="p-0">
             <div className="grid md:grid-cols-12 gap-0">
               <div className="md:col-span-8 p-6 md:p-8 flex flex-col justify-center">
@@ -69,11 +69,10 @@ export function CardGridSection({ data }: CardGridSectionProps) {
             const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
             const TablerIcon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
             
-            // Feature card with bottom primary border and custom/Tabler icon
             return (
               <Card 
                 key={index} 
-                className="h-full border-b-4 border-b-primary"
+                className="h-full border-b-4 border-b-primary/20"
                 data-testid={`card-bullet-${index}`}
               >
                 <CardContent className="p-5 flex flex-col items-start gap-3">
