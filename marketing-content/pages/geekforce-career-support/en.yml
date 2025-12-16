@@ -35,11 +35,14 @@ sections:
     image: "/attached_assets/Group-6663_1764711021914.png"
     image_alt: "Career support team members collaborating"
     cards:
-      - text: "Receive tailored guidance aligned with your goals, context, and challenges."
+      - title: "Personalized Career Guidance"
+        content: "Receive tailored guidance aligned with your goals, context, and challenges. Our mentors work with you one-on-one to understand your unique situation and create a customized roadmap for your success."
         icon: "Target"
-      - text: "Meet mentors online or in-person whenever you need support—unlimited, for life."
+      - title: "Unlimited Mentorship Access"
+        content: "Meet mentors online or in-person whenever you need support—unlimited, for life. Whether you're just starting out or years into your career, our support never expires."
         icon: "Users"
-      - text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
+      - title: "Cutting-Edge Tools & Strategies"
+        content: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves. From AI-powered job search tools to interview preparation, we keep you ahead of the curve."
         icon: "Rocket"
 
   - type: numbered_steps
