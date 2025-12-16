@@ -192,7 +192,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
           )}
           {data.emphasis && (
             <p 
-              className="text-lg font-semibold text-foreground"
+              className="font-semibold text-foreground text-[22px]"
               data-testid="text-syllabus-emphasis"
             >
               {data.emphasis}
