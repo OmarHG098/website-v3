@@ -234,7 +234,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               {activeContent && (
                 <div
                   key={activeStep}
-                  className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-6 shadow-lg w-72 
+                  className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-8 shadow-lg w-80 
                     animate-in fade-in zoom-in-95 duration-300
                     before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
                     after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
@@ -245,24 +245,24 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                   data-testid="bubble-content"
                 >
                   {activeContent.title && (
-                    <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <span className="text-primary font-bold">
+                    <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                      <span className="text-primary font-bold text-2xl">
                         {String(activeStep + 1).padStart(2, "0")}
                       </span>
                       {activeContent.title}
                     </h4>
                   )}
                   {activeContent.text && (
-                    <p className="text-muted-foreground mb-3">{activeContent.text}</p>
+                    <p className="text-muted-foreground mb-4 text-base">{activeContent.text}</p>
                   )}
                   {activeContent.bullets.length > 0 && (
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {activeContent.bullets.map((bullet, bulletIndex) => (
                         <li
                           key={bulletIndex}
-                          className="flex gap-2 items-start text-sm text-muted-foreground"
+                          className="flex gap-2 items-start text-base text-muted-foreground"
                         >
-                          <span className="text-primary flex-shrink-0 mt-0.5">•</span>
+                          <span className="text-primary flex-shrink-0 mt-1">•</span>
                           <span>{bullet}</span>
                         </li>
                       ))}
