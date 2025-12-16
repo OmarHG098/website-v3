@@ -148,21 +148,24 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             fill="none"
+            style={{ shapeRendering: "geometricPrecision" }}
           >
-            {/* Step 1 (bottom-left ~18%, 75%) to Step 2 (top-center ~50%, 42%) */}
+            {/* Step 1 (bottom-left) to Step 2 (top-center, moved up) */}
             <path
-              d="M 18 75 C 25 50, 40 42, 50 42"
-              className="stroke-primary/30"
-              strokeWidth="0.4"
+              d="M 18 75 C 25 45, 40 35, 50 35"
+              stroke="hsl(var(--primary) / 0.3)"
+              strokeWidth="0.5"
               strokeLinecap="round"
+              strokeLinejoin="round"
               fill="none"
             />
-            {/* Step 2 (top-center ~50%, 42%) to Step 3 (bottom-right ~82%, 75%) */}
+            {/* Step 2 (top-center) to Step 3 (bottom-right) */}
             <path
-              d="M 50 42 C 60 42, 75 50, 82 75"
-              className="stroke-primary/30"
-              strokeWidth="0.4"
+              d="M 50 35 C 60 35, 75 45, 82 75"
+              stroke="hsl(var(--primary) / 0.3)"
+              strokeWidth="0.5"
               strokeLinecap="round"
+              strokeLinejoin="round"
               fill="none"
             />
           </svg>
