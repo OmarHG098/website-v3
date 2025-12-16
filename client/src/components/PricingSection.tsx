@@ -105,7 +105,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
           <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
             <div
-              className="relative rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl overflow-hidden lg:col-span-4"
+              className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
               style={{
                 background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
               }}
