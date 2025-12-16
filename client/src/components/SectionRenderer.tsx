@@ -27,6 +27,7 @@ import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
 import { SupportDuoSection } from "@/components/SupportDuoSection";
+import { CardGridSection } from "@/components/CardGridSection";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -117,6 +118,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <PieCharts key={index} data={section as Parameters<typeof PieCharts>[0]["data"]} />;
     case "lead_form":
       return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
+    case "card_grid":
+      return <CardGridSection key={index} data={section as Parameters<typeof CardGridSection>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

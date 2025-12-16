@@ -27,29 +27,17 @@ sections:
     video_title: "GeekForce Career Support"
     video_ratio: "9:12"
 
-  - type: two_column
+  - type: card_grid
     version: "1.0"
     background: "bg-primary/5"
-    proportions: [7, 5]
-    reverse_on_mobile: true
-    alignment: "center"
-    gap: "10"
-    right:
-      image: "/attached_assets/Group-6663_1764711021914.png"
-      image_alt: "Career support team members collaborating"
-      image_mobile_max_width: "280px"
-    left:
-      heading: "Unlimited Career Support – Always Ahead of Job Market Trends"
-      description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market."
-      justify: "center"
-      text_align: "left"
-      font_size: "base"
-      bullets_visible: 2
-      bullet_icon: "Check"
-      bullets:
-        - text: "Receive tailored guidance aligned with your goals, context, and challenges."
-        - text: "Meet mentors online or in-person whenever you need support—unlimited, for life."
-        - text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
+    heading: "Unlimited Career Support – Always Ahead of Job Market Trends"
+    description: "Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market."
+    image: "/attached_assets/Group-6663_1764711021914.png"
+    image_alt: "Career support team members collaborating"
+    cards:
+      - text: "Receive tailored guidance aligned with your goals, context, and challenges."
+      - text: "Meet mentors online or in-person whenever you need support—unlimited, for life."
+      - text: "Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves."
 
   - type: numbered_steps
     version: "1.0"
