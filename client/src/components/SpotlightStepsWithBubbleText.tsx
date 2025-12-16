@@ -142,19 +142,6 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
         {/* Desktop: CSS Grid Triangle layout with background and connectors */}
         <div className="hidden md:block relative">
-          {/* Mid-moon background - semicircle covering full width */}
-          <div 
-            className="absolute pointer-events-none bg-primary/10"
-            style={{
-              width: "150vw",
-              height: "75vw",
-              borderRadius: "50%",
-              bottom: "-25vw",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          />
-
           {/* SVG Curved Connector Lines - temporarily hidden */}
 
           <div className="relative grid grid-cols-[1fr_minmax(400px,2fr)_1fr] grid-rows-2 gap-8" style={{ minHeight: "420px" }}>
