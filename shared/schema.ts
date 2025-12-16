@@ -527,6 +527,7 @@ import { testimonialsSlideSectionSchema } from "../marketing-content/component-r
 import { ctaBannerSectionSchema } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
 import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../marketing-content/component-registry/project_showcase/v1.0/schema";
 import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
 
 
 export const sectionSchema = z.union([
@@ -559,6 +560,7 @@ export const sectionSchema = z.union([
   pieChartsSectionSchema,
   awardsRowSectionSchema,
   supportDuoSectionSchema,
+  applyFormSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;
