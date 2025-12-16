@@ -129,12 +129,24 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
         {/* Desktop: CSS Grid Triangle layout */}
         <div className="hidden md:grid grid-cols-3 grid-rows-2 gap-4" style={{ minHeight: "400px" }}>
-          {/* Step 2 - Top Center (row 1, col 2) */}
+          {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
           {steps[1] && (
             <div
               className="col-start-2 row-start-1 flex flex-col items-center justify-end"
               data-testid="spotlight-step-2"
             >
+              {/* Title above circle */}
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+                  <span className="text-3xl font-bold text-primary leading-none">02</span>
+                </div>
+                {steps[1].title && (
+                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                    {steps[1].title}
+                  </h3>
+                )}
+              </div>
               <button
                 onClick={() => handleStepInteraction(1)}
                 onMouseEnter={() => setActiveStep(1)}
@@ -149,41 +161,17 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(steps[1].icon)}
               </button>
-              <div className="mt-4 flex items-center gap-3">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                  <span className="text-3xl font-bold text-primary leading-none">02</span>
-                </div>
-                {steps[1].title && (
-                  <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
-                    {steps[1].title}
-                  </h3>
-                )}
-              </div>
             </div>
           )}
 
-          {/* Step 1 - Bottom Left (row 2, col 1) */}
+          {/* Step 1 - Bottom Left (row 2, col 1) - Title to LEFT of circle */}
           {steps[0] && (
             <div
-              className="col-start-1 row-start-2 flex flex-col items-center justify-end h-full"
+              className="col-start-1 row-start-2 flex items-center justify-end gap-4 h-full"
               data-testid="spotlight-step-1"
             >
-              <button
-                onClick={() => handleStepInteraction(0)}
-                onMouseEnter={() => setActiveStep(0)}
-                aria-label={steps[0].title || "Step 1"}
-                aria-expanded={activeStep === 0}
-                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 0
-                    ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                }`}
-                data-testid="button-spotlight-step-1"
-              >
-                {getIcon(steps[0].icon)}
-              </button>
-              <div className="mt-4 flex items-center gap-3">
+              {/* Title to the left */}
+              <div className="flex items-center gap-3">
                 <div className="flex flex-col items-start">
                   <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
                   <span className="text-3xl font-bold text-primary leading-none">01</span>
@@ -194,6 +182,20 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                   </h3>
                 )}
               </div>
+              <button
+                onClick={() => handleStepInteraction(0)}
+                onMouseEnter={() => setActiveStep(0)}
+                aria-label={steps[0].title || "Step 1"}
+                aria-expanded={activeStep === 0}
+                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
+                  activeStep === 0
+                    ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                }`}
+                data-testid="button-spotlight-step-1"
+              >
+                {getIcon(steps[0].icon)}
+              </button>
             </div>
           )}
 
@@ -243,10 +245,10 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             )}
           </div>
 
-          {/* Step 3 - Bottom Right (row 2, col 3) */}
+          {/* Step 3 - Bottom Right (row 2, col 3) - Title to RIGHT of circle */}
           {steps[2] && (
             <div
-              className="col-start-3 row-start-2 flex flex-col items-center justify-end h-full"
+              className="col-start-3 row-start-2 flex items-center justify-start gap-4 h-full"
               data-testid="spotlight-step-3"
             >
               <button
@@ -254,7 +256,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 onMouseEnter={() => setActiveStep(2)}
                 aria-label={steps[2].title || "Step 3"}
                 aria-expanded={activeStep === 2}
-                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
                   activeStep === 2
                     ? "border-primary bg-primary/20 scale-110 shadow-lg"
                     : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
@@ -263,7 +265,8 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               >
                 {getIcon(steps[2].icon)}
               </button>
-              <div className="mt-4 flex items-center gap-3">
+              {/* Title to the right */}
+              <div className="flex items-center gap-3">
                 <div className="flex flex-col items-start">
                   <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
                   <span className="text-3xl font-bold text-primary leading-none">03</span>
