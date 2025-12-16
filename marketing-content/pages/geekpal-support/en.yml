@@ -9,32 +9,36 @@ meta:
 sections:
   - type: hero
     variant: productShowcase
-    title: Lifetime Mentorship & AI-Powered Coding Support
-    subtitle: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
+    title: Career Development for the AI Era
+    subtitle: Unlimited 1:1 career support tailored to your goals—for life. Enhance your resume, portfolio, and interview skills with our AI-driven platforms.
     welcome_text: Welcome to
     brand_mark:
       prefix: Geek
-      highlight: PAL
+      highlight: FORCE
       suffix: ":"
-      color: destructive
-    video_id: D5nUZNL52-Q
-    video_ratio: "3:4"
+      color: chart-5
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      autoplay: false
+      loop: true
     form:
       variant: inline
-      title: Join Us
+      title: Stay Updated
       subtitle: Enter your work email to start your journey
       submit_label: Sign up free →
-      tags: career, AI, support
-      automations: email_subscription
+      tags: career, support, AI
+      automations: email
       fields:
-        email:
-          placeholder: Enter your work email
+        email: {}
       success:
         message: Thank you for signing up!
       terms_url: /terms
       privacy_url: /privacy
       show_consent: true
       show_terms: true
+      className: lead-form
     trust_bar:
       rating: "4.5"
       review_count: Based on 5149+ reviews
