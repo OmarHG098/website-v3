@@ -251,7 +251,10 @@ variant_props:
           type: string
           required: false
           description: Background image alt text for accessibility
-      description: Full-width background image for the section
+      description: >-
+        Full-width background image for the section. 
+        NOTE: Background image is only displayed on screens >= 1280px width. 
+        On smaller screens, a gradient fallback is shown instead for better mobile experience.
     form:
       type: object
       required: false
