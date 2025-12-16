@@ -1,18 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import * as TablerIcons from "@tabler/icons-react";
 import { IconCheck } from "@tabler/icons-react";
-
-interface AccordionCardItem {
-  title: string;
-  content: string;
-  icon?: string;
-}
 
 interface CardGridSectionData {
   type: "card_grid";
@@ -22,7 +10,10 @@ interface CardGridSectionData {
   description?: string;
   image?: string;
   image_alt?: string;
-  cards: AccordionCardItem[];
+  cards: Array<{
+    text: string;
+    icon?: string;
+  }>;
 }
 
 interface CardGridSectionProps {
@@ -38,10 +29,10 @@ export function CardGridSection({ data }: CardGridSectionProps) {
       data-testid="section-card-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <Card className="overflow-hidden">
-          <CardContent className="p-8 md:p-10">
-            <div className="grid md:grid-cols-12 gap-8">
-              <div className="md:col-span-7 flex flex-col justify-start">
+        <Card className="mb-8 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="grid md:grid-cols-12 gap-0">
+              <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-center">
                 <h2 
                   className="text-2xl md:text-3xl font-bold text-foreground mb-4"
                   data-testid="text-card-grid-heading"
@@ -50,52 +41,19 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                 </h2>
                 {data.description && (
                   <p 
-                    className="text-muted-foreground text-base md:text-lg mb-6"
+                    className="text-muted-foreground text-base md:text-lg"
                     data-testid="text-card-grid-description"
                   >
                     {data.description}
                   </p>
                 )}
-                
-                <Accordion type="single" collapsible className="w-full">
-                  {data.cards.map((card, index) => {
-                    const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
-                    const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
-                    
-                    return (
-                      <AccordionItem 
-                        key={index} 
-                        value={`item-${index}`}
-                        className="border-b border-border"
-                        data-testid={`accordion-item-${index}`}
-                      >
-                        <AccordionTrigger 
-                          className="text-left text-base md:text-lg font-medium py-4 hover:no-underline"
-                          data-testid={`accordion-trigger-${index}`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <IconComponent className="w-5 h-5 text-primary flex-shrink-0" />
-                            <span>{card.title}</span>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent 
-                          className="text-muted-foreground text-sm md:text-base pb-4 pl-8"
-                          data-testid={`accordion-content-${index}`}
-                        >
-                          {card.content}
-                        </AccordionContent>
-                      </AccordionItem>
-                    );
-                  })}
-                </Accordion>
               </div>
-              
               {data.image && (
-                <div className="md:col-span-5 flex items-center justify-center">
+                <div className="md:col-span-5 flex items-center justify-center p-6 md:p-8">
                   <img
                     src={data.image}
                     alt={data.image_alt || ""}
-                    className="w-full max-w-[320px] object-contain"
+                    className="w-full max-w-[220px] md:max-w-[280px] object-contain"
                     data-testid="img-card-grid-main"
                   />
                 </div>
@@ -103,6 +61,28 @@ export function CardGridSection({ data }: CardGridSectionProps) {
             </div>
           </CardContent>
         </Card>
+
+        <div className="grid md:grid-cols-3 gap-4">
+          {data.cards.map((card, index) => {
+            const iconName = card.icon ? `Icon${card.icon}` : "IconCheck";
+            const IconComponent = (TablerIcons as Record<string, React.ComponentType<{ className?: string }>>)[iconName] || IconCheck;
+            
+            return (
+              <Card 
+                key={index} 
+                className="h-full"
+                data-testid={`card-bullet-${index}`}
+              >
+                <CardContent className="p-5 flex flex-col items-start gap-3">
+                  <IconComponent className="w-8 h-8 text-primary" />
+                  <p className="text-foreground text-sm md:text-base">
+                    {card.text}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
