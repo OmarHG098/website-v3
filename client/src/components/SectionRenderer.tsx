@@ -23,6 +23,7 @@ import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
 import { LeadForm } from "@/components/LeadForm";
 import { AwardBadges } from "@/components/AwardBadges";
+import { ApplyFormSection } from "@/components/ApplyFormSection";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -122,6 +123,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       }
       return <AwardBadges key={index} items={validItems} variant={badgeSection.variant} showBorder={badgeSection.showBorder} />;
     }
+    case "apply_form":
+      return <ApplyFormSection key={index} data={section as Parameters<typeof ApplyFormSection>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

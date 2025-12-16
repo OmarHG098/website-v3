@@ -18,7 +18,7 @@ sections:
       trusted_text: $65K average starting salary
     cta_buttons:
       - text: See Payment Options
-        url: /apply
+        url: /en/apply
         variant: primary
         icon: CurrencyDollar
       - text: Calculate Your ROI
@@ -108,7 +108,7 @@ sections:
         - text: Get unmatched personal attention with our 7:1 student teacher ratio, plus unlimited access to 1:1 sessions with expert mentors and career coaches.
       cta:
         text: Start learning now!
-        url: /apply
+        url: /en/apply
         variant: primary
   - type: certificate
     version: "1.0"

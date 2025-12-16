@@ -18,7 +18,7 @@ sections:
       trusted_text: Trusted by 2.5K+ learners
     cta_buttons:
       - text: Apply Now
-        url: /apply
+        url: /en/apply
         variant: primary
         icon: Rocket
       - text: Download Syllabus
@@ -106,7 +106,7 @@ sections:
       description: Connect with peers, mentors, and alumni and stay supported as you grow. Our cybersecurity curriculum was co-designed by Daniela Maissi, EC-Council member and malware specialist with 12+ certifications in cloud security, OSINT, and IT systems.
       cta:
         text: Start learning now!
-        url: /apply
+        url: /en/apply
         variant: primary
   - type: certificate
     version: "1.0"

@@ -20,7 +20,7 @@ sections:
       trusted_text: "$65K average starting salary"
     cta_buttons:
       - text: "See Payment Options"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"
         icon: "CurrencyDollar"
       - text: "Calculate Your ROI"
@@ -105,5 +105,5 @@ sections:
       description: "That's $350K+ in additional lifetime earnings. Start investing in your future today with flexible payment options."
       cta:
         text: "See Payment Options"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"

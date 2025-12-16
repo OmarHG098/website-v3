@@ -22,7 +22,7 @@ sections:
       trusted_text: "Trusted by 2.5K+ learners"
     cta_buttons:
       - text: "Apply Now"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"
         icon: "Rocket"
       - text: "Download Syllabus"
@@ -107,7 +107,7 @@ sections:
       description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
       cta:
         text: "Start learning now!"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"
 
   - type: certificate

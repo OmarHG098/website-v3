@@ -445,6 +445,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(page);
   });
 
+  // Special handler for apply page (includes programs and locations from _common.yml)
+  app.get("/api/pages/apply", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    const page = loadTemplatePage("apply", locale);
+    
+    if (!page) {
+      res.status(404).json({ error: "Apply page not found" });
+      return;
+    }
+    
+    // Load common data for programs and locations
+    const commonData = loadCommonData("pages", "apply");
+    
+    res.json({
+      ...page,
+      programs: commonData?.programs || [],
+      locations: commonData?.locations || [],
+    });
+  });
+
+  // Apply form submission endpoint
+  app.post("/api/apply", (req, res) => {
+    try {
+      const { program, location, firstName, lastName, email, phone, consentMarketing, consentSms, locale } = req.body;
+      
+      // Validate required fields
+      if (!program || !location || !firstName || !lastName || !email || !phone) {
+        res.status(400).json({ error: "Missing required fields" });
+        return;
+      }
+      
+      // Log the application (in production, this would send to a CRM or database)
+      console.log("New application received:", {
+        program,
+        location,
+        firstName,
+        lastName,
+        email,
+        phone,
+        consentMarketing,
+        consentSms,
+        locale,
+        timestamp: new Date().toISOString(),
+      });
+      
+      // In the future, this could:
+      // 1. Send to Breathecode API
+      // 2. Add to a CRM
+      // 3. Send confirmation email
+      // 4. Store in database
+      
+      res.json({ success: true, message: "Application received" });
+    } catch (error) {
+      console.error("Error processing application:", error);
+      res.status(500).json({ error: "Failed to process application" });
+    }
+  });
+
   app.get("/api/pages/:slug", (req, res) => {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";

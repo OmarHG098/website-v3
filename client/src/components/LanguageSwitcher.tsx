@@ -16,6 +16,7 @@ const languages = [
 
 const routeMappings = [
   { en: '/en/career-programs', es: '/es/programas-de-carrera' },
+  { en: '/en/apply', es: '/es/aplica' },
 ];
 
 function getLocalizedPath(currentPath: string, targetLang: string): string | null {
