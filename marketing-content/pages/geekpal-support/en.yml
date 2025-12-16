@@ -17,12 +17,8 @@ sections:
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    video:
-      url: /attached_assets/ai-engineering_1765593572918.mp4
-      ratio: "9:16"
-      muted: true
-      autoplay: false
-      loop: true
+    video_id: MBXqEnhodx0
+    video_ratio: "9:16"
     form:
       variant: inline
       title: Join Us
