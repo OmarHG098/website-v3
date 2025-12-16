@@ -22,6 +22,7 @@ import { About } from "@/components/About";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import StatsSection from "@/components/StatsSection";
 import { LeadForm } from "@/components/LeadForm";
+import { AwardBadges } from "@/components/AwardBadges";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -102,6 +103,25 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <StatsSection key={index} data={section as Parameters<typeof StatsSection>[0]["data"]} />;
     case "lead_form":
       return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
+    case "award_badges": {
+      const badgeSection = section as unknown as { items?: unknown[]; variant?: "simple" | "detailed"; showBorder?: boolean };
+      if (!Array.isArray(badgeSection.items) || badgeSection.items.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("award_badges section missing required 'items' array");
+        }
+        return null;
+      }
+      const validItems = badgeSection.items.filter((item): item is Parameters<typeof AwardBadges>[0]["items"][number] => 
+        typeof item === "object" && item !== null && "id" in item && "alt" in item
+      );
+      if (validItems.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("award_badges section has no valid items (each item requires 'id' and 'alt')");
+        }
+        return null;
+      }
+      return <AwardBadges key={index} items={validItems} variant={badgeSection.variant} showBorder={badgeSection.showBorder} />;
+    }
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
