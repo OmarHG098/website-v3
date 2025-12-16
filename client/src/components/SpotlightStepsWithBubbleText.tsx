@@ -62,8 +62,8 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
     }
   };
 
-  const getStepOpacity = (stepIndex: number) => {
-    return activeStep === stepIndex ? "opacity-100" : "opacity-50 hover:opacity-80";
+  const getStepOpacity = (_stepIndex: number) => {
+    return "opacity-100";
   };
 
   return (
