@@ -141,16 +141,16 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
         </div>
 
         {/* Desktop: CSS Grid Triangle layout with background and connectors */}
-        <div className="hidden md:block relative">
-          {/* Mid-moon background */}
+        <div className="hidden md:block relative overflow-hidden">
+          {/* Half circle background */}
           <div 
             className="absolute pointer-events-none bg-primary/10 rounded-full"
             style={{
-              width: "500px",
-              height: "500px",
-              top: "50%",
+              width: "200%",
+              height: "200%",
+              bottom: "-50%",
               left: "50%",
-              transform: "translate(-50%, -40%)",
+              transform: "translateX(-50%)",
             }}
           />
 
