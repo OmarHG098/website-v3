@@ -56,13 +56,13 @@ sections:
     subtitle: Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
     items:
       - icon: Briefcase
-        value: 3.5
-        title: AI-related toles expected by 2026
+        value: "3.5"
+        title: AI-related roles expected by 2026
       - icon: Graduation
-        value: 47%
+        value: "47%"
         title: year-over-year growth in AI job postings
       - icon: GrowthChart
-        value: 20-40%
+        value: "20-40%"
         title: Salary premiums for AI engineering skills
     columns: 3
     icon_color: "#0097CD"
