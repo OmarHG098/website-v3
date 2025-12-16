@@ -49,6 +49,23 @@ sections:
       - name: Best Coding Bootcamp
         source: Course Report
         year: "2025"
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: Does the Job Guarantee deliver results you can count on?
+    subtitle: Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board.
+    items:
+      - icon: Briefcase
+        value: 3.5
+        title: AI-related toles expected by 2026
+      - icon: Graduation
+        value: 47%
+        title: year-over-year growth in AI job postings
+      - icon: GrowthChart
+        value: 20-40%
+        title: Salary premiums for AI engineering skills
+    columns: 3
+    icon_color: "#0097CD"
   - type: syllabus
     title: What You'll Build in 20 Weeks
     subtitle: "From day one, you’ll choose one company. Yours, one you want to build, or one you want to reimagine.\LOver 20 weeks, you’ll transform it into a fully operational, AI-powered business."
@@ -153,7 +170,7 @@ sections:
     subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: "$299"
+    financing_amount: $299
     tech_icons:
       - openai
       - python
