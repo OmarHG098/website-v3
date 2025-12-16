@@ -268,8 +268,14 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
               {activeContent && (
                 <div
                   key={activeStep}
-                  className="relative bg-card border-2 border-primary/30 rounded-[2rem] p-6 shadow-lg w-72 
-                    animate-in fade-in zoom-in-95 duration-300"
+                  className={`relative bg-card border-2 border-primary/30 rounded-[2rem] p-6 shadow-lg w-72 
+                    animate-in fade-in zoom-in-95 duration-300
+                    before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
+                    after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
+                    ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
+                    ${activeStep === 1 ? "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-b-0 before:border-r-0 after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/3" : ""}
+                    ${activeStep === 2 ? "before:right-0 before:top-1/2 before:translate-x-1/2 before:-translate-y-1/2 before:border-l-0 before:border-b-0 after:right-0 after:top-1/2 after:translate-x-1/3 after:-translate-y-1/2" : ""}
+                  `}
                   data-testid="bubble-content"
                 >
                   {activeContent.title && (
