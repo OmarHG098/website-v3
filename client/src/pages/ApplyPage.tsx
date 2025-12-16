@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
-import { Header } from "@/components/Header";
+import Header from "@/components/Header";
 import { SectionRenderer, renderSection } from "@/components/SectionRenderer";
 import { ApplyFormSection } from "@/components/ApplyFormSection";
 import { FooterSection } from "@/components/FooterSection";

@@ -757,6 +757,50 @@ export const statsSectionSchema = z.object({
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
 
+// Apply Form Section (for application/signup pages)
+export const applyFormSectionSchema = z.object({
+  type: z.literal("apply_form"),
+  version: z.string().optional(),
+  hero: z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    note: z.string().optional(),
+  }),
+  form: z.object({
+    program_label: z.string(),
+    program_placeholder: z.string(),
+    location_label: z.string(),
+    location_placeholder: z.string(),
+    first_name_label: z.string(),
+    first_name_placeholder: z.string(),
+    last_name_label: z.string(),
+    last_name_placeholder: z.string(),
+    email_label: z.string(),
+    email_placeholder: z.string(),
+    phone_label: z.string(),
+    phone_placeholder: z.string(),
+    consent_marketing: z.string(),
+    consent_sms: z.string(),
+    submit_text: z.string(),
+    terms_text: z.string(),
+    terms_link_text: z.string(),
+    terms_link_url: z.string(),
+    privacy_text: z.string(),
+    privacy_link_text: z.string(),
+    privacy_link_url: z.string(),
+  }),
+  next_steps: z.object({
+    title: z.string(),
+    items: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })),
+    closing: z.string(),
+  }),
+});
+
+export type ApplyFormSection = z.infer<typeof applyFormSectionSchema>;
+
 // Section schema using z.union to support hero variants
 // Each hero variant has the same type: "hero" but different variant-specific required fields
 export const sectionSchema = z.union([
@@ -789,6 +833,7 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
+  applyFormSectionSchema,
 ]);
 
 export const schemaRefSchema = z.object({
