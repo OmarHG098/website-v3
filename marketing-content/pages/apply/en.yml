@@ -1,3 +1,8 @@
+meta:
+  page_title: "Apply Now - Start Your Tech Career | 4Geeks Academy"
+  description: "Apply to 4Geeks Academy and start your journey to becoming a tech professional. Fill out our simple application form and our admissions team will guide you through the next steps."
+  robots: "index, follow"
+
 sections:
   - type: apply_form
     version: "1.0"
