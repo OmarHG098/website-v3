@@ -285,7 +285,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     // Inline variant: compact horizontal success message
     if (isInline) {
       return (
-        <div className="flex items-center gap-2" data-testid="lead-form-success">
+        <div className="flex items-center gap-2 mb-4" data-testid="lead-form-success">
           <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
             <IconCheck className="w-4 h-4 text-green-500" />
           </div>
