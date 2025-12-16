@@ -56,19 +56,19 @@ sections:
     subtitle: Sí, y tenemos los números para respaldarlo. Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general.
     items:
       - icon: Briefcase
-        value: "3.5"
+        value: 3.5M
         title: Roles relacionados con IA esperados para 2026
       - icon: Graduation
-        value: "47%"
+        value: 47%
         title: Crecimiento año tras año en ofertas de trabajo de IA
       - icon: GrowthChart
-        value: "20-40%"
+        value: 20-40%
         title: Primas salariales por habilidades de ingeniería de IA
     columns: 3
     icon_color: "#0097CD"
   - type: syllabus
     title: Lo Que Construirás en 20 Semanas
-    subtitle: "Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA."
+    subtitle: Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA.
     modules:
       - title: Frontend Asistido por IA
         description: Aplicación React moderna con componentes potenciados por IA. Construye interfaces de usuario inteligentes que aprovechan la IA para experiencias de usuario mejoradas, autocompletado y sugerencias inteligentes.
