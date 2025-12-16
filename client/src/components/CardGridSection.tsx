@@ -53,7 +53,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                   <img
                     src={data.image}
                     alt={data.image_alt || ""}
-                    className="w-full max-w-[280px] md:max-w-full object-contain"
+                    className="w-full max-w-[220px] md:max-w-[280px] object-contain"
                     data-testid="img-card-grid-main"
                   />
                 </div>
