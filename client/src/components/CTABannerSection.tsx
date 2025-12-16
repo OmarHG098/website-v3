@@ -2,13 +2,25 @@ import type { CTABannerSection as CTABannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
 import { Link } from "wouter";
+import { useSession } from "@/contexts/SessionContext";
 
 interface CTABannerSectionProps {
   data: CTABannerSectionType;
 }
 
 export function CTABannerSection({ data }: CTABannerSectionProps) {
-  const hasMultipleButtons = data.buttons && data.buttons.length > 0;
+  const { session } = useSession();
+  
+  const isUS = session.geo?.country_code === 'US' || session.location?.country_code === 'US';
+  
+  const filteredButtons = data.buttons?.filter(button => {
+    if (button.us_only && !isUS) {
+      return false;
+    }
+    return true;
+  });
+  
+  const hasMultipleButtons = filteredButtons && filteredButtons.length > 0;
   
   return (
     <section 
@@ -33,7 +45,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
         
         {hasMultipleButtons ? (
           <div className="flex flex-wrap justify-center gap-4">
-            {data.buttons!.map((button, index) => {
+            {filteredButtons!.map((button, index) => {
               const variant = button.variant === "primary" ? "default" : button.variant === "secondary" ? "secondary" : "outline";
               const outlineStyles = button.variant === "outline" ? "border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10" : "";
               return (

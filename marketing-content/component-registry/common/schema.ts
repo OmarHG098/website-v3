@@ -10,6 +10,7 @@ export const ctaButtonSchema = z.object({
   url: z.string(),
   variant: z.enum(["primary", "secondary", "outline"]),
   icon: z.string().optional(),
+  us_only: z.boolean().optional(),
 });
 
 export type CtaButton = z.infer<typeof ctaButtonSchema>;
