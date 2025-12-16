@@ -1328,13 +1328,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         token: leadData.token || null,
       };
 
+      // Remove null, undefined, and empty string values from payload
+      const cleanPayload = Object.fromEntries(
+        Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== "")
+      );
+
       // Post to Breathecode API
       const response = await fetch(`${BREATHECODE_HOST}/v2/marketing/lead`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(cleanPayload),
       });
 
       if (!response.ok) {
