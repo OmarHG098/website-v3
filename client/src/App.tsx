@@ -24,6 +24,8 @@ const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
 const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
 const TemplatePage = lazy(() => import("@/pages/page"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
+const TermsPage = lazy(() => import("@/pages/TermsPage"));
+const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
 
 function LoadingFallback() {
   return (
@@ -86,6 +88,11 @@ function Router() {
         {/* Apply page - dedicated routes */}
         <Route path="/en/apply" component={ApplyPage} />
         <Route path="/es/aplica" component={ApplyPage} />
+        {/* Terms and Privacy pages */}
+        <Route path="/terms-conditions" component={TermsPage} />
+        <Route path="/terminos-condiciones" component={TermsPage} />
+        <Route path="/privacy-policy" component={PrivacyPage} />
+        <Route path="/politica-privacidad" component={PrivacyPage} />
         {/* Template pages - dynamic YAML-based pages */}
         <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />
