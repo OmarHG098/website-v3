@@ -25,18 +25,29 @@ sections:
         url: /syllabus/ai-for-professionals
         variant: outline
         icon: Download
-    award_badges:
-      - name: Top Online Bootcamp
+  - type: award_badges
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Online Bootcamp
         source: Forbes
+        name: Top Online Bootcamp
         year: "2024"
-      - name: Best for Spanish Speakers
+      - id: fortune-2024
+        alt: Fortune - Best for Spanish Speakers
         source: Fortune
+        name: Best for Spanish Speakers
         year: "2024"
-      - name: Top Coding Bootcamp
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
         source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: Best Coding Bootcamp
+      - id: coursereport-2025
+        alt: Course Report - Best Coding Bootcamp
         source: Course Report
+        name: Best Coding Bootcamp
         year: "2025"
   - type: numbered_steps
     version: "1.0"
