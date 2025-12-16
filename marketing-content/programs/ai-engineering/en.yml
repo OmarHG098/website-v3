@@ -18,15 +18,11 @@ schema:
     - courses:ai-engineering
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    badge: Career Program
+    variant: singleColumn
     title: Become an AI Engineer
-    subtitle: Get AI-ready in 20 weeks with unlimited 1:1 mentorship and career guidance. Launch a career with $95K-$135K starting salaries.
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $95K+ average starting salary
+    subtitle: Thrive in Today’s Tech and Shape Tomorrow’s. Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
+    badge: Career Program
     cta_buttons:
       - text: Apply Now
         url: /apply
@@ -36,6 +32,10 @@ sections:
         url: /syllabus/ai-engineering
         variant: outline
         icon: Download
+    trust_bar:
+      rating: "4.5"
+      rating_count: 1,294
+      trusted_text: $95K+ average starting salary
     award_badges:
       - name: Top Coding Bootcamp
         source: Forbes
@@ -49,7 +49,6 @@ sections:
       - name: Best Coding Bootcamp
         source: Course Report
         year: "2025"
-
   - type: syllabus
     title: What You'll Build in 20 Weeks
     subtitle: Learn to build and scale an entire AI-native business, not just individual features. Every milestone builds on the last, giving you real end-to-end engineering experience.
@@ -68,7 +67,6 @@ sections:
         description: AI-generated processes deployed via n8n, queues, and scheduled tasks. Automate business workflows with AI-driven decision making and orchestration.
       - title: Real-Time Systems
         description: WebSockets, streaming AI responses, event-driven architecture. Build responsive applications with real-time AI interactions and streaming capabilities.
-
   - type: projects
     title: Learn by Building Real-Life Projects
     subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world AI engineering position. Here's a glimpse of what you'll be working on:"
@@ -101,7 +99,6 @@ sections:
         duration: 40 HOURS
         date: 01/04/2025
         difficulty: hard
-
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
@@ -128,38 +125,26 @@ sections:
         text: Start learning now!
         url: /apply
         variant: primary
-
   - type: certificate
-    version: "1.0"
     title: Certificate & Career Network
     description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
-    stats:
-      - value: 4,000+
-        label: Graduates
-      - value: 84%
-        label: Job Placement
-      - value: 4.9/5
-        label: Student Rating
-      - value: 20+
-        label: Countries
     benefits:
       - text: Recognized by international institutions
       - text: Access to 5,000+ hiring partners
       - text: Lifetime career support
     card:
-      title: "AI Engineer"
-      subtitle: "4Geeks Academy Certificate"
-      program_name: "AI Engineering"
-
-  - type: why_learn_ai
-    title: Why Should I Become an AI Engineer?
-    subtitle: AI Engineering is the Fastest-Growing Tech Career
-    description: AI Engineers are in unprecedented demand as companies race to integrate AI into their products. With starting salaries of $95K-$135K and the field growing 40% annually, there's never been a better time to enter this career. Our comprehensive 20-week program prepares you to build production AI systems from day one.
-    cta:
-      text: Join now!
-      url: /signup
-      variant: primary
-
+      title: AI Engineer
+      subtitle: 4Geeks Academy Certificate
+      program_name: AI Engineering
+    stats:
+      - value: 84%
+        label: Hiring rate
+      - value: 3-6 months
+        label: Time to get hired
+      - value: 55%
+        label: Average Salary increase
+      - value: 5,000+
+        label: Hiring Partners
   - type: pricing
     title: Get access to all of our learning database, courses, and services
     subtitle: Earn a new skills every 30 min, never get stuck or lost again.
@@ -199,7 +184,6 @@ sections:
       text: Get plan
       url: /signup
       variant: primary
-
   - type: whos_hiring
     title: Who's Hiring Our Graduates?
     subtitle: Our alumni work at top companies around the world
@@ -253,7 +237,6 @@ sections:
         alt: Blackstone
       - src: /attached_assets/cemex_1764720131666.png
         alt: Cemex
-
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -297,7 +280,6 @@ sections:
         rating: 5
         comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
         outcome: Landed first tech job
-
   - type: faq
     version: "1.0"
     title: FAQ
@@ -316,7 +298,6 @@ sections:
       text: Still have questions?
       button_text: Talk to an Advisor
       button_url: /contact
-
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
@@ -328,7 +309,6 @@ sections:
       - text: Talk to an Advisor
         url: /contact
         variant: outline
-
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
