@@ -351,17 +351,31 @@ export const pricingPlanSchema = z.object({
   savings_badge: z.string().optional(),
 });
 
-export const pricingSectionSchema = z.object({
+const pricingBaseSchema = z.object({
   type: z.literal("pricing"),
   title: z.string(),
   subtitle: z.string().optional(),
-  monthly: pricingPlanSchema,
-  yearly: pricingPlanSchema,
   tech_icons: z.array(z.string()).optional(),
   features_title: z.string().optional(),
   features: z.array(pricingFeatureSchema),
   cta: ctaButtonSchema,
 });
+
+const pricingSubscriptionSchema = pricingBaseSchema.extend({
+  variant: z.literal("subscription").optional(),
+  monthly: pricingPlanSchema,
+  yearly: pricingPlanSchema,
+});
+
+const pricingProductSchema = pricingBaseSchema.extend({
+  variant: z.literal("product"),
+  product_price: z.string().optional(),
+  financing_text: z.string().optional(),
+  financing_amount: z.string().optional(),
+  discount_text: z.string().optional(),
+});
+
+export const pricingSectionSchema = z.union([pricingSubscriptionSchema, pricingProductSchema]);
 
 export const faqItemSchema = z.object({
   question: z.string(),

@@ -61,7 +61,9 @@ export function PricingSection({ data }: PricingSectionProps) {
   const isSpanish = i18n.language?.startsWith('es');
   const [isYearly, setIsYearly] = useState(true);
   
-  if (!data.monthly || !data.yearly) {
+  const isProductVariant = data.variant === "product";
+  
+  if (!isProductVariant && (!data.monthly || !data.yearly)) {
     return (
       <section className="py-16 bg-muted/30" data-testid="section-pricing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
@@ -71,11 +73,157 @@ export function PricingSection({ data }: PricingSectionProps) {
     );
   }
   
-  const currentPlan = isYearly ? data.yearly : data.monthly;
+  const currentPlan = isProductVariant ? null : (isYearly ? data.yearly : data.monthly);
   
   const yearlyLabel = isSpanish ? "Anual" : "Annual";
   const monthlyLabel = isSpanish ? "Mensual" : "Monthly";
   const learnAtPaceText = isSpanish ? "Aprende a tu ritmo" : "Learn at your own pace";
+
+  if (isProductVariant) {
+    return (
+      <section
+        className="py-16 bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+        data-testid="section-pricing"
+      >
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="mb-6">
+            <h2
+              className="text-2xl md:text-3xl font-bold text-primary mb-2"
+              data-testid="text-pricing-title"
+            >
+              {data.title}
+            </h2>
+            {data.subtitle && (
+              <p
+                className="text-foreground font-medium"
+                data-testid="text-pricing-subtitle"
+              >
+                {data.subtitle}
+              </p>
+            )}
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
+            <div
+              className="relative rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl overflow-hidden lg:col-span-4"
+              style={{
+                background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
+              }}
+              data-testid="card-pricing"
+            >
+              <div className="flex flex-col items-center justify-between h-full px-4 py-6">
+                <div className="flex flex-col items-center justify-center flex-1 py-6 space-y-4">
+                  {data.discount_text && (
+                    <div className="text-center">
+                      <p className="text-white text-sm font-medium" data-testid="text-discount">
+                        {data.discount_text}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {data.financing_text && (
+                    <div className="text-center">
+                      <p className="text-white/90 text-sm" data-testid="text-financing-label">
+                        {data.financing_text}
+                      </p>
+                      {data.financing_amount && (
+                        <div className="mt-2">
+                          <span
+                            className="text-4xl md:text-5xl font-bold text-white"
+                            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                            data-testid="text-financing-amount"
+                          >
+                            {data.financing_amount}
+                          </span>
+                          <span className="text-white text-xs font-normal">/mo</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full bg-white text-[#061258] border-0 hover:bg-white/90 font-bold h-10 text-[17px] tracking-wide rounded"
+                  data-testid="button-get-plan"
+                >
+                  <a href={data.cta.url} className="flex items-center justify-center gap-2">
+                    <IconSchool size={24} className="text-[#061258]" />
+                    {data.cta.text}
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+              {data.features_title && (
+                <p
+                  className="text-[#3A3A3A] font-normal text-lg"
+                  data-testid="text-features-title"
+                >
+                  {data.features_title}
+                </p>
+              )}
+
+              {data.tech_icons && data.tech_icons.length > 0 && (
+                <div
+                  className="flex flex-wrap gap-4"
+                  data-testid="tech-icons"
+                >
+                  {data.tech_icons.map((iconName, index) => {
+                    const IconComponent = iconMap[iconName.toLowerCase()];
+                    const color = techIconColors[iconName.toLowerCase()] || "#061258";
+                    return IconComponent ? (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center p-2"
+                        data-testid={`icon-tech-${index}`}
+                      >
+                        <IconComponent size={20} style={{ color }} />
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              )}
+
+              <div className="border-t border-border" />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {data.features.map((feature, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-2"
+                    data-testid={`feature-${index}`}
+                  >
+                    <div className="flex-shrink-0 mt-0.5">
+                      {feature.use_rigobot_icon ? (
+                        <RigobotIconTiny width="27px" height="17px" />
+                      ) : feature.icon ? (
+                        (() => {
+                          const IconComponent = iconMap[feature.icon.toLowerCase()];
+                          return IconComponent ? (
+                            <IconComponent size={22} className="text-primary" />
+                          ) : (
+                            <IconRobot size={22} className="text-primary" />
+                          );
+                        })()
+                      ) : (
+                        <IconCertificate size={22} className="text-primary" />
+                      )}
+                    </div>
+                    <span className="text-[#061258] text-xs leading-relaxed">
+                      {feature.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -137,7 +285,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             </div>
             <div className="flex items-center justify-center bg-[#EB5757] rounded-full px-3 py-1 -ml-2">
               <span className="text-[#FFBEBE] text-sm font-normal">
-                {currentPlan.discount_badge}
+                {currentPlan?.discount_badge}
               </span>
             </div>
           </div>
@@ -167,12 +315,12 @@ export function PricingSection({ data }: PricingSectionProps) {
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                     data-testid="text-price"
                   >
-                    ${currentPlan.price}
+                    ${currentPlan?.price}
                   </span>
-                  <span className="text-white text-xs font-normal">/{currentPlan.period}</span>
+                  <span className="text-white text-xs font-normal">/{currentPlan?.period}</span>
                 </div>
 
-                {currentPlan.original_price && (
+                {currentPlan?.original_price && (
                   <div
                     className="text-white/60 line-through text-lg mt-1"
                     data-testid="text-original-price"
@@ -181,7 +329,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                   </div>
                 )}
 
-                {currentPlan.savings_badge && (
+                {currentPlan?.savings_badge && (
                   <Badge
                     className="bg-[#061258] text-white border-0 mt-2 text-xs"
                     data-testid="badge-savings"

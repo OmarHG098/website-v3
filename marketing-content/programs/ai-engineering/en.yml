@@ -51,7 +51,7 @@ sections:
         year: "2025"
   - type: syllabus
     title: What You'll Build in 20 Weeks
-    subtitle: Learn to build and scale an entire AI-native business, not just individual features. Every milestone builds on the last, giving you real end-to-end engineering experience.
+    subtitle: "From day one, you’ll choose one company. Yours, one you want to build, or one you want to reimagine.\LOver 20 weeks, you’ll transform it into a fully operational, AI-powered business."
     modules:
       - title: AI-Assisted Frontend
         description: Modern React application with AI-powered components. Build intelligent user interfaces that leverage AI for enhanced user experiences, auto-completion, and smart suggestions.
@@ -127,11 +127,12 @@ sections:
         variant: primary
   - type: certificate
     title: Certificate & Career Network
-    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
+    description: "Earn an industry recognized certificate, accredited by the Florida Department of Education and access in-demand roles such as:"
     benefits:
-      - text: Recognized by international institutions
-      - text: Access to 5,000+ hiring partners
-      - text: Lifetime career support
+      - text: "AI Software Engineer: $95K–$135K"
+      - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
+      - text: "Agent Engineer / Workflow Automation Engineer: $105K–$155K"
+      - text: "Workflow Automation Engineer: $85K–$120K"
     card:
       title: AI Engineer
       subtitle: 4Geeks Academy Certificate
