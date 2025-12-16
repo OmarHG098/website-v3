@@ -4,8 +4,33 @@ meta:
   redirects:
     - /landing/ai-engineering
     - /campaign/ai-engineer
-
 sections:
+  - type: award_badges
+    version: v1.0
+    variant: simple
+    showBorder: true
+    items:
+      - id: coursereport-1
+        logo: /images/awards/course-report.svg
+        alt: Course Report - Best Coding Bootcamp
+        logoHeight: h-12 md:h-16
+        source: Course Report
+        name: Best Coding Bootcamp
+        year: "2024"
+      - id: switchup-1
+        logo: /images/awards/switchup.svg
+        alt: SwitchUp - Top Bootcamp
+        logoHeight: h-12 md:h-16
+        source: SwitchUp
+        name: Top Bootcamp
+        year: "2024"
+      - id: careerkarma-1
+        logo: /images/awards/career-karma.svg
+        alt: Career Karma - Best Value
+        logoHeight: h-12 md:h-16
+        source: Career Karma
+        name: Best Value
+        year: "2024"
   - type: hero
     version: "1.0"
     variant: productShowcase
@@ -53,7 +78,6 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-
   - type: features_grid
     version: "1.0"
     variant: highlight
@@ -71,7 +95,6 @@ sections:
         title: Average starting salary for AI Engineers
     columns: 3
     icon_color: "#0097CD"
-
   - type: syllabus
     title: What You'll Master in 20 Weeks
     subtitle: Build real AI systems from day one. Choose a company to transform with AI — yours or one you imagine — and create a fully operational, AI-powered business.
@@ -88,7 +111,6 @@ sections:
         description: AI-driven business process automation with n8n and scheduled tasks.
       - title: Real-Time AI Systems
         description: WebSockets, streaming responses, and event-driven architecture.
-
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
@@ -115,7 +137,6 @@ sections:
         text: Start Learning Now
         url: /en/apply?program=ai-engineering
         variant: primary
-
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
@@ -137,7 +158,6 @@ sections:
         label: Average salary increase
       - value: 5,000+
         label: Hiring Partners
-
   - type: pricing
     version: "1.0"
     variant: product
@@ -171,7 +191,6 @@ sections:
       text: Get plan
       url: /en/apply?program=ai-engineering
       variant: primary
-
   - type: whos_hiring
     title: Who's Hiring Our Graduates?
     subtitle: Our alumni work at top companies around the world
@@ -225,7 +244,6 @@ sections:
         alt: Blackstone
       - src: /attached_assets/cemex_1764720131666.png
         alt: Cemex
-
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
@@ -251,7 +269,6 @@ sections:
         rating: 5
         comment: Excellent content and great mentor support. Now I'm working on cutting-edge AI.
         outcome: +100% salary increase
-
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
@@ -263,7 +280,6 @@ sections:
       - text: Talk to an Advisor
         url: /contact
         variant: outline
-
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
