@@ -150,10 +150,11 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             }}
           />
 
-          {/* SVG Connector Lines */}
+          {/* SVG Curved Connector Lines */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             style={{ minHeight: "400px" }}
+            viewBox="0 0 100 100"
             preserveAspectRatio="none"
           >
             <defs>
@@ -163,39 +164,33 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
               </linearGradient>
             </defs>
-            {/* Line from Step 1 (bottom-left) to Step 2 (top-center) */}
-            <line
-              x1="25%"
-              y1="75%"
-              x2="50%"
-              y2="30%"
+            {/* Curved line from Step 1 (bottom-left) to Step 2 (top-center) */}
+            <path
+              d="M 25 75 Q 30 50, 50 30"
+              fill="none"
               stroke="url(#lineGradient)"
-              strokeWidth="2"
-              strokeDasharray="8 4"
+              strokeWidth="0.4"
+              strokeDasharray="2 1"
               className="transition-opacity duration-300"
               style={{ opacity: activeStep === 0 || activeStep === 1 ? 0.8 : 0.3 }}
             />
-            {/* Line from Step 2 (top-center) to Step 3 (bottom-right) */}
-            <line
-              x1="50%"
-              y1="30%"
-              x2="75%"
-              y2="75%"
+            {/* Curved line from Step 2 (top-center) to Step 3 (bottom-right) */}
+            <path
+              d="M 50 30 Q 70 50, 75 75"
+              fill="none"
               stroke="url(#lineGradient)"
-              strokeWidth="2"
-              strokeDasharray="8 4"
+              strokeWidth="0.4"
+              strokeDasharray="2 1"
               className="transition-opacity duration-300"
               style={{ opacity: activeStep === 1 || activeStep === 2 ? 0.8 : 0.3 }}
             />
-            {/* Line from Step 3 (bottom-right) to Step 1 (bottom-left) */}
-            <line
-              x1="75%"
-              y1="75%"
-              x2="25%"
-              y2="75%"
+            {/* Curved line from Step 3 (bottom-right) to Step 1 (bottom-left) */}
+            <path
+              d="M 75 75 Q 50 85, 25 75"
+              fill="none"
               stroke="url(#lineGradient)"
-              strokeWidth="2"
-              strokeDasharray="8 4"
+              strokeWidth="0.4"
+              strokeDasharray="2 1"
               className="transition-opacity duration-300"
               style={{ opacity: activeStep === 0 || activeStep === 2 ? 0.8 : 0.3 }}
             />
@@ -219,20 +214,23 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     </h3>
                   )}
                 </div>
-                <button
-                  onClick={() => handleStepInteraction(1)}
-                  onMouseEnter={() => setActiveStep(1)}
-                  aria-label={steps[1].title || "Step 2"}
-                  aria-expanded={activeStep === 1}
-                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                    activeStep === 1
-                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                  }`}
-                  data-testid="button-spotlight-step-2"
-                >
-                  {getIcon(steps[1].icon)}
-                </button>
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-full bg-background" />
+                  <button
+                    onClick={() => handleStepInteraction(1)}
+                    onMouseEnter={() => setActiveStep(1)}
+                    aria-label={steps[1].title || "Step 2"}
+                    aria-expanded={activeStep === 1}
+                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                      activeStep === 1
+                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                    }`}
+                    data-testid="button-spotlight-step-2"
+                  >
+                    {getIcon(steps[1].icon)}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -253,20 +251,23 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     </h3>
                   )}
                 </div>
-                <button
-                  onClick={() => handleStepInteraction(0)}
-                  onMouseEnter={() => setActiveStep(0)}
-                  aria-label={steps[0].title || "Step 1"}
-                  aria-expanded={activeStep === 0}
-                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
-                    activeStep === 0
-                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                  }`}
-                  data-testid="button-spotlight-step-1"
-                >
-                  {getIcon(steps[0].icon)}
-                </button>
+                <div className="relative flex-shrink-0">
+                  <div className="absolute inset-0 rounded-full bg-background" />
+                  <button
+                    onClick={() => handleStepInteraction(0)}
+                    onMouseEnter={() => setActiveStep(0)}
+                    aria-label={steps[0].title || "Step 1"}
+                    aria-expanded={activeStep === 0}
+                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                      activeStep === 0
+                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                    }`}
+                    data-testid="button-spotlight-step-1"
+                  >
+                    {getIcon(steps[0].icon)}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -321,20 +322,23 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 className={`col-start-3 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(2)}`}
                 data-testid="spotlight-step-3"
               >
-                <button
-                  onClick={() => handleStepInteraction(2)}
-                  onMouseEnter={() => setActiveStep(2)}
-                  aria-label={steps[2].title || "Step 3"}
-                  aria-expanded={activeStep === 2}
-                  className={`w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
-                    activeStep === 2
-                      ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                      : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                  }`}
-                  data-testid="button-spotlight-step-3"
-                >
-                  {getIcon(steps[2].icon)}
-                </button>
+                <div className="relative flex-shrink-0">
+                  <div className="absolute inset-0 rounded-full bg-background" />
+                  <button
+                    onClick={() => handleStepInteraction(2)}
+                    onMouseEnter={() => setActiveStep(2)}
+                    aria-label={steps[2].title || "Step 3"}
+                    aria-expanded={activeStep === 2}
+                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
+                      activeStep === 2
+                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
+                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                    }`}
+                    data-testid="button-spotlight-step-3"
+                  >
+                    {getIcon(steps[2].icon)}
+                  </button>
+                </div>
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col items-start">
                     <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
