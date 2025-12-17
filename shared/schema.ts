@@ -193,6 +193,12 @@ export {
   type NumberedStepsSection,
 } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
 
+// Variant types for type narrowing
+export type {
+  NumberedStepsDefaultSection,
+  NumberedStepsBubbleTextSection,
+} from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
+
 // ============================================
 // Re-export Syllabus Schemas from Component Registry
 // ============================================
@@ -220,9 +226,11 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
+  featuresGridCardHeaderCardSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
+  type FeaturesGridCardHeaderCard,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
@@ -230,6 +238,7 @@ export {
 export type {
   FeaturesGridHighlightSection,
   FeaturesGridDetailedSection,
+  FeaturesGridCardHeaderSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
 // ============================================
@@ -536,28 +545,6 @@ export type CommunitySupportGroup = z.infer<typeof communitySupportGroupSchema>;
 export type CommunitySupportSection = z.infer<typeof communitySupportSectionSchema>;
 
 // ============================================
-// Card Grid Section Schema
-// ============================================
-export const cardGridCardSchema = z.object({
-  text: z.string(),
-  icon: z.string().optional(),
-});
-
-export const cardGridSectionSchema = z.object({
-  type: z.literal("card_grid"),
-  version: z.string().optional(),
-  background: z.string().optional(),
-  heading: z.string(),
-  description: z.string().optional(),
-  image: z.string().optional(),
-  image_alt: z.string().optional(),
-  cards: z.array(cardGridCardSchema),
-});
-
-export type CardGridCard = z.infer<typeof cardGridCardSchema>;
-export type CardGridSection = z.infer<typeof cardGridSectionSchema>;
-
-// ============================================
 // Two Column Accordion Card Section Schema
 // ============================================
 export const twoColumnAccordionCardBulletSchema = z.object({
@@ -579,28 +566,6 @@ export const twoColumnAccordionCardSectionSchema = z.object({
 
 export type TwoColumnAccordionCardBullet = z.infer<typeof twoColumnAccordionCardBulletSchema>;
 export type TwoColumnAccordionCardSection = z.infer<typeof twoColumnAccordionCardSectionSchema>;
-
-// ============================================
-// Spotlight With Bubble Text Section Schema
-// ============================================
-export const spotlightStepSchema = z.object({
-  icon: z.string().optional(),
-  title: z.string().optional(),
-  text: z.string().optional(),
-  bullets: z.array(z.string()).optional(),
-});
-
-export const spotlightWithBubbleTextSectionSchema = z.object({
-  type: z.literal("spotlight_with_bubble_text"),
-  version: z.string().optional(),
-  title: z.string().optional(),
-  description: z.string().optional(),
-  background: z.string().optional(),
-  steps: z.array(spotlightStepSchema).optional(),
-});
-
-export type SpotlightStep = z.infer<typeof spotlightStepSchema>;
-export type SpotlightWithBubbleTextSection = z.infer<typeof spotlightWithBubbleTextSectionSchema>;
 
 // ============================================
 // Section Schema Union
@@ -656,9 +621,7 @@ export const sectionSchema = z.union([
   awardsRowSectionSchema,
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
-  cardGridSectionSchema,
   twoColumnAccordionCardSectionSchema,
-  spotlightWithBubbleTextSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;

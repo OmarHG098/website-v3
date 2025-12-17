@@ -46,8 +46,9 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-  - type: card_grid
+  - type: features_grid
     version: "1.0"
+    variant: cardHeader
     background: bg-primary/5
     heading: Unlimited Career Support – Always Ahead of Job Market Trends
     description: Geekforce is built into every 4Geeks program to make sure you don't just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you'll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.
@@ -60,8 +61,9 @@ sections:
         icon: Mentor2
       - text: Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves.
         icon: Rocket
-  - type: spotlight_with_bubble_text
+  - type: numbered_steps
     version: "1.0"
+    variant: bubbleText
     title: Get Hired with Our 3-Step Career Development Process
     description: Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.
     background: bg-background

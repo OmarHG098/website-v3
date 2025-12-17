@@ -27,6 +27,11 @@ export const featuresGridDetailedItemSchema = z.object({
   link_text: z.string().optional(),
 });
 
+export const featuresGridCardHeaderCardSchema = z.object({
+  icon: z.string(),
+  text: z.string(),
+});
+
 export const featuresGridHighlightSectionSchema = z.object({
   type: z.literal("features_grid"),
   version: z.string().optional(),
@@ -52,13 +57,28 @@ export const featuresGridDetailedSectionSchema = z.object({
   background: z.string().optional(),
 });
 
+export const featuresGridCardHeaderSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("cardHeader"),
+  heading: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  cards: z.array(featuresGridCardHeaderCardSchema),
+  background: z.string().optional(),
+});
+
 export const featuresGridSectionSchema = z.union([
   featuresGridHighlightSectionSchema,
   featuresGridDetailedSectionSchema,
+  featuresGridCardHeaderSectionSchema,
 ]);
 
 export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
 export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
+export type FeaturesGridCardHeaderCard = z.infer<typeof featuresGridCardHeaderCardSchema>;
 export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
 export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
+export type FeaturesGridCardHeaderSection = z.infer<typeof featuresGridCardHeaderSectionSchema>;
 export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;

@@ -3,6 +3,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { NumberedStepsBubbleText } from "@/components/numbered-steps/NumberedStepsBubbleText";
 
 export interface NumberedStepsStep {
   icon: string;
@@ -15,7 +16,7 @@ export interface NumberedStepsStep {
 }
 
 export interface NumberedStepsData {
-  title: string;
+  title?: string;
   description?: string;
   description_link?: {
     text: string;
@@ -27,7 +28,7 @@ export interface NumberedStepsData {
   bullet_icon_color?: string;
   bullet_char?: string;
   collapsible_mobile?: boolean;
-  variant?: "default" | "spotlight";
+  variant?: "default" | "spotlight" | "bubbleText";
 }
 
 interface NumberedStepsProps {
@@ -85,7 +86,7 @@ const StepNumber = ({ index, variant, size = "md" }: StepNumberProps) => {
 
 export { StepNumber };
 
-export default function NumberedSteps({ data }: NumberedStepsProps) {
+function NumberedStepsDefault({ data }: NumberedStepsProps) {
   const [expandedSteps, setExpandedSteps] = useState<Record<number, boolean>>({});
 
   const toggleStep = (index: number) => {
@@ -303,4 +304,14 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
       </div>
     </section>
   );
+}
+
+export default function NumberedSteps({ data }: NumberedStepsProps) {
+  const variant = data.variant || "default";
+  
+  if (variant === "bubbleText") {
+    return <NumberedStepsBubbleText data={data as Parameters<typeof NumberedStepsBubbleText>[0]["data"]} />;
+  }
+  
+  return <NumberedStepsDefault data={data} />;
 }

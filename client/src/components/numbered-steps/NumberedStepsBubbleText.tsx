@@ -1,40 +1,23 @@
 import { useState } from "react";
 import * as TablerIcons from "@tabler/icons-react";
-import { getCustomIcon } from "./custom-icons";
-import { StepNumber } from "./NumberedSteps";
-
-interface Step {
-  icon?: string;
-  title?: string;
-  text?: string;
-  bullets?: string[];
-}
-
-interface SpotlightStepsWithBubbleTextData {
-  type: "spotlight_with_bubble_text";
-  version?: string;
-  title?: string;
-  description?: string;
-  background?: string;
-  steps?: Step[];
-}
-
-interface SpotlightStepsWithBubbleTextProps {
-  data: SpotlightStepsWithBubbleTextData;
-}
+import { getCustomIcon } from "../custom-icons";
+import { StepNumber } from "../NumberedSteps";
+import type { NumberedStepsBubbleTextSection } from "@shared/schema";
 
 const { IconCheck } = TablerIcons;
+
+interface NumberedStepsBubbleTextProps {
+  data: NumberedStepsBubbleTextSection;
+}
 
 function getIcon(iconName?: string) {
   if (!iconName) return <IconCheck className="w-8 h-8 text-primary" />;
   
-  // Check custom icons first
   const CustomIcon = getCustomIcon(iconName);
   if (CustomIcon) {
     return <CustomIcon width="48px" height="48px" />;
   }
   
-  // Fallback to Tabler icons
   const fullIconName = `Icon${iconName}`;
   const Icon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullIconName];
   if (Icon) {
@@ -43,7 +26,7 @@ function getIcon(iconName?: string) {
   return <IconCheck className="w-8 h-8 text-primary" />;
 }
 
-export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWithBubbleTextProps) {
+export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) {
   const [activeStep, setActiveStep] = useState<number>(0);
   const steps = data.steps || [];
 
@@ -63,15 +46,6 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
 
   const activeContent = getActiveContent();
 
-  const getBubblePointerClass = () => {
-    switch (activeStep) {
-      case 0: return "before:left-0 before:-translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45";
-      case 1: return "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rotate-45";
-      case 2: return "before:right-0 before:translate-x-1/2 before:top-1/2 before:-translate-y-1/2 before:rotate-45";
-      default: return "";
-    }
-  };
-
   const getStepOpacity = (_stepIndex: number) => {
     return "opacity-100";
   };
@@ -79,13 +53,13 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
   return (
     <section
       className={`py-16 ${data.background || "bg-muted/30"}`}
-      data-testid="section-spotlight-steps-with-bubble-text"
+      data-testid="section-numbered-steps-bubble-text"
     >
       <div className="max-w-6xl mx-auto px-4">
         {data.title && (
           <h2
             className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
-            data-testid="text-spotlight-title"
+            data-testid="text-numbered-steps-title"
           >
             {data.title}
           </h2>
@@ -103,7 +77,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             <div
               key={index}
               className={`flex flex-col items-center transition-opacity duration-300 ${getStepOpacity(index)}`}
-              data-testid={`spotlight-step-mobile-${index + 1}`}
+              data-testid={`numbered-step-mobile-${index + 1}`}
             >
               <button
                 onClick={() => handleStepInteraction(index)}
@@ -114,7 +88,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                     ? "border-primary bg-primary/20 scale-110"
                     : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
                 }`}
-                data-testid={`button-spotlight-step-${index + 1}`}
+                data-testid={`button-numbered-step-${index + 1}`}
               >
                 {getIcon(step.icon)}
               </button>
@@ -181,7 +155,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             {steps[1] && (
               <div
                 className={`col-start-2 row-start-1 flex flex-col items-center justify-center pb-6 transition-opacity duration-300 ${getStepOpacity(1)}`}
-                data-testid="spotlight-step-2"
+                data-testid="numbered-step-2"
               >
                 <div className="mb-4 flex items-center gap-3">
                   <StepNumber index={1} variant="spotlight" size="md" />
@@ -203,7 +177,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                         ? "border-primary bg-primary/20 scale-110 shadow-lg"
                         : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
                     }`}
-                    data-testid="button-spotlight-step-2"
+                    data-testid="button-numbered-step-2"
                   >
                     {getIcon(steps[1].icon)}
                   </button>
@@ -215,7 +189,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             {steps[0] && (
               <div
                 className={`col-start-1 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(0)}`}
-                data-testid="spotlight-step-1"
+                data-testid="numbered-step-1"
               >
                 <div className="flex items-center gap-3">
                   <StepNumber index={0} variant="spotlight" size="md" />
@@ -237,7 +211,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                         ? "border-primary bg-primary/20 scale-110 shadow-lg"
                         : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
                     }`}
-                    data-testid="button-spotlight-step-1"
+                    data-testid="button-numbered-step-1"
                   >
                     {getIcon(steps[0].icon)}
                   </button>
@@ -294,7 +268,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
             {steps[2] && (
               <div
                 className={`col-start-3 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(2)}`}
-                data-testid="spotlight-step-3"
+                data-testid="numbered-step-3"
               >
                 <div className="relative flex-shrink-0">
                   <div className="absolute inset-0 rounded-full bg-background" />
@@ -308,7 +282,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                         ? "border-primary bg-primary/20 scale-110 shadow-lg"
                         : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
                     }`}
-                    data-testid="button-spotlight-step-3"
+                    data-testid="button-numbered-step-3"
                   >
                     {getIcon(steps[2].icon)}
                   </button>
@@ -329,3 +303,5 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
     </section>
   );
 }
+
+export default NumberedStepsBubbleText;

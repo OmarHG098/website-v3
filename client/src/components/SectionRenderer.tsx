@@ -28,9 +28,7 @@ import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
 import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
-import { CardGridSection } from "@/components/CardGridSection";
 import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
-import SpotlightStepsWithBubbleText from "@/components/SpotlightStepsWithBubbleText";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -123,12 +121,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <PieCharts key={index} data={section as Parameters<typeof PieCharts>[0]["data"]} />;
     case "lead_form":
       return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
-    case "card_grid":
-      return <CardGridSection key={index} data={section as Parameters<typeof CardGridSection>[0]["data"]} />;
     case "two_column_accordion_card":
       return <TwoColumnAccordionCard key={index} data={section as Parameters<typeof TwoColumnAccordionCard>[0]["data"]} />;
-    case "spotlight_with_bubble_text":
-      return <SpotlightStepsWithBubbleText key={index} data={section as unknown as Parameters<typeof SpotlightStepsWithBubbleText>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

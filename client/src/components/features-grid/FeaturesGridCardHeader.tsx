@@ -1,33 +1,21 @@
 import { Card, CardContent } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
-import { IconCheck } from "@tabler/icons-react";
-import { getCustomIcon } from "@/components/custom-icons";
+import { getCustomIcon } from "../custom-icons";
+import type { FeaturesGridCardHeaderSection } from "@shared/schema";
 
-interface CardGridSectionData {
-  type: "card_grid";
-  version?: string;
-  background?: string;
-  heading: string;
-  description?: string;
-  image?: string;
-  image_alt?: string;
-  cards: Array<{
-    text: string;
-    icon?: string;
-  }>;
+const { IconCheck } = TablerIcons;
+
+interface FeaturesGridCardHeaderProps {
+  data: FeaturesGridCardHeaderSection;
 }
 
-interface CardGridSectionProps {
-  data: CardGridSectionData;
-}
-
-export function CardGridSection({ data }: CardGridSectionProps) {
+export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
   const backgroundClass = data.background || "bg-background";
 
   return (
     <section 
       className={`py-14 ${backgroundClass}`}
-      data-testid="section-card-grid"
+      data-testid="section-features-grid-card-header"
     >
       <div className="max-w-6xl mx-auto px-4">
         <Card className="mb-8 overflow-hidden border-t-4 border-t-primary/20">
@@ -36,14 +24,14 @@ export function CardGridSection({ data }: CardGridSectionProps) {
               <div className="md:col-span-8 p-6 md:p-8 flex flex-col justify-center">
                 <h2 
                   className="text-2xl md:text-3xl font-bold text-foreground mb-4"
-                  data-testid="text-card-grid-heading"
+                  data-testid="text-features-grid-heading"
                 >
                   {data.heading}
                 </h2>
                 {data.description && (
                   <p 
                     className="text-muted-foreground text-base md:text-lg"
-                    data-testid="text-card-grid-description"
+                    data-testid="text-features-grid-description"
                   >
                     {data.description}
                   </p>
@@ -55,7 +43,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
                     src={data.image}
                     alt={data.image_alt || ""}
                     className="w-full max-w-[220px] md:max-w-[280px] object-contain"
-                    data-testid="img-card-grid-main"
+                    data-testid="img-features-grid-main"
                   />
                 </div>
               )}
@@ -73,7 +61,7 @@ export function CardGridSection({ data }: CardGridSectionProps) {
               <Card 
                 key={index} 
                 className="h-full border-b-4 border-b-primary/20"
-                data-testid={`card-bullet-${index}`}
+                data-testid={`card-feature-${index}`}
               >
                 <CardContent className="p-5 flex flex-col items-start gap-3">
                   {CustomIcon ? (
@@ -94,4 +82,4 @@ export function CardGridSection({ data }: CardGridSectionProps) {
   );
 }
 
-export default CardGridSection;
+export default FeaturesGridCardHeader;
