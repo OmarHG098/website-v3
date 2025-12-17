@@ -125,10 +125,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           </svg>
 
           <div className="relative grid grid-cols-[1fr_minmax(450px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
-            {/* Step 2 - Top Center (row 1, col 2) */}
+            {/* Step 2 - Top Center (row 1, col 2) - positioned lower */}
             {steps[1] && (
               <div
-                className="col-start-2 row-start-1 flex flex-col items-center justify-center pb-6"
+                className="col-start-2 row-start-1 flex flex-col items-center justify-end pb-2"
                 data-testid="numbered-step-2"
               >
                 <button
@@ -157,10 +157,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             )}
 
-            {/* Step 1 - Bottom Left (row 2, col 1) */}
+            {/* Step 1 - Bottom Left (row 2, col 1) - positioned more inside */}
             {steps[0] && (
               <div
-                className="col-start-1 row-start-2 flex items-center justify-end h-full"
+                className="col-start-1 row-start-2 flex items-center justify-end h-full pr-4"
                 data-testid="numbered-step-1"
               >
                 <button
@@ -206,7 +206,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   `}
                 />
                 {activeContent && (
-                  <div key={activeStep} className="animate-in fade-in duration-300">
+                  <div key={activeStep}>
                     {activeContent.title && (
                       <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center justify-center gap-2">
                         <span className="text-primary font-bold text-2xl">
@@ -236,10 +236,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             </div>
 
-            {/* Step 3 - Bottom Right (row 2, col 3) */}
+            {/* Step 3 - Bottom Right (row 2, col 3) - positioned more inside */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full pl-4"
                 data-testid="numbered-step-3"
               >
                 <button
