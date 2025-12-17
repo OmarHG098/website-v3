@@ -83,14 +83,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
-  // Determine panel slide direction based on card position
-  const getPanelDirection = (index: number, total: number): "left" | "right" => {
-    if (total <= 1) return "right";
-    if (index === 0) return "right"; // Left card → panel slides to right
-    if (index === total - 1) return "left"; // Right card → panel slides to left
-    return "right"; // Center card → panel slides to right
-  };
-
   const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
 
@@ -127,6 +119,21 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
         })}
       </div>
     );
+  };
+
+  // Calculate the expanded card layout based on which card is hovered
+  const getExpandedLayout = (hoveredIdx: number, total: number) => {
+    // For 3 cards: positions are 0, 1, 2
+    // Card 0 (left): takes columns 1-2, card 2-3 hidden
+    // Card 1 (center): takes columns 1-3
+    // Card 2 (right): takes columns 2-3, card 0-1 hidden
+    if (hoveredIdx === 0) {
+      return { gridColumn: "1 / 3", justify: "flex-start" };
+    } else if (hoveredIdx === total - 1) {
+      return { gridColumn: "2 / 4", justify: "flex-end" };
+    } else {
+      return { gridColumn: "1 / 4", justify: "center" };
+    }
   };
 
   return (
@@ -167,59 +174,79 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
             {data.metrics.map((metric, metricIndex) => {
               const isHovered = hoveredIndex === metricIndex;
               const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
-              const panelDirection = getPanelDirection(metricIndex, data.metrics.length);
 
               return (
-                <div
+                <Card
                   key={metricIndex}
-                  className="relative"
-                  style={{ zIndex: isHovered ? 20 : 1 }}
+                  className={`p-6 transition-all duration-300 ease-out cursor-pointer ${
+                    isOtherHovered
+                      ? "opacity-20 scale-95 pointer-events-none" 
+                      : "opacity-100"
+                  } ${isHovered ? "opacity-0" : ""}`}
                   onMouseEnter={() => setHoveredIndex(metricIndex)}
+                  data-testid={`card-metric-${metricIndex}`}
                 >
-                  {/* The card - stays exactly in place */}
-                  <Card
-                    className={`p-6 transition-all duration-300 ease-out cursor-pointer h-full ${
-                      isOtherHovered
-                        ? "opacity-20 scale-95" 
-                        : "opacity-100"
-                    }`}
-                    data-testid={`card-metric-${metricIndex}`}
-                  >
-                    <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                      {metric.title}
-                    </h3>
-                    {metric.unit && (
-                      <p className="text-sm text-muted-foreground text-center mb-6">
-                        {metric.unit}
-                      </p>
-                    )}
-                    {renderBars(metric, metricIndex)}
-                  </Card>
-
-                  {/* Sliding panel - expands from the card's edge */}
-                  {metric.description && (
-                    <div
-                      className={`absolute top-0 h-full transition-all duration-300 ease-out overflow-hidden ${
-                        panelDirection === "right" 
-                          ? "left-full ml-2" 
-                          : "right-full mr-2"
-                      }`}
-                      style={{
-                        width: isHovered ? "calc(200% + 1.5rem)" : "0px",
-                        opacity: isHovered ? 1 : 0,
-                      }}
-                    >
-                      <Card className="h-full p-6 flex items-center">
-                        <p className="text-base text-muted-foreground leading-relaxed">
-                          {metric.description}
-                        </p>
-                      </Card>
-                    </div>
+                  <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                    {metric.title}
+                  </h3>
+                  {metric.unit && (
+                    <p className="text-sm text-muted-foreground text-center mb-6">
+                      {metric.unit}
+                    </p>
                   )}
-                </div>
+                  {renderBars(metric, metricIndex)}
+                </Card>
               );
             })}
           </div>
+
+          {/* Expanded card overlay - positioned absolutely over the grid */}
+          {hoveredIndex !== null && data.metrics[hoveredIndex] && (
+            <div 
+              className="absolute top-0 left-0 right-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-none"
+            >
+              <div
+                className="pointer-events-auto"
+                style={{
+                  gridColumn: 
+                    hoveredIndex === 0 
+                      ? "1 / 3" 
+                      : hoveredIndex === data.metrics.length - 1 
+                        ? "2 / 4" 
+                        : "1 / 4",
+                }}
+              >
+                <Card
+                  className="p-6 h-full transition-all duration-300 ease-out animate-in fade-in slide-in-from-left-2 duration-300"
+                  data-testid={`card-metric-expanded-${hoveredIndex}`}
+                >
+                  <div className="flex flex-col lg:flex-row items-center gap-6 h-full">
+                    {/* Graph section */}
+                    <div className="flex flex-col items-center flex-shrink-0">
+                      <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                        {data.metrics[hoveredIndex].title}
+                      </h3>
+                      {data.metrics[hoveredIndex].unit && (
+                        <p className="text-sm text-muted-foreground text-center mb-6">
+                          {data.metrics[hoveredIndex].unit}
+                        </p>
+                      )}
+                      {renderBars(data.metrics[hoveredIndex], hoveredIndex)}
+                    </div>
+
+                    {/* Description section */}
+                    {data.metrics[hoveredIndex].description && (
+                      <div className="flex-1 flex items-center">
+                        <p className="text-base text-muted-foreground leading-relaxed">
+                          {data.metrics[hoveredIndex].description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              </div>
+            </div>
+          )}
         </div>
 
         {data.footer_description && (
