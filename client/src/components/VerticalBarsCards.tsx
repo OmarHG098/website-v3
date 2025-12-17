@@ -121,18 +121,13 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
-  // Check if card is last in row (should expand left instead of right)
-  const shouldExpandLeft = (index: number) => {
-    return index === data.metrics.length - 1;
-  };
-
   return (
     <section
       ref={containerRef}
-      className={`py-16 md:py-24 overflow-visible ${data.background || "bg-background"}`}
+      className={`py-16 md:py-24 ${data.background || "bg-background"}`}
       data-testid="section-vertical-bars-cards"
     >
-      <div className="max-w-6xl mx-auto px-4 overflow-visible">
+      <div className="max-w-6xl mx-auto px-4">
         {(data.title || data.subtitle) && (
           <div className="text-center mb-12">
             {data.title && (
@@ -154,32 +149,31 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           </div>
         )}
 
-        {/* Cards container */}
+        {/* Cards - flexbox layout for simpler expansion */}
         <div 
-          className="overflow-visible"
+          className="flex flex-col lg:flex-row gap-6"
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
-            {data.metrics.map((metric, metricIndex) => {
-              const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
-              const expandLeft = shouldExpandLeft(metricIndex);
+          {data.metrics.map((metric, metricIndex) => {
+            const isHovered = hoveredIndex === metricIndex;
+            const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
 
-              return (
-                <div
-                  key={metricIndex}
-                  className="group/card relative overflow-visible"
-                  style={{ zIndex: hoveredIndex === metricIndex ? 20 : 1 }}
-                  onMouseEnter={() => setHoveredIndex(metricIndex)}
-                >
-                  {/* The card - stays in place */}
-                  <Card
-                    className={`p-6 cursor-pointer h-full overflow-visible transition-all duration-300 ${
-                      isOtherHovered
-                        ? "opacity-20 scale-95 pointer-events-none" 
-                        : "opacity-100"
-                    } group-hover/card:shadow-lg group-hover/card:ring-2 group-hover/card:ring-primary/20`}
-                    data-testid={`card-metric-${metricIndex}`}
-                  >
+            return (
+              <Card
+                key={metricIndex}
+                className={`p-6 cursor-pointer transition-all duration-500 ease-out ${
+                  isOtherHovered
+                    ? "opacity-20 lg:flex-shrink lg:flex-grow-0 lg:basis-[15%]" 
+                    : isHovered
+                      ? "lg:flex-grow lg:basis-[70%] shadow-lg"
+                      : "lg:flex-1"
+                }`}
+                onMouseEnter={() => setHoveredIndex(metricIndex)}
+                data-testid={`card-metric-${metricIndex}`}
+              >
+                <div className={`flex ${isHovered ? "flex-row items-center gap-8" : "flex-col"}`}>
+                  {/* Graph section */}
+                  <div className={`flex flex-col items-center ${isHovered ? "flex-shrink-0" : ""}`}>
                     <h3 className="text-lg font-bold text-foreground text-center mb-2">
                       {metric.title}
                     </h3>
@@ -189,37 +183,20 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       </p>
                     )}
                     {renderBars(metric, metricIndex)}
-                  </Card>
+                  </div>
 
-                  {/* Drawer panel - uses CSS group-hover for stable visibility */}
-                  {metric.description && (
-                    <aside
-                      className={`
-                        absolute top-0 h-full
-                        pointer-events-none
-                        transition-all duration-300 ease-out
-                        opacity-0 w-0
-                        group-hover/card:opacity-100 group-hover/card:w-[280px] group-hover/card:pointer-events-auto
-                        ${expandLeft 
-                          ? "right-full mr-3 translate-x-4 group-hover/card:translate-x-0" 
-                          : "left-full ml-3 -translate-x-4 group-hover/card:translate-x-0"
-                        }
-                      `}
-                    >
-                      <Card 
-                        className="h-full p-5 flex items-center shadow-lg"
-                        data-testid={`card-metric-panel-${metricIndex}`}
-                      >
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {metric.description}
-                        </p>
-                      </Card>
-                    </aside>
+                  {/* Description - visible only when hovered */}
+                  {metric.description && isHovered && (
+                    <div className="flex-1 animate-in fade-in slide-in-from-left-4 duration-300">
+                      <p className="text-base text-muted-foreground leading-relaxed">
+                        {metric.description}
+                      </p>
+                    </div>
                   )}
                 </div>
-              );
-            })}
-          </div>
+              </Card>
+            );
+          })}
         </div>
 
         {data.footer_description && (
