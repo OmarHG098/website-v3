@@ -315,7 +315,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       right: 24,
                       transitionProperty: "opacity",
                       transitionDuration: isHovered ? "300ms" : "100ms",
-                      transitionDelay: isHovered ? "200ms" : "0ms"
+                      transitionDelay: isHovered ? "230ms" : "0ms"
                     }}
                   >
                     <h4 className="text-xl font-bold text-foreground mb-3">
