@@ -141,13 +141,13 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-2"
                 >
                   {/* Gradient fade for line - vertical fade from bottom */}
-                  <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-32 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+                  <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-32 h-24 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none" />
                   {steps[1].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
                     </h3>
                   )}
-                  <div className="relative">
+                  <div className="relative bg-background">
                     <StepNumber index={1} variant="spotlight" size="md" />
                   </div>
                 </button>
@@ -171,13 +171,13 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-1"
                 >
                   {/* Gradient fade for line - vertical fade */}
-                  <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-b from-background via-background/60 to-transparent pointer-events-none" />
+                  <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
                   {steps[0].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right">
                       {steps[0].title}
                     </h3>
                   )}
-                  <div className="relative">
+                  <div className="relative bg-background">
                     <StepNumber index={0} variant="spotlight" size="md" />
                   </div>
                 </button>
@@ -249,7 +249,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                 >
                   {/* Gradient fade for line - vertical fade */}
                   <div className="absolute -left-12 -top-16 w-24 h-48 bg-gradient-to-b from-background via-background/60 to-transparent pointer-events-none" />
-                  <div className="relative">
+                  <div className="relative bg-background">
                     <StepNumber index={2} variant="spotlight" size="md" />
                   </div>
                   {steps[2].title && (
