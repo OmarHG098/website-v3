@@ -124,11 +124,11 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             />
           </svg>
 
-          <div className="relative min-h-[400px]">
-            {/* Step 2 - Top Center - absolute positioned at end of line */}
+          <div className="relative grid grid-cols-[1fr_minmax(450px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
+            {/* Step 2 - Top Center (row 1, col 2) */}
             {steps[1] && (
               <div
-                className="absolute left-1/2 top-[15%] -translate-x-1/2"
+                className="col-start-2 row-start-1 flex flex-col items-center justify-center pb-6"
                 data-testid="numbered-step-2"
               >
                 <button
@@ -157,10 +157,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             )}
 
-            {/* Step 1 - Bottom Left - absolute positioned at end of line */}
+            {/* Step 1 - Bottom Left (row 2, col 1) */}
             {steps[0] && (
               <div
-                className="absolute left-[12%] top-[60%] -translate-y-1/2"
+                className="col-start-1 row-start-2 flex items-center justify-end h-full"
                 data-testid="numbered-step-1"
               >
                 <button
@@ -189,24 +189,24 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             )}
 
-            {/* Center Content - absolute positioned in center */}
+            {/* Center Content - row 2, col 2 - No background, just arrow indicator */}
             <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              className="col-start-2 row-start-2 flex items-center justify-center"
             >
               <div
                 className="relative p-10 w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col items-center justify-center text-center"
                 data-testid="bubble-content"
               >
-                {/* Arrow indicator pointing to active step - two lines forming an angle */}
+                {/* Arrow indicator pointing to active step */}
                 <div
-                  className={`absolute w-5 h-5 border-2 border-primary/50 rotate-45 transition-all duration-300
-                    ${activeStep === 0 ? "left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 border-r-0 border-t-0" : ""}
-                    ${activeStep === 1 ? "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 border-b-0 border-r-0" : ""}
-                    ${activeStep === 2 ? "right-0 top-1/2 translate-x-1/2 -translate-y-1/2 border-l-0 border-b-0" : ""}
+                  className={`absolute w-0 h-0 transition-all duration-300
+                    ${activeStep === 0 ? "left-0 top-1/2 -translate-y-1/2 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-r-[16px] border-r-primary/60" : ""}
+                    ${activeStep === 1 ? "top-0 left-1/2 -translate-x-1/2 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[16px] border-b-primary/60" : ""}
+                    ${activeStep === 2 ? "right-0 top-1/2 -translate-y-1/2 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[16px] border-l-primary/60" : ""}
                   `}
                 />
                 {activeContent && (
-                  <div key={activeStep}>
+                  <div key={activeStep} className="animate-in fade-in duration-300">
                     {activeContent.title && (
                       <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center justify-center gap-2">
                         <span className="text-primary font-bold text-2xl">
@@ -236,10 +236,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             </div>
 
-            {/* Step 3 - Bottom Right - absolute positioned at end of line */}
+            {/* Step 3 - Bottom Right (row 2, col 3) */}
             {steps[2] && (
               <div
-                className="absolute right-[12%] top-[60%] -translate-y-1/2"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full"
                 data-testid="numbered-step-3"
               >
                 <button
