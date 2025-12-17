@@ -694,7 +694,6 @@ export const sectionSchema = z.union([
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
   awardsRowSectionSchema,
-  supportDuoSectionSchema,
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   cardGridSectionSchema,

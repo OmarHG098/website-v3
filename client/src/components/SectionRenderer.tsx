@@ -26,7 +26,6 @@ import { HorizontalBars } from "@/components/HorizontalBars";
 import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
-import { SupportDuoSection } from "@/components/SupportDuoSection";
 import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
 import { CardGridSection } from "@/components/CardGridSection";
@@ -91,8 +90,6 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <FooterSection key={index} data={section as Parameters<typeof FooterSection>[0]["data"]} />;
     case "two_column":
       return <TwoColumn key={index} data={section as Parameters<typeof TwoColumn>[0]["data"]} />;
-    case "support_duo":
-      return <SupportDuoSection key={index} data={section as Parameters<typeof SupportDuoSection>[0]["data"]} />;
     case "human_and_ai_duo":
       return <HumanAndAIDuo key={index} data={section as Parameters<typeof HumanAndAIDuo>[0]["data"]} />;
     case "community_support":
