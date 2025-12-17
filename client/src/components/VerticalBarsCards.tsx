@@ -201,6 +201,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       absolute top-0 h-full p-6
                       pointer-events-auto cursor-pointer
                       transition-all duration-300 ease-out
+                      max-w-none
                       ${direction === "left" ? "right-0" : "left-0"}
                       ${isHovered 
                         ? "w-[180%] shadow-xl z-20" 
