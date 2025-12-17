@@ -135,13 +135,10 @@ function SinglePieChart({
     return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
   };
 
-  const baseSize = 180;
-  const expandedSize = 280;
-  const size = isHovered ? expandedSize : baseSize;
+  const size = 180;
   const cx = size / 2;
   const cy = size / 2;
   const radius = size / 2 - 4;
-
   const currentAngle = animationProgress * 360;
 
   const getSliceMidpoint = (slice: typeof slices[0], r: number) => {
@@ -154,40 +151,39 @@ function SinglePieChart({
     };
   };
 
-  const leaderLineLength = 40;
-  const labelOffset = 12;
+  const containerSize = 320;
+  const chartOffset = (containerSize - size) / 2;
 
   return (
     <div 
       className={`flex flex-col items-center transition-all duration-300 ease-out cursor-pointer ${
-        isOtherHovered ? "opacity-30" : "opacity-100"
+        isOtherHovered ? "opacity-30 duration-150" : "opacity-100"
       }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      style={{
-        transform: isHovered ? "scale(1)" : "scale(1)",
-      }}
     >
       <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
         {chart.title}
       </h3>
       
       <div 
-        className="relative transition-all duration-300 ease-out"
+        className="relative"
         style={{
-          width: isHovered ? expandedSize + 160 : baseSize,
-          height: isHovered ? expandedSize + 40 : baseSize,
+          width: containerSize,
+          height: containerSize,
         }}
       >
         <svg 
           width={size} 
           height={size} 
           viewBox={`0 0 ${size} ${size}`}
-          className="drop-shadow-sm transition-all duration-300 ease-out"
+          className="drop-shadow-sm transition-transform duration-300 ease-out"
           style={{
             position: "absolute",
-            left: isHovered ? 80 : 0,
-            top: isHovered ? 20 : 0,
+            left: chartOffset,
+            top: chartOffset,
+            transform: isHovered ? "scale(1.15)" : "scale(1)",
+            transformOrigin: "center center",
           }}
         >
           {slices.map((slice, index) => {
@@ -206,63 +202,72 @@ function SinglePieChart({
               />
             );
           })}
+        </svg>
+        
+        {slices.map((slice, index) => {
+          if (currentAngle <= slice.startAngle) return null;
           
-          {isHovered && slices.map((slice, index) => {
-            if (currentAngle <= slice.startAngle) return null;
-            
-            const midpoint = getSliceMidpoint(slice, radius * 0.7);
-            const outerPoint = getSliceMidpoint(slice, radius + leaderLineLength);
-            const isRightSide = outerPoint.x > cx;
-            
-            const labelX = isRightSide 
-              ? outerPoint.x + labelOffset 
-              : outerPoint.x - labelOffset;
-            
-            return (
-              <g 
-                key={`leader-${index}`}
-                className="transition-opacity duration-300"
-                style={{
-                  opacity: isHovered ? 1 : 0,
-                }}
+          const scaleFactor = isHovered ? 1.15 : 1;
+          const midpoint = getSliceMidpoint(slice, radius * 0.65);
+          const outerPoint = getSliceMidpoint(slice, radius + 35);
+          
+          const scaledMidX = chartOffset + cx + (midpoint.x - cx) * scaleFactor;
+          const scaledMidY = chartOffset + cy + (midpoint.y - cy) * scaleFactor;
+          const labelX = chartOffset + cx + (outerPoint.x - cx) * scaleFactor;
+          const labelY = chartOffset + cy + (outerPoint.y - cy) * scaleFactor;
+          
+          const isRightSide = outerPoint.x > cx;
+          
+          return (
+            <div
+              key={`label-${index}`}
+              className="absolute pointer-events-none transition-opacity duration-300"
+              style={{
+                opacity: isHovered ? 1 : 0,
+                left: 0,
+                top: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <svg
+                width={containerSize}
+                height={containerSize}
+                className="absolute left-0 top-0"
+                style={{ overflow: "visible" }}
               >
                 <line
-                  x1={midpoint.x}
-                  y1={midpoint.y}
-                  x2={outerPoint.x}
-                  y2={outerPoint.y}
+                  x1={scaledMidX}
+                  y1={scaledMidY}
+                  x2={labelX}
+                  y2={labelY}
                   stroke={slice.color}
                   strokeWidth={2}
-                  className="transition-all duration-300"
                 />
                 <circle
-                  cx={outerPoint.x}
-                  cy={outerPoint.y}
+                  cx={labelX}
+                  cy={labelY}
                   r={3}
                   fill={slice.color}
                 />
-                <text
-                  x={labelX}
-                  y={outerPoint.y}
-                  textAnchor={isRightSide ? "start" : "end"}
-                  dominantBaseline="middle"
-                  className="text-xs font-medium fill-foreground"
-                >
-                  {slice.label}
-                </text>
-                <text
-                  x={labelX}
-                  y={outerPoint.y + 14}
-                  textAnchor={isRightSide ? "start" : "end"}
-                  dominantBaseline="middle"
-                  className="text-xs fill-muted-foreground"
-                >
+              </svg>
+              <div
+                className="absolute text-xs whitespace-nowrap"
+                style={{
+                  left: labelX + (isRightSide ? 8 : -8),
+                  top: labelY,
+                  transform: `translateY(-50%)`,
+                  textAlign: isRightSide ? "left" : "right",
+                }}
+              >
+                <div className="font-medium text-foreground">{slice.label}</div>
+                <div className="text-muted-foreground">
                   {slice.displayValue || `${Math.round(slice.percentage)}%`}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -325,8 +330,8 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-8 items-start ${
-        data.charts.length === 1 ? 'grid-cols-1 justify-items-center' :
+      <div className={`grid gap-4 items-start justify-items-center ${
+        data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
       }`}>
