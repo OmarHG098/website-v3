@@ -223,9 +223,9 @@ function SinglePieChart({
           const endX = centerX + endRadius * Math.cos(midRad);
           const endY = centerY + endRadius * Math.sin(midRad);
           
-          const controlRadius = scaledRadius + 40;
+          const controlRadius = scaledRadius + 30;
           const perpRad = midRad + Math.PI / 2;
-          const controlOffset = 25;
+          const controlOffset = 35;
           const controlX = centerX + controlRadius * Math.cos(midRad) + controlOffset * Math.cos(perpRad);
           const controlY = centerY + controlRadius * Math.sin(midRad) + controlOffset * Math.sin(perpRad);
           
