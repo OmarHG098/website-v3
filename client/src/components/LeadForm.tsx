@@ -160,20 +160,32 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
         <FormField
           control={form.control}
           name="consent_email"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  data-testid="checkbox-consent-marketing"
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <Label className="text-muted-foreground cursor-pointer text-[12px]">
-                  {consent.marketing_text || defaultMarketingText}
-                </Label>
+          rules={{ 
+            validate: (value) => value === true || (locale === "es" 
+              ? "Por favor marca esta casilla para continuar" 
+              : "Please check this box to continue")
+          }}
+          render={({ field, fieldState }) => (
+            <FormItem className="flex flex-col space-y-2">
+              <div className="flex flex-row items-start space-x-3">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    data-testid="checkbox-consent-marketing"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <Label className="text-muted-foreground cursor-pointer text-[12px]">
+                    {consent.marketing_text || defaultMarketingText}
+                  </Label>
+                </div>
               </div>
+              {fieldState.error && (
+                <p className="text-sm text-destructive" data-testid="text-consent-error">
+                  {fieldState.error.message}
+                </p>
+              )}
             </FormItem>
           )}
         />
