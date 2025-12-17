@@ -260,10 +260,9 @@ function SinglePieChart({
               <div
                 className="absolute text-xs whitespace-nowrap"
                 style={{
-                  left: endX + (isRightSide ? 8 : -8),
+                  left: isRightSide ? endX + 12 : endX - 12,
                   top: endY,
-                  transform: `translateY(-50%)`,
-                  textAlign: isRightSide ? "left" : "right",
+                  transform: isRightSide ? `translateY(-50%)` : `translate(-100%, -50%)`,
                 }}
               >
                 <div className="font-medium text-foreground">{slice.label}</div>
