@@ -40,7 +40,6 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,15 +83,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
-  // Trigger expansion animation shortly after hover
-  useEffect(() => {
-    if (hoveredIndex !== null) {
-      const timer = setTimeout(() => setIsExpanded(true), 20);
-      return () => clearTimeout(timer);
-    } else {
-      setIsExpanded(false);
-    }
-  }, [hoveredIndex]);
+  // Determine which direction the panel expands
+  const getPanelDirection = (index: number, total: number): "right" | "left" => {
+    if (index === total - 1) return "left"; // Last card → panel to the left
+    return "right"; // Other cards → panel to the right
+  };
 
   const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
@@ -132,13 +127,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
-  // Get transform origin based on card position for directional expansion
-  const getTransformOrigin = (index: number, total: number) => {
-    if (index === 0) return "left center";
-    if (index === total - 1) return "right center";
-    return "center center";
-  };
-
   return (
     <section
       ref={containerRef}
@@ -167,9 +155,9 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           </div>
         )}
 
-        {/* Cards container */}
+        {/* Cards container - needs overflow visible for panels to show */}
         <div 
-          className="relative"
+          className="relative overflow-visible"
           onMouseLeave={() => setHoveredIndex(null)}
         >
           {/* Base grid layout */}
@@ -177,90 +165,70 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
             {data.metrics.map((metric, metricIndex) => {
               const isHovered = hoveredIndex === metricIndex;
               const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
+              const panelDirection = getPanelDirection(metricIndex, data.metrics.length);
 
               return (
-                <Card
+                <div
                   key={metricIndex}
-                  className={`p-6 transition-all duration-300 ease-out cursor-pointer ${
-                    isOtherHovered
-                      ? "opacity-20 scale-95 pointer-events-none" 
-                      : "opacity-100"
-                  } ${isHovered ? "opacity-0" : ""}`}
+                  className="relative"
+                  style={{ zIndex: isHovered ? 20 : 1 }}
                   onMouseEnter={() => setHoveredIndex(metricIndex)}
-                  data-testid={`card-metric-${metricIndex}`}
                 >
-                  <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                    {metric.title}
-                  </h3>
-                  {metric.unit && (
-                    <p className="text-sm text-muted-foreground text-center mb-6">
-                      {metric.unit}
-                    </p>
+                  {/* The original card - ALWAYS visible, never changes */}
+                  <Card
+                    className={`p-6 transition-all duration-300 ease-out cursor-pointer h-full ${
+                      isOtherHovered
+                        ? "opacity-20 scale-95" 
+                        : "opacity-100"
+                    } ${isHovered ? "shadow-lg" : ""}`}
+                    data-testid={`card-metric-${metricIndex}`}
+                  >
+                    <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                      {metric.title}
+                    </h3>
+                    {metric.unit && (
+                      <p className="text-sm text-muted-foreground text-center mb-6">
+                        {metric.unit}
+                      </p>
+                    )}
+                    {renderBars(metric, metricIndex)}
+                  </Card>
+
+                  {/* Description panel - slides out from the card */}
+                  {metric.description && (
+                    <div
+                      className={`absolute top-0 h-full transition-all duration-300 ease-out ${
+                        panelDirection === "right" 
+                          ? "left-full" 
+                          : "right-full"
+                      }`}
+                      style={{
+                        width: isHovered ? "calc(100% + 1.5rem)" : "0px",
+                        opacity: isHovered ? 1 : 0,
+                        paddingLeft: panelDirection === "right" ? "1.5rem" : 0,
+                        paddingRight: panelDirection === "left" ? "1.5rem" : 0,
+                      }}
+                    >
+                      <Card 
+                        className="h-full p-6 flex items-center overflow-hidden"
+                        data-testid={`card-metric-panel-${metricIndex}`}
+                      >
+                        <p 
+                          className="text-base text-muted-foreground leading-relaxed transition-opacity duration-200"
+                          style={{ 
+                            opacity: isHovered ? 1 : 0,
+                            transitionDelay: isHovered ? "150ms" : "0ms"
+                          }}
+                        >
+                          {metric.description}
+                        </p>
+                      </Card>
+                    </div>
                   )}
-                  {renderBars(metric, metricIndex)}
-                </Card>
+                </div>
               );
             })}
           </div>
-
-          {/* Expanded card overlay - positioned absolutely over the grid */}
-          {hoveredIndex !== null && data.metrics[hoveredIndex] && (
-            <div 
-              className="absolute top-0 left-0 right-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-none"
-            >
-              {/* Spacer for left cards when hovering right card */}
-              {hoveredIndex === data.metrics.length - 1 && (
-                <div className="hidden lg:block" />
-              )}
-              
-              <div
-                className="pointer-events-auto overflow-hidden transition-all duration-300 ease-out"
-                style={{
-                  gridColumn: 
-                    hoveredIndex === 0 
-                      ? "1 / 3" 
-                      : hoveredIndex === data.metrics.length - 1 
-                        ? "2 / 4" 
-                        : "1 / 4",
-                  transformOrigin: getTransformOrigin(hoveredIndex, data.metrics.length),
-                  transform: isExpanded ? "scaleX(1)" : "scaleX(0.5)",
-                  opacity: isExpanded ? 1 : 0.5,
-                }}
-              >
-                <Card
-                  className="p-6 h-full"
-                  data-testid={`card-metric-expanded-${hoveredIndex}`}
-                >
-                  <div 
-                    className="flex flex-col lg:flex-row items-center gap-6 h-full transition-opacity duration-200 delay-100"
-                    style={{ opacity: isExpanded ? 1 : 0 }}
-                  >
-                    {/* Graph section */}
-                    <div className="flex flex-col items-center flex-shrink-0">
-                      <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                        {data.metrics[hoveredIndex].title}
-                      </h3>
-                      {data.metrics[hoveredIndex].unit && (
-                        <p className="text-sm text-muted-foreground text-center mb-6">
-                          {data.metrics[hoveredIndex].unit}
-                        </p>
-                      )}
-                      {renderBars(data.metrics[hoveredIndex], hoveredIndex)}
-                    </div>
-
-                    {/* Description section */}
-                    {data.metrics[hoveredIndex].description && (
-                      <div className="flex-1 flex items-center">
-                        <p className="text-base text-muted-foreground leading-relaxed">
-                          {data.metrics[hoveredIndex].description}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </Card>
-              </div>
-            </div>
-          )}
         </div>
 
         {data.footer_description && (
