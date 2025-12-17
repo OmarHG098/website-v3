@@ -65,22 +65,22 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-  - type: award_badges
+  - type: awards_row
     version: "1.0"
     title: Trusted by industry leaders
-    items:
+    badges:
       - name: Best Coding Bootcamp
         source: Course Report
         year: "2024"
-        image: /attached_assets/course-report_1765590146414.webp
+        logo: /attached_assets/course-report_1765590146414.webp
       - name: Top Bootcamp
         source: SwitchUp
         year: "2024"
-        image: /attached_assets/switchup_1765590146414.webp
+        logo: /attached_assets/switchup_1765590146414.webp
       - name: Highly Rated
         source: Google
         year: "2024"
-        image: /attached_assets/google_1765590146414.webp
+        logo: /attached_assets/google_1765590146414.webp
   - type: features_grid
     version: "1.0"
     variant: spotlight
