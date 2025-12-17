@@ -209,9 +209,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
               >
                 <Card
                   className={`p-6 h-full transition-opacity duration-300 ${
-                    hoveredIndex !== null && hoveredIndex !== metricIndex
-                      ? "opacity-30"
-                      : "opacity-100"
+                    hoveredIndex === metricIndex
+                      ? "opacity-0"  // Hide completely when this card's overlay is active
+                      : hoveredIndex !== null
+                        ? "opacity-30"  // Fade when another card is hovered
+                        : "opacity-100"  // Full opacity when nothing is hovered
                   }`}
                   data-testid={`card-metric-${metricIndex}`}
                 >
