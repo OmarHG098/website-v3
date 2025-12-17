@@ -303,9 +303,9 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     {renderBars(metric, metricIndex)}
                   </div>
 
-                  {/* Description panel - absolutely positioned, not affected by layout changes */}
+                  {/* Description panel - absolutely positioned, appears after card is fully expanded */}
                   <div 
-                    className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 transition-all duration-500 ease-out ${
+                    className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 transition-opacity duration-300 ease-out ${
                       isHovered 
                         ? "opacity-100" 
                         : "opacity-0 pointer-events-none"
@@ -313,7 +313,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     style={{ 
                       left: rect.width - 24,
                       right: 24,
-                      transitionDelay: isHovered ? "200ms" : "0ms" 
+                      transitionDelay: isHovered ? "350ms" : "0ms"  // Wait for card expansion (300ms) + buffer
                     }}
                   >
                     <h4 className="text-xl font-bold text-foreground mb-3">
