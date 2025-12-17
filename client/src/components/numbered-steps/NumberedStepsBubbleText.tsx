@@ -135,20 +135,23 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(1)}
                   aria-label={steps[1].title || "Step 2"}
                   aria-expanded={activeStep === 1}
-                  className={`relative flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 1 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
+                  className={`group relative flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 1 ? "scale-105" : "hover:scale-102"
                   }`}
+                  data-active={activeStep === 1}
                   data-testid="button-numbered-step-2"
                 >
                   {steps[1].title && (
-                    <h3 className="relative z-10 text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
+                    <h3 className="relative z-10 text-lg font-semibold text-foreground leading-tight text-center max-w-[160px] transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
                       {steps[1].title}
                     </h3>
                   )}
                   {/* Radial gradient fade - starts solid in center, fades outward to both sides */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-24 bg-[radial-gradient(ellipse_at_center,_hsl(var(--background))_0%,_hsl(var(--background)/0.5)_50%,_transparent_80%)] pointer-events-none" />
                   <div className="relative z-10 bg-background ps-2 pe-1 me-1">
-                    <StepNumber index={1} variant="spotlight" size="md"  />
+                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                      <StepNumber index={1} variant="spotlight" size="md" />
+                    </div>
                   </div>
                 </button>
               </div>
@@ -165,20 +168,23 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(0)}
                   aria-label={steps[0].title || "Step 1"}
                   aria-expanded={activeStep === 0}
-                  className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 0 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
+                  className={`group relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 0 ? "scale-105" : "hover:scale-102"
                   }`}
+                  data-active={activeStep === 0}
                   data-testid="button-numbered-step-1"
                 >
                   {/* Gradient fade for line - vertical fade */}
                   <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
                   {steps[0].title && (
-                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
                       {steps[0].title}
                     </h3>
                   )}
                   <div className="relative bg-background py-1">
-                    <StepNumber index={0} variant="spotlight" size="md" />
+                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                      <StepNumber index={0} variant="spotlight" size="md" />
+                    </div>
                   </div>
                 </button>
               </div>
@@ -250,18 +256,21 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(2)}
                   aria-label={steps[2].title || "Step 3"}
                   aria-expanded={activeStep === 2}
-                  className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 2 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
+                  className={`group relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 2 ? "scale-105" : "hover:scale-102"
                   }`}
+                  data-active={activeStep === 2}
                   data-testid="button-numbered-step-3"
                 >
                   {/* Gradient fade for line - vertical fade */}
                   <div className="absolute -left-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
                   <div className="relative bg-background py-1">
-                    <StepNumber index={2} variant="spotlight" size="md" />
+                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                      <StepNumber index={2} variant="spotlight" size="md" />
+                    </div>
                   </div>
                   {steps[2].title && (
-                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
                       {steps[2].title}
                     </h3>
                   )}
