@@ -108,6 +108,8 @@ export type CardItem = z.infer<typeof cardItemSchema>;
 export const statItemSchema = z.object({
   value: z.string(),
   label: z.string(),
+  description: z.string().optional(),
+  benefits: z.array(z.object({ text: z.string() })).optional(),
 });
 
 export type StatItem = z.infer<typeof statItemSchema>;

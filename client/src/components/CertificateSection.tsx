@@ -1,13 +1,20 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 import { IconCheck } from "@tabler/icons-react";
 import type { CertificateSection as CertificateSectionType } from "@shared/schema";
 import { CertificateCard } from "./CertificateCard";
+import { cn } from "@/lib/utils";
 
 interface CertificateSectionProps {
   data: CertificateSectionType;
 }
 
 export function CertificateSection({ data }: CertificateSectionProps) {
+  const [selectedStatIndex, setSelectedStatIndex] = useState(0);
+
+  const selectedStat = data.stats?.[selectedStatIndex];
+  const displayDescription = selectedStat?.description || data.description;
+  const displayBenefits = selectedStat?.benefits || data.benefits || [];
+
   return (
     <section 
       className="py-20 md:py-24 bg-muted/30"
@@ -27,10 +34,17 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             data-testid="certificate-stats"
           >
             {data.stats.map((stat, index) => (
-              <div 
+              <button 
                 key={index}
-                className="text-center"
-                data-testid={`stat-${index}`}
+                type="button"
+                onClick={() => setSelectedStatIndex(index)}
+                className={cn(
+                  "text-center p-4 rounded-lg transition-all duration-200 cursor-pointer",
+                  selectedStatIndex === index
+                    ? "scale-105 border-2 border-primary bg-background shadow-md"
+                    : "border border-transparent hover:bg-muted/50"
+                )}
+                data-testid={`button-stat-${index}`}
               >
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
                   {stat.value}
@@ -38,7 +52,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 <div className="text-sm text-muted-foreground">
                   {stat.label}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -49,7 +63,6 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               <div className="w-full max-w-md">
                 <CertificateCard 
                   programName={data.card.program_name || data.card.title}
-                  certificateLabel={data.card.certificate_label}
                 />
               </div>
             </div>
@@ -60,11 +73,11 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               className="text-xl mb-8 leading-relaxed text-foreground"
               data-testid="text-certificate-description"
             >
-              {data.description}
+              {displayDescription}
             </p>
             
             <ul className="space-y-3">
-              {(data.benefits || []).map((benefit, index) => (
+              {displayBenefits.map((benefit, index) => (
                 <li 
                   key={index} 
                   className="flex items-start gap-3"
