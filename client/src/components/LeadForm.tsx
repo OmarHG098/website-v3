@@ -28,6 +28,8 @@ import {
 import { useSession, useLocation as useSessionLocation, useUTM } from "@/contexts/SessionContext";
 import { apiRequest } from "@/lib/queryClient";
 import { IconLoader2, IconCheck } from "@tabler/icons-react";
+import { PhoneInput } from "@/components/ui/phone-input";
+import type { Country } from "react-phone-number-input";
 
 interface FieldConfig {
   visible?: boolean;
@@ -163,10 +165,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
               <FormControl>
                 <Checkbox
                   checked={field.value}
-                  onCheckedChange={(checked) => {
-                    field.onChange(checked);
-                    form.setValue("consent_whatsapp", checked as boolean);
-                  }}
+                  onCheckedChange={field.onChange}
                   data-testid="checkbox-consent-marketing"
                 />
               </FormControl>
@@ -362,12 +361,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       // Map consent fields to backend field names
       const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
       
+      // When marketing consent is enabled, derive both email and whatsapp from consent_email checkbox
+      const effectiveEmailConsent = consent_email || false;
+      const effectiveWhatsappConsent = consent.marketing ? effectiveEmailConsent : (consent_whatsapp || false);
+      
       const payload = {
         ...restValues,
         // Consent fields mapped to backend names
-        consent_email: consent_email || false,
+        consent_email: effectiveEmailConsent,
         sms_consent: consent_sms || false,
-        consent_whatsapp: consent_whatsapp || false,
+        consent_whatsapp: effectiveWhatsappConsent,
         location: values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
         region: values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
         coupon: values.coupon || utm.coupon || resolveDefault("coupon", getFieldConfig("coupon").default),
@@ -636,7 +639,78 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className={isInline ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "space-y-4"}>
+          <div className="space-y-4">
+            {/* First + Last name on same row - NEW ORDER: Name -> Phone -> Email */}
+            {(getFieldConfig("first_name").visible || getFieldConfig("last_name").visible) && (
+              <div className="grid grid-cols-2 gap-3">
+                {getFieldConfig("first_name").visible && (
+                  <FormField
+                    control={form.control}
+                    name="first_name"
+                    rules={{ required: getFieldConfig("first_name").required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                        <FormControl>
+                          <Input 
+                            placeholder={getFieldConfig("first_name").placeholder || (locale === "es" ? "Nombre" : "First name")}
+                            {...field} 
+                            data-testid="input-first-name" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {getFieldConfig("last_name").visible && (
+                  <FormField
+                    control={form.control}
+                    name="last_name"
+                    rules={{ required: getFieldConfig("last_name").required ? (locale === "es" ? "Apellido requerido" : "Last name is required") : false }}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                        <FormControl>
+                          <Input 
+                            placeholder={getFieldConfig("last_name").placeholder || (locale === "es" ? "Apellido" : "Last name")}
+                            {...field} 
+                            data-testid="input-last-name" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Phone with country code */}
+            {getFieldConfig("phone").visible && (
+              <FormField
+                control={form.control}
+                name="phone"
+                rules={{ required: getFieldConfig("phone").required ? (locale === "es" ? "Teléfono requerido" : "Phone is required") : false }}
+                render={({ field }) => (
+                  <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                    <FormControl>
+                      <PhoneInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        defaultCountry={(session?.geo?.country_code || "US") as Country}
+                        placeholder={getFieldConfig("phone").placeholder || (locale === "es" ? "Teléfono" : "Phone number")}
+                        data-testid="input-phone"
+                      />
+                    </FormControl>
+                    {getFieldConfig("phone").helper_text && (
+                      <p className="text-sm text-muted-foreground">{getFieldConfig("phone").helper_text}</p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            {/* Email */}
             {getFieldConfig("email").visible && (
               <FormField
                 control={form.control}
@@ -649,100 +723,17 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   }
                 }}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{locale === "es" ? "Correo electrónico" : "Email"} *</FormLabel>
+                  <FormItem className="space-y-2 mt-[2px] mb-[2px]">
                     <FormControl>
                       <Input 
                         type="email" 
-                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "tu@email.com" : "you@email.com")} 
+                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "Correo electrónico" : "Email")} 
                         {...field} 
                         data-testid="input-email"
                       />
                     </FormControl>
                     {getFieldConfig("email").helper_text && (
                       <p className="text-sm text-muted-foreground">{getFieldConfig("email").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("first_name").visible && (
-              <FormField
-                control={form.control}
-                name="first_name"
-                rules={{ required: getFieldConfig("first_name").required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Nombre" : "First Name"}
-                      {getFieldConfig("first_name").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder={getFieldConfig("first_name").placeholder}
-                        {...field} 
-                        data-testid="input-first-name" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("first_name").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("first_name").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("last_name").visible && (
-              <FormField
-                control={form.control}
-                name="last_name"
-                rules={{ required: getFieldConfig("last_name").required ? (locale === "es" ? "Apellido requerido" : "Last name is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Apellido" : "Last Name"}
-                      {getFieldConfig("last_name").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder={getFieldConfig("last_name").placeholder}
-                        {...field} 
-                        data-testid="input-last-name" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("last_name").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("last_name").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("phone").visible && (
-              <FormField
-                control={form.control}
-                name="phone"
-                rules={{ required: getFieldConfig("phone").required ? (locale === "es" ? "Teléfono requerido" : "Phone is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Teléfono" : "Phone"}
-                      {getFieldConfig("phone").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        type="tel" 
-                        placeholder={getFieldConfig("phone").placeholder}
-                        {...field} 
-                        data-testid="input-phone" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("phone").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("phone").helper_text}</p>
                     )}
                     <FormMessage />
                   </FormItem>

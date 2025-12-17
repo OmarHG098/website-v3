@@ -21,38 +21,28 @@ sections:
       alt: AI Engineering Background
     form:
       variant: stacked
-      title: Start Your AI Journey
-      subtitle: Join 10,000+ graduates building successful tech careers
-      submit_label: Apply Now →
+      title: null
+      subtitle: null
+      submit_label: Create account
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email
       fields:
-        program:
-          visible: true
-          required: true
-          default: ai-engineering
-          placeholder: Select a program
-        location:
-          visible: true
-          required: true
-          default: auto
-          placeholder: Select a location
         first_name:
           visible: true
           required: true
-          placeholder: Enter your first name
+          placeholder: First name
         last_name:
           visible: true
           required: true
-          placeholder: Enter your last name
-        email:
-          visible: true
-          required: true
-          placeholder: Enter your email address
+          placeholder: Last name
         phone:
           visible: true
           required: true
-          placeholder: Enter your phone number
+        email:
+          visible: true
+          required: true
+          placeholder: Email
+          helper_text: We will use it to give you access to your account.
       consent:
         marketing: true
         marketing_text: "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
