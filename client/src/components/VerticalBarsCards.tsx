@@ -212,7 +212,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     hoveredIndex === metricIndex
                       ? "opacity-0 duration-200"  // Fade out when overlay is active
                       : hoveredIndex !== null
-                        ? "opacity-30 duration-300"  // Fade when another card is hovered
+                        ? "opacity-30 duration-150"  // Fade when another card is hovered
                         : "opacity-100 duration-0"  // Show instantly when nothing is hovered
                   }`}
                   data-testid={`card-metric-${metricIndex}`}
