@@ -9,14 +9,14 @@ meta:
 sections:
   - type: hero
     variant: productShowcase
-    title: Career Development for the AI Era
-    subtitle: Unlimited 1:1 career support tailored to your goals—for life. Enhance your resume, portfolio, and interview skills with our AI-driven platforms.
+    title: Lifetime Mentorship & AI-Powered Coding Support
     welcome_text: Welcome to
     brand_mark:
       prefix: Geek
-      highlight: FORCE
+      highlight: PAL
       suffix: ":"
-      color: chart-5
+      color: destructive
+    description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
     video:
       url: /attached_assets/ai-engineering_1765593572918.mp4
       ratio: "9:16"
