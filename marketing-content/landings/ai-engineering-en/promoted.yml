@@ -16,9 +16,6 @@ sections:
       highlight: AI Engineer
       color: primary
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
-    background_image:
-      src: /attached_assets/ai-engineering-light_1765830844948.jpg
-      alt: AI Engineering Background
     form:
       variant: stacked
       title: null
