@@ -151,7 +151,8 @@ function SinglePieChart({
     };
   };
 
-  const containerSize = 320;
+  const hoverScale = 1.25;
+  const containerSize = 360;
   const chartOffset = (containerSize - size) / 2;
 
   return (
@@ -167,7 +168,7 @@ function SinglePieChart({
       </h3>
       
       <div 
-        className="relative"
+        className="relative overflow-visible"
         style={{
           width: containerSize,
           height: containerSize,
@@ -182,7 +183,7 @@ function SinglePieChart({
             position: "absolute",
             left: chartOffset,
             top: chartOffset,
-            transform: isHovered ? "scale(1.15)" : "scale(1)",
+            transform: isHovered ? `scale(${hoverScale})` : "scale(1)",
             transformOrigin: "center center",
           }}
         >
@@ -207,16 +208,16 @@ function SinglePieChart({
         {slices.map((slice, index) => {
           if (currentAngle <= slice.startAngle) return null;
           
-          const scaleFactor = isHovered ? 1.15 : 1;
-          const midpoint = getSliceMidpoint(slice, radius * 0.65);
-          const outerPoint = getSliceMidpoint(slice, radius + 35);
+          const scaledRadius = radius * hoverScale;
+          const arrowStart = getSliceMidpoint(slice, scaledRadius * 0.85);
+          const arrowEnd = getSliceMidpoint(slice, scaledRadius + 45);
           
-          const scaledMidX = chartOffset + cx + (midpoint.x - cx) * scaleFactor;
-          const scaledMidY = chartOffset + cy + (midpoint.y - cy) * scaleFactor;
-          const labelX = chartOffset + cx + (outerPoint.x - cx) * scaleFactor;
-          const labelY = chartOffset + cy + (outerPoint.y - cy) * scaleFactor;
+          const startX = chartOffset + cx + (arrowStart.x - cx);
+          const startY = chartOffset + cy + (arrowStart.y - cy);
+          const endX = chartOffset + cx + (arrowEnd.x - cx);
+          const endY = chartOffset + cy + (arrowEnd.y - cy);
           
-          const isRightSide = outerPoint.x > cx;
+          const isRightSide = arrowEnd.x > cx;
           
           return (
             <div
@@ -228,6 +229,7 @@ function SinglePieChart({
                 top: 0,
                 width: "100%",
                 height: "100%",
+                overflow: "visible",
               }}
             >
               <svg
@@ -237,25 +239,25 @@ function SinglePieChart({
                 style={{ overflow: "visible" }}
               >
                 <line
-                  x1={scaledMidX}
-                  y1={scaledMidY}
-                  x2={labelX}
-                  y2={labelY}
-                  stroke={slice.color}
-                  strokeWidth={2}
+                  x1={startX}
+                  y1={startY}
+                  x2={endX}
+                  y2={endY}
+                  stroke="hsl(var(--foreground))"
+                  strokeWidth={1.5}
                 />
                 <circle
-                  cx={labelX}
-                  cy={labelY}
+                  cx={endX}
+                  cy={endY}
                   r={3}
-                  fill={slice.color}
+                  fill="hsl(var(--foreground))"
                 />
               </svg>
               <div
                 className="absolute text-xs whitespace-nowrap"
                 style={{
-                  left: labelX + (isRightSide ? 8 : -8),
-                  top: labelY,
+                  left: endX + (isRightSide ? 8 : -8),
+                  top: endY,
                   transform: `translateY(-50%)`,
                   textAlign: isRightSide ? "left" : "right",
                 }}
