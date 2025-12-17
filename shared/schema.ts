@@ -558,27 +558,27 @@ export type CardGridCard = z.infer<typeof cardGridCardSchema>;
 export type CardGridSection = z.infer<typeof cardGridSectionSchema>;
 
 // ============================================
-// Accordion Card Section Schema
+// Two Column Accordion Card Section Schema
 // ============================================
-export const accordionCardBulletSchema = z.object({
+export const twoColumnAccordionCardBulletSchema = z.object({
   heading: z.string(),
   text: z.string(),
 });
 
-export const accordionCardSectionSchema = z.object({
-  type: z.literal("accordion_card"),
+export const twoColumnAccordionCardSectionSchema = z.object({
+  type: z.literal("two_column_accordion_card"),
   version: z.string().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
-  bullets: z.array(accordionCardBulletSchema).optional(),
+  bullets: z.array(twoColumnAccordionCardBulletSchema).optional(),
   footer: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
   reverse: z.boolean().optional(),
 });
 
-export type AccordionCardBullet = z.infer<typeof accordionCardBulletSchema>;
-export type AccordionCardSection = z.infer<typeof accordionCardSectionSchema>;
+export type TwoColumnAccordionCardBullet = z.infer<typeof twoColumnAccordionCardBulletSchema>;
+export type TwoColumnAccordionCardSection = z.infer<typeof twoColumnAccordionCardSectionSchema>;
 
 // ============================================
 // Spotlight With Bubble Text Section Schema
@@ -657,7 +657,7 @@ export const sectionSchema = z.union([
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   cardGridSectionSchema,
-  accordionCardSectionSchema,
+  twoColumnAccordionCardSectionSchema,
   spotlightWithBubbleTextSectionSchema,
 ]);
 

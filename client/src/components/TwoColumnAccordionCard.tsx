@@ -6,30 +6,30 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-interface AccordionItem {
+interface AccordionBullet {
   heading: string;
   text: string;
 }
 
-interface AccordionCardData {
+interface TwoColumnAccordionCardData {
   title?: string;
   description?: string;
-  bullets?: AccordionItem[];
+  bullets?: AccordionBullet[];
   footer?: string;
   image?: string;
   image_alt?: string;
   reverse?: boolean;
 }
 
-interface AccordionCardSectionProps {
-  data: AccordionCardData;
+interface TwoColumnAccordionCardProps {
+  data: TwoColumnAccordionCardData;
 }
 
-export default function AccordionCardSection({ data }: AccordionCardSectionProps) {
+export function TwoColumnAccordionCard({ data }: TwoColumnAccordionCardProps) {
   const { title, description, bullets, footer, image, image_alt, reverse } = data;
 
   return (
-    <section className="py-14" data-testid="section-accordion-card">
+    <section className="py-14" data-testid="section-two-column-accordion-card">
       <div className="max-w-6xl mx-auto px-4">
         <Card className="overflow-hidden">
           <CardContent className="p-0">
@@ -38,7 +38,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
                 {title && (
                   <h2 
                     className="text-2xl md:text-3xl font-bold text-foreground mb-4"
-                    data-testid="text-accordion-card-title"
+                    data-testid="text-two-column-accordion-title"
                   >
                     {title}
                   </h2>
@@ -47,7 +47,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
                 {description && (
                   <p 
                     className="text-muted-foreground mb-6"
-                    data-testid="text-accordion-card-description"
+                    data-testid="text-two-column-accordion-description"
                   >
                     {description}
                   </p>
@@ -71,7 +71,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
                 {footer && (
                   <p 
                     className="text-muted-foreground mt-6 text-sm italic"
-                    data-testid="text-accordion-card-footer"
+                    data-testid="text-two-column-accordion-footer"
                   >
                     {footer}
                   </p>
@@ -84,7 +84,7 @@ export default function AccordionCardSection({ data }: AccordionCardSectionProps
                     src={image}
                     alt={image_alt || ""}
                     className="w-full max-w-[300px] md:max-w-full object-contain rounded-lg"
-                    data-testid="img-accordion-card"
+                    data-testid="img-two-column-accordion"
                   />
                 </div>
               )}

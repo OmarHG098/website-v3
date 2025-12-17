@@ -46,7 +46,7 @@ sections:
       - feature: "Previous Knowledge"
         values: ["None", "Entry tests or prior coding experience"]
 
-  - type: accordion_card
+  - type: two_column_accordion_card
     version: "1.0"
     title: "Hyperpersonalized Learning & Support That Lasts a Lifetime"
     description: "Most bootcamps give you a limited number of mentorship hours and generic resources — and leave you once you get hired. At 4Geeks, we built an entire support system around personalization:"

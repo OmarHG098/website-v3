@@ -1,0 +1,50 @@
+name: Two Column Accordion Card
+description: A card-based section with two columns - one side has a title, description, and expandable accordion items, the other side displays an image. Great for detailed feature explanations or FAQ-style content.
+version: "1.0"
+
+schema:
+  type: object
+  required:
+    - type
+  properties:
+    type:
+      type: string
+      const: two_column_accordion_card
+      description: Section type identifier
+    version:
+      type: string
+      description: Schema version
+    title:
+      type: string
+      description: Main heading for the section
+    description:
+      type: string
+      description: Introductory text below the title
+    bullets:
+      type: array
+      description: Accordion items that expand to show content
+      items:
+        type: object
+        required:
+          - heading
+          - text
+        properties:
+          heading:
+            type: string
+            description: The clickable accordion header
+          text:
+            type: string
+            description: The expandable content text
+    footer:
+      type: string
+      description: Optional footer text displayed below the accordion
+    image:
+      type: string
+      description: URL or path to the image displayed in the second column
+    image_alt:
+      type: string
+      description: Alt text for the image
+    reverse:
+      type: boolean
+      description: When true, image appears on the left instead of right
+      default: false
