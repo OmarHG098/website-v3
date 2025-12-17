@@ -94,11 +94,9 @@ function App() {
       <SessionProvider>
         <TooltipProvider>
           <EditModeWrapper>
-            <div className="overflow-x-clip">
-              <Toaster />
-              <Router />
-              <DebugBubble />
-            </div>
+            <Toaster />
+            <Router />
+            <DebugBubble />
           </EditModeWrapper>
         </TooltipProvider>
       </SessionProvider>
