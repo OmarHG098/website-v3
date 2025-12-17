@@ -465,47 +465,7 @@ export const awardsRowSectionSchema = z.object({
 export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
 
 // ============================================
-// Support Duo Section
-// ============================================
-export const supportDuoBulletSchema = z.object({
-  text: z.string(),
-  icon: z.string().optional(),
-});
-
-export const supportDuoBulletGroupSchema = z.object({
-  title: z.string(),
-  image: z.string().optional(),
-  icon: z.string().optional(),
-  badge: z.string().optional(),
-  accent_color: z.string().optional(),
-  description: z.string().optional(),
-  bullets: z.array(supportDuoBulletSchema).optional(),
-  button: z.object({
-    text: z.string(),
-    url: z.string(),
-    variant: z.string().optional(),
-  }).optional(),
-});
-
-export const supportDuoSectionSchema = z.object({
-  type: z.literal("support_duo"),
-  version: z.string().optional(),
-  variant: z.enum(["default", "grid"]).optional(),
-  heading: z.string().optional(),
-  description: z.string().optional(),
-  background: z.string().optional(),
-  image: z.string().optional(),
-  image_alt: z.string().optional(),
-  footer_description: z.string().optional(),
-  bullet_groups: z.array(supportDuoBulletGroupSchema).optional(),
-});
-
-export type SupportDuoBullet = z.infer<typeof supportDuoBulletSchema>;
-export type SupportDuoBulletGroup = z.infer<typeof supportDuoBulletGroupSchema>;
-export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
-
-// ============================================
-// Human and AI Duo Section (split from support_duo)
+// Human and AI Duo Section
 // ============================================
 export const humanAndAIDuoBulletSchema = z.object({
   text: z.string(),
