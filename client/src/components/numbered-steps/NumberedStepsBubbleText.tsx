@@ -124,7 +124,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           </svg>
 
           <div className="relative grid grid-cols-[1fr_minmax(450px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
-            {/* Step 2 - Top Center (row 1, col 2) - Step number and title above center */}
+            {/* Step 2 - Top Center (row 1, col 2) - Title above, step number below */}
             {steps[1] && (
               <div
                 className="col-start-2 row-start-1 flex flex-col items-center justify-center pb-6"
@@ -135,22 +135,22 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(1)}
                   aria-label={steps[1].title || "Step 2"}
                   aria-expanded={activeStep === 1}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
+                  className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
                     activeStep === 1 ? "scale-105" : "hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-2"
                 >
-                  <StepNumber index={1} variant="spotlight" size="md" />
                   {steps[1].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[140px]">
+                    <h3 className="text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
                     </h3>
                   )}
+                  <StepNumber index={1} variant="spotlight" size="md" />
                 </button>
               </div>
             )}
 
-            {/* Step 1 - Bottom Left (row 2, col 1) - Step number and title at left */}
+            {/* Step 1 - Bottom Left (row 2, col 1) - Title at left, step number at right */}
             {steps[0] && (
               <div
                 className="col-start-1 row-start-2 flex items-center justify-end h-full"
@@ -166,12 +166,12 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-1"
                 >
-                  <StepNumber index={0} variant="spotlight" size="md" />
                   {steps[0].title && (
                     <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[140px]">
                       {steps[0].title}
                     </h3>
                   )}
+                  <StepNumber index={0} variant="spotlight" size="md" />
                 </button>
               </div>
             )}
