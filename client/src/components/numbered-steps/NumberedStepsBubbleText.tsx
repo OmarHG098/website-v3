@@ -141,9 +141,9 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-2"
                 >
                   {/* Gradient fade for left connector line - horizontal fade to left */}
-                  <div className="absolute -bottom-16 -left-12 w-48 h-24 bg-gradient-to-l from-background via-background/70 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 -left-16 w-24 h-12 bg-gradient-to-l from-background via-background/70 to-transparent pointer-events-none" />
                   {/* Gradient fade for right connector line - horizontal fade to right */}
-                  <div className="absolute -bottom-16 -right-12 w-48 h-24 bg-gradient-to-r from-background via-background/70 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 -right-16 w-24 h-12 bg-gradient-to-r from-background via-background/70 to-transparent pointer-events-none" />
                   {steps[1].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
