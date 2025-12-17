@@ -170,7 +170,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-muted-foreground cursor-pointer text-[12px]">
                   {consent.marketing_text || defaultMarketingText}
                 </Label>
               </div>
@@ -732,9 +732,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                         data-testid="input-email"
                       />
                     </FormControl>
-                    {getFieldConfig("email").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("email").helper_text}</p>
-                    )}
                     <FormMessage />
                   </FormItem>
                 )}
