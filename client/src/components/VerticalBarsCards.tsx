@@ -40,7 +40,6 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [showDescription, setShowDescription] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,15 +83,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
-  // Delay showing description for smooth animation
-  useEffect(() => {
-    if (hoveredIndex !== null) {
-      const timer = setTimeout(() => setShowDescription(true), 50);
-      return () => clearTimeout(timer);
-    } else {
-      setShowDescription(false);
-    }
-  }, [hoveredIndex]);
+  // Determine panel direction based on card position
+  const getPanelDirection = (index: number, total: number): "right" | "left" => {
+    if (index === total - 1) return "left";
+    return "right";
+  };
 
   const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
@@ -138,7 +133,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
       className={`py-16 md:py-24 ${data.background || "bg-background"}`}
       data-testid="section-vertical-bars-cards"
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 overflow-visible">
         {(data.title || data.subtitle) && (
           <div className="text-center mb-12">
             {data.title && (
@@ -160,61 +155,72 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           </div>
         )}
 
-        {/* Cards container */}
-        <div 
-          className="relative"
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
+        {/* Cards container - overflow visible to allow panels to show */}
+        <div className="overflow-visible">
           {/* Base grid layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
             {data.metrics.map((metric, metricIndex) => {
               const isHovered = hoveredIndex === metricIndex;
               const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
+              const panelDirection = getPanelDirection(metricIndex, data.metrics.length);
 
               return (
-                <Card
+                <div
                   key={metricIndex}
-                  className={`p-6 transition-all duration-300 ease-out cursor-pointer ${
-                    isOtherHovered
-                      ? "opacity-20 scale-95" 
-                      : "opacity-100"
-                  } ${isHovered ? "shadow-lg ring-2 ring-primary/20" : ""}`}
+                  className="relative overflow-visible"
+                  style={{ zIndex: isHovered ? 20 : 1 }}
                   onMouseEnter={() => setHoveredIndex(metricIndex)}
-                  data-testid={`card-metric-${metricIndex}`}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  <div className={`flex flex-col lg:flex-row items-center gap-6 ${isHovered && showDescription ? "" : ""}`}>
-                    {/* Graph section - always visible */}
-                    <div className={`flex flex-col items-center ${isHovered && showDescription && metric.description ? "lg:flex-shrink-0" : "w-full"}`}>
-                      <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                        {metric.title}
-                      </h3>
-                      {metric.unit && (
-                        <p className="text-sm text-muted-foreground text-center mb-6">
-                          {metric.unit}
-                        </p>
-                      )}
-                      {renderBars(metric, metricIndex)}
-                    </div>
-
-                    {/* Description section - expands when hovered */}
-                    {metric.description && (
-                      <div 
-                        className="overflow-hidden transition-all duration-300 ease-out"
-                        style={{
-                          maxWidth: isHovered && showDescription ? "300px" : "0px",
-                          opacity: isHovered && showDescription ? 1 : 0,
-                          paddingLeft: isHovered && showDescription ? "1.5rem" : "0px",
-                        }}
-                      >
-                        <div className="border-l-2 border-primary/30 pl-4">
-                          <p className="text-sm text-muted-foreground leading-relaxed whitespace-normal">
-                            {metric.description}
-                          </p>
-                        </div>
-                      </div>
+                  {/* The original card - always stays in place */}
+                  <Card
+                    className={`p-6 transition-all duration-300 ease-out cursor-pointer h-full overflow-visible ${
+                      isOtherHovered
+                        ? "opacity-20 scale-95 pointer-events-none" 
+                        : "opacity-100"
+                    } ${isHovered ? "shadow-lg ring-2 ring-primary/20" : ""}`}
+                    data-testid={`card-metric-${metricIndex}`}
+                  >
+                    <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                      {metric.title}
+                    </h3>
+                    {metric.unit && (
+                      <p className="text-sm text-muted-foreground text-center mb-6">
+                        {metric.unit}
+                      </p>
                     )}
-                  </div>
-                </Card>
+                    {renderBars(metric, metricIndex)}
+                  </Card>
+
+                  {/* Sliding panel - positioned OUTSIDE the card as a sibling */}
+                  {metric.description && (
+                    <aside
+                      className={`absolute top-0 h-full transition-all duration-300 ease-out pointer-events-none ${
+                        panelDirection === "right" 
+                          ? "left-full ml-3" 
+                          : "right-full mr-3"
+                      }`}
+                      style={{
+                        width: isHovered ? "280px" : "0px",
+                        opacity: isHovered ? 1 : 0,
+                        transform: isHovered 
+                          ? "translateX(0)" 
+                          : panelDirection === "right" 
+                            ? "translateX(-20px)" 
+                            : "translateX(20px)",
+                      }}
+                    >
+                      <Card 
+                        className="h-full p-5 flex items-center pointer-events-auto"
+                        data-testid={`card-metric-panel-${metricIndex}`}
+                      >
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {metric.description}
+                        </p>
+                      </Card>
+                    </aside>
+                  )}
+                </div>
               );
             })}
           </div>
