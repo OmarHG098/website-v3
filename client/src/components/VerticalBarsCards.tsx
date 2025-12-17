@@ -40,7 +40,22 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // Track container width for calculating expanded card width
+  useEffect(() => {
+    const updateWidth = () => {
+      if (gridRef.current) {
+        setContainerWidth(gridRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -121,10 +136,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
-  // Determine expansion direction: last card expands left, others expand right
-  const getExpansionDirection = (index: number) => {
-    return index === data.metrics.length - 1 ? "left" : "right";
-  };
+  // Calculate expanded width: 65% of container for a 3-column layout
+  const gap = 24; // gap-6 = 24px
+  const numCards = data.metrics.length;
+  const cellWidth = (containerWidth - gap * (numCards - 1)) / numCards;
+  const expandedWidth = containerWidth * 0.65; // 65% of container
 
   return (
     <section
@@ -157,7 +173,10 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
         {/* Container for both layers */}
         <div className="relative">
           {/* BASE LAYER: Static cards that never move */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div 
+            ref={gridRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {data.metrics.map((metric, metricIndex) => (
               <Card
                 key={metricIndex}
@@ -188,33 +207,38 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           >
             {data.metrics.map((metric, metricIndex) => {
               const isHovered = hoveredIndex === metricIndex;
-              const direction = getExpansionDirection(metricIndex);
+              const isLastCard = metricIndex === data.metrics.length - 1;
+              
+              // Calculate position offset for expansion
+              // Left/center cards expand right, last card expands left
+              const expandOffset = isLastCard ? -(expandedWidth - cellWidth) : 0;
               
               return (
                 <div 
                   key={metricIndex} 
                   className="relative"
                 >
-                  {/* Overlay card - absolute positioned within cell, can expand beyond */}
+                  {/* Overlay card - absolute positioned, expands beyond cell */}
                   <Card
                     className={`
                       absolute top-0 h-full p-6
                       pointer-events-auto cursor-pointer
                       transition-all duration-300 ease-out
                       max-w-none
-                      ${direction === "left" ? "right-0" : "left-0"}
-                      ${isHovered 
-                        ? "w-[180%] shadow-xl z-20" 
-                        : "w-full opacity-0"
-                      }
+                      ${isHovered ? "shadow-xl z-20" : "opacity-0"}
                     `}
+                    style={{
+                      width: isHovered ? `${expandedWidth}px` : `${cellWidth}px`,
+                      left: isLastCard ? "auto" : 0,
+                      right: isLastCard ? 0 : "auto",
+                    }}
                     onMouseEnter={() => setHoveredIndex(metricIndex)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     data-testid={`card-overlay-${metricIndex}`}
                   >
                     <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
                       {/* Graph section - same as base card */}
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0" style={{ width: cellWidth - 48 }}>
                         <h3 className="text-lg font-bold text-foreground text-center mb-2">
                           {metric.title}
                         </h3>
