@@ -368,7 +368,7 @@ export function PieCharts({ data }: PieChartsProps) {
     return (
       <section
         ref={containerRef}
-        className={`py-6 ${data.background || "bg-background"}`}
+        className={`py-6 overflow-x-clip ${data.background || "bg-background"}`}
         data-testid="section-pie-charts"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -383,7 +383,7 @@ export function PieCharts({ data }: PieChartsProps) {
   return (
     <section
       ref={containerRef}
-      className={`py-12 ${data.background || "bg-background"}`}
+      className={`py-12 overflow-x-clip ${data.background || "bg-background"}`}
       data-testid="section-pie-charts"
     >
       <div className="max-w-6xl mx-auto px-4">
