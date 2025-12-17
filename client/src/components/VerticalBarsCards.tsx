@@ -304,20 +304,22 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       {renderBars(metric, metricIndex)}
                     </div>
 
-                    {/* Description panel - appears when expanded with delayed animation */}
-                    {isHovered && (
-                      <div 
-                        className="flex-1 flex flex-col justify-center animate-in fade-in slide-in-from-left-6 duration-500"
-                        style={{ animationDelay: "150ms", animationFillMode: "backwards" }}
-                      >
-                        <h4 className="text-xl font-bold text-foreground mb-3">
-                          {metric.title}
-                        </h4>
-                        <p className="text-base text-muted-foreground leading-relaxed">
-                          {metric.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
-                        </p>
-                      </div>
-                    )}
+                    {/* Description panel - appears when expanded with smooth horizontal animation */}
+                    <div 
+                      className={`flex-1 flex flex-col justify-center transition-all duration-500 ease-out ${
+                        isHovered 
+                          ? "opacity-100 translate-x-0" 
+                          : "opacity-0 -translate-x-8 pointer-events-none"
+                      }`}
+                      style={{ transitionDelay: isHovered ? "200ms" : "0ms" }}
+                    >
+                      <h4 className="text-xl font-bold text-foreground mb-3">
+                        {metric.title}
+                      </h4>
+                      <p className="text-base text-muted-foreground leading-relaxed">
+                        {metric.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
+                      </p>
+                    </div>
                   </div>
                 </Card>
               );
