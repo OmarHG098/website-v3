@@ -240,12 +240,27 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
               
               if (!rect || rect.width === 0) return null;
               
+              const isFirstCard = metricIndex === 0;
               const isLastCard = metricIndex === data.metrics.length - 1;
+              const isMiddleCard = !isFirstCard && !isLastCard;
               
-              // Expanded width: from card's left edge to container's right edge (or vice versa for last card)
-              const expandedWidth = isLastCard
-                ? rect.left + rect.width  // Expand left: cover from left edge to this card's right
-                : containerWidth - rect.left;  // Expand right: cover from this card to right edge
+              // Calculate expanded width and left position based on card position
+              let expandedWidth: number;
+              let expandedLeft: number;
+              
+              if (isFirstCard) {
+                // First card: expand right only
+                expandedWidth = containerWidth - rect.left;
+                expandedLeft = rect.left;
+              } else if (isLastCard) {
+                // Last card: expand left only
+                expandedWidth = rect.left + rect.width;
+                expandedLeft = 0;
+              } else {
+                // Middle card: expand to both sides (full container width)
+                expandedWidth = containerWidth;
+                expandedLeft = 0;
+              }
               
               return (
                 <Card
@@ -259,9 +274,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   `}
                   style={{
                     top: rect.top,
-                    left: isLastCard 
-                      ? (isHovered ? 0 : rect.left)  // Last card: starts at rect.left, expands to left edge
-                      : rect.left,  // Other cards: always start at rect.left
+                    left: isHovered ? expandedLeft : rect.left,
                     width: isHovered ? expandedWidth : rect.width,
                     height: rect.height,
                   }}
@@ -270,6 +283,17 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   data-testid={`card-overlay-${metricIndex}`}
                 >
                   <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
+                    {/* Left spacer for middle card - keeps graph centered */}
+                    {isMiddleCard && isHovered && (
+                      <div className="flex-1 flex items-center justify-end animate-in fade-in slide-in-from-right-4 duration-300">
+                        {metric.description && (
+                          <p className="text-base text-muted-foreground leading-relaxed text-right">
+                            {metric.description}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    
                     {/* Graph section - same width as original card */}
                     <div 
                       className="flex-shrink-0 flex flex-col"
@@ -286,13 +310,18 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       {renderBars(metric, metricIndex)}
                     </div>
 
-                    {/* Description panel - appears when expanded */}
-                    {metric.description && isHovered && (
+                    {/* Description panel - appears when expanded (for first/last cards) */}
+                    {metric.description && isHovered && !isMiddleCard && (
                       <div className="flex-1 flex items-center animate-in fade-in slide-in-from-left-4 duration-300">
                         <p className="text-base text-muted-foreground leading-relaxed">
                           {metric.description}
                         </p>
                       </div>
+                    )}
+                    
+                    {/* Right spacer for middle card - mirrors the left side */}
+                    {isMiddleCard && isHovered && (
+                      <div className="flex-1" />
                     )}
                   </div>
                 </Card>
