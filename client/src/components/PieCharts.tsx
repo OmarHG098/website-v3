@@ -219,21 +219,20 @@ function SinglePieChart({
           const startX = centerX + startRadius * Math.cos(midRad);
           const startY = centerY + startRadius * Math.sin(midRad);
           
-          const controlRadius = scaledRadius + 35;
-          const controlAngleOffset = 25;
-          const controlAngle = midAngle + controlAngleOffset;
-          const controlRad = (controlAngle - 90) * (Math.PI / 180);
-          const controlX = centerX + controlRadius * Math.cos(controlRad);
-          const controlY = centerY + controlRadius * Math.sin(controlRad);
+          const arcRadius = scaledRadius + 15;
+          const arcSweep = 60;
+          const arcEndAngle = midAngle + arcSweep;
+          const arcEndRad = (arcEndAngle - 90) * (Math.PI / 180);
+          const arcEndX = centerX + arcRadius * Math.cos(arcEndRad);
+          const arcEndY = centerY + arcRadius * Math.sin(arcEndRad);
           
-          const endRadius = scaledRadius + 50;
-          const endAngleOffset = 40;
-          const endAngle = midAngle + endAngleOffset;
-          const endRad = (endAngle - 90) * (Math.PI / 180);
-          const endX = centerX + endRadius * Math.cos(endRad);
-          const endY = centerY + endRadius * Math.sin(endRad);
+          const labelOffset = 35;
+          const labelAngle = arcEndAngle + 15;
+          const labelRad = (labelAngle - 90) * (Math.PI / 180);
+          const endX = centerX + (arcRadius + labelOffset) * Math.cos(labelRad);
+          const endY = centerY + (arcRadius + labelOffset) * Math.sin(labelRad);
           
-          const curvePath = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+          const curvePath = `M ${startX} ${startY} A ${arcRadius} ${arcRadius} 0 0 1 ${arcEndX} ${arcEndY} Q ${arcEndX + 10} ${arcEndY + 5} ${endX} ${endY}`;
           
           const isRightSide = endX > centerX;
           
