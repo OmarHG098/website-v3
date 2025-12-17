@@ -234,9 +234,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             </div>
 
             {/* Step 3 - Bottom Right (row 2, col 3) - Step number and title at right */}
+            {/* test */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-4"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-8"
                 data-testid="numbered-step-3"
               >
                 <button
