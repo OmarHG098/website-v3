@@ -283,17 +283,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   data-testid={`card-overlay-${metricIndex}`}
                 >
                   <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
-                    {/* Left spacer for middle card - keeps graph centered */}
-                    {isMiddleCard && isHovered && (
-                      <div className="flex-1 flex items-center justify-end animate-in fade-in slide-in-from-right-4 duration-300">
-                        {metric.description && (
-                          <p className="text-base text-muted-foreground leading-relaxed text-right">
-                            {metric.description}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    
                     {/* Graph section - same width as original card */}
                     <div 
                       className="flex-shrink-0 flex flex-col"
@@ -310,18 +299,13 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       {renderBars(metric, metricIndex)}
                     </div>
 
-                    {/* Description panel - appears when expanded (for first/last cards) */}
-                    {metric.description && isHovered && !isMiddleCard && (
+                    {/* Description panel - appears when expanded */}
+                    {metric.description && isHovered && (
                       <div className="flex-1 flex items-center animate-in fade-in slide-in-from-left-4 duration-300">
                         <p className="text-base text-muted-foreground leading-relaxed">
                           {metric.description}
                         </p>
                       </div>
-                    )}
-                    
-                    {/* Right spacer for middle card - mirrors the left side */}
-                    {isMiddleCard && isHovered && (
-                      <div className="flex-1" />
                     )}
                   </div>
                 </Card>
