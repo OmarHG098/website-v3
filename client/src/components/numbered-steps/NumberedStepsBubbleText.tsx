@@ -105,7 +105,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             <path
               d="M 18 68 C 22 28, 44 19, 50 22"
               stroke="hsl(var(--primary) / 0.4)"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray="6 8"
               fill="none"
@@ -115,7 +115,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             <path
               d="M 50 22 C 56 19, 75 28, 80 68"
               stroke="hsl(var(--primary) / 0.4)"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray="6 8"
               fill="none"
@@ -142,14 +142,14 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-2"
                 >
                   {steps[1].title && (
-                    <h3 className="relative z-10 text-lg font-semibold text-foreground leading-tight text-center max-w-[160px] transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <h3 className="relative z-10 text-lg font-semibold text-foreground leading-tight text-center max-w-[160px] transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       {steps[1].title}
                     </h3>
                   )}
                   {/* Radial gradient fade - starts solid in center, fades outward to both sides */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-24 bg-[radial-gradient(ellipse_at_center,_hsl(var(--background))_0%,_hsl(var(--background)/0.5)_50%,_transparent_80%)] pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-24 bg-[radial-gradient(ellipse_at_center,_hsl(var(--background))_0%,_hsl(var(--background)/0.8)_20%,_transparent_100%)] pointer-events-none" />
                   <div className="relative z-10 bg-background ps-2 pe-1 me-1">
-                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <div className="transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       <StepNumber index={1} variant="spotlight" size="md" />
                     </div>
                   </div>
@@ -175,14 +175,14 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-1"
                 >
                   {/* Gradient fade for line - vertical fade */}
-                  <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
+                  <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/100 to-transparent pointer-events-none" />
                   {steps[0].title && (
-                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       {steps[0].title}
                     </h3>
                   )}
                   <div className="relative bg-background py-1">
-                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <div className="transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       <StepNumber index={0} variant="spotlight" size="md" />
                     </div>
                   </div>
@@ -263,14 +263,14 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   data-testid="button-numbered-step-3"
                 >
                   {/* Gradient fade for line - vertical fade */}
-                  <div className="absolute -left-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
+                  <div className="absolute -left-12 -top-16 w-24 h-48 bg-gradient-to-t from-background via-background/100 to-transparent pointer-events-none" />
                   <div className="relative bg-background py-1">
-                    <div className="transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <div className="transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       <StepNumber index={2} variant="spotlight" size="md" />
                     </div>
                   </div>
                   {steps[2].title && (
-                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left transition-opacity group-data-[active=false]:opacity-50 group-hover:opacity-100">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       {steps[2].title}
                     </h3>
                   )}
