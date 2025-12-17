@@ -4,17 +4,25 @@
 import { z } from "zod";
 
 export const awardBadgeItemSchema = z.object({
-  name: z.string(),
-  source: z.string(),
+  id: z.string(),
+  alt: z.string(),
+  logo: z.string().optional(),
+  logoHeight: z.string().optional(),
+  description: z.string().optional(),
+  link: z.string().optional(),
+  linkText: z.string().optional(),
+  source: z.string().optional(),
+  name: z.string().optional(),
   year: z.string().optional(),
-  image: z.string().optional(),
 });
 
 export const awardBadgesSectionSchema = z.object({
   type: z.literal("award_badges"),
   version: z.string().optional(),
   title: z.string().optional(),
-  badges: z.array(awardBadgeItemSchema),
+  variant: z.enum(["simple", "detailed"]).optional(),
+  showBorder: z.boolean().optional(),
+  items: z.array(awardBadgeItemSchema),
 });
 
 export type AwardBadgeItem = z.infer<typeof awardBadgeItemSchema>;
