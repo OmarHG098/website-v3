@@ -42,7 +42,25 @@ function toColor(color: string): string {
   return color;
 }
 
-function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData; isVisible: boolean; delayOffset: number }) {
+interface SinglePieChartProps {
+  chart: PieChartData;
+  isVisible: boolean;
+  delayOffset: number;
+  isHovered: boolean;
+  isOtherHovered: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}
+
+function SinglePieChart({ 
+  chart, 
+  isVisible, 
+  delayOffset, 
+  isHovered, 
+  isOtherHovered,
+  onMouseEnter,
+  onMouseLeave 
+}: SinglePieChartProps) {
   const [animationProgress, setAnimationProgress] = useState(0);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -117,25 +135,60 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
     return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
   };
 
-  const size = 180;
+  const baseSize = 180;
+  const expandedSize = 280;
+  const size = isHovered ? expandedSize : baseSize;
   const cx = size / 2;
   const cy = size / 2;
   const radius = size / 2 - 4;
 
   const currentAngle = animationProgress * 360;
 
+  const getSliceMidpoint = (slice: typeof slices[0], r: number) => {
+    const midAngle = slice.startAngle + slice.angle / 2;
+    const midRad = (midAngle - 90) * (Math.PI / 180);
+    return {
+      x: cx + r * Math.cos(midRad),
+      y: cy + r * Math.sin(midRad),
+      angle: midAngle,
+    };
+  };
+
+  const leaderLineLength = 40;
+  const labelOffset = 12;
+
   return (
-    <div className="flex flex-col items-center">
+    <div 
+      className={`flex flex-col items-center transition-all duration-300 ease-out cursor-pointer ${
+        isOtherHovered ? "opacity-30" : "opacity-100"
+      }`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      style={{
+        transform: isHovered ? "scale(1)" : "scale(1)",
+      }}
+    >
       <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
         {chart.title}
       </h3>
       
-      <div className="relative">
+      <div 
+        className="relative transition-all duration-300 ease-out"
+        style={{
+          width: isHovered ? expandedSize + 160 : baseSize,
+          height: isHovered ? expandedSize + 40 : baseSize,
+        }}
+      >
         <svg 
           width={size} 
           height={size} 
           viewBox={`0 0 ${size} ${size}`}
-          className="drop-shadow-sm"
+          className="drop-shadow-sm transition-all duration-300 ease-out"
+          style={{
+            position: "absolute",
+            left: isHovered ? 80 : 0,
+            top: isHovered ? 20 : 0,
+          }}
         >
           {slices.map((slice, index) => {
             const visibleStart = Math.max(0, Math.min(slice.startAngle, currentAngle));
@@ -153,30 +206,63 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
               />
             );
           })}
+          
+          {isHovered && slices.map((slice, index) => {
+            if (currentAngle <= slice.startAngle) return null;
+            
+            const midpoint = getSliceMidpoint(slice, radius * 0.7);
+            const outerPoint = getSliceMidpoint(slice, radius + leaderLineLength);
+            const isRightSide = outerPoint.x > cx;
+            
+            const labelX = isRightSide 
+              ? outerPoint.x + labelOffset 
+              : outerPoint.x - labelOffset;
+            
+            return (
+              <g 
+                key={`leader-${index}`}
+                className="transition-opacity duration-300"
+                style={{
+                  opacity: isHovered ? 1 : 0,
+                }}
+              >
+                <line
+                  x1={midpoint.x}
+                  y1={midpoint.y}
+                  x2={outerPoint.x}
+                  y2={outerPoint.y}
+                  stroke={slice.color}
+                  strokeWidth={2}
+                  className="transition-all duration-300"
+                />
+                <circle
+                  cx={outerPoint.x}
+                  cy={outerPoint.y}
+                  r={3}
+                  fill={slice.color}
+                />
+                <text
+                  x={labelX}
+                  y={outerPoint.y}
+                  textAnchor={isRightSide ? "start" : "end"}
+                  dominantBaseline="middle"
+                  className="text-xs font-medium fill-foreground"
+                >
+                  {slice.label}
+                </text>
+                <text
+                  x={labelX}
+                  y={outerPoint.y + 14}
+                  textAnchor={isRightSide ? "start" : "end"}
+                  dominantBaseline="middle"
+                  className="text-xs fill-muted-foreground"
+                >
+                  {slice.displayValue || `${Math.round(slice.percentage)}%`}
+                </text>
+              </g>
+            );
+          })}
         </svg>
-      </div>
-
-      <div className="mt-4 space-y-1">
-        {slices.map((slice, index) => (
-          <div 
-            key={index} 
-            className="flex items-center gap-2 text-sm"
-            style={{
-              opacity: animationProgress >= (slice.startAngle / 360) ? 1 : 0,
-              transform: animationProgress >= (slice.startAngle / 360) ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'all 0.3s ease-out',
-            }}
-            data-testid={`pie-legend-${index}`}
-          >
-            <div 
-              className="w-3 h-3 rounded-sm shrink-0" 
-              style={{ backgroundColor: slice.color }}
-            />
-            <span className="text-muted-foreground">
-              {slice.label} ({slice.displayValue || `${Math.round(slice.percentage)}%`})
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );
@@ -184,6 +270,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
 
 export function PieCharts({ data }: PieChartsProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -238,7 +325,7 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-8 ${
+      <div className={`grid gap-8 items-start ${
         data.charts.length === 1 ? 'grid-cols-1 justify-items-center' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
@@ -249,6 +336,10 @@ export function PieCharts({ data }: PieChartsProps) {
             chart={chart} 
             isVisible={isVisible}
             delayOffset={0}
+            isHovered={hoveredIndex === index}
+            isOtherHovered={hoveredIndex !== null && hoveredIndex !== index}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
           />
         ))}
       </div>
