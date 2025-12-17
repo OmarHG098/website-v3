@@ -287,39 +287,41 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   onMouseLeave={() => setHoveredIndex(null)}
                   data-testid={`card-overlay-${metricIndex}`}
                 >
-                  <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
-                    {/* Graph section - same width as original card */}
-                    <div 
-                      className="flex-shrink-0 flex flex-col"
-                      style={{ width: rect.width - 48 }}
-                    >
-                      <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                        {metric.title}
-                      </h3>
-                      {metric.unit && (
-                        <p className="text-sm text-muted-foreground text-center mb-6">
-                          {metric.unit}
-                        </p>
-                      )}
-                      {renderBars(metric, metricIndex)}
-                    </div>
-
-                    {/* Description panel - appears when expanded with smooth horizontal animation */}
-                    <div 
-                      className={`flex-1 flex flex-col justify-center transition-all duration-500 ease-out ${
-                        isHovered 
-                          ? "opacity-100 translate-x-0" 
-                          : "opacity-0 -translate-x-8 pointer-events-none"
-                      }`}
-                      style={{ transitionDelay: isHovered ? "200ms" : "0ms" }}
-                    >
-                      <h4 className="text-xl font-bold text-foreground mb-3">
-                        {metric.title}
-                      </h4>
-                      <p className="text-base text-muted-foreground leading-relaxed">
-                        {metric.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
+                  {/* Graph section - always in place */}
+                  <div 
+                    className="flex flex-col"
+                    style={{ width: rect.width - 48 }}
+                  >
+                    <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                      {metric.title}
+                    </h3>
+                    {metric.unit && (
+                      <p className="text-sm text-muted-foreground text-center mb-6">
+                        {metric.unit}
                       </p>
-                    </div>
+                    )}
+                    {renderBars(metric, metricIndex)}
+                  </div>
+
+                  {/* Description panel - absolutely positioned, not affected by layout changes */}
+                  <div 
+                    className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 transition-all duration-500 ease-out ${
+                      isHovered 
+                        ? "opacity-100" 
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                    style={{ 
+                      left: rect.width - 24,
+                      right: 24,
+                      transitionDelay: isHovered ? "200ms" : "0ms" 
+                    }}
+                  >
+                    <h4 className="text-xl font-bold text-foreground mb-3">
+                      {metric.title}
+                    </h4>
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      {metric.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."}
+                    </p>
                   </div>
                 </Card>
               );
