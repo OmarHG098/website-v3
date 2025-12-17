@@ -305,7 +305,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
 
                   {/* Description panel - absolutely positioned, appears after card is fully expanded */}
                   <div 
-                    className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 transition-opacity duration-300 ease-out ${
+                    className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 ease-out ${
                       isHovered 
                         ? "opacity-100" 
                         : "opacity-0 pointer-events-none"
@@ -313,6 +313,8 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     style={{ 
                       left: rect.width - 24,
                       right: 24,
+                      transitionProperty: "opacity",
+                      transitionDuration: isHovered ? "300ms" : "100ms",
                       transitionDelay: isHovered ? "200ms" : "0ms"
                     }}
                   >
