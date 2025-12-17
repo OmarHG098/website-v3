@@ -40,6 +40,7 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,11 +84,36 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
-  const renderBars = (metric: MetricCard, metricIndex: number, compact: boolean = false) => {
+  // Trigger expansion animation after hover
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      // Small delay to allow initial render, then animate
+      const timer = setTimeout(() => setIsExpanded(true), 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsExpanded(false);
+    }
+  }, [hoveredIndex]);
+
+  const handleMouseLeave = () => {
+    setIsExpanded(false);
+    // Wait for collapse animation before removing overlay
+    setTimeout(() => setHoveredIndex(null), 250);
+  };
+
+  // Get transform origin based on card position
+  const getTransformOrigin = (index: number, total: number) => {
+    if (total <= 1) return "center center";
+    if (index === 0) return "left center";
+    if (index === total - 1) return "right center";
+    return "center center";
+  };
+
+  const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
 
     return (
-      <div className={`flex justify-center items-end ${compact ? "gap-4" : "gap-6"} ${compact ? "h-32" : "h-44"} mb-4`}>
+      <div className="flex justify-center items-end gap-6 h-44 mb-4">
         {metric.years.map((yearData, yearIndex) => {
           const percentage = (yearData.value / maxValue) * 100;
           const delay = metricIndex * 150 + yearIndex * 100;
@@ -98,10 +124,10 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
               key={yearIndex}
               className="flex flex-col items-center gap-2"
             >
-              <span className={`font-bold text-foreground ${compact ? "text-xs" : "text-sm"}`}>
+              <span className="text-sm font-bold text-foreground">
                 {yearData.displayValue}
               </span>
-              <div className={`${compact ? "w-8 h-24" : "w-12 md:w-14 h-36"} bg-muted rounded-t-md flex items-end overflow-hidden`}>
+              <div className="w-12 md:w-14 h-36 bg-muted rounded-t-md flex items-end overflow-hidden">
                 <div
                   className="w-full rounded-t-md transition-all duration-1000 ease-out"
                   style={{
@@ -111,7 +137,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   }}
                 />
               </div>
-              <span className={`font-medium text-muted-foreground ${compact ? "text-[10px]" : "text-xs"}`}>
+              <span className="text-xs font-medium text-muted-foreground">
                 {yearData.year}
               </span>
             </div>
@@ -150,23 +176,30 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
         )}
 
         {/* Cards container */}
-        <div 
-          className="relative"
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
-          {/* Expanded overlay - appears on top when a card is hovered */}
-          <div 
-            className={`absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none ${
-              hoveredIndex !== null ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {hoveredIndex !== null && data.metrics[hoveredIndex] && (
+        <div className="relative">
+          {/* Expanded overlay with directional animation */}
+          {hoveredIndex !== null && data.metrics[hoveredIndex] && (
+            <div 
+              className="absolute inset-0 z-20"
+              onMouseLeave={handleMouseLeave}
+              style={{
+                transformOrigin: getTransformOrigin(hoveredIndex, data.metrics.length),
+              }}
+            >
               <Card
-                className="w-full h-full p-8 pointer-events-auto animate-in fade-in zoom-in-95 duration-200"
+                className="w-full h-full p-8 transition-all duration-300 ease-out"
+                style={{
+                  transformOrigin: getTransformOrigin(hoveredIndex, data.metrics.length),
+                  transform: isExpanded ? "scaleX(1)" : "scaleX(0.333)",
+                  opacity: isExpanded ? 1 : 0.8,
+                }}
                 data-testid={`card-metric-expanded-${hoveredIndex}`}
               >
-                <div className="flex flex-col lg:flex-row items-center gap-8 h-full">
-                  {/* Left side: Graph (compact) */}
+                <div 
+                  className="flex flex-col lg:flex-row items-center gap-8 h-full transition-opacity duration-200"
+                  style={{ opacity: isExpanded ? 1 : 0 }}
+                >
+                  {/* Left side: Graph */}
                   <div className="flex flex-col items-center lg:w-2/5 flex-shrink-0">
                     <h3 className="text-xl font-bold text-foreground text-center mb-2">
                       {data.metrics[hoveredIndex].title}
@@ -176,7 +209,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                         {data.metrics[hoveredIndex].unit}
                       </p>
                     )}
-                    {renderBars(data.metrics[hoveredIndex], hoveredIndex, false)}
+                    {renderBars(data.metrics[hoveredIndex], hoveredIndex)}
                   </div>
 
                   {/* Right side: Description */}
@@ -189,22 +222,21 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   </div>
                 </div>
               </Card>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Base grid layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.metrics.map((metric, metricIndex) => {
-              const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
-              const isHovered = hoveredIndex === metricIndex;
+              const isAnyHovered = hoveredIndex !== null;
 
               return (
                 <Card
                   key={metricIndex}
                   className={`p-6 transition-all duration-300 ease-out cursor-pointer ${
-                    isOtherHovered || isHovered
-                      ? "opacity-0 scale-95" 
-                      : "opacity-100 scale-100"
+                    isAnyHovered
+                      ? "opacity-0" 
+                      : "opacity-100"
                   }`}
                   onMouseEnter={() => setHoveredIndex(metricIndex)}
                   data-testid={`card-metric-${metricIndex}`}
