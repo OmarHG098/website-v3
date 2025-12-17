@@ -343,7 +343,7 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-4 items-start justify-items-center overflow-visible ${
+      <div className={`grid gap-0 items-start justify-items-center overflow-visible ${
         data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
