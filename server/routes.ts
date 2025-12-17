@@ -4,16 +4,40 @@ import { storage } from "./storage";
 import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
-import { careerProgramSchema, landingPageSchema, locationPageSchema, templatePageSchema, experimentUpdateSchema, type CareerProgram, type LandingPage, type LocationPage, type TemplatePage } from "@shared/schema";
-import { getSitemap, clearSitemapCache, getSitemapCacheStatus, getSitemapUrls } from "./sitemap";
-import { redirectMiddleware, getRedirects, clearRedirectCache } from "./redirects";
-import { getSchema, getMergedSchemas, getAvailableSchemaKeys, clearSchemaCache } from "./schema-org";
-import { 
-  getRegistryOverview, 
-  getComponentInfo, 
-  listVersions, 
-  loadSchema, 
-  loadExamples, 
+import {
+  careerProgramSchema,
+  landingPageSchema,
+  locationPageSchema,
+  templatePageSchema,
+  experimentUpdateSchema,
+  type CareerProgram,
+  type LandingPage,
+  type LocationPage,
+  type TemplatePage,
+} from "@shared/schema";
+import {
+  getSitemap,
+  clearSitemapCache,
+  getSitemapCacheStatus,
+  getSitemapUrls,
+} from "./sitemap";
+import {
+  redirectMiddleware,
+  getRedirects,
+  clearRedirectCache,
+} from "./redirects";
+import {
+  getSchema,
+  getMergedSchemas,
+  getAvailableSchemaKeys,
+  clearSchemaCache,
+} from "./schema-org";
+import {
+  getRegistryOverview,
+  getComponentInfo,
+  listVersions,
+  loadSchema,
+  loadExamples,
   createNewVersion,
   getExampleFilePath,
   saveExample,
@@ -27,11 +51,16 @@ import {
   buildVisitorContext,
 } from "./experiments";
 import { loadImageRegistry } from "./image-registry";
-import { loadContent, listContentSlugs, loadCommonData } from "./utils/contentLoader";
+import {
+  loadContent,
+  listContentSlugs,
+  loadCommonData,
+} from "./utils/contentLoader";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
 
-const BREATHECODE_HOST = process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
+const BREATHECODE_HOST =
+  process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
 
 // Schema for career-programs listing page (custom page type)
 const careerProgramsListingSchema = z.object({
@@ -91,26 +120,28 @@ function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
     schema: careerProgramSchema,
     localeOrVariant: locale,
   });
-  
+
   if (!result.success) {
     console.error(result.error);
     return null;
   }
-  
+
   return result.data;
 }
 
-function listCareerPrograms(locale: string): Array<{ slug: string; title: string }> {
+function listCareerPrograms(
+  locale: string,
+): Array<{ slug: string; title: string }> {
   const slugs = listContentSlugs("programs");
   const programs: Array<{ slug: string; title: string }> = [];
-  
+
   for (const slug of slugs) {
     const program = loadCareerProgram(slug, locale);
     if (program) {
       programs.push({ slug: program.slug, title: program.title });
     }
   }
-  
+
   return programs;
 }
 
@@ -121,19 +152,23 @@ function loadLandingPage(slug: string): LandingPage | null {
     schema: landingPageSchema,
     localeOrVariant: "promoted",
   });
-  
+
   if (!result.success) {
     console.error(result.error);
     return null;
   }
-  
+
   return result.data;
 }
 
-function listLandingPages(): Array<{ slug: string; title: string; locale: string }> {
+function listLandingPages(): Array<{
+  slug: string;
+  title: string;
+  locale: string;
+}> {
   const slugs = listContentSlugs("landings");
   const landings: Array<{ slug: string; title: string; locale: string }> = [];
-  
+
   for (const slug of slugs) {
     const landing = loadLandingPage(slug);
     if (landing) {
@@ -142,7 +177,7 @@ function listLandingPages(): Array<{ slug: string; title: string; locale: string
       landings.push({ slug: landing.slug, title: landing.title, locale });
     }
   }
-  
+
   return landings;
 }
 
@@ -153,19 +188,33 @@ function loadLocationPage(slug: string, locale: string): LocationPage | null {
     schema: locationPageSchema,
     localeOrVariant: locale,
   });
-  
+
   if (!result.success) {
     console.error(result.error);
     return null;
   }
-  
+
   return result.data;
 }
 
-function listLocationPages(locale: string): Array<{ slug: string; name: string; city: string; country: string; region: string }> {
+function listLocationPages(
+  locale: string,
+): Array<{
+  slug: string;
+  name: string;
+  city: string;
+  country: string;
+  region: string;
+}> {
   const slugs = listContentSlugs("locations");
-  const locations: Array<{ slug: string; name: string; city: string; country: string; region: string }> = [];
-  
+  const locations: Array<{
+    slug: string;
+    name: string;
+    city: string;
+    country: string;
+    region: string;
+  }> = [];
+
   for (const slug of slugs) {
     const location = loadLocationPage(slug, locale);
     if (location && location.visibility === "listed") {
@@ -178,7 +227,7 @@ function listLocationPages(locale: string): Array<{ slug: string; name: string; 
       });
     }
   }
-  
+
   return locations;
 }
 
@@ -190,19 +239,21 @@ function loadTemplatePage(slug: string, locale: string): TemplatePage | null {
     schema: templatePageSchema,
     localeOrVariant: locale,
   });
-  
+
   if (!result.success) {
     console.error(result.error);
     return null;
   }
-  
+
   return result.data;
 }
 
-function listTemplatePages(locale: string): Array<{ slug: string; template: string; title: string }> {
+function listTemplatePages(
+  locale: string,
+): Array<{ slug: string; template: string; title: string }> {
   const slugs = listContentSlugs("pages");
   const pages: Array<{ slug: string; template: string; title: string }> = [];
-  
+
   for (const slug of slugs) {
     const page = loadTemplatePage(slug, locale);
     if (page) {
@@ -213,7 +264,7 @@ function listTemplatePages(locale: string): Array<{ slug: string; template: stri
       });
     }
   }
-  
+
   return pages;
 }
 
@@ -231,13 +282,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Check webmaster capability
-      const webmasterResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
-        method: "GET",
-        headers: {
-          "Authorization": `Token ${token}`,
-          "Academy": "4",
+      const webmasterResponse = await fetch(
+        "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Token ${token}`,
+            Academy: "4",
+          },
         },
-      });
+      );
 
       const hasWebmaster = webmasterResponse.status === 200;
 
@@ -284,28 +338,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       if (!secretKey) {
-        res.status(500).json({ success: false, error: "Turnstile secret key not configured" });
+        res
+          .status(500)
+          .json({
+            success: false,
+            error: "Turnstile secret key not configured",
+          });
         return;
       }
 
-      const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          secret: secretKey,
-          response: token,
-        }),
-      });
+      const verifyResponse = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            secret: secretKey,
+            response: token,
+          }),
+        },
+      );
 
-      const result = await verifyResponse.json() as { success: boolean; "error-codes"?: string[] };
+      const result = (await verifyResponse.json()) as {
+        success: boolean;
+        "error-codes"?: string[];
+      };
 
       if (result.success) {
         res.json({ success: true });
       } else {
-        res.status(400).json({ 
-          success: false, 
-          error: "Verification failed", 
-          codes: result["error-codes"] 
+        res.status(400).json({
+          success: false,
+          error: "Verification failed",
+          codes: result["error-codes"],
         });
       }
     } catch (error) {
@@ -325,20 +390,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
     const forceVariant = req.query.force_variant as string | undefined;
-    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
+    const forceVersion = req.query.force_version
+      ? parseInt(req.query.force_version as string, 10)
+      : undefined;
 
     let program: CareerProgram | null = null;
-    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+    let experimentInfo: {
+      experiment: string;
+      variant: string;
+      version: number;
+    } | null = null;
 
     // If force_variant is provided, load that variant directly (for preview)
     if (forceVariant && forceVersion !== undefined) {
       const experimentManager = getExperimentManager();
-      const forcedContent = experimentManager.getVariantContent(slug, {
-        experiment_slug: "preview",
-        variant_slug: forceVariant,
-        variant_version: forceVersion,
-        assigned_at: Date.now(),
-      }, locale);
+      const forcedContent = experimentManager.getVariantContent(
+        slug,
+        {
+          experiment_slug: "preview",
+          variant_slug: forceVariant,
+          variant_version: forceVersion,
+          assigned_at: Date.now(),
+        },
+        locale,
+      );
       if (forcedContent) {
         program = forcedContent;
         experimentInfo = {
@@ -359,11 +434,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check for active experiments
       const experimentManager = getExperimentManager();
       const visitorContext = buildVisitorContext(req, sessionId);
-      const assignment = experimentManager.getAssignment(slug, visitorContext, existingAssignments);
+      const assignment = experimentManager.getAssignment(
+        slug,
+        visitorContext,
+        existingAssignments,
+      );
 
       if (assignment) {
         // Try to load variant content
-        const variantContent = experimentManager.getVariantContent(slug, assignment, locale);
+        const variantContent = experimentManager.getVariantContent(
+          slug,
+          assignment,
+          locale,
+        );
         if (variantContent) {
           program = variantContent;
           experimentInfo = {
@@ -373,9 +456,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           };
 
           // Update cookie with new assignment
-          const updatedAssignments = [...existingAssignments.filter(
-            a => a.experiment_slug !== assignment.experiment_slug
-          ), assignment];
+          const updatedAssignments = [
+            ...existingAssignments.filter(
+              (a) => a.experiment_slug !== assignment.experiment_slug,
+            ),
+            assignment,
+          ];
           setExperimentCookie(res, sessionId, updatedAssignments);
         }
       }
@@ -407,24 +493,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/landings/:slug", (req, res) => {
     const { slug } = req.params;
     const forceVariant = req.query.force_variant as string | undefined;
-    const forceVersion = req.query.force_version ? parseInt(req.query.force_version as string, 10) : undefined;
+    const forceVersion = req.query.force_version
+      ? parseInt(req.query.force_version as string, 10)
+      : undefined;
 
     // Get locale from _common.yml
     const commonData = loadCommonData("landings", slug);
     const locale = (commonData?.locale as string) || "en";
 
     let landing: LandingPage | null = null;
-    let experimentInfo: { experiment: string; variant: string; version: number } | null = null;
+    let experimentInfo: {
+      experiment: string;
+      variant: string;
+      version: number;
+    } | null = null;
 
     // If force_variant is provided, load that variant directly (for preview)
     if (forceVariant && forceVersion !== undefined) {
       const experimentManager = getExperimentManager();
-      const forcedContent = experimentManager.getVariantContent(slug, {
-        experiment_slug: "preview",
-        variant_slug: forceVariant,
-        variant_version: forceVersion,
-        assigned_at: Date.now(),
-      }, locale, "landings");
+      const forcedContent = experimentManager.getVariantContent(
+        slug,
+        {
+          experiment_slug: "preview",
+          variant_slug: forceVariant,
+          variant_version: forceVersion,
+          assigned_at: Date.now(),
+        },
+        locale,
+        "landings",
+      );
       if (forcedContent) {
         landing = forcedContent as LandingPage;
         experimentInfo = {
@@ -453,11 +550,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const locale = (req.query.locale as string) || "en";
     const region = req.query.region as string | undefined;
     let locations = listLocationPages(locale);
-    
+
     if (region) {
-      locations = locations.filter(loc => loc.region === region);
+      locations = locations.filter((loc) => loc.region === region);
     }
-    
+
     res.json(locations);
   });
 
@@ -605,13 +702,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate token in production
       if (!isDevelopment && token) {
-        const response = await fetch(`${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Token ${token}`,
-            "Academy": "4",
+        const response = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
           },
-        });
+        );
 
         if (response.status !== 200) {
           res.status(403).json({ error: "Invalid or unauthorized token" });
@@ -651,26 +751,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/schema/:key", (req, res) => {
     const { key } = req.params;
     const locale = (req.query.locale as string) || "en";
-    
+
     const schema = getSchema(key, locale);
-    
+
     if (!schema) {
       res.status(404).json({ error: "Schema not found" });
       return;
     }
-    
+
     res.json(schema);
   });
 
   app.post("/api/schema/merge", (req, res) => {
     const { include, overrides } = req.body;
     const locale = (req.query.locale as string) || "en";
-    
+
     if (!include || !Array.isArray(include)) {
       res.status(400).json({ error: "include array required" });
       return;
     }
-    
+
     const schemas = getMergedSchemas({ include, overrides }, locale);
     res.json({ schemas });
   });
@@ -699,174 +799,186 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
-    
+
     const validTypes = ["programs", "pages", "landings", "locations"];
     if (!validTypes.includes(contentType)) {
       res.status(400).json({ error: "Invalid content type", validTypes });
       return;
     }
-    
+
     const experimentManager = getExperimentManager();
     const result = experimentManager.getAvailableVariants(
       contentType as "programs" | "pages" | "landings" | "locations",
-      slug
+      slug,
     );
-    
+
     if (!result) {
       res.status(404).json({ error: "Content folder not found" });
       return;
     }
-    
+
     res.json(result);
   });
 
   // Get experiments for a specific content type and slug
   app.get("/api/experiments/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
-    
+
     // Validate content type
     const validTypes = ["programs", "pages", "landings", "locations"];
     if (!validTypes.includes(contentType)) {
-      res.status(400).json({ 
-        error: "Invalid content type", 
-        validTypes 
+      res.status(400).json({
+        error: "Invalid content type",
+        validTypes,
       });
       return;
     }
-    
+
     const experimentManager = getExperimentManager();
     const experiments = experimentManager.getExperimentsForContent(
       contentType as "programs" | "pages" | "landings" | "locations",
-      slug
+      slug,
     );
-    
+
     if (!experiments) {
-      res.json({ 
+      res.json({
         experiments: [],
         hasExperimentsFile: false,
         filePath: experimentManager.getExperimentsFilePath(
           contentType as "programs" | "pages" | "landings" | "locations",
-          slug
-        )
+          slug,
+        ),
       });
       return;
     }
-    
+
     // Get stats for each experiment (including unique visitors)
     const extendedStats = experimentManager.getExtendedStats();
-    const experimentsWithStats = experiments.experiments.map(exp => ({
+    const experimentsWithStats = experiments.experiments.map((exp) => ({
       ...exp,
       stats: extendedStats.experiments[exp.slug]?.variant_counts || {},
-      unique_visitors: extendedStats.experiments[exp.slug]?.unique_visitors || 0
+      unique_visitors:
+        extendedStats.experiments[exp.slug]?.unique_visitors || 0,
     }));
-    
+
     res.json({
       experiments: experimentsWithStats,
       hasExperimentsFile: true,
       filePath: experimentManager.getExperimentsFilePath(
         contentType as "programs" | "pages" | "landings" | "locations",
-        slug
-      )
+        slug,
+      ),
     });
   });
 
   // Get single experiment details
-  app.get("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
-    const { contentType, contentSlug, experimentSlug } = req.params;
-    
-    const validTypes = ["programs", "pages", "landings", "locations"];
-    if (!validTypes.includes(contentType)) {
-      res.status(400).json({ error: "Invalid content type", validTypes });
-      return;
-    }
-    
-    const experimentManager = getExperimentManager();
-    const experiments = experimentManager.getExperimentsForContent(
-      contentType as "programs" | "pages" | "landings" | "locations",
-      contentSlug
-    );
-    
-    if (!experiments) {
-      res.status(404).json({ error: "Experiments file not found" });
-      return;
-    }
-    
-    const experiment = experiments.experiments.find(exp => exp.slug === experimentSlug);
-    if (!experiment) {
-      res.status(404).json({ error: "Experiment not found" });
-      return;
-    }
-    
-    const extendedStats = experimentManager.getExtendedStats();
-    const expStats = extendedStats.experiments[experimentSlug];
-    const experimentWithStats = {
-      ...experiment,
-      stats: expStats?.variant_counts || {},
-      unique_visitors: expStats?.unique_visitors || 0
-    };
-    
-    res.json({
-      experiment: experimentWithStats,
-      contentType,
-      contentSlug,
-      filePath: experimentManager.getExperimentsFilePath(
-        contentType as "programs" | "pages" | "landings" | "locations",
-        contentSlug
-      )
-    });
-  });
+  app.get(
+    "/api/experiments/:contentType/:contentSlug/:experimentSlug",
+    (req, res) => {
+      const { contentType, contentSlug, experimentSlug } = req.params;
 
-  // Update experiment settings
-  app.patch("/api/experiments/:contentType/:contentSlug/:experimentSlug", (req, res) => {
-    const { contentType, contentSlug, experimentSlug } = req.params;
-    
-    const validTypes = ["programs", "pages", "landings", "locations"];
-    if (!validTypes.includes(contentType)) {
-      res.status(400).json({ error: "Invalid content type", validTypes });
-      return;
-    }
-    
-    // Validate request body against schema
-    const parseResult = experimentUpdateSchema.safeParse(req.body);
-    if (!parseResult.success) {
-      res.status(400).json({ 
-        error: "Invalid update data",
-        details: parseResult.error.issues.map(i => ({
-          path: i.path.join('.'),
-          message: i.message
-        }))
-      });
-      return;
-    }
-    
-    const validatedUpdates = parseResult.data;
-    
-    const experimentManager = getExperimentManager();
-    try {
-      const result = experimentManager.updateExperiment(
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({ error: "Invalid content type", validTypes });
+        return;
+      }
+
+      const experimentManager = getExperimentManager();
+      const experiments = experimentManager.getExperimentsForContent(
         contentType as "programs" | "pages" | "landings" | "locations",
         contentSlug,
-        experimentSlug,
-        validatedUpdates
       );
-      res.json(result);
-    } catch (error) {
-      res.status(400).json({ 
-        error: error instanceof Error ? error.message : "Failed to update experiment" 
+
+      if (!experiments) {
+        res.status(404).json({ error: "Experiments file not found" });
+        return;
+      }
+
+      const experiment = experiments.experiments.find(
+        (exp) => exp.slug === experimentSlug,
+      );
+      if (!experiment) {
+        res.status(404).json({ error: "Experiment not found" });
+        return;
+      }
+
+      const extendedStats = experimentManager.getExtendedStats();
+      const expStats = extendedStats.experiments[experimentSlug];
+      const experimentWithStats = {
+        ...experiment,
+        stats: expStats?.variant_counts || {},
+        unique_visitors: expStats?.unique_visitors || 0,
+      };
+
+      res.json({
+        experiment: experimentWithStats,
+        contentType,
+        contentSlug,
+        filePath: experimentManager.getExperimentsFilePath(
+          contentType as "programs" | "pages" | "landings" | "locations",
+          contentSlug,
+        ),
       });
-    }
-  });
+    },
+  );
+
+  // Update experiment settings
+  app.patch(
+    "/api/experiments/:contentType/:contentSlug/:experimentSlug",
+    (req, res) => {
+      const { contentType, contentSlug, experimentSlug } = req.params;
+
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({ error: "Invalid content type", validTypes });
+        return;
+      }
+
+      // Validate request body against schema
+      const parseResult = experimentUpdateSchema.safeParse(req.body);
+      if (!parseResult.success) {
+        res.status(400).json({
+          error: "Invalid update data",
+          details: parseResult.error.issues.map((i) => ({
+            path: i.path.join("."),
+            message: i.message,
+          })),
+        });
+        return;
+      }
+
+      const validatedUpdates = parseResult.data;
+
+      const experimentManager = getExperimentManager();
+      try {
+        const result = experimentManager.updateExperiment(
+          contentType as "programs" | "pages" | "landings" | "locations",
+          contentSlug,
+          experimentSlug,
+          validatedUpdates,
+        );
+        res.json(result);
+      } catch (error) {
+        res.status(400).json({
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to update experiment",
+        });
+      }
+    },
+  );
 
   // Create new experiment
   app.post("/api/experiments/:contentType/:slug/create", (req, res) => {
     const { contentType, slug } = req.params;
-    
+
     const validTypes = ["programs", "pages", "landings", "locations"];
     if (!validTypes.includes(contentType)) {
       res.status(400).json({ error: "Invalid content type", validTypes });
       return;
     }
-    
+
     const {
       experimentName,
       experimentSlug,
@@ -877,22 +989,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       maxVisitors,
       targeting,
     } = req.body;
-    
+
     // Basic validation
     if (!experimentName || !experimentSlug || !variantA) {
-      res.status(400).json({ 
-        error: "Missing required fields: experimentName, experimentSlug, variantA" 
+      res.status(400).json({
+        error:
+          "Missing required fields: experimentName, experimentSlug, variantA",
       });
       return;
     }
-    
+
     if (!variantB && !newVariant) {
-      res.status(400).json({ 
-        error: "Either variantB or newVariant must be provided" 
+      res.status(400).json({
+        error: "Either variantB or newVariant must be provided",
       });
       return;
     }
-    
+
     const experimentManager = getExperimentManager();
     try {
       const result = experimentManager.createExperiment(
@@ -907,16 +1020,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           allocationA: allocationA ?? 50,
           maxVisitors: maxVisitors ?? 1000,
           targeting: targeting || {},
-        }
+        },
       );
-      
+
       res.json({
         ...result,
         redirectPath: `/private/${contentType}/${slug}/experiment/${experimentSlug}`,
       });
     } catch (error) {
-      res.status(400).json({ 
-        error: error instanceof Error ? error.message : "Failed to create experiment" 
+      res.status(400).json({
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create experiment",
       });
     }
   });
@@ -930,26 +1046,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/component-registry/:componentType", (req, res) => {
     const { componentType } = req.params;
     const info = getComponentInfo(componentType);
-    
+
     if (!info) {
       res.status(404).json({ error: "Component not found" });
       return;
     }
-    
+
     res.json(info);
   });
 
   app.get("/api/component-registry/:componentType/validate", (req, res) => {
     const { componentType } = req.params;
     const version = req.query.version as string | undefined;
-    
+
     // Dynamic import to avoid circular dependencies
-    import("../scripts/utils/validateComponent").then(({ validateComponent }) => {
-      const result = validateComponent(componentType, version);
-      res.json(result);
-    }).catch((error) => {
-      res.status(500).json({ error: "Failed to load validation module", details: String(error) });
-    });
+    import("../scripts/utils/validateComponent")
+      .then(({ validateComponent }) => {
+        const result = validateComponent(componentType, version);
+        res.json(result);
+      })
+      .catch((error) => {
+        res
+          .status(500)
+          .json({
+            error: "Failed to load validation module",
+            details: String(error),
+          });
+      });
   });
 
   app.get("/api/component-registry/:componentType/versions", (req, res) => {
@@ -958,67 +1081,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ versions });
   });
 
-  app.get("/api/component-registry/:componentType/:version/schema", (req, res) => {
-    const { componentType, version } = req.params;
-    const schema = loadSchema(componentType, version);
-    
-    if (!schema) {
-      res.status(404).json({ error: "Schema not found" });
-      return;
-    }
-    
-    res.json(schema);
-  });
+  app.get(
+    "/api/component-registry/:componentType/:version/schema",
+    (req, res) => {
+      const { componentType, version } = req.params;
+      const schema = loadSchema(componentType, version);
 
-  app.get("/api/component-registry/:componentType/:version/examples", (req, res) => {
-    const { componentType, version } = req.params;
-    const examples = loadExamples(componentType, version);
-    res.json({ examples });
-  });
+      if (!schema) {
+        res.status(404).json({ error: "Schema not found" });
+        return;
+      }
 
-  app.get("/api/component-registry/:componentType/:version/example-path", (req, res) => {
-    const { componentType, version } = req.params;
-    const filePath = getExampleFilePath(componentType, version);
-    res.json({ path: filePath });
-  });
+      res.json(schema);
+    },
+  );
 
-  app.post("/api/component-registry/:componentType/create-version", (req, res) => {
-    const { componentType } = req.params;
-    const { baseVersion } = req.body;
-    
-    if (!baseVersion) {
-      res.status(400).json({ error: "baseVersion required" });
-      return;
-    }
-    
-    const result = createNewVersion(componentType, baseVersion);
-    
-    if (!result.success) {
-      res.status(400).json({ error: result.error });
-      return;
-    }
-    
-    res.json({ success: true, newVersion: result.newVersion });
-  });
+  app.get(
+    "/api/component-registry/:componentType/:version/examples",
+    (req, res) => {
+      const { componentType, version } = req.params;
+      const examples = loadExamples(componentType, version);
+      res.json({ examples });
+    },
+  );
 
-  app.post("/api/component-registry/:componentType/:version/save-example", (req, res) => {
-    const { componentType, version } = req.params;
-    const { exampleName, yamlContent } = req.body;
-    
-    if (!exampleName || !yamlContent) {
-      res.status(400).json({ error: "exampleName and yamlContent required" });
-      return;
-    }
-    
-    const result = saveExample(componentType, version, exampleName, yamlContent);
-    
-    if (!result.success) {
-      res.status(400).json({ error: result.error });
-      return;
-    }
-    
-    res.json({ success: true });
-  });
+  app.get(
+    "/api/component-registry/:componentType/:version/example-path",
+    (req, res) => {
+      const { componentType, version } = req.params;
+      const filePath = getExampleFilePath(componentType, version);
+      res.json({ path: filePath });
+    },
+  );
+
+  app.post(
+    "/api/component-registry/:componentType/create-version",
+    (req, res) => {
+      const { componentType } = req.params;
+      const { baseVersion } = req.body;
+
+      if (!baseVersion) {
+        res.status(400).json({ error: "baseVersion required" });
+        return;
+      }
+
+      const result = createNewVersion(componentType, baseVersion);
+
+      if (!result.success) {
+        res.status(400).json({ error: result.error });
+        return;
+      }
+
+      res.json({ success: true, newVersion: result.newVersion });
+    },
+  );
+
+  app.post(
+    "/api/component-registry/:componentType/:version/save-example",
+    (req, res) => {
+      const { componentType, version } = req.params;
+      const { exampleName, yamlContent } = req.body;
+
+      if (!exampleName || !yamlContent) {
+        res.status(400).json({ error: "exampleName and yamlContent required" });
+        return;
+      }
+
+      const result = saveExample(
+        componentType,
+        version,
+        exampleName,
+        yamlContent,
+      );
+
+      if (!result.success) {
+        res.status(400).json({ error: result.error });
+        return;
+      }
+
+      res.json({ success: true });
+    },
+  );
 
   // Content editing API
   app.post("/api/content/edit", async (req, res) => {
@@ -1026,8 +1169,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // In development mode, allow without token (using X-Debug-Token or no auth)
       const isDevelopment = process.env.NODE_ENV !== "production";
       const authHeader = req.headers.authorization;
-      const debugToken = req.headers['x-debug-token'] as string | undefined;
-      
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+
       // Get token from Authorization header or X-Debug-Token
       let token: string | null = null;
       if (authHeader?.startsWith("Token ")) {
@@ -1035,69 +1178,109 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (debugToken) {
         token = debugToken;
       }
-      
+
       // In production, require valid token
       if (!isDevelopment) {
         if (!token) {
           res.status(401).json({ error: "Authorization required" });
           return;
         }
-        
+
         // Verify token has edit capabilities
-        const capResponse = await fetch("https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster", {
-          method: "GET",
-          headers: {
-            "Authorization": `Token ${token}`,
-            "Academy": "4",
+        const capResponse = await fetch(
+          "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
           },
-        });
-        
+        );
+
         if (capResponse.status !== 200) {
           res.status(403).json({ error: "Insufficient permissions" });
           return;
         }
       }
-      
+
       // Support both formats:
       // 1. Original: { contentType, slug, locale, operations: [...] }
       // 2. Simplified: { contentType, slug, locale, operation, sectionIndex, sectionData, variant, version }
-      const { contentType, slug, locale, operations, operation, sectionIndex, sectionData, variant, version } = req.body;
-      
+      const {
+        contentType,
+        slug,
+        locale,
+        operations,
+        operation,
+        sectionIndex,
+        sectionData,
+        variant,
+        version,
+      } = req.body;
+
       if (!contentType || !slug || !locale) {
-        res.status(400).json({ error: "Missing required fields: contentType, slug, locale" });
+        res
+          .status(400)
+          .json({
+            error: "Missing required fields: contentType, slug, locale",
+          });
         return;
       }
-      
+
       // Build operations array if using simplified format (only for update_section)
       let finalOperations = operations;
-      if (!operations && operation === 'update_section') {
-        if (sectionIndex === undefined || sectionData === undefined || sectionData === null) {
-          res.status(400).json({ error: "update_section requires sectionIndex and sectionData" });
+      if (!operations && operation === "update_section") {
+        if (
+          sectionIndex === undefined ||
+          sectionData === undefined ||
+          sectionData === null
+        ) {
+          res
+            .status(400)
+            .json({
+              error: "update_section requires sectionIndex and sectionData",
+            });
           return;
         }
-        finalOperations = [{
-          action: 'update_section',
-          index: sectionIndex,
-          section: sectionData,
-        }];
+        finalOperations = [
+          {
+            action: "update_section",
+            index: sectionIndex,
+            section: sectionData,
+          },
+        ];
       }
-      
-      if (!finalOperations || !Array.isArray(finalOperations) || finalOperations.length === 0) {
+
+      if (
+        !finalOperations ||
+        !Array.isArray(finalOperations) ||
+        finalOperations.length === 0
+      ) {
         res.status(400).json({ error: "Missing operations" });
         return;
       }
-      
+
       // Only pass variant/version if both are meaningful (not "default" or undefined)
-      const effectiveVariant = variant && variant !== 'default' ? variant : undefined;
-      const effectiveVersion = effectiveVariant && version !== undefined ? version : undefined;
-      
-      const result = await editContent({ contentType, slug, locale, operations: finalOperations, variant: effectiveVariant, version: effectiveVersion });
-      
+      const effectiveVariant =
+        variant && variant !== "default" ? variant : undefined;
+      const effectiveVersion =
+        effectiveVariant && version !== undefined ? version : undefined;
+
+      const result = await editContent({
+        contentType,
+        slug,
+        locale,
+        operations: finalOperations,
+        variant: effectiveVariant,
+        version: effectiveVersion,
+      });
+
       if (result.success) {
         // Clear relevant caches
         clearSitemapCache();
         clearRedirectCache();
-        
+
         // Return success with updated sections for immediate UI update
         res.json({ success: true, updatedSections: result.updatedSections });
       } else {
@@ -1112,14 +1295,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/content/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
     const locale = (req.query.locale as string) || "en";
-    
+
     if (!["program", "landing", "location"].includes(contentType)) {
       res.status(400).json({ error: "Invalid content type" });
       return;
     }
-    
-    const result = getContentForEdit(contentType as "program" | "landing" | "location", slug, locale);
-    
+
+    const result = getContentForEdit(
+      contentType as "program" | "landing" | "location",
+      slug,
+      locale,
+    );
+
     if (result.content) {
       res.json(result.content);
     } else {
@@ -1128,19 +1315,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Lead Form API endpoints
-  
+
   // Get form options (programs and locations for dropdowns)
   app.get("/api/form-options", (req, res) => {
     const locale = (req.query.locale as string) || "en";
-    
+
     // Get all programs for dropdown
-    const programs = listCareerPrograms(locale).map(p => ({
+    const programs = listCareerPrograms(locale).map((p) => ({
       slug: p.slug,
       title: p.title,
     }));
-    
+
     // Get all visible locations grouped by region
-    const locationsPath = path.join(process.cwd(), "marketing-content", "locations");
+    const locationsPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "locations",
+    );
     const locationsList: Array<{
       slug: string;
       name: string;
@@ -1148,14 +1339,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       country: string;
       region: string;
     }> = [];
-    
+
     try {
       if (fs.existsSync(locationsPath)) {
         const dirs = fs.readdirSync(locationsPath);
         for (const dir of dirs) {
           const campusPath = path.join(locationsPath, dir, "campus.yml");
           if (fs.existsSync(campusPath)) {
-            const campusData = yaml.load(fs.readFileSync(campusPath, "utf8")) as {
+            const campusData = yaml.load(
+              fs.readFileSync(campusPath, "utf8"),
+            ) as {
               slug: string;
               name: string;
               city: string;
@@ -1178,33 +1371,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error loading locations:", error);
     }
-    
+
     // Group locations by region
     const regions = [
-      { slug: "usa-canada", label: locale === "es" ? "EE.UU. y Canadá" : "USA & Canada" },
-      { slug: "latam", label: locale === "es" ? "Latinoamérica" : "Latin America" },
+      {
+        slug: "usa-canada",
+        label: locale === "es" ? "EE.UU. y Canadá" : "USA & Canada",
+      },
+      {
+        slug: "latam",
+        label: locale === "es" ? "Latinoamérica" : "Latin America",
+      },
       { slug: "europe", label: locale === "es" ? "Europa" : "Europe" },
       { slug: "online", label: "Online" },
     ];
-    
+
     res.json({
       programs,
       locations: locationsList,
       regions,
     });
   });
-  
+
   // Submit lead form
   app.post("/api/leads", async (req, res) => {
     try {
       const leadData = req.body;
-      
+
       // Validate required fields
       if (!leadData.email) {
         res.status(400).json({ error: "Email is required" });
         return;
       }
-      
+
       // Build the payload for Breathecode API
       const payload = {
         first_name: leadData.first_name || null,
@@ -1215,6 +1414,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         course: leadData.program || null,
         consent: leadData.consent_whatsapp || false,
         sms_consent: leadData.sms_consent || false,
+        consent_email: leadData.consent_email || false,
         comment: leadData.comment || null,
         // Session/tracking data
         utm_url: leadData.utm_url || null,
@@ -1250,27 +1450,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         experiment_slug: leadData.experiment_slug || null,
         experiment_variant: leadData.experiment_variant || null,
         experiment_version: leadData.experiment_version || null,
+        // Turnstile token for bot protection
+        token: leadData.token || null,
       };
-      
+
+      // Remove null, undefined, and empty string values from payload
+      const cleanPayload = Object.fromEntries(
+        Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== "")
+      );
+
       // Post to Breathecode API
-      const response = await fetch(`${BREATHECODE_HOST}/v1/marketing/lead`, {
+      const response = await fetch(`${BREATHECODE_HOST}/v2/marketing/lead`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(cleanPayload),
       });
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Breathecode API error:", response.status, errorText);
-        res.status(response.status).json({ 
+        res.status(response.status).json({
           error: "Failed to submit lead",
-          details: errorText 
+          details: errorText,
         });
         return;
       }
-      
+
       const result = await response.json();
       res.json({ success: true, data: result });
     } catch (error) {
@@ -1307,24 +1514,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/validation/run", async (req, res) => {
     try {
       const { validators: validatorNames, includeArtifacts } = req.body;
-      
+
       const service = getValidationService();
-      
+
       // Clear previous context to get fresh data
       service.clearContext();
       await service.buildContext();
-      
+
       const result = await service.runValidators({
         validators: validatorNames,
         includeArtifacts: includeArtifacts ?? false,
       });
-      
+
       res.json(result);
     } catch (error) {
       console.error("Validation error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         error: "Validation failed",
-        message: error instanceof Error ? error.message : "Unknown error"
+        message: error instanceof Error ? error.message : "Unknown error",
       });
     }
   });
@@ -1334,21 +1541,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { name } = req.params;
       const { includeArtifacts } = req.body;
-      
+
       const service = getValidationService();
-      
+
       // Clear previous context to get fresh data
       service.clearContext();
       await service.buildContext();
-      
-      const result = await service.runSingleValidator(name, includeArtifacts ?? false);
-      
+
+      const result = await service.runSingleValidator(
+        name,
+        includeArtifacts ?? false,
+      );
+
       res.json(result);
     } catch (error) {
       console.error("Validation error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         error: "Validation failed",
-        message: error instanceof Error ? error.message : "Unknown error"
+        message: error instanceof Error ? error.message : "Unknown error",
       });
     }
   });
@@ -1358,26 +1568,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const service = getValidationService();
       let context = service.getContext();
-      
+
       if (!context) {
         await service.buildContext();
         context = service.getContext();
       }
-      
+
       if (!context) {
         res.status(500).json({ error: "Failed to build context" });
         return;
       }
-      
+
       // contentFiles is a flat array - count by type
       const contentFiles = context.contentFiles;
       const typeCounts = {
-        programs: contentFiles.filter(f => f.type === "program").length,
-        landings: contentFiles.filter(f => f.type === "landing").length,
-        locations: contentFiles.filter(f => f.type === "location").length,
-        pages: contentFiles.filter(f => f.type === "page").length,
+        programs: contentFiles.filter((f) => f.type === "program").length,
+        landings: contentFiles.filter((f) => f.type === "landing").length,
+        locations: contentFiles.filter((f) => f.type === "location").length,
+        pages: contentFiles.filter((f) => f.type === "page").length,
       };
-      
+
       res.json({
         contentFiles: typeCounts,
         totalFiles: contentFiles.length,
@@ -1406,7 +1616,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/content/adapt-with-ai", async (req, res) => {
     try {
       const { getContentAdapter } = await import("./ai");
-      
+
       const {
         contentType,
         contentSlug,
@@ -1420,10 +1630,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } = req.body;
 
       // Validate required fields
-      if (!contentType || !contentSlug || !targetComponent || !targetVersion || !sourceYaml) {
+      if (
+        !contentType ||
+        !contentSlug ||
+        !targetComponent ||
+        !targetVersion ||
+        !sourceYaml
+      ) {
         res.status(400).json({
           error: "Missing required fields",
-          required: ["contentType", "contentSlug", "targetComponent", "targetVersion", "sourceYaml"],
+          required: [
+            "contentType",
+            "contentSlug",
+            "targetComponent",
+            "targetVersion",
+            "sourceYaml",
+          ],
         });
         return;
       }

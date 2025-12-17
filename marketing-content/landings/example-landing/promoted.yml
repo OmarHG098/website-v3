@@ -8,16 +8,16 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
+    title: You Are Not Alone Anymore
+    subtitle: Receive personalized career support tailored to your goals
     welcome_text: Welcome to
     brand_mark:
       prefix: Personalized
       highlight: Support
       color: chart-5
-    title: You Are Not Alone Anymore
-    subtitle: Receive personalized career support tailored to your goals
     description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
     background_image:
-      src: /attached_assets/ai-engineering-light_1765830844948.jpg
+      src: /attached_assets/ai-engineering-light.jpg
       alt: AI Engineering Background
     form:
       variant: inline
@@ -29,13 +29,13 @@ sections:
       fields:
         email:
           visible: true
-          helper_text: Join 10,000+ professionals advancing their careers
           placeholder: Enter your work email
       success:
         message: Thank you for signing up! We'll be in touch soon.
       terms_url: /terms-and-conditions
       privacy_url: /privacy-policy
-      show_consent: true
+      consent:
+        email: true
       show_terms: true
       className: inline-form
     cta_button:

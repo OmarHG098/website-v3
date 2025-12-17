@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { queryClient } from "@/lib/queryClient";
 import type { Section } from "@shared/schema";
@@ -34,6 +35,7 @@ export function SectionEditorPanel({
   onClose,
   onPreviewChange,
 }: SectionEditorPanelProps) {
+  const { toast } = useToast();
   const [yamlContent, setYamlContent] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -156,8 +158,14 @@ export function SectionEditorPanel({
 
   // Save without closing editor
   const handleSave = useCallback(async () => {
-    await saveToServer();
-  }, [saveToServer]);
+    const success = await saveToServer();
+    if (success) {
+      toast({
+        title: "Changes saved",
+        description: "Your section has been updated successfully.",
+      });
+    }
+  }, [saveToServer, toast]);
   
   // Handle close with unsaved changes warning
   const handleClose = useCallback(() => {

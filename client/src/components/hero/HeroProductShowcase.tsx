@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,21 @@ interface HeroProductShowcaseProps {
 }
 
 export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
+  // Hide background image on screens smaller than 1280px for better mobile experience
+  const [showBackground, setShowBackground] = useState(false);
+  
+  useEffect(() => {
+    const checkWidth = () => {
+      setShowBackground(window.innerWidth >= 1280);
+    };
+    
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  const shouldShowBackground = data.background_image && showBackground;
+
   const colorMap: Record<string, string> = {
     "primary": "hsl(var(--primary))",
     "accent": "hsl(var(--accent))",
@@ -23,14 +39,14 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   return (
     <section 
       className="py-16 md:py-20 relative overflow-hidden"
-      style={data.background_image ? {
-        backgroundImage: `url(${data.background_image.src})`,
+      style={shouldShowBackground ? {
+        backgroundImage: `url(${data.background_image!.src})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       } : undefined}
       data-testid="section-hero"
     >
-      {!data.background_image && (
+      {!shouldShowBackground && (
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
       )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -86,7 +102,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   data={{
                     ...data.form,
                     variant: data.form.variant || "inline",
-                    show_consent: data.form.show_consent ?? false,
+                    consent: data.form.consent,
                     show_terms: data.form.show_terms ?? false,
                     className: "w-full max-w-md mb-6",
                   } as LeadFormData}

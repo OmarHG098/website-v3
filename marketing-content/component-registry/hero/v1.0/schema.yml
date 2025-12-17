@@ -251,7 +251,10 @@ variant_props:
           type: string
           required: false
           description: Background image alt text for accessibility
-      description: Full-width background image for the section
+      description: >-
+        Full-width background image for the section. 
+        NOTE: Background image is only displayed on screens >= 1280px width. 
+        On smaller screens, a gradient fallback is shown instead for better mobile experience.
     form:
       type: object
       required: false
@@ -487,10 +490,23 @@ variant_props:
         privacy_url:
           type: string
           required: false
-        show_consent:
-          type: boolean
+        consent:
+          type: object
           required: false
-          description: Whether to show SMS/WhatsApp consent checkboxes
+          description: Granular consent options for different communication channels
+          properties:
+            email:
+              type: boolean
+              required: false
+              description: Show email marketing consent checkbox
+            sms:
+              type: boolean
+              required: false
+              description: Show SMS consent checkbox (recommended when phone is visible)
+            whatsapp:
+              type: boolean
+              required: false
+              description: Show WhatsApp consent checkbox (recommended when phone is visible)
         show_terms:
           type: boolean
           required: false

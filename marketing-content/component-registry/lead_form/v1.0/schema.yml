@@ -255,9 +255,23 @@ props:
     type: string
     required: false
     description: URL for Privacy Policy link
-  show_consent:
-    type: boolean
+  consent:
+    type: object
     required: false
+    description: Granular consent options for different communication channels
+    properties:
+      email:
+        type: boolean
+        required: false
+        description: Show email marketing consent checkbox
+      sms:
+        type: boolean
+        required: false
+        description: Show SMS consent checkbox (recommended when phone is visible)
+      whatsapp:
+        type: boolean
+        required: false
+        description: Show WhatsApp consent checkbox (recommended when phone is visible)
   show_terms:
     type: boolean
     required: false
