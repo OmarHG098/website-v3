@@ -259,8 +259,9 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   `}
                   style={{
                     top: rect.top,
-                    left: isLastCard ? 0 : rect.left,
-                    right: isLastCard ? "auto" : "auto",
+                    left: isLastCard 
+                      ? (isHovered ? 0 : rect.left)  // Last card: starts at rect.left, expands to left edge
+                      : rect.left,  // Other cards: always start at rect.left
                     width: isHovered ? expandedWidth : rect.width,
                     height: rect.height,
                   }}
