@@ -1,29 +1,8 @@
 import { useState } from "react";
-import * as TablerIcons from "@tabler/icons-react";
-import { getCustomIcon } from "../custom-icons";
-import { StepNumber } from "../NumberedSteps";
 import type { NumberedStepsBubbleTextSection } from "@shared/schema";
-
-const { IconCheck } = TablerIcons;
 
 interface NumberedStepsBubbleTextProps {
   data: NumberedStepsBubbleTextSection;
-}
-
-function getIcon(iconName?: string) {
-  if (!iconName) return <IconCheck className="w-8 h-8 text-primary" />;
-  
-  const CustomIcon = getCustomIcon(iconName);
-  if (CustomIcon) {
-    return <CustomIcon width="48px" height="48px" />;
-  }
-  
-  const fullIconName = `Icon${iconName}`;
-  const Icon = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullIconName];
-  if (Icon) {
-    return <Icon className="w-8 h-8 text-primary" />;
-  }
-  return <IconCheck className="w-8 h-8 text-primary" />;
 }
 
 export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) {
@@ -45,10 +24,6 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
   };
 
   const activeContent = getActiveContent();
-
-  const getStepOpacity = (_stepIndex: number) => {
-    return "opacity-100";
-  };
 
   return (
     <section
@@ -76,32 +51,31 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           {steps.map((step, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center transition-opacity duration-300 ${getStepOpacity(index)}`}
+              className="flex flex-col items-center"
               data-testid={`numbered-step-mobile-${index + 1}`}
             >
               <button
                 onClick={() => handleStepInteraction(index)}
                 aria-label={step.title || `Step ${index + 1}`}
                 aria-expanded={activeStep === index}
-                className={`w-20 h-20 rounded-full border-4 flex items-center justify-center transition-all ${
+                className={`flex flex-col items-center gap-1 p-3 rounded-lg transition-all ${
                   activeStep === index
-                    ? "border-primary bg-primary/20 scale-110"
-                    : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
                 data-testid={`button-numbered-step-${index + 1}`}
               >
-                {getIcon(step.icon)}
-              </button>
-              <div className="mt-4 flex items-center gap-3">
-                <StepNumber index={index} variant="spotlight" size="sm" />
+                <span className="text-sm font-medium uppercase tracking-wide">
+                  Step {String(index + 1).padStart(2, "0")}
+                </span>
                 {step.title && (
-                  <h3 className="text-base font-semibold text-foreground leading-tight">
+                  <span className="text-lg font-semibold text-foreground">
                     {step.title}
-                  </h3>
+                  </span>
                 )}
-              </div>
+              </button>
               {activeStep === index && step.bullets && (
-                <div className="mt-4 p-4 bg-card border rounded-lg w-full animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="mt-4 p-4 border border-primary/30 rounded-lg w-full animate-in fade-in slide-in-from-top-2 duration-300">
                   <ul className="space-y-2">
                     {step.bullets.map((bullet, bulletIndex) => (
                       <li
@@ -119,7 +93,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           ))}
         </div>
 
-        {/* Desktop: CSS Grid Triangle layout with background and connectors */}
+        {/* Desktop: CSS Grid Triangle layout with connectors */}
         <div className="hidden md:block relative">
           {/* SVG Curved Connector Lines - Dotted */}
           <svg
@@ -151,92 +125,87 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           </svg>
 
           <div className="relative grid grid-cols-[1fr_minmax(450px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
-            {/* Step 2 - Top Center (row 1, col 2) - Title ABOVE circle */}
+            {/* Step 2 - Top Center (row 1, col 2) */}
             {steps[1] && (
               <div
-                className={`col-start-2 row-start-1 flex flex-col items-center justify-center pb-6 transition-opacity duration-300 ${getStepOpacity(1)}`}
+                className="col-start-2 row-start-1 flex flex-col items-center justify-center pb-6"
                 data-testid="numbered-step-2"
               >
-                <div className="mb-4 flex items-center gap-3">
-                  <StepNumber index={1} variant="spotlight" size="md" />
+                <button
+                  onClick={() => handleStepInteraction(1)}
+                  onMouseEnter={() => setActiveStep(1)}
+                  aria-label={steps[1].title || "Step 2"}
+                  aria-expanded={activeStep === 1}
+                  className={`flex flex-col items-center gap-1 p-4 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 1
+                      ? "text-primary scale-105"
+                      : "text-muted-foreground hover:text-foreground hover:scale-102"
+                  }`}
+                  data-testid="button-numbered-step-2"
+                >
+                  <span className="text-sm font-medium uppercase tracking-wide">
+                    Step {String(2).padStart(2, "0")}
+                  </span>
                   {steps[1].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                    <span className={`text-xl font-semibold leading-tight text-center max-w-[180px] ${
+                      activeStep === 1 ? "text-primary" : "text-foreground"
+                    }`}>
                       {steps[1].title}
-                    </h3>
+                    </span>
                   )}
-                </div>
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full bg-background" />
-                  <button
-                    onClick={() => handleStepInteraction(1)}
-                    onMouseEnter={() => setActiveStep(1)}
-                    aria-label={steps[1].title || "Step 2"}
-                    aria-expanded={activeStep === 1}
-                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                      activeStep === 1
-                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                    }`}
-                    data-testid="button-numbered-step-2"
-                  >
-                    {getIcon(steps[1].icon)}
-                  </button>
-                </div>
+                </button>
               </div>
             )}
 
-            {/* Step 1 - Bottom Left (row 2, col 1) - Title to LEFT of circle */}
+            {/* Step 1 - Bottom Left (row 2, col 1) */}
             {steps[0] && (
               <div
-                className={`col-start-1 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(0)}`}
+                className="col-start-1 row-start-2 flex items-center justify-end h-full"
                 data-testid="numbered-step-1"
               >
-                <div className="flex items-center gap-3">
-                  <StepNumber index={0} variant="spotlight" size="md" />
+                <button
+                  onClick={() => handleStepInteraction(0)}
+                  onMouseEnter={() => setActiveStep(0)}
+                  aria-label={steps[0].title || "Step 1"}
+                  aria-expanded={activeStep === 0}
+                  className={`flex flex-col items-center gap-1 p-4 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 0
+                      ? "text-primary scale-105"
+                      : "text-muted-foreground hover:text-foreground hover:scale-102"
+                  }`}
+                  data-testid="button-numbered-step-1"
+                >
+                  <span className="text-sm font-medium uppercase tracking-wide">
+                    Step {String(1).padStart(2, "0")}
+                  </span>
                   {steps[0].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                    <span className={`text-xl font-semibold leading-tight text-center max-w-[180px] ${
+                      activeStep === 0 ? "text-primary" : "text-foreground"
+                    }`}>
                       {steps[0].title}
-                    </h3>
+                    </span>
                   )}
-                </div>
-                <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 rounded-full bg-background" />
-                  <button
-                    onClick={() => handleStepInteraction(0)}
-                    onMouseEnter={() => setActiveStep(0)}
-                    aria-label={steps[0].title || "Step 1"}
-                    aria-expanded={activeStep === 0}
-                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                      activeStep === 0
-                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                    }`}
-                    data-testid="button-numbered-step-1"
-                  >
-                    {getIcon(steps[0].icon)}
-                  </button>
-                </div>
+                </button>
               </div>
             )}
 
-            {/* Center Bubble - row 2, col 2 */}
+            {/* Center Content - row 2, col 2 - No background, just centered text with border outline */}
             <div
               className="col-start-2 row-start-2 flex items-center justify-center"
             >
               <div
-                className={`relative bg-card border-2 border-primary/30 rounded-[6rem] lg:rounded-[6rem] p-10 shadow-lg w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col
-                  before:content-[''] before:absolute before:w-5 before:h-5 before:bg-card before:border-2 before:border-primary/30 before:rotate-45
-                  after:content-[''] after:absolute after:w-4 after:h-4 after:bg-card after:rotate-45
-                  ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0 after:left-0 after:top-1/2 after:-translate-x-1/3 after:-translate-y-1/2" : ""}
-                  ${activeStep === 1 ? "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-b-0 before:border-r-0 after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/3" : ""}
-                  ${activeStep === 2 ? "before:right-0 before:top-1/2 before:translate-x-1/2 before:-translate-y-1/2 before:border-l-0 before:border-b-0 after:right-0 after:top-1/2 after:translate-x-1/3 after:-translate-y-1/2" : ""}
+                className={`relative border-2 border-primary/30 rounded-[4rem] p-10 w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col items-center justify-center text-center
+                  before:content-[''] before:absolute before:w-4 before:h-4 before:border-2 before:border-primary/30 before:rotate-45 before:bg-[hsl(var(--background))]
+                  ${activeStep === 0 ? "before:left-0 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-r-0 before:border-t-0" : ""}
+                  ${activeStep === 1 ? "before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:border-b-0 before:border-r-0" : ""}
+                  ${activeStep === 2 ? "before:right-0 before:top-1/2 before:translate-x-1/2 before:-translate-y-1/2 before:border-l-0 before:border-b-0" : ""}
                 `}
                 data-testid="bubble-content"
               >
                 {activeContent && (
                   <div key={activeStep} className="animate-in fade-in duration-300">
                     {activeContent.title && (
-                      <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                      <h4 className="text-xl font-semibold text-foreground mb-4 flex items-center justify-center gap-2">
                         <span className="text-primary font-bold text-2xl">
                           {String(activeStep + 1).padStart(2, "0")}
                         </span>
@@ -247,7 +216,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                       <p className="text-muted-foreground mb-4 text-base">{activeContent.text}</p>
                     )}
                     {activeContent.bullets.length > 0 && (
-                      <ul className="space-y-3">
+                      <ul className="space-y-3 text-left">
                         {activeContent.bullets.map((bullet, bulletIndex) => (
                           <li
                             key={bulletIndex}
@@ -264,37 +233,35 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             </div>
 
-            {/* Step 3 - Bottom Right (row 2, col 3) - Title to RIGHT of circle */}
+            {/* Step 3 - Bottom Right (row 2, col 3) */}
             {steps[2] && (
               <div
-                className={`col-start-3 row-start-2 flex items-center justify-start gap-4 h-full transition-opacity duration-300 ${getStepOpacity(2)}`}
+                className="col-start-3 row-start-2 flex items-center justify-start h-full"
                 data-testid="numbered-step-3"
               >
-                <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 rounded-full bg-background" />
-                  <button
-                    onClick={() => handleStepInteraction(2)}
-                    onMouseEnter={() => setActiveStep(2)}
-                    aria-label={steps[2].title || "Step 3"}
-                    aria-expanded={activeStep === 2}
-                    className={`relative w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all cursor-pointer ${
-                      activeStep === 2
-                        ? "border-primary bg-primary/20 scale-110 shadow-lg"
-                        : "border-primary/50 bg-primary/10 hover:border-primary hover:scale-105"
-                    }`}
-                    data-testid="button-numbered-step-3"
-                  >
-                    {getIcon(steps[2].icon)}
-                  </button>
-                </div>
-                <div className="flex items-center gap-3">
-                  <StepNumber index={2} variant="spotlight" size="md" />
+                <button
+                  onClick={() => handleStepInteraction(2)}
+                  onMouseEnter={() => setActiveStep(2)}
+                  aria-label={steps[2].title || "Step 3"}
+                  aria-expanded={activeStep === 2}
+                  className={`flex flex-col items-center gap-1 p-4 rounded-lg transition-all cursor-pointer ${
+                    activeStep === 2
+                      ? "text-primary scale-105"
+                      : "text-muted-foreground hover:text-foreground hover:scale-102"
+                  }`}
+                  data-testid="button-numbered-step-3"
+                >
+                  <span className="text-sm font-medium uppercase tracking-wide">
+                    Step {String(3).padStart(2, "0")}
+                  </span>
                   {steps[2].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
+                    <span className={`text-xl font-semibold leading-tight text-center max-w-[180px] ${
+                      activeStep === 2 ? "text-primary" : "text-foreground"
+                    }`}>
                       {steps[2].title}
-                    </h3>
+                    </span>
                   )}
-                </div>
+                </button>
               </div>
             )}
           </div>
