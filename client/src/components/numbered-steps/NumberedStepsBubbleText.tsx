@@ -140,8 +140,8 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-2"
                 >
-                  {/* Gradient fade for line - fades from bottom */}
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-20 h-12 bg-gradient-to-t from-[hsl(var(--muted))] to-transparent pointer-events-none" />
+                  {/* Gradient fade for line - vertical fade from bottom */}
+                  <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-32 h-24 bg-gradient-to-t from-[hsl(var(--muted))] via-[hsl(var(--muted)/0.8)] to-transparent pointer-events-none" />
                   {steps[1].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
@@ -170,8 +170,8 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-1"
                 >
-                  {/* Gradient fade for line - fades from right */}
-                  <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-20 bg-gradient-to-l from-[hsl(var(--muted))] to-transparent pointer-events-none" />
+                  {/* Gradient fade for line - vertical fade */}
+                  <div className="absolute -right-12 -top-16 w-24 h-48 bg-gradient-to-b from-[hsl(var(--muted))] via-[hsl(var(--muted)/0.6)] to-transparent pointer-events-none" />
                   {steps[0].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right">
                       {steps[0].title}
@@ -247,8 +247,8 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-3"
                 >
-                  {/* Gradient fade for line - fades from left */}
-                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-20 bg-gradient-to-r from-[hsl(var(--muted))] to-transparent pointer-events-none" />
+                  {/* Gradient fade for line - vertical fade */}
+                  <div className="absolute -left-12 -top-16 w-24 h-48 bg-gradient-to-b from-[hsl(var(--muted))] via-[hsl(var(--muted)/0.6)] to-transparent pointer-events-none" />
                   <div className="relative">
                     <StepNumber index={2} variant="spotlight" size="md" />
                   </div>
