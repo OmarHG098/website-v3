@@ -135,17 +135,21 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(1)}
                   aria-label={steps[1].title || "Step 2"}
                   aria-expanded={activeStep === 1}
-                  className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
+                  className={`relative flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
                     activeStep === 1 ? "scale-105" : "hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-2"
                 >
+                  {/* Gradient fade for line - fades from bottom */}
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-20 h-12 bg-gradient-to-t from-[hsl(var(--muted))] to-transparent pointer-events-none" />
                   {steps[1].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
                     </h3>
                   )}
-                  <StepNumber index={1} variant="spotlight" size="md" />
+                  <div className="relative">
+                    <StepNumber index={1} variant="spotlight" size="md" />
+                  </div>
                 </button>
               </div>
             )}
@@ -161,17 +165,21 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(0)}
                   aria-label={steps[0].title || "Step 1"}
                   aria-expanded={activeStep === 0}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
+                  className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
                     activeStep === 0 ? "scale-105" : "hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-1"
                 >
+                  {/* Gradient fade for line - fades from right */}
+                  <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-20 bg-gradient-to-l from-[hsl(var(--muted))] to-transparent pointer-events-none" />
                   {steps[0].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[140px]">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-right">
                       {steps[0].title}
                     </h3>
                   )}
-                  <StepNumber index={0} variant="spotlight" size="md" />
+                  <div className="relative">
+                    <StepNumber index={0} variant="spotlight" size="md" />
+                  </div>
                 </button>
               </div>
             )}
@@ -226,7 +234,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             {/* Step 3 - Bottom Right (row 2, col 3) - Step number and title at right */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-8"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-4"
                 data-testid="numbered-step-3"
               >
                 <button
@@ -234,14 +242,18 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   onMouseEnter={() => setActiveStep(2)}
                   aria-label={steps[2].title || "Step 3"}
                   aria-expanded={activeStep === 2}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
+                  className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
                     activeStep === 2 ? "scale-105" : "hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-3"
                 >
-                  <StepNumber index={2} variant="spotlight" size="md" />
+                  {/* Gradient fade for line - fades from left */}
+                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-20 bg-gradient-to-r from-[hsl(var(--muted))] to-transparent pointer-events-none" />
+                  <div className="relative">
+                    <StepNumber index={2} variant="spotlight" size="md" />
+                  </div>
                   {steps[2].title && (
-                    <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[140px]">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left">
                       {steps[2].title}
                     </h3>
                   )}
