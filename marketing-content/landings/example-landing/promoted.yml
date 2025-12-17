@@ -6,15 +6,44 @@ meta:
     - /demo/landing-page
 sections:
   - type: hero
-    variant: singleColumn
-    title: Career Development for the AI Era
+    version: "1.0"
+    variant: productShowcase
+    title: You Are Not Alone Anymore
     subtitle: Receive personalized career support tailored to your goals
-    cta_buttons:
-      - text: Get Started
-        url: /signup
-        variant: primary
+    welcome_text: Welcome to
+    brand_mark:
+      prefix: Personalized
+      highlight: Support
+      color: chart-5
+    description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
+    background_image:
+      src: /attached_assets/ai-engineering-light.jpg
+      alt: AI Engineering Background
+    form:
+      variant: inline
+      title: Start Your Journey
+      subtitle: Join thousands of learners building their tech careers
+      submit_label: Get Started →
+      tags: website-lead,personalized-support
+      automations: welcome-email
+      fields:
+        email:
+          visible: true
+          placeholder: Enter your work email
+      success:
+        message: Thank you for signing up! We'll be in touch soon.
+      terms_url: /terms-and-conditions
+      privacy_url: /privacy-policy
+      consent:
+        email: true
+      show_terms: true
+      className: inline-form
+    cta_button:
+      text: Explore Programs
+      url: /programs
+      variant: primary
+      icon: arrow-right
     trust_bar:
-      trusted_text: Trusted by thousands of students
       rating: "4.5"
       review_count: Based on 5149+ reviews
       review_logos:

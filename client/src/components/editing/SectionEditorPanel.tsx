@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { queryClient } from "@/lib/queryClient";
 import type { Section } from "@shared/schema";
@@ -19,6 +20,7 @@ interface SectionEditorPanelProps {
   version?: number;
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
+  onPreviewChange?: (previewSection: Section | null) => void;
 }
 
 export function SectionEditorPanel({
@@ -31,7 +33,9 @@ export function SectionEditorPanel({
   version,
   onUpdate,
   onClose,
+  onPreviewChange,
 }: SectionEditorPanelProps) {
+  const { toast } = useToast();
   const [yamlContent, setYamlContent] = useState("");
   const [parseError, setParseError] = useState<string | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -56,24 +60,29 @@ export function SectionEditorPanel({
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
     setHasChanges(true);
-    
-    // Validate YAML on change
+
+    // Validate YAML on change and trigger live preview
     try {
-      yamlParser.load(value);
+      const parsed = yamlParser.load(value) as Section;
       setParseError(null);
+
+      // Trigger live preview if valid section
+      if (parsed && typeof parsed === "object" && onPreviewChange) {
+        onPreviewChange(parsed);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
     }
-  }, []);
+  }, [onPreviewChange]);
 
   // Shared save logic - returns true on success
   const saveToServer = useCallback(async (): Promise<boolean> => {
     if (!contentType || !slug || !locale) {
       return false;
     }
-    
+
     let parsed: Section;
     try {
       parsed = yamlParser.load(yamlContent) as Section;
@@ -87,10 +96,10 @@ export function SectionEditorPanel({
       }
       return false;
     }
-    
+
     setIsSaving(true);
     setSaveError(null);
-    
+
     try {
       const token = getDebugToken();
       const response = await fetch("/api/content/edit", {
@@ -114,15 +123,23 @@ export function SectionEditorPanel({
       });
 
       if (response.ok) {
-        onUpdate(parsed);
+        const result = await response.json();
+
+        // Use server-confirmed section data if available, fallback to local parsed
+        const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
+        if (!confirmedSection) {
+          console.warn("Server did not return updated section, using local parsed data");
+        }
+        onUpdate(confirmedSection || parsed);
         setHasChanges(false);
-        
+
+        // Still invalidate queries to ensure cache consistency
         const apiPath = contentType === "program" 
           ? "/api/career-programs" 
           : contentType === "landing" 
             ? "/api/landings" 
             : "/api/locations";
-        
+
         await queryClient.invalidateQueries({ queryKey: [apiPath, slug] });
         return true;
       } else {
@@ -139,18 +156,29 @@ export function SectionEditorPanel({
     }
   }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate]);
 
-  // Apply: Save and keep editor open
-  const handleApply = useCallback(async () => {
-    await saveToServer();
-  }, [saveToServer]);
-
-  // Save: Save and close editor
+  // Save without closing editor
   const handleSave = useCallback(async () => {
     const success = await saveToServer();
     if (success) {
-      onClose();
+      toast({
+        title: "Changes saved",
+        description: "Your section has been updated successfully.",
+      });
     }
-  }, [saveToServer, onClose]);
+  }, [saveToServer, toast]);
+
+  // Handle close with unsaved changes warning
+  const handleClose = useCallback(() => {
+    if (hasChanges) {
+      const confirmed = window.confirm("You have unsaved changes. Are you sure you want to close without saving?");
+      if (!confirmed) return;
+    }
+    // Clear live preview when closing
+    if (onPreviewChange) {
+      onPreviewChange(null);
+    }
+    onClose();
+  }, [hasChanges, onClose, onPreviewChange]);
 
   const sectionType = (section as { type: string }).type || "unknown";
 
@@ -167,7 +195,7 @@ export function SectionEditorPanel({
         <Button
           size="icon"
           variant="ghost"
-          onClick={onClose}
+          onClick={handleClose}
           data-testid="button-close-editor"
         >
           <IconX className="h-4 w-4" />
@@ -190,7 +218,7 @@ export function SectionEditorPanel({
             className="h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
           />
         </div>
-        
+
         {parseError && (
           <div className="p-2 bg-destructive/10 text-destructive text-sm border-t">
             {parseError}
@@ -211,18 +239,10 @@ export function SectionEditorPanel({
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={handleClose}
             data-testid="button-cancel-edit"
           >
             Cancel
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={handleApply}
-            disabled={!!parseError || isSaving || !hasChanges}
-            data-testid="button-apply-changes"
-          >
-            Apply
           </Button>
           <Button
             onClick={handleSave}

@@ -99,12 +99,15 @@ export const heroProductShowcaseSchema = z.object({
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
   video: videoConfigSchema.optional(),
-  video_id: z.string().optional(),
-  video_title: z.string().optional(),
-  video_ratio: z.string().optional(),
   image: z.object({
     src: z.string(),
     alt: z.string(),
+  }).optional(),
+  // NOTE: Background image is only displayed on screens >= 1280px width.
+  // On smaller screens, a gradient fallback is shown instead for better mobile experience.
+  background_image: z.object({
+    src: z.string(),
+    alt: z.string().optional(),
   }).optional(),
   form: leadFormDataSchema.optional(),
   cta_button: ctaButtonSchema.optional(),

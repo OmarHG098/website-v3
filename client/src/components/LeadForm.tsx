@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -60,9 +61,18 @@ export interface LeadFormData {
   };
   terms_url?: string;
   privacy_url?: string;
-  show_consent?: boolean;
+  consent?: {
+    email?: boolean;
+    sms?: boolean;
+    whatsapp?: boolean;
+  };
   show_terms?: boolean;
   className?: string;
+  turnstile?: {
+    enabled?: boolean;
+    theme?: "light" | "dark" | "auto";
+    size?: "normal" | "compact";
+  };
 }
 
 interface LeadFormProps {
@@ -86,7 +96,8 @@ interface FormValues {
   location: string;
   coupon: string;
   comment: string;
-  sms_consent: boolean;
+  consent_email: boolean;
+  consent_sms: boolean;
   consent_whatsapp: boolean;
 }
 
@@ -98,10 +109,20 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const utm = useUTM();
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
+  const [showTurnstileModal, setShowTurnstileModal] = useState(false);
+
+  const turnstileEnabled = data.turnstile?.enabled ?? true;
+
+  const { data: turnstileSiteKey } = useQuery<{ siteKey: string }>({
+    queryKey: ["/api/turnstile/site-key"],
+    enabled: turnstileEnabled,
+  });
 
   const variant = data.variant || "stacked";
   const fields = data.fields || {};
-  const showConsent = data.show_consent !== false;
+  const consent = data.consent || {};
   const showTerms = data.show_terms !== false;
 
   const getFieldConfig = (fieldName: keyof NonNullable<LeadFormData["fields"]>): FieldConfig => {
@@ -127,7 +148,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     if (!configDefault || configDefault !== "auto") {
       return configDefault || "";
     }
-    
+
     switch (fieldName) {
       case "program":
         return programContext || "";
@@ -153,7 +174,8 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       location: resolveDefault("location", getFieldConfig("location").default),
       coupon: resolveDefault("coupon", getFieldConfig("coupon").default),
       comment: "",
-      sms_consent: false,
+      consent_email: false,
+      consent_sms: false,
       consent_whatsapp: false,
     },
   });
@@ -175,8 +197,20 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
+      // Check that Turnstile token exists if enabled (verification happens at Breathecode API)
+      if (turnstileEnabled && !turnstileToken) {
+        throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
+      }
+
+      // Map consent fields to backend field names
+      const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
+
       const payload = {
-        ...values,
+        ...restValues,
+        // Consent fields mapped to backend names
+        consent_email: consent_email || false,
+        sms_consent: consent_sms || false,
+        consent_whatsapp: consent_whatsapp || false,
         location: values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
         region: values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
         coupon: values.coupon || utm.coupon || resolveDefault("coupon", getFieldConfig("coupon").default),
@@ -202,8 +236,9 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         experiment_slug: session.experiment?.experiment_slug,
         variant_slug: session.experiment?.variant_slug,
         variant_version: session.experiment?.variant_version,
+        token: turnstileToken,
       };
-      
+
       return apiRequest("POST", "/api/leads", payload);
     },
     onSuccess: () => {
@@ -218,10 +253,36 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     },
     onError: (error: Error) => {
       console.error("Lead submission error:", error);
+
+      // Try to parse the error message to extract details
+      let errorMessage = error.message;
+      try {
+        // Error format: "400: {json}"
+        const jsonMatch = error.message.match(/^\d+:\s*(.+)$/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[1]);
+          if (parsed.details) {
+            // Details may be a JSON string itself
+            try {
+              const details = JSON.parse(parsed.details);
+              errorMessage = details.detail || details.message || parsed.error || error.message;
+            } catch {
+              errorMessage = parsed.details || parsed.error || error.message;
+            }
+          } else if (parsed.error) {
+            errorMessage = parsed.error;
+          }
+        }
+      } catch {
+        // Keep original message if parsing fails
+      }
+
+      setTurnstileError(errorMessage);
     },
   });
 
   const onSubmit = (values: FormValues) => {
+    setTurnstileError(null);
     submitMutation.mutate(values);
   };
 
@@ -231,11 +292,28 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     return loc.region === selectedRegion;
   }) || [];
 
+  const isInline = variant === "inline";
+
   if (isSuccess) {
+    // Inline variant: compact horizontal success message
+    if (isInline) {
+      return (
+        <div className="flex items-center gap-2 mb-4" data-testid="lead-form-success">
+          <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+            <IconCheck className="w-4 h-4 text-green-500" />
+          </div>
+          <p className="text-foreground text-sm" data-testid="text-success-message">
+            {successMessage}
+          </p>
+        </div>
+      );
+    }
+
+    // Stacked variant: centered success message
     return (
       <div className="text-center" data-testid="lead-form-success">
-        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center">
-          <IconCheck className="w-6 h-6 text-primary" />
+        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-green-500/20 flex items-center justify-center">
+          <IconCheck className="w-6 h-6 text-green-500" />
         </div>
         <p className="text-foreground" data-testid="text-success-message">
           {successMessage}
@@ -244,11 +322,9 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     );
   }
 
-  const isInline = variant === "inline";
   const emailConfig = getFieldConfig("email");
 
-  const hasVisibleFieldsBeyondEmail = 
-    getFieldConfig("first_name").visible ||
+  const hasVisibleFieldsBeyondEmailAndFirstName = 
     getFieldConfig("last_name").visible ||
     getFieldConfig("phone").visible ||
     getFieldConfig("program").visible ||
@@ -257,12 +333,33 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     getFieldConfig("coupon").visible ||
     getFieldConfig("comment").visible;
 
-  if (isInline && !hasVisibleFieldsBeyondEmail) {
+  const firstNameConfig = getFieldConfig("first_name");
+
+  if (isInline && !hasVisibleFieldsBeyondEmailAndFirstName) {
     return (
       <div className={data.className} data-testid="lead-form">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-2 items-start">
+            <div className="flex gap-2 items-start flex-wrap">
+              {firstNameConfig.visible && (
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  rules={{ required: firstNameConfig.required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
+                  render={({ field }) => (
+                    <FormItem className="flex-1 min-w-[140px]">
+                      <FormControl>
+                        <Input 
+                          placeholder={firstNameConfig.placeholder || (locale === "es" ? "Tu nombre" : "Your name")} 
+                          {...field} 
+                          data-testid="input-first-name"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
               <FormField
                 control={form.control}
                 name="email"
@@ -274,7 +371,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   }
                 }}
                 render={({ field }) => (
-                  <FormItem className="flex-1">
+                  <FormItem className="flex-1 min-w-[180px]">
                     <FormControl>
                       <Input 
                         type="email" 
@@ -289,7 +386,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
               <Button 
                 type="submit" 
-                disabled={submitMutation.isPending}
+                disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
                 data-testid="button-submit"
               >
                 {submitMutation.isPending ? (
@@ -299,10 +396,61 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 )}
               </Button>
             </div>
+            {turnstileEnabled && turnstileSiteKey?.siteKey && (
+              <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
+                <div className="bg-card p-6 rounded-lg shadow-lg">
+                  <Turnstile
+                    siteKey={turnstileSiteKey.siteKey}
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                      setShowTurnstileModal(false);
+                    }}
+                    onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+                    onExpire={() => setTurnstileToken(null)}
+                    onBeforeInteractive={() => setShowTurnstileModal(true)}
+                    options={{
+                      theme: data.turnstile?.theme || "auto",
+                      size: data.turnstile?.size || "compact",
+                      appearance: "interaction-only",
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+            {turnstileError && (
+              <p className="text-sm text-destructive mt-2" data-testid="text-turnstile-error">
+                {turnstileError}
+              </p>
+            )}
             {emailConfig.helper_text && (
               <p className="text-sm text-muted-foreground mt-2" data-testid="text-email-helper">
                 {emailConfig.helper_text}
               </p>
+            )}
+            {consent.email && (
+              <FormField
+                control={form.control}
+                name="consent_email"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 mt-3">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        data-testid="checkbox-consent-email"
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                        {locale === "es"
+                          ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing."
+                          : "I agree to receive information via email about workshops, events, courses, and other marketing materials."
+                        }
+                      </Label>
+                    </div>
+                  </FormItem>
+                )}
+              />
             )}
           </form>
         </Form>
@@ -604,62 +752,120 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             />
           )}
 
-          {showConsent && (
+          {(consent.email || consent.sms || consent.whatsapp) && (
             <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="sms_consent"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        data-testid="checkbox-sms-consent"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="sms_consent">
-                        {locale === "es" 
-                          ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                          : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
-                        }
-                      </Label>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {consent.email && (
+                <FormField
+                  control={form.control}
+                  name="consent_email"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-email"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                          {locale === "es"
+                            ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="consent_whatsapp"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        data-testid="checkbox-consent-whatsapp"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_whatsapp">
-                        {locale === "es"
-                          ? "Acepto recibir información a través de correo electrónico, WhatsApp y/u otros canales sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                          : "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
-                        }
-                      </Label>
-                    </div>
-                  </FormItem>
-                )}
-              />
+              {consent.sms && (
+                <FormField
+                  control={form.control}
+                  name="consent_sms"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-sms"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_sms">
+                          {locale === "es" 
+                            ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {consent.whatsapp && (
+                <FormField
+                  control={form.control}
+                  name="consent_whatsapp"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          data-testid="checkbox-consent-whatsapp"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_whatsapp">
+                          {locale === "es"
+                            ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                            : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                          }
+                        </Label>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
+          )}
+
+          {turnstileEnabled && turnstileSiteKey?.siteKey && (
+            <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
+              <div className="bg-card p-6 rounded-lg shadow-lg">
+                <Turnstile
+                  siteKey={turnstileSiteKey.siteKey}
+                  onSuccess={(token) => {
+                    setTurnstileToken(token);
+                    setShowTurnstileModal(false);
+                  }}
+                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
+                  onExpire={() => setTurnstileToken(null)}
+                  onBeforeInteractive={() => setShowTurnstileModal(true)}
+                  options={{
+                    theme: data.turnstile?.theme || "auto",
+                    size: data.turnstile?.size || "normal",
+                    appearance: "interaction-only",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {turnstileError && (
+            <p className="text-sm text-destructive text-center" data-testid="text-turnstile-error">
+              {turnstileError}
+            </p>
           )}
 
           <Button 
             type="submit" 
             className="w-full"
-            disabled={submitMutation.isPending}
+            disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
             data-testid="button-submit"
           >
             {submitMutation.isPending ? (

@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react";
 import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
-import VideoPlayer from "@/components/VideoPlayer";
-import UniversalVideo from "@/components/UniversalVideo";
+import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
@@ -10,6 +10,21 @@ interface HeroProductShowcaseProps {
 }
 
 export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
+  // Hide background image on screens smaller than 1280px for better mobile experience
+  const [showBackground, setShowBackground] = useState(false);
+
+  useEffect(() => {
+    const checkWidth = () => {
+      setShowBackground(window.innerWidth >= 1280);
+    };
+
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  const shouldShowBackground = data.background_image && showBackground;
+
   const colorMap: Record<string, string> = {
     "primary": "hsl(var(--primary))",
     "accent": "hsl(var(--accent))",
@@ -23,9 +38,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
   return (
     <section 
-      className="py-16 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden"
+      className="py-16 md:py-20 relative overflow-hidden"
+      style={shouldShowBackground ? {
+        backgroundImage: `url(${data.background_image!.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      } : undefined}
       data-testid="section-hero"
     >
+      {!shouldShowBackground && (
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
+      )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
@@ -35,7 +58,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   {data.welcome_text}
                 </p>
               )}
-              
+
               {data.brand_mark && (
                 <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
                   {data.brand_mark.prefix && (
@@ -49,14 +72,14 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   )}
                 </p>
               )}
-              
+
               <h1 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
               </h1>
-              
+
               {data.subtitle && (
                 <p 
                   className="text-xl lg:text-2xl text-muted-foreground mb-6 max-w-xl"
@@ -65,7 +88,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   {data.subtitle}
                 </p>
               )}
-              
+
               {data.description && (
                 <div className="relative">
                   <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
@@ -79,7 +102,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   data={{
                     ...data.form,
                     variant: data.form.variant || "inline",
-                    show_consent: data.form.show_consent ?? false,
+                    consent: data.form.consent,
                     show_terms: data.form.show_terms ?? false,
                     className: "w-full max-w-md mb-6",
                   } as LeadFormData}
@@ -113,7 +136,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                             const fullStars = Math.floor(rating);
                             const hasHalf = rating % 1 >= 0.5;
                             const isHalfStar = hasHalf && star === fullStars + 1;
-                            
+
                             if (star <= fullStars) {
                               return (
                                 <IconStarFilled 
@@ -169,22 +192,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
             </div>
           </div>
-          
+
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
             {data.video ? (
               <UniversalVideo 
                 url={data.video.url}
+                title={data.video.title}
                 ratio={data.video.ratio || "16:9"}
-                muted={data.video.muted ?? true}
-                autoplay={data.video.autoplay ?? false}
-                loop={data.video.loop ?? false}
-                className="w-[280px] md:w-full md:max-w-[400px] rounded-lg overflow-hidden shadow-lg"
-              />
-            ) : data.video_id ? (
-              <VideoPlayer 
-                videoId={data.video_id}
-                title={data.video_title || "Video"}
-                ratio={data.video_ratio || "16:9"}
+                muted={data.video.muted}
+                autoplay={data.video.autoplay}
+                loop={data.video.loop}
+                preview_image_url={data.video.preview_image_url}
                 className="w-[280px] md:w-full md:max-w-[400px]"
               />
             ) : data.image ? (
