@@ -40,6 +40,7 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,6 +84,16 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
+  // Trigger expansion animation shortly after hover
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      const timer = setTimeout(() => setIsExpanded(true), 20);
+      return () => clearTimeout(timer);
+    } else {
+      setIsExpanded(false);
+    }
+  }, [hoveredIndex]);
+
   const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
 
@@ -121,19 +132,11 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
-  // Calculate the expanded card layout based on which card is hovered
-  const getExpandedLayout = (hoveredIdx: number, total: number) => {
-    // For 3 cards: positions are 0, 1, 2
-    // Card 0 (left): takes columns 1-2, card 2-3 hidden
-    // Card 1 (center): takes columns 1-3
-    // Card 2 (right): takes columns 2-3, card 0-1 hidden
-    if (hoveredIdx === 0) {
-      return { gridColumn: "1 / 3", justify: "flex-start" };
-    } else if (hoveredIdx === total - 1) {
-      return { gridColumn: "2 / 4", justify: "flex-end" };
-    } else {
-      return { gridColumn: "1 / 4", justify: "center" };
-    }
+  // Get transform origin based on card position for directional expansion
+  const getTransformOrigin = (index: number, total: number) => {
+    if (index === 0) return "left center";
+    if (index === total - 1) return "right center";
+    return "center center";
   };
 
   return (
@@ -205,8 +208,13 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
             <div 
               className="absolute top-0 left-0 right-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-none"
             >
+              {/* Spacer for left cards when hovering right card */}
+              {hoveredIndex === data.metrics.length - 1 && (
+                <div className="hidden lg:block" />
+              )}
+              
               <div
-                className="pointer-events-auto"
+                className="pointer-events-auto overflow-hidden transition-all duration-300 ease-out"
                 style={{
                   gridColumn: 
                     hoveredIndex === 0 
@@ -214,13 +222,19 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       : hoveredIndex === data.metrics.length - 1 
                         ? "2 / 4" 
                         : "1 / 4",
+                  transformOrigin: getTransformOrigin(hoveredIndex, data.metrics.length),
+                  transform: isExpanded ? "scaleX(1)" : "scaleX(0.5)",
+                  opacity: isExpanded ? 1 : 0.5,
                 }}
               >
                 <Card
-                  className="p-6 h-full transition-all duration-300 ease-out animate-in fade-in slide-in-from-left-2 duration-300"
+                  className="p-6 h-full"
                   data-testid={`card-metric-expanded-${hoveredIndex}`}
                 >
-                  <div className="flex flex-col lg:flex-row items-center gap-6 h-full">
+                  <div 
+                    className="flex flex-col lg:flex-row items-center gap-6 h-full transition-opacity duration-200 delay-100"
+                    style={{ opacity: isExpanded ? 1 : 0 }}
+                  >
                     {/* Graph section */}
                     <div className="flex flex-col items-center flex-shrink-0">
                       <h3 className="text-lg font-bold text-foreground text-center mb-2">
