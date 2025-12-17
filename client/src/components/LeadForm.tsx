@@ -401,7 +401,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 <div className="bg-card p-6 rounded-lg shadow-lg">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
-                    onSuccess={(token) => {
+                    onSuccess={(token: string) => {
                       setTurnstileToken(token);
                       setShowTurnstileModal(false);
                     }}
@@ -839,7 +839,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               <div className="bg-card p-6 rounded-lg shadow-lg">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={(token) => {
+                  onSuccess={(token: string) => {
                     setTurnstileToken(token);
                     setShowTurnstileModal(false);
                   }}
