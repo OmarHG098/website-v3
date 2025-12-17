@@ -192,14 +192,22 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                 className="relative p-10 w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col items-center justify-center text-center"
                 data-testid="bubble-content"
               >
-                {/* Arrow indicator pointing to active step */}
-                <div
-                  className={`absolute w-0 h-0 transition-all duration-300
-                    ${activeStep === 0 ? "left-0 top-1/2 -translate-y-1/2 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-r-[16px] border-r-primary/60" : ""}
-                    ${activeStep === 1 ? "top-0 left-1/2 -translate-x-1/2 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[16px] border-b-primary/60" : ""}
-                    ${activeStep === 2 ? "right-0 top-1/2 -translate-y-1/2 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[16px] border-l-primary/60" : ""}
-                  `}
-                />
+                {/* Arrow indicator - simple 2-line outline chevron */}
+                {activeStep === 0 && (
+                  <svg className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-6" viewBox="0 0 16 24" fill="none">
+                    <path d="M12 4 L4 12 L12 20" stroke="hsl(var(--primary) / 0.6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+                {activeStep === 1 && (
+                  <svg className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-4" viewBox="0 0 24 16" fill="none">
+                    <path d="M4 12 L12 4 L20 12" stroke="hsl(var(--primary) / 0.6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+                {activeStep === 2 && (
+                  <svg className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-6" viewBox="0 0 16 24" fill="none">
+                    <path d="M4 4 L12 12 L4 20" stroke="hsl(var(--primary) / 0.6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
                 {activeContent && (
                   <div key={activeStep} className="animate-in fade-in duration-300">
                     {activeContent.title && (
