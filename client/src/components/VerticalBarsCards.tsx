@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 
 interface YearValue {
@@ -29,6 +29,13 @@ interface VerticalBarsCardsProps {
   data: VerticalBarsCardsData;
 }
 
+interface CardRect {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
 const chartColors = [
   "hsl(var(--chart-1))",
   "hsl(var(--chart-2))",
@@ -40,22 +47,46 @@ const chartColors = [
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [cardRects, setCardRects] = useState<CardRect[]>([]);
   const [containerWidth, setContainerWidth] = useState(0);
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Track container width for calculating expanded card width
-  useEffect(() => {
-    const updateWidth = () => {
-      if (gridRef.current) {
-        setContainerWidth(gridRef.current.offsetWidth);
-      }
-    };
-
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+  // Measure card positions relative to grid container
+  const measureCards = useCallback(() => {
+    if (!gridRef.current) return;
+    
+    const gridRect = gridRef.current.getBoundingClientRect();
+    setContainerWidth(gridRect.width);
+    
+    const rects: CardRect[] = cardRefs.current.map((cardEl) => {
+      if (!cardEl) return { left: 0, top: 0, width: 0, height: 0 };
+      const rect = cardEl.getBoundingClientRect();
+      return {
+        left: rect.left - gridRect.left,
+        top: rect.top - gridRect.top,
+        width: rect.width,
+        height: rect.height,
+      };
+    });
+    
+    setCardRects(rects);
   }, []);
+
+  // Measure on mount and resize
+  useEffect(() => {
+    measureCards();
+    window.addEventListener("resize", measureCards);
+    return () => window.removeEventListener("resize", measureCards);
+  }, [measureCards, data.metrics.length]);
+
+  // Re-measure after initial render
+  useEffect(() => {
+    const timer = setTimeout(measureCards, 100);
+    return () => clearTimeout(timer);
+  }, [measureCards]);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -136,12 +167,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
-  // Calculate expanded width: 65% of container for a 3-column layout
-  const gap = 24; // gap-6 = 24px
-  const numCards = data.metrics.length;
-  const cellWidth = (containerWidth - gap * (numCards - 1)) / numCards;
-  const expandedWidth = containerWidth * 0.65; // 65% of container
-
   return (
     <section
       ref={containerRef}
@@ -178,89 +203,98 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {data.metrics.map((metric, metricIndex) => (
-              <Card
+              <div
                 key={metricIndex}
-                className={`p-6 transition-opacity duration-300 ${
-                  hoveredIndex !== null && hoveredIndex !== metricIndex
-                    ? "opacity-30"
-                    : "opacity-100"
-                }`}
-                data-testid={`card-metric-${metricIndex}`}
+                ref={(el) => { cardRefs.current[metricIndex] = el; }}
               >
-                <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                  {metric.title}
-                </h3>
-                {metric.unit && (
-                  <p className="text-sm text-muted-foreground text-center mb-6">
-                    {metric.unit}
-                  </p>
-                )}
-                {renderBars(metric, metricIndex)}
-              </Card>
+                <Card
+                  className={`p-6 h-full transition-opacity duration-300 ${
+                    hoveredIndex !== null && hoveredIndex !== metricIndex
+                      ? "opacity-30"
+                      : "opacity-100"
+                  }`}
+                  data-testid={`card-metric-${metricIndex}`}
+                >
+                  <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                    {metric.title}
+                  </h3>
+                  {metric.unit && (
+                    <p className="text-sm text-muted-foreground text-center mb-6">
+                      {metric.unit}
+                    </p>
+                  )}
+                  {renderBars(metric, metricIndex)}
+                </Card>
+              </div>
             ))}
           </div>
 
-          {/* OVERLAY LAYER: Invisible canvases that expand on hover */}
+          {/* OVERLAY LAYER: Absolutely positioned overlays (NO grid wrapper) */}
           <div 
-            className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
             style={{ zIndex: 10 }}
           >
             {data.metrics.map((metric, metricIndex) => {
               const isHovered = hoveredIndex === metricIndex;
+              const rect = cardRects[metricIndex];
+              
+              if (!rect || rect.width === 0) return null;
+              
               const isLastCard = metricIndex === data.metrics.length - 1;
               
-              // Calculate position offset for expansion
-              // Left/center cards expand right, last card expands left
-              const expandOffset = isLastCard ? -(expandedWidth - cellWidth) : 0;
+              // Expanded width: from card's left edge to container's right edge (or vice versa for last card)
+              const expandedWidth = isLastCard
+                ? rect.left + rect.width  // Expand left: cover from left edge to this card's right
+                : containerWidth - rect.left;  // Expand right: cover from this card to right edge
               
               return (
-                <div 
-                  key={metricIndex} 
-                  className="relative"
+                <Card
+                  key={metricIndex}
+                  className={`
+                    absolute p-6
+                    pointer-events-auto cursor-pointer
+                    transition-all duration-300 ease-out
+                    max-w-none
+                    ${isHovered ? "shadow-xl z-20" : "opacity-0"}
+                  `}
+                  style={{
+                    top: rect.top,
+                    left: isLastCard ? 0 : rect.left,
+                    right: isLastCard ? "auto" : "auto",
+                    width: isHovered ? expandedWidth : rect.width,
+                    height: rect.height,
+                  }}
+                  onMouseEnter={() => setHoveredIndex(metricIndex)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  data-testid={`card-overlay-${metricIndex}`}
                 >
-                  {/* Overlay card - absolute positioned, expands beyond cell */}
-                  <Card
-                    className={`
-                      absolute top-0 h-full p-6
-                      pointer-events-auto cursor-pointer
-                      transition-all duration-300 ease-out
-                      max-w-none
-                      ${isHovered ? "shadow-xl z-20" : "opacity-0"}
-                    `}
-                    style={{
-                      width: isHovered ? `${expandedWidth}px` : `${cellWidth}px`,
-                      left: isLastCard ? "auto" : 0,
-                      right: isLastCard ? 0 : "auto",
-                    }}
-                    onMouseEnter={() => setHoveredIndex(metricIndex)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    data-testid={`card-overlay-${metricIndex}`}
-                  >
-                    <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
-                      {/* Graph section - same as base card */}
-                      <div className="flex-shrink-0" style={{ width: cellWidth - 48 }}>
-                        <h3 className="text-lg font-bold text-foreground text-center mb-2">
-                          {metric.title}
-                        </h3>
-                        {metric.unit && (
-                          <p className="text-sm text-muted-foreground text-center mb-6">
-                            {metric.unit}
-                          </p>
-                        )}
-                        {renderBars(metric, metricIndex)}
-                      </div>
-
-                      {/* Description panel - appears when expanded */}
-                      {metric.description && isHovered && (
-                        <div className="flex-1 flex items-center animate-in fade-in slide-in-from-left-4 duration-300">
-                          <p className="text-base text-muted-foreground leading-relaxed">
-                            {metric.description}
-                          </p>
-                        </div>
+                  <div className={`flex ${isHovered ? "flex-row gap-6" : "flex-col"} h-full`}>
+                    {/* Graph section - same width as original card */}
+                    <div 
+                      className="flex-shrink-0 flex flex-col"
+                      style={{ width: rect.width - 48 }}
+                    >
+                      <h3 className="text-lg font-bold text-foreground text-center mb-2">
+                        {metric.title}
+                      </h3>
+                      {metric.unit && (
+                        <p className="text-sm text-muted-foreground text-center mb-6">
+                          {metric.unit}
+                        </p>
                       )}
+                      {renderBars(metric, metricIndex)}
                     </div>
-                  </Card>
-                </div>
+
+                    {/* Description panel - appears when expanded */}
+                    {metric.description && isHovered && (
+                      <div className="flex-1 flex items-center animate-in fade-in slide-in-from-left-4 duration-300">
+                        <p className="text-base text-muted-foreground leading-relaxed">
+                          {metric.description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </Card>
               );
             })}
           </div>
