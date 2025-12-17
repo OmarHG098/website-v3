@@ -136,7 +136,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   aria-label={steps[1].title || "Step 2"}
                   aria-expanded={activeStep === 1}
                   className={`relative flex flex-col items-center gap-2 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 1 ? "scale-105" : "hover:scale-102"
+                    activeStep === 1 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-2"
                 >
@@ -166,7 +166,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   aria-label={steps[0].title || "Step 1"}
                   aria-expanded={activeStep === 0}
                   className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 0 ? "scale-105" : "hover:scale-102"
+                    activeStep === 0 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-1"
                 >
@@ -251,7 +251,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   aria-label={steps[2].title || "Step 3"}
                   aria-expanded={activeStep === 2}
                   className={`relative flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
-                    activeStep === 2 ? "scale-105" : "hover:scale-102"
+                    activeStep === 2 ? "scale-105" : "opacity-50 hover:opacity-100 hover:scale-102"
                   }`}
                   data-testid="button-numbered-step-3"
                 >
