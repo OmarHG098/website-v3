@@ -27,6 +27,8 @@ import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
 import { SupportDuoSection } from "@/components/SupportDuoSection";
+import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
+import { CommunitySupport } from "@/components/CommunitySupport";
 import { CardGridSection } from "@/components/CardGridSection";
 import AccordionCardSection from "@/components/AccordionCardSection";
 import SpotlightStepsWithBubbleText from "@/components/SpotlightStepsWithBubbleText";
@@ -91,6 +93,10 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <TwoColumn key={index} data={section as Parameters<typeof TwoColumn>[0]["data"]} />;
     case "support_duo":
       return <SupportDuoSection key={index} data={section as Parameters<typeof SupportDuoSection>[0]["data"]} />;
+    case "human_and_ai_duo":
+      return <HumanAndAIDuo key={index} data={section as Parameters<typeof HumanAndAIDuo>[0]["data"]} />;
+    case "community_support":
+      return <CommunitySupport key={index} data={section as Parameters<typeof CommunitySupport>[0]["data"]} />;
     case "numbered_steps":
       return <NumberedSteps key={index} data={section as Parameters<typeof NumberedSteps>[0]["data"]} />;
     case "testimonials_slide":
