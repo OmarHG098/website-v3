@@ -131,7 +131,7 @@ sections:
         - text: 7:1 student-to-teacher ratio plus unlimited access to expert mentors and career coaches.
       cta:
         text: Start Learning Now
-        url: /en/apply?program=ai-engineering
+        url: "#hero-form"
         variant: primary
   - type: certificate
     title: Certificate & Career Network
@@ -209,7 +209,7 @@ sections:
         text: Earn certificates from a USA certified school by the florida department of education.
     cta:
       text: Get plan
-      url: /en/apply?program=ai-engineering
+      url: "#hero-form"
       variant: primary
   - type: whos_hiring
     title: Who's Hiring Our Graduates?
@@ -295,7 +295,7 @@ sections:
     subtitle: Limited spots available. Start your transformation today.
     buttons:
       - text: Apply Now
-        url: /en/apply?program=ai-engineering
+        url: "#hero-form"
         variant: secondary
       - text: Talk to an Advisor
         url: https://calendly.com/epilowsky-4geeksacademy/30min
