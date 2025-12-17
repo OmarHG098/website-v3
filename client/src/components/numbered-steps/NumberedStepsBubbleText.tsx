@@ -124,11 +124,11 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             />
           </svg>
 
-          <div className="relative grid grid-cols-[1fr_minmax(450px,2fr)_1fr] grid-rows-[auto_1fr] gap-4">
-            {/* Step 2 - Top Center (row 1, col 2) - positioned lower */}
+          <div className="relative min-h-[400px]">
+            {/* Step 2 - Top Center - absolute positioned at end of line */}
             {steps[1] && (
               <div
-                className="col-start-2 row-start-1 flex flex-col items-end justify-center pb-2"
+                className="absolute left-1/2 top-[15%] -translate-x-1/2"
                 data-testid="numbered-step-2"
               >
                 <button
@@ -157,10 +157,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             )}
 
-            {/* Step 1 - Bottom Left (row 2, col 1) - positioned more inside */}
+            {/* Step 1 - Bottom Left - absolute positioned at end of line */}
             {steps[0] && (
               <div
-                className="col-start-1 row-start-2 flex items-center justify-end h-full"
+                className="absolute left-[12%] top-[60%] -translate-y-1/2"
                 data-testid="numbered-step-1"
               >
                 <button
@@ -189,9 +189,9 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             )}
 
-            {/* Center Content - row 2, col 2 - No background, just arrow indicator */}
+            {/* Center Content - absolute positioned in center */}
             <div
-              className="col-start-2 row-start-2 flex items-center justify-center"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <div
                 className="relative p-10 w-full max-w-[420px] min-h-[200px] lg:min-h-[280px] flex flex-col items-center justify-center text-center"
@@ -236,10 +236,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
               </div>
             </div>
 
-            {/* Step 3 - Bottom Right (row 2, col 3) - positioned more inside */}
+            {/* Step 3 - Bottom Right - absolute positioned at end of line */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full"
+                className="absolute right-[12%] top-[60%] -translate-y-1/2"
                 data-testid="numbered-step-3"
               >
                 <button
