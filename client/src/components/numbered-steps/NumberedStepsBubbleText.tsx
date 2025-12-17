@@ -140,8 +140,10 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-2"
                 >
-                  {/* Gradient fade for line - vertical fade from bottom */}
-                  <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-32 h-24 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none" />
+                  {/* Gradient fade for left connector line - fades to left */}
+                  <div className="absolute -bottom-12 -left-8 w-20 h-32 bg-gradient-to-l from-background via-background/70 to-transparent pointer-events-none" />
+                  {/* Gradient fade for right connector line - fades to right */}
+                  <div className="absolute -bottom-12 -right-8 w-20 h-32 bg-gradient-to-r from-background via-background/70 to-transparent pointer-events-none" />
                   {steps[1].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
@@ -234,7 +236,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             {/* Step 3 - Bottom Right (row 2, col 3) - Step number and title at right */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-8"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full ml-4"
                 data-testid="numbered-step-3"
               >
                 <button
@@ -253,7 +255,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                     <StepNumber index={2} variant="spotlight" size="md" />
                   </div>
                   {steps[2].title && (
-                    <h3 className="relative bg-background text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left">
+                    <h3 className="relative text-lg font-semibold text-foreground leading-tight max-w-[140px] text-left">
                       {steps[2].title}
                     </h3>
                   )}
