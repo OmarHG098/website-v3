@@ -313,7 +313,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     style={{ 
                       left: rect.width - 24,
                       right: 24,
-                      transitionDelay: isHovered ? "350ms" : "0ms"  // Wait for card expansion (300ms) + buffer
+                      transitionDelay: isHovered ? "250ms" : "0ms"  // Wait for most of card expansion
                     }}
                   >
                     <h4 className="text-xl font-bold text-foreground mb-3">
