@@ -318,7 +318,7 @@
     min-height: 2.25rem;
     border-radius: var(--radius);
     border: 1px solid hsl(var(--input));
-    background-color: transparent;
+    background-color: hsl(var(--background));
     padding: 0 0.75rem;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
