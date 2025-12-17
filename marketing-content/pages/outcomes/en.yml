@@ -30,7 +30,7 @@ sections:
     metrics:
       - title: "Job Placement Rate"
         unit: "Graduates hired within 6 months"
-        description: "Our job placement rate consistently remains above 80%, demonstrating the effectiveness of our career support program. We track employment outcomes for up to 6 months after graduation, ensuring accurate and reliable data. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+        description: "Our job placement rate consistently remains above 80%, demonstrating the effectiveness of our career support program. We track employment outcomes for up to 6 months after graduation, ensuring accurate and reliable data. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
         years:
           - year: "2023"
             value: 86
@@ -43,7 +43,7 @@ sections:
             displayValue: "82%"
       - title: "Average Salary Increase"
         unit: "Compared to pre-bootcamp salary"
-        description: "Graduates see significant salary improvements after completing our program. This increase reflects the high market demand for tech skills and the quality of training our students receive. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        description: "Graduates see significant salary improvements after completing our program. This increase reflects the high market demand for tech skills and the quality of training our students receive. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         years:
           - year: "2023"
             value: 12500
@@ -56,7 +56,7 @@ sections:
             displayValue: "$15.8k"
       - title: "Days to First Job"
         unit: "Average time from graduation to offer"
-        description: "Our students are getting hired faster than ever. With personalized career coaching and an extensive employer network, we help graduates land their first tech role in record time. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."
+        description: "Our students are getting hired faster than ever. With personalized career coaching and an extensive employer network, we help graduates land their first tech role in record time. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia."
         years:
           - year: "2023"
             value: 52
