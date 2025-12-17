@@ -414,6 +414,11 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     onError: (error: Error) => {
       console.error("Lead submission error:", error);
       
+      // Default user-friendly error message
+      const defaultErrorMessage = locale === "es" 
+        ? "Hubo un problema al enviar tu información. Por favor intenta de nuevo." 
+        : "There was a problem submitting your information. Please try again.";
+      
       // Try to parse the error message to extract details
       let errorMessage = error.message;
       try {
@@ -422,19 +427,33 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[1]);
           if (parsed.details) {
-            // Details may be a JSON string itself
-            try {
-              const details = JSON.parse(parsed.details);
-              errorMessage = details.detail || details.message || parsed.error || error.message;
-            } catch {
-              errorMessage = parsed.details || parsed.error || error.message;
+            // Check if details contains HTML (API error page)
+            if (typeof parsed.details === 'string' && 
+                (parsed.details.includes('<!DOCTYPE') || parsed.details.includes('<html'))) {
+              errorMessage = defaultErrorMessage;
+            } else {
+              // Details may be a JSON string itself
+              try {
+                const details = JSON.parse(parsed.details);
+                errorMessage = details.detail || details.message || parsed.error || defaultErrorMessage;
+              } catch {
+                errorMessage = parsed.details || parsed.error || defaultErrorMessage;
+              }
             }
           } else if (parsed.error) {
             errorMessage = parsed.error;
           }
         }
       } catch {
-        // Keep original message if parsing fails
+        // Keep original message if parsing fails, but check for HTML
+        if (errorMessage.includes('<!DOCTYPE') || errorMessage.includes('<html')) {
+          errorMessage = defaultErrorMessage;
+        }
+      }
+      
+      // Final safety check: if message is too long or contains HTML tags, use default
+      if (errorMessage.length > 200 || /<[^>]+>/.test(errorMessage)) {
+        errorMessage = defaultErrorMessage;
       }
       
       setTurnstileError(errorMessage);
