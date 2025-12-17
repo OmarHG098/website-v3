@@ -209,19 +209,33 @@ function SinglePieChart({
           if (currentAngle <= slice.startAngle) return null;
           
           const scaledRadius = radius * hoverScale;
-          const arrowStartRadius = scaledRadius + 5;
-          const arrowEndRadius = scaledRadius + 55;
-          const arrowStart = getSliceMidpoint(slice, arrowStartRadius);
-          const arrowEnd = getSliceMidpoint(slice, arrowEndRadius);
+          const midAngle = slice.startAngle + slice.angle / 2;
+          const midRad = (midAngle - 90) * (Math.PI / 180);
           
           const centerX = containerSize / 2;
           const centerY = containerSize / 2;
-          const startX = centerX + (arrowStart.x - cx);
-          const startY = centerY + (arrowStart.y - cy);
-          const endX = centerX + (arrowEnd.x - cx);
-          const endY = centerY + (arrowEnd.y - cy);
           
-          const isRightSide = arrowEnd.x > cx;
+          const startRadius = scaledRadius + 5;
+          const startX = centerX + startRadius * Math.cos(midRad);
+          const startY = centerY + startRadius * Math.sin(midRad);
+          
+          const controlRadius = scaledRadius + 35;
+          const controlAngleOffset = 25;
+          const controlAngle = midAngle + controlAngleOffset;
+          const controlRad = (controlAngle - 90) * (Math.PI / 180);
+          const controlX = centerX + controlRadius * Math.cos(controlRad);
+          const controlY = centerY + controlRadius * Math.sin(controlRad);
+          
+          const endRadius = scaledRadius + 50;
+          const endAngleOffset = 40;
+          const endAngle = midAngle + endAngleOffset;
+          const endRad = (endAngle - 90) * (Math.PI / 180);
+          const endX = centerX + endRadius * Math.cos(endRad);
+          const endY = centerY + endRadius * Math.sin(endRad);
+          
+          const curvePath = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+          
+          const isRightSide = endX > centerX;
           
           return (
             <div
@@ -242,13 +256,11 @@ function SinglePieChart({
                 className="absolute left-0 top-0"
                 style={{ overflow: "visible" }}
               >
-                <line
-                  x1={startX}
-                  y1={startY}
-                  x2={endX}
-                  y2={endY}
+                <path
+                  d={curvePath}
                   stroke="hsl(var(--foreground))"
                   strokeWidth={1.5}
+                  fill="none"
                 />
                 <circle
                   cx={endX}
