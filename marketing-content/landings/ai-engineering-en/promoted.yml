@@ -70,24 +70,24 @@ sections:
     variant: simple
     showBorder: true
     items:
+      - id: forbes-1
+        logo: /attached_assets/forbes-logo-award_1764709625651.webp
+        alt: Forbes - Top Coding Bootcamp
+        source: Forbes
+        name: Top Coding Bootcamp
+        year: "2024"
+      - id: fortune-1
+        logo: /attached_assets/fortune-logo_1764709618095.webp
+        alt: Fortune - Best Education Company
+        source: Fortune
+        name: Best Education Company
+        year: "2024"
       - id: coursereport-1
-        logo: /attached_assets/course-report_1765590146414.webp
+        logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         alt: Course Report - Best Coding Bootcamp
         source: Course Report
         name: Best Coding Bootcamp
-        year: "2024"
-      - id: switchup-1
-        logo: /attached_assets/switchup_1765590146414.webp
-        alt: SwitchUp - Top Bootcamp
-        source: SwitchUp
-        name: Top Bootcamp
-        year: "2024"
-      - id: google-1
-        logo: /attached_assets/google_1765590146414.webp
-        alt: Google - Highly Rated
-        source: Google
-        name: Highly Rated
-        year: "2024"
+        year: "2025"
   - type: features_grid
     version: "1.0"
     variant: spotlight
