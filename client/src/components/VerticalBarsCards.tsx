@@ -314,7 +314,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                       left: rect.width - 24,
                       right: 24,
                       transitionProperty: "opacity",
-                      transitionDuration: isHovered ? "300ms" : "100ms",
+                      transitionDuration: isHovered ? "300ms" : "50ms",
                       transitionDelay: isHovered ? "230ms" : "0ms"
                     }}
                   >
