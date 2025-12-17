@@ -128,7 +128,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             {/* Step 2 - Top Center (row 1, col 2) - positioned lower */}
             {steps[1] && (
               <div
-                className="col-start-2 row-start-1 flex flex-col items-center justify-end pb-2"
+                className="col-start-2 row-start-1 flex flex-col items-end justify-center pb-2"
                 data-testid="numbered-step-2"
               >
                 <button
@@ -160,7 +160,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             {/* Step 1 - Bottom Left (row 2, col 1) - positioned more inside */}
             {steps[0] && (
               <div
-                className="col-start-1 row-start-2 flex items-center justify-end h-full pr-4"
+                className="col-start-1 row-start-2 flex items-center justify-end h-full"
                 data-testid="numbered-step-1"
               >
                 <button
@@ -239,7 +239,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
             {/* Step 3 - Bottom Right (row 2, col 3) - positioned more inside */}
             {steps[2] && (
               <div
-                className="col-start-3 row-start-2 flex items-center justify-start h-full pl-4"
+                className="col-start-3 row-start-2 flex items-center justify-start h-full"
                 data-testid="numbered-step-3"
               >
                 <button
