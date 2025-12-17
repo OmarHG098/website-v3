@@ -209,13 +209,17 @@ function SinglePieChart({
           if (currentAngle <= slice.startAngle) return null;
           
           const scaledRadius = radius * hoverScale;
-          const arrowStart = getSliceMidpoint(slice, scaledRadius * 0.85);
-          const arrowEnd = getSliceMidpoint(slice, scaledRadius + 45);
+          const arrowStartRadius = scaledRadius + 5;
+          const arrowEndRadius = scaledRadius + 55;
+          const arrowStart = getSliceMidpoint(slice, arrowStartRadius);
+          const arrowEnd = getSliceMidpoint(slice, arrowEndRadius);
           
-          const startX = chartOffset + cx + (arrowStart.x - cx);
-          const startY = chartOffset + cy + (arrowStart.y - cy);
-          const endX = chartOffset + cx + (arrowEnd.x - cx);
-          const endY = chartOffset + cy + (arrowEnd.y - cy);
+          const centerX = containerSize / 2;
+          const centerY = containerSize / 2;
+          const startX = centerX + (arrowStart.x - cx);
+          const startY = centerY + (arrowStart.y - cy);
+          const endX = centerX + (arrowEnd.x - cx);
+          const endY = centerY + (arrowEnd.y - cy);
           
           const isRightSide = arrowEnd.x > cx;
           
@@ -332,7 +336,7 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-4 items-start justify-items-center ${
+      <div className={`grid gap-4 items-start justify-items-center overflow-visible ${
         data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
