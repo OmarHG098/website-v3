@@ -83,12 +83,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     };
   }, []);
 
-  // Determine panel direction based on card position
-  const getPanelDirection = (index: number, total: number): "right" | "left" => {
-    if (index === total - 1) return "left";
-    return "right";
-  };
-
   const renderBars = (metric: MetricCard, metricIndex: number) => {
     const maxValue = Math.max(...metric.years.map((y) => y.value));
 
@@ -127,10 +121,15 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
     );
   };
 
+  // Check if card is last in row (should expand left instead of right)
+  const shouldExpandLeft = (index: number) => {
+    return index === data.metrics.length - 1;
+  };
+
   return (
     <section
       ref={containerRef}
-      className={`py-16 md:py-24 ${data.background || "bg-background"}`}
+      className={`py-16 md:py-24 overflow-visible ${data.background || "bg-background"}`}
       data-testid="section-vertical-bars-cards"
     >
       <div className="max-w-6xl mx-auto px-4 overflow-visible">
@@ -155,30 +154,30 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
           </div>
         )}
 
-        {/* Cards container - overflow visible to allow panels to show */}
-        <div className="overflow-visible">
-          {/* Base grid layout */}
+        {/* Cards container */}
+        <div 
+          className="overflow-visible"
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
             {data.metrics.map((metric, metricIndex) => {
-              const isHovered = hoveredIndex === metricIndex;
               const isOtherHovered = hoveredIndex !== null && hoveredIndex !== metricIndex;
-              const panelDirection = getPanelDirection(metricIndex, data.metrics.length);
+              const expandLeft = shouldExpandLeft(metricIndex);
 
               return (
                 <div
                   key={metricIndex}
-                  className="relative overflow-visible"
-                  style={{ zIndex: isHovered ? 20 : 1 }}
+                  className="group/card relative overflow-visible"
+                  style={{ zIndex: hoveredIndex === metricIndex ? 20 : 1 }}
                   onMouseEnter={() => setHoveredIndex(metricIndex)}
-                  onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  {/* The original card - always stays in place */}
+                  {/* The card - stays in place */}
                   <Card
-                    className={`p-6 transition-all duration-300 ease-out cursor-pointer h-full overflow-visible ${
+                    className={`p-6 cursor-pointer h-full overflow-visible transition-all duration-300 ${
                       isOtherHovered
                         ? "opacity-20 scale-95 pointer-events-none" 
                         : "opacity-100"
-                    } ${isHovered ? "shadow-lg ring-2 ring-primary/20" : ""}`}
+                    } group-hover/card:shadow-lg group-hover/card:ring-2 group-hover/card:ring-primary/20`}
                     data-testid={`card-metric-${metricIndex}`}
                   >
                     <h3 className="text-lg font-bold text-foreground text-center mb-2">
@@ -192,26 +191,23 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     {renderBars(metric, metricIndex)}
                   </Card>
 
-                  {/* Sliding panel - positioned OUTSIDE the card as a sibling */}
+                  {/* Drawer panel - uses CSS group-hover for stable visibility */}
                   {metric.description && (
                     <aside
-                      className={`absolute top-0 h-full transition-all duration-300 ease-out pointer-events-none ${
-                        panelDirection === "right" 
-                          ? "left-full ml-3" 
-                          : "right-full mr-3"
-                      }`}
-                      style={{
-                        width: isHovered ? "280px" : "0px",
-                        opacity: isHovered ? 1 : 0,
-                        transform: isHovered 
-                          ? "translateX(0)" 
-                          : panelDirection === "right" 
-                            ? "translateX(-20px)" 
-                            : "translateX(20px)",
-                      }}
+                      className={`
+                        absolute top-0 h-full
+                        pointer-events-none
+                        transition-all duration-300 ease-out
+                        opacity-0 w-0
+                        group-hover/card:opacity-100 group-hover/card:w-[280px] group-hover/card:pointer-events-auto
+                        ${expandLeft 
+                          ? "right-full mr-3 translate-x-4 group-hover/card:translate-x-0" 
+                          : "left-full ml-3 -translate-x-4 group-hover/card:translate-x-0"
+                        }
+                      `}
                     >
                       <Card 
-                        className="h-full p-5 flex items-center pointer-events-auto"
+                        className="h-full p-5 flex items-center shadow-lg"
                         data-testid={`card-metric-panel-${metricIndex}`}
                       >
                         <p className="text-sm text-muted-foreground leading-relaxed">
