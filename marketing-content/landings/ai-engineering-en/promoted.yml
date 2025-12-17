@@ -23,7 +23,7 @@ sections:
       variant: stacked
       title: null
       subtitle: null
-      submit_label: Create account
+      submit_label: Apply now
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email
       fields:
