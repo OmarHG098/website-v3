@@ -208,12 +208,12 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                 ref={(el) => { cardRefs.current[metricIndex] = el; }}
               >
                 <Card
-                  className={`p-6 h-full ${
+                  className={`p-6 h-full transition-opacity ${
                     hoveredIndex === metricIndex
-                      ? "opacity-0 transition-opacity duration-0"  // Hide instantly
+                      ? "opacity-0 duration-200"  // Fade out when overlay is active
                       : hoveredIndex !== null
-                        ? "opacity-30 transition-opacity duration-300"  // Fade when another card is hovered
-                        : "opacity-100 transition-opacity duration-0"  // Show instantly when nothing is hovered
+                        ? "opacity-30 duration-300"  // Fade when another card is hovered
+                        : "opacity-100 duration-0"  // Show instantly when nothing is hovered
                   }`}
                   data-testid={`card-metric-${metricIndex}`}
                 >
@@ -274,7 +274,10 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     ${isHovered ? "shadow-xl z-20 opacity-100" : "opacity-0"}
                   `}
                   style={{
-                    transition: "opacity 0ms ease-out, left 300ms ease-out, width 300ms ease-out, height 300ms ease-out, box-shadow 300ms ease-out",
+                    // Fade in instantly, fade out smoothly
+                    transition: isHovered 
+                      ? "opacity 0ms ease-out, left 300ms ease-out, width 300ms ease-out, height 300ms ease-out, box-shadow 300ms ease-out"
+                      : "opacity 200ms ease-out, left 300ms ease-out, width 300ms ease-out, height 300ms ease-out, box-shadow 300ms ease-out",
                     top: rect.top,
                     left: isHovered ? expandedLeft : rect.left,
                     width: isHovered ? expandedWidth : rect.width,
