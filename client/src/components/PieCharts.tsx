@@ -152,7 +152,7 @@ function SinglePieChart({
   };
 
   const hoverScale = 1.25;
-  const containerSize = 360;
+  const containerSize = 300;
   const chartOffset = (containerSize - size) / 2;
 
   return (
@@ -219,7 +219,7 @@ function SinglePieChart({
           const startX = centerX + startRadius * Math.cos(midRad);
           const startY = centerY + startRadius * Math.sin(midRad);
           
-          const endRadius = scaledRadius + 55;
+          const endRadius = scaledRadius + 40;
           const endX = centerX + endRadius * Math.cos(midRad);
           const endY = centerY + endRadius * Math.sin(midRad);
           
@@ -343,7 +343,7 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-4 items-start justify-items-center overflow-visible ${
+      <div className={`grid gap-0 items-start justify-items-center overflow-visible ${
         data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
