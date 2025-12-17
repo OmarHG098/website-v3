@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "./custom-icons";
+import { StepNumber } from "./NumberedSteps";
 
 interface Step {
   icon?: string;
@@ -118,12 +119,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 {getIcon(step.icon)}
               </button>
               <div className="mt-4 flex items-center gap-3">
-                <div className="flex flex-col items-start">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                  <span className="text-2xl font-bold text-primary leading-none">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
+                <StepNumber index={index} variant="spotlight" size="sm" />
                 {step.title && (
                   <h3 className="text-base font-semibold text-foreground leading-tight">
                     {step.title}
@@ -188,10 +184,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 data-testid="spotlight-step-2"
               >
                 <div className="mb-4 flex items-center gap-3">
-                  <div className="flex flex-col items-start">
-                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                    <span className="text-3xl font-bold text-primary leading-none">02</span>
-                  </div>
+                  <StepNumber index={1} variant="spotlight" size="md" />
                   {steps[1].title && (
                     <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                       {steps[1].title}
@@ -225,10 +218,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                 data-testid="spotlight-step-1"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex flex-col items-start">
-                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                    <span className="text-3xl font-bold text-primary leading-none">01</span>
-                  </div>
+                  <StepNumber index={0} variant="spotlight" size="md" />
                   {steps[0].title && (
                     <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                       {steps[0].title}
@@ -324,10 +314,7 @@ export default function SpotlightStepsWithBubbleText({ data }: SpotlightStepsWit
                   </button>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex flex-col items-start">
-                    <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
-                    <span className="text-3xl font-bold text-primary leading-none">03</span>
-                  </div>
+                  <StepNumber index={2} variant="spotlight" size="md" />
                   {steps[2].title && (
                     <h3 className="text-lg font-semibold text-foreground leading-tight max-w-[120px]">
                       {steps[2].title}
