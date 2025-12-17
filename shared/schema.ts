@@ -505,6 +505,77 @@ export type SupportDuoBulletGroup = z.infer<typeof supportDuoBulletGroupSchema>;
 export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
 
 // ============================================
+// Human and AI Duo Section (split from support_duo)
+// ============================================
+export const humanAndAIDuoBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+});
+
+export const humanAndAIDuoBulletGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  bullets: z.array(humanAndAIDuoBulletSchema).optional(),
+});
+
+export const humanAndAIDuoSectionSchema = z.object({
+  type: z.literal("human_and_ai_duo"),
+  version: z.string().optional(),
+  heading: z.string(),
+  description: z.string(),
+  bullet_groups: z.array(humanAndAIDuoBulletGroupSchema),
+  footer_description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
+export type HumanAndAIDuoBulletGroup = z.infer<typeof humanAndAIDuoBulletGroupSchema>;
+export type HumanAndAIDuoSection = z.infer<typeof humanAndAIDuoSectionSchema>;
+
+// ============================================
+// Community Support Section (split from support_duo grid variant)
+// ============================================
+export const communitySupportBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+});
+
+export const communitySupportGroupSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  badge: z.string().optional(),
+  accent_color: z.string().optional(),
+  bullets: z.array(communitySupportBulletSchema).optional(),
+  button: z.object({
+    text: z.string(),
+    url: z.string(),
+    variant: z.string().optional(),
+  }).optional(),
+});
+
+export const communitySupportSectionSchema = z.object({
+  type: z.literal("community_support"),
+  version: z.string().optional(),
+  heading: z.string(),
+  description: z.string(),
+  bullet_groups: z.array(communitySupportGroupSchema),
+  footer_description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export type CommunitySupportBullet = z.infer<typeof communitySupportBulletSchema>;
+export type CommunitySupportGroup = z.infer<typeof communitySupportGroupSchema>;
+export type CommunitySupportSection = z.infer<typeof communitySupportSectionSchema>;
+
+// ============================================
 // Card Grid Section Schema
 // ============================================
 export const cardGridCardSchema = z.object({
@@ -624,6 +695,8 @@ export const sectionSchema = z.union([
   pieChartsSectionSchema,
   awardsRowSectionSchema,
   supportDuoSectionSchema,
+  humanAndAIDuoSectionSchema,
+  communitySupportSectionSchema,
   cardGridSectionSchema,
   accordionCardSectionSchema,
   spotlightWithBubbleTextSectionSchema,
