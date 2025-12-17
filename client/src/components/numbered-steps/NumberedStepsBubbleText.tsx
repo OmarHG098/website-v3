@@ -140,16 +140,16 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   }`}
                   data-testid="button-numbered-step-2"
                 >
-                  {/* Gradient fade for left connector line - horizontal fade to left, centered vertically */}
-                  <div className="absolute top-1/2 -translate-y-1/2 -left-16 w-48 h-24 bg-gradient-to-l from-background via-background/70 to-transparent pointer-events-none" />
-                  {/* Gradient fade for right connector line - horizontal fade to right, centered vertically */}
-                  <div className="absolute top-1/2 -translate-y-1/2 -right-16 w-48 h-24 bg-gradient-to-r from-background via-background/70 to-transparent pointer-events-none" />
                   {steps[1].title && (
                     <h3 className="relative text-lg font-semibold text-foreground leading-tight text-center max-w-[160px]">
                       {steps[1].title}
                     </h3>
                   )}
                   <div className="relative bg-background">
+                    {/* Gradient fade for left connector line - horizontal fade */}
+                    <div className="absolute -left-16 -bottom-12 w-48 h-24 bg-gradient-to-r from-background via-background/70 to-transparent pointer-events-none" />
+                    {/* Gradient fade for right connector line - horizontal fade */}
+                    <div className="absolute -right-16 -bottom-12 w-48 h-24 bg-gradient-to-l from-background via-background/70 to-transparent pointer-events-none" />
                     <StepNumber index={1} variant="spotlight" size="md" />
                   </div>
                 </button>
