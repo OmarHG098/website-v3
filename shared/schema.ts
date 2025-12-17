@@ -397,6 +397,7 @@ export const verticalBarsMetricCardSchema = z.object({
   title: z.string(),
   unit: z.string().optional(),
   icon: z.string().optional(),
+  description: z.string().optional(),
   years: z.array(verticalBarsYearValueSchema),
 });
 
