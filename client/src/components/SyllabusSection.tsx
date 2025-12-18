@@ -1,9 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import type { SyllabusSection as SyllabusSectionType, SyllabusDefault, SyllabusLanding, SyllabusProgramModules } from "@shared/schema";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";
@@ -242,47 +241,35 @@ function getTechIcon(iconName: string, className?: string) {
 function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const moduleCards = data.module_cards || [];
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 320;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
-    isDragging.current = true;
-    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
-    scrollContainerRef.current.style.cursor = 'grabbing';
-  };
+    const container = scrollContainerRef.current;
+    const cardWidth = 320 + 24;
+    const scrollPos = container.scrollLeft;
+    const newIndex = Math.round(scrollPos / cardWidth);
+    setActiveIndex(Math.max(0, Math.min(newIndex, moduleCards.length - 1)));
+  }, [moduleCards.length]);
 
-  const handleMouseUp = () => {
-    isDragging.current = false;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab';
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const handleScroll = () => updateActiveIndex();
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [updateActiveIndex]);
 
   const handleWheel = (e: React.WheelEvent) => {
     if (!scrollContainerRef.current) return;
-    e.preventDefault();
-    scrollContainerRef.current.scrollLeft += e.deltaY;
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      scrollContainerRef.current.scrollBy({
+        left: e.deltaY,
+        behavior: 'smooth'
+      });
+    }
   };
 
   if (moduleCards.length === 0) {
@@ -341,58 +328,47 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
           {/* Right: Scrollable Module Cards */}
           <div className="flex-1 min-w-0">
             <div className="relative">
-              {/* Scroll Buttons */}
-              <div className="absolute -top-2 right-0 flex gap-2 z-10">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => scroll('left')}
-                  className="rounded-full bg-background shadow-card border-0"
-                  data-testid="button-scroll-left"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => scroll('right')}
-                  className="rounded-full bg-background shadow-card border-0"
-                  data-testid="button-scroll-right"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </Button>
-              </div>
-
-              {/* Progress Dots */}
+              {/* Progress Dots - Progressive fill based on active index */}
               <div className="mb-8 pt-2 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 <div className="flex items-center min-w-max">
                   {moduleCards.map((_, index) => (
                     <div key={index} className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-primary flex-shrink-0" />
+                      <div 
+                        className={cn(
+                          "w-3 h-3 rounded-full flex-shrink-0 transition-colors duration-brand ease-brand",
+                          index <= activeIndex ? "bg-primary" : "bg-muted-foreground/30"
+                        )} 
+                      />
                       {index < moduleCards.length - 1 && (
-                        <div className="w-12 h-0.5 bg-border flex-shrink-0" />
+                        <div 
+                          className={cn(
+                            "w-12 h-0.5 flex-shrink-0 transition-colors duration-brand ease-brand",
+                            index < activeIndex ? "bg-primary" : "bg-muted-foreground/30"
+                          )} 
+                        />
                       )}
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Module Cards Container */}
+              {/* Module Cards Container - Native touch/drag with snap points */}
               <div 
                 ref={scrollContainerRef}
-                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', cursor: 'grab' }}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                onMouseMove={handleMouseMove}
+                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory touch-pan-x"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onWheel={handleWheel}
                 data-testid="container-module-cards"
               >
                 {moduleCards.map((module, index) => (
                   <Card 
                     key={index}
-                    className="flex-shrink-0 w-80 p-6 bg-card shadow-card rounded-card border-0 snap-start"
+                    className={cn(
+                      "flex-shrink-0 w-80 p-6 rounded-card border-0 snap-start transition-all duration-brand ease-brand",
+                      index === activeIndex 
+                        ? "bg-card shadow-card scale-[1.02]" 
+                        : "bg-card/60 shadow-none scale-100"
+                    )}
                     data-testid={`card-module-${index}`}
                   >
                     <div className="mb-5">
