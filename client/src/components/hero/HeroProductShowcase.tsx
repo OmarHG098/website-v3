@@ -61,7 +61,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
               
               {data.brand_mark && (
-                <p className="font-heading text-h1 tracking-tight mb-3">
+                <h1 className="font-heading text-h1 tracking-tight mb-3">
                   {data.brand_mark.prefix && (
                     <span className="text-foreground">{data.brand_mark.prefix}{" "}</span>
                   )}
@@ -71,15 +71,15 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   {data.brand_mark.suffix && (
                     <span className="text-foreground">{" "}{data.brand_mark.suffix}</span>
                   )}
-                </p>
+                </h1>
               )}
               
-              <h1 
-                className="text-foreground mt-2 mb-6"
+              <h2 
+                className="text-h2 text-foreground mt-2 mb-6"
                 data-testid="text-hero-title"
               >
                 {data.title}
-              </h1>
+              </h2>
               
               {data.subtitle && (
                 <p 
