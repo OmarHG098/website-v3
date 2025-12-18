@@ -110,23 +110,55 @@ sections:
       auto_rotate_ms: 4000
       pause_on_hover: true
   - type: syllabus
-    variant: landing-syllabus
-    title: What You'll Build and Master
-    description: From day one, you'll choose one company. Yours, one you want to build, or one you want to reimagine. Over 20 weeks, you'll transform it into a fully operational, AI-powered business.
-    emphasis: Every milestone upgrades the same company
-    focus_areas:
-      - title: AI-first system and product design
-        icon: Bulb
-      - title: Intelligent user interfaces and real-time applications
-        icon: DeviceDesktop
-      - title: APIs, infrastructure, and scalable backend systems
-        icon: Server
-      - title: Data pipelines, telemetry, and decision layers
-        icon: ChartBar
-      - title: Retrieval, embeddings, and production-ready AI agents
-        icon: Robot
-      - title: End-to-end automation across real business workflows
-        icon: Settings
+    variant: program-modules
+    program_title: AI Engineering
+    program_highlight: Program
+    tech_logos:
+      - name: OpenAI
+        icon: openai
+      - name: Python
+        icon: python
+      - name: React
+        icon: react
+      - name: Node.js
+        icon: nodejs
+      - name: Git
+        icon: git
+      - name: GitHub
+        icon: github
+    module_cards:
+      - title: Think like an AI Engineer
+        duration: 4 weeks
+        objectives:
+          - Master Python fundamentals and data structures
+          - Understand AI/ML concepts and terminology
+          - Build your first AI-powered application
+          - Learn prompt engineering best practices
+        projects: "Build an AI chatbot, create automated data pipelines, deploy your first LLM integration"
+      - title: Full-Stack AI Development
+        duration: 6 weeks
+        objectives:
+          - Build React frontends with AI integrations
+          - Create scalable Node.js backends
+          - Implement RAG systems and embeddings
+          - Design AI-first user experiences
+        projects: "Build a semantic search app, create an AI-powered content management system"
+      - title: Production AI Systems
+        duration: 5 weeks
+        objectives:
+          - Deploy production-ready AI agents
+          - Implement multi-agent orchestration
+          - Build real-time streaming applications
+          - Monitor and optimize AI performance
+        projects: "Deploy a multi-agent system, build an AI workflow automation platform"
+      - title: Enterprise AI & Career Launch
+        duration: 5 weeks
+        objectives:
+          - Scale AI systems for enterprise use
+          - Implement security and compliance
+          - Build portfolio-ready capstone project
+          - Interview preparation and career coaching
+        projects: "Complete capstone: Full AI-powered business application"
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
