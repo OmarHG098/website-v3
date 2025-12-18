@@ -1,10 +1,8 @@
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
-import LiteYouTubeEmbed from "react-lite-youtube-embed";
-import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+// @ts-expect-error - react-responsive-embed lacks TypeScript types
+import ResponsiveEmbed from 'react-responsive-embed';
 import { Card } from "@/components/ui/card";
-
-const ReactPlayer = lazy(() => import("react-player"));
 
 export interface VideoConfig {
   url: string;
@@ -81,19 +79,14 @@ export function UniversalVideo({
       if (videoId) {
         return (
           <div 
-            className={`relative overflow-hidden rounded-lg ${className}`}
-            style={aspectRatio}
+            className={`overflow-hidden rounded-lg ${className}`}
             data-testid="video-container"
           >
-            <div className="absolute inset-0">
-              <LiteYouTubeEmbed
-                id={videoId}
-                title="Video"
-                poster="maxresdefault"
-                wrapperClass="yt-lite h-full"
-                playerClass="lty-playbtn"
-              />
-            </div>
+            <ResponsiveEmbed
+              src={`https://www.youtube.com/embed/${videoId}`}
+              ratio={ratio}
+              title="Video"
+            />
           </div>
         );
       }
@@ -141,52 +134,21 @@ export function UniversalVideo({
 
     return (
       <div 
-        className={`relative overflow-hidden rounded-lg shadow-lg ${className}`}
-        style={aspectRatio}
+        className={`overflow-hidden rounded-lg ${className}`}
         data-testid="video-container"
       >
-        {showPreview ? (
-          <div 
-            className="absolute inset-0 cursor-pointer group"
-            onClick={handlePlay}
-            data-testid="video-preview"
-          >
-            <img
-              src={preview_image_url}
-              alt="Video preview"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <IconPlayerPlayFilled className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <Suspense fallback={
-            <div className="absolute inset-0 bg-muted flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            </div>
-          }>
-            <ReactPlayer
-              url={url}
-              playing={isPlaying}
-              loop={loop}
-              muted={muted}
-              controls
-              width="100%"
-              height="100%"
-              style={{ position: "absolute", top: 0, left: 0 }}
-            />
-          </Suspense>
-        )}
+        <ResponsiveEmbed
+          src={url}
+          ratio={ratio}
+          title="Video"
+        />
       </div>
     );
   };
 
   if (withCard) {
     return (
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden !p-0 !min-h-0">
         {renderVideo()}
       </Card>
     );
