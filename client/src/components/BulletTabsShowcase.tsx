@@ -38,9 +38,9 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
 
       <div className="space-y-1">
         {tabs.map((tab, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={index} className="flex items-center gap-1">
             <div 
-              className={`w-1 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${
+              className={`w-1 h-7 rounded-full transition-all duration-300 flex-shrink-0 ${
                 activeIndex === index
                   ? "bg-primary"
                   : "bg-muted-foreground/20"
