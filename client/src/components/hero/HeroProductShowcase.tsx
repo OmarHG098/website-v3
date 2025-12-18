@@ -12,12 +12,12 @@ interface HeroProductShowcaseProps {
 export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   // Hide background image on screens smaller than 1280px for better mobile experience
   const [showBackground, setShowBackground] = useState(false);
-  
+
   useEffect(() => {
     const checkWidth = () => {
       setShowBackground(window.innerWidth >= 1280);
     };
-    
+
     checkWidth();
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
@@ -59,7 +59,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   {data.welcome_text}
                 </p>
               )}
-              
+
               {data.brand_mark && (
                 <h1 className="font-heading text-h1 tracking-tight mb-3">
                   {data.brand_mark.prefix && (
@@ -73,14 +73,16 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   )}
                 </h1>
               )}
+
               
-              <h2 
-                className="text-h2 text-foreground mt-2 mb-6"
+
+              <h1 
+                className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
-              </h2>
-              
+              </h1>
+
               {data.subtitle && (
                 <p 
                   className="text-body text-muted-foreground mb-8 max-w-xl leading-relaxed"
@@ -89,7 +91,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   {data.subtitle}
                 </p>
               )}
-              
+
               {data.description && (
                 <div className="relative">
                   <p className="text-body text-foreground mb-10 max-w-xl leading-relaxed">
@@ -139,7 +141,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                             const fullStars = Math.floor(rating);
                             const hasHalf = rating % 1 >= 0.5;
                             const isHalfStar = hasHalf && star === fullStars + 1;
-                            
+
                             if (star <= fullStars) {
                               return (
                                 <IconStarFilled 
@@ -195,7 +197,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
             </div>
           </div>
-          
+
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
             {data.video ? (
               <UniversalVideo 

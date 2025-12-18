@@ -42,7 +42,25 @@ function toColor(color: string): string {
   return color;
 }
 
-function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData; isVisible: boolean; delayOffset: number }) {
+interface SinglePieChartProps {
+  chart: PieChartData;
+  isVisible: boolean;
+  delayOffset: number;
+  isHovered: boolean;
+  isOtherHovered: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}
+
+function SinglePieChart({ 
+  chart, 
+  isVisible, 
+  delayOffset, 
+  isHovered, 
+  isOtherHovered,
+  onMouseEnter,
+  onMouseLeave 
+}: SinglePieChartProps) {
   const [animationProgress, setAnimationProgress] = useState(0);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -121,21 +139,53 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
   const cx = size / 2;
   const cy = size / 2;
   const radius = size / 2 - 4;
-
   const currentAngle = animationProgress * 360;
 
+  const getSliceMidpoint = (slice: typeof slices[0], r: number) => {
+    const midAngle = slice.startAngle + slice.angle / 2;
+    const midRad = (midAngle - 90) * (Math.PI / 180);
+    return {
+      x: cx + r * Math.cos(midRad),
+      y: cy + r * Math.sin(midRad),
+      angle: midAngle,
+    };
+  };
+
+  const hoverScale = 1.25;
+  const containerSize = 360;
+  const chartOffset = (containerSize - size) / 2;
+
   return (
-    <div className="flex flex-col items-center">
+    <div 
+      className={`flex flex-col items-center transition-all duration-300 ease-out cursor-pointer ${
+        isOtherHovered ? "opacity-30 duration-150" : "opacity-100"
+      }`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
         {chart.title}
       </h3>
       
-      <div className="relative">
+      <div 
+        className="relative overflow-visible"
+        style={{
+          width: containerSize,
+          height: containerSize,
+        }}
+      >
         <svg 
           width={size} 
           height={size} 
           viewBox={`0 0 ${size} ${size}`}
-          className="drop-shadow-sm"
+          className="drop-shadow-sm transition-transform duration-300 ease-out"
+          style={{
+            position: "absolute",
+            left: chartOffset,
+            top: chartOffset,
+            transform: isHovered ? `scale(${hoverScale})` : "scale(1)",
+            transformOrigin: "center center",
+          }}
         >
           {slices.map((slice, index) => {
             const visibleStart = Math.max(0, Math.min(slice.startAngle, currentAngle));
@@ -154,29 +204,83 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
             );
           })}
         </svg>
-      </div>
-
-      <div className="mt-4 space-y-1">
-        {slices.map((slice, index) => (
-          <div 
-            key={index} 
-            className="flex items-center gap-2 text-sm"
-            style={{
-              opacity: animationProgress >= (slice.startAngle / 360) ? 1 : 0,
-              transform: animationProgress >= (slice.startAngle / 360) ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'all 0.3s ease-out',
-            }}
-            data-testid={`pie-legend-${index}`}
-          >
-            <div 
-              className="w-3 h-3 rounded-sm shrink-0" 
-              style={{ backgroundColor: slice.color }}
-            />
-            <span className="text-muted-foreground">
-              {slice.label} ({slice.displayValue || `${Math.round(slice.percentage)}%`})
-            </span>
-          </div>
-        ))}
+        
+        {slices.map((slice, index) => {
+          if (currentAngle <= slice.startAngle) return null;
+          
+          const scaledRadius = radius * hoverScale;
+          const midAngle = slice.startAngle + slice.angle / 2;
+          const midRad = (midAngle - 90) * (Math.PI / 180);
+          
+          const centerX = containerSize / 2;
+          const centerY = containerSize / 2;
+          
+          const startRadius = scaledRadius + 5;
+          const startX = centerX + startRadius * Math.cos(midRad);
+          const startY = centerY + startRadius * Math.sin(midRad);
+          
+          const endRadius = scaledRadius + 55;
+          const endX = centerX + endRadius * Math.cos(midRad);
+          const endY = centerY + endRadius * Math.sin(midRad);
+          
+          const controlRadius = scaledRadius + 30;
+          const perpRad = midRad + Math.PI / 2;
+          const controlOffset = 18;
+          const controlX = centerX + controlRadius * Math.cos(midRad) + controlOffset * Math.cos(perpRad);
+          const controlY = centerY + controlRadius * Math.sin(midRad) + controlOffset * Math.sin(perpRad);
+          
+          const curvePath = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+          
+          const isRightSide = endX > centerX;
+          
+          return (
+            <div
+              key={`label-${index}`}
+              className="absolute pointer-events-none transition-opacity duration-300"
+              style={{
+                opacity: isHovered ? 1 : 0,
+                left: 0,
+                top: 0,
+                width: "100%",
+                height: "100%",
+                overflow: "visible",
+              }}
+            >
+              <svg
+                width={containerSize}
+                height={containerSize}
+                className="absolute left-0 top-0"
+                style={{ overflow: "visible" }}
+              >
+                <path
+                  d={curvePath}
+                  stroke="hsl(var(--foreground))"
+                  strokeWidth={1.5}
+                  fill="none"
+                />
+                <circle
+                  cx={endX}
+                  cy={endY}
+                  r={3}
+                  fill="hsl(var(--foreground))"
+                />
+              </svg>
+              <div
+                className="absolute text-xs whitespace-nowrap"
+                style={{
+                  left: isRightSide ? endX + 12 : endX - 12,
+                  top: endY,
+                  transform: isRightSide ? `translateY(-50%)` : `translate(-100%, -50%)`,
+                }}
+              >
+                <div className="font-medium text-foreground">{slice.label}</div>
+                <div className="text-muted-foreground">
+                  {slice.displayValue || `${Math.round(slice.percentage)}%`}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -184,6 +288,7 @@ function SinglePieChart({ chart, isVisible, delayOffset }: { chart: PieChartData
 
 export function PieCharts({ data }: PieChartsProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -238,8 +343,8 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-8 ${
-        data.charts.length === 1 ? 'grid-cols-1 justify-items-center' :
+      <div className={`grid gap-0 items-start justify-items-center overflow-visible ${
+        data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
       }`}>
@@ -249,6 +354,10 @@ export function PieCharts({ data }: PieChartsProps) {
             chart={chart} 
             isVisible={isVisible}
             delayOffset={0}
+            isHovered={hoveredIndex === index}
+            isOtherHovered={hoveredIndex !== null && hoveredIndex !== index}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
           />
         ))}
       </div>
@@ -259,7 +368,7 @@ export function PieCharts({ data }: PieChartsProps) {
     return (
       <section
         ref={containerRef}
-        className={`py-6 ${data.background || "bg-background"}`}
+        className={`py-6 overflow-x-clip ${data.background || "bg-background"}`}
         data-testid="section-pie-charts"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -274,7 +383,7 @@ export function PieCharts({ data }: PieChartsProps) {
   return (
     <section
       ref={containerRef}
-      className={`py-12 ${data.background || "bg-background"}`}
+      className={`py-12 overflow-x-clip ${data.background || "bg-background"}`}
       data-testid="section-pie-charts"
     >
       <div className="max-w-6xl mx-auto px-4">

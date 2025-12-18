@@ -3,6 +3,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { NumberedStepsBubbleText } from "@/components/numbered-steps/NumberedStepsBubbleText";
 
 export interface NumberedStepsStep {
   icon: string;
@@ -15,7 +16,7 @@ export interface NumberedStepsStep {
 }
 
 export interface NumberedStepsData {
-  title: string;
+  title?: string;
   description?: string;
   description_link?: {
     text: string;
@@ -27,6 +28,7 @@ export interface NumberedStepsData {
   bullet_icon_color?: string;
   bullet_char?: string;
   collapsible_mobile?: boolean;
+  variant?: "default" | "spotlight" | "bubbleText";
 }
 
 interface NumberedStepsProps {
@@ -45,7 +47,46 @@ const getBulletIcon = (iconName: string, colorClass: string) => {
   return IconComponent ? <IconComponent className={`w-4 h-4 ${colorClass} flex-shrink-0 mt-0.5`} /> : null;
 };
 
-export default function NumberedSteps({ data }: NumberedStepsProps) {
+interface StepNumberProps {
+  index: number;
+  variant: "default" | "spotlight";
+  size?: "sm" | "md" | "lg";
+}
+
+const StepNumber = ({ index, variant, size = "md" }: StepNumberProps) => {
+  const number = String(index + 1).padStart(2, '0');
+  
+  if (variant === "spotlight") {
+    const sizeClasses = {
+      sm: "text-2xl",
+      md: "text-3xl", 
+      lg: "text-4xl"
+    };
+    return (
+      <div className="flex flex-col items-start">
+        <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
+        <span className={`${sizeClasses[size]} font-bold text-primary leading-none`}>{number}</span>
+      </div>
+    );
+  }
+  
+  // Default variant - circle style
+  const circleClasses = {
+    sm: "w-10 h-10 text-base",
+    md: "w-14 h-14 text-xl",
+    lg: "w-20 h-20 text-3xl"
+  };
+  
+  return (
+    <div className={`${circleClasses[size]} rounded-full border-2 border-primary bg-primary/10 flex items-center justify-center`}>
+      <span className="font-bold text-primary">{number}</span>
+    </div>
+  );
+};
+
+export { StepNumber };
+
+function NumberedStepsDefault({ data }: NumberedStepsProps) {
   const [expandedSteps, setExpandedSteps] = useState<Record<number, boolean>>({});
 
   const toggleStep = (index: number) => {
@@ -263,4 +304,14 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
       </div>
     </section>
   );
+}
+
+export default function NumberedSteps({ data }: NumberedStepsProps) {
+  const variant = data.variant || "default";
+  
+  if (variant === "bubbleText") {
+    return <NumberedStepsBubbleText data={data as Parameters<typeof NumberedStepsBubbleText>[0]["data"]} />;
+  }
+  
+  return <NumberedStepsDefault data={data} />;
 }

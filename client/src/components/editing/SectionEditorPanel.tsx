@@ -60,12 +60,12 @@ export function SectionEditorPanel({
   const handleYamlChange = useCallback((value: string) => {
     setYamlContent(value);
     setHasChanges(true);
-    
+
     // Validate YAML on change and trigger live preview
     try {
       const parsed = yamlParser.load(value) as Section;
       setParseError(null);
-      
+
       // Trigger live preview if valid section
       if (parsed && typeof parsed === "object" && onPreviewChange) {
         onPreviewChange(parsed);
@@ -82,7 +82,7 @@ export function SectionEditorPanel({
     if (!contentType || !slug || !locale) {
       return false;
     }
-    
+
     let parsed: Section;
     try {
       parsed = yamlParser.load(yamlContent) as Section;
@@ -96,10 +96,10 @@ export function SectionEditorPanel({
       }
       return false;
     }
-    
+
     setIsSaving(true);
     setSaveError(null);
-    
+
     try {
       const token = getDebugToken();
       const response = await fetch("/api/content/edit", {
@@ -124,7 +124,7 @@ export function SectionEditorPanel({
 
       if (response.ok) {
         const result = await response.json();
-        
+
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
         if (!confirmedSection) {
@@ -132,14 +132,14 @@ export function SectionEditorPanel({
         }
         onUpdate(confirmedSection || parsed);
         setHasChanges(false);
-        
+
         // Still invalidate queries to ensure cache consistency
         const apiPath = contentType === "program" 
           ? "/api/career-programs" 
           : contentType === "landing" 
             ? "/api/landings" 
             : "/api/locations";
-        
+
         await queryClient.invalidateQueries({ queryKey: [apiPath, slug] });
         return true;
       } else {
@@ -166,7 +166,7 @@ export function SectionEditorPanel({
       });
     }
   }, [saveToServer, toast]);
-  
+
   // Handle close with unsaved changes warning
   const handleClose = useCallback(() => {
     if (hasChanges) {
@@ -218,7 +218,7 @@ export function SectionEditorPanel({
             className="h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
           />
         </div>
-        
+
         {parseError && (
           <div className="p-2 bg-destructive/10 text-destructive text-sm border-t">
             {parseError}

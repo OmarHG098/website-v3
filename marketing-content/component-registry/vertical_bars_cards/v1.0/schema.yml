@@ -45,6 +45,10 @@ props:
         type: string
         required: false
         description: Icon name for the metric (optional)
+      description:
+        type: string
+        required: false
+        description: Detailed description shown when card is expanded on hover
       years:
         type: array
         required: true

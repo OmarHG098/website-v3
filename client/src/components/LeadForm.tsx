@@ -280,9 +280,9 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [showTurnstileModal, setShowTurnstileModal] = useState(false);
-  
+
   const turnstileEnabled = data.turnstile?.enabled ?? true;
-  
+
   const { data: turnstileSiteKey } = useQuery<{ siteKey: string }>({
     queryKey: ["/api/turnstile/site-key"],
     enabled: turnstileEnabled,
@@ -316,7 +316,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     if (!configDefault || configDefault !== "auto") {
       return configDefault || "";
     }
-    
+
     switch (fieldName) {
       case "program":
         return programContext || "";
@@ -376,7 +376,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       // When marketing consent is enabled, derive both email and whatsapp from consent_email checkbox
       const effectiveEmailConsent = consent_email || false;
       const effectiveWhatsappConsent = consent.marketing ? effectiveEmailConsent : (consent_whatsapp || false);
-      
       const payload = {
         ...restValues,
         // Consent fields mapped to backend names
@@ -410,7 +409,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         variant_version: session.experiment?.variant_version,
         token: turnstileToken,
       };
-      
+
       return apiRequest("POST", "/api/leads", payload);
     },
     onSuccess: () => {
@@ -430,7 +429,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       const defaultErrorMessage = locale === "es" 
         ? "Hubo un problema al enviar tu información. Por favor intenta de nuevo." 
         : "There was a problem submitting your information. Please try again.";
-      
+
       // Try to parse the error message to extract details
       let errorMessage = error.message;
       try {
@@ -467,7 +466,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       if (errorMessage.length > 200 || /<[^>]+>/.test(errorMessage)) {
         errorMessage = defaultErrorMessage;
       }
-      
+
       setTurnstileError(errorMessage);
     },
   });
@@ -499,7 +498,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         </div>
       );
     }
-    
+
     // Stacked variant: centered success message
     return (
       <div className="text-center" data-testid="lead-form-success">
@@ -592,7 +591,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 <div className="bg-card p-card-padding rounded-card shadow-card">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
-                    onSuccess={(token) => {
+                    onSuccess={(token: string) => {
                       setTurnstileToken(token);
                       setShowTurnstileModal(false);
                     }}
@@ -943,7 +942,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               <div className="bg-card p-6 rounded-card shadow-card">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={(token) => {
+                  onSuccess={(token: string) => {
                     setTurnstileToken(token);
                     setShowTurnstileModal(false);
                   }}

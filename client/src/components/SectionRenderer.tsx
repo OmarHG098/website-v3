@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import type { Section, EditOperation } from "@shared/schema";
-import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Hero } from "@/components/hero/Hero";
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
@@ -29,7 +28,10 @@ import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
 import { AwardBadges } from "@/components/AwardBadges";
 import { ApplyFormSection } from "@/components/ApplyFormSection";
-import { SupportDuoSection } from "@/components/SupportDuoSection";
+import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
+import { CommunitySupport } from "@/components/CommunitySupport";
+import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
+
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -89,8 +91,10 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <FooterSection key={index} data={section as Parameters<typeof FooterSection>[0]["data"]} />;
     case "two_column":
       return <TwoColumn key={index} data={section as Parameters<typeof TwoColumn>[0]["data"]} />;
-    case "support_duo":
-      return <SupportDuoSection key={index} data={section as Parameters<typeof SupportDuoSection>[0]["data"]} />;
+    case "human_and_ai_duo":
+      return <HumanAndAIDuo key={index} data={section as Parameters<typeof HumanAndAIDuo>[0]["data"]} />;
+    case "community_support":
+      return <CommunitySupport key={index} data={section as Parameters<typeof CommunitySupport>[0]["data"]} />;
     case "numbered_steps":
       return <NumberedSteps key={index} data={section as Parameters<typeof NumberedSteps>[0]["data"]} />;
     case "testimonials_slide":
@@ -150,53 +154,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
-export function SectionRenderer({ sections: propSections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
   const { toast } = useToast();
-  const editMode = useEditModeOptional();
-  
-  // Track the last propSections reference to detect backend refetches
-  const lastPropSectionsRef = useRef<Section[] | null>(null);
-  
-  // Build unique page key from content type, slug, and locale
-  // Use window.location.pathname as fallback for pages without explicit slug/locale
-  const currentPageKey = contentType && slug && locale 
-    ? `${contentType}:${slug}:${locale}` 
-    : `path:${typeof window !== 'undefined' ? window.location.pathname : 'ssr'}`;
-  
-  // Initialize context sections when page changes, context is empty, or backend refetch occurs
-  useEffect(() => {
-    // Only seed context when in edit mode
-    if (!editMode || !editMode.isEditMode || !propSections) return;
-    
-    // Check if this is a new propSections reference (from backend refetch)
-    const isNewPropsRef = lastPropSectionsRef.current !== propSections;
-    lastPropSectionsRef.current = propSections;
-    
-    // If page has changed, reinitialize (even for empty arrays)
-    if (editMode.pageKey !== currentPageKey) {
-      editMode.setPageKey(currentPageKey);
-      editMode.setSections(propSections);
-      return;
-    }
-    
-    // If context is empty and props has sections, initialize
-    if (editMode.sections.length === 0 && propSections.length > 0) {
-      editMode.setSections(propSections);
-      return;
-    }
-    
-    // Only resync from props when backend refetched (new reference)
-    // This preserves local edits from updateSection while catching add/remove/reorder
-    // Also handles empty array (all sections deleted)
-    if (isNewPropsRef) {
-      editMode.setSections(propSections);
-    }
-  }, [editMode, propSections, currentPageKey]);
-  
-  // Use context sections when in edit mode, otherwise use prop sections
-  const sections = (editMode?.isEditMode && editMode.sections.length > 0) 
-    ? editMode.sections 
-    : propSections;
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;

@@ -193,6 +193,12 @@ export {
   type NumberedStepsSection,
 } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
 
+// Variant types for type narrowing
+export type {
+  NumberedStepsDefaultSection,
+  NumberedStepsBubbleTextSection,
+} from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
+
 // ============================================
 // Re-export Syllabus Schemas from Component Registry
 // ============================================
@@ -232,9 +238,11 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
+  featuresGridCardHeaderCardSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
+  type FeaturesGridCardHeaderCard,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
@@ -414,6 +422,7 @@ export const verticalBarsMetricCardSchema = z.object({
   title: z.string(),
   unit: z.string().optional(),
   icon: z.string().optional(),
+  description: z.string().optional(),
   years: z.array(verticalBarsYearValueSchema),
 });
 
@@ -481,19 +490,53 @@ export const awardsRowSectionSchema = z.object({
 export type AwardsRowSection = z.infer<typeof awardsRowSectionSchema>;
 
 // ============================================
-// Support Duo Section
+// Human and AI Duo Section
 // ============================================
-export const supportDuoBulletSchema = z.object({
+export const humanAndAIDuoBulletSchema = z.object({
   text: z.string(),
   icon: z.string().optional(),
 });
 
-export const supportDuoBulletGroupSchema = z.object({
+export const humanAndAIDuoBulletGroupSchema = z.object({
   title: z.string(),
+  description: z.string().optional(),
   image: z.string().optional(),
   icon: z.string().optional(),
+  bullets: z.array(humanAndAIDuoBulletSchema).optional(),
+});
+
+export const humanAndAIDuoSectionSchema = z.object({
+  type: z.literal("human_and_ai_duo"),
+  version: z.string().optional(),
+  heading: z.string(),
+  description: z.string(),
+  bullet_groups: z.array(humanAndAIDuoBulletGroupSchema),
+  footer_description: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
+export type HumanAndAIDuoBulletGroup = z.infer<typeof humanAndAIDuoBulletGroupSchema>;
+export type HumanAndAIDuoSection = z.infer<typeof humanAndAIDuoSectionSchema>;
+
+// ============================================
+// Community Support Section (split from support_duo grid variant)
+// ============================================
+export const communitySupportBulletSchema = z.object({
+  text: z.string(),
+  icon: z.string().optional(),
+});
+
+export const communitySupportGroupSchema = z.object({
+  title: z.string(),
   description: z.string().optional(),
-  bullets: z.array(supportDuoBulletSchema).optional(),
+  image: z.string().optional(),
+  icon: z.string().optional(),
+  badge: z.string().optional(),
+  accent_color: z.string().optional(),
+  bullets: z.array(communitySupportBulletSchema).optional(),
   button: z.object({
     text: z.string(),
     url: z.string(),
@@ -501,22 +544,44 @@ export const supportDuoBulletGroupSchema = z.object({
   }).optional(),
 });
 
-export const supportDuoSectionSchema = z.object({
-  type: z.literal("support_duo"),
+export const communitySupportSectionSchema = z.object({
+  type: z.literal("community_support"),
   version: z.string().optional(),
-  variant: z.enum(["default", "grid"]).optional(),
-  heading: z.string().optional(),
-  description: z.string().optional(),
-  background: z.string().optional(),
+  heading: z.string(),
+  description: z.string(),
+  bullet_groups: z.array(communitySupportGroupSchema),
+  footer_description: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
-  footer_description: z.string().optional(),
-  bullet_groups: z.array(supportDuoBulletGroupSchema).optional(),
+  background: z.string().optional(),
 });
 
-export type SupportDuoBullet = z.infer<typeof supportDuoBulletSchema>;
-export type SupportDuoBulletGroup = z.infer<typeof supportDuoBulletGroupSchema>;
-export type SupportDuoSection = z.infer<typeof supportDuoSectionSchema>;
+export type CommunitySupportBullet = z.infer<typeof communitySupportBulletSchema>;
+export type CommunitySupportGroup = z.infer<typeof communitySupportGroupSchema>;
+export type CommunitySupportSection = z.infer<typeof communitySupportSectionSchema>;
+
+// ============================================
+// Two Column Accordion Card Section Schema
+// ============================================
+export const twoColumnAccordionCardBulletSchema = z.object({
+  heading: z.string(),
+  text: z.string(),
+});
+
+export const twoColumnAccordionCardSectionSchema = z.object({
+  type: z.literal("two_column_accordion_card"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  bullets: z.array(twoColumnAccordionCardBulletSchema).optional(),
+  footer: z.string().optional(),
+  image: z.string().optional(),
+  image_alt: z.string().optional(),
+  reverse: z.boolean().optional(),
+});
+
+export type TwoColumnAccordionCardBullet = z.infer<typeof twoColumnAccordionCardBulletSchema>;
+export type TwoColumnAccordionCardSection = z.infer<typeof twoColumnAccordionCardSectionSchema>;
 
 // ============================================
 // Section Schema Union
@@ -574,9 +639,11 @@ export const sectionSchema = z.union([
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
   awardsRowSectionSchema,
-  supportDuoSectionSchema,
   applyFormSectionSchema,
   awardBadgesSectionSchema,
+  humanAndAIDuoSectionSchema,
+  communitySupportSectionSchema,
+  twoColumnAccordionCardSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;

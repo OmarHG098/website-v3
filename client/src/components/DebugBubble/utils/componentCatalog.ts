@@ -15,6 +15,9 @@ import {
   IconQuestionMark,
   IconLayoutBottombar,
   IconChartBar,
+  IconRobot,
+  IconUsersGroup,
+  IconLayoutList,
 } from "@tabler/icons-react";
 import type { ComponentItem } from "../types";
 
@@ -39,4 +42,7 @@ export const componentsList: ComponentItem[] = [
   { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
   { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
+  { type: "human_and_ai_duo", label: "Human & AI Duo", icon: IconRobot, description: "Human mentorship + AI assistant benefits" },
+  { type: "community_support", label: "Community Support", icon: IconUsersGroup, description: "Community features with accent bars and CTAs" },
+  { type: "two_column_accordion_card", label: "Two Column Accordion Card", icon: IconLayoutList, description: "Card with accordion content and image" },
 ];

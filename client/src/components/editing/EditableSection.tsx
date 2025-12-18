@@ -64,9 +64,6 @@ export function EditableSection({ children, section, index, sectionType, content
   const [isAdapting, setIsAdapting] = useState(false);
   const [adaptedSection, setAdaptedSection] = useState<Section | null>(null);
   const [hasAdapted, setHasAdapted] = useState(false);
-  
-  // Live editor preview state
-  const [editorPreviewSection, setEditorPreviewSection] = useState<Section | null>(null);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -243,14 +240,6 @@ export function EditableSection({ children, section, index, sectionType, content
         'page': 'pages'
       };
       
-      // Convert the ORIGINAL section (from the page) to YAML for AI adaptation
-      // This preserves the user's current content when adapting to a new variant
-      const originalSectionYaml = yaml.dump(currentSection, {
-        lineWidth: -1,
-        noRefs: true,
-        quotingType: '"',
-      });
-      
       const res = await fetch('/api/content/adapt-with-ai', {
         method: 'POST',
         headers: { 
@@ -263,8 +252,7 @@ export function EditableSection({ children, section, index, sectionType, content
           targetComponent: sectionType,
           targetVersion: selectedVersion || 'v1.0',
           targetVariant: selectedVariant || currentExample.variant || 'default',
-          sourceYaml: originalSectionYaml,
-          targetExampleYaml: currentExample.yaml
+          sourceYaml: currentExample.yaml
         })
       });
       
@@ -294,25 +282,14 @@ export function EditableSection({ children, section, index, sectionType, content
       const adapted = { type: sectionType, ...sectionData } as Section;
       setAdaptedSection(adapted);
       setHasAdapted(true);
-      
-      // Show success toast, with warnings if any
-      const warnings = data.warnings as string[] | undefined;
-      if (warnings && warnings.length > 0) {
-        toast({ 
-          title: "Content adapted with warnings", 
-          description: `${warnings.length} validation warning(s): ${warnings.slice(0, 2).join(", ")}${warnings.length > 2 ? "..." : ""}`,
-          variant: "default"
-        });
-      } else {
-        toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
-      }
+      toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to adapt content';
       toast({ title: "AI Adaptation Error", description: message, variant: "destructive" });
     } finally {
       setIsAdapting(false);
     }
-  }, [currentExample, currentSection, contentType, slug, sectionType, selectedVersion, selectedVariant, toast]);
+  }, [currentExample, contentType, slug, sectionType, selectedVersion, toast]);
 
   const handleConfirmSwap = useCallback(async () => {
     // Use adapted section if available, otherwise use preview section
@@ -359,16 +336,11 @@ export function EditableSection({ children, section, index, sectionType, content
   
   const handleCloseEditor = useCallback(() => {
     setIsEditorOpen(false);
-    setEditorPreviewSection(null);
   }, []);
   
   const handleUpdate = useCallback((updatedSection: Section) => {
     setCurrentSection(updatedSection);
-    // Also update the context so the page re-renders with the new data
-    if (editMode?.updateSection) {
-      editMode.updateSection(index, updatedSection);
-    }
-  }, [editMode, index]);
+  }, []);
   
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
@@ -624,8 +596,6 @@ export function EditableSection({ children, section, index, sectionType, content
               )}
             </div>
           </>
-        ) : isEditorOpen && editorPreviewSection ? (
-          renderSection(editorPreviewSection, index)
         ) : (
           children
         )}
@@ -644,7 +614,6 @@ export function EditableSection({ children, section, index, sectionType, content
             version={version}
             onUpdate={handleUpdate}
             onClose={handleCloseEditor}
-            onPreviewChange={setEditorPreviewSection}
           />
         </Suspense>
       )}

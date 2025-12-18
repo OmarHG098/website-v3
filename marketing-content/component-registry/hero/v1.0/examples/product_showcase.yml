@@ -13,10 +13,9 @@ yaml: |
     title: "Career Development"
     subtitle: "for the AI Era"
     description: "Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms."
-    video:
-      url: "https://www.youtube.com/shorts/2ZvlgDnltc"
-      title: "GeekForce Career Support"
-      ratio: "9:12"
+    video_id: "-2ZvlgDnltc"
+    video_title: "GeekForce Career Support"
+    video_ratio: "9:12"
     form:
       variant: inline
       submit_label: "Get Started →"
