@@ -12,10 +12,10 @@ props:
     type: string
     required: false
     options:
-      - default
-      - minimal
-    description: Visual style variant. "default" shows primary background behind image. "minimal" shows centered image without background and smaller text.
-    default: default
+      - withBigBorder
+      - withoutBorder
+    description: Visual style variant. "withBigBorder" shows primary background behind image. "withoutBorder" shows centered image without background and smaller text.
+    default: withBigBorder
   heading:
     type: string
     required: false

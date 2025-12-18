@@ -8,9 +8,9 @@ interface BulletTabsShowcaseProps {
 }
 
 export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
-  const { heading, subheading, subheading_centered = true, variant = "default", tabs, image_position = "right" } = data;
+  const { heading, subheading, subheading_centered = true, variant = "withBigBorder", tabs, image_position = "right" } = data;
   const [activeIndex, setActiveIndex] = useState(0);
-  const isMinimal = variant === "minimal";
+  const isWithoutBorder = variant === "withoutBorder";
 
   if (!tabs || tabs.length === 0) {
     return null;
@@ -49,7 +49,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
               data-testid={`button-bullet-tab-${index}`}
             >
               <p 
-                className={`text-foreground font-normal ${isMinimal ? "text-base" : "text-lg"}`}
+                className={`text-foreground font-normal ${isWithoutBorder ? "text-base" : "text-lg"}`}
                 data-testid={`text-bullet-tab-description-${index}`}
               >
                 {tab.description || tab.label}
@@ -63,7 +63,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
 
   const imageContent = (
     <div className="relative flex justify-center items-center">
-      {isMinimal ? (
+      {isWithoutBorder ? (
         <div key={activeIndex} className="animate-in fade-in duration-300">
           <UniversalImage
             id={activeTab.image_id}
