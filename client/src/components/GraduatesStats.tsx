@@ -147,15 +147,16 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
         <div className="hidden lg:block">
           <div className="flex items-stretch">
             <div 
-              className="flex gap-3 flex-shrink-0"
-              style={{ width: 'calc(50vw - 576px + 280px)', minWidth: '320px' }}
-              data-testid="graduates-stats-featured"
+              className="flex-shrink-0"
+              style={{ width: 'calc(50vw - 576px + 500px)', minWidth: '500px' }}
             >
               <div 
-                className="grid grid-rows-2 gap-3 flex-1"
-                style={{ gridTemplateColumns: '2fr 1fr' }}
+                className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
+                data-testid="graduates-stats-collage-full"
               >
-                <div className="row-span-2 col-start-1">
+                <div 
+                  style={{ gridColumn: 'span 5', gridRow: 'span 2' }}
+                >
                   <UniversalImage
                     id={featured_images[0].image_id}
                     preset="card"
@@ -163,7 +164,9 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                     alt="Featured graduate photo 1"
                   />
                 </div>
-                <div className="row-span-2 col-start-2">
+                <div 
+                  style={{ gridColumn: 'span 3', gridRow: 'span 2' }}
+                >
                   <UniversalImage
                     id={featured_images[1].image_id}
                     preset="card"
@@ -171,18 +174,32 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                     alt="Featured graduate photo 2"
                   />
                 </div>
-              </div>
-            </div>
-
-            <div className="flex-1 px-6">
-              <div className="h-[320px]">
-                {renderCollageImages()}
+                {collage_images && collage_images.map((img, index) => {
+                  const colSpan = img.col_span || 4;
+                  const rowSpan = img.row_span || 2;
+                  return (
+                    <div 
+                      key={index}
+                      style={{
+                        gridColumn: `span ${colSpan}`,
+                        gridRow: `span ${rowSpan}`,
+                      }}
+                    >
+                      <UniversalImage
+                        id={img.image_id}
+                        preset="card"
+                        className="w-full h-full object-cover shadow-sm"
+                        alt={`Graduate photo ${index + 1}`}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <div 
-              className="flex-shrink-0 flex flex-col justify-center"
-              style={{ width: 'calc(50vw - 576px + 180px)', minWidth: '200px', paddingRight: '2rem' }}
+              className="flex-1 flex flex-col justify-center"
+              style={{ paddingLeft: '2rem', paddingRight: 'calc(50vw - 576px + 2rem)', minWidth: '200px' }}
             >
               {renderStatsCompact()}
             </div>
