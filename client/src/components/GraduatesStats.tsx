@@ -87,12 +87,12 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
     >
       <div className="flex flex-col gap-4">
         {stats.map((stat, index) => {
-          const isFirstRow = index === 0;
+          const isEven = index % 2 === 0;
           
           return (
             <div 
               key={index} 
-              className={`text-center lg:text-left ${isFirstRow ? 'lg:mr-auto' : 'lg:ml-auto'}`}
+              className={`text-center lg:text-left max-w-[140px] ${isEven ? 'lg:mr-auto' : 'lg:ml-auto'}`}
               data-testid={`stat-item-${index}`}
             >
               <p 
