@@ -445,6 +445,42 @@
       "alt": "Professional Profile Creation - LinkedIn profile optimization example",
       "focal_point": "center",
       "tags": ["geekforce", "linkedin", "profile", "career"]
+    },
+    "graduates_celebration": {
+      "src": "/attached_assets/graduation_1766029503175.webp",
+      "alt": "4Geeks Academy graduates celebrating with their certificates",
+      "focal_point": "center",
+      "tags": ["graduates", "celebration", "certificates", "community"]
+    },
+    "graduates_workspace": {
+      "src": "/attached_assets/unsplash_QckxruozjRg_(1)_1766029639606.png",
+      "alt": "Students working together at laptops in a collaborative workspace",
+      "focal_point": "center",
+      "tags": ["graduates", "workspace", "collaboration", "coding"]
+    },
+    "graduates_team_1": {
+      "src": "/attached_assets/Rectangle_3_1766029735830.png",
+      "alt": "4Geeks team members smiling together",
+      "focal_point": "center",
+      "tags": ["graduates", "team", "community"]
+    },
+    "graduates_team_2": {
+      "src": "/attached_assets/Rectangle_4_1766029735563.png",
+      "alt": "Large group of 4Geeks graduates celebrating with certificates",
+      "focal_point": "center",
+      "tags": ["graduates", "team", "celebration"]
+    },
+    "graduates_coding": {
+      "src": "/attached_assets/Rectangle_5_1766029737050.png",
+      "alt": "Student coding at a desk with multiple monitors",
+      "focal_point": "center",
+      "tags": ["graduates", "coding", "workspace"]
+    },
+    "graduates_friends": {
+      "src": "/attached_assets/Rectangle_6_1766029738660.png",
+      "alt": "4Geeks students laughing and enjoying time together",
+      "focal_point": "center",
+      "tags": ["graduates", "friends", "community"]
     }
   }
 }
