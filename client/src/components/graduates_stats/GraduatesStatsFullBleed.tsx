@@ -58,11 +58,11 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
           return (
             <div 
               key={index} 
-              className={`text-center lg:text-left max-w-[140px] ${isEven ? 'lg:mr-auto' : 'lg:ml-auto'}`}
+              className={`text-center lg:text-left max-w-[200px]  ${isEven ? 'lg:mr-auto' : 'lg:ml-auto'}`}
               data-testid={`stat-item-${index}`}
             >
               <p 
-                className="text-3xl md:text-4xl font-bold text-primary mb-1"
+                className="text-3xl md:text-5xl font-bold text-primary mb-1"
                 data-testid={`text-stat-value-${index}`}
               >
                 {stat.value}
@@ -165,8 +165,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
           </div>
 
           <div 
-            className="flex-1 flex flex-col justify-center"
-            style={{ paddingLeft: '2rem', paddingRight: 'max(2rem, calc(50vw - 576px))' }}
+            className="flex-1 flex flex-col justify-center px-12"
           >
             {renderStatsCompact()}
           </div>
