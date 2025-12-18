@@ -1,0 +1,65 @@
+name: Graduates Stats
+version: "1.0"
+component: GraduatesStats
+file: client/src/components/GraduatesStats.tsx
+description: Two-column layout with image collage on the left and large statistics display on the right
+when_to_use: |
+  Use for showcasing graduate outcomes, success metrics, or achievement statistics.
+  The collage creates visual interest while stats communicate key results.
+  Great for career pages, outcomes sections, or testimonial areas.
+props:
+  heading:
+    type: string
+    required: false
+    description: Main heading text displayed above the component
+    example: "Does the Job Guarantee deliver results?"
+  subheading:
+    type: string
+    required: false
+    description: Descriptive text below the heading
+    example: "Yes, and we've got the numbers to back it up."
+  stats:
+    type: array
+    required: true
+    description: List of statistics to display (3 recommended - 2 on first row, 1 on second)
+    items:
+      value:
+        type: string
+        required: true
+        description: The statistic value (e.g., "84%", "3-6 months")
+      label:
+        type: string
+        required: true
+        description: Label explaining the statistic (e.g., "Job placement rate")
+  collage_images:
+    type: array
+    required: true
+    description: List of images for the collage layout
+    items:
+      image_id:
+        type: string
+        required: true
+        description: ID of the image from the image registry
+      size:
+        type: string
+        required: false
+        options:
+          - small
+          - medium
+          - large
+        description: Size of the image in the collage
+        default: medium
+      position:
+        type: string
+        required: false
+        options:
+          - top
+          - middle
+          - bottom
+        description: Vertical position hint for the image
+        default: middle
+  background:
+    type: string
+    required: false
+    description: Background color class (e.g., "bg-primary/5")
+    default: ""
