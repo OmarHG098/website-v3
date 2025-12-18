@@ -1,0 +1,27 @@
+name: Career Outcomes
+description: Career-focused statistics highlighting employment outcomes
+example:
+  type: graduates_stats
+  heading: "Our graduates are changing their careers"
+  subheading: "Join thousands of professionals who have launched new tech careers with 4Geeks Academy."
+  stats:
+    - value: "5,000+"
+      label: "Graduates worldwide"
+    - value: "$65K"
+      label: "Average starting salary"
+    - value: "92%"
+      label: "Would recommend us"
+  collage_images:
+    - image_id: "graduates_celebration"
+      size: "large"
+    - image_id: "graduates_workspace"
+      size: "large"
+    - image_id: "graduates_team_1"
+      size: "medium"
+    - image_id: "graduates_team_2"
+      size: "medium"
+    - image_id: "graduates_coding"
+      size: "medium"
+    - image_id: "graduates_friends"
+      size: "large"
+  background: "bg-muted/30"
