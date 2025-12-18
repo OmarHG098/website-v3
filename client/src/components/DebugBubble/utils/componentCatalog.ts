@@ -47,4 +47,5 @@ export const componentsList: ComponentItem[] = [
   { type: "community_support", label: "Community Support", icon: IconUsersGroup, description: "Community features with accent bars and CTAs" },
   { type: "two_column_accordion_card", label: "Two Column Accordion Card", icon: IconLayoutList, description: "Card with accordion content and image" },
   { type: "bullet_tabs_showcase", label: "Bullet Tabs Showcase", icon: IconListDetails, description: "Interactive tabs with vertical highlight bar and image" },
+  { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
 ];
