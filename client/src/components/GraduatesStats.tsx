@@ -12,9 +12,6 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
     return null;
   }
 
-  const firstRowStats = stats.slice(0, 2);
-  const secondRowStats = stats.slice(2);
-
   return (
     <section 
       className={`py-16 md:py-24 ${background || ''}`}
@@ -128,53 +125,37 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
             className="flex flex-col justify-center"
             data-testid="graduates-stats-numbers"
           >
-            <div className="grid grid-cols-2 gap-8 mb-8">
-              {firstRowStats.map((stat, index) => (
-                <div 
-                  key={index} 
-                  className="text-center lg:text-left"
-                  data-testid={`stat-item-${index}`}
-                >
-                  <p 
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2"
-                    data-testid={`text-stat-value-${index}`}
-                  >
-                    {stat.value}
-                  </p>
-                  <p 
-                    className="text-sm md:text-base text-muted-foreground"
-                    data-testid={`text-stat-label-${index}`}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-            
-            {secondRowStats.length > 0 && (
-              <div className="grid grid-cols-2 gap-8">
-                {secondRowStats.map((stat, index) => (
+            <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+              {stats.map((stat, index) => {
+                const match = stat.value.match(/^([\d,\.]+)\s*(.*)$/);
+                const number = match ? match[1] : stat.value;
+                const unit = match ? match[2] : '';
+                
+                const isFirstColumn = index % 2 === 0;
+                
+                return (
                   <div 
-                    key={index + 2} 
-                    className={`text-center lg:text-left ${secondRowStats.length === 1 ? 'col-span-2' : ''}`}
-                    data-testid={`stat-item-${index + 2}`}
+                    key={index} 
+                    className={`text-center lg:text-left ${isFirstColumn ? 'col-start-1' : 'col-start-2'}`}
+                    data-testid={`stat-item-${index}`}
                   >
                     <p 
-                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2"
-                      data-testid={`text-stat-value-${index + 2}`}
+                      className="text-3xl md:text-4xl font-bold text-foreground mb-1"
+                      data-testid={`text-stat-value-${index}`}
                     >
-                      {stat.value}
+                      {number}
+                      {unit && <span className="text-xl md:text-2xl font-semibold ml-0.5">{unit}</span>}
                     </p>
                     <p 
                       className="text-sm md:text-base text-muted-foreground"
-                      data-testid={`text-stat-label-${index + 2}`}
+                      data-testid={`text-stat-label-${index}`}
                     >
                       {stat.label}
                     </p>
                   </div>
-                ))}
-              </div>
-            )}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
