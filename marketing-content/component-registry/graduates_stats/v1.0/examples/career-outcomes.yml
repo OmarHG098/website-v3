@@ -5,23 +5,32 @@ example:
   heading: "Our graduates are changing their careers"
   subheading: "Join thousands of professionals who have launched new tech careers with 4Geeks Academy."
   stats:
-    - value: "5,000+"
+    - value: "5,000"
+      unit: "+"
       label: "Graduates worldwide"
-    - value: "$65K"
+    - value: "$65"
+      unit: "K"
       label: "Average starting salary"
-    - value: "92%"
+    - value: "92"
+      unit: "%"
       label: "Would recommend us"
   collage_images:
     - image_id: "graduates_celebration"
-      size: "large"
+      col_span: 7
+      row_span: 2
     - image_id: "graduates_workspace"
-      size: "large"
+      col_span: 5
+      row_span: 2
     - image_id: "graduates_team_1"
-      size: "medium"
+      col_span: 5
+      row_span: 2
     - image_id: "graduates_team_2"
-      size: "medium"
+      col_span: 7
+      row_span: 2
     - image_id: "graduates_coding"
-      size: "medium"
+      col_span: 6
+      row_span: 2
     - image_id: "graduates_friends"
-      size: "large"
+      col_span: 6
+      row_span: 2
   background: "bg-muted/30"

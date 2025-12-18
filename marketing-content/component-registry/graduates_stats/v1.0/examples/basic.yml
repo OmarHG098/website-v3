@@ -5,28 +5,31 @@ example:
   heading: "Does the Job Guarantee deliver results?"
   subheading: "Yes, and we've got the numbers to back it up."
   stats:
-    - value: "84%"
+    - value: "84"
+      unit: "%"
       label: "Job placement rate"
     - value: "3-6"
-      label: "Months to get hired"
-    - value: "35%"
+      unit: "months"
+      label: "Average time to get hired"
+    - value: "35"
+      unit: "%"
       label: "Average salary increase"
   collage_images:
     - image_id: "graduates_celebration"
-      size: "large"
-      position: "top"
+      col_span: 7
+      row_span: 2
     - image_id: "graduates_workspace"
-      size: "large"
-      position: "top"
+      col_span: 5
+      row_span: 2
     - image_id: "graduates_team_1"
-      size: "medium"
-      position: "middle"
+      col_span: 5
+      row_span: 2
     - image_id: "graduates_team_2"
-      size: "medium"
-      position: "middle"
+      col_span: 7
+      row_span: 2
     - image_id: "graduates_coding"
-      size: "medium"
-      position: "bottom"
+      col_span: 6
+      row_span: 2
     - image_id: "graduates_friends"
-      size: "large"
-      position: "bottom"
+      col_span: 6
+      row_span: 2
