@@ -18,12 +18,16 @@ export const graduatesCollageImageSchema = z.object({
   image_id: z.string(),
   col_span: z.number().optional(),
   row_span: z.number().optional(),
+  col_start: z.number().optional(),
+  row_start: z.number().optional(),
 });
 
 export const graduatesFeaturedImageSchema = z.object({
   image_id: z.string(),
   col_span: z.number().optional(),
   row_span: z.number().optional(),
+  col_start: z.number().optional(),
+  row_start: z.number().optional(),
 });
 
 // ============================================

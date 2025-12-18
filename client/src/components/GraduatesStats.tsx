@@ -155,14 +155,16 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 data-testid="graduates-stats-collage-full"
               >
                 {featured_images.map((img, index) => {
-                  const colSpan = img.col_span || 6;
+                  const colSpan = img.col_span || 2;
                   const rowSpan = img.row_span || 2;
+                  const colStart = img.col_start || (index === 0 ? 1 : 3);
+                  const rowStart = img.row_start;
                   return (
                     <div 
                       key={`featured-${index}`}
                       style={{
-                        gridColumn: `span ${colSpan}`,
-                        gridRow: `span ${rowSpan}`,
+                        gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
+                        gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
                       }}
                     >
                       <UniversalImage
@@ -177,12 +179,14 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 {collage_images && collage_images.map((img, index) => {
                   const colSpan = img.col_span || 4;
                   const rowSpan = img.row_span || 2;
+                  const colStart = img.col_start || 5;
+                  const rowStart = img.row_start;
                   return (
                     <div 
                       key={`collage-${index}`}
                       style={{
-                        gridColumn: `span ${colSpan}`,
-                        gridRow: `span ${rowSpan}`,
+                        gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
+                        gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
                       }}
                     >
                       <UniversalImage
