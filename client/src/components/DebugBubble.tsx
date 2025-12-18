@@ -41,6 +41,7 @@ import {
   IconTable,
   IconFlask,
   IconPlus,
+  IconUsersGroup,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -91,6 +92,7 @@ const componentsList = [
   { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
   { type: "horizontal_bars", label: "Horizontal Bars", icon: IconChartBar, description: "Animated horizontal bar chart" },
   { type: "vertical_bars_cards", label: "Vertical Bars Cards", icon: IconChartBar, description: "Cards with vertical bars comparing years" },
+  { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
 ];
 
 type MenuView = "main" | "components" | "sitemap" | "experiments";
