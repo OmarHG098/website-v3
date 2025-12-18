@@ -155,10 +155,10 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 data-testid="graduates-stats-collage-full"
               >
                 {featured_images.map((img, index) => {
-                  const colSpan = img.col_span || 2;
+                  const colSpan = img.col_span || (index === 0 ? 5 : 3);
                   const rowSpan = img.row_span || 2;
-                  const colStart = img.col_start || (index === 0 ? 1 : 3);
-                  const rowStart = img.row_start;
+                  const colStart = img.col_start || 1;
+                  const rowStart = img.row_start || (index === 0 ? 1 : 3);
                   return (
                     <div 
                       key={`featured-${index}`}
@@ -179,8 +179,8 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 {collage_images && collage_images.map((img, index) => {
                   const colSpan = img.col_span || 4;
                   const rowSpan = img.row_span || 2;
-                  const colStart = img.col_start || 5;
-                  const rowStart = img.row_start;
+                  const colStart = img.col_start || (index < 2 ? 6 + index * 4 : 4 + index * 2);
+                  const rowStart = img.row_start || (index < 2 ? 1 : 3);
                   return (
                     <div 
                       key={`collage-${index}`}
