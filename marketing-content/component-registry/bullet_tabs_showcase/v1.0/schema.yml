@@ -8,6 +8,14 @@ when_to_use: |
   that reveal corresponding images. Great for product tours, feature explanations,
   or step-by-step visual guides where users can explore at their own pace.
 props:
+  variant:
+    type: string
+    required: false
+    options:
+      - default
+      - minimal
+    description: Visual style variant. "default" shows primary background behind image. "minimal" shows centered image without background and smaller text.
+    default: default
   heading:
     type: string
     required: false

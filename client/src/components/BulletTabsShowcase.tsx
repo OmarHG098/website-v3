@@ -8,8 +8,9 @@ interface BulletTabsShowcaseProps {
 }
 
 export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
-  const { heading, subheading, subheading_centered = true, tabs, image_position = "right" } = data;
+  const { heading, subheading, subheading_centered = true, variant = "default", tabs, image_position = "right" } = data;
   const [activeIndex, setActiveIndex] = useState(0);
+  const isMinimal = variant === "minimal";
 
   if (!tabs || tabs.length === 0) {
     return null;
@@ -48,7 +49,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
               data-testid={`button-bullet-tab-${index}`}
             >
               <p 
-                className="text-lg text-foreground font-normal"
+                className={`text-foreground font-normal ${isMinimal ? "text-base" : "text-lg"}`}
                 data-testid={`text-bullet-tab-description-${index}`}
               >
                 {tab.description || tab.label}
@@ -61,20 +62,31 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   );
 
   const imageContent = (
-    <div className="relative flex justify-center">
-      <div
-        className="relative bg-primary/30 rounded-2xl pt-14 pb-14 pl-10 flex justify-end"
-        data-testid="bullet-tabs-image-container"
-      >
-        <div key={activeIndex} className="animate-in fade-in duration-300 w-[95%]">
+    <div className="relative flex justify-center items-center">
+      {isMinimal ? (
+        <div key={activeIndex} className="animate-in fade-in duration-300">
           <UniversalImage
             id={activeTab.image_id}
             preset="full"
-            className="w-full h-auto rounded-l-lg shadow-lg"
+            className="w-full h-auto rounded-lg shadow-lg"
             alt={activeTab.label}
           />
         </div>
-      </div>
+      ) : (
+        <div
+          className="relative bg-primary/30 rounded-2xl pt-14 pb-14 pl-10 flex justify-end"
+          data-testid="bullet-tabs-image-container"
+        >
+          <div key={activeIndex} className="animate-in fade-in duration-300 w-[95%]">
+            <UniversalImage
+              id={activeTab.image_id}
+              preset="full"
+              className="w-full h-auto rounded-l-lg shadow-lg"
+              alt={activeTab.label}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 

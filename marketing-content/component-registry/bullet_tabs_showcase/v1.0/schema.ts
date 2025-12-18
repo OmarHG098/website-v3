@@ -12,6 +12,7 @@ export const bulletTabSchema = z.object({
 export const bulletTabsShowcaseSectionSchema = z.object({
   type: z.literal("bullet_tabs_showcase"),
   version: z.string().optional(),
+  variant: z.enum(["default", "minimal"]).optional(),
   heading: z.string().optional(),
   subheading: z.string().optional(),
   subheading_centered: z.boolean().optional(),
