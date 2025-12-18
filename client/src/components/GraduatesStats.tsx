@@ -49,7 +49,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
           >
             {collage_images && collage_images.length >= 6 && (
               <div className="relative w-full h-full">
-                <div className="absolute top-0 left-0 w-[48%] h-[38%]">
+                <div className="absolute top-0 left-0 w-[55%] h-[35%]">
                   <UniversalImage
                     id={collage_images[0]?.image_id}
                     preset="card"
@@ -58,7 +58,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
                 
-                <div className="absolute top-0 right-0 w-[48%] h-[32%]">
+                <div className="absolute top-0 right-0 w-[42%] h-[28%]">
                   <UniversalImage
                     id={collage_images[1]?.image_id}
                     preset="card"
@@ -67,7 +67,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
                 
-                <div className="absolute top-[35%] right-0 w-[48%] h-[30%]">
+                <div className="absolute top-[31%] right-0 w-[55%] h-[32%]">
                   <UniversalImage
                     id={collage_images[2]?.image_id}
                     preset="card"
@@ -76,7 +76,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
                 
-                <div className="absolute top-[42%] left-0 w-[48%] h-[28%]">
+                <div className="absolute top-[38%] left-0 w-[42%] h-[28%]">
                   <UniversalImage
                     id={collage_images[3]?.image_id}
                     preset="card"
@@ -85,7 +85,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
                 
-                <div className="absolute bottom-0 left-0 w-[48%] h-[26%]">
+                <div className="absolute bottom-0 left-0 w-[58%] h-[30%]">
                   <UniversalImage
                     id={collage_images[4]?.image_id}
                     preset="card"
@@ -94,7 +94,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
                 
-                <div className="absolute bottom-0 right-0 w-[48%] h-[32%]">
+                <div className="absolute bottom-0 right-0 w-[38%] h-[34%]">
                   <UniversalImage
                     id={collage_images[5]?.image_id}
                     preset="card"
