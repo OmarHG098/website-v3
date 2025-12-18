@@ -42,12 +42,10 @@ function SpotlightCard({
   return (
     <Card 
       className={`
-        p-4 md:p-card-padding cursor-pointer outline-none
+        p-4 md:p-5 cursor-pointer outline-none border-0
         transition-all duration-brand ease-brand
-        ${isActive 
-          ? 'shadow-card z-10 bg-card border-primary/20' 
-          : 'opacity-60 bg-card/50 hover:opacity-80'
-        }
+        bg-muted/30 hover:bg-muted/50
+        ${isActive ? 'bg-muted/50' : ''}
       `}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -55,27 +53,20 @@ function SpotlightCard({
       data-testid={`card-spotlight-${itemId}`}
       data-active={isActive}
     >
-      <div className="flex flex-col items-center justify-center text-center gap-2 h-[180px] md:h-[200px]">
-        <div className="w-12 h-12 md:w-14 md:h-14 flex-shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
           {getIcon(item.icon, "w-full h-full", iconColor)}
         </div>
         
-        {item.value && (
-          <div className="font-bold text-foreground text-xl md:text-2xl flex-shrink-0">
-            {item.value}
-          </div>
-        )}
-        
-        <div className="font-semibold text-foreground text-xs md:text-sm flex-shrink-0 line-clamp-2">
-          {item.title}
-        </div>
-        
-        <div className="h-[32px] md:h-[40px] flex items-start justify-center overflow-hidden flex-shrink-0">
-          <div className={`
-            text-xs text-muted-foreground transition-opacity duration-brand ease-brand line-clamp-2
-            ${isActive && item.description ? 'opacity-100' : 'opacity-0'}
-          `}>
-            {item.description || ''}
+        <div className="flex-1 min-w-0">
+          {item.value && (
+            <div className="font-bold text-foreground text-xl md:text-2xl font-heading">
+              {item.value}
+            </div>
+          )}
+          
+          <div className="text-muted-foreground text-sm">
+            {item.title}
           </div>
         </div>
       </div>
