@@ -38,14 +38,16 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
 
       <div className="space-y-1">
         {tabs.map((tab, index) => (
-          <div key={index} className="flex items-center gap-1">
-            <div 
-              className={`w-1 h-7 rounded-full transition-all duration-300 flex-shrink-0 ${
-                activeIndex === index
-                  ? "bg-primary"
-                  : "bg-muted-foreground/20"
-              }`}
-            />
+          <div key={index} className="flex items-stretch gap-1">
+            <div className="py-1 flex-shrink-0">
+              <div 
+                className={`w-1 h-full rounded-full transition-all duration-300 ${
+                  activeIndex === index
+                    ? "bg-primary"
+                    : "bg-muted-foreground/20"
+                }`}
+              />
+            </div>
             <Button
               variant="ghost"
               onClick={() => setActiveIndex(index)}
