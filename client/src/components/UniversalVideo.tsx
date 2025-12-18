@@ -125,11 +125,9 @@ export function UniversalVideo({
             loop={loop}
             muted={muted}
             controls
-            light={!isPlaying}
             width="100%"
             height="100%"
             style={{ position: "absolute", top: 0, left: 0 }}
-            onClickPreview={handlePlay}
             config={{
               youtube: {
                 playerVars: { modestbranding: 1 }
