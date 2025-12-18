@@ -11,12 +11,12 @@ export interface VideoConfig {
   autoplay?: boolean;
   loop?: boolean;
   preview_image_url?: string;
-  with_card?: boolean;
+  with_shadow_border?: boolean;
 }
 
-interface UniversalVideoProps extends Omit<VideoConfig, 'with_card'> {
+interface UniversalVideoProps extends Omit<VideoConfig, 'with_shadow_border'> {
   className?: string;
-  withCard?: boolean;
+  withShadowBorder?: boolean;
 }
 
 const isLocalVideo = (url: string): boolean => {
@@ -62,7 +62,7 @@ export function UniversalVideo({
   loop = true,
   preview_image_url,
   className = "",
-  withCard = false,
+  withShadowBorder = false,
 }: UniversalVideoProps) {
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [showPreview, setShowPreview] = useState(!autoplay && !!preview_image_url);
@@ -146,7 +146,7 @@ export function UniversalVideo({
     );
   };
 
-  if (withCard) {
+  if (withShadowBorder) {
     return (
       <SolidCard className="!p-0 !min-h-0 overflow-hidden">
         {renderVideo()}
