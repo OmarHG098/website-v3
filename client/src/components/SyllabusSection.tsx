@@ -332,13 +332,13 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
 
               {/* Progress Dots */}
-              <div className="mb-8 pt-2">
-                <div className="flex items-center">
+              <div className="mb-8 pt-2 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <div className="flex items-center min-w-max">
                   {moduleCards.map((_, index) => (
                     <div key={index} className="flex items-center">
-                      <div className="w-3.5 h-3.5 rounded-full bg-primary" />
+                      <div className="w-3 h-3 rounded-full bg-primary flex-shrink-0" />
                       {index < moduleCards.length - 1 && (
-                        <div className="w-20 h-0.5 bg-border" />
+                        <div className="w-12 h-0.5 bg-border flex-shrink-0" />
                       )}
                     </div>
                   ))}
