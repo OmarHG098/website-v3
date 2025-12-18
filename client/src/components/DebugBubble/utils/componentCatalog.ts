@@ -18,6 +18,7 @@ import {
   IconRobot,
   IconUsersGroup,
   IconLayoutList,
+  IconListDetails,
 } from "@tabler/icons-react";
 import type { ComponentItem } from "../types";
 
@@ -45,4 +46,5 @@ export const componentsList: ComponentItem[] = [
   { type: "human_and_ai_duo", label: "Human & AI Duo", icon: IconRobot, description: "Human mentorship + AI assistant benefits" },
   { type: "community_support", label: "Community Support", icon: IconUsersGroup, description: "Community features with accent bars and CTAs" },
   { type: "two_column_accordion_card", label: "Two Column Accordion Card", icon: IconLayoutList, description: "Card with accordion content and image" },
+  { type: "bullet_tabs_showcase", label: "Bullet Tabs Showcase", icon: IconListDetails, description: "Interactive tabs with vertical highlight bar and image" },
 ];

@@ -415,6 +415,24 @@
       "alt": "Workspace image",
       "focal_point": "center",
       "tags": ["photo", "workspace"]
+    },
+    "placeholder_career_guidance": {
+      "src": "/attached_assets/comunity-support_1765908983485.png",
+      "alt": "Career guidance placeholder",
+      "focal_point": "center",
+      "tags": ["placeholder", "career"]
+    },
+    "placeholder_mentorship": {
+      "src": "/attached_assets/community_1764717588840.png",
+      "alt": "Mentorship placeholder",
+      "focal_point": "center",
+      "tags": ["placeholder", "mentorship"]
+    },
+    "placeholder_strategies": {
+      "src": "/attached_assets/unsplash_QckxruozjRg_1765395521123.png",
+      "alt": "Strategies placeholder",
+      "focal_point": "center",
+      "tags": ["placeholder", "strategies"]
     }
   }
 }
