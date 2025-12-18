@@ -7,12 +7,12 @@ yaml: |
   heading: Does the Job Guarantee deliver results?
   subheading: Yes, and we've got the numbers to back it up.
   featured_images:
-    - image_id: caracas_graduates
+    - image_id: graduates_celebration
       col_span: 5
       row_span: 2
       col_start: 1
       row_start: 1
-    - image_id: community_support
+    - image_id: graduates_workspace
       col_span: 3
       row_span: 2
       col_start: 1
@@ -27,22 +27,22 @@ yaml: |
     - value: "$15K"
       label: Average salary increase after graduation
   collage_images:
-    - image_id: students_collaborating
+    - image_id: graduates_team_1
       col_span: 4
       row_span: 2
       col_start: 6
       row_start: 1
-    - image_id: group_career_support
+    - image_id: graduates_team_2
       col_span: 3
       row_span: 2
       col_start: 10
       row_start: 1
-    - image_id: group_geekpal
+    - image_id: graduates_coding
       col_span: 5
       row_span: 2
       col_start: 4
       row_start: 3
-    - image_id: group_original
+    - image_id: graduates_friends
       col_span: 4
       row_span: 2
       col_start: 9
