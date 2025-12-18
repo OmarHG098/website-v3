@@ -23,13 +23,13 @@ const isLocalVideo = (url: string): boolean => {
          url.startsWith("/") && !url.includes("youtube") && !url.includes("vimeo");
 };
 
-const parseRatio = (ratio?: string): { aspectRatio: string; paddingTop?: string } => {
-  if (!ratio) return { aspectRatio: "16 / 9" };
+const parseRatio = (ratio?: string): { paddingTop: string } => {
+  if (!ratio) return { paddingTop: "56.25%" };
   const [w, h] = ratio.split(":").map(Number);
   if (w && h) {
-    return { aspectRatio: `${w} / ${h}` };
+    return { paddingTop: `${(h / w) * 100}%` };
   }
-  return { aspectRatio: "16 / 9" };
+  return { paddingTop: "56.25%" };
 };
 
 export function UniversalVideo({
@@ -82,7 +82,7 @@ export function UniversalVideo({
             muted={muted}
             playsInline
             controls={!autoplay}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             data-testid="video-native"
           />
         )}
@@ -92,13 +92,13 @@ export function UniversalVideo({
 
   return (
     <div 
-      className={`overflow-hidden rounded-lg shadow-lg ${className}`}
+      className={`relative overflow-hidden rounded-lg shadow-lg ${className}`}
       style={aspectRatio}
       data-testid="video-container"
     >
       {showPreview ? (
         <div 
-          className="w-full h-full cursor-pointer group relative"
+          className="absolute inset-0 cursor-pointer group"
           onClick={handlePlay}
           data-testid="video-preview"
         >
@@ -115,7 +115,7 @@ export function UniversalVideo({
         </div>
       ) : (
         <Suspense fallback={
-          <div className="w-full h-full bg-muted flex items-center justify-center">
+          <div className="absolute inset-0 bg-muted flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         }>
@@ -127,6 +127,7 @@ export function UniversalVideo({
             controls
             width="100%"
             height="100%"
+            style={{ position: "absolute", top: 0, left: 0 }}
             config={{
               youtube: {
                 playerVars: { modestbranding: 1 }
