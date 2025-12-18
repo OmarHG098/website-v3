@@ -478,8 +478,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                     )}
                   </Card>
                 ))}
-                {/* Trailing spacer to allow scrolling to last cards */}
-                <div className="flex-shrink-0 w-64" aria-hidden="true" />
+                {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
+                <div className="flex-shrink-0 w-[calc(100%-344px)]" aria-hidden="true" />
               </div>
             </div>
           </div>
