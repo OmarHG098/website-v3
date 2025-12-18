@@ -6,13 +6,15 @@ interface GraduatesStatsProps {
 }
 
 export function GraduatesStats({ data }: GraduatesStatsProps) {
-  const { heading, subheading, stats, collage_images, featured_images, visual_variant, background } = data;
+  const { heading, subheading, stats, collage_images, background } = data;
+  const variant = 'variant' in data ? data.variant : 'standard';
+  const featured_images = 'featured_images' in data ? data.featured_images : undefined;
 
   if (!stats || stats.length === 0) {
     return null;
   }
 
-  const isFullBleed = visual_variant === "full_bleed_duo";
+  const isFullBleed = variant === "fullBleed" && featured_images && featured_images.length >= 2;
 
   const renderCollageImages = () => (
     <div 
@@ -43,74 +45,79 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
     </div>
   );
 
-  const renderStats = (compact = false) => (
+  const renderStatsStandard = () => (
     <div 
       className="flex flex-col justify-center"
       data-testid="graduates-stats-numbers"
     >
-      {compact ? (
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-          {stats.map((stat, index) => {
-            const isOdd = stats.length % 2 !== 0;
-            const isLast = index === stats.length - 1;
-            const shouldSpanFull = isOdd && isLast;
-            
-            return (
-              <div 
-                key={index} 
-                className={`text-center lg:text-left ${shouldSpanFull ? 'col-span-2' : ''}`}
-                data-testid={`stat-item-${index}`}
+      <div className="flex flex-col gap-6">
+        {stats.map((stat, index) => {
+          const isFirstColumn = index % 2 === 0;
+          
+          return (
+            <div 
+              key={index} 
+              className={`text-center lg:text-left ${isFirstColumn ? 'lg:mr-auto' : 'lg:ml-auto'}`}
+              data-testid={`stat-item-${index}`}
+            >
+              <p 
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-1"
+                data-testid={`text-stat-value-${index}`}
               >
-                <p 
-                  className="text-3xl md:text-4xl font-bold text-primary mb-1"
-                  data-testid={`text-stat-value-${index}`}
-                >
-                  {stat.value}
-                  {stat.unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stat.unit}</span>}
-                </p>
-                <p 
-                  className="text-sm text-muted-foreground"
-                  data-testid={`text-stat-label-${index}`}
-                >
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="flex flex-col gap-6">
-          {stats.map((stat, index) => {
-            const isFirstColumn = index % 2 === 0;
-            
-            return (
-              <div 
-                key={index} 
-                className={`text-center lg:text-left ${isFirstColumn ? 'lg:mr-auto' : 'lg:ml-auto'}`}
-                data-testid={`stat-item-${index}`}
+                {stat.value}
+                {stat.unit && <span className="text-2xl md:text-3xl font-semibold ml-1">{stat.unit}</span>}
+              </p>
+              <p 
+                className="text-sm md:text-base text-muted-foreground"
+                data-testid={`text-stat-label-${index}`}
               >
-                <p 
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-1"
-                  data-testid={`text-stat-value-${index}`}
-                >
-                  {stat.value}
-                  {stat.unit && <span className="text-2xl md:text-3xl font-semibold ml-1">{stat.unit}</span>}
-                </p>
-                <p 
-                  className="text-sm md:text-base text-muted-foreground"
-                  data-testid={`text-stat-label-${index}`}
-                >
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      )}
+                {stat.label}
+              </p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 
-  if (isFullBleed && featured_images && featured_images.length >= 2) {
+  const renderStatsCompact = () => (
+    <div 
+      className="flex flex-col justify-center"
+      data-testid="graduates-stats-numbers"
+    >
+      <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+        {stats.map((stat, index) => {
+          const isOdd = stats.length % 2 !== 0;
+          const isLast = index === stats.length - 1;
+          const shouldSpanFull = isOdd && isLast;
+          
+          return (
+            <div 
+              key={index} 
+              className={`text-center lg:text-left ${shouldSpanFull ? 'col-span-2' : ''}`}
+              data-testid={`stat-item-${index}`}
+            >
+              <p 
+                className="text-3xl md:text-4xl font-bold text-primary mb-1"
+                data-testid={`text-stat-value-${index}`}
+              >
+                {stat.value}
+                {stat.unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stat.unit}</span>}
+              </p>
+              <p 
+                className="text-sm text-muted-foreground"
+                data-testid={`text-stat-label-${index}`}
+              >
+                {stat.label}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  if (isFullBleed && featured_images) {
     return (
       <section 
         className={`py-16 md:py-24 overflow-hidden ${background || ''}`}
@@ -167,7 +174,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 <div className="h-[320px]">
                   {renderCollageImages()}
                 </div>
-                {renderStats(true)}
+                {renderStatsCompact()}
               </div>
             </div>
           </div>
@@ -195,7 +202,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
             </div>
             
             {renderCollageImages()}
-            {renderStats(true)}
+            {renderStatsCompact()}
           </div>
         </div>
       </section>
@@ -231,7 +238,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center">
           {renderCollageImages()}
-          {renderStats(false)}
+          {renderStatsStandard()}
         </div>
       </div>
     </section>

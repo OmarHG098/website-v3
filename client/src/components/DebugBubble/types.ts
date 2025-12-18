@@ -68,7 +68,6 @@ export interface ComponentItem {
   label: string;
   icon: Icon;
   description: string;
-  variant?: string;
 }
 
 export interface TagInputProps {

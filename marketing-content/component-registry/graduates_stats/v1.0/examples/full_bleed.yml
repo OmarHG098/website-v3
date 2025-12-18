@@ -1,9 +1,9 @@
-name: Full Bleed Duo Variant
-description: Layout with two featured images extending to the left screen edge, compact stats grid
+name: Full Bleed Career Outcomes
+description: Featured images bleed to screen edge with compact stats grid
 
 yaml: |
   type: graduates_stats
-  visual_variant: full_bleed_duo
+  variant: fullBleed
   heading: Does the Job Guarantee deliver results?
   subheading: Yes, and we've got the numbers to back it up.
   featured_images:

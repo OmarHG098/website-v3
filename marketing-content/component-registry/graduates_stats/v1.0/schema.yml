@@ -2,7 +2,7 @@ name: Graduates Stats
 version: "1.0"
 component: GraduatesStats
 file: client/src/components/GraduatesStats.tsx
-description: Two-column layout with image collage on the left and large statistics display on the right
+description: Display graduate outcomes with image collage and statistics. Supports multiple layout variants.
 when_to_use: |
   Use for showcasing graduate outcomes, success metrics, or achievement statistics.
   The collage creates visual interest while stats communicate key results.
@@ -11,17 +11,17 @@ variants:
   standard:
     description: Default layout with image collage on left and stacked stats on right
     best_for: General use, career outcomes pages
-  full_bleed_duo:
-    description: Two featured images bleed to the left edge with collage and stats in a more compact layout
+  fullBleed:
+    description: Two featured images bleed to the left screen edge with collage and compact stats
     best_for: Hero-like impact sections, landing pages
 props:
-  visual_variant:
+  variant:
     type: string
     required: false
     options:
       - standard
-      - full_bleed_duo
-    description: Layout variant - standard is default, full_bleed_duo adds two full-bleed images on the left
+      - fullBleed
+    description: Layout variant - standard is default, fullBleed adds two full-bleed images on the left
     default: standard
   heading:
     type: string
@@ -36,7 +36,7 @@ props:
   stats:
     type: array
     required: true
-    description: List of statistics to display in staggered left-right layout
+    description: List of statistics to display
     items:
       value:
         type: string
@@ -72,7 +72,7 @@ props:
   featured_images:
     type: array
     required: false
-    description: Two featured images for the full_bleed_duo variant (displayed on left edge)
+    description: Two featured images for the fullBleed variant (displayed on left edge). Required when variant is fullBleed.
     items:
       image_id:
         type: string

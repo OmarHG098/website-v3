@@ -971,20 +971,14 @@ export function DebugBubble() {
                     <div className="text-center py-8 text-sm text-muted-foreground">
                       No components found
                     </div>
-                  ) : filteredComponentsList.map((component, index) => {
+                  ) : filteredComponentsList.map((component) => {
                     const Icon = component.icon;
-                    const href = component.variant 
-                      ? `/private/component-showcase/${component.type}?example=${component.variant}`
-                      : `/private/component-showcase/${component.type}`;
-                    const uniqueKey = component.variant 
-                      ? `${component.type}-${component.variant}`
-                      : component.type;
                     return (
                       <a
-                        key={uniqueKey}
-                        href={href}
+                        key={component.type}
+                        href={`/private/component-showcase/${component.type}`}
                         className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                        data-testid={`link-component-${uniqueKey}`}
+                        data-testid={`link-component-${component.type}`}
                       >
                         <Icon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                         <div className="flex-1 min-w-0">
