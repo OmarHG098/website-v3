@@ -202,6 +202,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 autoplay={data.video.autoplay}
                 loop={data.video.loop}
                 preview_image_url={data.video.preview_image_url}
+                withCard={data.video.with_card}
                 className="w-[280px] md:w-full md:max-w-[400px]"
               />
             ) : data.image ? (

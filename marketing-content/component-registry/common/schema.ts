@@ -22,6 +22,7 @@ export const videoConfigSchema = z.object({
   autoplay: z.boolean().optional(),
   loop: z.boolean().optional(),
   preview_image_url: z.string().optional(),
+  with_card: z.boolean().optional(),
 });
 
 export type VideoConfig = z.infer<typeof videoConfigSchema>;
