@@ -51,14 +51,14 @@ sections:
     heading: Unlimited Career Support – Always Ahead of Job Market Trends
     subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you’ll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.
     tabs:
-      - label: AI Coding Tutor
-        description: Meet Rigobot, our internally developed AI coding tutor designed to help you become a great coder with personalized feedback.
-        image_id: geekforce_rigobot_ai
       - label: Personalized Guidance
         description: Receive tailored guidance aligned with your goals, context, and challenges.
+        image_id: geekforce_rigobot_ai
+      - label: Unlimited Mentorship
+        description: Meet mentors online or in-person whenever you need support—unlimited, for life.
         image_id: placeholder_career_guidance
-      - label: Professional Profile
-        description: Build a recruiter-ready LinkedIn profile and professional presence that attracts top employers.
+      - label: Proven Strategies
+        description: Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves.
         image_id: geekforce_linkedin_profile
     image_position: right
   - type: numbered_steps
