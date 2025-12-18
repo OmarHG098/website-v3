@@ -63,7 +63,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const imageContent = (
     <div className="relative flex justify-center">
       <div
-        className="relative bg-primary/20 rounded-2xl pt-14 pb-14 pl-10 flex justify-end"
+        className="relative bg-primary/30 rounded-2xl pt-14 pb-14 pl-10 flex justify-end"
         data-testid="bullet-tabs-image-container"
       >
         <div key={activeIndex} className="animate-in fade-in duration-300 w-[95%]">
@@ -91,7 +91,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
             </h2>
           </div>
         )}
-        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-center ${
+        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 ${
           image_position === "left" ? "lg:grid-cols-[3fr_2fr]" : ""
         }`}>
           {image_position === "left" ? (

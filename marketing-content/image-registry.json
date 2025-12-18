@@ -433,6 +433,18 @@
       "alt": "Strategies placeholder",
       "focal_point": "center",
       "tags": ["placeholder", "strategies"]
+    },
+    "geekforce_rigobot_ai": {
+      "src": "/attached_assets/image_1766026923754.png",
+      "alt": "Rigobot AI coding tutor - Meet our internally developed AI designed to help you become a great coder",
+      "focal_point": "center",
+      "tags": ["geekforce", "rigobot", "ai", "career"]
+    },
+    "geekforce_linkedin_profile": {
+      "src": "/attached_assets/image_1766027250007.png",
+      "alt": "Professional Profile Creation - LinkedIn profile optimization example",
+      "focal_point": "center",
+      "tags": ["geekforce", "linkedin", "profile", "career"]
     }
   }
 }
