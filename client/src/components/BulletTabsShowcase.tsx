@@ -72,10 +72,10 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const imageContent = (
     <div className="relative flex items-center justify-center">
       <div
-        className="relative bg-primary/10 rounded-2xl pt-10 pb-10 pl-10"
+        className="relative bg-primary/10 rounded-2xl pt-10 pb-10 pl-10 flex justify-end"
         data-testid="bullet-tabs-image-container"
       >
-        <div key={activeIndex} className="animate-in fade-in duration-300 max-w-[85%]">
+        <div key={activeIndex} className="animate-in fade-in duration-300 w-[90%]">
           <UniversalImage
             id={activeTab.image_id}
             preset="full"
