@@ -8,7 +8,7 @@ interface BulletTabsShowcaseProps {
 }
 
 export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
-  const { heading, subheading, tabs, image_position = "right" } = data;
+  const { heading, subheading, subheading_centered = true, tabs, image_position = "right" } = data;
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!tabs || tabs.length === 0) {
@@ -19,6 +19,14 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
 
   const textContent = (
     <div className="flex flex-col justify-center">
+      {subheading && !subheading_centered && (
+        <p 
+          className="text-muted-foreground mb-6 text-base md:text-lg"
+          data-testid="text-bullet-tabs-subheading"
+        >
+          {subheading}
+        </p>
+      )}
       <div className="space-y-1">
         {tabs.map((tab, index) => (
           <div key={index} className="flex items-stretch gap-1">
@@ -73,7 +81,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   return (
     <section className="py-16 md:py-24" data-testid="section-bullet-tabs-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        {(heading || subheading) && (
+        {(heading || (subheading && subheading_centered)) && (
           <div className="text-center mb-12">
             {heading && (
               <h2 
@@ -83,10 +91,10 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
                 {heading}
               </h2>
             )}
-            {subheading && (
+            {subheading && subheading_centered && (
               <p 
                 className="text-muted-foreground mt-4 text-base md:text-lg max-w-4xl mx-auto"
-                data-testid="text-bullet-tabs-subheading"
+                data-testid="text-bullet-tabs-subheading-centered"
               >
                 {subheading}
               </p>

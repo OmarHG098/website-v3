@@ -14,6 +14,7 @@ export const bulletTabsShowcaseSectionSchema = z.object({
   version: z.string().optional(),
   heading: z.string().optional(),
   subheading: z.string().optional(),
+  subheading_centered: z.boolean().optional(),
   tabs: z.array(bulletTabSchema),
   image_position: z.enum(["left", "right"]).optional(),
 });
