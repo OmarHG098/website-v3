@@ -200,8 +200,8 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
             </div>
 
             <div 
-              className="flex-shrink-0 flex flex-col justify-center"
-              style={{ width: 'calc(50vw - 576px + 150px)', minWidth: '160px', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
+              className="flex-1 flex flex-col justify-center"
+              style={{ paddingLeft: '2rem', paddingRight: 'max(2rem, calc(50vw - 576px))' }}
             >
               {renderStatsCompact()}
             </div>
