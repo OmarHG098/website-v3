@@ -80,7 +80,6 @@ export const featuresGridSectionSchema = z.union([
 
 export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
 export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
-export type FeaturesGridCardHeaderCard = z.infer<typeof featuresGridCardHeaderCardSchema>;
 export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
 export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
 export type FeaturesGridSpotlightSection = z.infer<typeof featuresGridSpotlightSectionSchema>;

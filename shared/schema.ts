@@ -238,11 +238,9 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
-  featuresGridCardHeaderCardSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
-  type FeaturesGridCardHeaderCard,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
