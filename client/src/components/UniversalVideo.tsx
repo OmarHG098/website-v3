@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
 // @ts-expect-error - react-responsive-embed lacks TypeScript types
 import ResponsiveEmbed from 'react-responsive-embed';
-import { Card } from "@/components/ui/card";
+import SolidCard from './SolidCard';
 
 export interface VideoConfig {
   url: string;
@@ -148,9 +148,9 @@ export function UniversalVideo({
 
   if (withCard) {
     return (
-      <Card className="overflow-hidden !p-0 !min-h-0">
+      <SolidCard className="!p-0 !min-h-0 overflow-hidden">
         {renderVideo()}
-      </Card>
+      </SolidCard>
     );
   }
 

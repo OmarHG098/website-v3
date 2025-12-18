@@ -18,8 +18,8 @@ sections:
       color: destructive
     description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
     video:
-      url: /attached_assets/ai-engineering_1765593572918.mp4
-      ratio: "9:16"
+      url: https://youtu.be/D5nUZNL52-Q
+      ratio: "3:4"
       muted: true
       autoplay: false
       loop: true
@@ -36,7 +36,6 @@ sections:
         message: Thank you for signing up!
       terms_url: /terms
       privacy_url: /privacy
-      show_consent: true
       show_terms: true
       className: lead-form
     trust_bar:
