@@ -164,7 +164,7 @@ sections:
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
     features:
       - icon: Robot
         title: Progress faster with AI
@@ -176,13 +176,15 @@ sections:
         title: Peer-driven learning
         description: Learn faster with an active community that keeps you accountable.
     highlight:
-      title: Maximize Your Progress
-      description: Live instruction, unlimited mentorship, and AI tools built for smarter learning.
+      title: Thrive in today's tech with career support for the AI-Era
+      description: ""
       bullets:
-        - text: Rigobot follows your progress and gives tailored feedback exactly when you need it.
-        - text: 7:1 student-to-teacher ratio plus unlimited access to expert mentors and career coaches.
+        - text: Personalized 1:1 coaching
+        - text: AI-ready resumes and portfolios
+        - text: Interview prep and salary negotiation
+        - text: Lifelong access to support your growth
       cta:
-        text: Start Learning Now
+        text: Start learning now!
         url: "#hero-form"
         variant: primary
   - type: certificate
