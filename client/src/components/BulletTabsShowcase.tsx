@@ -19,23 +19,6 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
 
   const textContent = (
     <div className="flex flex-col justify-center">
-      {heading && (
-        <h2 
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight"
-          data-testid="text-bullet-tabs-heading"
-        >
-          {heading}
-        </h2>
-      )}
-      {subheading && (
-        <p 
-          className="text-muted-foreground mb-8 text-base md:text-lg"
-          data-testid="text-bullet-tabs-subheading"
-        >
-          {subheading}
-        </p>
-      )}
-
       <div className="space-y-1">
         {tabs.map((tab, index) => (
           <div key={index} className="flex items-stretch gap-1">
@@ -72,7 +55,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const imageContent = (
     <div className="relative flex justify-center">
       <div
-        className="relative bg-primary/10 rounded-2xl pt-12 pb-12 pl-12 flex justify-end"
+        className="relative bg-primary/20 rounded-2xl pt-14 pb-14 pl-10 flex justify-end"
         data-testid="bullet-tabs-image-container"
       >
         <div key={activeIndex} className="animate-in fade-in duration-300 w-[95%]">
@@ -90,6 +73,26 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   return (
     <section className="py-16 md:py-24" data-testid="section-bullet-tabs-showcase">
       <div className="max-w-6xl mx-auto px-4">
+        {(heading || subheading) && (
+          <div className="text-center mb-12">
+            {heading && (
+              <h2 
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight"
+                data-testid="text-bullet-tabs-heading"
+              >
+                {heading}
+              </h2>
+            )}
+            {subheading && (
+              <p 
+                className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto"
+                data-testid="text-bullet-tabs-subheading"
+              >
+                {subheading}
+              </p>
+            )}
+          </div>
+        )}
         <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-center ${
           image_position === "left" ? "lg:grid-cols-[3fr_2fr]" : ""
         }`}>
