@@ -265,22 +265,24 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   return (
     <section 
-      className="py-section bg-background"
+      className="py-section bg-muted/30"
       data-testid="section-syllabus-program"
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left: Program Info Card */}
           <div className="lg:w-80 flex-shrink-0">
-            <Card className="p-6 bg-card h-full">
-              <div className="mb-6">
+            <Card className="p-8 bg-card h-full shadow-card rounded-card border-0">
+              <div className="mb-8">
                 <h2 
-                  className="text-h2 text-foreground mb-2"
+                  className="text-h2 text-foreground mb-3"
                   data-testid="text-syllabus-program-title"
                 >
                   {data.program_title}
                 </h2>
                 <span 
-                  className="inline-block bg-accent text-accent-foreground px-3 py-1 text-lg font-semibold"
+                  className="inline-block bg-accent text-foreground px-4 py-1.5 text-lg font-bold font-heading"
+                  style={{ backgroundColor: 'hsl(var(--accent))' }}
                   data-testid="text-syllabus-program-highlight"
                 >
                   {data.program_highlight}
@@ -288,15 +290,15 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <div className="flex flex-wrap gap-3" data-testid="list-tech-logos">
+                <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
                   {data.tech_logos.map((logo, index) => (
                     <div 
                       key={index}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-brand"
+                      className="text-muted-foreground hover:text-primary transition-colors duration-brand"
                       title={logo.name}
                       data-testid={`icon-tech-${index}`}
                     >
-                      {getTechIcon(logo.icon, "w-7 h-7")}
+                      {getTechIcon(logo.icon, "w-8 h-8")}
                     </div>
                   ))}
                 </div>
@@ -304,81 +306,88 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
             </Card>
           </div>
 
+          {/* Right: Scrollable Module Cards */}
           <div className="flex-1 min-w-0">
             <div className="relative">
-              <div className="absolute -top-4 right-0 flex gap-2 z-10">
+              {/* Scroll Buttons */}
+              <div className="absolute -top-2 right-0 flex gap-2 z-10">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => scroll('left')}
-                  className="rounded-full bg-background shadow-card"
+                  className="rounded-full bg-background shadow-card border-0"
                   data-testid="button-scroll-left"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-5 h-5" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => scroll('right')}
-                  className="rounded-full bg-background shadow-card"
+                  className="rounded-full bg-background shadow-card border-0"
                   data-testid="button-scroll-right"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-5 h-5" />
                 </Button>
               </div>
 
-              <div className="mb-6">
-                <div className="flex items-center gap-2">
+              {/* Progress Dots */}
+              <div className="mb-8 pt-2">
+                <div className="flex items-center">
                   {moduleCards.map((_, index) => (
                     <div key={index} className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-muted-foreground" />
+                      <div className="w-3.5 h-3.5 rounded-full bg-primary" />
                       {index < moduleCards.length - 1 && (
-                        <div className="w-16 h-0.5 bg-muted" />
+                        <div className="w-20 h-0.5 bg-border" />
                       )}
                     </div>
                   ))}
                 </div>
               </div>
 
+              {/* Module Cards Container */}
               <div 
                 ref={scrollContainerRef}
-                className="flex gap-5 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
-                style={{ scrollbarWidth: 'thin' }}
+                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 data-testid="container-module-cards"
               >
                 {moduleCards.map((module, index) => (
                   <Card 
                     key={index}
-                    className="flex-shrink-0 w-72 p-5 bg-card"
+                    className="flex-shrink-0 w-80 p-6 bg-card shadow-card rounded-card border-0 snap-start"
                     data-testid={`card-module-${index}`}
                   >
-                    <div className="mb-4">
-                      <p className="text-sm text-muted-foreground mb-1">
+                    <div className="mb-5">
+                      <p className="text-sm text-muted-foreground mb-2 font-medium">
                         Module {index + 1}
                       </p>
-                      <h3 className="inline-block bg-accent text-accent-foreground px-2 py-0.5 font-semibold mb-2">
+                      <h3 
+                        className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2"
+                        style={{ backgroundColor: 'hsl(var(--accent))' }}
+                      >
                         {module.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground font-medium mt-2">
                         {module.duration}
                       </p>
                     </div>
 
-                    <ul className="space-y-2 mb-4 text-sm text-foreground">
+                    <ul className="space-y-2.5 mb-5 text-sm text-foreground">
                       {module.objectives.map((objective, objIndex) => (
                         <li key={objIndex} className="flex items-start gap-2">
-                          <span className="text-primary mt-1">•</span>
-                          <span>{objective}</span>
+                          <span className="text-primary mt-0.5 text-lg leading-none">•</span>
+                          <span className="leading-relaxed">{objective}</span>
                         </li>
                       ))}
                     </ul>
 
                     {module.projects && (
-                      <div>
-                        <p className="text-sm font-semibold text-primary mb-1">
+                      <div className="pt-4 border-t border-border">
+                        <p className="text-sm font-bold text-primary mb-1.5">
                           Projects:
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           {module.projects}
                         </p>
                       </div>
