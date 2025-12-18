@@ -589,7 +589,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
               <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
-                <div className="bg-card p-6 rounded-lg shadow-lg">
+                <div className="bg-card p-card-padding rounded-card shadow-card">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
                     onSuccess={(token) => {
@@ -653,7 +653,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     <div className={data.className} data-testid="lead-form">
       {data.title && (
         <h2 
-          className="text-2xl md:text-3xl font-bold mb-2 text-center text-foreground"
+          className="mb-2 text-center text-foreground"
           data-testid="text-form-title"
         >
           {data.title}
@@ -661,7 +661,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       )}
       {data.subtitle && (
         <p 
-          className="text-muted-foreground text-center mb-6"
+          className="text-body text-muted-foreground text-center mb-6"
           data-testid="text-form-subtitle"
         >
           {data.subtitle}

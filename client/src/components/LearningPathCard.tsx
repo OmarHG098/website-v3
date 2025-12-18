@@ -12,7 +12,7 @@ interface LearningPathCardProps {
 export default function LearningPathCard({ title, description, icon, onClick }: LearningPathCardProps) {
   return (
     <Card 
-      className="flex flex-col items-center justify-center min-h-[280px] p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+      className="flex flex-col items-center justify-center min-h-[280px] p-6 text-center transition-all duration-brand ease-brand hover:shadow-card hover:scale-[1.02] cursor-pointer"
       onClick={onClick}
       data-testid={`card-learning-path-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >

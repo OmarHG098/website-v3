@@ -9,7 +9,10 @@ export default {
         lg: ".5625rem", /* 9px */
         md: ".375rem", /* 6px */
         sm: ".1875rem", /* 3px */
-        card: ".8rem", /* 12.8px - for course cards */
+        card: "0.75rem", /* 12px - brand standard */
+      },
+      boxShadow: {
+        'card': '0 2px 8px -2px hsl(0 0% 0% / 0.08)',
       },
       colors: {
         // Flat / base colors (regular buttons)
@@ -84,9 +87,25 @@ export default {
         },
       },
       fontFamily: {
+        heading: ["var(--font-heading)"],
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+      },
+      fontSize: {
+        'h1': ['50px', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.02em' }],
+        'h2': ['30px', { lineHeight: '1.2', fontWeight: '700', letterSpacing: '-0.01em' }],
+        'body': ['16px', { lineHeight: '1.5', fontWeight: '400' }],
+      },
+      spacing: {
+        'section': '64px',
+        'card-padding': '24px',
+      },
+      transitionDuration: {
+        'brand': '150ms',
+      },
+      transitionTimingFunction: {
+        'brand': 'ease-out',
       },
       keyframes: {
         "accordion-down": {

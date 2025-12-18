@@ -39,7 +39,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   return (
     <section 
       id="hero-form"
-      className="py-16 md:py-20 relative overflow-hidden"
+      className="py-section relative overflow-hidden"
       style={shouldShowBackground ? {
         backgroundImage: `url(${data.background_image!.src})`,
         backgroundSize: 'cover',
@@ -55,13 +55,13 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
             <div className="text-center md:text-left relative w-full">
               {data.welcome_text && (
-                <p className="text-4xl lg:text-5xl font-medium text-foreground">
+                <p className="text-body text-muted-foreground mb-2">
                   {data.welcome_text}
                 </p>
               )}
               
               {data.brand_mark && (
-                <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+                <p className="font-heading text-h1 tracking-tight mb-2">
                   {data.brand_mark.prefix && (
                     <span className="text-foreground">{data.brand_mark.prefix}{" "}</span>
                   )}
@@ -75,7 +75,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
               
               <h1 
-                className="text-4xl lg:text-5xl font-medium text-foreground mt-[16px] mb-[16px]"
+                className="text-foreground mt-4 mb-4"
                 data-testid="text-hero-title"
               >
                 {data.title}
@@ -83,7 +83,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               
               {data.subtitle && (
                 <p 
-                  className="text-xl lg:text-2xl text-muted-foreground mb-6 max-w-xl"
+                  className="text-body text-muted-foreground mb-6 max-w-xl"
                   data-testid="text-hero-subtitle"
                 >
                   {data.subtitle}
@@ -92,7 +92,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               
               {data.description && (
                 <div className="relative">
-                  <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
+                  <p className="text-body text-foreground mb-8 max-w-xl">
                     {data.description}
                   </p>
                 </div>
@@ -127,7 +127,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.trust_bar && (
-                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-background rounded-lg p-4 shadow-sm">
+                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-card rounded-card p-card-padding shadow-card transition-all duration-brand ease-brand">
                   <div className="flex flex-col gap-1">
                     {data.trust_bar.rating && (
                       <div className="flex items-center gap-1">

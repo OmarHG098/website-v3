@@ -1,0 +1,91 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Lato",
+      "count": 120
+    },
+    {
+      "family": "inter",
+      "count": 3
+    }
+  ],
+  "colors": {
+    "primary": "#38A56A",
+    "accent": "#0084FF",
+    "background": "#FFFFFF",
+    "textPrimary": "#0084FF",
+    "link": "#0084FF"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Lato",
+      "heading": "Lato"
+    },
+    "fontStacks": {
+      "body": [
+        "Lato"
+      ],
+      "heading": [
+        "Lato"
+      ],
+      "paragraph": [
+        "Lato"
+      ]
+    },
+    "fontSizes": {
+      "h1": "16px",
+      "h2": "18px",
+      "body": "16px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "6px"
+  },
+  "components": {
+    "input": {
+      "background": "transparent",
+      "textColor": "#000000",
+      "borderColor": "#E2E8F0",
+      "borderRadius": "6px",
+      "borderRadiusCorners": {
+        "topLeft": "6px",
+        "topRight": "6px",
+        "bottomRight": "6px",
+        "bottomLeft": "6px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "https://github.com/breatheco-de/content/blob/9af6423ce8641c9e02ae255c71b111be65a3106a/src/assets/images/logo-Forbes.png?raw=true",
+    "favicon": "File saved at: attached_assets/favicon.ico",
+    "ogImage": "File saved at: attached_assets/ogImage.png"
+  },
+  "__framework_hints": [],
+  "__llm_logo_reasoning": {
+    "selectedIndex": 5,
+    "reasoning": "Logo rejected: Low confidence. Heuristic fallback: Weak indicators: variant bonus (+8), no link (brand logos usually link to homepage, penalty), visible, src contains logo, reasonable size, body location without header (penalty). Score: 8. LLM validation recommended (close scores: top=8, second=-5)",
+    "confidence": 0.30000000000000004,
+    "rejected": true
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "secondary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "confidence": 0
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0,
+    "overall": 0
+  }
+}

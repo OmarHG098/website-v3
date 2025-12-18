@@ -42,11 +42,11 @@ function SpotlightCard({
   return (
     <Card 
       className={`
-        p-4 md:p-6 cursor-pointer outline-none
-        transition-all duration-300 ease-out
+        p-4 md:p-card-padding cursor-pointer outline-none
+        transition-all duration-brand ease-brand
         ${isActive 
-          ? 'scale-105 shadow-lg z-10 bg-card border-primary/20' 
-          : 'scale-95 opacity-60 bg-card/50 hover:opacity-80'
+          ? 'shadow-card z-10 bg-card border-primary/20' 
+          : 'opacity-60 bg-card/50 hover:opacity-80'
         }
       `}
       onMouseEnter={onMouseEnter}
@@ -72,7 +72,7 @@ function SpotlightCard({
         
         <div className="h-[32px] md:h-[40px] flex items-start justify-center overflow-hidden flex-shrink-0">
           <div className={`
-            text-xs text-muted-foreground transition-opacity duration-300 line-clamp-2
+            text-xs text-muted-foreground transition-opacity duration-brand ease-brand line-clamp-2
             ${isActive && item.description ? 'opacity-100' : 'opacity-0'}
           `}>
             {item.description || ''}
@@ -90,7 +90,7 @@ interface FeaturesGridSpotlightProps {
 export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
   const config = data.spotlight_config || {};
   const initialIndex = config.initial_index ?? 0;
-  const autoRotateMs = config.auto_rotate_ms ?? 4000;
+  const autoRotateMs = 0;
   const pauseOnHover = config.pause_on_hover ?? true;
   
   const [activeIndex, setActiveIndex] = useState(initialIndex);
@@ -186,7 +186,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
 
   return (
     <section 
-      className={`py-20 md:py-24 ${data.background || ''}`}
+      className={`py-section ${data.background || ''}`}
       data-testid="section-features-grid-spotlight"
       aria-label={data.title || "Feature highlights"}
       aria-roledescription="carousel"
@@ -196,14 +196,14 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
           <div className="text-center mb-8">
             {data.title && (
               <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                className="mb-6 text-foreground"
                 data-testid="text-features-grid-title"
               >
                 {data.title}
               </h2>
             )}
             {data.subtitle && (
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-body text-muted-foreground max-w-3xl mx-auto" style={{ fontSize: '16px' }}>
                 {data.subtitle}
               </p>
             )}
@@ -246,7 +246,7 @@ export function FeaturesGridSpotlight({ data }: FeaturesGridSpotlightProps) {
               key={index}
               onClick={() => handleDotClick(index)}
               className={`
-                w-2 h-2 rounded-full transition-all duration-300
+                w-2 h-2 rounded-full transition-all duration-brand ease-brand
                 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
                 ${index === activeIndex 
                   ? 'w-6 bg-primary' 

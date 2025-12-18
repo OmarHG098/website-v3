@@ -1,4 +1,3 @@
-import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -37,7 +36,7 @@ export function AwardBadges({
 
   const SimpleCard = ({ item, index }: { item: AwardBadgeItem; index: number }) => (
     <div 
-      className="flex items-center justify-center transition-transform duration-200 hover:scale-110"
+      className="flex items-center justify-center transition-opacity duration-brand ease-brand hover:opacity-80"
       data-testid={`award-badge-${index}`}
     >
       {item.logo ? (
@@ -114,12 +113,7 @@ export function AwardBadges({
             align: "center",
             loop: true,
           }}
-          plugins={[
-            Autoplay({
-              delay: 5000,
-              stopOnInteraction: true,
-            }),
-          ]}
+          plugins={[]}
           className="w-full max-w-sm mx-auto flex flex-col"
         >
           <div className={`${mobileHeight} flex items-center`}>

@@ -32,7 +32,7 @@ export default function IconFeatureGrid({
             className="group p-4 md:p-6 bg-transparent border-0 shadow-none flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-0"
             data-testid={`feature-icon-${index}`}
           >
-            <div className="shrink-0 md:mb-4 transition-transform duration-200 group-hover:scale-110">
+            <div className="shrink-0 md:mb-4 transition-transform duration-brand ease-brand group-hover:scale-[1.02]">
               <img
                 src={feature.icon}
                 alt=""

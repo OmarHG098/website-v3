@@ -23,7 +23,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
           {data.left_images?.map((image, index) => (
             <div
               key={index}
-              className={`absolute w-56 transform transition-transform hover:rotate-0 hover:scale-105 z-30 ${
+              className={`absolute w-56 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] z-30 ${
                 index === 0 
                   ? "top-[94px] left-0 -rotate-6" 
                   : "top-[222px] left-[100px] rotate-3"
@@ -43,7 +43,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
         {/* Content Column (Center) */}
         <div className="z-10 text-center px-4">
           <h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight whitespace-nowrap"
+            className="text-h1 mb-6 whitespace-nowrap"
             data-testid="text-hero-title"
           >
             {data.title}
@@ -51,7 +51,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
 
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto"
+              className="text-body text-muted-foreground mb-6 max-w-2xl md:max-w-xl mx-auto"
               data-testid="text-hero-subtitle"
             >
               {data.subtitle}
@@ -108,7 +108,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
           <div>
             <Button
               size="lg"
-              className="text-lg px-8 scale-110 mb-1"
+              className="text-body px-8 mb-1"
               asChild
               data-testid="button-hero-cta"
             >
@@ -124,7 +124,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
           {data.right_images?.map((image, index) => (
             <div
               key={index}
-              className={`absolute w-56 transform transition-transform hover:rotate-0 hover:scale-105 ${
+              className={`absolute w-56 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] ${
                 index === 0 
                   ? "top-[94px] right-0 rotate-6 z-30" 
                   : "top-[222px] right-[100px] -rotate-3 z-20"
