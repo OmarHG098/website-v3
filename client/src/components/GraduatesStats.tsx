@@ -125,7 +125,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
             className="flex flex-col justify-center"
             data-testid="graduates-stats-numbers"
           >
-            <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+            <div className="flex flex-col gap-6">
               {stats.map((stat, index) => {
                 const match = stat.value.match(/^([\d,\.]+)\s*(.*)$/);
                 const number = match ? match[1] : stat.value;
@@ -136,15 +136,15 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 return (
                   <div 
                     key={index} 
-                    className={`text-center lg:text-left ${isFirstColumn ? 'col-start-1' : 'col-start-2'}`}
+                    className={`text-center lg:text-left ${isFirstColumn ? 'lg:mr-auto' : 'lg:ml-auto'}`}
                     data-testid={`stat-item-${index}`}
                   >
                     <p 
-                      className="text-3xl md:text-4xl font-bold text-foreground mb-1"
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-1"
                       data-testid={`text-stat-value-${index}`}
                     >
                       {number}
-                      {unit && <span className="text-xl md:text-2xl font-semibold ml-0.5">{unit}</span>}
+                      {unit && <span className="text-2xl md:text-3xl font-semibold ml-0.5">{unit}</span>}
                     </p>
                     <p 
                       className="text-sm md:text-base text-muted-foreground"
