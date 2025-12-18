@@ -1,8 +1,32 @@
 import { UniversalImage } from "@/components/UniversalImage";
-import type { GraduatesStatsSection } from "@shared/schema";
+import type { GraduatesStatsSection, GraduatesCollageImage, GraduatesFeaturedImage } from "@shared/schema";
 
 interface GraduatesStatsProps {
   data: GraduatesStatsSection;
+}
+
+function renderImage(img: GraduatesCollageImage | GraduatesFeaturedImage, alt: string, className: string) {
+  if (img.src) {
+    return (
+      <img
+        src={img.src}
+        alt={alt}
+        className={className}
+        loading="lazy"
+      />
+    );
+  }
+  if (img.image_id) {
+    return (
+      <UniversalImage
+        id={img.image_id}
+        preset="card"
+        className={className}
+        alt={alt}
+      />
+    );
+  }
+  return <div className={`bg-muted ${className}`} />;
 }
 
 export function GraduatesStats({ data }: GraduatesStatsProps) {
@@ -167,12 +191,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                         gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
                       }}
                     >
-                      <UniversalImage
-                        id={img.image_id}
-                        preset="card"
-                        className="w-full h-full object-cover shadow-sm"
-                        alt={`Featured graduate photo ${index + 1}`}
-                      />
+                      {renderImage(img, `Featured graduate photo ${index + 1}`, "w-full h-full object-cover shadow-sm")}
                     </div>
                   );
                 })}
@@ -189,12 +208,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                         gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
                       }}
                     >
-                      <UniversalImage
-                        id={img.image_id}
-                        preset="card"
-                        className="w-full h-full object-cover shadow-sm"
-                        alt={`Graduate photo ${index + 1}`}
-                      />
+                      {renderImage(img, `Graduate photo ${index + 1}`, "w-full h-full object-cover shadow-sm")}
                     </div>
                   );
                 })}
