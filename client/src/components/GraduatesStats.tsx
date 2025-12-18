@@ -41,84 +41,34 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center">
           <div 
-            className="relative h-[450px] md:h-[550px] lg:h-[600px]"
+            className="grid grid-cols-12 auto-rows-[80px] gap-3"
             data-testid="graduates-stats-collage"
           >
-            {collage_images && collage_images.length >= 6 && (
-              <div className="relative w-full h-full">
-                <div className="absolute top-[5%] left-[3%] w-[50%] h-[26%]">
+            {collage_images && collage_images.map((img, index) => {
+              const colSpan = img.col_span || 6;
+              const rowSpan = img.row_span || 2;
+              
+              const colSpanClass = `col-span-${colSpan}`;
+              const rowSpanClass = `row-span-${rowSpan}`;
+              
+              return (
+                <div 
+                  key={index}
+                  className={`${colSpanClass} ${rowSpanClass}`}
+                  style={{
+                    gridColumn: `span ${colSpan} / span ${colSpan}`,
+                    gridRow: `span ${rowSpan} / span ${rowSpan}`,
+                  }}
+                >
                   <UniversalImage
-                    id={collage_images[0]?.image_id}
+                    id={img.image_id}
                     preset="card"
                     className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 1"
+                    alt={`Graduate photo ${index + 1}`}
                   />
                 </div>
-                
-                <div className="absolute top-[8%] right-[6%] w-[38%] h-[26%]">
-                  <UniversalImage
-                    id={collage_images[1]?.image_id}
-                    preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 2"
-                  />
-                </div>
-                
-                <div className="absolute top-[37%] right-[2%] w-[52%] h-[30%]">
-                  <UniversalImage
-                    id={collage_images[2]?.image_id}
-                    preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 3"
-                  />
-                </div>
-                
-                <div className="absolute top-[34%] left-[5%] w-[38%] h-[26%]">
-                  <UniversalImage
-                    id={collage_images[3]?.image_id}
-                    preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 4"
-                  />
-                </div>
-                
-                <div className="absolute bottom-[10%] left-[2%] w-[41%] h-[28%]">
-                  <UniversalImage
-                    id={collage_images[4]?.image_id}
-                    preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 5"
-                  />
-                </div>
-                
-                <div className="absolute bottom-[1%] right-[6%] w-[47%] h-[30%]">
-                  <UniversalImage
-                    id={collage_images[5]?.image_id}
-                    preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
-                    alt="Graduate photo 6"
-                  />
-                </div>
-              </div>
-            )}
-            
-            {collage_images && collage_images.length > 0 && collage_images.length < 6 && (
-              <div className="grid grid-cols-2 gap-3 h-full">
-                {collage_images.map((img, index) => (
-                  <div 
-                    key={index} 
-                    className={`${index === 0 ? 'col-span-2' : ''}`}
-                  >
-                    <UniversalImage
-                      id={img.image_id}
-                      preset="card"
-                      className="w-full h-full object-cover rounded-lg shadow-sm"
-                      alt={`Graduate photo ${index + 1}`}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+              );
+            })}
           </div>
 
           <div 
@@ -127,10 +77,6 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
           >
             <div className="flex flex-col gap-6">
               {stats.map((stat, index) => {
-                const match = stat.value.match(/^([\d,\.]+)\s*(.*)$/);
-                const number = match ? match[1] : stat.value;
-                const unit = match ? match[2] : '';
-                
                 const isFirstColumn = index % 2 === 0;
                 
                 return (
@@ -143,8 +89,8 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                       className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-1"
                       data-testid={`text-stat-value-${index}`}
                     >
-                      {number}
-                      {unit && <span className="text-2xl md:text-3xl font-semibold ml-0.5">{unit}</span>}
+                      {stat.value}
+                      {stat.unit && <span className="text-2xl md:text-3xl font-semibold ml-1">{stat.unit}</span>}
                     </p>
                     <p 
                       className="text-sm md:text-base text-muted-foreground"

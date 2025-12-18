@@ -167,31 +167,34 @@ sections:
     heading: Does the Job Guarantee deliver results you can count on?
     subheading: Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs.
     stats:
-      - value: "84%"
+      - value: "84"
+        unit: "%"
         label: "Job placement rate"
-      - value: "3-6 months"
+      - value: "3-6"
+        unit: "months"
         label: "Average time to get hired"
-      - value: "55%"
+      - value: "55"
+        unit: "%"
         label: "Salary increase after graduation"
     collage_images:
       - image_id: "graduates_celebration"
-        size: "large"
-        position: "top"
+        col_span: 7
+        row_span: 2
       - image_id: "graduates_workspace"
-        size: "large"
-        position: "top"
+        col_span: 5
+        row_span: 2
       - image_id: "graduates_team_1"
-        size: "medium"
-        position: "middle"
+        col_span: 5
+        row_span: 2
       - image_id: "graduates_team_2"
-        size: "medium"
-        position: "middle"
+        col_span: 7
+        row_span: 2
       - image_id: "graduates_coding"
-        size: "medium"
-        position: "bottom"
+        col_span: 6
+        row_span: 2
       - image_id: "graduates_friends"
-        size: "large"
-        position: "bottom"
+        col_span: 6
+        row_span: 2
   - type: testimonials_slide
     version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students

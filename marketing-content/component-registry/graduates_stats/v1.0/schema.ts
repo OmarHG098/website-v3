@@ -5,13 +5,14 @@ import { z } from "zod";
 
 export const graduatesStatItemSchema = z.object({
   value: z.string(),
+  unit: z.string().optional(),
   label: z.string(),
 });
 
 export const graduatesCollageImageSchema = z.object({
   image_id: z.string(),
-  size: z.enum(["small", "medium", "large"]).optional(),
-  position: z.enum(["top", "middle", "bottom"]).optional(),
+  col_span: z.number().optional(),
+  row_span: z.number().optional(),
 });
 
 export const graduatesStatsSectionSchema = z.object({

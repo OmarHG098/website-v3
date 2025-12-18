@@ -21,12 +21,16 @@ props:
   stats:
     type: array
     required: true
-    description: List of statistics to display (3 recommended - 2 on first row, 1 on second)
+    description: List of statistics to display in staggered left-right layout
     items:
       value:
         type: string
         required: true
-        description: The statistic value (e.g., "84%", "3-6 months")
+        description: The statistic value (e.g., "84", "3-6")
+      unit:
+        type: string
+        required: false
+        description: The unit displayed smaller after the value (e.g., "%", "months")
       label:
         type: string
         required: true
@@ -34,30 +38,22 @@ props:
   collage_images:
     type: array
     required: true
-    description: List of images for the collage layout
+    description: List of images for the 12-column grid layout
     items:
       image_id:
         type: string
         required: true
         description: ID of the image from the image registry
-      size:
-        type: string
+      col_span:
+        type: number
         required: false
-        options:
-          - small
-          - medium
-          - large
-        description: Size of the image in the collage
-        default: medium
-      position:
-        type: string
+        description: Number of columns to span (1-12)
+        default: 6
+      row_span:
+        type: number
         required: false
-        options:
-          - top
-          - middle
-          - bottom
-        description: Vertical position hint for the image
-        default: middle
+        description: Number of rows to span
+        default: 2
   background:
     type: string
     required: false

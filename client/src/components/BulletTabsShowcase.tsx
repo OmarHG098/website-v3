@@ -74,7 +74,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
         </div>
       ) : (
         <div
-          className="relative bg-primary/30 rounded-2xl pt-10 pb-10 pl-8 flex justify-end"
+          className="relative bg-primary/30 rounded-2xl py-14 pl-4 flex justify-end"
           data-testid="bullet-tabs-image-container"
         >
           <div key={activeIndex} className="animate-in fade-in duration-300 w-[90%]">
