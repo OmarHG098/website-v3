@@ -42,10 +42,12 @@ function SpotlightCard({
   return (
     <Card 
       className={`
-        p-4 md:p-5 cursor-pointer outline-none border-0
+        p-4 md:p-5 cursor-pointer outline-none border-0 rounded-card
         transition-all duration-brand ease-brand
-        bg-muted/30 hover:bg-muted/50
-        ${isActive ? 'bg-muted/50' : ''}
+        ${isActive 
+          ? 'bg-card shadow-card scale-[1.02]' 
+          : 'bg-muted/30 opacity-70 hover:opacity-90'
+        }
       `}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
