@@ -627,8 +627,8 @@ export const landingPageMetaSchema = z.object({
 });
 
 export const landingPageSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
+  slug: z.string().optional(),
+  title: z.string().optional(),
   meta: landingPageMetaSchema,
   schema: schemaRefSchema.optional(),
   sections: z.array(sectionSchema),

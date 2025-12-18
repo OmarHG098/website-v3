@@ -94,24 +94,24 @@ export const heroProductShowcaseSchema = z.object({
   version: z.string().optional(),
   variant: z.literal("productShowcase"),
   title: z.string(),
-  subtitle: z.string().optional(),
-  welcome_text: z.string().optional(),
-  brand_mark: brandMarkSchema.optional(),
-  description: z.string().optional(),
-  video: videoConfigSchema.optional(),
+  subtitle: z.string().nullish(),
+  welcome_text: z.string().nullish(),
+  brand_mark: brandMarkSchema.nullish(),
+  description: z.string().nullish(),
+  video: videoConfigSchema.nullish(),
   image: z.object({
     src: z.string(),
     alt: z.string(),
-  }).optional(),
+  }).nullish(),
   // NOTE: Background image is only displayed on screens >= 1280px width.
   // On smaller screens, a gradient fallback is shown instead for better mobile experience.
   background_image: z.object({
     src: z.string(),
     alt: z.string().optional(),
-  }).optional(),
-  form: leadFormDataSchema.optional(),
-  cta_button: ctaButtonSchema.optional(),
-  trust_bar: productShowcaseTrustBarSchema.optional(),
+  }).nullish(),
+  form: leadFormDataSchema.nullish(),
+  cta_button: ctaButtonSchema.nullish(),
+  trust_bar: productShowcaseTrustBarSchema.nullish(),
 }).strict();
 
 export const heroSimpleTwoColumnSchema = z.object({
