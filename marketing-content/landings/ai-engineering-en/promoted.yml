@@ -127,38 +127,90 @@ sections:
       - name: GitHub
         icon: github
     module_cards:
-      - title: Think like an AI Engineer
-        duration: 4 weeks
+      - title: "AI-First Prework"
+        duration: "Milestone 0"
         objectives:
-          - Master Python fundamentals and data structures
-          - Understand AI/ML concepts and terminology
-          - Build your first AI-powered application
-          - Learn prompt engineering best practices
-        projects: "Build an AI chatbot, create automated data pipelines, deploy your first LLM integration"
-      - title: Full-Stack AI Development
-        duration: 6 weeks
+          - "YAML/JSON fundamentals"
+          - "Git version control"
+          - "JS basics"
+          - "Internet fundamentals"
+          - "Coding agents"
+      - title: "Web Foundations"
+        duration: "Milestone 1"
         objectives:
-          - Build React frontends with AI integrations
-          - Create scalable Node.js backends
-          - Implement RAG systems and embeddings
-          - Design AI-first user experiences
-        projects: "Build a semantic search app, create an AI-powered content management system"
-      - title: Production AI Systems
-        duration: 5 weeks
+          - "HTML, CSS, Tailwind"
+          - "Accessibility best practices"
+          - "Layout techniques"
+        projects: "Build the company's first webpage"
+      - title: "Programming Foundations"
+        duration: "Milestone 2"
         objectives:
-          - Deploy production-ready AI agents
-          - Implement multi-agent orchestration
-          - Build real-time streaming applications
-          - Monitor and optimize AI performance
-        projects: "Deploy a multi-agent system, build an AI workflow automation platform"
-      - title: Enterprise AI & Career Launch
-        duration: 5 weeks
+          - "Algorithms and data structures"
+          - "Stateflow vs controlflow"
+          - "JavaScript mastery"
+        projects: "Implement small features for the company"
+      - title: "AI-Driven UI Engineering"
+        duration: "Milestone 3"
         objectives:
-          - Scale AI systems for enterprise use
-          - Implement security and compliance
-          - Build portfolio-ready capstone project
-          - Interview preparation and career coaching
-        projects: "Complete capstone: Full AI-powered business application"
+          - "Vision-to-Spec prompting"
+          - "Component generation with AI"
+        projects: "Rebuild the company's UI using AI"
+      - title: "React Fundamentals"
+        duration: "Milestone 4"
+        objectives:
+          - "SPA architecture"
+          - "Props, state, and effects"
+          - "Debugging techniques"
+        projects: "Build the company's interactive frontend"
+      - title: "Backend for AI Frontends"
+        duration: "Milestone 5"
+        objectives:
+          - "APIs and DB basics"
+          - "Serialization and auth"
+          - "Serverless functions"
+        projects: "Create the company's backend"
+      - title: "Telemetry & Data Pipelines"
+        duration: "Milestone 6"
+        objectives:
+          - "Collect, transform, aggregate, report"
+        projects: "Build telemetry for the company"
+      - title: "RAG & Memory"
+        duration: "Milestone 7"
+        objectives:
+          - "Chunking and embeddings"
+          - "Vector search"
+        projects: "Add the company's knowledge layer"
+      - title: "Agent Engineering"
+        duration: "Milestone 8"
+        objectives:
+          - "Rules and memory bank"
+          - "Tool calling"
+          - "Multi-agent planning"
+        projects: "Build the company's agents"
+      - title: "Agentic Workflow Generation"
+        duration: "Milestone 9"
+        objectives:
+          - "Use LLMs to analyze company case"
+          - "Generate and validate internal workflows"
+          - "Implement automation pipelines"
+        projects: "Serverless, queues, cronjobs, or n8n"
+      - title: "Real-Time Systems"
+        duration: "Milestone 10"
+        objectives:
+          - "Streaming and sockets"
+          - "Pub/sub patterns"
+        projects: "Enable real-time interactions for data, customers, AI or employees"
+      - title: "Full AI-Transformed Company"
+        duration: "Capstone"
+        objectives:
+          - "AI-generated frontend"
+          - "API + authentication"
+          - "Telemetry + reporting pipeline"
+          - "Workflow automation (agent-generated)"
+          - "RAG knowledge layer"
+          - "Agents with tool calling"
+          - "Real-time communication layer"
+        projects: "Deliver the complete transformation of their company"
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?

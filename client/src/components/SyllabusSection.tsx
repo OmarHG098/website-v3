@@ -360,7 +360,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   >
                     <div className="mb-5">
                       <p className="text-sm text-muted-foreground mb-2 font-medium">
-                        Module {index + 1}
+                        {module.duration}
                       </p>
                       <h3 
                         className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2"
@@ -368,9 +368,6 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                       >
                         {module.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground font-medium mt-2">
-                        {module.duration}
-                      </p>
                     </div>
 
                     <ul className="space-y-2.5 mb-5 text-sm text-foreground">
