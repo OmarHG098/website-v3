@@ -30,6 +30,7 @@ import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
 import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
 import { BulletTabsShowcase } from "@/components/BulletTabsShowcase";
+import { GraduatesStats } from "@/components/GraduatesStats";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -126,6 +127,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <TwoColumnAccordionCard key={index} data={section as Parameters<typeof TwoColumnAccordionCard>[0]["data"]} />;
     case "bullet_tabs_showcase":
       return <BulletTabsShowcase key={index} data={section as Parameters<typeof BulletTabsShowcase>[0]["data"]} />;
+    case "graduates_stats":
+      return <GraduatesStats key={index} data={section as Parameters<typeof GraduatesStats>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
