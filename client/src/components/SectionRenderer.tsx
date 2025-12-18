@@ -30,7 +30,7 @@ import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
 import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
 import { BulletTabsShowcase } from "@/components/BulletTabsShowcase";
-import { GraduatesStats } from "@/components/GraduatesStats";
+import { GraduatesStats } from "@/components/graduates_stats";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
