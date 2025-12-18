@@ -18,23 +18,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const activeTab = tabs[activeIndex];
 
   const textContent = (
-    <div className="flex flex-col">
-      {heading && (
-        <h2 
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight"
-          data-testid="text-bullet-tabs-heading"
-        >
-          {heading}
-        </h2>
-      )}
-      {subheading && (
-        <p 
-          className="text-muted-foreground mb-6 text-base md:text-lg"
-          data-testid="text-bullet-tabs-subheading"
-        >
-          {subheading}
-        </p>
-      )}
+    <div className="flex flex-col justify-center">
       <div className="space-y-1">
         {tabs.map((tab, index) => (
           <div key={index} className="flex items-stretch gap-1">
@@ -89,7 +73,27 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   return (
     <section className="py-16 md:py-24" data-testid="section-bullet-tabs-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-start ${
+        {(heading || subheading) && (
+          <div className="text-center mb-12">
+            {heading && (
+              <h2 
+                className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight"
+                data-testid="text-bullet-tabs-heading"
+              >
+                {heading}
+              </h2>
+            )}
+            {subheading && (
+              <p 
+                className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto"
+                data-testid="text-bullet-tabs-subheading"
+              >
+                {subheading}
+              </p>
+            )}
+          </div>
+        )}
+        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-center ${
           image_position === "left" ? "lg:grid-cols-[3fr_2fr]" : ""
         }`}>
           {image_position === "left" ? (
