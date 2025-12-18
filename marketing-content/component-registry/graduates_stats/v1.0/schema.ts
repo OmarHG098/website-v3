@@ -15,8 +15,7 @@ export const graduatesStatItemSchema = z.object({
 });
 
 export const graduatesCollageImageSchema = z.object({
-  image_id: z.string().optional(),
-  src: z.string().optional(),
+  image_id: z.string(),
   col_span: z.number().optional(),
   row_span: z.number().optional(),
   col_start: z.number().optional(),
@@ -24,8 +23,7 @@ export const graduatesCollageImageSchema = z.object({
 });
 
 export const graduatesFeaturedImageSchema = z.object({
-  image_id: z.string().optional(),
-  src: z.string().optional(),
+  image_id: z.string(),
   col_span: z.number().optional(),
   row_span: z.number().optional(),
   col_start: z.number().optional(),

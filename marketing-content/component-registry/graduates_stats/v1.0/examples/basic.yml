@@ -15,21 +15,21 @@ yaml: |
         unit: "%"
         label: "Average salary increase"
     collage_images:
-      - src: "/attached_assets/caracas-graduates_1765387638222.png"
+      - image_id: caracas_graduates
         col_span: 7
         row_span: 2
-      - src: "/attached_assets/community-support-2_1765406601448.webp"
+      - image_id: community_support
         col_span: 5
         row_span: 2
-      - src: "/attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp"
+      - image_id: students_collaborating
         col_span: 5
         row_span: 2
-      - src: "/attached_assets/Group-6663_1764711021914.png"
+      - image_id: group_career_support
         col_span: 7
         row_span: 2
-      - src: "/attached_assets/Group_6685_(1)_1765300162049.png"
+      - image_id: group_geekpal
         col_span: 6
         row_span: 2
-      - src: "/attached_assets/Group-original_1765419144159.webp"
+      - image_id: group_original
         col_span: 6
         row_span: 2
