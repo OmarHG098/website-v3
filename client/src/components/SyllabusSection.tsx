@@ -440,8 +440,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                     className={cn(
                       "flex-shrink-0 w-80 p-6 rounded-card border-0 snap-start transition-all duration-brand ease-brand",
                       index === activeIndex 
-                        ? "bg-card shadow-card scale-[1.02]" 
-                        : "bg-card/60 shadow-none scale-100"
+                        ? "bg-card shadow-card opacity-100" 
+                        : "bg-card shadow-none opacity-70"
                     )}
                     data-testid={`card-module-${index}`}
                   >
@@ -478,6 +478,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                     )}
                   </Card>
                 ))}
+                {/* Trailing spacer to allow scrolling to last cards */}
+                <div className="flex-shrink-0 w-64" aria-hidden="true" />
               </div>
             </div>
           </div>
