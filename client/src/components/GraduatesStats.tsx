@@ -148,7 +148,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
           <div className="flex items-stretch">
             <div 
               className="flex-shrink-0"
-              style={{ width: 'calc(50vw - 576px + 700px)', minWidth: '600px' }}
+              style={{ width: 'calc(50vw - 576px + 850px)', minWidth: '700px' }}
             >
               <div 
                 className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
@@ -203,7 +203,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
 
             <div 
               className="flex-shrink-0 flex flex-col justify-center"
-              style={{ width: 'calc(50vw - 576px + 200px)', minWidth: '180px', paddingLeft: '2rem', paddingRight: '2rem' }}
+              style={{ width: 'calc(50vw - 576px + 150px)', minWidth: '160px', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
             >
               {renderStatsCompact()}
             </div>
