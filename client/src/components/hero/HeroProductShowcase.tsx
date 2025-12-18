@@ -39,7 +39,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   return (
     <section 
       id="hero-form"
-      className="py-section relative overflow-hidden"
+      className="py-20 md:py-24 relative overflow-hidden"
       style={shouldShowBackground ? {
         backgroundImage: `url(${data.background_image!.src})`,
         backgroundSize: 'cover',
@@ -51,17 +51,17 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
       )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-5 gap-12 items-start">
+        <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
             <div className="text-center md:text-left relative w-full">
               {data.welcome_text && (
-                <p className="text-body text-muted-foreground mb-2">
+                <p className="text-body text-muted-foreground mb-4">
                   {data.welcome_text}
                 </p>
               )}
               
               {data.brand_mark && (
-                <p className="font-heading text-h1 tracking-tight mb-2">
+                <p className="font-heading text-h1 tracking-tight mb-3">
                   {data.brand_mark.prefix && (
                     <span className="text-foreground">{data.brand_mark.prefix}{" "}</span>
                   )}
@@ -75,7 +75,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
               
               <h1 
-                className="text-foreground mt-4 mb-4"
+                className="text-foreground mt-2 mb-6"
                 data-testid="text-hero-title"
               >
                 {data.title}
@@ -83,7 +83,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               
               {data.subtitle && (
                 <p 
-                  className="text-body text-muted-foreground mb-6 max-w-xl"
+                  className="text-body text-muted-foreground mb-8 max-w-xl leading-relaxed"
                   data-testid="text-hero-subtitle"
                 >
                   {data.subtitle}
@@ -92,26 +92,28 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               
               {data.description && (
                 <div className="relative">
-                  <p className="text-body text-foreground mb-8 max-w-xl">
+                  <p className="text-body text-foreground mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
                 </div>
               )}
 
               {data.form && (
-                <LeadForm 
-                  data={{
-                    ...data.form,
-                    variant: data.form.variant || "inline",
-                    consent: data.form.consent,
-                    show_terms: data.form.show_terms ?? false,
-                    className: "w-full max-w-md mb-6",
-                  } as LeadFormData}
-                />
+                <div className="mt-2 mb-8">
+                  <LeadForm 
+                    data={{
+                      ...data.form,
+                      variant: data.form.variant || "inline",
+                      consent: data.form.consent,
+                      show_terms: data.form.show_terms ?? false,
+                      className: "w-full max-w-md",
+                    } as LeadFormData}
+                  />
+                </div>
               )}
 
               {data.cta_button && !data.form && (
-                <div className="mb-6">
+                <div className="mt-2 mb-8">
                   <Button 
                     variant={data.cta_button.variant === "outline" ? "outline" : "default"}
                     size="lg"
@@ -127,7 +129,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.trust_bar && (
-                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-card rounded-card p-card-padding shadow-card transition-all duration-brand ease-brand">
+                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/50 rounded-card px-4 py-3 transition-all duration-brand ease-brand">
                   <div className="flex flex-col gap-1">
                     {data.trust_bar.rating && (
                       <div className="flex items-center gap-1">
