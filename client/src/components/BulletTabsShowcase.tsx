@@ -36,7 +36,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
         </p>
       )}
 
-      <div className="space-y-1">
+      <div className="space-y-2">
         {tabs.map((tab, index) => (
           <div key={index} className="flex items-stretch gap-3">
             <div 
@@ -49,23 +49,21 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
             <Button
               variant="ghost"
               onClick={() => setActiveIndex(index)}
-              className="flex-1 justify-start text-left whitespace-normal"
+              className={`flex-1 justify-start text-left whitespace-normal py-3 transition-opacity duration-300 ${
+                activeIndex === index ? "opacity-100" : "opacity-40"
+              }`}
               data-testid={`button-bullet-tab-${index}`}
             >
               <div className="flex flex-col items-start gap-1">
                 <span
-                  className={`text-base md:text-lg font-medium transition-colors ${
-                    activeIndex === index
-                      ? "text-foreground"
-                      : "text-muted-foreground"
-                  }`}
+                  className="text-base md:text-lg font-medium text-foreground"
                   data-testid={`text-bullet-tab-label-${index}`}
                 >
                   {tab.label}
                 </span>
-                {tab.description && activeIndex === index && (
+                {tab.description && (
                   <p 
-                    className="text-sm text-muted-foreground animate-in fade-in slide-in-from-top-1 duration-200 font-normal"
+                    className="text-sm text-muted-foreground font-normal"
                     data-testid={`text-bullet-tab-description-${index}`}
                   >
                     {tab.description}
