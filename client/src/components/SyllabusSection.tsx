@@ -242,6 +242,9 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const moduleCards = data.module_cards || [];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragState = useRef({ startX: 0, scrollLeft: 0, lastX: 0, lastTime: 0, velocity: 0 });
+  const animationRef = useRef<number | null>(null);
 
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
@@ -260,6 +263,70 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     container.addEventListener('scroll', handleScroll, { passive: true });
     return () => container.removeEventListener('scroll', handleScroll);
   }, [updateActiveIndex]);
+
+  const startMomentum = useCallback((velocity: number) => {
+    if (!scrollContainerRef.current || Math.abs(velocity) < 0.5) return;
+    
+    const friction = 0.95;
+    let currentVelocity = velocity;
+    
+    const animate = () => {
+      if (!scrollContainerRef.current || Math.abs(currentVelocity) < 0.5) {
+        animationRef.current = null;
+        return;
+      }
+      
+      scrollContainerRef.current.scrollLeft -= currentVelocity;
+      currentVelocity *= friction;
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (!scrollContainerRef.current) return;
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    
+    setIsDragging(true);
+    dragState.current = {
+      startX: e.clientX,
+      scrollLeft: scrollContainerRef.current.scrollLeft,
+      lastX: e.clientX,
+      lastTime: Date.now(),
+      velocity: 0
+    };
+    scrollContainerRef.current.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    
+    const now = Date.now();
+    const deltaX = e.clientX - dragState.current.lastX;
+    const deltaTime = now - dragState.current.lastTime;
+    
+    if (deltaTime > 0) {
+      dragState.current.velocity = deltaX / deltaTime * 16;
+    }
+    
+    dragState.current.lastX = e.clientX;
+    dragState.current.lastTime = now;
+    
+    const totalDelta = e.clientX - dragState.current.startX;
+    scrollContainerRef.current.scrollLeft = dragState.current.scrollLeft - totalDelta;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(false);
+    scrollContainerRef.current.releasePointerCapture(e.pointerId);
+    startMomentum(dragState.current.velocity);
+  };
 
   const handleWheel = (e: React.WheelEvent) => {
     if (!scrollContainerRef.current) return;
@@ -352,11 +419,18 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 </div>
               </div>
 
-              {/* Module Cards Container - Native touch/drag with snap points */}
+              {/* Module Cards Container - Drag with momentum */}
               <div 
                 ref={scrollContainerRef}
-                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory touch-pan-x"
+                className={cn(
+                  "flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none",
+                  isDragging ? "cursor-grabbing" : "cursor-grab"
+                )}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerLeave={handlePointerUp}
                 onWheel={handleWheel}
                 data-testid="container-module-cards"
               >
