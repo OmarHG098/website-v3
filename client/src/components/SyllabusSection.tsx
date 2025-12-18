@@ -242,6 +242,9 @@ function getTechIcon(iconName: string, className?: string) {
 function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const moduleCards = data.module_cards || [];
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -251,6 +254,35 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
         behavior: 'smooth'
       });
     }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    isDragging.current = true;
+    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
+    scrollContainerRef.current.style.cursor = 'grabbing';
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.cursor = 'grab';
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!scrollContainerRef.current) return;
+    e.preventDefault();
+    scrollContainerRef.current.scrollLeft += e.deltaY;
   };
 
   if (moduleCards.length === 0) {
@@ -348,8 +380,13 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               {/* Module Cards Container */}
               <div 
                 ref={scrollContainerRef}
-                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', cursor: 'grab' }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                onWheel={handleWheel}
                 data-testid="container-module-cards"
               >
                 {moduleCards.map((module, index) => (
