@@ -54,22 +54,12 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
               }`}
               data-testid={`button-bullet-tab-${index}`}
             >
-              <div className="flex flex-col items-start gap-1">
-                <span
-                  className="text-base md:text-lg font-medium text-foreground"
-                  data-testid={`text-bullet-tab-label-${index}`}
-                >
-                  {tab.label}
-                </span>
-                {tab.description && (
-                  <p 
-                    className="text-sm text-muted-foreground font-normal"
-                    data-testid={`text-bullet-tab-description-${index}`}
-                  >
-                    {tab.description}
-                  </p>
-                )}
-              </div>
+              <p 
+                className="text-base text-foreground font-normal"
+                data-testid={`text-bullet-tab-description-${index}`}
+              >
+                {tab.description || tab.label}
+              </p>
             </Button>
           </div>
         ))}
