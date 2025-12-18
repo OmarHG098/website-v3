@@ -205,12 +205,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 preview_image_url={data.video.preview_image_url}
                 className="w-[280px] md:w-full md:max-w-[400px]"
               />
-            ) : data.video_id ? (
-              <UniversalVideo 
-                url={`https://www.youtube.com/watch?v=${data.video_id}`}
-                ratio={data.video_ratio || "16:9"}
-                className="w-[280px] md:w-full md:max-w-[400px]"
-              />
             ) : data.image ? (
               <img
                 src={data.image.src}
