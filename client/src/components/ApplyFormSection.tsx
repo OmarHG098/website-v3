@@ -162,15 +162,15 @@ export function ApplyFormSection({
 
   if (isSubmitted) {
     return (
-      <section className="py-section bg-background" data-testid="section-apply-form-success">
+      <section className="py-16 bg-background" data-testid="section-apply-form-success">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
             <IconCheck className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="text-h2 text-foreground mb-4" data-testid="text-success-title">
+          <h2 className="text-3xl font-bold text-foreground mb-4" data-testid="text-success-title">
             {locale === "es" ? "¡Gracias por tu solicitud!" : "Thank you for your application!"}
           </h2>
-          <p className="text-body text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             {locale === "es" 
               ? "Nuestro equipo de admisiones se pondrá en contacto contigo pronto." 
               : "Our admissions team will reach out to you soon."}
@@ -181,19 +181,19 @@ export function ApplyFormSection({
   }
 
   return (
-    <section className="py-section bg-background" data-testid="section-apply-form">
+    <section className="py-12 md:py-16 bg-background" data-testid="section-apply-form">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           <div>
             <div className="mb-8">
               <h1 
-                className="text-h2 text-foreground mb-4"
+                className="text-3xl md:text-4xl font-bold text-foreground mb-4"
                 data-testid="text-apply-title"
               >
                 {data.hero.title}
               </h1>
               <p 
-                className="text-body text-muted-foreground mb-4"
+                className="text-lg text-muted-foreground mb-4"
                 data-testid="text-apply-subtitle"
               >
                 {data.hero.subtitle}

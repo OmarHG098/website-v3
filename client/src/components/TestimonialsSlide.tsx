@@ -214,18 +214,18 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
 
   return (
     <section 
-      className={`py-section ${data.background || "bg-sidebar"}`}
+      className={`py-12 md:py-16 ${data.background || "bg-sidebar"}`}
       data-testid="section-testimonials-slide"
     >
       <div className="max-w-6xl mx-auto px-4 mb-8">
         <h2 
-          className="text-h2 text-center text-foreground mb-4"
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-testimonials-slide-title"
         >
           {data.title}
         </h2>
         <p 
-          className="text-center text-body text-muted-foreground max-w-3xl mx-auto"
+          className="text-center text-lg text-muted-foreground max-w-3xl mx-auto"
           data-testid="text-testimonials-slide-description"
         >
           {data.description}
