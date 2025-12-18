@@ -146,35 +146,41 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
 
         <div className="hidden lg:block">
           <div className="flex items-stretch">
-            <div 
-              className="flex gap-3 flex-shrink-0"
-              style={{ width: 'calc(50vw - 576px + 200px)', minWidth: '280px' }}
-              data-testid="graduates-stats-featured"
-            >
-              <div className="flex-1 h-[320px]">
-                <UniversalImage
-                  id={featured_images[0].image_id}
-                  preset="card"
-                  className="w-full h-full object-cover shadow-sm"
-                  alt="Featured graduate photo 1"
-                />
-              </div>
-              <div className="flex-1 h-[320px]">
-                <UniversalImage
-                  id={featured_images[1].image_id}
-                  preset="card"
-                  className="w-full h-full object-cover shadow-sm"
-                  alt="Featured graduate photo 2"
-                />
+            <div className="flex-1 pl-4 pr-8">
+              <div className="h-[320px]">
+                {renderCollageImages()}
               </div>
             </div>
 
-            <div className="flex-1 max-w-4xl px-4">
-              <div className="grid grid-cols-[2fr_1fr] gap-8 items-center h-full">
-                <div className="h-[320px]">
-                  {renderCollageImages()}
-                </div>
+            <div 
+              className="flex gap-3 flex-shrink-0"
+              style={{ width: 'calc(50vw - 576px + 400px)', minWidth: '400px' }}
+            >
+              <div className="flex-shrink-0 flex flex-col justify-center pr-4">
                 {renderStatsCompact()}
+              </div>
+
+              <div 
+                className="grid grid-rows-2 gap-3 flex-1"
+                style={{ gridTemplateColumns: '2fr 1fr' }}
+                data-testid="graduates-stats-featured"
+              >
+                <div className="row-span-2 col-start-1">
+                  <UniversalImage
+                    id={featured_images[0].image_id}
+                    preset="card"
+                    className="w-full h-full object-cover shadow-sm"
+                    alt="Featured graduate photo 1"
+                  />
+                </div>
+                <div className="row-span-2 col-start-2">
+                  <UniversalImage
+                    id={featured_images[1].image_id}
+                    preset="card"
+                    className="w-full h-full object-cover shadow-sm"
+                    alt="Featured graduate photo 2"
+                  />
+                </div>
               </div>
             </div>
           </div>
