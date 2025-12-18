@@ -63,7 +63,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   <UniversalImage
                     id={img.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-2xl shadow-sm"
+                    className="w-full h-full object-cover shadow-sm"
                     alt={`Graduate photo ${index + 1}`}
                   />
                 </div>
