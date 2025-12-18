@@ -15,21 +15,21 @@ yaml: |
         unit: "%"
         label: "Average salary increase"
     collage_images:
-      - image_id: "graduates_celebration"
+      - image_id: "caracas_graduates"
         col_span: 7
         row_span: 2
-      - image_id: "graduates_workspace"
+      - image_id: "community_support"
         col_span: 5
         row_span: 2
-      - image_id: "graduates_team_1"
+      - image_id: "students_collaborating"
         col_span: 5
         row_span: 2
-      - image_id: "graduates_team_2"
+      - image_id: "group_career_support"
         col_span: 7
         row_span: 2
-      - image_id: "graduates_coding"
+      - image_id: "group_geekpal"
         col_span: 6
         row_span: 2
-      - image_id: "graduates_friends"
+      - image_id: "group_original"
         col_span: 6
         row_span: 2
