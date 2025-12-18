@@ -7,7 +7,22 @@ when_to_use: |
   Use for showcasing graduate outcomes, success metrics, or achievement statistics.
   The collage creates visual interest while stats communicate key results.
   Great for career pages, outcomes sections, or testimonial areas.
+variants:
+  standard:
+    description: Default layout with image collage on left and stacked stats on right
+    best_for: General use, career outcomes pages
+  full_bleed_duo:
+    description: Two featured images bleed to the left edge with collage and stats in a more compact layout
+    best_for: Hero-like impact sections, landing pages
 props:
+  visual_variant:
+    type: string
+    required: false
+    options:
+      - standard
+      - full_bleed_duo
+    description: Layout variant - standard is default, full_bleed_duo adds two full-bleed images on the left
+    default: standard
   heading:
     type: string
     required: false
@@ -54,6 +69,15 @@ props:
         required: false
         description: Number of rows to span
         default: 2
+  featured_images:
+    type: array
+    required: false
+    description: Two featured images for the full_bleed_duo variant (displayed on left edge)
+    items:
+      image_id:
+        type: string
+        required: true
+        description: ID of the featured image from the image registry
   background:
     type: string
     required: false

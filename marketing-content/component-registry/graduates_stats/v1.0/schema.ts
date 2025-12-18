@@ -15,13 +15,19 @@ export const graduatesCollageImageSchema = z.object({
   row_span: z.number().optional(),
 });
 
+export const graduatesFeaturedImageSchema = z.object({
+  image_id: z.string(),
+});
+
 export const graduatesStatsSectionSchema = z.object({
   type: z.literal("graduates_stats"),
   version: z.string().optional(),
+  visual_variant: z.enum(["standard", "full_bleed_duo"]).optional(),
   heading: z.string().optional(),
   subheading: z.string().optional(),
   stats: z.array(graduatesStatItemSchema),
   collage_images: z.array(graduatesCollageImageSchema),
+  featured_images: z.array(graduatesFeaturedImageSchema).optional(),
   background: z.string().optional(),
 });
 
