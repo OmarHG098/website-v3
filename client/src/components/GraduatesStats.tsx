@@ -50,47 +50,33 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
     >
       {compact ? (
         <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-          {stats.slice(0, 2).map((stat, index) => (
-            <div 
-              key={index} 
-              className="text-center lg:text-left"
-              data-testid={`stat-item-${index}`}
-            >
-              <p 
-                className="text-3xl md:text-4xl font-bold text-primary mb-1"
-                data-testid={`text-stat-value-${index}`}
+          {stats.map((stat, index) => {
+            const isOdd = stats.length % 2 !== 0;
+            const isLast = index === stats.length - 1;
+            const shouldSpanFull = isOdd && isLast;
+            
+            return (
+              <div 
+                key={index} 
+                className={`text-center lg:text-left ${shouldSpanFull ? 'col-span-2' : ''}`}
+                data-testid={`stat-item-${index}`}
               >
-                {stat.value}
-                {stat.unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stat.unit}</span>}
-              </p>
-              <p 
-                className="text-sm text-muted-foreground"
-                data-testid={`text-stat-label-${index}`}
-              >
-                {stat.label}
-              </p>
-            </div>
-          ))}
-          {stats[2] && (
-            <div 
-              className="col-span-2 text-center lg:text-left mt-2"
-              data-testid="stat-item-2"
-            >
-              <p 
-                className="text-3xl md:text-4xl font-bold text-primary mb-1"
-                data-testid="text-stat-value-2"
-              >
-                {stats[2].value}
-                {stats[2].unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stats[2].unit}</span>}
-              </p>
-              <p 
-                className="text-sm text-muted-foreground"
-                data-testid="text-stat-label-2"
-              >
-                {stats[2].label}
-              </p>
-            </div>
-          )}
+                <p 
+                  className="text-3xl md:text-4xl font-bold text-primary mb-1"
+                  data-testid={`text-stat-value-${index}`}
+                >
+                  {stat.value}
+                  {stat.unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stat.unit}</span>}
+                </p>
+                <p 
+                  className="text-sm text-muted-foreground"
+                  data-testid={`text-stat-label-${index}`}
+                >
+                  {stat.label}
+                </p>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="flex flex-col gap-6">
