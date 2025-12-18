@@ -42,7 +42,7 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
 
   return (
     <section 
-      className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background"
+      className="py-section bg-gradient-to-b from-primary/5 to-background"
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4 text-center">
@@ -57,7 +57,7 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
         )}
         
         <h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight"
+          className="text-h1 mb-6 text-foreground"
           data-testid="text-hero-title"
         >
           {data.title}
@@ -65,7 +65,7 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
         
         {data.subtitle && (
           <p 
-            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
+            className="text-body text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed"
             data-testid="text-hero-subtitle"
           >
             {data.subtitle}

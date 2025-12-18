@@ -44,20 +44,20 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
 
   return (
     <section 
-      className="py-16 px-4"
+      className="py-section px-4"
       data-testid="section-programs-list"
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 
-            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+            className="text-h2 text-foreground mb-4"
             data-testid="text-programs-list-title"
           >
             {data.title}
           </h2>
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-body text-muted-foreground max-w-2xl mx-auto"
               data-testid="text-programs-list-subtitle"
             >
               {data.subtitle}
@@ -82,7 +82,7 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
                     <IconCode className="w-6 h-6 text-primary" />
                   </div>
                   <h3 
-                    className="text-xl font-semibold text-foreground mb-4"
+                    className="text-body font-semibold text-foreground mb-4"
                     data-testid={`text-program-title-${index}`}
                   >
                     {program.title}

@@ -16,20 +16,20 @@ export function MentorshipSection({ data }: MentorshipSectionProps) {
 
   return (
     <section 
-      className="py-16 bg-background"
+      className="py-section bg-background"
       data-testid="section-mentorship"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            className="text-h2 mb-4 text-foreground"
             data-testid="text-mentorship-title"
           >
             {data.title}
           </h2>
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-body text-muted-foreground max-w-2xl mx-auto"
               data-testid="text-mentorship-subtitle"
             >
               {data.subtitle}
@@ -49,7 +49,7 @@ export function MentorshipSection({ data }: MentorshipSectionProps) {
                   {getIcon(card.icon)}
                 </div>
                 <h3 
-                  className="text-xl font-semibold mb-2 text-foreground"
+                  className="text-body font-semibold mb-2 text-foreground"
                   data-testid={`text-mentorship-card-title-${index}`}
                 >
                   {card.title}

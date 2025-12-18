@@ -16,7 +16,7 @@ export default function StatsCard({ title, value, icon: Icon, trend, trendUp }: 
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-muted-foreground mb-1">{title}</p>
-            <p className="text-3xl font-bold text-primary" data-testid={`text-stat-value-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+            <p className="text-h2 text-primary" data-testid={`text-stat-value-${title.toLowerCase().replace(/\s+/g, '-')}`}>
               {value}
             </p>
             {trend && (

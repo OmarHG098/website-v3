@@ -17,12 +17,12 @@ export function CertificateSection({ data }: CertificateSectionProps) {
 
   return (
     <section 
-      className="py-20 md:py-24 bg-muted/30"
+      className="py-section bg-muted/30"
       data-testid="section-certificate"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-3xl md:text-4xl font-bold mb-10 text-foreground text-center"
+          className="text-h2 mb-10 text-foreground text-center"
           data-testid="text-certificate-title"
         >
           {data.title}
@@ -39,14 +39,14 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 type="button"
                 onClick={() => setSelectedStatIndex(index)}
                 className={cn(
-                  "text-center p-4 rounded-lg transition-all duration-200 cursor-pointer",
+                  "text-center p-4 rounded-card transition-all duration-brand ease-brand cursor-pointer",
                   selectedStatIndex === index
-                    ? "scale-105 border-2 border-primary bg-background shadow-md"
+                    ? "scale-[1.02] border-2 border-primary bg-background shadow-card"
                     : "border border-transparent hover:bg-muted/50"
                 )}
                 data-testid={`button-stat-${index}`}
               >
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                <div className="text-h2 font-bold text-primary mb-1">
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground">
@@ -70,7 +70,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
           
           <div>
             <p 
-              className="text-xl mb-8 leading-relaxed text-foreground"
+              className="text-body mb-8 leading-relaxed text-foreground"
               data-testid="text-certificate-description"
             >
               {displayDescription}
@@ -86,7 +86,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mt-0.5">
                     <IconCheck size={14} className="text-green-600 dark:text-green-400" />
                   </div>
-                  <span className="text-foreground font-semibold text-[18px]">{benefit.text}</span>
+                  <span className="text-foreground font-semibold text-body">{benefit.text}</span>
                 </li>
               ))}
             </ul>

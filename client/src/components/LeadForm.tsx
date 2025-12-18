@@ -940,7 +940,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
             <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
-              <div className="bg-card p-6 rounded-lg shadow-lg">
+              <div className="bg-card p-6 rounded-card shadow-card">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
                   onSuccess={(token) => {

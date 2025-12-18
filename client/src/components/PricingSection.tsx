@@ -65,7 +65,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   
   if (!isProductVariant && (!data.monthly || !data.yearly)) {
     return (
-      <section className="py-16 bg-muted/30" data-testid="section-pricing">
+      <section className="py-section bg-muted/30" data-testid="section-pricing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Pricing section requires monthly and yearly pricing data
         </div>
@@ -82,13 +82,13 @@ export function PricingSection({ data }: PricingSectionProps) {
   if (isProductVariant) {
     return (
       <section
-        className="py-16 bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+        className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
         data-testid="section-pricing"
       >
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-6">
             <h2
-              className="text-2xl md:text-3xl font-bold text-primary mb-2"
+              className="text-h2 text-primary mb-2"
               data-testid="text-pricing-title"
             >
               {data.title}
@@ -129,7 +129,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                       {data.financing_amount && (
                         <div className="mt-2">
                           <span
-                            className="text-4xl md:text-5xl font-bold text-white"
+                            className="text-h1 text-white"
                             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                             data-testid="text-financing-amount"
                           >
@@ -159,7 +159,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
               {data.features_title && (
                 <p
-                  className="text-[#3A3A3A] font-normal text-lg"
+                  className="text-[#3A3A3A] font-normal text-body"
                   data-testid="text-features-title"
                 >
                   {data.features_title}
@@ -227,13 +227,13 @@ export function PricingSection({ data }: PricingSectionProps) {
 
   return (
     <section
-      className="py-16 bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+      className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
       data-testid="section-pricing"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
           <h2
-            className="text-2xl md:text-3xl font-bold text-primary"
+            className="text-h2 text-primary"
             data-testid="text-pricing-title"
           >
             {data.title}
@@ -311,7 +311,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               <div className="flex flex-col items-center justify-center flex-1 py-6">
                 <div className="text-center">
                   <span
-                    className="text-5xl md:text-[55px] font-bold text-white"
+                    className="text-h1 text-white"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                     data-testid="text-price"
                   >
@@ -322,7 +322,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
                 {currentPlan?.original_price && (
                   <div
-                    className="text-white/60 line-through text-lg mt-1"
+                    className="text-white/60 line-through text-body mt-1"
                     data-testid="text-original-price"
                   >
                     ${currentPlan.original_price}

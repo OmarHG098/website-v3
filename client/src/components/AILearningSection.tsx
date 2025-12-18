@@ -41,20 +41,20 @@ export function AILearningSection({ data }: AILearningSectionProps) {
 
   return (
     <section 
-      className="py-20 md:py-24"
+      className="py-section"
       data-testid="section-ai-learning"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            className="text-h2 mb-4 text-foreground"
             data-testid="text-ai-title"
           >
             {data.title}
           </h2>
           
           <p 
-            className="text-lg text-muted-foreground max-w-3xl mx-auto"
+            className="text-body text-muted-foreground max-w-3xl mx-auto"
             data-testid="text-ai-description"
           >
             {data.description}
@@ -102,7 +102,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   </div>
                   <div>
                     <h3 
-                      className="text-2xl md:text-3xl font-bold text-foreground mb-2"
+                      className="text-h2 text-foreground mb-2"
                       data-testid="text-highlight-title"
                     >
                       {data.highlight.title}
@@ -111,7 +111,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 </div>
                 
                 <p 
-                  className="mb-6 text-muted-foreground text-[18px]"
+                  className="mb-6 text-muted-foreground text-body"
                   data-testid="text-highlight-description"
                 >
                   {data.highlight.description}
@@ -142,7 +142,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             
             {videoId && (
               <div 
-                className="relative aspect-video rounded-lg overflow-hidden shadow-lg"
+                className="relative aspect-video rounded-card overflow-hidden shadow-card"
                 data-testid="video-container-ai"
               >
                 <iframe

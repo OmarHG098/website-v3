@@ -54,7 +54,7 @@ export default function AwardsRow({ data }: AwardsRowProps) {
 
   return (
     <section 
-      className={`py-12 ${data.background === 'muted' ? 'bg-muted' : ''}`}
+      className={`py-section ${data.background === 'muted' ? 'bg-muted' : ''}`}
       data-testid="section-awards-row"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -62,7 +62,7 @@ export default function AwardsRow({ data }: AwardsRowProps) {
           <div className="text-center mb-8">
             {data.title && (
               <h2 
-                className="text-2xl md:text-3xl font-bold mb-3 text-foreground"
+                className="text-h2 mb-3 text-foreground"
                 data-testid="text-awards-row-title"
               >
                 {data.title}

@@ -21,7 +21,7 @@ const iconMap: Record<string, typeof IconBook> = {
 export function HeroCourse({ data }: HeroCourseProps) {
   return (
     <section 
-      className="py-12 md:py-16 bg-background"
+      className="py-section bg-background"
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -29,7 +29,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
           {/* Left Column */}
           <div className="space-y-6">
             <h1 
-              className="text-4xl md:text-5xl font-bold text-primary leading-tight"
+              className="text-h1 text-primary"
               data-testid="text-hero-title"
             >
               {data.title}
@@ -37,7 +37,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
             
             {data.subtitle && (
               <p 
-                className="text-lg text-muted-foreground"
+                className="text-body text-muted-foreground"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}

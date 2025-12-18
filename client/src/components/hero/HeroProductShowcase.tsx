@@ -210,7 +210,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               <img
                 src={data.image.src}
                 alt={data.image.alt}
-                className="w-full max-w-[500px] rounded-lg shadow-lg"
+                className="w-full max-w-[500px] rounded-card shadow-card"
                 data-testid="img-hero-product"
               />
             ) : null}

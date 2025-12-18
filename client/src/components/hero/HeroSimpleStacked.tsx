@@ -16,7 +16,7 @@ const getIcon = (iconName: string) => {
 export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
   return (
     <section 
-      className={`py-12 md:py-16 ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
+      className={`py-section ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
       data-testid="section-hero"
     >
       <div className="max-w-4xl mx-auto px-4">
@@ -32,7 +32,7 @@ export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
             )}
             
             <h1 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground leading-tight"
+              className="text-h1 mb-4 text-foreground"
               data-testid="text-hero-title"
             >
               {data.title}
@@ -40,7 +40,7 @@ export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
             
             {data.subtitle && (
               <p 
-                className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed"
+                className="text-body text-muted-foreground mb-6 leading-relaxed"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}
@@ -71,7 +71,7 @@ export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
             <img 
               src={data.image.src} 
               alt={data.image.alt}
-              className="w-full h-auto rounded-lg shadow-lg"
+              className="w-full h-auto rounded-card shadow-card"
               data-testid="img-hero"
             />
           </div>

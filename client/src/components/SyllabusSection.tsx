@@ -47,7 +47,7 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
           <span className="hidden md:inline">{isOpen ? "Hide course details" : "Course details"}</span>
           <ChevronDown 
             className={cn(
-              "h-5 w-5 shrink-0 transition-transform duration-200",
+              "h-5 w-5 shrink-0 transition-transform duration-brand ease-brand",
               isOpen && "rotate-180"
             )}
           />
@@ -55,7 +55,7 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
       </button>
       <div
         className={cn(
-          "overflow-hidden transition-all duration-200",
+          "overflow-hidden transition-all duration-brand ease-brand",
           isOpen ? "max-h-96" : "max-h-0"
         )}
       >
@@ -77,20 +77,20 @@ function FocusAreaCard({ title, icon, testId }: FocusAreaCardProps) {
   return (
     <Card
       className={cn(
-        "transition-all duration-200 overflow-hidden group",
+        "transition-all duration-brand ease-brand overflow-hidden group",
         "border-l-4 border-l-primary/40",
-        "bg-card hover:bg-muted hover:border-l-primary hover:shadow-md"
+        "bg-card hover:bg-muted hover:border-l-primary hover:shadow-card"
       )}
       data-testid={testId}
     >
       <div className="flex items-center gap-4 p-5">
         <div className={cn(
-          "flex-shrink-0 transition-colors duration-200",
+          "flex-shrink-0 transition-colors duration-brand ease-brand",
           "text-muted-foreground group-hover:text-primary"
         )}>
           {getIcon(icon || "Sparkles", "w-6 h-6")}
         </div>
-        <span className="transition-colors duration-200 text-muted-foreground font-medium group-hover:text-foreground text-[18px]">
+        <span className="transition-colors duration-brand ease-brand text-muted-foreground font-medium group-hover:text-foreground text-body">
           {title}
         </span>
       </div>
@@ -108,7 +108,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   if (modules.length === 0) {
     return (
-      <section className="py-20 md:py-24 bg-primary/5" data-testid="section-syllabus">
+      <section className="py-section bg-primary/5" data-testid="section-syllabus">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -118,20 +118,20 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   return (
     <section 
-      className="py-20 md:py-24 bg-primary/5"
+      className="py-section bg-primary/5"
       data-testid="section-syllabus"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            className="text-h2 mb-4 text-foreground"
             data-testid="text-syllabus-title"
           >
             {data.title}
           </h2>
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground"
+              className="text-body text-muted-foreground"
               data-testid="text-syllabus-subtitle"
             >
               {data.subtitle}
@@ -161,7 +161,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   if (focusAreas.length === 0) {
     return (
-      <section className="py-20 md:py-24 bg-primary/5" data-testid="section-syllabus-landing">
+      <section className="py-section bg-primary/5" data-testid="section-syllabus-landing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one focus area
         </div>
@@ -171,20 +171,20 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   return (
     <section 
-      className="py-20 md:py-24 bg-primary/5"
+      className="py-section bg-primary/5"
       data-testid="section-syllabus-landing"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-10">
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            className="text-h2 mb-4 text-foreground"
             data-testid="text-syllabus-title"
           >
             {data.title}
           </h2>
           {data.description && (
             <p 
-              className="text-lg text-muted-foreground mb-3"
+              className="text-body text-muted-foreground mb-3"
               data-testid="text-syllabus-description"
             >
               {data.description}
@@ -192,7 +192,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
           )}
           {data.emphasis && (
             <p 
-              className="font-semibold text-foreground text-[22px]"
+              className="font-semibold text-foreground text-h2"
               data-testid="text-syllabus-emphasis"
             >
               {data.emphasis}

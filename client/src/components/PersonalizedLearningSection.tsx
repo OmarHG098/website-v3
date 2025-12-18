@@ -15,15 +15,15 @@ export default function PersonalizedLearningSection() {
   ];
   
   return (
-    <section className="py-16">
+    <section className="py-section">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
           {/* Blue Message Box - appears first on mobile */}
-          <div className="bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-lg flex flex-col justify-center md:hidden" data-testid="box-personalized-message">
-            <p className="text-lg md:text-xl mb-4 font-light">
+          <div className="bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-card flex flex-col justify-center md:hidden" data-testid="box-personalized-message">
+            <p className="text-body mb-4 font-light">
               {t('personalized.heading')}
             </p>
-            <p className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+            <p className="text-h2 leading-tight">
               {t('personalized.mainText')}
             </p>
           </div>
@@ -47,11 +47,11 @@ export default function PersonalizedLearningSection() {
             ))}
 
             {/* Blue Message Box - 5th column, desktop only, 2x wider */}
-            <div className="hidden md:flex flex-[2] bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-lg flex-col justify-center" data-testid="box-personalized-message-desktop">
-              <p className="text-lg md:text-xl mb-4 font-light">
+            <div className="hidden md:flex flex-[2] bg-primary text-primary-foreground px-6 py-8 md:px-8 md:py-12 rounded-card flex-col justify-center" data-testid="box-personalized-message-desktop">
+              <p className="text-body mb-4 font-light">
                 {t('personalized.heading')}
               </p>
-              <p className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+              <p className="text-h2 leading-tight">
                 {t('personalized.mainText')}
               </p>
             </div>

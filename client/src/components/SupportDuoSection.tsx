@@ -54,7 +54,7 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
 
   return (
     <section 
-      className={`py-14 ${backgroundClass}`}
+      className={`py-section ${backgroundClass}`}
       data-testid="section-support-duo"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -63,13 +63,13 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center mb-10">
             <div className="col-span-1 md:col-span-9 text-center md:text-start order-2 md:order-1">
               <h2 
-                className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+                className="text-h2 text-foreground mb-4"
                 data-testid="text-support-duo-heading"
               >
                 {data.heading}
               </h2>
               <p 
-                className="text-lg text-muted-foreground leading-relaxed"
+                className="text-body text-muted-foreground leading-relaxed"
                 data-testid="text-support-duo-description"
               >
                 {data.description}
@@ -193,10 +193,10 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
             {/* ===== MOBILE LAYOUT (base, hidden at md+) ===== */}
             <div className="md:hidden space-y-6">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-foreground mb-4" data-testid="text-support-duo-heading">
+                <h2 className="text-h2 text-foreground mb-4" data-testid="text-support-duo-heading">
                   {data.heading}
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-body text-muted-foreground leading-relaxed">
                   {data.description}
                 </p>
               </div>
@@ -267,10 +267,10 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
             <div className="hidden md:block lg:hidden space-y-8">
               <div className="grid grid-cols-12 gap-8 items-start">
                 <div className="col-span-8 text-left">
-                  <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-support-duo-heading-tablet">
+                  <h2 className="text-h2 text-foreground mb-4" data-testid="text-support-duo-heading-tablet">
                     {data.heading}
                   </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">{data.description}</p>
+                  <p className="text-body text-muted-foreground leading-relaxed">{data.description}</p>
                 </div>
                 {data.image && (
                   <div className="col-span-4">
@@ -317,10 +317,10 @@ export function SupportDuoSection({ data }: SupportDuoSectionProps) {
             {/* ===== DESKTOP LAYOUT (lg+, original stacked layout) ===== */}
             <div className="hidden lg:block">
               <div className="mb-10 text-start">
-                <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-support-duo-heading">
+                <h2 className="text-h2 text-foreground mb-4" data-testid="text-support-duo-heading">
                   {data.heading}
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">{data.description}</p>
+                <p className="text-body text-muted-foreground leading-relaxed">{data.description}</p>
               </div>
               <div className="grid grid-cols-12 gap-8 items-start">
                 <div className="col-span-7">

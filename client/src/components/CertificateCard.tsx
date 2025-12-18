@@ -8,7 +8,7 @@ interface CertificateCardProps {
 export function CertificateCard({ programName = "Full-Stack Developer", studentName = "Pedro Fuentes Escaloso de los Lobos" }: CertificateCardProps) {
   return (
     <div 
-      className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-lg"
+      className="relative w-full aspect-[4/3] rounded-card overflow-hidden shadow-card"
       data-testid="certificate-card-dynamic"
       style={{ backgroundColor: '#3b82f6' }}
     >

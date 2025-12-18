@@ -22,18 +22,18 @@ export function FAQSection({ data }: FAQSectionProps) {
   
   return (
     <section 
-      className="py-20 md:py-24 bg-[#e8f4fc] dark:bg-muted/30"
+      className="py-section bg-[#e8f4fc] dark:bg-muted/30"
       data-testid="section-faq"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground"
+          className="text-h2 mb-8 text-center text-foreground"
           data-testid="text-faq-title"
         >
           {data.title}
         </h2>
         
-        <div className="bg-background rounded-lg border overflow-hidden">
+        <div className="bg-background rounded-card border overflow-hidden">
           <Accordion type="single" collapsible>
             {(data.items || []).map((item, index) => (
               <AccordionItem 

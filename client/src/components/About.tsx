@@ -9,9 +9,9 @@ export function About({ data }: AboutProps) {
   const { title, description, link_text, link_url, image_src, image_alt, height = "auto" } = data;
 
   return (
-    <section className="py-12 md:py-16 bg-muted" data-testid="section-about">
+    <section className="py-section bg-muted" data-testid="section-about">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8 uppercase tracking-wide" data-testid="text-about-title">
+        <h2 className="text-h2 text-foreground text-center mb-8 uppercase tracking-wide" data-testid="text-about-title">
           {title}
         </h2>
 
@@ -21,7 +21,7 @@ export function About({ data }: AboutProps) {
             <img
               src={image_src}
               alt={image_alt}
-              className="w-64 object-cover rounded-lg"
+              className="w-64 object-cover rounded-card"
               loading="lazy"
               data-testid="img-about-mobile"
             />
