@@ -36,11 +36,11 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
         </p>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         {tabs.map((tab, index) => (
-          <div key={index} className="flex items-stretch gap-3">
+          <div key={index} className="flex items-center gap-2">
             <div 
-              className={`w-1 rounded-full transition-all duration-300 ${
+              className={`w-1 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${
                 activeIndex === index
                   ? "bg-primary"
                   : "bg-muted-foreground/20"
@@ -49,7 +49,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
             <Button
               variant="ghost"
               onClick={() => setActiveIndex(index)}
-              className={`flex-1 justify-start text-left whitespace-normal py-3 transition-opacity duration-300 ${
+              className={`flex-1 justify-start text-left whitespace-normal py-2 transition-opacity duration-300 ${
                 activeIndex === index ? "opacity-100" : "opacity-40"
               }`}
               data-testid={`button-bullet-tab-${index}`}
