@@ -85,16 +85,14 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
       className="flex flex-col justify-center"
       data-testid="graduates-stats-numbers"
     >
-      <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+      <div className="flex flex-col gap-4">
         {stats.map((stat, index) => {
-          const isOdd = stats.length % 2 !== 0;
-          const isLast = index === stats.length - 1;
-          const shouldSpanFull = isOdd && isLast;
+          const isFirstRow = index === 0;
           
           return (
             <div 
               key={index} 
-              className={`text-center lg:text-left ${shouldSpanFull ? 'col-span-2' : ''}`}
+              className={`text-center lg:text-left ${isFirstRow ? 'lg:mr-auto' : 'lg:ml-auto'}`}
               data-testid={`stat-item-${index}`}
             >
               <p 
