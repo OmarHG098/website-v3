@@ -8,7 +8,11 @@ yaml: |
   subheading: Yes, and we've got the numbers to back it up.
   featured_images:
     - image_id: diverse_team_collaboration
+      col_span: 6
+      row_span: 2
     - image_id: professional_headshot_001
+      col_span: 6
+      row_span: 2
   stats:
     - value: "84"
       unit: "%"

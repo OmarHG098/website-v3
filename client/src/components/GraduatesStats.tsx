@@ -154,32 +154,32 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
                 data-testid="graduates-stats-collage-full"
               >
-                <div 
-                  style={{ gridColumn: 'span 5', gridRow: 'span 2' }}
-                >
-                  <UniversalImage
-                    id={featured_images[0].image_id}
-                    preset="card"
-                    className="w-full h-full object-cover shadow-sm"
-                    alt="Featured graduate photo 1"
-                  />
-                </div>
-                <div 
-                  style={{ gridColumn: 'span 3', gridRow: 'span 2' }}
-                >
-                  <UniversalImage
-                    id={featured_images[1].image_id}
-                    preset="card"
-                    className="w-full h-full object-cover shadow-sm"
-                    alt="Featured graduate photo 2"
-                  />
-                </div>
+                {featured_images.map((img, index) => {
+                  const colSpan = img.col_span || 6;
+                  const rowSpan = img.row_span || 2;
+                  return (
+                    <div 
+                      key={`featured-${index}`}
+                      style={{
+                        gridColumn: `span ${colSpan}`,
+                        gridRow: `span ${rowSpan}`,
+                      }}
+                    >
+                      <UniversalImage
+                        id={img.image_id}
+                        preset="card"
+                        className="w-full h-full object-cover shadow-sm"
+                        alt={`Featured graduate photo ${index + 1}`}
+                      />
+                    </div>
+                  );
+                })}
                 {collage_images && collage_images.map((img, index) => {
                   const colSpan = img.col_span || 4;
                   const rowSpan = img.row_span || 2;
                   return (
                     <div 
-                      key={index}
+                      key={`collage-${index}`}
                       style={{
                         gridColumn: `span ${colSpan}`,
                         gridRow: `span ${rowSpan}`,

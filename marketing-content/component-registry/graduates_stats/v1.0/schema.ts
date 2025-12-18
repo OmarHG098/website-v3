@@ -22,6 +22,8 @@ export const graduatesCollageImageSchema = z.object({
 
 export const graduatesFeaturedImageSchema = z.object({
   image_id: z.string(),
+  col_span: z.number().optional(),
+  row_span: z.number().optional(),
 });
 
 // ============================================
