@@ -590,6 +590,8 @@ import { testimonialsSlideSectionSchema } from "../marketing-content/component-r
 import { ctaBannerSectionSchema } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
 import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../marketing-content/component-registry/project_showcase/v1.0/schema";
 import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab } from "../marketing-content/component-registry/bullet_tabs_showcase/v1.0/schema";
+export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
 
 export const sectionSchema = z.union([
   heroSchema,
@@ -622,6 +624,7 @@ export const sectionSchema = z.union([
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   twoColumnAccordionCardSectionSchema,
+  bulletTabsShowcaseSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;

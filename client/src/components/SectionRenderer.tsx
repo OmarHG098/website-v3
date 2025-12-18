@@ -29,6 +29,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
 import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
+import { BulletTabsShowcase } from "@/components/BulletTabsShowcase";
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
@@ -123,6 +124,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LeadForm key={index} data={section as Parameters<typeof LeadForm>[0]["data"]} />;
     case "two_column_accordion_card":
       return <TwoColumnAccordionCard key={index} data={section as Parameters<typeof TwoColumnAccordionCard>[0]["data"]} />;
+    case "bullet_tabs_showcase":
+      return <BulletTabsShowcase key={index} data={section as Parameters<typeof BulletTabsShowcase>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
