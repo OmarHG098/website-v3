@@ -72,7 +72,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const imageContent = (
     <div className="relative flex justify-center">
       <div
-        className="relative bg-primary/20 rounded-2xl pt-12 pb-12 pl-12 flex justify-end"
+        className="relative bg-primary/10 rounded-2xl pt-12 pb-12 pl-12 flex justify-end"
         data-testid="bullet-tabs-image-container"
       >
         <div key={activeIndex} className="animate-in fade-in duration-300 w-[95%]">
@@ -90,8 +90,8 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   return (
     <section className="py-16 md:py-24" data-testid="section-bullet-tabs-showcase">
       <div className="max-w-6xl mx-auto px-4">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16  ${
-          image_position === "left" ? "lg:grid-flow-dense" : ""
+        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-center ${
+          image_position === "left" ? "lg:grid-cols-[3fr_2fr]" : ""
         }`}>
           {image_position === "left" ? (
             <>
