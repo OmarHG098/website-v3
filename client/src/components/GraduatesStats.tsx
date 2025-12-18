@@ -146,24 +146,14 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
 
         <div className="hidden lg:block">
           <div className="flex items-stretch">
-            <div className="flex-1 pl-4 pr-8">
-              <div className="h-[320px]">
-                {renderCollageImages()}
-              </div>
-            </div>
-
             <div 
               className="flex gap-3 flex-shrink-0"
-              style={{ width: 'calc(50vw - 576px + 400px)', minWidth: '400px' }}
+              style={{ width: 'calc(50vw - 576px + 280px)', minWidth: '320px' }}
+              data-testid="graduates-stats-featured"
             >
-              <div className="flex-shrink-0 flex flex-col justify-center pr-4">
-                {renderStatsCompact()}
-              </div>
-
               <div 
                 className="grid grid-rows-2 gap-3 flex-1"
                 style={{ gridTemplateColumns: '2fr 1fr' }}
-                data-testid="graduates-stats-featured"
               >
                 <div className="row-span-2 col-start-1">
                   <UniversalImage
@@ -182,6 +172,19 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="flex-1 px-6">
+              <div className="h-[320px]">
+                {renderCollageImages()}
+              </div>
+            </div>
+
+            <div 
+              className="flex-shrink-0 flex flex-col justify-center"
+              style={{ width: 'calc(50vw - 576px + 180px)', minWidth: '200px', paddingRight: '2rem' }}
+            >
+              {renderStatsCompact()}
             </div>
           </div>
         </div>
