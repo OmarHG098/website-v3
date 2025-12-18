@@ -199,13 +199,19 @@ export {
 export {
   syllabusModuleSchema,
   focusAreaSchema,
+  moduleCardSchema,
+  techLogoSchema,
   syllabusDefaultSchema,
   syllabusLandingSchema,
+  syllabusProgramModulesSchema,
   syllabusSectionSchema,
   type SyllabusModule,
   type FocusArea,
+  type ModuleCard,
+  type TechLogo,
   type SyllabusDefault,
   type SyllabusLanding,
+  type SyllabusProgramModules,
   type SyllabusSection,
 } from "../marketing-content/component-registry/syllabus/v1.0/schema";
 

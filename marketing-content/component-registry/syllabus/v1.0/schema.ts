@@ -14,6 +14,20 @@ export const focusAreaSchema = z.object({
   icon: z.string().optional(),
 });
 
+// Module card for program-modules variant
+export const moduleCardSchema = z.object({
+  title: z.string(),
+  duration: z.string(),
+  objectives: z.array(z.string()),
+  projects: z.string().nullish(),
+});
+
+// Technology logo for program info
+export const techLogoSchema = z.object({
+  name: z.string(),
+  icon: z.string(),
+});
+
 // Default accordion variant
 export const syllabusDefaultSchema = z.object({
   type: z.literal("syllabus"),
@@ -33,13 +47,27 @@ export const syllabusLandingSchema = z.object({
   focus_areas: z.array(focusAreaSchema),
 });
 
+// Program modules variant with left info card + right scrollable module cards
+export const syllabusProgramModulesSchema = z.object({
+  type: z.literal("syllabus"),
+  variant: z.literal("program-modules"),
+  program_title: z.string(),
+  program_highlight: z.string(),
+  tech_logos: z.array(techLogoSchema).optional(),
+  module_cards: z.array(moduleCardSchema),
+});
+
 export const syllabusSectionSchema = z.union([
   syllabusDefaultSchema,
   syllabusLandingSchema,
+  syllabusProgramModulesSchema,
 ]);
 
 export type SyllabusModule = z.infer<typeof syllabusModuleSchema>;
 export type FocusArea = z.infer<typeof focusAreaSchema>;
+export type ModuleCard = z.infer<typeof moduleCardSchema>;
+export type TechLogo = z.infer<typeof techLogoSchema>;
 export type SyllabusDefault = z.infer<typeof syllabusDefaultSchema>;
 export type SyllabusLanding = z.infer<typeof syllabusLandingSchema>;
+export type SyllabusProgramModules = z.infer<typeof syllabusProgramModulesSchema>;
 export type SyllabusSection = z.infer<typeof syllabusSectionSchema>;
