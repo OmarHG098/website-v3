@@ -86,7 +86,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                     data-testid={`stat-item-${index}`}
                   >
                     <p 
-                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-1"
+                      className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-1"
                       data-testid={`text-stat-value-${index}`}
                     >
                       {stat.value}
