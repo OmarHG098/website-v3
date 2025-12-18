@@ -156,7 +156,7 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
                 {secondRowStats.map((stat, index) => (
                   <div 
                     key={index + 2} 
-                    className="text-center lg:text-left"
+                    className={`text-center lg:text-left ${secondRowStats.length === 1 ? 'col-span-2' : ''}`}
                     data-testid={`stat-item-${index + 2}`}
                   >
                     <p 
