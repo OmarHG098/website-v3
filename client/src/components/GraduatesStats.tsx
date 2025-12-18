@@ -49,56 +49,56 @@ export function GraduatesStats({ data }: GraduatesStatsProps) {
           >
             {collage_images && collage_images.length >= 6 && (
               <div className="relative w-full h-full">
-                <div className="absolute top-0 left-0 w-[55%] h-[35%]">
+                <div className="absolute top-[2%] left-[3%] w-[50%] h-[32%]">
                   <UniversalImage
                     id={collage_images[0]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-2xl shadow-sm"
                     alt="Graduate photo 1"
                   />
                 </div>
                 
-                <div className="absolute top-0 right-0 w-[42%] h-[28%]">
+                <div className="absolute top-[5%] right-[5%] w-[38%] h-[26%]">
                   <UniversalImage
                     id={collage_images[1]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-xl shadow-sm"
                     alt="Graduate photo 2"
                   />
                 </div>
                 
-                <div className="absolute top-[31%] right-0 w-[55%] h-[32%]">
+                <div className="absolute top-[34%] right-[2%] w-[52%] h-[30%]">
                   <UniversalImage
                     id={collage_images[2]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-2xl shadow-sm"
                     alt="Graduate photo 3"
                   />
                 </div>
                 
-                <div className="absolute top-[38%] left-0 w-[42%] h-[28%]">
+                <div className="absolute top-[38%] left-[5%] w-[38%] h-[26%]">
                   <UniversalImage
                     id={collage_images[3]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-xl shadow-sm"
                     alt="Graduate photo 4"
                   />
                 </div>
                 
-                <div className="absolute bottom-0 left-0 w-[58%] h-[30%]">
+                <div className="absolute bottom-[3%] left-[2%] w-[54%] h-[28%]">
                   <UniversalImage
                     id={collage_images[4]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-2xl shadow-sm"
                     alt="Graduate photo 5"
                   />
                 </div>
                 
-                <div className="absolute bottom-0 right-0 w-[38%] h-[34%]">
+                <div className="absolute bottom-[5%] right-[6%] w-[35%] h-[30%]">
                   <UniversalImage
                     id={collage_images[5]?.image_id}
                     preset="card"
-                    className="w-full h-full object-cover rounded-lg shadow-sm"
+                    className="w-full h-full object-cover rounded-xl shadow-sm"
                     alt="Graduate photo 6"
                   />
                 </div>
