@@ -17,7 +17,7 @@ export function StatCard({
 }: StatCardProps) {
   const content = (
     <div className="font-inter">
-      <div className="text-h2 font-bold text-primary mb-1">
+      <div className="text-3xl font-bold text-primary mb-1">
         {value}
       </div>
       <div className="text-body text-foreground">

@@ -31,6 +31,15 @@
   src: url('/fonts/lato-bold.woff2') format('woff2');
 }
 
+/* Inter Variable - Stats/Numbers */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+}
+
 /* Archivo - Body text (16px/400) */
 @font-face {
   font-family: 'Archivo';
@@ -263,7 +272,7 @@
   }
 
   .font-inter {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-family: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   }
 
   body {
