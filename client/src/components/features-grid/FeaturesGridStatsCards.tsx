@@ -19,7 +19,7 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
               return (
                 <Card 
                   key={itemId}
-                  className="items-center gap-2 rounded-card p-4"
+                  className={`items-center gap-2 rounded-card p-4 ${data.card_color || 'bg-primary/5'}`}
                   data-testid={`card-stat-${itemId}`}
                 >
                   <div className="text-h2 font-bold text-primary mb-1">
@@ -44,7 +44,7 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
             )}
             {data.subtitle && (
               <p 
-                className="text-h4 mb-6 text-primary"
+                className="text-lg mb-2 text-primary"
                 data-testid="text-stats-cards-subtitle"
               >
                 {data.subtitle}
@@ -64,4 +64,3 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
     </section>
   );
 }
-// test
