@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DotsIndicator } from "@/components/DotsIndicator";
+import { SyllabusModuleCard } from "@/components/molecules/SyllabusModuleCard";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";
@@ -457,48 +458,17 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   >
                     <div
                       ref={(el: HTMLDivElement | null) => { cardRefs.current[index] = el; }}
+                      className="m-2"
                     >
-                      <Card 
-                        className={cn(
-                          "p-6 m-2 rounded-card h-full min-h-[380px]",
-                          index === activeIndex 
-                            ? "bg-card shadow-card opacity-100" 
-                            : "bg-card shadow-none opacity-50"
-                        )}
-                        data-testid={`card-module-${index}`}
-                      >
-                        <div className="mb-5">
-                          <p className="text-sm text-muted-foreground mb-2 font-medium">
-                            {module.duration}
-                          </p>
-                          <h3 
-                            className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2"
-                            style={{ backgroundColor: 'hsl(var(--accent))' }}
-                          >
-                            {module.title}
-                          </h3>
-                        </div>
-
-                        <ul className="space-y-2.5 mb-5 text-sm text-foreground">
-                          {module.objectives.map((objective, objIndex) => (
-                            <li key={objIndex} className="flex items-start gap-2">
-                              <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
-                              <span className="leading-relaxed">{objective}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        {module.projects && (
-                          <div className="pt-4 border-t border-border">
-                            <p className="text-sm font-bold text-primary mb-1.5">
-                              Projects:
-                            </p>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {module.projects}
-                            </p>
-                          </div>
-                        )}
-                      </Card>
+                      <SyllabusModuleCard
+                        duration={module.duration}
+                        title={module.title}
+                        objectives={module.objectives}
+                        projects={module.projects}
+                        isActive={index === activeIndex}
+                        orientation="vertical"
+                        testId={`card-module-${index}`}
+                      />
                     </div>
                   </div>
                 ))}
