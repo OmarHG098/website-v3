@@ -5,7 +5,7 @@
       "component": "UniversalVideo",
       "variant": "YouTube",
       "description": "Embedded YouTube video with responsive aspect ratio",
-      "tags": ["video", "youtube", "embed", "media"],
+      "tags": ["video", "embed", "media"],
       "props": {
         "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         "ratio": "16:9"
@@ -16,7 +16,7 @@
       "component": "UniversalVideo",
       "variant": "Local",
       "description": "Self-hosted video with custom preview image and shadow border",
-      "tags": ["video", "local", "preview", "media"],
+      "tags": ["video", "embed", "media"],
       "props": {
         "url": "/videos/sample.mp4",
         "ratio": "16:9",
@@ -30,7 +30,7 @@
       "component": "UniversalVideo",
       "variant": "Autoplay",
       "description": "Muted autoplay video for background sections",
-      "tags": ["video", "autoplay", "background", "media"],
+      "tags": ["video", "embed", "media"],
       "props": {
         "url": "/videos/background.mp4",
         "ratio": "21:9",
@@ -44,7 +44,7 @@
       "component": "UniversalImage",
       "variant": "Logo",
       "description": "Company logo from registry with logo preset",
-      "tags": ["image", "logo", "branding"],
+      "tags": ["image"],
       "props": {
         "id": "arp_logo_certification",
         "preset": "logo",
@@ -56,7 +56,7 @@
       "component": "UniversalImage",
       "variant": "Avatar",
       "description": "Square avatar image for profiles",
-      "tags": ["image", "avatar", "profile"],
+      "tags": ["image", "avatar"],
       "props": {
         "id": "badges_new",
         "preset": "avatar",

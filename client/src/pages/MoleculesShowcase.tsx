@@ -14,6 +14,7 @@ interface MoleculesData {
 
 export default function MoleculesShowcase() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
 
   const { data, isLoading, error } = useQuery<MoleculesData>({
     queryKey: ["/api/molecules"],
@@ -26,13 +27,28 @@ export default function MoleculesShowcase() {
     return Array.from(tagSet).sort();
   }, [data]);
 
+  const allComponents = useMemo(() => {
+    if (!data?.molecules) return [];
+    const componentSet = new Set<string>();
+    data.molecules.forEach((m) => componentSet.add(m.component));
+    return Array.from(componentSet).sort();
+  }, [data]);
+
   const filteredMolecules = useMemo(() => {
     if (!data?.molecules) return [];
-    if (selectedTags.length === 0) return data.molecules;
-    return data.molecules.filter((m) =>
-      selectedTags.some((tag) => m.tags.includes(tag))
-    );
-  }, [data, selectedTags]);
+    let filtered = data.molecules;
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter((m) =>
+        selectedTags.some((tag) => m.tags.includes(tag))
+      );
+    }
+    if (selectedComponents.length > 0) {
+      filtered = filtered.filter((m) =>
+        selectedComponents.includes(m.component)
+      );
+    }
+    return filtered;
+  }, [data, selectedTags, selectedComponents]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
@@ -40,7 +56,18 @@ export default function MoleculesShowcase() {
     );
   };
 
-  const clearFilters = () => setSelectedTags([]);
+  const toggleComponent = (component: string) => {
+    setSelectedComponents((prev) =>
+      prev.includes(component) ? prev.filter((c) => c !== component) : [...prev, component]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedTags([]);
+    setSelectedComponents([]);
+  };
+
+  const hasActiveFilters = selectedTags.length > 0 || selectedComponents.length > 0;
 
   if (isLoading) {
     return (
@@ -92,7 +119,25 @@ export default function MoleculesShowcase() {
                 {tag}
               </Button>
             ))}
-            {selectedTags.length > 0 && (
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 mt-2">
+            <IconFilter className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground mr-2">
+              Filter by component:
+            </span>
+            {allComponents.map((component) => (
+              <Button
+                key={component}
+                variant={selectedComponents.includes(component) ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggleComponent(component)}
+                data-testid={`button-filter-component-${component}`}
+              >
+                {component}
+              </Button>
+            ))}
+            {hasActiveFilters && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -101,7 +146,7 @@ export default function MoleculesShowcase() {
                 data-testid="button-clear-filters"
               >
                 <IconX className="w-4 h-4 mr-1" />
-                Clear
+                Clear all
               </Button>
             )}
           </div>
