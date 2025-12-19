@@ -464,7 +464,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         duration={module.duration}
                         title={module.title}
                         objectives={module.objectives}
-                        projects={module.projects}
+                        projects={module.projects ?? undefined}
                         isActive={index === activeIndex}
                         orientation="vertical"
                         testId={`card-module-${index}`}

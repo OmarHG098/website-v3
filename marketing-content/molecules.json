@@ -100,6 +100,36 @@
         "use_card": false,
         "card_color": "bg-background"
       }
+    },
+    {
+      "id": "syllabus-module-card-vertical",
+      "component": "SyllabusModuleCard",
+      "variant": "Vertical",
+      "description": "Syllabus module card with vertical layout (default)",
+      "tags": ["syllabus", "card", "module"],
+      "props": {
+        "duration": "Milestone 1",
+        "title": "Web Foundations",
+        "objectives": ["HTML, CSS, Tailwind", "Accessibility best practices", "Layout techniques"],
+        "projects": "Build the company's first webpage",
+        "isActive": true,
+        "orientation": "vertical"
+      }
+    },
+    {
+      "id": "syllabus-module-card-horizontal",
+      "component": "SyllabusModuleCard",
+      "variant": "Horizontal",
+      "description": "Syllabus module card with horizontal layout",
+      "tags": ["syllabus", "card", "module"],
+      "props": {
+        "duration": "Milestone 2",
+        "title": "Programming Foundations",
+        "objectives": ["Algorithms and data structures", "Stateflow vs controlflow", "JavaScript mastery"],
+        "projects": "Complete coding challenges",
+        "isActive": true,
+        "orientation": "horizontal"
+      }
     }
   ]
 }
