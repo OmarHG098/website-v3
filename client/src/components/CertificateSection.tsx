@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { 
   IconUserHeart, IconFileDescription, IconMessageDots, IconInfinity,
   IconTarget, IconBriefcase, IconMicrophone, IconHeartHandshake,
@@ -9,6 +9,138 @@ import type { CertificateSection as CertificateSectionType } from "@shared/schem
 import { CertificateCard } from "./CertificateCard";
 import { cn } from "@/lib/utils";
 
+interface ParsedValue {
+  prefix: string;
+  number1: number | null;
+  separator: string;
+  number2: number | null;
+  suffix: string;
+  isRange: boolean;
+  hasNumber: boolean;
+  formatted1: (n: number) => string;
+  formatted2: (n: number) => string;
+}
+
+function parseStatValue(value: string): ParsedValue {
+  const rangeMatch = value.match(/^([^\d]*?)(\d[\d,]*)\s*(-)\s*(\d[\d,]*)(.*)$/);
+  if (rangeMatch) {
+    const num1 = parseInt(rangeMatch[2].replace(/,/g, ''), 10);
+    const num2 = parseInt(rangeMatch[4].replace(/,/g, ''), 10);
+    const hasComma1 = rangeMatch[2].includes(',');
+    const hasComma2 = rangeMatch[4].includes(',');
+    return {
+      prefix: rangeMatch[1],
+      number1: num1,
+      separator: rangeMatch[3],
+      number2: num2,
+      suffix: rangeMatch[5],
+      isRange: true,
+      hasNumber: true,
+      formatted1: (n: number) => hasComma1 ? n.toLocaleString() : String(n),
+      formatted2: (n: number) => hasComma2 ? n.toLocaleString() : String(n),
+    };
+  }
+
+  const singleMatch = value.match(/^([^\d]*?)(\d[\d,]*)(.*)$/);
+  if (singleMatch) {
+    const num = parseInt(singleMatch[2].replace(/,/g, ''), 10);
+    const hasComma = singleMatch[2].includes(',');
+    return {
+      prefix: singleMatch[1],
+      number1: num,
+      separator: '',
+      number2: null,
+      suffix: singleMatch[3],
+      isRange: false,
+      hasNumber: true,
+      formatted1: (n: number) => hasComma ? n.toLocaleString() : String(n),
+      formatted2: () => '',
+    };
+  }
+
+  return {
+    prefix: value,
+    number1: null,
+    separator: '',
+    number2: null,
+    suffix: '',
+    isRange: false,
+    hasNumber: false,
+    formatted1: () => '',
+    formatted2: () => '',
+  };
+}
+
+function useCountUp(target: number | null, duration: number, shouldAnimate: boolean): number {
+  const [current, setCurrent] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!shouldAnimate || target === null) {
+      setCurrent(target ?? 0);
+      return;
+    }
+
+    setCurrent(0);
+    startTimeRef.current = null;
+
+    const animate = (timestamp: number) => {
+      if (startTimeRef.current === null) {
+        startTimeRef.current = timestamp;
+      }
+      const elapsed = timestamp - startTimeRef.current;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCurrent(Math.round(eased * target));
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [target, duration, shouldAnimate]);
+
+  return current;
+}
+
+function AnimatedStatValue({ value, shouldAnimate }: { value: string; shouldAnimate: boolean }) {
+  const parsed = parseStatValue(value);
+  const count1 = useCountUp(parsed.number1, 2000, shouldAnimate && parsed.hasNumber);
+  const count2 = useCountUp(parsed.number2, 2000, shouldAnimate && parsed.isRange);
+
+  if (!parsed.hasNumber) {
+    return <>{value}</>;
+  }
+
+  if (parsed.isRange) {
+    return (
+      <>
+        {parsed.prefix}
+        {parsed.formatted1(count1)}
+        {parsed.separator}
+        {parsed.formatted2(count2)}
+        {parsed.suffix}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {parsed.prefix}
+      {parsed.formatted1(count1)}
+      {parsed.suffix}
+    </>
+  );
+}
+
 interface CertificateSectionProps {
   data: CertificateSectionType;
 }
@@ -16,6 +148,28 @@ interface CertificateSectionProps {
 export function CertificateSection({ data }: CertificateSectionProps) {
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting && !isVisible) {
+      setIsVisible(true);
+    }
+  }, [isVisible]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.3,
+      rootMargin: '0px',
+    });
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [handleIntersection]);
 
   const selectedStat = data.stats?.[selectedStatIndex];
   const displayDescription = selectedStat?.description || data.description;
@@ -36,6 +190,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
 
         {data.stats && data.stats.length > 0 && (
           <div 
+            ref={statsRef}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
             data-testid="certificate-stats"
           >
@@ -60,7 +215,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 data-testid={`button-stat-${index}`}
               >
                 <div className="text-h2 font-bold text-primary mb-1">
-                  {stat.value}
+                  <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {stat.label}
