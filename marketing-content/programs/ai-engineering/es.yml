@@ -1,0 +1,326 @@
+slug: ai-engineering
+title: Ingeniería de IA
+meta:
+  page_title: Programa de Carrera Ingeniero de IA | 4Geeks
+  description: Conviértete en Ingeniero de IA en 20 semanas con mentoría ilimitada 1:1, orientación profesional y proyectos prácticos. Inicia una carrera con salarios iniciales de $95K-$135K.
+  robots: index, follow
+  og_image: /images/programs/ai-engineering-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+  redirects:
+    - /bootcamp/ai-engineering-es
+    - /programas/ingeniero-ia
+    - /cursos/ingenieria-ia
+schema:
+  include:
+    - organization
+    - website
+    - courses:ai-engineering
+sections:
+  - type: hero
+    version: "1.0"
+    variant: singleColumn
+    title: Conviértete en Ingeniero de IA
+    subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas con mentoría personalizada 1:1 y orientación experta. Conviértete en el profesional que las empresas no pueden esperar a contratar.
+    badge: Programa de Carrera
+    cta_buttons:
+      - text: Aplicar Ahora
+        url: /es/aplica
+        variant: primary
+        icon: Rocket
+      - text: Descargar Programa
+        url: /programa/ai-engineering
+        variant: outline
+        icon: Download
+    trust_bar:
+      rating: "4.5"
+      rating_count: 1,294
+      trusted_text: $95K+ salario inicial promedio
+    award_badges:
+      - name: Mejor Bootcamp de Código
+        source: Forbes
+        year: "2024"
+      - name: Mejor para Hispanohablantes
+        source: Fortune
+        year: "2024"
+      - name: Top Bootcamp de Código
+        source: Newsweek
+        year: "2024"
+      - name: Mejor Bootcamp de Código
+        source: Course Report
+        year: "2025"
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
+    subtitle: Sí, y tenemos los números para respaldarlo. Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general.
+    items:
+      - icon: Briefcase
+        value: 3.5M
+        title: Roles relacionados con IA esperados para 2026
+      - icon: Graduation
+        value: 47%
+        title: Crecimiento año tras año en ofertas de trabajo de IA
+      - icon: GrowthChart
+        value: 20-40%
+        title: Primas salariales por habilidades de ingeniería de IA
+    columns: 3
+    icon_color: "#0097CD"
+  - type: syllabus
+    title: Lo Que Construirás en 20 Semanas
+    subtitle: Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA.
+    modules:
+      - title: Frontend Asistido por IA
+        description: Aplicación React moderna con componentes potenciados por IA. Construye interfaces de usuario inteligentes que aprovechan la IA para experiencias de usuario mejoradas, autocompletado y sugerencias inteligentes.
+      - title: Backend de Producción
+        description: APIs REST, autenticación, funciones serverless. Crea servicios backend escalables con autenticación segura, patrones de diseño de API y estrategias de despliegue nativas de la nube.
+      - title: Sistemas de Datos
+        description: Telemetría, pipelines, reportes automatizados. Diseña e implementa sistemas de recolección de datos, pipelines ETL y dashboards de análisis automatizados para insights en tiempo real.
+      - title: Capa de Conocimiento RAG
+        description: Búsqueda vectorial, embeddings, recuperación contextual de documentos. Construye sistemas sofisticados de generación aumentada por recuperación que conectan LLMs con tus datos propietarios.
+      - title: Sistemas Multi-Agente
+        description: Agentes inteligentes con memoria, enrutamiento de tareas y llamadas a herramientas. Crea sistemas de IA que pueden planificar, razonar y ejecutar tareas complejas de múltiples pasos de forma autónoma.
+      - title: Automatización de Flujos de Trabajo
+        description: Procesos generados por IA desplegados vía n8n, colas y tareas programadas. Automatiza flujos de trabajo empresariales con toma de decisiones y orquestación impulsadas por IA.
+      - title: Sistemas en Tiempo Real
+        description: WebSockets, respuestas de IA en streaming, arquitectura orientada a eventos. Construye aplicaciones responsivas con interacciones de IA en tiempo real y capacidades de streaming.
+  - type: projects
+    title: Aprende Construyendo Proyectos Reales
+    subtitle: "Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto real de ingeniería de IA. Aquí tienes un vistazo de lo que trabajarás:"
+    items:
+      - title: Construye una Base de Conocimiento con RAG
+        description: Crea una aplicación full-stack que permita a los usuarios consultar documentos usando lenguaje natural. Implementa embeddings vectoriales, búsqueda semántica e integra con OpenAI para respuestas inteligentes.
+        image: ml-final-project
+        tags:
+          - RAG
+          - Vector DB
+          - LLM
+        duration: 12 HORAS
+        date: 15/01/2025
+        difficulty: medium
+      - title: Orquestador de Tareas Multi-Agente
+        description: Diseña e implementa un sistema donde múltiples agentes de IA colaboran para completar tareas complejas. Aprende memoria de agentes, llamadas a herramientas y patrones de enrutamiento de tareas.
+        image: authentication
+        tags:
+          - Agentes
+          - LangChain
+        duration: 16 HORAS
+        date: 20/02/2025
+        difficulty: hard
+      - title: Aplicación Full-Stack Nativa de IA
+        description: Construye una aplicación empresarial nativa de IA completa desde cero. Combina frontend, backend, RAG, agentes y automatización en un producto listo para producción.
+        image: final-project
+        tags:
+          - Full-Stack
+          - Proyecto Final
+        duration: 40 HORAS
+        date: 01/04/2025
+        difficulty: hard
+  - type: ai_learning
+    version: "1.0"
+    badge: ¿Por qué 4Geeks?
+    title: ¿Por qué Aprender con 4Geeks?
+    description: Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: Aprende con IA
+        description: Nuestra IA revisa tu código para darte retroalimentación instantánea, ayuda con los ejercicios, ¡y más!
+      - icon: Headset
+        title: Sesiones de mentoría 1:1 ilimitadas
+        description: Accede a sesiones de mentoría ilimitadas con nuestros expertos en ingeniería de IA cuando necesites orientación.
+      - icon: Users
+        title: Aprende con la comunidad
+        description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
+    highlight:
+      title: Maximiza tu Progreso con Rigobot y Mentoría 1:1
+      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA diseñadas para un aprendizaje más inteligente y rápido.
+      bullets:
+        - text: Rigobot, nuestro asistente de código con IA, sigue tu progreso y te da retroalimentación personalizada exactamente cuando y como la necesitas.
+        - text: Obtén atención personal inigualable con nuestra proporción de 7:1 estudiantes por profesor, además de acceso ilimitado a sesiones 1:1 con mentores expertos y coaches de carrera.
+      cta:
+        text: ¡Comienza a aprender ahora!
+        url: /aplicar
+        variant: primary
+  - type: certificate
+    title: Certificado y Red de Carreras
+    description: "Obtén un certificado reconocido por la industria, acreditado por el Departamento de Educación de Florida y accede a roles de alta demanda como:"
+    benefits:
+      - text: "Ingeniero de Software IA: $95K–$135K"
+      - text: "Ingeniero Full-Stack (Fluente en IA): $100K–$145K"
+      - text: "Ingeniero de Agentes / Ingeniero de Automatización de Flujos: $105K–$155K"
+      - text: "Ingeniero de Automatización de Flujos: $85K–$120K"
+    card:
+      title: Ingeniero de IA
+      subtitle: Certificado 4Geeks Academy
+      program_name: Ingeniería de IA
+    stats:
+      - value: 84%
+        label: Tasa de contratación
+      - value: 3-6 meses
+        label: Tiempo para ser contratado
+      - value: 55%
+        label: Aumento salarial promedio
+      - value: 5,000+
+        label: Socios de contratación
+  - type: pricing
+    version: "1.0"
+    variant: product
+    title: Financia Tu Inversión
+    subtitle: Ofrecemos múltiples formas de financiar tu inscripción. Elige la opción que mejor funcione para ti.
+    discount_text: "Descuento por Pago Completo: Ahorra 10% con pago por adelantado."
+    financing_text: "Financiamiento Basado en Crédito: desde"
+    financing_amount: $299
+    tech_icons:
+      - openai
+      - python
+      - react
+      - nodejs
+      - api
+      - brain
+      - robot
+      - settings
+    features_title: Accede a cientos de ejercicios, tutoriales de proyectos y cursos en las tecnologías más demandadas
+    features:
+      - icon: certificate
+        text: Construye tu portafolio con cientos de proyectos del mundo real.
+      - icon: cloud
+        text: Miles de desafíos de código en la nube (sin configuración necesaria).
+      - text: Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas.
+        use_rigobot_icon: true
+      - icon: certificate
+        text: Certificados de cursos
+      - icon: certificate
+        text: Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida.
+    cta:
+      text: Obtener plan
+      url: /registro
+      variant: primary
+  - type: whos_hiring
+    title: ¿Quién Contrata a Nuestros Graduados?
+    subtitle: Nuestros egresados trabajan en las mejores empresas del mundo
+    description: Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en diversas industrias. Nuestro apoyo profesional y sólida red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y grandes corporaciones a nivel global.
+    logos:
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: TCG
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: MDC
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
+  - type: testimonials
+    title: Tu Nueva Carrera Comienza Aquí
+    subtitle: Mira lo que nuestros graduados tienen que decir sobre su experiencia
+    rating_summary:
+      average: "4.5"
+      count: 1,294
+    items:
+      - name: Sara García
+        role: Ingeniera de IA
+        company: Google
+        rating: 5
+        comment: Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones de IA del mundo real.
+        outcome: +55% aumento salarial
+      - name: Miguel Chen
+        role: Ingeniero ML
+        company: Meta
+        rating: 5
+        comment: La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el apoyo profesional fueron invaluables.
+        outcome: Contratado en 4 meses
+      - name: Elena Rodríguez
+        role: Ingeniera de IA
+        company: Amazon
+        rating: 5
+        comment: Excelente contenido y gran apoyo de los mentores. Los proyectos fueron desafiantes pero gratificantes, y ahora trabajo en IA de vanguardia.
+        outcome: +100% aumento salarial
+      - name: David Kim
+        role: Desarrollador de IA
+        company: Startup
+        rating: 5
+        comment: De cero conocimiento en IA a conseguir mi trabajo soñado en 5 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia.
+        outcome: Cambio de carrera exitoso
+      - name: Jéssica Martínez
+        role: Ingeniera de IA
+        company: Spotify
+        rating: 4
+        comment: Excelente curso con proyectos prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar.
+        outcome: +45% aumento salarial
+      - name: Roberto Thompson
+        role: Ingeniero ML
+        company: Tech Startup
+        rating: 5
+        comment: La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional.
+        outcome: Primer trabajo en tech
+  - type: faq
+    version: "1.0"
+    title: FAQ
+    items:
+      - question: ¿Qué requisitos previos necesito para Ingeniería de IA?
+        answer: Se recomienda conocimiento básico de programación pero no es obligatorio. Nuestro programa comienza con conceptos fundamentales y avanza hasta ingeniería de IA avanzada. Si eres nuevo en programación, tenemos materiales preparatorios para ayudarte a comenzar.
+      - question: ¿Cuánto tiempo dura el programa?
+        answer: El programa de Ingeniería de IA está diseñado para completarse en 20 semanas. Sin embargo, como programa a tu ritmo, puedes acelerar o tomar más tiempo según tu horario y ritmo de aprendizaje.
+      - question: ¿Qué tipo de proyectos construiré?
+        answer: Construirás aplicaciones de IA listas para producción incluyendo sistemas RAG, orquestadores multi-agente, aplicaciones de IA en tiempo real y un proyecto final completo. Todos los proyectos usan tecnologías y patrones del mundo real utilizados por las principales empresas.
+      - question: ¿Necesito hardware costoso para desarrollo de IA?
+        answer: ¡No! Todos los ejercicios y proyectos se ejecutan en la nube. Proporcionamos acceso a entornos de desarrollo en la nube y APIs de IA, así que puedes aprender solo con una laptop y conexión a internet.
+      - question: ¿El certificado es reconocido por empleadores?
+        answer: ¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación.
+    cta:
+      text: ¿Aún tienes preguntas?
+      button_text: Habla con un Asesor
+      button_url: /contacto
+  - type: cta_banner
+    version: "1.0"
+    title: ¿Listo para Convertirte en Ingeniero de IA?
+    subtitle: Únete a miles de graduados que han transformado sus carreras con 4Geeks.
+    buttons:
+      - text: Comienza Ahora
+        url: /registro
+        variant: secondary
+      - text: Habla con un Asesor
+        url: /contacto
+        variant: outline
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. Todos los derechos reservados.

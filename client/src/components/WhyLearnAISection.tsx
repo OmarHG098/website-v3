@@ -9,28 +9,28 @@ interface WhyLearnAISectionProps {
 export function WhyLearnAISection({ data }: WhyLearnAISectionProps) {
   return (
     <section 
-      className="py-16 bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+      className="py-section bg-gradient-to-r from-muted/50 to-background dark:from-muted/30 dark:to-background"
       data-testid="section-why-learn-ai"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 
-              className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+              className="text-h2 mb-4 text-foreground"
               data-testid="text-why-learn-title"
             >
               {data.title}
             </h2>
             
             <h3 
-              className="text-xl font-bold mb-6 text-foreground"
+              className="text-body font-bold mb-6 text-foreground"
               data-testid="text-why-learn-subtitle"
             >
               {data.subtitle}
             </h3>
             
             <p 
-              className="text-muted-foreground mb-8 leading-relaxed"
+              className="text-body text-muted-foreground mb-8 leading-relaxed"
               data-testid="text-why-learn-description"
             >
               {data.description}

@@ -44,12 +44,12 @@ const getBulletIcon = (iconName: string, colorClass: string) => {
 export default function VerticalTimeline({ data }: VerticalTimelineProps) {
   return (
     <section 
-      className={`py-16 md:py-20 ${data.background || "bg-muted/30"}`}
+      className={`py-section ${data.background || "bg-muted/30"}`}
       data-testid="section-vertical-timeline"
     >
       <div className="max-w-4xl mx-auto px-4">
         <h2 
-          className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
+          className="text-h2 mb-4 text-foreground text-center"
           data-testid="text-vertical-timeline-title"
         >
           {data.title}
@@ -57,7 +57,7 @@ export default function VerticalTimeline({ data }: VerticalTimelineProps) {
         
         {data.description && (
           <div className="text-center mb-12">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-body text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
             {data.description_link && (
@@ -65,7 +65,7 @@ export default function VerticalTimeline({ data }: VerticalTimelineProps) {
                 href={data.description_link.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary hover:underline text-lg mt-2 inline-block"
+                className="text-primary hover:underline text-body mt-2 inline-block"
                 data-testid="link-vertical-timeline-description"
               >
                 {data.description_link.text}

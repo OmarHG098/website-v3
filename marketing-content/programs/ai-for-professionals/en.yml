@@ -18,7 +18,7 @@ sections:
       trusted_text: Trusted by professionals worldwide
     cta_buttons:
       - text: Apply Now
-        url: /apply
+        url: /en/apply
         variant: primary
         icon: Rocket
       - text: Download Syllabus
@@ -125,7 +125,7 @@ sections:
       description: Rigobot is our custom-designed AI tutor for self-learners, ready to address any questions and equipped with automated feedback, allowing for an interactive learning experience anytime!
       cta:
         text: Start learning now!
-        url: /apply
+        url: /en/apply
         variant: primary
   - type: certificate
     version: "1.0"
@@ -154,7 +154,7 @@ sections:
     description: Workers with AI skills earn an average 56% wage premium globally. AI use at work has nearly doubled in two years, rising from 21% to 40% of U.S. employees. Join the professionals who aren't just keeping up, but taking the lead with AI. Whether you're in marketing, real estate, creative work, or any other field—AI skills will set you apart.
     cta:
       text: Join now!
-      url: /apply
+      url: /en/apply
       variant: primary
   - type: pricing
     title: Get access to all of our learning database, courses, and services
@@ -313,7 +313,7 @@ sections:
     subtitle: Join thousands of professionals who have transformed their careers with 4Geeks.
     buttons:
       - text: Start Learning Now
-        url: /apply
+        url: /en/apply
         variant: secondary
       - text: Talk to an Advisor
         url: /contact

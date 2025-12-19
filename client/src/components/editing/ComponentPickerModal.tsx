@@ -117,6 +117,8 @@ const variantLabels: Record<string, string> = {
   highlight: "Highlight",
   detailed: "Detailed",
   default: "Default",
+  subscription: "Subscription",
+  product: "Product",
 };
 
 function slugify(text: string): string {

@@ -57,9 +57,61 @@ import {
   loadCommonData,
 } from "./utils/contentLoader";
 import { getValidationService } from "../scripts/validation/service";
+import { z } from "zod";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
+
+// Schema for career-programs listing page (custom page type)
+const careerProgramsListingSchema = z.object({
+  slug: z.string(),
+  template: z.string(),
+  title: z.string(),
+  meta: z.object({
+    page_title: z.string(),
+    description: z.string(),
+    redirects: z.array(z.string()).optional(),
+    robots: z.string().optional(),
+    priority: z.number().optional(),
+    change_frequency: z.string().optional(),
+  }),
+  page_content: z.object({
+    hero_title: z.string(),
+    hero_subtitle: z.string(),
+    search_placeholder: z.string(),
+    difficulty_label: z.string(),
+    difficulty_all: z.string(),
+    difficulty_beginner: z.string(),
+    difficulty_intermediate: z.string(),
+    difficulty_advanced: z.string(),
+    no_results: z.string(),
+  }),
+  courses: z.array(z.object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string(),
+    duration: z.string(),
+    difficulty: z.string(),
+    lessons: z.number(),
+    link: z.string().optional(),
+  })),
+});
+
+function loadCareerProgramsListing(locale: string) {
+  const result = loadContent({
+    contentType: "pages",
+    slug: "career-programs",
+    schema: careerProgramsListingSchema,
+    localeOrVariant: locale,
+  });
+  
+  if (!result.success) {
+    console.error(result.error);
+    return null;
+  }
+  
+  return result.data;
+}
 
 function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
   const result = loadContent({
@@ -525,6 +577,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const locale = (req.query.locale as string) || "en";
     const pages = listTemplatePages(locale);
     res.json(pages);
+  });
+
+  // Special handler for career-programs listing page (custom page type)
+  app.get("/api/pages/career-programs", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    const page = loadCareerProgramsListing(locale);
+    
+    if (!page) {
+      res.status(404).json({ error: "Career programs listing page not found" });
+      return;
+    }
+    
+    res.json(page);
+  });
+
+  // Special handler for apply page (includes programs and locations from _common.yml)
+  app.get("/api/pages/apply", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    
+    const page = loadTemplatePage("apply", locale);
+    
+    if (!page) {
+      res.status(404).json({ error: "Apply page not found" });
+      return;
+    }
+    
+    // Load common data for programs and locations
+    const commonData = loadCommonData("pages", "apply");
+    
+    res.json({
+      ...page,
+      programs: commonData?.programs || [],
+      locations: commonData?.locations || [],
+    });
+  });
+
+  // Apply form submission endpoint
+  app.post("/api/apply", (req, res) => {
+    try {
+      const { program, location, firstName, lastName, email, phone, consentMarketing, consentSms, locale } = req.body;
+      
+      // Validate required fields
+      if (!program || !location || !firstName || !lastName || !email || !phone) {
+        res.status(400).json({ error: "Missing required fields" });
+        return;
+      }
+      
+      // Log the application (in production, this would send to a CRM or database)
+      console.log("New application received:", {
+        program,
+        location,
+        firstName,
+        lastName,
+        email,
+        phone,
+        consentMarketing,
+        consentSms,
+        locale,
+        timestamp: new Date().toISOString(),
+      });
+      
+      // In the future, this could:
+      // 1. Send to Breathecode API
+      // 2. Add to a CRM
+      // 3. Send confirmation email
+      // 4. Store in database
+      
+      res.json({ success: true, message: "Application received" });
+    } catch (error) {
+      console.error("Error processing application:", error);
+      res.status(500).json({ error: "Failed to process application" });
+    }
   });
 
   app.get("/api/pages/:slug", (req, res) => {

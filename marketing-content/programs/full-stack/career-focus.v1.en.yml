@@ -20,7 +20,7 @@ sections:
       trusted_text: "2,500+ career changers hired"
     cta_buttons:
       - text: "Start Your Career Change"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"
         icon: "Rocket"
       - text: "See Success Stories"
@@ -105,5 +105,5 @@ sections:
       description: "Join thousands of career changers who went from complete beginners to employed developers. Your new career starts here."
       cta:
         text: "Start Your Career Change"
-        url: "/apply"
+        url: "/en/apply"
         variant: "primary"

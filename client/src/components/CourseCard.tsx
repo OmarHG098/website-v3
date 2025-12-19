@@ -33,7 +33,7 @@ function CourseCard({
 
   return (
     <Card 
-      className="overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer hover-elevate"
+      className="overflow-hidden transition-all duration-brand ease-brand hover:shadow-card cursor-pointer hover-elevate"
       onClick={onClick}
       data-testid={`card-course-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
@@ -41,7 +41,7 @@ function CourseCard({
         <img 
           src={thumbnail} 
           alt={title} 
-          className="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-brand ease-brand hover:scale-[1.02]"
         />
       </div>
       

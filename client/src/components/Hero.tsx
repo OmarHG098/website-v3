@@ -14,10 +14,10 @@ export default function Hero() {
       
       <div className="container relative mx-auto flex h-full max-w-6xl items-center px-4">
         <div className="max-w-2xl text-white">
-          <h1 className="text-5xl font-bold leading-tight tracking-tight">
+          <h1 className="text-h1 tracking-tight">
             Master AI Skills for the Future
           </h1>
-          <p className="mt-4 text-lg text-white/90">
+          <p className="mt-4 text-body text-white/90">
             Transform your career with personalized learning paths designed by industry experts. 
             Start your journey today.
           </p>

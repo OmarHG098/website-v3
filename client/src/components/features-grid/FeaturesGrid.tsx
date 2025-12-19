@@ -1,7 +1,7 @@
-import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridCardHeaderSection } from "@shared/schema";
+import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridSpotlightSection } from "@shared/schema";
 import { FeaturesGridHighlight } from "./FeaturesGridHighlight";
 import { FeaturesGridDetailed } from "./FeaturesGridDetailed";
-import { FeaturesGridCardHeader } from "./FeaturesGridCardHeader";
+import { FeaturesGridSpotlight } from "./FeaturesGridSpotlight";
 
 interface FeaturesGridProps {
   data: FeaturesGridSection;
@@ -13,13 +13,13 @@ export function FeaturesGrid({ data }: FeaturesGridProps) {
   switch (variant) {
     case "detailed":
       return <FeaturesGridDetailed data={data as FeaturesGridDetailedSection} />;
-    case "cardHeader":
-      return <FeaturesGridCardHeader data={data as FeaturesGridCardHeaderSection} />;
+    case "spotlight":
+      return <FeaturesGridSpotlight data={data as FeaturesGridSpotlightSection} />;
     case "highlight":
     default:
       return <FeaturesGridHighlight data={data as FeaturesGridHighlightSection} />;
   }
 }
 
-export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridCardHeader };
+export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridSpotlight };
 export type { FeaturesGridProps };

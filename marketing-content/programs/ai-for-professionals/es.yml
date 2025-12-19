@@ -22,7 +22,7 @@ sections:
       trusted_text: "Confiado por profesionales en todo el mundo"
     cta_buttons:
       - text: "Aplicar Ahora"
-        url: "/apply"
+        url: "/es/aplica"
         variant: "primary"
         icon: "Rocket"
       - text: "Descargar Temario"
@@ -107,7 +107,7 @@ sections:
       description: "Rigobot es nuestro tutor de IA diseñado especialmente para autodidactas, listo para abordar cualquier pregunta y equipado con retroalimentación automatizada, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
       cta:
         text: "¡Empieza a aprender ahora!"
-        url: "/apply"
+        url: "/es/aplica"
         variant: "primary"
 
   - type: certificate
@@ -138,7 +138,7 @@ sections:
     description: "Los trabajadores con habilidades de IA ganan un promedio de 56% más a nivel global. El uso de IA en el trabajo casi se ha duplicado en dos años, pasando del 21% al 40% de empleados en EE.UU. Únete a los profesionales que no solo se mantienen al día, sino que lideran con IA. Ya sea que estés en marketing, bienes raíces, trabajo creativo o cualquier otro campo—las habilidades de IA te diferenciarán."
     cta:
       text: "¡Únete ahora!"
-      url: "/apply"
+      url: "/es/aplica"
       variant: "primary"
 
   - type: pricing
@@ -302,7 +302,7 @@ sections:
     subtitle: "Únete a miles de profesionales que han transformado sus carreras con 4Geeks."
     buttons:
       - text: "Empieza a Aprender Ahora"
-        url: "/apply"
+        url: "/es/aplica"
         variant: "secondary"
       - text: "Habla con un Asesor"
         url: "/contact"

@@ -15,18 +15,27 @@ const languages = [
 ];
 
 const routeMappings = [
-  { en: '/en/career-programs/', es: '/es/programas-de-carrera/' },
+  { en: '/en/career-programs', es: '/es/programas-de-carrera' },
+  { en: '/en/apply', es: '/es/aplica' },
 ];
 
 function getLocalizedPath(currentPath: string, targetLang: string): string | null {
   for (const mapping of routeMappings) {
-    if (targetLang === 'es' && currentPath.startsWith(mapping.en)) {
-      const slug = currentPath.slice(mapping.en.length);
-      return mapping.es + slug;
+    // Exact match for listing pages
+    if (targetLang === 'es' && currentPath === mapping.en) {
+      return mapping.es;
     }
-    if (targetLang === 'en' && currentPath.startsWith(mapping.es)) {
-      const slug = currentPath.slice(mapping.es.length);
-      return mapping.en + slug;
+    if (targetLang === 'en' && currentPath === mapping.es) {
+      return mapping.en;
+    }
+    // Match with trailing slug (detail pages)
+    if (targetLang === 'es' && currentPath.startsWith(mapping.en + '/')) {
+      const slug = currentPath.slice(mapping.en.length + 1);
+      return mapping.es + '/' + slug;
+    }
+    if (targetLang === 'en' && currentPath.startsWith(mapping.es + '/')) {
+      const slug = currentPath.slice(mapping.es.length + 1);
+      return mapping.en + '/' + slug;
     }
   }
   return null;

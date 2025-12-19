@@ -26,6 +26,8 @@ import { HorizontalBars } from "@/components/HorizontalBars";
 import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
+import { AwardBadges } from "@/components/AwardBadges";
+import { ApplyFormSection } from "@/components/ApplyFormSection";
 import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
 import { TwoColumnAccordionCard } from "@/components/TwoColumnAccordionCard";
@@ -129,6 +131,27 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <BulletTabsShowcase key={index} data={section as Parameters<typeof BulletTabsShowcase>[0]["data"]} />;
     case "graduates_stats":
       return <GraduatesStats key={index} data={section as Parameters<typeof GraduatesStats>[0]["data"]} />;
+    case "award_badges": {
+      const badgeSection = section as unknown as { items?: unknown[]; variant?: "simple" | "detailed"; showBorder?: boolean };
+      if (!Array.isArray(badgeSection.items) || badgeSection.items.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("award_badges section missing required 'items' array");
+        }
+        return null;
+      }
+      const validItems = badgeSection.items.filter((item): item is Parameters<typeof AwardBadges>[0]["items"][number] => 
+        typeof item === "object" && item !== null && "id" in item && "alt" in item
+      );
+      if (validItems.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("award_badges section has no valid items (each item requires 'id' and 'alt')");
+        }
+        return null;
+      }
+      return <AwardBadges key={index} items={validItems} variant={badgeSection.variant} showBorder={badgeSection.showBorder} />;
+    }
+    case "apply_form":
+      return <ApplyFormSection key={index} data={section as Parameters<typeof ApplyFormSection>[0]["data"]} />;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

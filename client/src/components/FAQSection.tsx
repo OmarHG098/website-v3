@@ -7,26 +7,33 @@ import {
 import { Button } from "@/components/ui/button";
 import { IconMessageCircle } from "@tabler/icons-react";
 import type { FAQSection as FAQSectionType } from "@shared/schema";
+import { useLocation } from "@/contexts/SessionContext";
 
 interface FAQSectionProps {
   data: FAQSectionType;
 }
 
+const CALENDLY_URL = "https://calendly.com/epilowsky-4geeksacademy/30min?month=2025-12";
+
 export function FAQSection({ data }: FAQSectionProps) {
+  const location = useLocation();
+  
+  const isUsOrCanada = location?.country_code === 'US' || location?.country_code === 'CA';
+  
   return (
     <section 
-      className="py-16 bg-[#e8f4fc] dark:bg-muted/30"
+      className="py-section bg-[#e8f4fc] dark:bg-muted/30"
       data-testid="section-faq"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground"
+          className="text-h2 mb-8 text-center text-foreground"
           data-testid="text-faq-title"
         >
           {data.title}
         </h2>
         
-        <div className="bg-background rounded-lg border overflow-hidden">
+        <div className="bg-background rounded-card border overflow-hidden">
           <Accordion type="single" collapsible>
             {(data.items || []).map((item, index) => (
               <AccordionItem 
@@ -52,7 +59,7 @@ export function FAQSection({ data }: FAQSectionProps) {
           </Accordion>
         </div>
 
-        {data.cta && (
+        {data.cta && isUsOrCanada && (
           <div 
             className="mt-12 text-center p-8 rounded-lg bg-muted/30 border"
             data-testid="faq-cta"
@@ -64,7 +71,9 @@ export function FAQSection({ data }: FAQSectionProps) {
             </div>
             <p className="text-lg text-foreground mb-4">{data.cta.text}</p>
             <Button asChild data-testid="button-faq-cta">
-              <a href={data.cta.button_url}>{data.cta.button_text}</a>
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                {data.cta.button_text}
+              </a>
             </Button>
           </div>
         )}

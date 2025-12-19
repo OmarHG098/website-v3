@@ -30,13 +30,13 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
 
   return (
     <section
-      className={`py-8 ${data.background || "bg-background"}`}
+      className={`py-section ${data.background || "bg-background"}`}
       data-testid="section-comparison-table"
     >
       <div className="max-w-6xl mx-auto px-4">
         {data.title && (
           <h2
-            className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground"
+            className="text-h2 text-center mb-4 text-foreground"
             data-testid="text-comparison-title"
           >
             {data.title}
@@ -44,7 +44,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
         {data.subtitle && (
           <p
-            className="text-lg text-muted-foreground text-center mb-12 max-w-3xl mx-auto"
+            className="text-body text-muted-foreground text-center mb-12 max-w-3xl mx-auto"
             data-testid="text-comparison-subtitle"
           >
             {data.subtitle}
@@ -58,15 +58,15 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               const feature = colIndex === 0;
               const comparator = colIndex === data.columns.length - 1;
               const borderClasses = feature
-                ? "border-t border-l border-border rounded-t-lg"
+                ? "border-t border-l border-border rounded-t-card"
                 : comparator
-                ? "border-t border-r border-border rounded-t-lg"
-                : "border-t border-border rounded-t-lg";
+                ? "border-t border-r border-border rounded-t-card"
+                : "border-t border-border rounded-t-card";
               
               return (
                 <div
                   key={colIndex}
-                  className={`flex-1 p-4 text-left font-semibold text-lg ${borderClasses} ${
+                  className={`flex-1 p-4 text-left font-semibold text-body ${borderClasses} ${
                     column.highlight
                       ? "bg-primary text-primary-foreground"
                       : "bg-primary/20 text-foreground"
@@ -79,7 +79,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             })}
           </div>
           {/* Table body with card background and border */}
-          <div className="bg-card rounded-b-lg border border-border border-t-0 overflow-hidden">
+          <div className="bg-card rounded-b-card border border-border border-t-0 overflow-hidden">
             <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
               <colgroup>
                 {data.columns.map((_, colIndex) => (
@@ -127,7 +127,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <AccordionItem
                 key={rowIndex}
                 value={`row-${rowIndex}`}
-                className="bg-card rounded-lg shadow-sm px-4 [&]:border-0"
+                className="bg-card rounded-card shadow-card px-4 [&]:border-0"
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
                 <AccordionTrigger className="hover:no-underline py-3">
@@ -138,7 +138,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 <AccordionContent>
                   <div className="flex items-stretch gap-2">
                     {/* 4Geeks Academy side - highlighted */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-3 border-l-[3px] border-primary">
+                    <div className="flex-1 bg-primary/10 rounded-card p-3 border-l-[3px] border-primary">
                       <p className="text-xs text-foreground/70 mb-1 font-semibold">
                         {data.columns[1]?.name || "4Geeks Academy"}
                       </p>
@@ -151,7 +151,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       <span className="text-foreground/50 font-semibold text-sm">vs</span>
                     </div>
                     {/* Competitors side */}
-                    <div className="flex-1 bg-primary/10 rounded-lg p-3">
+                    <div className="flex-1 bg-primary/10 rounded-card p-3">
                       <p className="text-xs text-foreground/70 mb-1 font-semibold">
                         {(data.columns[2]?.name || "Industry Average / Competitors").replace(" / Competitors", "")}
                       </p>

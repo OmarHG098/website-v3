@@ -1,7 +1,9 @@
 import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
+import { z } from "zod";
 import type { EditOperation } from "@shared/schema";
+import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -153,6 +155,69 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     // Apply all operations
     for (const operation of operations) {
       applyOperation(content, operation);
+    }
+    
+    // Validate content against the appropriate full schema
+    const validationErrors: string[] = [];
+    
+    // Get the appropriate schema based on content type
+    let schema: z.ZodTypeAny;
+    switch (contentType) {
+      case "landing":
+        schema = landingPageSchema;
+        break;
+      case "program":
+        schema = careerProgramSchema;
+        break;
+      case "page":
+        schema = templatePageSchema;
+        break;
+      case "location":
+        schema = locationPageSchema;
+        break;
+      default:
+        schema = landingPageSchema; // fallback
+    }
+    
+    const result = schema.safeParse(content);
+    
+    if (!result.success) {
+      // Parse the error to provide user-friendly messages
+      for (const issue of result.error.issues.slice(0, 5)) {
+        const pathStr = issue.path.join(".");
+        
+        // Check if this is a section validation error (union error)
+        if (issue.code === "invalid_union" && pathStr.startsWith("sections.")) {
+          const sectionIndex = parseInt(issue.path[1] as string, 10);
+          const sections = content.sections as Record<string, unknown>[] | undefined;
+          const sectionType = sections?.[sectionIndex]?.type || "unknown";
+          
+          // Check union errors for type mismatches
+          const unionErrors = (issue as { unionErrors?: z.ZodError[] }).unionErrors;
+          if (unionErrors && unionErrors.length > 0) {
+            // If all union branches fail on 'type', it's an unknown section type
+            const allTypeErrors = unionErrors.every(ue => 
+              ue.issues.some(i => i.path[0] === "type" && (i.code === "invalid_literal" || i.code === "invalid_enum_value"))
+            );
+            if (allTypeErrors) {
+              validationErrors.push(`Section ${sectionIndex + 1}: Unknown section type "${sectionType}". Check spelling or use a valid section type.`);
+              continue;
+            }
+          }
+          validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}): Invalid structure`);
+        } else if (issue.code === "invalid_type" && issue.message === "Required") {
+          validationErrors.push(`Missing required field: ${pathStr}`);
+        } else {
+          validationErrors.push(`${pathStr}: ${issue.message}`);
+        }
+      }
+    }
+    
+    if (validationErrors.length > 0) {
+      return { 
+        success: false, 
+        error: `Cannot save - validation failed:\n${validationErrors.join("\n")}` 
+      };
     }
     
     // Write back to file

@@ -104,16 +104,16 @@ export const heroProductShowcaseSchema = z.object({
   image: z.object({
     src: z.string(),
     alt: z.string(),
-  }).optional(),
+  }).nullish(),
   // NOTE: Background image is only displayed on screens >= 1280px width.
   // On smaller screens, a gradient fallback is shown instead for better mobile experience.
   background_image: z.object({
     src: z.string(),
     alt: z.string().optional(),
-  }).optional(),
-  form: leadFormDataSchema.optional(),
-  cta_button: ctaButtonSchema.optional(),
-  trust_bar: productShowcaseTrustBarSchema.optional(),
+  }).nullish(),
+  form: leadFormDataSchema.nullish(),
+  cta_button: ctaButtonSchema.nullish(),
+  trust_bar: productShowcaseTrustBarSchema.nullish(),
 }).strict();
 
 export const heroSimpleTwoColumnSchema = z.object({

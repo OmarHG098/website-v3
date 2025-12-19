@@ -22,7 +22,7 @@ export const aiLearningSectionSchema = z.object({
   highlight: z.object({
     title: z.string(),
     description: z.string(),
-    bullets: z.array(z.object({ text: z.string() })).optional(),
+    bullets: z.array(z.object({ text: z.string(), icon: z.string().optional() })).optional(),
     cta: ctaButtonSchema.optional(),
   }).optional(),
 });

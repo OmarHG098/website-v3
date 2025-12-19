@@ -74,7 +74,7 @@ function DetailedCard({
       </div>
       
       {collapsible && (
-        <div className={`md:hidden overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
+        <div className={`md:hidden overflow-hidden transition-all duration-brand ease-brand ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
           <p className="text-muted-foreground mb-4">
             {item.description}
           </p>
@@ -125,7 +125,7 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
 
   return (
     <section 
-      className={`py-14 ${data.background || ''}`}
+      className={`py-section ${data.background || ''}`}
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -133,14 +133,14 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
           <div className="text-center mb-6">
             {data.title && (
               <h2 
-                className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+                className="text-h2 mb-4 text-foreground"
                 data-testid="text-features-grid-title"
               >
                 {data.title}
               </h2>
             )}
             {data.subtitle && (
-              <p className="text-lg text-muted-foreground">
+              <p className="text-body text-muted-foreground">
                 {data.subtitle}
               </p>
             )}

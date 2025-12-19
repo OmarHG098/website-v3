@@ -95,12 +95,12 @@ function NumberedStepsDefault({ data }: NumberedStepsProps) {
 
   return (
     <section 
-      className={`pt-4 pb-10 ${data.background || "bg-muted/30"}`}
+      className={`py-section ${data.background || "bg-muted/30"}`}
       data-testid="section-numbered-steps"
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center"
+          className="text-h2 mb-4 text-foreground text-center"
           data-testid="text-numbered-steps-title"
         >
           {data.title}
@@ -108,7 +108,7 @@ function NumberedStepsDefault({ data }: NumberedStepsProps) {
         
         {data.description && (
           <div className="text-center mb-10">
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-body text-muted-foreground max-w-3xl mx-auto">
               {data.description}
             </p>
             {data.description_link && (
@@ -116,7 +116,7 @@ function NumberedStepsDefault({ data }: NumberedStepsProps) {
                 href={data.description_link.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary hover:underline text-lg mt-2 inline-block"
+                className="text-primary hover:underline text-body mt-2 inline-block"
                 data-testid="link-numbered-steps-description"
               >
                 {data.description_link.text}
@@ -257,7 +257,7 @@ function NumberedStepsDefault({ data }: NumberedStepsProps) {
                 <div className="flex items-center justify-center w-full mb-3 relative">
                   <div className="w-20 h-20 rounded-full border-2 border-primary bg-background flex items-center justify-center flex-shrink-0 relative z-10">
                     <div className="absolute inset-0 bg-primary/10 rounded-full" />
-                    <span className="text-3xl font-bold text-primary relative z-10">
+                    <span className="text-h2 text-primary relative z-10">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>

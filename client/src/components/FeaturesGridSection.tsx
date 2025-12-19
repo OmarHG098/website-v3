@@ -17,20 +17,20 @@ function getIcon(iconName: string) {
 export function FeaturesGridSection({ data }: FeaturesGridSectionProps) {
   return (
     <section 
-      className="py-16 px-4 bg-muted/30"
+      className="py-section px-4 bg-muted/30"
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 
-            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+            className="text-foreground mb-4"
             data-testid="text-features-grid-title"
           >
             {data.title}
           </h2>
           {data.subtitle && (
             <p 
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-body text-muted-foreground max-w-2xl mx-auto" style={{ fontSize: '16px' }}
               data-testid="text-features-grid-subtitle"
             >
               {data.subtitle}
@@ -40,15 +40,15 @@ export function FeaturesGridSection({ data }: FeaturesGridSectionProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {data.items.map((item, index) => {
-            const IconComponent = getIcon(item.icon);
+            const IconComponent = getIcon(item.icon || "Star");
             return (
               <Card 
                 key={index}
-                className="border-0 shadow-sm hover-elevate"
+                className="border-0 shadow-card hover-elevate transition-all duration-brand ease-brand"
                 data-testid={`card-feature-${index}`}
               >
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <CardContent className="p-card-padding text-center">
+                  <div className="w-12 h-12 rounded-card bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <IconComponent className="w-6 h-6 text-primary" />
                   </div>
                   <h3 

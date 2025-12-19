@@ -10,6 +10,7 @@ export const ctaButtonSchema = z.object({
   url: z.string(),
   variant: z.enum(["primary", "secondary", "outline"]),
   icon: z.string().optional(),
+  us_only: z.boolean().optional(),
 });
 
 export type CtaButton = z.infer<typeof ctaButtonSchema>;
@@ -73,6 +74,10 @@ export const leadFormDataSchema = z.object({
     email: z.boolean().optional(),
     sms: z.boolean().optional(),
     whatsapp: z.boolean().optional(),
+    marketing: z.boolean().optional(),
+    marketing_text: z.string().optional(),
+    sms_text: z.string().optional(),
+    sms_usa_only: z.boolean().optional(),
   }).optional(),
   show_terms: z.boolean().optional(),
   className: z.string().optional(),
@@ -93,6 +98,8 @@ export type CardItem = z.infer<typeof cardItemSchema>;
 export const statItemSchema = z.object({
   value: z.string(),
   label: z.string(),
+  description: z.string().optional(),
+  benefits: z.array(z.object({ text: z.string() })).optional(),
 });
 
 export type StatItem = z.infer<typeof statItemSchema>;

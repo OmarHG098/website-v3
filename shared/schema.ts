@@ -204,8 +204,20 @@ export type {
 // ============================================
 export {
   syllabusModuleSchema,
+  focusAreaSchema,
+  moduleCardSchema,
+  techLogoSchema,
+  syllabusDefaultSchema,
+  syllabusLandingSchema,
+  syllabusProgramModulesSchema,
   syllabusSectionSchema,
   type SyllabusModule,
+  type FocusArea,
+  type ModuleCard,
+  type TechLogo,
+  type SyllabusDefault,
+  type SyllabusLanding,
+  type SyllabusProgramModules,
   type SyllabusSection,
 } from "../marketing-content/component-registry/syllabus/v1.0/schema";
 
@@ -226,11 +238,9 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
-  featuresGridCardHeaderCardSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
-  type FeaturesGridCardHeaderCard,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
@@ -238,7 +248,8 @@ export {
 export type {
   FeaturesGridHighlightSection,
   FeaturesGridDetailedSection,
-  FeaturesGridCardHeaderSection,
+  FeaturesGridSpotlightSection,
+  SpotlightConfig,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
 // ============================================
@@ -326,9 +337,11 @@ export type ImageEntry = z.infer<typeof imageEntrySchema>;
 export type ImageRegistry = z.infer<typeof imageRegistrySchema>;
 export type ImageRef = z.infer<typeof imageRefSchema>;
 
+
 // ============================================
 // Programs List Section (not in component registry yet)
 // ============================================
+
 export const programsListSectionSchema = z.object({
   type: z.literal("programs_list"),
   version: z.string().optional(),
@@ -372,6 +385,7 @@ export const statsSectionSchema = z.object({
 });
 
 export type StatsSection = z.infer<typeof statsSectionSchema>;
+
 
 // ============================================
 // Horizontal Bars Section (chart component)
@@ -594,6 +608,9 @@ import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type B
 export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
 import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
 export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage };
+import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
+import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
+
 
 export const sectionSchema = z.union([
   heroSchema,
@@ -619,10 +636,13 @@ export const sectionSchema = z.union([
   aboutSectionSchema,
   comparisonTableSectionSchema,
   statsSectionSchema,
+
   horizontalBarsSectionSchema,
   verticalBarsCardsSectionSchema,
   pieChartsSectionSchema,
   awardsRowSectionSchema,
+  applyFormSectionSchema,
+  awardBadgesSectionSchema,
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   twoColumnAccordionCardSectionSchema,
@@ -684,8 +704,8 @@ export const landingPageMetaSchema = z.object({
 });
 
 export const landingPageSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
+  slug: z.string().optional(),
+  title: z.string().optional(),
   meta: landingPageMetaSchema,
   schema: schemaRefSchema.optional(),
   sections: z.array(sectionSchema),

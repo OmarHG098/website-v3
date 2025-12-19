@@ -1,0 +1,50 @@
+meta:
+  page_title: "Aplica Ahora - Comienza Tu Carrera Tech | 4Geeks Academy"
+  description: "Aplica a 4Geeks Academy y comienza tu camino para convertirte en un profesional de tecnología. Completa nuestro sencillo formulario de aplicación y nuestro equipo de admisiones te guiará en los siguientes pasos."
+  robots: "index, follow"
+
+sections:
+  - type: apply_form
+    version: "1.0"
+    hero:
+      title: "Tu Futuro en Tech Comienza Aquí"
+      subtitle: "Estás a un paso de tu nueva carrera en tecnología — ¡felicidades! Completa el formulario a continuación, y nuestro equipo de admisiones te guiará en los siguientes pasos."
+      note: "(Y no te preocupes — aún no te estás comprometiendo a nada, solo estamos iniciando la conversación.)"
+    form:
+      program_label: "Por favor selecciona un programa"
+      program_placeholder: "Selecciona un programa"
+      location_label: "Selecciona tu ubicación preferida"
+      location_placeholder: "Selecciona una ubicación"
+      first_name_label: "Nombre"
+      first_name_placeholder: "Ingresa tu nombre"
+      last_name_label: "Apellido"
+      last_name_placeholder: "Ingresa tu apellido"
+      email_label: "Correo electrónico"
+      email_placeholder: "Ingresa tu correo electrónico"
+      phone_label: "Número de teléfono"
+      phone_placeholder: "Ingresa tu número de teléfono"
+      consent_marketing: "Acepto recibir información a través de correo electrónico, WhatsApp y/u otros canales sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto, y puedes darte de baja fácilmente en cualquier momento."
+      consent_sms: "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicar tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4–6 mensajes de texto por mes."
+      submit_text: "APLICAR"
+      terms_text: "Al registrarte, aceptas los"
+      terms_link_text: "Términos y Condiciones"
+      terms_link_url: "/terminos-condiciones"
+      privacy_text: "y la"
+      privacy_link_text: "Política de Privacidad"
+      privacy_link_url: "/politica-privacidad"
+    next_steps:
+      title: "¿Qué Pasa Después?"
+      items:
+        - title: "Confirmación instantánea"
+          description: "Te enviaremos el programa de estudios por correo electrónico de inmediato."
+        - title: "Seguimiento personalizado"
+          description: "Nuestro equipo de admisiones te contactará por mensaje y teléfono para programar una llamada rápida."
+        - title: "Pregúntanos lo que quieras"
+          description: "Programas, horarios, financiamiento, apoyo profesional — te guiaremos por tus opciones y compartiremos todos los detalles."
+        - title: "Decide con confianza"
+          description: "Tendrás toda la información que necesitas para elegir el camino correcto para ti. Y estamos aquí para ayudarte."
+      closing: "¡Ahora estás listo para tomar la mejor decisión para tu carrera!"
+
+  - type: footer
+    version: "1.0"
+    copyright_text: "2024 4Geeks. Todos los derechos reservados."

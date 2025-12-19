@@ -28,6 +28,8 @@ import {
 import { useSession, useLocation as useSessionLocation, useUTM } from "@/contexts/SessionContext";
 import { apiRequest } from "@/lib/queryClient";
 import { IconLoader2, IconCheck } from "@tabler/icons-react";
+import { PhoneInput } from "@/components/ui/phone-input";
+import type { Country } from "react-phone-number-input";
 
 interface FieldConfig {
   visible?: boolean;
@@ -65,6 +67,10 @@ export interface LeadFormData {
     email?: boolean;
     sms?: boolean;
     whatsapp?: boolean;
+    marketing?: boolean;
+    marketing_text?: string;
+    sms_text?: string;
+    sms_usa_only?: boolean;
   };
   show_terms?: boolean;
   className?: string;
@@ -99,6 +105,168 @@ interface FormValues {
   consent_email: boolean;
   consent_sms: boolean;
   consent_whatsapp: boolean;
+}
+
+interface ConsentSectionProps {
+  consent: NonNullable<LeadFormData["consent"]>;
+  form: ReturnType<typeof useForm<FormValues>>;
+  locale: string;
+  formOptions?: FormOptions;
+  sessionLocation: { slug: string; region: string; country?: string } | null;
+}
+
+function ConsentSection({ consent, form, locale, formOptions, sessionLocation }: ConsentSectionProps) {
+  const selectedLocationSlug = form.watch("location");
+  
+  const isUSALocation = (): boolean => {
+    if (consent.sms_usa_only === false) return true;
+    
+    if (selectedLocationSlug && formOptions?.locations) {
+      const selectedLoc = formOptions.locations.find(loc => loc.slug === selectedLocationSlug);
+      if (selectedLoc) {
+        return selectedLoc.country === "United States" || 
+               selectedLoc.slug.endsWith("-usa") ||
+               selectedLoc.region === "north-america";
+      }
+    }
+    
+    if (sessionLocation) {
+      if (sessionLocation.country === "United States" || 
+          sessionLocation.country === "US" ||
+          sessionLocation.slug?.endsWith("-usa")) {
+        return true;
+      }
+      if (sessionLocation.region === "north-america") {
+        return true;
+      }
+    }
+    
+    return false;
+  };
+
+  const showSmsConsent = consent.sms && (!consent.sms_usa_only || isUSALocation());
+
+  const defaultMarketingText = locale === "es"
+    ? "Acepto recibir información a través de correo electrónico, WhatsApp y/u otros canales sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+    : "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment.";
+
+  const defaultSmsText = locale === "es"
+    ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+    : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment.";
+
+  return (
+    <div className="space-y-4">
+      {consent.marketing && (
+        <FormField
+          control={form.control}
+          name="consent_email"
+          rules={{ 
+            validate: (value) => value === true || (locale === "es" 
+              ? "Por favor marca esta casilla para continuar" 
+              : "Please check this box to continue")
+          }}
+          render={({ field, fieldState }) => (
+            <FormItem className="flex flex-col space-y-2">
+              <div className="flex flex-row items-start space-x-3">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    data-testid="checkbox-consent-marketing"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <Label className="text-muted-foreground cursor-pointer text-[12px]">
+                    {consent.marketing_text || defaultMarketingText}
+                  </Label>
+                </div>
+              </div>
+              {fieldState.error && (
+                <p className="text-sm text-destructive" data-testid="text-consent-error">
+                  {fieldState.error.message}
+                </p>
+              )}
+            </FormItem>
+          )}
+        />
+      )}
+
+      {!consent.marketing && consent.email && (
+        <FormField
+          control={form.control}
+          name="consent_email"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  data-testid="checkbox-consent-email"
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <Label className="text-sm text-muted-foreground cursor-pointer">
+                  {locale === "es"
+                    ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                    : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                  }
+                </Label>
+              </div>
+            </FormItem>
+          )}
+        />
+      )}
+
+      {showSmsConsent && (
+        <FormField
+          control={form.control}
+          name="consent_sms"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  data-testid="checkbox-consent-sms"
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <Label className="text-sm text-muted-foreground cursor-pointer">
+                  {consent.sms_text || defaultSmsText}
+                </Label>
+              </div>
+            </FormItem>
+          )}
+        />
+      )}
+
+      {!consent.marketing && consent.whatsapp && (
+        <FormField
+          control={form.control}
+          name="consent_whatsapp"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  data-testid="checkbox-consent-whatsapp"
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <Label className="text-sm text-muted-foreground cursor-pointer">
+                  {locale === "es"
+                    ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
+                    : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
+                  }
+                </Label>
+              </div>
+            </FormItem>
+          )}
+        />
+      )}
+    </div>
+  );
 }
 
 export function LeadForm({ data, programContext }: LeadFormProps) {
@@ -204,13 +372,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
       // Map consent fields to backend field names
       const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
-
+      
+      // When marketing consent is enabled, derive both email and whatsapp from consent_email checkbox
+      const effectiveEmailConsent = consent_email || false;
+      const effectiveWhatsappConsent = consent.marketing ? effectiveEmailConsent : (consent_whatsapp || false);
       const payload = {
         ...restValues,
         // Consent fields mapped to backend names
-        consent_email: consent_email || false,
+        consent_email: effectiveEmailConsent,
         sms_consent: consent_sms || false,
-        consent_whatsapp: consent_whatsapp || false,
+        consent_whatsapp: effectiveWhatsappConsent,
         location: values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
         region: values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
         coupon: values.coupon || utm.coupon || resolveDefault("coupon", getFieldConfig("coupon").default),
@@ -253,6 +424,11 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     },
     onError: (error: Error) => {
       console.error("Lead submission error:", error);
+      
+      // Default user-friendly error message
+      const defaultErrorMessage = locale === "es" 
+        ? "Hubo un problema al enviar tu información. Por favor intenta de nuevo." 
+        : "There was a problem submitting your information. Please try again.";
 
       // Try to parse the error message to extract details
       let errorMessage = error.message;
@@ -262,19 +438,33 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[1]);
           if (parsed.details) {
-            // Details may be a JSON string itself
-            try {
-              const details = JSON.parse(parsed.details);
-              errorMessage = details.detail || details.message || parsed.error || error.message;
-            } catch {
-              errorMessage = parsed.details || parsed.error || error.message;
+            // Check if details contains HTML (API error page)
+            if (typeof parsed.details === 'string' && 
+                (parsed.details.includes('<!DOCTYPE') || parsed.details.includes('<html'))) {
+              errorMessage = defaultErrorMessage;
+            } else {
+              // Details may be a JSON string itself
+              try {
+                const details = JSON.parse(parsed.details);
+                errorMessage = details.detail || details.message || parsed.error || defaultErrorMessage;
+              } catch {
+                errorMessage = parsed.details || parsed.error || defaultErrorMessage;
+              }
             }
           } else if (parsed.error) {
             errorMessage = parsed.error;
           }
         }
       } catch {
-        // Keep original message if parsing fails
+        // Keep original message if parsing fails, but check for HTML
+        if (errorMessage.includes('<!DOCTYPE') || errorMessage.includes('<html')) {
+          errorMessage = defaultErrorMessage;
+        }
+      }
+      
+      // Final safety check: if message is too long or contains HTML tags, use default
+      if (errorMessage.length > 200 || /<[^>]+>/.test(errorMessage)) {
+        errorMessage = defaultErrorMessage;
       }
 
       setTurnstileError(errorMessage);
@@ -398,7 +588,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             </div>
             {turnstileEnabled && turnstileSiteKey?.siteKey && (
               <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
-                <div className="bg-card p-6 rounded-lg shadow-lg">
+                <div className="bg-card p-card-padding rounded-card shadow-card">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
                     onSuccess={(token: string) => {
@@ -462,7 +652,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     <div className={data.className} data-testid="lead-form">
       {data.title && (
         <h2 
-          className="text-2xl md:text-3xl font-bold mb-2 text-center text-foreground"
+          className="mb-2 text-center text-foreground"
           data-testid="text-form-title"
         >
           {data.title}
@@ -470,7 +660,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       )}
       {data.subtitle && (
         <p 
-          className="text-muted-foreground text-center mb-6"
+          className="text-body text-muted-foreground text-center mb-6"
           data-testid="text-form-subtitle"
         >
           {data.subtitle}
@@ -479,7 +669,78 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className={isInline ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "space-y-4"}>
+          <div className="space-y-4">
+            {/* First + Last name on same row - NEW ORDER: Name -> Phone -> Email */}
+            {(getFieldConfig("first_name").visible || getFieldConfig("last_name").visible) && (
+              <div className="grid grid-cols-2 gap-3">
+                {getFieldConfig("first_name").visible && (
+                  <FormField
+                    control={form.control}
+                    name="first_name"
+                    rules={{ required: getFieldConfig("first_name").required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                        <FormControl>
+                          <Input 
+                            placeholder={getFieldConfig("first_name").placeholder || (locale === "es" ? "Nombre" : "First name")}
+                            {...field} 
+                            data-testid="input-first-name" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {getFieldConfig("last_name").visible && (
+                  <FormField
+                    control={form.control}
+                    name="last_name"
+                    rules={{ required: getFieldConfig("last_name").required ? (locale === "es" ? "Apellido requerido" : "Last name is required") : false }}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                        <FormControl>
+                          <Input 
+                            placeholder={getFieldConfig("last_name").placeholder || (locale === "es" ? "Apellido" : "Last name")}
+                            {...field} 
+                            data-testid="input-last-name" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Phone with country code */}
+            {getFieldConfig("phone").visible && (
+              <FormField
+                control={form.control}
+                name="phone"
+                rules={{ required: getFieldConfig("phone").required ? (locale === "es" ? "Teléfono requerido" : "Phone is required") : false }}
+                render={({ field }) => (
+                  <FormItem className="space-y-2 mt-[2px] mb-[2px]">
+                    <FormControl>
+                      <PhoneInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        defaultCountry={(session?.geo?.country_code || "US") as Country}
+                        placeholder={getFieldConfig("phone").placeholder || (locale === "es" ? "Teléfono" : "Phone number")}
+                        data-testid="input-phone"
+                      />
+                    </FormControl>
+                    {getFieldConfig("phone").helper_text && (
+                      <p className="text-sm text-muted-foreground">{getFieldConfig("phone").helper_text}</p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            {/* Email */}
             {getFieldConfig("email").visible && (
               <FormField
                 control={form.control}
@@ -492,101 +753,15 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                   }
                 }}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{locale === "es" ? "Correo electrónico" : "Email"} *</FormLabel>
+                  <FormItem className="space-y-2 mt-[2px] mb-[2px]">
                     <FormControl>
                       <Input 
                         type="email" 
-                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "tu@email.com" : "you@email.com")} 
+                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "Correo electrónico" : "Email")} 
                         {...field} 
                         data-testid="input-email"
                       />
                     </FormControl>
-                    {getFieldConfig("email").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("email").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("first_name").visible && (
-              <FormField
-                control={form.control}
-                name="first_name"
-                rules={{ required: getFieldConfig("first_name").required ? (locale === "es" ? "Nombre requerido" : "First name is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Nombre" : "First Name"}
-                      {getFieldConfig("first_name").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder={getFieldConfig("first_name").placeholder}
-                        {...field} 
-                        data-testid="input-first-name" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("first_name").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("first_name").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("last_name").visible && (
-              <FormField
-                control={form.control}
-                name="last_name"
-                rules={{ required: getFieldConfig("last_name").required ? (locale === "es" ? "Apellido requerido" : "Last name is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Apellido" : "Last Name"}
-                      {getFieldConfig("last_name").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder={getFieldConfig("last_name").placeholder}
-                        {...field} 
-                        data-testid="input-last-name" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("last_name").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("last_name").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {getFieldConfig("phone").visible && (
-              <FormField
-                control={form.control}
-                name="phone"
-                rules={{ required: getFieldConfig("phone").required ? (locale === "es" ? "Teléfono requerido" : "Phone is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Teléfono" : "Phone"}
-                      {getFieldConfig("phone").required && " *"}
-                    </FormLabel>
-                    <FormControl>
-                      <Input 
-                        type="tel" 
-                        placeholder={getFieldConfig("phone").placeholder}
-                        {...field} 
-                        data-testid="input-phone" 
-                      />
-                    </FormControl>
-                    {getFieldConfig("phone").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("phone").helper_text}</p>
-                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -752,91 +927,19 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             />
           )}
 
-          {(consent.email || consent.sms || consent.whatsapp) && (
-            <div className="space-y-4">
-              {consent.email && (
-                <FormField
-                  control={form.control}
-                  name="consent_email"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          data-testid="checkbox-consent-email"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
-                          {locale === "es"
-                            ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                            : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
-                          }
-                        </Label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              )}
-
-              {consent.sms && (
-                <FormField
-                  control={form.control}
-                  name="consent_sms"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          data-testid="checkbox-consent-sms"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_sms">
-                          {locale === "es" 
-                            ? "Acepto recibir mensajes SMS/texto sobre talleres, eventos, cursos y otros materiales de marketing. Pueden aplicarse tarifas de mensajes y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir hasta 4-6 mensajes de texto por mes. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                            : "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
-                          }
-                        </Label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              )}
-
-              {consent.whatsapp && (
-                <FormField
-                  control={form.control}
-                  name="consent_whatsapp"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          data-testid="checkbox-consent-whatsapp"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_whatsapp">
-                          {locale === "es"
-                            ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
-                            : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
-                          }
-                        </Label>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              )}
-            </div>
+          {(consent.email || consent.sms || consent.whatsapp || consent.marketing) && (
+            <ConsentSection 
+              consent={consent}
+              form={form}
+              locale={locale}
+              formOptions={formOptions}
+              sessionLocation={sessionLocation}
+            />
           )}
 
           {turnstileEnabled && turnstileSiteKey?.siteKey && (
             <div className={showTurnstileModal ? "fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm" : "hidden"}>
-              <div className="bg-card p-6 rounded-lg shadow-lg">
+              <div className="bg-card p-6 rounded-card shadow-card">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
                   onSuccess={(token: string) => {

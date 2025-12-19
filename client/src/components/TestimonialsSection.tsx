@@ -42,7 +42,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   return (
     <section 
-      className="py-16 bg-background"
+      className="py-section bg-background"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -63,7 +63,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           )}
           
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+            className="text-h2 mb-4 text-foreground"
             data-testid="text-testimonials-title"
           >
             {title}
@@ -71,7 +71,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           
           {subtitle && (
             <p 
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+              className="text-body text-muted-foreground max-w-2xl mx-auto"
               data-testid="text-testimonials-subtitle"
             >
               {subtitle}

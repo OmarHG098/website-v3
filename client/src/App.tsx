@@ -12,6 +12,7 @@ import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import "./i18n";
 
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
+const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
@@ -22,6 +23,9 @@ const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
 const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
 const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
 const TemplatePage = lazy(() => import("@/pages/page"));
+const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
+const TermsPage = lazy(() => import("@/pages/TermsPage"));
+const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
 
 function LoadingFallback() {
   return (
@@ -45,6 +49,8 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/en/career-programs" component={CareerPrograms} />
+        <Route path="/es/programas-de-carrera" component={CareerPrograms} />
         <Route
           path="/en/career-programs/:slug"
           component={CareerProgramDetail}
@@ -79,6 +85,14 @@ function Router() {
           path="/private/:contentType/:contentSlug/experiment/:experimentSlug"
           component={ExperimentEditor}
         />
+        {/* Apply page - dedicated routes */}
+        <Route path="/en/apply" component={ApplyPage} />
+        <Route path="/es/aplica" component={ApplyPage} />
+        {/* Terms and Privacy pages */}
+        <Route path="/terms-conditions" component={TermsPage} />
+        <Route path="/terminos-condiciones" component={TermsPage} />
+        <Route path="/privacy-policy" component={PrivacyPage} />
+        <Route path="/politica-privacidad" component={PrivacyPage} />
         {/* Template pages - dynamic YAML-based pages */}
         <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />

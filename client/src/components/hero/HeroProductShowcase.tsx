@@ -38,7 +38,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
   return (
     <section 
-      className="py-16 md:py-20 relative overflow-hidden"
+      id="hero-form"
+      className="py-20 md:py-24 relative overflow-hidden"
       style={shouldShowBackground ? {
         backgroundImage: `url(${data.background_image!.src})`,
         backgroundSize: 'cover',
@@ -50,28 +51,30 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
       )}
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-5 gap-12 items-start">
+        <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
             <div className="text-center md:text-left relative w-full">
               {data.welcome_text && (
-                <p className="text-4xl lg:text-5xl font-medium text-foreground">
+                <p className="text-body text-muted-foreground mb-4">
                   {data.welcome_text}
                 </p>
               )}
 
               {data.brand_mark && (
-                <p className="text-5xl lg:text-6xl tracking-tight mb-2 font-[1000]">
+                <h1 className="font-heading text-h1 tracking-tight mb-3">
                   {data.brand_mark.prefix && (
-                    <span className="text-foreground">{data.brand_mark.prefix}</span>
+                    <span className="text-foreground">{data.brand_mark.prefix}{" "}</span>
                   )}
                   <span style={{ color: colorMap[data.brand_mark.color || "primary"] }}>
                     {data.brand_mark.highlight}
                   </span>
                   {data.brand_mark.suffix && (
-                    <span className="text-foreground">{data.brand_mark.suffix}</span>
+                    <span className="text-foreground">{" "}{data.brand_mark.suffix}</span>
                   )}
-                </p>
+                </h1>
               )}
+
+              
 
               <h1 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
@@ -82,7 +85,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {data.subtitle && (
                 <p 
-                  className="text-xl lg:text-2xl text-muted-foreground mb-6 max-w-xl"
+                  className="text-body text-muted-foreground mb-8 max-w-xl leading-relaxed"
                   data-testid="text-hero-subtitle"
                 >
                   {data.subtitle}
@@ -91,26 +94,28 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {data.description && (
                 <div className="relative">
-                  <p className="text-xl text-foreground mb-8 max-w-xl font-semibold">
+                  <p className="text-body text-foreground mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
                 </div>
               )}
 
               {data.form && (
-                <LeadForm 
-                  data={{
-                    ...data.form,
-                    variant: data.form.variant || "inline",
-                    consent: data.form.consent,
-                    show_terms: data.form.show_terms ?? false,
-                    className: "w-full max-w-md mb-6",
-                  } as LeadFormData}
-                />
+                <div className="mt-2 mb-8">
+                  <LeadForm 
+                    data={{
+                      ...data.form,
+                      variant: data.form.variant || "inline",
+                      consent: data.form.consent,
+                      show_terms: data.form.show_terms ?? false,
+                      className: "w-full max-w-md",
+                    } as LeadFormData}
+                  />
+                </div>
               )}
 
               {data.cta_button && !data.form && (
-                <div className="mb-6">
+                <div className="mt-2 mb-8">
                   <Button 
                     variant={data.cta_button.variant === "outline" ? "outline" : "default"}
                     size="lg"
@@ -126,7 +131,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.trust_bar && (
-                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-background rounded-lg p-4 shadow-sm">
+                <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/50 rounded-card px-4 py-3 transition-all duration-brand ease-brand">
                   <div className="flex flex-col gap-1">
                     {data.trust_bar.rating && (
                       <div className="flex items-center gap-1">
@@ -209,7 +214,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               <img
                 src={data.image.src}
                 alt={data.image.alt}
-                className="w-full max-w-[500px] rounded-lg shadow-lg"
+                className="w-full max-w-[500px] rounded-card shadow-card"
                 data-testid="img-hero-product"
               />
             ) : null}

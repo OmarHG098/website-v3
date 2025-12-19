@@ -101,11 +101,14 @@ sections:
         title: Aprende con la comunidad
         description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
     highlight:
-      title: Maximiza Tu Potencial con Rigobot
-      description: Rigobot es nuestro tutor IA diseñado para autodidactas, listo para abordar cualquier problema relacionado con código y equipado con pruebas automatizadas para retroalimentación inmediata, permitiendo una experiencia de aprendizaje interactiva en cualquier momento!
+      title: Maximiza tu Progreso con Rigobot y Mentoría 1:1
+      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA diseñadas para un aprendizaje más inteligente y rápido.
+      bullets:
+        - text: Rigobot, nuestro asistente de código con IA, sigue tu progreso y te da retroalimentación personalizada exactamente cuando y como la necesitas.
+        - text: Obtén atención personal inigualable con nuestra proporción de 7:1 estudiantes por profesor, además de acceso ilimitado a sesiones 1:1 con mentores expertos y coaches de carrera.
       cta:
         text: ¡Comienza a aprender ahora!
-        url: /apply
+        url: /es/aplica
         variant: primary
   - type: certificate
     version: "1.0"

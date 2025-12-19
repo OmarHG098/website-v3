@@ -22,7 +22,7 @@ sections:
       trusted_text: "Confiado por más de 2.5K estudiantes"
     cta_buttons:
       - text: "Aplicar Ahora"
-        url: "/apply"
+        url: "/es/aplica"
         variant: "primary"
         icon: "Rocket"
       - text: "Descargar Syllabus"
@@ -107,7 +107,7 @@ sections:
       description: "Conéctate con compañeros, mentores y exalumnos y mantente apoyado mientras creces. Nuestro currículo de ciberseguridad fue co-diseñado por Daniela Maissi, miembro del EC-Council y especialista en malware con más de 12 certificaciones en seguridad en la nube, OSINT y sistemas de TI."
       cta:
         text: "¡Empieza a aprender ahora!"
-        url: "/apply"
+        url: "/es/aplica"
         variant: "primary"
 
   - type: certificate
@@ -143,19 +143,19 @@ sections:
       variant: "primary"
 
   - type: pricing
-    title: "Get access to all of our learning database, courses, and services"
-    subtitle: "Earn a new skills every 30 min, never get stuck or lost again."
+    title: "Obtén acceso a toda nuestra base de aprendizaje, cursos y servicios"
+    subtitle: "Aprende una nueva habilidad cada 30 min, nunca te quedes atascado o perdido de nuevo."
     monthly:
       discount_badge: "35% OFF"
       price: "38.99"
-      period: "mo"
+      period: "mes"
       original_price: "59.99"
     yearly:
       discount_badge: "35% OFF"
       price: "311.99"
-      period: "yr"
+      period: "año"
       original_price: "479.99"
-      savings_badge: "Save 3 months"
+      savings_badge: "Ahorra 3 meses"
     tech_icons:
       - "html"
       - "css"

@@ -24,7 +24,7 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
   
   return (
     <section 
-      className={`py-16 md:py-24 ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
+      className={`py-section ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -35,21 +35,21 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
             <img 
               src={image.src} 
               alt={image.alt}
-              className="w-full h-auto rounded-lg shadow-lg"
+              className="w-full h-auto rounded-card shadow-card"
               data-testid="img-hero"
             />
           </div>
 
           <div className="lg:col-span-7 text-center lg:text-left">
             <h1 
-              className="text-4xl md:text-5xl lg:text-5xl font-bold mb-4 text-foreground leading-tight text-center lg:text-left"
+              className="text-h1 mb-4 text-foreground text-center lg:text-left"
               data-testid="text-hero-title"
             >
               {data.title}
             </h1>
             {data.subtitle && (
               <p 
-                className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed"
+                className="text-body text-muted-foreground mb-4 leading-relaxed"
                 data-testid="text-hero-subtitle"
               >
                 {data.subtitle}

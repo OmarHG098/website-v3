@@ -8,8 +8,10 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logo from "@assets/4geeks-devs-logo_1763162063433.png";
 
 export default function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  const careerProgramsUrl = i18n.language === "es" ? "/es/programas-de-carrera" : "/en/career-programs";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +41,7 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link 
-            href="/career-programs" 
+            href={careerProgramsUrl} 
             className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
             data-testid="link-career-programs"
           >

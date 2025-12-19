@@ -48,20 +48,20 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
 
   return (
     <section 
-      className="py-12 md:py-16 bg-background"
+      className="py-section bg-background"
       data-testid="section-whos-hiring"
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-8">
           <h2 
-            className="text-3xl md:text-4xl font-bold mb-3 text-foreground"
+            className="text-h2 mb-3 text-foreground"
             data-testid="text-whos-hiring-title"
           >
             {data.title}
           </h2>
           {data.subtitle && (
             <p 
-              className="text-lg md:text-xl mb-4 text-foreground"
+              className="text-body mb-4 text-foreground"
               data-testid="text-whos-hiring-subtitle"
             >
               {data.subtitle}
@@ -69,7 +69,7 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
           )}
           {data.description && (
             <p 
-              className="text-base md:text-lg max-w-3xl mx-auto text-muted-foreground"
+              className="text-body max-w-3xl mx-auto text-muted-foreground"
               data-testid="text-whos-hiring-description"
             >
               {data.description}
@@ -112,7 +112,7 @@ export function WhosHiringSection({ data }: WhosHiringSectionProps) {
                   <button
                     key={index}
                     onClick={() => setCurrentPage(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
+                    className={`w-3 h-3 rounded-full transition-colors duration-brand ease-brand ${
                       currentPage === index 
                         ? "bg-primary" 
                         : "bg-muted-foreground/30 hover:bg-muted-foreground/50"

@@ -22,8 +22,8 @@ export default function IconFeatureGrid({
   const { t } = useTranslation();
 
   return (
-    <section className="container mx-auto px-4 md:px-12 lg:px-16 pb-16 pt-10">
-      <h2 className="text-4xl font-bold text-center mb-12">{title}</h2>
+    <section className="container mx-auto px-4 md:px-12 lg:px-16 py-section">
+      <h2 className="text-h2 text-center mb-12">{title}</h2>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
         {features.map((feature, index) => (
@@ -32,7 +32,7 @@ export default function IconFeatureGrid({
             className="group p-4 md:p-6 bg-transparent border-0 shadow-none flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-0"
             data-testid={`feature-icon-${index}`}
           >
-            <div className="shrink-0 md:mb-4 transition-transform duration-200 group-hover:scale-110">
+            <div className="shrink-0 md:mb-4 transition-transform duration-brand ease-brand group-hover:scale-[1.02]">
               <img
                 src={feature.icon}
                 alt=""

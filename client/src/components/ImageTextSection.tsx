@@ -18,19 +18,19 @@ export default function ImageTextSection({
   onCtaClick
 }: ImageTextSectionProps) {
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className="container mx-auto px-4 py-section">
       <div className={`grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto ${imagePosition === "right" ? "md:grid-flow-dense" : ""}`}>
         <div className={imagePosition === "right" ? "md:col-start-2" : ""}>
           <img 
             src={image} 
             alt={title}
-            className="rounded-lg w-full h-auto object-cover"
+            className="rounded-card w-full h-auto object-cover"
             loading="lazy"
           />
         </div>
         
         <div className="space-y-4">
-          <h2 className="text-3xl font-bold">{title}</h2>
+          <h2 className="text-h2">{title}</h2>
           <p className="text-muted-foreground leading-relaxed">{description}</p>
           {ctaText && (
             <Button 

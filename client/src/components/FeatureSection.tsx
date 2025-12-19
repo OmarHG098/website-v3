@@ -65,22 +65,22 @@ export default function FeatureSection({
     };
 
     return (
-      <section className="container mx-auto px-4 py-4">
+      <section className="container mx-auto px-4 py-section">
         <div className="max-w-6xl mx-auto">
           {heading && (
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 hidden md:block lg:hidden">
+            <h2 className="text-h2 mb-4 hidden md:block lg:hidden">
               {heading}
             </h2>
           )}
           <div className="flex flex-col md:flex-row md:items-end lg:items-start md:justify-between gap-4 md:gap-8 mb-8">
             <div className="flex-1">
               {heading && (
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 md:hidden lg:block">
+                <h2 className="text-h2 mb-4 md:hidden lg:block">
                   {heading}
                 </h2>
               )}
               {subheading && (
-                <p className="text-muted-foreground text-lg mb-0 md:mb-4">
+                <p className="text-muted-foreground text-body mb-0 md:mb-4">
                   {subheading}
                 </p>
               )}
@@ -164,9 +164,9 @@ export default function FeatureSection({
   }
 
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className="container mx-auto px-4 py-section">
       {title && (
-        <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
+        <h2 className="text-h2 text-center mb-12">{title}</h2>
       )}
 
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -178,7 +178,7 @@ export default function FeatureSection({
                   <img src={feature.icon} alt="" className="h-12 w-12" />
                 </div>
               )}
-              <CardTitle className="text-xl">{feature.title}</CardTitle>
+              <CardTitle className="text-body font-bold">{feature.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">{feature.description}</p>

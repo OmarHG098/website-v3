@@ -40,7 +40,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
   if (hasIcons) {
     return (
       <section 
-        className="pb-16"
+        className="py-section"
         data-testid="section-stats"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -48,14 +48,14 @@ export default function StatsSection({ data }: StatsSectionProps) {
             <div className="text-center mb-8">
               {data.title && (
                 <h2 
-                  className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                  className="text-h2 mb-6 text-foreground"
                   data-testid="text-stats-title"
                 >
                   {data.title}
                 </h2>
               )}
               {(data.description || data.subtitle) && (
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="text-body text-muted-foreground max-w-3xl mx-auto">
                   {data.description || data.subtitle}
                 </p>
               )}
@@ -71,7 +71,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
                   </div>
                 )}
                 <div>
-                  <div className="text-xl md:text-4xl font-semibold text-foreground">
+                  <div className="text-h2 text-foreground">
                     {stat.value}
                   </div>
                   <div className="text-sm md:text-base text-muted-foreground mt-0.5 md:mt-1">{stat.label}</div>
@@ -90,7 +90,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
 
   return (
     <section 
-      className={`py-16 ${data.background === 'muted' ? 'bg-muted' : ''}`}
+      className={`py-section ${data.background === 'muted' ? 'bg-muted' : ''}`}
       data-testid="section-stats"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -98,14 +98,14 @@ export default function StatsSection({ data }: StatsSectionProps) {
           <div className="text-center mb-12">
             {data.title && (
               <h2 
-                className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
+                className="text-h2 mb-4 text-foreground"
                 data-testid="text-stats-title"
               >
                 {data.title}
               </h2>
             )}
             {(data.description || data.subtitle) && (
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-body text-muted-foreground max-w-3xl mx-auto">
                 {data.description || data.subtitle}
               </p>
             )}
@@ -115,7 +115,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
         <div className={`grid grid-cols-2 ${gridCols} gap-8 text-center`}>
           {stats.map((stat, index) => (
             <div key={index} data-testid={`stat-item-${index}`} className="space-y-2">
-              <div className="text-2xl md:text-3xl font-bold text-primary">
+              <div className="text-h2 text-primary">
                 {stat.value}
               </div>
               <div className="text-sm md:text-base text-muted-foreground">

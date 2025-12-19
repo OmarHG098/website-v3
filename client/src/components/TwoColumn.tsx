@@ -89,14 +89,14 @@ const getTextFontSize = (size?: string): string => {
     "xs": "text-xs",
     "sm": "text-sm",
     "base": "text-base",
-    "lg": "text-lg",
-    "xl": "text-xl",
-    "2xl": "text-2xl",
-    "3xl": "text-3xl",
-    "4xl": "text-4xl",
-    "5xl": "text-5xl",
+    "lg": "text-body",
+    "xl": "text-body",
+    "2xl": "text-h2",
+    "3xl": "text-h2",
+    "4xl": "text-h1",
+    "5xl": "text-h1",
   };
-  return size ? (sizeMap[size] || "text-xl") : "text-xl";
+  return size ? (sizeMap[size] || "text-body") : "text-body";
 };
 
 const paddingLeftMap: Record<string, string> = {
@@ -219,7 +219,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
         <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
-              className={`text-3xl md:text-4xl font-bold text-foreground ${column.text_align ? '' : 'text-center md:text-left'} ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
+              className={`text-h2 text-foreground ${column.text_align ? '' : 'text-center md:text-left'} ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
               data-testid="text-two-column-heading"
             >
               {column.heading}
@@ -435,14 +435,14 @@ export function TwoColumn({ data }: TwoColumnProps) {
 
   return (
     <section 
-      className={`py-14 ${backgroundClass}`}
+      className={`py-section ${backgroundClass}`}
       data-testid="section-two-column"
       style={containerStyle}
     >
       <div className={`max-w-6xl mx-auto px-4 ${paddingLeftClass} ${paddingRightClass}`}>
         {headingAboveOnMd && tabletHeading && (
           <h2 
-            className="hidden md:block lg:hidden text-3xl md:text-4xl font-bold text-foreground text-center mb-8"
+            className="hidden md:block lg:hidden text-h2 text-foreground text-center mb-8"
             data-testid="text-two-column-heading-tablet"
           >
             {tabletHeading}
