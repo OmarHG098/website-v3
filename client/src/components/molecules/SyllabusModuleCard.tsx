@@ -31,7 +31,7 @@ export function SyllabusModuleCard({
   return (
     <Card 
       className={cn(
-        "p-6 rounded-card h-full border border-border",
+        "p-6 rounded-card h-full b",
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
