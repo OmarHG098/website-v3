@@ -454,7 +454,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 {moduleCards.map((module, index) => (
                   <div 
                     key={index}
-                    className="flex-shrink-0 w-80 snap-start"
+                    className="flex-shrink-0 snap-start"
                   >
                     <div
                       ref={(el: HTMLDivElement | null) => { cardRefs.current[index] = el; }}
@@ -476,28 +476,30 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 <div className="flex-shrink-0 w-[calc(100%-344px)]" aria-hidden="true" />
               </div>
 
-              {/* Navigation Arrow Buttons */}
-              <div className="flex justify-start ms-8 mt-4 gap-2" data-testid="container-nav-arrows">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleDotClick(activeIndex - 1)}
-                  disabled={activeIndex === 0}
-                  aria-label="Previous milestone"
-                  data-testid="button-prev-milestone"
-                >
-                  <TablerIcons.IconChevronLeft className="w-5 h-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleDotClick(activeIndex + 1)}
-                  disabled={activeIndex === moduleCards.length - 1}
-                  aria-label="Next milestone"
-                  data-testid="button-next-milestone"
-                >
-                  <TablerIcons.IconChevronRight className="w-5 h-5" />
-                </Button>
+              {/* Navigation Arrow Buttons - centered under the active card */}
+              <div className="mt-4 ml-2" style={{ width: '320px' }} data-testid="container-nav-arrows">
+                <div className="flex justify-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleDotClick(activeIndex - 1)}
+                    disabled={activeIndex === 0}
+                    aria-label="Previous milestone"
+                    data-testid="button-prev-milestone"
+                  >
+                    <TablerIcons.IconChevronLeft className="w-5 h-5 text-primary" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleDotClick(activeIndex + 1)}
+                    disabled={activeIndex === moduleCards.length - 1}
+                    aria-label="Next milestone"
+                    data-testid="button-next-milestone"
+                  >
+                    <TablerIcons.IconChevronRight className="w-5 h-5 text-primary" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

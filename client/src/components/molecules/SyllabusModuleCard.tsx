@@ -32,7 +32,7 @@ export function SyllabusModuleCard({
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
-        isVertical ? "min-h-[380px]" : "flex gap-6",
+        isVertical ? "min-h-[380px] w-80" : "flex gap-6",
         className
       )}
       data-testid={testId}
@@ -73,7 +73,7 @@ export function SyllabusModuleCard({
         </>
       ) : (
         <>
-          <div className="flex-shrink-0 w-48">
+          <div className="flex-shrink-0 w-62">
             <p className="text-sm text-muted-foreground mb-2 font-medium">
               {duration}
             </p>
