@@ -146,6 +146,7 @@ sections:
     module_cards:
       - title: "AI-First Prework"
         duration: "Milestone 0"
+        icon: "IconRocket"
         objectives:
           - "YAML/JSON fundamentals"
           - "Git version control"
@@ -154,6 +155,7 @@ sections:
           - "Coding agents"
       - title: "Web Foundations"
         duration: "Milestone 1"
+        icon: "IconWorld"
         objectives:
           - "HTML, CSS, Tailwind"
           - "Accessibility best practices"
@@ -161,6 +163,7 @@ sections:
         projects: "Build the company's first webpage"
       - title: "Programming Foundations"
         duration: "Milestone 2"
+        icon: "IconCode"
         objectives:
           - "Algorithms and data structures"
           - "Stateflow vs controlflow"
@@ -168,12 +171,14 @@ sections:
         projects: "Implement small features for the company"
       - title: "AI-Driven UI Engineering"
         duration: "Milestone 3"
+        icon: "IconSparkles"
         objectives:
           - "Vision-to-Spec prompting"
           - "Component generation with AI"
         projects: "Rebuild the company's UI using AI"
       - title: "React Fundamentals"
         duration: "Milestone 4"
+        icon: "IconBrandReact"
         objectives:
           - "SPA architecture"
           - "Props, state, and effects"
@@ -181,6 +186,7 @@ sections:
         projects: "Build the company's interactive frontend"
       - title: "Backend for AI Frontends"
         duration: "Milestone 5"
+        icon: "IconServer"
         objectives:
           - "APIs and DB basics"
           - "Serialization and auth"
@@ -188,17 +194,20 @@ sections:
         projects: "Create the company's backend"
       - title: "Telemetry & Data Pipelines"
         duration: "Milestone 6"
+        icon: "IconChartLine"
         objectives:
           - "Collect, transform, aggregate, report"
         projects: "Build telemetry for the company"
       - title: "RAG & Memory"
         duration: "Milestone 7"
+        icon: "IconBrain"
         objectives:
           - "Chunking and embeddings"
           - "Vector search"
         projects: "Add the company's knowledge layer"
       - title: "Agent Engineering"
         duration: "Milestone 8"
+        icon: "IconRobot"
         objectives:
           - "Rules and memory bank"
           - "Tool calling"
@@ -206,6 +215,7 @@ sections:
         projects: "Build the company's agents"
       - title: "Agentic Workflow Generation"
         duration: "Milestone 9"
+        icon: "IconSitemap"
         objectives:
           - "Use LLMs to analyze company case"
           - "Generate and validate internal workflows"
@@ -213,12 +223,14 @@ sections:
         projects: "Serverless, queues, cronjobs, or n8n"
       - title: "Real-Time Systems"
         duration: "Milestone 10"
+        icon: "IconBolt"
         objectives:
           - "Streaming and sockets"
           - "Pub/sub patterns"
         projects: "Enable real-time interactions for data, customers, AI or employees"
       - title: "Full AI-Transformed Company"
         duration: "Capstone"
+        icon: "IconTrophy"
         objectives:
           - "AI-generated frontend"
           - "API + authentication"

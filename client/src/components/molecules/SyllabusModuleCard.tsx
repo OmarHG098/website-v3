@@ -9,6 +9,7 @@ export interface SyllabusModuleCardProps {
   projects?: string;
   isActive?: boolean;
   orientation?: "vertical" | "horizontal";
+  icon?: string;
   className?: string;
   testId?: string;
 }
@@ -20,10 +21,12 @@ export function SyllabusModuleCard({
   projects,
   isActive = true,
   orientation = "vertical",
+  icon = "IconFlag",
   className,
   testId,
 }: SyllabusModuleCardProps) {
   const isVertical = orientation === "vertical";
+  const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[icon] || TablerIcons.IconFlag;
 
   return (
     <Card 
@@ -44,14 +47,12 @@ export function SyllabusModuleCard({
               {duration}
             </p>
             <div className="flex items-center gap-2 ">
-              <TablerIcons.IconFlag className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-              <span className="w-px h-5 bg-border flex-shrink-0"></span>
-              <h3 
-                className="inline-block px-2 py-1 font-bold font-heading text-foreground rounded"
-                style={{ backgroundColor: 'hsl(var(--accent))' }}
-              >
-                {title}
-              </h3>
+              <div className="flex items-center bg-accent px-2 py-1 gap-1 rounded">
+                <IconComponent className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                <h3 className="inline-block font-bold font-heading text-foreground">
+                  {title}
+                </h3>
+              </div>
             </div>
           </div>
 
@@ -82,14 +83,12 @@ export function SyllabusModuleCard({
               {duration}
             </p>
             <div className="flex items-center gap-2">
-              <TablerIcons.IconFlag className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-              <span className="w-px h-5 bg-border flex-shrink-0"></span>
-              <h3 
-                className="inline-block px-2 py-1 font-bold font-heading text-foreground rounded"
-                style={{ backgroundColor: 'hsl(var(--accent))' }}
-              >
-                {title}
-              </h3>
+              <div className="flex items-center bg-accent px-2 py-1 gap-1 rounded">
+                <IconComponent className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                <h3 className="inline-block font-bold font-heading text-foreground">
+                  {title}
+                </h3>
+              </div>
             </div>
           </div>
 

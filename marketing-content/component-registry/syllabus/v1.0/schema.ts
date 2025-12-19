@@ -21,6 +21,7 @@ export const moduleCardSchema = z.object({
   objectives: z.array(z.string()),
   projects: z.string().nullish(),
   orientation: z.enum(["vertical", "horizontal"]).optional(),
+  icon: z.string().optional(),
 });
 
 // Technology logo for program info

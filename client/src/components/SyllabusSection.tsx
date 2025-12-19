@@ -467,6 +467,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         projects={module.projects ?? undefined}
                         isActive={index === activeIndex}
                         orientation={module.orientation ?? "vertical"}
+                        icon={module.icon}
                         testId={`card-module-${index}`}
                       />
                     </div>
