@@ -228,6 +228,7 @@ sections:
           - "Agents with tool calling"
           - "Real-time communication layer"
         projects: "Deliver the complete transformation of their company"
+        orientation: "horizontal"
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
