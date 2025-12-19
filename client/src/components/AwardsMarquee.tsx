@@ -1,0 +1,73 @@
+import Marquee from "react-fast-marquee";
+
+export interface AwardsMarqueeItem {
+  id: string;
+  logo?: string;
+  alt: string;
+  logoHeight?: string;
+  source?: string;
+  name?: string;
+  year?: string;
+}
+
+interface AwardsMarqueeProps {
+  items: AwardsMarqueeItem[];
+  speed?: number;
+  pauseOnHover?: boolean;
+  gradient?: boolean;
+  gradientColor?: string;
+  gradientWidth?: number;
+  className?: string;
+}
+
+export function AwardsMarquee({ 
+  items, 
+  speed = 40,
+  pauseOnHover = true,
+  gradient = true,
+  gradientColor,
+  gradientWidth = 100,
+  className = "",
+}: AwardsMarqueeProps) {
+  if (!items || items.length === 0) return null;
+
+  return (
+    <div className={className} data-testid="awards-marquee">
+      <Marquee
+        speed={speed}
+        pauseOnHover={pauseOnHover}
+        gradient={gradient}
+        gradientColor={gradientColor}
+        gradientWidth={gradientWidth}
+      >
+        {items.map((item, index) => (
+          <div 
+            key={item.id}
+            className="flex items-center justify-center mx-8 transition-opacity duration-brand ease-brand hover:opacity-80"
+            data-testid={`marquee-item-${index}`}
+          >
+            {item.logo ? (
+              <img 
+                src={item.logo} 
+                alt={item.alt}
+                className={`${item.logoHeight || "h-12 md:h-14"} w-auto object-contain`}
+                loading="lazy"
+              />
+            ) : (
+              <div className="flex flex-col items-center text-center">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                  {item.source} {item.year && `${item.year}`}
+                </span>
+                <span className="text-sm font-medium text-foreground mt-0.5">
+                  {item.name}
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </Marquee>
+    </div>
+  );
+}
+
+export default AwardsMarquee;
