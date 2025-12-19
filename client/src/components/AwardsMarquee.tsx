@@ -30,7 +30,7 @@ export function AwardsMarquee({
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="pb-section">
+    <section className="py-section">
       <div className="max-w-6xl mx-auto px-4 pb-8">
         <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
       </div>
