@@ -16,14 +16,14 @@ export function StatCard({
   className = ""
 }: StatCardProps) {
   const content = (
-    <>
+    <div className="font-inter">
       <div className="text-h2 font-bold text-primary mb-1">
         {value}
       </div>
       <div className="text-body text-foreground">
         {title}
       </div>
-    </>
+    </div>
   );
 
   if (use_card) {
