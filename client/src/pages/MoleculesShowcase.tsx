@@ -1,0 +1,168 @@
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { MoleculeRenderer, type MoleculeDefinition } from "@/components/MoleculeRenderer";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { IconAtom, IconFilter, IconX } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
+
+interface MoleculesData {
+  molecules: MoleculeDefinition[];
+}
+
+export default function MoleculesShowcase() {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const { data, isLoading, error } = useQuery<MoleculesData>({
+    queryKey: ["/api/molecules"],
+  });
+
+  const allTags = useMemo(() => {
+    if (!data?.molecules) return [];
+    const tagSet = new Set<string>();
+    data.molecules.forEach((m) => m.tags.forEach((t) => tagSet.add(t)));
+    return Array.from(tagSet).sort();
+  }, [data]);
+
+  const filteredMolecules = useMemo(() => {
+    if (!data?.molecules) return [];
+    if (selectedTags.length === 0) return data.molecules;
+    return data.molecules.filter((m) =>
+      selectedTags.some((tag) => m.tags.includes(tag))
+    );
+  }, [data, selectedTags]);
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const clearFilters = () => setSelectedTags([]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent" />
+          <p className="mt-4 text-muted-foreground">Loading molecules...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="max-w-md">
+          <CardContent className="pt-6">
+            <p className="text-destructive">Failed to load molecules data</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center gap-3 mb-4">
+            <IconAtom className="w-8 h-8 text-primary" />
+            <h1 className="text-2xl font-bold text-foreground">
+              Molecules Showcase
+            </h1>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <IconFilter className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground mr-2">
+              Filter by tag:
+            </span>
+            {allTags.map((tag) => (
+              <Badge
+                key={tag}
+                variant={selectedTags.includes(tag) ? "default" : "outline"}
+                className="cursor-pointer"
+                onClick={() => toggleTag(tag)}
+                data-testid={`filter-tag-${tag}`}
+              >
+                {tag}
+              </Badge>
+            ))}
+            {selectedTags.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearFilters}
+                className="ml-2"
+                data-testid="button-clear-filters"
+              >
+                <IconX className="w-4 h-4 mr-1" />
+                Clear
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <p className="text-muted-foreground mb-8">
+          Showing {filteredMolecules.length} of {data?.molecules.length || 0}{" "}
+          molecules
+        </p>
+
+        <div className="space-y-12">
+          {filteredMolecules.map((molecule) => (
+            <div key={molecule.id} data-testid={`molecule-${molecule.id}`}>
+              <Card>
+                <CardHeader className="pb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <CardTitle className="text-lg">{molecule.name}</CardTitle>
+                    <div className="flex flex-wrap gap-1">
+                      {molecule.tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  {molecule.description && (
+                    <p className="text-sm text-muted-foreground">
+                      {molecule.description}
+                    </p>
+                  )}
+                </CardHeader>
+                <Separator />
+                <CardContent className="p-0">
+                  <MoleculeRenderer molecule={molecule} />
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        {filteredMolecules.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-muted-foreground">
+              No molecules match the selected filters
+            </p>
+            <Button
+              variant="outline"
+              onClick={clearFilters}
+              className="mt-4"
+              data-testid="button-clear-filters-empty"
+            >
+              Clear filters
+            </Button>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
