@@ -91,7 +91,7 @@ function useCountUp(target: number | null, duration: number, shouldAnimate: bool
       }
       const elapsed = timestamp - startTimeRef.current;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const eased = 1 - Math.pow(1 - progress, 5);
       setCurrent(Math.round(eased * target));
 
       if (progress < 1) {
@@ -113,8 +113,8 @@ function useCountUp(target: number | null, duration: number, shouldAnimate: bool
 
 function AnimatedStatValue({ value, shouldAnimate }: { value: string; shouldAnimate: boolean }) {
   const parsed = parseStatValue(value);
-  const count1 = useCountUp(parsed.number1, 2000, shouldAnimate && parsed.hasNumber);
-  const count2 = useCountUp(parsed.number2, 2000, shouldAnimate && parsed.isRange);
+  const count1 = useCountUp(parsed.number1, 1500, shouldAnimate && parsed.hasNumber);
+  const count2 = useCountUp(parsed.number2, 1500, shouldAnimate && parsed.isRange);
 
   if (!parsed.hasNumber) {
     return <>{value}</>;
