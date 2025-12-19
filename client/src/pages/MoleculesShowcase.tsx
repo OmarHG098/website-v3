@@ -8,6 +8,7 @@ import { IconAtom, IconFilter, IconX, IconTag } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface MoleculesData {
   molecules: MoleculeDefinition[];
@@ -105,21 +106,54 @@ export default function MoleculesShowcase() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <IconFilter className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground mr-2">
-              Filter by tag:
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  data-testid="button-open-tag-filter"
+                >
+                  <IconFilter className="w-4 h-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Filter by Tags</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {allTags.map((tag) => (
+                    <Button
+                      key={tag}
+                      variant={selectedTags.includes(tag) ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => toggleTag(tag)}
+                      data-testid={`button-modal-filter-tag-${tag}`}
+                    >
+                      {tag}
+                    </Button>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+            <span className="text-sm text-muted-foreground">
+              Tags:
             </span>
-            {allTags.map((tag) => (
-              <Button
-                key={tag}
-                variant={selectedTags.includes(tag) ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleTag(tag)}
-                data-testid={`button-filter-tag-${tag}`}
-              >
-                {tag}
-              </Button>
-            ))}
+            {selectedTags.length === 0 ? (
+              <span className="text-sm text-muted-foreground italic">All</span>
+            ) : (
+              selectedTags.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="default"
+                  className="cursor-pointer"
+                  onClick={() => toggleTag(tag)}
+                  data-testid={`badge-active-tag-${tag}`}
+                >
+                  {tag}
+                  <IconX className="w-3 h-3 ml-1" />
+                </Badge>
+              ))
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-2 mt-2">
