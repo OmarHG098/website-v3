@@ -3,6 +3,7 @@ import type { SyllabusSection as SyllabusSectionType, SyllabusDefault, SyllabusL
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { DotsIndicator } from "@/components/DotsIndicator";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
@@ -503,6 +504,30 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 ))}
                 {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
                 <div className="flex-shrink-0 w-[calc(100%-344px)]" aria-hidden="true" />
+              </div>
+
+              {/* Navigation Arrow Buttons */}
+              <div className="flex justify-start ms-8 mt-4 gap-2" data-testid="container-nav-arrows">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => handleDotClick(activeIndex - 1)}
+                  disabled={activeIndex === 0}
+                  aria-label="Previous milestone"
+                  data-testid="button-prev-milestone"
+                >
+                  <TablerIcons.IconChevronLeft className="w-5 h-5" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => handleDotClick(activeIndex + 1)}
+                  disabled={activeIndex === moduleCards.length - 1}
+                  aria-label="Next milestone"
+                  data-testid="button-next-milestone"
+                >
+                  <TablerIcons.IconChevronRight className="w-5 h-5" />
+                </Button>
               </div>
             </div>
           </div>
