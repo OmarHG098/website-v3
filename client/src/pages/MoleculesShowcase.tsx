@@ -210,7 +210,7 @@ export default function MoleculesShowcase() {
                           data-testid={`button-tags-${molecule.id}`}
                         >
                           <IconTag className="w-3 h-3" />
-                          Tags ({molecule.tags.length})
+                          {molecule.tags.length}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-3">
