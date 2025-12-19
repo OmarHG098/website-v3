@@ -43,12 +43,16 @@ export function SyllabusModuleCard({
             <p className="text-sm text-muted-foreground mb-2 font-medium">
               {duration}
             </p>
-            <h3 
-              className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2 rounded"
-              style={{ backgroundColor: 'hsl(var(--accent))' }}
-            >
-              {title}
-            </h3>
+            <div className="flex items-center gap-2">
+              <TablerIcons.IconFlag className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+              <span className="w-px h-5 bg-border flex-shrink-0"></span>
+              <h3 
+                className="inline-block px-2 py-1 font-bold font-heading text-foreground rounded"
+                style={{ backgroundColor: 'hsl(var(--accent))' }}
+              >
+                {title}
+              </h3>
+            </div>
           </div>
 
           <ul className="space-y-2.5 mb-5 text-sm text-foreground">
@@ -77,12 +81,16 @@ export function SyllabusModuleCard({
             <p className="text-sm text-muted-foreground mb-2 font-medium">
               {duration}
             </p>
-            <h3 
-              className="inline-block px-2 py-1 font-bold font-heading text-foreground"
-              style={{ backgroundColor: 'hsl(var(--accent))' }}
-            >
-              {title}
-            </h3>
+            <div className="flex items-center gap-2">
+              <TablerIcons.IconFlag className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+              <span className="w-px h-5 bg-border flex-shrink-0"></span>
+              <h3 
+                className="inline-block px-2 py-1 font-bold font-heading text-foreground rounded"
+                style={{ backgroundColor: 'hsl(var(--accent))' }}
+              >
+                {title}
+              </h3>
+            </div>
           </div>
 
           <div className="flex-1">
