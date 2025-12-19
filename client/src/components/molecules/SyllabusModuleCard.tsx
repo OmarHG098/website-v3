@@ -43,7 +43,7 @@ export function SyllabusModuleCard({
             <p className="text-sm text-muted-foreground mb-2 font-medium">
               {duration}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <TablerIcons.IconFlag className="w-5 h-5 text-muted-foreground flex-shrink-0" />
               <span className="w-px h-5 bg-border flex-shrink-0"></span>
               <h3 
