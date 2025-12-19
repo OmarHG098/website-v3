@@ -378,10 +378,13 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   return (
     <section 
-      className="py-section bg-muted/30"
+      className="relative"
       data-testid="section-syllabus-program"
     >
-      <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
+      {/* Background for the right side that spans full section height */}
+      <div className="absolute top-0 right-0 bottom-0 w-full lg:w-[calc(100%-20rem-2rem)] bg-muted/30" aria-hidden="true" />
+      
+      <div className="relative py-section pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Program Info Card */}
           <div className="flex-shrink-0 lg:w-80">
