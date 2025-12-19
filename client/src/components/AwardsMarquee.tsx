@@ -30,42 +30,47 @@ export function AwardsMarquee({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={`mx-12 ${className}`} data-testid="awards-marquee">
-      <Marquee
-        speed={speed}
-        pauseOnHover={false}
-        gradient={gradient}
-        gradientColor={gradientColor}
-        gradientWidth={gradientWidth}
-        autoFill={true}
-      >
-        {items.map((item, index) => (
-          <div 
-            key={item.id}
-            className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
-            data-testid={`marquee-item-${index}`}
-          >
-            {item.logo ? (
-              <img 
-                src={item.logo} 
-                alt={item.alt}
-                className={`${item.logoHeight || "h-12 md:h-20"} w-auto object-contain`}
-                loading="lazy"
-              />
-            ) : (
-              <div className="flex flex-col items-center text-center">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                  {item.source} {item.year && `${item.year}`}
-                </span>
-                <span className="text-sm font-medium text-foreground mt-0.5">
-                  {item.name}
-                </span>
-              </div>
-            )}
-          </div>
-        ))}
-      </Marquee>
-    </div>
+    <section className="pb-section">
+      <div className="max-w-6xl mx-auto px-4 pb-8">
+        <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
+      </div>
+      <div className={`mx-12 ${className}`} data-testid="awards-marquee">
+        <Marquee
+          speed={speed}
+          pauseOnHover={false}
+          gradient={gradient}
+          gradientColor={gradientColor}
+          gradientWidth={gradientWidth}
+          autoFill={true}
+        >
+          {items.map((item, index) => (
+            <div 
+              key={item.id}
+              className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
+              data-testid={`marquee-item-${index}`}
+            >
+              {item.logo ? (
+                <img 
+                  src={item.logo} 
+                  alt={item.alt}
+                  className={`${item.logoHeight || "h-12 md:h-20"} w-auto object-contain`}
+                  loading="lazy"
+                />
+              ) : (
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                    {item.source} {item.year && `${item.year}`}
+                  </span>
+                  <span className="text-sm font-medium text-foreground mt-0.5">
+                    {item.name}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </Marquee>
+      </div>
+    </section>
   );
 }
 
