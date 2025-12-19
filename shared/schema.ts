@@ -249,6 +249,8 @@ export type {
   FeaturesGridHighlightSection,
   FeaturesGridDetailedSection,
   FeaturesGridSpotlightSection,
+  FeaturesGridStatsCardsSection,
+  FeaturesGridStatsCardsItem,
   SpotlightConfig,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 

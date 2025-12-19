@@ -71,17 +71,34 @@ export const featuresGridSpotlightSectionSchema = z.object({
   spotlight_config: spotlightConfigSchema.optional(),
 });
 
+export const featuresGridStatsCardsItemSchema = z.object({
+  id: z.string().optional(),
+  value: z.string(),
+  title: z.string(),
+});
+
+export const featuresGridStatsCardsSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("stats-cards"),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  items: z.array(featuresGridStatsCardsItemSchema),
+});
+
 export const featuresGridSectionSchema = z.union([
   featuresGridHighlightSectionSchema,
   featuresGridDetailedSectionSchema,
   featuresGridSpotlightSectionSchema,
-
+  featuresGridStatsCardsSectionSchema,
 ]);
 
 export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
 export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
+export type FeaturesGridStatsCardsItem = z.infer<typeof featuresGridStatsCardsItemSchema>;
 export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
 export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSectionSchema>;
 export type FeaturesGridSpotlightSection = z.infer<typeof featuresGridSpotlightSectionSchema>;
+export type FeaturesGridStatsCardsSection = z.infer<typeof featuresGridStatsCardsSectionSchema>;
 export type SpotlightConfig = z.infer<typeof spotlightConfigSchema>;
 export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
