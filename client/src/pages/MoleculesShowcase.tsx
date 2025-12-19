@@ -100,9 +100,14 @@ export default function MoleculesShowcase() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center gap-3 mb-4">
             <IconAtom className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">
-              Molecules Showcase
-            </h1>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">
+                Molecules Showcase
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Showing {filteredMolecules.length} of {data?.molecules.length || 0} molecules
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -218,11 +223,6 @@ export default function MoleculesShowcase() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-muted-foreground mb-8">
-          Showing {filteredMolecules.length} of {data?.molecules.length || 0}{" "}
-          molecules
-        </p>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredMolecules.map((molecule) => (
             <div key={molecule.id} data-testid={`molecule-${molecule.id}`}>
