@@ -230,13 +230,13 @@ export default function MoleculesShowcase() {
                 <CardHeader className="pb-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="text-lg">{molecule.component} → {molecule.variant}</CardTitle>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="sm"
-                            className="gap-1"
+                            className="gap-1 h-7 px-2"
                             data-testid={`button-tags-${molecule.id}`}
                           >
                             <IconTag className="w-3 h-3" />
@@ -260,9 +260,9 @@ export default function MoleculesShowcase() {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 w-7 p-0"
                             data-testid={`button-props-${molecule.id}`}
                           >
                             <IconCode className="w-3 h-3" />
