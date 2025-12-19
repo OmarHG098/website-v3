@@ -71,6 +71,7 @@ sections:
     title: Why AI Engineering Now
     subtitle: The talent shortage is your opportunity
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    card_color: "bg-background"
     items:
       - value: 3.5M
         title: AI-related roles expected by 2026

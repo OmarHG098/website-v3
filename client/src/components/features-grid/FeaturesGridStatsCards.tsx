@@ -1,5 +1,4 @@
 import type { FeaturesGridStatsCardsSection } from "@shared/schema";
-import { Card } from "@/components/ui/card";
 
 interface FeaturesGridStatsCardsProps {
   data: FeaturesGridStatsCardsSection;
@@ -8,7 +7,7 @@ interface FeaturesGridStatsCardsProps {
 export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
   return (
     <section 
-      className="py-section bg-muted/30"
+      className="py-section bg-primary/5"
       data-testid="section-features-grid-stats-cards"
     >
       <div className="max-w-6xl mx-auto px-4 ">
@@ -17,7 +16,7 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
             {data.items.map((item, index) => {
               const itemId = item.id || `stat-${index}`;
               return (
-                <Card 
+                <div 
                   key={itemId}
                   className={`items-center gap-2 rounded-card p-4 ${data.card_color || 'bg-primary/5'}`}
                   data-testid={`card-stat-${itemId}`}
@@ -28,7 +27,7 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
                   <div className="text-body text-foreground">
                     {item.title}
                   </div>
-                </Card>
+                </div>
               );
             })}
           </div>
