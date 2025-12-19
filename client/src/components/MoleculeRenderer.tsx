@@ -1,5 +1,7 @@
 import { UniversalVideo, type VideoConfig } from "@/components/UniversalVideo";
 import { UniversalImage } from "@/components/UniversalImage";
+import { StatCard, type StatCardProps } from "@/components/molecules/StatCard";
+import { SyllabusModuleCard, type SyllabusModuleCardProps } from "@/components/molecules/SyllabusModuleCard";
 import type { ImageRef } from "@shared/schema";
 
 interface UniversalVideoMolecule {
@@ -20,7 +22,29 @@ interface UniversalImageMolecule {
   props: ImageRef & { loading?: "lazy" | "eager" };
 }
 
-export type MoleculeDefinition = UniversalVideoMolecule | UniversalImageMolecule;
+interface StatCardMolecule {
+  id: string;
+  component: "StatCard";
+  variant: string;
+  description?: string;
+  tags: string[];
+  props: StatCardProps;
+}
+
+interface SyllabusModuleCardMolecule {
+  id: string;
+  component: "SyllabusModuleCard";
+  variant: string;
+  description?: string;
+  tags: string[];
+  props: SyllabusModuleCardProps;
+}
+
+export type MoleculeDefinition = 
+  | UniversalVideoMolecule 
+  | UniversalImageMolecule 
+  | StatCardMolecule 
+  | SyllabusModuleCardMolecule;
 
 interface MoleculeRendererProps {
   molecule: MoleculeDefinition;
@@ -49,6 +73,30 @@ export function MoleculeRenderer({ molecule }: MoleculeRendererProps) {
           className={molecule.props.className}
           loading={molecule.props.loading}
         />
+      );
+    case "StatCard":
+      return (
+        <div className="p-6">
+          <StatCard
+            value={molecule.props.value}
+            title={molecule.props.title}
+            use_card={molecule.props.use_card}
+            card_color={molecule.props.card_color}
+          />
+        </div>
+      );
+    case "SyllabusModuleCard":
+      return (
+        <div className="p-6">
+          <SyllabusModuleCard
+            duration={molecule.props.duration}
+            title={molecule.props.title}
+            objectives={molecule.props.objectives}
+            projects={molecule.props.projects}
+            isActive={molecule.props.isActive}
+            orientation={molecule.props.orientation}
+          />
+        </div>
       );
     default:
       return (
