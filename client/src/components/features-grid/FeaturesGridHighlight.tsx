@@ -126,7 +126,7 @@ export function FeaturesGridHighlight({ data }: FeaturesGridHighlightProps) {
         )}
 
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6`}>
-          {data.items.map((item, index) => (
+          {(data.items || []).map((item, index) => (
             <HighlightCard key={item.id || index} item={item} iconColor={item.icon_color || data.icon_color} />
           ))}
         </div>
