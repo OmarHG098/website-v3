@@ -31,9 +31,6 @@ export function AwardsMarquee({
 
   return (
     <section className="py-section">
-      <div className="max-w-6xl mx-auto px-4 pb-8">
-        <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
-      </div>
       <div className={`mx-12 ${className}`} data-testid="awards-marquee">
         <Marquee
           speed={speed}
@@ -69,6 +66,9 @@ export function AwardsMarquee({
             </div>
           ))}
         </Marquee>
+      </div>
+      <div className="max-w-6xl mx-auto px-4 pt-8">
+        <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
       </div>
     </section>
   );

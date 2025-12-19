@@ -379,23 +379,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       className="py-section bg-muted/30"
       data-testid="section-syllabus-program"
     >
-      <div className="ms-24 px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left: Program Info Card with background wrapper */}
-          <div className="relative flex-shrink-0">
-            {/* Background that extends to screen edge - padding on left, top, bottom only */}
-            <div 
-              className="absolute inset-y-0 right-0 bg-background rounded-xl"
-              style={{ 
-                left: '-100vw', 
-                width: 'calc(100% + 100vw)',
-                top: '-2rem',
-                bottom: '-2rem'
-              }}
-            />
-            {/* Card with spacing from background on left, top, bottom */}
-            <div className="relative lg:w-80">
-              <Card className="p-8 bg-card shadow-card rounded-card border-0">
+          {/* Left: Program Info Card */}
+          <div className="flex-shrink-0 lg:w-80">
+            <Card className="p-8 bg-card shadow-card rounded-card border-0">
               <div className="mb-8">
                 <h2 
                   className="text-h2 text-foreground mb-3"
@@ -426,8 +414,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   ))}
                 </div>
               )}
-              </Card>
-            </div>
+            </Card>
           </div>
 
           {/* Right: Scrollable Module Cards */}
