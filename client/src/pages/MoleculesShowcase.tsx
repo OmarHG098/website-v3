@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
+import { oneDark } from "@codemirror/theme-one-dark";
 
 interface MoleculesData {
   molecules: MoleculeDefinition[];
@@ -268,10 +271,15 @@ export default function MoleculesShowcase() {
                             <IconCode className="w-3 h-3" />
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-80 p-3">
-                          <pre className="text-xs overflow-auto max-h-64 bg-muted p-2 rounded">
-                            {JSON.stringify(molecule.props, null, 2)}
-                          </pre>
+                        <PopoverContent className="w-80 p-0">
+                          <CodeMirror
+                            value={JSON.stringify(molecule.props, null, 2)}
+                            extensions={[json()]}
+                            theme={oneDark}
+                            editable={false}
+                            basicSetup={{ lineNumbers: false, foldGutter: false }}
+                            className="text-xs max-h-64 overflow-auto"
+                          />
                         </PopoverContent>
                       </Popover>
                     </div>
