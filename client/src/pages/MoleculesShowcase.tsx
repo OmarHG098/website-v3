@@ -227,7 +227,7 @@ export default function MoleculesShowcase() {
           {filteredMolecules.map((molecule) => (
             <div key={molecule.id} data-testid={`molecule-${molecule.id}`}>
               <Card>
-                <CardHeader className="pb-2">
+                <CardHeader className="pl-[14px] pr-[14px] pt-[4px] pb-[4px]">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="text-lg">{molecule.component} → {molecule.variant}</CardTitle>
                     <div className="flex items-center">
