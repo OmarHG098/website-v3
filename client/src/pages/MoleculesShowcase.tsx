@@ -4,7 +4,7 @@ import { MoleculeRenderer, type MoleculeDefinition } from "@/components/Molecule
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { IconAtom, IconFilter, IconX, IconTag } from "@tabler/icons-react";
+import { IconAtom, IconFilter, IconX, IconTag, IconBox } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -157,21 +157,54 @@ export default function MoleculesShowcase() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 mt-2">
-            <IconFilter className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground mr-2">
-              Filter by component:
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  data-testid="button-open-component-filter"
+                >
+                  <IconBox className="w-4 h-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Filter by Component</DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {allComponents.map((component) => (
+                    <Button
+                      key={component}
+                      variant={selectedComponents.includes(component) ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => toggleComponent(component)}
+                      data-testid={`button-modal-filter-component-${component}`}
+                    >
+                      {component}
+                    </Button>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+            <span className="text-sm text-muted-foreground">
+              Components:
             </span>
-            {allComponents.map((component) => (
-              <Button
-                key={component}
-                variant={selectedComponents.includes(component) ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleComponent(component)}
-                data-testid={`button-filter-component-${component}`}
-              >
-                {component}
-              </Button>
-            ))}
+            {selectedComponents.length === 0 ? (
+              <span className="text-sm text-muted-foreground italic">All</span>
+            ) : (
+              selectedComponents.map((component) => (
+                <Badge
+                  key={component}
+                  variant="default"
+                  className="cursor-pointer"
+                  onClick={() => toggleComponent(component)}
+                  data-testid={`badge-active-component-${component}`}
+                >
+                  {component}
+                  <IconX className="w-3 h-3 ml-1" />
+                </Badge>
+              ))
+            )}
             {hasActiveFilters && (
               <Button
                 variant="ghost"
