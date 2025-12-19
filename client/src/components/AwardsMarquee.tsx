@@ -39,11 +39,12 @@ export function AwardsMarquee({
         gradient={gradient}
         gradientColor={gradientColor}
         gradientWidth={gradientWidth}
+        autoFill={true}
       >
         {items.map((item, index) => (
           <div 
             key={item.id}
-            className="flex items-center justify-center mx-8 transition-opacity duration-brand ease-brand hover:opacity-80"
+            className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
             data-testid={`marquee-item-${index}`}
           >
             {item.logo ? (
