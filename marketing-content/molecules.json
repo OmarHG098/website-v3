@@ -1,0 +1,79 @@
+{
+  "molecules": [
+    {
+      "id": "universal-video-youtube",
+      "component": "UniversalVideo",
+      "variant": "YouTube",
+      "description": "Embedded YouTube video with responsive aspect ratio",
+      "tags": ["video", "embed", "media"],
+      "props": {
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "ratio": "16:9"
+      }
+    },
+    {
+      "id": "universal-video-local",
+      "component": "UniversalVideo",
+      "variant": "Local",
+      "description": "Self-hosted video with custom preview image and shadow border",
+      "tags": ["video", "embed", "media"],
+      "props": {
+        "url": "/videos/sample.mp4",
+        "ratio": "16:9",
+        "muted": true,
+        "autoplay": false,
+        "loop": true
+      }
+    },
+    {
+      "id": "universal-video-autoplay",
+      "component": "UniversalVideo",
+      "variant": "Autoplay",
+      "description": "Muted autoplay video for background sections",
+      "tags": ["video", "embed", "media"],
+      "props": {
+        "url": "/videos/background.mp4",
+        "ratio": "21:9",
+        "muted": true,
+        "autoplay": true,
+        "loop": true
+      }
+    },
+    {
+      "id": "universal-image-logo",
+      "component": "UniversalImage",
+      "variant": "Logo",
+      "description": "Company logo from registry with logo preset",
+      "tags": ["image"],
+      "props": {
+        "id": "arp_logo_certification",
+        "preset": "logo",
+        "className": "w-32"
+      }
+    },
+    {
+      "id": "universal-image-avatar",
+      "component": "UniversalImage",
+      "variant": "Avatar",
+      "description": "Square avatar image for profiles",
+      "tags": ["image", "avatar"],
+      "props": {
+        "id": "badges_new",
+        "preset": "avatar",
+        "className": "w-16 h-16 rounded-full"
+      }
+    },
+    {
+      "id": "universal-image-card",
+      "component": "UniversalImage",
+      "variant": "Card",
+      "description": "Standard card thumbnail image",
+      "tags": ["image", "card", "thumbnail"],
+      "props": {
+        "id": "logo_beacon_council",
+        "preset": "card",
+        "className": "w-full rounded-lg"
+      }
+    }
+  ]
+}

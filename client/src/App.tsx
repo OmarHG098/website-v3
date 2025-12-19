@@ -22,6 +22,7 @@ const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
 const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
 const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
+const MoleculesShowcase = lazy(() => import("@/pages/MoleculesShowcase"));
 const TemplatePage = lazy(() => import("@/pages/page"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
 const TermsPage = lazy(() => import("@/pages/TermsPage"));
@@ -77,6 +78,10 @@ function Router() {
         />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/media-gallery" component={MediaGallery} />
+        <Route
+          path="/private/molecules-showcase"
+          component={MoleculesShowcase}
+        />
         <Route
           path="/private/preview/:contentType/:slug"
           component={PrivatePreview}

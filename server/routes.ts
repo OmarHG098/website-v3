@@ -1037,6 +1037,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Molecules Showcase API endpoint
+  app.get("/api/molecules", (_req, res) => {
+    const moleculesPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "molecules.json",
+    );
+    try {
+      const moleculesData = JSON.parse(fs.readFileSync(moleculesPath, "utf-8"));
+      res.json(moleculesData);
+    } catch (error) {
+      res.status(500).json({
+        error: "Failed to load molecules data",
+        details: String(error),
+      });
+    }
+  });
+
   // Component Registry API endpoints
   app.get("/api/component-registry", (req, res) => {
     const overview = getRegistryOverview();

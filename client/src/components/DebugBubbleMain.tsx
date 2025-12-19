@@ -46,6 +46,7 @@ import {
   IconDeviceDesktop,
   IconFolder,
   IconExternalLink,
+  IconAtom,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import {
@@ -937,14 +938,24 @@ export function DebugBubble() {
                       <p className="text-xs text-muted-foreground">{componentsList.length} components</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setShowComponentsSearch(!showComponentsSearch)}
-                    className={`p-1.5 rounded hover-elevate ${showComponentsSearch ? 'bg-muted' : ''}`}
-                    title="Toggle search"
-                    data-testid="button-toggle-components-search"
-                  >
-                    <IconSearch className="h-4 w-4 text-muted-foreground" />
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <a
+                      href="/private/molecules-showcase"
+                      className="p-1.5 rounded hover-elevate"
+                      title="Molecules Showcase"
+                      data-testid="link-molecules-showcase"
+                    >
+                      <IconAtom className="h-4 w-4 text-muted-foreground" />
+                    </a>
+                    <button
+                      onClick={() => setShowComponentsSearch(!showComponentsSearch)}
+                      className={`p-1.5 rounded hover-elevate ${showComponentsSearch ? 'bg-muted' : ''}`}
+                      title="Toggle search"
+                      data-testid="button-toggle-components-search"
+                    >
+                      <IconSearch className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
                 </div>
               </div>
               
