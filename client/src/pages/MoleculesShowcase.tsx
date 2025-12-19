@@ -4,7 +4,7 @@ import { MoleculeRenderer, type MoleculeDefinition } from "@/components/Molecule
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { IconAtom, IconX, IconTag, IconBox } from "@tabler/icons-react";
+import { IconAtom, IconX, IconTag, IconBox, IconCode } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -230,32 +230,51 @@ export default function MoleculesShowcase() {
                 <CardHeader className="pb-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="text-lg">{molecule.component} → {molecule.variant}</CardTitle>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-1"
-                          data-testid={`button-tags-${molecule.id}`}
-                        >
-                          <IconTag className="w-3 h-3" />
-                          {molecule.tags.length}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-3">
-                        <div className="flex flex-wrap gap-1">
-                          {molecule.tags.map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="secondary"
-                              className="text-xs"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                    <div className="flex items-center gap-1">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-1"
+                            data-testid={`button-tags-${molecule.id}`}
+                          >
+                            <IconTag className="w-3 h-3" />
+                            {molecule.tags.length}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-3">
+                          <div className="flex flex-wrap gap-1">
+                            {molecule.tags.map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            data-testid={`button-props-${molecule.id}`}
+                          >
+                            <IconCode className="w-3 h-3" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80 p-3">
+                          <pre className="text-xs overflow-auto max-h-64 bg-muted p-2 rounded">
+                            {JSON.stringify(molecule.props, null, 2)}
+                          </pre>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
                   {molecule.description && (
                     <p className="text-sm text-muted-foreground">
