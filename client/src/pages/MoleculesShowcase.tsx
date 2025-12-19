@@ -105,112 +105,108 @@ export default function MoleculesShowcase() {
             </h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  data-testid="button-open-tag-filter"
-                >
-                  <IconTag className="w-4 h-4" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Filter by Tags</DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {allTags.map((tag) => (
-                    <Button
-                      key={tag}
-                      variant={selectedTags.includes(tag) ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => toggleTag(tag)}
-                      data-testid={`button-modal-filter-tag-${tag}`}
-                    >
-                      {tag}
-                    </Button>
-                  ))}
-                </div>
-              </DialogContent>
-            </Dialog>
-            <span className="text-sm text-muted-foreground">
-              Tags:
-            </span>
-            {selectedTags.length === 0 ? (
-              <span className="text-sm text-muted-foreground italic">All</span>
-            ) : (
-              selectedTags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="default"
-                  className="cursor-pointer"
-                  onClick={() => toggleTag(tag)}
-                  data-testid={`badge-active-tag-${tag}`}
-                >
-                  {tag}
-                  <IconX className="w-3 h-3 ml-1" />
-                </Badge>
-              ))
-            )}
-          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-open-tag-filter"
+                  >
+                    <IconTag className="w-4 h-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Filter by Tags</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {allTags.map((tag) => (
+                      <Button
+                        key={tag}
+                        variant={selectedTags.includes(tag) ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => toggleTag(tag)}
+                        data-testid={`button-modal-filter-tag-${tag}`}
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </div>
+                </DialogContent>
+              </Dialog>
+              {selectedTags.length === 0 ? (
+                <span className="text-sm text-muted-foreground italic">All tags</span>
+              ) : (
+                selectedTags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="default"
+                    className="cursor-pointer"
+                    onClick={() => toggleTag(tag)}
+                    data-testid={`badge-active-tag-${tag}`}
+                  >
+                    {tag}
+                    <IconX className="w-3 h-3 ml-1" />
+                  </Badge>
+                ))
+              )}
+            </div>
 
-          <div className="flex flex-wrap items-center gap-2 mt-2">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  data-testid="button-open-component-filter"
-                >
-                  <IconBox className="w-4 h-4" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Filter by Component</DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {allComponents.map((component) => (
-                    <Button
-                      key={component}
-                      variant={selectedComponents.includes(component) ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => toggleComponent(component)}
-                      data-testid={`button-modal-filter-component-${component}`}
-                    >
-                      {component}
-                    </Button>
-                  ))}
-                </div>
-              </DialogContent>
-            </Dialog>
-            <span className="text-sm text-muted-foreground">
-              Components:
-            </span>
-            {selectedComponents.length === 0 ? (
-              <span className="text-sm text-muted-foreground italic">All</span>
-            ) : (
-              selectedComponents.map((component) => (
-                <Badge
-                  key={component}
-                  variant="default"
-                  className="cursor-pointer"
-                  onClick={() => toggleComponent(component)}
-                  data-testid={`badge-active-component-${component}`}
-                >
-                  {component}
-                  <IconX className="w-3 h-3 ml-1" />
-                </Badge>
-              ))
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-open-component-filter"
+                  >
+                    <IconBox className="w-4 h-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Filter by Component</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {allComponents.map((component) => (
+                      <Button
+                        key={component}
+                        variant={selectedComponents.includes(component) ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => toggleComponent(component)}
+                        data-testid={`button-modal-filter-component-${component}`}
+                      >
+                        {component}
+                      </Button>
+                    ))}
+                  </div>
+                </DialogContent>
+              </Dialog>
+              {selectedComponents.length === 0 ? (
+                <span className="text-sm text-muted-foreground italic">All components</span>
+              ) : (
+                selectedComponents.map((component) => (
+                  <Badge
+                    key={component}
+                    variant="default"
+                    className="cursor-pointer"
+                    onClick={() => toggleComponent(component)}
+                    data-testid={`badge-active-component-${component}`}
+                  >
+                    {component}
+                    <IconX className="w-3 h-3 ml-1" />
+                  </Badge>
+                ))
+              )}
+            </div>
+
             {hasActiveFilters && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearFilters}
-                className="ml-2"
                 data-testid="button-clear-filters"
               >
                 <IconX className="w-4 h-4 mr-1" />
