@@ -36,19 +36,11 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
           <div className="lg:pl-4">
             {data.title && (
               <h2 
-                className="text-h2 mb-2 text-foreground"
+                className="text-h2 mb-6 text-foreground"
                 data-testid="text-stats-cards-title"
               >
                 {data.title}
               </h2>
-            )}
-            {data.subtitle && (
-              <p 
-                className="text-h4 mb-6 text-primary"
-                data-testid="text-stats-cards-subtitle"
-              >
-                {data.subtitle}
-              </p>
             )}
             {data.description && (
               <p 
