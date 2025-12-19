@@ -120,7 +120,7 @@ export default function MoleculesShowcase() {
               <Card>
                 <CardHeader className="pb-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <CardTitle className="text-lg">{molecule.name}</CardTitle>
+                    <CardTitle className="text-lg">{molecule.component} → {molecule.variant}</CardTitle>
                     <div className="flex flex-wrap gap-1">
                       {molecule.tags.map((tag) => (
                         <Badge

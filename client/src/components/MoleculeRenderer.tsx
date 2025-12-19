@@ -5,7 +5,7 @@ import type { ImageRef } from "@shared/schema";
 interface UniversalVideoMolecule {
   id: string;
   component: "UniversalVideo";
-  name: string;
+  variant: string;
   description?: string;
   tags: string[];
   props: VideoConfig;
@@ -14,7 +14,7 @@ interface UniversalVideoMolecule {
 interface UniversalImageMolecule {
   id: string;
   component: "UniversalImage";
-  name: string;
+  variant: string;
   description?: string;
   tags: string[];
   props: ImageRef & { loading?: "lazy" | "eager" };

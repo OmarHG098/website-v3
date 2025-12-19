@@ -3,7 +3,7 @@
     {
       "id": "universal-video-youtube",
       "component": "UniversalVideo",
-      "name": "YouTube Video Embed",
+      "variant": "YouTube",
       "description": "Embedded YouTube video with responsive aspect ratio",
       "tags": ["video", "youtube", "embed", "media"],
       "props": {
@@ -14,7 +14,7 @@
     {
       "id": "universal-video-local",
       "component": "UniversalVideo",
-      "name": "Local Video with Preview",
+      "variant": "Local",
       "description": "Self-hosted video with custom preview image and shadow border",
       "tags": ["video", "local", "preview", "media"],
       "props": {
@@ -28,7 +28,7 @@
     {
       "id": "universal-video-autoplay",
       "component": "UniversalVideo",
-      "name": "Autoplay Background Video",
+      "variant": "Autoplay",
       "description": "Muted autoplay video for background sections",
       "tags": ["video", "autoplay", "background", "media"],
       "props": {
@@ -42,7 +42,7 @@
     {
       "id": "universal-image-logo",
       "component": "UniversalImage",
-      "name": "Logo Image",
+      "variant": "Logo",
       "description": "Company logo from registry with logo preset",
       "tags": ["image", "logo", "branding"],
       "props": {
@@ -54,7 +54,7 @@
     {
       "id": "universal-image-avatar",
       "component": "UniversalImage",
-      "name": "Avatar Image",
+      "variant": "Avatar",
       "description": "Square avatar image for profiles",
       "tags": ["image", "avatar", "profile"],
       "props": {
@@ -66,7 +66,7 @@
     {
       "id": "universal-image-card",
       "component": "UniversalImage",
-      "name": "Card Image",
+      "variant": "Card",
       "description": "Standard card thumbnail image",
       "tags": ["image", "card", "thumbnail"],
       "props": {
