@@ -1,15 +1,26 @@
-import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
+import { UniversalVideo, type VideoConfig } from "@/components/UniversalVideo";
+import { UniversalImage } from "@/components/UniversalImage";
+import type { ImageRef } from "@shared/schema";
 
-interface NumberedStepsMolecule {
+interface UniversalVideoMolecule {
   id: string;
-  component: "NumberedSteps";
+  component: "UniversalVideo";
   name: string;
   description?: string;
   tags: string[];
-  props: NumberedStepsData;
+  props: VideoConfig;
 }
 
-export type MoleculeDefinition = NumberedStepsMolecule;
+interface UniversalImageMolecule {
+  id: string;
+  component: "UniversalImage";
+  name: string;
+  description?: string;
+  tags: string[];
+  props: ImageRef & { loading?: "lazy" | "eager" };
+}
+
+export type MoleculeDefinition = UniversalVideoMolecule | UniversalImageMolecule;
 
 interface MoleculeRendererProps {
   molecule: MoleculeDefinition;
@@ -17,8 +28,28 @@ interface MoleculeRendererProps {
 
 export function MoleculeRenderer({ molecule }: MoleculeRendererProps) {
   switch (molecule.component) {
-    case "NumberedSteps":
-      return <NumberedSteps data={molecule.props} />;
+    case "UniversalVideo":
+      return (
+        <UniversalVideo
+          url={molecule.props.url}
+          ratio={molecule.props.ratio}
+          muted={molecule.props.muted}
+          autoplay={molecule.props.autoplay}
+          loop={molecule.props.loop}
+          preview_image_url={molecule.props.preview_image_url}
+          withShadowBorder={molecule.props.with_shadow_border}
+        />
+      );
+    case "UniversalImage":
+      return (
+        <UniversalImage
+          id={molecule.props.id}
+          preset={molecule.props.preset}
+          alt={molecule.props.alt}
+          className={molecule.props.className}
+          loading={molecule.props.loading}
+        />
+      );
     default:
       return (
         <div className="p-8 text-center text-muted-foreground bg-muted/30 rounded-lg">

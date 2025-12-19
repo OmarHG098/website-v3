@@ -1,133 +1,78 @@
 {
   "molecules": [
     {
-      "id": "numbered-steps-default",
-      "component": "NumberedSteps",
-      "name": "Numbered Steps - Default",
-      "description": "Vertical steps with numbered circles, expandable on mobile",
-      "tags": ["steps", "progress", "process", "timeline"],
+      "id": "universal-video-youtube",
+      "component": "UniversalVideo",
+      "name": "YouTube Video Embed",
+      "description": "Embedded YouTube video with responsive aspect ratio",
+      "tags": ["video", "youtube", "embed", "media"],
       "props": {
-        "variant": "default",
-        "title": "How It Works",
-        "description": "Follow these simple steps to get started with your learning journey",
-        "collapsible_mobile": true,
-        "steps": [
-          {
-            "icon": "Rocket",
-            "title": "Sign Up",
-            "text": "Create your free account in minutes",
-            "bullets": [
-              "No credit card required",
-              "Instant access to free courses",
-              "Personalized learning path"
-            ]
-          },
-          {
-            "icon": "Book",
-            "title": "Learn",
-            "text": "Access world-class curriculum",
-            "bullets": [
-              "Expert-led video lessons",
-              "Hands-on coding exercises",
-              "Real-world projects"
-            ]
-          },
-          {
-            "icon": "Certificate",
-            "title": "Get Certified",
-            "text": "Earn your certification",
-            "bullets": [
-              "Industry-recognized credentials",
-              "Portfolio-ready projects",
-              "Career support included"
-            ]
-          }
-        ]
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "ratio": "16:9"
       }
     },
     {
-      "id": "numbered-steps-spotlight",
-      "component": "NumberedSteps",
-      "name": "Numbered Steps - Spotlight",
-      "description": "Horizontal steps with spotlight number styling, great for showcasing process",
-      "tags": ["steps", "progress", "process", "spotlight"],
+      "id": "universal-video-local",
+      "component": "UniversalVideo",
+      "name": "Local Video with Preview",
+      "description": "Self-hosted video with custom preview image and shadow border",
+      "tags": ["video", "local", "preview", "media"],
       "props": {
-        "variant": "spotlight",
-        "title": "Your Path to Success",
-        "description": "A proven methodology that has helped thousands of students launch new careers",
-        "steps": [
-          {
-            "icon": "UserPlus",
-            "title": "Enroll Today",
-            "bullets": [
-              "Choose your program",
-              "Select your schedule",
-              "Meet your mentor"
-            ]
-          },
-          {
-            "icon": "Code",
-            "title": "Build Real Projects",
-            "bullets": [
-              "Work on industry projects",
-              "Collaborate with peers",
-              "Get code reviews"
-            ]
-          },
-          {
-            "icon": "Briefcase",
-            "title": "Launch Your Career",
-            "bullets": [
-              "Resume preparation",
-              "Interview coaching",
-              "Job placement support"
-            ]
-          }
-        ]
+        "url": "/videos/sample.mp4",
+        "ratio": "16:9",
+        "muted": true,
+        "autoplay": false,
+        "loop": true
       }
     },
     {
-      "id": "numbered-steps-bubble-text",
-      "component": "NumberedSteps",
-      "name": "Numbered Steps - Bubble Text",
-      "description": "Interactive triangle layout with clickable steps and expanding content",
-      "tags": ["steps", "interactive", "navs", "breadcrumb"],
+      "id": "universal-video-autoplay",
+      "component": "UniversalVideo",
+      "name": "Autoplay Background Video",
+      "description": "Muted autoplay video for background sections",
+      "tags": ["video", "autoplay", "background", "media"],
       "props": {
-        "variant": "bubbleText",
-        "title": "The 4Geeks Method",
-        "description": "Our unique approach combines the best of online and in-person learning",
-        "steps": [
-          {
-            "title": "Foundations",
-            "text": "Master the fundamentals",
-            "bullets": [
-              "HTML, CSS, and JavaScript basics",
-              "Programming fundamentals",
-              "Version control with Git",
-              "Command line proficiency"
-            ]
-          },
-          {
-            "title": "Advanced Skills",
-            "text": "Level up your expertise",
-            "bullets": [
-              "React and modern frameworks",
-              "Backend development",
-              "Database design",
-              "API development"
-            ]
-          },
-          {
-            "title": "Career Launch",
-            "text": "Enter the job market",
-            "bullets": [
-              "Portfolio development",
-              "Technical interviews",
-              "Networking strategies",
-              "Salary negotiation"
-            ]
-          }
-        ]
+        "url": "/videos/background.mp4",
+        "ratio": "21:9",
+        "muted": true,
+        "autoplay": true,
+        "loop": true
+      }
+    },
+    {
+      "id": "universal-image-logo",
+      "component": "UniversalImage",
+      "name": "Logo Image",
+      "description": "Company logo from registry with logo preset",
+      "tags": ["image", "logo", "branding"],
+      "props": {
+        "id": "arp_logo_certification",
+        "preset": "logo",
+        "className": "w-32"
+      }
+    },
+    {
+      "id": "universal-image-avatar",
+      "component": "UniversalImage",
+      "name": "Avatar Image",
+      "description": "Square avatar image for profiles",
+      "tags": ["image", "avatar", "profile"],
+      "props": {
+        "id": "badges_new",
+        "preset": "avatar",
+        "className": "w-16 h-16 rounded-full"
+      }
+    },
+    {
+      "id": "universal-image-card",
+      "component": "UniversalImage",
+      "name": "Card Image",
+      "description": "Standard card thumbnail image",
+      "tags": ["image", "card", "thumbnail"],
+      "props": {
+        "id": "logo_beacon_council",
+        "preset": "card",
+        "className": "w-full rounded-lg"
       }
     }
   ]
