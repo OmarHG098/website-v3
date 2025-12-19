@@ -1,5 +1,6 @@
 import type { FeaturesGridStatsCardsSection } from "@shared/schema";
-import { Card } from "@/components/ui/card"
+import { StatCard } from "@/components/molecules/StatCard";
+
 interface FeaturesGridStatsCardsProps {
   data: FeaturesGridStatsCardsSection;
 }
@@ -16,18 +17,14 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
             {data.items.map((item, index) => {
               const itemId = item.id || `stat-${index}`;
               return (
-                <Card 
+                <StatCard
                   key={itemId}
-                  className={`items-center gap-2 rounded-card p-4 ${data.card_color || 'bg-primary/5'}`}
+                  value={item.value}
+                  title={item.title}
+                  use_card={data.use_card !== false}
+                  card_color={data.card_color}
                   data-testid={`card-stat-${itemId}`}
-                >
-                  <div className="text-h2 font-bold text-primary mb-1">
-                    {item.value}
-                  </div>
-                  <div className="text-body text-foreground">
-                    {item.title}
-                  </div>
-                </Card>
+                />
               );
             })}
           </div>

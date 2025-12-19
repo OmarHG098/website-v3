@@ -85,6 +85,7 @@ export const featuresGridStatsCardsSectionSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string().optional(),
   card_color: z.string().optional(),
+  use_card: z.boolean().optional(),
   items: z.array(featuresGridStatsCardsItemSchema),
 });
 
