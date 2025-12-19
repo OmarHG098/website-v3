@@ -13,10 +13,6 @@ props:
     type: number
     required: false
     description: Scroll speed in pixels per second (default 40)
-  pauseOnHover:
-    type: boolean
-    required: false
-    description: Whether to pause scrolling on hover (default true)
   gradient:
     type: boolean
     required: false

@@ -68,50 +68,49 @@ sections:
   - type: awards_marquee
     version: "1.0"
     speed: 40
-    pauseOnHover: true
     gradient: true
     gradientWidth: 100
     items:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: excelencia-educativa
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality Online Education
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: course-report-2024
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: tech-hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: ebootcamp
         logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: premios-tecnologia
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-20
       - id: newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: reviews-coursereport
         logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: forbes-1
         logo: /attached_assets/forbes-logo-award_1764709625651.webp
         alt: Forbes - Top Coding Bootcamp
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
       - id: fortune-1
         logo: /attached_assets/fortune-logo_1764709618095.webp
         alt: Fortune - Best Education Company
-        logoHeight: h-10 md:h-12
+        logoHeight: h-10 md:h-16
   - type: features_grid
     version: "1.0"
     variant: spotlight

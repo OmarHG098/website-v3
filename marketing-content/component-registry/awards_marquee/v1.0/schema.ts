@@ -17,7 +17,6 @@ export const awardsMarqueeSectionSchema = z.object({
   type: z.literal("awards_marquee"),
   version: z.string().optional(),
   speed: z.number().optional(),
-  pauseOnHover: z.boolean().optional(),
   gradient: z.boolean().optional(),
   gradientColor: z.string().optional(),
   gradientWidth: z.number().optional(),

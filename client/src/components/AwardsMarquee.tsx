@@ -13,7 +13,6 @@ export interface AwardsMarqueeItem {
 interface AwardsMarqueeProps {
   items: AwardsMarqueeItem[];
   speed?: number;
-  pauseOnHover?: boolean;
   gradient?: boolean;
   gradientColor?: string;
   gradientWidth?: number;
@@ -23,7 +22,6 @@ interface AwardsMarqueeProps {
 export function AwardsMarquee({ 
   items, 
   speed = 40,
-  pauseOnHover = true,
   gradient = true,
   gradientColor,
   gradientWidth = 100,
@@ -35,7 +33,7 @@ export function AwardsMarquee({
     <div className={className} data-testid="awards-marquee">
       <Marquee
         speed={speed}
-        pauseOnHover={pauseOnHover}
+        pauseOnHover={false}
         gradient={gradient}
         gradientColor={gradientColor}
         gradientWidth={gradientWidth}
@@ -51,7 +49,7 @@ export function AwardsMarquee({
               <img 
                 src={item.logo} 
                 alt={item.alt}
-                className={`${item.logoHeight || "h-12 md:h-14"} w-auto object-contain`}
+                className={`${item.logoHeight || "h-12 md:h-20"} w-auto object-contain`}
                 loading="lazy"
               />
             ) : (

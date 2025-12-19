@@ -1,6 +1,5 @@
 - type: awards_marquee
   speed: 40
-  pauseOnHover: true
   gradient: true
   gradientWidth: 100
   items:
