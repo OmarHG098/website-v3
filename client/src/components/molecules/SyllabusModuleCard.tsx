@@ -44,7 +44,7 @@ export function SyllabusModuleCard({
               {duration}
             </p>
             <h3 
-              className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2"
+              className="inline-block px-2 py-1 font-bold font-heading text-foreground mb-2 rounded"
               style={{ backgroundColor: 'hsl(var(--accent))' }}
             >
               {title}
