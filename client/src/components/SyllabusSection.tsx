@@ -494,7 +494,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         <ul className="space-y-2.5 mb-5 text-sm text-foreground">
                           {module.objectives.map((objective, objIndex) => (
                             <li key={objIndex} className="flex items-start gap-2">
-                              <span className="text-primary mt-0.5 text-lg leading-none">•</span>
+                              <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
                               <span className="leading-relaxed">{objective}</span>
                             </li>
                           ))}

@@ -30,7 +30,7 @@ export function AwardsMarquee({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={className} data-testid="awards-marquee">
+    <div className={`mx-12 ${className}`} data-testid="awards-marquee">
       <Marquee
         speed={speed}
         pauseOnHover={false}
