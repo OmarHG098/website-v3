@@ -379,7 +379,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       className="py-section bg-muted/30"
       data-testid="section-syllabus-program"
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Program Info Card */}
           <div className="flex-shrink-0 lg:w-80">
