@@ -67,25 +67,16 @@ sections:
           logo: /attached_assets/switchup_1765590146414.webp
   - type: features_grid
     version: "1.0"
-    variant: spotlight
+    variant: stats-cards
     title: Why AI Engineering Now
-    subtitle: The talent shortage is your opportunity
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
     items:
-      - icon: Briefcase
-        value: 3.5M
+      - value: 3.5M
         title: AI-related roles expected by 2026
-      - icon: Graduation
-        value: 47%
+      - value: 47%
         title: Year-over-year growth in AI job postings
-      - icon: GrowthChart
-        value: $95K-$135K
+      - value: $95K-$135K
         title: Average starting salary for AI Engineers
-    columns: 3
-    icon_color: "#0097CD"
-    spotlight_config:
-      initial_index: 0
-      auto_rotate_ms: 4000
-      pause_on_hover: true
   - type: awards_marquee
     version: "1.0"
     speed: 40
