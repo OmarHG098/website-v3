@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { IconAtom, IconFilter, IconX } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MoleculesData {
   molecules: MoleculeDefinition[];
@@ -81,15 +82,15 @@ export default function MoleculesShowcase() {
               Filter by tag:
             </span>
             {allTags.map((tag) => (
-              <Badge
+              <Button
                 key={tag}
                 variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer"
+                size="sm"
                 onClick={() => toggleTag(tag)}
-                data-testid={`filter-tag-${tag}`}
+                data-testid={`button-filter-tag-${tag}`}
               >
                 {tag}
-              </Badge>
+              </Button>
             ))}
             {selectedTags.length > 0 && (
               <Button

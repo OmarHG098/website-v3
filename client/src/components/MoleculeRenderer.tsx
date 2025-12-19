@@ -1,28 +1,28 @@
 import NumberedSteps, { type NumberedStepsData } from "@/components/NumberedSteps";
 
-export interface MoleculeDefinition {
+interface NumberedStepsMolecule {
   id: string;
-  component: string;
+  component: "NumberedSteps";
   name: string;
   description?: string;
   tags: string[];
-  props: Record<string, unknown>;
+  props: NumberedStepsData;
 }
+
+export type MoleculeDefinition = NumberedStepsMolecule;
 
 interface MoleculeRendererProps {
   molecule: MoleculeDefinition;
 }
 
 export function MoleculeRenderer({ molecule }: MoleculeRendererProps) {
-  const { component, props } = molecule;
-
-  switch (component) {
+  switch (molecule.component) {
     case "NumberedSteps":
-      return <NumberedSteps data={props as unknown as NumberedStepsData} />;
+      return <NumberedSteps data={molecule.props} />;
     default:
       return (
         <div className="p-8 text-center text-muted-foreground bg-muted/30 rounded-lg">
-          Unknown molecule component: {component}
+          Unknown molecule component: {(molecule as { component: string }).component}
         </div>
       );
   }
