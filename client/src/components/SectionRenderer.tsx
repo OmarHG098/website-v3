@@ -27,6 +27,7 @@ import { VerticalBarsCards } from "@/components/VerticalBarsCards";
 import { PieCharts } from "@/components/PieCharts";
 import { LeadForm } from "@/components/LeadForm";
 import { AwardBadges } from "@/components/AwardBadges";
+import { AwardsMarquee } from "@/components/AwardsMarquee";
 import { ApplyFormSection } from "@/components/ApplyFormSection";
 import { HumanAndAIDuo } from "@/components/HumanAndAIDuo";
 import { CommunitySupport } from "@/components/CommunitySupport";
@@ -149,6 +150,34 @@ export function renderSection(section: Section, index: number): React.ReactNode 
         return null;
       }
       return <AwardBadges key={index} items={validItems} variant={badgeSection.variant} showBorder={badgeSection.showBorder} />;
+    }
+    case "awards_marquee": {
+      const marqueeSection = section as unknown as { items?: unknown[]; speed?: number; pauseOnHover?: boolean; gradient?: boolean; gradientWidth?: number };
+      if (!Array.isArray(marqueeSection.items) || marqueeSection.items.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("awards_marquee section missing required 'items' array");
+        }
+        return null;
+      }
+      const validItems = marqueeSection.items.filter((item): item is Parameters<typeof AwardsMarquee>[0]["items"][number] => 
+        typeof item === "object" && item !== null && "id" in item && "alt" in item
+      );
+      if (validItems.length === 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("awards_marquee section has no valid items (each item requires 'id' and 'alt')");
+        }
+        return null;
+      }
+      return (
+        <AwardsMarquee 
+          key={index} 
+          items={validItems} 
+          speed={marqueeSection.speed}
+          pauseOnHover={marqueeSection.pauseOnHover}
+          gradient={marqueeSection.gradient}
+          gradientWidth={marqueeSection.gradientWidth}
+        />
+      );
     }
     case "apply_form":
       return <ApplyFormSection key={index} data={section as Parameters<typeof ApplyFormSection>[0]["data"]} />;

@@ -610,6 +610,8 @@ import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type Graduat
 export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage };
 import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
+import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
+export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 
 
 export const sectionSchema = z.union([
@@ -643,6 +645,7 @@ export const sectionSchema = z.union([
   awardsRowSectionSchema,
   applyFormSectionSchema,
   awardBadgesSectionSchema,
+  awardsMarqueeSectionSchema,
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   twoColumnAccordionCardSectionSchema,
