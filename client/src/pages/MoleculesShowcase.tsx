@@ -4,7 +4,7 @@ import { MoleculeRenderer, type MoleculeDefinition } from "@/components/Molecule
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { IconAtom, IconFilter, IconX, IconTag, IconBox } from "@tabler/icons-react";
+import { IconAtom, IconX, IconTag, IconBox } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -113,7 +113,7 @@ export default function MoleculesShowcase() {
                   size="icon"
                   data-testid="button-open-tag-filter"
                 >
-                  <IconFilter className="w-4 h-4" />
+                  <IconTag className="w-4 h-4" />
                 </Button>
               </DialogTrigger>
               <DialogContent>
