@@ -3,7 +3,7 @@ import type { FeaturesGridSpotlightSection, FeaturesGridHighlightItem } from "@s
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
-import { DotsIndicator } from "@/components/ui/dots-indicator";
+import { DotsIndicator } from "@/components/DotsIndicator";
 import type { ComponentType } from "react";
 
 function getIcon(iconName: string, className?: string, color?: string) {

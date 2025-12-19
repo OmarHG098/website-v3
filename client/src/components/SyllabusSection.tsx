@@ -3,7 +3,7 @@ import type { SyllabusSection as SyllabusSectionType, SyllabusDefault, SyllabusL
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { DotsIndicator } from "@/components/ui/dots-indicator";
+import { DotsIndicator } from "@/components/DotsIndicator";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";
