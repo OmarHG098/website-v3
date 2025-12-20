@@ -93,7 +93,7 @@ export function SyllabusModuleCard({
           </div>
 
           <div className="flex gap-8 mb-5">
-            <ul className="space-y-2 text-sm text-foreground flex-1">
+            <ul className="space-y-1 text-sm text-foreground w-max">
               {objectives.slice(0, 4).map((objective, objIndex) => (
                 <li key={objIndex} className="flex items-start gap-2">
                   <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
@@ -102,7 +102,7 @@ export function SyllabusModuleCard({
               ))}
             </ul>
             {objectives.length > 4 && (
-              <ul className="space-y-2 text-sm text-foreground flex-1">
+              <ul className="space-y-1 text-sm text-foreground w-max">
                 {objectives.slice(4).map((objective, objIndex) => (
                   <li key={objIndex + 4} className="flex items-start gap-2">
                     <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
