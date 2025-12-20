@@ -35,7 +35,7 @@ export function SyllabusModuleCard({
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
-        isVertical ? "min-h-[380px] w-80" : "flex gap-6",
+        isVertical ? "min-h-[380px] w-80" : "min-w-[600px]",
         className
       )}
       data-testid={testId}
@@ -78,7 +78,7 @@ export function SyllabusModuleCard({
         </>
       ) : (
         <>
-          <div className="flex-shrink-0 w-62">
+          <div className="mb-5">
             <p className="text-sm text-muted-foreground mb-2 font-medium">
               {duration}
             </p>
@@ -92,27 +92,37 @@ export function SyllabusModuleCard({
             </div>
           </div>
 
-          <div className="flex-1">
-            <ul className="space-y-2 text-sm text-foreground">
-              {objectives.map((objective, objIndex) => (
+          <div className="flex gap-8 mb-5">
+            <ul className="space-y-2 text-sm text-foreground flex-1">
+              {objectives.slice(0, 4).map((objective, objIndex) => (
                 <li key={objIndex} className="flex items-start gap-2">
                   <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
                   <span className="leading-relaxed">{objective}</span>
                 </li>
               ))}
             </ul>
-
-            {projects && (
-              <div className="pt-4 mt-4 border-t border-border">
-                <p className="text-sm font-bold text-primary mb-1.5">
-                  Projects:
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {projects}
-                </p>
-              </div>
+            {objectives.length > 4 && (
+              <ul className="space-y-2 text-sm text-foreground flex-1">
+                {objectives.slice(4).map((objective, objIndex) => (
+                  <li key={objIndex + 4} className="flex items-start gap-2">
+                    <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
+                    <span className="leading-relaxed">{objective}</span>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
+
+          {projects && (
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm font-bold text-primary mb-1.5">
+                Projects:
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {projects}
+              </p>
+            </div>
+          )}
         </>
       )}
     </Card>

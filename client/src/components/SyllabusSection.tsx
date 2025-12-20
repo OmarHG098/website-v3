@@ -368,7 +368,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   if (moduleCards.length === 0) {
     return (
-      <section className="py-section bg-background" data-testid="section-syllabus-program">
+      <section className="py-section bg-muted/30" data-testid="section-syllabus-program">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -384,9 +384,9 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Program Info Card */}
-          <div className="flex-shrink-0 lg:w-80">
-            <Card className="p-8 bg-card shadow-card rounded-card border-0">
-              <div className="mb-8">
+          <div className="flex-shrink-0 lg:w-80 bg-background rounded-xl rounde bor-8 border-primary/20">
+            <Card className="p-8 bg-card shadow-card border-0">
+              <div className="mb-8 ">
                 <h2 
                   className="text-h2 text-foreground mb-3"
                   data-testid="text-syllabus-program-title"
@@ -394,8 +394,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   {data.program_title}
                 </h2>
                 <span 
-                  className="inline-block bg-accent text-foreground px-4 py-1.5 text-lg font-bold font-heading"
-                  style={{ backgroundColor: 'hsl(var(--accent))' }}
+                  className="inline-blocktext-lg font-bold font-heading rounded bg-primary/20 px-4 py-1.5"
                   data-testid="text-syllabus-program-highlight"
                 >
                   {data.program_highlight}
