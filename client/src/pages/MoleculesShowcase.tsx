@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
+import { oneDark } from "@codemirror/theme-one-dark";
 
 interface MoleculesData {
   molecules: MoleculeDefinition[];
@@ -227,16 +230,16 @@ export default function MoleculesShowcase() {
           {filteredMolecules.map((molecule) => (
             <div key={molecule.id} data-testid={`molecule-${molecule.id}`}>
               <Card>
-                <CardHeader className="pb-2">
+                <CardHeader className="pl-[14px] pr-[14px] pt-[4px] pb-[4px]">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="text-lg">{molecule.component} → {molecule.variant}</CardTitle>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="sm"
-                            className="gap-1"
+                            className="gap-1 h-7 px-2"
                             data-testid={`button-tags-${molecule.id}`}
                           >
                             <IconTag className="w-3 h-3" />
@@ -260,18 +263,23 @@ export default function MoleculesShowcase() {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 w-7 p-0"
                             data-testid={`button-props-${molecule.id}`}
                           >
                             <IconCode className="w-3 h-3" />
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-80 p-3">
-                          <pre className="text-xs overflow-auto max-h-64 bg-muted p-2 rounded">
-                            {JSON.stringify(molecule.props, null, 2)}
-                          </pre>
+                        <PopoverContent className="w-80 p-0">
+                          <CodeMirror
+                            value={JSON.stringify(molecule.props, null, 2)}
+                            extensions={[json()]}
+                            theme={oneDark}
+                            editable={false}
+                            basicSetup={{ lineNumbers: false, foldGutter: false }}
+                            className="text-xs max-h-64 overflow-auto"
+                          />
                         </PopoverContent>
                       </Popover>
                     </div>

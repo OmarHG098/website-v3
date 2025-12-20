@@ -55,9 +55,9 @@ export function isDebugModeActive(): boolean {
 }
 
 export function getDebugToken(): string | null {
-  // Check sessionStorage for cached token
-  const cachedToken = sessionStorage.getItem(DEBUG_TOKEN_KEY);
-  const cachedExpiry = sessionStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
+  // Check localStorage for cached token (persists across tabs)
+  const cachedToken = localStorage.getItem(DEBUG_TOKEN_KEY);
+  const cachedExpiry = localStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
   
   if (cachedToken && cachedExpiry) {
     const expiryTime = parseInt(cachedExpiry, 10);
@@ -76,7 +76,7 @@ export function getDebugToken(): string | null {
 
 export function getCachedCapabilities(): Capabilities {
   try {
-    const cached = sessionStorage.getItem(DEBUG_CAPABILITIES_KEY);
+    const cached = localStorage.getItem(DEBUG_CAPABILITIES_KEY);
     if (cached) {
       return JSON.parse(cached);
     }
@@ -98,10 +98,10 @@ export function useDebugAuth() {
   const validateToken = useCallback(async (skipCache = false) => {
     // Check if we have a valid cached session (unless skipping cache for retry)
     if (!skipCache) {
-      const cachedValidation = sessionStorage.getItem(DEBUG_SESSION_KEY);
-      const cachedExpiry = sessionStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
-      const cachedToken = sessionStorage.getItem(DEBUG_TOKEN_KEY);
-      const cachedCaps = sessionStorage.getItem(DEBUG_CAPABILITIES_KEY);
+      const cachedValidation = localStorage.getItem(DEBUG_SESSION_KEY);
+      const cachedExpiry = localStorage.getItem(DEBUG_SESSION_EXPIRY_KEY);
+      const cachedToken = localStorage.getItem(DEBUG_TOKEN_KEY);
+      const cachedCaps = localStorage.getItem(DEBUG_CAPABILITIES_KEY);
       
       if (cachedValidation === "true" && cachedExpiry && cachedToken) {
         const expiryTime = parseInt(cachedExpiry, 10);
@@ -121,10 +121,10 @@ export function useDebugAuth() {
       }
     } else {
       // Clear cache when retrying
-      sessionStorage.removeItem(DEBUG_SESSION_KEY);
-      sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
-      sessionStorage.removeItem(DEBUG_TOKEN_KEY);
-      sessionStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+      localStorage.removeItem(DEBUG_SESSION_KEY);
+      localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+      localStorage.removeItem(DEBUG_TOKEN_KEY);
+      localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
     }
 
     // Get token from URL querystring or env variable
@@ -164,20 +164,20 @@ export function useDebugAuth() {
       const data = await response.json();
       
       if (data.valid) {
-        // Cache the validation result, token, and capabilities with expiry
-        sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
-        sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
-        sessionStorage.setItem(DEBUG_TOKEN_KEY, token);
+        // Cache the validation result, token, and capabilities with expiry (localStorage for cross-tab persistence)
+        localStorage.setItem(DEBUG_SESSION_KEY, "true");
+        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        localStorage.setItem(DEBUG_TOKEN_KEY, token);
         if (data.capabilities) {
-          sessionStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
+          localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
           setCapabilities(data.capabilities);
         }
         setIsValidated(true);
       } else {
-        sessionStorage.removeItem(DEBUG_SESSION_KEY);
-        sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
-        sessionStorage.removeItem(DEBUG_TOKEN_KEY);
-        sessionStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+        localStorage.removeItem(DEBUG_SESSION_KEY);
+        localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+        localStorage.removeItem(DEBUG_TOKEN_KEY);
+        localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
         setCapabilities(data.capabilities || DEFAULT_CAPABILITIES);
         setIsValidated(false);
       }
@@ -207,10 +207,10 @@ export function useDebugAuth() {
     setIsLoading(true);
     
     // Clear any existing cache
-    sessionStorage.removeItem(DEBUG_SESSION_KEY);
-    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
-    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
-    sessionStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+    localStorage.removeItem(DEBUG_SESSION_KEY);
+    localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    localStorage.removeItem(DEBUG_TOKEN_KEY);
+    localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
 
     try {
       const response = await fetch("/api/debug/validate-token", {
@@ -224,11 +224,11 @@ export function useDebugAuth() {
       const data = await response.json();
       
       if (data.valid) {
-        sessionStorage.setItem(DEBUG_SESSION_KEY, "true");
-        sessionStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
-        sessionStorage.setItem(DEBUG_TOKEN_KEY, manualToken);
+        localStorage.setItem(DEBUG_SESSION_KEY, "true");
+        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        localStorage.setItem(DEBUG_TOKEN_KEY, manualToken);
         if (data.capabilities) {
-          sessionStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
+          localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
           setCapabilities(data.capabilities);
         }
         setIsValidated(true);
@@ -247,10 +247,10 @@ export function useDebugAuth() {
 
   // Clear token and reset to "no token" state
   const clearToken = useCallback(() => {
-    sessionStorage.removeItem(DEBUG_SESSION_KEY);
-    sessionStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
-    sessionStorage.removeItem(DEBUG_TOKEN_KEY);
-    sessionStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+    localStorage.removeItem(DEBUG_SESSION_KEY);
+    localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+    localStorage.removeItem(DEBUG_TOKEN_KEY);
+    localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
     setHasToken(false);
     setIsValidated(false);
     setCapabilities(DEFAULT_CAPABILITIES);
