@@ -189,31 +189,32 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             data-testid="certificate-stats"
           >
             {data.stats.map((stat, index) => (
-              <div 
+              <button 
                 key={index}
-                onMouseEnter={() => {
+                type="button"
+                onClick={() => {
                   setSelectedStatIndex(index);
+                }}
+                onMouseEnter={() => {
                   if (!hasInteracted) {
+                    setSelectedStatIndex(index);
                     setHasInteracted(true);
                   }
                 }}
                 className={cn(
-                  "text-center p-4 transition-all duration-brand ease-brand cursor-default",
-                  hasInteracted && selectedStatIndex === index && "scale-[1.05]",
-                  hasInteracted && selectedStatIndex !== index && "opacity-50"
+                  "text-center p-4 transition-all duration-brand ease-brand cursor-pointer",
+                  hasInteracted && selectedStatIndex === index && "scale-[1.1]",
+                  hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-60"
                 )}
-                data-testid={`stat-${index}`}
+                data-testid={`button-stat-${index}`}
               >
-                <div className={cn(
-                  "font-bold text-primary mb-1 transition-all duration-brand",
-                  hasInteracted && selectedStatIndex === index ? "text-[2.5rem] leading-tight" : "text-h2"
-                )}>
+                <div className="text-h2 font-bold text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {stat.label}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
