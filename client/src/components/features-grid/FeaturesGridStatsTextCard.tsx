@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
-import { StatCard } from "@/components/molecules/StatCard";
+import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
 

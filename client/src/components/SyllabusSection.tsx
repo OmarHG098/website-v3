@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DotsIndicator } from "@/components/DotsIndicator";
-import { SyllabusModuleCard } from "@/components/molecules/SyllabusModuleCard";
+import { SyllabusModuleCard } from "@/components/SyllabusModuleCard";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";

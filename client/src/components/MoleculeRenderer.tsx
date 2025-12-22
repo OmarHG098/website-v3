@@ -1,7 +1,7 @@
 import { UniversalVideo, type VideoConfig } from "@/components/UniversalVideo";
 import { UniversalImage } from "@/components/UniversalImage";
-import { StatCard, type StatCardProps } from "@/components/molecules/StatCard";
-import { SyllabusModuleCard, type SyllabusModuleCardProps } from "@/components/molecules/SyllabusModuleCard";
+import { StatCard, type StatCardProps } from "@/components/StatCard";
+import { SyllabusModuleCard, type SyllabusModuleCardProps } from "@/components/SyllabusModuleCard";
 import type { ImageRef } from "@shared/schema";
 
 interface UniversalVideoMolecule {

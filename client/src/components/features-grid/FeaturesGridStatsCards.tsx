@@ -1,5 +1,5 @@
 import type { FeaturesGridStatsCardsSection } from "@shared/schema";
-import { StatCard } from "@/components/molecules/StatCard";
+import { StatCard } from "@/components/StatCard";
 
 interface FeaturesGridStatsCardsProps {
   data: FeaturesGridStatsCardsSection;

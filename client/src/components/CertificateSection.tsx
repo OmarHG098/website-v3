@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { CertificateSection as CertificateSectionType } from "@shared/schema";
-import { CertificateDisplay } from "./molecules/CertificateDisplay";
+import { Certificate } from "./Certificate";
 import { cn } from "@/lib/utils";
 
 interface ParsedValue {
@@ -243,7 +243,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
         )}
 
         {data.card && (
-          <CertificateDisplay
+          <Certificate
             programName={data.card.program_name || data.card.title}
             description={displayDescription}
             benefits={displayBenefits}

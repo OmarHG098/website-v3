@@ -6,28 +6,28 @@ import {
   IconBuildingSkyscraper, IconStar, IconUsers, IconWorld,
   IconChevronDown
 } from "@tabler/icons-react";
-import { CertificateCard } from "../CertificateCard";
+import { CertificateCard } from "./CertificateCard";
 import { Button } from "@/components/ui/button";
 
-export interface CertificateDisplayBenefit {
+export interface CertificateBenefit {
   text: string;
 }
 
-export interface CertificateDisplayProps {
+export interface CertificateProps {
   programName: string;
   description?: string;
-  benefits?: CertificateDisplayBenefit[];
+  benefits?: CertificateBenefit[];
   certificate_position?: "left" | "right";
   iconSetIndex?: number;
 }
 
-export function CertificateDisplay({ 
+export function Certificate({ 
   programName,
   description,
   benefits = [],
   certificate_position = "left",
   iconSetIndex = 0
-}: CertificateDisplayProps) {
+}: CertificateProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isCertificateLeft = certificate_position === "left";
   const visibleBenefitsCount = 2;
