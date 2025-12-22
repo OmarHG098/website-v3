@@ -42,11 +42,11 @@ export function StatCard({
   const isHorizontalMobile = layout === "horizontal-mobile";
   
   const content = (
-    <div className={`font-inter ${isHorizontalMobile ? "flex items-center gap-4 lg:block" : ""}`}>
-      <div className={`font-bold text-primary ${isHorizontalMobile ? "text-3xl lg:text-5xl shrink-0" : "text-5xl"}`}>
+    <div className={`font-inter ${isHorizontalMobile ? "flex items-center gap-4 sm:block" : ""}`}>
+      <div className={`font-bold text-primary ${isHorizontalMobile ? "text-4xl sm:text-5xl shrink-0" : "text-5xl"}`}>
         {formatValueWithUnit(value)}
       </div>
-      <div className={`text-sm text-foreground ${isHorizontalMobile ? "lg:mt-0" : ""}`}>
+      <div className={`text-sm text-foreground`}>
         {title}
       </div>
     </div>
@@ -61,7 +61,7 @@ export function StatCard({
   }
 
   return (
-    <div className={`items-center gap-2 rounded-card px-16 py-4 min-w-[280px] ${card_color} ${className}`}>
+    <div className={`items-center gap-2 rounded-card py-4 ${card_color} ${className}`}>
       {content}
     </div>
   );
