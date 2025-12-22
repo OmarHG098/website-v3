@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/molecules/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -10,6 +11,16 @@ interface FeaturesGridStatsTextCardProps {
 
 export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedStatIndex, setSelectedStatIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   return (
     <section 
@@ -22,27 +33,19 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
             <div className="grid grid-cols-2 gap-6">
               {data.items.slice(0, 2).map((item, index) => {
                 const itemId = item.id || `stat-${index}`;
+                const isSelected = selectedStatIndex === index;
                 return (
-                  <StatCard
+                  <div
                     key={itemId}
-                    value={item.value}
-                    title={item.title}
-                    use_card={false}
-                    card_color="bg-transparent"
-                    size="small"
-                    className="text-center"
-                    data-testid={`stat-${itemId}`}
-                  />
-                );
-              })}
-            </div>
-            {data.items.length > 2 && (
-              <div className="flex justify-center">
-                {data.items.slice(2, 3).map((item, index) => {
-                  const itemId = item.id || `stat-${index + 2}`;
-                  return (
+                    onClick={() => !isDesktop && setSelectedStatIndex(index)}
+                    onMouseEnter={() => isDesktop && setSelectedStatIndex(index)}
+                    className={cn(
+                      "cursor-pointer transition-all duration-200",
+                      !isDesktop && isSelected && "scale-110",
+                      !isDesktop && !isSelected && "opacity-60"
+                    )}
+                  >
                     <StatCard
-                      key={itemId}
                       value={item.value}
                       title={item.title}
                       use_card={false}
@@ -51,6 +54,37 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                       className="text-center"
                       data-testid={`stat-${itemId}`}
                     />
+                  </div>
+                );
+              })}
+            </div>
+            {data.items.length > 2 && (
+              <div className="flex justify-center">
+                {data.items.slice(2, 3).map((item, index) => {
+                  const itemId = item.id || `stat-${index + 2}`;
+                  const actualIndex = index + 2;
+                  const isSelected = selectedStatIndex === actualIndex;
+                  return (
+                    <div
+                      key={itemId}
+                      onClick={() => !isDesktop && setSelectedStatIndex(actualIndex)}
+                      onMouseEnter={() => isDesktop && setSelectedStatIndex(actualIndex)}
+                      className={cn(
+                        "cursor-pointer transition-all duration-200",
+                        !isDesktop && isSelected && "scale-110",
+                        !isDesktop && !isSelected && "opacity-60"
+                      )}
+                    >
+                      <StatCard
+                        value={item.value}
+                        title={item.title}
+                        use_card={false}
+                        card_color="bg-transparent"
+                        size="small"
+                        className="text-center"
+                        data-testid={`stat-${itemId}`}
+                      />
+                    </div>
                   );
                 })}
               </div>
