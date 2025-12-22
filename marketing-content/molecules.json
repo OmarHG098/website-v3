@@ -130,6 +130,42 @@
         "isActive": true,
         "orientation": "horizontal"
       }
+    },
+    {
+      "id": "certificate-display-left",
+      "component": "CertificateDisplay",
+      "variant": "Certificate Left",
+      "description": "Certificate card on left, text and benefits on right",
+      "tags": ["certificate", "card", "display"],
+      "props": {
+        "programName": "AI Engineering",
+        "description": "Most graduates secure their first role within 3-6 months of completing the program.",
+        "benefits": [
+          { "text": "Job search strategy and planning" },
+          { "text": "Salary negotiation coaching" },
+          { "text": "Lifetime career support" }
+        ],
+        "layout": "certificate-left",
+        "iconSetIndex": 0
+      }
+    },
+    {
+      "id": "certificate-display-right",
+      "component": "CertificateDisplay",
+      "variant": "Certificate Right",
+      "description": "Text and benefits on left, certificate card on right",
+      "tags": ["certificate", "card", "display"],
+      "props": {
+        "programName": "Full Stack Developer",
+        "description": "Our comprehensive program prepares you for real-world challenges.",
+        "benefits": [
+          { "text": "Portfolio development" },
+          { "text": "Interview preparation" },
+          { "text": "Mentor matching" }
+        ],
+        "layout": "certificate-right",
+        "iconSetIndex": 1
+      }
     }
   ]
 }

@@ -16,6 +16,7 @@ export const certificateSectionSchema = z.object({
     certificate_label: z.string().optional(),
   }).optional(),
   stats: z.array(statItemSchema).optional(),
+  layout: z.enum(["certificate-left", "certificate-right"]).optional(),
 });
 
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;
