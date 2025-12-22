@@ -282,23 +282,41 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     return () => tabletQuery.removeEventListener('change', handler);
   }, []);
 
+  const getCardScrollPositions = useCallback(() => {
+    // Calculate cumulative scroll positions for each card based on actual widths
+    const positions: number[] = [0];
+    const gap = isDesktop ? 24 : isTablet ? 16 : 12;
+    
+    for (let i = 0; i < moduleCards.length; i++) {
+      const isHorizontal = moduleCards[i].orientation === 'horizontal';
+      const cardWidth = isHorizontal 
+        ? (isDesktop ? 600 : isTablet ? 500 : 400)
+        : (isDesktop ? 320 : isTablet ? 280 : 256);
+      positions.push(positions[i] + cardWidth + gap);
+    }
+    return positions;
+  }, [moduleCards, isDesktop, isTablet]);
+
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
     const scrollPos = container.scrollLeft;
-    const maxScroll = container.scrollWidth - container.clientWidth;
+    const positions = getCardScrollPositions();
     
-    // If we're near the end of scroll, set to last card
-    if (maxScroll > 0 && scrollPos >= maxScroll - 10) {
-      setActiveIndex(moduleCards.length - 1);
-      return;
+    // Find which card is closest to current scroll position
+    let closestIndex = 0;
+    let minDistance = Math.abs(scrollPos - positions[0]);
+    
+    for (let i = 1; i < positions.length - 1; i++) {
+      const distance = Math.abs(scrollPos - positions[i]);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = i;
+      }
     }
     
-    const newIndex = Math.round(scrollPos / cardWidth);
-    const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
-    setActiveIndex(clampedIndex);
-  }, [moduleCards.length, isDesktop, isTablet]);
+    setActiveIndex(closestIndex);
+  }, [getCardScrollPositions]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -332,15 +350,15 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
+    const positions = getCardScrollPositions();
     
     scrollContainerRef.current.scrollTo({
-      left: index * cardWidth,
+      left: positions[index],
       behavior: isDesktop ? 'smooth' : 'instant'
     });
     
     setActiveIndex(index);
-  }, [isDesktop, isTablet, moduleCards.length]);
+  }, [isDesktop, moduleCards.length, getCardScrollPositions]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!scrollContainerRef.current) return;
