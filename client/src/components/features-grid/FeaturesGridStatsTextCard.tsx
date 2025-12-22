@@ -14,7 +14,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex gap-8 lg:gap-12 items-center">
-          <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col gap-1 min-w-[320px]">
             {data.items.map((item, index) => {
               const itemId = item.id || `stat-${index}`;
               return (
