@@ -6,6 +6,7 @@ export interface StatCardProps {
   use_card?: boolean;
   card_color?: string;
   className?: string;
+  layout?: "vertical" | "horizontal-mobile";
 }
 
 function formatValueWithUnit(value: string) {
@@ -35,14 +36,17 @@ export function StatCard({
   title, 
   use_card = true, 
   card_color = "bg-primary/5",
-  className = ""
+  className = "",
+  layout = "vertical"
 }: StatCardProps) {
+  const isHorizontalMobile = layout === "horizontal-mobile";
+  
   const content = (
-    <div className="font-inter">
-      <div className="text-5xl font-bold text-primary">
+    <div className={`font-inter ${isHorizontalMobile ? "flex items-center gap-4 lg:block" : ""}`}>
+      <div className={`font-bold text-primary ${isHorizontalMobile ? "text-3xl lg:text-5xl shrink-0" : "text-5xl"}`}>
         {formatValueWithUnit(value)}
       </div>
-      <div className="text-sm text-foreground">
+      <div className={`text-sm text-foreground ${isHorizontalMobile ? "lg:mt-0" : ""}`}>
         {title}
       </div>
     </div>
@@ -50,14 +54,14 @@ export function StatCard({
 
   if (use_card) {
     return (
-      <Card className={`items-center gap-2 rounded-card p-4 text-center ${card_color} ${className}`}>
+      <Card className={`items-center gap-2 rounded-card px-16 py-4 min-w-[280px] text-center ${card_color} ${className}`}>
         {content}
       </Card>
     );
   }
 
   return (
-    <div className={`items-center gap-2 rounded-card p-4 ${card_color} ${className}`}>
+    <div className={`items-center gap-2 rounded-card px-16 py-4 min-w-[280px] ${card_color} ${className}`}>
       {content}
     </div>
   );
