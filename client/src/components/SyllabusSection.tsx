@@ -323,12 +323,13 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
-    const cardWidth = isDesktop ? 320 + 24 : 256 + 12;
+    if (index < 0 || index >= moduleCards.length) return;
+    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
     scrollContainerRef.current.scrollTo({
       left: index * cardWidth,
       behavior: isDesktop ? 'smooth' : 'instant'
     });
-  }, [isDesktop]);
+  }, [isDesktop, isTablet, moduleCards.length]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!scrollContainerRef.current) return;
