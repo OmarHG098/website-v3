@@ -384,8 +384,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Program Info Card */}
-          <div className="flex-shrink-0 lg:w-80 bg-background rounded-xl rounde bor-8 border-primary/20">
-            <Card className="p-8 bg-card shadow-card border-0">
+          <div className="flex-shrink-0 lg:w-80">
+            <Card className="p-8 bg-primary/5 shadow-card border-0 border-l-4 border-l-primary rounded-l-none rounded-r-xl">
               <div className="mb-8 ">
                 <h2 
                   className="text-h2 text-foreground mb-3"
@@ -394,7 +394,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   {data.program_title}
                 </h2>
                 <span 
-                  className="inline-blocktext-lg font-bold font-heading rounded bg-primary/20 px-4 py-1.5"
+                  className="inline-block text-lg font-bold font-heading rounded-full bg-primary text-primary-foreground px-5 py-2"
                   data-testid="text-syllabus-program-highlight"
                 >
                   {data.program_highlight}
