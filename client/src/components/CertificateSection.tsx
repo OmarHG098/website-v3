@@ -143,7 +143,16 @@ export function CertificateSection({ data }: CertificateSectionProps) {
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
@@ -192,14 +201,24 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               <div 
                 key={index}
                 onMouseEnter={() => {
-                  setSelectedStatIndex(index);
-                  if (!hasInteracted) {
-                    setHasInteracted(true);
+                  if (isDesktop) {
+                    setSelectedStatIndex(index);
+                    if (!hasInteracted) {
+                      setHasInteracted(true);
+                    }
+                  }
+                }}
+                onClick={() => {
+                  if (!isDesktop) {
+                    setSelectedStatIndex(index);
+                    if (!hasInteracted) {
+                      setHasInteracted(true);
+                    }
                   }
                 }}
                 className={cn(
                   "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  hasInteracted && selectedStatIndex === index && "md:scale-[1.2]",
+                  hasInteracted && selectedStatIndex === index && "scale-[1.15] md:scale-[1.2]",
                   hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}

@@ -45,7 +45,7 @@ export function StatCard({
   const isSmall = size === "small";
   
   const valueSizeClass = isSmall 
-    ? (isHorizontalMobile ? "text-2xl sm:text-3xl" : "text-4xl")
+    ? (isHorizontalMobile ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl" : "text-4xl md:text-5xl")
     : (isHorizontalMobile ? "text-4xl sm:text-5xl" : "text-5xl");
   
   const content = (
