@@ -287,6 +287,14 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     const container = scrollContainerRef.current;
     const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
     const scrollPos = container.scrollLeft;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    
+    // If we're near the end of scroll, set to last card
+    if (maxScroll > 0 && scrollPos >= maxScroll - 10) {
+      setActiveIndex(moduleCards.length - 1);
+      return;
+    }
+    
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
     setActiveIndex(clampedIndex);
@@ -324,11 +332,21 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
+    const container = scrollContainerRef.current;
     const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
-    scrollContainerRef.current.scrollTo({
-      left: index * cardWidth,
+    const targetScroll = index * cardWidth;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    
+    // For the last few cards, scroll to max to ensure we reach them
+    const scrollTo = Math.min(targetScroll, maxScroll);
+    
+    container.scrollTo({
+      left: scrollTo,
       behavior: isDesktop ? 'smooth' : 'instant'
     });
+    
+    // Manually set activeIndex since scroll event might not fire if already at max
+    setActiveIndex(index);
   }, [isDesktop, isTablet, moduleCards.length]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
