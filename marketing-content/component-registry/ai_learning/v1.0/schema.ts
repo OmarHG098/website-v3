@@ -19,6 +19,7 @@ export const aiLearningSectionSchema = z.object({
   features: z.array(cardItemSchema),
   chat_example: chatExampleSchema.optional(),
   video_url: z.string().optional(),
+  video_position: z.enum(["left", "right"]).optional(),
   highlight: z.object({
     title: z.string(),
     description: z.string(),

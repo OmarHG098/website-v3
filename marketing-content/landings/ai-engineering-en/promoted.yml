@@ -85,7 +85,6 @@ sections:
     pauseOnHover: true
     gradient: true
     gradientWidth: 500
-    certificate_position: right
     items:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
@@ -244,6 +243,7 @@ sections:
         orientation: "horizontal"
   - type: ai_learning
     version: "1.0"
+    video_position: left
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
@@ -273,6 +273,7 @@ sections:
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
+    certificate_position: right
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"

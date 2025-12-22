@@ -91,7 +91,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
         {(data.highlight || videoId) && (
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {data.highlight && (
-              <div data-testid="highlight-block">
+              <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
                 <div className="flex items-start gap-4 mb-6">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
                     <img 
@@ -146,7 +146,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             
             {videoId && (
               <div 
-                className="relative aspect-video rounded-card overflow-hidden shadow-card"
+                className={`relative aspect-video rounded-card overflow-hidden shadow-card ${data.video_position === "left" ? "lg:order-1" : ""}`}
                 data-testid="video-container-ai"
               >
                 <iframe
