@@ -1,11 +1,11 @@
 import logoImage from "@assets/4geeks-logo.png";
 
-interface CertificateProps {
+interface CertificateCardProps {
   programName?: string;
   studentName?: string;
 }
 
-export function Certificate({ programName = "Full-Stack Developer", studentName = "Pedro Fuentes Escaloso de los Lobos" }: CertificateProps) {
+export function CertificateCard({ programName = "Full-Stack Developer", studentName = "Pedro Fuentes Escaloso de los Lobos" }: CertificateCardProps) {
   return (
     <div 
       className="relative w-full aspect-[4/3] rounded-card overflow-hidden shadow-card"

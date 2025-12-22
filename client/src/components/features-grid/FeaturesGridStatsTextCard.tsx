@@ -12,10 +12,14 @@ interface FeaturesGridStatsTextCardProps {
 export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
   return (
@@ -33,11 +37,12 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 return (
                   <div
                     key={itemId}
-                    onClick={() => setSelectedStatIndex(index)}
+                    onClick={() => !isDesktop && setSelectedStatIndex(index)}
+                    onMouseEnter={() => isDesktop && setSelectedStatIndex(index)}
                     className={cn(
-                      "cursor-pointer transition-all duration-200 origin-center",
-                      isMounted && isSelected && "scale-110 lg:scale-100",
-                      isMounted && !isSelected && "opacity-60 lg:opacity-100"
+                      "cursor-pointer transition-all duration-200",
+                      !isDesktop && isSelected && "scale-110",
+                      !isDesktop && !isSelected && "opacity-60"
                     )}
                   >
                     <StatCard
@@ -62,11 +67,12 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                   return (
                     <div
                       key={itemId}
-                      onClick={() => setSelectedStatIndex(actualIndex)}
+                      onClick={() => !isDesktop && setSelectedStatIndex(actualIndex)}
+                      onMouseEnter={() => isDesktop && setSelectedStatIndex(actualIndex)}
                       className={cn(
-                        "cursor-pointer transition-all duration-200 origin-center",
-                        isMounted && isSelected && "scale-110 lg:scale-100",
-                        isMounted && !isSelected && "opacity-60 lg:opacity-100"
+                        "cursor-pointer transition-all duration-200",
+                        !isDesktop && isSelected && "scale-110",
+                        !isDesktop && !isSelected && "opacity-60"
                       )}
                     >
                       <StatCard
