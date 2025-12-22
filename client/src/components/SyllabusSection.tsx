@@ -272,15 +272,25 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     }
   }, [activeIndex]);
 
+  const [isTablet, setIsTablet] = useState(false);
+  
+  useEffect(() => {
+    const tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
+    setIsTablet(tabletQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsTablet(e.matches);
+    tabletQuery.addEventListener('change', handler);
+    return () => tabletQuery.removeEventListener('change', handler);
+  }, []);
+
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isDesktop ? 320 + 24 : 256 + 12;
+    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 288 + 16 : 256 + 12;
     const scrollPos = container.scrollLeft;
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
     setActiveIndex(clampedIndex);
-  }, [moduleCards.length, isDesktop]);
+  }, [moduleCards.length, isDesktop, isTablet]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -453,7 +463,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
+                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
                   isDesktop ? "select-none" : "touch-auto",
                   isDesktop && (isDragging ? "cursor-grabbing" : "cursor-grab")
                 )}
@@ -488,11 +498,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   </div>
                 ))}
                 {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
-                <div className="flex-shrink-0 w-[calc(100%-272px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
+                <div className="flex-shrink-0 w-[calc(100%-272px)] md:w-[calc(100%-304px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
               </div>
 
               {/* Navigation Arrow Buttons - centered under the active card */}
-              <div className="mt-4 ml-2 w-[256px] lg:w-[320px]" data-testid="container-nav-arrows">
+              <div className="mt-4 ml-2 w-[256px] md:w-[288px] lg:w-[320px]" data-testid="container-nav-arrows">
                 <div className="flex justify-center gap-2">
                   <Button
                     variant="outline"

@@ -35,7 +35,7 @@ export function SyllabusModuleCard({
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
-        isVertical ? "min-h-[280px] lg:min-h-[380px] min-w-[256px] w-64 lg:min-w-[320px] lg:w-80" : "min-w-[400px] lg:min-w-[600px]",
+        isVertical ? "min-h-[280px] md:min-h-[340px] lg:min-h-[380px] min-w-[256px] w-64 md:min-w-[280px] md:w-72 lg:min-w-[320px] lg:w-80" : "min-w-[400px] lg:min-w-[600px]",
         className
       )}
       data-testid={testId}
