@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/molecules/StatCard";
 import { Card } from "@/components/ui/card";
@@ -12,6 +12,11 @@ interface FeaturesGridStatsTextCardProps {
 export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section 
@@ -31,7 +36,8 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                     onClick={() => setSelectedStatIndex(index)}
                     className={cn(
                       "cursor-pointer transition-all duration-200 origin-center",
-                      isSelected && "scale-[1.15] lg:scale-100"
+                      isMounted && isSelected && "scale-110 lg:scale-100",
+                      isMounted && !isSelected && "opacity-60 lg:opacity-100"
                     )}
                   >
                     <StatCard
@@ -59,7 +65,8 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                       onClick={() => setSelectedStatIndex(actualIndex)}
                       className={cn(
                         "cursor-pointer transition-all duration-200 origin-center",
-                        isSelected && "scale-[1.15] lg:scale-100"
+                        isMounted && isSelected && "scale-110 lg:scale-100",
+                        isMounted && !isSelected && "opacity-60 lg:opacity-100"
                       )}
                     >
                       <StatCard
