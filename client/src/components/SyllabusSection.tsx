@@ -444,10 +444,10 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none",
-                  isDragging ? "cursor-grabbing" : "cursor-grab"
+                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none touch-pan-x",
+                  isDragging ? "cursor-grabbing lg:cursor-grabbing" : "cursor-grab lg:cursor-grab"
                 )}
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
