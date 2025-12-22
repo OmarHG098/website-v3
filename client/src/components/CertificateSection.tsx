@@ -141,7 +141,6 @@ interface CertificateSectionProps {
 
 export function CertificateSection({ data }: CertificateSectionProps) {
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -203,30 +202,24 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 onMouseEnter={() => {
                   if (isDesktop) {
                     setSelectedStatIndex(index);
-                    if (!hasInteracted) {
-                      setHasInteracted(true);
-                    }
                   }
                 }}
                 onClick={() => {
                   if (!isDesktop) {
                     setSelectedStatIndex(index);
-                    if (!hasInteracted) {
-                      setHasInteracted(true);
-                    }
                   }
                 }}
                 className={cn(
                   "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  hasInteracted && selectedStatIndex === index && "scale-[1.15] md:scale-[1.2]",
-                  hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
+                  selectedStatIndex === index && "scale-[1.15] md:scale-[1.2]",
+                  selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-xl md:text-h2 font-bold text-primary mb-1">
+                <div className="text-2xl md:text-3xl lg:text-h2 font-bold text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
-                <div className="text-sm md:text-sm text-muted-foreground">
+                <div className="text-sm text-muted-foreground">
                   {stat.label}
                 </div>
               </div>
