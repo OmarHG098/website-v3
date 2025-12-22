@@ -145,7 +145,7 @@
           { "text": "Salary negotiation coaching" },
           { "text": "Lifetime career support" }
         ],
-        "layout": "certificate-left",
+        "certificate_position": "left",
         "iconSetIndex": 0
       }
     },
@@ -163,7 +163,7 @@
           { "text": "Interview preparation" },
           { "text": "Mentor matching" }
         ],
-        "layout": "certificate-right",
+        "certificate_position": "right",
         "iconSetIndex": 1
       }
     }

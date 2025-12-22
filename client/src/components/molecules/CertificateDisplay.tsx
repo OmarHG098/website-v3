@@ -14,7 +14,7 @@ export interface CertificateDisplayProps {
   programName: string;
   description?: string;
   benefits?: CertificateDisplayBenefit[];
-  layout?: "certificate-left" | "certificate-right";
+  certificate_position?: "left" | "right";
   iconSetIndex?: number;
 }
 
@@ -22,10 +22,10 @@ export function CertificateDisplay({
   programName,
   description,
   benefits = [],
-  layout = "certificate-left",
+  certificate_position = "left",
   iconSetIndex = 0
 }: CertificateDisplayProps) {
-  const isCertificateLeft = layout === "certificate-left";
+  const isCertificateLeft = certificate_position === "left";
 
   const certificateColumn = (
     <div className="flex justify-center">

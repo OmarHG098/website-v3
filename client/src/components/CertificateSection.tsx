@@ -224,7 +224,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             programName={data.card.program_name || data.card.title}
             description={displayDescription}
             benefits={displayBenefits}
-            layout={data.layout || "certificate-left"}
+            certificate_position={data.certificate_position || "left"}
             iconSetIndex={selectedStatIndex}
           />
         )}
