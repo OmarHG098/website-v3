@@ -6,7 +6,7 @@ import {
   IconBuildingSkyscraper, IconStar, IconUsers, IconWorld,
   IconChevronDown
 } from "@tabler/icons-react";
-import { CertificateCard } from "../CertificateCard";
+import { Certificate } from "../Certificate";
 import { Button } from "@/components/ui/button";
 
 export interface CertificateDisplayBenefit {
@@ -35,7 +35,7 @@ export function CertificateDisplay({
   const certificateColumn = (
     <div className="flex justify-center">
       <div className="w-full max-w-md">
-        <CertificateCard programName={programName} />
+        <Certificate programName={programName} />
       </div>
     </div>
   );

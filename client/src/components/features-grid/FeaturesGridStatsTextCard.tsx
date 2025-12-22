@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/molecules/StatCard";
 import { Card } from "@/components/ui/card";
@@ -12,15 +12,6 @@ interface FeaturesGridStatsTextCardProps {
 export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1024px)');
-    setIsDesktop(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
 
   return (
     <section 
@@ -37,11 +28,10 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 return (
                   <div
                     key={itemId}
-                    onClick={() => !isDesktop && setSelectedStatIndex(index)}
-                    onMouseEnter={() => isDesktop && setSelectedStatIndex(index)}
+                    onClick={() => setSelectedStatIndex(index)}
                     className={cn(
                       "cursor-pointer transition-all duration-200 origin-center",
-                      !isDesktop && isSelected && "scale-[1.15]"
+                      isSelected && "scale-[1.15] lg:scale-100"
                     )}
                   >
                     <StatCard
@@ -66,11 +56,10 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                   return (
                     <div
                       key={itemId}
-                      onClick={() => !isDesktop && setSelectedStatIndex(actualIndex)}
-                      onMouseEnter={() => isDesktop && setSelectedStatIndex(actualIndex)}
+                      onClick={() => setSelectedStatIndex(actualIndex)}
                       className={cn(
                         "cursor-pointer transition-all duration-200 origin-center",
-                        !isDesktop && isSelected && "scale-[1.15]"
+                        isSelected && "scale-[1.15] lg:scale-100"
                       )}
                     >
                       <StatCard
