@@ -141,17 +141,9 @@ interface CertificateSectionProps {
 
 export function CertificateSection({ data }: CertificateSectionProps) {
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1024px)');
-    setIsDesktop(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
@@ -200,26 +192,22 @@ export function CertificateSection({ data }: CertificateSectionProps) {
               <div 
                 key={index}
                 onMouseEnter={() => {
-                  if (isDesktop) {
-                    setSelectedStatIndex(index);
-                  }
-                }}
-                onClick={() => {
-                  if (!isDesktop) {
-                    setSelectedStatIndex(index);
+                  setSelectedStatIndex(index);
+                  if (!hasInteracted) {
+                    setHasInteracted(true);
                   }
                 }}
                 className={cn(
                   "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  selectedStatIndex === index && "scale-[1.15] md:scale-[1.2]",
-                  selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
+                  hasInteracted && selectedStatIndex === index && "md:scale-[1.2]",
+                  hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-2xl md:text-3xl lg:text-h2 font-bold text-primary mb-1">
+                <div className="text-xl md:text-h2 font-bold text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm md:text-sm text-muted-foreground">
                   {stat.label}
                 </div>
               </div>
