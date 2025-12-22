@@ -7,10 +7,8 @@ meta:
 sections:
   - type: hero
     version: "1.0"
-    variant: productShowcase
+    variant: ApplyFormProductShowcase
     title: Thrive in Today’s Tech and Shape Tomorrow’s.
-    subtitle: null
-    welcome_text: null
     brand_mark:
       prefix: Become an
       highlight: AI Engineer
@@ -19,7 +17,6 @@ sections:
     form:
       variant: stacked
       title: null
-      subtitle: null
       submit_label: Apply now
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email

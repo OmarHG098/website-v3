@@ -78,6 +78,7 @@ export type {
   HeroSimpleStacked,
   HeroTwoColumn,
   HeroCourse,
+  HeroApplyFormProductShowcase,
 } from "../marketing-content/component-registry/hero/v1.0/schema";
 
 // ============================================

@@ -191,6 +191,19 @@ export const heroCourseSchema = z.object({
   }),
 }).strict();
 
+// ApplyFormProductShowcase variant - hero with application form and product showcase
+export const heroApplyFormProductShowcaseSchema = z.object({
+  type: z.literal("hero"),
+  version: z.string().optional(),
+  variant: z.literal("ApplyFormProductShowcase"),
+  title: z.string(),
+  brand_mark: brandMarkSchema.optional(),
+  description: z.string().optional(),
+  form: leadFormDataSchema,
+  cta_button: ctaButtonSchema.optional(),
+  trust_bar: productShowcaseTrustBarSchema.optional(),
+}).strict();
+
 // Combined hero section schema
 export const heroSectionSchema = z.union([
   heroSingleColumnSchema,
@@ -200,6 +213,7 @@ export const heroSectionSchema = z.union([
   heroSimpleStackedSchema,
   heroTwoColumnSchema,
   heroCourseSchema,
+  heroApplyFormProductShowcaseSchema,
 ]);
 
 // Type exports
@@ -218,4 +232,5 @@ export type HeroSimpleTwoColumn = z.infer<typeof heroSimpleTwoColumnSchema>;
 export type HeroSimpleStacked = z.infer<typeof heroSimpleStackedSchema>;
 export type HeroTwoColumn = z.infer<typeof heroTwoColumnSchema>;
 export type HeroCourse = z.infer<typeof heroCourseSchema>;
+export type HeroApplyFormProductShowcase = z.infer<typeof heroApplyFormProductShowcaseSchema>;
 export type HeroSection = z.infer<typeof heroSectionSchema>;

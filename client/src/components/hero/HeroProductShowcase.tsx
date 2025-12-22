@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import type { HeroProductShowcase as HeroProductShowcaseType } from "@shared/schema";
+import type { HeroProductShowcase as HeroProductShowcaseType, HeroApplyFormProductShowcase } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
 
 interface HeroProductShowcaseProps {
-  data: HeroProductShowcaseType;
+  data: HeroProductShowcaseType | HeroApplyFormProductShowcase;
 }
 
 export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
@@ -23,7 +23,14 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
     return () => window.removeEventListener("resize", checkWidth);
   }, []);
 
-  const shouldShowBackground = data.background_image && showBackground;
+  // Safely access properties that may not exist on all variants
+  const backgroundImage = 'background_image' in data ? data.background_image : null;
+  const welcomeText = 'welcome_text' in data ? data.welcome_text : null;
+  const subtitle = 'subtitle' in data ? data.subtitle : null;
+  const video = 'video' in data ? data.video : null;
+  const image = 'image' in data ? data.image : null;
+
+  const shouldShowBackground = backgroundImage && showBackground;
 
   const colorMap: Record<string, string> = {
     "primary": "hsl(var(--primary))",
@@ -41,7 +48,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
       id="hero-form"
       className="py-20 md:py-24 relative overflow-hidden"
       style={shouldShowBackground ? {
-        backgroundImage: `url(${data.background_image!.src})`,
+        backgroundImage: `url(${backgroundImage!.src})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       } : undefined}
@@ -54,9 +61,9 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
         <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
             <div className="text-center md:text-left relative w-full">
-              {data.welcome_text && (
+              {welcomeText && (
                 <p className="text-body text-muted-foreground mb-4">
-                  {data.welcome_text}
+                  {welcomeText}
                 </p>
               )}
 
@@ -83,12 +90,12 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 {data.title}
               </h1>
 
-              {data.subtitle && (
+              {subtitle && (
                 <p 
                   className="text-body text-muted-foreground mb-8 max-w-xl leading-relaxed"
                   data-testid="text-hero-subtitle"
                 >
-                  {data.subtitle}
+                  {subtitle}
                 </p>
               )}
 
@@ -199,21 +206,21 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           </div>
 
           <div className="md:col-span-2 w-full md:w-auto flex justify-center md:justify-start">
-            {data.video ? (
+            {video ? (
               <UniversalVideo 
-                url={data.video.url}
-                ratio={data.video.ratio || "16:9"}
-                muted={data.video.muted}
-                autoplay={data.video.autoplay}
-                loop={data.video.loop}
-                preview_image_url={data.video.preview_image_url}
-                withShadowBorder={data.video.with_shadow_border}
+                url={video.url}
+                ratio={video.ratio || "16:9"}
+                muted={video.muted}
+                autoplay={video.autoplay}
+                loop={video.loop}
+                preview_image_url={video.preview_image_url}
+                withShadowBorder={video.with_shadow_border}
                 className="w-[280px] md:w-full md:max-w-[400px]"
               />
-            ) : data.image ? (
+            ) : image ? (
               <img
-                src={data.image.src}
-                alt={data.image.alt}
+                src={image.src}
+                alt={image.alt}
                 className="w-full max-w-[500px] rounded-card shadow-card"
                 data-testid="img-hero-product"
               />

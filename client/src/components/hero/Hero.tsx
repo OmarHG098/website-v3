@@ -17,6 +17,7 @@ export function Hero({ data }: HeroProps) {
     case "showcase":
       return <HeroShowcase data={data} />;
     case "productShowcase":
+    case "ApplyFormProductShowcase":
       return <HeroProductShowcase data={data} />;
     case "simpleTwoColumn":
       return <HeroSimpleTwoColumn data={data} />;
