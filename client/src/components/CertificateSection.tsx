@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { CertificateSection as CertificateSectionType } from "@shared/schema";
-import { Certificate } from "./Certificate";
+import { CertificateDisplay } from "./CertificateDisplay";
 import { cn } from "@/lib/utils";
 
 interface ParsedValue {
@@ -243,7 +243,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
         )}
 
         {data.card && (
-          <Certificate
+          <CertificateDisplay
             programName={data.card.program_name || data.card.title}
             description={displayDescription}
             benefits={displayBenefits}
