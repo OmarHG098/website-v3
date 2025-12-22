@@ -285,8 +285,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    // Card width + gap + margin (m-2 = 8px total horizontal)
-    const cardWidth = isDesktop ? 320 + 24 + 8 : isTablet ? 280 + 16 + 8 : 256 + 12 + 8;
+    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
     const scrollPos = container.scrollLeft;
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
@@ -325,8 +324,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    // Card width + gap + margin (m-2 = 8px total horizontal)
-    const cardWidth = isDesktop ? 320 + 24 + 8 : isTablet ? 280 + 16 + 8 : 256 + 12 + 8;
+    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
     scrollContainerRef.current.scrollTo({
       left: index * cardWidth,
       behavior: isDesktop ? 'smooth' : 'instant'
