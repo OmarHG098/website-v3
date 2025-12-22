@@ -39,10 +39,10 @@ export function StatCard({
 }: StatCardProps) {
   const content = (
     <div className="font-inter">
-      <div className="text-4xl font-bold text-primary mb-1">
+      <div className="text-5xl font-bold text-primary">
         {formatValueWithUnit(value)}
       </div>
-      <div className="text-lg text-foreground">
+      <div className="text-sm text-foreground">
         {title}
       </div>
     </div>
@@ -50,14 +50,14 @@ export function StatCard({
 
   if (use_card) {
     return (
-      <Card className={`items-center gap-2 rounded-card p-4 ${card_color} ${className}`}>
+      <Card className={`items-center gap-2 rounded-card px-8 py-4 ${card_color} ${className}`}>
         {content}
       </Card>
     );
   }
 
   return (
-    <div className={`items-center gap-2 rounded-card p-4 ${card_color} ${className}`}>
+    <div className={`items-center gap-2 rounded-card px-8 py-4 ${card_color} ${className}`}>
       {content}
     </div>
   );

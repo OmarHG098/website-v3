@@ -13,8 +13,8 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
       data-testid="section-features-grid-stats-text-card"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <div className="flex flex-col gap-4">
+        <div className="flex gap-8 lg:gap-12 items-center">
+          <div className="flex flex-col gap-1 ">
             {data.items.map((item, index) => {
               const itemId = item.id || `stat-${index}`;
               return (
