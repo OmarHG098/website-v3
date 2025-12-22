@@ -16,11 +16,14 @@ sections:
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
     form:
       variant: stacked
-      title: null
       submit_label: Apply now
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email
       fields:
+        email:
+          visible: true
+          required: true
+          placeholder: Email
         first_name:
           visible: true
           required: true
@@ -32,20 +35,16 @@ sections:
         phone:
           visible: true
           required: true
-        email:
-          visible: true
-          required: true
-          placeholder: Email
-      consent:
-        marketing: true
-        marketing_text: "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
-        sms: true
-        sms_usa_only: true
-        sms_text: "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment."
       success:
         message: Check your inbox! Your syllabus is on the way.
       terms_url: /terms-and-conditions
       privacy_url: /privacy-policy
+      consent:
+        sms: true
+        marketing: true
+        marketing_text: I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment.
+        sms_text: I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment.
+        sms_usa_only: true
       show_terms: true
     cta_button:
       text: Download Syllabus
@@ -68,7 +67,7 @@ sections:
     title: Why AI Engineering Now
     subtitle: The talent shortage is your opportunity
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    card_color: "bg-background"
+    card_color: bg-background
     items:
       - value: 3.5M
         title: AI-related roles expected by 2026
@@ -142,110 +141,107 @@ sections:
       - name: GitHub
         icon: github
     module_cards:
-      - title: "AI-First Prework"
-        duration: "Milestone 0"
-        icon: "IconRocket"
+      - title: AI-First Prework
+        duration: Milestone 0
+        icon: IconRocket
         objectives:
-          - "YAML/JSON fundamentals"
-          - "Git version control"
-          - "JS basics"
-          - "Internet fundamentals"
-          - "Coding agents"
-      - title: "Web Foundations"
-        duration: "Milestone 1"
-        icon: "IconWorld"
+          - YAML/JSON fundamentals
+          - Git version control
+          - JS basics
+          - Internet fundamentals
+          - Coding agents
+      - title: Web Foundations
+        duration: Milestone 1
+        icon: IconWorld
         objectives:
-          - "HTML, CSS, Tailwind"
-          - "Accessibility best practices"
-          - "Layout techniques"
-        projects: "Build the company's first webpage"
-      - title: "Programming Foundations"
-        duration: "Milestone 2"
-        icon: "IconCode"
+          - HTML, CSS, Tailwind
+          - Accessibility best practices
+          - Layout techniques
+        projects: Build the company's first webpage
+      - title: Programming Foundations
+        duration: Milestone 2
+        icon: IconCode
         objectives:
-          - "Algorithms and data structures"
-          - "Stateflow vs controlflow"
-          - "JavaScript mastery"
-        projects: "Implement small features for the company"
-      - title: "AI-Driven UI Engineering"
-        duration: "Milestone 3"
-        icon: "IconSparkles"
+          - Algorithms and data structures
+          - Stateflow vs controlflow
+          - JavaScript mastery
+        projects: Implement small features for the company
+      - title: AI-Driven UI Engineering
+        duration: Milestone 3
+        icon: IconSparkles
         objectives:
-          - "Vision-to-Spec prompting"
-          - "Component generation with AI"
-        projects: "Rebuild the company's UI using AI"
-      - title: "React Fundamentals"
-        duration: "Milestone 4"
-        icon: "IconBrandReact"
+          - Vision-to-Spec prompting
+          - Component generation with AI
+        projects: Rebuild the company's UI using AI
+      - title: React Fundamentals
+        duration: Milestone 4
+        icon: IconBrandReact
         objectives:
-          - "SPA architecture"
-          - "Props, state, and effects"
-          - "Debugging techniques"
-        projects: "Build the company's interactive frontend"
-      - title: "Backend for AI Frontends"
-        duration: "Milestone 5"
-        icon: "IconServer"
+          - SPA architecture
+          - Props, state, and effects
+          - Debugging techniques
+        projects: Build the company's interactive frontend
+      - title: Backend for AI Frontends
+        duration: Milestone 5
+        icon: IconServer
         objectives:
-          - "APIs and DB basics"
-          - "Serialization and auth"
-          - "Serverless functions"
-        projects: "Create the company's backend"
-      - title: "Telemetry & Data Pipelines"
-        duration: "Milestone 6"
-        icon: "IconChartLine"
+          - APIs and DB basics
+          - Serialization and auth
+          - Serverless functions
+        projects: Create the company's backend
+      - title: Telemetry & Data Pipelines
+        duration: Milestone 6
+        icon: IconChartLine
         objectives:
-          - "Collect, transform, aggregate, report"
-        projects: "Build telemetry for the company"
-      - title: "RAG & Memory"
-        duration: "Milestone 7"
-        icon: "IconBrain"
+          - Collect, transform, aggregate, report
+        projects: Build telemetry for the company
+      - title: RAG & Memory
+        duration: Milestone 7
+        icon: IconBrain
         objectives:
-          - "Chunking and embeddings"
-          - "Vector search"
-        projects: "Add the company's knowledge layer"
-      - title: "Agent Engineering"
-        duration: "Milestone 8"
-        icon: "IconRobot"
+          - Chunking and embeddings
+          - Vector search
+        projects: Add the company's knowledge layer
+      - title: Agent Engineering
+        duration: Milestone 8
+        icon: IconRobot
         objectives:
-          - "Rules and memory bank"
-          - "Tool calling"
-          - "Multi-agent planning"
-        projects: "Build the company's agents"
-      - title: "Agentic Workflow Generation"
-        duration: "Milestone 9"
-        icon: "IconSitemap"
+          - Rules and memory bank
+          - Tool calling
+          - Multi-agent planning
+        projects: Build the company's agents
+      - title: Agentic Workflow Generation
+        duration: Milestone 9
+        icon: IconSitemap
         objectives:
-          - "Use LLMs to analyze company case"
-          - "Generate and validate internal workflows"
-          - "Implement automation pipelines"
-        projects: "Serverless, queues, cronjobs, or n8n"
-      - title: "Real-Time Systems"
-        duration: "Milestone 10"
-        icon: "IconBolt"
+          - Use LLMs to analyze company case
+          - Generate and validate internal workflows
+          - Implement automation pipelines
+        projects: Serverless, queues, cronjobs, or n8n
+      - title: Real-Time Systems
+        duration: Milestone 10
+        icon: IconBolt
         objectives:
-          - "Streaming and sockets"
-          - "Pub/sub patterns"
-        projects: "Enable real-time interactions for data, customers, AI or employees"
-      - title: "Full AI-Transformed Company"
-        duration: "Capstone"
-        icon: "IconTrophy"
+          - Streaming and sockets
+          - Pub/sub patterns
+        projects: Enable real-time interactions for data, customers, AI or employees
+      - title: Full AI-Transformed Company
+        duration: Capstone
+        icon: IconTrophy
         objectives:
-          - "AI-generated frontend"
-          - "API + authentication"
-          - "Telemetry + reporting pipeline"
-          - "Workflow automation (agent-generated)"
-          - "RAG knowledge layer"
-          - "Agents with tool calling"
-          - "Real-time communication layer"
-        projects: "Deliver the complete transformation of their company"
-        orientation: "horizontal"
+          - AI-generated frontend
+          - API + authentication
+          - Telemetry + reporting pipeline
+          - Workflow automation (agent-generated)
+          - RAG knowledge layer
+          - Agents with tool calling
+          - Real-time communication layer
+        projects: Deliver the complete transformation of their company
+        orientation: horizontal
   - type: ai_learning
-    version: "1.0"
-    video_position: right
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
-    video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
     features:
       - icon: Robot
         title: Progress faster with AI
@@ -256,6 +252,8 @@ sections:
       - icon: Users
         title: Peer-driven learning
         description: Learn faster with an active community that keeps you accountable.
+    video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
+    video_position: right
     highlight:
       title: Thrive in today's tech with career support for the AI-Era
       description: ""
@@ -284,23 +282,23 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: "84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired."
+        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
         benefits:
-          - text: "Dedicated career coaching from day one"
-          - text: "Resume and LinkedIn profile optimization"
-          - text: "Mock interviews with industry professionals"
-          - text: "Direct introductions to hiring partners"
+          - text: Dedicated career coaching from day one
+          - text: Resume and LinkedIn profile optimization
+          - text: Mock interviews with industry professionals
+          - text: Direct introductions to hiring partners
       - value: 3-6 months
         label: Time to get hired
-        description: "Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job."
+        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
         benefits:
-          - text: "Job search strategy and planning"
-          - text: "Salary negotiation coaching"
-          - text: "Lifetime career support access"
-          - text: "Alumni network with 10,000+ professionals"
+          - text: Job search strategy and planning
+          - text: Salary negotiation coaching
+          - text: Lifetime career support access
+          - text: Alumni network with 10,000+ professionals
       - value: 55%
         label: Average salary increase
-        description: "Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself."
+        description: Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself.
         benefits:
           - text: "AI Software Engineer: $95K–$135K"
           - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -308,12 +306,12 @@ sections:
           - text: "Workflow Automation Engineer: $85K–$120K"
       - value: 5,000+
         label: Hiring Partners
-        description: "Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals."
+        description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
         benefits:
-          - text: "Exclusive job board access"
-          - text: "Priority referrals to partner companies"
-          - text: "Networking events with hiring managers"
-          - text: "Companies include Google, Meta, Amazon, startups"
+          - text: Exclusive job board access
+          - text: Priority referrals to partner companies
+          - text: Networking events with hiring managers
+          - text: Companies include Google, Meta, Amazon, startups
   - type: pricing
     version: "1.0"
     variant: product

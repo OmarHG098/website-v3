@@ -13,8 +13,8 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
       data-testid="section-features-grid-stats-text-card"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center">
-          <div className="flex flex-col gap-4 lg:min-w-[420px]">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12 md:items-center">
+          <div className="flex flex-col gap-4 md:min-w-[420px]">
             <div className="grid grid-cols-2 gap-6">
               {data.items.slice(0, 2).map((item, index) => {
                 const itemId = item.id || `stat-${index}`;
@@ -53,7 +53,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
             )}
           </div>
 
-          <Card className={`p-6 lg:p-8 ${data.card_color || "bg-background"}`}>
+          <Card className={`p-6 md:p-8 ${data.card_color || "bg-background"}`}>
             {data.title && (
               <h2 
                 className="text-h2 mb-2 text-foreground"
