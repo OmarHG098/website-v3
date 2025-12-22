@@ -285,7 +285,16 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isDesktop ? 320 + 24 : 280 + 12;
+    
+    // Get actual card width from DOM for accurate index calculation
+    const firstCard = cardRefs.current[0];
+    let cardWidth = isDesktop ? 344 : 292; // fallback
+    if (firstCard) {
+      const cardRect = firstCard.getBoundingClientRect();
+      const gap = isDesktop ? 24 : 12;
+      cardWidth = cardRect.width + gap;
+    }
+    
     const scrollPos = container.scrollLeft;
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
@@ -324,11 +333,18 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    const cardWidth = isDesktop ? 320 + 24 : 280 + 12;
-    scrollContainerRef.current.scrollTo({
-      left: index * cardWidth,
-      behavior: isDesktop ? 'smooth' : 'instant'
-    });
+    
+    // Get actual card width from DOM for accurate scrolling
+    const firstCard = cardRefs.current[0];
+    if (firstCard) {
+      const cardRect = firstCard.getBoundingClientRect();
+      const gap = isDesktop ? 24 : 12;
+      const cardWidth = cardRect.width + gap;
+      scrollContainerRef.current.scrollTo({
+        left: index * cardWidth,
+        behavior: isDesktop ? 'smooth' : 'instant'
+      });
+    }
   }, [isDesktop, moduleCards.length]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
