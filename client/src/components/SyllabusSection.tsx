@@ -301,22 +301,26 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const scrollPos = container.scrollLeft;
-    const positions = getCardScrollPositions();
     
-    // Find which card is closest to current scroll position
+    // Use actual card DOM positions
     let closestIndex = 0;
-    let minDistance = Math.abs(scrollPos - positions[0]);
+    let minDistance = Infinity;
     
-    for (let i = 1; i < positions.length - 1; i++) {
-      const distance = Math.abs(scrollPos - positions[i]);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = i;
+    for (let i = 0; i < cardRefs.current.length; i++) {
+      const card = cardRefs.current[i];
+      if (card) {
+        // Get the card's left offset relative to the scroll container
+        const cardLeft = card.offsetLeft - container.offsetLeft;
+        const distance = Math.abs(scrollPos - cardLeft);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = i;
+        }
       }
     }
     
     setActiveIndex(closestIndex);
-  }, [getCardScrollPositions]);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -350,15 +354,20 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    const positions = getCardScrollPositions();
     
-    scrollContainerRef.current.scrollTo({
-      left: positions[index],
-      behavior: isDesktop ? 'smooth' : 'instant'
-    });
+    const card = cardRefs.current[index];
+    if (card) {
+      const container = scrollContainerRef.current;
+      const cardLeft = card.offsetLeft - container.offsetLeft;
+      
+      container.scrollTo({
+        left: cardLeft,
+        behavior: isDesktop ? 'smooth' : 'instant'
+      });
+    }
     
     setActiveIndex(index);
-  }, [isDesktop, moduleCards.length, getCardScrollPositions]);
+  }, [isDesktop, moduleCards.length]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!scrollContainerRef.current) return;
