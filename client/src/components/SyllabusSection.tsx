@@ -285,12 +285,12 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
+    const cardWidth = isDesktop ? 320 + 24 : 280 + 12;
     const scrollPos = container.scrollLeft;
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
     setActiveIndex(clampedIndex);
-  }, [moduleCards.length, isDesktop, isTablet]);
+  }, [moduleCards.length, isDesktop]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -324,12 +324,12 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
+    const cardWidth = isDesktop ? 320 + 24 : 280 + 12;
     scrollContainerRef.current.scrollTo({
       left: index * cardWidth,
       behavior: isDesktop ? 'smooth' : 'instant'
     });
-  }, [isDesktop, isTablet, moduleCards.length]);
+  }, [isDesktop, moduleCards.length]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!scrollContainerRef.current) return;
@@ -464,7 +464,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
+                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
                   isDesktop ? "select-none" : "touch-auto",
                   isDesktop && (isDragging ? "cursor-grabbing" : "cursor-grab")
                 )}
@@ -499,11 +499,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   </div>
                 ))}
                 {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
-                <div className="flex-shrink-0 w-[calc(100%-272px)] md:w-[calc(100%-296px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
+                <div className="flex-shrink-0 w-[calc(100%-296px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
               </div>
 
               {/* Navigation Arrow Buttons - centered under the active card */}
-              <div className="mt-4 ml-2 w-[256px] md:w-[280px] lg:w-[320px]" data-testid="container-nav-arrows">
+              <div className="mt-4 ml-2 w-[280px] lg:w-[320px]" data-testid="container-nav-arrows">
                 <div className="flex justify-center gap-2">
                   <Button
                     variant="outline"
