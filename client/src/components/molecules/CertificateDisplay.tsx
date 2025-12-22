@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { 
   IconUserHeart, IconFileDescription, IconMessageDots, IconInfinity,
   IconTarget, IconBriefcase, IconMicrophone, IconHeartHandshake,
   IconTrendingUp, IconCoin, IconRocket, IconCrown,
-  IconBuildingSkyscraper, IconStar, IconUsers, IconWorld
+  IconBuildingSkyscraper, IconStar, IconUsers, IconWorld,
+  IconChevronDown
 } from "@tabler/icons-react";
 import { CertificateCard } from "../CertificateCard";
+import { Button } from "@/components/ui/button";
 
 export interface CertificateDisplayBenefit {
   text: string;
@@ -25,7 +28,9 @@ export function CertificateDisplay({
   certificate_position = "left",
   iconSetIndex = 0
 }: CertificateDisplayProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const isCertificateLeft = certificate_position === "left";
+  const visibleBenefitsCount = 2;
 
   const certificateColumn = (
     <div className="flex justify-center">
@@ -57,10 +62,11 @@ export function CertificateDisplay({
             ];
             const currentSet = iconSets[iconSetIndex % iconSets.length];
             const IconComponent = currentSet[index % currentSet.length];
+            const isHiddenOnMobile = index >= visibleBenefitsCount && !isExpanded;
             return (
               <div 
                 key={index} 
-                className="flex items-center gap-3"
+                className={`flex items-center gap-3 ${isHiddenOnMobile ? 'hidden md:flex' : ''}`}
                 data-testid={`item-benefit-${index}`}
               >
                 <div className="flex items-center gap-2">
@@ -73,6 +79,21 @@ export function CertificateDisplay({
               </div>
             );
           })}
+          {benefits.length > visibleBenefitsCount && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden self-start text-primary"
+              onClick={() => setIsExpanded(!isExpanded)}
+              data-testid="button-see-more-benefits"
+            >
+              {isExpanded ? 'See less' : 'See more'}
+              <IconChevronDown 
+                size={16} 
+                className={`ml-1 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+              />
+            </Button>
+          )}
         </div>
       )}
     </div>

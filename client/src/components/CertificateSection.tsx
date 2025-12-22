@@ -185,7 +185,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
         {data.stats && data.stats.length > 0 && (
           <div 
             ref={statsRef}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+            className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 mb-8 md:mb-12"
             data-testid="certificate-stats"
           >
             {data.stats.map((stat, index) => (
@@ -198,16 +198,16 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                   }
                 }}
                 className={cn(
-                  "text-center p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  hasInteracted && selectedStatIndex === index && "scale-[1.2]",
+                  "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
+                  hasInteracted && selectedStatIndex === index && "md:scale-[1.2]",
                   hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-h2 font-bold text-primary mb-1">
+                <div className="text-lg md:text-h2 font-bold text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-xs md:text-sm text-muted-foreground">
                   {stat.label}
                 </div>
               </div>
