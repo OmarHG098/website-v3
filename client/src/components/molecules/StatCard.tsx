@@ -23,11 +23,11 @@ function formatValueWithUnit(value: string) {
     <>
       {prefix1 && <span>{prefix1}</span>}
       <span>{num1}</span>
-      {unit1 && <span className="">{unit1}</span>}
+      {unit1 && <span>{unit1}</span>}
       {separator && <span>{separator}</span>}
       {prefix2 && <span>{prefix2}</span>}
       {num2 && <span>{num2}</span>}
-      {unit2 && <span className="t">{unit2}</span>}
+      {unit2 && <span>{unit2}</span>}
     </>
   );
 }
@@ -45,7 +45,7 @@ export function StatCard({
   const isSmall = size === "small";
   
   const valueSizeClass = isSmall 
-    ? (isHorizontalMobile ? "text-2xl sm:text-3xl" : "text-3xl")
+    ? (isHorizontalMobile ? "text-2xl sm:text-3xl" : "text-4xl")
     : (isHorizontalMobile ? "text-4xl sm:text-5xl" : "text-5xl");
   
   const content = (

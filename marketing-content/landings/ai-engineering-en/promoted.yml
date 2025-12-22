@@ -244,7 +244,7 @@ sections:
         orientation: "horizontal"
   - type: ai_learning
     version: "1.0"
-    video_position: left
+    video_position: right
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
