@@ -248,8 +248,17 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const [activeIndex, setActiveIndex] = useState(0);
   const prevActiveIndex = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const dragState = useRef({ startX: 0, scrollLeft: 0, lastX: 0, lastTime: 0, velocity: 0 });
   const animationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     if (prevActiveIndex.current !== activeIndex) {
@@ -304,12 +313,12 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
-    const cardWidth = 320 + 24;
+    const cardWidth = isDesktop ? 320 + 24 : 256 + 12;
     scrollContainerRef.current.scrollTo({
       left: index * cardWidth,
-      behavior: 'smooth'
+      behavior: isDesktop ? 'smooth' : 'instant'
     });
-  }, []);
+  }, [isDesktop]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!scrollContainerRef.current) return;
@@ -440,19 +449,20 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 />
               </div>
 
-              {/* Module Cards Container - Drag with momentum */}
+              {/* Module Cards Container - Drag with momentum on desktop, native scroll on mobile */}
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none touch-pan-x",
-                  isDragging ? "cursor-grabbing lg:cursor-grabbing" : "cursor-grab lg:cursor-grab"
+                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
+                  isDesktop ? "select-none" : "touch-pan-x",
+                  isDesktop && (isDragging ? "cursor-grabbing" : "cursor-grab")
                 )}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerLeave={handlePointerUp}
-                onWheel={handleWheel}
+                onPointerDown={isDesktop ? handlePointerDown : undefined}
+                onPointerMove={isDesktop ? handlePointerMove : undefined}
+                onPointerUp={isDesktop ? handlePointerUp : undefined}
+                onPointerLeave={isDesktop ? handlePointerUp : undefined}
+                onWheel={isDesktop ? handleWheel : undefined}
                 data-testid="container-module-cards"
               >
                 {moduleCards.map((module, index) => (
