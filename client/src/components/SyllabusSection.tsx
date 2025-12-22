@@ -275,12 +275,12 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const updateActiveIndex = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = 320 + 24;
+    const cardWidth = isDesktop ? 320 + 24 : 256 + 12;
     const scrollPos = container.scrollLeft;
     const newIndex = Math.round(scrollPos / cardWidth);
     const clampedIndex = Math.max(0, Math.min(newIndex, moduleCards.length - 1));
     setActiveIndex(clampedIndex);
-  }, [moduleCards.length]);
+  }, [moduleCards.length, isDesktop]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
