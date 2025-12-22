@@ -41,8 +41,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                     onMouseEnter={() => isDesktop && setSelectedStatIndex(index)}
                     className={cn(
                       "cursor-pointer transition-all duration-200",
-                      !isDesktop && isSelected && "scale-110",
-                      !isDesktop && !isSelected && "opacity-60"
+                      !isDesktop && isSelected && "scale-110"
                     )}
                   >
                     <StatCard
@@ -71,8 +70,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                       onMouseEnter={() => isDesktop && setSelectedStatIndex(actualIndex)}
                       className={cn(
                         "cursor-pointer transition-all duration-200",
-                        !isDesktop && isSelected && "scale-110",
-                        !isDesktop && !isSelected && "opacity-60"
+                        !isDesktop && isSelected && "scale-110"
                       )}
                     >
                       <StatCard
