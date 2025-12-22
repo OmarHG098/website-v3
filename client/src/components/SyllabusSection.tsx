@@ -332,20 +332,13 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   const handleDotClick = useCallback((index: number) => {
     if (!scrollContainerRef.current) return;
     if (index < 0 || index >= moduleCards.length) return;
-    const container = scrollContainerRef.current;
     const cardWidth = isDesktop ? 320 + 24 : isTablet ? 280 + 16 : 256 + 12;
-    const targetScroll = index * cardWidth;
-    const maxScroll = container.scrollWidth - container.clientWidth;
     
-    // For the last few cards, scroll to max to ensure we reach them
-    const scrollTo = Math.min(targetScroll, maxScroll);
-    
-    container.scrollTo({
-      left: scrollTo,
+    scrollContainerRef.current.scrollTo({
+      left: index * cardWidth,
       behavior: isDesktop ? 'smooth' : 'instant'
     });
     
-    // Manually set activeIndex since scroll event might not fire if already at max
     setActiveIndex(index);
   }, [isDesktop, isTablet, moduleCards.length]);
 
@@ -516,8 +509,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                     </div>
                   </div>
                 ))}
-                {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
-                <div className="flex-shrink-0 w-[calc(100%-272px)] md:w-[calc(100%-296px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
+                {/* Trailing spacer to allow scrolling last card to left edge */}
+                <div className="flex-shrink-0 w-[calc(100vw-80px)] md:w-[calc(100vw-100px)] lg:w-[calc(100vw-400px)]" aria-hidden="true" />
               </div>
 
               {/* Navigation Arrow Buttons - centered under the active card */}
