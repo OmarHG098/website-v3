@@ -1,4 +1,5 @@
 import Marquee from "react-fast-marquee";
+import { useState, useEffect } from "react";
 
 export interface AwardsMarqueeItem {
   id: string;
@@ -27,6 +28,18 @@ export function AwardsMarquee({
   gradientWidth = 100,
   className = "",
 }: AwardsMarqueeProps) {
+  const [isDesktop, setIsDesktop] = useState(false);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+  
+  const responsiveGradientWidth = isDesktop ? gradientWidth : Math.min(gradientWidth, 30);
+  
   if (!items || items.length === 0) return null;
 
   return (
@@ -37,7 +50,7 @@ export function AwardsMarquee({
           pauseOnHover={false}
           gradient={gradient}
           gradientColor={gradientColor}
-          gradientWidth={gradientWidth}
+          gradientWidth={responsiveGradientWidth}
           autoFill={true}
         >
           {items.map((item, index) => (
