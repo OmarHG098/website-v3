@@ -7,6 +7,7 @@ export interface StatCardProps {
   card_color?: string;
   className?: string;
   layout?: "vertical" | "horizontal-mobile";
+  size?: "default" | "small";
 }
 
 function formatValueWithUnit(value: string) {
@@ -37,13 +38,19 @@ export function StatCard({
   use_card = true, 
   card_color = "bg-primary/5",
   className = "",
-  layout = "vertical"
+  layout = "vertical",
+  size = "default"
 }: StatCardProps) {
   const isHorizontalMobile = layout === "horizontal-mobile";
+  const isSmall = size === "small";
+  
+  const valueSizeClass = isSmall 
+    ? (isHorizontalMobile ? "text-2xl sm:text-3xl" : "text-3xl")
+    : (isHorizontalMobile ? "text-4xl sm:text-5xl" : "text-5xl");
   
   const content = (
     <div className={`font-inter ${isHorizontalMobile ? "flex items-center gap-4 sm:block" : ""}`}>
-      <div className={`font-bold text-primary ${isHorizontalMobile ? "text-4xl sm:text-5xl shrink-0" : "text-5xl"}`}>
+      <div className={`font-bold text-primary ${valueSizeClass} shrink-0`}>
         {formatValueWithUnit(value)}
       </div>
       <div className={`text-sm text-foreground`}>

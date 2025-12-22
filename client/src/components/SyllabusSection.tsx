@@ -388,12 +388,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
             <Card className="h-full p-8 bg-primary/5 shadow-card border-0 border-l-4 border-l-primary rounded-r-none">
               <div className="mb-8 ">
                 <h2 
-                  className="text-h2 text-foreground mb-3"
+                  className="text-h2 text-foreground mb-1"
                   data-testid="text-syllabus-program-title"
                 >
                   {data.program_title}
                 </h2>
-                {/* test */}
                 {data.program_description && (
                   <p className="text-muted-foreground mb-4" data-testid="text-syllabus-program-description">
                     {data.program_description}

@@ -13,22 +13,42 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
       data-testid="section-features-grid-stats-text-card"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 sm:items-center">
-          <div className="flex flex-col gap-4 sm:gap-1 sm:min-w-[320px]">
-            {data.items.map((item, index) => {
-              const itemId = item.id || `stat-${index}`;
-              return (
-                <StatCard
-                  key={itemId}
-                  value={item.value}
-                  title={item.title}
-                  use_card={false}
-                  card_color="bg-transparent"
-                  layout="horizontal-mobile"
-                  data-testid={`stat-${itemId}`}
-                />
-              );
-            })}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center">
+          <div className="flex flex-col gap-4 lg:min-w-[320px]">
+            <div className="grid grid-cols-2 gap-4">
+              {data.items.slice(0, 2).map((item, index) => {
+                const itemId = item.id || `stat-${index}`;
+                return (
+                  <StatCard
+                    key={itemId}
+                    value={item.value}
+                    title={item.title}
+                    use_card={false}
+                    card_color="bg-transparent"
+                    size="small"
+                    data-testid={`stat-${itemId}`}
+                  />
+                );
+              })}
+            </div>
+            {data.items.length > 2 && (
+              <div className="flex justify-center">
+                {data.items.slice(2, 3).map((item, index) => {
+                  const itemId = item.id || `stat-${index + 2}`;
+                  return (
+                    <StatCard
+                      key={itemId}
+                      value={item.value}
+                      title={item.title}
+                      use_card={false}
+                      card_color="bg-transparent"
+                      size="small"
+                      data-testid={`stat-${itemId}`}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <Card className={`p-6 lg:p-8 ${data.card_color || "bg-background"}`}>
