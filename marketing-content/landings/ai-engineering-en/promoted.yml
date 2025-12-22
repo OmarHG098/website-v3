@@ -85,6 +85,7 @@ sections:
     pauseOnHover: true
     gradient: true
     gradientWidth: 500
+    certificate_position: right
     items:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
