@@ -378,7 +378,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   return (
     <section 
-      className="pt-section bg-muted/30"
+      className="pt-section"
       data-testid="section-syllabus-program"
     >
       <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">

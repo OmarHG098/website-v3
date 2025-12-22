@@ -22,11 +22,11 @@ function formatValueWithUnit(value: string) {
     <>
       {prefix1 && <span>{prefix1}</span>}
       <span>{num1}</span>
-      {unit1 && <span className="text-2xl">{unit1}</span>}
+      {unit1 && <span className="">{unit1}</span>}
       {separator && <span>{separator}</span>}
       {prefix2 && <span>{prefix2}</span>}
       {num2 && <span>{num2}</span>}
-      {unit2 && <span className="text-2xl">{unit2}</span>}
+      {unit2 && <span className="t">{unit2}</span>}
     </>
   );
 }

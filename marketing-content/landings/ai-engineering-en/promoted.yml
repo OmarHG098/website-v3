@@ -84,7 +84,7 @@ sections:
     speed: 40
     pauseOnHover: true
     gradient: true
-    gradientWidth: 100
+    gradientWidth: 500
     items:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
