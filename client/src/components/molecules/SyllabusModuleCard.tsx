@@ -90,7 +90,7 @@ export function SyllabusModuleCard({
                 </>
               ) : (
                 <>
-                  See more ({objectives.length - 4} more)
+                  See {objectives.length - 4} more
                   <TablerIcons.IconChevronDown className="w-4 h-4" />
                 </>
               )}
