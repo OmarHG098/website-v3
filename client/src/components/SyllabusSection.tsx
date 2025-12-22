@@ -382,10 +382,10 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       data-testid="section-syllabus-program"
     >
       <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row">
           {/* Left: Program Info Card */}
           <div className="flex-shrink-0 lg:w-80 self-stretch">
-            <Card className="h-full p-8 bg-primary/5 shadow-card border-0 border-l-4 border-l-primary rounded-l-none rounded-r-xl">
+            <Card className="h-full p-8 bg-primary/5 shadow-card border-0 border-l-4 border-l-primary rounded-r-none">
               <div className="mb-8 ">
                 <h2 
                   className="text-h2 text-foreground mb-3"
@@ -420,7 +420,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
           {/* Right: Scrollable Module Cards */}
           <div className="flex-1 min-w-0">
-            <div className="relative">
+            <div className="relative bg-muted ps-8 py-4">
               {/* Progress Dots */}
               <div className="mb-8 pt-2">
                 <DotsIndicator

@@ -30,7 +30,7 @@ export function AwardsMarquee({
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="py-section">
+    <section className="pt-section">
       <div className={`mx-12 ${className}`} data-testid="awards-marquee">
         <Marquee
           speed={speed}
