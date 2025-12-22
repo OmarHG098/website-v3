@@ -14,8 +14,8 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
     >
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center">
-          <div className="flex flex-col gap-4 lg:min-w-[320px]">
-            <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-4 lg:min-w-[420px]">
+            <div className="grid grid-cols-2 gap-6">
               {data.items.slice(0, 2).map((item, index) => {
                 const itemId = item.id || `stat-${index}`;
                 return (
@@ -26,6 +26,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                     use_card={false}
                     card_color="bg-transparent"
                     size="small"
+                    className="text-center"
                     data-testid={`stat-${itemId}`}
                   />
                 );
@@ -43,6 +44,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                       use_card={false}
                       card_color="bg-transparent"
                       size="small"
+                      className="text-center"
                       data-testid={`stat-${itemId}`}
                     />
                   );
