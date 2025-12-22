@@ -381,11 +381,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
       className="pt-section"
       data-testid="section-syllabus-program"
     >
-      <div className="pl-4 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))]">
+      <div className="px-0 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))] lg:pr-0">
         <div className="flex flex-col lg:flex-row">
           {/* Left: Program Info Card */}
-          <div className="flex-shrink-0 lg:w-80 self-stretch">
-            <Card className="h-full p-8 bg-primary/5 shadow-card border-0 border-l-4 border-l-primary rounded-r-none">
+          <div className="flex-shrink-0 lg:w-80 self-stretch px-4 lg:px-0">
+            <Card className="h-full p-6 lg:p-8 bg-primary/5 shadow-card border-0 lg:border-l-4 lg:border-l-primary lg:rounded-r-none">
               <div className="mb-8 ">
                 <h2 
                   className="text-h2 text-foreground mb-1"
@@ -425,18 +425,18 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
           {/* Right: Scrollable Module Cards */}
           <div className="flex-1 min-w-0">
-            <div className="relative bg-muted ps-8 py-4">
+            <div className="relative bg-muted ps-4 lg:ps-8 py-4">
               {/* Progress Dots */}
-              <div className="mb-8 pt-2">
+              <div className="mb-4 lg:mb-8 pt-2">
                 <DotsIndicator
                   count={moduleCards.length}
                   activeIndex={activeIndex}
                   onDotClick={handleDotClick}
-                  className="justify-start ms-8"
+                  className="justify-start ms-4 lg:ms-8"
                   ariaLabel="Module progress indicators"
-                  dotSize="w-3 h-3"
-                  activeDotWidth="w-12"
-                  gap="gap-4"
+                  dotSize="w-2 h-2 lg:w-3 lg:h-3"
+                  activeDotWidth="w-8 lg:w-12"
+                  gap="gap-2 lg:gap-4"
                 />
               </div>
 
@@ -444,7 +444,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none",
+                  "flex gap-3 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory select-none",
                   isDragging ? "cursor-grabbing" : "cursor-grab"
                 )}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
