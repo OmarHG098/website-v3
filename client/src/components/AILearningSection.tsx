@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,47 @@ import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
+}
+
+interface CollapsibleFeatureCardProps {
+  feature: { icon: string; title: string; description: string };
+  index: number;
+  isRigobot: boolean;
+  getIcon: (iconName: string, isRigobot?: boolean) => JSX.Element | null;
+}
+
+function CollapsibleFeatureCard({ feature, index, isRigobot, getIcon }: CollapsibleFeatureCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <Card 
+      className="bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-0 shadow-none"
+      data-testid={`feature-ai-${index}`}
+    >
+      <CardContent className="p-4 md:p-6">
+        <div 
+          className="flex items-center gap-3 cursor-pointer md:cursor-default"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+            {getIcon(feature.icon, isRigobot)}
+          </div>
+          <h3 className="font-semibold text-foreground flex-1">
+            {feature.title}
+          </h3>
+          <TablerIcons.IconChevronDown 
+            size={20} 
+            className={`md:hidden text-muted-foreground transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+          />
+        </div>
+        <div className={`overflow-hidden transition-all duration-200 md:max-h-none md:opacity-100 md:mt-3 ${isExpanded ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+          <p className="text-muted-foreground text-sm">
+            {feature.description}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 function extractYouTubeId(url: string): string | null {
@@ -61,29 +103,17 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-16">
           {(data.features || []).slice(0, 3).map((feature, index) => {
             const isRigobot = feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
-              <Card 
-                key={index} 
-                className="bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-0 shadow-none"
-                data-testid={`feature-ai-${index}`}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {getIcon(feature.icon, isRigobot)}
-                    </div>
-                    <h3 className="font-semibold text-foreground">
-                      {feature.title}
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <CollapsibleFeatureCard
+                key={index}
+                feature={feature}
+                index={index}
+                isRigobot={isRigobot}
+                getIcon={getIcon}
+              />
             );
           })}
         </div>
