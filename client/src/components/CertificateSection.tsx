@@ -141,7 +141,7 @@ interface CertificateSectionProps {
 
 export function CertificateSection({ data }: CertificateSectionProps) {
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(true); // Start as true so first stat is selected
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -149,7 +149,15 @@ export function CertificateSection({ data }: CertificateSectionProps) {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1024px)');
     setIsDesktop(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    // On desktop, start with no selection until hover
+    if (mediaQuery.matches) {
+      setHasInteracted(false);
+    }
+    const handler = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+      // Reset interaction state based on device
+      setHasInteracted(!e.matches);
+    };
     mediaQuery.addEventListener('change', handler);
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
@@ -218,12 +226,12 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 }}
                 className={cn(
                   "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  hasInteracted && selectedStatIndex === index && "scale-[1.15] md:scale-[1.2]",
+                  hasInteracted && selectedStatIndex === index && "scale-[1.2] md:scale-[1.25]",
                   hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-xl md:text-h2 font-bold text-primary mb-1">
+                <div className="text-2xl md:text-3xl lg:text-h2 font-bold text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
                 <div className="text-sm md:text-sm text-muted-foreground">
