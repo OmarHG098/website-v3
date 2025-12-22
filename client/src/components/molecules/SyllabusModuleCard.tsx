@@ -31,11 +31,11 @@ export function SyllabusModuleCard({
   return (
     <Card 
       className={cn(
-        "p-6 rounded-card h-full b",
+        "p-4 lg:p-6 rounded-card h-full",
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
-        isVertical ? "min-h-[380px] w-80" : "min-w-[600px]",
+        isVertical ? "min-h-[280px] lg:min-h-[380px] w-64 lg:w-80" : "min-w-[400px] lg:min-w-[600px]",
         className
       )}
       data-testid={testId}

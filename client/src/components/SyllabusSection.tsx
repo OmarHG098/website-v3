@@ -478,11 +478,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   </div>
                 ))}
                 {/* Trailing spacer to allow scrolling to last cards - width matches container minus one card */}
-                <div className="flex-shrink-0 w-[calc(100%-344px)]" aria-hidden="true" />
+                <div className="flex-shrink-0 w-[calc(100%-272px)] lg:w-[calc(100%-344px)]" aria-hidden="true" />
               </div>
 
               {/* Navigation Arrow Buttons - centered under the active card */}
-              <div className="mt-4 ml-2" style={{ width: '320px' }} data-testid="container-nav-arrows">
+              <div className="mt-4 ml-2 w-[256px] lg:w-[320px]" data-testid="container-nav-arrows">
                 <div className="flex justify-center gap-2">
                   <Button
                     variant="outline"
