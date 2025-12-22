@@ -50,14 +50,14 @@ export function StatCard({
 
   if (use_card) {
     return (
-      <Card className={`items-center gap-2 rounded-card px-8 py-4 ${card_color} ${className}`}>
+      <Card className={`items-center gap-2 rounded-card px-12 py-4 min-w-[200px] ${card_color} ${className}`}>
         {content}
       </Card>
     );
   }
 
   return (
-    <div className={`items-center gap-2 rounded-card px-8 py-4 ${card_color} ${className}`}>
+    <div className={`items-center gap-2 rounded-card px-12 py-4 min-w-[200px] ${card_color} ${className}`}>
       {content}
     </div>
   );
