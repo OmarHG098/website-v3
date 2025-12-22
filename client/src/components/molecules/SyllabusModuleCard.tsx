@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import * as TablerIcons from "@tabler/icons-react";
@@ -25,17 +26,28 @@ export function SyllabusModuleCard({
   className,
   testId,
 }: SyllabusModuleCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const isVertical = orientation === "vertical";
   const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[icon] || TablerIcons.IconFlag;
+  
+  const hasMoreObjectives = objectives.length > 4;
+  const displayedObjectives = isVertical && hasMoreObjectives && !isExpanded 
+    ? objectives.slice(0, 4) 
+    : objectives;
 
   return (
     <Card 
       className={cn(
-        "p-4 lg:p-6 rounded-card h-full",
+        "p-4 lg:p-6 rounded-card",
         isActive 
           ? "bg-card shadow-card opacity-100" 
           : "bg-card shadow-none opacity-50",
-        isVertical ? "min-h-[380px] lg:min-h-[380px] min-w-[256px] md:min-w-[280px] w-[256px] lg:min-w-[320px] flex-shrink-0" : "min-w-[400px] lg:min-w-[600px] flex-shrink-0",
+        isVertical 
+          ? cn(
+              "min-w-[256px] md:min-w-[280px] w-[256px] lg:min-w-[320px] flex-shrink-0",
+              !isExpanded && "min-h-[380px] lg:min-h-[380px]"
+            )
+          : "min-w-[400px] md:min-w-[500px] lg:min-w-[600px] flex-shrink-0",
         className
       )}
       data-testid={testId}
@@ -57,13 +69,33 @@ export function SyllabusModuleCard({
           </div>
 
           <ul className="space-y-2.5 mb-5 text-sm text-foreground">
-            {objectives.map((objective, objIndex) => (
+            {displayedObjectives.map((objective, objIndex) => (
               <li key={objIndex} className="flex items-start gap-2">
                 <TablerIcons.IconCheck className="text-primary mt-0.5 w-4 h-4 flex-shrink-0" />
                 <span className="leading-relaxed">{objective}</span>
               </li>
             ))}
           </ul>
+
+          {hasMoreObjectives && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-sm text-primary font-medium mb-4 flex items-center gap-1 hover:underline"
+              data-testid="button-see-more"
+            >
+              {isExpanded ? (
+                <>
+                  See less
+                  <TablerIcons.IconChevronUp className="w-4 h-4" />
+                </>
+              ) : (
+                <>
+                  See more ({objectives.length - 4} more)
+                  <TablerIcons.IconChevronDown className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          )}
 
           {projects && (
             <div className="pt-4 border-t border-border">

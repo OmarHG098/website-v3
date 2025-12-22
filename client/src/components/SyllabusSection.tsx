@@ -273,6 +273,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
   }, [activeIndex]);
 
   const [isTablet, setIsTablet] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     const tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
@@ -280,6 +281,14 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
     const handler = (e: MediaQueryListEvent) => setIsTablet(e.matches);
     tabletQuery.addEventListener('change', handler);
     return () => tabletQuery.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mobileQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mobileQuery.addEventListener('change', handler);
+    return () => mobileQuery.removeEventListener('change', handler);
   }, []);
 
   const getCardScrollPositions = useCallback(() => {
@@ -529,7 +538,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         objectives={module.objectives}
                         projects={module.projects ?? undefined}
                         isActive={index === activeIndex}
-                        orientation={module.orientation ?? "vertical"}
+                        orientation={isMobile ? "vertical" : (module.orientation ?? "vertical")}
                         icon={module.icon}
                         testId={`card-module-${index}`}
                       />
