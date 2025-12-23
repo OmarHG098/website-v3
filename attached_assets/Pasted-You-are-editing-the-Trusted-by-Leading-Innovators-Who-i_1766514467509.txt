@@ -1,0 +1,37 @@
+You are editing the “Trusted by Leading Innovators / Who is hiring our graduates” section on the AI Engineering page (4geeks.com).
+Keep what is already correct
+- Keep the current monochrome card style (bg-muted/30, subtle depth, borders, radius).
+- Keep the mosaic concept (small stacked cards + large cards, and the large card bottom text).
+- Keep grayscale logos and no hover name labels.
+New changes to implement
+1) Increase the overall scale of the section (reduce visual overload)
+- The section currently shows too many cards per viewport, which creates visual noise.
+- Increase the size of the carousel area and the cards so fewer cards are visible at once, similar to Supabase.
+- Make the mosaic feel more “zoomed in”:
+  - Increase card widths and heights
+  - Increase internal padding
+  - Slightly increase the overall carousel container height
+- Keep gaps consistent and clean, but adjust them proportionally so the layout does not feel cramped.
+2) Fix the stacked-small vs large card proportion (must match exactly)
+- The two small stacked cards must equal the height of the large card next to them.
+- Ensure the layout math is exact:
+  - Large card height = (small card height * 2) + (gap between the two small cards)
+- Do this consistently for every mosaic group so the grid feels intentional and aligned.
+3) Normalize logo visual weight (Uber vs Meta issue)
+- Logos should have similar perceived size and weight, not necessarily the same pixel dimensions.
+- Implement a normalization rule:
+  - Set a consistent max-height for logos inside each card type (small vs large)
+  - Use object-fit: contain and consistent padding
+  - Adjust individual logos if needed using per-logo scale overrides (e.g., a small set of CSS classes or inline style variables)
+- Specifically reduce logos that appear too large (like Uber) and slightly increase those that look too small (like Meta) until the visual weight matches.
+- Keep grayscale and opacity consistent across all logos.
+Additional requirements
+- Do not change the typography of the section header.
+- Keep the infinite horizontal scroll and pause on hover.
+- Ensure the layout remains stable, with no jumping as it scrolls.
+Acceptance criteria
+- Fewer cards are visible per screen, similar to Supabase (less clutter, more premium).
+- Two stacked small cards match the large card height perfectly.
+- Logos feel consistent in visual weight across cards (no outliers like Uber being too dominant).
+- The design stays monochrome and clean.
+el objetivo es “ver entre 6 y 8 cards máximo en desktop viewport”, no 12-14. Eso fuerza el zoom-in correcto sin que invente cosas.

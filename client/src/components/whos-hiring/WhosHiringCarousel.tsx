@@ -27,6 +27,10 @@ const heroCardTexts = [
   "Shaping the next generation of products.",
 ];
 
+const SMALL_CARD_HEIGHT = 120;
+const GAP = 24;
+const HERO_CARD_HEIGHT = SMALL_CARD_HEIGHT * 2 + GAP;
+
 function LogoCard({ 
   logo, 
   size = "normal",
@@ -36,27 +40,27 @@ function LogoCard({
   size?: "small" | "normal" | "hero";
   heroText?: string;
 }) {
-  const sizeClasses = {
-    small: "h-20 w-36",
-    normal: "h-24 w-44",
-    hero: "h-[216px] w-56",
-  };
-
   const isHero = size === "hero";
+  const isSmall = size === "small";
+
+  const cardStyle = {
+    height: isHero ? `${HERO_CARD_HEIGHT}px` : isSmall ? `${SMALL_CARD_HEIGHT}px` : "140px",
+    width: isHero ? "320px" : isSmall ? "220px" : "260px",
+  };
 
   return (
     <div
       className={`
         flex-shrink-0
-        ${sizeClasses[size]}
         rounded-[0.8rem]
-        bg-muted/80
+        bg-muted/30
         border border-border/20
         shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]
         transition-all duration-200
         hover:bg-muted/50 hover:border-border/40 hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)]
-        ${isHero ? "flex flex-col justify-between p-5" : "flex items-center justify-center p-4"}
+        ${isHero ? "flex flex-col justify-between p-6" : "flex items-center justify-center p-5"}
       `}
+      style={cardStyle}
     >
       {isHero ? (
         <>
@@ -64,11 +68,11 @@ function LogoCard({
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-8 w-auto object-contain logo-grayscale"
+              className="h-10 max-w-[140px] object-contain logo-grayscale"
               loading="lazy"
             />
           </div>
-          <p className="text-xs text-muted-foreground/70 leading-relaxed">
+          <p className="text-sm text-muted-foreground/70 leading-relaxed">
             {heroText}
           </p>
         </>
@@ -76,7 +80,7 @@ function LogoCard({
         <img
           src={logo.src}
           alt={logo.alt}
-          className="max-h-full max-w-full object-contain logo-grayscale"
+          className="h-10 max-w-[160px] object-contain logo-grayscale"
           loading="lazy"
         />
       )}
@@ -88,10 +92,12 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   const { pattern, items } = group;
   const heroText = heroCardTexts[textIndex % heroCardTexts.length];
 
+  const gapClass = "gap-6";
+
   if (pattern === "stack-hero" && items.length >= 3) {
     return (
-      <div className="flex gap-5 h-[216px]">
-        <div className="flex flex-col gap-5">
+      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+        <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
         </div>
@@ -102,9 +108,9 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "hero-stack" && items.length >= 3) {
     return (
-      <div className="flex gap-5 h-[216px]">
+      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <LogoCard logo={items[0]} size="hero" heroText={heroText} />
-        <div className="flex flex-col gap-5">
+        <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[1]} size="small" />
           <LogoCard logo={items[2]} size="small" />
         </div>
@@ -114,12 +120,12 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "triple-stack" && items.length >= 3) {
     return (
-      <div className="flex gap-5 h-[216px]">
-        <div className="flex flex-col gap-5">
+      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+        <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
         </div>
-        <div className="flex flex-col gap-5">
+        <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[2]} size="small" />
           {items[3] && <LogoCard logo={items[3]} size="small" />}
         </div>
@@ -128,7 +134,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   }
 
   return (
-    <div className="flex gap-5 h-[216px]">
+    <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
       {items.map((item, i) => (
         <LogoCard key={i} logo={item} size="normal" />
       ))}
@@ -222,18 +228,18 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
       </div>
 
       <div 
-        className="relative py-6"
+        className="relative py-8"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => setIsPaused(false)}
       >
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <div className="overflow-hidden">
           <div 
-            className={`flex gap-8 ${shouldAnimate ? "logo-carousel-track" : ""}`}
+            className={`flex gap-10 ${shouldAnimate ? "logo-carousel-track" : ""}`}
             style={{
               width: "max-content",
             }}
