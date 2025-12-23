@@ -82,7 +82,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   if (isProductVariant) {
     return (
       <section
-        className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+        className="py-section"
         data-testid="section-pricing"
       >
         <div className="max-w-6xl mx-auto px-4">
