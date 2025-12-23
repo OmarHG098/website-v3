@@ -1,17 +1,9 @@
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   IconFlame,
-  IconBrandHtml5,
-  IconBrandCss3,
-  IconBrandJavascript,
-  IconBrandReact,
-  IconBrandPython,
-  IconBrandNodejs,
-  IconBrandGit,
-  IconBrandBootstrap,
   IconApi,
   IconSettings,
   IconCertificate,
@@ -20,6 +12,19 @@ import {
   IconSchool,
   type Icon,
 } from "@tabler/icons-react";
+import {
+  SiGit,
+  SiPython,
+  SiReact,
+  SiNodedotjs,
+  SiOpenai,
+  SiFlask,
+  SiBootstrap,
+  SiJavascript,
+  SiHtml5,
+  SiCss3,
+  SiGithub,
+} from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
 import RigobotIconTiny from "@/components/custom-icons/RigobotIconTiny";
 
@@ -27,33 +32,28 @@ interface PricingSectionProps {
   data: PricingSectionType;
 }
 
-const iconMap: Record<string, Icon> = {
-  html: IconBrandHtml5,
-  css: IconBrandCss3,
-  javascript: IconBrandJavascript,
-  react: IconBrandReact,
-  python: IconBrandPython,
-  nodejs: IconBrandNodejs,
-  git: IconBrandGit,
-  bootstrap: IconBrandBootstrap,
+const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
+  git: SiGit,
+  python: SiPython,
+  react: SiReact,
+  nodejs: SiNodedotjs,
+  openai: SiOpenai,
+  flask: SiFlask,
+  bootstrap: SiBootstrap,
+  javascript: SiJavascript,
+  html5: SiHtml5,
+  html: SiHtml5,
+  css3: SiCss3,
+  css: SiCss3,
+  github: SiGithub,
+};
+
+const featureIconMap: Record<string, Icon> = {
   api: IconApi,
   settings: IconSettings,
   certificate: IconCertificate,
   cloud: IconCloud,
   robot: IconRobot,
-};
-
-const techIconColors: Record<string, string> = {
-  html: "#0084FF",
-  css: "#25BF6C",
-  javascript: "#FFB718",
-  react: "#0084FF",
-  python: "#FFB718",
-  nodejs: "#FFB718",
-  git: "#EB5757",
-  bootstrap: "#9747FF",
-  api: "#061258",
-  settings: "#061258",
 };
 
 export function PricingSection({ data }: PricingSectionProps) {
@@ -183,15 +183,14 @@ export function PricingSection({ data }: PricingSectionProps) {
                   data-testid="tech-icons"
                 >
                   {data.tech_icons.map((iconName, index) => {
-                    const IconComponent = iconMap[iconName.toLowerCase()];
-                    const color = techIconColors[iconName.toLowerCase()] || "#061258";
+                    const IconComponent = techIconMap[iconName.toLowerCase()];
                     return IconComponent ? (
                       <div
                         key={index}
-                        className="flex items-center justify-center p-2"
+                        className="flex items-center justify-center p-2 text-muted-foreground"
                         data-testid={`icon-tech-${index}`}
                       >
-                        <IconComponent size={20} style={{ color }} />
+                        <IconComponent className="w-5 h-5" />
                       </div>
                     ) : null;
                   })}
@@ -212,7 +211,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                         <RigobotIconTiny width="27px" height="17px" />
                       ) : feature.icon ? (
                         (() => {
-                          const IconComponent = iconMap[feature.icon.toLowerCase()];
+                          const IconComponent = featureIconMap[feature.icon.toLowerCase()];
                           return IconComponent ? (
                             <IconComponent size={22} className="text-primary" />
                           ) : (
@@ -380,15 +379,14 @@ export function PricingSection({ data }: PricingSectionProps) {
                 data-testid="tech-icons"
               >
                 {data.tech_icons.map((iconName, index) => {
-                  const IconComponent = iconMap[iconName.toLowerCase()];
-                  const color = techIconColors[iconName.toLowerCase()] || "#061258";
+                  const IconComponent = techIconMap[iconName.toLowerCase()];
                   return IconComponent ? (
                     <div
                       key={index}
-                      className="flex items-center justify-center p-2"
+                      className="flex items-center justify-center p-2 text-muted-foreground"
                       data-testid={`icon-tech-${index}`}
                     >
-                      <IconComponent size={20} style={{ color }} />
+                      <IconComponent className="w-5 h-5" />
                     </div>
                   ) : null;
                 })}
@@ -409,7 +407,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                       <RigobotIconTiny width="27px" height="17px" />
                     ) : feature.icon ? (
                       (() => {
-                        const IconComponent = iconMap[feature.icon.toLowerCase()];
+                        const IconComponent = featureIconMap[feature.icon.toLowerCase()];
                         return IconComponent ? (
                           <IconComponent size={22} className="text-primary" />
                         ) : (
