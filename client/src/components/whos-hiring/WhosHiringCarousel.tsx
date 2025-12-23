@@ -13,7 +13,7 @@ interface LogoItem {
 
 interface MosaicGroup {
   id: string;
-  pattern: "stack-hero" | "hero-stack" | "triple-stack";
+  pattern: "stack-hero" | "hero-stack";
   items: LogoItem[];
 }
 
@@ -93,12 +93,10 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   const { pattern, items } = group;
   const heroText = heroCardTexts[textIndex % heroCardTexts.length];
 
-  const gapClass = "gap-4";
-
   if (pattern === "stack-hero" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
-        <div className={`flex flex-col ${gapClass}`}>
+      <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+        <div className="flex flex-col gap-4">
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
         </div>
@@ -109,33 +107,18 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "hero-stack" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <LogoCard logo={items[0]} size="hero" heroText={heroText} />
-        <div className={`flex flex-col ${gapClass}`}>
+        <div className="flex flex-col gap-4">
           <LogoCard logo={items[1]} size="small" />
           <LogoCard logo={items[2]} size="small" />
-        </div>
-      </div>
-    );
-  }
-
-  if (pattern === "triple-stack" && items.length >= 3) {
-    return (
-      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
-        <div className={`flex flex-col ${gapClass}`}>
-          <LogoCard logo={items[0]} size="small" />
-          <LogoCard logo={items[1]} size="small" />
-        </div>
-        <div className={`flex flex-col ${gapClass}`}>
-          <LogoCard logo={items[2]} size="small" />
-          {items[3] && <LogoCard logo={items[3]} size="small" />}
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+    <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
       {items.map((item, i) => (
         <LogoCard key={i} logo={item} size="normal" />
       ))}
@@ -159,19 +142,16 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
   const mosaicGroups = useMemo(() => {
     const groups: MosaicGroup[] = [];
-    const patterns: Array<"stack-hero" | "hero-stack" | "triple-stack"> = [
-      "stack-hero", "hero-stack", "triple-stack", "hero-stack", "stack-hero"
-    ];
+    const patterns: Array<"stack-hero" | "hero-stack"> = ["stack-hero", "hero-stack"];
     
     let logoIndex = 0;
     let patternIndex = 0;
     
     while (logoIndex < logos.length) {
       const pattern = patterns[patternIndex % patterns.length];
-      const itemsNeeded = pattern === "triple-stack" ? 4 : 3;
       const items: LogoItem[] = [];
       
-      for (let i = 0; i < itemsNeeded && logoIndex < logos.length; i++) {
+      for (let i = 0; i < 3 && logoIndex < logos.length; i++) {
         items.push(logos[logoIndex % logos.length]);
         logoIndex++;
       }
@@ -229,15 +209,17 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
           speed={40}
           pauseOnHover={true}
           gradient={false}
-          direction="right"
+          direction="left"
           autoFill={true}
+          className="gap-4"
         >
           {mosaicGroups.map((group, index) => (
-            <MosaicGroupComponent 
-              key={`${group.id}-${index}`} 
-              group={group}
-              textIndex={index}
-            />
+            <div key={`${group.id}-${index}`} className="ml-4">
+              <MosaicGroupComponent 
+                group={group}
+                textIndex={index}
+              />
+            </div>
           ))}
         </Marquee>
       </div>
