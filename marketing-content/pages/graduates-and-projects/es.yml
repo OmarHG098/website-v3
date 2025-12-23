@@ -1,5 +1,9 @@
 # Graduados y Proyectos - Español
 
+slug: "alumnos-y-proyectos"
+template: "default"
+title: "Alumnos y Proyectos"
+
 meta:
   page_title: "Proyectos de Graduados y Alumni | 4Geeks Academy"
   description: "Explora proyectos finales de graduados de 4Geeks Academy: apps reales y soluciones que muestran las habilidades y creatividad de nuestros alumni."

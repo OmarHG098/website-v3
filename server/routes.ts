@@ -56,6 +56,7 @@ import {
   listContentSlugs,
   loadCommonData,
 } from "./utils/contentLoader";
+import { getFolderFromSlug } from "@shared/slugMappings";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
 
@@ -657,7 +658,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const locale = (req.query.locale as string) || "en";
 
     // Resolve translated slug to folder name
-    const { getFolderFromSlug } = require("@shared/slugMappings");
     const folder = getFolderFromSlug(slug, locale);
 
     const page = loadTemplatePage(folder, locale);
