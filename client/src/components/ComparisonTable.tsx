@@ -52,72 +52,67 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block">
-          {/* Header row */}
-          <div className="flex w-full" style={{ width: '100%' }}>
-            {data.columns.map((column, colIndex) => {
-              const feature = colIndex === 0;
-              const comparator = colIndex === data.columns.length - 1;
-              const borderClasses = feature
-                ? "border-t border-l border-border rounded-t-card"
-                : comparator
-                ? "border-t border-r border-border rounded-t-card"
-                : "border-t border-border rounded-t-card";
-              
-              return (
-                <div
-                  key={colIndex}
-                  className={`flex-1 p-4 text-left font-semibold text-body ${borderClasses} ${
-                    column.highlight
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-primary/20 text-foreground"
-                  }`}
-                  data-testid={`th-column-${colIndex}`}
-                >
-                  {column.name}
-                </div>
-              );
-            })}
-          </div>
-          {/* Table body with card background and border */}
-          <div className="bg-card rounded-b-card border border-border border-t-0 overflow-hidden">
-            <table className="w-full border-collapse table-fixed" data-testid="table-comparison">
-              <colgroup>
-                {data.columns.map((_, colIndex) => (
-                  <col key={colIndex} style={{ width: `${100 / data.columns.length}%` }} />
-                ))}
-              </colgroup>
-              <tbody>
-                {data.rows.map((row, rowIndex) => (
-                  <tr
-                    key={rowIndex}
-                    className={rowIndex % 2 === 0 ? "bg-primary/5" : ""}
-                    data-testid={`tr-row-${rowIndex}`}
+          {/* Comparison table with rounded border */}
+          <div className="rounded-xl border border-border overflow-hidden shadow-card" data-testid="table-comparison">
+            {/* Header row */}
+            <div className="grid grid-cols-3">
+              {data.columns.map((column, colIndex) => {
+                const isFeatureCol = colIndex === 0;
+                const isHighlighted = column.highlight;
+                
+                return (
+                  <div
+                    key={colIndex}
+                    className={`p-6 font-semibold text-body ${
+                      isFeatureCol ? "text-left" : "text-center"
+                    } ${
+                      isHighlighted
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "bg-muted text-foreground"
+                    }`}
+                    data-testid={`th-column-${colIndex}`}
                   >
-                    <td className="p-4 font-medium text-foreground">
-                      {row.feature}
-                      {row.feature_description && (
-                        <p className="text-sm text-muted-foreground font-normal mt-1">
-                          {row.feature_description}
-                        </p>
-                      )}
-                    </td>
-                    {row.values.map((value, valIndex) => (
-                      <td
-                        key={valIndex}
-                        className={`p-4 text-center ${
-                          valIndex === highlightIndex - 1
-                            ? "bg-primary/10 font-semibold text-foreground"
-                            : "text-foreground"
-                        }`}
-                        data-testid={`td-value-${rowIndex}-${valIndex}`}
-                      >
-                        <CellValue value={value} />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    {column.name}
+                  </div>
+                );
+              })}
+            </div>
+            {/* Table body */}
+            {data.rows.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                className="grid grid-cols-3 border-t border-border"
+                data-testid={`tr-row-${rowIndex}`}
+              >
+                {/* Feature name - left aligned */}
+                <div className="p-6 font-medium text-foreground text-left bg-card">
+                  {row.feature}
+                  {row.feature_description && (
+                    <p className="text-sm text-muted-foreground font-normal mt-1">
+                      {row.feature_description}
+                    </p>
+                  )}
+                </div>
+                {/* Values */}
+                {row.values.map((value, valIndex) => {
+                  const isHighlightedCol = valIndex === highlightIndex - 1;
+                  
+                  return (
+                    <div
+                      key={valIndex}
+                      className={`p-6 text-center ${
+                        isHighlightedCol
+                          ? "bg-primary/10 font-semibold text-foreground"
+                          : "bg-card text-foreground"
+                      }`}
+                      data-testid={`td-value-${rowIndex}-${valIndex}`}
+                    >
+                      <CellValue value={value} />
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         </div>
 
