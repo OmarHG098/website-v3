@@ -1,0 +1,146 @@
+slug: geekpal
+template: default
+title: GeekPAL Apoyo
+meta:
+  page_title: GeekPAL Apoyo | 4Geeks Academy
+  description: Obtén mentoría 1:1 ilimitada y guía con IA de Rigobot 24/7. Nunca programes solo, recibe feedback instantáneo y únete a una comunidad global de desarrolladores.
+  redirects:
+    - /es/geekpal
+sections:
+  - type: hero
+    variant: productShowcase
+    title: Mentoría de Por Vida y Apoyo de Coding con IA
+    welcome_text: Bienvenido a
+    brand_mark:
+      prefix: Geek
+      highlight: PAL
+      suffix: ":"
+      color: destructive
+    description: Obtén mentoría 1:1 ilimitada y guía con IA de Rigobot 24/7. Nunca programes solo, recibe feedback instantáneo y únete a una comunidad global de desarrolladores.
+    video:
+      url: https://youtu.be/D5nUZNL52-Q
+      ratio: "3:4"
+      muted: true
+      autoplay: false
+      loop: true
+    form:
+      variant: inline
+      title: Mantente Actualizado
+      subtitle: Ingresa tu email de trabajo para comenzar
+      submit_label: Registrarme gratis →
+      tags: career, support, AI
+      automations: email
+      fields:
+        email: {}
+      success:
+        message: ¡Gracias por registrarte!
+      terms_url: /terminos-condiciones
+      privacy_url: /politica-privacidad
+      show_terms: true
+      className: lead-form
+    trust_bar:
+      rating: "4.5"
+      review_count: Basado en 5149+ reseñas
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: Avanza Más Rápido, Nunca Pierdas el Impulso
+    subtitle: "¿La razón #1 por la que la gente abandona cuando aprende a programar? Quedarse atascado. En 4Geeks, construimos un sistema de apoyo personalizado donde siempre tendrás a alguien que te ayude."
+    columns: 4
+    background: bg-primary/5
+    items:
+      - icon: PeopleGroup
+        icon_color: "#0097CD"
+        title: Ratio 7:1 Estudiante-Profesor
+        description: Atención individual en cada clase.
+      - icon: Handshake
+        icon_color: "#BE8BFF"
+        title: Mentoría 1:1 Ilimitada
+        description: Desde el primer día y de por vida.
+      - icon: Rocket
+        icon_color: "#FFB718"
+        title: Asistente de Coding con IA 24/7 (Rigobot)
+        description: Feedback instantáneo mientras programas.
+      - icon: HandsGroup
+        icon_color: "#E74C3C"
+        title: Comunidad de Apoyo Real
+        description: Mentores, alumni y compañeros siempre listos para ayudar.
+  - type: human_and_ai_duo
+    version: "1.0"
+    heading: "Humano + IA: El Dúo de Apoyo Perfecto"
+    description: El aprendizaje funciona mejor cuando la experiencia humana y el apoyo de IA trabajan juntos. En 4Geeks, tendrás acceso a mentoría 1:1 ilimitada más feedback guiado por IA de Rigobot.
+    bullet_groups:
+      - title: "Nuestro Equipo de Mentores Expertos:"
+        image: /attached_assets/profile-pic6_1764775742734.webp
+        bullets:
+          - text: Proporciona guía personalizada en desafíos de coding y mejores prácticas
+            icon: CircleCheck
+          - text: Ofrece troubleshooting en vivo y soporte de debugging
+            icon: Bug
+          - text: Asistencia experta para arreglar bugs
+            icon: Settings
+          - text: Comparte insights de la industria, consejos de carrera y estrategias de aprendizaje
+            icon: Bulb
+      - title: "Rigobot + Learnpack:"
+        bullets:
+          - text: Proporciona feedback instantáneo y tutoría mientras programas
+            icon: Message
+          - text: Rastrea tus habilidades y progreso
+            icon: ChartBar
+          - text: Ayuda con debugging y resolución de problemas
+            icon: Puzzle
+          - text: Cientos de ejercicios prácticos de coding y práctica estructurada en Learnpack
+            icon: Code
+    footer_description: Juntos, la mentoría humana y las herramientas con IA aceleran tu aprendizaje, te mantienen comprometido y te empoderan para enfrentar desafíos con confianza.
+    image: /attached_assets/Group_6685_(1)_1765300162049.png
+    image_alt: Mujer trabajando en laptop en café
+    background: bg-background
+  - type: community_support
+    version: "1.0"
+    heading: Una Comunidad Global de Desarrolladores Apoyando tu Crecimiento
+    description: 4Geeks es más que un bootcamp — es una red de apoyo de profesionales tech, mentores y fellow geeks para ayudarte a avanzar en tu carrera.
+    background: bg-primary/5
+    image: /attached_assets/Group-6606.webp
+    image_alt: Comunidad global de desarrolladores 4Geeks
+    bullet_groups:
+      - title: Comunidad Slack
+        badge: 6,000+ Miembros
+        icon: BrandSlack
+        accent_color: primary
+        description: Obtén ayuda en tiempo real de mentores, alumni y compañeros a través de nuestros canales activos — desde soporte de coding hasta bolsas de trabajo y consejos de carrera.
+        button:
+          text: Únete Ahora
+          url: https://4geeks.com/slack
+          variant: primary
+      - title: 4Geeks.com
+        icon: Rigobot
+        accent_color: primary
+        description: Continúa avanzando en tus habilidades con más recursos de formación, eventos en vivo y proyectos colaborativos. Conéctate con personas que han estado donde tú estás.
+        button:
+          text: Visitar Ahora
+          url: https://4geeks.com
+          variant: primary
+  - type: two_column
+    version: "1.0"
+    proportions:
+      - 12
+      - 0
+    background: bg-background
+    alignment: center
+    gap: "8"
+    heading_above_on_md: false
+    left:
+      heading: Escucha a Uno de Nuestros Graduados
+      description: Escucha a Joao hablar sobre su experiencia durante y después de nuestro bootcamp y cómo el acceso ilimitado a mentoría de coding hizo una gran diferencia en su carrera.
+      font_size: lg
+      justify: center
+      text_align: center
+      video: MBXqEnhodx0
+      video_width: 900px

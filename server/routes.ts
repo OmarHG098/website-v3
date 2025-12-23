@@ -656,7 +656,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { slug } = req.params;
     const locale = (req.query.locale as string) || "en";
 
-    const page = loadTemplatePage(slug, locale);
+    // Resolve translated slug to folder name
+    const { getFolderFromSlug } = require("@shared/slugMappings");
+    const folder = getFolderFromSlug(slug, locale);
+
+    const page = loadTemplatePage(folder, locale);
 
     if (!page) {
       res.status(404).json({ error: "Template page not found" });

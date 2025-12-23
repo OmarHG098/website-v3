@@ -1,0 +1,155 @@
+# Geeks vs Otros - Español
+
+meta:
+  page_title: "4Geeks vs Otros Bootcamps | 4Geeks Academy"
+  description: "Compara 4Geeks Academy con otros coding bootcamps. Descubre por qué nuestra mentoría ilimitada, apoyo profesional y resultados probados nos distinguen."
+  redirects:
+    - "/es/geeks-vs-otros"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    title: "4Geeks Academy vs Otros Bootcamps"
+    subtitle: "Descubre por qué 4Geeks Academy es diferente. Nuestro currículo integrado con IA, proyectos prácticos y mentoría personalizada ayudan a estudiantes a lanzar carreras tech de alta demanda. Con mentoría y apoyo profesional de por vida, nos aseguramos de que sigas creciendo después de graduarte."
+    badge: "Por Qué 4Geeks Destaca"
+    image:
+      src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
+      alt: "Estudiantes programando juntos en una mesa con laptops"
+
+  - type: comparison_table
+    version: "1.0"
+    title: "Lanzando Carreras Tech Exitosas en la Era de la IA"
+    subtitle: "Ayudar a estudiantes a construir carreras tech duraderas es nuestra misión. Desde un syllabus alineado con la industria hasta un sistema de apoyo de por vida, así es como superamos a la competencia:"
+    columns:
+      - name: "Característica"
+      - name: "4Geeks Academy"
+        highlight: true
+      - name: "Promedio de la Industria / Competidores"
+    rows:
+      - feature: "Apoyo Profesional"
+        values: ["Apoyo personalizado de por vida", "Limitado, termina con el 1er empleo"]
+      - feature: "Ratio Profesor:Estudiante"
+        values: ["1:7", "1:10+"]
+      - feature: "Feedback con IA"
+        values: ["Personalizado a tu progreso", "Genérico o inexistente"]
+      - feature: "Mentoría 1:1"
+        values: ["Ilimitada y de por vida", "Sesiones limitadas"]
+      - feature: "Currículo"
+        values: ["Actualizado constantemente según la industria", "Lento para adaptarse"]
+      - feature: "% Tasa de Contratación"
+        values: ["~84% en 6 meses", "Frecuentemente Desconocido"]
+      - feature: "Comunidad"
+        values: ["Fuerte red local y global", "Depende de la escuela"]
+      - feature: "Formato de Clases"
+        values: ["Online, presencial", "Usualmente solo un formato"]
+      - feature: "Conocimiento Previo"
+        values: ["Ninguno", "Tests de entrada o experiencia previa"]
+
+  - type: two_column_accordion_card
+    version: "1.0"
+    title: "Aprendizaje Hiperpersonalizado y Apoyo de Por Vida"
+    description: "La mayoría de bootcamps te dan horas limitadas de mentoría y recursos genéricos — y te abandonan cuando consigues empleo. En 4Geeks, construimos todo un sistema de apoyo alrededor de la personalización:"
+    bullets:
+      - heading: "Mentoría 1:1 Ilimitada con Humanos Reales"
+        text: "Obtén tanta guía personal como necesites, de por vida. Desde debuggear código hasta prepararte para un rol senior años después, nuestros mentores están siempre a un mensaje de distancia."
+      - heading: "Seguimiento de Progreso y Feedback con IA"
+        text: "Rigobot + LearnPack se adaptan a tu estilo de aprendizaje, dándote feedback instantáneo, ayudándote a debuggear más rápido y rastreando tu crecimiento de habilidades."
+      - heading: "Apoyo Profesional que Crece Contigo"
+        text: "GeekFORCE no es solo para tu primer empleo. Es coaching de carrera personalizado y continuo que puedes usar una y otra vez, ya sea cambiando de rol o subiendo a liderazgo."
+    footer: "El resultado: una experiencia de aprendizaje verdaderamente hiperpersonalizada que combina mentoría humana con inteligencia IA y que es tuya de por vida."
+    image: "/attached_assets/hombre-joven-con-laptop_1764691956393.webp"
+    image_alt: "Joven trabajando en laptop"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    background: "bg-muted/30"
+    right:
+      heading: "Haciendo las Carreras Tech Accesibles"
+      description: "Las carreras tech cambian vidas, y creemos que las finanzas nunca deberían ser un obstáculo. Por eso construimos algunas de las opciones más flexibles de la industria:"
+      bullets:
+        - text: "Entre las matrículas más asequibles de cualquier bootcamp top (reconocido por Forbes)."
+        - text: "Opciones de financiamiento desde menos de $299/mes."
+        - text: "Opciones de pago basadas en ingresos, donde solo pagas cuando estés ganando."
+        - text: "Becas disponibles para estudiantes elegibles."
+      bullets_visible: 2
+      text_align: "left"
+      button:
+        text: "Ver opciones de financiamiento"
+        url: "/es/financiacion"
+        variant: "primary"
+    left:
+      image: "/attached_assets/reservation-es_1764814854635.webp"
+      image_alt: "Mujer trabajando en laptop"
+      justify: "center"
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Resultados en los que Puedes Confiar"
+    subtitle: "Los números importan — y los nuestros hablan por sí solos."
+    columns: 3
+    items:
+      - icon: "Briefcase"
+        icon_color: "#0084FF"
+        value: "84%"
+        title: "Tasa de colocación laboral"
+      - icon: "Graduation"
+        icon_color: "#0084FF"
+        value: "3-6 meses"
+        title: "Tiempo promedio para conseguir empleo"
+      - icon: "GrowthChart"
+        icon_color: "#0084FF"
+        value: "55%"
+        title: "Aumento salarial después de graduarte"
+
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    left:
+      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
+      image_alt: "Empresaria feliz con laptop"
+      justify: "center"
+    right:
+      heading: "La Confianza de una Garantía de Empleo"
+      description: "¿La prueba más fuerte de que creemos en nuestro modelo? Lo respaldamos con Garantía de Empleo. La mayoría de escuelas prometen \"apoyo profesional\". En 4Geeks, prometemos resultados: consigue empleo en 9 meses, o te devolvemos tu matrícula. Aplican condiciones."
+      sub_heading: "Podemos hacer esto porque:"
+      bullets:
+        - text: "Nuestro currículo está alineado con la industria y listo para IA"
+        - text: "Nuestra mentoría es ilimitada y personalizada"
+        - text: "Nuestro apoyo profesional nunca expira"
+      bullets_visible: 1
+      text_align: "left"
+      button:
+        text: "Saber Más"
+        url: "/es/trabajo-garantizado"
+        variant: "primary"
+      footer: "Sigue el programa, apóyate en tus mentores, y si aún no consigues empleo, asumimos toda la responsabilidad."
+
+  - type: two_column
+    version: "1.0"
+    proportions: [6, 6]
+    alignment: "center"
+    gap: "12"
+    background: "bg-muted/30"
+    left:
+      heading: "Reconocidos Globalmente por Excelencia"
+      description: "No solo lo decimos — el reconocimiento de fuentes confiables prueba nuestro valor."
+      bullets:
+        - heading: "Top 5 Coding Bootcamps"
+          text: "Calificados entre los Top 5 Coding Bootcamps mundialmente (Newsweek, Forbes, SwitchUp, Course Report)"
+        - heading: "Mejor Apoyo Estudiantil"
+          text: "Consistentemente reconocidos por Mejor Apoyo Estudiantil y Mejor Valor por Dinero"
+        - heading: "20,000+ Estudiantes"
+          text: "Confianza de 20,000+ estudiantes alrededor del mundo"
+      bullets_collapsible: true
+      text_align: "left"
+    right:
+      image: "/attached_assets/community-support-2_1765406601448.webp"
+      image_alt: "Comunidad y apoyo de 4Geeks Academy"
+      justify: "center"

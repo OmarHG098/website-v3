@@ -1,0 +1,215 @@
+slug: geekforce
+template: default
+title: GeekForce Apoyo Profesional
+meta:
+  page_title: GeekForce Apoyo Profesional | 4Geeks Academy
+  description: Obtén apoyo profesional 1:1 ilimitado diseñado para tu perfil y metas, de por vida. Desde CV y portafolio hasta entrevistas y plataformas de contratación con IA.
+  redirects:
+    - /es/geekforce
+sections:
+  - type: hero
+    variant: productShowcase
+    title: Desarrollo Profesional
+    subtitle: para la Era de la IA
+    welcome_text: Bienvenido a
+    brand_mark:
+      prefix: Geek
+      highlight: FORCE
+      suffix: ":"
+      color: chart-5
+    description: Obtén apoyo profesional 1:1 ilimitado diseñado para tu perfil y metas, de por vida. Desde CV y portafolio hasta entrevistas y plataformas de contratación con IA.
+    video:
+      url: "https://www.youtube.com/watch?v=-2ZvlgDnltc"
+      ratio: "3:4"
+    form:
+      variant: inline
+      title: Regístrate para apoyo de por vida
+      subtitle: Usa tu email de trabajo
+      submit_label: Registrarme gratis →
+      tags: career, support, AI
+      automations: email
+      fields:
+        email:
+          placeholder: Tu email de trabajo
+      success:
+        message: ¡Gracias por registrarte!
+      terms_url: /terminos-condiciones
+      privacy_url: /politica-privacidad
+      show_consent: true
+      show_terms: true
+    trust_bar:
+      rating: "4.5"
+      review_count: Basado en 5149+ reseñas
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+  - type: bullet_tabs_showcase
+    version: "1.0"
+    heading: Apoyo Profesional Ilimitado – Siempre a la Vanguardia del Mercado
+    subheading: Geekforce está integrado en cada programa de 4Geeks para asegurar que no solo aprendas tech, sino que lances una carrera exitosa. Con mentoría 1:1 ilimitada y coaching grupal, obtendrás insights y estrategias para mantenerte adelante en el mercado laboral.
+    tabs:
+      - label: Orientación Personalizada
+        description: Recibe guía adaptada a tus metas, contexto y desafíos.
+        image_id: geekforce_rigobot_ai
+      - label: Mentoría Ilimitada
+        description: Reúnete con mentores online o presencial cuando necesites apoyo, ilimitado y de por vida.
+        image_id: placeholder_career_guidance
+      - label: Estrategias Probadas
+        description: Accede a herramientas y estrategias probadas para tomar decisiones de carrera más inteligentes.
+        image_id: geekforce_linkedin_profile
+    image_position: right
+  - type: numbered_steps
+    version: "1.0"
+    variant: bubbleText
+    title: Consigue Empleo con Nuestro Proceso de 3 Pasos
+    description: Una vez que domines las habilidades técnicas, nuestro proceso estructurado te ayuda a construir una carrera duradera en tech.
+    background: bg-background
+    steps:
+      - icon: Optimization
+        title: Optimización de Perfil
+        bullets:
+          - Mejora tu LinkedIn, GitHub y portafolio para atraer reclutadores y pasar filtros de IA.
+          - Construye un CV que supere sistemas de seguimiento de candidatos (ATS).
+          - Muestra tus habilidades con un portafolio listo para reclutadores.
+      - icon: Interview
+        title: Preparación de Entrevistas
+        bullets:
+          - Gana confianza con entrevistas técnicas y conductuales simuladas.
+          - Practica coding y resolución de problemas con ejercicios auto-evaluados.
+          - Desarrolla estrategias personalizadas para tus entrevistas.
+      - icon: JobSearch
+        title: Búsqueda Estratégica de Empleo
+        bullets:
+          - Crea un plan de búsqueda personalizado alineado con tus metas.
+          - Navega plataformas de contratación con IA, desde escáneres de CV hasta entrevistas automatizadas.
+          - Conéctate con nuestra extensa red de partners de contratación globales.
+  - type: two_column
+    version: "1.0"
+    proportions:
+      - 5
+      - 7
+    background: bg-primary/5
+    alignment: center
+    reverse_on_mobile: true
+    padding_right: "6"
+    left:
+      image: /attached_assets/community_1764717588840.png
+      image_alt: Miembros de la comunidad 4Geeks colaborando
+      justify: start
+    right:
+      heading: Acelera tus Resultados con Apoyo Hiperpersonalizado
+      description: "Combina mentoría 1:1 ilimitada con herramientas de IA para lanzar tu carrera más rápido:"
+      bullets_visible: 2
+      bullets:
+        - text: Rigobot, nuestra IA personalizada, te da feedback instantáneo en tu CV, portafolio y proyectos.
+        - text: Practica entrevistas técnicas y preguntas conductuales con ejercicios guiados por IA.
+        - text: Recibe coaching experto de nuestros mentores que adaptan consejos a tu perfil único.
+      font_size: base
+  - type: whos_hiring
+    version: "1.0"
+    title: ¿Quién Contrata a Nuestros Graduados?
+    subtitle: Nuestros alumni trabajan en empresas top alrededor del mundo
+    description: Desde startups hasta empresas Fortune 500, los graduados de 4Geeks hacen impacto en diversas industrias. Nuestro apoyo profesional y red de empleadores te ayudan a conseguir roles en empresas tech líderes.
+    logos:
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/ultimate_1764720025067.png
+        alt: Ultimate Software
+      - src: /attached_assets/tcg_1764720028893.png
+        alt: The Creative Group
+      - src: /attached_assets/razz_1764720036807.png
+        alt: Razz
+      - src: /attached_assets/overseas_1764720045331.png
+        alt: Overseas Leisure Group
+      - src: /attached_assets/ds9_1764720051158.png
+        alt: DS9 Design
+      - src: /attached_assets/coinet_1764720056569.jpg
+        alt: Coinet
+      - src: /attached_assets/strata_1764720063140.png
+        alt: Strata.ai
+      - src: /attached_assets/mdc_ce_1764720089793.png
+        alt: Miami Dade College
+      - src: /attached_assets/beacon_council_1764720100166.jpg
+        alt: Miami-Dade Beacon Council
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
+      - src: /attached_assets/cemex_1764720131666.png
+        alt: Cemex
+  - type: graduates_stats
+    variant: fullBleed
+    heading: ¿La Garantía de Empleo entrega resultados?
+    subheading: Sí, y tenemos los números para probarlo.
+    featured_images:
+      - image_id: graduates_celebration
+        col_span: 5
+        row_span: 2
+        col_start: 1
+        row_start: 1
+      - image_id: graduates_workspace
+        col_span: 3
+        row_span: 2
+        col_start: 1
+        row_start: 3
+    stats:
+      - value: "84"
+        unit: "%"
+        label: Tasa de colocación laboral
+      - value: "3-6"
+        unit: meses
+        label: Tiempo promedio para conseguir empleo
+      - value: "$15K"
+        label: Aumento salarial promedio después de graduarte
+    collage_images:
+      - image_id: graduates_team_1
+        col_span: 4
+        row_span: 2
+        col_start: 6
+        row_start: 1
+      - image_id: graduates_team_2
+        col_span: 3
+        row_span: 2
+        col_start: 10
+        row_start: 1
+      - image_id: graduates_coding
+        col_span: 5
+        row_span: 2
+        col_start: 4
+        row_start: 3
+      - image_id: graduates_friends
+        col_span: 4
+        row_span: 2
+        col_start: 9
+        row_start: 3
+    background: bg-muted/30
+  - type: testimonials_slide
+    version: "1.0"
+    title: Las Carreras Reales Empiezan Aquí — Pregunta a Nuestros Estudiantes
+    description: "Nuestros graduados están en alta demanda, con más del 84% contratados dentro de seis meses de finalizar el programa. Las reseñas y resultados hablan por sí solos: saldrás con habilidades técnicas, confianza y estrategia de carrera para entrar en uno de los campos más gratificantes de tech."

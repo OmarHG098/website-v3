@@ -1,0 +1,182 @@
+slug: "resultados"
+template: "default"
+title: "Resultados"
+
+meta:
+  page_title: "Informe de Resultados de 4Geeks Academy | Datos de Éxito Profesional"
+  description: "Descubre los resultados profesionales de graduados de 4Geeks Academy. Ve tasas de empleo, aumentos salariales e historias de éxito de nuestros alumni."
+  robots: "index, follow"
+  redirects:
+    - "/es/resultados"
+
+schema:
+  include:
+    - organization
+    - website
+
+sections:
+  - type: hero
+    version: "1.0"
+    variant: simpleTwoColumn
+    title: "Resultados Probados que Lanzan Carreras Tech"
+    subtitle: "En 4Geeks, el éxito no es una promesa — es un historial. Nuestros estudiantes lanzan carreras tech exitosas en coding con IA, data science y ciberseguridad, y los números lo prueban."
+    badge: "Informe de Resultados de 4Geeks Academy"
+    image:
+      src: "/attached_assets/outcomes_1765562850573.png"
+      alt: "Gráfico de crecimiento de resultados de estudiantes"
+
+  - type: vertical_bars_cards
+    version: "1.0"
+    title: "Métricas de Éxito de Contratación"
+    subtitle: "Rastrea los resultados profesionales de nuestros estudiantes a través de años recientes"
+    metrics:
+      - title: "Tasa de Colocación Laboral"
+        unit: "Graduados contratados en 6 meses"
+        description: "Nuestra tasa de colocación laboral se mantiene consistentemente por encima del 80%, demostrando la efectividad de nuestro programa de apoyo profesional. Rastreamos resultados de empleo hasta 6 meses después de graduación, asegurando datos precisos y confiables."
+        years:
+          - year: "2023"
+            value: 86
+            displayValue: "86%"
+          - year: "2024"
+            value: 84
+            displayValue: "84%"
+          - year: "Mid 2025"
+            value: 82
+            displayValue: "82%"
+      - title: "Aumento Salarial Promedio"
+        unit: "Comparado con salario pre-bootcamp"
+        description: "Los graduados ven mejoras salariales significativas después de completar nuestro programa. Este aumento refleja la alta demanda del mercado por habilidades tech y la calidad del entrenamiento que reciben nuestros estudiantes."
+        years:
+          - year: "2023"
+            value: 12500
+            displayValue: "$12.5k"
+          - year: "2024"
+            value: 14200
+            displayValue: "$14.2k"
+          - year: "Mid 2025"
+            value: 15800
+            displayValue: "$15.8k"
+      - title: "Días para Primer Empleo"
+        unit: "Tiempo promedio de graduación a oferta"
+        description: "Nuestros estudiantes están siendo contratados más rápido que nunca. Con coaching de carrera personalizado y una extensa red de empleadores, ayudamos a graduados a conseguir su primer rol tech en tiempo récord."
+        years:
+          - year: "2023"
+            value: 52
+            displayValue: "52 días"
+          - year: "2024"
+            value: 48
+            displayValue: "48 días"
+          - year: "Mid 2025"
+            value: 45
+            displayValue: "45 días"
+
+  - type: stats
+    version: "1.0"
+    title: "Resultados en Números"
+    subtitle: "Resultados reales de nuestros graduados en diferentes regiones"
+    background: "muted"
+    items:
+      - value: "84%"
+        label: "de graduados en EE.UU. contratados en 6 meses"
+      - value: "+55%"
+        label: "aumento salarial promedio en EE.UU."
+      - value: "+233%"
+        label: "aumento salarial promedio en LATAM"
+      - value: "85%"
+        label: "tasa de colocación en España"
+      - value: "3-6 meses"
+        label: "tiempo promedio para conseguir empleo en todos los mercados"
+
+  - type: awards_row
+    version: "1.0"
+    title: "Reconocidos, Calificados y Recomendados"
+    link_text: "Ver más"
+    link_url: "/es/premios"
+    badges:
+      - name: "Top Coding Bootcamp"
+        source: "Forbes"
+        year: "2024"
+      - name: "Mejor para Hispanohablantes"
+        source: "Fortune"
+        year: "2024"
+      - name: "Top Coding Bootcamp"
+        source: "Newsweek"
+        year: "2024"
+      - name: "Mejor Coding Bootcamp"
+        source: "Course Report"
+        year: "Mid 2025"
+
+  - type: pie_charts
+    version: "1.0"
+    title: "Nuestra Comunidad Estudiantil de un Vistazo"
+    subtitle: "Estos gráficos muestran la distribución de nuestros estudiantes por grupos de edad, género y nacionalidades. Nuestra comunidad es diversa y global."
+    charts:
+      - title: "Edad"
+        items:
+          - label: "22-25"
+            value: 30
+            color: "chart-5"
+          - label: "26-32"
+            value: 44
+          - label: "33-42"
+            value: 26
+      - title: "Género"
+        items:
+          - label: "Masculino"
+            value: 76
+          - label: "Femenino"
+            value: 24
+            color: "chart-5"
+      - title: "Región"
+        items:
+          - label: "Norteamérica"
+            value: 50
+            color: "chart-5"
+          - label: "Lat.Am."
+            value: 28
+          - label: "Europa"
+            value: 21
+          - label: "Asia"
+            value: 1
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Haciendo las Carreras Tech Accesibles"
+    subtitle: "Las carreras tech deberían estar abiertas para todos. Por eso ofrecemos:"
+    columns: 3
+    items:
+      - icon: "CurrencyDollar"
+        title: "Matrícula Accesible"
+        description: "La más baja entre bootcamps top (reconocido por Forbes como Mejor Bootcamp para Estudiantes con Presupuesto)."
+      - icon: "CreditCard"
+        title: "Financiamiento Flexible"
+        description: "Opciones desde menos de $299/mes, más préstamos accesibles y planes de pago basados en ingresos."
+      - icon: "School"
+        title: "Becas Completas y Parciales"
+        description: "Opciones basadas en ubicación gracias a importantes alianzas institucionales e iniciativas gubernamentales."
+
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    left:
+      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
+      image_alt: "Empresaria feliz con laptop"
+      justify: "center"
+    right:
+      heading: "La Confianza de una Garantía de Empleo"
+      description: "¿La prueba más fuerte de que creemos en nuestro modelo? Lo respaldamos con Garantía de Empleo. La mayoría de escuelas prometen \"apoyo profesional\". En 4Geeks, prometemos resultados: consigue empleo en 9 meses, o te devolvemos tu matrícula. Aplican condiciones."
+      sub_heading: "Podemos hacer esto porque:"
+      bullets:
+        - text: "Nuestro currículo está alineado con la industria y listo para IA"
+        - text: "Nuestra mentoría es ilimitada y personalizada"
+        - text: "Nuestro apoyo profesional nunca expira"
+      bullets_visible: 1
+      text_align: "left"
+      button:
+        text: "Saber Más"
+        url: "/es/trabajo-garantizado"
+        variant: "primary"
+      footer: "Sigue el programa, apóyate en tus mentores, y si aún no consigues empleo, asumimos toda la responsabilidad."
