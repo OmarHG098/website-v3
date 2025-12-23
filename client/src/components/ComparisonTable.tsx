@@ -117,40 +117,45 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         </div>
 
         <div className="md:hidden">
-          <Accordion type="single" collapsible className="space-y-2">
+          <Accordion type="single" collapsible className="space-y-3">
             {data.rows.map((row, rowIndex) => (
               <AccordionItem
                 key={rowIndex}
                 value={`row-${rowIndex}`}
-                className="bg-card rounded-card shadow-card px-4 [&]:border-0"
+                className={`rounded-card shadow-card px-6 [&]:border-0 ${
+                  rowIndex % 2 === 0 ? "bg-card" : "bg-muted/50"
+                }`}
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <span className="font-semibold text-foreground uppercase text-sm">
+                <AccordionTrigger className="hover:no-underline py-4 min-h-[56px] [&>svg]:w-5 [&>svg]:h-5">
+                  <span className="font-semibold text-foreground text-base">
                     {row.feature}
                   </span>
                 </AccordionTrigger>
-                <AccordionContent>
-                  <div className="flex items-stretch gap-2">
-                    {/* 4Geeks Academy side - highlighted */}
-                    <div className="flex-1 bg-primary/10 rounded-card p-3 border-l-[3px] border-primary">
-                      <p className="text-xs text-foreground/70 mb-1 font-semibold">
-                        {data.columns[1]?.name || "4Geeks Academy"}
-                      </p>
-                      <p className="font-semibold text-foreground text-sm">
+                <AccordionContent className="pb-6">
+                  <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-stretch">
+                    {/* 4Geeks Academy side - highlighted with checkmark */}
+                    <div className="bg-primary/5 rounded-card p-4 border-l-4 border-primary">
+                      <div className="flex items-center gap-1 mb-2">
+                        <IconCheck className="w-4 h-4 text-primary" />
+                        <p className="text-xs text-primary font-semibold">
+                          {data.columns[1]?.name || "4Geeks Academy"}
+                        </p>
+                      </div>
+                      <p className="text-xl font-bold text-foreground">
                         <CellValue value={row.values[0]} />
                       </p>
                     </div>
                     {/* VS divider */}
-                    <div className="flex items-center justify-center">
-                      <span className="text-foreground/50 font-semibold text-sm">vs</span>
+                    <div className="flex items-center justify-center px-2">
+                      <span className="text-muted-foreground font-bold text-sm">vs</span>
                     </div>
                     {/* Competitors side */}
-                    <div className="flex-1 bg-primary/10 rounded-card p-3">
-                      <p className="text-xs text-foreground/70 mb-1 font-semibold">
-                        {(data.columns[2]?.name || "Industry Average / Competitors").replace(" / Competitors", "")}
+                    <div className="bg-muted/50 rounded-card p-4">
+                      <p className="text-xs text-muted-foreground mb-2 font-medium">
+                        {(data.columns[2]?.name || "Industry Average").replace(" / Competitors", "")}
                       </p>
-                      <p className="text-foreground text-sm">
+                      <p className="text-lg text-muted-foreground">
                         <CellValue value={row.values[1]} />
                       </p>
                     </div>
