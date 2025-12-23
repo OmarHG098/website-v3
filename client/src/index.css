@@ -542,13 +542,13 @@
     transform: scale(1);
   }
   25% {
-    transform: scale(1.08);
+    transform: scale(1.18);
   }
   50% {
     transform: scale(1);
   }
   75% {
-    transform: scale(1.05);
+    transform: scale(1.12);
   }
 }
 
