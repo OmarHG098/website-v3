@@ -13,7 +13,7 @@ export function Certificate({ programName = "Full-Stack Developer", studentName 
       <div 
         className="w-full h-full rounded-sm p-[3px]"
         style={{
-          background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%)'
+          background: 'linear-gradient(90deg, #22c55e 0%, #06b6d4 15%, #3b82f6 30%, #f59e0b 50%, #ef4444 70%, #ec4899 85%, #22c55e 100%)'
         }}
       >
         <div className="w-full h-full bg-white rounded-[2px] relative overflow-hidden flex flex-col">
@@ -128,7 +128,7 @@ export function Certificate({ programName = "Full-Stack Developer", studentName 
         <div 
           className="absolute inset-0 rounded-sm p-[3px]"
           style={{
-            background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%)'
+            background: 'linear-gradient(90deg, #22c55e 0%, #06b6d4 15%, #3b82f6 30%, #f59e0b 50%, #ef4444 70%, #ec4899 85%, #22c55e 100%)'
           }}
         >
           <div className="w-full h-full bg-white rounded-[2px] relative overflow-hidden flex flex-col">
