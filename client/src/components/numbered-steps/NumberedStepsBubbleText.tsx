@@ -16,7 +16,7 @@ function StepNumber({ index, size = "md" }: StepNumberProps) {
   };
   
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col items-start bg-primary/20 p-2 rounded group-hover:animate-heartbeat">
       <span className="text-xs font-medium text-primary uppercase tracking-wide">Step</span>
       <span className={`${sizeClasses[size]} font-bold text-primary leading-none`}>{number}</span>
     </div>
@@ -170,7 +170,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                   {/* Radial gradient fade - starts solid in center, fades outward to both sides */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-24 bg-[radial-gradient(ellipse_at_center,_hsl(var(--background))_0%,_hsl(var(--background)/0.8)_20%,_transparent_100%)] pointer-events-none" />
                   <div className="relative z-10 bg-background ps-2 pe-1 me-1">
-                    <div className="transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100 bg-primary/20 p-2 rounded">
+                    <div className="transition-opacity group-data-[active=false]:opacity-40 group-hover:opacity-100">
                       <StepNumber index={1} size="md" />
                     </div>
                   </div>

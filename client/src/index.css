@@ -535,3 +535,24 @@
   transform-origin: center center;
   will-change: transform;
 }
+
+/* Continuous heartbeat animation for hover effects */
+@keyframes heartbeat-loop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.08);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+}
+
+.group:hover .group-hover\:animate-heartbeat {
+  animation: heartbeat-loop 0.8s ease-in-out infinite;
+  transform-origin: center center;
+}
