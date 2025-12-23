@@ -139,13 +139,13 @@ sections:
           - label: "Asia"
             value: 1
 
-  - type: two_column
+  - type: features_grid
     version: "1.0"
-    variant: benefitCards
-    background: "bg-muted/30"
+    variant: highlight
     title: "Haciendo las Carreras Tech Accesibles"
     subtitle: "Las carreras tech deberían estar abiertas para todos. Por eso ofrecemos:"
-    benefit_items:
+    columns: 3
+    items:
       - icon: "CurrencyDollar"
         title: "Matrícula Accesible"
         description: "La más baja entre bootcamps top (reconocido por Forbes como Mejor Bootcamp para Estudiantes con Presupuesto)."
@@ -154,14 +154,7 @@ sections:
         description: "Opciones desde menos de $299/mes, más préstamos accesibles y planes de pago basados en ingresos."
       - icon: "School"
         title: "Becas Completas y Parciales"
-        description: "Opciones basadas en ubicación gracias a alianzas institucionales e iniciativas gubernamentales."
-    cta_button:
-      text: "Ver Opciones de Financiamiento"
-      url: "/es/financiacion"
-      variant: "primary"
-    right:
-      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
-      image_alt: "Empresaria feliz con laptop"
+        description: "Opciones basadas en ubicación gracias a importantes alianzas institucionales e iniciativas gubernamentales."
 
   - type: two_column
     version: "1.0"

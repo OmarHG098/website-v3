@@ -67,28 +67,30 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [5, 7]
-    alignment: "center"
-    gap: "12"
+    variant: benefitCards
     background: "bg-muted/30"
+    title: "Haciendo las Carreras Tech Accesibles"
+    subtitle: "Las carreras tech cambian vidas, y creemos que las finanzas nunca deberían ser un obstáculo. Por eso construimos algunas de las opciones más flexibles de la industria:"
+    benefit_items:
+      - icon: "CurrencyDollar"
+        title: "Matrícula Accesible"
+        description: "Entre las matrículas más asequibles de cualquier bootcamp top (reconocido por Forbes)."
+      - icon: "CreditCard"
+        title: "Financiamiento Flexible"
+        description: "Opciones de financiamiento desde menos de $299/mes."
+      - icon: "Coin"
+        title: "Pago Basado en Ingresos"
+        description: "Opciones de pago basadas en ingresos, donde solo pagas cuando estés ganando."
+      - icon: "School"
+        title: "Becas Disponibles"
+        description: "Becas completas y parciales disponibles para estudiantes elegibles."
+    cta_button:
+      text: "Ver opciones de financiamiento"
+      url: "/es/financiacion"
+      variant: "primary"
     right:
-      heading: "Haciendo las Carreras Tech Accesibles"
-      description: "Las carreras tech cambian vidas, y creemos que las finanzas nunca deberían ser un obstáculo. Por eso construimos algunas de las opciones más flexibles de la industria:"
-      bullets:
-        - text: "Entre las matrículas más asequibles de cualquier bootcamp top (reconocido por Forbes)."
-        - text: "Opciones de financiamiento desde menos de $299/mes."
-        - text: "Opciones de pago basadas en ingresos, donde solo pagas cuando estés ganando."
-        - text: "Becas disponibles para estudiantes elegibles."
-      bullets_visible: 2
-      text_align: "left"
-      button:
-        text: "Ver opciones de financiamiento"
-        url: "/es/financiacion"
-        variant: "primary"
-    left:
       image: "/attached_assets/reservation-es_1764814854635.webp"
       image_alt: "Mujer trabajando en laptop"
-      justify: "center"
 
   - type: features_grid
     version: "1.0"

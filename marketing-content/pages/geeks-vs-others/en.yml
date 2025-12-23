@@ -63,28 +63,30 @@ sections:
 
   - type: two_column
     version: "1.0"
-    proportions: [5, 7]
-    alignment: "center"
-    gap: "12"
+    variant: benefitCards
     background: "bg-muted/30"
+    title: "Making Tech Careers Accessible"
+    subtitle: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
+    benefit_items:
+      - icon: "CurrencyDollar"
+        title: "Affordable Tuition"
+        description: "Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes)."
+      - icon: "CreditCard"
+        title: "Flexible Financing"
+        description: "Financing options start below $299/month, so you can learn without financial stress."
+      - icon: "Coin"
+        title: "Income-Based Payment"
+        description: "Income-based payment options, where you only pay once you're earning."
+      - icon: "School"
+        title: "Scholarships Available"
+        description: "Full and partial scholarships available for eligible students."
+    cta_button:
+      text: "See financing options"
+      url: "/en/financials"
+      variant: "primary"
     right:
-      heading: "Making Tech Careers Accessible"
-      description: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
-      bullets:
-        - text: "Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes)."
-        - text: "Financing options start below $299/month, so you can learn without financial stress."
-        - text: "Income-based payment options, where you only pay once you're earning."
-        - text: "Scholarships available for eligible students."
-      bullets_visible: 2
-      text_align: "left"
-      button:
-        text: "See financing options"
-        url: "/en/financials"
-        variant: "primary"
-    left:
       image: "/attached_assets/reservation-es_1764814854635.webp"
       image_alt: "Woman working on laptop"
-      justify: "center"
 
   - type: features_grid
     version: "1.0"
