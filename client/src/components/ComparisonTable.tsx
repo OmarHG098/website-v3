@@ -47,13 +47,11 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
     );
   }
   
-  const isKeyMetric = /^(1:\d|~?\d+%|Unlimited|Personalized)/.test(value);
-  
-  if (isHighlighted && isKeyMetric) {
+  if (isHighlighted) {
     return (
       <span className="flex items-center justify-center gap-2">
         <IconCheck className="w-4 h-4 text-primary flex-shrink-0" />
-        <span className="text-lg font-bold">{value}</span>
+        <span>{value}</span>
       </span>
     );
   }
