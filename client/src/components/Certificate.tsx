@@ -93,7 +93,7 @@ export function Certificate({ programName = "Full-Stack Developer", studentName 
 
   if (useSolidCard) {
     return (
-      <SolidCard className="p-3" data-testid="certificate-card-dynamic">
+      <SolidCard className="p-0" data-testid="certificate-card-dynamic">
         {CertificateInner}
       </SolidCard>
     );

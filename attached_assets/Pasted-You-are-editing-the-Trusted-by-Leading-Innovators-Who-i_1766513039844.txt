@@ -1,0 +1,44 @@
+You are editing the “Trusted by Leading Innovators / Who is hiring our graduates” section on the AI Engineering page (4geeks.com).
+Keep what is already correct
+- Keep the grayscale logo treatment and sizing normalization already implemented.
+- Keep the mosaic layout concept (stacked small cards + larger hero cards).
+- Do NOT reintroduce brand colors.
+- Do NOT add heavy effects or redesign the section from scratch.
+Changes to implement
+1) Make the entire card mosaic area larger (scale and presence)
+- The mosaic currently feels too small compared to the Supabase reference.
+- Increase the carousel area height and overall card sizes so it feels more “premium” and has more presence.
+- Increase padding around the mosaic and increase the card dimensions proportionally.
+- Keep spacing consistent (gaps should scale slightly too, but remain clean and not crowded).
+2) Card background and subtle depth
+- Set card background to bg-muted/30 (very light muted tint over white).
+- Add a barely visible shadow to create depth similar to Supabase:
+  - very soft
+  - low opacity
+  - no harsh edges
+- Keep borders subtle. The card should read as a surface, not a bordered box.
+3) Large cards: logo on top, text at bottom (Supabase rhythm)
+- For the larger “hero” cards, structure the content like Supabase:
+  - Place the logo near the top-left or top area of the card (not vertically centered).
+  - Add intentional empty space in the middle.
+  - Add a short text block near the bottom to balance the card height.
+- The text is NOT a tooltip or label. It should be a short supporting sentence, subtle, light gray, and readable.
+- This is required so we do not need to enlarge the logo to fill the card and we keep logo sizing consistent with smaller cards.
+- Keep the text subtle and minimal, similar to Supabase customer story cards.
+4) Remove hover name label for large logos
+- Currently, on hover, large logos show the company name under the logo.
+- Remove that behavior entirely.
+- Hover should only affect the card surface subtly (slight background shift and/or border/shadow change), but no extra text appears on hover.
+Additional requirements
+- Maintain monochromatic palette (grays only).
+- Keep infinite horizontal scroll and pause on hover.
+- Respect prefers-reduced-motion.
+- Ensure the mosaic does not collapse into a single strip on desktop.
+Acceptance criteria
+- The mosaic area has stronger presence and matches the scale feel of Supabase.
+- Cards have bg-muted/30 and a very subtle shadow for depth.
+- Large cards have logo aligned near the top and a short text block near the bottom.
+- No hover label appears under logos.
+- Overall look remains clean, premium, and consistent with the page’s white background design system.
+Implement changes in the existing component/code, modifying only what is needed.
+“Use short neutral copy for the large card bottom text, max 12 to 16 words, no marketing claims, no numbers.”
