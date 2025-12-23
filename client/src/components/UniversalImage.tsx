@@ -143,7 +143,7 @@ export function UniversalImage({
         loading={loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
+        className={`w-full h-full object-cover transition-opacity duration-300 border-2 border-black ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
         data-testid={`img-${id}`}
