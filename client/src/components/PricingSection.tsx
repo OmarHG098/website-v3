@@ -140,7 +140,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                       {data.financing_amount && (
                         <div className="mt-2">
                           <span
-                            className="text-5xl font-bold text-white"
+                            className="text-6xl font-bold text-white"
                             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                             data-testid="text-financing-amount"
                           >
