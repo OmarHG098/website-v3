@@ -331,6 +331,11 @@
     font-weight: 400;
     line-height: 1.6;
   }
+
+  /* Paragraph styling for better readability */
+  p {
+    line-height: 1.6;
+  }
 }
 
 /**
