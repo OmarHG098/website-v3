@@ -165,7 +165,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           </button>
 
           {/* Cards Container */}
-          <div className="relative h-full flex items-center justify-center">
+          <div className="relative h-full flex items-center justify-center overflow-visible">
             {/* Left Card */}
             {items.length > 1 && (
               <CarouselCard
@@ -258,7 +258,7 @@ function CarouselCard({
       <Card
         className={`border border-border ${
           isCenter 
-            ? "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)]" 
+            ? "shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)]" 
             : ""
         }`}
       >
