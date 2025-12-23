@@ -149,7 +149,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           {/* Navigation Arrows */}
           <button
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors hidden md:flex items-center justify-center"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background border border-border shadow-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors hidden md:flex items-center justify-center"
             data-testid="button-carousel-prev"
             aria-label="Previous review"
           >
@@ -157,7 +157,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors hidden md:flex items-center justify-center"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background border border-border shadow-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors hidden md:flex items-center justify-center"
             data-testid="button-carousel-next"
             aria-label="Next review"
           >
@@ -258,8 +258,8 @@ function CarouselCard({
       <Card
         className={`${
           isCenter 
-            ? "shadow-lg border-border" 
-            : "shadow-sm border-border/50"
+            ? "shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-border" 
+            : "shadow-none border-border/30"
         }`}
       >
         <CardContent className={`${isCenter ? "p-6" : "p-5"}`}>
