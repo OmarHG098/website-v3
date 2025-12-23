@@ -3,6 +3,7 @@ import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
+import { TechMolecule } from "@/components/TechMolecule";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -99,6 +100,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 </p>
               </div>
             )}
+            <TechMolecule className="mt-4 hidden md:block" />
           </Card>
         </div>
       </div>
