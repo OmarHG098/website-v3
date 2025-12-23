@@ -1,0 +1,48 @@
+You are editing the “Real Results from Real Graduates” reviews section on the AI Engineering page (4geeks.com).
+Goal
+Redesign the reviews display into a premium “center focus” carousel:
+- The center review card is always the largest and fully readable.
+- The left and right cards appear behind it, smaller, partially visible, and slightly faded, creating depth.
+- Cards rotate automatically with smooth transitions.
+This should solve the visual imbalance caused by different review text lengths and make the section feel more dynamic.
+Keep existing design
+- Keep the current card styling (white background, subtle border, rounded corners, clean layout).
+- Keep the star rating visuals.
+- Do NOT change review content text.
+- Replace non-monochrome avatars with monochrome initials badges or a gray silhouette icon (no colored faces).
+Carousel behavior
+- Display 3 cards at a time:
+  - Center card: active, scale 1.0, highest z-index, fully visible.
+  - Side cards: scale around 0.88 to 0.92, lower z-index, partially clipped, reduced opacity.
+- The center card should overlap the side cards slightly so it feels layered.
+- Auto-rotate every 4 to 6 seconds.
+- Smooth transition when rotating:
+  - use transform and opacity transitions
+  - no abrupt jumps
+  - no bouncing effects
+- Pause auto-rotation on hover.
+- Allow manual navigation:
+  - swipe on mobile
+  - optional subtle arrow buttons (only if needed, minimal style)
+  - no dots pagination unless absolutely necessary
+Layout and sizing
+- Make the carousel container wider and taller than current layout so the center card has presence.
+- Ensure the center card remains visually dominant.
+- Side cards should be partially cut off by the container edges, like they are behind the center.
+Text handling (important)
+- Keep review text unchanged.
+- For side cards, clamp visible text to a small consistent number of lines (for example 2 to 3) so they stay compact.
+- The center card shows more text (but still keep a maximum height so the card does not become too tall).
+- Keep footer chips (like “Hired in 4 months”) aligned and consistent.
+Depth styling (subtle)
+- Add a very soft shadow to the center card only to increase focus.
+- Side cards should have lighter shadow or none.
+- Keep everything clean and monochrome.
+Accessibility
+- Respect prefers-reduced-motion:
+  - disable auto-rotation
+  - show static center card with the two side cards, or show a simple horizontal scroll list
+Acceptance criteria
+- The center review is always the largest and clearly readable.
+- Side reviews look smaller and behind, partially visible.
+- Reviews rotate automatically with smooth transitions.

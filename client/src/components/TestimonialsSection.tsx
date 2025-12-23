@@ -1,18 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { IconStarFilled, IconStar } from "@tabler/icons-react";
+import { IconStarFilled, IconStar, IconUser, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
-
-import profilePic1 from "@assets/profile-pic1_1764775438461.webp";
-import profilePic2 from "@assets/profile-pic2_1764775432918.webp";
-import profilePic3 from "@assets/profile-pic3_1764775528641.webp";
-import profilePic4 from "@assets/profile-pic4_1764775523318.webp";
-import profilePic5 from "@assets/profile-pic5_1764775738827.webp";
-import profilePic6 from "@assets/profile-pic6_1764775742734.webp";
-
-const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4, profilePic5, profilePic6];
 
 interface LegacyTestimonial {
   id: string;
@@ -38,6 +28,15 @@ interface TestimonialItem {
   avatar?: string;
 }
 
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map(n => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
     name: t.name,
@@ -51,36 +50,58 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const subtitle = data?.subtitle;
   const ratingSummary = data?.rating_summary;
 
-  const { heroItem, smallItems, heroIndex, smallIndices } = useMemo(() => {
-    if (items.length < 3) {
-      return { 
-        heroItem: items[0], 
-        smallItems: items.slice(1), 
-        heroIndex: 0,
-        smallIndices: items.slice(1).map((_, i) => i + 1)
-      };
-    }
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
-    const indexed = items.slice(0, 3).map((item, idx) => ({ item, idx, len: item.comment.length }));
-    indexed.sort((a, b) => a.len - b.len);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setActiveIndex(prev => (prev + 1) % items.length);
+  }, [items.length]);
+
+  const goToPrev = useCallback(() => {
+    setActiveIndex(prev => (prev - 1 + items.length) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    if (prefersReducedMotion || isPaused || items.length <= 1) return;
     
-    const small1 = indexed[0];
-    const small2 = indexed[1];
-    const hero = indexed[2];
+    const interval = setInterval(goToNext, 5000);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion, isPaused, goToNext, items.length]);
 
-    return {
-      heroItem: hero.item,
-      smallItems: [small1.item, small2.item],
-      heroIndex: hero.idx,
-      smallIndices: [small1.idx, small2.idx],
-    };
-  }, [items]);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goToNext();
+      else goToPrev();
+    }
+    setTouchStart(null);
+  };
+
+  const getCardIndex = (offset: number) => {
+    return (activeIndex + offset + items.length) % items.length;
+  };
 
   if (items.length === 0) return null;
 
   return (
     <section 
-      className="py-section bg-background"
+      className="py-section bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -117,62 +138,73 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           )}
         </div>
 
-        {/* Mobile: single column stack */}
-        <div className="grid grid-cols-1 gap-4 md:hidden">
-          {items.slice(0, 3).map((testimonial, index) => (
-            <TestimonialCard 
-              key={index} 
-              testimonial={testimonial} 
-              index={index} 
-              variant="normal"
+        {/* Carousel Container */}
+        <div 
+          className="relative h-[420px] md:h-[380px]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Navigation Arrows */}
+          <button
+            onClick={goToPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors hidden md:flex items-center justify-center"
+            data-testid="button-carousel-prev"
+            aria-label="Previous review"
+          >
+            <IconChevronLeft size={24} />
+          </button>
+          <button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/80 border border-border/50 text-muted-foreground hover:text-foreground hover:bg-background transition-colors hidden md:flex items-center justify-center"
+            data-testid="button-carousel-next"
+            aria-label="Next review"
+          >
+            <IconChevronRight size={24} />
+          </button>
+
+          {/* Cards Container */}
+          <div className="relative h-full flex items-center justify-center">
+            {/* Left Card */}
+            {items.length > 1 && (
+              <CarouselCard
+                testimonial={items[getCardIndex(-1)]}
+                position="left"
+                prefersReducedMotion={prefersReducedMotion}
+              />
+            )}
+
+            {/* Center Card */}
+            <CarouselCard
+              testimonial={items[activeIndex]}
+              position="center"
+              prefersReducedMotion={prefersReducedMotion}
+            />
+
+            {/* Right Card */}
+            {items.length > 2 && (
+              <CarouselCard
+                testimonial={items[getCardIndex(1)]}
+                position="right"
+                prefersReducedMotion={prefersReducedMotion}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Indicator Dots */}
+        <div className="flex justify-center gap-2 mt-6 md:hidden">
+          {items.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`w-2 h-2 rounded-full transition-colors ${
+                index === activeIndex ? "bg-primary" : "bg-muted-foreground/30"
+              }`}
+              aria-label={`Go to review ${index + 1}`}
             />
           ))}
-        </div>
-
-        {/* Tablet: 2 columns, hero spans full width on top */}
-        <div className="hidden md:block lg:hidden">
-          <div className="mb-4">
-            <TestimonialCard 
-              testimonial={heroItem} 
-              index={heroIndex} 
-              variant="hero"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {smallItems.map((testimonial, i) => (
-              <TestimonialCard 
-                key={i} 
-                testimonial={testimonial} 
-                index={smallIndices[i]} 
-                variant="small"
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop: small - hero - small layout */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-stretch">
-          <div className="col-span-3">
-            <TestimonialCard 
-              testimonial={smallItems[0]} 
-              index={smallIndices[0]} 
-              variant="small"
-            />
-          </div>
-          <div className="col-span-6">
-            <TestimonialCard 
-              testimonial={heroItem} 
-              index={heroIndex} 
-              variant="hero"
-            />
-          </div>
-          <div className="col-span-3">
-            <TestimonialCard 
-              testimonial={smallItems[1]} 
-              index={smallIndices[1]} 
-              variant="small"
-            />
-          </div>
         </div>
       </div>
     </section>
@@ -181,84 +213,105 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
 export default TestimonialsSection;
 
-function TestimonialCard({ 
+function CarouselCard({ 
   testimonial, 
-  index,
-  variant = "normal"
+  position,
+  prefersReducedMotion
 }: { 
   testimonial: TestimonialItem; 
-  index: number;
-  variant?: "small" | "hero" | "normal";
+  position: "left" | "center" | "right";
+  prefersReducedMotion: boolean;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const isSmall = variant === "small";
-  const isHero = variant === "hero";
+  const isCenter = position === "center";
+  const isLeft = position === "left";
+  const isRight = position === "right";
 
-  const shouldClamp = isSmall && testimonial.comment.length > 120;
+  const positionStyles = useMemo(() => {
+    if (isCenter) {
+      return {
+        transform: "translateX(0) scale(1)",
+        zIndex: 30,
+        opacity: 1,
+      };
+    }
+    if (isLeft) {
+      return {
+        transform: "translateX(-75%) scale(0.88)",
+        zIndex: 10,
+        opacity: 0.5,
+      };
+    }
+    return {
+      transform: "translateX(75%) scale(0.88)",
+      zIndex: 10,
+      opacity: 0.5,
+    };
+  }, [isCenter, isLeft]);
 
   return (
-    <Card
-      data-testid={`card-testimonial-${index}`}
-      className="h-full"
+    <div
+      className={`absolute w-full max-w-md px-4 ${
+        prefersReducedMotion ? "" : "transition-all duration-500 ease-out"
+      }`}
+      style={positionStyles}
     >
-      <CardContent className={`h-full flex flex-col ${isHero ? "p-8" : "p-6"}`}>
-        <div className="flex items-center gap-3 mb-4">
-          <Avatar className={isHero ? "h-12 w-12" : "h-10 w-10"}>
-            <AvatarImage 
-              src={testimonial.avatar || defaultAvatars[index % defaultAvatars.length]} 
-              alt={testimonial.name} 
-            />
-          </Avatar>
-          <div className="flex-1 min-w-0">
-            <p className={`font-semibold text-foreground truncate ${isHero ? "text-base" : "text-sm"}`}>
-              {testimonial.name}
-            </p>
-            <p className="text-xs text-muted-foreground truncate">
-              {testimonial.role}
-              {testimonial.company && ` at ${testimonial.company}`}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-1 mb-3">
-          {Array.from({ length: 5 }).map((_, i) =>
-            i < testimonial.rating ? (
-              <IconStarFilled key={i} className={`${isHero ? "w-5 h-5" : "w-4 h-4"} text-yellow-500`} />
-            ) : (
-              <IconStar key={i} className={`${isHero ? "w-5 h-5" : "w-4 h-4"} text-muted`} />
-            ),
-          )}
-        </div>
-
-        <div className="flex-1">
-          {shouldClamp && !isExpanded ? (
-            <div>
-              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                {testimonial.comment}
-              </p>
-              <button
-                onClick={() => setIsExpanded(true)}
-                className="text-xs text-primary/80 hover:text-primary mt-2 transition-colors"
-                data-testid={`button-read-more-${index}`}
-              >
-                Read more
-              </button>
+      <Card
+        className={`${
+          isCenter 
+            ? "shadow-lg border-border" 
+            : "shadow-sm border-border/50"
+        }`}
+      >
+        <CardContent className={`${isCenter ? "p-6" : "p-5"}`}>
+          {/* Header with Avatar and Info */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Monochrome Initials Badge */}
+            <div className={`${isCenter ? "w-12 h-12" : "w-10 h-10"} rounded-full bg-muted flex items-center justify-center flex-shrink-0`}>
+              <span className={`font-semibold text-muted-foreground ${isCenter ? "text-base" : "text-sm"}`}>
+                {getInitials(testimonial.name)}
+              </span>
             </div>
-          ) : (
-            <p className={`text-muted-foreground leading-relaxed ${isHero ? "text-base" : "text-sm"}`}>
-              {testimonial.comment}
-            </p>
-          )}
-        </div>
-
-        {testimonial.outcome && (
-          <div className="pt-3 border-t mt-4">
-            <Badge variant="secondary" className="text-xs">
-              {testimonial.outcome}
-            </Badge>
+            <div className="flex-1 min-w-0">
+              <p className={`font-semibold text-foreground truncate ${isCenter ? "text-base" : "text-sm"}`}>
+                {testimonial.name}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {testimonial.role}
+                {testimonial.company && ` at ${testimonial.company}`}
+              </p>
+            </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {/* Star Rating */}
+          <div className="flex items-center gap-1 mb-3">
+            {Array.from({ length: 5 }).map((_, i) =>
+              i < testimonial.rating ? (
+                <IconStarFilled key={i} className={`${isCenter ? "w-5 h-5" : "w-4 h-4"} text-yellow-500`} />
+              ) : (
+                <IconStar key={i} className={`${isCenter ? "w-5 h-5" : "w-4 h-4"} text-muted`} />
+              ),
+            )}
+          </div>
+
+          {/* Review Text */}
+          <p className={`text-muted-foreground leading-relaxed ${
+            isCenter 
+              ? "text-sm line-clamp-6" 
+              : "text-xs line-clamp-3"
+          }`}>
+            {testimonial.comment}
+          </p>
+
+          {/* Outcome Badge */}
+          {testimonial.outcome && (
+            <div className="pt-3 border-t mt-4">
+              <Badge variant="secondary" className="text-xs">
+                {testimonial.outcome}
+              </Badge>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
