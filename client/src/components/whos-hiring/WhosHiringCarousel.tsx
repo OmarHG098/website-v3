@@ -54,8 +54,8 @@ function LogoCard({
       className={`
         flex-shrink-0
         rounded-[0.8rem]
-        bg-muted
-        border border-border/20
+        bg-secondary/50
+        border border-border/80
         shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]
         transition-all duration-200
         hover:bg-muted/50 hover:border-border/40 hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)]
@@ -176,10 +176,10 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
   return (
     <section 
-      className="py-section-lg bg-background overflow-hidden"
+      className="py-section-lg bg-background overflow-hidden pt-16"
       data-testid="section-whos-hiring-carousel"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="bg-primary/5 py-4">
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
             Customer Stories
@@ -192,7 +192,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
           </h2>
           {data.subtitle && (
             <p 
-              className="text-body mb-4 text-muted-foreground max-w-2xl mx-auto"
+              className="text-body mb-4 text-muted-foreground max-w-2xl mx-auto text-primary"
               data-testid="text-whos-hiring-subtitle"
             >
               {data.subtitle}

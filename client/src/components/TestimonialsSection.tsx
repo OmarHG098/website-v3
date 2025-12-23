@@ -119,7 +119,7 @@ function TestimonialCard({
       data-testid={`card-testimonial-${index}`}
       className="h-full"
     >
-      <CardContent className="p-6">
+      <CardContent className="p-6 h-full flex flex-col">
         <div className="flex items-center gap-3 mb-4">
           <Avatar className="h-10 w-10">
             <AvatarImage 
@@ -146,12 +146,12 @@ function TestimonialCard({
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed flex-1">
           {testimonial.comment}
         </p>
 
         {testimonial.outcome && (
-          <div className="pt-3 border-t">
+          <div className="pt-3 border-t mt-4">
             <Badge variant="secondary" className="text-xs">
               {testimonial.outcome}
             </Badge>
