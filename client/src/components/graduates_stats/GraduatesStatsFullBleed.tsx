@@ -108,63 +108,71 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
       )}
 
       <div className="hidden lg:block">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-stretch gap-12">
-            <div className="flex-1">
-              <div 
-                className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
-                data-testid="graduates-stats-collage-full"
-              >
-                {featured_images.map((img, index) => {
-                  const colSpan = img.col_span || (index === 0 ? 5 : 3);
-                  const rowSpan = img.row_span || 2;
-                  const colStart = img.col_start || 1;
-                  const rowStart = img.row_start || (index === 0 ? 1 : 3);
-                  return (
-                    <div 
-                      key={`featured-${index}`}
-                      style={{
-                        gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
-                        gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
-                      }}
-                    >
-                      <UniversalImage
-                        id={img.image_id}
-                        preset="card"
-                        className="w-full h-full object-cover shadow-sm"
-                        alt={`Featured graduate photo ${index + 1}`}
-                      />
-                    </div>
-                  );
-                })}
-                {collage_images && collage_images.map((img, index) => {
-                  const colSpan = img.col_span || 4;
-                  const rowSpan = img.row_span || 2;
-                  const colStart = img.col_start || (index < 2 ? 6 + index * 4 : 4 + index * 2);
-                  const rowStart = img.row_start || (index < 2 ? 1 : 3);
-                  return (
-                    <div 
-                      key={`collage-${index}`}
-                      style={{
-                        gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
-                        gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
-                      }}
-                    >
-                      <UniversalImage
-                        id={img.image_id}
-                        preset="card"
-                        className="w-full h-full object-cover shadow-sm"
-                        alt={`Graduate photo ${index + 1}`}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+        <div className="flex items-stretch">
+          <div 
+            className="flex-shrink-0"
+            style={{ width: 'calc(50vw - 576px + 700px)', minWidth: '500px' }}
+          >
+            <div 
+              className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
+              data-testid="graduates-stats-collage-full"
+            >
+              {featured_images.map((img, index) => {
+                const colSpan = img.col_span || (index === 0 ? 5 : 3);
+                const rowSpan = img.row_span || 2;
+                const colStart = img.col_start || 1;
+                const rowStart = img.row_start || (index === 0 ? 1 : 3);
+                return (
+                  <div 
+                    key={`featured-${index}`}
+                    style={{
+                      gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
+                      gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
+                    }}
+                  >
+                    <UniversalImage
+                      id={img.image_id}
+                      preset="card"
+                      className="w-full h-full object-cover shadow-sm"
+                      alt={`Featured graduate photo ${index + 1}`}
+                    />
+                  </div>
+                );
+              })}
+              {collage_images && collage_images.map((img, index) => {
+                const colSpan = img.col_span || 4;
+                const rowSpan = img.row_span || 2;
+                const colStart = img.col_start || (index < 2 ? 6 + index * 4 : 4 + index * 2);
+                const rowStart = img.row_start || (index < 2 ? 1 : 3);
+                return (
+                  <div 
+                    key={`collage-${index}`}
+                    style={{
+                      gridColumn: colStart ? `${colStart} / span ${colSpan}` : `span ${colSpan}`,
+                      gridRow: rowStart ? `${rowStart} / span ${rowSpan}` : `span ${rowSpan}`,
+                    }}
+                  >
+                    <UniversalImage
+                      id={img.image_id}
+                      preset="card"
+                      className="w-full h-full object-cover shadow-sm"
+                      alt={`Graduate photo ${index + 1}`}
+                    />
+                  </div>
+                );
+              })}
             </div>
+          </div>
 
-            <div className="flex-shrink-0 w-80 flex flex-col justify-center">
-              {renderStatsCompact()}
-            </div>
+          <div 
+            className="flex flex-col justify-center pl-12"
+            style={{ 
+              width: 'calc(50vw - 576px + 452px)',
+              maxWidth: '452px',
+              marginRight: 'max(1rem, calc(50vw - 576px))'
+            }}
+          >
+            {renderStatsCompact()}
           </div>
         </div>
       </div>
