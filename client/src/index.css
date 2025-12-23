@@ -553,6 +553,6 @@
 }
 
 .group:hover .group-hover\:animate-heartbeat {
-  animation: heartbeat-loop 0.8s ease-in-out infinite;
+  animation: heartbeat-loop 0.8s ease-in-out 2;
   transform-origin: center center;
 }
