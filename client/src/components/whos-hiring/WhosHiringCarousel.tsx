@@ -229,7 +229,8 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
           speed={40}
           pauseOnHover={true}
           gradient={false}
-          play={!prefersReducedMotion}
+          direction="left"
+          autoFill={true}
         >
           {mosaicGroups.map((group, index) => (
             <MosaicGroupComponent 
