@@ -326,10 +326,8 @@ sections:
       - python
       - react
       - nodejs
-      - api
-      - brain
-      - robot
-      - settings
+      - git
+      - github
     features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
     features:
       - icon: certificate
