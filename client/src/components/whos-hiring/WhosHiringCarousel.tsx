@@ -50,7 +50,7 @@ function LogoCard({
         flex-shrink-0
         ${sizeClasses[size]}
         rounded-[0.8rem]
-        bg-muted/30
+        bg-muted/80
         border border-border/20
         shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]
         transition-all duration-200
