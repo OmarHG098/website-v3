@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import Marquee from "react-fast-marquee";
 import type { WhosHiringSection as WhosHiringSectionType } from "@shared/schema";
 
 interface WhosHiringCarouselProps {
@@ -96,7 +97,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "stack-hero" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
@@ -108,7 +109,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "hero-stack" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <LogoCard logo={items[0]} size="hero" heroText={heroText} />
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[1]} size="small" />
@@ -120,7 +121,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "triple-stack" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
@@ -134,7 +135,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   }
 
   return (
-    <div className={`flex ${gapClass}`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+    <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
       {items.map((item, i) => (
         <LogoCard key={i} logo={item} size="normal" />
       ))}
@@ -143,7 +144,6 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 }
 
 export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
-  const [isPaused, setIsPaused] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const logos = data.logos || [];
@@ -190,15 +190,9 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
     return groups;
   }, [logos]);
 
-  const duplicatedGroups = useMemo(() => {
-    return [...mosaicGroups, ...mosaicGroups];
-  }, [mosaicGroups]);
-
   if (logos.length === 0) {
     return null;
   }
-
-  const shouldAnimate = !prefersReducedMotion && !isPaused;
 
   return (
     <section 
@@ -227,32 +221,24 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
         </div>
       </div>
 
-      <div 
-        className="relative py-8"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
-      >
+      <div className="relative py-8">
         <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="overflow-hidden">
-          <div 
-            className={`flex gap-10 ${shouldAnimate ? "logo-carousel-track" : ""}`}
-            style={{
-              width: "max-content",
-            }}
-          >
-            {duplicatedGroups.map((group, index) => (
-              <MosaicGroupComponent 
-                key={`${group.id}-${index}`} 
-                group={group}
-                textIndex={index}
-              />
-            ))}
-          </div>
-        </div>
+        <Marquee
+          speed={40}
+          pauseOnHover={true}
+          gradient={false}
+          play={!prefersReducedMotion}
+        >
+          {mosaicGroups.map((group, index) => (
+            <MosaicGroupComponent 
+              key={`${group.id}-${index}`} 
+              group={group}
+              textIndex={index}
+            />
+          ))}
+        </Marquee>
       </div>
     </section>
   );
