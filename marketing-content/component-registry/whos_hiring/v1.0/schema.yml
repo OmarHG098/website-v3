@@ -1,13 +1,24 @@
 name: Who's Hiring Section
 version: "1.0"
-component: WhosHiringSection
-file: client/src/components/career-programs/WhosHiringSection.tsx
-description: Display a scrolling marquee of company logos showing where graduates are hired
+component: WhosHiring
+file: client/src/components/whos-hiring/WhosHiring.tsx
+description: Display company logos showing where graduates are hired. Supports grid and carousel variants.
 when_to_use: |
   Use this section to build trust by showcasing real employers who have hired your graduates.
   Place after why_learn_ai and before testimonials for maximum social proof impact.
-  Include 8-12 logos for optimal carousel display; the marquee will loop continuously.
+  Include 8-12 logos for optimal display.
+variants:
+  - name: grid
+    description: Paginated grid layout with navigation dots
+  - name: carousel
+    description: Supabase-style auto-scrolling masonry carousel with grayscale logos
 props:
+  variant:
+    type: string
+    required: false
+    default: grid
+    enum: [grid, carousel]
+    description: Display variant - 'grid' for paginated layout, 'carousel' for auto-scrolling masonry
   title:
     type: string
     required: true

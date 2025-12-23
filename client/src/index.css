@@ -609,3 +609,39 @@
 .molecule-dot {
   animation: molecule-dot-pulse 2s ease-in-out infinite;
 }
+
+/* Logo Carousel - Grayscale effect */
+.logo-grayscale {
+  filter: grayscale(100%) contrast(0.8);
+  opacity: 0.65;
+  transition: all 0.3s ease;
+}
+
+.logo-grayscale:hover {
+  filter: grayscale(0%) contrast(1);
+  opacity: 1;
+}
+
+/* Logo Carousel - Auto-scroll animation */
+@keyframes logo-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-carousel-track {
+  animation: logo-scroll 40s linear infinite;
+}
+
+.logo-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-carousel-track {
+    animation: none;
+  }
+}

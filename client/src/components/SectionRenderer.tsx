@@ -9,7 +9,7 @@ import { WhyLearnAISection } from "./WhyLearnAISection";
 import { PricingSection } from "./PricingSection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
-import { WhosHiringSection } from "./WhosHiringSection";
+import { WhosHiring } from "@/components/whos-hiring/WhosHiring";
 import { FooterSection } from "./FooterSection";
 import { TwoColumn } from "@/components/TwoColumn";
 import NumberedSteps from "@/components/NumberedSteps";
@@ -88,7 +88,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "testimonials":
       return <TestimonialsSection key={index} data={section as Parameters<typeof TestimonialsSection>[0]["data"]} />;
     case "whos_hiring":
-      return <WhosHiringSection key={index} data={section as Parameters<typeof WhosHiringSection>[0]["data"]} />;
+      return <WhosHiring key={index} data={section as Parameters<typeof WhosHiring>[0]["data"]} />;
     case "footer":
       return <FooterSection key={index} data={section as Parameters<typeof FooterSection>[0]["data"]} />;
     case "two_column":
