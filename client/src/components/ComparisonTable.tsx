@@ -1,5 +1,17 @@
 import type { ComparisonTableSection } from "@shared/schema";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { 
+  IconCheck, 
+  IconX, 
+  IconBriefcase, 
+  IconUsers, 
+  IconSparkles, 
+  IconMessageCircle, 
+  IconBook, 
+  IconTrendingUp, 
+  IconWorld, 
+  IconDeviceDesktop, 
+  IconSchool 
+} from "@tabler/icons-react";
 import {
   Accordion,
   AccordionContent,
@@ -11,10 +23,22 @@ interface ComparisonTableProps {
   data: ComparisonTableSection;
 }
 
-function CellValue({ value }: { value: string }) {
+const featureIcons: Record<string, typeof IconBriefcase> = {
+  "Career Support": IconBriefcase,
+  "Teacher: Student Ratio": IconUsers,
+  "AI-Powered Feedback": IconSparkles,
+  "1-on-1 Mentoring": IconMessageCircle,
+  "Curriculum": IconBook,
+  "% Hiring Rate": IconTrendingUp,
+  "Community": IconWorld,
+  "Class Format": IconDeviceDesktop,
+  "Previous Knowledge": IconSchool,
+};
+
+function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: boolean }) {
   if (value === "yes" || value === "Yes" || value === "✓") {
     return (
-      <IconCheck className="w-6 h-6 text-green-600 mx-auto" />
+      <IconCheck className="w-6 h-6 text-primary mx-auto" />
     );
   }
   if (value === "no" || value === "No" || value === "✗") {
@@ -22,6 +46,18 @@ function CellValue({ value }: { value: string }) {
       <IconX className="w-6 h-6 text-muted-foreground mx-auto" />
     );
   }
+  
+  const isKeyMetric = /^(1:\d|~?\d+%|Unlimited|Personalized)/.test(value);
+  
+  if (isHighlighted && isKeyMetric) {
+    return (
+      <span className="flex items-center justify-center gap-2">
+        <IconCheck className="w-4 h-4 text-primary flex-shrink-0" />
+        <span className="text-lg font-bold">{value}</span>
+      </span>
+    );
+  }
+  
   return <span>{value}</span>;
 }
 
@@ -52,8 +88,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block">
-          {/* Comparison table with rounded border */}
-          <div className="rounded-xl border border-border overflow-hidden shadow-card" data-testid="table-comparison">
+          {/* Premium comparison table */}
+          <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5" data-testid="table-comparison">
             {/* Header row */}
             <div className="grid grid-cols-3">
               {data.columns.map((column, colIndex) => {
@@ -63,56 +99,70 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 return (
                   <div
                     key={colIndex}
-                    className={`p-6 font-semibold text-body ${
+                    className={`py-6 px-6 font-semibold text-body ${
                       isFeatureCol ? "text-left" : "text-center"
                     } ${
                       isHighlighted
-                        ? "bg-primary text-primary-foreground shadow-md"
+                        ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md"
                         : "bg-muted text-foreground"
                     }`}
                     data-testid={`th-column-${colIndex}`}
                   >
-                    {column.name}
+                    <span>{column.name}</span>
+                    {isHighlighted && (
+                      <span className="block text-xs opacity-90 mt-1 font-medium">Our Approach</span>
+                    )}
                   </div>
                 );
               })}
             </div>
             {/* Table body */}
-            {data.rows.map((row, rowIndex) => (
-              <div
-                key={rowIndex}
-                className="grid grid-cols-3 border-t border-border"
-                data-testid={`tr-row-${rowIndex}`}
-              >
-                {/* Feature name - left aligned */}
-                <div className="p-6 font-medium text-foreground text-left bg-card">
-                  {row.feature}
-                  {row.feature_description && (
-                    <p className="text-sm text-muted-foreground font-normal mt-1">
-                      {row.feature_description}
-                    </p>
-                  )}
-                </div>
-                {/* Values */}
-                {row.values.map((value, valIndex) => {
-                  const isHighlightedCol = valIndex === highlightIndex - 1;
-                  
-                  return (
-                    <div
-                      key={valIndex}
-                      className={`p-6 text-center ${
-                        isHighlightedCol
-                          ? "bg-primary/10 font-semibold text-foreground"
-                          : "bg-card text-foreground"
-                      }`}
-                      data-testid={`td-value-${rowIndex}-${valIndex}`}
-                    >
-                      <CellValue value={value} />
+            {data.rows.map((row, rowIndex) => {
+              const FeatureIcon = featureIcons[row.feature];
+              
+              return (
+                <div
+                  key={rowIndex}
+                  className={`grid grid-cols-3 transition-colors hover:bg-primary/5 ${
+                    rowIndex % 2 === 0 ? "bg-card" : "bg-muted/30"
+                  }`}
+                  data-testid={`tr-row-${rowIndex}`}
+                >
+                  {/* Feature name - left aligned with icon */}
+                  <div className="py-5 px-6 font-medium text-foreground text-left flex items-start gap-2">
+                    {FeatureIcon && (
+                      <FeatureIcon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    )}
+                    <div>
+                      <span>{row.feature}</span>
+                      {row.feature_description && (
+                        <p className="text-sm text-muted-foreground font-normal mt-1">
+                          {row.feature_description}
+                        </p>
+                      )}
                     </div>
-                  );
-                })}
-              </div>
-            ))}
+                  </div>
+                  {/* Values */}
+                  {row.values.map((value, valIndex) => {
+                    const isHighlightedCol = valIndex === highlightIndex - 1;
+                    
+                    return (
+                      <div
+                        key={valIndex}
+                        className={`py-5 px-6 text-center flex items-center justify-center ${
+                          isHighlightedCol
+                            ? "bg-primary/5 font-semibold text-foreground"
+                            : "text-muted-foreground font-normal"
+                        }`}
+                        data-testid={`td-value-${rowIndex}-${valIndex}`}
+                      >
+                        <CellValue value={value} isHighlighted={isHighlightedCol} />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         </div>
 
