@@ -280,6 +280,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [showTurnstileModal, setShowTurnstileModal] = useState(false);
+  const [pendingFormData, setPendingFormData] = useState<FormValues | null>(null);
 
   const turnstileEnabled = data.turnstile?.enabled ?? true;
 
@@ -365,11 +366,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
-      // Check that Turnstile token exists if enabled (verification happens at Breathecode API)
-      if (turnstileEnabled && !turnstileToken) {
-        throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
-      }
-
       // Map consent fields to backend field names
       const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
       
@@ -473,8 +469,25 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const onSubmit = (values: FormValues) => {
     setTurnstileError(null);
+    
+    // If turnstile is enabled and we don't have a token yet, show the modal and wait
+    if (turnstileEnabled && !turnstileToken) {
+      setPendingFormData(values);
+      setShowTurnstileModal(true);
+      return;
+    }
+    
     submitMutation.mutate(values);
   };
+
+  // Auto-submit when turnstile token is received and we have pending form data
+  useEffect(() => {
+    if (turnstileToken && pendingFormData) {
+      setShowTurnstileModal(false);
+      submitMutation.mutate(pendingFormData);
+      setPendingFormData(null);
+    }
+  }, [turnstileToken, pendingFormData]);
 
   const filteredLocations = formOptions?.locations.filter(loc => {
     const selectedRegion = form.watch("region");
@@ -576,7 +589,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
               <Button 
                 type="submit" 
-                disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+                disabled={submitMutation.isPending}
                 data-testid="button-submit"
               >
                 {submitMutation.isPending ? (
@@ -591,17 +604,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 <div className="bg-card p-card-padding rounded-card shadow-card">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
-                    onSuccess={(token: string) => {
-                      setTurnstileToken(token);
+                    onSuccess={(token: string) => setTurnstileToken(token)}
+                    onError={() => {
+                      setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error");
                       setShowTurnstileModal(false);
+                      setPendingFormData(null);
                     }}
-                    onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                     onExpire={() => setTurnstileToken(null)}
-                    onBeforeInteractive={() => setShowTurnstileModal(true)}
                     options={{
                       theme: data.turnstile?.theme || "auto",
                       size: data.turnstile?.size || "compact",
-                      appearance: "interaction-only",
                     }}
                   />
                 </div>
@@ -942,17 +954,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               <div className="bg-card p-6 rounded-card shadow-card">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={(token: string) => {
-                    setTurnstileToken(token);
+                  onSuccess={(token: string) => setTurnstileToken(token)}
+                  onError={() => {
+                    setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error");
                     setShowTurnstileModal(false);
+                    setPendingFormData(null);
                   }}
-                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                   onExpire={() => setTurnstileToken(null)}
-                  onBeforeInteractive={() => setShowTurnstileModal(true)}
                   options={{
                     theme: data.turnstile?.theme || "auto",
                     size: data.turnstile?.size || "normal",
-                    appearance: "interaction-only",
                   }}
                 />
               </div>
@@ -968,7 +979,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           <Button 
             type="submit" 
             className="w-full"
-            disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+            disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
             {submitMutation.isPending ? (
