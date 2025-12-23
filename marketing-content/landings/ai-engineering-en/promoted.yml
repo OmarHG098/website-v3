@@ -346,9 +346,9 @@ sections:
       url: "#hero-form"
       variant: primary
   - type: whos_hiring
-    title: Who's Hiring Our Graduates?
-    subtitle: Our alumni work at top companies around the world
-    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.
+    variant: carousel
+    title: Trusted by Leading Innovators
+    subtitle: Explore how 4Geeks Academy propels your career forward with top employers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -374,30 +374,6 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-      - src: /attached_assets/kpmg-logo1_1764720019827.png
-        alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
-      - src: /attached_assets/blackstone_1764720124773.png
-        alt: Blackstone
-      - src: /attached_assets/cemex_1764720131666.png
-        alt: Cemex
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
