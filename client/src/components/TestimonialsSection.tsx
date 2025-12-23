@@ -257,11 +257,9 @@ function CarouselCard({
     >
       <Card
         className={`${
-          prefersReducedMotion ? "" : "transition-shadow duration-500 ease-out"
-        } ${
           isCenter 
-            ? "shadow-[0_4px_20px_-4px_rgba(0,0,0,0.15),0_12px_40px_-8px_rgba(0,0,0,0.12)] border-border" 
-            : "shadow-none border-border/20"
+            ? "shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-border" 
+            : "shadow-none border-border/30"
         }`}
       >
         <CardContent className={`${isCenter ? "p-6" : "p-5"}`}>
