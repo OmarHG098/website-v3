@@ -1,0 +1,76 @@
+You are redesigning ONLY the interactive visual diagram inside the “Why AI Engineering Now” section on the AI Engineering landing page (4geeks.com).
+This diagram must feel inspired by high-end SaaS system visuals (Supabase / Linear level), but it MUST NOT resemble a cube or any recognizable Supabase asset.
+Goal
+Visually communicate that AI Engineering is the structural core that holds modern AI systems together.
+This is a system-level abstraction, not an illustration.
+Remove current diagram
+- Remove circular/orbit visuals.
+- Remove icons.
+- Remove explicit connector lines.
+- Remove radial layouts.
+- Remove node-to-node diagrams.
+New diagram concept (mandatory)
+Create an abstract “system core” composed of:
+1) A central geometric core
+- Shape should be abstract and non-literal.
+- Examples (choose ONE):
+  - layered hexagon outlines
+  - stacked transparent planes
+  - intersecting wireframe rectangles
+  - offset geometric frames creating depth
+- No solid fill.
+- No recognizable object (no cube, no sphere).
+2) Depth and structure
+- Use multiple thin outlines layered with slight offsets.
+- Use perspective and opacity to imply 3D structure.
+- The core should feel architectural, like a framework.
+3) Surrounding elements
+- Add subtle floating points or particles around the core.
+- These represent models, data, infrastructure, applications.
+- No icons.
+- No labels directly on the diagram.
+- Particles should feel like signals, not decorations.
+Center identity
+- Inside or just below the core, add a very minimal text label:
+  - “AI Engineering”
+- Small, understated.
+- Neutral color.
+- No logo image.
+Color constraints
+- Use ONLY existing page blues and blue-grays.
+- No new hues.
+- No gradients that introduce green, purple, or neon.
+- Lines should be thin and soft.
+- Background stays light.
+Animation behavior (critical)
+Idle state:
+- Extremely slow, continuous motion:
+  - subtle parallax between layers
+  - gentle drifting of particles
+- Motion should feel alive but almost unnoticeable.
+Hover interaction:
+- Slight increase in contrast or opacity of the core layers.
+- Particles nearest the cursor brighten subtly.
+- No scaling jumps.
+- No rotations faster than slow ambient movement.
+Performance & accessibility
+- Respect prefers-reduced-motion.
+- Animation must stop or simplify when reduced motion is enabled.
+Size & layout
+- Diagram must remain compact.
+- It must not overpower the metrics on the left.
+- Maintain generous whitespace.
+- Diagram lives comfortably inside the right content card.
+What NOT to do
+- Do NOT use a cube.
+- Do NOT use icons.
+- Do NOT use explicit lines connecting concepts.
+- Do NOT explain concepts inside the diagram.
+- Do NOT make it illustrative or playful.
+Acceptance criteria
+- Diagram feels technical, abstract, and premium.
+- It clearly suggests “system architecture” without literal shapes.
+- It feels original to 4Geeks.
+- It visually elevates the section instead of distracting.
+- It matches the overall minimal SaaS aesthetic of the page.
+Implement using SVG or Canvas with clean, maintainable code.
