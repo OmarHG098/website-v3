@@ -28,8 +28,8 @@ const heroCardTexts = [
   "Shaping the next generation of products.",
 ];
 
-const SMALL_CARD_HEIGHT = 120;
-const GAP = 24;
+const SMALL_CARD_HEIGHT = 130;
+const GAP = 16;
 const HERO_CARD_HEIGHT = SMALL_CARD_HEIGHT * 2 + GAP;
 
 function LogoCard({ 
@@ -45,8 +45,8 @@ function LogoCard({
   const isSmall = size === "small";
 
   const cardStyle = {
-    height: isHero ? `${HERO_CARD_HEIGHT}px` : isSmall ? `${SMALL_CARD_HEIGHT}px` : "140px",
-    width: isHero ? "320px" : isSmall ? "220px" : "260px",
+    height: isHero ? `${HERO_CARD_HEIGHT}px` : isSmall ? `${SMALL_CARD_HEIGHT}px` : "150px",
+    width: isHero ? "340px" : isSmall ? "240px" : "280px",
   };
 
   return (
@@ -54,7 +54,7 @@ function LogoCard({
       className={`
         flex-shrink-0
         rounded-[0.8rem]
-        bg-muted/30
+        bg-muted
         border border-border/20
         shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]
         transition-all duration-200
@@ -93,11 +93,11 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   const { pattern, items } = group;
   const heroText = heroCardTexts[textIndex % heroCardTexts.length];
 
-  const gapClass = "gap-6";
+  const gapClass = "gap-4";
 
   if (pattern === "stack-hero" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
@@ -109,7 +109,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "hero-stack" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <LogoCard logo={items[0]} size="hero" heroText={heroText} />
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[1]} size="small" />
@@ -121,7 +121,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
   if (pattern === "triple-stack" && items.length >= 3) {
     return (
-      <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+      <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
         <div className={`flex flex-col ${gapClass}`}>
           <LogoCard logo={items[0]} size="small" />
           <LogoCard logo={items[1]} size="small" />
@@ -135,7 +135,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
   }
 
   return (
-    <div className={`flex ${gapClass} mx-5`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+    <div className={`flex ${gapClass} mx-3`} style={{ height: `${HERO_CARD_HEIGHT}px` }}>
       {items.map((item, i) => (
         <LogoCard key={i} logo={item} size="normal" />
       ))}
@@ -229,7 +229,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
           speed={40}
           pauseOnHover={true}
           gradient={false}
-          direction="left"
+          direction="right"
           autoFill={true}
         >
           {mosaicGroups.map((group, index) => (
