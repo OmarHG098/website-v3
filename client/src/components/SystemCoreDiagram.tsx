@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import { SiOpenai, SiPython, SiReact, SiNodedotjs, SiGit, SiGithub } from "react-icons/si";
 
 interface SystemCoreDiagramProps {
   className?: string;
@@ -12,6 +13,23 @@ interface Particle {
   speed: number;
   angle: number;
 }
+
+interface TechBox {
+  icon: typeof SiOpenai;
+  label: string;
+}
+
+const leftTechs: TechBox[] = [
+  { icon: SiOpenai, label: "OpenAI" },
+  { icon: SiPython, label: "Python" },
+  { icon: SiReact, label: "React" },
+  { icon: SiNodedotjs, label: "Node.js" },
+];
+
+const rightTechs: TechBox[] = [
+  { icon: SiGit, label: "Git" },
+  { icon: SiGithub, label: "GitHub" },
+];
 
 export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -28,9 +46,9 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
 
   // Initialize particles
   useEffect(() => {
-    const initialParticles: Particle[] = Array.from({ length: 24 }, () => ({
-      x: 20 + Math.random() * 60,
-      y: 15 + Math.random() * 70,
+    const initialParticles: Particle[] = Array.from({ length: 20 }, () => ({
+      x: 25 + Math.random() * 50,
+      y: 20 + Math.random() * 60,
       size: Math.random() * 1.5 + 0.5,
       opacity: Math.random() * 0.4 + 0.2,
       speed: Math.random() * 0.008 + 0.003,
@@ -61,10 +79,10 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
         let newY = p.y + Math.sin(p.angle) * p.speed;
         
         // Wrap around bounds
-        if (newX < 15) newX = 85;
-        if (newX > 85) newX = 15;
-        if (newY < 10) newY = 90;
-        if (newY > 90) newY = 10;
+        if (newX < 20) newX = 80;
+        if (newX > 80) newX = 20;
+        if (newY < 15) newY = 85;
+        if (newY > 85) newY = 15;
         
         return { ...p, x: newX, y: newY };
       }));
@@ -105,11 +123,25 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
   };
 
   const layers = [
-    { size: 28, opacity: isHovered ? 0.5 : 0.35, strokeWidth: 0.8 },
-    { size: 24, opacity: isHovered ? 0.6 : 0.4, strokeWidth: 0.7 },
-    { size: 20, opacity: isHovered ? 0.7 : 0.5, strokeWidth: 0.6 },
-    { size: 16, opacity: isHovered ? 0.8 : 0.6, strokeWidth: 0.5 },
-    { size: 12, opacity: isHovered ? 0.9 : 0.7, strokeWidth: 0.4 },
+    { size: 22, opacity: isHovered ? 0.5 : 0.35, strokeWidth: 0.8 },
+    { size: 18, opacity: isHovered ? 0.6 : 0.4, strokeWidth: 0.7 },
+    { size: 14, opacity: isHovered ? 0.7 : 0.5, strokeWidth: 0.6 },
+    { size: 10, opacity: isHovered ? 0.8 : 0.6, strokeWidth: 0.5 },
+    { size: 6, opacity: isHovered ? 0.9 : 0.7, strokeWidth: 0.4 },
+  ];
+
+  // Connector line endpoints for left side (4 techs)
+  const leftLineEndpoints = [
+    { boxY: 12, coreX: 28, coreY: 35 },
+    { boxY: 33, coreX: 28, coreY: 45 },
+    { boxY: 54, coreX: 28, coreY: 55 },
+    { boxY: 75, coreX: 28, coreY: 65 },
+  ];
+
+  // Connector line endpoints for right side (2 techs)
+  const rightLineEndpoints = [
+    { boxY: 33, coreX: 72, coreY: 45 },
+    { boxY: 67, coreX: 72, coreY: 55 },
   ];
 
   return (
@@ -119,124 +151,198 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full aspect-square max-w-[260px] mx-auto">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full"
-          onMouseMove={handleMouseMove}
-          style={{ overflow: "visible" }}
-        >
-          <defs>
-            <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="1.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
+      {/* Full diagram layout with side boxes */}
+      <div className="relative flex items-center justify-center gap-3">
+        {/* Left tech boxes */}
+        <div className="flex flex-col gap-2 z-10">
+          {leftTechs.map((tech, i) => (
+            <div
+              key={tech.label}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-card border border-border/50 shadow-sm"
+              data-testid={`tech-box-${tech.label.toLowerCase().replace(/\./g, '')}`}
+            >
+              <tech.icon className="w-4 h-4 text-muted-foreground" />
+              <span className="text-xs font-medium text-foreground whitespace-nowrap">{tech.label}</span>
+            </div>
+          ))}
+        </div>
 
-          {/* Subtle background grid lines */}
-          <g opacity="0.06">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <line
-                key={`h-${i}`}
-                x1="10"
-                y1={20 + i * 10}
-                x2="90"
-                y2={20 + i * 10}
-                stroke="hsl(var(--primary))"
-                strokeWidth="0.3"
-              />
+        {/* Center hexagon diagram with connector lines */}
+        <div className="relative w-[160px] h-[160px] flex-shrink-0">
+          <svg
+            viewBox="0 0 100 100"
+            className="w-full h-full"
+            onMouseMove={handleMouseMove}
+            style={{ overflow: "visible" }}
+          >
+            <defs>
+              <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="1.5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Left connector lines */}
+            {leftLineEndpoints.map((line, i) => (
+              <g key={`left-line-${i}`} opacity={isHovered ? 0.6 : 0.4}>
+                <path
+                  d={`M -8 ${line.boxY} L 8 ${line.boxY} L ${line.coreX} ${line.coreY}`}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="0.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx={line.coreX}
+                  cy={line.coreY}
+                  r="1.5"
+                  fill="hsl(var(--primary))"
+                  opacity="0.7"
+                />
+              </g>
             ))}
-            {Array.from({ length: 7 }).map((_, i) => (
-              <line
-                key={`v-${i}`}
-                x1={20 + i * 10}
-                y1="10"
-                x2={20 + i * 10}
-                y2="90"
-                stroke="hsl(var(--primary))"
-                strokeWidth="0.3"
-              />
+
+            {/* Right connector lines */}
+            {rightLineEndpoints.map((line, i) => (
+              <g key={`right-line-${i}`} opacity={isHovered ? 0.6 : 0.4}>
+                <path
+                  d={`M 108 ${line.boxY} L 92 ${line.boxY} L ${line.coreX} ${line.coreY}`}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="0.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx={line.coreX}
+                  cy={line.coreY}
+                  r="1.5"
+                  fill="hsl(var(--primary))"
+                  opacity="0.7"
+                />
+              </g>
             ))}
-          </g>
 
-          {/* Floating signal particles */}
-          {particles.map((p, i) => {
-            const brightness = getParticleBrightness(p.x, p.y);
-            return (
-              <circle
-                key={i}
-                cx={p.x}
-                cy={p.y}
-                r={p.size}
-                fill="hsl(var(--primary))"
-                opacity={p.opacity * brightness * (isHovered ? 1.3 : 1)}
-                className={!prefersReducedMotion ? "transition-opacity duration-300" : ""}
-              />
-            );
-          })}
+            {/* Subtle background grid lines */}
+            <g opacity="0.05">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <line
+                  key={`h-${i}`}
+                  x1="20"
+                  y1={30 + i * 10}
+                  x2="80"
+                  y2={30 + i * 10}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="0.3"
+                />
+              ))}
+              {Array.from({ length: 5 }).map((_, i) => (
+                <line
+                  key={`v-${i}`}
+                  x1={30 + i * 10}
+                  y1="20"
+                  x2={30 + i * 10}
+                  y2="80"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="0.3"
+                />
+              ))}
+            </g>
 
-          {/* Layered hexagon wireframes with parallax */}
-          <g filter={isHovered ? "url(#coreGlow)" : ""}>
-            {layers.map((layer, i) => (
-              <path
-                key={i}
-                d={getHexagonPath(
-                  50,
-                  50,
-                  layer.size,
-                  prefersReducedMotion ? 0 : layerOffsets[i] * (i % 2 === 0 ? 1 : -1),
-                  prefersReducedMotion ? 0 : layerOffsets[i] * 0.5 * (i % 2 === 0 ? -1 : 1)
-                )}
+            {/* Floating signal particles */}
+            {particles.map((p, i) => {
+              const brightness = getParticleBrightness(p.x, p.y);
+              return (
+                <circle
+                  key={i}
+                  cx={p.x}
+                  cy={p.y}
+                  r={p.size}
+                  fill="hsl(var(--primary))"
+                  opacity={p.opacity * brightness * (isHovered ? 1.3 : 1)}
+                  className={!prefersReducedMotion ? "transition-opacity duration-300" : ""}
+                />
+              );
+            })}
+
+            {/* Layered hexagon wireframes with parallax */}
+            <g filter={isHovered ? "url(#coreGlow)" : ""}>
+              {layers.map((layer, i) => (
+                <path
+                  key={i}
+                  d={getHexagonPath(
+                    50,
+                    50,
+                    layer.size,
+                    prefersReducedMotion ? 0 : layerOffsets[i] * (i % 2 === 0 ? 1 : -1),
+                    prefersReducedMotion ? 0 : layerOffsets[i] * 0.5 * (i % 2 === 0 ? -1 : 1)
+                  )}
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={layer.strokeWidth}
+                  opacity={layer.opacity}
+                  className={!prefersReducedMotion ? "transition-opacity duration-500" : ""}
+                />
+              ))}
+            </g>
+
+            {/* Inner geometric accent - offset rectangles */}
+            <g opacity={isHovered ? 0.5 : 0.3}>
+              <rect
+                x={50 - 5 + (prefersReducedMotion ? 0 : layerOffsets[0] * 0.3)}
+                y={50 - 3 + (prefersReducedMotion ? 0 : layerOffsets[1] * 0.2)}
+                width="10"
+                height="6"
                 fill="none"
                 stroke="hsl(var(--primary))"
-                strokeWidth={layer.strokeWidth}
-                opacity={layer.opacity}
+                strokeWidth="0.4"
                 className={!prefersReducedMotion ? "transition-opacity duration-500" : ""}
               />
-            ))}
-          </g>
+              <rect
+                x={50 - 3 + (prefersReducedMotion ? 0 : layerOffsets[2] * -0.2)}
+                y={50 - 2 + (prefersReducedMotion ? 0 : layerOffsets[3] * -0.15)}
+                width="6"
+                height="4"
+                fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="0.3"
+                className={!prefersReducedMotion ? "transition-opacity duration-500" : ""}
+              />
+            </g>
 
-          {/* Inner geometric accent - offset rectangles */}
-          <g opacity={isHovered ? 0.5 : 0.3}>
-            <rect
-              x={50 - 6 + (prefersReducedMotion ? 0 : layerOffsets[0] * 0.3)}
-              y={50 - 4 + (prefersReducedMotion ? 0 : layerOffsets[1] * 0.2)}
-              width="12"
-              height="8"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="0.4"
-              className={!prefersReducedMotion ? "transition-opacity duration-500" : ""}
+            {/* Center dot */}
+            <circle
+              cx="50"
+              cy="50"
+              r="1.5"
+              fill="hsl(var(--primary))"
+              opacity={isHovered ? 0.9 : 0.6}
+              className={!prefersReducedMotion ? "transition-opacity duration-300" : ""}
             />
-            <rect
-              x={50 - 4 + (prefersReducedMotion ? 0 : layerOffsets[2] * -0.2)}
-              y={50 - 3 + (prefersReducedMotion ? 0 : layerOffsets[3] * -0.15)}
-              width="8"
-              height="6"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="0.3"
-              className={!prefersReducedMotion ? "transition-opacity duration-500" : ""}
-            />
-          </g>
+          </svg>
+        </div>
 
-          {/* Center dot */}
-          <circle
-            cx="50"
-            cy="50"
-            r="2"
-            fill="hsl(var(--primary))"
-            opacity={isHovered ? 0.9 : 0.6}
-            className={!prefersReducedMotion ? "transition-opacity duration-300" : ""}
-          />
-        </svg>
+        {/* Right tech boxes */}
+        <div className="flex flex-col gap-2 z-10">
+          {rightTechs.map((tech, i) => (
+            <div
+              key={tech.label}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-card border border-border/50 shadow-sm"
+              data-testid={`tech-box-${tech.label.toLowerCase()}`}
+            >
+              <tech.icon className="w-4 h-4 text-muted-foreground" />
+              <span className="text-xs font-medium text-foreground whitespace-nowrap">{tech.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Label below */}
-      <div className="mt-3 text-center">
+      <div className="mt-4 text-center">
         <span 
           className="text-xs tracking-widest uppercase text-muted-foreground/70 font-medium"
           style={{ letterSpacing: "0.15em" }}
