@@ -107,7 +107,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             <div
               className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
               style={{
-                background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
+                background: "linear-gradient(135deg, #66B8FF 0%, #3399FF 100%)",
               }}
               data-testid="card-pricing"
             >
@@ -293,7 +293,7 @@ export function PricingSection({ data }: PricingSectionProps) {
           <div
             className="relative rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl overflow-hidden lg:col-span-4"
             style={{
-              background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
+              background: "linear-gradient(135deg, #66B8FF 0%, #3399FF 100%)",
             }}
             data-testid="card-pricing"
           >
