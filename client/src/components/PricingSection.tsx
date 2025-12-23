@@ -115,27 +115,49 @@ export function PricingSection({ data }: PricingSectionProps) {
                 <div className="flex flex-col items-center justify-center flex-1 py-6 space-y-4">
                   {data.discount_text && (
                     <div className="text-center">
-                      <p className="text-white text-sm font-medium" data-testid="text-discount">
-                        {data.discount_text}
-                      </p>
+                      {data.discount_text.includes(":") ? (
+                        <div data-testid="text-discount">
+                          <p className="text-white/90 text-sm">
+                            {data.discount_text.split(":")[0]}:
+                          </p>
+                          <p className="text-white text-sm font-bold mt-1">
+                            {data.discount_text.split(":")[1]?.trim()}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="text-white text-sm font-medium" data-testid="text-discount">
+                          {data.discount_text}
+                        </p>
+                      )}
                     </div>
                   )}
                   
                   {data.financing_text && (
                     <div className="text-center">
-                      <p className="text-white/90 text-sm" data-testid="text-financing-label">
-                        {data.financing_text}
-                      </p>
+                      {data.financing_text.includes(":") ? (
+                        <div data-testid="text-financing-label">
+                          <p className="text-white/90 text-sm">
+                            {data.financing_text.split(":")[0]}:
+                          </p>
+                          <p className="text-white text-sm font-bold mt-1">
+                            {data.financing_text.split(":")[1]?.trim()}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="text-white/90 text-sm" data-testid="text-financing-label">
+                          {data.financing_text}
+                        </p>
+                      )}
                       {data.financing_amount && (
                         <div className="mt-2">
                           <span
-                            className="text-h1 text-white"
+                            className="text-5xl font-bold text-white"
                             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                             data-testid="text-financing-amount"
                           >
                             {data.financing_amount}
                           </span>
-                          <span className="text-white text-xs font-normal">/mo</span>
+                          <span className="text-white text-sm font-normal">/mo</span>
                         </div>
                       )}
                     </div>
