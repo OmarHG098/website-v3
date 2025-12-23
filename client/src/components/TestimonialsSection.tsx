@@ -256,10 +256,10 @@ function CarouselCard({
       style={positionStyles}
     >
       <Card
-        className={`${
+        className={`border border-border ${
           isCenter 
-            ? "shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-border" 
-            : "shadow-none border-border/30"
+            ? "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)]" 
+            : ""
         }`}
       >
         <CardContent className={`${isCenter ? "p-6" : "p-5"}`}>
