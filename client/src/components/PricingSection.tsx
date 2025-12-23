@@ -134,20 +134,9 @@ export function PricingSection({ data }: PricingSectionProps) {
                   
                   {data.financing_text && (
                     <div className="text-center">
-                      {data.financing_text.includes(":") ? (
-                        <div data-testid="text-financing-label">
-                          <p className="text-white/90 text-sm">
-                            {data.financing_text.split(":")[0]}:
-                          </p>
-                          <p className="text-white text-sm font-bold mt-1">
-                            {data.financing_text.split(":")[1]?.trim()}
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="text-white/90 text-sm" data-testid="text-financing-label">
-                          {data.financing_text}
-                        </p>
-                      )}
+                      <p className="text-white/90 text-sm" data-testid="text-financing-label">
+                        {data.financing_text}
+                      </p>
                       {data.financing_amount && (
                         <div className="mt-2">
                           <span
