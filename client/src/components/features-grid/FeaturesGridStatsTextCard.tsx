@@ -3,7 +3,7 @@ import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
-import { AbstractNetworkDiagram } from "@/components/AbstractNetworkDiagram";
+import { SystemCoreDiagram } from "@/components/SystemCoreDiagram";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -100,7 +100,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 </p>
               </div>
             )}
-            <AbstractNetworkDiagram className="mt-4 hidden md:block" />
+            <SystemCoreDiagram className="mt-4 hidden md:block" />
           </Card>
         </div>
       </div>
