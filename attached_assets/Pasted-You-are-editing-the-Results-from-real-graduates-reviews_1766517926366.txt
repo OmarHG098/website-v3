@@ -1,0 +1,49 @@
+You are editing the “Results from real graduates” reviews section on the AI Engineering page (4geeks.com).
+Problem
+All review cards currently have the same size, but the review texts have different lengths, so the bottom edges and text endings look misaligned and messy. We cannot edit or shorten the reviews.
+Goal
+Keep the review content exactly as-is, but redesign the layout so the cards adapt to content length and still look intentional and aligned.
+Layout approach (required)
+- Switch from “3 equal cards in a row” to an editorial layout with different card sizes:
+  - Two shorter reviews become smaller cards.
+  - The longest review becomes a larger card.
+- The overall row should still feel balanced and premium, similar to a curated grid.
+Card sizing rules
+- Identify the shortest 2 reviews and place them in smaller cards:
+  - reduce their width and height
+  - target a compact card that fits about 3 lines of visible text without looking empty
+- The longest review becomes the hero card:
+  - make it wider (and optionally slightly taller than the small cards)
+  - but do NOT make it too tall
+  - the hero card should visually balance the row, not dominate it vertically
+Content handling (no content edits)
+- Keep the full review text unchanged.
+- If a review is too long for its card, do NOT change the text.
+- Instead:
+  - allow the hero card to fit more text naturally
+  - for smaller cards, clamp visible text to a consistent number of lines (for example 3 to 4 lines) and show an elegant “Read more” interaction that expands on click or hover.
+- The goal is a clean baseline alignment, not uneven bottoms.
+Design constraints
+- Keep the current visual style of the page:
+  - monochrome and subtle surfaces
+  - same border radius and subtle border
+  - same bg-muted/30 treatment and soft shadow if used elsewhere
+- Do not add loud colors.
+- Do not add heavy drop shadows.
+Alignment and consistency
+- Ensure all cards align cleanly along a shared baseline within the section.
+- Use consistent internal padding so author name, rating, and any metadata align across cards.
+- Keep spacing between cards consistent.
+Responsive behavior
+- Desktop:
+  - Layout should be: small card, hero card, small card (or small stacked left and hero right if it looks better).
+- Tablet:
+  - 2 columns, hero spans full width or appears first.
+- Mobile:
+  - 1 column stack, with consistent vertical spacing.
+Acceptance criteria
+- The reviews section looks tidy and intentional, not messy.
+- No content is edited.
+- Short reviews do not create empty-looking large cards.
+- Long review does not create an excessively tall card.
+- The overall section matches the premium SaaS design direction of the page.
