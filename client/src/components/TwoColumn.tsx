@@ -427,7 +427,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
           {/* Left Column: Title + Subtitle + Benefit Cards + CTA */}
           <div className="flex flex-col">
             {data.title && (
-              <h2 className="text-h2 text-foreground mb-4" data-testid="text-benefit-cards-title">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-title">
                 {data.title}
               </h2>
             )}
@@ -444,7 +444,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
                   return (
                     <div 
                       key={index}
-                      className="flex items-start gap-4"
+                      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
                       data-testid={`benefit-card-${index}`}
                     >
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">

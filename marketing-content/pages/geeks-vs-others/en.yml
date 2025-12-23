@@ -91,6 +91,7 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: highlight
+    background: "bg-background"
     title: "Results You Can Count On"
     subtitle: "Numbers matter — and ours speak for themselves."
     columns: 3
@@ -113,6 +114,7 @@ sections:
     proportions: [5, 7]
     alignment: "center"
     gap: "12"
+    background: "bg-muted/30"
     left:
       image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
       image_alt: "Happy businesswoman with laptop"
@@ -138,7 +140,7 @@ sections:
     proportions: [6, 6]
     alignment: "center"
     gap: "12"
-    background: "bg-muted/30"
+    background: "bg-background"
     left:
       heading: "Recognized Globally for Excellence"
       description: "We don't just say we deliver — recognition from trusted sources proves our worth."

@@ -95,6 +95,7 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: highlight
+    background: "bg-background"
     title: "Resultados en los que Puedes Confiar"
     subtitle: "Los números importan — y los nuestros hablan por sí solos."
     columns: 3
@@ -117,6 +118,7 @@ sections:
     proportions: [5, 7]
     alignment: "center"
     gap: "12"
+    background: "bg-muted/30"
     left:
       image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
       image_alt: "Empresaria feliz con laptop"
@@ -142,7 +144,7 @@ sections:
     proportions: [6, 6]
     alignment: "center"
     gap: "12"
-    background: "bg-muted/30"
+    background: "bg-background"
     left:
       heading: "Reconocidos Globalmente por Excelencia"
       description: "No solo lo decimos — el reconocimiento de fuentes confiables prueba nuestro valor."

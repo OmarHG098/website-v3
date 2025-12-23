@@ -29,7 +29,7 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
   if (hasDescriptionNoValue) {
     return (
       <Card 
-        className="p-3 md:p-5"
+        className="p-3 md:p-5 shadow-sm"
         data-testid={`card-feature-${itemId}`}
       >
         <div className="flex items-center gap-3 md:hidden">
@@ -62,7 +62,7 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
   
   return (
     <Card 
-      className="p-3 md:p-5 flex items-center gap-3 md:gap-5"
+      className="p-3 md:p-5 flex items-center gap-3 md:gap-5 shadow-sm transition-transform duration-200 hover:scale-105"
       data-testid={`card-feature-${itemId}`}
     >
       <div className="flex-shrink-0 w-10 h-10 md:w-16 md:h-16">
@@ -111,7 +111,7 @@ export function FeaturesGridHighlight({ data }: FeaturesGridHighlightProps) {
           <div className="text-center mb-8">
             {data.title && (
               <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
                 data-testid="text-features-grid-title"
               >
                 {data.title}
