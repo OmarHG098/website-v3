@@ -123,11 +123,11 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
   };
 
   const layers = [
-    { size: 22, opacity: isHovered ? 0.5 : 0.35, strokeWidth: 0.8 },
-    { size: 18, opacity: isHovered ? 0.6 : 0.4, strokeWidth: 0.7 },
-    { size: 14, opacity: isHovered ? 0.7 : 0.5, strokeWidth: 0.6 },
-    { size: 10, opacity: isHovered ? 0.8 : 0.6, strokeWidth: 0.5 },
-    { size: 6, opacity: isHovered ? 0.9 : 0.7, strokeWidth: 0.4 },
+    { size: 28, opacity: isHovered ? 0.55 : 0.35, strokeWidth: 1.0 },
+    { size: 23, opacity: isHovered ? 0.65 : 0.42, strokeWidth: 0.85 },
+    { size: 18, opacity: isHovered ? 0.75 : 0.5, strokeWidth: 0.7 },
+    { size: 13, opacity: isHovered ? 0.85 : 0.6, strokeWidth: 0.55 },
+    { size: 8, opacity: isHovered ? 0.95 : 0.72, strokeWidth: 0.45 },
   ];
 
   // Connector line endpoints for left side (4 techs)
@@ -158,17 +158,17 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
           {leftTechs.map((tech, i) => (
             <div
               key={tech.label}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-card border border-border/50 shadow-sm"
+              className="flex items-center gap-2 px-3 py-2 rounded-md bg-card border border-border/50 shadow-sm cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-primary/30"
               data-testid={`tech-box-${tech.label.toLowerCase().replace(/\./g, '')}`}
             >
-              <tech.icon className="w-4 h-4 text-muted-foreground" />
+              <tech.icon className="w-4 h-4 text-muted-foreground transition-colors duration-300 group-hover:text-primary" />
               <span className="text-xs font-medium text-foreground whitespace-nowrap">{tech.label}</span>
             </div>
           ))}
         </div>
 
         {/* Center hexagon diagram with connector lines */}
-        <div className="relative w-[160px] h-[160px] flex-shrink-0">
+        <div className={`relative w-[200px] h-[200px] flex-shrink-0 transition-transform duration-500 ${isHovered && !prefersReducedMotion ? "scale-105" : ""}`}>
           <svg
             viewBox="0 0 100 100"
             className="w-full h-full"
@@ -331,10 +331,10 @@ export function SystemCoreDiagram({ className = "" }: SystemCoreDiagramProps) {
           {rightTechs.map((tech, i) => (
             <div
               key={tech.label}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-card border border-border/50 shadow-sm"
+              className="flex items-center gap-2 px-3 py-2 rounded-md bg-card border border-border/50 shadow-sm cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md hover:border-primary/30"
               data-testid={`tech-box-${tech.label.toLowerCase()}`}
             >
-              <tech.icon className="w-4 h-4 text-muted-foreground" />
+              <tech.icon className="w-4 h-4 text-muted-foreground transition-colors duration-300" />
               <span className="text-xs font-medium text-foreground whitespace-nowrap">{tech.label}</span>
             </div>
           ))}
