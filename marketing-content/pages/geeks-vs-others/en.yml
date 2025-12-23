@@ -97,15 +97,12 @@ sections:
     columns: 3
     items:
       - icon: "Briefcase"
-        icon_color: "#0084FF"
         value: "84%"
         title: "Job placement rate"
-      - icon: "Graduation"
-        icon_color: "#0084FF"
+      - icon: "GraduationCap"
         value: "3-6 months"
         title: "Average time to get hired"
-      - icon: "GrowthChart"
-        icon_color: "#0084FF"
+      - icon: "TrendingUp"
         value: "55%"
         title: "Salary increase after graduation"
 
