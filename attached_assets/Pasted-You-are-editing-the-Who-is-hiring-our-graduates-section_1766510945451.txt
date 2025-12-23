@@ -1,0 +1,54 @@
+You are editing the “Who is hiring our graduates” section on the AI Engineering page (4geeks.com).
+Important constraint
+The company logos currently used in this section are image files. You must edit and normalize these logos as part of this task.
+Logo processing requirements
+- Convert ALL existing logo images to grayscale.
+- Remove any brand colors.
+- Do NOT keep original colored versions.
+- Reduce contrast so logos are not pure black.
+- Target a neutral gray tone similar to Supabase logos.
+- Final opacity should be around 60 to 75 percent.
+Logo sizing and consistency
+- Normalize all logos to feel visually consistent, not equal pixel size.
+- Logos should appear similar in visual weight, not height or width.
+- Follow Supabase style:
+  - Some logos wider, some more compact
+  - All centered and balanced inside their cards
+- Avoid logos touching card edges.
+- Add internal padding so logos always “breathe”.
+Preferred formats
+- If possible, replace raster images with SVG versions.
+- If SVG is not available, edit raster images via CSS filters or preprocessing.
+- No logo should appear sharper, darker, or louder than the rest.
+Section goal
+Rebuild this section to match the Supabase “Trusted by innovative companies” carousel layout, adapted to a white background and strict monochromatic grayscale palette.
+Carousel container
+- Wrapper with overflow hidden.
+- Soft top and bottom fade mask (white to transparent).
+- Inner track that auto-scrolls horizontally in an infinite loop.
+- Duplicate content to avoid visible loop jumps.
+Pinterest style layout
+- Cards must be different sizes (masonry / Pinterest feel).
+- Avoid uniform grids.
+- Cards flow as a visual wall, not rows.
+Card design
+- Transparent or near-transparent background.
+- Very subtle 1px border in light gray.
+- No shadows.
+- Rounded corners consistent with site.
+- Hover:
+  - Very subtle background fill
+  - Slightly stronger border
+  - No scaling, no glow.
+Motion
+- Slow, constant horizontal auto-scroll.
+- Pause on hover.
+- Touch scroll enabled on mobile.
+- Respect prefers-reduced-motion.
+Acceptance criteria
+- All logos appear grayscale and calm.
+- No brand colors visible.
+- Logos feel normalized like Supabase, not pasted images.
+- Section feels premium, quiet, and SaaS-like.
+- White background remains clean and uninterrupted.
+Implement the full HTML, CSS, and JS required for this section using the current project conventions.

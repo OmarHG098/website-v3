@@ -54,7 +54,7 @@ export function TechMolecule({ className = "" }: TechMoleculeProps) {
 
           {/* Connection lines using CSS */}
           {/* Line from center to top-left */}
-          <div className="absolute left-[22%] top-[28%] w-[28%] h-px bg-gradient-to-r from-border to-primary/40 origin-right rotate-[25deg] molecule-line" />
+          <div className="absolute left-[18%] top-[34%] w-[28%] h-px bg-gradient-to-r from-border to-primary/40 origin-right rotate-[25deg] molecule-line" />
           
           {/* Line from center to top-right */}
           <div className="absolute right-[22%] top-[25%] w-[28%] h-px bg-gradient-to-l from-border to-primary/40 origin-left -rotate-[30deg] molecule-line" style={{ animationDelay: "0.2s" }} />
