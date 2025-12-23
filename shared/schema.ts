@@ -176,10 +176,12 @@ export {
 export {
   twoColumnBulletSchema,
   bulletGroupSchema,
+  benefitItemSchema,
   twoColumnColumnSchema,
   twoColumnSectionSchema,
   type TwoColumnBullet,
   type BulletGroup,
+  type BenefitItem,
   type TwoColumnColumn,
   type TwoColumnSection,
 } from "../marketing-content/component-registry/two_column/v1.0/schema";

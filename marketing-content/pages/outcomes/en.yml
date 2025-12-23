@@ -137,13 +137,13 @@ sections:
           - label: "Asia"
             value: 1
 
-  - type: features_grid
+  - type: two_column
     version: "1.0"
-    variant: highlight
+    variant: benefitCards
+    background: "bg-muted/30"
     title: "Making Tech Careers Accessible"
     subtitle: "Tech careers should be open to everyone. That's why we offer:"
-    columns: 3
-    items:
+    benefit_items:
       - icon: "CurrencyDollar"
         title: "Affordable Tuition"
         description: "Lowest among top-rated bootcamps (recognized by Forbes as Best Bootcamp for Students on a Budget)."
@@ -152,7 +152,14 @@ sections:
         description: "Options starting below $299/month, plus affordable loans and income-based payment plans."
       - icon: "School"
         title: "Full and Partial Scholarships"
-        description: "Location-based options thanks to important institutional partnerships and government initiatives."
+        description: "Location-based options thanks to institutional partnerships and government initiatives."
+    cta_button:
+      text: "View Financing Options"
+      url: "/en/financials"
+      variant: "primary"
+    right:
+      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
+      image_alt: "Happy businesswoman with laptop"
 
   - type: two_column
     version: "1.0"
