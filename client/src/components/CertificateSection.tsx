@@ -249,6 +249,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             benefits={displayBenefits}
             certificate_position={data.certificate_position || "left"}
             iconSetIndex={selectedStatIndex}
+            useSolidCard={data.useSolidCard}
           />
         )}
       </div>

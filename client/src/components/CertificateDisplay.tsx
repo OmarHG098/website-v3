@@ -19,6 +19,7 @@ export interface CertificateDisplayProps {
   benefits?: CertificateDisplayBenefit[];
   certificate_position?: "left" | "right";
   iconSetIndex?: number;
+  useSolidCard?: boolean;
 }
 
 export function CertificateDisplay({ 
@@ -26,7 +27,8 @@ export function CertificateDisplay({
   description,
   benefits = [],
   certificate_position = "left",
-  iconSetIndex = 0
+  iconSetIndex = 0,
+  useSolidCard = false
 }: CertificateDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isCertificateLeft = certificate_position === "left";
@@ -35,7 +37,7 @@ export function CertificateDisplay({
   const certificateColumn = (
     <div className="flex justify-center">
       <div className="w-full max-w-md">
-        <Certificate programName={programName} />
+        <Certificate programName={programName} useSolidCard={useSolidCard} />
       </div>
     </div>
   );

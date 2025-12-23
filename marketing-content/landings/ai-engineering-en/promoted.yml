@@ -269,7 +269,7 @@ sections:
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
-    certificate_position: right
+    useSolidCard: true
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -312,6 +312,7 @@ sections:
           - text: Priority referrals to partner companies
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
+    certificate_position: right
   - type: pricing
     version: "1.0"
     variant: product
