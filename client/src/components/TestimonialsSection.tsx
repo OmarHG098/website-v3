@@ -131,6 +131,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   
   const dragThreshold = 0.3; // 30% drag triggers transition
   const cardWidth = 400; // Approximate width for drag calculation
+  const dragResistance = 0.4; // Drag resistance multiplier (lower = more resistance)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -211,8 +212,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging || isAnimating) return;
     const diff = e.clientX - dragStartX.current;
-    // Convert to progress (-1 to 1), negative = dragging left
-    const progress = Math.max(-1, Math.min(1, -diff / cardWidth));
+    // Apply drag resistance and convert to progress (-1 to 1), negative = dragging left
+    const progress = Math.max(-1, Math.min(1, (-diff * dragResistance) / cardWidth));
     setDragProgress(progress);
   };
 
@@ -221,16 +222,18 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     setIsDragging(false);
     
     const absProgress = Math.abs(dragProgress);
+    const wasGoingLeft = dragProgress < 0; // Capture direction before animation
     
     if (absProgress >= dragThreshold) {
       // Complete the transition
-      const targetProgress = dragProgress < 0 ? -1 : 1;
+      const targetProgress = wasGoingLeft ? -1 : 1;
       animateTransition(targetProgress, () => {
-        if (dragProgress < 0) {
+        if (wasGoingLeft) {
           goToNext();
         } else {
           goToPrev();
         }
+        setIsPaused(false);
       });
     } else {
       // Spring back
