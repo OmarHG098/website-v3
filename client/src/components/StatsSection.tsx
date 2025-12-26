@@ -40,7 +40,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
   if (hasIcons) {
     return (
       <section 
-        className="py-section"
+        className=""
         data-testid="section-stats"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -90,7 +90,7 @@ export default function StatsSection({ data }: StatsSectionProps) {
 
   return (
     <section 
-      className={`py-section ${data.background === 'muted' ? 'bg-muted' : ''}`}
+      className={`${data.background === 'muted' ? 'bg-muted' : ''}`}
       data-testid="section-stats"
     >
       <div className="max-w-6xl mx-auto px-4">

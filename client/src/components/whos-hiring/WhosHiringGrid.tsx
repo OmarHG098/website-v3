@@ -48,7 +48,7 @@ export function WhosHiringGrid({ data }: WhosHiringGridProps) {
 
   return (
     <section 
-      className="py-section bg-background"
+      className="bg-background"
       data-testid="section-whos-hiring"
     >
       <div className="max-w-6xl mx-auto px-4">

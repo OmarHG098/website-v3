@@ -618,7 +618,17 @@ import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 
 
-export const sectionSchema = z.union([
+// Layout spacing fields that can be applied to any section
+// Supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
+export const sectionLayoutSchema = z.object({
+  marginY: z.string().optional(),
+  paddingY: z.string().optional(),
+});
+
+export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
+
+// Base section schema union (component-specific fields)
+const baseSectionSchema = z.union([
   heroSchema,
   featuresGridSchema,
   syllabusSectionSchema,
@@ -656,6 +666,9 @@ export const sectionSchema = z.union([
   bulletTabsShowcaseSectionSchema,
   graduatesStatsSectionSchema,
 ]);
+
+// Combined section schema with layout fields
+export const sectionSchema = baseSectionSchema.and(sectionLayoutSchema);
 
 export type Section = z.infer<typeof sectionSchema>;
 

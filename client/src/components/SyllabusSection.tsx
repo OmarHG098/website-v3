@@ -112,7 +112,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   if (modules.length === 0) {
     return (
-      <section className="py-section bg-primary/5" data-testid="section-syllabus">
+      <section className="bg-primary/5" data-testid="section-syllabus">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -122,7 +122,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   return (
     <section 
-      className="py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-syllabus"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -165,7 +165,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   if (focusAreas.length === 0) {
     return (
-      <section className="py-section bg-primary/5" data-testid="section-syllabus-landing">
+      <section className="bg-primary/5" data-testid="section-syllabus-landing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one focus area
         </div>
@@ -175,7 +175,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   return (
     <section 
-      className="py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-syllabus-landing"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -435,7 +435,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   if (moduleCards.length === 0) {
     return (
-      <section className="py-section bg-muted/30" data-testid="section-syllabus-program">
+      <section className="bg-muted/30" data-testid="section-syllabus-program">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -445,7 +445,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   return (
     <section 
-      className="pt-section"
+      className=""
       data-testid="section-syllabus-program"
     >
       <div className="px-0 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))] lg:pr-0">

@@ -16,7 +16,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
   const avatars = [avatar1, avatar2, avatar3, avatar4];
 
   return (
-    <section className="relative container mx-auto px-4 pt-12 overflow-hidden">
+    <section className="relative container mx-auto px-4 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 items-start max-w-7xl mx-auto">
         {/* Left Images Column */}
         <div className="relative h-[300px] lg:h-[500px] hidden lg:block">

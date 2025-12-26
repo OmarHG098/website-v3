@@ -435,7 +435,7 @@ export function TwoColumn({ data }: TwoColumnProps) {
 
   return (
     <section 
-      className={`py-section ${backgroundClass}`}
+      className={`${backgroundClass}`}
       data-testid="section-two-column"
       style={containerStyle}
     >

@@ -16,7 +16,7 @@ export function MentorshipSection({ data }: MentorshipSectionProps) {
 
   return (
     <section 
-      className="py-16 bg-background"
+      className="bg-background"
       data-testid="section-mentorship"
     >
       <div className="max-w-6xl mx-auto px-4">

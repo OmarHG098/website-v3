@@ -65,7 +65,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   
   if (!isProductVariant && (!data.monthly || !data.yearly)) {
     return (
-      <section className="py-section bg-muted/30" data-testid="section-pricing">
+      <section className="bg-muted/30" data-testid="section-pricing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Pricing section requires monthly and yearly pricing data
         </div>
@@ -82,7 +82,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   if (isProductVariant) {
     return (
       <section
-        className="py-section"
+        className=""
         data-testid="section-pricing"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -237,7 +237,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
   return (
     <section
-      className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+      className="bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
       data-testid="section-pricing"
     >
       <div className="max-w-6xl mx-auto px-4">

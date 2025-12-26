@@ -21,7 +21,7 @@ const iconMap: Record<string, typeof IconBook> = {
 export function HeroCourse({ data }: HeroCourseProps) {
   return (
     <section 
-      className="py-section bg-background"
+      className="bg-background"
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">

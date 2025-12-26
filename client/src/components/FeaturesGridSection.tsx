@@ -17,7 +17,7 @@ function getIcon(iconName: string) {
 export function FeaturesGridSection({ data }: FeaturesGridSectionProps) {
   return (
     <section 
-      className="py-section px-4 bg-muted/30"
+      className="px-4 bg-muted/30"
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto">

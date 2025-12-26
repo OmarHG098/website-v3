@@ -7,7 +7,7 @@ interface FooterSectionProps {
 export function FooterSection({ data }: FooterSectionProps) {
   return (
     <footer 
-      className="py-8 bg-background border-t"
+      className="bg-background border-t"
       data-testid="section-footer"
     >
       <div className="max-w-6xl mx-auto px-4 text-center">

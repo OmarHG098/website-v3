@@ -14,7 +14,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
 
   return (
     <section 
-      className="py-8 md:py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-features-grid-stats-text-card"
     >
       <div className="max-w-6xl mx-auto px-4">

@@ -188,7 +188,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
 
   return (
     <section 
-      className="py-section bg-muted/30"
+      className="bg-muted/30"
       data-testid="section-certificate"
     >
       <div className="max-w-6xl mx-auto px-4">

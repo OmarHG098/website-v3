@@ -1,6 +1,57 @@
-import { useCallback } from "react";
-import type { Section, EditOperation } from "@shared/schema";
+import type { CSSProperties } from "react";
+import { useCallback, useMemo } from "react";
+import type { Section, EditOperation, SectionLayout } from "@shared/schema";
 import { Hero } from "@/components/hero/Hero";
+
+// Spacing presets in pixels (top, bottom)
+const SPACING_PRESETS: Record<string, { top: string; bottom: string }> = {
+  none: { top: "0px", bottom: "0px" },
+  sm: { top: "16px", bottom: "16px" },
+  md: { top: "32px", bottom: "32px" },
+  lg: { top: "64px", bottom: "64px" },
+  xl: { top: "96px", bottom: "96px" },
+};
+
+// Parse spacing value - supports presets or custom CSS values
+// Returns null if no value provided (component handles its own spacing)
+function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
+  if (!value) return null;
+  
+  // Check if it's a preset
+  if (SPACING_PRESETS[value]) {
+    return SPACING_PRESETS[value];
+  }
+  
+  // Parse custom value (e.g., "20px 32px" or "20px")
+  const parts = value.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return { top: parts[0], bottom: parts[0] };
+  }
+  return { top: parts[0], bottom: parts[1] || parts[0] };
+}
+
+// Default spacing when YAML doesn't specify values
+// Using padding: none (components apply their own internal padding)
+// Using margin: lg for vertical spacing between sections
+const DEFAULT_PADDING = SPACING_PRESETS.none; // Components handle their own internal padding
+const DEFAULT_MARGIN = { top: "0px", bottom: "0px" }; // No margin by default (sections stack)
+
+// Get section layout styles - applies spacing from YAML or defaults
+// paddingY: Applied to wrapper (for sections that DON'T have internal content padding)
+// marginY: Applied to wrapper (for spacing between sections)
+function getSectionLayoutStyles(section: Section): CSSProperties {
+  const layoutSection = section as SectionLayout;
+  
+  const padding = parseSpacing(layoutSection.paddingY) || DEFAULT_PADDING;
+  const margin = parseSpacing(layoutSection.marginY) || DEFAULT_MARGIN;
+  
+  return {
+    paddingTop: padding.top,
+    paddingBottom: padding.bottom,
+    marginTop: margin.top,
+    marginBottom: margin.bottom,
+  };
+}
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
 import { AILearningSection } from "./AILearningSection";
@@ -253,11 +304,12 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSection(section, index);
+        const layoutStyles = getSectionLayoutStyles(section);
         
         if (!renderedSection) return null;
         
         return (
-          <div key={index}>
+          <div key={index} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}
