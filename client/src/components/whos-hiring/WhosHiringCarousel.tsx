@@ -176,10 +176,16 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
   return (
     <section 
-      className="bg-background overflow-hidden"
+      className="relative bg-background overflow-hidden"
       data-testid="section-whos-hiring-carousel"
     >
-      <div className="bg-primary/5 py-4">
+      {/* Background that extends from top through middle of carousel */}
+      <div 
+        className="absolute inset-x-0 top-0 bg-primary/5 pointer-events-none" 
+        style={{ height: 'calc(100% - 80px)' }}
+      />
+      
+      <div className="relative z-[1] py-4">
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
             Customer Stories
@@ -201,8 +207,8 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
         </div>
       </div>
 
-      <div className="relative py-8">
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="relative z-[1] py-8">
+        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <Marquee
