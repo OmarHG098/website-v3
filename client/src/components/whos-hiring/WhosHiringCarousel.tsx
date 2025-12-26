@@ -54,14 +54,16 @@ function LogoCard({
       className={`
         flex-shrink-0
         rounded-[0.8rem]
-        bg-secondary/50
         border border-border/80
         shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]
         transition-all duration-200
-        hover:bg-muted/50 hover:border-border/40 hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)]
+        hover:border-border/40 hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)]
         ${isHero ? "flex flex-col justify-between p-6" : "flex items-center justify-center p-5"}
       `}
-      style={cardStyle}
+      style={{
+        ...cardStyle,
+        background: 'linear-gradient(hsl(var(--secondary) / 0.5), hsl(var(--secondary) / 0.5)), hsl(var(--background))',
+      }}
     >
       {isHero ? (
         <>
@@ -203,7 +205,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
       <div 
         className="relative py-8"
-        style={{ background: 'linear-gradient(to bottom, hsl(var(--primary) / 0.05) 0%, hsl(var(--primary) / 0.05) 25%, transparent 25%)' }}
+        style={{ background: 'linear-gradient(to bottom, hsl(var(--primary) / 0.05) 0%, hsl(var(--primary) / 0.05) 73%, transparent 73%)' }}
       >
         <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
