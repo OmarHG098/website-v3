@@ -1,6 +1,9 @@
-import { useCallback, useState, useEffect } from "react";
-import { IconX, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
+import { useCallback, useState, useEffect, useMemo } from "react";
+import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { queryClient } from "@/lib/queryClient";
@@ -23,6 +26,87 @@ interface SectionEditorPanelProps {
   onPreviewChange?: (previewSection: Section | null) => void;
 }
 
+const BACKGROUND_TOKENS = [
+  { label: "None", value: "", cssVar: "" },
+  { label: "Background", value: "background", cssVar: "var(--background)" },
+  { label: "Muted", value: "muted", cssVar: "var(--muted)" },
+  { label: "Card", value: "card", cssVar: "var(--card)" },
+  { label: "Accent", value: "accent", cssVar: "var(--accent)" },
+  { label: "Primary", value: "primary", cssVar: "var(--primary)" },
+  { label: "Secondary", value: "secondary", cssVar: "var(--secondary)" },
+  { label: "Sidebar", value: "sidebar", cssVar: "var(--sidebar-background)" },
+];
+
+interface BackgroundPickerProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
+  const isCustom = value && !BACKGROUND_TOKENS.some((t) => t.value === value);
+  const [customValue, setCustomValue] = useState(isCustom ? value : "");
+
+  // Sync custom value when external value changes
+  useEffect(() => {
+    const isNowCustom = value && !BACKGROUND_TOKENS.some((t) => t.value === value);
+    if (isNowCustom) {
+      setCustomValue(value);
+    } else {
+      setCustomValue("");
+    }
+  }, [value]);
+
+  return (
+    <div className="space-y-3">
+      <Label className="text-sm font-medium">Background Color</Label>
+      <div className="grid grid-cols-4 gap-2">
+        {BACKGROUND_TOKENS.map((token) => (
+          <button
+            key={token.value}
+            type="button"
+            onClick={() => onChange(token.value)}
+            className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+              value === token.value
+                ? "border-primary ring-2 ring-primary/20"
+                : "border-border hover:border-primary/50"
+            }`}
+            data-testid={`props-background-${token.value || "none"}`}
+          >
+            {token.cssVar ? (
+              <span
+                className="w-6 h-6 rounded border border-border/50"
+                style={{ background: `hsl(${token.cssVar})` }}
+              />
+            ) : (
+              <span className="w-6 h-6 rounded border border-dashed border-border/50 bg-transparent" />
+            )}
+            <span className="text-[10px] text-muted-foreground">{token.label}</span>
+          </button>
+        ))}
+      </div>
+      <div className="space-y-1.5">
+        <Label className="text-xs text-muted-foreground">Custom CSS Value</Label>
+        <Input
+          type="text"
+          placeholder="e.g., #ff5500, linear-gradient(...)"
+          value={customValue}
+          onChange={(e) => {
+            setCustomValue(e.target.value);
+            if (e.target.value) {
+              onChange(e.target.value);
+            }
+          }}
+          className="text-sm"
+          data-testid="props-background-custom"
+        />
+        <p className="text-xs text-muted-foreground">
+          Enter any valid CSS color or gradient value
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function SectionEditorPanel({
   section,
   sectionIndex,
@@ -41,6 +125,18 @@ export function SectionEditorPanel({
   const [hasChanges, setHasChanges] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("code");
+
+  // Parse current YAML to extract props
+  const parsedSection = useMemo(() => {
+    try {
+      return yamlParser.load(yamlContent) as Record<string, unknown> | null;
+    } catch {
+      return null;
+    }
+  }, [yamlContent]);
+
+  const currentBackground = (parsedSection?.background as string) || "";
 
   // Initialize YAML content from section
   useEffect(() => {
@@ -76,6 +172,37 @@ export function SectionEditorPanel({
       }
     }
   }, [onPreviewChange]);
+
+  // Update a specific property in the YAML
+  const updateProperty = useCallback((key: string, value: string) => {
+    try {
+      const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+      if (!parsed || typeof parsed !== "object") return;
+
+      if (value) {
+        parsed[key] = value;
+      } else {
+        delete parsed[key];
+      }
+
+      const newYaml = yamlParser.dump(parsed, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+
+      setYamlContent(newYaml);
+      setHasChanges(true);
+      setParseError(null);
+
+      // Trigger live preview
+      if (onPreviewChange) {
+        onPreviewChange(parsed as Section);
+      }
+    } catch (error) {
+      console.error("Error updating property:", error);
+    }
+  }, [yamlContent, onPreviewChange]);
 
   // Shared save logic - returns true on success
   const saveToServer = useCallback(async (): Promise<boolean> => {
@@ -154,7 +281,7 @@ export function SectionEditorPanel({
     } finally {
       setIsSaving(false);
     }
-  }, [yamlContent, sectionIndex, contentType, slug, locale, onUpdate]);
+  }, [yamlContent, sectionIndex, contentType, slug, locale, variant, version, onUpdate]);
 
   // Save without closing editor
   const handleSave = useCallback(async () => {
@@ -201,30 +328,61 @@ export function SectionEditorPanel({
           <IconX className="h-4 w-4" />
         </Button>
       </div>
-      {/* Editor */}
-      <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex-1 min-h-0">
-          <CodeMirror
-            value={yamlContent}
-            height="100%"
-            extensions={[yaml()]}
-            theme={oneDark}
-            onChange={handleYamlChange}
-            basicSetup={{
-              lineNumbers: true,
-              foldGutter: true,
-              highlightActiveLine: true,
-            }}
-            className="h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
-          />
-        </div>
 
-        {parseError && (
-          <div className="p-2 bg-destructive/10 text-destructive text-sm border-t">
-            {parseError}
+      {/* Tabs */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+        <TabsList className="mx-4 mt-2 grid w-auto grid-cols-2">
+          <TabsTrigger value="code" className="gap-1.5" data-testid="tab-code">
+            <IconCode className="h-4 w-4" />
+            Code
+          </TabsTrigger>
+          <TabsTrigger value="props" className="gap-1.5" data-testid="tab-props">
+            <IconSettings className="h-4 w-4" />
+            Props
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="code" className="flex-1 flex flex-col min-h-0 mt-0 data-[state=inactive]:hidden">
+          <div className="flex-1 min-h-0">
+            <CodeMirror
+              value={yamlContent}
+              height="100%"
+              extensions={[yaml()]}
+              theme={oneDark}
+              onChange={handleYamlChange}
+              basicSetup={{
+                lineNumbers: true,
+                foldGutter: true,
+                highlightActiveLine: true,
+              }}
+              className="h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
+            />
           </div>
-        )}
-      </div>
+        </TabsContent>
+
+        <TabsContent value="props" className="flex-1 overflow-auto p-4 mt-0 data-[state=inactive]:hidden">
+          <div className="space-y-6">
+            <BackgroundPicker
+              value={currentBackground}
+              onChange={(value) => updateProperty("background", value)}
+            />
+
+            {/* Placeholder for future props */}
+            <div className="pt-4 border-t">
+              <p className="text-xs text-muted-foreground">
+                More properties coming soon: spacing, visibility, animations...
+              </p>
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {parseError && (
+        <div className="p-2 bg-destructive/10 text-destructive text-sm border-t">
+          {parseError}
+        </div>
+      )}
+
       {/* Footer */}
       <div className="flex items-center justify-between p-4 border-t bg-muted/30">
         <div className="text-sm">
