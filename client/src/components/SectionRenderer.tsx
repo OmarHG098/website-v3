@@ -296,6 +296,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     <>
       <AddSectionButton
         insertIndex={0}
+        sections={sections}
         contentType={contentType}
         slug={slug}
         locale={locale}
@@ -326,6 +327,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
             </EditableSection>
             <AddSectionButton
               insertIndex={index + 1}
+              sections={sections}
               contentType={contentType}
               slug={slug}
               locale={locale}
