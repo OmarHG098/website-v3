@@ -52,6 +52,7 @@ function LogoCard({
   return (
     <div
       className={`
+        logo-card
         flex-shrink-0
         rounded-[0.8rem]
         border border-border/80
@@ -204,7 +205,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
       </div>
 
       <div 
-        className="relative py-8"
+        className="relative pb-8"
         style={{ background: 'linear-gradient(to bottom, hsl(var(--primary) / 0.05) 0%, hsl(var(--primary) / 0.05) 73%, transparent 73%)' }}
       >
         <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
