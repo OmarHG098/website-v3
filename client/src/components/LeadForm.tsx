@@ -176,7 +176,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <Label className="text-muted-foreground cursor-pointer text-[12px]">
+                  <Label className="text-xs text-muted-foreground cursor-pointer">
                     {consent.marketing_text || defaultMarketingText}
                   </Label>
                 </div>
@@ -205,7 +205,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {locale === "es"
                     ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
                     : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
@@ -231,7 +231,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {consent.sms_text || defaultSmsText}
                 </Label>
               </div>
@@ -254,7 +254,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {locale === "es"
                     ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
                     : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
@@ -495,6 +495,51 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     return loc.region === selectedRegion;
   }) || [];
 
+  // Watch all form values to determine if required fields are filled
+  const watchedValues = form.watch();
+  
+  const allRequiredFieldsFilled = (() => {
+    const requiredFields: (keyof FormValues)[] = [];
+    
+    if (getFieldConfig("email").visible && getFieldConfig("email").required) {
+      requiredFields.push("email");
+    }
+    if (getFieldConfig("first_name").visible && getFieldConfig("first_name").required) {
+      requiredFields.push("first_name");
+    }
+    if (getFieldConfig("last_name").visible && getFieldConfig("last_name").required) {
+      requiredFields.push("last_name");
+    }
+    if (getFieldConfig("phone").visible && getFieldConfig("phone").required) {
+      requiredFields.push("phone");
+    }
+    if (getFieldConfig("program").visible && getFieldConfig("program").required) {
+      requiredFields.push("program");
+    }
+    if (getFieldConfig("region").visible && getFieldConfig("region").required) {
+      requiredFields.push("region");
+    }
+    if (getFieldConfig("location").visible && getFieldConfig("location").required) {
+      requiredFields.push("location");
+    }
+    if (getFieldConfig("comment").visible && getFieldConfig("comment").required) {
+      requiredFields.push("comment");
+    }
+    
+    // Check if all required fields have values
+    return requiredFields.every(field => {
+      const value = watchedValues[field];
+      if (typeof value === "string") {
+        // For email, also validate format
+        if (field === "email") {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+        return value.trim() !== "";
+      }
+      return !!value;
+    });
+  })();
+
   const isInline = variant === "inline";
 
   if (isSuccess) {
@@ -629,7 +674,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 {emailConfig.helper_text}
               </p>
             )}
-            {consent.email && (
+            {allRequiredFieldsFilled && consent.email && (
               <FormField
                 control={form.control}
                 name="consent_email"
@@ -643,7 +688,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                      <Label className="text-xs text-muted-foreground cursor-pointer" htmlFor="consent_email">
                         {locale === "es"
                           ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing."
                           : "I agree to receive information via email about workshops, events, courses, and other marketing materials."
@@ -939,7 +984,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             />
           )}
 
-          {(consent.email || consent.sms || consent.whatsapp || consent.marketing) && (
+          {allRequiredFieldsFilled && (consent.email || consent.sms || consent.whatsapp || consent.marketing) && (
             <ConsentSection 
               consent={consent}
               form={form}
