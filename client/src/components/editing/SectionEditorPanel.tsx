@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
-import { queryClient } from "@/lib/queryClient";
+import { refreshContent } from "@/lib/contentRefresh";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -260,14 +260,8 @@ export function SectionEditorPanel({
         onUpdate(confirmedSection || parsed);
         setHasChanges(false);
 
-        // Still invalidate queries to ensure cache consistency
-        const apiPath = contentType === "program" 
-          ? "/api/career-programs" 
-          : contentType === "landing" 
-            ? "/api/landings" 
-            : "/api/locations";
-
-        await queryClient.invalidateQueries({ queryKey: [apiPath, slug] });
+        // Refresh content to update the page
+        await refreshContent(contentType, slug, locale);
         return true;
       } else {
         const error = await response.json();

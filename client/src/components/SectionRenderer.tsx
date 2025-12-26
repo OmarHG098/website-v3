@@ -117,6 +117,7 @@ import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
+import { refreshContent } from "@/lib/contentRefresh";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -280,6 +281,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved up" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
@@ -295,6 +297,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved down" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
@@ -314,6 +317,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section deleted" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });

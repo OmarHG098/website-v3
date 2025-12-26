@@ -53,7 +53,7 @@ sections:
       icon: Download
   - type: awards_marquee
     version: "1.0"
-    paddingY: md
+    paddingY: none
     marginY: none
     speed: 40
     pauseOnHover: true
@@ -102,7 +102,6 @@ sections:
         logoHeight: h-10 md:h-16
   - type: features_grid
     version: "1.0"
-    paddingY: xl
     variant: stats-text-card
     title: Why AI Engineering Now
     subtitle: The talent shortage is your opportunity
@@ -116,6 +115,7 @@ sections:
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY: none
+    paddingY: xl
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
+import { refreshContent } from "@/lib/contentRefresh";
 import type { Section, SectionLayout } from "@shared/schema";
 
 interface SpacingControlPopoverProps {
@@ -178,6 +179,8 @@ export function SpacingControlPopover({
         });
       } else if (operations.length > 0) {
         toast({ title: "Spacing updated" });
+        // Refresh content to update the page
+        await refreshContent(contentType, slug, locale);
         onSpacingChanged?.();
       }
       setIsOpen(false);

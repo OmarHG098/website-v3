@@ -59,6 +59,7 @@ import {
 } from "@/components/ui/tooltip";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
+import { refreshContent } from "@/lib/contentRefresh";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -381,7 +382,8 @@ export default function ComponentPickerModal({
       if (response.ok) {
         onSectionAdded?.();
         onClose();
-        window.location.reload();
+        // Refresh content to update the page without full reload
+        await refreshContent(contentType, slug, locale);
       } else {
         console.error("Failed to add section");
       }
