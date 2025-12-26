@@ -103,20 +103,31 @@ export function CertificateDisplay({
 
   return (
     <div 
-      className="grid lg:grid-cols-2 gap-12 items-center bg-primary/5 rounded-3xl"
+      className="relative"
       data-testid="container-certificate-display"
     >
-      {isCertificateLeft ? (
-        <>
-          {certificateColumn}
-          {textColumn}
-        </>
-      ) : (
-        <>
-          {textColumn}
-          {certificateColumn}
-        </>
-      )}
+      {/* Background that only covers the text column height */}
+      <div 
+        className="absolute inset-y-4 bg-primary/5 rounded-3xl pointer-events-none"
+        style={{ 
+          left: isCertificateLeft ? '0' : '0',
+          right: '0'
+        }}
+      />
+      
+      <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+        {isCertificateLeft ? (
+          <>
+            {certificateColumn}
+            {textColumn}
+          </>
+        ) : (
+          <>
+            {textColumn}
+            {certificateColumn}
+          </>
+        )}
+      </div>
     </div>
   );
 }
