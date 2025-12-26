@@ -162,7 +162,7 @@ export function ApplyFormSection({
 
   if (isSubmitted) {
     return (
-      <section className="py-16 bg-background" data-testid="section-apply-form-success">
+      <section className="bg-background" data-testid="section-apply-form-success">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
             <IconCheck className="w-8 h-8 text-primary" />
@@ -181,7 +181,7 @@ export function ApplyFormSection({
   }
 
   return (
-    <section className="py-12 md:py-16 bg-background" data-testid="section-apply-form">
+    <section className="bg-background" data-testid="section-apply-form">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           <div>

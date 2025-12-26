@@ -8,7 +8,7 @@ interface FeaturesGridStatsCardsProps {
 export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
   return (
     <section 
-      className="py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-features-grid-stats-cards"
     >
       <div className="max-w-6xl mx-auto px-4 ">

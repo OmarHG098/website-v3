@@ -83,7 +83,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
 
   return (
     <section 
-      className="py-section"
+      className=""
       data-testid="section-ai-learning"
     >
       <div className="max-w-6xl mx-auto px-4">

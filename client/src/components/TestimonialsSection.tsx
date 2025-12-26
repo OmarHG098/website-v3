@@ -101,7 +101,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   return (
     <section 
-      className="py-section bg-background overflow-hidden"
+      className="bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">

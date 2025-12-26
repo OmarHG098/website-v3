@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
+import { refreshContent } from "@/lib/contentRefresh";
 import { renderSection } from "@/components/SectionRenderer";
 import yaml from "js-yaml";
 
@@ -321,7 +322,9 @@ export function EditableSection({ children, section, index, sectionType, content
       setSwapPopoverOpen(false);
       setAdaptedSection(null);
       setHasAdapted(false);
-      toast({ title: "Section swapped", description: "The section variant has been updated. Refresh the page to see changes." });
+      // Refresh content to update the page
+      await refreshContent(contentType, slug, locale || 'en');
+      toast({ title: "Section swapped", description: "The section variant has been updated." });
     } catch (err) {
       toast({ title: "Error", description: "Failed to swap section variant.", variant: "destructive" });
     } finally {

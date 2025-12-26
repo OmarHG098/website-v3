@@ -9,7 +9,7 @@ interface WhyLearnAISectionProps {
 export function WhyLearnAISection({ data }: WhyLearnAISectionProps) {
   return (
     <section 
-      className="py-section bg-gradient-to-r from-muted/50 to-background dark:from-muted/30 dark:to-background"
+      className="bg-gradient-to-r from-muted/50 to-background dark:from-muted/30 dark:to-background"
       data-testid="section-why-learn-ai"
     >
       <div className="max-w-6xl mx-auto px-4">

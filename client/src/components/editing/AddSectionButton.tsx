@@ -2,9 +2,12 @@ import { useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import ComponentPickerModal from "./ComponentPickerModal";
+import { SpacingControlPopover } from "./SpacingControlPopover";
+import type { Section } from "@shared/schema";
 
 interface AddSectionButtonProps {
   insertIndex: number;
+  sections?: Section[];
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
@@ -12,7 +15,8 @@ interface AddSectionButtonProps {
 }
 
 export function AddSectionButton({ 
-  insertIndex, 
+  insertIndex,
+  sections = [],
   contentType, 
   slug, 
   locale,
@@ -46,14 +50,24 @@ export function AddSectionButton({
       >
         <div className="absolute inset-x-0 top-0 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <div className="flex-1 h-px bg-primary/40" />
-          <button
-            onClick={handleOpenModal}
-            className="mx-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-primary text-primary bg-background shadow-sm hover:bg-primary/10 hover:px-4 hover:py-2 hover:gap-2 transition-all duration-200"
-            data-testid={`button-add-section-${insertIndex}`}
-          >
-            <IconPlus className="h-4 w-4" />
-            <span className="text-xs font-medium">Add</span>
-          </button>
+          <div className="mx-3 flex items-center gap-2">
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-primary text-primary bg-background shadow-sm hover:bg-primary/10 hover:px-4 hover:py-2 hover:gap-2 transition-all duration-200"
+              data-testid={`button-add-section-${insertIndex}`}
+            >
+              <IconPlus className="h-4 w-4" />
+              <span className="text-xs font-medium">Add</span>
+            </button>
+            <SpacingControlPopover
+              insertIndex={insertIndex}
+              sections={sections}
+              contentType={contentType}
+              slug={slug}
+              locale={locale}
+              onSpacingChanged={onSectionAdded}
+            />
+          </div>
           <div className="flex-1 h-px bg-primary/40" />
         </div>
       </div>

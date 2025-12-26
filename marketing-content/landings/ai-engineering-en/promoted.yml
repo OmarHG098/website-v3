@@ -51,32 +51,10 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
-    trust_bar:
-      rating: "4.5"
-      review_count: Based on 1,294+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
-  - type: features_grid
-    version: "1.0"
-    variant: stats-text-card
-    title: Why AI Engineering Now
-    subtitle: The talent shortage is your opportunity
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    card_color: bg-background
-    items:
-      - value: 3.5M
-        title: AI-related roles expected by 2026
-      - value: 47%
-        title: Year-over-year growth in AI job postings
-      - value: $95K-$135K
-        title: Average starting salary for AI Engineers
   - type: awards_marquee
     version: "1.0"
+    paddingY: none
+    marginY: none
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -122,6 +100,22 @@ sections:
         logo: /attached_assets/fortune-logo_1764709618095.webp
         alt: Fortune - Best Education Company
         logoHeight: h-10 md:h-16
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text-card
+    title: Why AI Engineering Now
+    subtitle: The talent shortage is your opportunity
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    card_color: bg-background
+    items:
+      - value: 3.5M
+        title: AI-related roles expected by 2026
+      - value: 47%
+        title: Year-over-year growth in AI job postings
+      - value: $95K-$135K
+        title: Average starting salary for AI Engineers
+    marginY: none
+    paddingY: xl
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -238,6 +232,8 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
+    paddingY: none
+    marginY: none
   - type: ai_learning
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -373,6 +369,21 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
+  - type: bullet_tabs_showcase
+    version: "1.0"
+    heading: Ideate and specify what to build next
+    subheading: Transform your ideas into actionable tasks seamlessly
+    image_position: right
+    tabs:
+      - label: Collaborative documents
+        description: Work together on specifications and requirements in real-time
+        image_id: placeholder_career_guidance
+      - label: Inline comments
+        description: Add contextual feedback directly where it matters most
+        image_id: placeholder_mentorship
+      - label: Text-to-issue commands
+        description: Seamlessly move between ideation and execution
+        image_id: placeholder_strategies
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers

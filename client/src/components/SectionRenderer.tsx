@@ -1,6 +1,85 @@
-import { useCallback } from "react";
-import type { Section, EditOperation } from "@shared/schema";
+import type { CSSProperties } from "react";
+import { useCallback, useMemo } from "react";
+import type { Section, EditOperation, SectionLayout } from "@shared/schema";
 import { Hero } from "@/components/hero/Hero";
+
+// Spacing presets in pixels (top, bottom)
+const SPACING_PRESETS: Record<string, { top: string; bottom: string }> = {
+  none: { top: "0px", bottom: "0px" },
+  sm: { top: "16px", bottom: "16px" },
+  md: { top: "32px", bottom: "32px" },
+  lg: { top: "64px", bottom: "64px" },
+  xl: { top: "96px", bottom: "96px" },
+};
+
+// Parse spacing value - supports presets or custom CSS values
+// Returns null if no value provided (component handles its own spacing)
+function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
+  if (!value) return null;
+  
+  // Check if it's a preset
+  if (SPACING_PRESETS[value]) {
+    return SPACING_PRESETS[value];
+  }
+  
+  // Parse custom value (e.g., "20px 32px" or "20px")
+  const parts = value.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return { top: parts[0], bottom: parts[0] };
+  }
+  return { top: parts[0], bottom: parts[1] || parts[0] };
+}
+
+// Default spacing when YAML doesn't specify values
+// Using padding: none (components apply their own internal padding)
+// Using margin: lg for vertical spacing between sections
+const DEFAULT_PADDING = SPACING_PRESETS.none; // Components handle their own internal padding
+const DEFAULT_MARGIN = { top: "0px", bottom: "0px" }; // No margin by default (sections stack)
+
+// Semantic background tokens mapped to CSS variables
+const BACKGROUND_TOKENS: Record<string, string> = {
+  background: "hsl(var(--background))",
+  muted: "hsl(var(--muted))",
+  card: "hsl(var(--card))",
+  accent: "hsl(var(--accent))",
+  primary: "hsl(var(--primary))",
+  secondary: "hsl(var(--secondary))",
+  sidebar: "hsl(var(--sidebar-background))",
+  destructive: "hsl(var(--destructive))",
+};
+
+// Parse background value - supports semantic tokens or custom CSS
+function parseBackground(value: string | undefined): string | undefined {
+  if (!value || value === "inherit" || value === "none") return undefined;
+  
+  // Check if it's a semantic token
+  if (BACKGROUND_TOKENS[value]) {
+    return BACKGROUND_TOKENS[value];
+  }
+  
+  // Return as-is for custom values (gradients, colors, etc.)
+  return value;
+}
+
+// Get section layout styles - applies spacing from YAML or defaults
+// paddingY: Applied to wrapper (for sections that DON'T have internal content padding)
+// marginY: Applied to wrapper (for spacing between sections)
+// background: Applied to wrapper (semantic token or custom CSS)
+function getSectionLayoutStyles(section: Section): CSSProperties {
+  const layoutSection = section as SectionLayout;
+  
+  const padding = parseSpacing(layoutSection.paddingY) || DEFAULT_PADDING;
+  const margin = parseSpacing(layoutSection.marginY) || DEFAULT_MARGIN;
+  const background = parseBackground(layoutSection.background);
+  
+  return {
+    paddingTop: padding.top,
+    paddingBottom: padding.bottom,
+    marginTop: margin.top,
+    marginBottom: margin.bottom,
+    ...(background ? { background } : {}),
+  };
+}
 import { SyllabusSection } from "./SyllabusSection";
 import { ProjectsSection } from "./ProjectsSection";
 import { AILearningSection } from "./AILearningSection";
@@ -38,6 +117,7 @@ import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
+import { refreshContent } from "@/lib/contentRefresh";
 
 interface SectionRendererProps {
   sections: Section[];
@@ -201,6 +281,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved up" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
@@ -216,6 +297,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved down" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
@@ -235,6 +317,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section deleted" });
+      await refreshContent(contentType, slug, locale);
       onSectionAdded?.();
     } else {
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
@@ -245,6 +328,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     <>
       <AddSectionButton
         insertIndex={0}
+        sections={sections}
         contentType={contentType}
         slug={slug}
         locale={locale}
@@ -253,11 +337,12 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSection(section, index);
+        const layoutStyles = getSectionLayoutStyles(section);
         
         if (!renderedSection) return null;
         
         return (
-          <div key={index}>
+          <div key={index} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}
@@ -274,6 +359,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
             </EditableSection>
             <AddSectionButton
               insertIndex={index + 1}
+              sections={sections}
               contentType={contentType}
               slug={slug}
               locale={locale}

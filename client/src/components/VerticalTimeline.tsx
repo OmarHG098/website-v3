@@ -44,7 +44,7 @@ const getBulletIcon = (iconName: string, colorClass: string) => {
 export default function VerticalTimeline({ data }: VerticalTimelineProps) {
   return (
     <section 
-      className={`py-section ${data.background || "bg-muted/30"}`}
+      className={`${data.background || "bg-muted/30"}`}
       data-testid="section-vertical-timeline"
     >
       <div className="max-w-4xl mx-auto px-4">

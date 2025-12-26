@@ -29,7 +29,7 @@ export function TwoColumnAccordionCard({ data }: TwoColumnAccordionCardProps) {
   const { title, description, bullets, footer, image, image_alt, reverse } = data;
 
   return (
-    <section className="py-14" data-testid="section-two-column-accordion-card">
+    <section className="" data-testid="section-two-column-accordion-card">
       <div className="max-w-6xl mx-auto px-4">
         <Card className="overflow-hidden">
           <CardContent className="p-0">

@@ -65,7 +65,7 @@ export default function FeatureSection({
     };
 
     return (
-      <section className="container mx-auto px-4 py-section">
+      <section className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {heading && (
             <h2 className="text-h2 mb-4 hidden md:block lg:hidden">
@@ -164,7 +164,7 @@ export default function FeatureSection({
   }
 
   return (
-    <section className="container mx-auto px-4 py-section">
+    <section className="container mx-auto px-4">
       {title && (
         <h2 className="text-h2 text-center mb-12">{title}</h2>
       )}

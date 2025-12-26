@@ -176,7 +176,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
   return (
     <section 
-      className="py-section-lg bg-background overflow-hidden pt-16"
+      className="bg-background overflow-hidden"
       data-testid="section-whos-hiring-carousel"
     >
       <div className="bg-primary/5 py-4">

@@ -44,7 +44,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
   
   if (totalItems === 0) {
     return (
-      <section className="py-16 bg-background" data-testid="section-projects">
+      <section className="bg-background" data-testid="section-projects">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Projects section requires at least one project item
         </div>
@@ -70,7 +70,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
   return (
     <section 
-      className="py-16 bg-background"
+      className="bg-background"
       data-testid="section-projects"
     >
       <div className="max-w-6xl mx-auto px-4">
