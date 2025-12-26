@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
@@ -38,6 +38,73 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
+// Interpolation helper
+function lerp(start: number, end: number, progress: number): number {
+  return start + (end - start) * progress;
+}
+
+// Card position configurations
+const CARD_CONFIGS = {
+  farLeft: { translateX: -150, scale: 0.75, opacity: 0, zIndex: 5 },
+  left: { translateX: -75, scale: 0.88, opacity: 0.5, zIndex: 10 },
+  center: { translateX: 0, scale: 1, opacity: 1, zIndex: 30 },
+  right: { translateX: 75, scale: 0.88, opacity: 0.5, zIndex: 10 },
+  farRight: { translateX: 150, scale: 0.75, opacity: 0, zIndex: 5 },
+};
+
+type CardPosition = keyof typeof CARD_CONFIGS;
+
+// Get interpolated styles between two positions
+function getInterpolatedStyles(
+  fromPos: CardPosition,
+  toPos: CardPosition,
+  progress: number
+) {
+  const from = CARD_CONFIGS[fromPos];
+  const to = CARD_CONFIGS[toPos];
+  
+  return {
+    transform: `translateX(${lerp(from.translateX, to.translateX, progress)}%) scale(${lerp(from.scale, to.scale, progress)})`,
+    opacity: lerp(from.opacity, to.opacity, progress),
+    zIndex: progress > 0.5 ? to.zIndex : from.zIndex,
+  };
+}
+
+// Get card styles based on slot position and drag progress
+function getCardStyles(slotIndex: number, dragProgress: number) {
+  // slotIndex: -2 = farLeft, -1 = left, 0 = center, 1 = right, 2 = farRight
+  // dragProgress: negative = dragging left (right card coming in), positive = dragging right (left card coming in)
+  
+  const positions: CardPosition[] = ['farLeft', 'left', 'center', 'right', 'farRight'];
+  const baseIndex = slotIndex + 2; // Convert to 0-4 range
+  
+  if (dragProgress === 0) {
+    // At rest
+    return {
+      ...CARD_CONFIGS[positions[baseIndex]],
+      transform: `translateX(${CARD_CONFIGS[positions[baseIndex]].translateX}%) scale(${CARD_CONFIGS[positions[baseIndex]].scale})`,
+    };
+  }
+  
+  // During drag, interpolate toward next position
+  // Dragging left (negative) = cards move left, so each card moves toward the position to its left
+  // Dragging right (positive) = cards move right, so each card moves toward the position to its right
+  
+  const absProgress = Math.abs(dragProgress);
+  
+  if (dragProgress < 0) {
+    // Dragging left: cards shift left (right card becomes center, etc.)
+    const fromPos = positions[baseIndex];
+    const toPos = positions[Math.max(0, baseIndex - 1)];
+    return getInterpolatedStyles(fromPos, toPos, absProgress);
+  } else {
+    // Dragging right: cards shift right (left card becomes center, etc.)
+    const fromPos = positions[baseIndex];
+    const toPos = positions[Math.min(4, baseIndex + 1)];
+    return getInterpolatedStyles(fromPos, toPos, absProgress);
+  }
+}
+
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
     name: t.name,
@@ -57,8 +124,13 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
+  const [dragProgress, setDragProgress] = useState(0); // -1 to 1
+  const [isAnimating, setIsAnimating] = useState(false);
   const dragStartX = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const dragThreshold = 0.3; // 30% drag triggers transition
+  const cardWidth = 400; // Approximate width for drag calculation
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -67,6 +139,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
+
+  const getItemIndex = useCallback((offset: number) => {
+    return (activeIndex + offset + items.length) % items.length;
+  }, [activeIndex, items.length]);
 
   const goToIndex = useCallback((index: number) => {
     const newIndex = (index + items.length) % items.length;
@@ -81,16 +157,51 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     goToIndex(activeIndex - 1);
   }, [activeIndex, goToIndex]);
 
+  // Auto-advance
   useEffect(() => {
-    if (prefersReducedMotion || isPaused || items.length <= 1 || isDragging) return;
+    if (prefersReducedMotion || isPaused || items.length <= 1 || isDragging || isAnimating) return;
     
     const interval = setInterval(goToNext, 5000);
     return () => clearInterval(interval);
-  }, [prefersReducedMotion, isPaused, goToNext, items.length, isDragging]);
+  }, [prefersReducedMotion, isPaused, goToNext, items.length, isDragging, isAnimating]);
 
-  // Pointer/drag handlers
+  // Animate to complete or spring back
+  const animateTransition = useCallback((targetProgress: number, onComplete: () => void) => {
+    if (prefersReducedMotion) {
+      setDragProgress(targetProgress);
+      onComplete();
+      return;
+    }
+    
+    setIsAnimating(true);
+    const startProgress = dragProgress;
+    const startTime = performance.now();
+    const duration = 300;
+    
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      
+      const currentProgress = lerp(startProgress, targetProgress, eased);
+      setDragProgress(currentProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setDragProgress(0);
+        setIsAnimating(false);
+        onComplete();
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [dragProgress, prefersReducedMotion]);
+
+  // Pointer handlers
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (items.length <= 1) return;
+    if (items.length <= 1 || isAnimating) return;
     setIsDragging(true);
     setIsPaused(true);
     dragStartX.current = e.clientX;
@@ -98,35 +209,41 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || isAnimating) return;
     const diff = e.clientX - dragStartX.current;
-    // Limit drag offset for subtle feedback (max 50px)
-    const clampedDiff = Math.max(-50, Math.min(50, diff * 0.5));
-    setDragOffset(clampedDiff);
+    // Convert to progress (-1 to 1), negative = dragging left
+    const progress = Math.max(-1, Math.min(1, -diff / cardWidth));
+    setDragProgress(progress);
   };
 
   const handlePointerUp = () => {
     if (!isDragging) return;
-    
-    // Determine if we should snap to next/prev based on drag distance
-    const threshold = 30;
-    
-    if (dragOffset < -threshold) {
-      goToNext();
-    } else if (dragOffset > threshold) {
-      goToPrev();
-    }
-    
     setIsDragging(false);
-    setDragOffset(0);
-    setIsPaused(false);
-  };
-
-  const getCardIndex = (offset: number) => {
-    return (activeIndex + offset + items.length) % items.length;
+    
+    const absProgress = Math.abs(dragProgress);
+    
+    if (absProgress >= dragThreshold) {
+      // Complete the transition
+      const targetProgress = dragProgress < 0 ? -1 : 1;
+      animateTransition(targetProgress, () => {
+        if (dragProgress < 0) {
+          goToNext();
+        } else {
+          goToPrev();
+        }
+      });
+    } else {
+      // Spring back
+      animateTransition(0, () => {
+        setIsPaused(false);
+      });
+    }
   };
 
   if (items.length === 0) return null;
+
+  // Render 5 cards: -2, -1, 0, 1, 2 relative to active index
+  const cardSlots = [-2, -1, 0, 1, 2];
 
   return (
     <section 
@@ -169,9 +286,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
         {/* Carousel Container */}
         <div 
+          ref={containerRef}
           className={`relative h-[420px] md:h-[380px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          onMouseEnter={() => !isDragging && setIsPaused(true)}
-          onMouseLeave={() => !isDragging && setIsPaused(false)}
+          onMouseEnter={() => !isDragging && !isAnimating && setIsPaused(true)}
+          onMouseLeave={() => !isDragging && !isAnimating && setIsPaused(false)}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -179,37 +297,23 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           style={{ touchAction: 'pan-y pinch-zoom' }}
         >
           {/* Cards Container */}
-          <div className="relative h-full flex items-center justify-center overflow-visible select-none">
-            {/* Left Card */}
-            {items.length > 1 && (
-              <CarouselCard
-                testimonial={items[getCardIndex(-1)]}
-                position="left"
-                prefersReducedMotion={prefersReducedMotion}
-                dragOffset={dragOffset}
-                isDragging={isDragging}
-              />
-            )}
-
-            {/* Center Card */}
-            <CarouselCard
-              testimonial={items[activeIndex]}
-              position="center"
-              prefersReducedMotion={prefersReducedMotion}
-              dragOffset={dragOffset}
-              isDragging={isDragging}
-            />
-
-            {/* Right Card */}
-            {items.length > 2 && (
-              <CarouselCard
-                testimonial={items[getCardIndex(1)]}
-                position="right"
-                prefersReducedMotion={prefersReducedMotion}
-                dragOffset={dragOffset}
-                isDragging={isDragging}
-              />
-            )}
+          <div className="relative h-full flex items-center justify-center overflow-hidden select-none">
+            {cardSlots.map((slotOffset) => {
+              const itemIndex = getItemIndex(slotOffset);
+              const styles = getCardStyles(slotOffset, dragProgress);
+              
+              // Don't render cards that are completely invisible
+              if (styles.opacity <= 0) return null;
+              
+              return (
+                <CarouselCard
+                  key={`${slotOffset}-${itemIndex}`}
+                  testimonial={items[itemIndex]}
+                  styles={styles}
+                  isCenter={slotOffset === 0 && dragProgress === 0}
+                />
+              );
+            })}
           </div>
         </div>
 
@@ -218,7 +322,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           <DotsIndicator
             count={items.length}
             activeIndex={activeIndex}
-            onDotClick={goToIndex}
+            onDotClick={(index) => {
+              if (!isAnimating) goToIndex(index);
+            }}
             className="justify-center"
             ariaLabel="Testimonial navigation"
           />
@@ -230,45 +336,21 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
 export default TestimonialsSection;
 
-function CarouselCard({ 
-  testimonial, 
-  position,
-  prefersReducedMotion,
-  dragOffset,
-  isDragging
-}: { 
-  testimonial: TestimonialItem; 
-  position: "left" | "center" | "right";
-  prefersReducedMotion: boolean;
-  dragOffset: number;
-  isDragging: boolean;
-}) {
-  const isCenter = position === "center";
-  const isLeft = position === "left";
+interface CarouselCardProps {
+  testimonial: TestimonialItem;
+  styles: {
+    transform: string;
+    opacity: number;
+    zIndex: number;
+  };
+  isCenter: boolean;
+}
 
-  const positionStyles = useMemo(() => {
-    // Base positions
-    const baseTranslate = isCenter ? 0 : isLeft ? -75 : 75;
-    const baseScale = isCenter ? 1 : 0.88;
-    const baseOpacity = isCenter ? 1 : 0.5;
-    const zIndex = isCenter ? 30 : 10;
-
-    // Add drag offset to all cards for subtle movement feedback
-    const translateX = baseTranslate + (dragOffset * 0.15); // Subtle multiplier
-    
-    return {
-      transform: `translateX(${translateX}%) scale(${baseScale})`,
-      zIndex,
-      opacity: baseOpacity,
-    };
-  }, [isCenter, isLeft, dragOffset]);
-
+function CarouselCard({ testimonial, styles, isCenter }: CarouselCardProps) {
   return (
     <div
-      className={`absolute w-full max-w-md px-4 ${
-        prefersReducedMotion ? "" : isDragging ? "transition-none" : "transition-all duration-500 ease-out"
-      }`}
-      style={positionStyles}
+      className="absolute w-full max-w-md px-4"
+      style={styles}
     >
       <Card
         className={`border border-border ${
@@ -277,17 +359,16 @@ function CarouselCard({
             : ""
         }`}
       >
-        <CardContent className={`${isCenter ? "p-6" : "p-5"}`}>
+        <CardContent className="p-6">
           {/* Header with Avatar and Info */}
           <div className="flex items-center gap-3 mb-4">
-            {/* Monochrome Initials Badge */}
-            <div className={`${isCenter ? "w-12 h-12" : "w-10 h-10"} rounded-full bg-muted flex items-center justify-center flex-shrink-0`}>
-              <span className={`font-semibold text-muted-foreground ${isCenter ? "text-base" : "text-sm"}`}>
+            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+              <span className="font-semibold text-muted-foreground text-base">
                 {getInitials(testimonial.name)}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className={`font-semibold text-foreground truncate ${isCenter ? "text-base" : "text-sm"}`}>
+              <p className="font-semibold text-foreground truncate text-base">
                 {testimonial.name}
               </p>
               <p className="text-xs text-muted-foreground truncate">
@@ -301,19 +382,15 @@ function CarouselCard({
           <div className="flex items-center gap-1 mb-3">
             {Array.from({ length: 5 }).map((_, i) =>
               i < testimonial.rating ? (
-                <IconStarFilled key={i} className={`${isCenter ? "w-5 h-5" : "w-4 h-4"} text-yellow-500`} />
+                <IconStarFilled key={i} className="w-5 h-5 text-yellow-500" />
               ) : (
-                <IconStar key={i} className={`${isCenter ? "w-5 h-5" : "w-4 h-4"} text-muted`} />
+                <IconStar key={i} className="w-5 h-5 text-muted" />
               ),
             )}
           </div>
 
           {/* Review Text */}
-          <p className={`text-muted-foreground leading-relaxed ${
-            isCenter 
-              ? "text-sm line-clamp-6" 
-              : "text-xs line-clamp-3"
-          }`}>
+          <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5">
             {testimonial.comment}
           </p>
 
