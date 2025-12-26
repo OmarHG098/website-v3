@@ -103,7 +103,7 @@ export function CertificateDisplay({
 
   return (
     <div 
-      className="grid lg:grid-cols-2 gap-12 items-center bg-primary/5 rounded-3xl"
+      className="grid lg:grid-cols-2 gap-12 items-center bg-primary/5 rounded-3xl p-8 lg:p-12"
       data-testid="container-certificate-display"
     >
       {isCertificateLeft ? (
