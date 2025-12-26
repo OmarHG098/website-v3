@@ -36,20 +36,48 @@ function parseSpacing(value: string | undefined): { top: string; bottom: string 
 const DEFAULT_PADDING = SPACING_PRESETS.none; // Components handle their own internal padding
 const DEFAULT_MARGIN = { top: "0px", bottom: "0px" }; // No margin by default (sections stack)
 
+// Semantic background tokens mapped to CSS variables
+const BACKGROUND_TOKENS: Record<string, string> = {
+  background: "hsl(var(--background))",
+  muted: "hsl(var(--muted))",
+  card: "hsl(var(--card))",
+  accent: "hsl(var(--accent))",
+  primary: "hsl(var(--primary))",
+  secondary: "hsl(var(--secondary))",
+  sidebar: "hsl(var(--sidebar-background))",
+  destructive: "hsl(var(--destructive))",
+};
+
+// Parse background value - supports semantic tokens or custom CSS
+function parseBackground(value: string | undefined): string | undefined {
+  if (!value || value === "inherit" || value === "none") return undefined;
+  
+  // Check if it's a semantic token
+  if (BACKGROUND_TOKENS[value]) {
+    return BACKGROUND_TOKENS[value];
+  }
+  
+  // Return as-is for custom values (gradients, colors, etc.)
+  return value;
+}
+
 // Get section layout styles - applies spacing from YAML or defaults
 // paddingY: Applied to wrapper (for sections that DON'T have internal content padding)
 // marginY: Applied to wrapper (for spacing between sections)
+// background: Applied to wrapper (semantic token or custom CSS)
 function getSectionLayoutStyles(section: Section): CSSProperties {
   const layoutSection = section as SectionLayout;
   
   const padding = parseSpacing(layoutSection.paddingY) || DEFAULT_PADDING;
   const margin = parseSpacing(layoutSection.marginY) || DEFAULT_MARGIN;
+  const background = parseBackground(layoutSection.background);
   
   return {
     paddingTop: padding.top,
     paddingBottom: padding.bottom,
     marginTop: margin.top,
     marginBottom: margin.bottom,
+    ...(background ? { background } : {}),
   };
 }
 import { SyllabusSection } from "./SyllabusSection";

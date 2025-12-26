@@ -53,8 +53,8 @@ sections:
       icon: Download
   - type: awards_marquee
     version: "1.0"
-    paddingY: "sm"
-    marginY: "none"
+    paddingY: md
+    marginY: none
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -102,7 +102,7 @@ sections:
         logoHeight: h-10 md:h-16
   - type: features_grid
     version: "1.0"
-    paddingY: "48px 64px"
+    paddingY: xl
     variant: stats-text-card
     title: Why AI Engineering Now
     subtitle: The talent shortage is your opportunity
@@ -115,6 +115,7 @@ sections:
         title: Year-over-year growth in AI job postings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
+    marginY: none
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -231,6 +232,8 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
+    paddingY: none
+    marginY: none
   - type: ai_learning
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?

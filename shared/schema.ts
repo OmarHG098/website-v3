@@ -618,11 +618,13 @@ import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 
 
-// Layout spacing fields that can be applied to any section
+// Layout fields that can be applied to any section
 // Supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
+// background: semantic token (muted, card, etc.) or custom CSS value
 export const sectionLayoutSchema = z.object({
   marginY: z.string().optional(),
   paddingY: z.string().optional(),
+  background: z.string().optional(),
 });
 
 export type SectionLayout = z.infer<typeof sectionLayoutSchema>;

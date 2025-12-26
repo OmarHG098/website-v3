@@ -26,12 +26,23 @@ const SPACING_PRESETS = [
   { label: "XL", value: "xl" },
 ];
 
-async function updateSectionSpacing(
+const BACKGROUND_TOKENS = [
+  { label: "Inherit", value: "", cssVar: "" },
+  { label: "Background", value: "background", cssVar: "var(--background)" },
+  { label: "Muted", value: "muted", cssVar: "var(--muted)" },
+  { label: "Card", value: "card", cssVar: "var(--card)" },
+  { label: "Accent", value: "accent", cssVar: "var(--accent)" },
+  { label: "Primary", value: "primary", cssVar: "var(--primary)" },
+  { label: "Secondary", value: "secondary", cssVar: "var(--secondary)" },
+  { label: "Sidebar", value: "sidebar", cssVar: "var(--sidebar-background)" },
+];
+
+async function updateSectionField(
   contentType: string,
   slug: string,
   locale: string,
   sectionIndex: number,
-  field: "paddingY" | "marginY",
+  field: string,
   value: string
 ): Promise<{ success: boolean; error?: string }> {
   const token = getDebugToken();
@@ -57,12 +68,13 @@ async function updateSectionSpacing(
   return response.json();
 }
 
-function parseSpacingValue(section: Section | undefined): { paddingY: string; marginY: string } {
-  if (!section) return { paddingY: "", marginY: "" };
+function parseLayoutValue(section: Section | undefined): { paddingY: string; marginY: string; background: string } {
+  if (!section) return { paddingY: "", marginY: "", background: "" };
   const layout = section as SectionLayout;
   return {
     paddingY: layout.paddingY || "",
     marginY: layout.marginY || "",
+    background: layout.background || "",
   };
 }
 
@@ -106,6 +118,53 @@ function SpacingPresetButtons({
   );
 }
 
+function BackgroundPicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const isCustom = value && !BACKGROUND_TOKENS.some((t) => t.value === value);
+
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs text-muted-foreground">Background</Label>
+      <div className="flex flex-wrap items-center gap-1">
+        {BACKGROUND_TOKENS.map((token) => (
+          <button
+            key={token.value}
+            type="button"
+            onClick={() => onChange(token.value)}
+            className={`h-7 px-2 text-xs rounded-md border transition-all flex items-center gap-1.5 ${
+              value === token.value
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border hover:border-primary/50"
+            }`}
+            data-testid={`background-token-${token.value || "inherit"}`}
+          >
+            {token.cssVar && (
+              <span
+                className="w-3 h-3 rounded-sm border border-border/50"
+                style={{ background: `hsl(${token.cssVar})` }}
+              />
+            )}
+            <span>{token.label}</span>
+          </button>
+        ))}
+      </div>
+      <Input
+        type="text"
+        placeholder="Custom (e.g., linear-gradient(...))"
+        value={isCustom ? value : ""}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-7 text-xs px-2 mt-1"
+        data-testid="background-custom"
+      />
+    </div>
+  );
+}
+
 export function SpacingControlPopover({
   insertIndex,
   sections,
@@ -123,23 +182,27 @@ export function SpacingControlPopover({
   const sectionAbove = aboveIndex >= 0 ? sections[aboveIndex] : undefined;
   const sectionBelow = belowIndex < sections.length ? sections[belowIndex] : undefined;
 
-  const aboveSpacing = parseSpacingValue(sectionAbove);
-  const belowSpacing = parseSpacingValue(sectionBelow);
+  const aboveLayout = parseLayoutValue(sectionAbove);
+  const belowLayout = parseLayoutValue(sectionBelow);
 
-  const [abovePaddingY, setAbovePaddingY] = useState(aboveSpacing.paddingY);
-  const [aboveMarginY, setAboveMarginY] = useState(aboveSpacing.marginY);
-  const [belowPaddingY, setBelowPaddingY] = useState(belowSpacing.paddingY);
-  const [belowMarginY, setBelowMarginY] = useState(belowSpacing.marginY);
+  const [abovePaddingY, setAbovePaddingY] = useState(aboveLayout.paddingY);
+  const [aboveMarginY, setAboveMarginY] = useState(aboveLayout.marginY);
+  const [aboveBackground, setAboveBackground] = useState(aboveLayout.background);
+  const [belowPaddingY, setBelowPaddingY] = useState(belowLayout.paddingY);
+  const [belowMarginY, setBelowMarginY] = useState(belowLayout.marginY);
+  const [belowBackground, setBelowBackground] = useState(belowLayout.background);
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsOpen(open);
     if (open) {
-      const above = parseSpacingValue(sectionAbove);
-      const below = parseSpacingValue(sectionBelow);
+      const above = parseLayoutValue(sectionAbove);
+      const below = parseLayoutValue(sectionBelow);
       setAbovePaddingY(above.paddingY);
       setAboveMarginY(above.marginY);
+      setAboveBackground(above.background);
       setBelowPaddingY(below.paddingY);
       setBelowMarginY(below.marginY);
+      setBelowBackground(below.background);
     }
   }, [sectionAbove, sectionBelow]);
 
@@ -150,20 +213,26 @@ export function SpacingControlPopover({
     const operations: Promise<{ success: boolean; error?: string }>[] = [];
 
     if (sectionAbove) {
-      if (abovePaddingY !== aboveSpacing.paddingY) {
-        operations.push(updateSectionSpacing(contentType, slug, locale, aboveIndex, "paddingY", abovePaddingY));
+      if (abovePaddingY !== aboveLayout.paddingY) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "paddingY", abovePaddingY));
       }
-      if (aboveMarginY !== aboveSpacing.marginY) {
-        operations.push(updateSectionSpacing(contentType, slug, locale, aboveIndex, "marginY", aboveMarginY));
+      if (aboveMarginY !== aboveLayout.marginY) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "marginY", aboveMarginY));
+      }
+      if (aboveBackground !== aboveLayout.background) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "background", aboveBackground));
       }
     }
 
     if (sectionBelow) {
-      if (belowPaddingY !== belowSpacing.paddingY) {
-        operations.push(updateSectionSpacing(contentType, slug, locale, belowIndex, "paddingY", belowPaddingY));
+      if (belowPaddingY !== belowLayout.paddingY) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "paddingY", belowPaddingY));
       }
-      if (belowMarginY !== belowSpacing.marginY) {
-        operations.push(updateSectionSpacing(contentType, slug, locale, belowIndex, "marginY", belowMarginY));
+      if (belowMarginY !== belowLayout.marginY) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "marginY", belowMarginY));
+      }
+      if (belowBackground !== belowLayout.background) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "background", belowBackground));
       }
     }
 
@@ -172,18 +241,18 @@ export function SpacingControlPopover({
       const failed = results.filter((r) => !r.success);
       if (failed.length > 0) {
         toast({
-          title: "Failed to update spacing",
+          title: "Failed to update layout",
           description: failed[0].error,
           variant: "destructive",
         });
       } else if (operations.length > 0) {
-        toast({ title: "Spacing updated" });
+        toast({ title: "Layout updated" });
         onSpacingChanged?.();
       }
       setIsOpen(false);
     } catch (error) {
       toast({
-        title: "Error updating spacing",
+        title: "Error updating layout",
         description: String(error),
         variant: "destructive",
       });
@@ -200,10 +269,12 @@ export function SpacingControlPopover({
     belowIndex,
     abovePaddingY,
     aboveMarginY,
+    aboveBackground,
     belowPaddingY,
     belowMarginY,
-    aboveSpacing,
-    belowSpacing,
+    belowBackground,
+    aboveLayout,
+    belowLayout,
     toast,
     onSpacingChanged,
   ]);
@@ -220,20 +291,21 @@ export function SpacingControlPopover({
           data-testid={`button-spacing-${insertIndex}`}
         >
           <IconSpacingVertical className="h-4 w-4" />
-          <span className="text-xs font-medium">Spacing</span>
+          <span className="text-xs font-medium">Layout</span>
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="center">
+      <PopoverContent className="w-96 p-4" align="center">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="font-medium text-sm">Adjust Spacing</h4>
+            <h4 className="font-medium text-sm">Section Layout</h4>
             <Tooltip>
               <TooltipTrigger asChild>
                 <IconInfoCircle className="h-4 w-4 text-muted-foreground cursor-help" />
               </TooltipTrigger>
               <TooltipContent className="max-w-xs text-xs">
-                <p className="mb-1"><strong>Padding:</strong> Adds space inside the section (may break full-bleed backgrounds)</p>
-                <p><strong>Margin:</strong> Adds space outside the section (preserves backgrounds)</p>
+                <p className="mb-1"><strong>Padding:</strong> Space inside section (may inset content)</p>
+                <p className="mb-1"><strong>Margin:</strong> Space outside section (between sections)</p>
+                <p><strong>Background:</strong> Section background color or gradient</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -242,8 +314,12 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowUp className="h-3.5 w-3.5" />
-                <span>Section Above (Bottom)</span>
+                <span>Section Above</span>
               </div>
+              <BackgroundPicker
+                value={aboveBackground}
+                onChange={setAboveBackground}
+              />
               <SpacingPresetButtons
                 label="Padding Bottom"
                 value={abovePaddingY}
@@ -261,8 +337,12 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowDown className="h-3.5 w-3.5" />
-                <span>Section Below (Top)</span>
+                <span>Section Below</span>
               </div>
+              <BackgroundPicker
+                value={belowBackground}
+                onChange={setBelowBackground}
+              />
               <SpacingPresetButtons
                 label="Padding Top"
                 value={belowPaddingY}
