@@ -128,6 +128,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const [isAnimating, setIsAnimating] = useState(false);
   const dragStartX = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dragDirectionRef = useRef<'left' | 'right' | null>(null);
   
   const dragThreshold = 0.3; // 30% drag triggers transition
   const cardWidth = 400; // Approximate width for drag calculation
@@ -222,21 +223,25 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     setIsDragging(false);
     
     const absProgress = Math.abs(dragProgress);
-    const wasGoingLeft = dragProgress < 0; // Capture direction before animation
     
     if (absProgress >= dragThreshold) {
-      // Complete the transition
-      const targetProgress = wasGoingLeft ? -1 : 1;
+      // Store direction in ref before animation
+      dragDirectionRef.current = dragProgress < 0 ? 'left' : 'right';
+      const targetProgress = dragDirectionRef.current === 'left' ? -1 : 1;
+      
       animateTransition(targetProgress, () => {
-        if (wasGoingLeft) {
+        // Use ref to determine which way to go
+        if (dragDirectionRef.current === 'left') {
           goToNext();
         } else {
           goToPrev();
         }
+        dragDirectionRef.current = null;
         setIsPaused(false);
       });
     } else {
       // Spring back
+      dragDirectionRef.current = null;
       animateTransition(0, () => {
         setIsPaused(false);
       });
@@ -310,10 +315,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
               
               return (
                 <CarouselCard
-                  key={`${slotOffset}-${itemIndex}`}
+                  key={`slot-${slotOffset}`}
                   testimonial={items[itemIndex]}
                   styles={styles}
-                  isCenter={slotOffset === 0 && dragProgress === 0}
+                  isCenter={slotOffset === 0 && Math.abs(dragProgress) < 0.1}
                 />
               );
             })}
