@@ -461,7 +461,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   {data.program_title}
                 </h2>
                 {data.program_description && (
-                  <p className="text-muted-foreground mb-4" data-testid="text-syllabus-program-description">
+                  <p className="text-muted-foreground" data-testid="text-syllabus-program-description">
                     {data.program_description}
                   </p>
                 )}
