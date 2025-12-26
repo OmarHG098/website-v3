@@ -59,8 +59,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const dragStartX = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardWidth = 400; // Approximate card width for calculations
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -102,14 +100,16 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return;
     const diff = e.clientX - dragStartX.current;
-    setDragOffset(diff);
+    // Limit drag offset for subtle feedback (max 50px)
+    const clampedDiff = Math.max(-50, Math.min(50, diff * 0.5));
+    setDragOffset(clampedDiff);
   };
 
   const handlePointerUp = () => {
     if (!isDragging) return;
     
     // Determine if we should snap to next/prev based on drag distance
-    const threshold = cardWidth * 0.2; // 20% of card width triggers snap
+    const threshold = 30;
     
     if (dragOffset < -threshold) {
       goToNext();
@@ -127,9 +127,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   };
 
   if (items.length === 0) return null;
-
-  // Calculate drag progress as a fraction of card width (-1 to 1)
-  const dragProgress = isDragging ? Math.max(-1, Math.min(1, dragOffset / cardWidth)) : 0;
 
   return (
     <section 
@@ -172,7 +169,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
         {/* Carousel Container */}
         <div 
-          ref={containerRef}
           className={`relative h-[420px] md:h-[380px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           onMouseEnter={() => !isDragging && setIsPaused(true)}
           onMouseLeave={() => !isDragging && setIsPaused(false)}
@@ -190,7 +186,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                 testimonial={items[getCardIndex(-1)]}
                 position="left"
                 prefersReducedMotion={prefersReducedMotion}
-                dragProgress={dragProgress}
+                dragOffset={dragOffset}
                 isDragging={isDragging}
               />
             )}
@@ -200,7 +196,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
               testimonial={items[activeIndex]}
               position="center"
               prefersReducedMotion={prefersReducedMotion}
-              dragProgress={dragProgress}
+              dragOffset={dragOffset}
               isDragging={isDragging}
             />
 
@@ -210,7 +206,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                 testimonial={items[getCardIndex(1)]}
                 position="right"
                 prefersReducedMotion={prefersReducedMotion}
-                dragProgress={dragProgress}
+                dragOffset={dragOffset}
                 isDragging={isDragging}
               />
             )}
@@ -238,91 +234,45 @@ function CarouselCard({
   testimonial, 
   position,
   prefersReducedMotion,
-  dragProgress,
+  dragOffset,
   isDragging
 }: { 
   testimonial: TestimonialItem; 
   position: "left" | "center" | "right";
   prefersReducedMotion: boolean;
-  dragProgress: number;
+  dragOffset: number;
   isDragging: boolean;
 }) {
   const isCenter = position === "center";
   const isLeft = position === "left";
-  const isRight = position === "right";
 
   const positionStyles = useMemo(() => {
-    // Base positions (percentage of container)
-    const basePositions = {
-      left: -75,
-      center: 0,
-      right: 75
-    };
-    
-    const baseScales = {
-      left: 0.88,
-      center: 1,
-      right: 0.88
-    };
-    
-    const baseOpacity = {
-      left: 0.5,
-      center: 1,
-      right: 0.5
-    };
-    
-    const baseZ = {
-      left: 10,
-      center: 30,
-      right: 10
-    };
+    // Base positions
+    const baseTranslate = isCenter ? 0 : isLeft ? -75 : 75;
+    const baseScale = isCenter ? 1 : 0.88;
+    const baseOpacity = isCenter ? 1 : 0.5;
+    const zIndex = isCenter ? 30 : 10;
 
-    // Calculate interpolated values based on drag progress
-    // Dragging right (positive) moves cards right, dragging left (negative) moves cards left
-    const dragMultiplier = 75; // How much drag affects position
-    
-    let translateX = basePositions[position] + (dragProgress * dragMultiplier);
-    let scale = baseScales[position];
-    let opacity = baseOpacity[position];
-    let zIndex = baseZ[position];
-    
-    // Interpolate scale and opacity based on drag
-    if (isDragging) {
-      if (isCenter) {
-        // Center card shrinks as it moves away
-        const distanceFromCenter = Math.abs(dragProgress);
-        scale = 1 - (distanceFromCenter * 0.12);
-        opacity = 1 - (distanceFromCenter * 0.5);
-      } else if (isLeft && dragProgress > 0) {
-        // Left card grows as it moves toward center
-        scale = 0.88 + (dragProgress * 0.12);
-        opacity = 0.5 + (dragProgress * 0.5);
-        if (dragProgress > 0.5) zIndex = 35;
-      } else if (isRight && dragProgress < 0) {
-        // Right card grows as it moves toward center
-        scale = 0.88 + (Math.abs(dragProgress) * 0.12);
-        opacity = 0.5 + (Math.abs(dragProgress) * 0.5);
-        if (dragProgress < -0.5) zIndex = 35;
-      }
-    }
+    // Add drag offset to all cards for subtle movement feedback
+    const translateX = baseTranslate + (dragOffset * 0.15); // Subtle multiplier
     
     return {
-      transform: `translateX(${translateX}%) scale(${scale})`,
+      transform: `translateX(${translateX}%) scale(${baseScale})`,
       zIndex,
-      opacity: Math.max(0.3, Math.min(1, opacity)),
+      opacity: baseOpacity,
     };
-  }, [position, dragProgress, isDragging, isCenter, isLeft, isRight]);
+  }, [isCenter, isLeft, dragOffset]);
 
   return (
     <div
       className={`absolute w-full max-w-md px-4 ${
-        prefersReducedMotion || isDragging ? "" : "transition-all duration-500 ease-out"
+        prefersReducedMotion ? "" : isDragging ? "transition-none" : "transition-all duration-500 ease-out"
       }`}
       style={positionStyles}
     >
       <Card
         className={`border border-border ${
-          isCenter && !isDragging
+          isCenter 
             ? "shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)]" 
             : ""
         }`}
