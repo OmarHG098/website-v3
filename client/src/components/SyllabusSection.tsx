@@ -461,10 +461,16 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                   {data.program_title}
                 </h2>
                 {data.program_description && (
-                  <p className="text-muted-foreground" data-testid="text-syllabus-program-description">
+                  <p className="text-muted-foreground mb-4" data-testid="text-syllabus-program-description">
                     {data.program_description}
                   </p>
                 )}
+                <span 
+                  className="inline-block text-lg font-bold font-heading rounded-full bg-primary text-primary-foreground px-5 py-2"
+                  data-testid="text-syllabus-program-highlight"
+                >
+                  {data.program_highlight}
+                </span>
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
