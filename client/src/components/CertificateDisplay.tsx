@@ -108,7 +108,7 @@ export function CertificateDisplay({
     >
       {/* Background that only covers the text column height */}
       <div 
-        className="absolute inset-y-4 bg-primary/5 rounded-3xl pointer-events-none"
+        className="absolute inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
         style={{ 
           left: isCertificateLeft ? '0' : '0',
           right: '0'

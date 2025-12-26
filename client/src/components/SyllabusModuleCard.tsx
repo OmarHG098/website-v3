@@ -59,7 +59,7 @@ export function SyllabusModuleCard({
               {duration}
             </p>
             <div className="flex items-center gap-2 ">
-              <div className="flex items-center bg-accent px-2 py-1 gap-1 rounded">
+              <div className="flex items-center bg-primary/10 px-2 py-1 gap-1 rounded">
                 <IconComponent className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                 <h3 className="inline-block font-bold font-heading text-foreground">
                   {title}
