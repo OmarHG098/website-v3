@@ -14,21 +14,26 @@ interface AILearningSectionProps {
 interface HoverFeatureCardProps {
   feature: { icon: string; title: string; description: string };
   index: number;
-  isHovered: boolean;
+  isSelected: boolean;
+  isHovering: boolean;
   onHover: () => void;
   onLeave: () => void;
   isRigobot: boolean;
   getIcon: (iconName: string, isRigobot?: boolean) => JSX.Element | null;
 }
 
-function HoverFeatureCard({ feature, index, isHovered, onHover, onLeave, isRigobot, getIcon }: HoverFeatureCardProps) {
+function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onLeave, isRigobot, getIcon }: HoverFeatureCardProps) {
+  const isActive = isSelected || isHovering;
+  
   return (
     <Card 
       className={cn(
         "border-0 shadow-none cursor-pointer transition-all duration-300 ease-out",
-        isHovered 
-          ? "bg-primary/5 scale-105" 
-          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100 hover:bg-primary/5"
+        isHovering 
+          ? "bg-primary/5 scale-[1.03]" 
+          : isSelected
+            ? "bg-primary/5 scale-100"
+            : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100"
       )}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
@@ -38,7 +43,7 @@ function HoverFeatureCard({ feature, index, isHovered, onHover, onLeave, isRigob
         <div className="flex items-center gap-3">
           <div className={cn(
             "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
-            isHovered ? "bg-primary/20" : "bg-primary/10"
+            isActive ? "bg-primary/20" : "bg-primary/10"
           )}>
             {getIcon(feature.icon, isRigobot)}
           </div>
@@ -63,9 +68,10 @@ function extractYouTubeId(url: string): string | null {
 }
 
 export function AILearningSection({ data }: AILearningSectionProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const features = data.features || [];
-  const displayedFeature = hoveredIndex !== null ? features[hoveredIndex] : features[0];
+  const displayedFeature = features[selectedIndex];
 
   const getIcon = (iconName: string, isRigobot: boolean = false) => {
     if (isRigobot) {
@@ -115,9 +121,15 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 key={index}
                 feature={feature}
                 index={index}
-                isHovered={hoveredIndex === index}
-                onHover={() => setHoveredIndex(index)}
-                onLeave={() => setHoveredIndex(null)}
+                isSelected={selectedIndex === index}
+                isHovering={hoverIndex === index}
+                onHover={() => {
+                  setHoverIndex(index);
+                  setSelectedIndex(index);
+                }}
+                onLeave={() => {
+                  setHoverIndex(null);
+                }}
                 isRigobot={isRigobot}
                 getIcon={getIcon}
               />
