@@ -213,7 +213,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
         <Marquee
           speed={40}
-          pauseOnHover={true}
+          pauseOnHover={false}
           gradient={false}
           direction="left"
           autoFill={true}

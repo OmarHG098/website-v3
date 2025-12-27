@@ -13,6 +13,7 @@ export interface SyllabusModuleCardProps {
   icon?: string;
   className?: string;
   testId?: string;
+  hideExpandButton?: boolean;
 }
 
 export function SyllabusModuleCard({
@@ -25,6 +26,7 @@ export function SyllabusModuleCard({
   icon = "IconFlag",
   className,
   testId,
+  hideExpandButton = false,
 }: SyllabusModuleCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isVertical = orientation === "vertical";
@@ -77,7 +79,7 @@ export function SyllabusModuleCard({
             ))}
           </ul>
 
-          {hasMoreObjectives && (
+          {hasMoreObjectives && !hideExpandButton && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
               className="text-sm text-primary font-medium mb-4 flex items-center gap-1 hover:underline"
@@ -115,7 +117,7 @@ export function SyllabusModuleCard({
               {duration}
             </p>
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-accent px-2 py-1 gap-1 rounded">
+              <div className="flex items-center bg-primary/5 px-2 py-1 gap-1 rounded">
                 <IconComponent className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                 <h3 className="inline-block font-bold font-heading text-foreground">
                   {title}

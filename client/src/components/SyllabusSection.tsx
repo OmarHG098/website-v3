@@ -541,6 +541,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         orientation={isMobile ? "vertical" : (module.orientation ?? "vertical")}
                         icon={module.icon}
                         testId={`card-module-${index}`}
+                        hideExpandButton={index === 0}
                       />
                     </div>
                   </div>
