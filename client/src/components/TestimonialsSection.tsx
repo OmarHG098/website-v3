@@ -125,10 +125,12 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
   const [dragProgress, setDragProgress] = useState(0); // -1 to 1
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isAnimatingRef = useRef(false);
   const dragStartX = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragDirectionRef = useRef<'left' | 'right' | null>(null);
+  const pointerIdRef = useRef<number | null>(null);
+  const dragProgressRef = useRef(0); // Track progress in ref for animation
   
   const dragThreshold = 0.3; // 30% drag triggers transition
   const cardWidth = 400; // Approximate width for drag calculation
@@ -159,24 +161,30 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     goToIndex(activeIndex - 1);
   }, [activeIndex, goToIndex]);
 
+  // Keep ref in sync with state
+  useEffect(() => {
+    dragProgressRef.current = dragProgress;
+  }, [dragProgress]);
+
   // Auto-advance
   useEffect(() => {
-    if (prefersReducedMotion || isPaused || items.length <= 1 || isDragging || isAnimating) return;
+    if (prefersReducedMotion || isPaused || items.length <= 1 || isDragging || isAnimatingRef.current) return;
     
     const interval = setInterval(goToNext, 5000);
     return () => clearInterval(interval);
-  }, [prefersReducedMotion, isPaused, goToNext, items.length, isDragging, isAnimating]);
+  }, [prefersReducedMotion, isPaused, goToNext, items.length, isDragging]);
 
   // Animate to complete or spring back
   const animateTransition = useCallback((targetProgress: number, onComplete: () => void) => {
     if (prefersReducedMotion) {
       setDragProgress(targetProgress);
+      dragProgressRef.current = targetProgress;
       onComplete();
       return;
     }
     
-    setIsAnimating(true);
-    const startProgress = dragProgress;
+    isAnimatingRef.current = true;
+    const startProgress = dragProgressRef.current;
     const startTime = performance.now();
     const duration = 300;
     
@@ -188,45 +196,64 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       
       const currentProgress = lerp(startProgress, targetProgress, eased);
       setDragProgress(currentProgress);
+      dragProgressRef.current = currentProgress;
       
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
         setDragProgress(0);
-        setIsAnimating(false);
+        dragProgressRef.current = 0;
+        isAnimatingRef.current = false;
         onComplete();
       }
     };
     
     requestAnimationFrame(animate);
-  }, [dragProgress, prefersReducedMotion]);
+  }, [prefersReducedMotion]);
 
   // Pointer handlers
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (items.length <= 1 || isAnimating) return;
+    if (items.length <= 1 || isAnimatingRef.current) return;
+    
+    // Store pointer ID and capture
+    pointerIdRef.current = e.pointerId;
+    const target = e.currentTarget as HTMLElement;
+    target.setPointerCapture(e.pointerId);
+    
     setIsDragging(true);
     setIsPaused(true);
     dragStartX.current = e.clientX;
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || isAnimating) return;
+    if (!isDragging || isAnimatingRef.current) return;
     const diff = e.clientX - dragStartX.current;
     // Apply drag resistance and convert to progress (-1 to 1), negative = dragging left
     const progress = Math.max(-1, Math.min(1, (-diff * dragResistance) / cardWidth));
     setDragProgress(progress);
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e: React.PointerEvent) => {
     if (!isDragging) return;
+    
+    // Release pointer capture
+    if (pointerIdRef.current !== null) {
+      try {
+        (e.currentTarget as HTMLElement).releasePointerCapture(pointerIdRef.current);
+      } catch {
+        // Ignore if already released
+      }
+      pointerIdRef.current = null;
+    }
+    
     setIsDragging(false);
     
-    const absProgress = Math.abs(dragProgress);
+    const currentProgress = dragProgress;
+    const absProgress = Math.abs(currentProgress);
     
     if (absProgress >= dragThreshold) {
       // Store direction in ref before animation
-      dragDirectionRef.current = dragProgress < 0 ? 'left' : 'right';
+      dragDirectionRef.current = currentProgress < 0 ? 'left' : 'right';
       const targetProgress = dragDirectionRef.current === 'left' ? -1 : 1;
       
       animateTransition(targetProgress, () => {
@@ -296,8 +323,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         <div 
           ref={containerRef}
           className={`relative h-[420px] md:h-[380px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          onMouseEnter={() => !isDragging && !isAnimating && setIsPaused(true)}
-          onMouseLeave={() => !isDragging && !isAnimating && setIsPaused(false)}
+          onMouseEnter={() => !isDragging && !isAnimatingRef.current && setIsPaused(true)}
+          onMouseLeave={() => !isDragging && !isAnimatingRef.current && setIsPaused(false)}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -331,7 +358,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
             count={items.length}
             activeIndex={activeIndex}
             onDotClick={(index) => {
-              if (!isAnimating) goToIndex(index);
+              if (!isAnimatingRef.current) goToIndex(index);
             }}
             className="justify-center"
             ariaLabel="Testimonial navigation"
