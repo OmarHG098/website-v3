@@ -38,7 +38,7 @@ function getInitials(name: string): string {
 }
 
 const CARD_WIDTH = 380;
-const CARD_SPACING = 340; // Less overlap - more of side cards visible
+const CARD_SPACING = 330; // Side cards 10px more behind center
 const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.85; // Smaller side cards
 const SIDE_OPACITY = 0.5;
