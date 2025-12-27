@@ -40,6 +40,7 @@ function getInitials(name: string): string {
 const CARD_WIDTH = 380;
 const CARD_GAP = 24;
 const CARD_TOTAL = CARD_WIDTH + CARD_GAP;
+const DRAG_RESISTANCE = 0.4;
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
@@ -59,6 +60,11 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number }>>(new Map());
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
+
+  // Drag state
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const scrollStartRef = useRef(0);
 
   // Triple the items for infinite loop (before + original + after)
   const extendedItems = [...items, ...items, ...items];
@@ -105,7 +111,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     setCardTransforms(newTransforms);
   }, [extendedItems.length]);
 
-  const handleScroll = useCallback(() => {
+  const checkInfiniteLoop = useCallback(() => {
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
@@ -132,13 +138,90 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         updateCardTransforms();
       });
     }
+  }, [originalLength, updateCardTransforms]);
+
+  const handleScroll = useCallback(() => {
+    checkInfiniteLoop();
 
     // Update transforms on every scroll
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
     }
     rafRef.current = requestAnimationFrame(updateCardTransforms);
-  }, [originalLength, updateCardTransforms]);
+  }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Drag handlers
+  const handleDragStart = useCallback((clientX: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    isDraggingRef.current = true;
+    dragStartXRef.current = clientX;
+    scrollStartRef.current = container.scrollLeft;
+    container.style.cursor = 'grabbing';
+    container.style.userSelect = 'none';
+  }, []);
+
+  const handleDragMove = useCallback((clientX: number) => {
+    if (!isDraggingRef.current) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const deltaX = (dragStartXRef.current - clientX) * DRAG_RESISTANCE;
+    container.scrollLeft = scrollStartRef.current + deltaX;
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    isDraggingRef.current = false;
+    container.style.cursor = 'grab';
+    container.style.userSelect = '';
+
+    // Snap to nearest card
+    const containerCenter = container.clientWidth / 2;
+    const currentScroll = container.scrollLeft;
+    const centerCardIndex = Math.round((currentScroll + containerCenter - CARD_WIDTH / 2) / CARD_TOTAL);
+    const targetScroll = (centerCardIndex * CARD_TOTAL) - containerCenter + (CARD_WIDTH / 2);
+
+    container.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
+  }, []);
+
+  // Mouse events
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    handleDragStart(e.clientX);
+  }, [handleDragStart]);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    handleDragMove(e.clientX);
+  }, [handleDragMove]);
+
+  const handleMouseUp = useCallback(() => {
+    if (isDraggingRef.current) {
+      handleDragEnd();
+    }
+  }, [handleDragEnd]);
+
+  // Touch events
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragStart(touch.clientX);
+  }, [handleDragStart]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragMove(touch.clientX);
+  }, [handleDragMove]);
+
+  const handleTouchEnd = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
 
   // Initialize scroll position and transforms
   useEffect(() => {
@@ -148,27 +231,34 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     // Start in the middle set, centered on first card
     const initialScroll = (originalLength * CARD_TOTAL) + (container.clientWidth / 2) - (CARD_WIDTH / 2);
     container.scrollLeft = initialScroll;
+    container.style.cursor = 'grab';
 
     // Initial transform calculation
     requestAnimationFrame(updateCardTransforms);
   }, [items.length, originalLength, updateCardTransforms]);
 
-  // Set up scroll listener
+  // Set up scroll and global mouse listeners
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     container.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateCardTransforms);
+    
+    // Global mouse listeners for drag
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateCardTransforms);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp]);
 
   if (items.length === 0) return null;
 
@@ -225,18 +315,22 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
             className="absolute right-0 top-0 bottom-0 w-[200px] bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none"
           />
 
-          {/* Scrollable container */}
+          {/* Scrollable container with drag support */}
           <div
             ref={scrollContainerRef}
-            className="h-full overflow-x-auto scrollbar-hide"
+            className="h-full overflow-x-auto scrollbar-hide select-none"
             style={{ 
               WebkitOverflowScrolling: 'touch',
             }}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Cards track */}
             <div
               ref={contentRef}
-              className="h-full flex items-center"
+              className="h-full flex items-center pointer-events-none"
               style={{ 
                 width: `${totalWidth}px`,
                 gap: `${CARD_GAP}px`,
