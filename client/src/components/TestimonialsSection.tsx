@@ -38,8 +38,7 @@ function getInitials(name: string): string {
 }
 
 const CARD_WIDTH = 380;
-const CARD_GAP = 0; // No gap - cards overlap
-const CARD_TOTAL = CARD_WIDTH; // Cards positioned edge-to-edge
+const CARD_SPACING = 280; // Cards overlap - less than card width
 const DRAG_MULTIPLIER = 0.7;
 const SIDE_SCALE = 0.9;
 const SIDE_OPACITY = 0.5;
@@ -85,7 +84,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     let closestDistance = Infinity;
 
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - scrollLeft;
+      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
       const distance = Math.abs(cardCenterX - containerCenter);
       if (distance < closestDistance) {
         closestDistance = distance;
@@ -95,7 +94,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     // Apply transforms based on distance from the closest (center) card
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - scrollLeft;
+      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
       const indexDiff = Math.abs(index - closestIndex);
 
@@ -111,7 +110,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       } else if (indexDiff === 1) {
         // Immediate neighbors - side cards
         // Interpolate based on how close we are to becoming center
-        const t = Math.min(1, distanceFromCenter / CARD_TOTAL);
+        const t = Math.min(1, distanceFromCenter / CARD_SPACING);
         scale = 1 - (t * (1 - SIDE_SCALE));
         opacity = 1 - (t * (1 - SIDE_OPACITY));
         zIndex = 5;
@@ -134,7 +133,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const singleSetWidth = originalLength * CARD_TOTAL;
+    const singleSetWidth = originalLength * CARD_SPACING;
     const minScroll = singleSetWidth * 0.5;
     const maxScroll = singleSetWidth * 2;
 
@@ -208,7 +207,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     let closestDistance = Infinity;
 
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - currentScroll;
+      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - currentScroll;
       const distance = Math.abs(cardCenterX - containerCenter);
       if (distance < closestDistance) {
         closestDistance = distance;
@@ -217,7 +216,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     });
 
     // Calculate scroll position to center that card
-    const targetScroll = (closestIndex * CARD_TOTAL) + (CARD_WIDTH / 2) - containerCenter;
+    const targetScroll = (closestIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
     
     // Animate to target
     animateScrollTo(targetScroll, 250);
@@ -293,7 +292,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     // Start in the middle set, centered on first card
     const containerCenter = container.clientWidth / 2;
-    const initialScroll = (originalLength * CARD_TOTAL) + (CARD_WIDTH / 2) - containerCenter;
+    const initialScroll = (originalLength * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
     container.scrollLeft = initialScroll;
     container.style.cursor = 'grab';
 
@@ -323,7 +322,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   if (items.length === 0) return null;
 
-  const totalWidth = extendedItems.length * CARD_TOTAL;
+  const totalWidth = extendedItems.length * CARD_SPACING;
 
   return (
     <section 
@@ -385,23 +384,25 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Cards track - no gap, cards overlap */}
+            {/* Cards track - absolute positioning for overlap */}
             <div
-              className="h-full flex items-center"
+              className="h-full relative"
               style={{ 
-                width: `${totalWidth}px`,
+                width: `${totalWidth + CARD_WIDTH}px`,
               }}
             >
               {extendedItems.map((testimonial, index) => {
                 const transform = cardTransforms.get(index) || { scale: SIDE_SCALE, opacity: 0, zIndex: 1 };
+                const leftPosition = index * CARD_SPACING;
                 
                 return (
                   <div
                     key={index}
-                    className="flex-shrink-0 transition-transform duration-100 ease-out pointer-events-none"
+                    className="absolute top-1/2 transition-all duration-100 ease-out pointer-events-none"
                     style={{
                       width: `${CARD_WIDTH}px`,
-                      transform: `scale(${transform.scale})`,
+                      left: `${leftPosition}px`,
+                      transform: `translateY(-50%) scale(${transform.scale})`,
                       opacity: transform.opacity,
                       zIndex: transform.zIndex,
                       visibility: transform.opacity > 0 ? 'visible' : 'hidden',
