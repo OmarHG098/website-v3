@@ -325,7 +325,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center">
           {ratingSummary && (
             <div 
               className="flex items-center justify-center gap-2 mb-4"
@@ -423,7 +423,7 @@ interface TestimonialCardProps {
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
     <Card className="min-h-[270px] border border-border bg-card">
-      <CardContent className="p-6">
+      <CardContent className="p-6 h-full flex flex-col min-h-[270px]">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
@@ -454,13 +454,13 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         </div>
 
         {/* Review Text */}
-        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5">
+        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5 flex-1">
           {testimonial.comment}
         </p>
 
-        {/* Outcome Badge */}
+        {/* Outcome Badge - always at bottom */}
         {testimonial.outcome && (
-          <div className="pt-3 border-t mt-4">
+          <div className="pt-3 mt-auto">
             <Badge variant="secondary" className="text-xs">
               {testimonial.outcome}
             </Badge>
