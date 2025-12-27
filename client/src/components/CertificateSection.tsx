@@ -226,9 +226,8 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 }}
                 className={cn(
                   "text-center p-2 md:p-4 transition-all duration-brand ease-brand cursor-pointer",
-                  "hover:scale-105",
-                  hasInteracted && selectedStatIndex === index && "scale-110",
-                  hasInteracted && selectedStatIndex !== index && "opacity-50"
+                  hasInteracted && selectedStatIndex === index && "scale-[1.2] md:scale-[1.25]",
+                  hasInteracted && selectedStatIndex !== index && "hover:bg-muted/50 opacity-50"
                 )}
                 data-testid={`stat-${index}`}
               >
