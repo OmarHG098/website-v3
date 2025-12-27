@@ -1,51 +1,54 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { AILearningSection as AILearningSectionType } from "@shared/schema";
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
+import { cn } from "@/lib/utils";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
 }
 
-interface CollapsibleFeatureCardProps {
+interface SelectableFeatureCardProps {
   feature: { icon: string; title: string; description: string };
   index: number;
+  isSelected: boolean;
+  onSelect: () => void;
   isRigobot: boolean;
   getIcon: (iconName: string, isRigobot?: boolean) => JSX.Element | null;
 }
 
-function CollapsibleFeatureCard({ feature, index, isRigobot, getIcon }: CollapsibleFeatureCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+function SelectableFeatureCard({ feature, index, isSelected, onSelect, isRigobot, getIcon }: SelectableFeatureCardProps) {
   return (
     <Card 
-      className="bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-0 shadow-none"
+      className={cn(
+        "border-2 shadow-none cursor-pointer transition-all duration-200",
+        isSelected 
+          ? "bg-primary/10 border-primary" 
+          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-transparent hover:border-primary/30"
+      )}
+      onClick={onSelect}
       data-testid={`feature-ai-${index}`}
     >
       <CardContent className="p-4 md:p-6">
-        <div 
-          className="flex items-center gap-3 cursor-pointer md:cursor-default"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center gap-3">
+          <div className={cn(
+            "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
+            isSelected ? "bg-primary/20" : "bg-primary/10"
+          )}>
             {getIcon(feature.icon, isRigobot)}
           </div>
           <h3 className="font-semibold text-foreground flex-1">
             {feature.title}
           </h3>
-          <TablerIcons.IconChevronDown 
-            size={20} 
-            className={`md:hidden text-muted-foreground transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
-          />
-        </div>
-        <div className={`overflow-hidden transition-all duration-200 md:max-h-none md:opacity-100 md:mt-3 ${isExpanded ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
-          <p className="text-muted-foreground text-sm">
-            {feature.description}
-          </p>
+          {isSelected && (
+            <TablerIcons.IconCheck 
+              size={20} 
+              className="text-primary flex-shrink-0"
+            />
+          )}
         </div>
       </CardContent>
     </Card>
@@ -64,6 +67,10 @@ function extractYouTubeId(url: string): string | null {
 }
 
 export function AILearningSection({ data }: AILearningSectionProps) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const features = data.features || [];
+  const selectedFeature = features[selectedIndex];
+
   const getIcon = (iconName: string, isRigobot: boolean = false) => {
     if (isRigobot) {
       return (
@@ -103,14 +110,17 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-16">
-          {(data.features || []).slice(0, 3).map((feature, index) => {
+        {/* Selectable Feature Cards */}
+        <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-8">
+          {features.slice(0, 3).map((feature, index) => {
             const isRigobot = feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
-              <CollapsibleFeatureCard
+              <SelectableFeatureCard
                 key={index}
                 feature={feature}
                 index={index}
+                isSelected={index === selectedIndex}
+                onSelect={() => setSelectedIndex(index)}
                 isRigobot={isRigobot}
                 getIcon={getIcon}
               />
@@ -118,74 +128,115 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           })}
         </div>
 
-        {(data.highlight || videoId) && (
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {data.highlight && (
-              <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
-                    <img 
-                      src={rigobotLogo} 
-                      alt="Rigobot" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 
-                      className="text-h2 text-foreground mb-2"
-                      data-testid="text-highlight-title"
-                    >
-                      {data.highlight.title}
+        {/* Selected Feature Content */}
+        {selectedFeature && (
+          <Card 
+            className="bg-muted/30 border-0 shadow-card mb-16"
+            data-testid="selected-feature-content"
+          >
+            <CardContent className="p-6 md:p-8">
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      {getIcon(selectedFeature.icon, selectedFeature.title?.toLowerCase().includes('rigobot'))}
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                      {selectedFeature.title}
                     </h3>
                   </div>
+                  <p className="text-muted-foreground text-body leading-relaxed">
+                    {selectedFeature.description}
+                  </p>
                 </div>
                 
-                <p 
-                  className="mb-6 text-muted-foreground text-body"
-                  data-testid="text-highlight-description"
-                >
-                  {data.highlight.description}
-                </p>
-
-                {data.highlight.bullets && data.highlight.bullets.length > 0 && (
-                  <div className="flex flex-col justify-center gap-3 mb-6" data-testid="highlight-bullets">
-                    {data.highlight.bullets.map((bullet, idx) => (
-                      <div key={idx} className="flex items-center gap-3 ">
-                        <div className="flex items-center gap-2">
-                          <span className="text-primary flex-shrink-0">
-                            {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
-                          </span>
-                          <span className="text-muted-foreground">{bullet.text}</span>
-                        </div>
-                      </div>
-                    ))}
+                {videoId && (
+                  <div 
+                    className="relative aspect-video rounded-card overflow-hidden shadow-card"
+                    data-testid="video-container-ai"
+                  >
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      title="Learn with 4Geeks"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                      data-testid="iframe-youtube-video"
+                    />
                   </div>
                 )}
-                
-                {data.highlight.cta && (
-                  <Button
-                    variant={data.highlight.cta.variant === "primary" ? "default" : data.highlight.cta.variant === "outline" ? "outline" : "secondary"}
-                    asChild
-                    data-testid="button-highlight-cta"
-                  >
-                    <a href={data.highlight.cta.url}>{data.highlight.cta.text}</a>
-                  </Button>
-                )}
               </div>
-            )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Highlight Section (separate from selectable cards) */}
+        {data.highlight && (
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
+              <div className="flex items-start gap-4 mb-6">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
+                  <img 
+                    src={rigobotLogo} 
+                    alt="Rigobot" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 
+                    className="text-h2 text-foreground mb-2"
+                    data-testid="text-highlight-title"
+                  >
+                    {data.highlight.title}
+                  </h3>
+                </div>
+              </div>
+              
+              <p 
+                className="mb-6 text-muted-foreground text-body"
+                data-testid="text-highlight-description"
+              >
+                {data.highlight.description}
+              </p>
+
+              {data.highlight.bullets && data.highlight.bullets.length > 0 && (
+                <div className="flex flex-col justify-center gap-3 mb-6" data-testid="highlight-bullets">
+                  {data.highlight.bullets.map((bullet, idx) => (
+                    <div key={idx} className="flex items-center gap-3 ">
+                      <div className="flex items-center gap-2">
+                        <span className="text-primary flex-shrink-0">
+                          {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
+                        </span>
+                        <span className="text-muted-foreground">{bullet.text}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {data.highlight.cta && (
+                <Button
+                  variant={data.highlight.cta.variant === "primary" ? "default" : data.highlight.cta.variant === "outline" ? "outline" : "secondary"}
+                  asChild
+                  data-testid="button-highlight-cta"
+                >
+                  <a href={data.highlight.cta.url}>{data.highlight.cta.text}</a>
+                </Button>
+              )}
+            </div>
             
-            {videoId && (
+            {!videoId && data.video_url && (
               <div 
                 className={`relative aspect-video rounded-card overflow-hidden shadow-card ${data.video_position === "left" ? "lg:order-1" : ""}`}
-                data-testid="video-container-ai"
+                data-testid="video-container-highlight"
               >
                 <iframe
-                  src={`https://www.youtube.com/embed/${videoId}`}
+                  src={`https://www.youtube.com/embed/${extractYouTubeId(data.video_url)}`}
                   title="Learn with 4Geeks"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="absolute inset-0 w-full h-full"
-                  data-testid="iframe-youtube-video"
+                  data-testid="iframe-youtube-highlight"
                 />
               </div>
             )}
