@@ -38,8 +38,8 @@ function getInitials(name: string): string {
 }
 
 const CARD_WIDTH = 380;
-const CARD_SPACING = 280; // Cards overlap - less than card width
-const DRAG_MULTIPLIER = 0.7;
+const CARD_SPACING = 340; // Less overlap - more of side cards visible
+const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.9;
 const SIDE_OPACITY = 0.5;
 
@@ -79,43 +79,39 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
 
-    // Find the card closest to center first
-    let closestIndex = 0;
-    let closestDistance = Infinity;
-
-    extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
-      const distance = Math.abs(cardCenterX - containerCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    // Apply transforms based on distance from the closest (center) card
+    // Apply transforms based on continuous distance from center
+    // This creates smooth transitions as cards move
     extendedItems.forEach((_, index) => {
       const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
-      const indexDiff = Math.abs(index - closestIndex);
+      
+      // Normalize distance: 0 = centered, 1 = one card away, 2 = two cards away
+      const normalizedDist = distanceFromCenter / CARD_SPACING;
 
       let scale: number;
       let opacity: number;
       let zIndex: number;
 
-      if (index === closestIndex) {
-        // Center card - always full scale/opacity
-        scale = 1;
-        opacity = 1;
+      if (normalizedDist < 0.5) {
+        // Center zone - full scale/opacity, smoothly transition at edges
+        const t = normalizedDist * 2; // 0 to 1 within center zone
+        scale = 1 - (t * 0.02); // Slight scale reduction as moving away
+        opacity = 1 - (t * 0.1); // Slight opacity reduction
         zIndex = 10;
-      } else if (indexDiff === 1) {
-        // Immediate neighbors - side cards
-        // Interpolate based on how close we are to becoming center
-        const t = Math.min(1, distanceFromCenter / CARD_SPACING);
-        scale = 1 - (t * (1 - SIDE_SCALE));
-        opacity = 1 - (t * (1 - SIDE_OPACITY));
+      } else if (normalizedDist < 1.5) {
+        // Side card zone - interpolate from center to side style
+        const t = (normalizedDist - 0.5); // 0 to 1 within side zone
+        scale = 1 - (0.02 + t * (1 - SIDE_SCALE - 0.02));
+        opacity = 0.9 - (t * (0.9 - SIDE_OPACITY));
         zIndex = 5;
+      } else if (normalizedDist < 2.5) {
+        // Outer zone - fade out completely
+        const t = (normalizedDist - 1.5); // 0 to 1
+        scale = SIDE_SCALE;
+        opacity = SIDE_OPACITY * (1 - t);
+        zIndex = 1;
       } else {
-        // All other cards - hidden
+        // Hidden
         scale = SIDE_SCALE;
         opacity = 0;
         zIndex = 1;
