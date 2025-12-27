@@ -231,7 +231,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-stat font-bold text-primary mb-1">
+                <div className="text-2xl md:text-3xl lg:text-h2 font-bold font-heading text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
                 <div className="text-sm md:text-sm text-muted-foreground">

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
+import { DotsIndicator } from "@/components/DotsIndicator";
 
 interface LegacyTestimonial {
   id: string;
@@ -58,6 +59,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
+  const [activeIndex, setActiveIndex] = useState(0);
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
 
@@ -78,12 +80,22 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const scrollLeft = container.scrollLeft;
 
     const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
+    
+    // Track closest card to center
+    let closestIndex = 0;
+    let closestDistance = Infinity;
 
     // Apply transforms based on continuous distance from center
     // Smooth linear interpolation - no sudden jumps
     extendedItems.forEach((_, index) => {
       const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
+      
+      // Track closest card
+      if (distanceFromCenter < closestDistance) {
+        closestDistance = distanceFromCenter;
+        closestIndex = index;
+      }
       
       // Normalize distance: 0 = centered, 1 = one card away
       const normalizedDist = distanceFromCenter / CARD_SPACING;
@@ -120,7 +132,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     });
 
     setCardTransforms(newTransforms);
-  }, [extendedItems.length]);
+    
+    // Update active index (modulo to get original item index)
+    setActiveIndex(closestIndex % originalLength);
+  }, [extendedItems.length, originalLength]);
 
   const checkInfiniteLoop = useCallback(() => {
     if (isResettingRef.current) return;
@@ -188,6 +203,19 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     requestAnimationFrame(animate);
   }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Navigate to specific card by original index
+  const navigateToCard = useCallback((targetOriginalIndex: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.clientWidth / 2;
+    // Use middle set for navigation (index in range [originalLength, originalLength*2))
+    const targetExtendedIndex = originalLength + targetOriginalIndex;
+    const targetScroll = (targetExtendedIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    
+    animateScrollTo(targetScroll, 300);
+  }, [originalLength, animateScrollTo]);
 
   // Snap to nearest card center
   const snapToNearestCard = useCallback(() => {
@@ -422,6 +450,16 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
               })}
             </div>
           </div>
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="mt-6">
+          <DotsIndicator
+            count={originalLength}
+            activeIndex={activeIndex}
+            onDotClick={navigateToCard}
+            ariaLabel="Testimonial navigation"
+          />
         </div>
       </div>
     </section>

@@ -11,44 +11,40 @@ interface AILearningSectionProps {
   data: AILearningSectionType;
 }
 
-interface SelectableFeatureCardProps {
+interface HoverFeatureCardProps {
   feature: { icon: string; title: string; description: string };
   index: number;
-  isSelected: boolean;
-  onSelect: () => void;
+  isHovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
   isRigobot: boolean;
   getIcon: (iconName: string, isRigobot?: boolean) => JSX.Element | null;
 }
 
-function SelectableFeatureCard({ feature, index, isSelected, onSelect, isRigobot, getIcon }: SelectableFeatureCardProps) {
+function HoverFeatureCard({ feature, index, isHovered, onHover, onLeave, isRigobot, getIcon }: HoverFeatureCardProps) {
   return (
     <Card 
       className={cn(
-        "border-2 shadow-none cursor-pointer transition-all duration-200",
-        isSelected 
-          ? "bg-primary/10 border-primary" 
-          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] border-transparent hover:border-primary/30"
+        "border-0 shadow-none cursor-pointer transition-all duration-300 ease-out",
+        isHovered 
+          ? "bg-primary/5 scale-105" 
+          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100 hover:bg-primary/5"
       )}
-      onClick={onSelect}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       data-testid={`feature-ai-${index}`}
     >
       <CardContent className="p-4 md:p-6">
         <div className="flex items-center gap-3">
           <div className={cn(
             "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
-            isSelected ? "bg-primary/20" : "bg-primary/10"
+            isHovered ? "bg-primary/20" : "bg-primary/10"
           )}>
             {getIcon(feature.icon, isRigobot)}
           </div>
           <h3 className="font-semibold text-foreground flex-1">
             {feature.title}
           </h3>
-          {isSelected && (
-            <TablerIcons.IconCheck 
-              size={20} 
-              className="text-primary flex-shrink-0"
-            />
-          )}
         </div>
       </CardContent>
     </Card>
@@ -67,9 +63,9 @@ function extractYouTubeId(url: string): string | null {
 }
 
 export function AILearningSection({ data }: AILearningSectionProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const features = data.features || [];
-  const selectedFeature = features[selectedIndex];
+  const displayedFeature = hoveredIndex !== null ? features[hoveredIndex] : features[0];
 
   const getIcon = (iconName: string, isRigobot: boolean = false) => {
     if (isRigobot) {
@@ -110,17 +106,18 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </p>
         </div>
 
-        {/* Selectable Feature Cards */}
+        {/* Hover Feature Cards */}
         <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-8">
           {features.slice(0, 3).map((feature, index) => {
             const isRigobot = feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
-              <SelectableFeatureCard
+              <HoverFeatureCard
                 key={index}
                 feature={feature}
                 index={index}
-                isSelected={index === selectedIndex}
-                onSelect={() => setSelectedIndex(index)}
+                isHovered={hoveredIndex === index}
+                onHover={() => setHoveredIndex(index)}
+                onLeave={() => setHoveredIndex(null)}
                 isRigobot={isRigobot}
                 getIcon={getIcon}
               />
@@ -128,10 +125,10 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           })}
         </div>
 
-        {/* Selected Feature Content */}
-        {selectedFeature && (
+        {/* Displayed Feature Content */}
+        {displayedFeature && (
           <Card 
-            className="bg-muted/30 border-0 shadow-card mb-16"
+            className="bg-muted/30 border-0 shadow-card mb-16 transition-all duration-300"
             data-testid="selected-feature-content"
           >
             <CardContent className="p-6 md:p-8">
@@ -139,14 +136,14 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {getIcon(selectedFeature.icon, selectedFeature.title?.toLowerCase().includes('rigobot'))}
+                      {getIcon(displayedFeature.icon, displayedFeature.title?.toLowerCase().includes('rigobot'))}
                     </div>
                     <h3 className="text-xl md:text-2xl font-bold text-foreground">
-                      {selectedFeature.title}
+                      {displayedFeature.title}
                     </h3>
                   </div>
                   <p className="text-muted-foreground text-body leading-relaxed">
-                    {selectedFeature.description}
+                    {displayedFeature.description}
                   </p>
                 </div>
                 
@@ -170,7 +167,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
           </Card>
         )}
 
-        {/* Highlight Section (separate from selectable cards) */}
+        {/* Highlight Section (separate from hover cards) */}
         {data.highlight && (
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
