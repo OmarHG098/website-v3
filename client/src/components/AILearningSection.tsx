@@ -29,11 +29,9 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
     <Card 
       className={cn(
         "border-0 shadow-none cursor-pointer transition-all duration-300 ease-out",
-        isHovering 
-          ? "bg-primary/5 scale-[1.08]" 
-          : isSelected
-            ? "bg-primary/5 scale-[1.05]"
-            : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100"
+        isSelected
+          ? "bg-primary/5 scale-[1.10]"
+          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100"
       )}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
