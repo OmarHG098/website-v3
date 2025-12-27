@@ -40,7 +40,7 @@ function getInitials(name: string): string {
 const CARD_WIDTH = 380;
 const CARD_SPACING = 340; // Less overlap - more of side cards visible
 const DRAG_MULTIPLIER = 0.5; // Slower drag
-const SIDE_SCALE = 0.9;
+const SIDE_SCALE = 0.85; // Smaller side cards
 const SIDE_OPACITY = 0.5;
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
@@ -80,35 +80,34 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
 
     // Apply transforms based on continuous distance from center
-    // This creates smooth transitions as cards move
+    // Smooth linear interpolation - no sudden jumps
     extendedItems.forEach((_, index) => {
       const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
       
-      // Normalize distance: 0 = centered, 1 = one card away, 2 = two cards away
+      // Normalize distance: 0 = centered, 1 = one card away
       const normalizedDist = distanceFromCenter / CARD_SPACING;
 
       let scale: number;
       let opacity: number;
       let zIndex: number;
 
-      if (normalizedDist < 0.5) {
-        // Center zone - full scale/opacity, smoothly transition at edges
-        const t = normalizedDist * 2; // 0 to 1 within center zone
-        scale = 1 - (t * 0.02); // Slight scale reduction as moving away
-        opacity = 1 - (t * 0.1); // Slight opacity reduction
-        zIndex = 10;
-      } else if (normalizedDist < 1.5) {
-        // Side card zone - interpolate from center to side style
-        const t = (normalizedDist - 0.5); // 0 to 1 within side zone
-        scale = 1 - (0.02 + t * (1 - SIDE_SCALE - 0.02));
-        opacity = 0.9 - (t * (0.9 - SIDE_OPACITY));
-        zIndex = 5;
-      } else if (normalizedDist < 2.5) {
-        // Outer zone - fade out completely
-        const t = (normalizedDist - 1.5); // 0 to 1
+      // Smooth continuous interpolation based on distance
+      // Center card (dist ~0): scale 1, opacity 1
+      // Side cards (dist ~1): scale 0.85, opacity 0.5
+      // Hidden (dist > 1.5): opacity 0
+      
+      if (normalizedDist <= 1) {
+        // Smoothly interpolate from center to side
+        scale = 1 - (normalizedDist * (1 - SIDE_SCALE));
+        opacity = 1 - (normalizedDist * (1 - SIDE_OPACITY));
+        // Z-index based on proximity - closer = higher
+        zIndex = Math.round(10 - normalizedDist * 5);
+      } else if (normalizedDist <= 2) {
+        // Fade out zone
+        const fadeProgress = normalizedDist - 1; // 0 to 1
         scale = SIDE_SCALE;
-        opacity = SIDE_OPACITY * (1 - t);
+        opacity = SIDE_OPACITY * (1 - fadeProgress);
         zIndex = 1;
       } else {
         // Hidden
@@ -424,7 +423,7 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="h-full border border-border bg-card">
+    <Card className="min-h-[270px] border border-border bg-card">
       <CardContent className="p-6">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
