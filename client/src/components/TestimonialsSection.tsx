@@ -393,14 +393,13 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                 return (
                   <div
                     key={index}
-                    className="absolute top-1/2 transition-all duration-100 ease-out pointer-events-none"
+                    className="absolute top-1/2 pointer-events-none"
                     style={{
                       width: `${CARD_WIDTH}px`,
                       left: `${leftPosition}px`,
                       transform: `translateY(-50%) scale(${transform.scale})`,
                       opacity: transform.opacity,
                       zIndex: transform.zIndex,
-                      visibility: transform.opacity > 0 ? 'visible' : 'hidden',
                     }}
                   >
                     <TestimonialCard testimonial={testimonial} />
