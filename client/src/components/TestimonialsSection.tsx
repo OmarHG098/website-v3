@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
-import { DotsIndicator } from "@/components/DotsIndicator";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
 
 interface LegacyTestimonial {
@@ -38,73 +37,6 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-// Interpolation helper
-function lerp(start: number, end: number, progress: number): number {
-  return start + (end - start) * progress;
-}
-
-// Card position configurations
-const CARD_CONFIGS = {
-  farLeft: { translateX: -150, scale: 0.75, opacity: 0, zIndex: 5 },
-  left: { translateX: -75, scale: 0.88, opacity: 0.5, zIndex: 10 },
-  center: { translateX: 0, scale: 1, opacity: 1, zIndex: 30 },
-  right: { translateX: 75, scale: 0.88, opacity: 0.5, zIndex: 10 },
-  farRight: { translateX: 150, scale: 0.75, opacity: 0, zIndex: 5 },
-};
-
-type CardPosition = keyof typeof CARD_CONFIGS;
-
-// Get interpolated styles between two positions
-function getInterpolatedStyles(
-  fromPos: CardPosition,
-  toPos: CardPosition,
-  progress: number
-) {
-  const from = CARD_CONFIGS[fromPos];
-  const to = CARD_CONFIGS[toPos];
-  
-  return {
-    transform: `translateX(${lerp(from.translateX, to.translateX, progress)}%) scale(${lerp(from.scale, to.scale, progress)})`,
-    opacity: lerp(from.opacity, to.opacity, progress),
-    zIndex: progress > 0.5 ? to.zIndex : from.zIndex,
-  };
-}
-
-// Get card styles based on slot position and drag progress
-function getCardStyles(slotIndex: number, dragProgress: number) {
-  // slotIndex: -2 = farLeft, -1 = left, 0 = center, 1 = right, 2 = farRight
-  // dragProgress: negative = dragging left (right card coming in), positive = dragging right (left card coming in)
-  
-  const positions: CardPosition[] = ['farLeft', 'left', 'center', 'right', 'farRight'];
-  const baseIndex = slotIndex + 2; // Convert to 0-4 range
-  
-  if (dragProgress === 0) {
-    // At rest
-    return {
-      ...CARD_CONFIGS[positions[baseIndex]],
-      transform: `translateX(${CARD_CONFIGS[positions[baseIndex]].translateX}%) scale(${CARD_CONFIGS[positions[baseIndex]].scale})`,
-    };
-  }
-  
-  // During drag, interpolate toward next position
-  // Dragging left (negative) = cards move left, so each card moves toward the position to its left
-  // Dragging right (positive) = cards move right, so each card moves toward the position to its right
-  
-  const absProgress = Math.abs(dragProgress);
-  
-  if (dragProgress < 0) {
-    // Dragging left: cards shift left (right card becomes center, etc.)
-    const fromPos = positions[baseIndex];
-    const toPos = positions[Math.max(0, baseIndex - 1)];
-    return getInterpolatedStyles(fromPos, toPos, absProgress);
-  } else {
-    // Dragging right: cards shift right (left card becomes center, etc.)
-    const fromPos = positions[baseIndex];
-    const toPos = positions[Math.min(4, baseIndex + 1)];
-    return getInterpolatedStyles(fromPos, toPos, absProgress);
-  }
-}
-
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
     name: t.name,
@@ -118,167 +50,35 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const subtitle = data?.subtitle;
   const ratingSummary = data?.rating_summary;
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  
-  // Drag state
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragProgress, setDragProgress] = useState(0); // -1 to 1
-  const isAnimatingRef = useRef(false);
-  const dragStartX = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dragDirectionRef = useRef<'left' | 'right' | null>(null);
-  const pointerIdRef = useRef<number | null>(null);
-  const dragProgressRef = useRef(0); // Track progress in ref for animation
-  
-  const dragThreshold = 0.3; // 30% drag triggers transition
-  const cardWidth = 400; // Approximate width for drag calculation
-  const dragResistance = 0.4; // Drag resistance multiplier (lower = more resistance)
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
+  const checkScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    setCanScrollLeft(container.scrollLeft > 10);
+    setCanScrollRight(
+      container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+    );
   }, []);
 
-  const getItemIndex = useCallback((offset: number) => {
-    return (activeIndex + offset + items.length) % items.length;
-  }, [activeIndex, items.length]);
-
-  const goToIndex = useCallback((index: number) => {
-    const newIndex = (index + items.length) % items.length;
-    setActiveIndex(newIndex);
-  }, [items.length]);
-
-  const goToNext = useCallback(() => {
-    goToIndex(activeIndex + 1);
-  }, [activeIndex, goToIndex]);
-
-  const goToPrev = useCallback(() => {
-    goToIndex(activeIndex - 1);
-  }, [activeIndex, goToIndex]);
-
-  // Keep ref in sync with state
   useEffect(() => {
-    dragProgressRef.current = dragProgress;
-  }, [dragProgress]);
-
-  // Auto-advance
-  useEffect(() => {
-    if (prefersReducedMotion || isPaused || items.length <= 1 || isDragging || isAnimatingRef.current) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
     
-    const interval = setInterval(goToNext, 5000);
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion, isPaused, goToNext, items.length, isDragging]);
-
-  // Animate to complete or spring back
-  const animateTransition = useCallback((targetProgress: number, onComplete: () => void) => {
-    if (prefersReducedMotion) {
-      setDragProgress(targetProgress);
-      dragProgressRef.current = targetProgress;
-      onComplete();
-      return;
-    }
+    checkScroll();
+    container.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll);
     
-    isAnimatingRef.current = true;
-    const startProgress = dragProgressRef.current;
-    const startTime = performance.now();
-    const duration = 300;
-    
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      
-      const currentProgress = lerp(startProgress, targetProgress, eased);
-      setDragProgress(currentProgress);
-      dragProgressRef.current = currentProgress;
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setDragProgress(0);
-        dragProgressRef.current = 0;
-        isAnimatingRef.current = false;
-        onComplete();
-      }
+    return () => {
+      container.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
     };
-    
-    requestAnimationFrame(animate);
-  }, [prefersReducedMotion]);
-
-  // Pointer handlers
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (items.length <= 1 || isAnimatingRef.current) return;
-    
-    // Store pointer ID and capture
-    pointerIdRef.current = e.pointerId;
-    const target = e.currentTarget as HTMLElement;
-    target.setPointerCapture(e.pointerId);
-    
-    setIsDragging(true);
-    setIsPaused(true);
-    dragStartX.current = e.clientX;
-  };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || isAnimatingRef.current) return;
-    const diff = e.clientX - dragStartX.current;
-    // Apply drag resistance and convert to progress (-1 to 1), negative = dragging left
-    const progress = Math.max(-1, Math.min(1, (-diff * dragResistance) / cardWidth));
-    setDragProgress(progress);
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isDragging) return;
-    
-    // Release pointer capture
-    if (pointerIdRef.current !== null) {
-      try {
-        (e.currentTarget as HTMLElement).releasePointerCapture(pointerIdRef.current);
-      } catch {
-        // Ignore if already released
-      }
-      pointerIdRef.current = null;
-    }
-    
-    setIsDragging(false);
-    
-    const currentProgress = dragProgress;
-    const absProgress = Math.abs(currentProgress);
-    
-    if (absProgress >= dragThreshold) {
-      // Store direction in ref before animation
-      dragDirectionRef.current = currentProgress < 0 ? 'left' : 'right';
-      const targetProgress = dragDirectionRef.current === 'left' ? -1 : 1;
-      
-      animateTransition(targetProgress, () => {
-        // Use ref to determine which way to go
-        if (dragDirectionRef.current === 'left') {
-          goToNext();
-        } else {
-          goToPrev();
-        }
-        dragDirectionRef.current = null;
-        setIsPaused(false);
-      });
-    } else {
-      // Spring back
-      dragDirectionRef.current = null;
-      animateTransition(0, () => {
-        setIsPaused(false);
-      });
-    }
-  };
+  }, [checkScroll]);
 
   if (items.length === 0) return null;
-
-  // Render 5 cards: -2, -1, 0, 1, 2 relative to active index
-  const cardSlots = [-2, -1, 0, 1, 2];
 
   return (
     <section 
@@ -319,50 +119,46 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           )}
         </div>
 
-        {/* Carousel Container */}
-        <div 
-          ref={containerRef}
-          className={`relative h-[420px] md:h-[380px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          onMouseEnter={() => !isDragging && !isAnimatingRef.current && setIsPaused(true)}
-          onMouseLeave={() => !isDragging && !isAnimatingRef.current && setIsPaused(false)}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-          style={{ touchAction: 'pan-y pinch-zoom' }}
-        >
-          {/* Cards Container */}
-          <div className="relative h-full flex items-center justify-center overflow-hidden select-none">
-            {cardSlots.map((slotOffset) => {
-              const itemIndex = getItemIndex(slotOffset);
-              const styles = getCardStyles(slotOffset, dragProgress);
-              
-              // Don't render cards that are completely invisible
-              if (styles.opacity <= 0) return null;
-              
-              return (
-                <CarouselCard
-                  key={`slot-${slotOffset}`}
-                  testimonial={items[itemIndex]}
-                  styles={styles}
-                  isCenter={slotOffset === 0 && Math.abs(dragProgress) < 0.1}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Dots Indicator */}
-        <div className="mt-8">
-          <DotsIndicator
-            count={items.length}
-            activeIndex={activeIndex}
-            onDotClick={(index) => {
-              if (!isAnimatingRef.current) goToIndex(index);
-            }}
-            className="justify-center"
-            ariaLabel="Testimonial navigation"
+        {/* Scrollable Container with Gradient Masks */}
+        <div className="relative">
+          {/* Left fade gradient */}
+          <div 
+            className={`absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+              canScrollLeft ? 'opacity-100' : 'opacity-0'
+            }`}
           />
+          
+          {/* Right fade gradient */}
+          <div 
+            className={`absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+              canScrollRight ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+
+          {/* Scrollable cards container */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 overflow-x-auto pb-4 px-4 md:px-8 snap-x snap-mandatory scrollbar-hide"
+            style={{ 
+              scrollBehavior: 'smooth',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}
+          >
+            {/* Left spacer for centering first card */}
+            <div className="flex-shrink-0 w-4 md:w-20" />
+            
+            {items.map((testimonial, index) => (
+              <TestimonialCard
+                key={index}
+                testimonial={testimonial}
+              />
+            ))}
+            
+            {/* Right spacer for centering last card */}
+            <div className="flex-shrink-0 w-4 md:w-20" />
+          </div>
         </div>
       </div>
     </section>
@@ -371,29 +167,14 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
 export default TestimonialsSection;
 
-interface CarouselCardProps {
+interface TestimonialCardProps {
   testimonial: TestimonialItem;
-  styles: {
-    transform: string;
-    opacity: number;
-    zIndex: number;
-  };
-  isCenter: boolean;
 }
 
-function CarouselCard({ testimonial, styles, isCenter }: CarouselCardProps) {
+function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <div
-      className="absolute w-full max-w-md px-4"
-      style={styles}
-    >
-      <Card
-        className={`border border-border ${
-          isCenter 
-            ? "shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)]" 
-            : ""
-        }`}
-      >
+    <div className="flex-shrink-0 w-[320px] md:w-[380px] snap-center">
+      <Card className="h-full border border-border">
         <CardContent className="p-6">
           {/* Header with Avatar and Info */}
           <div className="flex items-center gap-3 mb-4">
