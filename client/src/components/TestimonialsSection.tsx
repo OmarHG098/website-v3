@@ -38,9 +38,9 @@ function getInitials(name: string): string {
 }
 
 const CARD_WIDTH = 380;
-const CARD_GAP = 32;
-const CARD_TOTAL = CARD_WIDTH + CARD_GAP;
-const DRAG_MULTIPLIER = 0.7; // Faster drag response
+const CARD_GAP = 0; // No gap - cards overlap
+const CARD_TOTAL = CARD_WIDTH; // Cards positioned edge-to-edge
+const DRAG_MULTIPLIER = 0.7;
 const SIDE_SCALE = 0.9;
 const SIDE_OPACITY = 0.5;
 
@@ -385,12 +385,11 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Cards track */}
+            {/* Cards track - no gap, cards overlap */}
             <div
               className="h-full flex items-center"
               style={{ 
                 width: `${totalWidth}px`,
-                gap: `${CARD_GAP}px`,
               }}
             >
               {extendedItems.map((testimonial, index) => {
