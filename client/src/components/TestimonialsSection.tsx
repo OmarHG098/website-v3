@@ -226,6 +226,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     dragStartXRef.current = clientX;
     scrollStartRef.current = container.scrollLeft;
     container.style.cursor = 'grabbing';
+    document.body.style.userSelect = 'none';
   }, []);
 
   const handleDragMove = useCallback((clientX: number) => {
@@ -239,11 +240,14 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   }, []);
 
   const handleDragEnd = useCallback(() => {
+    if (!isDraggingRef.current) return;
+    
     const container = scrollContainerRef.current;
     if (!container) return;
 
     isDraggingRef.current = false;
     container.style.cursor = 'grab';
+    document.body.style.userSelect = '';
 
     // Smooth snap to nearest card
     snapToNearestCard();
@@ -299,21 +303,31 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const container = scrollContainerRef.current;
     if (!container) return;
 
+    // Force end drag on window blur (user tabs away)
+    const handleWindowBlur = () => {
+      if (isDraggingRef.current) {
+        handleDragEnd();
+      }
+    };
+
     container.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateCardTransforms);
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('blur', handleWindowBlur);
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateCardTransforms);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('blur', handleWindowBlur);
+      document.body.style.userSelect = '';
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd]);
 
   if (items.length === 0) return null;
 
