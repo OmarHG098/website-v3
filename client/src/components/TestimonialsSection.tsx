@@ -38,9 +38,11 @@ function getInitials(name: string): string {
 }
 
 const CARD_WIDTH = 380;
-const CARD_GAP = 24;
+const CARD_GAP = 32;
 const CARD_TOTAL = CARD_WIDTH + CARD_GAP;
-const DRAG_RESISTANCE = 0.4;
+const DRAG_MULTIPLIER = 0.7; // Faster drag response
+const SIDE_SCALE = 0.9;
+const SIDE_OPACITY = 0.5;
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
@@ -56,8 +58,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const ratingSummary = data?.rating_summary;
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number }>>(new Map());
+  const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
 
@@ -66,46 +67,62 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
 
-  // Triple the items for infinite loop (before + original + after)
+  // Triple the items for infinite loop
   const extendedItems = [...items, ...items, ...items];
   const originalLength = items.length;
 
   const updateCardTransforms = useCallback(() => {
     const container = scrollContainerRef.current;
-    const content = contentRef.current;
-    if (!container || !content) return;
+    if (!container) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const containerCenter = containerRect.width / 2;
+    const containerCenter = container.clientWidth / 2;
     const scrollLeft = container.scrollLeft;
 
-    const newTransforms = new Map<number, { scale: number; opacity: number }>();
+    const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
 
-    // Calculate transforms for each card based on distance from center
+    // Find the card closest to center first
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    extendedItems.forEach((_, index) => {
+      const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - scrollLeft;
+      const distance = Math.abs(cardCenterX - containerCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Apply transforms based on distance from the closest (center) card
     extendedItems.forEach((_, index) => {
       const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
-      const normalizedDistance = distanceFromCenter / CARD_TOTAL;
+      const indexDiff = Math.abs(index - closestIndex);
 
       let scale: number;
       let opacity: number;
+      let zIndex: number;
 
-      if (normalizedDistance < 0.5) {
-        // Center card
+      if (index === closestIndex) {
+        // Center card - always full scale/opacity
         scale = 1;
         opacity = 1;
-      } else if (normalizedDistance < 1.5) {
-        // Side cards - interpolate from center to side
-        const t = Math.min(1, (normalizedDistance - 0.5));
-        scale = 1 - (t * 0.12); // 1 -> 0.88
-        opacity = 1 - (t * 0.5); // 1 -> 0.5
+        zIndex = 10;
+      } else if (indexDiff === 1) {
+        // Immediate neighbors - side cards
+        // Interpolate based on how close we are to becoming center
+        const t = Math.min(1, distanceFromCenter / CARD_TOTAL);
+        scale = 1 - (t * (1 - SIDE_SCALE));
+        opacity = 1 - (t * (1 - SIDE_OPACITY));
+        zIndex = 5;
       } else {
-        // Hidden cards
-        scale = 0.88;
+        // All other cards - hidden
+        scale = SIDE_SCALE;
         opacity = 0;
+        zIndex = 1;
       }
 
-      newTransforms.set(index, { scale, opacity });
+      newTransforms.set(index, { scale, opacity, zIndex });
     });
 
     setCardTransforms(newTransforms);
@@ -117,12 +134,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    // Calculate boundaries for infinite loop
     const singleSetWidth = originalLength * CARD_TOTAL;
     const minScroll = singleSetWidth * 0.5;
     const maxScroll = singleSetWidth * 2;
 
-    // Check if we need to loop
     if (container.scrollLeft < minScroll) {
       isResettingRef.current = true;
       container.scrollLeft += singleSetWidth;
@@ -143,12 +158,70 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const handleScroll = useCallback(() => {
     checkInfiniteLoop();
 
-    // Update transforms on every scroll
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
     }
     rafRef.current = requestAnimationFrame(updateCardTransforms);
   }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Smooth scroll animation to target
+  const animateScrollTo = useCallback((targetScroll: number, duration: number = 300) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const startScroll = container.scrollLeft;
+    const distance = targetScroll - startScroll;
+    const startTime = performance.now();
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+
+      container.scrollLeft = startScroll + (distance * eased);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        checkInfiniteLoop();
+        updateCardTransforms();
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Snap to nearest card center
+  const snapToNearestCard = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.clientWidth / 2;
+    const currentScroll = container.scrollLeft;
+
+    // Find which card center is closest to container center
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    extendedItems.forEach((_, index) => {
+      const cardCenterX = (index * CARD_TOTAL) + (CARD_WIDTH / 2) - currentScroll;
+      const distance = Math.abs(cardCenterX - containerCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Calculate scroll position to center that card
+    const targetScroll = (closestIndex * CARD_TOTAL) + (CARD_WIDTH / 2) - containerCenter;
+    
+    // Animate to target
+    animateScrollTo(targetScroll, 250);
+  }, [extendedItems.length, animateScrollTo]);
 
   // Drag handlers
   const handleDragStart = useCallback((clientX: number) => {
@@ -159,7 +232,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     dragStartXRef.current = clientX;
     scrollStartRef.current = container.scrollLeft;
     container.style.cursor = 'grabbing';
-    container.style.userSelect = 'none';
   }, []);
 
   const handleDragMove = useCallback((clientX: number) => {
@@ -168,7 +240,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const deltaX = (dragStartXRef.current - clientX) * DRAG_RESISTANCE;
+    const deltaX = (dragStartXRef.current - clientX) * DRAG_MULTIPLIER;
     container.scrollLeft = scrollStartRef.current + deltaX;
   }, []);
 
@@ -178,19 +250,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     isDraggingRef.current = false;
     container.style.cursor = 'grab';
-    container.style.userSelect = '';
 
-    // Snap to nearest card
-    const containerCenter = container.clientWidth / 2;
-    const currentScroll = container.scrollLeft;
-    const centerCardIndex = Math.round((currentScroll + containerCenter - CARD_WIDTH / 2) / CARD_TOTAL);
-    const targetScroll = (centerCardIndex * CARD_TOTAL) - containerCenter + (CARD_WIDTH / 2);
-
-    container.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-  }, []);
+    // Smooth snap to nearest card
+    snapToNearestCard();
+  }, [snapToNearestCard]);
 
   // Mouse events
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -223,29 +286,27 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     handleDragEnd();
   }, [handleDragEnd]);
 
-  // Initialize scroll position and transforms
+  // Initialize scroll position
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container || items.length === 0) return;
 
     // Start in the middle set, centered on first card
-    const initialScroll = (originalLength * CARD_TOTAL) + (container.clientWidth / 2) - (CARD_WIDTH / 2);
+    const containerCenter = container.clientWidth / 2;
+    const initialScroll = (originalLength * CARD_TOTAL) + (CARD_WIDTH / 2) - containerCenter;
     container.scrollLeft = initialScroll;
     container.style.cursor = 'grab';
 
-    // Initial transform calculation
     requestAnimationFrame(updateCardTransforms);
   }, [items.length, originalLength, updateCardTransforms]);
 
-  // Set up scroll and global mouse listeners
+  // Set up listeners
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     container.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateCardTransforms);
-    
-    // Global mouse listeners for drag
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
 
@@ -303,25 +364,22 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           )}
         </div>
 
-        {/* Scroll-based Carousel Container */}
+        {/* Carousel Container */}
         <div className="relative h-[420px]">
-          {/* Left fade gradient */}
+          {/* Left fade - softer gradient */}
           <div 
-            className="absolute left-0 top-0 bottom-0 w-[200px] bg-gradient-to-r from-background via-background/80 to-transparent z-20 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
           
-          {/* Right fade gradient */}
+          {/* Right fade - softer gradient */}
           <div 
-            className="absolute right-0 top-0 bottom-0 w-[200px] bg-gradient-to-l from-background via-background/80 to-transparent z-20 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
           />
 
-          {/* Scrollable container with drag support */}
+          {/* Scrollable container */}
           <div
             ref={scrollContainerRef}
-            className="h-full overflow-x-auto scrollbar-hide select-none"
-            style={{ 
-              WebkitOverflowScrolling: 'touch',
-            }}
+            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide"
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -329,24 +387,24 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           >
             {/* Cards track */}
             <div
-              ref={contentRef}
-              className="h-full flex items-center pointer-events-none"
+              className="h-full flex items-center"
               style={{ 
                 width: `${totalWidth}px`,
                 gap: `${CARD_GAP}px`,
               }}
             >
               {extendedItems.map((testimonial, index) => {
-                const transform = cardTransforms.get(index) || { scale: 0.88, opacity: 0 };
+                const transform = cardTransforms.get(index) || { scale: SIDE_SCALE, opacity: 0, zIndex: 1 };
                 
                 return (
                   <div
                     key={index}
-                    className="flex-shrink-0 transition-all duration-150 ease-out"
+                    className="flex-shrink-0 transition-transform duration-100 ease-out pointer-events-none"
                     style={{
                       width: `${CARD_WIDTH}px`,
                       transform: `scale(${transform.scale})`,
                       opacity: transform.opacity,
+                      zIndex: transform.zIndex,
                       visibility: transform.opacity > 0 ? 'visible' : 'hidden',
                     }}
                   >
