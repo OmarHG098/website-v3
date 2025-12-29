@@ -59,6 +59,8 @@ function buildAllowedValues(theme: ThemeConfig): Set<string> {
   allowed.add("");
   
   for (const bg of theme.backgrounds) {
+    allowed.add(bg.id);
+    
     if (bg.cssVar) {
       allowed.add(`hsl(var(${bg.cssVar}))`);
     }
@@ -165,13 +167,13 @@ export function validateBackground(value: string, theme: ThemeConfig): { valid: 
     return { valid: true };
   }
   
-  const allowedList = Array.from(allowed)
-    .filter(v => v !== "")
-    .join(", ");
+  const cssValues = theme.backgrounds
+    .filter(bg => bg.cssVar)
+    .map(bg => `hsl(var(${bg.cssVar}))`);
   
   return {
     valid: false,
-    suggestion: `Allowed values: ${allowedList}`,
+    suggestion: `Allowed values: ${cssValues.join(", ")}`,
   };
 }
 
