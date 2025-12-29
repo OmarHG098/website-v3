@@ -478,16 +478,13 @@ function ComponentCard({
         className="sticky top-0 z-50 border-b py-3 px-[15px] bg-[#ffffff]"
         data-testid={`component-card-${componentType}`}
       >
-        <div className="flex flex-row items-start justify-between gap-4">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold">{schema.name}</h1>
-              <Badge variant="secondary">{componentType}</Badge>
-            </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-semibold">{schema.name}</h1>
+            <Badge variant="secondary">{componentType}</Badge>
           </div>
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Version:</span>
               <Select value={selectedVersion} onValueChange={handleVersionChange}>
                 <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
                   <SelectValue />
@@ -554,7 +551,6 @@ function ComponentCard({
                   </SelectContent>
                 </Select>
             </div>
-            <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {/* Mobile-only buttons row */}
             <div className="flex sm:hidden items-center gap-2 pt-[3px] pb-[3px]">
               {(() => {
@@ -640,25 +636,8 @@ function ComponentCard({
                 <IconRefresh className="w-4 h-4" />
               </Button>
             </div>
-            {(() => {
-              const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
-              const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
-              const variants = schemaVariants.length > 0 ? schemaVariants : exampleVariants;
-              if (variants.length === 0) return null;
-              return (
-                <div className="flex items-center gap-2 pt-[2px] pb-[2px] overflow-x-auto scrollbar-none">
-                  <span className="text-xs text-muted-foreground flex-shrink-0">Variants:</span>
-                  {variants.map(variant => (
-                    <Badge key={variant} variant="outline" className="text-xs flex-shrink-0">
-                      {formatVariantLabel(variant)}
-                    </Badge>
-                  ))}
-                </div>
-              );
-            })()}
-          </div>
-          {/* Desktop-only buttons */}
-          <div className="hidden sm:flex items-center gap-2">
+            {/* Desktop-only buttons */}
+            <div className="hidden sm:flex items-center gap-2">
             {(() => {
               const currentExample = examples.find(ex => ex.name === selectedExample);
               if (!currentExample?.description) return null;
@@ -741,6 +720,7 @@ function ComponentCard({
             >
               <IconRefresh className="w-4 h-4" />
             </Button>
+            </div>
           </div>
         </div>
       </nav>
