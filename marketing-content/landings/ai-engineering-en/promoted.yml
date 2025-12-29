@@ -66,11 +66,11 @@ sections:
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY: none
-    paddingY: none
+    paddingY: lg
     background: secondary
   - type: awards_marquee
     version: "1.0"
-    paddingY: none
+    paddingY: lg
     marginY: none
     speed: 40
     pauseOnHover: true
@@ -233,7 +233,7 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
-    paddingY: none
+    paddingY: lg
     marginY: none
   - type: ai_learning
     badge: Why 4Geeks?
@@ -263,6 +263,7 @@ sections:
         text: Start learning now!
         url: "#hero-form"
         variant: primary
+    paddingY: lg
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
@@ -310,6 +311,8 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
+    paddingY: none
+    marginY: md
   - type: pricing
     version: "1.0"
     variant: product
@@ -341,6 +344,8 @@ sections:
       text: Get plan
       url: "#hero-form"
       variant: primary
+    marginY: xl
+    paddingY: none
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
@@ -370,6 +375,7 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
+    marginY: xl
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next
@@ -385,6 +391,8 @@ sections:
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
+    marginY: xl
+    paddingY: none
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
@@ -422,6 +430,7 @@ sections:
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
+    marginY: xl
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
