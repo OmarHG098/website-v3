@@ -449,7 +449,8 @@ sections:
         us_only: true
     marginY: none
     background: hsl(var(--primary))
-    paddingY: xl
+    paddingY: xl md
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
+    paddingY: md none

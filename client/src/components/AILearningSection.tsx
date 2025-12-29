@@ -7,6 +7,7 @@ import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { cn } from "@/lib/utils";
 import { UniversalImage } from "@/components/UniversalImage";
+import { UniversalVideo } from "@/components/UniversalVideo";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
@@ -206,59 +207,29 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 
                 {/* Feature-specific media: image_id, video_url (MP4/YouTube), or fallback */}
                 {displayedFeature.image_id ? (
-                  <div 
-                    className="relative aspect-video rounded-card overflow-hidden shadow-card"
-                    data-testid="image-container-feature"
-                  >
+                  <div data-testid="image-container-feature">
                     <UniversalImage
                       id={displayedFeature.image_id}
                       preset="card-wide"
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="aspect-video"
+                      useSolidCard={true}
                     />
                   </div>
                 ) : displayedFeature.video_url ? (
-                  displayedFeature.video_url.includes('.mp4') ? (
-                    <div 
-                      className="relative aspect-video rounded-card overflow-hidden shadow-card"
-                      data-testid="video-container-feature"
-                    >
-                      <video
-                        src={displayedFeature.video_url}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
-                        data-testid="video-feature-mp4"
-                      />
-                    </div>
-                  ) : (
-                    <div 
-                      className="relative aspect-video rounded-card overflow-hidden shadow-card"
-                      data-testid="video-container-feature"
-                    >
-                      <iframe
-                        src={`https://www.youtube.com/embed/${extractYouTubeId(displayedFeature.video_url)}`}
-                        title="Learn with 4Geeks"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute inset-0 w-full h-full"
-                        data-testid="iframe-feature-youtube"
-                      />
-                    </div>
-                  )
+                  <div data-testid="video-container-feature">
+                    <UniversalVideo
+                      url={displayedFeature.video_url}
+                      autoplay={displayedFeature.video_url.includes('.mp4')}
+                      loop={displayedFeature.video_url.includes('.mp4')}
+                      muted={displayedFeature.video_url.includes('.mp4')}
+                      useSolidCard={true}
+                    />
+                  </div>
                 ) : videoId ? (
-                  <div 
-                    className="relative aspect-video rounded-card overflow-hidden shadow-card"
-                    data-testid="video-container-ai"
-                  >
-                    <iframe
-                      src={`https://www.youtube.com/embed/${videoId}`}
-                      title="Learn with 4Geeks"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                      data-testid="iframe-youtube-video"
+                  <div data-testid="video-container-ai">
+                    <UniversalVideo
+                      url={data.video_url!}
+                      useSolidCard={true}
                     />
                   </div>
                 ) : null}

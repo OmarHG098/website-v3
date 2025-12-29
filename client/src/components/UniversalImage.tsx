@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { ImageRef, ImageEntry, ImagePreset } from "@shared/schema";
+import SolidCard from "./SolidCard";
 
 interface ImageRegistryData {
   presets: Record<string, ImagePreset>;
@@ -43,6 +44,7 @@ interface UniversalImageProps extends ImageRef {
   loading?: "lazy" | "eager";
   onLoad?: () => void;
   onError?: () => void;
+  useSolidCard?: boolean;
 }
 
 const ASPECT_RATIOS: Record<string, number> = {
@@ -62,6 +64,7 @@ export function UniversalImage({
   loading = "lazy",
   onLoad,
   onError,
+  useSolidCard = false,
 }: UniversalImageProps) {
   const { registry, loading: registryLoading } = useImageRegistry();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -124,9 +127,9 @@ export function UniversalImage({
     );
   }
 
-  return (
+  const imageContent = (
     <div 
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden ${useSolidCard ? '' : className}`}
       style={containerStyle}
       data-testid={`img-container-${id}`}
     >
@@ -143,13 +146,23 @@ export function UniversalImage({
         loading={loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={`w-full h-full object-cover transition-opacity duration-300 border-2 border-black ${
+        className={`w-full h-full object-cover transition-opacity duration-300 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
         data-testid={`img-${id}`}
       />
     </div>
   );
+
+  if (useSolidCard) {
+    return (
+      <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
+        {imageContent}
+      </SolidCard>
+    );
+  }
+
+  return imageContent;
 }
 
 export function getImageUrl(id: string): string | null {
