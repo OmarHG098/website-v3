@@ -45,6 +45,7 @@ interface UniversalImageProps extends ImageRef {
   onLoad?: () => void;
   onError?: () => void;
   useSolidCard?: boolean;
+  bordered?: boolean;
 }
 
 const ASPECT_RATIOS: Record<string, number> = {
@@ -65,6 +66,7 @@ export function UniversalImage({
   onLoad,
   onError,
   useSolidCard = false,
+  bordered = false,
 }: UniversalImageProps) {
   const { registry, loading: registryLoading } = useImageRegistry();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -127,9 +129,11 @@ export function UniversalImage({
     );
   }
 
+  const borderClasses = bordered ? "border-2 border-black rounded-lg" : "";
+  
   const imageContent = (
     <div 
-      className={`relative overflow-hidden ${useSolidCard ? '' : className}`}
+      className={`relative overflow-hidden ${borderClasses} ${useSolidCard ? '' : className}`}
       style={containerStyle}
       data-testid={`img-container-${id}`}
     >

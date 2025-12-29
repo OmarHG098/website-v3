@@ -18,6 +18,7 @@ interface UniversalVideoProps extends Omit<VideoConfig, 'with_shadow_border'> {
   className?: string;
   withShadowBorder?: boolean;
   useSolidCard?: boolean;
+  bordered?: boolean;
 }
 
 const isLocalVideo = (url: string): boolean => {
@@ -65,6 +66,7 @@ export function UniversalVideo({
   className = "",
   withShadowBorder = false,
   useSolidCard = false,
+  bordered = false,
 }: UniversalVideoProps) {
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [showPreview, setShowPreview] = useState(!autoplay && !!preview_image_url);
@@ -75,13 +77,15 @@ export function UniversalVideo({
     setIsPlaying(true);
   };
 
+  const borderClasses = bordered ? "border-2 border-black" : "";
+  
   const renderVideo = () => {
     if (isYouTubeUrl(url)) {
       const videoId = extractYouTubeId(url);
       if (videoId) {
         return (
           <div 
-            className={`overflow-hidden rounded-lg ${className}`}
+            className={`overflow-hidden rounded-lg ${borderClasses} ${className}`}
             data-testid="video-container"
           >
             <ResponsiveEmbed
@@ -97,7 +101,7 @@ export function UniversalVideo({
     if (isLocalVideo(url)) {
       return (
         <div 
-          className={`relative overflow-hidden rounded-lg shadow-lg ${className}`}
+          className={`relative overflow-hidden rounded-lg shadow-lg ${borderClasses} ${className}`}
           style={aspectRatio}
           data-testid="video-container"
         >
@@ -136,7 +140,7 @@ export function UniversalVideo({
 
     return (
       <div 
-        className={`overflow-hidden rounded-lg ${className}`}
+        className={`overflow-hidden rounded-lg ${borderClasses} ${className}`}
         data-testid="video-container"
       >
         <ResponsiveEmbed
