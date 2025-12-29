@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearch } from "wouter";
 import { SectionRenderer } from "@/components/SectionRenderer";
@@ -5,6 +6,7 @@ import type { CareerProgram, LandingPage, LocationPage, TemplatePage } from "@sh
 import { IconLoader2, IconAlertTriangle, IconArrowLeft } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 
@@ -53,6 +55,17 @@ export default function PrivatePreview() {
 
   usePageMeta(content?.meta);
   useSchemaOrg(content?.schema);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useContentAutoRefresh(
+    config?.singular as "program" | "landing" | "location" | "page",
+    slug,
+    locale,
+    handleRefetch
+  );
 
   if (!isValidContentType) {
     return (
@@ -114,7 +127,6 @@ export default function PrivatePreview() {
         contentType={config.singular as "program" | "landing" | "location" | "page"}
         slug={slug}
         locale={locale}
-        onSectionAdded={() => refetch()}
       />
     </div>
   );

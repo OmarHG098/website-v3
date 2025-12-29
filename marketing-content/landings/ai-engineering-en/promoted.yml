@@ -115,8 +115,8 @@ sections:
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY: none
-    paddingY: xl
-    background: secondary
+    paddingY: none
+    background: primary
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
