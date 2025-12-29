@@ -1133,43 +1133,6 @@ export default function ComponentShowcase() {
   return (
     <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto mb-8">
-          <h1 className="text-3xl font-bold mb-2" data-testid="text-showcase-title">
-            Component Showcase
-          </h1>
-          <p className="text-muted-foreground mb-6">
-            This page displays all available section components for career program pages. 
-            Each component shows the YAML configuration and a live preview.
-          </p>
-          
-          <div className="flex items-center gap-4 mb-8 p-4 bg-muted rounded-lg flex-wrap">
-            <div className="flex-1 min-w-[200px]">
-              <p className="font-medium">Components Registry</p>
-              <p className="text-sm text-muted-foreground">
-                See <code className="bg-background px-1 rounded">marketing-content/component-registry/</code> for schemas and examples
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant={yamlExpanded ? "default" : "outline"}
-                onClick={toggleAllYaml}
-                data-testid="button-toggle-all-yaml"
-              >
-                <IconCode className="w-4 h-4 mr-1" />
-                {yamlExpanded ? "Hide All YAML" : "Show All YAML"}
-              </Button>
-              <Button
-                variant={previewExpanded ? "default" : "outline"}
-                onClick={toggleAllPreview}
-                data-testid="button-toggle-all-preview"
-              >
-                <IconEye className="w-4 h-4 mr-1" />
-                {previewExpanded ? "Hide All Previews" : "Show All Previews"}
-              </Button>
-            </div>
-          </div>
-        </div>
-
         <div className="max-w-6xl mx-auto">
           <AllComponentsLoader 
             components={components}
