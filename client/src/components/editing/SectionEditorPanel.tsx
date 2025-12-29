@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,16 +27,18 @@ interface SectionEditorPanelProps {
   onPreviewChange?: (previewSection: Section | null) => void;
 }
 
-const BACKGROUND_TOKENS = [
-  { label: "None", value: "", cssVar: "" },
-  { label: "Background", value: "background", cssVar: "var(--background)" },
-  { label: "Muted", value: "muted", cssVar: "var(--muted)" },
-  { label: "Card", value: "card", cssVar: "var(--card)" },
-  { label: "Accent", value: "accent", cssVar: "var(--accent)" },
-  { label: "Primary", value: "primary", cssVar: "var(--primary)" },
-  { label: "Secondary", value: "secondary", cssVar: "var(--secondary)" },
-  { label: "Sidebar", value: "sidebar", cssVar: "var(--sidebar-background)" },
-];
+interface ThemeColor {
+  id: string;
+  label: string;
+  cssVar?: string;
+  value?: string;
+}
+
+interface ThemeConfig {
+  backgrounds: ThemeColor[];
+  accents?: ThemeColor[];
+  text?: ThemeColor[];
+}
 
 interface BackgroundPickerProps {
   value: string;
@@ -43,44 +46,84 @@ interface BackgroundPickerProps {
 }
 
 function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
-  const isCustom = value && !BACKGROUND_TOKENS.some((t) => t.value === value);
+  const { data: theme, isLoading } = useQuery<ThemeConfig>({
+    queryKey: ["/api/theme"],
+    queryFn: async () => {
+      const response = await fetch("/api/theme");
+      if (!response.ok) {
+        throw new Error("Failed to load theme");
+      }
+      return response.json();
+    },
+  });
+
+  const backgrounds = useMemo(() => {
+    if (!theme?.backgrounds) return [];
+    return theme.backgrounds.map((bg) => ({
+      id: bg.id,
+      label: bg.label,
+      cssVar: bg.cssVar,
+      value: bg.value,
+    }));
+  }, [theme]);
+
+  const isCustom = value && !backgrounds.some((t) => t.id === value);
   const [customValue, setCustomValue] = useState(isCustom ? value : "");
 
-  // Sync custom value when external value changes
   useEffect(() => {
-    const isNowCustom = value && !BACKGROUND_TOKENS.some((t) => t.value === value);
+    const isNowCustom = value && backgrounds.length > 0 && !backgrounds.some((t) => t.id === value);
     if (isNowCustom) {
       setCustomValue(value);
     } else {
       setCustomValue("");
     }
-  }, [value]);
+  }, [value, backgrounds]);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-3">
+        <Label className="text-sm font-medium">Background Color</Label>
+        <div className="flex items-center justify-center h-24 bg-muted/30 rounded-md">
+          <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium">Background Color</Label>
       <div className="grid grid-cols-4 gap-2">
-        {BACKGROUND_TOKENS.map((token) => (
+        <button
+          type="button"
+          onClick={() => onChange("")}
+          className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+            value === ""
+              ? "border-primary ring-2 ring-primary/20"
+              : "border-border hover:border-primary/50"
+          }`}
+          data-testid="props-background-none"
+        >
+          <span className="w-6 h-6 rounded border border-dashed border-border/50 bg-transparent" />
+          <span className="text-[10px] text-muted-foreground">None</span>
+        </button>
+        {backgrounds.map((bg) => (
           <button
-            key={token.value}
+            key={bg.id}
             type="button"
-            onClick={() => onChange(token.value)}
+            onClick={() => onChange(bg.id)}
             className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
-              value === token.value
+              value === bg.id
                 ? "border-primary ring-2 ring-primary/20"
                 : "border-border hover:border-primary/50"
             }`}
-            data-testid={`props-background-${token.value || "none"}`}
+            data-testid={`props-background-${bg.id}`}
           >
-            {token.cssVar ? (
-              <span
-                className="w-6 h-6 rounded border border-border/50"
-                style={{ background: `hsl(${token.cssVar})` }}
-              />
-            ) : (
-              <span className="w-6 h-6 rounded border border-dashed border-border/50 bg-transparent" />
-            )}
-            <span className="text-[10px] text-muted-foreground">{token.label}</span>
+            <span
+              className="w-6 h-6 rounded border border-border/50"
+              style={{ background: bg.cssVar ? `hsl(var(${bg.cssVar}))` : bg.value }}
+            />
+            <span className="text-[10px] text-muted-foreground">{bg.label}</span>
           </button>
         ))}
       </div>
