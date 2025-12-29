@@ -51,12 +51,12 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
-    paddingY: lg xl
+    paddingY: lg none
     marginY: none
   - type: awards_marquee
     version: "1.0"
-    paddingY: md
-    marginY: md
+    paddingY: lg md
+    marginY: none md
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -117,8 +117,7 @@ sections:
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY: none
-    paddingY: lg
-    background: secondary
+    paddingY: lg md
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
