@@ -439,6 +439,7 @@ sections:
     version: "1.0"
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
+    paddingY: lg
     buttons:
       - text: Apply Now
         url: "#hero-form"
