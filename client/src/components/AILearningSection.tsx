@@ -160,7 +160,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
         {/* Displayed Feature Content */}
         {displayedFeature && (
           <Card 
-            className="bg-muted/30 border-0 shadow-card mb-16 transition-all duration-300"
+            className="border-0 shadow-card mb-16 transition-all duration-300"
             data-testid="selected-feature-content"
           >
             <CardContent className="p-6 md:p-8">
