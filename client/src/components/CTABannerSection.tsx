@@ -37,7 +37,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
         </h2>
         {data.subtitle && (
           <p 
-            className="text-body opacity-90 mb-8 max-w-2xl mx-auto" style={{ fontSize: '16px' }}
+            className="text-body opacity-90 mb-6 max-w-2xl mx-auto" style={{ fontSize: '16px' }}
             data-testid="text-cta-banner-subtitle"
           >
             {data.subtitle}
@@ -45,7 +45,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
         )}
         
         {hasMultipleButtons ? (
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 pb-2">
             {filteredButtons!.map((button, index) => {
               const variant = button.variant === "primary" ? "default" : button.variant === "secondary" ? "secondary" : "outline";
               const outlineStyles = button.variant === "outline" ? "border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10" : "";

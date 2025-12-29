@@ -51,6 +51,14 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
+    trust_bar:
+      rating: "4.89"
+      review_count: "3,524 reviews"
+      review_logos:
+        - name: Course Report
+          logo: /attached_assets/course-report-logo.png
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
     paddingY: none
     marginY: none md
   - type: features_grid
