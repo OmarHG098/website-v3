@@ -11,18 +11,32 @@ interface AILearningSectionProps {
   data: AILearningSectionType;
 }
 
+interface FeatureBullet {
+  text: string;
+  icon?: string;
+}
+
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  show_rigobot_logo?: boolean;
+  bullets?: FeatureBullet[];
+  video_url?: string;
+}
+
 interface HoverFeatureCardProps {
-  feature: { icon: string; title: string; description: string };
+  feature: Feature;
   index: number;
   isSelected: boolean;
   isHovering: boolean;
   onHover: () => void;
   onLeave: () => void;
-  isRigobot: boolean;
+  showRigobotLogo: boolean;
   getIcon: (iconName: string, isRigobot?: boolean) => JSX.Element | null;
 }
 
-function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onLeave, isRigobot, getIcon }: HoverFeatureCardProps) {
+function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onLeave, showRigobotLogo, getIcon }: HoverFeatureCardProps) {
   const isActive = isSelected || isHovering;
   
   return (
@@ -43,7 +57,7 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
             "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
             isActive ? "bg-primary/20" : "bg-primary/10"
           )}>
-            {getIcon(feature.icon, isRigobot)}
+            {getIcon(feature.icon, showRigobotLogo)}
           </div>
           <h3 className="font-semibold text-foreground flex-1">
             {feature.title}
@@ -113,7 +127,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
         {/* Hover Feature Cards */}
         <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-8">
           {features.slice(0, 3).map((feature, index) => {
-            const isRigobot = feature.title?.toLowerCase().includes('rigobot') ?? false;
+            const showRigobotLogo = feature.show_rigobot_logo ?? feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
               <HoverFeatureCard
                 key={index}
@@ -128,7 +142,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 onLeave={() => {
                   setHoverIndex(null);
                 }}
-                isRigobot={isRigobot}
+                showRigobotLogo={showRigobotLogo}
                 getIcon={getIcon}
               />
             );
@@ -146,18 +160,66 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {getIcon(displayedFeature.icon, displayedFeature.title?.toLowerCase().includes('rigobot'))}
+                      {getIcon(displayedFeature.icon, displayedFeature.show_rigobot_logo ?? displayedFeature.title?.toLowerCase().includes('rigobot'))}
                     </div>
                     <h3 className="text-xl md:text-2xl font-bold text-foreground">
                       {displayedFeature.title}
                     </h3>
                   </div>
-                  <p className="text-muted-foreground text-body leading-relaxed">
-                    {displayedFeature.description}
-                  </p>
+                  
+                  {displayedFeature.description && (
+                    <p className="text-muted-foreground text-body leading-relaxed mb-4">
+                      {displayedFeature.description}
+                    </p>
+                  )}
+                  
+                  {displayedFeature.bullets && displayedFeature.bullets.length > 0 && (
+                    <ul className="space-y-3" data-testid="feature-bullets">
+                      {displayedFeature.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-primary flex-shrink-0 mt-0.5">
+                            {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
+                          </span>
+                          <span className="text-muted-foreground">{bullet.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 
-                {videoId && (
+                {/* Feature-specific video (MP4 or YouTube) */}
+                {displayedFeature.video_url ? (
+                  displayedFeature.video_url.includes('.mp4') ? (
+                    <div 
+                      className="relative aspect-video rounded-card overflow-hidden shadow-card"
+                      data-testid="video-container-feature"
+                    >
+                      <video
+                        src={displayedFeature.video_url}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                        data-testid="video-feature-mp4"
+                      />
+                    </div>
+                  ) : (
+                    <div 
+                      className="relative aspect-video rounded-card overflow-hidden shadow-card"
+                      data-testid="video-container-feature"
+                    >
+                      <iframe
+                        src={`https://www.youtube.com/embed/${extractYouTubeId(displayedFeature.video_url)}`}
+                        title="Learn with 4Geeks"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute inset-0 w-full h-full"
+                        data-testid="iframe-feature-youtube"
+                      />
+                    </div>
+                  )
+                ) : videoId ? (
                   <div 
                     className="relative aspect-video rounded-card overflow-hidden shadow-card"
                     data-testid="video-container-ai"
@@ -171,7 +233,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       data-testid="iframe-youtube-video"
                     />
                   </div>
-                )}
+                ) : null}
               </div>
             </CardContent>
           </Card>

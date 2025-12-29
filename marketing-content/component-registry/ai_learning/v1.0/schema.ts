@@ -2,7 +2,7 @@
  * AI Learning Component Schemas - v1.0
  */
 import { z } from "zod";
-import { ctaButtonSchema, cardItemSchema } from "../../common/schema";
+import { ctaButtonSchema } from "../../common/schema";
 
 export const chatExampleSchema = z.object({
   bot_name: z.string(),
@@ -11,12 +11,22 @@ export const chatExampleSchema = z.object({
   bot_response: z.string(),
 });
 
+// Extended card item for AI learning features with optional bullets and video
+export const aiLearningFeatureSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+  show_rigobot_logo: z.boolean().optional(),
+  bullets: z.array(z.object({ text: z.string(), icon: z.string().optional() })).optional(),
+  video_url: z.string().optional(),
+});
+
 export const aiLearningSectionSchema = z.object({
   type: z.literal("ai_learning"),
   badge: z.string().optional(),
   title: z.string(),
   description: z.string(),
-  features: z.array(cardItemSchema),
+  features: z.array(aiLearningFeatureSchema),
   chat_example: chatExampleSchema.optional(),
   video_url: z.string().optional(),
   video_position: z.enum(["left", "right"]).optional(),
