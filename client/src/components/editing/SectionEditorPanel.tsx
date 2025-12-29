@@ -251,6 +251,7 @@ export function SectionEditorPanel({
 
       if (response.ok) {
         const result = await response.json();
+        console.log("[SectionEditorPanel] Save successful, refreshing content...", { contentType, slug, locale });
 
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
@@ -261,7 +262,9 @@ export function SectionEditorPanel({
         setHasChanges(false);
 
         // Refresh content to update the page
+        console.log("[SectionEditorPanel] Calling refreshContent...");
         await refreshContent(contentType, slug, locale);
+        console.log("[SectionEditorPanel] refreshContent completed");
         return true;
       } else {
         const error = await response.json();

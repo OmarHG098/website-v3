@@ -116,7 +116,7 @@ sections:
         title: Average starting salary for AI Engineers
     marginY: none
     paddingY: xl
-    background: accent
+    background: secondary
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering

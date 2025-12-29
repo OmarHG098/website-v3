@@ -72,6 +72,21 @@ export async function refreshContent(
   slug: string,
   locale?: string
 ): Promise<void> {
+  const apiPath = getApiPath(contentType);
+  
+  // Log cache state before invalidation
+  const cache = queryClient.getQueryCache();
+  const allQueries = cache.getAll();
+  const matchingBefore = allQueries.filter(q => {
+    const key = q.queryKey;
+    return Array.isArray(key) && key.length >= 2 && key[0] === apiPath && key[1] === slug;
+  });
+  console.log(`[refreshContent] Before invalidation - Found ${matchingBefore.length} matching queries:`, 
+    matchingBefore.map(q => ({ key: q.queryKey, state: q.state.status })));
+  
   await invalidateContent(contentType, slug, locale);
+  console.log(`[refreshContent] After invalidation, now refetching...`);
+  
   await refetchContent(contentType, slug, locale);
+  console.log(`[refreshContent] Refetch complete`);
 }
