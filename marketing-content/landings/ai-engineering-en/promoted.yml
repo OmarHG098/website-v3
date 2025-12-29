@@ -266,15 +266,19 @@ sections:
           - text: Access Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
       - icon: Robot
-        title: A Global Developer Community Supporting Your Growth
+        title: Thrive in today's tech with career support for the AI-Era
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Get real-time help from mentors, alumni, and peers through our 6,000+ member Slack community
-          - text: Access theme-specific channels for coding support, job boards, and career advice
-          - text: Advance your skills with further training resources, live events, and collaborative projects
-          - text: Connect with people who've been where you are and know how to help you get where you want to go
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
         video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
     video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
     video_position: right
     highlight:
