@@ -25,6 +25,11 @@ interface Feature {
   bullets?: FeatureBullet[];
   video_url?: string;
   image_id?: string;
+  cta?: {
+    text: string;
+    url: string;
+    variant?: string;
+  };
 }
 
 interface HoverFeatureCardProps {
@@ -176,7 +181,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   )}
                   
                   {displayedFeature.bullets && displayedFeature.bullets.length > 0 && (
-                    <ul className="space-y-3" data-testid="feature-bullets">
+                    <ul className="space-y-3 mb-6" data-testid="feature-bullets">
                       {displayedFeature.bullets.map((bullet, idx) => (
                         <li key={idx} className="flex items-start gap-3">
                           <span className="text-primary flex-shrink-0 mt-0.5">
@@ -186,6 +191,16 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                         </li>
                       ))}
                     </ul>
+                  )}
+                  
+                  {displayedFeature.cta && (
+                    <Button
+                      variant={displayedFeature.cta.variant === "primary" ? "default" : displayedFeature.cta.variant === "outline" ? "outline" : "secondary"}
+                      asChild
+                      data-testid="button-feature-cta"
+                    >
+                      <a href={displayedFeature.cta.url}>{displayedFeature.cta.text}</a>
+                    </Button>
                   )}
                 </div>
                 

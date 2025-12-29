@@ -11,7 +11,7 @@ export const chatExampleSchema = z.object({
   bot_response: z.string(),
 });
 
-// Extended card item for AI learning features with optional bullets, video, or image
+// Extended card item for AI learning features with optional bullets, video, image, or CTA
 export const aiLearningFeatureSchema = z.object({
   icon: z.string(),
   title: z.string(),
@@ -20,6 +20,7 @@ export const aiLearningFeatureSchema = z.object({
   bullets: z.array(z.object({ text: z.string(), icon: z.string().optional() })).optional(),
   video_url: z.string().optional(),
   image_id: z.string().optional(),
+  cta: ctaButtonSchema.optional(),
 });
 
 export const aiLearningSectionSchema = z.object({

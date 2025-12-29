@@ -251,6 +251,10 @@ sections:
           - text: Helps with debugging and problem-solving tasks
           - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
       - icon: Robot
         title: One-on-one mentoring sessions
         description: ""
