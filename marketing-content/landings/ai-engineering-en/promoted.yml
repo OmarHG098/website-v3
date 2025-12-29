@@ -242,6 +242,20 @@ sections:
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
+        title: Thrive in today's tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
+      - icon: Robot
         title: Progress faster with AI using Rigobot + Learnpack
         description: ""
         show_rigobot_logo: true
@@ -265,34 +279,6 @@ sections:
           - text: Engage with peers through Slack, feedback tools, and weekly check-ins
           - text: Access Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
-      - icon: Robot
-        title: Thrive in today's tech with career support for the AI-Era
-        description: ""
-        show_rigobot_logo: true
-        bullets:
-          - text: Personalized 1:1 coaching
-          - text: AI-ready resumes and portfolios
-          - text: Interview prep and salary negotiation
-          - text: Lifelong access to support your growth
-        video_url: https://youtu.be/-2ZvlgDnltc
-        cta:
-          text: Start learning now!
-          url: "#hero-form"
-          variant: primary
-    video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-    video_position: right
-    highlight:
-      title: Thrive in today's tech with career support for the AI-Era
-      description: ""
-      bullets:
-        - text: Personalized 1:1 coaching
-        - text: AI-ready resumes and portfolios
-        - text: Interview prep and salary negotiation
-        - text: Lifelong access to support your growth
-      cta:
-        text: Start learning now!
-        url: "#hero-form"
-        variant: primary
     paddingY: lg
   - type: certificate
     title: Certificate & Career Network
