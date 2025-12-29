@@ -129,7 +129,7 @@ export function UniversalImage({
     );
   }
 
-  const borderClasses = bordered ? "border-2 border-black rounded-lg" : "";
+  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
   
   const imageContent = (
     <div 

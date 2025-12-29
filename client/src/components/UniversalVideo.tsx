@@ -77,7 +77,7 @@ export function UniversalVideo({
     setIsPlaying(true);
   };
 
-  const borderClasses = bordered ? "border-2 border-black" : "";
+  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
   
   const renderVideo = () => {
     if (isYouTubeUrl(url)) {
