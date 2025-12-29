@@ -379,6 +379,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Theme configuration endpoint
+  app.get("/api/theme", (_req, res) => {
+    try {
+      const themePath = path.join(
+        process.cwd(),
+        "marketing-content",
+        "theme.json"
+      );
+      if (!fs.existsSync(themePath)) {
+        res.status(404).json({ error: "Theme configuration not found" });
+        return;
+      }
+      const themeContent = fs.readFileSync(themePath, "utf-8");
+      const theme = JSON.parse(themeContent);
+      res.json(theme);
+    } catch (error) {
+      console.error("Error loading theme:", error);
+      res.status(500).json({ error: "Failed to load theme configuration" });
+    }
+  });
+
   app.get("/api/career-programs", (req, res) => {
     const locale = (req.query.locale as string) || "en";
     const _location = req.query.location as string | undefined;

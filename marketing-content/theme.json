@@ -1,0 +1,23 @@
+{
+  "backgrounds": [
+    { "id": "background", "label": "Background", "cssVar": "--background" },
+    { "id": "muted", "label": "Muted", "cssVar": "--muted" },
+    { "id": "card", "label": "Card", "cssVar": "--card" },
+    { "id": "accent", "label": "Accent", "cssVar": "--accent" },
+    { "id": "primary", "label": "Primary", "cssVar": "--primary" },
+    { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
+    { "id": "sidebar", "label": "Sidebar", "cssVar": "--sidebar-background" }
+  ],
+  "accents": [
+    { "id": "primary", "label": "Primary", "cssVar": "--primary" },
+    { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
+    { "id": "accent", "label": "Accent", "cssVar": "--accent" },
+    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" }
+  ],
+  "text": [
+    { "id": "foreground", "label": "Default", "cssVar": "--foreground" },
+    { "id": "muted-foreground", "label": "Muted", "cssVar": "--muted-foreground" },
+    { "id": "primary-foreground", "label": "On Primary", "cssVar": "--primary-foreground" },
+    { "id": "secondary-foreground", "label": "On Secondary", "cssVar": "--secondary-foreground" }
+  ]
+}
