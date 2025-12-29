@@ -704,12 +704,24 @@ export function DebugBubble() {
                 </div>
               </div>
             </div>)
-          ) : menuView === "main" ? (
+          ) : (
             <>
+              {/* Persistent header - always visible */}
               <div className="p-3 border-b flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-sm">Dev Tools</h3>
-                  <p className="text-xs text-muted-foreground">Development utilities</p>
+                <div className="flex items-center gap-2">
+                  {menuView !== "main" && (
+                    <button
+                      onClick={() => setMenuView("main")}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                  )}
+                  <div>
+                    <h3 className="font-semibold text-sm">Dev Tools</h3>
+                    <p className="text-xs text-muted-foreground">Development utilities</p>
+                  </div>
                 </div>
                 {editMode && (
                   <div 
@@ -757,6 +769,9 @@ export function DebugBubble() {
                 )}
               </div>
               
+              {/* Menu content based on current view */}
+              {menuView === "main" && (
+              <>
               <div className="p-2 space-y-1">
                 <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
                   <button
@@ -920,44 +935,36 @@ export function DebugBubble() {
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
               </div>
-            </>
-          ) : menuView === "components" ? (
-            <>
-              <div className="px-3 py-2 border-b">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => setMenuView("main")}
-                      className="p-1 rounded-md hover-elevate"
-                      data-testid="button-back-to-main"
-                    >
-                      <IconArrowLeft className="h-4 w-4" />
-                    </button>
+              </>
+              )}
+              {menuView === "components" && (
+              <>
+                <div className="px-3 py-2 border-b">
+                  <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-semibold text-sm">Components</h3>
                       <p className="text-xs text-muted-foreground">{componentsList.length} components</p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <a
-                      href="/private/molecules-showcase"
-                      className="p-1.5 rounded hover-elevate"
-                      title="Molecules Showcase"
-                      data-testid="link-molecules-showcase"
-                    >
-                      <IconAtom className="h-4 w-4 text-muted-foreground" />
-                    </a>
-                    <button
-                      onClick={() => setShowComponentsSearch(!showComponentsSearch)}
-                      className={`p-1.5 rounded hover-elevate ${showComponentsSearch ? 'bg-muted' : ''}`}
-                      title="Toggle search"
-                      data-testid="button-toggle-components-search"
-                    >
-                      <IconSearch className="h-4 w-4 text-muted-foreground" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <a
+                        href="/private/molecules-showcase"
+                        className="p-1.5 rounded hover-elevate"
+                        title="Molecules Showcase"
+                        data-testid="link-molecules-showcase"
+                      >
+                        <IconAtom className="h-4 w-4 text-muted-foreground" />
+                      </a>
+                      <button
+                        onClick={() => setShowComponentsSearch(!showComponentsSearch)}
+                        className={`p-1.5 rounded hover-elevate ${showComponentsSearch ? 'bg-muted' : ''}`}
+                        title="Toggle search"
+                        data-testid="button-toggle-components-search"
+                      >
+                        <IconSearch className="h-4 w-4 text-muted-foreground" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
               
               {showComponentsSearch && (
                 <div className="p-2 border-b">
@@ -1001,25 +1008,17 @@ export function DebugBubble() {
                   })}
                 </div>
               </ScrollArea>
-            </>
-          ) : menuView === "experiments" ? (
-            <>
+              </>
+              )}
+              {menuView === "experiments" && (
+              <>
               <div className="px-3 py-2 border-b">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => setMenuView("main")}
-                      className="p-1 rounded-md hover-elevate"
-                      data-testid="button-back-to-main-experiments"
-                    >
-                      <IconArrowLeft className="h-4 w-4" />
-                    </button>
-                    <div>
-                      <h3 className="font-semibold text-sm">Experiments</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {contentInfo.label}: {contentInfo.slug}
-                      </p>
-                    </div>
+                  <div>
+                    <h3 className="font-semibold text-sm">Experiments</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {contentInfo.label}: {contentInfo.slug}
+                    </p>
                   </div>
                   <button
                     onClick={handleOpenCreateExperiment}
@@ -1095,23 +1094,15 @@ export function DebugBubble() {
                   )}
                 </div>
               </ScrollArea>
-            </>
-          ) : (
-            <>
+              </>
+              )}
+              {menuView === "sitemap" && (
+              <>
               <div className="px-3 py-2 border-b">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => setMenuView("main")}
-                      className="p-1 rounded-md hover-elevate"
-                      data-testid="button-back-to-main-sitemap"
-                    >
-                      <IconArrowLeft className="h-4 w-4" />
-                    </button>
-                    <div>
-                      <h3 className="font-semibold text-sm">Sitemap URLs</h3>
-                      <p className="text-xs text-muted-foreground">{sitemapUrls.length} URLs indexed</p>
-                    </div>
+                  <div>
+                    <h3 className="font-semibold text-sm">Sitemap URLs</h3>
+                    <p className="text-xs text-muted-foreground">{sitemapUrls.length} URLs indexed</p>
                   </div>
                   <div className="flex items-center gap-1">
                     <button
@@ -1227,6 +1218,8 @@ export function DebugBubble() {
                   )}
                 </div>
               </ScrollArea>
+              </>
+              )}
             </>
           )}
         </PopoverContent>
