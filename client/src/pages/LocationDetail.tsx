@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { useTranslation } from "react-i18next";
@@ -6,6 +7,7 @@ import type { LocationPage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 import Header from "@/components/Header";
 
 export default function LocationDetail() {
@@ -32,6 +34,12 @@ export default function LocationDetail() {
 
   usePageMeta(location?.meta);
   useSchemaOrg(location?.schema);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useContentAutoRefresh("location", slug, locale, handleRefetch);
 
   if (isLoading) {
     return (
@@ -72,7 +80,6 @@ export default function LocationDetail() {
         contentType="location"
         slug={slug}
         locale={locale}
-        onSectionAdded={() => refetch()}
       />
     </div>
   );

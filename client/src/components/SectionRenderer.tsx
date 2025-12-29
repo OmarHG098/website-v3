@@ -117,14 +117,13 @@ import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 
 interface SectionRendererProps {
   sections: Section[];
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
-  onSectionAdded?: () => void;
 }
 
 async function sendEditOperation(
@@ -269,7 +268,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
-export function SectionRenderer({ sections, contentType, slug, locale, onSectionAdded }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
   const { toast } = useToast();
   
   const handleMoveUp = useCallback(async (index: number) => {
@@ -281,12 +280,11 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved up" });
-      await refreshContent(contentType, slug, locale);
-      onSectionAdded?.();
+      emitContentUpdated({ contentType, slug, locale });
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
     }
-  }, [contentType, slug, locale, toast, onSectionAdded]);
+  }, [contentType, slug, locale, toast]);
   
   const handleMoveDown = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index >= sections.length - 1) return;
@@ -297,12 +295,11 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section moved down" });
-      await refreshContent(contentType, slug, locale);
-      onSectionAdded?.();
+      emitContentUpdated({ contentType, slug, locale });
     } else {
       toast({ title: "Failed to move section", description: result.error, variant: "destructive" });
     }
-  }, [contentType, slug, locale, sections.length, toast, onSectionAdded]);
+  }, [contentType, slug, locale, sections.length, toast]);
   
   const handleDelete = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale) return;
@@ -317,12 +314,11 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
     
     if (result.success) {
       toast({ title: "Section deleted" });
-      await refreshContent(contentType, slug, locale);
-      onSectionAdded?.();
+      emitContentUpdated({ contentType, slug, locale });
     } else {
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
     }
-  }, [contentType, slug, locale, toast, onSectionAdded]);
+  }, [contentType, slug, locale, toast]);
 
   return (
     <>
@@ -332,7 +328,6 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
         contentType={contentType}
         slug={slug}
         locale={locale}
-        onSectionAdded={onSectionAdded}
       />
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
@@ -363,7 +358,6 @@ export function SectionRenderer({ sections, contentType, slug, locale, onSection
               contentType={contentType}
               slug={slug}
               locale={locale}
-              onSectionAdded={onSectionAdded}
             />
           </div>
         );

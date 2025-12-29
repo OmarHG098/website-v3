@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 import type { Section, SectionLayout } from "@shared/schema";
 
 interface SpacingControlPopoverProps {
@@ -16,7 +16,6 @@ interface SpacingControlPopoverProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
-  onSpacingChanged?: () => void;
 }
 
 const SPACING_PRESETS = [
@@ -113,7 +112,6 @@ export function SpacingControlPopover({
   contentType,
   slug,
   locale,
-  onSpacingChanged,
 }: SpacingControlPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -179,9 +177,8 @@ export function SpacingControlPopover({
         });
       } else if (operations.length > 0) {
         toast({ title: "Spacing updated" });
-        // Refresh content to update the page
-        await refreshContent(contentType, slug, locale);
-        onSpacingChanged?.();
+        // Emit event to trigger page refresh
+        emitContentUpdated({ contentType, slug, locale });
       }
       setIsOpen(false);
     } catch (error) {
@@ -208,7 +205,6 @@ export function SpacingControlPopover({
     aboveSpacing,
     belowSpacing,
     toast,
-    onSpacingChanged,
   ]);
 
   if (!sectionAbove && !sectionBelow) {

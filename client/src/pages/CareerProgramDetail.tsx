@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { useTranslation } from "react-i18next";
@@ -6,6 +7,7 @@ import type { CareerProgram } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 import Header from "@/components/Header";
 
 export default function CareerProgramDetail() {
@@ -33,6 +35,12 @@ export default function CareerProgramDetail() {
 
   usePageMeta(program?.meta);
   useSchemaOrg(program?.schema);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useContentAutoRefresh("program", slug, locale, handleRefetch);
 
   if (isLoading) {
     return (
@@ -73,7 +81,6 @@ export default function CareerProgramDetail() {
         contentType="program"
         slug={slug}
         locale={locale}
-        onSectionAdded={() => refetch()}
       />
     </div>
   );

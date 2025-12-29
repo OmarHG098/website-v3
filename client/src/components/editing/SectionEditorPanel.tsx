@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -251,7 +251,6 @@ export function SectionEditorPanel({
 
       if (response.ok) {
         const result = await response.json();
-        console.log("[SectionEditorPanel] Save successful, refreshing content...", { contentType, slug, locale });
 
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
@@ -261,10 +260,8 @@ export function SectionEditorPanel({
         onUpdate(confirmedSection || parsed);
         setHasChanges(false);
 
-        // Refresh content to update the page
-        console.log("[SectionEditorPanel] Calling refreshContent...");
-        await refreshContent(contentType, slug, locale);
-        console.log("[SectionEditorPanel] refreshContent completed");
+        // Emit event to trigger page refresh
+        emitContentUpdated({ contentType, slug, locale });
         return true;
       } else {
         const error = await response.json();
