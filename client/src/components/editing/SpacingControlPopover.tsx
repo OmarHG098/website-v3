@@ -274,7 +274,7 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowUp className="h-3.5 w-3.5" />
-                <span>Section Above (Bottom)</span>
+                <span>Section Above ({sectionAbove.type})</span>
               </div>
               <SpacingPresetButtons
                 label="Padding Bottom"
@@ -293,7 +293,7 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowDown className="h-3.5 w-3.5" />
-                <span>Section Below (Top)</span>
+                <span>Section Below ({sectionBelow.type})</span>
               </div>
               <SpacingPresetButtons
                 label="Padding Top"
