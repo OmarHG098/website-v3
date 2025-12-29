@@ -6,6 +6,7 @@ import type { AILearningSection as AILearningSectionType } from "@shared/schema"
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { cn } from "@/lib/utils";
+import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
@@ -157,21 +158,12 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   </p>
                 </div>
                 
-                {videoId && (
-                  <div 
-                    className="relative aspect-video rounded-card overflow-hidden shadow-card"
-                    data-testid="video-container-ai"
-                  >
-                    <iframe
-                      src={`https://www.youtube.com/embed/${videoId}`}
-                      title="Learn with 4Geeks"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                      data-testid="iframe-youtube-video"
-                    />
-                  </div>
-                )}
+                <div 
+                  className="flex items-center justify-center"
+                  data-testid="diagram-container-ai"
+                >
+                  <AIWorkflowDiagram />
+                </div>
               </div>
             </CardContent>
           </Card>
