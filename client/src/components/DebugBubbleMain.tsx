@@ -707,7 +707,7 @@ export function DebugBubble() {
           ) : (
             <>
               {/* Persistent header - always visible */}
-              <div className="p-3 border-b flex items-center justify-between">
+              <div className="p-3 border-b flex items-center justify-between pl-[12px] pr-[12px] pt-[6px] pb-[6px]">
                 <div className="flex items-center gap-2">
                   {menuView !== "main" && (
                     <button
@@ -718,10 +718,7 @@ export function DebugBubble() {
                       <IconArrowLeft className="h-4 w-4" />
                     </button>
                   )}
-                  <div>
-                    <h3 className="font-semibold text-sm">Dev Tools</h3>
-                    <p className="text-xs text-muted-foreground">Development utilities</p>
-                  </div>
+                  <h3 className="font-semibold text-sm">Dev Tools</h3>
                 </div>
                 {editMode && (
                   <div 
