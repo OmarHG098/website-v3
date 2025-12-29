@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useTranslation } from "react-i18next";
@@ -6,6 +7,7 @@ import type { LandingPage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 
 export default function LandingDetail() {
   const { i18n } = useTranslation();
@@ -27,6 +29,12 @@ export default function LandingDetail() {
 
   usePageMeta(landing?.meta);
   useSchemaOrg(landing?.schema);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useContentAutoRefresh("landing", slug, locale, handleRefetch);
 
   if (isLoading) {
     return (
@@ -66,7 +74,6 @@ export default function LandingDetail() {
         contentType="landing"
         slug={slug}
         locale={locale}
-        onSectionAdded={() => refetch()}
       />
     </div>
   );

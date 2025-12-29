@@ -59,7 +59,7 @@ import {
 } from "@/components/ui/tooltip";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -70,7 +70,6 @@ interface ComponentPickerModalProps {
   locale?: string;
   variant?: string;
   version?: number;
-  onSectionAdded?: () => void;
 }
 
 interface ComponentInfo {
@@ -188,7 +187,6 @@ export default function ComponentPickerModal({
   locale,
   variant,
   version,
-  onSectionAdded,
 }: ComponentPickerModalProps) {
   const [step, setStep] = useState<"select" | "configure">("select");
   const [selectedComponent, setSelectedComponent] = useState<ComponentInfo | null>(null);
@@ -380,10 +378,9 @@ export default function ComponentPickerModal({
       });
 
       if (response.ok) {
-        onSectionAdded?.();
         onClose();
-        // Refresh content to update the page without full reload
-        await refreshContent(contentType, slug, locale);
+        // Emit event to trigger page refresh
+        emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale! });
       } else {
         console.error("Failed to add section");
       }
@@ -392,7 +389,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose, useAiAdaptation, toast]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onClose, useAiAdaptation, toast]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {

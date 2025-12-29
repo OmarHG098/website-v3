@@ -11,7 +11,6 @@ interface AddSectionButtonProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
-  onSectionAdded?: () => void;
 }
 
 export function AddSectionButton({ 
@@ -20,7 +19,6 @@ export function AddSectionButton({
   contentType, 
   slug, 
   locale,
-  onSectionAdded 
 }: AddSectionButtonProps) {
   const editMode = useEditModeOptional();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,11 +33,6 @@ export function AddSectionButton({
   
   const handleCloseModal = () => {
     setIsModalOpen(false);
-  };
-  
-  const handleSectionAdded = () => {
-    setIsModalOpen(false);
-    onSectionAdded?.();
   };
   
   return (
@@ -65,7 +58,6 @@ export function AddSectionButton({
               contentType={contentType}
               slug={slug}
               locale={locale}
-              onSpacingChanged={onSectionAdded}
             />
           </div>
           <div className="flex-1 h-px bg-primary/40" />
@@ -79,7 +71,6 @@ export function AddSectionButton({
           contentType={contentType}
           slug={slug}
           locale={locale}
-          onSectionAdded={handleSectionAdded}
         />
       )}
     </>

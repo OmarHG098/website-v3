@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 import { renderSection } from "@/components/SectionRenderer";
 import yaml from "js-yaml";
 
@@ -44,6 +44,11 @@ export function EditableSection({ children, section, index, sectionType, content
   const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
+  
+  // Sync currentSection when the prop changes (e.g., after refetch)
+  useEffect(() => {
+    setCurrentSection(section);
+  }, [section]);
   
   const canMoveUp = index > 0;
   const canMoveDown = totalSections > 0 && index < totalSections - 1;
@@ -322,8 +327,8 @@ export function EditableSection({ children, section, index, sectionType, content
       setSwapPopoverOpen(false);
       setAdaptedSection(null);
       setHasAdapted(false);
-      // Refresh content to update the page
-      await refreshContent(contentType, slug, locale || 'en');
+      // Emit event to trigger page refresh
+      emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale || 'en' });
       toast({ title: "Section swapped", description: "The section variant has been updated." });
     } catch (err) {
       toast({ title: "Error", description: "Failed to swap section variant.", variant: "destructive" });

@@ -74,7 +74,7 @@ export const heroSingleColumnSchema = z.object({
   cta_buttons: z.array(ctaButtonSchema).optional(),
   trust_bar: trustBarSchema.optional(),
   award_badges: z.array(awardBadgeSchema).optional(),
-}).strict();
+}).passthrough();
 
 export const heroShowcaseSchema = z.object({
   type: z.literal("hero"),
@@ -87,7 +87,7 @@ export const heroShowcaseSchema = z.object({
   left_images: z.array(heroImageSchema).optional(),
   right_images: z.array(heroImageSchema).optional(),
   show_arrow: z.boolean().optional(),
-}).strict();
+}).passthrough();
 
 export const heroProductShowcaseSchema = z.object({
   type: z.literal("hero"),
@@ -114,7 +114,7 @@ export const heroProductShowcaseSchema = z.object({
   form: leadFormDataSchema.nullish(),
   cta_button: ctaButtonSchema.nullish(),
   trust_bar: productShowcaseTrustBarSchema.nullish(),
-}).strict();
+}).passthrough();
 
 export const heroSimpleTwoColumnSchema = z.object({
   type: z.literal("hero"),
@@ -129,7 +129,7 @@ export const heroSimpleTwoColumnSchema = z.object({
   }),
   cta_buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
-}).strict();
+}).passthrough();
 
 export const heroSimpleStackedSchema = z.object({
   type: z.literal("hero"),
@@ -144,7 +144,7 @@ export const heroSimpleStackedSchema = z.object({
   }).optional(),
   cta_buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
-}).strict();
+}).passthrough();
 
 export const heroTwoColumnSchema = z.object({
   type: z.literal("hero"),
@@ -157,7 +157,7 @@ export const heroTwoColumnSchema = z.object({
   image_alt: z.string().optional(),
   cta_buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
-}).strict();
+}).passthrough();
 
 export const heroCourseSchema = z.object({
   type: z.literal("hero"),
@@ -189,7 +189,7 @@ export const heroCourseSchema = z.object({
     }).optional(),
     features: z.array(heroCourseFeatureSchema).optional(),
   }),
-}).strict();
+}).passthrough();
 
 // ApplyFormProductShowcase variant - hero with application form and product showcase
 export const heroApplyFormProductShowcaseSchema = z.object({
@@ -202,7 +202,7 @@ export const heroApplyFormProductShowcaseSchema = z.object({
   form: leadFormDataSchema,
   cta_button: ctaButtonSchema.optional(),
   trust_bar: productShowcaseTrustBarSchema.optional(),
-}).strict();
+}).passthrough();
 
 // Combined hero section schema
 export const heroSectionSchema = z.union([

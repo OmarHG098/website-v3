@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
-import { refreshContent } from "@/lib/contentRefresh";
+import { emitContentUpdated } from "@/lib/contentEvents";
 import type { Section, SectionLayout } from "@shared/schema";
 
 interface SpacingControlPopoverProps {
@@ -16,7 +16,6 @@ interface SpacingControlPopoverProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
-  onSpacingChanged?: () => void;
 }
 
 const SPACING_PRESETS = [
@@ -58,12 +57,37 @@ async function updateSectionField(
   return response.json();
 }
 
-function parseSpacingValue(section: Section | undefined): { paddingY: string; marginY: string } {
-  if (!section) return { paddingY: "", marginY: "" };
+function parseTopBottom(value: string | undefined): { top: string; bottom: string } {
+  if (!value) return { top: "none", bottom: "none" };
+  const parts = value.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return { top: parts[0], bottom: parts[0] };
+  }
+  return { top: parts[0], bottom: parts[1] };
+}
+
+function combineTopBottom(top: string, bottom: string): string {
+  const t = top || "none";
+  const b = bottom || "none";
+  if (t === b) return t;
+  return `${t} ${b}`;
+}
+
+function parseSpacingValue(section: Section | undefined): {
+  paddingTop: string;
+  paddingBottom: string;
+  marginTop: string;
+  marginBottom: string;
+} {
+  if (!section) return { paddingTop: "none", paddingBottom: "none", marginTop: "none", marginBottom: "none" };
   const layout = section as SectionLayout;
+  const padding = parseTopBottom(layout.paddingY);
+  const margin = parseTopBottom(layout.marginY);
   return {
-    paddingY: layout.paddingY || "",
-    marginY: layout.marginY || "",
+    paddingTop: padding.top,
+    paddingBottom: padding.bottom,
+    marginTop: margin.top,
+    marginBottom: margin.bottom,
   };
 }
 
@@ -113,7 +137,6 @@ export function SpacingControlPopover({
   contentType,
   slug,
   locale,
-  onSpacingChanged,
 }: SpacingControlPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -127,20 +150,20 @@ export function SpacingControlPopover({
   const aboveSpacing = parseSpacingValue(sectionAbove);
   const belowSpacing = parseSpacingValue(sectionBelow);
 
-  const [abovePaddingY, setAbovePaddingY] = useState(aboveSpacing.paddingY);
-  const [aboveMarginY, setAboveMarginY] = useState(aboveSpacing.marginY);
-  const [belowPaddingY, setBelowPaddingY] = useState(belowSpacing.paddingY);
-  const [belowMarginY, setBelowMarginY] = useState(belowSpacing.marginY);
+  const [abovePaddingBottom, setAbovePaddingBottom] = useState(aboveSpacing.paddingBottom);
+  const [aboveMarginBottom, setAboveMarginBottom] = useState(aboveSpacing.marginBottom);
+  const [belowPaddingTop, setBelowPaddingTop] = useState(belowSpacing.paddingTop);
+  const [belowMarginTop, setBelowMarginTop] = useState(belowSpacing.marginTop);
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsOpen(open);
     if (open) {
       const above = parseSpacingValue(sectionAbove);
       const below = parseSpacingValue(sectionBelow);
-      setAbovePaddingY(above.paddingY);
-      setAboveMarginY(above.marginY);
-      setBelowPaddingY(below.paddingY);
-      setBelowMarginY(below.marginY);
+      setAbovePaddingBottom(above.paddingBottom);
+      setAboveMarginBottom(above.marginBottom);
+      setBelowPaddingTop(below.paddingTop);
+      setBelowMarginTop(below.marginTop);
     }
   }, [sectionAbove, sectionBelow]);
 
@@ -151,20 +174,28 @@ export function SpacingControlPopover({
     const operations: Promise<{ success: boolean; error?: string }>[] = [];
 
     if (sectionAbove) {
-      if (abovePaddingY !== aboveSpacing.paddingY) {
-        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "paddingY", abovePaddingY));
+      const newPaddingY = combineTopBottom(aboveSpacing.paddingTop, abovePaddingBottom);
+      const oldPaddingY = combineTopBottom(aboveSpacing.paddingTop, aboveSpacing.paddingBottom);
+      if (newPaddingY !== oldPaddingY) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "paddingY", newPaddingY));
       }
-      if (aboveMarginY !== aboveSpacing.marginY) {
-        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "marginY", aboveMarginY));
+      const newMarginY = combineTopBottom(aboveSpacing.marginTop, aboveMarginBottom);
+      const oldMarginY = combineTopBottom(aboveSpacing.marginTop, aboveSpacing.marginBottom);
+      if (newMarginY !== oldMarginY) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "marginY", newMarginY));
       }
     }
 
     if (sectionBelow) {
-      if (belowPaddingY !== belowSpacing.paddingY) {
-        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "paddingY", belowPaddingY));
+      const newPaddingY = combineTopBottom(belowPaddingTop, belowSpacing.paddingBottom);
+      const oldPaddingY = combineTopBottom(belowSpacing.paddingTop, belowSpacing.paddingBottom);
+      if (newPaddingY !== oldPaddingY) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "paddingY", newPaddingY));
       }
-      if (belowMarginY !== belowSpacing.marginY) {
-        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "marginY", belowMarginY));
+      const newMarginY = combineTopBottom(belowMarginTop, belowSpacing.marginBottom);
+      const oldMarginY = combineTopBottom(belowSpacing.marginTop, belowSpacing.marginBottom);
+      if (newMarginY !== oldMarginY) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "marginY", newMarginY));
       }
     }
 
@@ -179,9 +210,8 @@ export function SpacingControlPopover({
         });
       } else if (operations.length > 0) {
         toast({ title: "Spacing updated" });
-        // Refresh content to update the page
-        await refreshContent(contentType, slug, locale);
-        onSpacingChanged?.();
+        // Emit event to trigger page refresh
+        emitContentUpdated({ contentType, slug, locale });
       }
       setIsOpen(false);
     } catch (error) {
@@ -201,14 +231,13 @@ export function SpacingControlPopover({
     sectionBelow,
     aboveIndex,
     belowIndex,
-    abovePaddingY,
-    aboveMarginY,
-    belowPaddingY,
-    belowMarginY,
+    abovePaddingBottom,
+    aboveMarginBottom,
+    belowPaddingTop,
+    belowMarginTop,
     aboveSpacing,
     belowSpacing,
     toast,
-    onSpacingChanged,
   ]);
 
   if (!sectionAbove && !sectionBelow) {
@@ -245,17 +274,17 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowUp className="h-3.5 w-3.5" />
-                <span>Section Above (Bottom)</span>
+                <span>Section Above ({sectionAbove.type})</span>
               </div>
               <SpacingPresetButtons
                 label="Padding Bottom"
-                value={abovePaddingY}
-                onChange={setAbovePaddingY}
+                value={abovePaddingBottom}
+                onChange={setAbovePaddingBottom}
               />
               <SpacingPresetButtons
                 label="Margin Bottom"
-                value={aboveMarginY}
-                onChange={setAboveMarginY}
+                value={aboveMarginBottom}
+                onChange={setAboveMarginBottom}
               />
             </div>
           )}
@@ -264,17 +293,17 @@ export function SpacingControlPopover({
             <div className="space-y-3 p-3 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <IconArrowDown className="h-3.5 w-3.5" />
-                <span>Section Below (Top)</span>
+                <span>Section Below ({sectionBelow.type})</span>
               </div>
               <SpacingPresetButtons
                 label="Padding Top"
-                value={belowPaddingY}
-                onChange={setBelowPaddingY}
+                value={belowPaddingTop}
+                onChange={setBelowPaddingTop}
               />
               <SpacingPresetButtons
                 label="Margin Top"
-                value={belowMarginY}
-                onChange={setBelowMarginY}
+                value={belowMarginTop}
+                onChange={setBelowMarginTop}
               />
             </div>
           )}
