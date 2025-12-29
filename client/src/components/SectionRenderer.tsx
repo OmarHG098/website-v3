@@ -12,22 +12,33 @@ const SPACING_PRESETS: Record<string, { top: string; bottom: string }> = {
   xl: { top: "96px", bottom: "96px" },
 };
 
+// Resolve a single spacing value (preset name or custom CSS)
+function resolveSpacingValue(val: string): string {
+  const preset = SPACING_PRESETS[val];
+  if (preset) return preset.top; // All presets have equal top/bottom
+  return val; // Return as-is (custom CSS value like "20px")
+}
+
 // Parse spacing value - supports presets or custom CSS values
 // Returns null if no value provided (component handles its own spacing)
 function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
   if (!value) return null;
   
-  // Check if it's a preset
+  // Check if it's a single preset
   if (SPACING_PRESETS[value]) {
     return SPACING_PRESETS[value];
   }
   
-  // Parse custom value (e.g., "20px 32px" or "20px")
+  // Parse two-value format (e.g., "lg xl" or "20px 32px")
   const parts = value.trim().split(/\s+/);
   if (parts.length === 1) {
-    return { top: parts[0], bottom: parts[0] };
+    const resolved = resolveSpacingValue(parts[0]);
+    return { top: resolved, bottom: resolved };
   }
-  return { top: parts[0], bottom: parts[1] || parts[0] };
+  return { 
+    top: resolveSpacingValue(parts[0]), 
+    bottom: resolveSpacingValue(parts[1] || parts[0]) 
+  };
 }
 
 // Default spacing when YAML doesn't specify values
