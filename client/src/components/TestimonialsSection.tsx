@@ -453,7 +453,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         </div>
 
         {/* Dots Indicator */}
-        <div className="mt-6">
+        <div className="mt-3">
           <DotsIndicator
             count={originalLength}
             activeIndex={activeIndex}
