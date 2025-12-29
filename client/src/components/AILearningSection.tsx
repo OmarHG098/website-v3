@@ -65,7 +65,7 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
             "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
             isActive ? "bg-primary/20" : "bg-primary/10"
           )}>
-            {getIcon(feature.icon, showRigobotLogo)}
+            {getIcon(feature.icon, false)}
           </div>
           <h3 className="font-semibold text-foreground flex-1">
             {feature.title}
@@ -212,7 +212,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       id={displayedFeature.image_id}
                       preset="card-wide"
                       className="aspect-video"
-                      useSolidCard={true}
                       bordered={true}
                     />
                   </div>
@@ -223,7 +222,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       autoplay={displayedFeature.video_url.includes('.mp4')}
                       loop={displayedFeature.video_url.includes('.mp4')}
                       muted={displayedFeature.video_url.includes('.mp4')}
-                      useSolidCard={true}
                       bordered={true}
                     />
                   </div>
@@ -231,7 +229,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   <div data-testid="video-container-ai">
                     <UniversalVideo
                       url={data.video_url!}
-                      useSolidCard={true}
                       bordered={true}
                     />
                   </div>
