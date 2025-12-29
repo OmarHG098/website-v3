@@ -67,7 +67,7 @@ sections:
         title: Average starting salary for AI Engineers
     marginY: none
     paddingY: none
-    background: none
+    background: secondary
   - type: awards_marquee
     version: "1.0"
     paddingY: none

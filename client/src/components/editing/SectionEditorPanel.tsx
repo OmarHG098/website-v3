@@ -59,25 +59,32 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 
   const backgrounds = useMemo(() => {
     if (!theme?.backgrounds) return [];
-    return theme.backgrounds.map((bg) => ({
-      id: bg.id,
-      label: bg.label,
-      cssVar: bg.cssVar,
-      value: bg.value,
-    }));
+    return theme.backgrounds.map((bg) => {
+      const cssValue = bg.cssVar ? `hsl(var(${bg.cssVar}))` : bg.value || "";
+      return {
+        id: bg.id,
+        label: bg.label,
+        cssValue,
+        previewStyle: cssValue,
+      };
+    });
   }, [theme]);
 
-  const isCustom = value && !backgrounds.some((t) => t.id === value);
+  const isSelected = useCallback((bg: { id: string; cssValue: string }) => {
+    return value === bg.cssValue || value === bg.id;
+  }, [value]);
+
+  const isCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
   const [customValue, setCustomValue] = useState(isCustom ? value : "");
 
   useEffect(() => {
-    const isNowCustom = value && backgrounds.length > 0 && !backgrounds.some((t) => t.id === value);
+    const isNowCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
     if (isNowCustom) {
       setCustomValue(value);
     } else {
       setCustomValue("");
     }
-  }, [value, backgrounds]);
+  }, [value, backgrounds, isSelected]);
 
   if (isLoading) {
     return (
@@ -111,9 +118,9 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
           <button
             key={bg.id}
             type="button"
-            onClick={() => onChange(bg.id)}
+            onClick={() => onChange(bg.cssValue)}
             className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
-              value === bg.id
+              isSelected(bg)
                 ? "border-primary ring-2 ring-primary/20"
                 : "border-border hover:border-primary/50"
             }`}
@@ -121,7 +128,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
           >
             <span
               className="w-6 h-6 rounded border border-border/50"
-              style={{ background: bg.cssVar ? `hsl(var(${bg.cssVar}))` : bg.value }}
+              style={{ background: bg.previewStyle }}
             />
             <span className="text-[10px] text-muted-foreground">{bg.label}</span>
           </button>

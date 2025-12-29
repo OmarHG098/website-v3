@@ -36,6 +36,74 @@ The platform utilizes a modern web stack: React with TypeScript, Vite, Tailwind 
 -   **UniversalVideo Component**: A mandatory component (`client/src/components/UniversalVideo.tsx`) for all video content, handling local videos natively and lazy-loading `react-player` for external sources. Configurable via YAML with schema validation.
 -   **UniversalImage Component**: A mandatory component (`client/src/components/UniversalImage.tsx`) for all image content, referencing an `image-registry.json` for metadata and supporting presets and lazy loading.
 -   **Inline Editing System**: A capability-based system for human editors and AI agents, enabling content modification directly on the site. It includes an `EditModeContext`, `EditableSection` wrappers, a `SectionEditorPanel` with YAML editor, and server-side content manipulation via API endpoints.
+-   **Theme Configuration System**: A centralized `marketing-content/theme.json` file defines allowed colors for backgrounds, accents, and text. The editor fetches this as a reference when choosing colors, but saves the resolved CSS value (e.g., `hsl(var(--background))`) directly to YAML—no runtime lookups needed.
+
+### Validation System
+The platform includes a modular validation framework at `scripts/validation/` that can be used both **preventively** (API calls during editing) and **reactively** (CLI batch scanning).
+
+**Directory Structure:**
+```
+scripts/validation/
+├── index.ts           # Main exports
+├── service.ts         # ValidationService orchestrator
+├── reporting.ts       # Output formatting utilities
+├── shared/
+│   └── types.ts       # Core interfaces (Validator, ValidationIssue, etc.)
+└── validators/
+    ├── index.ts       # Validator registry and discovery
+    ├── redirects.ts   # Redirect conflict detection
+    ├── meta.ts        # SEO meta validation
+    ├── schema.ts      # Schema.org reference validation
+    ├── sitemap.ts     # Sitemap integrity checks
+    ├── components.ts  # Component registry validation
+    └── backgrounds.ts # Background color theme compliance
+```
+
+**Creating a New Validator:**
+1. Create a new file in `scripts/validation/validators/` (e.g., `myvalidator.ts`)
+2. Export a `Validator` object with the required interface:
+```typescript
+import type { Validator, ValidationContext, ValidatorResult, ValidationIssue } from "../shared/types";
+
+export const myValidator: Validator = {
+  name: "my-validator",
+  description: "Validates something specific",
+  apiExposed: true,  // Set true to allow UI/API calls
+  estimatedDuration: "fast",  // "fast" | "medium" | "slow"
+  category: "content",  // "content" | "seo" | "integrity" | "components"
+
+  async run(context: ValidationContext): Promise<ValidatorResult> {
+    const startTime = Date.now();
+    const errors: ValidationIssue[] = [];
+    const warnings: ValidationIssue[] = [];
+
+    // Validation logic here...
+    // Use context.contentFiles to access all YAML content
+
+    return {
+      name: this.name,
+      description: this.description,
+      status: errors.length > 0 ? "failed" : warnings.length > 0 ? "warning" : "passed",
+      errors,
+      warnings,
+      duration: Date.now() - startTime,
+    };
+  },
+};
+```
+3. Add the validator to `scripts/validation/validators/index.ts`:
+   - Import: `import { myValidator } from "./myvalidator";`
+   - Add to `validators` array
+   - Add to exports
+
+**Key Interfaces:**
+- `ValidationIssue`: `{ type, code, message, file?, line?, suggestion? }`
+- `ValidatorResult`: `{ name, description, status, errors, warnings, duration, artifacts? }`
+- `ValidationContext`: Contains `contentFiles`, `redirectMap`, `validUrls`, `availableSchemas`, `sitemapEntries`
+
+**Usage:**
+- **Reactive (CLI)**: Run all validators via `ValidationService.runValidators()`
+- **Preventive (API)**: Call single validator via `ValidationService.runSingleValidator(name)` with `apiExposed: true`
 
 ### External Dependencies
 -   **4geeks Breathecode API**: Intended for user authentication, profile management, and educational content delivery.
