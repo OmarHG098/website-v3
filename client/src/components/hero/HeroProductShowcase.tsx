@@ -46,7 +46,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   return (
     <section 
       id="hero-form"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden pt-32"
       style={shouldShowBackground ? {
         backgroundImage: `url(${backgroundImage!.src})`,
         backgroundSize: 'cover',

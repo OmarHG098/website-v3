@@ -53,7 +53,7 @@ sections:
       icon: Download
   - type: awards_marquee
     version: "1.0"
-    paddingY: 72px
+    paddingY: md
     marginY: md
     speed: 40
     pauseOnHover: true

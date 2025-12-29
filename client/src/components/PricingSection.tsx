@@ -106,11 +106,12 @@ export function PricingSection({ data }: PricingSectionProps) {
           <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
             <div
               className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
-              style={{
-                background: "linear-gradient(135deg, #0042FF 0%, #3399FF 100%)",
-              }}
               data-testid="card-pricing"
+              style={{
+                background: "linear-gradient(135deg, #366bff 0%, #4aa5ff 100%)",
+              }}
             >
+
               <div className="flex flex-col items-center justify-between h-full px-4 py-6">
                 <div className="flex flex-col items-center justify-center flex-1 py-6 space-y-4">
                   {data.discount_text && (
