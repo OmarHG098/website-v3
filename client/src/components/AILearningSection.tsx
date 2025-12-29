@@ -85,19 +85,19 @@ export function AILearningSection({ data }: AILearningSectionProps) {
   const features = data.features || [];
   const displayedFeature = features[selectedIndex];
 
-  const getIcon = (iconName: string, isRigobot: boolean = false) => {
+  const getIcon = (iconName: string, isRigobot: boolean = false, isLarge: boolean = false) => {
     if (isRigobot) {
       return (
         <img 
           src={rigobotLogo} 
           alt="Rigobot" 
-          className="w-7 h-7 object-contain"
+          className={isLarge ? "w-full h-full object-cover" : "w-7 h-7 object-contain"}
         />
       );
     }
     const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
     const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={24} className="text-primary" /> : null;
+    return IconComponent ? <IconComponent size={isLarge ? 32 : 24} className="text-primary" /> : null;
   };
 
   const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
@@ -158,11 +158,11 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             <CardContent className="p-6 md:p-8">
               <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {getIcon(displayedFeature.icon, displayedFeature.show_rigobot_logo ?? displayedFeature.title?.toLowerCase().includes('rigobot'))}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
+                      {getIcon(displayedFeature.icon, displayedFeature.show_rigobot_logo ?? displayedFeature.title?.toLowerCase().includes('rigobot'), true)}
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                    <h3 className="text-h2 text-foreground">
                       {displayedFeature.title}
                     </h3>
                   </div>
