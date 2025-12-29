@@ -213,6 +213,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       preset="card-wide"
                       className="aspect-video"
                       useSolidCard={true}
+                      bordered={true}
                     />
                   </div>
                 ) : displayedFeature.video_url ? (
@@ -223,6 +224,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       loop={displayedFeature.video_url.includes('.mp4')}
                       muted={displayedFeature.video_url.includes('.mp4')}
                       useSolidCard={true}
+                      bordered={true}
                     />
                   </div>
                 ) : videoId ? (
@@ -230,6 +232,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                     <UniversalVideo
                       url={data.video_url!}
                       useSolidCard={true}
+                      bordered={true}
                     />
                   </div>
                 ) : null}

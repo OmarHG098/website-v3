@@ -241,7 +241,7 @@ sections:
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
-      - icon: Rocket
+      - icon: TrendingUp
         title: Thrive in today's tech with career support for the AI-Era
         description: ""
         show_rigobot_logo: true
@@ -255,7 +255,7 @@ sections:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
-      - icon: Robot
+      - icon: Sparkles
         title: Progress faster with AI using Rigobot + Learnpack
         description: ""
         show_rigobot_logo: true
@@ -269,7 +269,7 @@ sections:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
-      - icon: Users
+      - icon: MessageCircle
         title: One-on-one mentoring sessions
         description: ""
         show_rigobot_logo: true
