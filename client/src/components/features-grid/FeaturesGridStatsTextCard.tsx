@@ -3,7 +3,7 @@ import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
-import { WorkflowAnimation } from "@/components/WorkflowAnimation";
+import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -100,7 +100,9 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 </p>
               </div>
             )}
-            <WorkflowAnimation className="mt-4 hidden md:block h-[200px]" />
+            <div className="mt-4 hidden md:block">
+              <AIWorkflowDiagram className="max-w-md mx-auto" />
+            </div>
           </Card>
         </div>
       </div>
