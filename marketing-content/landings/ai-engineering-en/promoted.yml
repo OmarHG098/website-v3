@@ -255,7 +255,7 @@ sections:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
-      - icon: Sparkles
+      - icon: Robot
         title: Progress faster with AI using Rigobot + Learnpack
         description: ""
         show_rigobot_logo: true
@@ -269,7 +269,7 @@ sections:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
-      - icon: MessageCircle
+      - icon: Headset
         title: One-on-one mentoring sessions
         description: ""
         show_rigobot_logo: true
