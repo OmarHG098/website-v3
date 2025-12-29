@@ -51,12 +51,12 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
-    paddingY: lg xl
+    paddingY: lg none
     marginY: none
   - type: awards_marquee
     version: "1.0"
     paddingY: none
-    marginY: none
+    marginY: none lg
     speed: 40
     pauseOnHover: true
     gradient: true
