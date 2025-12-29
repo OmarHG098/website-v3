@@ -6,6 +6,7 @@ import type { AILearningSection as AILearningSectionType } from "@shared/schema"
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { cn } from "@/lib/utils";
+import { UniversalImage } from "@/components/UniversalImage";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
@@ -23,6 +24,7 @@ interface Feature {
   show_rigobot_logo?: boolean;
   bullets?: FeatureBullet[];
   video_url?: string;
+  image_id?: string;
 }
 
 interface HoverFeatureCardProps {
@@ -187,8 +189,19 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   )}
                 </div>
                 
-                {/* Feature-specific video (MP4 or YouTube) */}
-                {displayedFeature.video_url ? (
+                {/* Feature-specific media: image_id, video_url (MP4/YouTube), or fallback */}
+                {displayedFeature.image_id ? (
+                  <div 
+                    className="relative aspect-video rounded-card overflow-hidden shadow-card"
+                    data-testid="image-container-feature"
+                  >
+                    <UniversalImage
+                      id={displayedFeature.image_id}
+                      preset="card-wide"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                ) : displayedFeature.video_url ? (
                   displayedFeature.video_url.includes('.mp4') ? (
                     <div 
                       className="relative aspect-video rounded-card overflow-hidden shadow-card"

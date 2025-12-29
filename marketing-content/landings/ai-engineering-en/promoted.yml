@@ -251,9 +251,15 @@ sections:
           - text: Helps with debugging and problem-solving tasks
           - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
-      - icon: Headset
+      - icon: Robot
         title: One-on-one mentoring sessions
-        description: Unlimited access to 1:1 mentorship and career coaching, for life.
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in coding sessions and workshops
+          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
+        image_id: mentoring_zoom_call
       - icon: Users
         title: Peer-driven learning
         description: Learn faster with an active community that keeps you accountable.
