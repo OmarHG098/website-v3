@@ -45,6 +45,11 @@ export function EditableSection({ children, section, index, sectionType, content
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
   
+  // Sync currentSection when the prop changes (e.g., after refetch)
+  useEffect(() => {
+    setCurrentSection(section);
+  }, [section]);
+  
   const canMoveUp = index > 0;
   const canMoveDown = totalSections > 0 && index < totalSections - 1;
   
