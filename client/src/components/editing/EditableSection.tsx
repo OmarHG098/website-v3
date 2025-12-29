@@ -388,7 +388,12 @@ export function EditableSection({ children, section, index, sectionType, content
           data-testid={`button-edit-section-${index}`}
         >
           <IconPencil className="h-4 w-4" />
-          <span className="text-xs font-medium">{sectionType}</span>
+          <div className="flex flex-col items-start">
+            <span className="text-xs font-medium">{sectionType}</span>
+            {(currentSection as { variant?: string }).variant && (
+              <small className="text-[10px] opacity-75">{deslugify((currentSection as { variant?: string }).variant!)}</small>
+            )}
+          </div>
         </button>
         {onMoveUp && (
           <button
