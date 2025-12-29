@@ -432,7 +432,9 @@ sections:
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
-    marginY: xl
+    marginY: none
+    background: hsl(var(--primary))
+    paddingY: xl
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
