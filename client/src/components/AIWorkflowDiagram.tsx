@@ -195,7 +195,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         className="absolute inset-0 w-full h-full pointer-events-none" 
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        style={{ zIndex: -1 }}
+        style={{ zIndex: 1 }}
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
@@ -256,7 +256,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         })}
       </svg>
 
-      <div className="relative flex flex-col items-stretch gap-1 py-5 md:py-6">
+      <div className="relative flex flex-col items-stretch gap-1 py-5 md:py-6" style={{ zIndex: 2 }}>
         <div className="flex items-center justify-between w-full">
           {topRowTechnologies.map((tech, index) => (
             <TechNodeComponent
