@@ -1,0 +1,23 @@
+# Job Confidence Split - Job Guarantee Example
+# A two-card layout with primary dark card and secondary accent card with benefits
+
+- type: job_confidence_split
+  primary:
+    heading: "The Confidence of a Job Guarantee"
+    description: "We go beyond traditional training. Aprende herramientas como ChatGPT, Claude y las funciones de IA de Figma para generar ideas, perfeccionar tus diseños y crear experiencias excepcionales, más rápido que nunca."
+    tool_icons:
+      - image_id: "logo-chatgpt"
+        size: md
+        position:
+          bottom: "15%"
+          left: "60%"
+      - image_id: "logo-figma"
+        size: md
+        position:
+          bottom: "30%"
+          right: "10%"
+  secondary:
+    benefits:
+      - text: "Generate design ideas in seconds"
+      - text: "Automate routine tasks and focus on creativity"
+      - text: "Secure your career for the future"
