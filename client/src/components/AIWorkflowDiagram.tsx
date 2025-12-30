@@ -110,15 +110,15 @@ function TechNodeComponent({
     >
       <div
         className={cn(
-          "flex items-center justify-center bg-transparent border-2 transition-all duration-300",
+          "flex items-center justify-center bg-transparent transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
           isHovered
-            ? "border-[#3B82F6] scale-110"
-            : "border-[#60A5FA]/60"
+            ? "border-[1.5px] border-[#3B82F6] scale-110"
+            : "border border-[#A0D0FF]"
         )}
         style={{
           boxShadow: isHovered
-            ? "0 6px 16px rgba(59, 130, 246, 0.2)"
+            ? "0 6px 16px rgba(59, 130, 246, 0.18)"
             : "none",
         }}
       >
@@ -143,14 +143,15 @@ function TechNodeComponent({
         <div
           className={cn(
             "absolute z-30 px-3 py-2 text-[10px] rounded-lg whitespace-nowrap animate-in fade-in-0 zoom-in-95 duration-150",
-            "bg-white border border-[#E2E8F0] text-[#1E293B]",
+            "bg-white text-[#1E293B]",
             row === "top" ? "top-full mt-2" : "bottom-full mb-2"
           )}
           style={{ 
             maxWidth: "150px", 
             whiteSpace: "normal", 
             textAlign: "center",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
+            borderRadius: "8px"
           }}
           data-testid={`tooltip-${tech.id}`}
         >
@@ -187,11 +188,11 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 15
+      y: 18
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 85
+      y: 82
     })),
     center: { x: 50, y: 50 }
   };
@@ -204,6 +205,13 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
 
   const isCenterHovered = hoveredNode === "center";
 
+  const generateCurvedPath = (startX: number, startY: number, endX: number, endY: number, isTop: boolean) => {
+    const midY = (startY + endY) / 2;
+    const curveOffset = isTop ? 8 : -8;
+    const controlY = midY + curveOffset;
+    return `M ${startX} ${startY} Q ${startX} ${controlY} ${endX} ${endY}`;
+  };
+
   return (
     <div 
       ref={containerRef}
@@ -213,11 +221,12 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       <svg 
         className="absolute inset-0 w-full h-full pointer-events-none" 
         style={{ zIndex: 0 }}
+        viewBox="0 0 100 100"
         preserveAspectRatio="none"
       >
         <defs>
           <filter id="lineGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="0.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -228,20 +237,18 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         {topRowTechnologies.map((tech, i) => {
           const pos = nodePositions.top[i];
           const active = isLineActive(tech.id);
+          const pathD = generateCurvedPath(pos.x, pos.y + 6, nodePositions.center.x, nodePositions.center.y - 8, true);
           return (
-            <line 
+            <path 
               key={`top-line-${i}`}
-              x1={`${pos.x}%`} 
-              y1={`${pos.y + 10}%`} 
-              x2={`${nodePositions.center.x}%`} 
-              y2={`${nodePositions.center.y - 10}%`} 
-              stroke={active ? "#2563EB" : "#60A5FA"}
-              strokeOpacity={active ? 0.9 : 0.5}
-              strokeWidth={active ? 2.5 : 2}
+              d={pathD}
+              fill="none"
+              stroke={active ? "#2563EB" : "#A0D0FF"}
+              strokeOpacity={active ? 0.95 : 0.45}
+              strokeWidth={active ? 1.8 : 1.2}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
-                transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms"
               }}
             />
           );
@@ -250,20 +257,18 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         {bottomRowTechnologies.map((tech, i) => {
           const pos = nodePositions.bottom[i];
           const active = isLineActive(tech.id);
+          const pathD = generateCurvedPath(nodePositions.center.x, nodePositions.center.y + 8, pos.x, pos.y - 6, false);
           return (
-            <line 
+            <path 
               key={`bottom-line-${i}`}
-              x1={`${pos.x}%`} 
-              y1={`${pos.y - 10}%`} 
-              x2={`${nodePositions.center.x}%`} 
-              y2={`${nodePositions.center.y + 10}%`} 
-              stroke={active ? "#2563EB" : "#60A5FA"}
-              strokeOpacity={active ? 0.9 : 0.5}
-              strokeWidth={active ? 2.5 : 2}
+              d={pathD}
+              fill="none"
+              stroke={active ? "#2563EB" : "#A0D0FF"}
+              strokeOpacity={active ? 0.95 : 0.45}
+              strokeWidth={active ? 1.8 : 1.2}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
-                transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms"
               }}
             />
           );
@@ -289,17 +294,19 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           <div 
             className={cn(
               "flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 cursor-pointer transition-all duration-300",
-              "bg-transparent border-2 rounded-2xl",
+              "rounded-2xl",
               isCenterHovered
-                ? "border-[#3B82F6] scale-108"
-                : "border-[#60A5FA]/60",
+                ? "border-[1.5px] border-[#3B82F6] scale-108"
+                : "border border-[#A0D0FF]",
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
             style={{ 
               transitionDelay: "200ms",
               boxShadow: isCenterHovered
-                ? "0 6px 16px rgba(59, 130, 246, 0.2)"
+                ? "0 6px 16px rgba(59, 130, 246, 0.18)"
                 : "none",
+              backgroundColor: "rgba(248, 250, 252, 0.25)",
+              backdropFilter: "blur(4px)"
             }}
             onMouseEnter={() => setHoveredNode("center")}
             onMouseLeave={() => setHoveredNode(null)}
