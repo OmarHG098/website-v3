@@ -208,21 +208,42 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           const controlX = (startX + nodeX) / 2;
           const controlY = (startY + nodeY) / 2 - 2;
           
+          const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`;
+          const animationDelay = i * 0.4;
+          
           return (
-            <path 
-              key={`top-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`}
-              fill="none"
-              stroke="#A0D0FF"
-              strokeOpacity="0.33"
-              strokeWidth="0.7"
-              strokeLinecap="round"
-              className={cn(
-                "transition-opacity duration-500",
-                isVisible ? "opacity-100" : "opacity-0"
+            <g key={`top-line-${i}`}>
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="#A0D0FF"
+                strokeOpacity="0.33"
+                strokeWidth="0.7"
+                strokeLinecap="round"
+                className={cn(
+                  "transition-opacity duration-500",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}
+                style={{ transitionDelay: `${i * 60 + 100}ms` }}
+              />
+              {isVisible && (
+                <circle r="1" fill="#60A5FA" opacity="0.7">
+                  <animateMotion
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    begin={`${animationDelay}s`}
+                    path={pathD}
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.8;0.8;0"
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    begin={`${animationDelay}s`}
+                  />
+                </circle>
               )}
-              style={{ transitionDelay: `${i * 60 + 100}ms` }}
-            />
+            </g>
           );
         })}
         
@@ -238,21 +259,42 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           const controlX = (startX + nodeX) / 2;
           const controlY = (startY + nodeY) / 2 + 2;
           
+          const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`;
+          const animationDelay = (i * 0.4) + 1.2;
+          
           return (
-            <path 
-              key={`bottom-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`}
-              fill="none"
-              stroke="#A0D0FF"
-              strokeOpacity="0.33"
-              strokeWidth="0.7"
-              strokeLinecap="round"
-              className={cn(
-                "transition-opacity duration-500",
-                isVisible ? "opacity-100" : "opacity-0"
+            <g key={`bottom-line-${i}`}>
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="#A0D0FF"
+                strokeOpacity="0.33"
+                strokeWidth="0.7"
+                strokeLinecap="round"
+                className={cn(
+                  "transition-opacity duration-500",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}
+                style={{ transitionDelay: `${i * 60 + 500}ms` }}
+              />
+              {isVisible && (
+                <circle r="1" fill="#60A5FA" opacity="0.7">
+                  <animateMotion
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    begin={`${animationDelay}s`}
+                    path={pathD}
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.8;0.8;0"
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    begin={`${animationDelay}s`}
+                  />
+                </circle>
               )}
-              style={{ transitionDelay: `${i * 60 + 500}ms` }}
-            />
+            </g>
           );
         })}
       </svg>
