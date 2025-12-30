@@ -193,19 +193,19 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   }, []);
 
   const topRowOffsets = [
-    { x: -8, y: -5 },
-    { x: 0, y: -10 },
-    { x: 0, y: -20 },
-    { x: 0, y: -10 },
-    { x: 8, y: -5 },
+    { x: -8, y: 10 },
+    { x: 0, y: -5 },
+    { x: 0, y: -32 },
+    { x: 0, y: -5 },
+    { x: 8, y: 10 },
   ];
 
   const bottomRowOffsets = [
-    { x: -8, y: 5 },
-    { x: 0, y: 10 },
-    { x: 0, y: 20 },
-    { x: 0, y: 10 },
-    { x: 8, y: 5 },
+    { x: -8, y: -10 },
+    { x: 0, y: 5 },
+    { x: 0, y: 32 },
+    { x: 0, y: 5 },
+    { x: 8, y: -10 },
   ];
 
   const nodePositions = {
