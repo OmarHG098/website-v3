@@ -100,7 +100,8 @@ function TechNodeComponent({
     <div
       className={cn(
         "relative flex flex-col items-center cursor-pointer transition-all duration-300 flex-1",
-        isVisible ? "opacity-100" : "opacity-0"
+        isVisible ? "opacity-100" : "opacity-0",
+        isHovered ? "z-50" : "z-10"
       )}
       style={{ 
         transitionDelay: `${delay}ms`,
