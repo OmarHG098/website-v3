@@ -97,7 +97,9 @@ function TechNodeComponent({
   const baseDelay = row === "top" ? 0 : 400;
   const delay = baseDelay + index * 60;
   
-  const verticalOffset = arcOffset * 0.8;
+  const verticalOffset = row === "top" 
+    ? arcOffset * 2 
+    : -arcOffset * 2;
 
   return (
     <div
@@ -192,30 +194,21 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     return () => observer.disconnect();
   }, []);
 
-  const topRowOffsets = [
-    { x: -8, y: 10 },
-    { x: 0, y: -5 },
-    { x: 0, y: -32 },
-    { x: 0, y: -5 },
-    { x: 8, y: 10 },
-  ];
-
-  const bottomRowOffsets = [
-    { x: -8, y: -10 },
-    { x: 0, y: 5 },
-    { x: 0, y: 32 },
-    { x: 0, y: 5 },
-    { x: 8, y: -10 },
-  ];
+  const getArcOffset = (index: number, total: number) => {
+    const center = (total - 1) / 2;
+    const distance = Math.abs(index - center);
+    const maxOffset = 6;
+    return maxOffset * (distance / center);
+  };
 
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
-      x: (i + 0.5) / topRowTechnologies.length * 100 + topRowOffsets[i].x,
-      y: 22 + topRowOffsets[i].y
+      x: (i + 0.5) / topRowTechnologies.length * 100,
+      y: 14 + getArcOffset(i, topRowTechnologies.length)
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
-      x: (i + 0.5) / bottomRowTechnologies.length * 100 + bottomRowOffsets[i].x,
-      y: 78 + bottomRowOffsets[i].y
+      x: (i + 0.5) / bottomRowTechnologies.length * 100,
+      y: 86 - getArcOffset(i, bottomRowTechnologies.length)
     })),
     center: { x: 50, y: 50 }
   };
@@ -267,8 +260,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.85 : 0.4}
-              strokeWidth={active ? 1.5 : 0.9}
+              strokeOpacity={active ? 0.95 : 0.45}
+              strokeWidth={active ? 1.8 : 1.2}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
@@ -287,8 +280,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.85 : 0.4}
-              strokeWidth={active ? 1.5 : 0.9}
+              strokeOpacity={active ? 0.95 : 0.45}
+              strokeWidth={active ? 1.8 : 1.2}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
@@ -309,7 +302,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="top"
-              arcOffset={topRowOffsets[index].y}
+              arcOffset={getArcOffset(index, topRowTechnologies.length)}
             />
           ))}
         </div>
@@ -362,7 +355,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="bottom"
-              arcOffset={bottomRowOffsets[index].y}
+              arcOffset={getArcOffset(index, bottomRowTechnologies.length)}
             />
           ))}
         </div>
