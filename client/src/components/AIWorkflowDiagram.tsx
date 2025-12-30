@@ -195,7 +195,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const topRowOffsets = [
     { x: -8, y: -5 },
     { x: 0, y: -10 },
-    { x: 0, y: -18 },
+    { x: 0, y: -20 },
     { x: 0, y: -10 },
     { x: 8, y: -5 },
   ];
@@ -203,7 +203,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const bottomRowOffsets = [
     { x: -8, y: 5 },
     { x: 0, y: 10 },
-    { x: 0, y: 18 },
+    { x: 0, y: 20 },
     { x: 0, y: 10 },
     { x: 8, y: 5 },
   ];
@@ -267,8 +267,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.95 : 0.45}
-              strokeWidth={active ? 1.8 : 1.2}
+              strokeOpacity={active ? 0.85 : 0.4}
+              strokeWidth={active ? 1.5 : 0.9}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
@@ -287,8 +287,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.95 : 0.45}
-              strokeWidth={active ? 1.8 : 1.2}
+              strokeOpacity={active ? 0.85 : 0.4}
+              strokeWidth={active ? 1.5 : 0.9}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
