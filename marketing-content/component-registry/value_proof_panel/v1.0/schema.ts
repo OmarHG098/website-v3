@@ -10,7 +10,9 @@ import { ctaButtonSchema } from "../../common/schema";
 export const evidenceItemSchema = z.object({
   icon: z.string().optional(),
   title: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
+  source: z.string().optional(),
+  source_url: z.string().optional(),
 });
 
 export const valueProofPanelMediaSchema = z.object({
@@ -27,7 +29,6 @@ export const valueProofPanelSectionSchema = z.object({
   subtitle: z.string().optional(),
   evidence_items: z.array(evidenceItemSchema).min(1).max(6),
   media: valueProofPanelMediaSchema.optional(),
-  cta: ctaButtonSchema.optional(),
   background: z.string().optional(),
   reverse_layout: z.boolean().optional(),
 });

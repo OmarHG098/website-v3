@@ -1,6 +1,5 @@
 import { memo } from "react";
 import type { ValueProofPanelSection, EvidenceItem } from "@shared/schema";
-import { Button } from "@/components/ui/button";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import {
   IconTrophy,
@@ -38,36 +37,58 @@ function getIcon(iconName?: string): TablerIconType | null {
   return iconMap[iconName] || null;
 }
 
-function EvidenceCard({ 
+function EvidenceCitation({ 
   icon, 
   title, 
   description,
+  source,
+  source_url,
   index 
 }: { 
   icon?: string; 
   title: string; 
-  description: string;
+  description?: string;
+  source?: string;
+  source_url?: string;
   index: number;
 }) {
   const IconComponent = getIcon(icon);
   
   return (
     <div 
-      className="flex gap-4 p-4 rounded-lg bg-card/50 border border-border/50 hover:border-border transition-colors"
-      data-testid={`card-evidence-item-${index}`}
+      className="flex gap-4 py-4 border-l-2 border-primary/30 pl-4"
+      data-testid={`citation-evidence-item-${index}`}
     >
       {IconComponent && (
-        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <IconComponent className="text-primary" size={20} />
+        <div className="flex-shrink-0 mt-0.5">
+          <IconComponent className="text-muted-foreground" size={18} />
         </div>
       )}
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-foreground mb-1" data-testid="text-evidence-title">
+        <h3 className="text-lg font-semibold text-foreground mb-1" data-testid="text-evidence-title">
           {title}
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-evidence-description">
-          {description}
-        </p>
+        {description && (
+          <p className="text-sm text-muted-foreground leading-relaxed mb-1" data-testid="text-evidence-description">
+            {description}
+          </p>
+        )}
+        {source && (
+          <p className="text-sm text-muted-foreground/70 italic" data-testid="text-evidence-source">
+            {source_url ? (
+              <a 
+                href={source_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors underline underline-offset-2"
+              >
+                — {source}
+              </a>
+            ) : (
+              <>— {source}</>
+            )}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -125,7 +146,6 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
     subtitle,
     evidence_items,
     media,
-    cta,
     background,
     reverse_layout = false,
   } = data;
@@ -167,29 +187,19 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
             </div>
 
             {/* Evidence Items */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-2">
               {evidence_items.map((item: EvidenceItem, index: number) => (
-                <EvidenceCard
+                <EvidenceCitation
                   key={index}
                   index={index}
                   icon={item.icon}
                   title={item.title}
                   description={item.description}
+                  source={item.source}
+                  source_url={item.source_url}
                 />
               ))}
             </div>
-
-            {/* CTA Button */}
-            {cta && (
-              <Button
-                variant={cta.variant === "primary" ? "default" : cta.variant === "outline" ? "outline" : "secondary"}
-                size="lg"
-                asChild
-                data-testid="button-value-proof-cta"
-              >
-                <a href={cta.url}>{cta.text}</a>
-              </Button>
-            )}
           </div>
 
           {/* Media Column */}
