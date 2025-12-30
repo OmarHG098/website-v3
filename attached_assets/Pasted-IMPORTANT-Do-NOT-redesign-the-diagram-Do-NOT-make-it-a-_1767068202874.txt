@@ -1,0 +1,23 @@
+IMPORTANT: Do NOT redesign the diagram. Do NOT make it a full circle or radial mind-map. Start EXACTLY from the current version (gentle curved lines, horizontal-ish rows, rounded pill nodes, thin pale blue connectors, transparent interiors, subtle hover effects) and ONLY make these small positional adjustments:
+
+1. Node repositioning (keep all styles, sizes, borders, colors, labels, icons, hover effects, and everything else 100% identical):
+   - Gently push the top row nodes (Python, VS Code, Jupyter, GitHub, OpenAI) slightly upward and spread them a bit wider in a very subtle upward arc (make the middle three nodes ~10-15% higher than the left and right ones to form a soft curve).
+   - Gently push the bottom row nodes (LangChain, Hugging Face, React, Node.js, Rigobot) slightly downward and spread them a bit wider in a very subtle downward arc (middle three ~10-15% lower).
+   - The overall shape should become a very wide, flattened oval/ellipse (much wider horizontally than tall, panoramic, not a perfect circle, just a soft organic wrap around the center).
+   - Center hub must stay perfectly centered — do NOT move or resize it.
+
+2. Connector lines:
+   - Automatically adjust the curves to smoothly follow the new gentle arc positions (keep the same very thin 1–1.2px thickness, same pale blue color #A0D0FF or similar, same 0.4–0.5 opacity — do NOT make them thicker or more curved).
+   - Maintain the exact same gentle bezier arc style.
+
+3. No other changes allowed:
+   - Keep rounded pill/rectangle nodes (border-radius unchanged)
+   - Keep transparent interiors
+   - Keep soft blue borders
+   - Keep full width, compact height, staggered fade-in
+   - Keep hover behavior exactly as is (scale + glow on nodes, lines brighten/thicken on connected hover, solid tooltip)
+   - Keep the very subtle center fill if it already exists (or add one only if lines show through — #F8FAFC at 20% opacity max)
+
+Goal: Take the current good diagram and make it feel just a little more like a soft, wide oval/ellipse by subtly repositioning the 10 nodes into gentle upper/lower arcs — nothing dramatic, no full circle, just a flattened, panoramic organic flow.
+
+Do NOT touch anything else. Keep left stats and right text completely unchanged.

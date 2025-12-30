@@ -98,8 +98,8 @@ function TechNodeComponent({
   const delay = baseDelay + index * 60;
   
   const verticalOffset = row === "top" 
-    ? arcOffset * 2 
-    : -arcOffset * 2;
+    ? arcOffset * 1.5 
+    : -arcOffset * 1.5;
 
   return (
     <div
@@ -197,18 +197,18 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const getArcOffset = (index: number, total: number) => {
     const center = (total - 1) / 2;
     const distance = Math.abs(index - center);
-    const maxOffset = 6;
+    const maxOffset = 3;
     return maxOffset * (distance / center);
   };
 
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 14 + getArcOffset(i, topRowTechnologies.length)
+      y: 16 + getArcOffset(i, topRowTechnologies.length)
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 86 - getArcOffset(i, bottomRowTechnologies.length)
+      y: 84 - getArcOffset(i, bottomRowTechnologies.length)
     })),
     center: { x: 50, y: 50 }
   };
