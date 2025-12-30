@@ -12,6 +12,7 @@ export const toolIconSchema = z.object({
   image_id: z.string().optional(),
   size: z.enum(["sm", "md", "lg"]).optional().default("md"),
   position: z.object({
+    top: z.string().optional(),
     bottom: z.string().optional(),
     left: z.string().optional(),
     right: z.string().optional(),

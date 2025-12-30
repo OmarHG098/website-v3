@@ -57,6 +57,9 @@ props:
             required: false
             description: "Positioning within the card"
             fields:
+              top:
+                type: string
+                description: "Top offset (e.g., '10%')"
               bottom:
                 type: string
                 description: "Bottom offset (e.g., '20%')"

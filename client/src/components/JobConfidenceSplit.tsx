@@ -1,7 +1,17 @@
 import { memo } from "react";
 import type { JobConfidenceSplitSection, JobConfidenceBenefit, ToolIcon } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
-import { IconCheck } from "@tabler/icons-react";
+import { 
+  IconCheck, 
+  IconBrandOpenai,
+  IconBrandFigma,
+  IconBrandGithub,
+  IconBrandVscode,
+  IconCode,
+  IconRobot,
+  IconSparkles,
+  type Icon as TablerIconType
+} from "@tabler/icons-react";
 
 interface JobConfidenceSplitProps {
   data: JobConfidenceSplitSection;
@@ -13,6 +23,27 @@ const sizeClasses: Record<string, string> = {
   lg: "w-20 h-20",
 };
 
+const iconSizeMap: Record<string, number> = {
+  sm: 20,
+  md: 28,
+  lg: 40,
+};
+
+const toolIconMap: Record<string, TablerIconType> = {
+  BrandOpenai: IconBrandOpenai,
+  BrandFigma: IconBrandFigma,
+  BrandGithub: IconBrandGithub,
+  BrandVscode: IconBrandVscode,
+  Code: IconCode,
+  Robot: IconRobot,
+  Sparkles: IconSparkles,
+};
+
+function getToolIcon(iconName?: string): TablerIconType | null {
+  if (!iconName) return null;
+  return toolIconMap[iconName] || null;
+}
+
 function ToolIconBadge({ 
   tool, 
   index 
@@ -22,12 +53,21 @@ function ToolIconBadge({
 }) {
   const size = tool.size || "md";
   const sizeClass = sizeClasses[size];
+  const iconSize = iconSizeMap[size];
+  const IconComponent = getToolIcon(tool.icon);
 
   const positionStyle: React.CSSProperties = {};
   if (tool.position) {
+    if (tool.position.top) positionStyle.top = tool.position.top;
     if (tool.position.bottom) positionStyle.bottom = tool.position.bottom;
     if (tool.position.left) positionStyle.left = tool.position.left;
     if (tool.position.right) positionStyle.right = tool.position.right;
+  }
+
+  const hasContent = tool.image_id || IconComponent;
+
+  if (!hasContent) {
+    return null;
   }
 
   return (
@@ -42,9 +82,9 @@ function ToolIconBadge({
           className="w-3/4 h-3/4 object-contain"
           alt=""
         />
-      ) : (
-        <div className="w-3/4 h-3/4 bg-muted rounded" />
-      )}
+      ) : IconComponent ? (
+        <IconComponent size={iconSize} className="text-foreground" />
+      ) : null}
     </div>
   );
 }
