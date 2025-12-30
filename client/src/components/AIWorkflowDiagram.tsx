@@ -112,11 +112,11 @@ function TechNodeComponent({
     >
       <div
         className={cn(
-          "flex items-center justify-center border transition-all duration-300",
+          "relative flex items-center justify-center border transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
           isHovered
-            ? "border-primary/40 scale-110 bg-primary/10"
-            : "border-primary/20 bg-background"
+            ? "border-primary/40 scale-110"
+            : "border-primary/20"
         )}
         style={{
           boxShadow: isHovered
@@ -124,10 +124,15 @@ function TechNodeComponent({
             : "none",
         }}
       >
+        <div className="absolute inset-0 bg-background rounded-xl" />
+        <div className={cn(
+          "absolute inset-0 rounded-xl transition-colors duration-300",
+          isHovered ? "bg-primary/10" : "bg-transparent"
+        )} />
         <TechIcon 
           icon={tech.icon} 
           className={cn(
-            "transition-colors duration-300",
+            "relative z-10 transition-colors duration-300",
             isHovered ? "text-primary" : "text-primary/50"
           )} 
         />
