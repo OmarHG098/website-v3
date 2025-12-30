@@ -165,7 +165,6 @@ function TechNodeComponent({
 
 export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [hoveredLine, setHoveredLine] = useState<string | null>(null);
   const [isCenterHovered, setIsCenterHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -217,35 +216,28 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`;
           
-          const lineId = `top-${i}`;
-          const isLineHovered = hoveredLine === lineId;
-          
           return (
-            <g key={`top-line-${i}`}>
+            <g key={`top-line-${i}`} className="connector-line-group">
               <path 
                 d={pathD}
                 fill="none"
                 stroke="#A0D0FF"
-                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
-                strokeWidth={isLineHovered ? "1" : "0.7"}
+                strokeOpacity="0.33"
+                strokeWidth="0.7"
                 strokeLinecap="round"
                 className={cn(
-                  "transition-all duration-300 cursor-pointer pointer-events-auto",
+                  "transition-all duration-300 connector-line",
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
                 style={{ transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms" }}
-                onMouseEnter={() => setHoveredLine(lineId)}
-                onMouseLeave={() => setHoveredLine(null)}
               />
               <path 
                 d={pathD}
                 fill="none"
                 stroke="transparent"
-                strokeWidth="4"
+                strokeWidth="6"
                 strokeLinecap="round"
-                className="cursor-pointer pointer-events-auto"
-                onMouseEnter={() => setHoveredLine(lineId)}
-                onMouseLeave={() => setHoveredLine(null)}
+                className="cursor-pointer pointer-events-auto connector-hit-area"
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
@@ -285,35 +277,28 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`;
           
-          const lineId = `bottom-${i}`;
-          const isLineHovered = hoveredLine === lineId;
-          
           return (
-            <g key={`bottom-line-${i}`}>
+            <g key={`bottom-line-${i}`} className="connector-line-group">
               <path 
                 d={pathD}
                 fill="none"
                 stroke="#A0D0FF"
-                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
-                strokeWidth={isLineHovered ? "1" : "0.7"}
+                strokeOpacity="0.33"
+                strokeWidth="0.7"
                 strokeLinecap="round"
                 className={cn(
-                  "transition-all duration-300 cursor-pointer pointer-events-auto",
+                  "transition-all duration-300 connector-line",
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
                 style={{ transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms" }}
-                onMouseEnter={() => setHoveredLine(lineId)}
-                onMouseLeave={() => setHoveredLine(null)}
               />
               <path 
                 d={pathD}
                 fill="none"
                 stroke="transparent"
-                strokeWidth="4"
+                strokeWidth="6"
                 strokeLinecap="round"
-                className="cursor-pointer pointer-events-auto"
-                onMouseEnter={() => setHoveredLine(lineId)}
-                onMouseLeave={() => setHoveredLine(null)}
+                className="cursor-pointer pointer-events-auto connector-hit-area"
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
