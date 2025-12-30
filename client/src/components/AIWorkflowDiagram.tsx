@@ -112,7 +112,7 @@ function TechNodeComponent({
     >
       <div
         className={cn(
-          "flex items-center justify-center bg-transparent border transition-all duration-300",
+          "flex items-center justify-center bg-background border transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
           isHovered
             ? "border-primary/40 scale-110"
