@@ -19,6 +19,7 @@ export interface CertificateDisplayProps {
   benefits?: CertificateDisplayBenefit[];
   certificate_position?: "left" | "right";
   iconSetIndex?: number;
+  useSolidCard?: boolean;
 }
 
 export function CertificateDisplay({ 
@@ -26,7 +27,8 @@ export function CertificateDisplay({
   description,
   benefits = [],
   certificate_position = "left",
-  iconSetIndex = 0
+  iconSetIndex = 0,
+  useSolidCard = false
 }: CertificateDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isCertificateLeft = certificate_position === "left";
@@ -35,13 +37,13 @@ export function CertificateDisplay({
   const certificateColumn = (
     <div className="flex justify-center">
       <div className="w-full max-w-md">
-        <Certificate programName={programName} />
+        <Certificate programName={programName} useSolidCard={useSolidCard} />
       </div>
     </div>
   );
 
   const textColumn = (
-    <div>
+    <div className="ps-8">
       {description && (
         <p 
           className="text-body mb-8 leading-relaxed text-foreground"
@@ -101,20 +103,31 @@ export function CertificateDisplay({
 
   return (
     <div 
-      className="grid lg:grid-cols-2 gap-12 items-center"
+      className="relative"
       data-testid="container-certificate-display"
     >
-      {isCertificateLeft ? (
-        <>
-          {certificateColumn}
-          {textColumn}
-        </>
-      ) : (
-        <>
-          {textColumn}
-          {certificateColumn}
-        </>
-      )}
+      {/* Background that only covers the text column height */}
+      <div 
+        className="absolute inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
+        style={{ 
+          left: isCertificateLeft ? '0' : '0',
+          right: '0'
+        }}
+      />
+      
+      <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+        {isCertificateLeft ? (
+          <>
+            {certificateColumn}
+            {textColumn}
+          </>
+        ) : (
+          <>
+            {textColumn}
+            {certificateColumn}
+          </>
+        )}
+      </div>
     </div>
   );
 }

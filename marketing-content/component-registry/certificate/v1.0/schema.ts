@@ -17,6 +17,7 @@ export const certificateSectionSchema = z.object({
   }).optional(),
   stats: z.array(statItemSchema).optional(),
   certificate_position: z.enum(["left", "right"]).optional(),
+  useSolidCard: z.boolean().optional(),
 });
 
 export type CertificateSection = z.infer<typeof certificateSectionSchema>;

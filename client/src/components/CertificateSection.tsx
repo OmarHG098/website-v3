@@ -188,7 +188,6 @@ export function CertificateSection({ data }: CertificateSectionProps) {
 
   return (
     <section 
-      className="py-section bg-muted/30"
       data-testid="section-certificate"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -231,7 +230,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
                 )}
                 data-testid={`stat-${index}`}
               >
-                <div className="text-2xl md:text-3xl lg:text-h2 font-bold text-primary mb-1">
+                <div className="text-2xl md:text-3xl lg:text-h2 font-bold font-heading text-primary mb-1">
                   <AnimatedStatValue value={stat.value} shouldAnimate={isVisible} />
                 </div>
                 <div className="text-sm md:text-sm text-muted-foreground">
@@ -249,6 +248,7 @@ export function CertificateSection({ data }: CertificateSectionProps) {
             benefits={displayBenefits}
             certificate_position={data.certificate_position || "left"}
             iconSetIndex={selectedStatIndex}
+            useSolidCard={data.useSolidCard}
           />
         )}
       </div>

@@ -44,7 +44,7 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
 
   return (
     <section 
-      className="py-16 px-4"
+      className="px-4"
       data-testid="section-programs-list"
     >
       <div className="max-w-6xl mx-auto">

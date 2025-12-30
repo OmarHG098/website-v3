@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { SectionRenderer } from "@/components/SectionRenderer";
@@ -5,6 +6,7 @@ import type { TemplatePage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useSchemaOrg } from "@/hooks/useSchemaOrg";
+import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 import Header from "@/components/Header";
 
 export default function Page() {
@@ -27,6 +29,12 @@ export default function Page() {
 
   usePageMeta(page?.meta);
   useSchemaOrg(page?.schema);
+
+  const handleRefetch = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useContentAutoRefresh("page", slug, locale, handleRefetch);
 
   if (isLoading) {
     return (
@@ -67,7 +75,6 @@ export default function Page() {
         contentType="page"
         slug={slug}
         locale={locale}
-        onSectionAdded={() => refetch()}
       />
     </div>
   );

@@ -176,7 +176,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <Label className="text-muted-foreground cursor-pointer text-[12px]">
+                  <Label className="text-xs text-muted-foreground cursor-pointer">
                     {consent.marketing_text || defaultMarketingText}
                   </Label>
                 </div>
@@ -205,7 +205,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {locale === "es"
                     ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
                     : "I agree to receive information via email about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
@@ -231,7 +231,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {consent.sms_text || defaultSmsText}
                 </Label>
               </div>
@@ -254,7 +254,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <Label className="text-sm text-muted-foreground cursor-pointer">
+                <Label className="text-xs text-muted-foreground cursor-pointer">
                   {locale === "es"
                     ? "Acepto recibir información a través de WhatsApp sobre talleres, eventos, cursos y otros materiales de marketing. Nunca compartiremos tu información de contacto y puedes cancelar fácilmente en cualquier momento."
                     : "I agree to receive information via WhatsApp about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment."
@@ -280,6 +280,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [showTurnstileModal, setShowTurnstileModal] = useState(false);
+  const [pendingFormData, setPendingFormData] = useState<FormValues | null>(null);
 
   const turnstileEnabled = data.turnstile?.enabled ?? true;
 
@@ -365,11 +366,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
-      // Check that Turnstile token exists if enabled (verification happens at Breathecode API)
-      if (turnstileEnabled && !turnstileToken) {
-        throw new Error(locale === "es" ? "Por favor complete la verificación de seguridad" : "Please complete security verification");
-      }
-
       // Map consent fields to backend field names
       const { consent_email, consent_sms, consent_whatsapp, ...restValues } = values;
       
@@ -473,14 +469,76 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
   const onSubmit = (values: FormValues) => {
     setTurnstileError(null);
+    
+    // If turnstile is enabled and we don't have a token yet, show the modal and wait
+    if (turnstileEnabled && !turnstileToken) {
+      setPendingFormData(values);
+      setShowTurnstileModal(true);
+      return;
+    }
+    
     submitMutation.mutate(values);
   };
+
+  // Auto-submit when turnstile token is received and we have pending form data
+  useEffect(() => {
+    if (turnstileToken && pendingFormData) {
+      setShowTurnstileModal(false);
+      submitMutation.mutate(pendingFormData);
+      setPendingFormData(null);
+    }
+  }, [turnstileToken, pendingFormData]);
 
   const filteredLocations = formOptions?.locations.filter(loc => {
     const selectedRegion = form.watch("region");
     if (!selectedRegion || !getFieldConfig("region").visible) return true;
     return loc.region === selectedRegion;
   }) || [];
+
+  // Watch all form values to determine if required fields are filled
+  const watchedValues = form.watch();
+  
+  const allRequiredFieldsFilled = (() => {
+    const requiredFields: (keyof FormValues)[] = [];
+    
+    if (getFieldConfig("email").visible && getFieldConfig("email").required) {
+      requiredFields.push("email");
+    }
+    if (getFieldConfig("first_name").visible && getFieldConfig("first_name").required) {
+      requiredFields.push("first_name");
+    }
+    if (getFieldConfig("last_name").visible && getFieldConfig("last_name").required) {
+      requiredFields.push("last_name");
+    }
+    if (getFieldConfig("phone").visible && getFieldConfig("phone").required) {
+      requiredFields.push("phone");
+    }
+    if (getFieldConfig("program").visible && getFieldConfig("program").required) {
+      requiredFields.push("program");
+    }
+    if (getFieldConfig("region").visible && getFieldConfig("region").required) {
+      requiredFields.push("region");
+    }
+    if (getFieldConfig("location").visible && getFieldConfig("location").required) {
+      requiredFields.push("location");
+    }
+    if (getFieldConfig("comment").visible && getFieldConfig("comment").required) {
+      requiredFields.push("comment");
+    }
+    
+    // Check if all required fields have values
+    return requiredFields.every(field => {
+      const value = watchedValues[field];
+      if (typeof value === "string") {
+        // For email, also validate format
+        if (field === "email") {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+        return value.trim() !== "";
+      }
+      return !!value;
+    });
+  })();
 
   const isInline = variant === "inline";
 
@@ -576,7 +634,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
               <Button 
                 type="submit" 
-                disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+                disabled={submitMutation.isPending}
                 data-testid="button-submit"
               >
                 {submitMutation.isPending ? (
@@ -591,17 +649,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 <div className="bg-card p-card-padding rounded-card shadow-card">
                   <Turnstile
                     siteKey={turnstileSiteKey.siteKey}
-                    onSuccess={(token: string) => {
-                      setTurnstileToken(token);
+                    onSuccess={(token: string) => setTurnstileToken(token)}
+                    onError={() => {
+                      setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error");
                       setShowTurnstileModal(false);
+                      setPendingFormData(null);
                     }}
-                    onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                     onExpire={() => setTurnstileToken(null)}
-                    onBeforeInteractive={() => setShowTurnstileModal(true)}
                     options={{
                       theme: data.turnstile?.theme || "auto",
                       size: data.turnstile?.size || "compact",
-                      appearance: "interaction-only",
                     }}
                   />
                 </div>
@@ -617,7 +674,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 {emailConfig.helper_text}
               </p>
             )}
-            {consent.email && (
+            {allRequiredFieldsFilled && consent.email && (
               <FormField
                 control={form.control}
                 name="consent_email"
@@ -631,7 +688,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <Label className="text-sm text-muted-foreground cursor-pointer" htmlFor="consent_email">
+                      <Label className="text-xs text-muted-foreground cursor-pointer" htmlFor="consent_email">
                         {locale === "es"
                           ? "Acepto recibir información por correo electrónico sobre talleres, eventos, cursos y otros materiales de marketing."
                           : "I agree to receive information via email about workshops, events, courses, and other marketing materials."
@@ -927,7 +984,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             />
           )}
 
-          {(consent.email || consent.sms || consent.whatsapp || consent.marketing) && (
+          {allRequiredFieldsFilled && (consent.email || consent.sms || consent.whatsapp || consent.marketing) && (
             <ConsentSection 
               consent={consent}
               form={form}
@@ -942,17 +999,16 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               <div className="bg-card p-6 rounded-card shadow-card">
                 <Turnstile
                   siteKey={turnstileSiteKey.siteKey}
-                  onSuccess={(token: string) => {
-                    setTurnstileToken(token);
+                  onSuccess={(token: string) => setTurnstileToken(token)}
+                  onError={() => {
+                    setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error");
                     setShowTurnstileModal(false);
+                    setPendingFormData(null);
                   }}
-                  onError={() => setTurnstileError(locale === "es" ? "Error de verificación" : "Verification error")}
                   onExpire={() => setTurnstileToken(null)}
-                  onBeforeInteractive={() => setShowTurnstileModal(true)}
                   options={{
                     theme: data.turnstile?.theme || "auto",
                     size: data.turnstile?.size || "normal",
-                    appearance: "interaction-only",
                   }}
                 />
               </div>
@@ -968,7 +1024,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           <Button 
             type="submit" 
             className="w-full"
-            disabled={submitMutation.isPending || (turnstileEnabled && !turnstileToken)}
+            disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
             {submitMutation.isPending ? (

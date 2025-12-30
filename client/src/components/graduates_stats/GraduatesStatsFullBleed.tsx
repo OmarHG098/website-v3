@@ -111,7 +111,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
         <div className="flex items-stretch">
           <div 
             className="flex-shrink-0"
-            style={{ width: 'calc(50vw - 576px + 850px)', minWidth: '700px' }}
+            style={{ width: 'calc(50vw - 576px + 700px)', minWidth: '500px' }}
           >
             <div 
               className="grid grid-cols-12 auto-rows-[80px] gap-3 h-[320px]"
@@ -165,7 +165,12 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
           </div>
 
           <div 
-            className="flex-1 flex flex-col justify-center px-12"
+            className="flex flex-col justify-center pl-12"
+            style={{ 
+              width: 'calc(50vw - 576px + 452px)',
+              maxWidth: '452px',
+              marginRight: 'max(1rem, calc(50vw - 576px))'
+            }}
           >
             {renderStatsCompact()}
           </div>
@@ -173,7 +178,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
       </div>
 
       <div className="lg:hidden">
-        <div className="px-4 space-y-8">
+        <div className="max-w-6xl mx-auto px-4 space-y-8">
           <div className="grid grid-cols-2 gap-3">
             <div className="h-[200px]">
               <UniversalImage

@@ -54,7 +54,7 @@ export default function AwardsRow({ data }: AwardsRowProps) {
 
   return (
     <section 
-      className={`py-12 ${data.background === 'muted' ? 'bg-muted' : ''}`}
+      className={`${data.background === 'muted' ? 'bg-muted' : ''}`}
       data-testid="section-awards-row"
     >
       <div className="max-w-6xl mx-auto px-4">

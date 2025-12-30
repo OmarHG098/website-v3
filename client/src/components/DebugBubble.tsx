@@ -83,7 +83,7 @@ const componentsList = [
   { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
   { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
   { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
-  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo carousel of hiring companies" },
+  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo display - grid or carousel variants" },
   { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
   { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
   { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },

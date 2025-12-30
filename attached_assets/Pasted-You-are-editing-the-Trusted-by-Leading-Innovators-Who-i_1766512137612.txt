@@ -1,0 +1,42 @@
+You are editing the “Trusted by Leading Innovators / Who is hiring our graduates” section on the AI Engineering page (4geeks.com).
+Current status
+The card styling and grayscale logos are correct and must remain unchanged (border, radius, monochrome look, logo sizing, spacing). Do NOT redesign the cards or logos.
+Problem to fix
+Right now the cards are laid out in a single horizontal line (logo strip look). We need the Supabase-style mosaic layout: a moving wall with a Pinterest/editorial rhythm, not a row.
+Goal
+Change ONLY the distribution and layout of the cards inside the carousel track to match Supabase:
+- groups composed of: two small stacked cards + one larger card
+- the larger card sometimes includes a short text line under the logo (optional) to create variety
+- repeat these groups across the track so it feels like a masonry wall
+Layout requirements
+1) Replace the single-row layout with a 2-row (or multi-row) mosaic inside the carousel track.
+2) Use a pattern like:
+   - Column A: small card (top) + small card (bottom)
+   - Column B: one tall/wide card spanning the height of both small cards
+3) Repeat this “stack + hero” pattern across the track with small variations:
+   - sometimes swap sides (hero on left, stacked on right)
+   - sometimes use a medium card instead of tall
+   - keep it visually balanced and organic
+Implementation guidance
+- Keep the carousel as a single horizontally scrolling track (infinite loop).
+- Inside the track, build “mosaic groups” (each group is a mini layout block).
+- Each mosaic group has a fixed overall height (ex: same as 2 small cards stacked), and cards inside adapt.
+- Cards must stay aligned with consistent gaps (same spacing everywhere).
+- Ensure no visible layout jumping as the track scrolls.
+Responsiveness
+- Desktop: show the full mosaic (stacked + hero cards).
+- Tablet: reduce group complexity but keep 2-row feel.
+- Mobile: collapse to 1 column or 2 columns with varied heights, still not a single strip.
+Important constraints
+- Do NOT change:
+  - card border style
+  - card background transparency
+  - grayscale logo treatment
+  - typography already set
+- Only change the layout and distribution of cards in the carousel track.
+Acceptance criteria
+- The section no longer reads as a single row of logos.
+- It looks like a Supabase-style moving wall: two small cards stacked next to a larger card, repeating.
+- Cards keep the current clean monochrome style and logo treatment.
+- Movement remains smooth, infinite, and premium.
+“Use the Supabase Customer Stories carousel layout as the exact layout reference, but keep our existing card visual styling unchanged.”

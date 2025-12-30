@@ -1,17 +1,9 @@
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
-
-import profilePic1 from "@assets/profile-pic1_1764775438461.webp";
-import profilePic2 from "@assets/profile-pic2_1764775432918.webp";
-import profilePic3 from "@assets/profile-pic3_1764775528641.webp";
-import profilePic4 from "@assets/profile-pic4_1764775523318.webp";
-import profilePic5 from "@assets/profile-pic5_1764775738827.webp";
-import profilePic6 from "@assets/profile-pic6_1764775742734.webp";
-
-const defaultAvatars = [profilePic1, profilePic2, profilePic3, profilePic4, profilePic5, profilePic6];
+import { DotsIndicator } from "@/components/DotsIndicator";
 
 interface LegacyTestimonial {
   id: string;
@@ -27,6 +19,31 @@ interface TestimonialsSectionProps {
   testimonials?: LegacyTestimonial[];
 }
 
+interface TestimonialItem {
+  name: string;
+  role: string;
+  rating: number;
+  comment: string;
+  company?: string;
+  outcome?: string;
+  avatar?: string;
+}
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map(n => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+const CARD_WIDTH = 380;
+const CARD_SPACING = 330; // Side cards 10px more behind center
+const DRAG_MULTIPLIER = 0.5; // Slower drag
+const SIDE_SCALE = 0.85; // Smaller side cards
+const SIDE_OPACITY = 0.5;
+
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
     name: t.name,
@@ -40,13 +57,317 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const subtitle = data?.subtitle;
   const ratingSummary = data?.rating_summary;
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isResettingRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+
+  // Drag state
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const scrollStartRef = useRef(0);
+
+  // Triple the items for infinite loop
+  const extendedItems = [...items, ...items, ...items];
+  const originalLength = items.length;
+
+  const updateCardTransforms = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.clientWidth / 2;
+    const scrollLeft = container.scrollLeft;
+
+    const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
+    
+    // Track closest card to center
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    // Apply transforms based on continuous distance from center
+    // Smooth linear interpolation - no sudden jumps
+    extendedItems.forEach((_, index) => {
+      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
+      const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
+      
+      // Track closest card
+      if (distanceFromCenter < closestDistance) {
+        closestDistance = distanceFromCenter;
+        closestIndex = index;
+      }
+      
+      // Normalize distance: 0 = centered, 1 = one card away
+      const normalizedDist = distanceFromCenter / CARD_SPACING;
+
+      let scale: number;
+      let opacity: number;
+      let zIndex: number;
+
+      // Smooth continuous interpolation based on distance
+      // Center card (dist ~0): scale 1, opacity 1
+      // Side cards (dist ~1): scale 0.85, opacity 0.5
+      // Hidden (dist > 1.5): opacity 0
+      
+      if (normalizedDist <= 1) {
+        // Smoothly interpolate from center to side
+        scale = 1 - (normalizedDist * (1 - SIDE_SCALE));
+        opacity = 1 - (normalizedDist * (1 - SIDE_OPACITY));
+        // Z-index based on proximity - closer = higher
+        zIndex = Math.round(10 - normalizedDist * 5);
+      } else if (normalizedDist <= 2) {
+        // Fade out zone
+        const fadeProgress = normalizedDist - 1; // 0 to 1
+        scale = SIDE_SCALE;
+        opacity = SIDE_OPACITY * (1 - fadeProgress);
+        zIndex = 1;
+      } else {
+        // Hidden
+        scale = SIDE_SCALE;
+        opacity = 0;
+        zIndex = 1;
+      }
+
+      newTransforms.set(index, { scale, opacity, zIndex });
+    });
+
+    setCardTransforms(newTransforms);
+    
+    // Update active index (modulo to get original item index)
+    setActiveIndex(closestIndex % originalLength);
+  }, [extendedItems.length, originalLength]);
+
+  const checkInfiniteLoop = useCallback(() => {
+    if (isResettingRef.current) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const singleSetWidth = originalLength * CARD_SPACING;
+    const minScroll = singleSetWidth * 0.5;
+    const maxScroll = singleSetWidth * 2;
+
+    if (container.scrollLeft < minScroll) {
+      isResettingRef.current = true;
+      container.scrollLeft += singleSetWidth;
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+        updateCardTransforms();
+      });
+    } else if (container.scrollLeft > maxScroll) {
+      isResettingRef.current = true;
+      container.scrollLeft -= singleSetWidth;
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+        updateCardTransforms();
+      });
+    }
+  }, [originalLength, updateCardTransforms]);
+
+  const handleScroll = useCallback(() => {
+    checkInfiniteLoop();
+
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    rafRef.current = requestAnimationFrame(updateCardTransforms);
+  }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Smooth scroll animation to target
+  const animateScrollTo = useCallback((targetScroll: number, duration: number = 300) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const startScroll = container.scrollLeft;
+    const distance = targetScroll - startScroll;
+    const startTime = performance.now();
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+
+      container.scrollLeft = startScroll + (distance * eased);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        checkInfiniteLoop();
+        updateCardTransforms();
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [checkInfiniteLoop, updateCardTransforms]);
+
+  // Navigate to specific card by original index
+  const navigateToCard = useCallback((targetOriginalIndex: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.clientWidth / 2;
+    // Use middle set for navigation (index in range [originalLength, originalLength*2))
+    const targetExtendedIndex = originalLength + targetOriginalIndex;
+    const targetScroll = (targetExtendedIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    
+    animateScrollTo(targetScroll, 300);
+  }, [originalLength, animateScrollTo]);
+
+  // Snap to nearest card center
+  const snapToNearestCard = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.clientWidth / 2;
+    const currentScroll = container.scrollLeft;
+
+    // Find which card center is closest to container center
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    extendedItems.forEach((_, index) => {
+      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - currentScroll;
+      const distance = Math.abs(cardCenterX - containerCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Calculate scroll position to center that card
+    const targetScroll = (closestIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    
+    // Animate to target
+    animateScrollTo(targetScroll, 250);
+  }, [extendedItems.length, animateScrollTo]);
+
+  // Drag handlers
+  const handleDragStart = useCallback((clientX: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    isDraggingRef.current = true;
+    dragStartXRef.current = clientX;
+    scrollStartRef.current = container.scrollLeft;
+    container.style.cursor = 'grabbing';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  const handleDragMove = useCallback((clientX: number) => {
+    if (!isDraggingRef.current) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const deltaX = (dragStartXRef.current - clientX) * DRAG_MULTIPLIER;
+    container.scrollLeft = scrollStartRef.current + deltaX;
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    if (!isDraggingRef.current) return;
+    
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    isDraggingRef.current = false;
+    container.style.cursor = 'grab';
+    document.body.style.userSelect = '';
+
+    // Smooth snap to nearest card
+    snapToNearestCard();
+  }, [snapToNearestCard]);
+
+  // Mouse events
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    handleDragStart(e.clientX);
+  }, [handleDragStart]);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    handleDragMove(e.clientX);
+  }, [handleDragMove]);
+
+  const handleMouseUp = useCallback(() => {
+    if (isDraggingRef.current) {
+      handleDragEnd();
+    }
+  }, [handleDragEnd]);
+
+  // Touch events
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragStart(touch.clientX);
+  }, [handleDragStart]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragMove(touch.clientX);
+  }, [handleDragMove]);
+
+  const handleTouchEnd = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
+
+  // Initialize scroll position
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || items.length === 0) return;
+
+    // Start in the middle set, centered on first card
+    const containerCenter = container.clientWidth / 2;
+    const initialScroll = (originalLength * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    container.scrollLeft = initialScroll;
+    container.style.cursor = 'grab';
+
+    requestAnimationFrame(updateCardTransforms);
+  }, [items.length, originalLength, updateCardTransforms]);
+
+  // Set up listeners
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Force end drag on window blur (user tabs away)
+    const handleWindowBlur = () => {
+      if (isDraggingRef.current) {
+        handleDragEnd();
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateCardTransforms);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('blur', handleWindowBlur);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateCardTransforms);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('blur', handleWindowBlur);
+      document.body.style.userSelect = '';
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd]);
+
+  if (items.length === 0) return null;
+
+  const totalWidth = extendedItems.length * CARD_SPACING;
+
   return (
     <section 
-      className="py-section bg-background"
+      className="bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center">
           {ratingSummary && (
             <div 
               className="flex items-center justify-center gap-2 mb-4"
@@ -79,16 +400,66 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:hidden">
-          {items.slice(0, 3).map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} index={index} />
-          ))}
+        {/* Carousel Container */}
+        <div className="relative h-[420px]">
+          {/* Left fade - softer gradient */}
+          <div 
+            className="absolute left-0 top-0 bottom-0 w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
+          />
+          
+          {/* Right fade - softer gradient */}
+          <div 
+            className="absolute right-0 top-0 bottom-0 w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
+          />
+
+          {/* Scrollable container */}
+          <div
+            ref={scrollContainerRef}
+            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide"
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Cards track - absolute positioning for overlap */}
+            <div
+              className="h-full relative"
+              style={{ 
+                width: `${totalWidth + CARD_WIDTH}px`,
+              }}
+            >
+              {extendedItems.map((testimonial, index) => {
+                const transform = cardTransforms.get(index) || { scale: SIDE_SCALE, opacity: 0, zIndex: 1 };
+                const leftPosition = index * CARD_SPACING;
+                
+                return (
+                  <div
+                    key={index}
+                    className="absolute top-1/2 pointer-events-none"
+                    style={{
+                      width: `${CARD_WIDTH}px`,
+                      left: `${leftPosition}px`,
+                      transform: `translateY(-50%) scale(${transform.scale})`,
+                      opacity: transform.opacity,
+                      zIndex: transform.zIndex,
+                    }}
+                  >
+                    <TestimonialCard testimonial={testimonial} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} index={index} />
-          ))}
+        {/* Dots Indicator */}
+        <div>
+          <DotsIndicator
+            count={originalLength}
+            activeIndex={activeIndex}
+            onDotClick={navigateToCard}
+            ariaLabel="Testimonial navigation"
+          />
         </div>
       </div>
     </section>
@@ -97,38 +468,25 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
 export default TestimonialsSection;
 
-interface TestimonialItem {
-  name: string;
-  role: string;
-  rating: number;
-  comment: string;
-  company?: string;
-  outcome?: string;
-  avatar?: string;
+interface TestimonialCardProps {
+  testimonial: TestimonialItem;
 }
 
-function TestimonialCard({ 
-  testimonial, 
-  index 
-}: { 
-  testimonial: TestimonialItem; 
-  index: number;
-}) {
+function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card
-      data-testid={`card-testimonial-${index}`}
-      className="h-full"
-    >
-      <CardContent className="p-6">
+    <Card className="min-h-[270px] border border-border bg-card">
+      <CardContent className="p-6 h-full flex flex-col min-h-[270px]">
+        {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
-          <Avatar className="h-10 w-10">
-            <AvatarImage 
-              src={testimonial.avatar || defaultAvatars[index % defaultAvatars.length]} 
-              alt={testimonial.name} 
-            />
-          </Avatar>
+          <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+            <span className="font-semibold text-muted-foreground text-base">
+              {getInitials(testimonial.name)}
+            </span>
+          </div>
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-foreground truncate">{testimonial.name}</p>
+            <p className="font-semibold text-foreground truncate text-base">
+              {testimonial.name}
+            </p>
             <p className="text-xs text-muted-foreground truncate">
               {testimonial.role}
               {testimonial.company && ` at ${testimonial.company}`}
@@ -136,22 +494,25 @@ function TestimonialCard({
           </div>
         </div>
 
+        {/* Star Rating */}
         <div className="flex items-center gap-1 mb-3">
           {Array.from({ length: 5 }).map((_, i) =>
             i < testimonial.rating ? (
-              <IconStarFilled key={i} className="w-4 h-4 text-yellow-500" />
+              <IconStarFilled key={i} className="w-5 h-5 text-yellow-500" />
             ) : (
-              <IconStar key={i} className="w-4 h-4 text-muted" />
+              <IconStar key={i} className="w-5 h-5 text-muted" />
             ),
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+        {/* Review Text */}
+        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5 flex-1">
           {testimonial.comment}
         </p>
 
+        {/* Outcome Badge - always at bottom */}
         {testimonial.outcome && (
-          <div className="pt-3 border-t">
+          <div className="pt-3 mt-auto">
             <Badge variant="secondary" className="text-xs">
               {testimonial.outcome}
             </Badge>

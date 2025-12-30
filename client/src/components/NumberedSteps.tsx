@@ -95,7 +95,7 @@ function NumberedStepsDefault({ data }: NumberedStepsProps) {
 
   return (
     <section 
-      className={`py-section ${data.background || "bg-muted/30"}`}
+      className={`${data.background || "bg-muted/30"}`}
       data-testid="section-numbered-steps"
     >
       <div className="max-w-6xl mx-auto px-4">

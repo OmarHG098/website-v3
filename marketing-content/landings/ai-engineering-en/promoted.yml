@@ -52,15 +52,15 @@ sections:
       variant: outline
       icon: Download
     trust_bar:
-      rating: "4.5"
-      review_count: Based on 1,294+ reviews
+      rating: "4.89"
+      review_count: "3,524 reviews"
       review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
         - name: Course Report
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
+          logo: /attached_assets/switchup_1765590084376.webp
+    paddingY: none lg
+    marginY: none md
   - type: features_grid
     version: "1.0"
     variant: stats-text-card
@@ -75,8 +75,12 @@ sections:
         title: Year-over-year growth in AI job postings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
+    marginY: md none
+    paddingY: none md
   - type: awards_marquee
     version: "1.0"
+    paddingY: lg
+    marginY: none
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -238,38 +242,57 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
+    marginY: none
+    paddingY: lg none
   - type: ai_learning
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
+      - icon: TrendingUp
+        title: Thrive in today's tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
       - icon: Robot
-        title: Progress faster with AI
-        description: Rigobot gives personalized feedback and keeps you moving forward.
+        title: Progress faster with AI using Rigobot + Learnpack
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Provides instant feedback and tutoring while you code
+          - text: Tracks your skills and progress
+          - text: Helps with debugging and problem-solving tasks
+          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
       - icon: Headset
         title: One-on-one mentoring sessions
-        description: Unlimited access to 1:1 mentorship and career coaching, for life.
-      - icon: Users
-        title: Peer-driven learning
-        description: Learn faster with an active community that keeps you accountable.
-    video_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-    video_position: right
-    highlight:
-      title: Thrive in today's tech with career support for the AI-Era
-      description: ""
-      bullets:
-        - text: Personalized 1:1 coaching
-        - text: AI-ready resumes and portfolios
-        - text: Interview prep and salary negotiation
-        - text: Lifelong access to support your growth
-      cta:
-        text: Start learning now!
-        url: "#hero-form"
-        variant: primary
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in coding sessions and workshops
+          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
+          - text: Access Slack channels for coding support, job boards, and career advice
+        image_id: mentoring_zoom_call
+    paddingY: lg none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
-    certificate_position: right
+    useSolidCard: true
+    background: muted
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -312,6 +335,9 @@ sections:
           - text: Priority referrals to partner companies
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
+    certificate_position: right
+    paddingY: lg
+    marginY: none
   - type: pricing
     version: "1.0"
     variant: product
@@ -325,10 +351,8 @@ sections:
       - python
       - react
       - nodejs
-      - api
-      - brain
-      - robot
-      - settings
+      - git
+      - github
     features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
     features:
       - icon: certificate
@@ -345,10 +369,11 @@ sections:
       text: Get plan
       url: "#hero-form"
       variant: primary
+    paddingY: lg none
   - type: whos_hiring
-    title: Who's Hiring Our Graduates?
-    subtitle: Our alumni work at top companies around the world
-    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.
+    variant: carousel
+    title: Trusted by Leading Innovators
+    subtitle: Explore how 4Geeks Academy propels your career forward with top employers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -374,30 +399,25 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-      - src: /attached_assets/kpmg-logo1_1764720019827.png
-        alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
-      - src: /attached_assets/blackstone_1764720124773.png
-        alt: Blackstone
-      - src: /attached_assets/cemex_1764720131666.png
-        alt: Cemex
+    marginY: none xl
+    paddingY: none
+  - type: bullet_tabs_showcase
+    version: "1.0"
+    heading: Ideate and specify what to build next
+    subheading: Transform your ideas into actionable tasks seamlessly
+    image_position: right
+    tabs:
+      - label: Collaborative documents
+        description: Work together on specifications and requirements in real-time
+        image_id: placeholder_career_guidance
+      - label: Inline comments
+        description: Add contextual feedback directly where it matters most
+        image_id: placeholder_mentorship
+      - label: Text-to-issue commands
+        description: Seamlessly move between ideation and execution
+        image_id: placeholder_strategies
+    marginY: xl lg
+    paddingY: none
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
@@ -423,6 +443,8 @@ sections:
         rating: 5
         comment: Excellent content and great mentor support. Now I'm working on cutting-edge AI.
         outcome: +100% salary increase
+    paddingY: md none
+    marginY: none lg
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
@@ -435,6 +457,10 @@ sections:
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
+    marginY: md none
+    background: hsl(var(--primary))
+    paddingY: lg
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
+    paddingY: lg none

@@ -15,7 +15,7 @@ export default function PersonalizedLearningSection() {
   ];
   
   return (
-    <section className="py-section">
+    <section className="">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
           {/* Blue Message Box - appears first on mobile */}

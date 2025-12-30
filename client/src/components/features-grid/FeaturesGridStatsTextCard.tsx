@@ -3,19 +3,19 @@ import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
+import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
 }
 
-export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardProps) {
+export function FeaturesGridStatsTextCard({
+  data,
+}: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section 
-      className="py-8 md:py-section bg-primary/5"
-      data-testid="section-features-grid-stats-text-card"
-    >
+    <section className="bg-primary/5 py-12" data-testid="section-features-grid-stats-text-card">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 md:items-center">
           <div className="flex flex-col gap-4 md:w-[280px] lg:w-[420px] md:flex-shrink-0">
@@ -58,7 +58,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
           </div>
 
           <Card className={`p-6 md:p-8 ${data.card_color || "bg-background"}`}>
-            <div 
+            <div
               className="md:cursor-default cursor-pointer"
               onClick={() => setIsExpanded(!isExpanded)}
               data-testid="button-toggle-description"
@@ -66,7 +66,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
               <div className="flex items-start justify-between gap-2">
                 <div>
                   {data.title && (
-                    <h2 
+                    <h2
                       className="text-h2 mb-2 text-foreground"
                       data-testid="text-stats-text-card-title"
                     >
@@ -74,7 +74,7 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                     </h2>
                   )}
                   {data.subtitle && (
-                    <p 
+                    <p
                       className="text-lg mb-2 text-primary"
                       data-testid="text-stats-text-card-subtitle"
                     >
@@ -83,15 +83,17 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                   )}
                 </div>
                 {data.description && (
-                  <IconChevronDown 
-                    className={`md:hidden w-5 h-5 text-muted-foreground flex-shrink-0 mt-1 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                  <IconChevronDown
+                    className={`md:hidden w-5 h-5 text-muted-foreground flex-shrink-0 mt-1 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
                   />
                 )}
               </div>
             </div>
             {data.description && (
-              <div className={`overflow-hidden transition-all duration-200 md:max-h-none md:opacity-100 ${isExpanded ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 md:mt-0'}`}>
-                <p 
+              <div
+                className={`overflow-hidden transition-all duration-200 md:max-h-none md:opacity-100 ${isExpanded ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0 md:mt-0"}`}
+              >
+                <p
                   className="text-body text-muted-foreground leading-relaxed"
                   data-testid="text-stats-text-card-description"
                 >
@@ -99,6 +101,9 @@ export function FeaturesGridStatsTextCard({ data }: FeaturesGridStatsTextCardPro
                 </p>
               </div>
             )}
+            <div className="mt-4 hidden md:block">
+              <AIWorkflowDiagram className="max-w-md mx-auto" />
+            </div>
           </Card>
         </div>
       </div>

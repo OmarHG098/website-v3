@@ -91,7 +91,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   );
 
   return (
-    <section className="py-16 md:py-24" data-testid="section-bullet-tabs-showcase">
+    <section className="" data-testid="section-bullet-tabs-showcase">
       <div className="max-w-6xl mx-auto px-4">
         {(heading || (subheading && subheading_centered)) && (
           <div className="text-center mb-12">

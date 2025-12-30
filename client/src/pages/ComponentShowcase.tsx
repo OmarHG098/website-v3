@@ -478,40 +478,13 @@ function ComponentCard({
         className="sticky top-0 z-50 border-b py-3 px-[15px] bg-[#ffffff]"
         data-testid={`component-card-${componentType}`}
       >
-        <div className="flex flex-row items-start justify-between gap-4">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold">{schema.name}</h1>
-              <Badge variant="secondary">{componentType}</Badge>
-            </div>
-            <p className="text-sm text-muted-foreground">{schema.description}</p>
-            {(() => {
-              const variants = Array.from(new Set(examples.map(ex => ex.variant).filter(Boolean)));
-              if (variants.length === 0) return null;
-              const variantLabels: Record<string, string> = {
-                singleColumn: 'Single Column',
-                showcase: 'Showcase',
-                productShowcase: 'Product Showcase',
-                simpleTwoColumn: 'Simple Two Column',
-                imageText: 'Image + Text',
-                bulletGroups: 'Bullet Groups',
-                video: 'Video',
-              };
-              return (
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs text-muted-foreground">Variants:</span>
-                  {variants.map(variant => (
-                    <Badge key={variant} variant="outline" className="text-xs">
-                      {variantLabels[variant as string] || variant}
-                    </Badge>
-                  ))}
-                </div>
-              );
-            })()}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-semibold">{schema.name}</h1>
+            <Badge variant="secondary">{componentType}</Badge>
           </div>
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Version:</span>
               <Select value={selectedVersion} onValueChange={handleVersionChange}>
                 <SelectTrigger className="w-32" data-testid={`select-version-${componentType}`}>
                   <SelectValue />
@@ -578,7 +551,6 @@ function ComponentCard({
                   </SelectContent>
                 </Select>
             </div>
-            <p className="hidden sm:block text-sm text-muted-foreground pt-[3px] pb-[3px]">{schema.description}</p>
             {/* Mobile-only buttons row */}
             <div className="flex sm:hidden items-center gap-2 pt-[3px] pb-[3px]">
               {(() => {
@@ -664,25 +636,8 @@ function ComponentCard({
                 <IconRefresh className="w-4 h-4" />
               </Button>
             </div>
-            {(() => {
-              const schemaVariants = schema.variants ? Object.keys(schema.variants) : [];
-              const exampleVariants = Array.from(new Set(examples.map(ex => ex.variant).filter((v): v is string => Boolean(v))));
-              const variants = schemaVariants.length > 0 ? schemaVariants : exampleVariants;
-              if (variants.length === 0) return null;
-              return (
-                <div className="flex items-center gap-2 pt-[2px] pb-[2px] overflow-x-auto scrollbar-none">
-                  <span className="text-xs text-muted-foreground flex-shrink-0">Variants:</span>
-                  {variants.map(variant => (
-                    <Badge key={variant} variant="outline" className="text-xs flex-shrink-0">
-                      {formatVariantLabel(variant)}
-                    </Badge>
-                  ))}
-                </div>
-              );
-            })()}
-          </div>
-          {/* Desktop-only buttons */}
-          <div className="hidden sm:flex items-center gap-2">
+            {/* Desktop-only buttons */}
+            <div className="hidden sm:flex items-center gap-2">
             {(() => {
               const currentExample = examples.find(ex => ex.name === selectedExample);
               if (!currentExample?.description) return null;
@@ -765,6 +720,7 @@ function ComponentCard({
             >
               <IconRefresh className="w-4 h-4" />
             </Button>
+            </div>
           </div>
         </div>
       </nav>
@@ -1177,43 +1133,6 @@ export default function ComponentShowcase() {
   return (
     <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto mb-8">
-          <h1 className="text-3xl font-bold mb-2" data-testid="text-showcase-title">
-            Component Showcase
-          </h1>
-          <p className="text-muted-foreground mb-6">
-            This page displays all available section components for career program pages. 
-            Each component shows the YAML configuration and a live preview.
-          </p>
-          
-          <div className="flex items-center gap-4 mb-8 p-4 bg-muted rounded-lg flex-wrap">
-            <div className="flex-1 min-w-[200px]">
-              <p className="font-medium">Components Registry</p>
-              <p className="text-sm text-muted-foreground">
-                See <code className="bg-background px-1 rounded">marketing-content/component-registry/</code> for schemas and examples
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant={yamlExpanded ? "default" : "outline"}
-                onClick={toggleAllYaml}
-                data-testid="button-toggle-all-yaml"
-              >
-                <IconCode className="w-4 h-4 mr-1" />
-                {yamlExpanded ? "Hide All YAML" : "Show All YAML"}
-              </Button>
-              <Button
-                variant={previewExpanded ? "default" : "outline"}
-                onClick={toggleAllPreview}
-                data-testid="button-toggle-all-preview"
-              >
-                <IconEye className="w-4 h-4 mr-1" />
-                {previewExpanded ? "Hide All Previews" : "Show All Previews"}
-              </Button>
-            </div>
-          </div>
-        </div>
-
         <div className="max-w-6xl mx-auto">
           <AllComponentsLoader 
             components={components}

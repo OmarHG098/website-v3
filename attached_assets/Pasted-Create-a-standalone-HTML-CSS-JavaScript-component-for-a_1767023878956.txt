@@ -1,0 +1,36 @@
+Create a standalone HTML + CSS + JavaScript component for an interactive "AI Engineering Workflow" diagram to be placed in the "Why AI Engineering Now" section of our landing page.
+Design requirements:
+- White background (#FFFFFF or very light)
+- Use our brand blue palette: primary blue #007BFF (or similar vibrant blue), lighter blues #E3F2FD / #BBDEFB for accents, dark blue #0D47A1 for highlights
+- Clean, minimalistic, modern look – similar to Apple or Vercel style
+- Subtle shadows and rounded elements
+- Responsive: works perfectly on desktop and mobile
+Content & Layout:
+- Central large circle or rounded card with "AI Engineering Workflow" text and optionally the 4Geeks/Rigobot logo
+- Around the center, arrange 8–10 technology nodes in a loose circle or two columns (left: AI/ML tools, right: development/deployment tools)
+- Technologies to include (use official SVG logos where possible):
+  - Python (center or prominent)
+  - OpenAI
+  - Rigobot (our custom AI mentor – use a simple robot icon if no logo)
+  - LangChain
+  - Hugging Face
+  - Git & GitHub
+  - React
+  - Node.js
+  - Jupyter / Google Colab
+  - VS Code / Cursor
+Connections:
+- Thin light blue lines (curved or straight) connecting the central element to each technology node
+- Lines should be subtle (#BBDEFB or light gray)
+Interactivity (lightweight, no heavy libraries):
+- On hover over any technology node:
+  - Node slightly scales up and gets a soft blue glow/shadow
+  - Connecting line becomes brighter/thicker
+  - A small tooltip appears with a short description like "Master prompt engineering & API integration" for OpenAI
+- Keep it smooth and performant – use only CSS transitions where possible, minimal JS
+Implementation:
+- Use pure HTML, CSS, and vanilla JavaScript (no external libraries except CDN for logos if needed)
+- Use SVG for the diagram (inline or <svg> element) for crisp scaling
+- Nodes should be rounded rectangles or circles with the logo + name below or beside
+- Make it easy to customize colors and add/remove nodes later
+Output the full HTML file that I can copy and embed directly into my landing page section. Make it visually attractive and professional – this will be a key visual element to show what technologies students will learn in our AI Engineering bootcamp.

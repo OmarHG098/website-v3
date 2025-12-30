@@ -112,7 +112,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   if (modules.length === 0) {
     return (
-      <section className="py-section bg-primary/5" data-testid="section-syllabus">
+      <section className="bg-primary/5" data-testid="section-syllabus">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -122,7 +122,7 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   return (
     <section 
-      className="py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-syllabus"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -165,7 +165,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   if (focusAreas.length === 0) {
     return (
-      <section className="py-section bg-primary/5" data-testid="section-syllabus-landing">
+      <section className="bg-primary/5" data-testid="section-syllabus-landing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one focus area
         </div>
@@ -175,7 +175,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
 
   return (
     <section 
-      className="py-section bg-primary/5"
+      className="bg-primary/5"
       data-testid="section-syllabus-landing"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -435,7 +435,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   if (moduleCards.length === 0) {
     return (
-      <section className="py-section bg-muted/30" data-testid="section-syllabus-program">
+      <section className="bg-muted/30" data-testid="section-syllabus-program">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Syllabus section requires at least one module
         </div>
@@ -445,7 +445,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
   return (
     <section 
-      className="pt-section"
+      className=""
       data-testid="section-syllabus-program"
     >
       <div className="px-0 lg:pl-[max(1rem,calc((100vw-72rem)/2+1rem))] lg:pr-0">
@@ -541,6 +541,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                         orientation={isMobile ? "vertical" : (module.orientation ?? "vertical")}
                         icon={module.icon}
                         testId={`card-module-${index}`}
+                        hideExpandButton={index === 0}
                       />
                     </div>
                   </div>
@@ -551,26 +552,28 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
               {/* Navigation Arrow Buttons - centered under the active card */}
               <div className="mt-4 ml-2 w-[256px] md:w-[280px] lg:w-[320px]" data-testid="container-nav-arrows">
-                <div className="flex justify-center gap-2">
+                <div className="flex justify-center gap-3">
                   <Button
                     variant="outline"
-                    size="icon"
+                    size="lg"
+                    className="h-12 w-12 p-0"
                     onClick={() => handleDotClick(activeIndex - 1)}
                     disabled={activeIndex === 0}
                     aria-label="Previous milestone"
                     data-testid="button-prev-milestone"
                   >
-                    <TablerIcons.IconChevronLeft className="w-5 h-5 text-primary" />
+                    <TablerIcons.IconChevronLeft className="w-6 h-6 text-primary" />
                   </Button>
                   <Button
                     variant="outline"
-                    size="icon"
+                    size="lg"
+                    className="h-12 w-12 p-0"
                     onClick={() => handleDotClick(activeIndex + 1)}
                     disabled={activeIndex === moduleCards.length - 1}
                     aria-label="Next milestone"
                     data-testid="button-next-milestone"
                   >
-                    <TablerIcons.IconChevronRight className="w-5 h-5 text-primary" />
+                    <TablerIcons.IconChevronRight className="w-6 h-6 text-primary" />
                   </Button>
                 </div>
               </div>

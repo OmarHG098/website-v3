@@ -24,7 +24,7 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
   
   return (
     <section 
-      className={`py-section ${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
+      className={`${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">

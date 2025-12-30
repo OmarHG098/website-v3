@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import jsYaml from "js-yaml";
 import { 
   IconX, 
@@ -21,6 +22,15 @@ import {
   IconTable,
   IconCheck,
   IconWand,
+  IconComponents,
+  IconListDetails,
+  IconAward,
+  IconPhoto,
+  IconForms,
+  IconChartDots,
+  IconChartBar as IconVerticalBars,
+  IconHandClick,
+  IconColumns,
 } from "@tabler/icons-react";
 import {
   Dialog,
@@ -49,6 +59,7 @@ import {
 } from "@/components/ui/tooltip";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
+import { emitContentUpdated } from "@/lib/contentEvents";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -59,7 +70,6 @@ interface ComponentPickerModalProps {
   locale?: string;
   variant?: string;
   version?: number;
-  onSectionAdded?: () => void;
 }
 
 interface ComponentInfo {
@@ -83,28 +93,50 @@ interface ProcessedExample {
   content: Record<string, unknown>;
 }
 
-const componentsList: ComponentInfo[] = [
-  { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
-  { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
-  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
-  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight or detailed variants" },
-  { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
-  { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
-  { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
-  { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
-  { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
-  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
-  { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
-  { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
-  { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
-  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo carousel of hiring companies" },
-  { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
-  { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
-  { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
-  { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
-  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
-];
+interface RegistryComponent {
+  type: string;
+  name: string;
+  description: string;
+  latestVersion: string;
+  versions: string[];
+}
+
+interface RegistryOverview {
+  components: RegistryComponent[];
+}
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  hero: IconRocket,
+  two_column: IconLayoutColumns,
+  two_column_accordion_card: IconColumns,
+  comparison_table: IconTable,
+  features_grid: IconLayoutColumns,
+  numbered_steps: IconArrowRight,
+  ai_learning: IconBrain,
+  mentorship: IconUsers,
+  pricing: IconCreditCard,
+  projects: IconFolderCode,
+  project_showcase: IconChartBar,
+  syllabus: IconBook,
+  why_learn_ai: IconSparkles,
+  certificate: IconCertificate,
+  whos_hiring: IconBuildingSkyscraper,
+  testimonials: IconMessage,
+  testimonials_slide: IconMessage,
+  faq: IconQuestionMark,
+  cta_banner: IconHandClick,
+  footer: IconLayoutBottombar,
+  award_badges: IconCertificate,
+  awards_marquee: IconAward,
+  bullet_tabs_showcase: IconListDetails,
+  apply_form: IconForms,
+  lead_form: IconForms,
+  graduates_stats: IconChartDots,
+  horizontal_bars: IconChartBar,
+  vertical_bars_cards: IconVerticalBars,
+  human_and_ai_duo: IconUsers,
+  community_support: IconUsers,
+};
 
 const variantLabels: Record<string, string> = {
   singleColumn: "Single Column",
@@ -155,7 +187,6 @@ export default function ComponentPickerModal({
   locale,
   variant,
   version,
-  onSectionAdded,
 }: ComponentPickerModalProps) {
   const [step, setStep] = useState<"select" | "configure">("select");
   const [selectedComponent, setSelectedComponent] = useState<ComponentInfo | null>(null);
@@ -168,6 +199,21 @@ export default function ComponentPickerModal({
   const [useAiAdaptation, setUseAiAdaptation] = useState(false);
   const [isAdapting, setIsAdapting] = useState(false);
   const { toast } = useToast();
+
+  const { data: registryData, isLoading: isLoadingRegistry } = useQuery<RegistryOverview>({
+    queryKey: ["/api/component-registry"],
+    enabled: isOpen,
+  });
+
+  const componentsList: ComponentInfo[] = useMemo(() => {
+    if (!registryData?.components) return [];
+    return registryData.components.map((comp) => ({
+      type: comp.type,
+      label: comp.name,
+      icon: iconMap[comp.type] || IconComponents,
+      description: comp.description || "",
+    }));
+  }, [registryData]);
 
   useEffect(() => {
     if (selectedComponent) {
@@ -332,9 +378,9 @@ export default function ComponentPickerModal({
       });
 
       if (response.ok) {
-        onSectionAdded?.();
         onClose();
-        window.location.reload();
+        // Emit event to trigger page refresh
+        emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale! });
       } else {
         console.error("Failed to add section");
       }
@@ -343,7 +389,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onSectionAdded, onClose, useAiAdaptation, toast]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onClose, useAiAdaptation, toast]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
@@ -419,27 +465,37 @@ export default function ComponentPickerModal({
         
         {step === "select" ? (
           <ScrollArea className="flex-1 p-4">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {componentsList.map((component) => {
-                const Icon = component.icon;
-                return (
-                  <button
-                    key={component.type}
-                    onClick={() => handleSelectComponent(component)}
-                    className="flex flex-col items-center gap-2 p-4 rounded-lg border bg-card hover:border-primary hover:bg-primary/5 transition-all text-left"
-                    data-testid={`component-option-${component.type}`}
-                  >
-                    <div className="p-3 rounded-full bg-muted">
-                      <Icon className="h-6 w-6 text-muted-foreground" />
-                    </div>
-                    <div className="text-center">
-                      <div className="font-medium text-sm">{component.label}</div>
-                      <div className="text-xs text-muted-foreground mt-0.5">{component.description}</div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            {isLoadingRegistry ? (
+              <div className="flex items-center justify-center h-full py-12">
+                <IconRefresh className="h-8 w-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : componentsList.length === 0 ? (
+              <div className="flex items-center justify-center h-full py-12 text-muted-foreground">
+                No components available
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {componentsList.map((component) => {
+                  const Icon = component.icon;
+                  return (
+                    <button
+                      key={component.type}
+                      onClick={() => handleSelectComponent(component)}
+                      className="flex flex-col items-center gap-2 p-4 rounded-lg border bg-card hover:border-primary hover:bg-primary/5 transition-all text-left"
+                      data-testid={`component-option-${component.type}`}
+                    >
+                      <div className="p-3 rounded-full bg-muted">
+                        <Icon className="h-6 w-6 text-muted-foreground" />
+                      </div>
+                      <div className="text-center">
+                        <div className="font-medium text-sm">{component.label}</div>
+                        <div className="text-xs text-muted-foreground mt-0.5">{component.description}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </ScrollArea>
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">

@@ -18,7 +18,7 @@ export default function ImageTextSection({
   onCtaClick
 }: ImageTextSectionProps) {
   return (
-    <section className="container mx-auto px-4 py-section">
+    <section className="container mx-auto px-4">
       <div className={`grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto ${imagePosition === "right" ? "md:grid-flow-dense" : ""}`}>
         <div className={imagePosition === "right" ? "md:col-start-2" : ""}>
           <img 

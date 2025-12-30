@@ -166,6 +166,16 @@
         "certificate_position": "right",
         "iconSetIndex": 1
       }
+    },
+    {
+      "id": "tech-molecule",
+      "component": "TechMolecule",
+      "variant": "Default",
+      "description": "Decorative molecule diagram with animated tech nodes connected by glowing lines. Features central AI brain with surrounding code, database, cloud, terminal, and CPU nodes.",
+      "tags": ["decorative", "diagram", "animation", "tech"],
+      "props": {
+        "className": ""
+      }
     }
   ]
 }

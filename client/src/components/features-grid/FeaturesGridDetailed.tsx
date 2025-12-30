@@ -125,7 +125,7 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
 
   return (
     <section 
-      className={`py-section ${data.background || ''}`}
+      className={`${data.background || ''}`}
       data-testid="section-features-grid"
     >
       <div className="max-w-6xl mx-auto px-4">

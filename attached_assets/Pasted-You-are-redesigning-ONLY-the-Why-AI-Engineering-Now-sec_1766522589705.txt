@@ -1,0 +1,64 @@
+You are redesigning ONLY the “Why AI Engineering Now” section on the AI Engineering landing page (4geeks.com).
+Current state is not acceptable
+- Remove the current icon-based diagram.
+- Remove the straight connector lines.
+- Do NOT use icons in the new diagram.
+- The new diagram must feel more original and premium, inspired by Supabase-style abstract diagrams.
+Layout constraints (must respect)
+- Keep two-column layout: metrics on the left, content on the right.
+- The diagram must be compact and not oversized, so it does not compete with the metrics.
+- Do NOT increase metric sizes. Keep them readable but not huge.
+- The right content card should remain visually balanced with the left metrics.
+New diagram direction (required)
+Create an abstract, interactive network diagram (no icons, no labels inside nodes) that communicates:
+AI Engineering is the connective layer between models, data, infrastructure, and applications.
+Visual style
+- Use only the existing blue palette from the page.
+- Background stays light and clean.
+- The diagram should be made of:
+  - a central “core” shape (circle or rounded square) with subtle blue glow
+  - multiple orbiting nodes as simple dots or small rounded pills (no icons)
+  - soft curved paths or dotted trails (not solid straight lines)
+  - faint grid or particle field behind it (very subtle), similar to Supabase vibe but adapted to light background
+Interaction (main feature)
+- On hover over a node:
+  - that node scales up slightly
+  - the path/trail connected to it becomes brighter
+  - nearby particles animate subtly (or pulse)
+  - a short caption text updates under the diagram describing that layer
+- On hover over the central core:
+  - the core gently pulses
+  - all nodes softly brighten
+  - caption becomes a summary sentence
+Caption content (keep it short, not marketing)
+- Provide 5 captions total:
+  - default (core summary)
+  - models
+  - data
+  - infrastructure
+  - applications
+- Captions should be 1 sentence, max 14 words each.
+- No numbers, no claims, no metrics in captions.
+Motion guidelines
+- Add ambient motion in idle state:
+  - slow drifting particles or slow orbit movement
+  - subtle, elegant, not distracting
+- No bouncing animations.
+- No fast transitions.
+- Respect prefers-reduced-motion: show static diagram, still allow hover highlight if possible.
+Size and spacing
+- Diagram height should fit nicely inside the right card without pushing content down too much.
+- Keep generous whitespace around it.
+- Ensure it looks centered and intentional inside the card.
+What NOT to do
+- Do NOT use icons.
+- Do NOT use straight connector lines.
+- Do NOT turn this into an infographic.
+- Do NOT add new colors or gradients that introduce new hues.
+Acceptance criteria
+- The diagram feels original, interactive, and premium.
+- It matches the page style (clean, blue palette, no icon set).
+- It is compact and does not overpower metrics.
+- Hover interactions feel smooth and satisfying, like Supabase.
+- Section no longer looks generic.
+Implement using SVG/Canvas/HTML/CSS/JS as needed, following existing project conventions.

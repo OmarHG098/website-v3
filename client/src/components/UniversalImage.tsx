@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import type { ImageRef, ImageEntry, ImagePreset } from "@shared/schema";
+import SolidCard from "./SolidCard";
 
 interface ImageRegistryData {
   presets: Record<string, ImagePreset>;
@@ -43,6 +44,8 @@ interface UniversalImageProps extends ImageRef {
   loading?: "lazy" | "eager";
   onLoad?: () => void;
   onError?: () => void;
+  useSolidCard?: boolean;
+  bordered?: boolean;
 }
 
 const ASPECT_RATIOS: Record<string, number> = {
@@ -62,6 +65,8 @@ export function UniversalImage({
   loading = "lazy",
   onLoad,
   onError,
+  useSolidCard = false,
+  bordered = false,
 }: UniversalImageProps) {
   const { registry, loading: registryLoading } = useImageRegistry();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -124,9 +129,11 @@ export function UniversalImage({
     );
   }
 
-  return (
+  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
+  
+  const imageContent = (
     <div 
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden ${borderClasses} ${useSolidCard ? '' : className}`}
       style={containerStyle}
       data-testid={`img-container-${id}`}
     >
@@ -150,6 +157,16 @@ export function UniversalImage({
       />
     </div>
   );
+
+  if (useSolidCard) {
+    return (
+      <SolidCard className={`!p-0 !min-h-0 overflow-hidden ${className}`}>
+        {imageContent}
+      </SolidCard>
+    );
+  }
+
+  return imageContent;
 }
 
 export function getImageUrl(id: string): string | null {

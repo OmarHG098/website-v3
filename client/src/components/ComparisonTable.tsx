@@ -64,7 +64,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
 
   return (
     <section
-      className={`py-section ${data.background || "bg-background"}`}
+      className={`${data.background || "bg-background"}`}
       data-testid="section-comparison-table"
     >
       <div className="max-w-6xl mx-auto px-4">

@@ -1,17 +1,9 @@
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   IconFlame,
-  IconBrandHtml5,
-  IconBrandCss3,
-  IconBrandJavascript,
-  IconBrandReact,
-  IconBrandPython,
-  IconBrandNodejs,
-  IconBrandGit,
-  IconBrandBootstrap,
   IconApi,
   IconSettings,
   IconCertificate,
@@ -20,6 +12,19 @@ import {
   IconSchool,
   type Icon,
 } from "@tabler/icons-react";
+import {
+  SiGit,
+  SiPython,
+  SiReact,
+  SiNodedotjs,
+  SiOpenai,
+  SiFlask,
+  SiBootstrap,
+  SiJavascript,
+  SiHtml5,
+  SiCss3,
+  SiGithub,
+} from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
 import RigobotIconTiny from "@/components/custom-icons/RigobotIconTiny";
 
@@ -27,33 +32,28 @@ interface PricingSectionProps {
   data: PricingSectionType;
 }
 
-const iconMap: Record<string, Icon> = {
-  html: IconBrandHtml5,
-  css: IconBrandCss3,
-  javascript: IconBrandJavascript,
-  react: IconBrandReact,
-  python: IconBrandPython,
-  nodejs: IconBrandNodejs,
-  git: IconBrandGit,
-  bootstrap: IconBrandBootstrap,
+const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
+  git: SiGit,
+  python: SiPython,
+  react: SiReact,
+  nodejs: SiNodedotjs,
+  openai: SiOpenai,
+  flask: SiFlask,
+  bootstrap: SiBootstrap,
+  javascript: SiJavascript,
+  html5: SiHtml5,
+  html: SiHtml5,
+  css3: SiCss3,
+  css: SiCss3,
+  github: SiGithub,
+};
+
+const featureIconMap: Record<string, Icon> = {
   api: IconApi,
   settings: IconSettings,
   certificate: IconCertificate,
   cloud: IconCloud,
   robot: IconRobot,
-};
-
-const techIconColors: Record<string, string> = {
-  html: "#0084FF",
-  css: "#25BF6C",
-  javascript: "#FFB718",
-  react: "#0084FF",
-  python: "#FFB718",
-  nodejs: "#FFB718",
-  git: "#EB5757",
-  bootstrap: "#9747FF",
-  api: "#061258",
-  settings: "#061258",
 };
 
 export function PricingSection({ data }: PricingSectionProps) {
@@ -65,7 +65,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   
   if (!isProductVariant && (!data.monthly || !data.yearly)) {
     return (
-      <section className="py-section bg-muted/30" data-testid="section-pricing">
+      <section className="bg-muted/30" data-testid="section-pricing">
         <div className="max-w-6xl mx-auto px-4 text-center text-muted-foreground">
           Pricing section requires monthly and yearly pricing data
         </div>
@@ -82,7 +82,7 @@ export function PricingSection({ data }: PricingSectionProps) {
   if (isProductVariant) {
     return (
       <section
-        className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+        className=""
         data-testid="section-pricing"
       >
         <div className="max-w-6xl mx-auto px-4">
@@ -106,18 +106,30 @@ export function PricingSection({ data }: PricingSectionProps) {
           <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
             <div
               className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
-              style={{
-                background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
-              }}
               data-testid="card-pricing"
+              style={{
+                background: "linear-gradient(135deg, #366bff 0%, #4aa5ff 100%)",
+              }}
             >
+
               <div className="flex flex-col items-center justify-between h-full px-4 py-6">
                 <div className="flex flex-col items-center justify-center flex-1 py-6 space-y-4">
                   {data.discount_text && (
                     <div className="text-center">
-                      <p className="text-white text-sm font-medium" data-testid="text-discount">
-                        {data.discount_text}
-                      </p>
+                      {data.discount_text.includes(":") ? (
+                        <div data-testid="text-discount">
+                          <p className="text-white/90 text-sm">
+                            {data.discount_text.split(":")[0]}:
+                          </p>
+                          <p className="text-white text-sm font-bold mt-1">
+                            {data.discount_text.split(":")[1]?.trim()}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="text-white text-sm font-medium" data-testid="text-discount">
+                          {data.discount_text}
+                        </p>
+                      )}
                     </div>
                   )}
                   
@@ -129,13 +141,13 @@ export function PricingSection({ data }: PricingSectionProps) {
                       {data.financing_amount && (
                         <div className="mt-2">
                           <span
-                            className="text-h1 text-white"
+                            className="text-6xl font-bold text-white"
                             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                             data-testid="text-financing-amount"
                           >
                             {data.financing_amount}
                           </span>
-                          <span className="text-white text-xs font-normal">/mo</span>
+                          <span className="text-white text-sm font-normal">/mo</span>
                         </div>
                       )}
                     </div>
@@ -172,15 +184,14 @@ export function PricingSection({ data }: PricingSectionProps) {
                   data-testid="tech-icons"
                 >
                   {data.tech_icons.map((iconName, index) => {
-                    const IconComponent = iconMap[iconName.toLowerCase()];
-                    const color = techIconColors[iconName.toLowerCase()] || "#061258";
+                    const IconComponent = techIconMap[iconName.toLowerCase()];
                     return IconComponent ? (
                       <div
                         key={index}
-                        className="flex items-center justify-center p-2"
+                        className="flex items-center justify-center p-2 text-muted-foreground"
                         data-testid={`icon-tech-${index}`}
                       >
-                        <IconComponent size={20} style={{ color }} />
+                        <IconComponent className="w-5 h-5" />
                       </div>
                     ) : null;
                   })}
@@ -201,7 +212,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                         <RigobotIconTiny width="27px" height="17px" />
                       ) : feature.icon ? (
                         (() => {
-                          const IconComponent = iconMap[feature.icon.toLowerCase()];
+                          const IconComponent = featureIconMap[feature.icon.toLowerCase()];
                           return IconComponent ? (
                             <IconComponent size={22} className="text-primary" />
                           ) : (
@@ -227,7 +238,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
   return (
     <section
-      className="py-section bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
+      className="bg-gradient-to-r from-[#e8f4fc] to-white dark:from-muted/30 dark:to-background"
       data-testid="section-pricing"
     >
       <div className="max-w-6xl mx-auto px-4">
@@ -293,7 +304,7 @@ export function PricingSection({ data }: PricingSectionProps) {
           <div
             className="relative rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl overflow-hidden lg:col-span-4"
             style={{
-              background: "linear-gradient(135deg, #EB5757 0%, #0084FF 100%)",
+              background: "linear-gradient(135deg, #66B8FF 0%, #3399FF 100%)",
             }}
             data-testid="card-pricing"
           >
@@ -369,15 +380,14 @@ export function PricingSection({ data }: PricingSectionProps) {
                 data-testid="tech-icons"
               >
                 {data.tech_icons.map((iconName, index) => {
-                  const IconComponent = iconMap[iconName.toLowerCase()];
-                  const color = techIconColors[iconName.toLowerCase()] || "#061258";
+                  const IconComponent = techIconMap[iconName.toLowerCase()];
                   return IconComponent ? (
                     <div
                       key={index}
-                      className="flex items-center justify-center p-2"
+                      className="flex items-center justify-center p-2 text-muted-foreground"
                       data-testid={`icon-tech-${index}`}
                     >
-                      <IconComponent size={20} style={{ color }} />
+                      <IconComponent className="w-5 h-5" />
                     </div>
                   ) : null;
                 })}
@@ -398,7 +408,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                       <RigobotIconTiny width="27px" height="17px" />
                     ) : feature.icon ? (
                       (() => {
-                        const IconComponent = iconMap[feature.icon.toLowerCase()];
+                        const IconComponent = featureIconMap[feature.icon.toLowerCase()];
                         return IconComponent ? (
                           <IconComponent size={22} className="text-primary" />
                         ) : (
