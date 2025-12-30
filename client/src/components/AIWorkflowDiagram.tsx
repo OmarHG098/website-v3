@@ -97,9 +97,7 @@ function TechNodeComponent({
   const baseDelay = row === "top" ? 0 : 400;
   const delay = baseDelay + index * 60;
   
-  const verticalOffset = row === "top" 
-    ? arcOffset * 1.5 
-    : -arcOffset * 1.5;
+  const verticalOffset = arcOffset * 0.8;
 
   return (
     <div
@@ -194,21 +192,30 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     return () => observer.disconnect();
   }, []);
 
-  const getArcOffset = (index: number, total: number) => {
-    const center = (total - 1) / 2;
-    const distance = Math.abs(index - center);
-    const maxOffset = 3;
-    return maxOffset * (distance / center);
-  };
+  const topRowOffsets = [
+    { x: -8, y: -5 },
+    { x: 0, y: -10 },
+    { x: 0, y: -18 },
+    { x: 0, y: -10 },
+    { x: 8, y: -5 },
+  ];
+
+  const bottomRowOffsets = [
+    { x: -8, y: 5 },
+    { x: 0, y: 10 },
+    { x: 0, y: 18 },
+    { x: 0, y: 10 },
+    { x: 8, y: 5 },
+  ];
 
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
-      x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 16 + getArcOffset(i, topRowTechnologies.length)
+      x: (i + 0.5) / topRowTechnologies.length * 100 + topRowOffsets[i].x,
+      y: 22 + topRowOffsets[i].y
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
-      x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 84 - getArcOffset(i, bottomRowTechnologies.length)
+      x: (i + 0.5) / bottomRowTechnologies.length * 100 + bottomRowOffsets[i].x,
+      y: 78 + bottomRowOffsets[i].y
     })),
     center: { x: 50, y: 50 }
   };
@@ -302,7 +309,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="top"
-              arcOffset={getArcOffset(index, topRowTechnologies.length)}
+              arcOffset={topRowOffsets[index].y}
             />
           ))}
         </div>
@@ -355,7 +362,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="bottom"
-              arcOffset={getArcOffset(index, bottomRowTechnologies.length)}
+              arcOffset={bottomRowOffsets[index].y}
             />
           ))}
         </div>
