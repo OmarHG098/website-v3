@@ -23,19 +23,19 @@ interface TechNode {
 }
 
 const topRowTechnologies: TechNode[] = [
-  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 22 },
-  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 9 },
-  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -22 },
-  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 9 },
-  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 22 },
+  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 20 },
+  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 7 },
+  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -20 },
+  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 7 },
+  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 20 },
 ];
 
 const bottomRowTechnologies: TechNode[] = [
-  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -22 },
-  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -9 },
-  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 22 },
-  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -9 },
-  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -22 },
+  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -20 },
+  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -7 },
+  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 20 },
+  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -7 },
+  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -20 },
 ];
 
 function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: string }) {
@@ -182,8 +182,32 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   }, []);
 
   const centerY = 50;
-  const centerBoxHalfWidth = 12;
-  const centerBoxHalfHeight = 4;
+
+  const getTopLinePoints = (nodeX: number, nodeY: number, index: number) => {
+    const edgeOffsetX = (nodeX - 50) * 0.25;
+    const startX = 50 + edgeOffsetX;
+    const startY = centerY - 6;
+    
+    const midY = (nodeY + startY) / 2;
+    const curveBend = Math.abs(nodeX - 50) * 0.08;
+    const controlX = nodeX + (nodeX < 50 ? curveBend : -curveBend);
+    const controlY = midY - 4;
+    
+    return { startX, startY, controlX, controlY, endX: nodeX, endY: nodeY + 8 };
+  };
+
+  const getBottomLinePoints = (nodeX: number, nodeY: number, index: number) => {
+    const edgeOffsetX = (nodeX - 50) * 0.25;
+    const startX = 50 + edgeOffsetX;
+    const startY = centerY + 6;
+    
+    const midY = (nodeY + startY) / 2;
+    const curveBend = Math.abs(nodeX - 50) * 0.08;
+    const controlX = nodeX + (nodeX < 50 ? curveBend : -curveBend);
+    const controlY = midY + 4;
+    
+    return { startX, startY, controlX, controlY, endX: nodeX, endY: nodeY - 8 };
+  };
 
   return (
     <div 
@@ -198,22 +222,16 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
-          const nodeY = 20 + tech.yOffset * 0.3;
-          
-          const centerOffsetX = (nodeX - 50) * 0.2;
-          const startX = 50 + centerOffsetX;
-          const startY = centerY - centerBoxHalfHeight - 1;
-          
-          const controlX = nodeX;
-          const controlY = (nodeY + startY) / 2 - 3;
+          const nodeY = 22 + tech.yOffset * 0.28;
+          const { startX, startY, controlX, controlY, endX, endY } = getTopLinePoints(nodeX, nodeY, i);
           
           return (
             <path 
               key={`top-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 6}`}
+              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`}
               fill="none"
-              stroke="#C3DDFD"
-              strokeOpacity="0.35"
+              stroke="#A0D0FF"
+              strokeOpacity="0.32"
               strokeWidth="0.7"
               className={cn(
                 "transition-opacity duration-500",
@@ -226,22 +244,16 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         
         {bottomRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / bottomRowTechnologies.length * 100;
-          const nodeY = 80 + tech.yOffset * 0.3;
-          
-          const centerOffsetX = (nodeX - 50) * 0.2;
-          const startX = 50 + centerOffsetX;
-          const startY = centerY + centerBoxHalfHeight + 1;
-          
-          const controlX = nodeX;
-          const controlY = (nodeY + startY) / 2 + 3;
+          const nodeY = 78 + tech.yOffset * 0.28;
+          const { startX, startY, controlX, controlY, endX, endY } = getBottomLinePoints(nodeX, nodeY, i);
           
           return (
             <path 
               key={`bottom-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 6}`}
+              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`}
               fill="none"
-              stroke="#C3DDFD"
-              strokeOpacity="0.35"
+              stroke="#A0D0FF"
+              strokeOpacity="0.32"
               strokeWidth="0.7"
               className={cn(
                 "transition-opacity duration-500",
@@ -253,7 +265,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         })}
       </svg>
 
-      <div className="relative flex flex-col items-stretch gap-1 py-6 md:py-8">
+      <div className="relative flex flex-col items-stretch gap-1 py-5 md:py-6">
         <div className="flex items-center justify-between w-full">
           {topRowTechnologies.map((tech, index) => (
             <TechNodeComponent
