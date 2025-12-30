@@ -194,23 +194,26 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     return () => observer.disconnect();
   }, []);
 
-  const getArcOffset = (index: number, total: number) => {
-    const center = (total - 1) / 2;
-    const distance = Math.abs(index - center);
-    const maxOffset = 6;
-    return maxOffset * (distance / center);
-  };
+  // Per-node vertical offsets for wide flattened ellipse
+  // Top row: positive = push UP (away from center), negative = pull DOWN (toward center)
+  // Bottom row: positive = push DOWN (away from center), negative = pull UP (toward center)
+  const topOffsets = [-18, -5, 38, -5, -18]; // Python, VSCode, Jupyter, GitHub, OpenAI
+  const bottomOffsets = [-18, -5, 38, -5, -18]; // LangChain, HuggingFace, React, Node.js, Rigobot
 
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 14 + getArcOffset(i, topRowTechnologies.length)
+      y: 22 - topOffsets[i]
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 86 - getArcOffset(i, bottomRowTechnologies.length)
+      y: 78 + bottomOffsets[i]
     })),
     center: { x: 50, y: 50 }
+  };
+  
+  const getArcOffset = (index: number, row: "top" | "bottom") => {
+    return row === "top" ? topOffsets[index] : bottomOffsets[index];
   };
 
   const isLineActive = (nodeId: string) => {
@@ -260,8 +263,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.95 : 0.45}
-              strokeWidth={active ? 1.8 : 1.2}
+              strokeOpacity={active ? 0.7 : 0.35}
+              strokeWidth={active ? 1.2 : 0.8}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
@@ -280,8 +283,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               d={pathD}
               fill="none"
               stroke={active ? "#2563EB" : "#A0D0FF"}
-              strokeOpacity={active ? 0.95 : 0.45}
-              strokeWidth={active ? 1.8 : 1.2}
+              strokeOpacity={active ? 0.7 : 0.35}
+              strokeWidth={active ? 1.2 : 0.8}
               className="transition-all duration-300"
               style={{ 
                 filter: active ? "url(#lineGlow)" : "none",
@@ -302,7 +305,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="top"
-              arcOffset={getArcOffset(index, topRowTechnologies.length)}
+              arcOffset={getArcOffset(index, "top")}
             />
           ))}
         </div>
@@ -355,7 +358,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="bottom"
-              arcOffset={getArcOffset(index, bottomRowTechnologies.length)}
+              arcOffset={getArcOffset(index, "bottom")}
             />
           ))}
         </div>
