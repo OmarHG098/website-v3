@@ -8,7 +8,12 @@ import { DotsIndicator } from "@/components/DotsIndicator";
 import { SyllabusModuleCard } from "@/components/SyllabusModuleCard";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
-import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";
+import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub, SiTailwindcss, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiPostman, SiN8N } from "react-icons/si";
+import { TiHtml5 } from "react-icons/ti";
+import { RiNextjsFill, RiSupabaseFill, RiClaudeFill } from "react-icons/ri";
+import { FaGitAlt } from "react-icons/fa";
+import { IoLogoVercel } from "react-icons/io5";
+import matplotlibLogo from "@assets/image_3_1767108719157.png";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -229,12 +234,31 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   bootstrap: SiBootstrap,
   javascript: SiJavascript,
   html5: SiHtml5,
+  tihtml5: TiHtml5,
   css3: SiCss3,
   github: SiGithub,
+  tailwindcss: SiTailwindcss,
+  nextjs: RiNextjsFill,
+  pandas: SiPandas,
+  numpy: SiNumpy,
+  scikitlearn: SiScikitlearn,
+  pytorch: SiPytorch,
+  gitalt: FaGitAlt,
+  postman: SiPostman,
+  vercel: IoLogoVercel,
+  supabase: RiSupabaseFill,
+  n8n: SiN8N,
+  claude: RiClaudeFill,
 };
 
 function getTechIcon(iconName: string, className?: string) {
-  const IconComponent = techIconMap[iconName.toLowerCase()];
+  const lowerName = iconName.toLowerCase();
+  
+  if (lowerName === "matplotlib") {
+    return <img src={matplotlibLogo} alt="Matplotlib" className={className || "w-6 h-6"} />;
+  }
+  
+  const IconComponent = techIconMap[lowerName];
   if (IconComponent) {
     return <IconComponent className={className || "w-6 h-6"} />;
   }
