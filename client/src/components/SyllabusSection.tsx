@@ -13,7 +13,7 @@ import { TiHtml5 } from "react-icons/ti";
 import { RiNextjsFill, RiSupabaseFill, RiClaudeFill } from "react-icons/ri";
 import { FaGitAlt } from "react-icons/fa";
 import { IoLogoVercel } from "react-icons/io5";
-import matplotlibLogo from "@assets/image_3_1767108719157.png";
+import matplotlibLogo from "@assets/image_3_(1)_1767109507402.png";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
