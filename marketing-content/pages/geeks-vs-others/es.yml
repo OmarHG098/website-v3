@@ -137,16 +137,16 @@ sections:
     subtitle: "No solo lo decimos — el reconocimiento de fuentes confiables lo demuestra."
     evidence_items:
       - icon: Trophy
-        title: "Top 5 Coding Bootcamps"
-        description: "Entre los Top 5 mundiales (Newsweek, Forbes, SwitchUp, Course Report)"
-      - icon: Headset
-        title: "Mejor Apoyo Estudiantil"
-        description: "Reconocidos por mentoría y orientación profesional excepcional"
+        title: "Top 5 Coding Bootcamps en el Mundo"
+        source: "Newsweek, Forbes, SwitchUp, Course Report"
+      - icon: Award
+        title: "Mejor Apoyo Estudiantil y Mejor Valor"
+        source: "Course Report, SwitchUp"
       - icon: Users
-        title: "35,000+ Graduados en el Mundo"
+        title: "35,000+ Graduados en 20+ Países"
         description: "Una comunidad global de profesionales tech exitosos"
       - icon: Certificate
-        title: "Certificados Reconocidos"
+        title: "Certificados Reconocidos por la Industria"
         description: "Credenciales que los empleadores valoran"
     media:
       type: image

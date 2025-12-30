@@ -1,18 +1,19 @@
 # Value Proof Panel - Awards & Recognition Example
 # Use this for showcasing external validation and credibility signals
+# Evidence items are styled as editorial citations with source attribution
 
 - type: value_proof_panel
   title: "Recognized Globally for Excellence"
   subtitle: "We don't just say we deliver — recognition from trusted sources proves our worth."
   evidence_items:
     - icon: Trophy
-      title: "Top 5 Coding Bootcamps"
-      description: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
-    - icon: Headset
-      title: "Best Student Support"
-      description: "Consistently recognized for outstanding mentorship and career guidance"
+      title: "Top 5 Coding Bootcamps Worldwide"
+      source: "Newsweek, Forbes, SwitchUp, Course Report"
+    - icon: Award
+      title: "Best Student Support & Best Value"
+      source: "Course Report, SwitchUp"
     - icon: Users
-      title: "35,000+ Graduates Worldwide"
+      title: "35,000+ Graduates Across 20+ Countries"
       description: "A global community of successful tech professionals"
     - icon: Certificate
       title: "Industry-Recognized Certificates"
@@ -23,8 +24,4 @@
     alt: "4Geeks Academy awards and recognitions"
     aspect_ratio: "4:3"
     style: rounded
-  cta:
-    text: "Read Our Reviews"
-    url: "/reviews"
-    variant: outline
   background: muted
