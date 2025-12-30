@@ -209,7 +209,6 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           const controlY = (startY + nodeY) / 2 - 2;
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`;
-          const animationDelay = i * 0.4;
           
           return (
             <g key={`top-line-${i}`}>
@@ -229,17 +228,20 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               {isVisible && (
                 <circle r="1" fill="#60A5FA" opacity="0.7">
                   <animateMotion
-                    dur="2.5s"
+                    dur="1.5s"
                     repeatCount="indefinite"
-                    begin={`${animationDelay}s`}
+                    begin="0s;motionAnim.end+3s"
                     path={pathD}
+                    calcMode="linear"
+                    id={i === 0 ? "motionAnim" : undefined}
                   />
                   <animate
                     attributeName="opacity"
                     values="0;0.8;0.8;0"
-                    dur="2.5s"
+                    keyTimes="0;0.1;0.9;1"
+                    dur="1.5s"
                     repeatCount="indefinite"
-                    begin={`${animationDelay}s`}
+                    begin="0s;motionAnim.end+3s"
                   />
                 </circle>
               )}
@@ -260,7 +262,6 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           const controlY = (startY + nodeY) / 2 + 2;
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`;
-          const animationDelay = (i * 0.4) + 1.2;
           
           return (
             <g key={`bottom-line-${i}`}>
@@ -280,17 +281,19 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               {isVisible && (
                 <circle r="1" fill="#60A5FA" opacity="0.7">
                   <animateMotion
-                    dur="2.5s"
+                    dur="1.5s"
                     repeatCount="indefinite"
-                    begin={`${animationDelay}s`}
+                    begin="0s;motionAnim.end+3s"
                     path={pathD}
+                    calcMode="linear"
                   />
                   <animate
                     attributeName="opacity"
                     values="0;0.8;0.8;0"
-                    dur="2.5s"
+                    keyTimes="0;0.1;0.9;1"
+                    dur="1.5s"
                     repeatCount="indefinite"
-                    begin={`${animationDelay}s`}
+                    begin="0s;motionAnim.end+3s"
                   />
                 </circle>
               )}
