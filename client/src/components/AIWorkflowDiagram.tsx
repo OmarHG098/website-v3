@@ -199,10 +199,10 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       data-testid="ai-workflow-diagram"
     >
       <svg 
-        className="absolute inset-0 w-full h-full pointer-events-none" 
+        className="absolute inset-0 w-full h-full" 
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        style={{ zIndex: 10 }}
+        style={{ zIndex: 1 }}
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
