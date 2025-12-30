@@ -1,0 +1,95 @@
+name: Job Confidence Split
+version: "1.0"
+component: "JobConfidenceSplit"
+file: "client/src/components/JobConfidenceSplit.tsx"
+description: "A two-card layout featuring a primary dark card with tool icons and a secondary accent-colored card with benefits list. Responsive: 3/4 + 1/4 on desktop, 50/50 on tablet, stacked on mobile."
+
+when_to_use: |
+  Use for sections that combine a feature description with a benefits list.
+  Ideal for job guarantee sections, skill acquisition highlights, or any feature + benefits combination.
+  The primary card showcases the main message with optional tool/brand icons.
+  The secondary card lists key benefits or outcomes.
+
+props:
+  type:
+    type: string
+    required: true
+    value: "job_confidence_split"
+
+  primary:
+    type: object
+    required: true
+    description: "The main card (dark background, ~75% width on desktop)"
+    fields:
+      heading:
+        type: string
+        required: true
+        description: "Main headline for the primary card"
+        example: "The Confidence of a Job Guarantee"
+      description:
+        type: string
+        required: false
+        description: "Supporting paragraph text"
+      badge:
+        type: string
+        required: false
+        description: "Optional badge text above the heading"
+      tool_icons:
+        type: array
+        required: false
+        description: "Floating tool/brand icons displayed on the card"
+        items:
+          icon:
+            type: string
+            required: false
+            description: "Tabler icon name (if using icon library)"
+          image_id:
+            type: string
+            required: false
+            description: "Image ID from image registry (for brand logos)"
+          size:
+            type: string
+            enum: ["sm", "md", "lg"]
+            default: "md"
+            description: "Icon size preset"
+          position:
+            type: object
+            required: false
+            description: "Positioning within the card"
+            fields:
+              bottom:
+                type: string
+                description: "Bottom offset (e.g., '20%')"
+              left:
+                type: string
+                description: "Left offset (e.g., '10%')"
+              right:
+                type: string
+                description: "Right offset (e.g., '30%')"
+
+  secondary:
+    type: object
+    required: true
+    description: "The benefits card (accent background, ~25% width on desktop)"
+    fields:
+      benefits:
+        type: array
+        required: true
+        min: 1
+        max: 5
+        description: "List of benefit items with checkmarks"
+        items:
+          text:
+            type: string
+            required: true
+            description: "Benefit text"
+            example: "Generate design ideas in seconds"
+          icon:
+            type: string
+            required: false
+            description: "Custom icon (defaults to checkmark)"
+
+  background:
+    type: string
+    required: false
+    description: "Background color token for the section container"
