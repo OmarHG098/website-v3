@@ -154,7 +154,3 @@ sections:
       alt: "Comunidad y apoyo de 4Geeks Academy"
       aspect_ratio: "4:3"
       style: rounded
-    cta:
-      text: "Lee Nuestras Reseñas"
-      url: "/reviews"
-      variant: outline

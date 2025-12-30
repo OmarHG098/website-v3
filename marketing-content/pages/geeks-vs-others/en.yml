@@ -150,7 +150,3 @@ sections:
       alt: "4Geeks Academy community and support"
       aspect_ratio: "4:3"
       style: rounded
-    cta:
-      text: "Read Our Reviews"
-      url: "/reviews"
-      variant: outline
