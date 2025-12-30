@@ -128,25 +128,29 @@ sections:
         variant: "primary"
       footer: "Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp."
 
-  - type: two_column
-    version: "1.0"
-    proportions: [6, 6]
-    alignment: "center"
-    gap: "12"
-    background: "bg-background"
-    left:
-      heading: "Recognized Globally for Excellence"
-      description: "We don't just say we deliver — recognition from trusted sources proves our worth."
-      bullets:
-        - heading: "Top 5 Coding Bootcamps"
-          text: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
-        - heading: "Best Student Support"
-          text: "Consistently recognized for Best Student Support and Best Value for Money"
-        - heading: "20,000+ Students"
-          text: "Trusted by 20,000+ students across the globe"
-      bullets_collapsible: true
-      text_align: "left"
-    right:
-      image: "/attached_assets/community-support-2_1765406601448.webp"
-      image_alt: "4Geeks Academy community and support"
-      justify: "center"
+  - type: value_proof_panel
+    title: "Recognized Globally for Excellence"
+    subtitle: "We don't just say we deliver — recognition from trusted sources proves our worth."
+    evidence_items:
+      - icon: Trophy
+        title: "Top 5 Coding Bootcamps"
+        description: "Rated among the Top 5 Coding Bootcamps worldwide (Newsweek, Forbes, SwitchUp, Course Report)"
+      - icon: Headset
+        title: "Best Student Support"
+        description: "Consistently recognized for outstanding mentorship and career guidance"
+      - icon: Users
+        title: "35,000+ Graduates Worldwide"
+        description: "A global community of successful tech professionals"
+      - icon: Certificate
+        title: "Industry-Recognized Certificates"
+        description: "Credentials that employers trust and value"
+    media:
+      type: image
+      src: "/attached_assets/community-support-2_1765406601448.webp"
+      alt: "4Geeks Academy community and support"
+      aspect_ratio: "4:3"
+      style: rounded
+    cta:
+      text: "Read Our Reviews"
+      url: "/reviews"
+      variant: outline

@@ -1,0 +1,17 @@
+# Value Proof Panel - Certifications Example
+# Use this for displaying official certifications and partnerships
+
+- type: value_proof_panel
+  title: "Officially Certified & Accredited"
+  subtitle: "Our programs meet rigorous industry standards and partner requirements."
+  evidence_items:
+    - icon: ShieldCheck
+      title: "State-Licensed Institution"
+      description: "Fully licensed to operate as an educational institution in 12+ states"
+    - icon: BuildingBank
+      title: "VA Approved for GI Bill"
+      description: "Veterans can use their GI Bill benefits for our programs"
+    - icon: Briefcase
+      title: "WIOA Eligible Provider"
+      description: "Approved for workforce development funding assistance"
+  reverse_layout: true

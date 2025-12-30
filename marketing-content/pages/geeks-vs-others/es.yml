@@ -132,25 +132,29 @@ sections:
         variant: "primary"
       footer: "Sigue el programa, apóyate en tus mentores, y si aún no consigues empleo, asumimos toda la responsabilidad."
 
-  - type: two_column
-    version: "1.0"
-    proportions: [6, 6]
-    alignment: "center"
-    gap: "12"
-    background: "bg-background"
-    left:
-      heading: "Reconocidos Globalmente por Excelencia"
-      description: "No solo lo decimos — el reconocimiento de fuentes confiables prueba nuestro valor."
-      bullets:
-        - heading: "Top 5 Coding Bootcamps"
-          text: "Calificados entre los Top 5 Coding Bootcamps mundialmente (Newsweek, Forbes, SwitchUp, Course Report)"
-        - heading: "Mejor Apoyo Estudiantil"
-          text: "Consistentemente reconocidos por Mejor Apoyo Estudiantil y Mejor Valor por Dinero"
-        - heading: "20,000+ Estudiantes"
-          text: "Confianza de 20,000+ estudiantes alrededor del mundo"
-      bullets_collapsible: true
-      text_align: "left"
-    right:
-      image: "/attached_assets/community-support-2_1765406601448.webp"
-      image_alt: "Comunidad y apoyo de 4Geeks Academy"
-      justify: "center"
+  - type: value_proof_panel
+    title: "Reconocidos Globalmente por Excelencia"
+    subtitle: "No solo lo decimos — el reconocimiento de fuentes confiables lo demuestra."
+    evidence_items:
+      - icon: Trophy
+        title: "Top 5 Coding Bootcamps"
+        description: "Entre los Top 5 mundiales (Newsweek, Forbes, SwitchUp, Course Report)"
+      - icon: Headset
+        title: "Mejor Apoyo Estudiantil"
+        description: "Reconocidos por mentoría y orientación profesional excepcional"
+      - icon: Users
+        title: "35,000+ Graduados en el Mundo"
+        description: "Una comunidad global de profesionales tech exitosos"
+      - icon: Certificate
+        title: "Certificados Reconocidos"
+        description: "Credenciales que los empleadores valoran"
+    media:
+      type: image
+      src: "/attached_assets/community-support-2_1765406601448.webp"
+      alt: "Comunidad y apoyo de 4Geeks Academy"
+      aspect_ratio: "4:3"
+      style: rounded
+    cta:
+      text: "Lee Nuestras Reseñas"
+      url: "/reviews"
+      variant: outline

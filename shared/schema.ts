@@ -187,6 +187,18 @@ export {
 } from "../marketing-content/component-registry/two_column/v1.0/schema";
 
 // ============================================
+// Re-export Value Proof Panel Schemas from Component Registry
+// ============================================
+export {
+  evidenceItemSchema,
+  valueProofPanelMediaSchema,
+  valueProofPanelSectionSchema,
+  type EvidenceItem,
+  type ValueProofPanelMedia,
+  type ValueProofPanelSection,
+} from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
+
+// ============================================
 // Re-export Numbered Steps Schemas from Component Registry
 // ============================================
 export {
@@ -618,7 +630,7 @@ import { applyFormSectionSchema } from "../marketing-content/component-registry/
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
 import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
-
+import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 
 // Layout fields that can be applied to any section
 // Supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
@@ -669,6 +681,7 @@ const baseSectionSchema = z.union([
   twoColumnAccordionCardSectionSchema,
   bulletTabsShowcaseSectionSchema,
   graduatesStatsSectionSchema,
+  valueProofPanelSectionSchema,
 ]);
 
 // Combined section schema with layout fields

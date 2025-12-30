@@ -1,0 +1,104 @@
+name: Value Proof Panel
+version: "1.0"
+component: "ValueProofPanel"
+file: "client/src/components/ValueProofPanel.tsx"
+description: "A credibility-focused section displaying evidence items with optional supportive media. Designed for showcasing awards, recognitions, certifications, and other trust signals."
+
+when_to_use: |
+  Use when you need to present credibility signals, awards, or recognition.
+  Best for sections where external validation matters more than feature descriptions.
+  Avoid using generic two_column layouts for credibility content - use this instead.
+  The media is decorative and supportive, not explanatory.
+
+props:
+  type:
+    type: string
+    required: true
+    value: "value_proof_panel"
+
+  title:
+    type: string
+    required: true
+    description: "Main headline for the section (H2)"
+    example: "Recognized Globally for Excellence"
+
+  subtitle:
+    type: string
+    required: false
+    description: "Short supporting paragraph (1-2 lines max)"
+    example: "We don't just say we deliver — recognition from trusted sources proves our worth."
+
+  evidence_items:
+    type: array
+    required: true
+    min: 1
+    max: 6
+    description: "List of evidence/credibility items to display"
+    items:
+      icon:
+        type: string
+        required: false
+        description: "Tabler icon name (e.g., Trophy, Award, Certificate)"
+      title:
+        type: string
+        required: true
+        description: "Short title for the evidence item"
+      description:
+        type: string
+        required: true
+        description: "One-line description of the credibility signal"
+
+  media:
+    type: object
+    required: false
+    description: "Optional decorative media (image or video)"
+    fields:
+      type:
+        type: string
+        enum: ["image", "video"]
+        default: "image"
+      src:
+        type: string
+        required: true
+        description: "URL or path to the media file"
+      alt:
+        type: string
+        required: false
+        description: "Alt text for accessibility"
+      aspect_ratio:
+        type: string
+        enum: ["1:1", "4:3", "16:9", "3:4"]
+        required: false
+        description: "Aspect ratio for the media container"
+      style:
+        type: string
+        enum: ["rounded", "organic", "circle"]
+        required: false
+        description: "Visual style for the media container"
+
+  cta:
+    type: object
+    required: false
+    description: "Optional call-to-action button"
+    fields:
+      text:
+        type: string
+        required: true
+      url:
+        type: string
+        required: true
+      variant:
+        type: string
+        enum: ["primary", "secondary", "outline"]
+        required: false
+
+  background:
+    type: string
+    required: false
+    description: "Background color token (e.g., 'muted', 'background')"
+
+  reverse_layout:
+    type: boolean
+    required: false
+    default: false
+    description: "If true, places media on the left and content on the right"
