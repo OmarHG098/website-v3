@@ -94,23 +94,16 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: highlight
-    background: "bg-background"
+    variant: stats_cards
     title: "Resultados en los que Puedes Confiar"
     subtitle: "Los números importan — y los nuestros hablan por sí solos."
-    columns: 3
+    use_card: true
     items:
-      - icon: "Briefcase"
-        icon_color: "#0084FF"
-        value: "84%"
+      - value: "84%"
         title: "Tasa de colocación laboral"
-      - icon: "Graduation"
-        icon_color: "#0084FF"
-        value: "3-6 meses"
+      - value: "3-6 meses"
         title: "Tiempo promedio para conseguir empleo"
-      - icon: "GrowthChart"
-        icon_color: "#0084FF"
-        value: "55%"
+      - value: "55%"
         title: "Aumento salarial después de graduarte"
 
   - type: two_column
