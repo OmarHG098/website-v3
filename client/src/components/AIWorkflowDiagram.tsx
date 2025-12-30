@@ -226,22 +226,22 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
                 style={{ transitionDelay: `${i * 60 + 100}ms` }}
               />
               {isVisible && (
-                <circle r="1" fill="#60A5FA" opacity="0.7">
+                <circle r="0.5" fill="#60A5FA">
                   <animateMotion
-                    dur="1.5s"
+                    dur="4.5s"
                     repeatCount="indefinite"
-                    begin="0s;motionAnim.end+3s"
                     path={pathD}
-                    calcMode="linear"
-                    id={i === 0 ? "motionAnim" : undefined}
+                    calcMode="spline"
+                    keyPoints="0;1;1"
+                    keyTimes="0;0.33;1"
+                    keySplines="0.4 0 0.6 1;0 0 1 1"
                   />
                   <animate
                     attributeName="opacity"
-                    values="0;0.8;0.8;0"
-                    keyTimes="0;0.1;0.9;1"
-                    dur="1.5s"
+                    values="0;0.7;0.7;0;0"
+                    keyTimes="0;0.05;0.28;0.33;1"
+                    dur="4.5s"
                     repeatCount="indefinite"
-                    begin="0s;motionAnim.end+3s"
                   />
                 </circle>
               )}
@@ -279,21 +279,22 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
                 style={{ transitionDelay: `${i * 60 + 500}ms` }}
               />
               {isVisible && (
-                <circle r="1" fill="#60A5FA" opacity="0.7">
+                <circle r="0.5" fill="#60A5FA">
                   <animateMotion
-                    dur="1.5s"
+                    dur="4.5s"
                     repeatCount="indefinite"
-                    begin="0s;motionAnim.end+3s"
                     path={pathD}
-                    calcMode="linear"
+                    calcMode="spline"
+                    keyPoints="0;1;1"
+                    keyTimes="0;0.33;1"
+                    keySplines="0.4 0 0.6 1;0 0 1 1"
                   />
                   <animate
                     attributeName="opacity"
-                    values="0;0.8;0.8;0"
-                    keyTimes="0;0.1;0.9;1"
-                    dur="1.5s"
+                    values="0;0.7;0.7;0;0"
+                    keyTimes="0;0.05;0.28;0.33;1"
+                    dur="4.5s"
                     repeatCount="indefinite"
-                    begin="0s;motionAnim.end+3s"
                   />
                 </circle>
               )}
