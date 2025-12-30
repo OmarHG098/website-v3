@@ -23,19 +23,19 @@ interface TechNode {
 }
 
 const topRowTechnologies: TechNode[] = [
-  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 20 },
-  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 7 },
-  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -20 },
-  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 7 },
-  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 20 },
+  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28 },
+  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4 },
+  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -16 },
+  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 4 },
+  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 28 },
 ];
 
 const bottomRowTechnologies: TechNode[] = [
-  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -20 },
-  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -7 },
-  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 20 },
-  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -7 },
-  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -20 },
+  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -28 },
+  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -4 },
+  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 16 },
+  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -4 },
+  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -28 },
 ];
 
 function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: string }) {
@@ -182,32 +182,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   }, []);
 
   const centerY = 50;
-
-  const getTopLinePoints = (nodeX: number, nodeY: number, index: number) => {
-    const edgeOffsetX = (nodeX - 50) * 0.25;
-    const startX = 50 + edgeOffsetX;
-    const startY = centerY - 6;
-    
-    const midY = (nodeY + startY) / 2;
-    const curveBend = Math.abs(nodeX - 50) * 0.08;
-    const controlX = nodeX + (nodeX < 50 ? curveBend : -curveBend);
-    const controlY = midY - 4;
-    
-    return { startX, startY, controlX, controlY, endX: nodeX, endY: nodeY + 8 };
-  };
-
-  const getBottomLinePoints = (nodeX: number, nodeY: number, index: number) => {
-    const edgeOffsetX = (nodeX - 50) * 0.25;
-    const startX = 50 + edgeOffsetX;
-    const startY = centerY + 6;
-    
-    const midY = (nodeY + startY) / 2;
-    const curveBend = Math.abs(nodeX - 50) * 0.08;
-    const controlX = nodeX + (nodeX < 50 ? curveBend : -curveBend);
-    const controlY = midY + 4;
-    
-    return { startX, startY, controlX, controlY, endX: nodeX, endY: nodeY - 8 };
-  };
+  const centerBoxTop = 44;
+  const centerBoxBottom = 56;
 
   return (
     <div 
@@ -217,22 +193,30 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     >
       <svg 
         className="absolute inset-0 w-full h-full pointer-events-none" 
-        style={{ zIndex: 0 }}
+        viewBox="0 0 100 100"
         preserveAspectRatio="none"
+        style={{ zIndex: 0 }}
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
-          const nodeY = 22 + tech.yOffset * 0.28;
-          const { startX, startY, controlX, controlY, endX, endY } = getTopLinePoints(nodeX, nodeY, i);
+          const nodeY = 18 + tech.yOffset * 0.15;
+          
+          const edgeOffsetX = (nodeX - 50) * 0.22;
+          const startX = 50 + edgeOffsetX;
+          const startY = centerBoxTop;
+          
+          const controlX = (startX + nodeX) / 2;
+          const controlY = (startY + nodeY) / 2 - 2;
           
           return (
             <path 
               key={`top-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`}
+              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`}
               fill="none"
               stroke="#A0D0FF"
-              strokeOpacity="0.32"
+              strokeOpacity="0.33"
               strokeWidth="0.7"
+              strokeLinecap="round"
               className={cn(
                 "transition-opacity duration-500",
                 isVisible ? "opacity-100" : "opacity-0"
@@ -244,17 +228,24 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         
         {bottomRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / bottomRowTechnologies.length * 100;
-          const nodeY = 78 + tech.yOffset * 0.28;
-          const { startX, startY, controlX, controlY, endX, endY } = getBottomLinePoints(nodeX, nodeY, i);
+          const nodeY = 82 + tech.yOffset * 0.15;
+          
+          const edgeOffsetX = (nodeX - 50) * 0.22;
+          const startX = 50 + edgeOffsetX;
+          const startY = centerBoxBottom;
+          
+          const controlX = (startX + nodeX) / 2;
+          const controlY = (startY + nodeY) / 2 + 2;
           
           return (
             <path 
               key={`bottom-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`}
+              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 5}`}
               fill="none"
               stroke="#A0D0FF"
-              strokeOpacity="0.32"
+              strokeOpacity="0.33"
               strokeWidth="0.7"
+              strokeLinecap="round"
               className={cn(
                 "transition-opacity duration-500",
                 isVisible ? "opacity-100" : "opacity-0"
