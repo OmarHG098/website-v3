@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DotsIndicator } from "@/components/DotsIndicator";
 import { SyllabusModuleCard } from "@/components/SyllabusModuleCard";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub, SiTailwindcss, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiPostman, SiN8N } from "react-icons/si";
@@ -252,19 +252,31 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   claude: RiClaudeFill,
 };
 
-function getTechIcon(iconName: string, className?: string, isImage?: boolean) {
+function getTechIcon(iconName: string, className?: string) {
   const lowerName = iconName.toLowerCase();
   
   if (lowerName === "matplotlib") {
     return (
-      <img 
-        src={matplotlibLogo} 
-        alt="Matplotlib" 
-        className={cn(
-          className || "w-6 h-6",
-          "grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-brand"
-        )} 
-      />
+      <div className="relative">
+        <img 
+          src={matplotlibLogo} 
+          alt="Matplotlib" 
+          className={cn(
+            className || "w-6 h-6",
+            "transition-opacity duration-brand group-hover:opacity-0"
+          )} 
+          style={{ filter: 'grayscale(100%) brightness(0.6)' }}
+        />
+        <img 
+          src={matplotlibLogo} 
+          alt="Matplotlib" 
+          className={cn(
+            className || "w-6 h-6",
+            "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-brand"
+          )} 
+          style={{ filter: 'brightness(0) saturate(100%) invert(45%) sepia(98%) saturate(1500%) hue-rotate(190deg) brightness(95%) contrast(101%)' }}
+        />
+      </div>
     );
   }
   
@@ -502,23 +514,25 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
-                  {data.tech_logos.map((logo, index) => (
-                    <Tooltip key={index} delayDuration={1000}>
-                      <TooltipTrigger asChild>
-                        <div 
-                          className="group text-muted-foreground hover:text-primary transition-colors duration-brand cursor-pointer"
-                          data-testid={`icon-tech-${index}`}
-                        >
-                          {getTechIcon(logo.icon, "w-8 h-8")}
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{logo.name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  ))}
-                </div>
+                <TooltipProvider delayDuration={1000} skipDelayDuration={0}>
+                  <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
+                    {data.tech_logos.map((logo, index) => (
+                      <Tooltip key={index}>
+                        <TooltipTrigger asChild>
+                          <div 
+                            className="group text-muted-foreground hover:text-primary transition-colors duration-brand cursor-pointer"
+                            data-testid={`icon-tech-${index}`}
+                          >
+                            {getTechIcon(logo.icon, "w-8 h-8")}
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{logo.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </TooltipProvider>
               )}
             </Card>
           </div>
