@@ -228,7 +228,8 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         
         {bottomRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / bottomRowTechnologies.length * 100;
-          const nodeY = 82 + tech.yOffset * 0.15;
+          const baseY = 78;
+          const nodeY = baseY + tech.yOffset * 0.18;
           
           const edgeOffsetX = (nodeX - 50) * 0.22;
           const startX = 50 + edgeOffsetX;
@@ -240,7 +241,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           return (
             <path 
               key={`bottom-line-${i}`}
-              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 5}`}
+              d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`}
               fill="none"
               stroke="#A0D0FF"
               strokeOpacity="0.33"
