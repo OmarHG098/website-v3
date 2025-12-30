@@ -112,11 +112,11 @@ function TechNodeComponent({
     >
       <div
         className={cn(
-          "flex items-center justify-center bg-background border transition-all duration-300",
+          "flex items-center justify-center border transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
           isHovered
-            ? "border-primary/40 scale-110"
-            : "border-primary/20"
+            ? "border-primary/40 scale-110 bg-primary/10"
+            : "border-primary/20 bg-background"
         )}
         style={{
           boxShadow: isHovered
@@ -199,7 +199,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
-          const nodeY = 18 + tech.yOffset * 0.15;
+          const nodeY = 16 + tech.yOffset * 0.18;
           
           const edgeOffsetX = (nodeX - 50) * 0.22;
           const startX = 50 + edgeOffsetX;
