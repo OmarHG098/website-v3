@@ -275,7 +275,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           <div 
             className={cn(
               "flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-500",
-              "bg-primary/6 border border-primary/20 rounded-2xl",
+              "bg-background border border-primary/20 rounded-2xl",
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
             style={{ 
