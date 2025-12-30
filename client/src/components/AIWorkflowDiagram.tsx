@@ -110,15 +110,15 @@ function TechNodeComponent({
     >
       <div
         className={cn(
-          "flex items-center justify-center bg-background border transition-all duration-300",
+          "flex items-center justify-center bg-transparent border-2 transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
           isHovered
-            ? "border-primary/40 scale-110"
-            : "border-primary/15"
+            ? "border-[#3B82F6] scale-110"
+            : "border-[#60A5FA]/60"
         )}
         style={{
           boxShadow: isHovered
-            ? "0 0 16px hsl(var(--primary) / 0.15), 0 2px 8px rgba(0,0,0,0.05)"
+            ? "0 6px 16px rgba(59, 130, 246, 0.2)"
             : "none",
         }}
       >
@@ -126,14 +126,14 @@ function TechNodeComponent({
           icon={tech.icon} 
           className={cn(
             "transition-colors duration-300",
-            isHovered ? "text-primary" : "text-primary/50"
+            isHovered ? "text-[#3B82F6]" : "text-[#60A5FA]"
           )} 
         />
       </div>
       <span
         className={cn(
           "mt-1 text-[7px] md:text-[8px] font-medium text-center transition-colors duration-300 whitespace-nowrap",
-          isHovered ? "text-primary" : "text-muted-foreground/60"
+          isHovered ? "text-[#3B82F6]" : "text-[#60A5FA]/80"
         )}
       >
         {tech.name}
@@ -142,11 +142,16 @@ function TechNodeComponent({
       {isHovered && (
         <div
           className={cn(
-            "absolute z-30 px-2.5 py-1.5 text-[10px] rounded-lg shadow-md whitespace-nowrap animate-in fade-in-0 zoom-in-95 duration-150",
-            "bg-background/95 backdrop-blur-sm border border-primary/10 text-foreground",
+            "absolute z-30 px-3 py-2 text-[10px] rounded-lg whitespace-nowrap animate-in fade-in-0 zoom-in-95 duration-150",
+            "bg-white border border-[#E2E8F0] text-[#1E293B]",
             row === "top" ? "top-full mt-2" : "bottom-full mb-2"
           )}
-          style={{ maxWidth: "150px", whiteSpace: "normal", textAlign: "center" }}
+          style={{ 
+            maxWidth: "150px", 
+            whiteSpace: "normal", 
+            textAlign: "center",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+          }}
           data-testid={`tooltip-${tech.id}`}
         >
           {tech.tooltip}
@@ -160,7 +165,6 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -180,32 +184,25 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.offsetWidth,
-          height: containerRef.current.offsetHeight
-        });
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [isVisible]);
-
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 12
+      y: 15
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 88
+      y: 85
     })),
     center: { x: 50, y: 50 }
   };
+
+  const isLineActive = (nodeId: string) => {
+    if (hoveredNode === "center") return true;
+    if (hoveredNode === nodeId) return true;
+    return false;
+  };
+
+  const isCenterHovered = hoveredNode === "center";
 
   return (
     <div 
@@ -219,48 +216,58 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         preserveAspectRatio="none"
       >
         <defs>
-          <linearGradient id="lineGradientV" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#A0D0FF" stopOpacity="0.15" />
-            <stop offset="50%" stopColor="#A0D0FF" stopOpacity="0.30" />
-            <stop offset="100%" stopColor="#A0D0FF" stopOpacity="0.15" />
-          </linearGradient>
+          <filter id="lineGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
         
-        {nodePositions.top.map((pos, i) => (
-          <line 
-            key={`top-line-${i}`}
-            x1={`${pos.x}%`} 
-            y1={`${pos.y + 12}%`} 
-            x2={`${nodePositions.center.x}%`} 
-            y2={`${nodePositions.center.y - 8}%`} 
-            stroke="#A0D0FF"
-            strokeOpacity="0.25"
-            strokeWidth="1"
-            className={cn(
-              "transition-opacity duration-500",
-              isVisible ? "opacity-100" : "opacity-0"
-            )}
-            style={{ transitionDelay: `${i * 60 + 100}ms` }}
-          />
-        ))}
+        {topRowTechnologies.map((tech, i) => {
+          const pos = nodePositions.top[i];
+          const active = isLineActive(tech.id);
+          return (
+            <line 
+              key={`top-line-${i}`}
+              x1={`${pos.x}%`} 
+              y1={`${pos.y + 10}%`} 
+              x2={`${nodePositions.center.x}%`} 
+              y2={`${nodePositions.center.y - 10}%`} 
+              stroke={active ? "#2563EB" : "#60A5FA"}
+              strokeOpacity={active ? 0.9 : 0.5}
+              strokeWidth={active ? 2.5 : 2}
+              className="transition-all duration-300"
+              style={{ 
+                filter: active ? "url(#lineGlow)" : "none",
+                transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms"
+              }}
+            />
+          );
+        })}
         
-        {nodePositions.bottom.map((pos, i) => (
-          <line 
-            key={`bottom-line-${i}`}
-            x1={`${pos.x}%`} 
-            y1={`${pos.y - 12}%`} 
-            x2={`${nodePositions.center.x}%`} 
-            y2={`${nodePositions.center.y + 8}%`} 
-            stroke="#A0D0FF"
-            strokeOpacity="0.25"
-            strokeWidth="1"
-            className={cn(
-              "transition-opacity duration-500",
-              isVisible ? "opacity-100" : "opacity-0"
-            )}
-            style={{ transitionDelay: `${i * 60 + 500}ms` }}
-          />
-        ))}
+        {bottomRowTechnologies.map((tech, i) => {
+          const pos = nodePositions.bottom[i];
+          const active = isLineActive(tech.id);
+          return (
+            <line 
+              key={`bottom-line-${i}`}
+              x1={`${pos.x}%`} 
+              y1={`${pos.y - 10}%`} 
+              x2={`${nodePositions.center.x}%`} 
+              y2={`${nodePositions.center.y + 10}%`} 
+              stroke={active ? "#2563EB" : "#60A5FA"}
+              strokeOpacity={active ? 0.9 : 0.5}
+              strokeWidth={active ? 2.5 : 2}
+              className="transition-all duration-300"
+              style={{ 
+                filter: active ? "url(#lineGlow)" : "none",
+                transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms"
+              }}
+            />
+          );
+        })}
       </svg>
 
       <div className="relative flex flex-col items-stretch gap-3 md:gap-4 py-2">
@@ -281,17 +288,32 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         <div className="flex items-center justify-center w-full py-2 md:py-3">
           <div 
             className={cn(
-              "flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-500",
-              "bg-primary/6 border border-primary/20 rounded-2xl",
+              "flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 cursor-pointer transition-all duration-300",
+              "bg-transparent border-2 rounded-2xl",
+              isCenterHovered
+                ? "border-[#3B82F6] scale-108"
+                : "border-[#60A5FA]/60",
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
             style={{ 
               transitionDelay: "200ms",
+              boxShadow: isCenterHovered
+                ? "0 6px 16px rgba(59, 130, 246, 0.2)"
+                : "none",
             }}
+            onMouseEnter={() => setHoveredNode("center")}
+            onMouseLeave={() => setHoveredNode(null)}
+            data-testid="node-center"
           >
-            <IconCpu className="w-4 h-4 md:w-5 md:h-5 text-primary/60" />
+            <IconCpu className={cn(
+              "w-4 h-4 md:w-5 md:h-5 transition-colors duration-300",
+              isCenterHovered ? "text-[#3B82F6]" : "text-[#60A5FA]"
+            )} />
             <span 
-              className="text-xs md:text-sm font-semibold text-primary/80"
+              className={cn(
+                "text-xs md:text-sm font-semibold transition-colors duration-300",
+                isCenterHovered ? "text-[#3B82F6]" : "text-[#60A5FA]"
+              )}
               style={{ fontFamily: "var(--font-heading)" }}
             >
               AI Engineering
