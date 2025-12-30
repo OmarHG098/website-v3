@@ -340,7 +340,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           ))}
         </div>
 
-        <div className="flex items-center justify-center w-full py-3 md:py-4">
+        <div className="flex items-center justify-center w-full py-3 md:py-4" style={{ zIndex: 20 }}>
           <div 
             className={cn(
               "relative flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-300 cursor-pointer",
