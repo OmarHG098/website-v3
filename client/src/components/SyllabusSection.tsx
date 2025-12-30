@@ -506,6 +506,11 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 >
                   {data.program_title}
                 </h2>
+                {data.program_subtitle && (
+                  <p className="text-primary font-semibold mb-2" data-testid="text-syllabus-program-subtitle">
+                    {data.program_subtitle}
+                  </p>
+                )}
                 {data.program_description && (
                   <p className="text-muted-foreground mb-4" data-testid="text-syllabus-program-description">
                     {data.program_description}
@@ -514,7 +519,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <TooltipProvider delayDuration={1000} skipDelayDuration={0}>
+                <TooltipProvider delayDuration={600} skipDelayDuration={0}>
                   <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
                     {data.tech_logos.map((logo, index) => (
                       <Tooltip key={index}>
