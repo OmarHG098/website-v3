@@ -82,7 +82,8 @@ function TechNodeComponent({
   isVisible,
   hoveredNode,
   onHover,
-  row
+  row,
+  arcOffset = 0
 }: { 
   tech: TechNode; 
   index: number;
@@ -90,19 +91,27 @@ function TechNodeComponent({
   hoveredNode: string | null;
   onHover: (id: string | null) => void;
   row: "top" | "bottom";
+  arcOffset?: number;
 }) {
   const isHovered = hoveredNode === tech.id;
   const baseDelay = row === "top" ? 0 : 400;
   const delay = baseDelay + index * 60;
+  
+  const verticalOffset = row === "top" 
+    ? arcOffset * 2 
+    : -arcOffset * 2;
 
   return (
     <div
       className={cn(
         "relative flex flex-col items-center cursor-pointer transition-all duration-300 flex-1",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        isVisible ? "opacity-100" : "opacity-0"
       )}
       style={{ 
         transitionDelay: `${delay}ms`,
+        transform: isVisible 
+          ? `translateY(${verticalOffset}px)` 
+          : `translateY(${verticalOffset + 8}px)`,
       }}
       onMouseEnter={() => onHover(tech.id)}
       onMouseLeave={() => onHover(null)}
@@ -185,14 +194,21 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
     return () => observer.disconnect();
   }, []);
 
+  const getArcOffset = (index: number, total: number) => {
+    const center = (total - 1) / 2;
+    const distance = Math.abs(index - center);
+    const maxOffset = 6;
+    return maxOffset * (distance / center);
+  };
+
   const nodePositions = {
     top: topRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / topRowTechnologies.length * 100,
-      y: 18
+      y: 14 + getArcOffset(i, topRowTechnologies.length)
     })),
     bottom: bottomRowTechnologies.map((_, i) => ({
       x: (i + 0.5) / bottomRowTechnologies.length * 100,
-      y: 82
+      y: 86 - getArcOffset(i, bottomRowTechnologies.length)
     })),
     center: { x: 50, y: 50 }
   };
@@ -276,7 +292,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       </svg>
 
       <div className="relative flex flex-col items-stretch gap-3 md:gap-4 py-2">
-        <div className="flex items-end justify-between w-full">
+        <div className="flex items-center justify-between w-full">
           {topRowTechnologies.map((tech, index) => (
             <TechNodeComponent
               key={tech.id}
@@ -286,6 +302,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="top"
+              arcOffset={getArcOffset(index, topRowTechnologies.length)}
             />
           ))}
         </div>
@@ -328,7 +345,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           </div>
         </div>
 
-        <div className="flex items-start justify-between w-full">
+        <div className="flex items-center justify-between w-full">
           {bottomRowTechnologies.map((tech, index) => (
             <TechNodeComponent
               key={tech.id}
@@ -338,6 +355,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               hoveredNode={hoveredNode}
               onHover={setHoveredNode}
               row="bottom"
+              arcOffset={getArcOffset(index, bottomRowTechnologies.length)}
             />
           ))}
         </div>
