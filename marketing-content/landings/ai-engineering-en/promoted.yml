@@ -130,7 +130,6 @@ sections:
     variant: program-modules
     program_title: AI Engineering
     program_description: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
-    program_highlight: Program
     tech_logos:
       - name: OpenAI
         icon: openai
