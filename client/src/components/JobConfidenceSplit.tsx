@@ -186,7 +186,7 @@ export const JobConfidenceSplit = memo(function JobConfidenceSplit({
 
           {/* Secondary Card - Accent background with benefits */}
           <div 
-            className="bg-accent text-accent-foreground rounded-[0.8rem] p-6 md:p-8 flex flex-col justify-center"
+            className="text-accent-foreground rounded-[0.8rem] p-6 md:p-8 flex flex-col justify-center bg-[#0080ff0d]"
             data-testid="card-secondary"
           >
             <div className="space-y-1">
