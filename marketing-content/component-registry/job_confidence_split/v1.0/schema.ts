@@ -18,7 +18,7 @@ export const toolIconSchema = z.object({
   }).optional(),
 });
 
-export const benefitItemSchema = z.object({
+export const jobConfidenceBenefitSchema = z.object({
   text: z.string(),
   icon: z.string().optional(),
 });
@@ -32,11 +32,11 @@ export const jobConfidenceSplitSectionSchema = z.object({
     tool_icons: z.array(toolIconSchema).optional(),
   }),
   secondary: z.object({
-    benefits: z.array(benefitItemSchema).min(1).max(5),
+    benefits: z.array(jobConfidenceBenefitSchema).min(1).max(5),
   }),
   background: z.string().optional(),
 });
 
 export type ToolIcon = z.infer<typeof toolIconSchema>;
-export type BenefitItem = z.infer<typeof benefitItemSchema>;
+export type JobConfidenceBenefit = z.infer<typeof jobConfidenceBenefitSchema>;
 export type JobConfidenceSplitSection = z.infer<typeof jobConfidenceSplitSectionSchema>;
