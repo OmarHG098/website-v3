@@ -5,7 +5,6 @@
  * Designed to replace generic two-column layouts with purpose-built validation sections.
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
 
 export const evidenceItemSchema = z.object({
   icon: z.string().optional(),
