@@ -654,9 +654,3 @@
     animation: none;
   }
 }
-
-/* AI Workflow Diagram - Connector line hover effect */
-.connector-hit-area:hover ~ .connector-line {
-  stroke-opacity: 0.7 !important;
-  stroke-width: 1.2 !important;
-}
