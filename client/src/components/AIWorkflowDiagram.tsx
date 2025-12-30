@@ -165,6 +165,8 @@ function TechNodeComponent({
 
 export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [hoveredLine, setHoveredLine] = useState<string | null>(null);
+  const [isCenterHovered, setIsCenterHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -197,7 +199,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
       data-testid="ai-workflow-diagram"
     >
       <svg 
-        className="absolute inset-0 w-full h-full pointer-events-none" 
+        className="absolute inset-0 w-full h-full" 
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         style={{ zIndex: 1 }}
@@ -215,20 +217,35 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`;
           
+          const lineId = `top-${i}`;
+          const isLineHovered = hoveredLine === lineId;
+          
           return (
             <g key={`top-line-${i}`}>
               <path 
                 d={pathD}
                 fill="none"
                 stroke="#A0D0FF"
-                strokeOpacity="0.33"
-                strokeWidth="0.7"
+                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
+                strokeWidth={isLineHovered ? "1" : "0.7"}
                 strokeLinecap="round"
                 className={cn(
-                  "transition-opacity duration-500",
+                  "transition-all duration-300 cursor-pointer pointer-events-auto",
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
-                style={{ transitionDelay: `${i * 60 + 100}ms` }}
+                style={{ transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms" }}
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="transparent"
+                strokeWidth="4"
+                strokeLinecap="round"
+                className="cursor-pointer pointer-events-auto"
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
@@ -268,20 +285,35 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           
           const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`;
           
+          const lineId = `bottom-${i}`;
+          const isLineHovered = hoveredLine === lineId;
+          
           return (
             <g key={`bottom-line-${i}`}>
               <path 
                 d={pathD}
                 fill="none"
                 stroke="#A0D0FF"
-                strokeOpacity="0.33"
-                strokeWidth="0.7"
+                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
+                strokeWidth={isLineHovered ? "1" : "0.7"}
                 strokeLinecap="round"
                 className={cn(
-                  "transition-opacity duration-500",
+                  "transition-all duration-300 cursor-pointer pointer-events-auto",
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
-                style={{ transitionDelay: `${i * 60 + 500}ms` }}
+                style={{ transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms" }}
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="transparent"
+                strokeWidth="4"
+                strokeLinecap="round"
+                className="cursor-pointer pointer-events-auto"
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
@@ -326,17 +358,37 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         <div className="flex items-center justify-center w-full py-3 md:py-4">
           <div 
             className={cn(
-              "flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-500",
-              "bg-background border border-primary/20 rounded-2xl",
+              "relative flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-300 cursor-pointer",
+              "border rounded-2xl",
+              isCenterHovered 
+                ? "border-primary/40" 
+                : "border-primary/20",
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
             style={{ 
-              transitionDelay: "200ms",
+              transitionDelay: isVisible ? "200ms" : "0ms",
+              boxShadow: isCenterHovered
+                ? "0 0 20px hsl(var(--primary) / 0.15), 0 2px 8px rgba(0,0,0,0.05)"
+                : "none",
             }}
+            onMouseEnter={() => setIsCenterHovered(true)}
+            onMouseLeave={() => setIsCenterHovered(false)}
+            data-testid="center-node-ai-engineering"
           >
-            <IconCpu className="w-4 h-4 md:w-5 md:h-5 text-primary/60" />
+            <div className="absolute inset-0 bg-background rounded-2xl" />
+            <div className={cn(
+              "absolute inset-0 rounded-2xl transition-colors duration-300",
+              isCenterHovered ? "bg-primary/10" : "bg-transparent"
+            )} />
+            <IconCpu className={cn(
+              "relative z-10 w-4 h-4 md:w-5 md:h-5 transition-colors duration-300",
+              isCenterHovered ? "text-primary" : "text-primary/60"
+            )} />
             <span 
-              className="text-xs md:text-sm font-semibold text-primary/80"
+              className={cn(
+                "relative z-10 text-xs md:text-sm font-semibold transition-colors duration-300",
+                isCenterHovered ? "text-primary" : "text-primary/80"
+              )}
               style={{ fontFamily: "var(--font-heading)" }}
             >
               AI Engineering
