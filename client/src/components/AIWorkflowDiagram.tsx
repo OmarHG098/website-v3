@@ -195,7 +195,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
         className="absolute inset-0 w-full h-full pointer-events-none" 
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        style={{ zIndex: 0 }}
+        style={{ zIndex: -1 }}
       >
         {topRowTechnologies.map((tech, i) => {
           const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
