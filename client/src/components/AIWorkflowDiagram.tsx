@@ -221,6 +221,14 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               <path 
                 d={pathD}
                 fill="none"
+                stroke="transparent"
+                strokeWidth="8"
+                strokeLinecap="round"
+                className="cursor-pointer connector-hit-area"
+              />
+              <path 
+                d={pathD}
+                fill="none"
                 stroke="#A0D0FF"
                 strokeOpacity="0.33"
                 strokeWidth="0.7"
@@ -230,14 +238,6 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
                 style={{ transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms" }}
-              />
-              <path 
-                d={pathD}
-                fill="none"
-                stroke="transparent"
-                strokeWidth="6"
-                strokeLinecap="round"
-                className="cursor-pointer pointer-events-auto connector-hit-area"
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
@@ -282,6 +282,14 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               <path 
                 d={pathD}
                 fill="none"
+                stroke="transparent"
+                strokeWidth="8"
+                strokeLinecap="round"
+                className="cursor-pointer connector-hit-area"
+              />
+              <path 
+                d={pathD}
+                fill="none"
                 stroke="#A0D0FF"
                 strokeOpacity="0.33"
                 strokeWidth="0.7"
@@ -291,14 +299,6 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
                   isVisible ? "opacity-100" : "opacity-0"
                 )}
                 style={{ transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms" }}
-              />
-              <path 
-                d={pathD}
-                fill="none"
-                stroke="transparent"
-                strokeWidth="6"
-                strokeLinecap="round"
-                className="cursor-pointer pointer-events-auto connector-hit-area"
               />
               {isVisible && (
                 <circle r="0.5" fill="#60A5FA">
@@ -340,7 +340,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
           ))}
         </div>
 
-        <div className="flex items-center justify-center w-full py-3 md:py-4" style={{ zIndex: 20 }}>
+        <div className="relative flex items-center justify-center w-full py-3 md:py-4" style={{ zIndex: 20 }}>
           <div 
             className={cn(
               "relative flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-300 cursor-pointer",
