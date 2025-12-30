@@ -94,7 +94,7 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: stats_cards
+    variant: stats-cards
     title: "Resultados en los que Puedes Confiar"
     subtitle: "Los números importan — y los nuestros hablan por sí solos."
     use_card: true

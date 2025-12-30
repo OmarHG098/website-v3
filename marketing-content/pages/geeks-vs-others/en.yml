@@ -90,7 +90,7 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: stats_cards
+    variant: stats-cards
     title: "Results You Can Count On"
     subtitle: "Numbers matter — and ours speak for themselves."
     use_card: true
