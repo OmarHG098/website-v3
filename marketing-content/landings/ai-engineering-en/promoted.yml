@@ -129,7 +129,6 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
-    program_subtitle: Full Stack Development + Machine Learning
     program_description: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     tech_logos:
       - name: OpenAI
