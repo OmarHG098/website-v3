@@ -102,31 +102,17 @@ sections:
       - value: "55%"
         title: "Salary increase after graduation"
 
-  - type: two_column
-    version: "1.0"
-    proportions: [5, 7]
-    alignment: "center"
-    gap: "12"
-    background: "bg-muted/30"
-    left:
-      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
-      image_alt: "Happy businesswoman with laptop"
-      justify: "center"
-    right:
+  - type: job_confidence_split
+    background: muted
+    primary:
+      badge: "Results-Backed Promise"
       heading: "The Confidence of a Job Guarantee"
       description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
-      sub_heading: "We can do this because:"
-      bullets:
+    secondary:
+      benefits:
         - text: "Our curriculum is industry-aligned and AI-ready"
         - text: "Our mentorship is unlimited and personalized"
         - text: "Our career support never expires"
-      bullets_visible: 1
-      text_align: "left"
-      button:
-        text: "Learn More"
-        url: "/en/job-guarantee"
-        variant: "primary"
-      footer: "Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp."
 
   - type: value_proof_panel
     title: "Recognized Globally for Excellence"

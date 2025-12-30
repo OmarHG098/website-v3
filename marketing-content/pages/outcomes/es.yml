@@ -156,13 +156,27 @@ sections:
         title: "Becas Completas y Parciales"
         description: "Opciones basadas en ubicación gracias a importantes alianzas institucionales e iniciativas gubernamentales."
 
-  - type: job_confidence_split
-    primary:
-      badge: "Promesa Respaldada"
+  - type: two_column
+    version: "1.0"
+    proportions: [5, 7]
+    alignment: "center"
+    gap: "12"
+    left:
+      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
+      image_alt: "Empresaria feliz con laptop"
+      justify: "center"
+    right:
       heading: "La Confianza de una Garantía de Empleo"
-      description: "¿La prueba más fuerte de que creemos en nuestro modelo? Lo respaldamos con Garantía de Empleo. En 4Geeks prometemos resultados: consigue empleo en 9 meses, o te devolvemos tu matrícula. Aplican condiciones."
-    secondary:
-      benefits:
-        - text: "Currículo alineado con la industria y listo para IA"
-        - text: "Mentoría ilimitada y personalizada"
-        - text: "Apoyo profesional que nunca expira"
+      description: "¿La prueba más fuerte de que creemos en nuestro modelo? Lo respaldamos con Garantía de Empleo. La mayoría de escuelas prometen \"apoyo profesional\". En 4Geeks, prometemos resultados: consigue empleo en 9 meses, o te devolvemos tu matrícula. Aplican condiciones."
+      sub_heading: "Podemos hacer esto porque:"
+      bullets:
+        - text: "Nuestro currículo está alineado con la industria y listo para IA"
+        - text: "Nuestra mentoría es ilimitada y personalizada"
+        - text: "Nuestro apoyo profesional nunca expira"
+      bullets_visible: 1
+      text_align: "left"
+      button:
+        text: "Saber Más"
+        url: "/es/trabajo-garantizado"
+        variant: "primary"
+      footer: "Sigue el programa, apóyate en tus mentores, y si aún no consigues empleo, asumimos toda la responsabilidad."
