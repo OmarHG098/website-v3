@@ -597,8 +597,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 <div className="flex-shrink-0 w-[calc(100vw-80px)] md:w-[calc(100vw-100px)] lg:w-[calc(100vw-400px)]" aria-hidden="true" />
               </div>
 
-              {/* Navigation Arrow Buttons - centered under the active card */}
-              <div className="mt-4 ml-2 w-[256px] md:w-[280px] lg:w-[320px]" data-testid="container-nav-arrows">
+              {/* Navigation Arrow Buttons - centered on mobile/tablet, under active card on desktop */}
+              <div className="mt-2 lg:mt-4 w-full lg:ml-2 lg:w-[320px]" data-testid="container-nav-arrows">
                 <div className="flex justify-center gap-3">
                   <Button
                     variant="outline"
