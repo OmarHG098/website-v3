@@ -115,7 +115,7 @@ export function CertificateDisplay({
         }}
       />
       
-      <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative grid lg:grid-cols-2 gap-12 items-center pt-6 lg:pt-0">
         {isCertificateLeft ? (
           <>
             {certificateColumn}
