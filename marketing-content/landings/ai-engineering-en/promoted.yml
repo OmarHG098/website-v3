@@ -53,12 +53,12 @@ sections:
       icon: Download
     trust_bar:
       rating: "4.89"
-      review_count: "3,524 reviews"
+      review_count: 3,524 reviews
       review_logos:
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
         - name: SwitchUp
-          logo: /attached_assets/switchup_1765590084376.webp
+          logo: /attached_assets/switchup_1765590146414.webp
     paddingY: none lg
     marginY: none md
   - type: features_grid
@@ -423,7 +423,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     marginY: none xl
-    paddingY: none
+    paddingY: lg none
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next

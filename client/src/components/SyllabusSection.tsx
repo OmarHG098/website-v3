@@ -558,8 +558,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
-                  isDesktop ? "select-none" : "touch-auto",
+                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory",
+                  isDesktop ? "select-none pb-4" : "touch-auto",
                   isDesktop && (isDragging ? "cursor-grabbing" : "cursor-grab")
                 )}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
