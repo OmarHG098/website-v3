@@ -106,11 +106,11 @@ export function CertificateDisplay({
       className="relative"
       data-testid="container-certificate-display"
     >
-      {/* Background that only covers the text column height */}
+      {/* Background that covers full div on mobile, offset on desktop */}
       <div 
-        className="absolute inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
+        className="absolute inset-y-0 lg:inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
         style={{ 
-          left: isCertificateLeft ? '0' : '0',
+          left: '0',
           right: '0'
         }}
       />
