@@ -43,7 +43,7 @@ export function CertificateDisplay({
   );
 
   const textColumn = (
-    <div className="ps-0 lg:ps-8 text-center lg:text-left">
+    <div className="ps-8">
       {description && (
         <p 
           className="text-body mb-8 leading-relaxed text-foreground"
@@ -54,7 +54,7 @@ export function CertificateDisplay({
       )}
       
       {benefits.length > 0 && (
-        <div className="flex flex-col items-center lg:items-start justify-center gap-3">
+        <div className="flex flex-col justify-center gap-3">
           {benefits.map((benefit, index) => {
             const iconSets = [
               [IconUserHeart, IconFileDescription, IconMicrophone, IconHeartHandshake],
@@ -85,7 +85,7 @@ export function CertificateDisplay({
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden self-center lg:self-start text-primary"
+              className="md:hidden self-start text-primary"
               onClick={() => setIsExpanded(!isExpanded)}
               data-testid="button-see-more-benefits"
             >
@@ -115,7 +115,7 @@ export function CertificateDisplay({
         }}
       />
       
-      <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative grid lg:grid-cols-2 gap-12 items-center pt-6 lg:pt-0">
         {isCertificateLeft ? (
           <>
             {certificateColumn}
