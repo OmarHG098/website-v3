@@ -211,23 +211,25 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
         <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <Marquee
-          speed={40}
-          pauseOnHover={false}
-          gradient={false}
-          direction="left"
-          autoFill={true}
-          className="gap-4"
-        >
-          {mosaicGroups.map((group, index) => (
-            <div key={`${group.id}-${index}`} className="ml-4">
-              <MosaicGroupComponent 
-                group={group}
-                textIndex={index}
-              />
-            </div>
-          ))}
-        </Marquee>
+        <div className="scale-[0.65] md:scale-100 origin-left">
+          <Marquee
+            speed={40}
+            pauseOnHover={false}
+            gradient={false}
+            direction="left"
+            autoFill={true}
+            className="gap-4"
+          >
+            {mosaicGroups.map((group, index) => (
+              <div key={`${group.id}-${index}`} className="ml-4">
+                <MosaicGroupComponent 
+                  group={group}
+                  textIndex={index}
+                />
+              </div>
+            ))}
+          </Marquee>
+        </div>
       </div>
     </section>
   );
