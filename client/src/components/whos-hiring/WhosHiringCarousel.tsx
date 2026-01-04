@@ -205,13 +205,13 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
       </div>
 
       <div 
-        className="relative pb-8"
+        className="relative pb-4 md:pb-8 overflow-hidden"
         style={{ background: 'linear-gradient(to bottom, hsl(var(--primary) / 0.05) 0%, hsl(var(--primary) / 0.05) 73%, transparent 73%)' }}
       >
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="scale-[0.65] md:scale-100 origin-left">
+        <div className="scale-[0.65] md:scale-100 origin-top-left h-[180px] md:h-auto">
           <Marquee
             speed={40}
             pauseOnHover={false}
