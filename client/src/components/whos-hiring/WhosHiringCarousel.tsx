@@ -28,25 +28,33 @@ const heroCardTexts = [
   "Shaping the next generation of products.",
 ];
 
-const SMALL_CARD_HEIGHT = 130;
-const GAP = 16;
-const HERO_CARD_HEIGHT = SMALL_CARD_HEIGHT * 2 + GAP;
+const SMALL_CARD_HEIGHT_MOBILE = 85;
+const SMALL_CARD_HEIGHT_DESKTOP = 130;
+const GAP_MOBILE = 10;
+const GAP_DESKTOP = 16;
+const HERO_CARD_HEIGHT_MOBILE = SMALL_CARD_HEIGHT_MOBILE * 2 + GAP_MOBILE;
+const HERO_CARD_HEIGHT_DESKTOP = SMALL_CARD_HEIGHT_DESKTOP * 2 + GAP_DESKTOP;
 
 function LogoCard({ 
   logo, 
   size = "normal",
   heroText,
+  isMobile,
 }: { 
   logo: LogoItem; 
   size?: "small" | "normal" | "hero";
   heroText?: string;
+  isMobile?: boolean;
 }) {
   const isHero = size === "hero";
   const isSmall = size === "small";
+  
+  const smallHeight = isMobile ? SMALL_CARD_HEIGHT_MOBILE : SMALL_CARD_HEIGHT_DESKTOP;
+  const heroHeight = isMobile ? HERO_CARD_HEIGHT_MOBILE : HERO_CARD_HEIGHT_DESKTOP;
 
   const cardStyle = {
-    height: isHero ? `${HERO_CARD_HEIGHT}px` : isSmall ? `${SMALL_CARD_HEIGHT}px` : "150px",
-    width: isHero ? "340px" : isSmall ? "240px" : "280px",
+    height: isHero ? `${heroHeight}px` : isSmall ? `${smallHeight}px` : (isMobile ? "100px" : "150px"),
+    width: isHero ? (isMobile ? "220px" : "340px") : isSmall ? (isMobile ? "156px" : "240px") : (isMobile ? "182px" : "280px"),
   };
 
   return (
@@ -92,38 +100,40 @@ function LogoCard({
   );
 }
 
-function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIndex: number }) {
+function MosaicGroupComponent({ group, textIndex, isMobile }: { group: MosaicGroup; textIndex: number; isMobile: boolean }) {
   const { pattern, items } = group;
   const heroText = heroCardTexts[textIndex % heroCardTexts.length];
+  const heroHeight = isMobile ? HERO_CARD_HEIGHT_MOBILE : HERO_CARD_HEIGHT_DESKTOP;
+  const gap = isMobile ? GAP_MOBILE : GAP_DESKTOP;
 
   if (pattern === "stack-hero" && items.length >= 3) {
     return (
-      <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
-        <div className="flex flex-col gap-4">
-          <LogoCard logo={items[0]} size="small" />
-          <LogoCard logo={items[1]} size="small" />
+      <div className="flex" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
+        <div className="flex flex-col" style={{ gap: `${gap}px` }}>
+          <LogoCard logo={items[0]} size="small" isMobile={isMobile} />
+          <LogoCard logo={items[1]} size="small" isMobile={isMobile} />
         </div>
-        <LogoCard logo={items[2]} size="hero" heroText={heroText} />
+        <LogoCard logo={items[2]} size="hero" heroText={heroText} isMobile={isMobile} />
       </div>
     );
   }
 
   if (pattern === "hero-stack" && items.length >= 3) {
     return (
-      <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
-        <LogoCard logo={items[0]} size="hero" heroText={heroText} />
-        <div className="flex flex-col gap-4">
-          <LogoCard logo={items[1]} size="small" />
-          <LogoCard logo={items[2]} size="small" />
+      <div className="flex" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
+        <LogoCard logo={items[0]} size="hero" heroText={heroText} isMobile={isMobile} />
+        <div className="flex flex-col" style={{ gap: `${gap}px` }}>
+          <LogoCard logo={items[1]} size="small" isMobile={isMobile} />
+          <LogoCard logo={items[2]} size="small" isMobile={isMobile} />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex gap-4" style={{ height: `${HERO_CARD_HEIGHT}px` }}>
+    <div className="flex" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
       {items.map((item, i) => (
-        <LogoCard key={i} logo={item} size="normal" />
+        <LogoCard key={i} logo={item} size="normal" isMobile={isMobile} />
       ))}
     </div>
   );
@@ -131,6 +141,7 @@ function MosaicGroupComponent({ group, textIndex }: { group: MosaicGroup; textIn
 
 export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const logos = data.logos || [];
 
@@ -141,6 +152,15 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
     const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mobileQuery.matches);
+    
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mobileQuery.addEventListener("change", handler);
+    return () => mobileQuery.removeEventListener("change", handler);
   }, []);
 
   const mosaicGroups = useMemo(() => {
@@ -205,31 +225,30 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
       </div>
 
       <div 
-        className="relative pb-4 md:pb-8 overflow-hidden"
+        className="relative pb-8"
         style={{ background: 'linear-gradient(to bottom, hsl(var(--primary) / 0.05) 0%, hsl(var(--primary) / 0.05) 73%, transparent 73%)' }}
       >
         <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-primary/5 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="scale-[0.65] md:scale-100 origin-top-left h-[180px] md:h-auto">
-          <Marquee
-            speed={40}
-            pauseOnHover={false}
-            gradient={false}
-            direction="left"
-            autoFill={true}
-            className="gap-4"
-          >
-            {mosaicGroups.map((group, index) => (
-              <div key={`${group.id}-${index}`} className="ml-4">
-                <MosaicGroupComponent 
-                  group={group}
-                  textIndex={index}
-                />
-              </div>
-            ))}
-          </Marquee>
-        </div>
+        <Marquee
+          speed={40}
+          pauseOnHover={false}
+          gradient={false}
+          direction="left"
+          autoFill={true}
+          className="gap-4"
+        >
+          {mosaicGroups.map((group, index) => (
+            <div key={`${group.id}-${index}`} className={isMobile ? "ml-2" : "ml-4"}>
+              <MosaicGroupComponent 
+                group={group}
+                textIndex={index}
+                isMobile={isMobile}
+              />
+            </div>
+          ))}
+        </Marquee>
       </div>
     </section>
   );
