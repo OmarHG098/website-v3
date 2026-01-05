@@ -158,8 +158,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
 
   const checkInfiniteLoop = useCallback(() => {
-    // Disable infinite loop on mobile to prevent blinking issues with native scroll
-    if (!isDesktop) return;
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
@@ -171,18 +169,25 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     if (container.scrollLeft < minScroll) {
       isResettingRef.current = true;
-      container.scrollLeft += singleSetWidth;
-      requestAnimationFrame(() => {
-        isResettingRef.current = false;
-        updateCardTransforms();
-      });
+      // Use a longer delay on mobile to prevent blinking
+      const resetDelay = isDesktop ? 0 : 50;
+      setTimeout(() => {
+        container.scrollLeft += singleSetWidth;
+        requestAnimationFrame(() => {
+          isResettingRef.current = false;
+          updateCardTransforms();
+        });
+      }, resetDelay);
     } else if (container.scrollLeft > maxScroll) {
       isResettingRef.current = true;
-      container.scrollLeft -= singleSetWidth;
-      requestAnimationFrame(() => {
-        isResettingRef.current = false;
-        updateCardTransforms();
-      });
+      const resetDelay = isDesktop ? 0 : 50;
+      setTimeout(() => {
+        container.scrollLeft -= singleSetWidth;
+        requestAnimationFrame(() => {
+          isResettingRef.current = false;
+          updateCardTransforms();
+        });
+      }, resetDelay);
     }
   }, [originalLength, updateCardTransforms, cardSpacing, isDesktop]);
 
@@ -534,8 +539,8 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="min-h-[270px] border border-border bg-card">
-      <CardContent className="p-6 h-full flex flex-col min-h-[270px]">
+    <Card className="min-h-[320px] lg:min-h-[270px] border border-border bg-card">
+      <CardContent className="p-6 h-full flex flex-col min-h-[320px] lg:min-h-[270px]">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
