@@ -113,7 +113,7 @@ const CertificateSection = lazy(() => import("./CertificateSection").then(m => (
 const WhyLearnAISection = lazy(() => import("./WhyLearnAISection").then(m => ({ default: m.WhyLearnAISection })));
 const PricingSection = lazy(() => import("./PricingSection").then(m => ({ default: m.PricingSection })));
 const FAQSection = lazy(() => import("./FAQSection").then(m => ({ default: m.FAQSection })));
-const TestimonialsSection = lazy(() => import("./TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
+const Testimonials = lazy(() => import("./testimonials/Testimonials").then(m => ({ default: m.Testimonials })));
 const WhosHiring = lazy(() => import("@/components/whos-hiring/WhosHiring").then(m => ({ default: m.WhosHiring })));
 const FooterSection = lazy(() => import("./FooterSection").then(m => ({ default: m.FooterSection })));
 const TwoColumn = lazy(() => import("@/components/TwoColumn").then(m => ({ default: m.TwoColumn })));
@@ -261,7 +261,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "faq":
       return <LazySection key={index}><FAQSection data={section as Parameters<typeof FAQSection>[0]["data"]} /></LazySection>;
     case "testimonials":
-      return <LazySection key={index}><TestimonialsSection data={section as Parameters<typeof TestimonialsSection>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><Testimonials data={section as Parameters<typeof Testimonials>[0]["data"]} /></LazySection>;
     case "whos_hiring":
       return <LazySection key={index}><WhosHiring data={section as Parameters<typeof WhosHiring>[0]["data"]} /></LazySection>;
     case "footer":

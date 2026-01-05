@@ -1,12 +1,21 @@
 name: Testimonials Section
 version: "1.0"
-component: TestimonialsSection
-file: client/src/components/career-programs/TestimonialsSection.tsx
-description: Display student reviews and success stories with ratings, photos, and outcomes
+component: Testimonials
+file: client/src/components/testimonials/Testimonials.tsx
+description: Display student reviews and success stories with ratings, photos, and outcomes. Supports multiple layout variants.
 when_to_use: |
   Use testimonials to build trust and show real results from past students.
   Place after the certificate section and before FAQ for maximum impact.
-  Include 3-6 testimonials for optimal display across all screen sizes.
+  Choose the variant that best fits your page:
+  - grid: Simple 3-column grid, best for quick overview
+  - carousel: Interactive draggable carousel with scaling effects, best for engagement
+variants:
+  grid:
+    description: 3-column static grid layout showing up to 3 testimonials
+    best_for: Quick overview, compact sections, mobile-friendly
+  carousel:
+    description: Interactive draggable carousel with scaling effects and infinite scroll
+    best_for: Engaging experiences, showcasing many testimonials, desktop-focused
 props:
   title:
     type: string
@@ -75,3 +84,8 @@ props:
   filter_by_location:
     type: string
     required: false
+variant_props:
+  grid:
+    description: Grid variant shows testimonials in a 3-column layout (1 column on mobile)
+  carousel:
+    description: Carousel variant provides an interactive experience with drag support and scaling effects
