@@ -87,9 +87,12 @@ function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): Responsiv
       desktop: { top: "none", bottom: "none" },
     };
   }
+  // Handle inheritance: if one is missing, use the other's value
+  const mobileValue = value.mobile ?? value.desktop ?? "none";
+  const desktopValue = value.desktop ?? value.mobile ?? "none";
   return {
-    mobile: parseTopBottom(value.mobile),
-    desktop: parseTopBottom(value.desktop),
+    mobile: parseTopBottom(mobileValue),
+    desktop: parseTopBottom(desktopValue),
   };
 }
 
@@ -185,6 +188,11 @@ function BreakpointToggle({
   );
 }
 
+// Check if mobile and desktop values are equal for a position
+function areBreakpointsEqual(values: ResponsiveSpacingValues, position: "top" | "bottom"): boolean {
+  return values.mobile[position] === values.desktop[position];
+}
+
 export function SpacingControlPopover({
   insertIndex,
   sections,
@@ -222,25 +230,50 @@ export function SpacingControlPopover({
     }
   }, [sectionAbove, sectionBelow]);
 
+  // Update a spacing value
+  // - Editing desktop: syncs to mobile if they currently match (inheritance behavior)
+  // - Editing mobile: only updates mobile (explicit override, breaks sync)
   const updateResponsiveValue = (
     setter: React.Dispatch<React.SetStateAction<ResponsiveSpacingValues>>,
     breakpoint: Breakpoint,
     position: "top" | "bottom",
     value: string
   ) => {
-    setter(prev => ({
-      ...prev,
-      [breakpoint]: {
-        ...prev[breakpoint],
-        [position]: value,
-      },
-    }));
+    setter(prev => {
+      // Editing desktop: sync to mobile if they're currently equal
+      if (breakpoint === "desktop" && areBreakpointsEqual(prev, position)) {
+        return {
+          mobile: { ...prev.mobile, [position]: value },
+          desktop: { ...prev.desktop, [position]: value },
+        };
+      }
+      // Editing mobile (or breakpoints differ): only update the active breakpoint
+      return {
+        ...prev,
+        [breakpoint]: {
+          ...prev[breakpoint],
+          [position]: value,
+        },
+      };
+    });
   };
 
-  const toResponsiveSpacing = (values: ResponsiveSpacingValues): ResponsiveSpacing => ({
-    mobile: combineTopBottom(values.mobile.top, values.mobile.bottom),
-    desktop: combineTopBottom(values.desktop.top, values.desktop.bottom),
-  });
+  // Convert to ResponsiveSpacing for saving
+  // If both breakpoints are identical, only save one (desktop) so the other inherits
+  const toResponsiveSpacing = (values: ResponsiveSpacingValues): ResponsiveSpacing => {
+    const mobileStr = combineTopBottom(values.mobile.top, values.mobile.bottom);
+    const desktopStr = combineTopBottom(values.desktop.top, values.desktop.bottom);
+    
+    // If identical, only save desktop so mobile inherits
+    if (mobileStr === desktopStr) {
+      return { desktop: desktopStr };
+    }
+    
+    return {
+      mobile: mobileStr,
+      desktop: desktopStr,
+    };
+  };
 
   const hasChanged = (original: ResponsiveSpacingValues, current: ResponsiveSpacingValues): boolean => {
     return (
