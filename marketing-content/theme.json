@@ -3,6 +3,7 @@
     { "id": "white", "label": "White", "cssVar": "--background" },
     { "id": "muted", "label": "Muted", "cssVar": "--muted" },
     { "id": "primary-5", "label": "Primary 5%", "value": "hsl(210 100% 50% / 0.05)" },
+    { "id": "primary-10-gradient", "label": "Primary 10% Gradient", "value": "linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)" },
     { "id": "accent", "label": "Accent", "cssVar": "--accent" },
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },
     { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" }

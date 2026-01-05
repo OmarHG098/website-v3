@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { IconSpacingVertical, IconArrowUp, IconArrowDown, IconInfoCircle } from "@tabler/icons-react";
+import { IconSpacingVertical, IconArrowUp, IconArrowDown, IconInfoCircle, IconDeviceMobile, IconDeviceDesktop } from "@tabler/icons-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
-import type { Section, SectionLayout } from "@shared/schema";
+import type { Section, SectionLayout, ResponsiveSpacing } from "@shared/schema";
 
 interface SpacingControlPopoverProps {
   insertIndex: number;
@@ -26,13 +26,20 @@ const SPACING_PRESETS = [
   { label: "XL", value: "xl" },
 ];
 
+type Breakpoint = "mobile" | "desktop";
+
+interface ResponsiveSpacingValues {
+  mobile: { top: string; bottom: string };
+  desktop: { top: string; bottom: string };
+}
+
 async function updateSectionField(
   contentType: string,
   slug: string,
   locale: string,
   sectionIndex: number,
   field: string,
-  value: string
+  value: ResponsiveSpacing
 ): Promise<{ success: boolean; error?: string }> {
   const token = getDebugToken();
   const response = await fetch("/api/content/edit", {
@@ -73,21 +80,36 @@ function combineTopBottom(top: string, bottom: string): string {
   return `${t} ${b}`;
 }
 
-function parseSpacingValue(section: Section | undefined): {
-  paddingTop: string;
-  paddingBottom: string;
-  marginTop: string;
-  marginBottom: string;
-} {
-  if (!section) return { paddingTop: "none", paddingBottom: "none", marginTop: "none", marginBottom: "none" };
-  const layout = section as SectionLayout;
-  const padding = parseTopBottom(layout.paddingY);
-  const margin = parseTopBottom(layout.marginY);
+function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): ResponsiveSpacingValues {
+  if (!value) {
+    return {
+      mobile: { top: "none", bottom: "none" },
+      desktop: { top: "none", bottom: "none" },
+    };
+  }
+  // Handle inheritance: if one is missing, use the other's value
+  const mobileValue = value.mobile ?? value.desktop ?? "none";
+  const desktopValue = value.desktop ?? value.mobile ?? "none";
   return {
-    paddingTop: padding.top,
-    paddingBottom: padding.bottom,
-    marginTop: margin.top,
-    marginBottom: margin.bottom,
+    mobile: parseTopBottom(mobileValue),
+    desktop: parseTopBottom(desktopValue),
+  };
+}
+
+function parseSpacingValue(section: Section | undefined): {
+  padding: ResponsiveSpacingValues;
+  margin: ResponsiveSpacingValues;
+} {
+  if (!section) {
+    return {
+      padding: { mobile: { top: "none", bottom: "none" }, desktop: { top: "none", bottom: "none" } },
+      margin: { mobile: { top: "none", bottom: "none" }, desktop: { top: "none", bottom: "none" } },
+    };
+  }
+  const layout = section as SectionLayout;
+  return {
+    padding: parseResponsiveSpacing(layout.paddingY),
+    margin: parseResponsiveSpacing(layout.marginY),
   };
 }
 
@@ -131,6 +153,46 @@ function SpacingPresetButtons({
   );
 }
 
+function BreakpointToggle({
+  activeBreakpoint,
+  onChange,
+}: {
+  activeBreakpoint: Breakpoint;
+  onChange: (breakpoint: Breakpoint) => void;
+}) {
+  return (
+    <div className="flex rounded-md overflow-hidden border">
+      <button
+        onClick={() => onChange("mobile")}
+        className={`flex items-center justify-center p-2 transition-colors ${
+          activeBreakpoint === "mobile"
+            ? "bg-primary text-primary-foreground"
+            : "bg-muted text-muted-foreground hover:bg-muted/80"
+        }`}
+        data-testid="toggle-breakpoint-mobile"
+      >
+        <IconDeviceMobile className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => onChange("desktop")}
+        className={`flex items-center justify-center p-2 transition-colors ${
+          activeBreakpoint === "desktop"
+            ? "bg-primary text-primary-foreground"
+            : "bg-muted text-muted-foreground hover:bg-muted/80"
+        }`}
+        data-testid="toggle-breakpoint-desktop"
+      >
+        <IconDeviceDesktop className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+// Check if mobile and desktop values are equal for a position
+function areBreakpointsEqual(values: ResponsiveSpacingValues, position: "top" | "bottom"): boolean {
+  return values.mobile[position] === values.desktop[position];
+}
+
 export function SpacingControlPopover({
   insertIndex,
   sections,
@@ -140,6 +202,7 @@ export function SpacingControlPopover({
 }: SpacingControlPopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [activeBreakpoint, setActiveBreakpoint] = useState<Breakpoint>("desktop");
   const { toast } = useToast();
 
   const aboveIndex = insertIndex - 1;
@@ -147,25 +210,79 @@ export function SpacingControlPopover({
   const sectionAbove = aboveIndex >= 0 ? sections[aboveIndex] : undefined;
   const sectionBelow = belowIndex < sections.length ? sections[belowIndex] : undefined;
 
-  const aboveSpacing = parseSpacingValue(sectionAbove);
-  const belowSpacing = parseSpacingValue(sectionBelow);
+  const aboveInitial = parseSpacingValue(sectionAbove);
+  const belowInitial = parseSpacingValue(sectionBelow);
 
-  const [abovePaddingBottom, setAbovePaddingBottom] = useState(aboveSpacing.paddingBottom);
-  const [aboveMarginBottom, setAboveMarginBottom] = useState(aboveSpacing.marginBottom);
-  const [belowPaddingTop, setBelowPaddingTop] = useState(belowSpacing.paddingTop);
-  const [belowMarginTop, setBelowMarginTop] = useState(belowSpacing.marginTop);
+  const [abovePadding, setAbovePadding] = useState<ResponsiveSpacingValues>(aboveInitial.padding);
+  const [aboveMargin, setAboveMargin] = useState<ResponsiveSpacingValues>(aboveInitial.margin);
+  const [belowPadding, setBelowPadding] = useState<ResponsiveSpacingValues>(belowInitial.padding);
+  const [belowMargin, setBelowMargin] = useState<ResponsiveSpacingValues>(belowInitial.margin);
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsOpen(open);
     if (open) {
       const above = parseSpacingValue(sectionAbove);
       const below = parseSpacingValue(sectionBelow);
-      setAbovePaddingBottom(above.paddingBottom);
-      setAboveMarginBottom(above.marginBottom);
-      setBelowPaddingTop(below.paddingTop);
-      setBelowMarginTop(below.marginTop);
+      setAbovePadding(above.padding);
+      setAboveMargin(above.margin);
+      setBelowPadding(below.padding);
+      setBelowMargin(below.margin);
     }
   }, [sectionAbove, sectionBelow]);
+
+  // Update a spacing value
+  // - Editing desktop: syncs to mobile if they currently match (inheritance behavior)
+  // - Editing mobile: only updates mobile (explicit override, breaks sync)
+  const updateResponsiveValue = (
+    setter: React.Dispatch<React.SetStateAction<ResponsiveSpacingValues>>,
+    breakpoint: Breakpoint,
+    position: "top" | "bottom",
+    value: string
+  ) => {
+    setter(prev => {
+      // Editing desktop: sync to mobile if they're currently equal
+      if (breakpoint === "desktop" && areBreakpointsEqual(prev, position)) {
+        return {
+          mobile: { ...prev.mobile, [position]: value },
+          desktop: { ...prev.desktop, [position]: value },
+        };
+      }
+      // Editing mobile (or breakpoints differ): only update the active breakpoint
+      return {
+        ...prev,
+        [breakpoint]: {
+          ...prev[breakpoint],
+          [position]: value,
+        },
+      };
+    });
+  };
+
+  // Convert to ResponsiveSpacing for saving
+  // If both breakpoints are identical, only save one (desktop) so the other inherits
+  const toResponsiveSpacing = (values: ResponsiveSpacingValues): ResponsiveSpacing => {
+    const mobileStr = combineTopBottom(values.mobile.top, values.mobile.bottom);
+    const desktopStr = combineTopBottom(values.desktop.top, values.desktop.bottom);
+    
+    // If identical, only save desktop so mobile inherits
+    if (mobileStr === desktopStr) {
+      return { desktop: desktopStr };
+    }
+    
+    return {
+      mobile: mobileStr,
+      desktop: desktopStr,
+    };
+  };
+
+  const hasChanged = (original: ResponsiveSpacingValues, current: ResponsiveSpacingValues): boolean => {
+    return (
+      original.mobile.top !== current.mobile.top ||
+      original.mobile.bottom !== current.mobile.bottom ||
+      original.desktop.top !== current.desktop.top ||
+      original.desktop.bottom !== current.desktop.bottom
+    );
+  };
 
   const handleApply = useCallback(async () => {
     if (!contentType || !slug || !locale) return;
@@ -174,28 +291,22 @@ export function SpacingControlPopover({
     const operations: Promise<{ success: boolean; error?: string }>[] = [];
 
     if (sectionAbove) {
-      const newPaddingY = combineTopBottom(aboveSpacing.paddingTop, abovePaddingBottom);
-      const oldPaddingY = combineTopBottom(aboveSpacing.paddingTop, aboveSpacing.paddingBottom);
-      if (newPaddingY !== oldPaddingY) {
-        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "paddingY", newPaddingY));
+      const originalAbove = parseSpacingValue(sectionAbove);
+      if (hasChanged(originalAbove.padding, abovePadding)) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "paddingY", toResponsiveSpacing(abovePadding)));
       }
-      const newMarginY = combineTopBottom(aboveSpacing.marginTop, aboveMarginBottom);
-      const oldMarginY = combineTopBottom(aboveSpacing.marginTop, aboveSpacing.marginBottom);
-      if (newMarginY !== oldMarginY) {
-        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "marginY", newMarginY));
+      if (hasChanged(originalAbove.margin, aboveMargin)) {
+        operations.push(updateSectionField(contentType, slug, locale, aboveIndex, "marginY", toResponsiveSpacing(aboveMargin)));
       }
     }
 
     if (sectionBelow) {
-      const newPaddingY = combineTopBottom(belowPaddingTop, belowSpacing.paddingBottom);
-      const oldPaddingY = combineTopBottom(belowSpacing.paddingTop, belowSpacing.paddingBottom);
-      if (newPaddingY !== oldPaddingY) {
-        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "paddingY", newPaddingY));
+      const originalBelow = parseSpacingValue(sectionBelow);
+      if (hasChanged(originalBelow.padding, belowPadding)) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "paddingY", toResponsiveSpacing(belowPadding)));
       }
-      const newMarginY = combineTopBottom(belowMarginTop, belowSpacing.marginBottom);
-      const oldMarginY = combineTopBottom(belowSpacing.marginTop, belowSpacing.marginBottom);
-      if (newMarginY !== oldMarginY) {
-        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "marginY", newMarginY));
+      if (hasChanged(originalBelow.margin, belowMargin)) {
+        operations.push(updateSectionField(contentType, slug, locale, belowIndex, "marginY", toResponsiveSpacing(belowMargin)));
       }
     }
 
@@ -210,7 +321,6 @@ export function SpacingControlPopover({
         });
       } else if (operations.length > 0) {
         toast({ title: "Spacing updated" });
-        // Emit event to trigger page refresh
         emitContentUpdated({ contentType, slug, locale });
       }
       setIsOpen(false);
@@ -231,12 +341,10 @@ export function SpacingControlPopover({
     sectionBelow,
     aboveIndex,
     belowIndex,
-    abovePaddingBottom,
-    aboveMarginBottom,
-    belowPaddingTop,
-    belowMarginTop,
-    aboveSpacing,
-    belowSpacing,
+    abovePadding,
+    aboveMargin,
+    belowPadding,
+    belowMargin,
     toast,
   ]);
 
@@ -259,15 +367,22 @@ export function SpacingControlPopover({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-sm">Adjust Spacing</h4>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <IconInfoCircle className="h-4 w-4 text-muted-foreground cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs text-xs">
-                <p className="mb-1"><strong>Padding:</strong> Adds space inside the section (may break full-bleed backgrounds)</p>
-                <p><strong>Margin:</strong> Adds space outside the section (preserves backgrounds)</p>
-              </TooltipContent>
-            </Tooltip>
+            <div className="flex items-center gap-2">
+              <BreakpointToggle
+                activeBreakpoint={activeBreakpoint}
+                onChange={setActiveBreakpoint}
+              />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <IconInfoCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs text-xs">
+                  <p className="mb-1"><strong>Padding:</strong> Adds space inside the section (may break full-bleed backgrounds)</p>
+                  <p className="mb-1"><strong>Margin:</strong> Adds space outside the section (preserves backgrounds)</p>
+                  <p><strong>Breakpoint:</strong> Mobile applies below 768px, Desktop at 768px+</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </div>
 
           {sectionAbove && (
@@ -278,13 +393,13 @@ export function SpacingControlPopover({
               </div>
               <SpacingPresetButtons
                 label="Padding Bottom"
-                value={abovePaddingBottom}
-                onChange={setAbovePaddingBottom}
+                value={abovePadding[activeBreakpoint].bottom}
+                onChange={(val) => updateResponsiveValue(setAbovePadding, activeBreakpoint, "bottom", val)}
               />
               <SpacingPresetButtons
                 label="Margin Bottom"
-                value={aboveMarginBottom}
-                onChange={setAboveMarginBottom}
+                value={aboveMargin[activeBreakpoint].bottom}
+                onChange={(val) => updateResponsiveValue(setAboveMargin, activeBreakpoint, "bottom", val)}
               />
             </div>
           )}
@@ -297,13 +412,13 @@ export function SpacingControlPopover({
               </div>
               <SpacingPresetButtons
                 label="Padding Top"
-                value={belowPaddingTop}
-                onChange={setBelowPaddingTop}
+                value={belowPadding[activeBreakpoint].top}
+                onChange={(val) => updateResponsiveValue(setBelowPadding, activeBreakpoint, "top", val)}
               />
               <SpacingPresetButtons
                 label="Margin Top"
-                value={belowMarginTop}
-                onChange={setBelowMarginTop}
+                value={belowMargin[activeBreakpoint].top}
+                onChange={(val) => updateResponsiveValue(setBelowMargin, activeBreakpoint, "top", val)}
               />
             </div>
           )}
