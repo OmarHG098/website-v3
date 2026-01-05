@@ -64,7 +64,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   
@@ -334,14 +334,13 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const containerCenter = container.clientWidth / 2;
     
     if (isDesktopOrTablet) {
-      // Desktop/Tablet: Start in the middle set, centered on first card (for infinite loop)
-      const initialScroll = (originalLength * cardSpacing) + (cardWidth / 2) - containerCenter;
+      // Desktop/Tablet: Start in the middle set, centered on second card (for infinite loop)
+      const initialScroll = (originalLength * cardSpacing) + cardSpacing + (cardWidth / 2) - containerCenter;
       container.scrollLeft = initialScroll;
       container.style.cursor = 'grab';
     } else {
-      // Mobile: Start at the beginning, centered on first card (no infinite loop)
-      // Center first card in viewport
-      container.scrollLeft = 0;
+      // Mobile: Start centered on second card (no infinite loop)
+      container.scrollLeft = cardSpacing;
     }
 
     requestAnimationFrame(updateCardTransforms);
