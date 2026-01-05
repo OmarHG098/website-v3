@@ -47,7 +47,8 @@ const CARD_SPACING_MOBILE = 260;
 
 const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.85; // Smaller side cards
-const SIDE_OPACITY = 0.5;
+const SIDE_OPACITY_DESKTOP = 0.5;
+const SIDE_OPACITY_MOBILE = 0.75; // Higher opacity on mobile for better visibility
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
@@ -84,9 +85,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
   
-  // Responsive card dimensions
+  // Responsive card dimensions and opacity
   const cardWidth = isDesktop ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
   const cardSpacing = isDesktop ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
+  const sideOpacity = isDesktop ? SIDE_OPACITY_DESKTOP : SIDE_OPACITY_MOBILE;
 
   // Triple the items for infinite loop
   const extendedItems = [...items, ...items, ...items];
@@ -126,20 +128,20 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
       // Smooth continuous interpolation based on distance
       // Center card (dist ~0): scale 1, opacity 1
-      // Side cards (dist ~1): scale 0.85, opacity 0.5
+      // Side cards (dist ~1): scale 0.85, opacity varies by device
       // Hidden (dist > 1.5): opacity 0
       
       if (normalizedDist <= 1) {
         // Smoothly interpolate from center to side
         scale = 1 - (normalizedDist * (1 - SIDE_SCALE));
-        opacity = 1 - (normalizedDist * (1 - SIDE_OPACITY));
+        opacity = 1 - (normalizedDist * (1 - sideOpacity));
         // Z-index based on proximity - closer = higher
         zIndex = Math.round(10 - normalizedDist * 5);
       } else if (normalizedDist <= 2) {
         // Fade out zone
         const fadeProgress = normalizedDist - 1; // 0 to 1
         scale = SIDE_SCALE;
-        opacity = SIDE_OPACITY * (1 - fadeProgress);
+        opacity = sideOpacity * (1 - fadeProgress);
         zIndex = 1;
       } else {
         // Hidden
@@ -155,7 +157,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     
     // Update active index (modulo to get original item index)
     setActiveIndex(closestIndex % originalLength);
-  }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
+  }, [extendedItems.length, originalLength, cardWidth, cardSpacing, sideOpacity]);
 
   const checkInfiniteLoop = useCallback(() => {
     if (isResettingRef.current) return;
