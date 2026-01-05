@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
@@ -59,7 +59,7 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
       onMouseLeave={onLeave}
       data-testid={`feature-ai-${index}`}
     >
-      <CardContent className="p-2 md:p-6">
+      <CardContent className="!p-3 !md:p-6">
         <div className="flex items-center gap-2 md:gap-3">
           <div className={cn(
             "w-8 h-8 md:w-10 md:h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
@@ -90,8 +90,17 @@ function extractYouTubeId(url: string): string | null {
 export function AILearningSection({ data }: AILearningSectionProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [showAllBullets, setShowAllBullets] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const features = data.features || [];
   const displayedFeature = features[selectedIndex];
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const getIcon = (iconName: string, isRigobot: boolean = false, isLarge: boolean = false) => {
     if (isRigobot) {
@@ -146,6 +155,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                 onHover={() => {
                   setHoverIndex(index);
                   setSelectedIndex(index);
+                  setShowAllBullets(false);
                 }}
                 onLeave={() => {
                   setHoverIndex(null);
@@ -164,8 +174,40 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             data-testid="selected-feature-content"
           >
             <CardContent className="p-6 md:p-8">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div>
+              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-center">
+                {/* Media - shows first on mobile, second on desktop */}
+                <div className="order-1 lg:order-2 w-full">
+                  {displayedFeature.image_id ? (
+                    <div data-testid="image-container-feature">
+                      <UniversalImage
+                        id={displayedFeature.image_id}
+                        preset="card-wide"
+                        className="aspect-video"
+                        bordered={true}
+                      />
+                    </div>
+                  ) : displayedFeature.video_url ? (
+                    <div data-testid="video-container-feature">
+                      <UniversalVideo
+                        url={displayedFeature.video_url}
+                        autoplay={displayedFeature.video_url.includes('.mp4')}
+                        loop={displayedFeature.video_url.includes('.mp4')}
+                        muted={displayedFeature.video_url.includes('.mp4')}
+                        bordered={true}
+                      />
+                    </div>
+                  ) : videoId ? (
+                    <div data-testid="video-container-ai">
+                      <UniversalVideo
+                        url={data.video_url!}
+                        bordered={true}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Text content - shows second on mobile, first on desktop */}
+                <div className="order-2 lg:order-1">
                   <div className="flex items-start gap-4 mb-6">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
                       {getIcon(displayedFeature.icon, displayedFeature.show_rigobot_logo ?? displayedFeature.title?.toLowerCase().includes('rigobot'), true)}
@@ -182,16 +224,30 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   )}
                   
                   {displayedFeature.bullets && displayedFeature.bullets.length > 0 && (
-                    <ul className="space-y-3 mb-6" data-testid="feature-bullets">
-                      {displayedFeature.bullets.map((bullet, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <span className="text-primary flex-shrink-0 mt-0.5">
-                            {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
-                          </span>
-                          <span className="text-muted-foreground">{bullet.text}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <>
+                      <ul className="space-y-3 mb-3" data-testid="feature-bullets">
+                        {displayedFeature.bullets
+                          .slice(0, (!isMobile || showAllBullets) ? undefined : 2)
+                          .map((bullet, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <span className="text-primary flex-shrink-0 mt-0.5">
+                              {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
+                            </span>
+                            <span className="text-muted-foreground">{bullet.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {isMobile && displayedFeature.bullets.length > 2 && !showAllBullets && (
+                        <button
+                          onClick={() => setShowAllBullets(true)}
+                          className="text-primary text-sm font-medium mb-3 flex items-center gap-1"
+                          data-testid="button-see-more-bullets"
+                        >
+                          See more <TablerIcons.IconChevronDown size={16} />
+                        </button>
+                      )}
+                      <div className="mb-3" />
+                    </>
                   )}
                   
                   {displayedFeature.cta && (
@@ -204,35 +260,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                     </Button>
                   )}
                 </div>
-                
-                {/* Feature-specific media: image_id, video_url (MP4/YouTube), or fallback */}
-                {displayedFeature.image_id ? (
-                  <div data-testid="image-container-feature">
-                    <UniversalImage
-                      id={displayedFeature.image_id}
-                      preset="card-wide"
-                      className="aspect-video"
-                      bordered={true}
-                    />
-                  </div>
-                ) : displayedFeature.video_url ? (
-                  <div data-testid="video-container-feature">
-                    <UniversalVideo
-                      url={displayedFeature.video_url}
-                      autoplay={displayedFeature.video_url.includes('.mp4')}
-                      loop={displayedFeature.video_url.includes('.mp4')}
-                      muted={displayedFeature.video_url.includes('.mp4')}
-                      bordered={true}
-                    />
-                  </div>
-                ) : videoId ? (
-                  <div data-testid="video-container-ai">
-                    <UniversalVideo
-                      url={data.video_url!}
-                      bordered={true}
-                    />
-                  </div>
-                ) : null}
               </div>
             </CardContent>
           </Card>
