@@ -157,37 +157,41 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     setActiveIndex(closestIndex % originalLength);
   }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
 
+  // Throttle ref for mobile scroll
+  const lastResetTimeRef = useRef(0);
+  
   const checkInfiniteLoop = useCallback(() => {
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
     if (!container) return;
 
+    // On mobile, throttle resets to prevent rapid blinking
+    if (!isDesktop) {
+      const now = Date.now();
+      if (now - lastResetTimeRef.current < 300) return;
+    }
+
     const singleSetWidth = originalLength * cardSpacing;
-    const minScroll = singleSetWidth * 0.5;
-    const maxScroll = singleSetWidth * 2;
+    const minScroll = singleSetWidth * 0.3;
+    const maxScroll = singleSetWidth * 2.2;
 
     if (container.scrollLeft < minScroll) {
       isResettingRef.current = true;
-      // Use a longer delay on mobile to prevent blinking
-      const resetDelay = isDesktop ? 0 : 50;
-      setTimeout(() => {
-        container.scrollLeft += singleSetWidth;
-        requestAnimationFrame(() => {
-          isResettingRef.current = false;
-          updateCardTransforms();
-        });
-      }, resetDelay);
+      lastResetTimeRef.current = Date.now();
+      container.scrollLeft += singleSetWidth;
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+        updateCardTransforms();
+      });
     } else if (container.scrollLeft > maxScroll) {
       isResettingRef.current = true;
-      const resetDelay = isDesktop ? 0 : 50;
-      setTimeout(() => {
-        container.scrollLeft -= singleSetWidth;
-        requestAnimationFrame(() => {
-          isResettingRef.current = false;
-          updateCardTransforms();
-        });
-      }, resetDelay);
+      lastResetTimeRef.current = Date.now();
+      container.scrollLeft -= singleSetWidth;
+      requestAnimationFrame(() => {
+        isResettingRef.current = false;
+        updateCardTransforms();
+      });
     }
   }, [originalLength, updateCardTransforms, cardSpacing, isDesktop]);
 
@@ -539,8 +543,8 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="min-h-[320px] lg:min-h-[270px] border border-border bg-card">
-      <CardContent className="p-6 h-full flex flex-col min-h-[320px] lg:min-h-[270px]">
+    <Card className="min-h-[320px] md:min-h-[270px] border border-border bg-card">
+      <CardContent className="p-6 h-full flex flex-col min-h-[320px] md:min-h-[270px]">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
@@ -571,7 +575,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         </div>
 
         {/* Review Text */}
-        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5 flex-1">
+        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-none md:line-clamp-5 flex-1">
           {testimonial.comment}
         </p>
 
