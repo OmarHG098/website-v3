@@ -297,20 +297,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     }
   }, [handleDragEnd]);
 
-  // Touch events
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    handleDragStart(touch.clientX);
-  }, [handleDragStart]);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    handleDragMove(touch.clientX);
-  }, [handleDragMove]);
-
-  const handleTouchEnd = useCallback(() => {
-    handleDragEnd();
-  }, [handleDragEnd]);
+  // Touch tracking for determining horizontal vs vertical swipe
+  const touchStartYRef = useRef(0);
+  const isHorizontalSwipeRef = useRef<boolean | null>(null);
 
   // Initialize scroll position
   useEffect(() => {
@@ -325,6 +314,41 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     requestAnimationFrame(updateCardTransforms);
   }, [items.length, originalLength, updateCardTransforms]);
+
+  // Native touch handlers (needed for { passive: false } to allow preventDefault)
+  const nativeTouchStart = useCallback((e: TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartYRef.current = touch.clientY;
+    isHorizontalSwipeRef.current = null;
+    handleDragStart(touch.clientX);
+  }, [handleDragStart]);
+
+  const nativeTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDraggingRef.current) return;
+    
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - dragStartXRef.current);
+    const deltaY = Math.abs(touch.clientY - touchStartYRef.current);
+    
+    // Determine swipe direction on first significant move
+    if (isHorizontalSwipeRef.current === null && (deltaX > 10 || deltaY > 10)) {
+      isHorizontalSwipeRef.current = deltaX > deltaY;
+    }
+    
+    // Only handle horizontal swipes, let vertical ones pass through
+    if (isHorizontalSwipeRef.current) {
+      e.preventDefault(); // This works because we use { passive: false }
+      handleDragMove(touch.clientX);
+    } else {
+      // Cancel our drag if user is scrolling vertically
+      isDraggingRef.current = false;
+    }
+  }, [handleDragMove]);
+
+  const nativeTouchEnd = useCallback(() => {
+    isHorizontalSwipeRef.current = null;
+    handleDragEnd();
+  }, [handleDragEnd]);
 
   // Set up listeners
   useEffect(() => {
@@ -343,6 +367,11 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('blur', handleWindowBlur);
+    
+    // Use native touch event listeners with passive: false to allow preventDefault
+    container.addEventListener('touchstart', nativeTouchStart, { passive: true });
+    container.addEventListener('touchmove', nativeTouchMove, { passive: false });
+    container.addEventListener('touchend', nativeTouchEnd, { passive: true });
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
@@ -350,12 +379,15 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('blur', handleWindowBlur);
+      container.removeEventListener('touchstart', nativeTouchStart);
+      container.removeEventListener('touchmove', nativeTouchMove);
+      container.removeEventListener('touchend', nativeTouchEnd);
       document.body.style.userSelect = '';
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd]);
 
   if (items.length === 0) return null;
 
@@ -412,14 +444,11 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
             className="absolute right-0 top-0 bottom-0 w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
           />
 
-          {/* Scrollable container */}
+          {/* Scrollable container - touch events handled via native listeners in useEffect */}
           <div
             ref={scrollContainerRef}
-            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide"
+            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide touch-pan-y"
             onMouseDown={handleMouseDown}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
           >
             {/* Cards track - absolute positioning for overlap */}
             <div
