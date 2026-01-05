@@ -618,12 +618,21 @@ import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 
 
+// Responsive spacing schema - separate values for mobile and desktop
+export const responsiveSpacingSchema = z.object({
+  mobile: z.string(),
+  desktop: z.string(),
+});
+
+export type ResponsiveSpacing = z.infer<typeof responsiveSpacingSchema>;
+
 // Layout fields that can be applied to any section
-// Supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
+// marginY/paddingY: Responsive object with mobile/desktop values
+// Each value supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
 // background: semantic token (muted, card, etc.) or custom CSS value
 export const sectionLayoutSchema = z.object({
-  marginY: z.string().optional(),
-  paddingY: z.string().optional(),
+  marginY: responsiveSpacingSchema.optional(),
+  paddingY: responsiveSpacingSchema.optional(),
   background: z.string().optional(),
 });
 

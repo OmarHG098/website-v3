@@ -654,3 +654,27 @@
     animation: none;
   }
 }
+
+/* =============================================================================
+   RESPONSIVE SECTION SPACING
+   Uses CSS custom properties set by SectionRenderer for mobile/desktop values
+   Breakpoint: 768px (matches Tailwind md:)
+   ============================================================================= */
+
+/* Mobile-first: use mobile values by default */
+.section-wrapper {
+  --section-pt: var(--section-pt-mobile);
+  --section-pb: var(--section-pb-mobile);
+  --section-mt: var(--section-mt-mobile);
+  --section-mb: var(--section-mb-mobile);
+}
+
+/* Desktop: switch to desktop values at 768px+ */
+@media (min-width: 768px) {
+  .section-wrapper {
+    --section-pt: var(--section-pt-desktop);
+    --section-pb: var(--section-pb-desktop);
+    --section-mt: var(--section-mt-desktop);
+    --section-mb: var(--section-mb-desktop);
+  }
+}

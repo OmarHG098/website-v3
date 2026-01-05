@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useCallback, useMemo, lazy, Suspense } from "react";
-import type { Section, EditOperation, SectionLayout } from "@shared/schema";
+import type { Section, EditOperation, SectionLayout, ResponsiveSpacing } from "@shared/schema";
 
 // ============================================
 // Component Load Strategy Registry
@@ -27,11 +27,9 @@ function resolveSpacingValue(val: string): string {
   return val; // Return as-is (custom CSS value like "20px")
 }
 
-// Parse spacing value - supports presets or custom CSS values
-// Returns null if no value provided (component handles its own spacing)
-function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
-  if (!value) return null;
-  
+// Parse a single breakpoint's spacing value - supports presets or custom CSS values
+// Returns { top, bottom } for the given value string
+function parseSpacingValue(value: string): { top: string; bottom: string } {
   // Check if it's a single preset
   if (SPACING_PRESETS[value]) {
     return SPACING_PRESETS[value];
@@ -49,11 +47,20 @@ function parseSpacing(value: string | undefined): { top: string; bottom: string 
   };
 }
 
+// Parse responsive spacing object - returns mobile and desktop values
+function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): {
+  mobile: { top: string; bottom: string };
+  desktop: { top: string; bottom: string };
+} | null {
+  if (!value) return null;
+  return {
+    mobile: parseSpacingValue(value.mobile),
+    desktop: parseSpacingValue(value.desktop),
+  };
+}
+
 // Default spacing when YAML doesn't specify values
-// Using padding: none (components apply their own internal padding)
-// Using margin: lg for vertical spacing between sections
-const DEFAULT_PADDING = SPACING_PRESETS.none; // Components handle their own internal padding
-const DEFAULT_MARGIN = { top: "0px", bottom: "0px" }; // No margin by default (sections stack)
+const DEFAULT_SPACING = { top: "0px", bottom: "0px" };
 
 // Semantic background tokens mapped to CSS variables
 const BACKGROUND_TOKENS: Record<string, string> = {
@@ -80,24 +87,43 @@ function parseBackground(value: string | undefined): string | undefined {
   return value;
 }
 
-// Get section layout styles - applies spacing from YAML or defaults
+// Get section layout styles - applies responsive spacing from YAML or defaults
+// Uses CSS custom properties + media query for responsive behavior
 // paddingY: Applied to wrapper (for sections that DON'T have internal content padding)
 // marginY: Applied to wrapper (for spacing between sections)
 // background: Applied to wrapper (semantic token or custom CSS)
-function getSectionLayoutStyles(section: Section): CSSProperties {
+function getSectionLayoutStyles(section: Section): CSSProperties & Record<string, string> {
   const layoutSection = section as SectionLayout;
   
-  const padding = parseSpacing(layoutSection.paddingY) || DEFAULT_PADDING;
-  const margin = parseSpacing(layoutSection.marginY) || DEFAULT_MARGIN;
+  const padding = parseResponsiveSpacing(layoutSection.paddingY);
+  const margin = parseResponsiveSpacing(layoutSection.marginY);
   const background = parseBackground(layoutSection.background);
   
-  return {
-    paddingTop: padding.top,
-    paddingBottom: padding.bottom,
-    marginTop: margin.top,
-    marginBottom: margin.bottom,
-    ...(background ? { background } : {}),
+  // Use CSS custom properties for responsive values
+  // Global CSS will handle the media query switching via .section-wrapper class
+  const styles: CSSProperties & Record<string, string> = {
+    // Apply using the responsive CSS variables set by media query in index.css
+    paddingTop: 'var(--section-pt)',
+    paddingBottom: 'var(--section-pb)',
+    marginTop: 'var(--section-mt)',
+    marginBottom: 'var(--section-mb)',
   };
+  
+  // Set CSS custom properties (index signature for custom properties)
+  styles['--section-pt-mobile'] = padding?.mobile.top ?? DEFAULT_SPACING.top;
+  styles['--section-pb-mobile'] = padding?.mobile.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-mt-mobile'] = margin?.mobile.top ?? DEFAULT_SPACING.top;
+  styles['--section-mb-mobile'] = margin?.mobile.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-pt-desktop'] = padding?.desktop.top ?? DEFAULT_SPACING.top;
+  styles['--section-pb-desktop'] = padding?.desktop.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-mt-desktop'] = margin?.desktop.top ?? DEFAULT_SPACING.top;
+  styles['--section-mb-desktop'] = margin?.desktop.bottom ?? DEFAULT_SPACING.bottom;
+  
+  if (background) {
+    styles.background = background;
+  }
+  
+  return styles;
 }
 // EAGER components - commonly above the fold
 import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
@@ -381,7 +407,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         if (!renderedSection) return null;
         
         return (
-          <div key={index} style={layoutStyles}>
+          <div key={index} className="section-wrapper" style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}

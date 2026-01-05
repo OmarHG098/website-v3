@@ -51,12 +51,20 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
-    paddingY: none
-    marginY: none
+    paddingY:
+      mobile: none
+      desktop: none
+    marginY:
+      mobile: none
+      desktop: none
   - type: awards_marquee
     version: "1.0"
-    paddingY: none lg
-    marginY: md none
+    paddingY:
+      mobile: none lg
+      desktop: none lg
+    marginY:
+      mobile: md none
+      desktop: md none
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -116,8 +124,12 @@ sections:
         title: Year-over-year growth in AI job postings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
-    marginY: md none
-    paddingY: none md
+    marginY:
+      mobile: md none
+      desktop: md none
+    paddingY:
+      mobile: none md
+      desktop: none md
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -257,8 +269,12 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
-    marginY: none
-    paddingY: lg none
+    marginY:
+      mobile: none
+      desktop: none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: ai_learning
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -302,7 +318,9 @@ sections:
           - text: Engage with peers through Slack, feedback tools, and weekly check-ins
           - text: Access Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
-    paddingY: lg none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
@@ -351,8 +369,12 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
-    paddingY: lg
-    marginY: none
+    paddingY:
+      mobile: lg
+      desktop: lg
+    marginY:
+      mobile: none
+      desktop: none
   - type: pricing
     version: "1.0"
     variant: product
@@ -384,7 +406,9 @@ sections:
       text: Get plan
       url: "#hero-form"
       variant: primary
-    paddingY: lg none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
@@ -414,8 +438,12 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-    marginY: none xl
-    paddingY: lg none
+    marginY:
+      mobile: none xl
+      desktop: none xl
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next
@@ -431,8 +459,12 @@ sections:
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
-    marginY: xl lg
-    paddingY: none
+    marginY:
+      mobile: xl lg
+      desktop: xl lg
+    paddingY:
+      mobile: none
+      desktop: none
   - type: testimonials
     variant: carousel
     title: Real Results from Real Graduates
@@ -483,10 +515,16 @@ sections:
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
-    marginY: md none
+    marginY:
+      mobile: md none
+      desktop: md none
     background: hsl(var(--primary))
-    paddingY: lg
+    paddingY:
+      mobile: lg
+      desktop: lg
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
-    paddingY: none
+    paddingY:
+      mobile: none
+      desktop: none
