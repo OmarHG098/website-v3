@@ -425,6 +425,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   if (items.length === 0) return null;
 
   const totalWidth = extendedItems.length * cardSpacing;
+  
+  // Calculate padding needed to center first/last card on mobile
+  // On mobile, we need padding so first card can be centered
+  const mobilePadding = isDesktopOrTablet ? 0 : `calc(50vw - ${cardWidth / 2}px)`;
 
   return (
     <section 
@@ -493,6 +497,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
               className="h-full relative"
               style={{ 
                 width: `${totalWidth + cardWidth}px`,
+                paddingLeft: mobilePadding,
+                paddingRight: mobilePadding,
               }}
             >
               {extendedItems.map((testimonial, index) => {
