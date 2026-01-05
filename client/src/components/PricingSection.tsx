@@ -207,7 +207,8 @@ export function PricingSection({ data }: PricingSectionProps) {
                 <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
                   <Marquee
                     speed={25}
-                    gradient={false}
+                    gradient={true}
+                    gradientWidth={50}
                     pauseOnHover={true}
                   >
                     {data.tech_icons.map((iconName, index) => {
@@ -406,7 +407,8 @@ export function PricingSection({ data }: PricingSectionProps) {
               <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
                 <Marquee
                   speed={25}
-                  gradient={false}
+                  gradient={true}
+                  gradientWidth={50}
                   pauseOnHover={true}
                 >
                   {data.tech_icons.map((iconName, index) => {
