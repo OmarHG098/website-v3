@@ -57,6 +57,7 @@ sections:
     marginY:
       mobile: none
       desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
   - type: awards_marquee
     version: "1.0"
     paddingY:
