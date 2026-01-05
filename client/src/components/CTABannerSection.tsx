@@ -25,7 +25,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
   
   return (
     <section 
-      className="px-4 bg-primary text-primary-foreground"
+      className="px-4 text-primary-foreground"
       data-testid="section-cta-banner"
     >
       <div className="max-w-4xl mx-auto text-center">

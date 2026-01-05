@@ -83,12 +83,12 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               
 
-              <h1 
+              <h2 
                 className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
-              </h1>
+              </h2>
 
               {subtitle && (
                 <p 
