@@ -4,7 +4,8 @@ import { defaultSession } from '@shared/session';
 import { 
   getCachedSession, 
   saveSession, 
-  getNavigatorInfo
+  getNavigatorInfo,
+  getDeviceInfo
 } from '../lib/sessionBootstrap';
 import { locations, getLocationBySlug } from '../lib/locations';
 
@@ -106,6 +107,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
             path: window.location.pathname,
             search: window.location.search,
             navigator: getNavigatorInfo(),
+            device: getDeviceInfo(),
           },
         };
 
