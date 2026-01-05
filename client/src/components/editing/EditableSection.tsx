@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } from "react";
-import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles } from "@tabler/icons-react";
-import type { Section } from "@shared/schema";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles, IconDeviceDesktop, IconDeviceMobile } from "@tabler/icons-react";
+import type { Section, SectionLayout, ShowOn } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -427,6 +427,58 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconTrash className="h-4 w-4" />
           </button>
         )}
+        {/* Visibility badge - shows which breakpoints this section is visible on */}
+        {(() => {
+          const showOn = (section as SectionLayout).showOn || 'all';
+          const isDesktopVisible = showOn === 'all' || showOn === 'desktop';
+          const isMobileVisible = showOn === 'all' || showOn === 'mobile';
+          
+          // Only show badge if section has restricted visibility
+          if (showOn === 'all') return null;
+          
+          return (
+            <div 
+              className="flex items-center gap-0.5 px-2 py-1.5 bg-muted rounded-md shadow-lg"
+              title={`Visible on ${showOn === 'mobile' ? 'mobile only' : 'desktop only'}`}
+              data-testid={`badge-visibility-${index}`}
+            >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!isDesktopVisible && editMode) {
+                    editMode.setPreviewBreakpoint('desktop');
+                  }
+                }}
+                className={`p-0.5 rounded transition-colors ${
+                  isDesktopVisible 
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground opacity-40 cursor-pointer hover:opacity-70'
+                }`}
+                data-testid={`button-visibility-desktop-${index}`}
+                title={isDesktopVisible ? 'Visible on desktop' : 'Click to preview desktop view'}
+              >
+                <IconDeviceDesktop className="h-3.5 w-3.5" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!isMobileVisible && editMode) {
+                    editMode.setPreviewBreakpoint('mobile');
+                  }
+                }}
+                className={`p-0.5 rounded transition-colors ${
+                  isMobileVisible 
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground opacity-40 cursor-pointer hover:opacity-70'
+                }`}
+                data-testid={`button-visibility-mobile-${index}`}
+                title={isMobileVisible ? 'Visible on mobile' : 'Click to preview mobile view'}
+              >
+                <IconDeviceMobile className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          );
+        })()}
         <Popover open={swapPopoverOpen} onOpenChange={setSwapPopoverOpen}>
           <PopoverTrigger asChild>
             <button 

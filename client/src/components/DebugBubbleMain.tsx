@@ -764,6 +764,46 @@ export function DebugBubble() {
                     </button>
                   </div>
                 )}
+                {/* Preview breakpoint toggle - only visible in edit mode */}
+                {editMode && editMode.isEditMode && (
+                  <div 
+                    className="flex items-center bg-muted rounded-full p-0.5 ml-2"
+                    data-testid="toggle-preview-breakpoint"
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        editMode.setPreviewBreakpoint('desktop');
+                      }}
+                      className={`p-1.5 rounded-full transition-colors ${
+                        editMode.previewBreakpoint === 'desktop' 
+                          ? "bg-foreground text-background shadow-sm" 
+                          : "text-muted-foreground"
+                      }`}
+                      data-testid="button-preview-desktop"
+                      title="Preview desktop view"
+                    >
+                      <IconDeviceDesktop className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        editMode.setPreviewBreakpoint('mobile');
+                      }}
+                      className={`p-1.5 rounded-full transition-colors ${
+                        editMode.previewBreakpoint === 'mobile' 
+                          ? "bg-foreground text-background shadow-sm" 
+                          : "text-muted-foreground"
+                      }`}
+                      data-testid="button-preview-mobile"
+                      title="Preview mobile view"
+                    >
+                      <IconDeviceMobile className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                )}
               </div>
               
               {/* Menu content based on current view */}

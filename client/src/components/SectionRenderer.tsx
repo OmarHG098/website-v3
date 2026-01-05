@@ -190,6 +190,27 @@ import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
+import { useEditModeOptional, type PreviewBreakpoint } from "@/contexts/EditModeContext";
+
+// Check if a section should be visible based on showOn and current preview breakpoint
+// In edit mode, respects previewBreakpoint; in production, always returns true (CSS handles visibility)
+function shouldShowSection(showOn: ShowOn | undefined, previewBreakpoint: PreviewBreakpoint | undefined, isEditMode: boolean): boolean {
+  // If not in edit mode or no previewBreakpoint, always show (CSS will handle responsive visibility)
+  if (!isEditMode || !previewBreakpoint) return true;
+  
+  // In edit mode, filter based on previewBreakpoint
+  const effectiveShowOn = showOn || 'all';
+  
+  switch (effectiveShowOn) {
+    case 'mobile':
+      return previewBreakpoint === 'mobile';
+    case 'desktop':
+      return previewBreakpoint === 'desktop';
+    case 'all':
+    default:
+      return true;
+  }
+}
 
 // Loading fallback for lazy sections
 function SectionSkeleton() {
@@ -363,6 +384,9 @@ export function renderSection(section: Section, index: number): React.ReactNode 
 
 export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
   const { toast } = useToast();
+  const editMode = useEditModeOptional();
+  const isEditMode = editMode?.isEditMode ?? false;
+  const previewBreakpoint = editMode?.previewBreakpoint;
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;
@@ -427,9 +451,35 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         const renderedSection = renderSection(section, index);
         const layoutStyles = getSectionLayoutStyles(section);
         const showOn = (section as SectionLayout).showOn;
-        const visibilityClasses = getSectionVisibilityClasses(showOn);
+        
+        // In edit mode: previewBreakpoint controls visibility, no CSS classes needed
+        // In production: CSS classes handle responsive visibility
+        const isVisible = shouldShowSection(showOn, previewBreakpoint, isEditMode);
+        const visibilityClasses = isEditMode ? '' : getSectionVisibilityClasses(showOn);
         
         if (!renderedSection) return null;
+        
+        // In edit mode, if section is hidden by previewBreakpoint, show a placeholder
+        // This preserves AddSectionButton positions and allows editors to see where hidden sections are
+        if (!isVisible && isEditMode) {
+          return (
+            <div key={index}>
+              <div className="section-wrapper opacity-40 border border-dashed border-muted-foreground/40 rounded-md my-2 py-2" style={layoutStyles}>
+                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground py-2">
+                  <span className="font-medium">{sectionType}</span>
+                  <span>• Hidden on {previewBreakpoint}</span>
+                </div>
+              </div>
+              <AddSectionButton
+                insertIndex={index + 1}
+                sections={sections}
+                contentType={contentType}
+                slug={slug}
+                locale={locale}
+              />
+            </div>
+          );
+        }
         
         return (
           <div key={index} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
