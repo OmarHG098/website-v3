@@ -1,7 +1,7 @@
 name: Testimonials Section
 version: "1.0"
-component: TestimonialsSection
-file: client/src/components/TestimonialsSection.tsx
+component: Testimonials
+file: client/src/components/testimonials/Testimonials.tsx
 description: Display student reviews and success stories with ratings, photos, and outcomes. Supports multiple layout variants.
 when_to_use: |
   Use testimonials to build trust and show real results from past students.
