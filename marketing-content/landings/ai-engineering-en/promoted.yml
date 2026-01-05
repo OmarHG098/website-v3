@@ -53,7 +53,7 @@ sections:
       icon: Download
     paddingY:
       mobile: none
-      desktop: none
+      desktop: lg none
     marginY:
       mobile: none
       desktop: none
