@@ -48,14 +48,20 @@ function parseSpacingValue(value: string): { top: string; bottom: string } {
 }
 
 // Parse responsive spacing object - returns mobile and desktop values
+// Inheritance: if only one breakpoint is specified, the other inherits its value
 function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): {
   mobile: { top: string; bottom: string };
   desktop: { top: string; bottom: string };
 } | null {
   if (!value) return null;
+  
+  // Handle inheritance: if one is missing, use the other's value
+  const mobileValue = value.mobile ?? value.desktop ?? "none";
+  const desktopValue = value.desktop ?? value.mobile ?? "none";
+  
   return {
-    mobile: parseSpacingValue(value.mobile),
-    desktop: parseSpacingValue(value.desktop),
+    mobile: parseSpacingValue(mobileValue),
+    desktop: parseSpacingValue(desktopValue),
   };
 }
 
