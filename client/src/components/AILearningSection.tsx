@@ -243,7 +243,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       {isMobile && displayedFeature.bullets.length > 2 && !showAllBullets && (
                         <button
                           onClick={() => setShowAllBullets(true)}
-                          className="text-primary text-sm font-medium mb-3 flex items-center gap-1"
+                          className="text-primary text-sm font-medium mb-3 flex items-center gap-1 mb-4"
                           data-testid="button-see-more-bullets"
                         >
                           See more <TablerIcons.IconChevronDown size={16} />

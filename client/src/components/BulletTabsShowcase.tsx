@@ -64,7 +64,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
   const imageContent = (
     <div className="relative flex justify-center items-center">
       {isWithoutBorder ? (
-        <div key={activeIndex} className="animate-in fade-in duration-300">
+        <div key={activeIndex} className="animate-in fade-in duration-300 min-h-[250px] md:min-h-[350px]">
           <UniversalImage
             id={activeTab.image_id}
             preset="full"
@@ -74,7 +74,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
         </div>
       ) : (
         <div
-          className="relative bg-primary/30 rounded-2xl py-14 pl-4 flex justify-end"
+          className="relative bg-primary/30 rounded-2xl py-14 pl-4 flex justify-end min-h-[300px] md:min-h-[400px]"
           data-testid="bullet-tabs-image-container"
         >
           <div key={activeIndex} className="animate-in fade-in duration-300 w-[90%]">

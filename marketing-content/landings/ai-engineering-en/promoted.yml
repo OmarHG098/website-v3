@@ -116,8 +116,9 @@ sections:
         title: Year-over-year growth in AI job postings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
-    marginY: md none
-    paddingY: none md
+    marginY: sm none
+    paddingY: none sm
+    background: hsl(210 100% 50% / 0.05)
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -306,8 +307,6 @@ sections:
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
-    useSolidCard: true
-    background: muted
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -351,8 +350,10 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
-    paddingY: lg
+    useSolidCard: true
     marginY: none
+    paddingY: lg
+    background: hsl(var(--muted))
   - type: pricing
     version: "1.0"
     variant: product
