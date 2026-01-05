@@ -444,6 +444,7 @@ sections:
     marginY: xl lg
     paddingY: none
   - type: testimonials
+    variant: carousel
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
     rating_summary:
@@ -468,8 +469,18 @@ sections:
         rating: 5
         comment: Excellent content and great mentor support. Now I'm working on cutting-edge AI.
         outcome: +100% salary increase
-    paddingY: md none
-    marginY: none lg
+      - name: David Park
+        role: Data Scientist
+        company: Netflix
+        rating: 5
+        comment: The hands-on projects prepared me for real challenges at work. Highly recommend!
+        outcome: Career transition success
+      - name: Lisa Wang
+        role: ML Research Engineer
+        company: OpenAI
+        rating: 5
+        comment: From marketing to machine learning - this program made it possible.
+        outcome: Dream job achieved
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
