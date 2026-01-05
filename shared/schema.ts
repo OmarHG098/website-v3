@@ -619,9 +619,10 @@ export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 
 
 // Responsive spacing schema - separate values for mobile and desktop
+// When only one breakpoint is specified, the other inherits its value
 export const responsiveSpacingSchema = z.object({
-  mobile: z.string(),
-  desktop: z.string(),
+  mobile: z.string().optional(),
+  desktop: z.string().optional(),
 });
 
 export type ResponsiveSpacing = z.infer<typeof responsiveSpacingSchema>;
