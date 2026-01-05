@@ -88,8 +88,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const cardWidth = isDesktopOrTablet ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
   const cardSpacing = isDesktopOrTablet ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
 
-  // Triple the items for infinite loop
-  const extendedItems = [...items, ...items, ...items];
+  // Triple the items for infinite loop on desktop/tablet, single set on mobile
+  const extendedItems = isDesktopOrTablet ? [...items, ...items, ...items] : items;
   const originalLength = items.length;
 
   const updateCardTransforms = useCallback(() => {
@@ -328,14 +328,21 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const container = scrollContainerRef.current;
     if (!container || items.length === 0) return;
 
-    // Start in the middle set, centered on first card
     const containerCenter = container.clientWidth / 2;
-    const initialScroll = (originalLength * cardSpacing) + (cardWidth / 2) - containerCenter;
-    container.scrollLeft = initialScroll;
-    container.style.cursor = 'grab';
+    
+    if (isDesktopOrTablet) {
+      // Desktop/Tablet: Start in the middle set, centered on first card (for infinite loop)
+      const initialScroll = (originalLength * cardSpacing) + (cardWidth / 2) - containerCenter;
+      container.scrollLeft = initialScroll;
+      container.style.cursor = 'grab';
+    } else {
+      // Mobile: Start at the beginning, centered on first card (no infinite loop)
+      const initialScroll = (cardWidth / 2) - containerCenter;
+      container.scrollLeft = Math.max(0, initialScroll);
+    }
 
     requestAnimationFrame(updateCardTransforms);
-  }, [items.length, originalLength, updateCardTransforms, cardWidth, cardSpacing]);
+  }, [items.length, originalLength, updateCardTransforms, cardWidth, cardSpacing, isDesktopOrTablet]);
 
   // Native touch handlers (needed for { passive: false } to allow preventDefault)
   const nativeTouchStart = useCallback((e: TouchEvent) => {
