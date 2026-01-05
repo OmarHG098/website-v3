@@ -24,8 +24,8 @@ interface TechNode {
 }
 
 const topRowTechnologies: TechNode[] = [
-  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28, hoverColor: "#3776AB" },
-  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4, hoverColor: "#007ACC" },
+  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28, hoverColor: "#E34C26" },
+  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4, hoverColor: "#8B5CF6" },
   { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -16, hoverColor: "#F37626" },
   { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 4, hoverColor: "#6e5494" },
   { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 28, hoverColor: "#10A37F" },
