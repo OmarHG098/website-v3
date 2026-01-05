@@ -6,9 +6,15 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DotsIndicator } from "@/components/DotsIndicator";
 import { SyllabusModuleCard } from "@/components/SyllabusModuleCard";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
-import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub } from "react-icons/si";
+import { SiGit, SiPython, SiReact, SiNodedotjs, SiOpenai, SiFlask, SiBootstrap, SiJavascript, SiHtml5, SiCss3, SiGithub, SiTailwindcss, SiPandas, SiNumpy, SiScikitlearn, SiPytorch, SiPostman, SiN8N } from "react-icons/si";
+import { TiHtml5 } from "react-icons/ti";
+import { RiNextjsFill, RiSupabaseFill, RiClaudeFill } from "react-icons/ri";
+import { FaGitAlt } from "react-icons/fa";
+import { IoLogoVercel } from "react-icons/io5";
+import matplotlibLogo from "@assets/image_3_(1)_1767109507402.png";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -229,12 +235,52 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   bootstrap: SiBootstrap,
   javascript: SiJavascript,
   html5: SiHtml5,
+  tihtml5: TiHtml5,
   css3: SiCss3,
   github: SiGithub,
+  tailwindcss: SiTailwindcss,
+  nextjs: RiNextjsFill,
+  pandas: SiPandas,
+  numpy: SiNumpy,
+  scikitlearn: SiScikitlearn,
+  pytorch: SiPytorch,
+  gitalt: FaGitAlt,
+  postman: SiPostman,
+  vercel: IoLogoVercel,
+  supabase: RiSupabaseFill,
+  n8n: SiN8N,
+  claude: RiClaudeFill,
 };
 
 function getTechIcon(iconName: string, className?: string) {
-  const IconComponent = techIconMap[iconName.toLowerCase()];
+  const lowerName = iconName.toLowerCase();
+  
+  if (lowerName === "matplotlib") {
+    return (
+      <div className="relative">
+        <img 
+          src={matplotlibLogo} 
+          alt="Matplotlib" 
+          className={cn(
+            className || "w-6 h-6",
+            "transition-opacity duration-brand group-hover:opacity-0"
+          )} 
+          style={{ filter: 'grayscale(100%) brightness(0.6)' }}
+        />
+        <img 
+          src={matplotlibLogo} 
+          alt="Matplotlib" 
+          className={cn(
+            className || "w-6 h-6",
+            "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-brand"
+          )} 
+          style={{ filter: 'brightness(0) saturate(100%) invert(45%) sepia(98%) saturate(1500%) hue-rotate(190deg) brightness(95%) contrast(101%)' }}
+        />
+      </div>
+    );
+  }
+  
+  const IconComponent = techIconMap[lowerName];
   if (IconComponent) {
     return <IconComponent className={className || "w-6 h-6"} />;
   }
@@ -465,27 +511,28 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                     {data.program_description}
                   </p>
                 )}
-                <span 
-                  className="inline-block text-lg font-bold font-heading rounded-full bg-primary text-primary-foreground px-5 py-2"
-                  data-testid="text-syllabus-program-highlight"
-                >
-                  {data.program_highlight}
-                </span>
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
-                  {data.tech_logos.map((logo, index) => (
-                    <div 
-                      key={index}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-brand"
-                      title={logo.name}
-                      data-testid={`icon-tech-${index}`}
-                    >
-                      {getTechIcon(logo.icon, "w-8 h-8")}
-                    </div>
-                  ))}
-                </div>
+                <TooltipProvider delayDuration={1000} skipDelayDuration={0}>
+                  <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
+                    {data.tech_logos.map((logo, index) => (
+                      <Tooltip key={index}>
+                        <TooltipTrigger asChild>
+                          <div 
+                            className="group text-muted-foreground hover:text-primary transition-colors duration-brand cursor-pointer"
+                            data-testid={`icon-tech-${index}`}
+                          >
+                            {getTechIcon(logo.icon, "w-8 h-8")}
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{logo.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+                </TooltipProvider>
               )}
             </Card>
           </div>
@@ -511,8 +558,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               <div 
                 ref={scrollContainerRef}
                 className={cn(
-                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory",
-                  isDesktop ? "select-none" : "touch-auto",
+                  "flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory",
+                  isDesktop ? "select-none pb-4" : "touch-auto",
                   isDesktop && (isDragging ? "cursor-grabbing" : "cursor-grab")
                 )}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
@@ -550,8 +597,8 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
                 <div className="flex-shrink-0 w-[calc(100vw-80px)] md:w-[calc(100vw-100px)] lg:w-[calc(100vw-400px)]" aria-hidden="true" />
               </div>
 
-              {/* Navigation Arrow Buttons - centered under the active card */}
-              <div className="mt-4 ml-2 w-[256px] md:w-[280px] lg:w-[320px]" data-testid="container-nav-arrows">
+              {/* Navigation Arrow Buttons - centered on mobile/tablet, under active card on desktop */}
+              <div className="mt-2 lg:mt-4 w-full lg:ml-2 lg:w-[320px]" data-testid="container-nav-arrows">
                 <div className="flex justify-center gap-3">
                   <Button
                     variant="outline"

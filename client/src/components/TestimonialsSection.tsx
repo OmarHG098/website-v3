@@ -38,8 +38,13 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-const CARD_WIDTH = 380;
-const CARD_SPACING = 330; // Side cards 10px more behind center
+// Desktop values
+const CARD_WIDTH_DESKTOP = 380;
+const CARD_SPACING_DESKTOP = 330;
+// Mobile values (smaller)
+const CARD_WIDTH_MOBILE = 240;
+const CARD_SPACING_MOBILE = 220;
+
 const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.85; // Smaller side cards
 const SIDE_OPACITY = 0.5;
@@ -59,17 +64,32 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
+  
+  // Desktop/Tablet detection - use custom drag and full-size cards on tablet and desktop
+  const [isDesktopOrTablet, setIsDesktopOrTablet] = useState(false);
+  
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 768px)');
+    setIsDesktopOrTablet(query.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktopOrTablet(e.matches);
+    query.addEventListener('change', handler);
+    return () => query.removeEventListener('change', handler);
+  }, []);
 
   // Drag state
   const isDraggingRef = useRef(false);
   const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
+  
+  // Responsive card dimensions - tablet uses desktop sizes
+  const cardWidth = isDesktopOrTablet ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
+  const cardSpacing = isDesktopOrTablet ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
 
-  // Triple the items for infinite loop
-  const extendedItems = [...items, ...items, ...items];
+  // Triple the items for infinite loop on desktop/tablet, single set on mobile
+  const extendedItems = isDesktopOrTablet ? [...items, ...items, ...items] : items;
   const originalLength = items.length;
 
   const updateCardTransforms = useCallback(() => {
@@ -78,6 +98,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     const containerCenter = container.clientWidth / 2;
     const scrollLeft = container.scrollLeft;
+    
+    // On mobile, cards are offset so first card is centered at scroll 0
+    const mobileLeftOffset = isDesktopOrTablet ? 0 : (containerCenter - cardWidth / 2);
 
     const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
     
@@ -88,7 +111,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     // Apply transforms based on continuous distance from center
     // Smooth linear interpolation - no sudden jumps
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - scrollLeft;
+      const cardCenterX = mobileLeftOffset + (index * cardSpacing) + (cardWidth / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
       
       // Track closest card
@@ -98,7 +121,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       }
       
       // Normalize distance: 0 = centered, 1 = one card away
-      const normalizedDist = distanceFromCenter / CARD_SPACING;
+      const normalizedDist = distanceFromCenter / cardSpacing;
 
       let scale: number;
       let opacity: number;
@@ -135,15 +158,17 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     
     // Update active index (modulo to get original item index)
     setActiveIndex(closestIndex % originalLength);
-  }, [extendedItems.length, originalLength]);
+  }, [extendedItems.length, originalLength, cardWidth, cardSpacing, isDesktopOrTablet]);
 
   const checkInfiniteLoop = useCallback(() => {
+    // Disable infinite loop on mobile to prevent blinking
+    if (!isDesktopOrTablet) return;
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const singleSetWidth = originalLength * CARD_SPACING;
+    const singleSetWidth = originalLength * cardSpacing;
     const minScroll = singleSetWidth * 0.5;
     const maxScroll = singleSetWidth * 2;
 
@@ -162,7 +187,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         updateCardTransforms();
       });
     }
-  }, [originalLength, updateCardTransforms]);
+  }, [originalLength, updateCardTransforms, cardSpacing, isDesktopOrTablet]);
 
   const handleScroll = useCallback(() => {
     checkInfiniteLoop();
@@ -212,10 +237,10 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     const containerCenter = container.clientWidth / 2;
     // Use middle set for navigation (index in range [originalLength, originalLength*2))
     const targetExtendedIndex = originalLength + targetOriginalIndex;
-    const targetScroll = (targetExtendedIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    const targetScroll = (targetExtendedIndex * cardSpacing) + (cardWidth / 2) - containerCenter;
     
     animateScrollTo(targetScroll, 300);
-  }, [originalLength, animateScrollTo]);
+  }, [originalLength, animateScrollTo, cardWidth, cardSpacing]);
 
   // Snap to nearest card center
   const snapToNearestCard = useCallback(() => {
@@ -230,7 +255,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     let closestDistance = Infinity;
 
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * CARD_SPACING) + (CARD_WIDTH / 2) - currentScroll;
+      const cardCenterX = (index * cardSpacing) + (cardWidth / 2) - currentScroll;
       const distance = Math.abs(cardCenterX - containerCenter);
       if (distance < closestDistance) {
         closestDistance = distance;
@@ -239,11 +264,11 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     });
 
     // Calculate scroll position to center that card
-    const targetScroll = (closestIndex * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
+    const targetScroll = (closestIndex * cardSpacing) + (cardWidth / 2) - containerCenter;
     
     // Animate to target
     animateScrollTo(targetScroll, 250);
-  }, [extendedItems.length, animateScrollTo]);
+  }, [extendedItems.length, animateScrollTo, cardWidth, cardSpacing]);
 
   // Drag handlers
   const handleDragStart = useCallback((clientX: number) => {
@@ -297,34 +322,64 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     }
   }, [handleDragEnd]);
 
-  // Touch events
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    handleDragStart(touch.clientX);
-  }, [handleDragStart]);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    handleDragMove(touch.clientX);
-  }, [handleDragMove]);
-
-  const handleTouchEnd = useCallback(() => {
-    handleDragEnd();
-  }, [handleDragEnd]);
+  // Touch tracking for determining horizontal vs vertical swipe
+  const touchStartYRef = useRef(0);
+  const isHorizontalSwipeRef = useRef<boolean | null>(null);
 
   // Initialize scroll position
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container || items.length === 0) return;
 
-    // Start in the middle set, centered on first card
     const containerCenter = container.clientWidth / 2;
-    const initialScroll = (originalLength * CARD_SPACING) + (CARD_WIDTH / 2) - containerCenter;
-    container.scrollLeft = initialScroll;
-    container.style.cursor = 'grab';
+    
+    if (isDesktopOrTablet) {
+      // Desktop/Tablet: Start in the middle set, centered on second card (for infinite loop)
+      const initialScroll = (originalLength * cardSpacing) + cardSpacing + (cardWidth / 2) - containerCenter;
+      container.scrollLeft = initialScroll;
+      container.style.cursor = 'grab';
+    } else {
+      // Mobile: Start centered on second card (no infinite loop)
+      container.scrollLeft = cardSpacing;
+    }
 
     requestAnimationFrame(updateCardTransforms);
-  }, [items.length, originalLength, updateCardTransforms]);
+  }, [items.length, originalLength, updateCardTransforms, cardWidth, cardSpacing, isDesktopOrTablet]);
+
+  // Native touch handlers (needed for { passive: false } to allow preventDefault)
+  const nativeTouchStart = useCallback((e: TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartYRef.current = touch.clientY;
+    isHorizontalSwipeRef.current = null;
+    handleDragStart(touch.clientX);
+  }, [handleDragStart]);
+
+  const nativeTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDraggingRef.current) return;
+    
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - dragStartXRef.current);
+    const deltaY = Math.abs(touch.clientY - touchStartYRef.current);
+    
+    // Determine swipe direction on first significant move
+    if (isHorizontalSwipeRef.current === null && (deltaX > 10 || deltaY > 10)) {
+      isHorizontalSwipeRef.current = deltaX > deltaY;
+    }
+    
+    // Only handle horizontal swipes, let vertical ones pass through
+    if (isHorizontalSwipeRef.current) {
+      e.preventDefault(); // This works because we use { passive: false }
+      handleDragMove(touch.clientX);
+    } else {
+      // Cancel our drag if user is scrolling vertically
+      isDraggingRef.current = false;
+    }
+  }, [handleDragMove]);
+
+  const nativeTouchEnd = useCallback(() => {
+    isHorizontalSwipeRef.current = null;
+    handleDragEnd();
+  }, [handleDragEnd]);
 
   // Set up listeners
   useEffect(() => {
@@ -340,33 +395,49 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     container.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateCardTransforms);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('blur', handleWindowBlur);
+    
+    // Only add mouse/touch drag handlers on desktop - mobile uses native scroll
+    if (isDesktopOrTablet) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('blur', handleWindowBlur);
+      container.addEventListener('touchstart', nativeTouchStart, { passive: true });
+      container.addEventListener('touchmove', nativeTouchMove, { passive: false });
+      container.addEventListener('touchend', nativeTouchEnd, { passive: true });
+    }
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateCardTransforms);
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('blur', handleWindowBlur);
+      if (isDesktopOrTablet) {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener('blur', handleWindowBlur);
+        container.removeEventListener('touchstart', nativeTouchStart);
+        container.removeEventListener('touchmove', nativeTouchMove);
+        container.removeEventListener('touchend', nativeTouchEnd);
+      }
       document.body.style.userSelect = '';
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd, isDesktopOrTablet]);
 
   if (items.length === 0) return null;
 
-  const totalWidth = extendedItems.length * CARD_SPACING;
+  const totalWidth = extendedItems.length * cardSpacing;
+  
+  // On mobile, offset cards so first card can be centered
+  // This creates space on the left so first card center aligns with viewport center at scroll 0
+  const mobileOffset = isDesktopOrTablet ? 0 : `calc(50vw - ${cardWidth / 2}px)`;
 
   return (
     <section 
       className="bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-0 md:px-4">
         <div className="text-center">
           {ratingSummary && (
             <div 
@@ -401,44 +472,46 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         </div>
 
         {/* Carousel Container */}
-        <div className="relative h-[420px]">
-          {/* Left fade - softer gradient */}
+        <div className="relative h-[380px] lg:h-[420px]">
+          {/* Left fade - much smaller on mobile for better card visibility */}
           <div 
-            className="absolute left-0 top-0 bottom-0 w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
           
-          {/* Right fade - softer gradient */}
+          {/* Right fade - much smaller on mobile for better card visibility */}
           <div 
-            className="absolute right-0 top-0 bottom-0 w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
           />
 
-          {/* Scrollable container */}
+          {/* Scrollable container - native scroll on mobile, custom drag on desktop */}
           <div
             ref={scrollContainerRef}
-            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide"
-            onMouseDown={handleMouseDown}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            className={`h-full overflow-x-auto overflow-y-hidden scrollbar-hide ${
+              isDesktopOrTablet 
+                ? "select-none cursor-grab" 
+                : "snap-x snap-mandatory touch-auto"
+            }`}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            onMouseDown={isDesktopOrTablet ? handleMouseDown : undefined}
           >
             {/* Cards track - absolute positioning for overlap */}
             <div
               className="h-full relative"
               style={{ 
-                width: `${totalWidth + CARD_WIDTH}px`,
+                width: `${totalWidth + cardWidth}px`,
               }}
             >
               {extendedItems.map((testimonial, index) => {
                 const transform = cardTransforms.get(index) || { scale: SIDE_SCALE, opacity: 0, zIndex: 1 };
-                const leftPosition = index * CARD_SPACING;
+                const leftPosition = index * cardSpacing;
                 
                 return (
                   <div
                     key={index}
-                    className="absolute top-1/2 pointer-events-none"
+                    className={`absolute top-1/2 pointer-events-none ${!isDesktopOrTablet ? "snap-center" : ""}`}
                     style={{
-                      width: `${CARD_WIDTH}px`,
-                      left: `${leftPosition}px`,
+                      width: `${cardWidth}px`,
+                      left: isDesktopOrTablet ? `${leftPosition}px` : `calc(${mobileOffset} + ${leftPosition}px)`,
                       transform: `translateY(-50%) scale(${transform.scale})`,
                       opacity: transform.opacity,
                       zIndex: transform.zIndex,
@@ -474,8 +547,8 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="min-h-[270px] border border-border bg-card">
-      <CardContent className="p-6 h-full flex flex-col min-h-[270px]">
+    <Card className="min-h-[320px] md:min-h-[270px] border border-border bg-card">
+      <CardContent className="p-6 h-full flex flex-col min-h-[320px] md:min-h-[270px]">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
@@ -506,7 +579,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         </div>
 
         {/* Review Text */}
-        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-5 flex-1">
+        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-none md:line-clamp-5 flex-1">
           {testimonial.comment}
         </p>
 

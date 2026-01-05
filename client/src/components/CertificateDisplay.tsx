@@ -43,7 +43,7 @@ export function CertificateDisplay({
   );
 
   const textColumn = (
-    <div className="ps-8">
+    <div className="px-4 md:px-8">
       {description && (
         <p 
           className="text-body mb-8 leading-relaxed text-foreground"
@@ -106,16 +106,16 @@ export function CertificateDisplay({
       className="relative"
       data-testid="container-certificate-display"
     >
-      {/* Background that only covers the text column height */}
+      {/* Background that covers full div on mobile, offset on desktop */}
       <div 
-        className="absolute inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
+        className="absolute inset-y-0 lg:inset-y-7 bg-primary/5 rounded-3xl pointer-events-none"
         style={{ 
-          left: isCertificateLeft ? '0' : '0',
+          left: '0',
           right: '0'
         }}
       />
       
-      <div className="relative grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative grid lg:grid-cols-2 gap-12 items-center pt-4 lg:pt-0">
         {isCertificateLeft ? (
           <>
             {certificateColumn}

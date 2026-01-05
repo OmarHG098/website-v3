@@ -1,5 +1,4 @@
-import { useState
-} from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import {
   IconBrandPython,
@@ -11,7 +10,7 @@ import {
   IconBrain,
   IconCode,
   IconDatabase,
-  IconCloud
+  IconCpu
 } from "@tabler/icons-react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 
@@ -20,24 +19,27 @@ interface TechNode {
   name: string;
   icon: "python" | "openai" | "rigobot" | "langchain" | "huggingface" | "github" | "react" | "nodejs" | "jupyter" | "vscode";
   tooltip: string;
-  angle: number;
+  yOffset: number;
 }
 
-const technologies: TechNode[] = [
-  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", angle: 0 },
-  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", angle: 36 },
-  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", angle: 72 },
-  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", angle: 108 },
-  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", angle: 144 },
-  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", angle: 180 },
-  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", angle: 216 },
-  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", angle: 252 },
-  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", angle: 288 },
-  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", angle: 324 },
+const topRowTechnologies: TechNode[] = [
+  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28 },
+  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4 },
+  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -16 },
+  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 4 },
+  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 28 },
+];
+
+const bottomRowTechnologies: TechNode[] = [
+  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -28 },
+  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -4 },
+  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 16 },
+  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -4 },
+  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -28 },
 ];
 
 function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: string }) {
-  const iconClass = cn("w-6 h-6 md:w-8 md:h-8", className);
+  const iconClass = cn("w-4 h-4 md:w-5 md:h-5", className);
   
   switch (icon) {
     case "python":
@@ -49,7 +51,7 @@ function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: str
         <img 
           src={rigobotLogo} 
           alt="Rigobot" 
-          className="w-6 h-6 md:w-8 md:h-8 object-contain"
+          className="w-4 h-4 md:w-5 md:h-5 object-contain"
         />
       );
     case "langchain":
@@ -67,7 +69,7 @@ function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: str
     case "vscode":
       return <IconBrandVscode className={iconClass} />;
     default:
-      return <IconCloud className={iconClass} />;
+      return <IconCpu className={iconClass} />;
   }
 }
 
@@ -75,189 +77,340 @@ interface AIWorkflowDiagramProps {
   className?: string;
 }
 
-export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-
-  const centerX = 200;
-  const centerY = 200;
-  const radius = 140;
-  const nodeRadius = 36;
-
-  const getNodePosition = (angle: number) => {
-    const radians = (angle - 90) * (Math.PI / 180);
-    return {
-      x: centerX + radius * Math.cos(radians),
-      y: centerY + radius * Math.sin(radians),
-    };
-  };
-
-  const handleNodeHover = (nodeId: string | null, event?: React.MouseEvent) => {
-    setHoveredNode(nodeId);
-    if (event && nodeId) {
-      const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-      setTooltipPosition({
-        x: rect.left + rect.width / 2,
-        y: rect.top - 10,
-      });
-    }
-  };
+function TechNodeComponent({ 
+  tech, 
+  index, 
+  isVisible,
+  hoveredNode,
+  onHover,
+  row
+}: { 
+  tech: TechNode; 
+  index: number;
+  isVisible: boolean;
+  hoveredNode: string | null;
+  onHover: (id: string | null) => void;
+  row: "top" | "bottom";
+}) {
+  const isHovered = hoveredNode === tech.id;
+  const baseDelay = row === "top" ? 0 : 400;
+  const delay = baseDelay + index * 60;
 
   return (
-    <div className={cn("relative w-full max-w-lg mx-auto", className)} data-testid="ai-workflow-diagram">
-      <svg
-        viewBox="0 0 400 400"
-        className="w-full h-auto"
-        style={{ maxHeight: "500px" }}
+    <div
+      className={cn(
+        "relative flex flex-col items-center cursor-pointer transition-all duration-300 flex-1",
+        isVisible ? "opacity-100" : "opacity-0",
+        isHovered ? "z-50" : "z-10"
+      )}
+      style={{ 
+        transitionDelay: `${delay}ms`,
+        transform: `translateY(${tech.yOffset}px)`,
+      }}
+      onMouseEnter={() => onHover(tech.id)}
+      onMouseLeave={() => onHover(null)}
+      data-testid={`node-${tech.id}`}
+    >
+      <div
+        className={cn(
+          "relative flex items-center justify-center border transition-all duration-300",
+          "w-10 h-8 md:w-12 md:h-9 rounded-xl",
+          isHovered
+            ? "border-primary/40 scale-110"
+            : "border-primary/20"
+        )}
+        style={{
+          boxShadow: isHovered
+            ? "0 0 16px hsl(var(--primary) / 0.15), 0 2px 8px rgba(0,0,0,0.05)"
+            : "none",
+        }}
       >
-        <defs>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
-          </linearGradient>
-          <linearGradient id="lineGradientHover" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.4" />
-          </linearGradient>
-          <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-          </radialGradient>
-        </defs>
+        <div className="absolute inset-0 bg-background rounded-xl" />
+        <div className={cn(
+          "absolute inset-0 rounded-xl transition-colors duration-300",
+          isHovered ? "bg-primary/10" : "bg-transparent"
+        )} />
+        <TechIcon 
+          icon={tech.icon} 
+          className={cn(
+            "relative z-10 transition-colors duration-300",
+            isHovered ? "text-primary" : "text-primary/50"
+          )} 
+        />
+      </div>
+      <span
+        className={cn(
+          "mt-1 text-[7px] md:text-[8px] font-medium text-center transition-colors duration-300 whitespace-nowrap",
+          isHovered ? "text-primary" : "text-muted-foreground/60"
+        )}
+      >
+        {tech.name}
+      </span>
 
-        {technologies.map((tech) => {
-          const pos = getNodePosition(tech.angle);
-          const isHovered = hoveredNode === tech.id;
+      {isHovered && (
+        <div
+          className={cn(
+            "absolute z-30 px-2.5 py-1.5 text-[10px] rounded-lg shadow-md whitespace-nowrap animate-in fade-in-0 zoom-in-95 duration-150",
+            "bg-background/95 backdrop-blur-sm border border-primary/10 text-foreground",
+            row === "top" ? "top-full mt-2" : "bottom-full mb-2"
+          )}
+          style={{ maxWidth: "150px", whiteSpace: "normal", textAlign: "center" }}
+          data-testid={`tooltip-${tech.id}`}
+        >
+          {tech.tooltip}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [hoveredLine, setHoveredLine] = useState<string | null>(null);
+  const [isCenterHovered, setIsCenterHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const centerY = 50;
+  const centerBoxTop = 44;
+  const centerBoxBottom = 56;
+
+  return (
+    <div 
+      ref={containerRef}
+      className={cn("relative w-full", className)} 
+      data-testid="ai-workflow-diagram"
+    >
+      <svg 
+        className="absolute inset-0 w-full h-full" 
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        style={{ zIndex: 1 }}
+      >
+        {topRowTechnologies.map((tech, i) => {
+          const nodeX = (i + 0.5) / topRowTechnologies.length * 100;
+          const nodeY = 16 + tech.yOffset * 0.18;
           
-          const midX = (centerX + pos.x) / 2;
-          const midY = (centerY + pos.y) / 2;
-          const perpX = -(pos.y - centerY) * 0.15;
-          const perpY = (pos.x - centerX) * 0.15;
-          const controlX = midX + perpX;
-          const controlY = midY + perpY;
-
+          const edgeOffsetX = (nodeX - 50) * 0.22;
+          const startX = 50 + edgeOffsetX;
+          const startY = centerBoxTop;
+          
+          const controlX = (startX + nodeX) / 2;
+          const controlY = (startY + nodeY) / 2 - 2;
+          
+          const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY + 5}`;
+          
+          const lineId = `top-${i}`;
+          const isLineHovered = hoveredLine === lineId;
+          
           return (
-            <path
-              key={`line-${tech.id}`}
-              d={`M ${centerX} ${centerY} Q ${controlX} ${controlY} ${pos.x} ${pos.y}`}
-              fill="none"
-              stroke={isHovered ? "url(#lineGradientHover)" : "url(#lineGradient)"}
-              strokeWidth={isHovered ? 3 : 1.5}
-              className="transition-all duration-300"
-              style={{
-                filter: isHovered ? "url(#glow)" : "none",
-              }}
-            />
+            <g key={`top-line-${i}`}>
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="#A0D0FF"
+                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
+                strokeWidth={isLineHovered ? "1" : "0.7"}
+                strokeLinecap="round"
+                className={cn(
+                  "transition-all duration-300 cursor-pointer pointer-events-auto",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}
+                style={{ transitionDelay: isVisible ? `${i * 60 + 100}ms` : "0ms" }}
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="transparent"
+                strokeWidth="4"
+                strokeLinecap="round"
+                className="cursor-pointer pointer-events-auto"
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              {isVisible && (
+                <circle r="0.5" fill="#60A5FA">
+                  <animateMotion
+                    dur="4.5s"
+                    repeatCount="indefinite"
+                    path={pathD}
+                    calcMode="spline"
+                    keyPoints="0;1;1"
+                    keyTimes="0;0.33;1"
+                    keySplines="0.4 0 0.6 1;0 0 1 1"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.7;0.7;0;0"
+                    keyTimes="0;0.05;0.28;0.33;1"
+                    dur="4.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )}
+            </g>
           );
         })}
-
-        <circle
-          cx={centerX}
-          cy={centerY}
-          r={55}
-          fill="url(#centerGradient)"
-          stroke="hsl(var(--primary))"
-          strokeWidth="2"
-          strokeOpacity="0.3"
-        />
-        <circle
-          cx={centerX}
-          cy={centerY}
-          r={48}
-          fill="hsl(var(--background))"
-          stroke="hsl(var(--primary))"
-          strokeWidth="2"
-          strokeOpacity="0.5"
-        />
         
-        <text
-          x={centerX}
-          y={centerY - 8}
-          textAnchor="middle"
-          className="fill-primary text-[11px] font-bold"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          AI Engineering
-        </text>
-        <text
-          x={centerX}
-          y={centerY + 8}
-          textAnchor="middle"
-          className="fill-primary text-[10px] font-medium"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          Workflow
-        </text>
+        {bottomRowTechnologies.map((tech, i) => {
+          const nodeX = (i + 0.5) / bottomRowTechnologies.length * 100;
+          const baseY = 78;
+          const nodeY = baseY + tech.yOffset * 0.18;
+          
+          const edgeOffsetX = (nodeX - 50) * 0.22;
+          const startX = 50 + edgeOffsetX;
+          const startY = centerBoxBottom;
+          
+          const controlX = (startX + nodeX) / 2;
+          const controlY = (startY + nodeY) / 2 + 2;
+          
+          const pathD = `M ${startX} ${startY} Q ${controlX} ${controlY} ${nodeX} ${nodeY - 3}`;
+          
+          const lineId = `bottom-${i}`;
+          const isLineHovered = hoveredLine === lineId;
+          
+          return (
+            <g key={`bottom-line-${i}`}>
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="#A0D0FF"
+                strokeOpacity={isLineHovered ? "0.7" : "0.33"}
+                strokeWidth={isLineHovered ? "1" : "0.7"}
+                strokeLinecap="round"
+                className={cn(
+                  "transition-all duration-300 cursor-pointer pointer-events-auto",
+                  isVisible ? "opacity-100" : "opacity-0"
+                )}
+                style={{ transitionDelay: isVisible ? `${i * 60 + 500}ms` : "0ms" }}
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              <path 
+                d={pathD}
+                fill="none"
+                stroke="transparent"
+                strokeWidth="4"
+                strokeLinecap="round"
+                className="cursor-pointer pointer-events-auto"
+                onMouseEnter={() => setHoveredLine(lineId)}
+                onMouseLeave={() => setHoveredLine(null)}
+              />
+              {isVisible && (
+                <circle r="0.5" fill="#60A5FA">
+                  <animateMotion
+                    dur="4.5s"
+                    repeatCount="indefinite"
+                    path={pathD}
+                    calcMode="spline"
+                    keyPoints="0;1;1"
+                    keyTimes="0;0.33;1"
+                    keySplines="0.4 0 0.6 1;0 0 1 1"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.7;0.7;0;0"
+                    keyTimes="0;0.05;0.28;0.33;1"
+                    dur="4.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )}
+            </g>
+          );
+        })}
       </svg>
 
-      {technologies.map((tech) => {
-        const pos = getNodePosition(tech.angle);
-        const isHovered = hoveredNode === tech.id;
-        
-        const leftPercent = (pos.x / 400) * 100;
-        const topPercent = (pos.y / 400) * 100;
+      <div className="relative flex flex-col items-stretch gap-1 py-5 md:py-6" style={{ zIndex: 2 }}>
+        <div className="flex items-center justify-between w-full">
+          {topRowTechnologies.map((tech, index) => (
+            <TechNodeComponent
+              key={tech.id}
+              tech={tech}
+              index={index}
+              isVisible={isVisible}
+              hoveredNode={hoveredNode}
+              onHover={setHoveredNode}
+              row="top"
+            />
+          ))}
+        </div>
 
-        return (
-          <div
-            key={tech.id}
+        <div className="flex items-center justify-center w-full py-3 md:py-4">
+          <div 
             className={cn(
-              "absolute flex flex-col items-center cursor-pointer transition-all duration-300",
-              isHovered && "z-10"
+              "relative flex items-center justify-center gap-2 md:gap-2.5 px-5 md:px-6 py-2 md:py-2.5 transition-all duration-300 cursor-pointer",
+              "border rounded-2xl",
+              isCenterHovered 
+                ? "border-primary/40" 
+                : "border-primary/20",
+              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
-            style={{
-              left: `${leftPercent}%`,
-              top: `${topPercent}%`,
-              transform: `translate(-50%, -50%) ${isHovered ? "scale(1.15)" : "scale(1)"}`,
+            style={{ 
+              transitionDelay: isVisible ? "200ms" : "0ms",
+              boxShadow: isCenterHovered
+                ? "0 0 20px hsl(var(--primary) / 0.15), 0 2px 8px rgba(0,0,0,0.05)"
+                : "none",
             }}
-            onMouseEnter={(e) => handleNodeHover(tech.id, e)}
-            onMouseLeave={() => handleNodeHover(null)}
-            data-testid={`node-${tech.id}`}
+            onMouseEnter={() => setIsCenterHovered(true)}
+            onMouseLeave={() => setIsCenterHovered(false)}
+            data-testid="center-node-ai-engineering"
           >
-            <div
+            <div className="absolute inset-0 bg-background rounded-2xl" />
+            <div className={cn(
+              "absolute inset-0 rounded-2xl transition-colors duration-300",
+              isCenterHovered ? "bg-primary/10" : "bg-transparent"
+            )} />
+            <IconCpu className={cn(
+              "relative z-10 w-4 h-4 md:w-5 md:h-5 transition-colors duration-300",
+              isCenterHovered ? "text-primary" : "text-primary/60"
+            )} />
+            <span 
               className={cn(
-                "flex items-center justify-center rounded-full bg-background border-2 transition-all duration-300",
-                "w-12 h-12 md:w-16 md:h-16",
-                isHovered
-                  ? "border-primary shadow-lg shadow-primary/30"
-                  : "border-primary/30 hover:border-primary/50"
+                "relative z-10 text-xs md:text-sm font-semibold transition-colors duration-300",
+                isCenterHovered ? "text-primary" : "text-primary/80"
               )}
-              style={{
-                boxShadow: isHovered
-                  ? "0 0 20px hsl(var(--primary) / 0.4), 0 4px 12px rgba(0,0,0,0.1)"
-                  : "0 2px 8px rgba(0,0,0,0.05)",
-              }}
+              style={{ fontFamily: "var(--font-heading)" }}
             >
-              <TechIcon icon={tech.icon} className={isHovered ? "text-primary" : "text-muted-foreground"} />
-            </div>
-            <span
-              className={cn(
-                "mt-1 text-[10px] md:text-xs font-medium text-center transition-colors duration-300 whitespace-nowrap",
-                isHovered ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              {tech.name}
+              AI Engineering
             </span>
-
-            {isHovered && (
-              <div
-                className="absolute bottom-full mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg shadow-xl whitespace-nowrap z-20 animate-in fade-in-0 zoom-in-95 duration-200"
-                style={{ maxWidth: "200px", whiteSpace: "normal", textAlign: "center" }}
-                data-testid={`tooltip-${tech.id}`}
-              >
-                {tech.tooltip}
-                <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-foreground" />
-              </div>
-            )}
           </div>
-        );
-      })}
+        </div>
+
+        <div className="flex items-center justify-between w-full">
+          {bottomRowTechnologies.map((tech, index) => (
+            <TechNodeComponent
+              key={tech.id}
+              tech={tech}
+              index={index}
+              isVisible={isVisible}
+              hoveredNode={hoveredNode}
+              onHover={setHoveredNode}
+              row="bottom"
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+Refactor the diagram in the "Why AI Engineering Now" section to make it more impressive, simpler, and better integrated into the page.
+
+Current issues: The diagram is too tall and circular, has a big surrounding circle, thick curved lines, and a black hover popup that doesn't match the clean light-blue/white theme of the page.
+
+New design goals:
+- Make the diagram span the full width of the right-side card (or the entire section container if possible) to feel wide and panoramic.
+- Dramatically reduce height: Use a flat, horizontal layout with only the center node plus two rows of surrounding nodes (top row and bottom row), so total vertical space is minimal (like 3 stacked node heights max).
+- Layout details:
+  - Top row: 4–5 evenly spaced nodes (e.g., Python, VS Code, Jupyter, GitHub, OpenAI)
+  - Center row: Larger central node labeled "AI Engineering Workflow" (or "AI Engineering" if shorter fits better)
+  - Bottom row: 4–5 evenly spaced nodes (e.g., LangChain, Hugging Face, React, Node.js, Rigobot)
+  - All rows horizontally aligned and centered, using full available width.
+- Completely remove the large circular border around the center.
+- Connection lines: Very thin, straight lines (light gray or very light blue, opacity 0.3–0.4) radiating directly from the center node to each surrounding node. No curved lines, no overlapping clutter.
+- Node styling:
+  - Reduce node size by 25–30% compared to current.
+  - Icons monochromatic: Soft blue or white with light blue stroke to match the page's color scheme.
+  - Short labels below each icon (e.g., just "Python").
+  - Limit to 8–10 essential tools total.
+- Hover effect: Replace black popup with a soft, modern one – on hover, node slightly scales up (1.1x), gets a subtle blue glow/shadow, and shows a light tooltip (white or very light blue background, dark text, rounded corners).
+- Add subtle animation: Nodes fade in staggered on section load for a premium feel.
+- Ensure fully responsive: On mobile, nodes can stack more vertically if needed but keep it compact.
+- Overall: Aim for a clean, minimal "tech constellation" or flat mind-map style that feels modern and professional, blending seamlessly with the rest of the page's light background, blue accents, and minimal design.
+
+Keep the left-side stats and right-side text unchanged, just enhance the diagram below the text to make the whole section shorter, wider, and more visually striking.

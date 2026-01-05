@@ -53,12 +53,14 @@ sections:
       icon: Download
     trust_bar:
       rating: "4.89"
-      review_count: "3,524 reviews"
+      review_count: 3,524 reviews
       review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
         - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
+          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         - name: SwitchUp
-          logo: /attached_assets/switchup_1765590084376.webp
+          logo: /attached_assets/switchup_1765590146414.webp
     paddingY: none lg
     marginY: none md
   - type: features_grid
@@ -130,20 +132,43 @@ sections:
     variant: program-modules
     program_title: AI Engineering
     program_description: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
-    program_highlight: Program
     tech_logos:
       - name: OpenAI
         icon: openai
+      - name: Claude
+        icon: claude
       - name: Python
         icon: python
+      - name: Pandas
+        icon: pandas
+      - name: NumPy
+        icon: numpy
+      - name: Scikit-learn
+        icon: scikitlearn
+      - name: PyTorch
+        icon: pytorch
+      - name: Matplotlib
+        icon: matplotlib
       - name: React
         icon: react
+      - name: Next.js
+        icon: nextjs
+      - name: Tailwind CSS
+        icon: tailwindcss
       - name: Node.js
         icon: nodejs
+      - name: Vercel
+        icon: vercel
+      - name: Supabase
+        icon: supabase
       - name: Git
         icon: git
       - name: GitHub
         icon: github
+      - name: Postman
+        icon: postman
+      - name: n8n
+        icon: n8n
     module_cards:
       - title: AI-First Prework
         duration: Milestone 0
@@ -400,7 +425,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     marginY: none xl
-    paddingY: none
+    paddingY: lg none
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next

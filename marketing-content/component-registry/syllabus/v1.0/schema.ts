@@ -55,7 +55,6 @@ export const syllabusProgramModulesSchema = z.object({
   variant: z.literal("program-modules"),
   program_title: z.string(),
   program_description: z.string().optional(),
-  program_highlight: z.string(),
   tech_logos: z.array(techLogoSchema).optional(),
   module_cards: z.array(moduleCardSchema),
 });
