@@ -92,8 +92,7 @@ export function FeaturesGridStatsTextCard({
                 <div className="md:hidden">
                   <Button
                     variant="ghost"
-                    size="sm"
-                    className="p-0 h-auto mt-2 text-primary hover:bg-transparent hover:underline"
+                    className="p-0 h-auto mt-3 text-primary text-base font-medium hover:bg-transparent hover:underline"
                     onClick={() => setIsExpanded(!isExpanded)}
                     data-testid="button-toggle-description"
                   >
