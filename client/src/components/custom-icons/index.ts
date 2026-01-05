@@ -9,6 +9,7 @@ import HandsGroup from "./HandsGroup";
 import Handshake from "./Handshake";
 import Interview from "./Interview";
 import JobSearch from "./JobSearch";
+import Matplotlib from "./Matplotlib";
 import Mentor2 from "./Mentor2";
 import Monitor from "./Monitor";
 import Optimization from "./Optimization";
@@ -38,6 +39,7 @@ const customIcons: Record<string, React.ComponentType<{
   Handshake,
   Interview,
   JobSearch,
+  Matplotlib,
   Mentor2,
   Monitor,
   Optimization,
@@ -66,6 +68,7 @@ export {
   Handshake,
   Interview,
   JobSearch,
+  Matplotlib,
   Mentor2,
   Monitor,
   Optimization,

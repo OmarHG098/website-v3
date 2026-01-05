@@ -12,7 +12,7 @@ import {
   IconDatabase,
   IconCpu
 } from "@tabler/icons-react";
-import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
+import Rigobot from "@/components/custom-icons/Rigobot.tsx"
 
 interface TechNode {
   id: string;
@@ -47,13 +47,7 @@ function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: str
     case "openai":
       return <IconBrain className={iconClass} />;
     case "rigobot":
-      return (
-        <img 
-          src={rigobotLogo} 
-          alt="Rigobot" 
-          className="w-4 h-4 md:w-5 md:h-5 object-contain"
-        />
-      );
+      return <Rigobot className={iconClass} />;
     case "langchain":
       return <IconCode className={iconClass} />;
     case "huggingface":
