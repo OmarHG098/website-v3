@@ -183,27 +183,51 @@ export default function Home() {
           items: [
             {
               name: "Sarah Johnson",
-              role: "AI Engineer",
+              role: "Software Engineer",
               company: "Google",
               rating: 5,
-              comment: "This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfect for real-world AI applications.",
-              outcome: "+55% salary increase"
-            },
-            {
-              name: "Michael Chen",
-              role: "ML Engineer",
-              company: "Meta",
-              rating: 5,
-              comment: "Best investment I ever made. Got a job offer before finishing the program!",
+              comment: "This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications.",
               outcome: "Hired in 4 months"
             },
             {
+              name: "Michael Chen",
+              role: "Data Analyst",
+              company: "Meta",
+              rating: 5,
+              comment: "Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable.",
+              outcome: "+55% salary increase"
+            },
+            {
               name: "Emily Rodriguez",
-              role: "AI Engineer",
+              role: "ML Engineer",
               company: "Amazon",
               rating: 5,
-              comment: "Excellent content and great mentor support. Now I'm working on cutting-edge AI.",
-              outcome: "+100% salary increase"
+              comment: "Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI.",
+              outcome: "Career change success"
+            },
+            {
+              name: "David Kim",
+              role: "Full Stack Developer",
+              company: "Startup",
+              rating: 5,
+              comment: "From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference.",
+              outcome: "Dream job achieved"
+            },
+            {
+              name: "Jessica Martinez",
+              role: "Frontend Developer",
+              company: "Spotify",
+              rating: 4,
+              comment: "Great course with practical, real-world projects. The community is supportive and the instructors are always available to help.",
+              outcome: "Remote work"
+            },
+            {
+              name: "Ryan Thompson",
+              role: "Data Scientist",
+              company: "Netflix",
+              rating: 5,
+              comment: "The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.",
+              outcome: "3x salary increase"
             }
           ]
         }}
