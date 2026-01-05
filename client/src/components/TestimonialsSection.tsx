@@ -68,15 +68,15 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   
-  // Desktop detection - use custom drag only on desktop
-  const [isDesktop, setIsDesktop] = useState(false);
+  // Desktop/Tablet detection - use custom drag and full-size cards on tablet and desktop
+  const [isDesktopOrTablet, setIsDesktopOrTablet] = useState(false);
   
   useEffect(() => {
-    const desktopQuery = window.matchMedia('(min-width: 1024px)');
-    setIsDesktop(desktopQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    desktopQuery.addEventListener('change', handler);
-    return () => desktopQuery.removeEventListener('change', handler);
+    const query = window.matchMedia('(min-width: 768px)');
+    setIsDesktopOrTablet(query.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktopOrTablet(e.matches);
+    query.addEventListener('change', handler);
+    return () => query.removeEventListener('change', handler);
   }, []);
 
   // Drag state
@@ -84,9 +84,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
   
-  // Responsive card dimensions
-  const cardWidth = isDesktop ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
-  const cardSpacing = isDesktop ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
+  // Responsive card dimensions - tablet uses desktop sizes
+  const cardWidth = isDesktopOrTablet ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
+  const cardSpacing = isDesktopOrTablet ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
 
   // Triple the items for infinite loop
   const extendedItems = [...items, ...items, ...items];
@@ -157,28 +157,20 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     setActiveIndex(closestIndex % originalLength);
   }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
 
-  // Throttle ref for mobile scroll
-  const lastResetTimeRef = useRef(0);
-  
   const checkInfiniteLoop = useCallback(() => {
+    // Disable infinite loop on mobile to prevent blinking
+    if (!isDesktopOrTablet) return;
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    // On mobile, throttle resets to prevent rapid blinking
-    if (!isDesktop) {
-      const now = Date.now();
-      if (now - lastResetTimeRef.current < 300) return;
-    }
-
     const singleSetWidth = originalLength * cardSpacing;
-    const minScroll = singleSetWidth * 0.3;
-    const maxScroll = singleSetWidth * 2.2;
+    const minScroll = singleSetWidth * 0.5;
+    const maxScroll = singleSetWidth * 2;
 
     if (container.scrollLeft < minScroll) {
       isResettingRef.current = true;
-      lastResetTimeRef.current = Date.now();
       container.scrollLeft += singleSetWidth;
       requestAnimationFrame(() => {
         isResettingRef.current = false;
@@ -186,14 +178,13 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       });
     } else if (container.scrollLeft > maxScroll) {
       isResettingRef.current = true;
-      lastResetTimeRef.current = Date.now();
       container.scrollLeft -= singleSetWidth;
       requestAnimationFrame(() => {
         isResettingRef.current = false;
         updateCardTransforms();
       });
     }
-  }, [originalLength, updateCardTransforms, cardSpacing, isDesktop]);
+  }, [originalLength, updateCardTransforms, cardSpacing, isDesktopOrTablet]);
 
   const handleScroll = useCallback(() => {
     checkInfiniteLoop();
@@ -397,7 +388,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     window.addEventListener('resize', updateCardTransforms);
     
     // Only add mouse/touch drag handlers on desktop - mobile uses native scroll
-    if (isDesktop) {
+    if (isDesktopOrTablet) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
       window.addEventListener('blur', handleWindowBlur);
@@ -409,7 +400,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     return () => {
       container.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateCardTransforms);
-      if (isDesktop) {
+      if (isDesktopOrTablet) {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
         window.removeEventListener('blur', handleWindowBlur);
@@ -422,7 +413,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd, isDesktop]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd, isDesktopOrTablet]);
 
   if (items.length === 0) return null;
 
@@ -483,12 +474,12 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
           <div
             ref={scrollContainerRef}
             className={`h-full overflow-x-auto overflow-y-hidden scrollbar-hide ${
-              isDesktop 
+              isDesktopOrTablet 
                 ? "select-none cursor-grab" 
                 : "snap-x snap-mandatory touch-auto"
             }`}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-            onMouseDown={isDesktop ? handleMouseDown : undefined}
+            onMouseDown={isDesktopOrTablet ? handleMouseDown : undefined}
           >
             {/* Cards track - absolute positioning for overlap */}
             <div
@@ -504,7 +495,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                 return (
                   <div
                     key={index}
-                    className={`absolute top-1/2 pointer-events-none ${!isDesktop ? "snap-center" : ""}`}
+                    className={`absolute top-1/2 pointer-events-none ${!isDesktopOrTablet ? "snap-center" : ""}`}
                     style={{
                       width: `${cardWidth}px`,
                       left: `${leftPosition}px`,
