@@ -24,9 +24,21 @@ import {
   SiHtml5,
   SiCss3,
   SiGithub,
+  SiAnthropic,
+  SiPandas,
+  SiNumpy,
+  SiScikitlearn,
+  SiPytorch,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiVercel,
+  SiSupabase,
+  SiPostman,
+  SiN8N,
 } from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
 import RigobotIconTiny from "@/components/custom-icons/RigobotIconTiny";
+import Matplotlib from "@/components/custom-icons/Matplotlib";
 
 interface PricingSectionProps {
   data: PricingSectionType;
@@ -46,6 +58,18 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   css3: SiCss3,
   css: SiCss3,
   github: SiGithub,
+  claude: SiAnthropic,
+  pandas: SiPandas,
+  numpy: SiNumpy,
+  scikitlearn: SiScikitlearn,
+  pytorch: SiPytorch,
+  matplotlib: Matplotlib,
+  nextjs: SiNextdotjs,
+  tailwindcss: SiTailwindcss,
+  vercel: SiVercel,
+  supabase: SiSupabase,
+  postman: SiPostman,
+  n8n: SiN8N,
 };
 
 const featureIconMap: Record<string, Icon> = {

@@ -363,12 +363,24 @@ sections:
     financing_amount: $299
     tech_icons:
       - openai
+      - claude
       - python
+      - pandas
+      - numpy
+      - scikitlearn
+      - pytorch
+      - matplotlib
       - react
+      - nextjs
+      - tailwindcss
       - nodejs
+      - vercel
+      - supabase
       - git
       - github
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+      - postman
+      - n8n
+    features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     features:
       - icon: certificate
         text: Build your portfolio with hundreds of real-world projects.
