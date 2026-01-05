@@ -199,16 +199,16 @@ export {
 } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 
 // ============================================
-// Re-export Job Confidence Split Schemas from Component Registry
+// Re-export Split Cards Schemas from Component Registry
 // ============================================
 export {
   toolIconSchema,
-  jobConfidenceBenefitSchema,
-  jobConfidenceSplitSectionSchema,
+  splitCardsBenefitSchema,
+  splitCardsSectionSchema,
   type ToolIcon,
-  type JobConfidenceBenefit,
-  type JobConfidenceSplitSection,
-} from "../marketing-content/component-registry/job_confidence_split/v1.0/schema";
+  type SplitCardsBenefit,
+  type SplitCardsSection,
+} from "../marketing-content/component-registry/split_cards/v1.0/schema";
 
 // ============================================
 // Re-export Numbered Steps Schemas from Component Registry
@@ -637,7 +637,7 @@ import { comparisonTableSectionSchema } from "../marketing-content/component-reg
 import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab } from "../marketing-content/component-registry/bullet_tabs_showcase/v1.0/schema";
 export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
 import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
-import { jobConfidenceSplitSectionSchema as jcsSchema } from "../marketing-content/component-registry/job_confidence_split/v1.0/schema";
+import { splitCardsSectionSchema } from "../marketing-content/component-registry/split_cards/v1.0/schema";
 export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage };
 import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
@@ -695,7 +695,7 @@ const baseSectionSchema = z.union([
   bulletTabsShowcaseSectionSchema,
   graduatesStatsSectionSchema,
   valueProofPanelSectionSchema,
-  jcsSchema,
+  splitCardsSectionSchema,
 ]);
 
 // Combined section schema with layout fields

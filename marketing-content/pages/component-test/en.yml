@@ -1,5 +1,5 @@
-# Component Test Page - Job Confidence Split
-# This page demonstrates the new JobConfidenceSplit component
+# Component Test Page - Split Cards
+# This page demonstrates the SplitCards component with both variants
 
 slug: "component-test"
 template: "default"
@@ -7,7 +7,7 @@ title: "Component Test"
 
 meta:
   page_title: "Component Test | 4Geeks Academy"
-  description: "Testing the new JobConfidenceSplit component"
+  description: "Testing the SplitCards component with both variants"
   robots: "noindex, nofollow"
 
 sections:
@@ -15,10 +15,11 @@ sections:
     variant: simpleTwoColumn
     version: "1.0"
     title: "Component Test Page"
-    subtitle: "Testing the new JobConfidenceSplit component with responsive card layout"
+    subtitle: "Testing the SplitCards component with responsive card layout and both variants"
     badge: "Development Only"
 
-  - type: job_confidence_split
+  - type: split_cards
+    variant: primary-left
     primary:
       badge: "AI-Powered Learning"
       heading: "Design Smarter with AI Copilots"
@@ -45,7 +46,9 @@ sections:
         - text: "Automate routine tasks and focus on creativity"
         - text: "Secure your career for the future"
 
-  - type: job_confidence_split
+  - type: split_cards
+    variant: primary-right
+    background: muted
     primary:
       heading: "The Confidence of a Job Guarantee"
       description: "We back our model with a Job Guarantee. Get hired within 9 months, or we refund your tuition in full. That's how much we believe in our program."
@@ -54,4 +57,3 @@ sections:
         - text: "Industry-aligned, AI-ready curriculum"
         - text: "Unlimited, personalized mentorship"
         - text: "Career support that never expires"
-    background: muted

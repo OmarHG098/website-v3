@@ -102,7 +102,8 @@ sections:
       - value: "55%"
         title: "Salary increase after graduation"
 
-  - type: job_confidence_split
+  - type: split_cards
+    variant: primary-left
     background: muted
     primary:
       badge: "Results-Backed Promise"

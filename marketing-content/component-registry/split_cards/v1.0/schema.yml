@@ -1,52 +1,47 @@
-name: Job Confidence Split
+name: split_cards
 version: "1.0"
-component: "JobConfidenceSplit"
-file: "client/src/components/JobConfidenceSplit.tsx"
-description: "A two-card layout featuring a primary dark card with tool icons and a secondary accent-colored card with benefits list. Responsive: 3/4 + 1/4 on desktop, 50/50 on tablet, stacked on mobile."
+description: "Two-card split layout with responsive sizing. Primary card (3/4 desktop, 50% tablet) has dark background with heading, description, and optional floating icons. Secondary card (1/4 desktop, 50% tablet) displays a benefits list with checkmarks."
 
-when_to_use: |
-  Use for sections that combine a feature description with a benefits list.
-  Ideal for job guarantee sections, skill acquisition highlights, or any feature + benefits combination.
-  The primary card showcases the main message with optional tool/brand icons.
-  The secondary card lists key benefits or outcomes.
+variants:
+  - name: primary-left
+    description: "Primary card on the left, secondary on the right (default)"
+  - name: primary-right
+    description: "Primary card on the right, secondary on the left"
 
-props:
-  type:
+properties:
+  variant:
     type: string
-    required: true
-    value: "job_confidence_split"
-
+    enum: ["primary-left", "primary-right"]
+    default: "primary-left"
+    description: "Layout variant controlling primary card position"
   primary:
     type: object
     required: true
-    description: "The main card (dark background, ~75% width on desktop)"
+    description: "Primary card content (larger card with dark background)"
     fields:
       heading:
         type: string
         required: true
-        description: "Main headline for the primary card"
-        example: "The Confidence of a Job Guarantee"
+        description: "Main heading text"
       description:
         type: string
         required: false
-        description: "Supporting paragraph text"
+        description: "Supporting description text"
       badge:
         type: string
         required: false
-        description: "Optional badge text above the heading"
+        description: "Small badge/label above heading"
       tool_icons:
         type: array
         required: false
-        description: "Floating tool/brand icons displayed on the card"
+        description: "Floating tool icons with positioning"
         items:
           icon:
             type: string
-            required: false
-            description: "Tabler icon name (if using icon library)"
+            description: "Tabler icon name (e.g., 'BrandOpenai', 'BrandFigma', 'Code')"
           image_id:
             type: string
-            required: false
-            description: "Image ID from image registry (for brand logos)"
+            description: "Image registry ID (alternative to icon)"
           size:
             type: string
             enum: ["sm", "md", "lg"]
@@ -73,7 +68,7 @@ props:
   secondary:
     type: object
     required: true
-    description: "The benefits card (accent background, ~25% width on desktop)"
+    description: "Secondary card content (smaller card with benefits list)"
     fields:
       benefits:
         type: array
@@ -86,13 +81,18 @@ props:
             type: string
             required: true
             description: "Benefit text"
-            example: "Generate design ideas in seconds"
           icon:
             type: string
             required: false
-            description: "Custom icon (defaults to checkmark)"
+            description: "Optional custom icon (defaults to checkmark)"
 
   background:
     type: string
     required: false
-    description: "Background color token for the section container"
+    description: "Section background (muted, card, or default)"
+    enum: ["muted", "card"]
+
+responsive_behavior:
+  desktop: "Primary card 75% width, secondary card 25% width"
+  tablet: "Both cards 50% width side-by-side"
+  mobile: "Cards stacked vertically"

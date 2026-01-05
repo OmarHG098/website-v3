@@ -1,9 +1,13 @@
 /**
- * Job Confidence Split Component Schemas - v1.0
+ * Split Cards Component Schemas - v1.0
  * 
  * A two-card layout with responsive sizing: 3/4 + 1/4 on desktop, 50/50 on tablet, stacked on mobile.
  * Primary card has dark background with heading, description, and floating tool icons.
  * Secondary card has accent background with a list of benefits.
+ * 
+ * Variants:
+ * - primary-left (default): Primary card on left, secondary on right
+ * - primary-right: Primary card on right, secondary on left
  */
 import { z } from "zod";
 
@@ -19,13 +23,14 @@ export const toolIconSchema = z.object({
   }).optional(),
 });
 
-export const jobConfidenceBenefitSchema = z.object({
+export const splitCardsBenefitSchema = z.object({
   text: z.string(),
   icon: z.string().optional(),
 });
 
-export const jobConfidenceSplitSectionSchema = z.object({
-  type: z.literal("job_confidence_split"),
+export const splitCardsSectionSchema = z.object({
+  type: z.literal("split_cards"),
+  variant: z.enum(["primary-left", "primary-right"]).optional().default("primary-left"),
   primary: z.object({
     heading: z.string(),
     description: z.string().optional(),
@@ -33,11 +38,11 @@ export const jobConfidenceSplitSectionSchema = z.object({
     tool_icons: z.array(toolIconSchema).optional(),
   }),
   secondary: z.object({
-    benefits: z.array(jobConfidenceBenefitSchema).min(1).max(5),
+    benefits: z.array(splitCardsBenefitSchema).min(1).max(5),
   }),
   background: z.string().optional(),
 });
 
 export type ToolIcon = z.infer<typeof toolIconSchema>;
-export type JobConfidenceBenefit = z.infer<typeof jobConfidenceBenefitSchema>;
-export type JobConfidenceSplitSection = z.infer<typeof jobConfidenceSplitSectionSchema>;
+export type SplitCardsBenefit = z.infer<typeof splitCardsBenefitSchema>;
+export type SplitCardsSection = z.infer<typeof splitCardsSectionSchema>;

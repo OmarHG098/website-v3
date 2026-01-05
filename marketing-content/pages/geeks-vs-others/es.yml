@@ -106,7 +106,8 @@ sections:
       - value: "55%"
         title: "Aumento salarial después de graduarte"
 
-  - type: job_confidence_split
+  - type: split_cards
+    variant: primary-left
     background: muted
     primary:
       badge: "Promesa Respaldada"
