@@ -16,6 +16,7 @@ export const testimonialItemSchema = z.object({
 export const testimonialsSectionSchema = z.object({
   type: z.literal("testimonials"),
   version: z.string().optional(),
+  variant: z.enum(["grid", "carousel"]).optional().default("grid"),
   title: z.string(),
   subtitle: z.string().optional(),
   rating_summary: z.object({
