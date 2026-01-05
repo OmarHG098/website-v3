@@ -204,20 +204,21 @@ export function PricingSection({ data }: PricingSectionProps) {
               )}
 
               {data.tech_icons && data.tech_icons.length > 0 && (
-                <div className="-mx-4" data-testid="tech-icons">
+                <div className="w-full overflow-hidden" data-testid="tech-icons">
                   <Marquee
-                    speed={30}
+                    speed={25}
                     gradient={true}
                     gradientColor="hsl(var(--background))"
-                    gradientWidth={40}
+                    gradientWidth={20}
                     pauseOnHover={true}
+                    style={{ width: '100%' }}
                   >
                     {data.tech_icons.map((iconName, index) => {
                       const IconComponent = techIconMap[iconName.toLowerCase()];
                       return IconComponent ? (
                         <div
                           key={index}
-                          className="flex items-center justify-center px-4 py-2 text-muted-foreground"
+                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
                           data-testid={`icon-tech-${index}`}
                         >
                           <IconComponent className="w-5 h-5" />
@@ -405,20 +406,21 @@ export function PricingSection({ data }: PricingSectionProps) {
             )}
 
             {data.tech_icons && data.tech_icons.length > 0 && (
-              <div className="-mx-4" data-testid="tech-icons">
+              <div className="w-full overflow-hidden" data-testid="tech-icons">
                 <Marquee
-                  speed={30}
+                  speed={25}
                   gradient={true}
                   gradientColor="hsl(var(--background))"
-                  gradientWidth={40}
+                  gradientWidth={20}
                   pauseOnHover={true}
+                  style={{ width: '100%' }}
                 >
                   {data.tech_icons.map((iconName, index) => {
                     const IconComponent = techIconMap[iconName.toLowerCase()];
                     return IconComponent ? (
                       <div
                         key={index}
-                        className="flex items-center justify-center px-4 py-2 text-muted-foreground"
+                        className="flex items-center justify-center px-3 py-2 text-muted-foreground"
                         data-testid={`icon-tech-${index}`}
                       >
                         <IconComponent className="w-5 h-5" />
