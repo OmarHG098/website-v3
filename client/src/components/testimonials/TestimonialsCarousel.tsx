@@ -402,7 +402,7 @@ export function TestimonialsCarousel({ data }: TestimonialsCarouselProps) {
           )}
         </div>
 
-        <div className="relative h-[340px] lg:h-[300px]">
+        <div className="relative h-[340px] lg:h-[300px] mb-4">
           <div 
             className="absolute left-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
