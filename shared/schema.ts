@@ -627,14 +627,23 @@ export const responsiveSpacingSchema = z.object({
 
 export type ResponsiveSpacing = z.infer<typeof responsiveSpacingSchema>;
 
+// Breakpoint visibility for sections - controls which breakpoint(s) a section is visible on
+// mobile: only visible on screens < 768px
+// desktop: only visible on screens >= 768px  
+// all (default): visible on all breakpoints
+export const showOnSchema = z.enum(['mobile', 'desktop', 'all']);
+export type ShowOn = z.infer<typeof showOnSchema>;
+
 // Layout fields that can be applied to any section
 // marginY/paddingY: Responsive object with mobile/desktop values
 // Each value supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
 // background: semantic token (muted, card, etc.) or custom CSS value
+// showOn: controls breakpoint visibility (mobile, desktop, or all)
 export const sectionLayoutSchema = z.object({
   marginY: responsiveSpacingSchema.optional(),
   paddingY: responsiveSpacingSchema.optional(),
   background: z.string().optional(),
+  showOn: showOnSchema.optional(),
 });
 
 export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
