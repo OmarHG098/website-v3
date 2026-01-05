@@ -98,6 +98,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     const containerCenter = container.clientWidth / 2;
     const scrollLeft = container.scrollLeft;
+    
+    // On mobile, cards are offset so first card is centered at scroll 0
+    const mobileLeftOffset = isDesktopOrTablet ? 0 : (containerCenter - cardWidth / 2);
 
     const newTransforms = new Map<number, { scale: number; opacity: number; zIndex: number }>();
     
@@ -108,7 +111,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     // Apply transforms based on continuous distance from center
     // Smooth linear interpolation - no sudden jumps
     extendedItems.forEach((_, index) => {
-      const cardCenterX = (index * cardSpacing) + (cardWidth / 2) - scrollLeft;
+      const cardCenterX = mobileLeftOffset + (index * cardSpacing) + (cardWidth / 2) - scrollLeft;
       const distanceFromCenter = Math.abs(cardCenterX - containerCenter);
       
       // Track closest card
@@ -155,7 +158,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     
     // Update active index (modulo to get original item index)
     setActiveIndex(closestIndex % originalLength);
-  }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
+  }, [extendedItems.length, originalLength, cardWidth, cardSpacing, isDesktopOrTablet]);
 
   const checkInfiniteLoop = useCallback(() => {
     // Disable infinite loop on mobile to prevent blinking
@@ -426,9 +429,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
   const totalWidth = extendedItems.length * cardSpacing;
   
-  // Calculate padding needed to center first/last card on mobile
-  // On mobile, we need padding so first card can be centered
-  const mobilePadding = isDesktopOrTablet ? 0 : `calc(50vw - ${cardWidth / 2}px)`;
+  // On mobile, offset cards so first card can be centered
+  // This creates space on the left so first card center aligns with viewport center at scroll 0
+  const mobileOffset = isDesktopOrTablet ? 0 : `calc(50vw - ${cardWidth / 2}px)`;
 
   return (
     <section 
@@ -497,8 +500,6 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
               className="h-full relative"
               style={{ 
                 width: `${totalWidth + cardWidth}px`,
-                paddingLeft: mobilePadding,
-                paddingRight: mobilePadding,
               }}
             >
               {extendedItems.map((testimonial, index) => {
@@ -511,7 +512,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                     className={`absolute top-1/2 pointer-events-none ${!isDesktopOrTablet ? "snap-center" : ""}`}
                     style={{
                       width: `${cardWidth}px`,
-                      left: `${leftPosition}px`,
+                      left: isDesktopOrTablet ? `${leftPosition}px` : `calc(${mobileOffset} + ${leftPosition}px)`,
                       transform: `translateY(-50%) scale(${transform.scale})`,
                       opacity: transform.opacity,
                       zIndex: transform.zIndex,
