@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useCallback, useMemo, lazy, Suspense } from "react";
-import type { Section, EditOperation, SectionLayout, ResponsiveSpacing } from "@shared/schema";
+import type { Section, EditOperation, SectionLayout, ResponsiveSpacing, ShowOn } from "@shared/schema";
 
 // ============================================
 // Component Load Strategy Registry
@@ -130,6 +130,23 @@ function getSectionLayoutStyles(section: Section): CSSProperties & Record<string
   }
   
   return styles;
+}
+
+// Get CSS classes for section visibility based on showOn property
+// Uses Tailwind responsive classes to show/hide sections at breakpoints
+// mobile: hidden at md and up (>= 768px)
+// desktop: hidden below md (< 768px)
+// all or undefined: visible at all breakpoints
+function getSectionVisibilityClasses(showOn: ShowOn | undefined): string {
+  switch (showOn) {
+    case 'mobile':
+      return 'block md:hidden'; // Show on mobile, hide on desktop
+    case 'desktop':
+      return 'hidden md:block'; // Hide on mobile, show on desktop
+    case 'all':
+    default:
+      return ''; // Visible on all breakpoints
+  }
 }
 // EAGER components - commonly above the fold
 import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
@@ -409,11 +426,13 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSection(section, index);
         const layoutStyles = getSectionLayoutStyles(section);
+        const showOn = (section as SectionLayout).showOn;
+        const visibilityClasses = getSectionVisibilityClasses(showOn);
         
         if (!renderedSection) return null;
         
         return (
-          <div key={index} className="section-wrapper" style={layoutStyles}>
+          <div key={index} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}
