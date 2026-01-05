@@ -62,6 +62,17 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const [activeIndex, setActiveIndex] = useState(0);
   const isResettingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
+  
+  // Desktop detection - use custom drag only on desktop
+  const [isDesktop, setIsDesktop] = useState(false);
+  
+  useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(desktopQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    desktopQuery.addEventListener('change', handler);
+    return () => desktopQuery.removeEventListener('change', handler);
+  }, []);
 
   // Drag state
   const isDraggingRef = useRef(false);
@@ -364,30 +375,34 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
     container.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateCardTransforms);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('blur', handleWindowBlur);
     
-    // Use native touch event listeners with passive: false to allow preventDefault
-    container.addEventListener('touchstart', nativeTouchStart, { passive: true });
-    container.addEventListener('touchmove', nativeTouchMove, { passive: false });
-    container.addEventListener('touchend', nativeTouchEnd, { passive: true });
+    // Only add mouse/touch drag handlers on desktop - mobile uses native scroll
+    if (isDesktop) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('blur', handleWindowBlur);
+      container.addEventListener('touchstart', nativeTouchStart, { passive: true });
+      container.addEventListener('touchmove', nativeTouchMove, { passive: false });
+      container.addEventListener('touchend', nativeTouchEnd, { passive: true });
+    }
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateCardTransforms);
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('blur', handleWindowBlur);
-      container.removeEventListener('touchstart', nativeTouchStart);
-      container.removeEventListener('touchmove', nativeTouchMove);
-      container.removeEventListener('touchend', nativeTouchEnd);
+      if (isDesktop) {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener('blur', handleWindowBlur);
+        container.removeEventListener('touchstart', nativeTouchStart);
+        container.removeEventListener('touchmove', nativeTouchMove);
+        container.removeEventListener('touchend', nativeTouchEnd);
+      }
       document.body.style.userSelect = '';
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd]);
+  }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd, isDesktop]);
 
   if (items.length === 0) return null;
 
@@ -433,22 +448,27 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         </div>
 
         {/* Carousel Container */}
-        <div className="relative h-[420px]">
-          {/* Left fade - softer gradient */}
+        <div className="relative h-[420px] lg:h-[420px]">
+          {/* Left fade - softer gradient, smaller on mobile */}
           <div 
-            className="absolute left-0 top-0 bottom-0 w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-[60px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
           
-          {/* Right fade - softer gradient */}
+          {/* Right fade - softer gradient, smaller on mobile */}
           <div 
-            className="absolute right-0 top-0 bottom-0 w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-[60px] lg:w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
           />
 
-          {/* Scrollable container - touch events handled via native listeners in useEffect */}
+          {/* Scrollable container - native scroll on mobile, custom drag on desktop */}
           <div
             ref={scrollContainerRef}
-            className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide touch-pan-y"
-            onMouseDown={handleMouseDown}
+            className={`h-full overflow-x-auto overflow-y-hidden scrollbar-hide ${
+              isDesktop 
+                ? "select-none cursor-grab" 
+                : "snap-x snap-mandatory touch-auto"
+            }`}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            onMouseDown={isDesktop ? handleMouseDown : undefined}
           >
             {/* Cards track - absolute positioning for overlap */}
             <div
@@ -464,7 +484,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
                 return (
                   <div
                     key={index}
-                    className="absolute top-1/2 pointer-events-none"
+                    className={`absolute top-1/2 pointer-events-none ${!isDesktop ? "snap-center" : ""}`}
                     style={{
                       width: `${CARD_WIDTH}px`,
                       left: `${leftPosition}px`,
