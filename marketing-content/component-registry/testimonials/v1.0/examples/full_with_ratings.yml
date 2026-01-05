@@ -1,4 +1,5 @@
 - type: testimonials
+  variant: grid
   title: "What Our Students Say"
   subtitle: "Real stories from graduates who transformed their careers"
   rating_summary:

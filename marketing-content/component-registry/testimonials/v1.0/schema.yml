@@ -8,6 +8,13 @@ when_to_use: |
   Place after the certificate section and before FAQ for maximum impact.
   Include 3-6 testimonials for optimal display across all screen sizes.
 props:
+  variant:
+    type: string
+    required: false
+    default: grid
+    enum: [grid, carousel]
+    description: Layout variant - "grid" shows a 3-column grid, "carousel" shows a draggable carousel with scaling effects
+    example: carousel
   title:
     type: string
     required: true
