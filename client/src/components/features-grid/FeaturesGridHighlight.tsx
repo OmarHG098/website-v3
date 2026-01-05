@@ -46,8 +46,8 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
           </div>
         </div>
         <div className="hidden md:block">
-          <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-            {getIcon(item.icon, "w-7 h-7", iconColor || "hsl(var(--primary))")}
+          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+            {getIcon(item.icon, "w-6 h-6", iconColor || "hsl(var(--primary))")}
           </div>
           <div className="font-semibold text-foreground text-lg">
             {item.title}
