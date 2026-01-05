@@ -57,6 +57,8 @@ sections:
       review_logos:
         - name: Google
           logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY: none lg

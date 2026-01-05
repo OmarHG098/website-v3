@@ -108,7 +108,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.form && (
-                <div className="mt-2 mb-8">
+                <div className="mt-2 mb-8 flex justify-center md:justify-start">
                   <LeadForm 
                     data={{
                       ...data.form,
@@ -138,6 +138,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.trust_bar && (
+                <div className="flex justify-center md:justify-start">
                 <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/50 rounded-card px-4 py-3 transition-all duration-brand ease-brand">
                   <div className="flex flex-col gap-1">
                     {data.trust_bar.rating && (
@@ -200,6 +201,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                       ))}
                     </div>
                   )}
+                </div>
                 </div>
               )}
             </div>

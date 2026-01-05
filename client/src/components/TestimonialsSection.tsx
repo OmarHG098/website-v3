@@ -337,8 +337,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       container.style.cursor = 'grab';
     } else {
       // Mobile: Start at the beginning, centered on first card (no infinite loop)
-      const initialScroll = (cardWidth / 2) - containerCenter;
-      container.scrollLeft = Math.max(0, initialScroll);
+      // Center first card in viewport
+      container.scrollLeft = 0;
     }
 
     requestAnimationFrame(updateCardTransforms);
