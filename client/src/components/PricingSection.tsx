@@ -128,7 +128,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             )}
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
+          <div className="grid lg:grid-cols-12 gap-0 items-stretch relative overflow-hidden">
             <div
               className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
               data-testid="card-pricing"
@@ -193,7 +193,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               </div>
             </div>
 
-            <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+            <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8 overflow-hidden">
               {data.features_title && (
                 <p
                   className="text-[#3A3A3A] font-normal text-body"
@@ -204,14 +204,11 @@ export function PricingSection({ data }: PricingSectionProps) {
               )}
 
               {data.tech_icons && data.tech_icons.length > 0 && (
-                <div className="w-full overflow-hidden" data-testid="tech-icons">
+                <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
                   <Marquee
                     speed={25}
-                    gradient={true}
-                    gradientColor="hsl(var(--background))"
-                    gradientWidth={20}
+                    gradient={false}
                     pauseOnHover={true}
-                    style={{ width: '100%' }}
                   >
                     {data.tech_icons.map((iconName, index) => {
                       const IconComponent = techIconMap[iconName.toLowerCase()];
@@ -317,7 +314,7 @@ export function PricingSection({ data }: PricingSectionProps) {
           </p>
         )}
 
-        <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
+        <div className="grid lg:grid-cols-12 gap-0 items-stretch relative overflow-hidden">
           <div
             className="flex items-center absolute -top-4 left-0 z-10"
             data-testid="badge-discount"
@@ -395,7 +392,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             </div>
           </div>
 
-          <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+          <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8 overflow-hidden">
             {data.features_title && (
               <p
                 className="text-[#3A3A3A] font-normal text-lg"
@@ -406,14 +403,11 @@ export function PricingSection({ data }: PricingSectionProps) {
             )}
 
             {data.tech_icons && data.tech_icons.length > 0 && (
-              <div className="w-full overflow-hidden" data-testid="tech-icons">
+              <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
                 <Marquee
                   speed={25}
-                  gradient={true}
-                  gradientColor="hsl(var(--background))"
-                  gradientWidth={20}
+                  gradient={false}
                   pauseOnHover={true}
-                  style={{ width: '100%' }}
                 >
                   {data.tech_icons.map((iconName, index) => {
                     const IconComponent = techIconMap[iconName.toLowerCase()];
