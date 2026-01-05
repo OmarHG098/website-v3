@@ -173,10 +173,10 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             className="border-0 shadow-card mb-16 transition-all duration-300"
             data-testid="selected-feature-content"
           >
-            <CardContent className="p-6 md:p-8">
-              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-center">
-                {/* Media - shows first on mobile, second on desktop */}
-                <div className="order-1 lg:order-2 w-full">
+            <CardContent className="px-6 pb-6 pt-0 md:p-8">
+              <div className="flex flex-col md:grid md:grid-cols-2 gap-8 items-center">
+                {/* Media - shows first on mobile, second on tablet/desktop */}
+                <div className="order-1 md:order-2 w-full">
                   {displayedFeature.image_id ? (
                     <div data-testid="image-container-feature">
                       <UniversalImage
@@ -206,9 +206,10 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                   ) : null}
                 </div>
 
-                {/* Text content - shows second on mobile, first on desktop */}
-                <div className="order-2 lg:order-1">
-                  <div className="flex items-start gap-4 mb-6">
+                {/* Text content - shows second on mobile, first on tablet/desktop */}
+                <div className="order-2 md:order-1">
+                  {/* Title and icon - hidden on mobile */}
+                  <div className="hidden md:flex items-start gap-4 mb-6">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
                       {getIcon(displayedFeature.icon, displayedFeature.show_rigobot_logo ?? displayedFeature.title?.toLowerCase().includes('rigobot'), true)}
                     </div>
@@ -217,8 +218,9 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                     </h3>
                   </div>
                   
+                  {/* Description - hidden on mobile */}
                   {displayedFeature.description && (
-                    <p className="text-muted-foreground text-body leading-relaxed mb-4">
+                    <p className="hidden md:block text-muted-foreground text-body leading-relaxed mb-4">
                       {displayedFeature.description}
                     </p>
                   )}
