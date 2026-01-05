@@ -20,26 +20,25 @@ interface TechNode {
   icon: "python" | "openai" | "rigobot" | "langchain" | "huggingface" | "github" | "react" | "nodejs" | "jupyter" | "vscode";
   tooltip: string;
   yOffset: number;
-  hoverColor: string;
 }
 
 const topRowTechnologies: TechNode[] = [
-  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28, hoverColor: "#3776AB" },
-  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4, hoverColor: "#007ACC" },
-  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -16, hoverColor: "#F37626" },
-  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 4, hoverColor: "#6e5494" },
-  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 28, hoverColor: "#10a37f" },
+  { id: "python", name: "Python", icon: "python", tooltip: "Core programming language for AI development", yOffset: 28 },
+  { id: "vscode", name: "VS Code", icon: "vscode", tooltip: "AI-enhanced code editor with Copilot", yOffset: 4 },
+  { id: "jupyter", name: "Jupyter", icon: "jupyter", tooltip: "Interactive notebooks for data exploration", yOffset: -16 },
+  { id: "github", name: "GitHub", icon: "github", tooltip: "Version control & collaborative development", yOffset: 4 },
+  { id: "openai", name: "OpenAI", icon: "openai", tooltip: "Master prompt engineering & API integration", yOffset: 28 },
 ];
 
 const bottomRowTechnologies: TechNode[] = [
-  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -28, hoverColor: "#2dd4bf" },
-  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -4, hoverColor: "#FFD21E" },
-  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 16, hoverColor: "#61dafb" },
-  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -4, hoverColor: "#339933" },
-  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -28, hoverColor: "#6366f1" },
+  { id: "langchain", name: "LangChain", icon: "langchain", tooltip: "Build powerful AI applications with chain-of-thought", yOffset: -28 },
+  { id: "huggingface", name: "Hugging Face", icon: "huggingface", tooltip: "Access thousands of pre-trained ML models", yOffset: -4 },
+  { id: "react", name: "React", icon: "react", tooltip: "Build modern AI-powered user interfaces", yOffset: 16 },
+  { id: "nodejs", name: "Node.js", icon: "nodejs", tooltip: "Backend runtime for AI application servers", yOffset: -4 },
+  { id: "rigobot", name: "Rigobot", icon: "rigobot", tooltip: "Your personal AI mentor for 24/7 coding support", yOffset: -28 },
 ];
 
-function TechIcon({ icon, className, style }: { icon: TechNode["icon"]; className?: string; style?: React.CSSProperties }) {
+function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: string }) {
   const iconClass = cn("w-4 h-4 md:w-5 md:h-5", className);
   
   switch (icon) {
@@ -110,39 +109,34 @@ function TechNodeComponent({
         className={cn(
           "relative flex items-center justify-center border transition-all duration-300",
           "w-10 h-8 md:w-12 md:h-9 rounded-xl",
-          isHovered ? "scale-110" : "",
-          !isHovered && "border-primary/20"
+          isHovered
+            ? "border-primary/40 scale-110"
+            : "border-primary/20"
         )}
         style={{
-          borderColor: isHovered ? `${tech.hoverColor}66` : undefined,
           boxShadow: isHovered
-            ? `0 0 16px ${tech.hoverColor}26, 0 2px 8px rgba(0,0,0,0.05)`
+            ? "0 0 16px hsl(var(--primary) / 0.15), 0 2px 8px rgba(0,0,0,0.05)"
             : "none",
         }}
       >
         <div className="absolute inset-0 bg-background rounded-xl" />
-        <div 
-          className="absolute inset-0 rounded-xl transition-colors duration-300"
-          style={{
-            backgroundColor: isHovered ? `${tech.hoverColor}1A` : "transparent",
-          }}
-        />
+        <div className={cn(
+          "absolute inset-0 rounded-xl transition-colors duration-300",
+          isHovered ? "bg-primary/10" : "bg-transparent"
+        )} />
         <TechIcon 
           icon={tech.icon} 
-          className="relative z-10 transition-colors duration-300"
-          style={{
-            color: isHovered ? tech.hoverColor : "hsl(var(--primary) / 0.5)",
-          }}
+          className={cn(
+            "relative z-10 transition-colors duration-300",
+            isHovered ? "text-primary" : "text-primary/50"
+          )} 
         />
       </div>
       <span
         className={cn(
           "mt-1 text-[7px] md:text-[8px] font-medium text-center transition-colors duration-300 whitespace-nowrap",
-          !isHovered && "text-muted-foreground/60"
+          isHovered ? "text-primary" : "text-muted-foreground/60"
         )}
-        style={{
-          color: isHovered ? tech.hoverColor : undefined,
-        }}
       >
         {tech.name}
       </span>
