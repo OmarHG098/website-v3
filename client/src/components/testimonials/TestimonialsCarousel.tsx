@@ -369,7 +369,7 @@ export function TestimonialsCarousel({ data }: TestimonialsCarouselProps) {
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-0 md:px-4">
-        <div className="text-center mb-8">
+        <div className="text-center">
           {ratingSummary && (
             <div 
               className="flex items-center justify-center gap-2 mb-4"
@@ -402,7 +402,7 @@ export function TestimonialsCarousel({ data }: TestimonialsCarouselProps) {
           )}
         </div>
 
-        <div className="relative h-[380px] lg:h-[420px]">
+        <div className="relative h-[340px] lg:h-[300px]">
           <div 
             className="absolute left-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
