@@ -161,27 +161,25 @@ function BreakpointToggle({
     <div className="flex rounded-md overflow-hidden border">
       <button
         onClick={() => onChange("mobile")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${
+        className={`flex items-center justify-center p-2 transition-colors ${
           activeBreakpoint === "mobile"
             ? "bg-primary text-primary-foreground"
             : "bg-muted text-muted-foreground hover:bg-muted/80"
         }`}
         data-testid="toggle-breakpoint-mobile"
       >
-        <IconDeviceMobile className="h-3.5 w-3.5" />
-        <span>Mobile</span>
+        <IconDeviceMobile className="h-4 w-4" />
       </button>
       <button
         onClick={() => onChange("desktop")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${
+        className={`flex items-center justify-center p-2 transition-colors ${
           activeBreakpoint === "desktop"
             ? "bg-primary text-primary-foreground"
             : "bg-muted text-muted-foreground hover:bg-muted/80"
         }`}
         data-testid="toggle-breakpoint-desktop"
       >
-        <IconDeviceDesktop className="h-3.5 w-3.5" />
-        <span>Desktop</span>
+        <IconDeviceDesktop className="h-4 w-4" />
       </button>
     </div>
   );
