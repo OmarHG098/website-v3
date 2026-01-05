@@ -178,7 +178,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
       </section>
     );
   }
-
+x
   return (
     <section 
       className="bg-primary/5"
@@ -493,7 +493,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <TooltipProvider delayDuration={500} skipDelayDuration={0}>
+                <TooltipProvider delayDuration={200} skipDelayDuration={0}>
                   <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
                     {data.tech_logos.map((logo, index) => (
                       <Tooltip key={index}>
