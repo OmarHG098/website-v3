@@ -158,6 +158,8 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
 
   const checkInfiniteLoop = useCallback(() => {
+    // Disable infinite loop on mobile to prevent blinking issues with native scroll
+    if (!isDesktop) return;
     if (isResettingRef.current) return;
 
     const container = scrollContainerRef.current;
@@ -182,7 +184,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         updateCardTransforms();
       });
     }
-  }, [originalLength, updateCardTransforms, cardSpacing]);
+  }, [originalLength, updateCardTransforms, cardSpacing, isDesktop]);
 
   const handleScroll = useCallback(() => {
     checkInfiniteLoop();
@@ -457,7 +459,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
         </div>
 
         {/* Carousel Container */}
-        <div className="relative h-[320px] lg:h-[420px]">
+        <div className="relative h-[380px] lg:h-[420px]">
           {/* Left fade - much smaller on mobile for better card visibility */}
           <div 
             className="absolute left-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
