@@ -85,24 +85,11 @@ export function FeaturesGridStatsTextCard({
                   >
                     {data.description}
                   </p>
-                </div>
-                <div className="md:hidden mt-2">
-                  <p
-                    className="text-body text-muted-foreground leading-relaxed line-clamp-3"
-                    data-testid="text-stats-text-card-description-preview"
-                  >
-                    {data.description}
-                  </p>
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
-                  >
-                    <p
-                      className="text-body text-muted-foreground leading-relaxed"
-                      data-testid="text-stats-text-card-description-full"
-                    >
-                      {data.description.slice(data.description.slice(0, 150).lastIndexOf(' '))}
-                    </p>
+                  <div className="mt-4">
+                    <AIWorkflowDiagram className="max-w-md mx-auto" />
                   </div>
+                </div>
+                <div className="md:hidden">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -112,12 +99,22 @@ export function FeaturesGridStatsTextCard({
                   >
                     {isExpanded ? "See less" : "See more"}
                   </Button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
+                  >
+                    <p
+                      className="text-body text-muted-foreground leading-relaxed"
+                      data-testid="text-stats-text-card-description-mobile"
+                    >
+                      {data.description}
+                    </p>
+                    <div className="mt-4">
+                      <AIWorkflowDiagram className="max-w-md mx-auto" />
+                    </div>
+                  </div>
                 </div>
               </>
             )}
-            <div className="mt-4 hidden md:block">
-              <AIWorkflowDiagram className="max-w-md mx-auto" />
-            </div>
           </Card>
         </div>
       </div>
