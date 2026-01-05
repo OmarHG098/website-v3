@@ -47,8 +47,7 @@ const CARD_SPACING_MOBILE = 260;
 
 const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.85; // Smaller side cards
-const SIDE_OPACITY_DESKTOP = 0.5;
-const SIDE_OPACITY_MOBILE = 0.75; // Higher opacity on mobile for better visibility
+const SIDE_OPACITY = 0.5;
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
   const items = data?.items || testimonials?.map(t => ({
@@ -85,10 +84,9 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
   
-  // Responsive card dimensions and opacity
+  // Responsive card dimensions
   const cardWidth = isDesktop ? CARD_WIDTH_DESKTOP : CARD_WIDTH_MOBILE;
   const cardSpacing = isDesktop ? CARD_SPACING_DESKTOP : CARD_SPACING_MOBILE;
-  const sideOpacity = isDesktop ? SIDE_OPACITY_DESKTOP : SIDE_OPACITY_MOBILE;
 
   // Triple the items for infinite loop
   const extendedItems = [...items, ...items, ...items];
@@ -128,20 +126,20 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
       // Smooth continuous interpolation based on distance
       // Center card (dist ~0): scale 1, opacity 1
-      // Side cards (dist ~1): scale 0.85, opacity varies by device
+      // Side cards (dist ~1): scale 0.85, opacity 0.5
       // Hidden (dist > 1.5): opacity 0
       
       if (normalizedDist <= 1) {
         // Smoothly interpolate from center to side
         scale = 1 - (normalizedDist * (1 - SIDE_SCALE));
-        opacity = 1 - (normalizedDist * (1 - sideOpacity));
+        opacity = 1 - (normalizedDist * (1 - SIDE_OPACITY));
         // Z-index based on proximity - closer = higher
         zIndex = Math.round(10 - normalizedDist * 5);
       } else if (normalizedDist <= 2) {
         // Fade out zone
         const fadeProgress = normalizedDist - 1; // 0 to 1
         scale = SIDE_SCALE;
-        opacity = sideOpacity * (1 - fadeProgress);
+        opacity = SIDE_OPACITY * (1 - fadeProgress);
         zIndex = 1;
       } else {
         // Hidden
@@ -157,7 +155,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     
     // Update active index (modulo to get original item index)
     setActiveIndex(closestIndex % originalLength);
-  }, [extendedItems.length, originalLength, cardWidth, cardSpacing, sideOpacity]);
+  }, [extendedItems.length, originalLength, cardWidth, cardSpacing]);
 
   const checkInfiniteLoop = useCallback(() => {
     if (isResettingRef.current) return;
@@ -460,14 +458,14 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
 
         {/* Carousel Container */}
         <div className="relative h-[320px] lg:h-[420px]">
-          {/* Left fade - softer gradient, smaller on mobile */}
+          {/* Left fade - much smaller on mobile for better card visibility */}
           <div 
-            className="absolute left-0 top-0 bottom-0 w-[60px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-r from-background to-transparent z-30 pointer-events-none"
           />
           
-          {/* Right fade - softer gradient, smaller on mobile */}
+          {/* Right fade - much smaller on mobile for better card visibility */}
           <div 
-            className="absolute right-0 top-0 bottom-0 w-[60px] lg:w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-[20px] lg:w-[180px] bg-gradient-to-l from-background to-transparent z-30 pointer-events-none"
           />
 
           {/* Scrollable container - native scroll on mobile, custom drag on desktop */}
