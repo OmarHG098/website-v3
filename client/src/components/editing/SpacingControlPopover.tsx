@@ -28,8 +28,9 @@ const SPACING_PRESETS = [
 
 type Breakpoint = "mobile" | "desktop";
 
+// Mobile values can be undefined (inherits from desktop) or explicitly set
 interface ResponsiveSpacingValues {
-  mobile: { top: string; bottom: string };
+  mobile: { top: string | undefined; bottom: string | undefined };
   desktop: { top: string; bottom: string };
 }
 
@@ -83,16 +84,28 @@ function combineTopBottom(top: string, bottom: string): string {
 function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): ResponsiveSpacingValues {
   if (!value) {
     return {
-      mobile: { top: "none", bottom: "none" },
+      mobile: { top: undefined, bottom: undefined },
       desktop: { top: "none", bottom: "none" },
     };
   }
-  // Handle inheritance: if one is missing, use the other's value
-  const mobileValue = value.mobile ?? value.desktop ?? "none";
+  
+  // Desktop is always required, fallback to "none"
   const desktopValue = value.desktop ?? value.mobile ?? "none";
+  const desktopParsed = parseTopBottom(desktopValue);
+  
+  // Mobile: keep as undefined if not explicitly set in YAML
+  // This tracks whether it was explicitly set or inheriting
+  if (value.mobile === undefined) {
+    return {
+      mobile: { top: undefined, bottom: undefined },
+      desktop: desktopParsed,
+    };
+  }
+  
+  const mobileParsed = parseTopBottom(value.mobile);
   return {
-    mobile: parseTopBottom(mobileValue),
-    desktop: parseTopBottom(desktopValue),
+    mobile: { top: mobileParsed.top, bottom: mobileParsed.bottom },
+    desktop: desktopParsed,
   };
 }
 
@@ -102,8 +115,8 @@ function parseSpacingValue(section: Section | undefined): {
 } {
   if (!section) {
     return {
-      padding: { mobile: { top: "none", bottom: "none" }, desktop: { top: "none", bottom: "none" } },
-      margin: { mobile: { top: "none", bottom: "none" }, desktop: { top: "none", bottom: "none" } },
+      padding: { mobile: { top: undefined, bottom: undefined }, desktop: { top: "none", bottom: "none" } },
+      margin: { mobile: { top: undefined, bottom: undefined }, desktop: { top: "none", bottom: "none" } },
     };
   }
   const layout = section as SectionLayout;
@@ -111,6 +124,19 @@ function parseSpacingValue(section: Section | undefined): {
     padding: parseResponsiveSpacing(layout.paddingY),
     margin: parseResponsiveSpacing(layout.marginY),
   };
+}
+
+// Get the effective value for a position (uses desktop if mobile is undefined)
+function getEffectiveValue(values: ResponsiveSpacingValues, breakpoint: Breakpoint, position: "top" | "bottom"): string {
+  if (breakpoint === "mobile") {
+    return values.mobile[position] ?? values.desktop[position];
+  }
+  return values.desktop[position];
+}
+
+// Check if mobile is inheriting (undefined) for a position
+function isMobileInheriting(values: ResponsiveSpacingValues, position: "top" | "bottom"): boolean {
+  return values.mobile[position] === undefined;
 }
 
 function SpacingPresetButtons({
@@ -188,10 +214,6 @@ function BreakpointToggle({
   );
 }
 
-// Check if mobile and desktop values are equal for a position
-function areBreakpointsEqual(values: ResponsiveSpacingValues, position: "top" | "bottom"): boolean {
-  return values.mobile[position] === values.desktop[position];
-}
 
 export function SpacingControlPopover({
   insertIndex,
@@ -231,8 +253,8 @@ export function SpacingControlPopover({
   }, [sectionAbove, sectionBelow]);
 
   // Update a spacing value
-  // - Editing desktop: syncs to mobile if they currently match (inheritance behavior)
-  // - Editing mobile: only updates mobile (explicit override, breaks sync)
+  // - Editing desktop: keeps mobile undefined (inheriting) - no explicit sync needed
+  // - Editing mobile: sets mobile to explicit value (breaks inheritance)
   const updateResponsiveValue = (
     setter: React.Dispatch<React.SetStateAction<ResponsiveSpacingValues>>,
     breakpoint: Breakpoint,
@@ -240,34 +262,35 @@ export function SpacingControlPopover({
     value: string
   ) => {
     setter(prev => {
-      // Editing desktop: sync to mobile if they're currently equal
-      if (breakpoint === "desktop" && areBreakpointsEqual(prev, position)) {
+      if (breakpoint === "desktop") {
+        // Only update desktop - mobile stays undefined (inheriting) or keeps its explicit value
         return {
-          mobile: { ...prev.mobile, [position]: value },
+          ...prev,
           desktop: { ...prev.desktop, [position]: value },
         };
       }
-      // Editing mobile (or breakpoints differ): only update the active breakpoint
+      // Editing mobile: set explicit value (breaks inheritance)
       return {
         ...prev,
-        [breakpoint]: {
-          ...prev[breakpoint],
-          [position]: value,
-        },
+        mobile: { ...prev.mobile, [position]: value },
       };
     });
   };
 
   // Convert to ResponsiveSpacing for saving
-  // If both breakpoints are identical, only save one (desktop) so the other inherits
+  // Only include mobile if it was explicitly set (not undefined)
   const toResponsiveSpacing = (values: ResponsiveSpacingValues): ResponsiveSpacing => {
-    const mobileStr = combineTopBottom(values.mobile.top, values.mobile.bottom);
     const desktopStr = combineTopBottom(values.desktop.top, values.desktop.bottom);
     
-    // If identical, only save desktop so mobile inherits
-    if (mobileStr === desktopStr) {
+    // If mobile values are all undefined, only save desktop
+    if (values.mobile.top === undefined && values.mobile.bottom === undefined) {
       return { desktop: desktopStr };
     }
+    
+    // If any mobile value is set, save both (use desktop as fallback for undefined positions)
+    const mobileTop = values.mobile.top ?? values.desktop.top;
+    const mobileBottom = values.mobile.bottom ?? values.desktop.bottom;
+    const mobileStr = combineTopBottom(mobileTop, mobileBottom);
     
     return {
       mobile: mobileStr,
@@ -393,12 +416,12 @@ export function SpacingControlPopover({
               </div>
               <SpacingPresetButtons
                 label="Padding Bottom"
-                value={abovePadding[activeBreakpoint].bottom}
+                value={getEffectiveValue(abovePadding, activeBreakpoint, "bottom")}
                 onChange={(val) => updateResponsiveValue(setAbovePadding, activeBreakpoint, "bottom", val)}
               />
               <SpacingPresetButtons
                 label="Margin Bottom"
-                value={aboveMargin[activeBreakpoint].bottom}
+                value={getEffectiveValue(aboveMargin, activeBreakpoint, "bottom")}
                 onChange={(val) => updateResponsiveValue(setAboveMargin, activeBreakpoint, "bottom", val)}
               />
             </div>
@@ -412,12 +435,12 @@ export function SpacingControlPopover({
               </div>
               <SpacingPresetButtons
                 label="Padding Top"
-                value={belowPadding[activeBreakpoint].top}
+                value={getEffectiveValue(belowPadding, activeBreakpoint, "top")}
                 onChange={(val) => updateResponsiveValue(setBelowPadding, activeBreakpoint, "top", val)}
               />
               <SpacingPresetButtons
                 label="Margin Top"
-                value={belowMargin[activeBreakpoint].top}
+                value={getEffectiveValue(belowMargin, activeBreakpoint, "top")}
                 onChange={(val) => updateResponsiveValue(setBelowMargin, activeBreakpoint, "top", val)}
               />
             </div>
