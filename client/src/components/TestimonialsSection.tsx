@@ -42,8 +42,8 @@ function getInitials(name: string): string {
 const CARD_WIDTH_DESKTOP = 380;
 const CARD_SPACING_DESKTOP = 330;
 // Mobile values (smaller)
-const CARD_WIDTH_MOBILE = 280;
-const CARD_SPACING_MOBILE = 260;
+const CARD_WIDTH_MOBILE = 240;
+const CARD_SPACING_MOBILE = 220;
 
 const DRAG_MULTIPLIER = 0.5; // Slower drag
 const SIDE_SCALE = 0.85; // Smaller side cards
@@ -422,7 +422,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
       className="bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-0 md:px-4">
         <div className="text-center">
           {ratingSummary && (
             <div 
