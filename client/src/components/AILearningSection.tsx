@@ -59,15 +59,15 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
       onMouseLeave={onLeave}
       data-testid={`feature-ai-${index}`}
     >
-      <CardContent className="p-4 md:p-6">
-        <div className="flex items-center gap-3">
+      <CardContent className="p-2 md:p-6">
+        <div className="flex items-center gap-2 md:gap-3">
           <div className={cn(
-            "w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
+            "w-8 h-8 md:w-10 md:h-10 rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
             isActive ? "bg-primary/20" : "bg-primary/10"
           )}>
             {getIcon(feature.icon, false)}
           </div>
-          <h3 className="font-semibold text-foreground flex-1">
+          <h3 className="font-semibold text-foreground flex-1 text-sm md:text-base">
             {feature.title}
           </h3>
         </div>
