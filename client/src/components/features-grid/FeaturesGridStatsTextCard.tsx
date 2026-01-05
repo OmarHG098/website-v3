@@ -4,6 +4,7 @@ import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
 import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 import { Button } from "@/components/ui/button";
+import { IconChevronDown } from "@tabler/icons-react";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -92,11 +93,14 @@ export function FeaturesGridStatsTextCard({
                 <div className="md:hidden">
                   <Button
                     variant="ghost"
-                    className="p-0 h-auto mt-3 text-primary text-base font-medium hover:bg-transparent hover:underline"
+                    className="p-0 h-auto mt-3 text-primary text-base font-medium hover:bg-transparent hover:underline flex items-center gap-1"
                     onClick={() => setIsExpanded(!isExpanded)}
                     data-testid="button-toggle-description"
                   >
                     {isExpanded ? "See less" : "See more"}
+                    <IconChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+                    />
                   </Button>
                   <div
                     className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
