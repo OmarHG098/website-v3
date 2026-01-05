@@ -228,14 +228,15 @@ function parseDeviceInfo(deviceJson: string): DeviceData | undefined {
     
     const ua = raw.userAgent.toLowerCase();
     
-    // Detect OS family
+    // Detect OS family (order matters - iOS UAs contain "like Mac OS X", so check iOS first)
     let osFamily = 'Unknown';
-    if (ua.includes('windows')) osFamily = 'Windows';
-    else if (ua.includes('mac os') || ua.includes('macos')) osFamily = 'macOS';
-    else if (ua.includes('iphone') || ua.includes('ipad')) osFamily = 'iOS';
+    if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) osFamily = 'iOS';
     else if (ua.includes('android')) osFamily = 'Android';
+    else if (ua.includes('windows phone')) osFamily = 'Windows Phone';
+    else if (ua.includes('windows')) osFamily = 'Windows';
+    else if (ua.includes('mac os') || ua.includes('macos')) osFamily = 'macOS';
+    else if (ua.includes('chrome os') || ua.includes('cros')) osFamily = 'ChromeOS';
     else if (ua.includes('linux')) osFamily = 'Linux';
-    else if (ua.includes('chrome os')) osFamily = 'ChromeOS';
     
     // Detect browser family
     let browserFamily = 'Unknown';

@@ -1353,6 +1353,44 @@ export function DebugBubble() {
             </div>
             
             <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Device</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Category:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.deviceCategory || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">OS:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.osFamily || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Browser:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.browserFamily || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Orientation:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.orientation || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Viewport:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">
+                    {session.device ? `${session.device.viewportWidth}×${session.device.viewportHeight}` : 'N/A'}
+                  </code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Screen:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">
+                    {session.device ? `${session.device.screenWidth}×${session.device.screenHeight}` : 'N/A'}
+                  </code>
+                </div>
+                <div className="flex justify-between col-span-2">
+                  <span className="text-muted-foreground">Pixel Ratio:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.devicePixelRatio || 'N/A'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
               <h4 className="text-sm font-semibold text-foreground">UTM Parameters</h4>
               <div className="space-y-1.5 text-sm">
                 {(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_placement', 'utm_plan'] as const).map(key => (
