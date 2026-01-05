@@ -50,20 +50,22 @@ sections:
       - feature: "Conocimiento Previo"
         values: ["Ninguno", "Tests de entrada o experiencia previa"]
 
-  - type: two_column_accordion_card
+  - type: features_grid
     version: "1.0"
+    variant: highlight
+    columns: 3
     title: "Aprendizaje Hiperpersonalizado y Apoyo de Por Vida"
-    description: "La mayoría de bootcamps te dan horas limitadas de mentoría y recursos genéricos — y te abandonan cuando consigues empleo. En 4Geeks, construimos todo un sistema de apoyo alrededor de la personalización:"
-    bullets:
-      - heading: "Mentoría 1:1 Ilimitada con Humanos Reales"
-        text: "Obtén tanta guía personal como necesites, de por vida. Desde debuggear código hasta prepararte para un rol senior años después, nuestros mentores están siempre a un mensaje de distancia."
-      - heading: "Seguimiento de Progreso y Feedback con IA"
-        text: "Rigobot + LearnPack se adaptan a tu estilo de aprendizaje, dándote feedback instantáneo, ayudándote a debuggear más rápido y rastreando tu crecimiento de habilidades."
-      - heading: "Apoyo Profesional que Crece Contigo"
-        text: "GeekFORCE no es solo para tu primer empleo. Es coaching de carrera personalizado y continuo que puedes usar una y otra vez, ya sea cambiando de rol o subiendo a liderazgo."
-    footer: "El resultado: una experiencia de aprendizaje verdaderamente hiperpersonalizada que combina mentoría humana con inteligencia IA y que es tuya de por vida."
-    image: "/attached_assets/hombre-joven-con-laptop_1764691956393.webp"
-    image_alt: "Joven trabajando en laptop"
+    subtitle: "La mayoría de bootcamps te dan horas limitadas de mentoría y te abandonan cuando consigues empleo. En 4Geeks, construimos un sistema de apoyo alrededor de la personalización."
+    items:
+      - icon: "Users"
+        title: "Mentoría 1:1 Ilimitada"
+        description: "Obtén tanta guía personal como necesites, de por vida. Desde debuggear código hasta prepararte para un rol senior, nuestros mentores siempre están disponibles."
+      - icon: "Robot"
+        title: "Feedback con IA"
+        description: "Rigobot + LearnPack se adaptan a tu estilo de aprendizaje, dándote feedback instantáneo y ayudándote a debuggear más rápido."
+      - icon: "Briefcase"
+        title: "Apoyo Profesional de Por Vida"
+        description: "GeekFORCE no es solo para tu primer empleo. Es coaching de carrera personalizado que puedes usar una y otra vez, ya sea cambiando de rol o subiendo a liderazgo."
 
   - type: two_column
     version: "1.0"
