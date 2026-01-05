@@ -173,7 +173,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             className="border-0 shadow-card mb-16 transition-all duration-300"
             data-testid="selected-feature-content"
           >
-            <CardContent className="px-6 pb-6 pt-0 md:p-8">
+            <CardContent className="px-2 pb-6 pt-0 md:p-8">
               <div className="flex flex-col md:grid md:grid-cols-2 gap-8 items-center">
                 {/* Media - shows first on mobile, second on tablet/desktop */}
                 <div className="order-1 md:order-2 w-full">
