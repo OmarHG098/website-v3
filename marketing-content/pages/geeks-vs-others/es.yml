@@ -63,7 +63,7 @@ sections:
       - icon: "Robot"
         title: "Feedback con IA"
         description: "Rigobot + LearnPack se adaptan a tu estilo de aprendizaje, dándote feedback instantáneo y ayudándote a debuggear más rápido."
-      - icon: "Briefcase"
+      - icon: "Headset"
         title: "Apoyo Profesional de Por Vida"
         description: "GeekFORCE no es solo para tu primer empleo. Es coaching de carrera personalizado que puedes usar una y otra vez, ya sea cambiando de rol o subiendo a liderazgo."
 
