@@ -61,6 +61,7 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   const title = data?.title || "What Our Students Say";
   const subtitle = data?.subtitle;
   const ratingSummary = data?.rating_summary;
+  const variant = data?.variant || "grid";
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [cardTransforms, setCardTransforms] = useState<Map<number, { scale: number; opacity: number; zIndex: number }>>(new Map());
@@ -432,44 +433,69 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
   // This creates space on the left so first card center aligns with viewport center at scroll 0
   const mobileOffset = isDesktopOrTablet ? 0 : `calc(50vw - ${cardWidth / 2}px)`;
 
+  // Shared header for both variants
+  const Header = () => (
+    <div className="text-center mb-8">
+      {ratingSummary && (
+        <div 
+          className="flex items-center justify-center gap-2 mb-4"
+          data-testid="rating-summary"
+        >
+          <IconStarFilled className="w-7 h-7 text-yellow-500" />
+          <span className="text-2xl font-bold text-foreground">
+            {ratingSummary.average}
+          </span>
+          <span className="text-muted-foreground">
+            / {ratingSummary.count} Reviews
+          </span>
+        </div>
+      )}
+      
+      <h2 
+        className="text-h2 mb-4 text-foreground"
+        data-testid="text-testimonials-title"
+      >
+        {title}
+      </h2>
+      
+      {subtitle && (
+        <p 
+          className="text-body text-muted-foreground max-w-2xl mx-auto"
+          data-testid="text-testimonials-subtitle"
+        >
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+
+  // Grid variant - simple 3-column grid
+  if (variant === "grid") {
+    return (
+      <section 
+        className="bg-background"
+        data-testid="section-testimonials"
+      >
+        <div className="max-w-6xl mx-auto px-4">
+          <Header />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {items.slice(0, 3).map((testimonial, index) => (
+              <TestimonialCardGrid key={index} testimonial={testimonial} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Carousel variant
   return (
     <section 
       className="bg-background overflow-hidden"
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto px-0 md:px-4">
-        <div className="text-center">
-          {ratingSummary && (
-            <div 
-              className="flex items-center justify-center gap-2 mb-4"
-              data-testid="rating-summary"
-            >
-              <IconStarFilled className="w-7 h-7 text-yellow-500" />
-              <span className="text-2xl font-bold text-foreground">
-                {ratingSummary.average}
-              </span>
-              <span className="text-muted-foreground">
-                / {ratingSummary.count} Reviews
-              </span>
-            </div>
-          )}
-          
-          <h2 
-            className="text-h2 mb-4 text-foreground"
-            data-testid="text-testimonials-title"
-          >
-            {title}
-          </h2>
-          
-          {subtitle && (
-            <p 
-              className="text-body text-muted-foreground max-w-2xl mx-auto"
-              data-testid="text-testimonials-subtitle"
-            >
-              {subtitle}
-            </p>
-          )}
-        </div>
+        <Header />
 
         {/* Carousel Container */}
         <div className="relative h-[380px] lg:h-[420px]">
@@ -586,6 +612,57 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         {/* Outcome Badge - always at bottom */}
         {testimonial.outcome && (
           <div className="pt-3 mt-auto">
+            <Badge variant="secondary" className="text-xs">
+              {testimonial.outcome}
+            </Badge>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function TestimonialCardGrid({ testimonial }: TestimonialCardProps) {
+  return (
+    <Card className="border border-border bg-card h-full">
+      <CardContent className="p-6 h-full flex flex-col">
+        {/* Header with Avatar and Info */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+            <span className="font-semibold text-muted-foreground text-sm">
+              {getInitials(testimonial.name)}
+            </span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-foreground truncate text-sm">
+              {testimonial.name}
+            </p>
+            <p className="text-xs text-muted-foreground truncate">
+              {testimonial.role}
+              {testimonial.company && ` at ${testimonial.company}`}
+            </p>
+          </div>
+        </div>
+
+        {/* Star Rating */}
+        <div className="flex items-center gap-0.5 mb-3">
+          {Array.from({ length: 5 }).map((_, i) =>
+            i < testimonial.rating ? (
+              <IconStarFilled key={i} className="w-4 h-4 text-yellow-500" />
+            ) : (
+              <IconStar key={i} className="w-4 h-4 text-muted" />
+            ),
+          )}
+        </div>
+
+        {/* Review Text */}
+        <p className="text-muted-foreground leading-relaxed text-sm flex-1">
+          {testimonial.comment}
+        </p>
+
+        {/* Outcome Badge - always at bottom */}
+        {testimonial.outcome && (
+          <div className="pt-4 mt-auto">
             <Badge variant="secondary" className="text-xs">
               {testimonial.outcome}
             </Badge>
