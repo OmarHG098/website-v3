@@ -161,6 +161,8 @@ interface PendingChange {
   contentType: string;
   slug: string;
   author?: string;
+  date?: string;
+  commitSha?: string;
 }
 
 interface ContentInfo {

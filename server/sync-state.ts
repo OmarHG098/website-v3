@@ -57,6 +57,8 @@ export interface PendingChange {
   localSha: string;
   remoteSha?: string;
   author?: string;
+  date?: string;
+  commitSha?: string;
 }
 
 const DEFAULT_SYNC_STATE: SyncState = {
