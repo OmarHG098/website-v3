@@ -63,7 +63,7 @@ sections:
         image_id: geekforce_linkedin_profile
     image_position: right
     marginY:
-      desktop: lg none
+      desktop: xl none
   - type: numbered_steps
     version: "1.0"
     variant: bubbleText
