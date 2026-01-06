@@ -1852,9 +1852,6 @@ export function DebugBubble() {
           <div className="space-y-4 py-4">
             {/* Pending changes list */}
             <div className="space-y-2">
-              <h4 className="text-sm font-medium">
-                Pending Changes ({pendingChanges.length})
-              </h4>
               {pendingChangesLoading ? (
                 <div className="flex items-center justify-center py-4">
                   <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -2033,10 +2030,6 @@ export function DebugBubble() {
                 </ScrollArea>
               )}
             </div>
-            
-            <p className="text-xs text-muted-foreground">
-              Use the buttons above to upload your changes to remote or download remote changes.
-            </p>
           </div>
 
           <DialogFooter>
