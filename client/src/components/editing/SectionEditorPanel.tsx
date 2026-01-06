@@ -410,6 +410,13 @@ export function SectionEditorPanel({
               value={currentBackground}
               onChange={(value) => updateProperty("background", value)}
             />
+
+            {/* Placeholder for future props */}
+            <div className="pt-4 border-t">
+              <p className="text-xs text-muted-foreground">
+                More properties coming soon: spacing, visibility, animations...
+              </p>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

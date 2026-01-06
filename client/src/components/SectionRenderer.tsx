@@ -27,8 +27,11 @@ function resolveSpacingValue(val: string): string {
   return val; // Return as-is (custom CSS value like "20px")
 }
 
-// Parse a string spacing value - supports presets or custom CSS values
-function parseSpacingString(value: string): { top: string; bottom: string } {
+// Parse spacing value - supports presets or custom CSS values
+// Returns null if no value provided (component handles its own spacing)
+function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
+  if (!value) return null;
+  
   // Check if it's a single preset
   if (SPACING_PRESETS[value]) {
     return SPACING_PRESETS[value];
@@ -44,29 +47,6 @@ function parseSpacingString(value: string): { top: string; bottom: string } {
     top: resolveSpacingValue(parts[0]), 
     bottom: resolveSpacingValue(parts[1] || parts[0]) 
   };
-}
-
-// Responsive spacing type
-type ResponsiveSpacing = string | { mobile?: string; desktop?: string };
-
-// Parse spacing value - supports string, object format, or undefined
-// Returns null if no value provided (component handles its own spacing)
-function parseSpacing(value: ResponsiveSpacing | undefined): { top: string; bottom: string } | null {
-  if (!value) return null;
-  
-  // Handle string format
-  if (typeof value === 'string') {
-    return parseSpacingString(value);
-  }
-  
-  // Handle object format { mobile, desktop } - use desktop for now (can be extended for responsive)
-  // Priority: desktop > mobile > none
-  const spacingValue = value.desktop || value.mobile;
-  if (spacingValue) {
-    return parseSpacingString(spacingValue);
-  }
-  
-  return null;
 }
 
 // Default spacing when YAML doesn't specify values
@@ -133,7 +113,7 @@ const CertificateSection = lazy(() => import("./CertificateSection").then(m => (
 const WhyLearnAISection = lazy(() => import("./WhyLearnAISection").then(m => ({ default: m.WhyLearnAISection })));
 const PricingSection = lazy(() => import("./PricingSection").then(m => ({ default: m.PricingSection })));
 const FAQSection = lazy(() => import("./FAQSection").then(m => ({ default: m.FAQSection })));
-const Testimonials = lazy(() => import("./testimonials/Testimonials").then(m => ({ default: m.Testimonials })));
+const TestimonialsSection = lazy(() => import("./TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const WhosHiring = lazy(() => import("@/components/whos-hiring/WhosHiring").then(m => ({ default: m.WhosHiring })));
 const FooterSection = lazy(() => import("./FooterSection").then(m => ({ default: m.FooterSection })));
 const TwoColumn = lazy(() => import("@/components/TwoColumn").then(m => ({ default: m.TwoColumn })));
@@ -281,7 +261,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "faq":
       return <LazySection key={index}><FAQSection data={section as Parameters<typeof FAQSection>[0]["data"]} /></LazySection>;
     case "testimonials":
-      return <LazySection key={index}><Testimonials data={section as Parameters<typeof Testimonials>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><TestimonialsSection data={section as Parameters<typeof TestimonialsSection>[0]["data"]} /></LazySection>;
     case "whos_hiring":
       return <LazySection key={index}><WhosHiring data={section as Parameters<typeof WhosHiring>[0]["data"]} /></LazySection>;
     case "footer":

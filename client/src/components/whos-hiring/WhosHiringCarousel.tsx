@@ -204,11 +204,9 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
     >
       <div className="bg-primary/5 py-4 flex items-center justify-center min-h-[200px]">
         <div className="text-center">
-          {data.label && (
-            <p className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
-              {data.label}
-            </p>
-          )}
+          <p className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
+            Customer Stories
+          </p>
           <h2 
             className="text-h2 mb-4 text-foreground"
             data-testid="text-whos-hiring-title"
