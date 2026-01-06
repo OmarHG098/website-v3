@@ -42,6 +42,8 @@ import {
   IconFlask,
   IconPlus,
   IconUsersGroup,
+  IconBrandGithub,
+  IconCloudDownload,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -130,6 +132,17 @@ interface ExperimentsResponse {
   experiments: ExperimentConfig[];
   hasExperimentsFile: boolean;
   filePath: string;
+}
+
+interface GitHubSyncStatus {
+  configured: boolean;
+  localCommit: string | null;
+  remoteCommit: string | null;
+  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
+  behindBy?: number;
+  aheadBy?: number;
+  repoUrl?: string;
+  branch?: string;
 }
 
 interface ContentInfo {
@@ -273,6 +286,10 @@ export function DebugBubble() {
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
   const [experimentsLoading, setExperimentsLoading] = useState(false);
   
+  // GitHub sync status state
+  const [githubSyncStatus, setGithubSyncStatus] = useState<GitHubSyncStatus | null>(null);
+  const [syncStatusLoading, setSyncStatusLoading] = useState(false);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -355,6 +372,37 @@ export function DebugBubble() {
       }
     }
   }, [contentInfo.type, menuView]);
+
+  // Fetch GitHub sync status on mount and when popover opens
+  useEffect(() => {
+    if (open && menuView === "main" && !githubSyncStatus && !syncStatusLoading) {
+      setSyncStatusLoading(true);
+      fetch("/api/github/sync-status")
+        .then((res) => res.json())
+        .then((data: GitHubSyncStatus) => {
+          setGithubSyncStatus(data);
+          setSyncStatusLoading(false);
+        })
+        .catch(() => {
+          setSyncStatusLoading(false);
+        });
+    }
+  }, [open, menuView]);
+
+  // Function to refresh sync status
+  const refreshSyncStatus = () => {
+    setSyncStatusLoading(true);
+    setGithubSyncStatus(null);
+    fetch("/api/github/sync-status")
+      .then((res) => res.json())
+      .then((data: GitHubSyncStatus) => {
+        setGithubSyncStatus(data);
+        setSyncStatusLoading(false);
+      })
+      .catch(() => {
+        setSyncStatusLoading(false);
+      });
+  };
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -645,6 +693,25 @@ export function DebugBubble() {
             </div>)
           ) : menuView === "main" ? (
             <>
+              {/* Warning banner when behind or diverged from GitHub */}
+              {githubSyncStatus && (githubSyncStatus.status === 'behind' || githubSyncStatus.status === 'diverged') && (
+                <div className="p-3 bg-amber-100 dark:bg-amber-900/50 border-b border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-2">
+                    <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-amber-800 dark:text-amber-200">
+                        {githubSyncStatus.status === 'behind' 
+                          ? `Pull ${githubSyncStatus.behindBy} commit${(githubSyncStatus.behindBy || 0) > 1 ? 's' : ''} before publishing`
+                          : 'Local and remote have diverged'}
+                      </p>
+                      <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">
+                        Production content edits may be overwritten
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <div className="p-3 border-b">
                 <h3 className="font-semibold text-sm">Debug Tools</h3>
                 <p className="text-xs text-muted-foreground">Development utilities</p>
@@ -730,6 +797,64 @@ export function DebugBubble() {
                     </div>
                   </button>
                 )}
+                
+                {/* GitHub sync status */}
+                <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                  <div className="flex items-center gap-3">
+                    <IconBrandGithub className="h-4 w-4 text-muted-foreground" />
+                    <span>GitHub Sync</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {syncStatusLoading ? (
+                      <IconRefresh className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+                    ) : githubSyncStatus ? (
+                      <>
+                        {githubSyncStatus.status === 'in-sync' && (
+                          <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                            <IconCheck className="h-3.5 w-3.5" />
+                            In sync
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'behind' && (
+                          <span className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                            <IconCloudDownload className="h-3.5 w-3.5" />
+                            {githubSyncStatus.behindBy} behind
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'ahead' && (
+                          <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                            {githubSyncStatus.aheadBy} ahead
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'diverged' && (
+                          <span className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                            <IconAlertTriangle className="h-3.5 w-3.5" />
+                            Diverged
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'not-configured' && (
+                          <span className="text-xs text-muted-foreground">Not configured</span>
+                        )}
+                        {githubSyncStatus.status === 'unknown' && (
+                          <span className="text-xs text-amber-600 dark:text-amber-400" title="Could not compare local and remote commits">
+                            Check failed
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">--</span>
+                    )}
+                    <button
+                      onClick={refreshSyncStatus}
+                      disabled={syncStatusLoading}
+                      className="p-1 rounded hover-elevate disabled:opacity-50"
+                      data-testid="button-refresh-sync-status"
+                      title="Refresh sync status"
+                    >
+                      <IconRefresh className={`h-3.5 w-3.5 ${syncStatusLoading ? 'animate-spin' : ''}`} />
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div className="border-t p-2 space-y-1">

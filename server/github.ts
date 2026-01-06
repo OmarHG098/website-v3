@@ -169,9 +169,189 @@ export async function commitToGitHub(options: GitHubCommitOptions): Promise<{ su
  * Check if GitHub integration is configured
  */
 export function isGitHubConfigured(): boolean {
-  return !!(
-    process.env.GITHUB_TOKEN &&
-    process.env.GITHUB_REPO_OWNER &&
-    process.env.GITHUB_REPO_NAME
-  );
+  const repoUrl = process.env.GITHUB_REPO_URL || '';
+  const parsed = parseGitHubUrl(repoUrl);
+  return !!(process.env.GITHUB_TOKEN && parsed?.owner && parsed?.repo);
+}
+
+/**
+ * Get GitHub config from environment variables
+ */
+export function getGitHubConfig(): GitHubConfig | null {
+  const token = process.env.GITHUB_TOKEN || '';
+  const repoUrl = process.env.GITHUB_REPO_URL || '';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  
+  const parsed = parseGitHubUrl(repoUrl);
+  if (!token || !parsed) return null;
+  
+  return {
+    token,
+    owner: parsed.owner,
+    repo: parsed.repo,
+    branch,
+  };
+}
+
+interface GitHubBranchRef {
+  ref: string;
+  object: {
+    sha: string;
+    type: string;
+  };
+}
+
+export interface GitHubSyncStatus {
+  configured: boolean;
+  localCommit: string | null;
+  remoteCommit: string | null;
+  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
+  behindBy?: number;
+  aheadBy?: number;
+  repoUrl?: string;
+  branch?: string;
+}
+
+/**
+ * Get the sync status between local and remote GitHub repository
+ */
+export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return {
+      configured: false,
+      localCommit: null,
+      remoteCommit: null,
+      status: 'not-configured',
+    };
+  }
+  
+  try {
+    // Get local HEAD commit using git
+    const { execSync } = await import('child_process');
+    let localCommit: string | null = null;
+    
+    try {
+      localCommit = execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
+    } catch {
+      // Not a git repo or git not available
+      return {
+        configured: true,
+        localCommit: null,
+        remoteCommit: null,
+        status: 'unknown',
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    }
+    
+    // Get remote branch ref from GitHub API
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/ref/heads/${config.branch}`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error getting branch ref:', response.status);
+      return {
+        configured: true,
+        localCommit,
+        remoteCommit: null,
+        status: 'unknown',
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    }
+    
+    const data: GitHubBranchRef = await response.json();
+    const remoteCommit = data.object.sha;
+    
+    // Compare commits
+    if (localCommit === remoteCommit) {
+      return {
+        configured: true,
+        localCommit,
+        remoteCommit,
+        status: 'in-sync',
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    }
+    
+    // Check if local is behind or ahead using git merge-base
+    try {
+      // Fetch to ensure we have remote refs
+      execSync(`git fetch origin ${config.branch} --quiet 2>/dev/null || true`, { encoding: 'utf-8' });
+      
+      // Get merge base
+      const mergeBase = execSync(`git merge-base HEAD origin/${config.branch} 2>/dev/null || echo ""`, { encoding: 'utf-8' }).trim();
+      
+      if (!mergeBase) {
+        // Can't determine relationship
+        return {
+          configured: true,
+          localCommit,
+          remoteCommit,
+          status: 'unknown',
+          repoUrl: process.env.GITHUB_REPO_URL,
+          branch: config.branch,
+        };
+      }
+      
+      // Count commits ahead/behind
+      const behindCount = execSync(`git rev-list --count HEAD..origin/${config.branch} 2>/dev/null || echo "0"`, { encoding: 'utf-8' }).trim();
+      const aheadCount = execSync(`git rev-list --count origin/${config.branch}..HEAD 2>/dev/null || echo "0"`, { encoding: 'utf-8' }).trim();
+      
+      const behind = parseInt(behindCount) || 0;
+      const ahead = parseInt(aheadCount) || 0;
+      
+      let status: GitHubSyncStatus['status'];
+      if (behind > 0 && ahead > 0) {
+        status = 'diverged';
+      } else if (behind > 0) {
+        status = 'behind';
+      } else if (ahead > 0) {
+        status = 'ahead';
+      } else {
+        status = 'in-sync';
+      }
+      
+      return {
+        configured: true,
+        localCommit,
+        remoteCommit,
+        status,
+        behindBy: behind,
+        aheadBy: ahead,
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    } catch {
+      // Git comparison failed
+      return {
+        configured: true,
+        localCommit,
+        remoteCommit,
+        status: localCommit === remoteCommit ? 'in-sync' : 'unknown',
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    }
+  } catch (error) {
+    console.error('Error checking GitHub sync status:', error);
+    return {
+      configured: true,
+      localCommit: null,
+      remoteCommit: null,
+      status: 'unknown',
+      repoUrl: process.env.GITHUB_REPO_URL,
+      branch: config?.branch,
+    };
+  }
 }
