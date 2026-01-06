@@ -105,19 +105,23 @@ export const myValidator: Validator = {
 - **Reactive (CLI)**: Run all validators via `ValidationService.runValidators()`
 - **Preventive (API)**: Call single validator via `ValidationService.runSingleValidator(name)` with `apiExposed: true`
 
-### GitHub Content Sync (Production)
-When deployed to production, content edits made through the inline editor are automatically committed back to the GitHub repository. This ensures development stays in sync with production content changes.
+### GitHub Content Sync
+Content edits made through the inline editor can be automatically committed back to the GitHub repository. This ensures development stays in sync with production content changes.
 
-**Required Environment Variables (Production only):**
+**Required Environment Variables:**
+- `GITHUB_SYNC_ENABLED`: Set to `"true"` to enable GitHub sync (defaults to `"false"`)
 - `GITHUB_TOKEN`: Personal access token with `repo` write permissions
-- `GITHUB_REPO_OWNER`: Repository owner (username or organization)
-- `GITHUB_REPO_NAME`: Repository name
+- `GITHUB_REPO_URL`: Full GitHub repository URL (e.g., `https://github.com/owner/repo`)
 - `GITHUB_BRANCH`: Target branch (defaults to `main`)
 
 **Behavior:**
-- In development: GitHub sync is skipped silently
-- In production without config: Editors see a warning that GitHub sync failed
-- In production with config: Changes are committed directly to the configured branch
+- When `GITHUB_SYNC_ENABLED=false` (default): GitHub sync is skipped silently
+- When `GITHUB_SYNC_ENABLED=true` without config: Editors see a warning that GitHub sync failed
+- When `GITHUB_SYNC_ENABLED=true` with config: Changes are committed directly to the configured branch
+
+**Sync Status Indicator:**
+- The DebugBubble shows GitHub sync status (in-sync, behind, ahead, diverged, not-configured)
+- A warning banner appears when local is behind remote, alerting editors to pull before publishing
 
 **Implementation:**
 - `server/github.ts`: GitHub Contents API utility for committing files

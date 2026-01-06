@@ -281,9 +281,9 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     
     fs.writeFileSync(filePath, updatedYaml, "utf-8");
     
-    // In production, commit changes back to GitHub repo
+    // Commit changes to GitHub when sync is enabled
     let githubWarning: string | undefined;
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.GITHUB_SYNC_ENABLED === "true") {
       // Get relative path from project root for GitHub
       const relativePath = path.relative(process.cwd(), filePath);
       

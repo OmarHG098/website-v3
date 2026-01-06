@@ -95,16 +95,24 @@ export async function commitToGitHub(options: GitHubCommitOptions): Promise<{ su
     branch,
   };
   
+  // Check if GitHub sync is enabled (defaults to false)
+  const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
+  
   // Validate config
   if (!config.token || !config.owner || !config.repo) {
-    // In production, return an error if not configured
-    if (process.env.NODE_ENV === "production") {
+    // If sync is enabled but not configured, return an error
+    if (syncEnabled) {
       return { 
         success: false, 
         error: "GitHub integration not configured (missing GITHUB_TOKEN or GITHUB_REPO_URL)" 
       };
     }
-    // In development, silently skip
+    // If sync is disabled, silently skip
+    return { success: true };
+  }
+  
+  // If sync is disabled, skip even if configured
+  if (!syncEnabled) {
     return { success: true };
   }
   
