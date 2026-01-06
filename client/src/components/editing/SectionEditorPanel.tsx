@@ -104,34 +104,29 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
         <button
           type="button"
           onClick={() => onChange("")}
-          className={`w-7 h-7 rounded-md border-2 transition-all flex items-center justify-center ${
+          className={`w-7 h-7 rounded border-2 transition-all ${
             value === ""
               ? "border-primary ring-2 ring-primary/20"
               : "border-border hover:border-primary/50"
           }`}
           data-testid="props-background-none"
           title="None"
-        >
-          <span className="w-4 h-4 rounded border border-dashed border-border/50 bg-transparent" />
-        </button>
+          style={{ background: 'repeating-conic-gradient(hsl(var(--muted)) 0% 25%, transparent 0% 50%) 50% / 8px 8px' }}
+        />
         {backgrounds.map((bg) => (
           <button
             key={bg.id}
             type="button"
             onClick={() => onChange(bg.cssValue)}
-            className={`w-7 h-7 rounded-md border-2 transition-all flex items-center justify-center ${
+            className={`w-7 h-7 rounded border-2 transition-all ${
               isSelected(bg)
                 ? "border-primary ring-2 ring-primary/20"
                 : "border-border hover:border-primary/50"
             }`}
             data-testid={`props-background-${bg.id}`}
             title={bg.label}
-          >
-            <span
-              className="w-4 h-4 rounded border border-border/50"
-              style={{ background: bg.previewStyle }}
-            />
-          </button>
+            style={{ background: bg.previewStyle }}
+          />
         ))}
       </div>
       <div className="space-y-1.5">
