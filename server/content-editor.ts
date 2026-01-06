@@ -204,18 +204,32 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
               continue;
             }
             
-            // Find the matching schema branch (where type matches) and extract its errors
-            const matchingBranch = unionErrors.find(ue => 
-              !ue.issues.some(i => i.path[0] === "type" && (i.code === "invalid_literal" || i.code === "invalid_enum_value"))
-            );
+            // Find the matching schema branch (where both type AND variant match) and extract its errors
+            const sectionVariant = sections?.[sectionIndex]?.variant as string | undefined;
+            const matchingBranch = unionErrors.find(ue => {
+              // Must not have type mismatch
+              const hasTypeMismatch = ue.issues.some(i => 
+                i.path[0] === "type" && (i.code === "invalid_literal" || i.code === "invalid_enum_value")
+              );
+              // Must not have variant mismatch (if variant exists)
+              const hasVariantMismatch = sectionVariant && ue.issues.some(i => 
+                i.path[0] === "variant" && (i.code === "invalid_literal" || i.code === "invalid_enum_value")
+              );
+              return !hasTypeMismatch && !hasVariantMismatch;
+            });
             
             if (matchingBranch && matchingBranch.issues.length > 0) {
               // Extract detailed errors from the matching branch
-              const detailedErrors = matchingBranch.issues.slice(0, 3).map(i => {
+              const detailedErrors = matchingBranch.issues.slice(0, 5).map(i => {
                 const fieldPath = i.path.join(".");
+                // Make "Required" messages more helpful
+                if (i.code === "invalid_type" && i.message === "Required") {
+                  return `  - "${fieldPath}" is required`;
+                }
                 return `  - ${fieldPath}: ${i.message}`;
               });
-              validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}):\n${detailedErrors.join("\n")}`);
+              const variantInfo = sectionVariant ? `, variant: ${sectionVariant}` : "";
+              validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}${variantInfo}):\n${detailedErrors.join("\n")}`);
               continue;
             }
           }
