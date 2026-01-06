@@ -75,6 +75,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
@@ -1941,39 +1942,49 @@ export function DebugBubble() {
                           <div className="flex flex-wrap items-center gap-1">
                             {/* Show Upload button for local changes and conflicts */}
                             {(change.source === 'local' || change.source === 'conflict') && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-6 text-xs px-2"
-                                onClick={() => {
-                                  setSelectedFileForCommit(change.file);
-                                  setFileCommitMessage("");
-                                }}
-                                data-testid={`button-commit-file-${index}`}
-                              >
-                                <IconArrowUp className="h-3 w-3 mr-1" />
-                                Upload my version to remote
-                              </Button>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => {
+                                      setSelectedFileForCommit(change.file);
+                                      setFileCommitMessage("");
+                                    }}
+                                    data-testid={`button-commit-file-${index}`}
+                                  >
+                                    <IconArrowUp className="h-3 w-3" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent side="top">
+                                  <p>Upload my version to remote</p>
+                                </TooltipContent>
+                              </Tooltip>
                             )}
                             {/* Show Download button for incoming changes and conflicts */}
                             {(change.source === 'incoming' || change.source === 'conflict') && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-6 text-xs px-2"
-                                onClick={() => setConfirmPullFile(change.file)}
-                                disabled={filePulling === change.file}
-                                data-testid={`button-pull-file-${index}`}
-                              >
-                                {filePulling === change.file ? (
-                                  <IconRefresh className="h-3 w-3 animate-spin" />
-                                ) : (
-                                  <>
-                                    <IconCloudDownload className="h-3 w-3 mr-1" />
-                                    Download and Override mine
-                                  </>
-                                )}
-                              </Button>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className="h-6 w-6"
+                                    onClick={() => setConfirmPullFile(change.file)}
+                                    disabled={filePulling === change.file}
+                                    data-testid={`button-pull-file-${index}`}
+                                  >
+                                    {filePulling === change.file ? (
+                                      <IconRefresh className="h-3 w-3 animate-spin" />
+                                    ) : (
+                                      <IconCloudDownload className="h-3 w-3" />
+                                    )}
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent side="top">
+                                  <p>Download and Override mine</p>
+                                </TooltipContent>
+                              </Tooltip>
                             )}
                           </div>
                         )}
