@@ -441,12 +441,36 @@ export function DebugBubble() {
       });
   };
 
-  // Fetch pending changes on mount and when sync status indicates sync is enabled
+  // Fetch pending changes when sync status indicates sync is enabled
   useEffect(() => {
     if (githubSyncStatus?.syncEnabled) {
       fetchPendingChanges();
     }
   }, [githubSyncStatus?.syncEnabled]);
+
+  // Listen for content-saved event to refresh pending changes immediately
+  useEffect(() => {
+    const handleContentSaved = () => {
+      // First ensure we have sync status, then fetch pending changes
+      if (!githubSyncStatus) {
+        // Fetch sync status first, which will trigger pending changes fetch
+        fetch("/api/github/sync-status")
+          .then((res) => res.json())
+          .then((data: GitHubSyncStatus) => {
+            setGithubSyncStatus(data);
+            if (data.syncEnabled) {
+              fetchPendingChanges();
+            }
+          })
+          .catch(() => {});
+      } else if (githubSyncStatus.syncEnabled) {
+        fetchPendingChanges();
+      }
+    };
+
+    window.addEventListener('content-saved', handleContentSaved);
+    return () => window.removeEventListener('content-saved', handleContentSaved);
+  }, [githubSyncStatus]);
 
   // Handle commit
   const handleCommit = async () => {
