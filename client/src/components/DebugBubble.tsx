@@ -48,6 +48,7 @@ import {
   IconDeviceDesktop,
   IconDatabase,
   IconCopy,
+  IconArrowUp,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -148,6 +149,13 @@ interface GitHubSyncStatus {
   aheadBy?: number;
   repoUrl?: string;
   branch?: string;
+}
+
+interface PendingChange {
+  file: string;
+  status: 'modified' | 'added' | 'deleted';
+  contentType: string;
+  slug: string;
 }
 
 interface ContentInfo {
@@ -297,6 +305,13 @@ export function DebugBubble() {
   const [githubSyncStatus, setGithubSyncStatus] = useState<GitHubSyncStatus | null>(null);
   const [syncStatusLoading, setSyncStatusLoading] = useState(false);
   
+  // Pending changes state
+  const [pendingChanges, setPendingChanges] = useState<PendingChange[]>([]);
+  const [pendingChangesLoading, setPendingChangesLoading] = useState(false);
+  const [commitModalOpen, setCommitModalOpen] = useState(false);
+  const [commitMessage, setCommitMessage] = useState("");
+  const [isCommitting, setIsCommitting] = useState(false);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -409,6 +424,58 @@ export function DebugBubble() {
       .catch(() => {
         setSyncStatusLoading(false);
       });
+  };
+
+  // Fetch pending changes when GitHub sync is enabled
+  const fetchPendingChanges = () => {
+    setPendingChangesLoading(true);
+    fetch("/api/github/pending-changes")
+      .then((res) => res.json())
+      .then((data: { changes: PendingChange[]; count: number }) => {
+        setPendingChanges(data.changes || []);
+        setPendingChangesLoading(false);
+      })
+      .catch(() => {
+        setPendingChanges([]);
+        setPendingChangesLoading(false);
+      });
+  };
+
+  // Fetch pending changes on mount and when sync status indicates sync is enabled
+  useEffect(() => {
+    if (githubSyncStatus?.syncEnabled) {
+      fetchPendingChanges();
+    }
+  }, [githubSyncStatus?.syncEnabled]);
+
+  // Handle commit
+  const handleCommit = async () => {
+    if (!commitMessage.trim()) return;
+    
+    setIsCommitting(true);
+    try {
+      const res = await fetch("/api/github/commit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: commitMessage.trim() }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        setCommitModalOpen(false);
+        setCommitMessage("");
+        setPendingChanges([]);
+        // Refresh sync status
+        refreshSyncStatus();
+      } else {
+        alert(data.error || "Failed to commit changes");
+      }
+    } catch (error) {
+      alert("Failed to commit changes");
+    } finally {
+      setIsCommitting(false);
+    }
   };
 
   // Handle popover open/close - reset search but preserve menu view
@@ -590,19 +657,25 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {editMode?.isEditMode && (
-              <div 
-                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
+            {/* Show "Pending" indicator when there are uncommitted changes and GitHub sync is enabled */}
+            {githubSyncStatus?.syncEnabled && pendingChanges.length > 0 && (
+              <button
+                onClick={() => {
+                  setCommitModalOpen(true);
+                  fetchPendingChanges(); // Refresh pending changes when opening modal
+                }}
+                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse cursor-pointer hover:opacity-90 transition-opacity"
                 style={{
                   backgroundColor: '#fbbf24',
                   color: '#000',
                   boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
                 }}
-                data-testid="indicator-edit-mode"
+                data-testid="indicator-pending-changes"
+                title={`${pendingChanges.length} pending change${pendingChanges.length > 1 ? 's' : ''} - click to commit`}
               >
-                <IconPencil className="h-3 w-3" />
-                <span>On</span>
-              </div>
+                <IconArrowUp className="h-3 w-3" />
+                <span>Pending</span>
+              </button>
             )}
           </div>
         </PopoverTrigger>
@@ -1580,6 +1653,106 @@ export function DebugBubble() {
               data-testid="button-close-session-modal"
             >
               Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Commit Modal */}
+      <Dialog open={commitModalOpen} onOpenChange={setCommitModalOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconArrowUp className="h-5 w-5" />
+              Commit Changes to GitHub
+            </DialogTitle>
+            <DialogDescription>
+              Review your pending changes and provide a commit message.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            {/* Pending changes list */}
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium">
+                Pending Changes ({pendingChanges.length})
+              </h4>
+              {pendingChangesLoading ? (
+                <div className="flex items-center justify-center py-4">
+                  <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                </div>
+              ) : pendingChanges.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-2">
+                  No pending changes found.
+                </p>
+              ) : (
+                <ScrollArea className="h-[150px] rounded-md border">
+                  <div className="p-3 space-y-2">
+                    {pendingChanges.map((change, index) => (
+                      <div 
+                        key={`${change.file}-${index}`}
+                        className="flex items-center gap-2 text-sm"
+                      >
+                        <span className={`w-16 text-xs font-medium px-1.5 py-0.5 rounded ${
+                          change.status === 'added' 
+                            ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
+                            : change.status === 'deleted'
+                            ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
+                            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+                        }`}>
+                          {change.status}
+                        </span>
+                        <span className="text-muted-foreground truncate flex-1" title={change.file}>
+                          {change.contentType}/{change.slug}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </div>
+            
+            {/* Commit message input */}
+            <div className="space-y-2">
+              <label htmlFor="commit-message" className="text-sm font-medium">
+                Commit Message
+              </label>
+              <textarea
+                id="commit-message"
+                value={commitMessage}
+                onChange={(e) => setCommitMessage(e.target.value)}
+                placeholder="Describe your changes..."
+                className="w-full min-h-[80px] px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                data-testid="input-commit-message"
+              />
+            </div>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setCommitModalOpen(false)}
+              disabled={isCommitting}
+              data-testid="button-cancel-commit"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleCommit}
+              disabled={!commitMessage.trim() || pendingChanges.length === 0 || isCommitting}
+              data-testid="button-confirm-commit"
+            >
+              {isCommitting ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Committing...
+                </>
+              ) : (
+                <>
+                  <IconArrowUp className="h-4 w-4 mr-2" />
+                  Commit & Push
+                </>
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
