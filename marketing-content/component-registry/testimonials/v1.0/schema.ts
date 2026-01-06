@@ -18,11 +18,11 @@ export const ratingSummarySchema = z.object({
   count: z.string(),
 });
 
-// Grid variant - 3-column static grid layout
-export const testimonialsGridSchema = z.object({
+// Base testimonials schema - variant defaults to "grid" if not specified
+export const testimonialsSectionSchema = z.object({
   type: z.literal("testimonials"),
   version: z.string().optional(),
-  variant: z.literal("grid"),
+  variant: z.enum(["grid", "carousel"]).optional().default("grid"),
   title: z.string(),
   subtitle: z.string().optional(),
   rating_summary: ratingSummarySchema.optional(),
@@ -30,23 +30,11 @@ export const testimonialsGridSchema = z.object({
   filter_by_location: z.string().optional(),
 });
 
-// Carousel variant - draggable carousel with scaling effects
-export const testimonialsCarouselSchema = z.object({
-  type: z.literal("testimonials"),
-  version: z.string().optional(),
-  variant: z.literal("carousel"),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  rating_summary: ratingSummarySchema.optional(),
-  items: z.array(testimonialItemSchema).optional(),
-  filter_by_location: z.string().optional(),
-});
+// Grid variant alias for backwards compatibility
+export const testimonialsGridSchema = testimonialsSectionSchema;
 
-// Combined testimonials section schema
-export const testimonialsSectionSchema = z.union([
-  testimonialsGridSchema,
-  testimonialsCarouselSchema,
-]);
+// Carousel variant alias for backwards compatibility
+export const testimonialsCarouselSchema = testimonialsSectionSchema;
 
 export type TestimonialItem = z.infer<typeof testimonialItemSchema>;
 export type RatingSummary = z.infer<typeof ratingSummarySchema>;
