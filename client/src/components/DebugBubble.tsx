@@ -754,7 +754,7 @@ export function DebugBubble() {
               )}
               
               {/* Persistent Dev Tools header - visible in all menu views */}
-              <div className="p-3 border-b">
+              <div className="p-3 border-b pl-[8px] pr-[8px] pt-[3px] pb-[3px]">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm">Dev Tools</h3>
                   <div className="flex items-center gap-2">
