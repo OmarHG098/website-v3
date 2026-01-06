@@ -1431,8 +1431,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         );
 
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
         if (capResponse.status !== 200) {
-          res.status(403).json({ error: "Insufficient permissions" });
+          res.status(403).json({ error: "You need webmaster capability to edit content" });
           return;
         }
       }
