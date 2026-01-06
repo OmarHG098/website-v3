@@ -1959,9 +1959,9 @@ export function DebugBubble() {
                             )}
                             
                             {/* Commit hash (clickable) */}
-                            {change.commitSha && syncStatus?.repoUrl && (
+                            {change.commitSha && githubSyncStatus?.repoUrl && (
                               <a
-                                href={`${syncStatus.repoUrl.replace(/\.git$/, '')}/commit/${change.commitSha}`}
+                                href={`${githubSyncStatus.repoUrl.replace(/\.git$/, '')}/commit/${change.commitSha}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-xs font-mono text-primary hover:underline"
