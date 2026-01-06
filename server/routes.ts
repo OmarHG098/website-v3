@@ -844,14 +844,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Commit and push pending changes to GitHub
   app.post("/api/github/commit", async (req, res) => {
     try {
-      const { message } = req.body;
+      const { message, force } = req.body;
       if (!message || typeof message !== 'string' || message.trim().length === 0) {
         res.status(400).json({ error: "Commit message is required" });
         return;
       }
 
       const { commitAndPush } = await import("./github");
-      const result = await commitAndPush(message.trim());
+      const result = await commitAndPush(message.trim(), { force: !!force });
       
       if (result.success) {
         res.json({ success: true, commitHash: result.commitHash });
@@ -861,6 +861,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error committing to GitHub:", error);
       res.status(500).json({ error: "Failed to commit changes" });
+    }
+  });
+
+  // Get conflict information (missed commits from remote)
+  app.get("/api/github/conflict-info", async (req, res) => {
+    try {
+      const { getConflictInfo } = await import("./github");
+      const conflictInfo = await getConflictInfo();
+      res.json(conflictInfo);
+    } catch (error) {
+      console.error("Error getting conflict info:", error);
+      res.status(500).json({ error: "Failed to get conflict info" });
+    }
+  });
+
+  // Sync local state with remote (accept remote changes)
+  app.post("/api/github/sync", async (req, res) => {
+    try {
+      const { syncWithRemote } = await import("./github");
+      const result = await syncWithRemote();
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error syncing with remote:", error);
+      res.status(500).json({ error: "Failed to sync with remote" });
     }
   });
 
