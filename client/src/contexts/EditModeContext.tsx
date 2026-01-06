@@ -135,6 +135,8 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
 
       if (response.ok) {
         clearPendingChanges(pageKey);
+        // Dispatch event to notify DebugBubble about content changes
+        window.dispatchEvent(new CustomEvent('content-saved'));
         return true;
       } else {
         const error = await response.json();
