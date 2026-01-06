@@ -8,6 +8,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     title: You Are Not Alone Anymore
     subtitle: Receive personalized career support tailored to your goals
     welcome_text: Welcome to
@@ -79,6 +80,7 @@ sections:
         description: Watch a live demonstration of our AI coding assistant in action
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: Frequently Asked Questions
     items:
       - question: Is this program really free?

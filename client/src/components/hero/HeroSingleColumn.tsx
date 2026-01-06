@@ -25,7 +25,6 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
 
   return (
     <section 
-      className="bg-gradient-to-b from-primary/5 to-background"
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4 text-center">

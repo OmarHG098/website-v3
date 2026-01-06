@@ -11,6 +11,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Career Transformation"
     title: "Launch Your Tech Career in 18 Weeks"
     subtitle: "Join 2,500+ graduates who transformed their careers. Our 84% hire rate within 6 months and job guarantee means you'll land your first developer role - or your money back."

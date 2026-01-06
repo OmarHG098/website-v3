@@ -9,6 +9,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     title: Desarrollo Full Stack con IA
     subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo.
     badge: Programa de Carrera
@@ -282,6 +283,7 @@ sections:
         outcome: Primer trabajo en tech
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: FAQ
     items:
       - question: ¿Hay horarios de clase fijos?

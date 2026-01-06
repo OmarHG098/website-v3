@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Career Program"
     title: "Data Science and Machine Learning with AI"
     subtitle: "Break into one of tech's fastest-growing, highest-paying fields. Learn to analyze data, build predictive models, and use AI tools to solve real-world problems—backed by expert mentorship, an 84% hire rate within 6 months, and our job guarantee."
@@ -289,6 +290,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: "FAQ"
     items:
       - question: "Do I need prior experience with data or coding?"

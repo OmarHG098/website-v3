@@ -20,6 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     title: Conviértete en Ingeniero de IA
     subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas con mentoría personalizada 1:1 y orientación experta. Conviértete en el profesional que las empresas no pueden esperar a contratar.
     badge: Programa de Carrera
@@ -297,6 +298,7 @@ sections:
         outcome: Primer trabajo en tech
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: FAQ
     items:
       - question: ¿Qué requisitos previos necesito para Ingeniería de IA?

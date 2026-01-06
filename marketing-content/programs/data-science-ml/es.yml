@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "Ciencia de Datos y Machine Learning con IA"
     subtitle: "Entra a uno de los campos tecnológicos de más rápido crecimiento y mejores salarios. Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales—respaldado por mentoría experta, 84% de tasa de contratación en 6 meses y nuestra garantía de empleo."
@@ -290,6 +291,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa con datos o programación?"

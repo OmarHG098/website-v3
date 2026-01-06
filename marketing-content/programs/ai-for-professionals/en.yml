@@ -9,6 +9,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: Career Program
     title: AI for Professionals
     subtitle: Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.
@@ -297,6 +298,7 @@ sections:
         outcome: Streamlined hiring process
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: FAQ
     items:
       - question: Do I need any technical background?

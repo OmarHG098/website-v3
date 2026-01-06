@@ -9,6 +9,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: High-Earning Career
     title: Earn $65K+ as a Full Stack Developer test
     subtitle: Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available.
@@ -281,6 +282,7 @@ sections:
         outcome: Landed first tech job
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: FAQ
     items:
       - question: Are there fixed class times?

@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "Conviértete en Especialista en Ciberseguridad"
     subtitle: "Inicia una carrera bien remunerada en uno de los campos más demandados de la tecnología. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad y respaldado por una garantía de empleo."
@@ -290,6 +291,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa en ciberseguridad?"

@@ -8,6 +8,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     welcome_text: Cupos Limitados
     brand_mark:
       prefix: Conviértete en

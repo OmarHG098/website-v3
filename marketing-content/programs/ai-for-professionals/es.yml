@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "IA para Profesionales"
     subtitle: "Mantente relevante en tu carrera. Lidera con IA. Adquiere las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
@@ -285,6 +286,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito algún conocimiento técnico previo?"

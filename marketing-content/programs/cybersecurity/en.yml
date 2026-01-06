@@ -9,6 +9,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: Career Program
     title: Become a Cybersecurity Specialist
     subtitle: Launch a high-paying career in one of tech's most in-demand fields. Learn to defend systems and respond to real-world cyber threats with a hands-on, AI-integrated curriculum—designed by leading cybersecurity experts and backed by a job guarantee option.
@@ -283,6 +284,7 @@ sections:
         outcome: Landed first security job
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: FAQ
     items:
       - question: Do I need prior cybersecurity experience?

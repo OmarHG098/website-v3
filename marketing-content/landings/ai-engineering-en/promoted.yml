@@ -57,7 +57,7 @@ sections:
     marginY:
       mobile: none
       desktop: none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     showOn: desktop
   - type: hero
     version: "1.0"
@@ -74,7 +74,7 @@ sections:
     marginY:
       mobile: none
       desktop: none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     showOn: mobile
     video:
       url: /attached_assets/ai-engineering_1765593572918.mp4

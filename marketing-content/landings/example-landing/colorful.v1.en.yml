@@ -8,6 +8,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: Example Page
     title: Learn to Code with AI in 2024
     subtitle: >-
@@ -48,6 +49,7 @@ sections:
         label: Success Stories
   - type: faq
     version: "1.0"
+    background: "#e8f4fc"
     title: Frequently Asked Questions
     items:
       - question: Is this program really free?
