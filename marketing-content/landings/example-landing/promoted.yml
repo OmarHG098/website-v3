@@ -63,16 +63,6 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
-  - type: stats
-    version: "1.0"
-    title: Join 50,000+ Learners
-    items:
-      - value: 50,000+
-        label: Students Worldwide
-      - value: 4.8/5
-        label: Average Rating
-      - value: 1,500+
-        label: Success Stories
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
@@ -87,6 +77,16 @@ sections:
       - icon: Code
         title: Live Demo
         description: Watch a live demonstration of our AI coding assistant in action
+  - type: stats
+    version: "1.0"
+    title: Join 50,000+ Learners
+    items:
+      - value: 50,000+
+        label: Students Worldwide
+      - value: 4.8/5
+        label: Average Rating
+      - value: 1,500+
+        label: Success Stories
   - type: cta_banner
     version: "1.0"
     title: Ready to Transform Your Learning?
