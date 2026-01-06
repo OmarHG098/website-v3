@@ -11,7 +11,7 @@ sections:
     title: Thrive in Today’s Tech and Shape Tomorrow’s.
     brand_mark:
       prefix: Become an
-      highlight: AI Engineeer
+      highlight: AI Engineer
       color: primary
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
     form:
@@ -143,9 +143,9 @@ sections:
     card_color: bg-background
     items:
       - value: 800,000
-        title: AI-related roles expected by 2026
+        title: AI-related roles expected by 2027
       - value: ~30%
-        title: Year-over-year growth in AI job postings
+        title: Year-over-year growth in AI job openings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY:
@@ -302,11 +302,11 @@ sections:
       desktop: lg none
   - type: ai_learning
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeeks?
+    title: Why Learn with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: TrendingUp
-        title: Thrive in today's tech with career support for the AI-Era
+        title: Thrive in tech with career support for the AI-Era
         description: ""
         show_rigobot_logo: true
         bullets:
@@ -320,21 +320,21 @@ sections:
           url: "#hero-form"
           variant: primary
       - icon: Robot
-        title: Progress faster with AI using Rigobot + Learnpack
+        title: Progress faster with AI-powered tools
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Provides instant feedback and tutoring while you code
-          - text: Tracks your skills and progress
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
           - text: Helps with debugging and problem-solving tasks
-          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
+          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
       - icon: Headset
-        title: One-on-one mentoring sessions
+        title: Unlimited 1:1 mentorship and an active community
         description: ""
         show_rigobot_logo: true
         bullets:
