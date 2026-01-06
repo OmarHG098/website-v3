@@ -8,11 +8,11 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: You Are Not Alone Anymoree
+    title: You Are Not Alone Anymore
     subtitle: Receive personalized career support tailored to your goals
     welcome_text: Welcome to
     brand_mark:
-      prefix: Personalized
+      prefix: Personalizeed
       highlight: Support
       color: chart-5
     description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
@@ -54,8 +54,7 @@ sections:
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
   - type: faq
-    version: "1.0"
-    title: Frequently Asked Questions
+    title: Frequently Asked Questionss
     items:
       - question: Is this program really free?
         answer: Yes! We offer free introductory content to help you get started.
@@ -79,7 +78,7 @@ sections:
         description: Watch a live demonstration of our AI coding assistant in action
   - type: stats
     version: "1.0"
-    title: Join 50,000+ Learners
+    title: Join 50,000+ Learnerss
     items:
       - value: 50,000+
         label: Students Worldwide
