@@ -4,7 +4,6 @@ import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { EditModeProvider } from "@/contexts/EditModeContext";
 import { SyncProvider } from "@/contexts/SyncContext";
 import { SyncConflictBanner } from "@/components/SyncConflictBanner";
-import { SyncConflictModal } from "@/components/SyncConflictModal";
 import type { Section } from "@shared/schema";
 
 const SectionEditorPanel = lazy(() => 
@@ -34,7 +33,6 @@ function SyncWrapper({ children }: { children: React.ReactNode }) {
     <SyncProvider>
       <SyncConflictBanner />
       {children}
-      <SyncConflictModal />
     </SyncProvider>
   );
 }

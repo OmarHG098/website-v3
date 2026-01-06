@@ -40,8 +40,6 @@ interface SyncContextValue {
   checkForConflicts: () => Promise<void>;
   syncWithRemote: () => Promise<boolean>;
   enableForceCommit: () => void;
-  showConflictModal: boolean;
-  setShowConflictModal: (show: boolean) => void;
   refreshSyncStatus: () => void;
 }
 
@@ -53,7 +51,6 @@ interface SyncProviderProps {
 
 export function SyncProvider({ children }: SyncProviderProps) {
   const queryClient = useQueryClient();
-  const [showConflictModal, setShowConflictModal] = useState(false);
   const [conflictInfo, setConflictInfo] = useState<ConflictInfo | null>(null);
   const [forceCommitEnabled, setForceCommitEnabled] = useState(false);
 
@@ -74,7 +71,6 @@ export function SyncProvider({ children }: SyncProviderProps) {
 
   const enableForceCommit = useCallback(() => {
     setForceCommitEnabled(true);
-    setShowConflictModal(false);
   }, []);
 
   const checkForConflicts = useCallback(async () => {
@@ -83,9 +79,6 @@ export function SyncProvider({ children }: SyncProviderProps) {
       if (response.ok) {
         const info: ConflictInfo = await response.json();
         setConflictInfo(info);
-        if (info.hasConflict) {
-          setShowConflictModal(true);
-        }
       }
     } catch (error) {
       console.error('Error checking for conflicts:', error);
@@ -101,7 +94,6 @@ export function SyncProvider({ children }: SyncProviderProps) {
       
       if (response.ok) {
         setConflictInfo(null);
-        setShowConflictModal(false);
         setForceCommitEnabled(false);
         await refreshSyncStatus();
         queryClient.invalidateQueries({ queryKey: ['/api/github/pending-changes'] });
@@ -142,8 +134,6 @@ export function SyncProvider({ children }: SyncProviderProps) {
     checkForConflicts,
     syncWithRemote,
     enableForceCommit,
-    showConflictModal,
-    setShowConflictModal,
     refreshSyncStatus: () => { refreshSyncStatus(); },
   };
 

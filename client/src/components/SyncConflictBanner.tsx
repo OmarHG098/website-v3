@@ -1,4 +1,4 @@
-import { IconAlertTriangle, IconRefresh, IconChevronRight } from "@tabler/icons-react";
+import { IconAlertTriangle, IconRefresh } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { useSyncOptional } from "@/contexts/SyncContext";
 
@@ -27,33 +27,22 @@ export function SyncConflictBanner() {
               Remote repository has {behindBy} new {commitText}
             </p>
             <p className="text-xs text-muted-foreground">
-              Editing is disabled until you sync. Your local changes may conflict with remote updates.
+              Use the debug tools to sync changes before editing.
             </p>
           </div>
         </div>
         
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => sync.setShowConflictModal(true)}
-            data-testid="button-view-conflicts"
-          >
-            View Changes
-            <IconChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-          <Button
-            size="sm"
-            onClick={async () => {
-              await sync.syncWithRemote();
-              window.location.reload();
-            }}
-            data-testid="button-sync-now"
-          >
-            <IconRefresh className="h-4 w-4 mr-1" />
-            Sync & Reload
-          </Button>
-        </div>
+        <Button
+          size="sm"
+          onClick={async () => {
+            await sync.syncWithRemote();
+            window.location.reload();
+          }}
+          data-testid="button-sync-now"
+        >
+          <IconRefresh className="h-4 w-4 mr-1" />
+          Sync & Reload
+        </Button>
       </div>
     </div>
   );
