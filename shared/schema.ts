@@ -645,12 +645,22 @@ import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 
+// Responsive spacing schema - supports string or {mobile, desktop} object
+const responsiveSpacingSchema = z.union([
+  z.string(),
+  z.object({
+    mobile: z.string().optional(),
+    desktop: z.string().optional(),
+  }),
+]);
+
 // Layout fields that can be applied to any section
 // Supports presets (none, sm, md, lg, xl) or custom CSS values (e.g., "20px 32px")
+// Also supports responsive object format: { mobile: "none", desktop: "lg none" }
 // background: semantic token (muted, card, etc.) or custom CSS value
 export const sectionLayoutSchema = z.object({
-  marginY: z.string().optional(),
-  paddingY: z.string().optional(),
+  marginY: responsiveSpacingSchema.optional(),
+  paddingY: responsiveSpacingSchema.optional(),
   background: z.string().optional(),
 });
 
