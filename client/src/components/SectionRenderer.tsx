@@ -27,11 +27,8 @@ function resolveSpacingValue(val: string): string {
   return val; // Return as-is (custom CSS value like "20px")
 }
 
-// Parse spacing value - supports presets or custom CSS values
-// Returns null if no value provided (component handles its own spacing)
-function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
-  if (!value) return null;
-  
+// Parse a string spacing value - supports presets or custom CSS values
+function parseSpacingString(value: string): { top: string; bottom: string } {
   // Check if it's a single preset
   if (SPACING_PRESETS[value]) {
     return SPACING_PRESETS[value];
@@ -47,6 +44,29 @@ function parseSpacing(value: string | undefined): { top: string; bottom: string 
     top: resolveSpacingValue(parts[0]), 
     bottom: resolveSpacingValue(parts[1] || parts[0]) 
   };
+}
+
+// Responsive spacing type
+type ResponsiveSpacing = string | { mobile?: string; desktop?: string };
+
+// Parse spacing value - supports string, object format, or undefined
+// Returns null if no value provided (component handles its own spacing)
+function parseSpacing(value: ResponsiveSpacing | undefined): { top: string; bottom: string } | null {
+  if (!value) return null;
+  
+  // Handle string format
+  if (typeof value === 'string') {
+    return parseSpacingString(value);
+  }
+  
+  // Handle object format { mobile, desktop } - use desktop for now (can be extended for responsive)
+  // Priority: desktop > mobile > none
+  const spacingValue = value.desktop || value.mobile;
+  if (spacingValue) {
+    return parseSpacingString(spacingValue);
+  }
+  
+  return null;
 }
 
 // Default spacing when YAML doesn't specify values
