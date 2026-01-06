@@ -61,50 +61,13 @@ sections:
     showOn: desktop
   - type: hero
     version: "1.0"
-    variant: ApplyFormProductShowcase
+    variant: productShowcase
     title: Thrive in Today’s Tech and Shape Tomorrow’s.
     brand_mark:
       prefix: Become an
       highlight: AI Engineer
       color: primary
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
-    form:
-      variant: stacked
-      submit_label: Apply now
-      tags: website-lead,ai-engineering-campaign
-      automations: welcome-email
-      fields:
-        email:
-          visible: true
-          required: true
-          placeholder: Email
-        first_name:
-          visible: true
-          required: true
-          placeholder: First name
-        last_name:
-          visible: true
-          required: true
-          placeholder: Last name
-        phone:
-          visible: true
-          required: true
-      success:
-        message: Check your inbox! Your syllabus is on the way.
-      terms_url: /terms-and-conditions
-      privacy_url: /privacy-policy
-      consent:
-        sms: true
-        marketing: true
-        marketing_text: I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment.
-        sms_text: I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment.
-        sms_usa_only: true
-      show_terms: true
-    cta_button:
-      text: Download Syllabus
-      url: /syllabus/ai-engineering
-      variant: outline
-      icon: Download
     paddingY:
       mobile: none
       desktop: lg none
