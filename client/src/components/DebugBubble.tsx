@@ -313,6 +313,7 @@ export function DebugBubble() {
   const [commitModalOpen, setCommitModalOpen] = useState(false);
   const [commitMessage, setCommitMessage] = useState("");
   const [isCommitting, setIsCommitting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
@@ -426,6 +427,29 @@ export function DebugBubble() {
       .catch(() => {
         setSyncStatusLoading(false);
       });
+  };
+
+  // Function to sync from remote (pull latest changes)
+  const handleSyncFromRemote = async () => {
+    setIsSyncing(true);
+    try {
+      const res = await fetch("/api/github/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (res.ok) {
+        // Refresh sync status and pending changes before reload
+        await refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+        window.location.reload();
+      } else {
+        setIsSyncing(false);
+      }
+    } catch {
+      setIsSyncing(false);
+    }
   };
 
   // Fetch pending changes when GitHub sync is enabled
@@ -1107,6 +1131,17 @@ export function DebugBubble() {
                     >
                       <IconRefresh className={`h-3.5 w-3.5 ${syncStatusLoading ? 'animate-spin' : ''}`} />
                     </button>
+                    {githubSyncStatus?.syncEnabled && (
+                      <button
+                        onClick={handleSyncFromRemote}
+                        disabled={isSyncing || syncStatusLoading}
+                        className="p-1 rounded hover-elevate disabled:opacity-50"
+                        data-testid="button-sync-from-remote"
+                        title="Pull latest from GitHub"
+                      >
+                        <IconCloudDownload className={`h-3.5 w-3.5 ${isSyncing ? 'animate-pulse' : ''}`} />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
