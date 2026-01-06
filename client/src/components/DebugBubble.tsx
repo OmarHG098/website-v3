@@ -1687,11 +1687,11 @@ export function DebugBubble() {
                 </p>
               ) : (
                 <ScrollArea className="h-[150px] rounded-md border">
-                  <div className="p-3 space-y-2 overflow-hidden">
+                  <div className="p-3 space-y-2">
                     {pendingChanges.map((change, index) => (
                       <div 
                         key={`${change.file}-${index}`}
-                        className="flex items-center gap-2 text-sm overflow-hidden"
+                        className="flex items-center gap-2 text-sm"
                       >
                         <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
                           change.status === 'added' 
@@ -1703,11 +1703,19 @@ export function DebugBubble() {
                           {change.status}
                         </span>
                         <span 
-                          className="text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
-                          style={{ direction: 'rtl', textAlign: 'left' }}
+                          className="text-muted-foreground"
+                          style={{ 
+                            direction: 'rtl', 
+                            textAlign: 'left',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '300px',
+                            display: 'block',
+                          }}
                           title={change.file}
                         >
-                          <bdi>{change.contentType}/{change.slug}</bdi>
+                          {change.contentType}/{change.slug}
                         </span>
                       </div>
                     ))}
