@@ -49,6 +49,7 @@ import {
   IconDatabase,
   IconCopy,
   IconArrowUp,
+  IconArrowDown,
   IconFile,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
@@ -2012,7 +2013,7 @@ export function DebugBubble() {
                                       {filePulling === change.file ? (
                                         <IconRefresh className="h-3 w-3 animate-spin" />
                                       ) : (
-                                        <IconCloudDownload className="h-3 w-3" />
+                                        <IconArrowDown className="h-3 w-3" />
                                       )}
                                     </Button>
                                   </TooltipTrigger>
