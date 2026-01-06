@@ -5,11 +5,14 @@ import { useSyncOptional } from "@/contexts/SyncContext";
 export function SyncConflictBanner() {
   const sync = useSyncOptional();
   
-  if (!sync || !sync.isBehind || !sync.syncStatus?.syncEnabled) {
+  // Only show banner when there are actual file changes to sync
+  // (not just when sync status is "behind" without specific files)
+  const fileCount = sync?.pendingFileCount || 0;
+  
+  if (!sync || !sync.syncStatus?.syncEnabled || fileCount === 0) {
     return null;
   }
 
-  const fileCount = sync.pendingFileCount || 0;
   const fileText = fileCount === 1 ? 'file' : 'files';
 
   return (
@@ -24,9 +27,7 @@ export function SyncConflictBanner() {
           </div>
           <div>
             <p className="text-sm font-medium text-foreground">
-              {fileCount > 0 
-                ? `${fileCount} ${fileText} need syncing with remote`
-                : "Remote repository has changes"}
+              {fileCount} {fileText} need syncing with remote
             </p>
             <p className="text-xs text-muted-foreground">
               Sync changes before editing to avoid conflicts.

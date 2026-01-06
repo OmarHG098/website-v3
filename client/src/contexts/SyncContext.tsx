@@ -71,13 +71,17 @@ export function SyncProvider({ children }: SyncProviderProps) {
     file: string;
     source: 'local' | 'incoming' | 'conflict';
   }
-  const { data: pendingChanges } = useQuery<PendingChange[]>({
-    queryKey: ['/api/github/all-changes'],
+  interface PendingChangesResponse {
+    changes: PendingChange[];
+    count: number;
+  }
+  const { data: pendingChangesData } = useQuery<PendingChangesResponse>({
+    queryKey: ['/api/github/pending-changes'],
     enabled: syncStatus?.syncEnabled === true,
     refetchInterval: 30000,
   });
 
-  const pendingFileCount = pendingChanges?.length ?? 0;
+  const pendingFileCount = pendingChangesData?.count ?? 0;
 
   const isBehind = useMemo(() => {
     return syncStatus?.status === 'behind' || syncStatus?.status === 'diverged';
@@ -151,7 +155,6 @@ export function SyncProvider({ children }: SyncProviderProps) {
     const unsubscribe = subscribeToContentUpdates(() => {
       // Invalidate pending changes query to refresh the sync indicator
       queryClient.invalidateQueries({ queryKey: ['/api/github/pending-changes'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/github/all-changes'] });
       // Also refresh the main sync status
       refreshSyncStatus();
     });
