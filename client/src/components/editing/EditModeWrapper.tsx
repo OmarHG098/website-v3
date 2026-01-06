@@ -2,9 +2,11 @@ import { lazy, Suspense, useState, useCallback } from "react";
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { EditModeProvider } from "@/contexts/EditModeContext";
+import { SyncProvider } from "@/contexts/SyncContext";
+import { SyncConflictBanner } from "@/components/SyncConflictBanner";
+import { SyncConflictModal } from "@/components/SyncConflictModal";
 import type { Section } from "@shared/schema";
 
-// Lazy load the section editor panel
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
 );
@@ -82,27 +84,28 @@ export function EditModeWrapper({
 }: EditModeWrapperProps) {
   const { canEdit, isDebugMode } = useDebugAuth();
   
-  // If not in debug mode at all, skip everything (zero overhead for public users)
-  // Debug mode requires ?debug=true in production, or being in development
   if (!isDebugMode) {
     return <>{children}</>;
   }
   
-  // If in debug mode but user can't edit, still skip the provider
   if (!canEdit) {
     return <>{children}</>;
   }
   
   return (
-    <EditModeProvider>
-      <EditModeInner 
-        sections={sections} 
-        contentType={contentType} 
-        slug={slug} 
-        locale={locale}
-      >
-        {children}
-      </EditModeInner>
-    </EditModeProvider>
+    <SyncProvider>
+      <EditModeProvider>
+        <SyncConflictBanner />
+        <EditModeInner 
+          sections={sections} 
+          contentType={contentType} 
+          slug={slug} 
+          locale={locale}
+        >
+          {children}
+        </EditModeInner>
+        <SyncConflictModal />
+      </EditModeProvider>
+    </SyncProvider>
   );
 }
