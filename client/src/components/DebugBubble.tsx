@@ -49,6 +49,7 @@ import {
   IconDatabase,
   IconCopy,
   IconArrowUp,
+  IconFile,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -315,6 +316,10 @@ export function DebugBubble() {
   const [isCommitting, setIsCommitting] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   
+  // Pull conflict state
+  const [pullConflictModalOpen, setPullConflictModalOpen] = useState(false);
+  const [pullConflictFiles, setPullConflictFiles] = useState<string[]>([]);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -429,8 +434,8 @@ export function DebugBubble() {
       });
   };
 
-  // Function to sync from remote (pull latest changes)
-  const handleSyncFromRemote = async () => {
+  // Function to execute the actual sync (called after conflict check)
+  const executeSyncFromRemote = async () => {
     setIsSyncing(true);
     try {
       const res = await fetch("/api/github/sync", {
@@ -447,6 +452,29 @@ export function DebugBubble() {
       } else {
         setIsSyncing(false);
       }
+    } catch {
+      setIsSyncing(false);
+    }
+  };
+
+  // Function to sync from remote (pull latest changes) - checks for conflicts first
+  const handleSyncFromRemote = async () => {
+    setIsSyncing(true);
+    try {
+      // Check for conflicts first
+      const conflictRes = await fetch("/api/github/pull-conflicts");
+      if (conflictRes.ok) {
+        const conflictData = await conflictRes.json();
+        if (conflictData.hasConflicts && conflictData.conflictingFiles.length > 0) {
+          // Show conflict modal instead of pulling
+          setPullConflictFiles(conflictData.conflictingFiles);
+          setPullConflictModalOpen(true);
+          setIsSyncing(false);
+          return;
+        }
+      }
+      // No conflicts, proceed with sync
+      await executeSyncFromRemote();
     } catch {
       setIsSyncing(false);
     }
@@ -1828,6 +1856,79 @@ export function DebugBubble() {
                   Commit & Push
                 </>
               )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Pull Conflict Modal */}
+      <Dialog open={pullConflictModalOpen} onOpenChange={setPullConflictModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <DialogTitle>Conflicting Files Detected</DialogTitle>
+                <DialogDescription>
+                  The following files have been modified both locally and on remote.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <ScrollArea className="max-h-[200px] border rounded-md">
+              <div className="p-2 space-y-1">
+                {pullConflictFiles.map((file, idx) => (
+                  <div key={idx} className="flex items-center gap-2 px-2 py-1.5 text-sm">
+                    <IconFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <span 
+                      className="font-mono text-xs truncate" 
+                      title={file}
+                    >
+                      {file.replace('marketing-content/', '')}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+            
+            <p className="text-xs text-muted-foreground mt-3">
+              Pulling will overwrite your local changes to these files.
+            </p>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setPullConflictModalOpen(false)}
+              data-testid="button-cancel-pull"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setPullConflictModalOpen(false);
+                setCommitModalOpen(true);
+              }}
+              data-testid="button-commit-first"
+            >
+              <IconArrowUp className="h-4 w-4 mr-2" />
+              Commit First
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setPullConflictModalOpen(false);
+                executeSyncFromRemote();
+              }}
+              data-testid="button-pull-anyway"
+            >
+              <IconCloudDownload className="h-4 w-4 mr-2" />
+              Pull Anyway
             </Button>
           </DialogFooter>
         </DialogContent>
