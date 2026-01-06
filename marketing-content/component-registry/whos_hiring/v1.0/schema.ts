@@ -7,6 +7,7 @@ import { logoItemSchema } from "../../common/schema";
 export const whosHiringSectionSchema = z.object({
   type: z.literal("whos_hiring"),
   variant: z.enum(["grid", "carousel"]).optional().default("grid"),
+  badge: z.string().optional(),
   title: z.string(),
   subtitle: z.string().optional(),
   description: z.string().optional(),
