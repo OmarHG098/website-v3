@@ -804,9 +804,12 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
   const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
   const remoteFileSet = new Set(remoteChangedFiles);
   
-  // Build a map of file -> author for incoming changes
+  // Build maps for file metadata from commits
   // Extract author from commit message [Author: Name] or fall back to commit author
   const fileAuthorMap = new Map<string, string>();
+  const fileDateMap = new Map<string, string>();
+  const fileCommitShaMap = new Map<string, string>();
+  
   for (const commit of conflictInfo.commits) {
     // Try to extract author from commit message format: [Author: Full Name]
     const authorMatch = commit.message.match(/\[Author:\s*([^\]]+)\]/);
@@ -816,6 +819,8 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
       // Only set if not already set (first commit wins - most recent)
       if (!fileAuthorMap.has(file)) {
         fileAuthorMap.set(file, author);
+        fileDateMap.set(file, commit.date);
+        fileCommitShaMap.set(file, commit.sha);
       }
     }
   }
@@ -839,8 +844,11 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
     changes.push({
       ...change,
       source: isConflict ? 'conflict' : 'local',
-      // For conflicts, include the remote author
-      author: isConflict ? fileAuthorMap.get(change.file) : undefined,
+      // For conflicts, include the remote author/date/commitSha
+      // For local changes, use "Yourself" as author and current date
+      author: isConflict ? fileAuthorMap.get(change.file) : 'Yourself',
+      date: isConflict ? fileDateMap.get(change.file) : new Date().toISOString(),
+      commitSha: isConflict ? fileCommitShaMap.get(change.file) : undefined,
     });
   }
   
@@ -857,6 +865,8 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
         slug: pathMatch?.[2] || filePath.split('/').pop()?.replace(/\.(yml|yaml)$/, '') || 'unknown',
         localSha: '',
         author: fileAuthorMap.get(filePath),
+        date: fileDateMap.get(filePath),
+        commitSha: fileCommitShaMap.get(filePath),
       });
     }
   }
