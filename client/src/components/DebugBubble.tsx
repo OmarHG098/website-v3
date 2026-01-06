@@ -2134,6 +2134,7 @@ export function DebugBubble() {
             <Button
               variant="outline"
               onClick={() => setConfirmPullFile(null)}
+              disabled={filePulling === confirmPullFile}
               data-testid="button-cancel-pull-file"
             >
               Cancel
@@ -2145,10 +2146,10 @@ export function DebugBubble() {
                   handleFilePull(confirmPullFile);
                 }
               }}
-              disabled={filePulling !== null}
+              disabled={filePulling === confirmPullFile}
               data-testid="button-confirm-pull-file"
             >
-              {filePulling ? (
+              {filePulling === confirmPullFile ? (
                 <>
                   <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
                   Pulling...
