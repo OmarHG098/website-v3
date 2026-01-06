@@ -106,7 +106,7 @@ export function SyncConflictModal() {
     setShowConflictModal, 
     conflictInfo, 
     syncWithRemote,
-    syncStatus,
+    enableForceCommit,
   } = useSync();
   
   const [isLoading, setIsLoading] = useState(false);
@@ -128,13 +128,11 @@ export function SyncConflictModal() {
     }
   };
 
-  const handleForceCommit = async () => {
-    setIsLoading(true);
-    try {
-      window.location.href = window.location.pathname + '?force_commit=true';
-    } finally {
-      setIsLoading(false);
+  const handleForceCommit = () => {
+    if (!confirm('Are you sure? This will allow you to commit even though remote has newer changes. Your changes will overwrite remote.')) {
+      return;
     }
+    enableForceCommit();
   };
 
   const behindBy = conflictInfo.behindBy;

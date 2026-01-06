@@ -35,8 +35,10 @@ interface SyncContextValue {
   isLoading: boolean;
   isBehind: boolean;
   editingDisabled: boolean;
+  forceCommitEnabled: boolean;
   checkForConflicts: () => Promise<void>;
   syncWithRemote: () => Promise<boolean>;
+  enableForceCommit: () => void;
   showConflictModal: boolean;
   setShowConflictModal: (show: boolean) => void;
   refreshSyncStatus: () => void;
@@ -52,6 +54,7 @@ export function SyncProvider({ children }: SyncProviderProps) {
   const queryClient = useQueryClient();
   const [showConflictModal, setShowConflictModal] = useState(false);
   const [conflictInfo, setConflictInfo] = useState<ConflictInfo | null>(null);
+  const [forceCommitEnabled, setForceCommitEnabled] = useState(false);
 
   const { data: syncStatus, isLoading, refetch: refreshSyncStatus } = useQuery<SyncStatus>({
     queryKey: ['/api/github/sync-status'],
@@ -64,8 +67,14 @@ export function SyncProvider({ children }: SyncProviderProps) {
   }, [syncStatus]);
 
   const editingDisabled = useMemo(() => {
+    if (forceCommitEnabled) return false;
     return isBehind && syncStatus?.syncEnabled === true;
-  }, [isBehind, syncStatus?.syncEnabled]);
+  }, [isBehind, syncStatus?.syncEnabled, forceCommitEnabled]);
+
+  const enableForceCommit = useCallback(() => {
+    setForceCommitEnabled(true);
+    setShowConflictModal(false);
+  }, []);
 
   const checkForConflicts = useCallback(async () => {
     try {
@@ -92,6 +101,7 @@ export function SyncProvider({ children }: SyncProviderProps) {
       if (response.ok) {
         setConflictInfo(null);
         setShowConflictModal(false);
+        setForceCommitEnabled(false);
         await refreshSyncStatus();
         queryClient.invalidateQueries({ queryKey: ['/api/github/pending-changes'] });
         return true;
@@ -115,8 +125,10 @@ export function SyncProvider({ children }: SyncProviderProps) {
     isLoading,
     isBehind,
     editingDisabled,
+    forceCommitEnabled,
     checkForConflicts,
     syncWithRemote,
+    enableForceCommit,
     showConflictModal,
     setShowConflictModal,
     refreshSyncStatus: () => { refreshSyncStatus(); },

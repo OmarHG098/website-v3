@@ -51,6 +51,7 @@ import {
   IconArrowUp,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
+import { useSyncOptional } from "@/contexts/SyncContext";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -276,6 +277,7 @@ export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const { session } = useSession();
   const editMode = useEditModeOptional();
+  const syncContext = useSyncOptional();
   const { i18n } = useTranslation();
   const [pathname, navigate] = useLocation();
   const [open, setOpen] = useState(false);
@@ -478,10 +480,14 @@ export function DebugBubble() {
     
     setIsCommitting(true);
     try {
+      const forceCommit = syncContext?.forceCommitEnabled || false;
       const res = await fetch("/api/github/commit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: commitMessage.trim() }),
+        body: JSON.stringify({ 
+          message: commitMessage.trim(),
+          force: forceCommit,
+        }),
       });
       
       const data = await res.json();
@@ -490,8 +496,11 @@ export function DebugBubble() {
         setCommitModalOpen(false);
         setCommitMessage("");
         setPendingChanges([]);
-        // Refresh sync status
         refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+          syncContext.syncWithRemote();
+        }
       } else {
         alert(data.error || "Failed to commit changes");
       }
