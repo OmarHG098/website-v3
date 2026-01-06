@@ -1732,6 +1732,19 @@ export function DebugBubble() {
                       <IconCopy className="h-4 w-4" />
                     )}
                   </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 flex-shrink-0"
+                    onClick={() => {
+                      clearToken();
+                      setSessionModalOpen(false);
+                    }}
+                    data-testid="button-clear-session-token"
+                    title="Clear token"
+                  >
+                    <IconX className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             )}
