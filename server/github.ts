@@ -785,6 +785,67 @@ export async function checkPullConflicts(): Promise<PullConflictCheck> {
 }
 
 /**
+ * Get all sync changes - both local changes that need to be uploaded
+ * and incoming remote changes that can be downloaded.
+ * Returns unified list with source field indicating the type.
+ * 
+ * Conflict detection: A file is a conflict only if:
+ * 1. It has local changes (localSha differs from remoteSha in sync state)
+ * 2. AND it appears in remote changes (remote has commits affecting this file)
+ * 3. AND the local change has a remoteSha stored (meaning we've synced before)
+ */
+export async function getAllSyncChanges(): Promise<PendingChange[]> {
+  const localChanges = await getPendingChanges();
+  const conflictInfo = await getConflictInfo();
+  
+  // Get all remote changed files from commits (filtered by shouldTrackFile)
+  const { shouldTrackFile } = await import("./sync-state");
+  const allRemoteFiles = conflictInfo.commits.flatMap(c => c.files || []);
+  const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
+  const remoteFileSet = new Set(remoteChangedFiles);
+  
+  // Create a map of local changes for quick lookup
+  const localFileMap = new Map(localChanges.map(c => [c.file, c]));
+  
+  // Build the unified list
+  const changes: PendingChange[] = [];
+  
+  // Add local changes - check if they're also conflicts
+  for (const change of localChanges) {
+    // A true conflict requires:
+    // 1. File appears in remote changes AND
+    // 2. The local change has a remoteSha (we've synced this file before)
+    // If no remoteSha, it's a new local file - mark as local, not conflict
+    const isRemoteChanged = remoteFileSet.has(change.file);
+    const hasSyncedBefore = !!change.remoteSha;
+    const isConflict = isRemoteChanged && hasSyncedBefore;
+    
+    changes.push({
+      ...change,
+      source: isConflict ? 'conflict' : 'local',
+    });
+  }
+  
+  // Add incoming changes (files changed on remote but not locally modified)
+  for (const filePath of remoteChangedFiles) {
+    if (!localFileMap.has(filePath)) {
+      // Parse content type and slug from file path
+      const pathMatch = filePath.match(/marketing-content\/(programs|landings|locations|pages|component-registry)\/([^\/]+)/);
+      changes.push({
+        file: filePath,
+        status: 'modified',
+        source: 'incoming',
+        contentType: pathMatch?.[1] || 'unknown',
+        slug: pathMatch?.[2] || filePath.split('/').pop()?.replace(/\.(yml|yaml)$/, '') || 'unknown',
+        localSha: '',
+      });
+    }
+  }
+  
+  return changes;
+}
+
+/**
  * Sync local state with remote by updating lastSyncedCommit
  * Call this after user chooses to "refresh" and accept remote changes
  * Rebuilds the file hash cache so pending changes shows 0 after sync

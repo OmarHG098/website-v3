@@ -851,15 +851,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get pending changes for commit
+  // Get all sync changes (local and incoming)
   app.get("/api/github/pending-changes", async (req, res) => {
     try {
-      const { getPendingChanges } = await import("./github");
-      const changes = await getPendingChanges();
+      const { getAllSyncChanges } = await import("./github");
+      const changes = await getAllSyncChanges();
       res.json({ changes, count: changes.length });
     } catch (error) {
-      console.error("Error getting pending changes:", error);
-      res.status(500).json({ error: "Failed to get pending changes" });
+      console.error("Error getting sync changes:", error);
+      res.status(500).json({ error: "Failed to get sync changes" });
     }
   });
 
@@ -991,23 +991,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error pulling file:", error);
       res.status(500).json({ error: "Failed to pull file" });
-    }
-  });
-
-  // Discard local changes for a single file
-  app.post("/api/github/discard-file", async (req, res) => {
-    try {
-      const { filePath } = req.body;
-      if (!filePath) {
-        res.status(400).json({ error: "Missing filePath" });
-        return;
-      }
-      const { discardLocalChanges } = await import("./sync-state");
-      const success = discardLocalChanges(filePath);
-      res.json({ success });
-    } catch (error) {
-      console.error("Error discarding file changes:", error);
-      res.status(500).json({ error: "Failed to discard changes" });
     }
   });
 

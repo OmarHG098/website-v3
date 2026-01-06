@@ -156,6 +156,7 @@ interface GitHubSyncStatus {
 interface PendingChange {
   file: string;
   status: 'modified' | 'added' | 'deleted';
+  source: 'local' | 'incoming' | 'conflict';
   contentType: string;
   slug: string;
 }
@@ -637,28 +638,6 @@ export function DebugBubble() {
       alert("Failed to pull file");
     } finally {
       setFilePulling(null);
-    }
-  };
-
-  // Handle per-file discard
-  const handleFileDiscard = async (filePath: string) => {
-    try {
-      const res = await fetch("/api/github/discard-file", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ filePath }),
-      });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        // Remove file from pending changes
-        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
-      } else {
-        alert("Failed to discard changes");
-      }
-    } catch {
-      alert("Failed to discard changes");
     }
   };
 
@@ -1857,11 +1836,11 @@ export function DebugBubble() {
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <IconArrowUp className="h-5 w-5" />
+              <IconBrandGithub className="h-5 w-5" />
               Sync Files with GitHub
             </DialogTitle>
             <DialogDescription>
-              Manage individual file changes. Commit to push, pull to update, or discard to ignore.
+              Upload your local changes to remote or download incoming changes from remote.
             </DialogDescription>
           </DialogHeader>
           
@@ -1876,38 +1855,10 @@ export function DebugBubble() {
                   <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
                 </div>
               ) : pendingChanges.length === 0 ? (
-                <div className="py-2 space-y-3">
+                <div className="py-2">
                   <p className="text-sm text-muted-foreground">
-                    No local changes to commit.
+                    All files are in sync. No local or remote changes detected.
                   </p>
-                  {githubSyncStatus?.status === 'behind' && (
-                    <div className="p-3 rounded-md border bg-muted/50 space-y-2">
-                      <p className="text-sm">
-                        Remote has newer changes. Pull to update your local files.
-                      </p>
-                      <Button
-                        size="sm"
-                        onClick={() => {
-                          setCommitModalOpen(false);
-                          handleSyncFromRemote();
-                        }}
-                        disabled={isSyncing}
-                        data-testid="button-pull-all-from-remote"
-                      >
-                        {isSyncing ? (
-                          <>
-                            <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
-                            Pulling...
-                          </>
-                        ) : (
-                          <>
-                            <IconCloudDownload className="h-4 w-4 mr-2" />
-                            Pull Latest from Remote
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
                 </div>
               ) : (
                 <ScrollArea className="h-[250px] rounded-md border">
@@ -1919,13 +1870,13 @@ export function DebugBubble() {
                       >
                         <div className="flex items-center gap-2">
                           <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
-                            change.status === 'added' 
-                              ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
-                              : change.status === 'deleted'
+                            change.source === 'conflict'
                               ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
+                              : change.source === 'incoming'
+                              ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300'
                               : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
                           }`}>
-                            {change.status}
+                            {change.source === 'conflict' ? 'Conflict' : change.source === 'incoming' ? 'Incoming update' : 'Local update'}
                           </span>
                           <span 
                             className="flex-1 text-muted-foreground font-mono text-xs truncate"
@@ -1987,47 +1938,43 @@ export function DebugBubble() {
                             </div>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-6 text-xs px-2"
-                              onClick={() => {
-                                setSelectedFileForCommit(change.file);
-                                setFileCommitMessage("");
-                              }}
-                              data-testid={`button-commit-file-${index}`}
-                            >
-                              <IconArrowUp className="h-3 w-3 mr-1" />
-                              Commit
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-6 text-xs px-2"
-                              onClick={() => setConfirmPullFile(change.file)}
-                              disabled={filePulling === change.file}
-                              data-testid={`button-pull-file-${index}`}
-                            >
-                              {filePulling === change.file ? (
-                                <IconRefresh className="h-3 w-3 animate-spin" />
-                              ) : (
-                                <>
-                                  <IconCloudDownload className="h-3 w-3 mr-1" />
-                                  Pull
-                                </>
-                              )}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-6 text-xs px-2 text-muted-foreground"
-                              onClick={() => handleFileDiscard(change.file)}
-                              data-testid={`button-discard-file-${index}`}
-                            >
-                              <IconX className="h-3 w-3 mr-1" />
-                              Discard
-                            </Button>
+                          <div className="flex flex-wrap items-center gap-1">
+                            {/* Show Upload button for local changes and conflicts */}
+                            {(change.source === 'local' || change.source === 'conflict') && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-6 text-xs px-2"
+                                onClick={() => {
+                                  setSelectedFileForCommit(change.file);
+                                  setFileCommitMessage("");
+                                }}
+                                data-testid={`button-commit-file-${index}`}
+                              >
+                                <IconArrowUp className="h-3 w-3 mr-1" />
+                                Upload my version to remote
+                              </Button>
+                            )}
+                            {/* Show Download button for incoming changes and conflicts */}
+                            {(change.source === 'incoming' || change.source === 'conflict') && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-6 text-xs px-2"
+                                onClick={() => setConfirmPullFile(change.file)}
+                                disabled={filePulling === change.file}
+                                data-testid={`button-pull-file-${index}`}
+                              >
+                                {filePulling === change.file ? (
+                                  <IconRefresh className="h-3 w-3 animate-spin" />
+                                ) : (
+                                  <>
+                                    <IconCloudDownload className="h-3 w-3 mr-1" />
+                                    Download and Override mine
+                                  </>
+                                )}
+                              </Button>
+                            )}
                           </div>
                         )}
                       </div>
@@ -2038,7 +1985,7 @@ export function DebugBubble() {
             </div>
             
             <p className="text-xs text-muted-foreground">
-              Use the buttons above to commit, pull, or discard changes for each file individually.
+              Use the buttons above to upload your changes to remote or download remote changes.
             </p>
           </div>
 
@@ -2131,7 +2078,7 @@ export function DebugBubble() {
         </DialogContent>
       </Dialog>
       
-      {/* Per-file Pull Confirmation Modal */}
+      {/* Per-file Download Confirmation Modal */}
       <Dialog open={confirmPullFile !== null} onOpenChange={(open) => !open && setConfirmPullFile(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -2140,9 +2087,9 @@ export function DebugBubble() {
                 <IconCloudDownload className="h-5 w-5 text-amber-600 dark:text-amber-400" />
               </div>
               <div>
-                <DialogTitle>Pull File from Remote?</DialogTitle>
+                <DialogTitle>Download and Override Local File?</DialogTitle>
                 <DialogDescription>
-                  This will overwrite your local changes to this file.
+                  This will replace your local version with the remote version.
                 </DialogDescription>
               </div>
             </div>
@@ -2160,7 +2107,7 @@ export function DebugBubble() {
             </div>
             
             <p className="text-xs text-muted-foreground mt-3">
-              Your local changes to this file will be replaced with the remote version. This action cannot be undone.
+              Your local version will be replaced with the remote version. This action cannot be undone.
             </p>
           </div>
 
@@ -2186,12 +2133,12 @@ export function DebugBubble() {
               {filePulling === confirmPullFile ? (
                 <>
                   <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
-                  Pulling...
+                  Downloading...
                 </>
               ) : (
                 <>
                   <IconCloudDownload className="h-4 w-4 mr-2" />
-                  Pull & Overwrite
+                  Download and Override mine
                 </>
               )}
             </Button>

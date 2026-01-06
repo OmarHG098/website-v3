@@ -51,6 +51,7 @@ export interface SyncState {
 export interface PendingChange {
   file: string;
   status: 'modified' | 'added' | 'deleted';
+  source: 'local' | 'incoming' | 'conflict';
   contentType: string;
   slug: string;
   localSha: string;
@@ -219,6 +220,7 @@ export function detectPendingChanges(): PendingChange[] {
         changesMap.set(filePath, {
           file: filePath,
           status: 'added',
+          source: 'local',
           contentType,
           slug,
           localSha: currentSha,
@@ -227,6 +229,7 @@ export function detectPendingChanges(): PendingChange[] {
         changesMap.set(filePath, {
           file: filePath,
           status: 'modified',
+          source: 'local',
           contentType,
           slug,
           localSha: currentSha,
@@ -236,6 +239,7 @@ export function detectPendingChanges(): PendingChange[] {
         changesMap.set(filePath, {
           file: filePath,
           status: 'modified',
+          source: 'local',
           contentType,
           slug,
           localSha: currentSha,
@@ -254,6 +258,7 @@ export function detectPendingChanges(): PendingChange[] {
       changesMap.set(filePath, {
         file: filePath,
         status: 'deleted',
+        source: 'local',
         contentType,
         slug,
         localSha: '',
