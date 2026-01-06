@@ -13,6 +13,23 @@ import * as crypto from 'crypto';
 const SYNC_STATE_PATH = path.join(process.cwd(), 'marketing-content', '.sync-state.json');
 const MARKETING_CONTENT_DIR = path.join(process.cwd(), 'marketing-content');
 
+/**
+ * Check if a file should be tracked by the sync system.
+ * Only tracks YAML files in marketing-content directory.
+ */
+export function shouldTrackFile(filePath: string): boolean {
+  if (!filePath.startsWith('marketing-content/')) {
+    return false;
+  }
+  
+  const ext = path.extname(filePath).toLowerCase();
+  if (ext !== '.yml' && ext !== '.yaml') {
+    return false;
+  }
+  
+  return true;
+}
+
 export interface FileSyncInfo {
   sha: string;
   lastModified: number;
@@ -49,12 +66,31 @@ export function computeFileSha(content: string): string {
 
 /**
  * Load sync state from .sync-state.json
+ * Automatically prunes any non-YAML files from the state
  */
 export function loadSyncState(): SyncState {
   try {
     if (fs.existsSync(SYNC_STATE_PATH)) {
       const content = fs.readFileSync(SYNC_STATE_PATH, 'utf-8');
-      return JSON.parse(content) as SyncState;
+      const state = JSON.parse(content) as SyncState;
+      
+      // Prune non-YAML files from state
+      const prunedFiles: Record<string, FileSyncInfo> = {};
+      let pruned = false;
+      for (const [filePath, info] of Object.entries(state.files)) {
+        if (shouldTrackFile(filePath)) {
+          prunedFiles[filePath] = info;
+        } else {
+          pruned = true;
+        }
+      }
+      
+      if (pruned) {
+        state.files = prunedFiles;
+        saveSyncState(state);
+      }
+      
+      return state;
     }
   } catch (error) {
     console.error('Error loading sync state:', error);
@@ -79,13 +115,19 @@ export function saveSyncState(state: SyncState): void {
 
 /**
  * Mark a file as modified (dirty) after an edit
+ * Only tracks YAML files in marketing-content directory
  */
 export function markFileAsModified(filePath: string): void {
-  const state = loadSyncState();
   const relativePath = filePath.startsWith('marketing-content/') 
     ? filePath 
     : `marketing-content/${filePath}`;
   
+  // Only track YAML files
+  if (!shouldTrackFile(relativePath)) {
+    return;
+  }
+  
+  const state = loadSyncState();
   const fullPath = path.join(process.cwd(), relativePath);
   
   if (fs.existsSync(fullPath)) {
@@ -143,14 +185,20 @@ function parseContentPath(filePath: string): { contentType: string; slug: string
 
 /**
  * Detect pending changes by comparing current file hashes against stored state
+ * Only tracks YAML files in marketing-content, deduplicates results
  */
 export function detectPendingChanges(): PendingChange[] {
   const state = loadSyncState();
-  const changes: PendingChange[] = [];
+  const changesMap = new Map<string, PendingChange>();
   const currentFiles = getAllContentFiles();
   const processedFiles = new Set<string>();
   
   for (const filePath of currentFiles) {
+    // Double-check file should be tracked
+    if (!shouldTrackFile(filePath)) {
+      continue;
+    }
+    
     processedFiles.add(filePath);
     const fullPath = path.join(process.cwd(), filePath);
     
@@ -162,7 +210,7 @@ export function detectPendingChanges(): PendingChange[] {
       const { contentType, slug } = parseContentPath(filePath);
       
       if (!storedInfo) {
-        changes.push({
+        changesMap.set(filePath, {
           file: filePath,
           status: 'added',
           contentType,
@@ -170,7 +218,7 @@ export function detectPendingChanges(): PendingChange[] {
           localSha: currentSha,
         });
       } else if (storedInfo.remoteSha && storedInfo.remoteSha !== currentSha) {
-        changes.push({
+        changesMap.set(filePath, {
           file: filePath,
           status: 'modified',
           contentType,
@@ -179,7 +227,7 @@ export function detectPendingChanges(): PendingChange[] {
           remoteSha: storedInfo.remoteSha,
         });
       } else if (storedInfo.sha !== currentSha) {
-        changes.push({
+        changesMap.set(filePath, {
           file: filePath,
           status: 'modified',
           contentType,
@@ -193,10 +241,11 @@ export function detectPendingChanges(): PendingChange[] {
     }
   }
   
+  // Check for deleted files (in state but not on disk)
   for (const [filePath, info] of Object.entries(state.files)) {
-    if (!processedFiles.has(filePath) && info.remoteSha) {
+    if (!processedFiles.has(filePath) && shouldTrackFile(filePath) && info.remoteSha) {
       const { contentType, slug } = parseContentPath(filePath);
-      changes.push({
+      changesMap.set(filePath, {
         file: filePath,
         status: 'deleted',
         contentType,
@@ -207,11 +256,12 @@ export function detectPendingChanges(): PendingChange[] {
     }
   }
   
-  return changes;
+  return Array.from(changesMap.values());
 }
 
 /**
  * Update sync state after a successful commit
+ * Only tracks YAML files in marketing-content directory
  */
 export function updateSyncStateAfterCommit(
   commitSha: string,
@@ -223,6 +273,11 @@ export function updateSyncStateAfterCommit(
   state.lastSyncedAt = new Date().toISOString();
   
   for (const filePath of committedFiles) {
+    // Only track YAML files
+    if (!shouldTrackFile(filePath)) {
+      continue;
+    }
+    
     const fullPath = path.join(process.cwd(), filePath);
     if (fs.existsSync(fullPath)) {
       const content = fs.readFileSync(fullPath, 'utf-8');
@@ -245,6 +300,7 @@ export function updateSyncStateAfterCommit(
 /**
  * Initialize sync state from GitHub remote
  * Call this when syncing with remote for the first time or after pulling changes
+ * Only tracks YAML files in marketing-content directory
  */
 export function initializeSyncStateFromRemote(
   commitSha: string,
@@ -257,6 +313,11 @@ export function initializeSyncStateFromRemote(
   };
   
   for (const file of remoteFiles) {
+    // Only track YAML files in marketing-content
+    if (!shouldTrackFile(file.path)) {
+      continue;
+    }
+    
     const fullPath = path.join(process.cwd(), file.path);
     if (fs.existsSync(fullPath)) {
       const content = fs.readFileSync(fullPath, 'utf-8');
