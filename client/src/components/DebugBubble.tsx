@@ -1848,16 +1848,16 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      {/* Commit Modal */}
+      {/* Sync Files Modal */}
       <Dialog open={commitModalOpen} onOpenChange={setCommitModalOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <IconArrowUp className="h-5 w-5" />
-              Commit Changes to GitHub
+              Sync Files with GitHub
             </DialogTitle>
             <DialogDescription>
-              Review your pending changes and provide a commit message.
+              Manage individual file changes. Commit to push, pull to update, or discard to ignore.
             </DialogDescription>
           </DialogHeader>
           
