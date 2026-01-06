@@ -18,6 +18,7 @@ interface AwardsMarqueeProps {
   gradientColor?: string;
   gradientWidth?: number;
   className?: string;
+  subtitle?: string;
 }
 
 export function AwardsMarquee({ 
@@ -27,6 +28,7 @@ export function AwardsMarquee({
   gradientColor,
   gradientWidth = 100,
   className = "",
+  subtitle,
 }: AwardsMarqueeProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   
@@ -80,9 +82,11 @@ export function AwardsMarquee({
           ))}
         </Marquee>
       </div>
-      <div className="max-w-6xl mx-auto px-4 pt-8">
-        <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
-      </div>
+      {subtitle && (
+        <div className="max-w-6xl mx-auto px-4 pt-8">
+          <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">{subtitle}</p>
+        </div>
+      )}
     </section>
   );
 }

@@ -25,18 +25,30 @@ sections:
       rating: "4.5"
       rating_count: 1,294
       trusted_text: Confiado por más de 2.5K estudiantes
-    award_badges:
-      - name: Mejor Bootcamp de Código
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Mejor Bootcamp de Código
         source: Forbes
+        name: Mejor Bootcamp de Código
         year: "2024"
-      - name: Mejor para Hispanohablantes
+      - id: fortune-2024
+        alt: Fortune - Mejor para Hispanohablantes
         source: Fortune
+        name: Mejor para Hispanohablantes
         year: "2024"
-      - name: Top Bootcamp de Código
+      - id: newsweek-2024
+        alt: Newsweek - Top Bootcamp de Código
         source: Newsweek
+        name: Top Bootcamp de Código
         year: "2024"
-      - name: Mejor Bootcamp de Código
+      - id: coursereport-2025
+        alt: Course Report - Mejor Bootcamp de Código
         source: Course Report
+        name: Mejor Bootcamp de Código
         year: "2025"
   - type: syllabus
     title: ¡Prepárate para el Trabajo con Nuestro Programa!
