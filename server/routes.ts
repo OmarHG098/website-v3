@@ -829,6 +829,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get pending changes for commit
+  app.get("/api/github/pending-changes", async (req, res) => {
+    try {
+      const { getPendingChanges } = await import("./github");
+      const changes = await getPendingChanges();
+      res.json({ changes, count: changes.length });
+    } catch (error) {
+      console.error("Error getting pending changes:", error);
+      res.status(500).json({ error: "Failed to get pending changes" });
+    }
+  });
+
+  // Commit and push pending changes to GitHub
+  app.post("/api/github/commit", async (req, res) => {
+    try {
+      const { message } = req.body;
+      if (!message || typeof message !== 'string' || message.trim().length === 0) {
+        res.status(400).json({ error: "Commit message is required" });
+        return;
+      }
+
+      const { commitAndPush } = await import("./github");
+      const result = await commitAndPush(message.trim());
+      
+      if (result.success) {
+        res.json({ success: true, commitHash: result.commitHash });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error committing to GitHub:", error);
+      res.status(500).json({ error: "Failed to commit changes" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;

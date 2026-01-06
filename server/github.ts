@@ -224,6 +224,121 @@ export interface GitHubSyncStatus {
 /**
  * Get the sync status between local and remote GitHub repository
  */
+export interface PendingChange {
+  file: string;
+  status: 'modified' | 'added' | 'deleted';
+  contentType: string;
+  slug: string;
+}
+
+/**
+ * Get list of pending changes in marketing-content directory
+ * These are files modified since the last commit
+ */
+export async function getPendingChanges(): Promise<PendingChange[]> {
+  try {
+    const { execSync } = await import('child_process');
+    
+    // Get modified/added/deleted files in marketing-content directory
+    // Using git status --porcelain for machine-readable output
+    const output = execSync('git status --porcelain marketing-content/', { encoding: 'utf-8' });
+    
+    if (!output.trim()) {
+      return [];
+    }
+    
+    const changes: PendingChange[] = [];
+    const lines = output.trim().split('\n');
+    
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      
+      // Parse git status format: XY filename
+      // X = index status, Y = worktree status
+      const statusCode = line.substring(0, 2);
+      const file = line.substring(3).trim();
+      
+      let status: PendingChange['status'] = 'modified';
+      if (statusCode.includes('A') || statusCode.includes('?')) {
+        status = 'added';
+      } else if (statusCode.includes('D')) {
+        status = 'deleted';
+      }
+      
+      // Extract content type and slug from path
+      // e.g., marketing-content/programs/ai-engineering/en.yml
+      const pathMatch = file.match(/marketing-content\/(programs|landings|locations|pages)\/([^\/]+)\//);
+      const contentType = pathMatch?.[1] || 'unknown';
+      const slug = pathMatch?.[2] || file;
+      
+      changes.push({ file, status, contentType, slug });
+    }
+    
+    return changes;
+  } catch (error) {
+    console.error('Error getting pending changes:', error);
+    return [];
+  }
+}
+
+/**
+ * Commit all pending changes with a custom message and push to GitHub
+ */
+export async function commitAndPush(message: string): Promise<{ success: boolean; error?: string; commitHash?: string }> {
+  const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
+  
+  if (!syncEnabled) {
+    return { success: false, error: "GitHub sync is not enabled" };
+  }
+  
+  const config = getGitHubConfig();
+  if (!config) {
+    return { success: false, error: "GitHub not configured (missing GITHUB_TOKEN or GITHUB_REPO_URL)" };
+  }
+  
+  try {
+    const { execSync } = await import('child_process');
+    
+    // Check if there are pending changes
+    const pendingChanges = await getPendingChanges();
+    if (pendingChanges.length === 0) {
+      return { success: false, error: "No pending changes to commit" };
+    }
+    
+    // Stage all changes in marketing-content
+    execSync('git add marketing-content/', { encoding: 'utf-8' });
+    
+    // Commit with provided message
+    const sanitizedMessage = message.replace(/"/g, '\\"');
+    execSync(`git commit -m "${sanitizedMessage}"`, { encoding: 'utf-8' });
+    
+    // Get the commit hash
+    const commitHash = execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
+    
+    // Push to the configured branch
+    execSync(`git push origin HEAD:${config.branch}`, { encoding: 'utf-8' });
+    
+    console.log(`Committed and pushed to GitHub: ${commitHash}`);
+    return { success: true, commitHash };
+  } catch (error) {
+    console.error('Error committing and pushing:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
+    // Try to provide a more helpful error message
+    if (errorMessage.includes('nothing to commit')) {
+      return { success: false, error: "No changes to commit" };
+    }
+    if (errorMessage.includes('Permission denied') || errorMessage.includes('403')) {
+      return { success: false, error: "Permission denied - check GITHUB_TOKEN permissions" };
+    }
+    
+    return { success: false, error: errorMessage };
+  }
+}
+
+/**
+ * Get the sync status between local and remote GitHub repository
+ */
 export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
   const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
   const config = getGitHubConfig();
