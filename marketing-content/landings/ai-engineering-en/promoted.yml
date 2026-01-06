@@ -14,6 +14,11 @@ sections:
       highlight: AI Engineer
       color: primary
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
+    video:
+      url: https://www.youtube.com/shorts/sSxJnelPJT8
+      ratio: "9:16"
+      muted: true
+      loop: true
     form:
       variant: stacked
       submit_label: Apply now
@@ -348,7 +353,7 @@ sections:
       mobile: lg none
       desktop: lg none
   - type: certificate
-    title: Certificate & Career Outcomes
+    title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
@@ -394,13 +399,13 @@ sections:
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
     useSolidCard: true
-    marginY:
-      mobile: none
-      desktop: none
+    background: hsl(var(--muted))
     paddingY:
       mobile: lg
       desktop: lg
-    background: hsl(var(--muted))
+    marginY:
+      mobile: none
+      desktop: none
   - type: pricing
     version: "1.0"
     variant: product
