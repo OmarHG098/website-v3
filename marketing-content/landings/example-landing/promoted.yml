@@ -8,7 +8,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: You Are Not Alone Anymore
+    title: You Are Not Alone Anymoree
     subtitle: Receive personalized career support tailored to your goals
     welcome_text: Welcome to
     brand_mark:
@@ -65,7 +65,7 @@ sections:
         label: Success Stories
   - type: features_grid
     version: "1.0"
-    title: What You'll Learn
+    title: What You'll Learnn
     subtitle: Discover the tools that make learning faster and easier
     items:
       - icon: Brain
@@ -87,20 +87,6 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
-  - type: features_grid
-    version: "1.0"
-    title: What You'll Learn
-    subtitle: Discover the tools that make learning faster and easier
-    items:
-      - icon: Brain
-        title: AI-Powered Learning
-        description: See how AI tutors provide instant feedback and personalized guidance 24/7
-      - icon: Rocket
-        title: Accelerated Progress
-        description: Learn how students are completing courses 3x faster with AI assistance
-      - icon: Code
-        title: Live Demo
-        description: Watch a live demonstration of our AI coding assistant in action
   - type: cta_banner
     version: "1.0"
     title: Ready to Transform Your Learning?
