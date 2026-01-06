@@ -306,9 +306,9 @@ export function SectionEditorPanel({
   }, [yamlContent, onPreviewChange]);
 
   // Shared save logic - returns true on success
-  const saveToServer = useCallback(async (): Promise<boolean> => {
+  const saveToServer = useCallback(async (): Promise<{ success: boolean; warning?: string }> => {
     if (!contentType || !slug || !locale) {
-      return false;
+      return { success: false };
     }
 
     let parsed: Section;
@@ -316,13 +316,13 @@ export function SectionEditorPanel({
       parsed = yamlParser.load(yamlContent) as Section;
       if (!parsed || typeof parsed !== "object") {
         setParseError("Invalid section structure");
-        return false;
+        return { success: false };
       }
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
-      return false;
+      return { success: false };
     }
 
     setIsSaving(true);
@@ -351,7 +351,7 @@ export function SectionEditorPanel({
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = await response.json() as { success: boolean; updatedSections?: unknown[]; warning?: string };
 
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
@@ -363,16 +363,18 @@ export function SectionEditorPanel({
 
         // Emit event to trigger page refresh
         emitContentUpdated({ contentType, slug, locale });
-        return true;
+        
+        // Return warning if present (for GitHub sync failures)
+        return { success: true, warning: result.warning };
       } else {
         const error = await response.json();
         setSaveError(error.error || "Failed to save changes");
-        return false;
+        return { success: false };
       }
     } catch (error) {
       console.error("Error saving changes:", error);
       setSaveError(error instanceof Error ? error.message : "Network error");
-      return false;
+      return { success: false };
     } finally {
       setIsSaving(false);
     }
@@ -380,12 +382,21 @@ export function SectionEditorPanel({
 
   // Save without closing editor
   const handleSave = useCallback(async () => {
-    const success = await saveToServer();
-    if (success) {
-      toast({
-        title: "Changes saved",
-        description: "Your section has been updated successfully.",
-      });
+    const result = await saveToServer();
+    if (result && result.success) {
+      if (result.warning) {
+        // Show warning toast for GitHub sync failures
+        toast({
+          title: "Changes saved with warning",
+          description: result.warning,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Changes saved",
+          description: "Your section has been updated successfully.",
+        });
+      }
     }
   }, [saveToServer, toast]);
 

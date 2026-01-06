@@ -105,6 +105,25 @@ export const myValidator: Validator = {
 - **Reactive (CLI)**: Run all validators via `ValidationService.runValidators()`
 - **Preventive (API)**: Call single validator via `ValidationService.runSingleValidator(name)` with `apiExposed: true`
 
+### GitHub Content Sync (Production)
+When deployed to production, content edits made through the inline editor are automatically committed back to the GitHub repository. This ensures development stays in sync with production content changes.
+
+**Required Environment Variables (Production only):**
+- `GITHUB_TOKEN`: Personal access token with `repo` write permissions
+- `GITHUB_REPO_OWNER`: Repository owner (username or organization)
+- `GITHUB_REPO_NAME`: Repository name
+- `GITHUB_BRANCH`: Target branch (defaults to `main`)
+
+**Behavior:**
+- In development: GitHub sync is skipped silently
+- In production without config: Editors see a warning that GitHub sync failed
+- In production with config: Changes are committed directly to the configured branch
+
+**Implementation:**
+- `server/github.ts`: GitHub Contents API utility for committing files
+- `server/content-editor.ts`: Integrates GitHub commit after YAML file saves
+- Commit messages follow format: `[Content] Update {type}/{slug} - {sections} ({date})`
+
 ### External Dependencies
 -   **4geeks Breathecode API**: Intended for user authentication, profile management, and educational content delivery.
 -   **@tabler/icons-react**: Icon library.

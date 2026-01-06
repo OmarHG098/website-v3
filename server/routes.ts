@@ -1321,7 +1321,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clearRedirectCache();
 
         // Return success with updated sections for immediate UI update
-        res.json({ success: true, updatedSections: result.updatedSections });
+        // Include warning if GitHub sync failed
+        const response: { success: boolean; updatedSections?: unknown; warning?: string } = { 
+          success: true, 
+          updatedSections: result.updatedSections 
+        };
+        if (result.warning) {
+          response.warning = result.warning;
+        }
+        res.json(response);
       } else {
         res.status(400).json({ error: result.error });
       }

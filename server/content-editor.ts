@@ -4,6 +4,7 @@ import yaml from "js-yaml";
 import { z } from "zod";
 import type { EditOperation } from "@shared/schema";
 import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
+import { commitToGitHub } from "./github";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -130,7 +131,7 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
   }
 }
 
-export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string }> {
+export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string; warning?: string; updatedSections?: unknown[] }> {
   const { contentType, slug, locale, operations, variant, version } = request;
   
   // Validate variant/version are used together and version is valid
@@ -280,7 +281,49 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     
     fs.writeFileSync(filePath, updatedYaml, "utf-8");
     
-    return { success: true };
+    // In production, commit changes back to GitHub repo
+    let githubWarning: string | undefined;
+    if (process.env.NODE_ENV === "production") {
+      // Get relative path from project root for GitHub
+      const relativePath = path.relative(process.cwd(), filePath);
+      
+      // Build descriptive commit message
+      const timestamp = new Date().toISOString().split('T')[0];
+      const operationSummary = operations.map(op => {
+        if (op.action === "update_field" && op.path.includes("sections[")) {
+          const sectionMatch = op.path.match(/sections\[(\d+)\]/);
+          const sectionNum = sectionMatch ? parseInt(sectionMatch[1]) + 1 : "?";
+          return `section ${sectionNum}`;
+        }
+        if ("path" in op) {
+          return op.path;
+        }
+        return op.action;
+      }).slice(0, 3).join(", ");
+      
+      const commitMessage = `[Content] Update ${contentType}/${slug} - ${operationSummary} (${timestamp})`;
+      
+      // Await the GitHub commit to capture any errors
+      try {
+        const result = await commitToGitHub({
+          filePath: relativePath,
+          content: updatedYaml,
+          message: commitMessage,
+        });
+        
+        if (!result.success) {
+          console.error("Failed to commit to GitHub:", result.error);
+          githubWarning = `Changes saved locally but failed to sync to GitHub: ${result.error}`;
+        }
+      } catch (err) {
+        console.error("GitHub commit error:", err);
+        githubWarning = "Changes saved locally but failed to sync to GitHub";
+      }
+    }
+    
+    // Return updated sections for immediate UI update
+    const updatedSections = (content.sections as unknown[]) || [];
+    return { success: true, warning: githubWarning, updatedSections };
   } catch (error) {
     console.error("Content edit error:", error);
     return { success: false, error: error instanceof Error ? error.message : "Unknown error" };
