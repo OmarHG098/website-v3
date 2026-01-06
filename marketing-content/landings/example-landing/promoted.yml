@@ -8,11 +8,11 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: You Are Not Alone Anymore
-    subtitle: Receive personalized career support tailored to your goals
+    title: You Are Not Alone Anymoree
+    subtitle: Receive personalized career support tailored to your goal
     welcome_text: Welcome to
     brand_mark:
-      prefix: Personalizeed
+      prefix: Personalizee
       highlight: Support
       color: chart-5
     description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
@@ -45,7 +45,7 @@ sections:
       icon: arrow-right
     trust_bar:
       rating: "4.5"
-      review_count: Based on 5149+ reviews
+      review_count: Based on 5149+ reviewss
       review_logos:
         - name: Google
           logo: /attached_assets/google_1765590146414.webp
