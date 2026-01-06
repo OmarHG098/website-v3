@@ -56,6 +56,7 @@ export interface PendingChange {
   slug: string;
   localSha: string;
   remoteSha?: string;
+  author?: string;
 }
 
 const DEFAULT_SYNC_STATE: SyncState = {

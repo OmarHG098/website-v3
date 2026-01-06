@@ -160,6 +160,7 @@ interface PendingChange {
   source: 'local' | 'incoming' | 'conflict';
   contentType: string;
   slug: string;
+  author?: string;
 }
 
 interface ContentInfo {
@@ -1885,6 +1886,11 @@ export function DebugBubble() {
                           >
                             {change.file.replace('marketing-content/', '')}
                           </span>
+                          {change.author && (
+                            <span className="shrink-0 text-xs text-muted-foreground">
+                              by {change.author}
+                            </span>
+                          )}
                         </div>
                         
                         {/* Per-file actions */}

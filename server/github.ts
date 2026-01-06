@@ -804,6 +804,22 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
   const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
   const remoteFileSet = new Set(remoteChangedFiles);
   
+  // Build a map of file -> author for incoming changes
+  // Extract author from commit message [Author: Name] or fall back to commit author
+  const fileAuthorMap = new Map<string, string>();
+  for (const commit of conflictInfo.commits) {
+    // Try to extract author from commit message format: [Author: Full Name]
+    const authorMatch = commit.message.match(/\[Author:\s*([^\]]+)\]/);
+    const author = authorMatch ? authorMatch[1].trim() : commit.author;
+    
+    for (const file of commit.files || []) {
+      // Only set if not already set (first commit wins - most recent)
+      if (!fileAuthorMap.has(file)) {
+        fileAuthorMap.set(file, author);
+      }
+    }
+  }
+  
   // Create a map of local changes for quick lookup
   const localFileMap = new Map(localChanges.map(c => [c.file, c]));
   
@@ -823,6 +839,8 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
     changes.push({
       ...change,
       source: isConflict ? 'conflict' : 'local',
+      // For conflicts, include the remote author
+      author: isConflict ? fileAuthorMap.get(change.file) : undefined,
     });
   }
   
@@ -838,6 +856,7 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
         contentType: pathMatch?.[1] || 'unknown',
         slug: pathMatch?.[2] || filePath.split('/').pop()?.replace(/\.(yml|yaml)$/, '') || 'unknown',
         localSha: '',
+        author: fileAuthorMap.get(filePath),
       });
     }
   }
