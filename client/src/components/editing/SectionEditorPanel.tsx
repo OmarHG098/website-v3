@@ -100,37 +100,37 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium">Background Color</Label>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="flex flex-wrap gap-1.5">
         <button
           type="button"
           onClick={() => onChange("")}
-          className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+          className={`w-7 h-7 rounded-md border-2 transition-all flex items-center justify-center ${
             value === ""
               ? "border-primary ring-2 ring-primary/20"
               : "border-border hover:border-primary/50"
           }`}
           data-testid="props-background-none"
+          title="None"
         >
-          <span className="w-6 h-6 rounded border border-dashed border-border/50 bg-transparent" />
-          <span className="text-[10px] text-muted-foreground">None</span>
+          <span className="w-4 h-4 rounded border border-dashed border-border/50 bg-transparent" />
         </button>
         {backgrounds.map((bg) => (
           <button
             key={bg.id}
             type="button"
             onClick={() => onChange(bg.cssValue)}
-            className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+            className={`w-7 h-7 rounded-md border-2 transition-all flex items-center justify-center ${
               isSelected(bg)
                 ? "border-primary ring-2 ring-primary/20"
                 : "border-border hover:border-primary/50"
             }`}
             data-testid={`props-background-${bg.id}`}
+            title={bg.label}
           >
             <span
-              className="w-6 h-6 rounded border border-border/50"
+              className="w-4 h-4 rounded border border-border/50"
               style={{ background: bg.previewStyle }}
             />
-            <span className="text-[10px] text-muted-foreground">{bg.label}</span>
           </button>
         ))}
       </div>
