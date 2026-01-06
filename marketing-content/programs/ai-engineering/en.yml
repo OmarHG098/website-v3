@@ -96,23 +96,17 @@ sections:
     columns: 3
     icon_color: "#0097CD"
   - type: syllabus
-    title: What You'll Build in 20 Weeks
-    subtitle: "From day one, you’ll choose one company. Yours, one you want to build, or one you want to reimagine.\LOver 20 weeks, you’ll transform it into a fully operational, AI-powered business."
+    title: AI Engineering Program Syllabus
+    subtitle: Dive into real-world projects from the start and prepare for a tech career.
     modules:
-      - title: AI-Assisted Frontend
-        description: Modern React application with AI-powered components. Build intelligent user interfaces that leverage AI for enhanced user experiences, auto-completion, and smart suggestions.
-      - title: Production Backend
-        description: REST APIs, authentication, serverless functions. Create scalable backend services with secure authentication, API design patterns, and cloud-native deployment strategies.
-      - title: Data Systems
-        description: Telemetry, pipelines, automated reporting. Design and implement data collection systems, ETL pipelines, and automated analytics dashboards for real-time insights.
-      - title: RAG Knowledge Layer
-        description: Vector search, embeddings, contextual document retrieval. Build sophisticated retrieval-augmented generation systems that connect LLMs to your proprietary data.
-      - title: Multi-Agent Systems
-        description: Intelligent agents with memory, task routing, and tool calling. Create AI systems that can plan, reason, and execute complex multi-step tasks autonomously.
-      - title: Workflow Automation
-        description: AI-generated processes deployed via n8n, queues, and scheduled tasks. Automate business workflows with AI-driven decision making and orchestration.
-      - title: Real-Time Systems
-        description: WebSockets, streaming AI responses, event-driven architecture. Build responsive applications with real-time AI interactions and streaming capabilities.
+      - title: Foundation
+        description: Establish your coding fundamentals with HTML, CSS, and JavaScript. Learn version control with Git as you build your first responsive website.
+      - title: Frontend Mastery
+        description: Master React component architecture, state management, and API integration. Create a full React application to showcase your skills.
+      - title: Backend Development
+        description: Delve into Python fundamentals, REST API design, and database integration. Build a complete API server to enhance your backend expertise.
+      - title: Full Stack Integration
+        description: Connect frontend to backend with authentication flows and deployment strategies. Launch your capstone project to demonstrate full stack proficiency.
   - type: ai_learning
     version: "1.0"
     badge: Why 4Geeks?
