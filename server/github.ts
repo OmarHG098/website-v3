@@ -1065,3 +1065,99 @@ export async function getRemoteFileStatus(filePath: string): Promise<{
     remoteContent,
   };
 }
+
+/**
+ * Incoming change from remote - file that exists on remote but differs from local
+ */
+export interface IncomingChange {
+  file: string;
+  status: 'added' | 'modified' | 'removed';
+  remoteSha: string;
+}
+
+/**
+ * Get list of files that have changed on remote (incoming changes when local is behind)
+ * Uses GitHub Compare API to find changes between local and remote HEAD
+ */
+export async function getIncomingChanges(): Promise<{
+  changes: IncomingChange[];
+  error?: string;
+  overflow?: boolean;
+}> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return { changes: [], error: "GitHub not configured" };
+  }
+  
+  const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
+  if (!syncEnabled) {
+    return { changes: [], error: "GitHub sync is disabled" };
+  }
+  
+  const localCommit = getLastSyncedCommit();
+  if (!localCommit) {
+    return { changes: [], error: "No local commit tracked - initial sync needed" };
+  }
+  
+  try {
+    // Use GitHub Compare API to get files changed between local and remote
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/compare/${localCommit}...${config.branch}`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (response.status === 404) {
+      // Commit not found - might be a force push or initial setup
+      return { changes: [], error: "Local commit not found on remote - may need full sync" };
+    }
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('GitHub Compare API error:', response.status, errorText);
+      return { changes: [], error: `GitHub API error: ${response.status}` };
+    }
+    
+    const data = await response.json();
+    
+    // Check for overflow (GitHub limits compare to 300 files)
+    const overflow = data.files?.length >= 300;
+    
+    // Filter to only marketing-content YAML files
+    const changes: IncomingChange[] = [];
+    
+    for (const file of data.files || []) {
+      const filePath = file.filename;
+      
+      // Only track marketing-content YAML files (excluding component-registry)
+      if (!filePath.startsWith('marketing-content/')) continue;
+      if (filePath.startsWith('marketing-content/component-registry/')) continue;
+      if (!filePath.endsWith('.yml') && !filePath.endsWith('.yaml')) continue;
+      
+      let status: 'added' | 'modified' | 'removed';
+      if (file.status === 'added') {
+        status = 'added';
+      } else if (file.status === 'removed') {
+        status = 'removed';
+      } else {
+        status = 'modified';
+      }
+      
+      changes.push({
+        file: filePath,
+        status,
+        remoteSha: file.sha || '',
+      });
+    }
+    
+    return { changes, overflow };
+  } catch (error) {
+    console.error('Error getting incoming changes:', error);
+    return { changes: [], error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
