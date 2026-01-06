@@ -1,6 +1,13 @@
-import { IconAlertTriangle, IconRefresh } from "@tabler/icons-react";
+import { IconAlertTriangle, IconBrandGithub } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { useSyncOptional } from "@/contexts/SyncContext";
+
+// Custom event to open the sync modal in DebugBubble
+export const OPEN_SYNC_MODAL_EVENT = "open-sync-modal";
+
+export function openSyncModal() {
+  window.dispatchEvent(new CustomEvent(OPEN_SYNC_MODAL_EVENT));
+}
 
 export function SyncConflictBanner() {
   const sync = useSyncOptional();
@@ -8,9 +15,6 @@ export function SyncConflictBanner() {
   if (!sync || !sync.isBehind || !sync.syncStatus?.syncEnabled) {
     return null;
   }
-
-  const behindBy = sync.conflictInfo?.behindBy || 1;
-  const commitText = behindBy === 1 ? 'commit' : 'commits';
 
   return (
     <div 
@@ -24,24 +28,21 @@ export function SyncConflictBanner() {
           </div>
           <div>
             <p className="text-sm font-medium text-foreground">
-              Remote repository has {behindBy} new {commitText}
+              Remote repository has files that need to be synced
             </p>
             <p className="text-xs text-muted-foreground">
-              Use the debug tools to sync changes before editing.
+              Review and sync changes before editing.
             </p>
           </div>
         </div>
         
         <Button
           size="sm"
-          onClick={async () => {
-            await sync.syncWithRemote();
-            window.location.reload();
-          }}
-          data-testid="button-sync-now"
+          onClick={() => openSyncModal()}
+          data-testid="button-open-sync-modal"
         >
-          <IconRefresh className="h-4 w-4 mr-1" />
-          Sync & Reload
+          <IconBrandGithub className="h-4 w-4 mr-1" />
+          Open sync modal
         </Button>
       </div>
     </div>

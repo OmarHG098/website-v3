@@ -390,6 +390,17 @@ export function DebugBubble() {
     }
   }, []);
 
+  // Listen for open-sync-modal event from SyncConflictBanner
+  useEffect(() => {
+    const handleOpenSyncModal = () => {
+      setCommitModalOpen(true);
+    };
+    window.addEventListener("open-sync-modal", handleOpenSyncModal);
+    return () => {
+      window.removeEventListener("open-sync-modal", handleOpenSyncModal);
+    };
+  }, []);
+
   // Fetch experiments when entering experiments view
   useEffect(() => {
     if (menuView === "experiments" && contentInfo.type && contentInfo.slug) {
