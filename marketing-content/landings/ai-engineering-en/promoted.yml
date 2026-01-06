@@ -65,7 +65,6 @@ sections:
     marginY: none md
   - type: awards_marquee
     version: "1.0"
-    subtitle: Recognized, Top-Rated & Recommended
     paddingY: lg
     marginY: none
     speed: 40
@@ -315,8 +314,10 @@ sections:
         image_id: mentoring_zoom_call
     paddingY: lg none
   - type: certificate
-    title: Get into Tech with our Recognized Certificate
+    title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
+    useSolidCard: true
+    background: muted
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -360,10 +361,8 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
-    useSolidCard: true
-    marginY: none
     paddingY: lg
-    background: muted
+    marginY: none
   - type: pricing
     version: "1.0"
     variant: product
@@ -398,9 +397,8 @@ sections:
     paddingY: lg none
   - type: whos_hiring
     variant: carousel
-    badge: Success Stories
     title: Trusted by Leading Innovators
-    subtitle: Our graduates are hired by top companies worldwide
+    subtitle: Explore how 4Geeks Academy propels your career forward with top employers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft

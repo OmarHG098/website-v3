@@ -13,7 +13,6 @@ export interface AwardsMarqueeItem {
 
 interface AwardsMarqueeProps {
   items: AwardsMarqueeItem[];
-  subtitle?: string;
   speed?: number;
   gradient?: boolean;
   gradientColor?: string;
@@ -22,8 +21,7 @@ interface AwardsMarqueeProps {
 }
 
 export function AwardsMarquee({ 
-  items,
-  subtitle,
+  items, 
   speed = 40,
   gradient = true,
   gradientColor,
@@ -82,11 +80,9 @@ export function AwardsMarquee({
           ))}
         </Marquee>
       </div>
-      {subtitle && (
-        <div className="max-w-6xl mx-auto px-4 pt-8">
-          <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">{subtitle}</p>
-        </div>
-      )}
+      <div className="max-w-6xl mx-auto px-4 pt-8">
+        <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">Recognized, Rated, and Recommended</p>
+      </div>
     </section>
   );
 }
