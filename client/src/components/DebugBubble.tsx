@@ -1698,7 +1698,7 @@ export function DebugBubble() {
       <Dialog open={sessionModalOpen} onOpenChange={setSessionModalOpen}>
         <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Session Data</DialogTitle>
+            <DialogTitle>Session Data{getDebugUserName() ? ` - ${getDebugUserName()}` : ''}</DialogTitle>
             <DialogDescription>
               Current session values captured from browser, geolocation, and URL parameters.
             </DialogDescription>
