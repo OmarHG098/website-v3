@@ -1876,9 +1876,39 @@ export function DebugBubble() {
                   <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
                 </div>
               ) : pendingChanges.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-2">
-                  No pending changes found.
-                </p>
+                <div className="py-2 space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    No local changes to commit.
+                  </p>
+                  {githubSyncStatus?.status === 'behind' && (
+                    <div className="p-3 rounded-md border bg-muted/50 space-y-2">
+                      <p className="text-sm">
+                        Remote has newer changes. Pull to update your local files.
+                      </p>
+                      <Button
+                        size="sm"
+                        onClick={() => {
+                          setCommitModalOpen(false);
+                          handleSyncFromRemote();
+                        }}
+                        disabled={isSyncing}
+                        data-testid="button-pull-all-from-remote"
+                      >
+                        {isSyncing ? (
+                          <>
+                            <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                            Pulling...
+                          </>
+                        ) : (
+                          <>
+                            <IconCloudDownload className="h-4 w-4 mr-2" />
+                            Pull Latest from Remote
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <ScrollArea className="h-[250px] rounded-md border">
                   <div className="p-2 space-y-1">
