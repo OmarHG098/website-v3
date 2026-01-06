@@ -320,6 +320,13 @@ export function DebugBubble() {
   const [pullConflictModalOpen, setPullConflictModalOpen] = useState(false);
   const [pullConflictFiles, setPullConflictFiles] = useState<string[]>([]);
   
+  // Per-file sync state
+  const [selectedFileForCommit, setSelectedFileForCommit] = useState<string | null>(null);
+  const [fileCommitMessage, setFileCommitMessage] = useState("");
+  const [fileCommitting, setFileCommitting] = useState<string | null>(null);
+  const [filePulling, setFilePulling] = useState<string | null>(null);
+  const [confirmPullFile, setConfirmPullFile] = useState<string | null>(null);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -562,6 +569,96 @@ export function DebugBubble() {
       alert("Failed to commit changes");
     } finally {
       setIsCommitting(false);
+    }
+  };
+
+  // Handle per-file commit
+  const handleFileCommit = async (filePath: string) => {
+    if (!fileCommitMessage.trim()) return;
+    
+    setFileCommitting(filePath);
+    try {
+      const author = getDebugUserName();
+      const res = await fetch("/api/github/commit-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          filePath,
+          message: fileCommitMessage.trim(),
+          author,
+        }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Remove committed file from pending changes
+        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
+        setSelectedFileForCommit(null);
+        setFileCommitMessage("");
+        refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+      } else {
+        alert(data.error || "Failed to commit file");
+      }
+    } catch {
+      alert("Failed to commit file");
+    } finally {
+      setFileCommitting(null);
+    }
+  };
+
+  // Handle per-file pull
+  const handleFilePull = async (filePath: string) => {
+    setFilePulling(filePath);
+    try {
+      const res = await fetch("/api/github/pull-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filePath }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Remove file from pending changes (now synced)
+        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
+        setConfirmPullFile(null);
+        refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+      } else {
+        alert(data.error || "Failed to pull file");
+      }
+    } catch {
+      alert("Failed to pull file");
+    } finally {
+      setFilePulling(null);
+    }
+  };
+
+  // Handle per-file discard
+  const handleFileDiscard = async (filePath: string) => {
+    try {
+      const res = await fetch("/api/github/discard-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filePath }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Remove file from pending changes
+        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
+      } else {
+        alert("Failed to discard changes");
+      }
+    } catch {
+      alert("Failed to discard changes");
     }
   };
 
@@ -1779,37 +1876,126 @@ export function DebugBubble() {
                   No pending changes found.
                 </p>
               ) : (
-                <ScrollArea className="h-[150px] rounded-md border">
-                  <div className="p-3 space-y-2">
+                <ScrollArea className="h-[250px] rounded-md border">
+                  <div className="p-2 space-y-1">
                     {pendingChanges.map((change, index) => (
                       <div 
                         key={`${change.file}-${index}`}
-                        className="flex items-center gap-2 text-sm"
+                        className="border rounded-md p-2 space-y-2"
                       >
-                        <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
-                          change.status === 'added' 
-                            ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
-                            : change.status === 'deleted'
-                            ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
-                            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
-                        }`}>
-                          {change.status}
-                        </span>
-                        <span 
-                          className="text-muted-foreground font-mono text-xs"
-                          style={{ 
-                            direction: 'rtl', 
-                            textAlign: 'left',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            maxWidth: '300px',
-                            display: 'block',
-                          }}
-                          title={change.file}
-                        >
-                          {change.file.replace('marketing-content/', '')}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
+                            change.status === 'added' 
+                              ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
+                              : change.status === 'deleted'
+                              ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
+                              : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+                          }`}>
+                            {change.status}
+                          </span>
+                          <span 
+                            className="flex-1 text-muted-foreground font-mono text-xs truncate"
+                            title={change.file}
+                          >
+                            {change.file.replace('marketing-content/', '')}
+                          </span>
+                        </div>
+                        
+                        {/* Per-file actions */}
+                        {selectedFileForCommit === change.file ? (
+                          <div className="space-y-2">
+                            <input
+                              type="text"
+                              value={fileCommitMessage}
+                              onChange={(e) => setFileCommitMessage(e.target.value)}
+                              placeholder="Commit message..."
+                              className="w-full px-2 py-1.5 text-xs rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                              data-testid={`input-file-commit-message-${index}`}
+                              autoFocus
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && fileCommitMessage.trim()) {
+                                  handleFileCommit(change.file);
+                                } else if (e.key === 'Escape') {
+                                  setSelectedFileForCommit(null);
+                                  setFileCommitMessage("");
+                                }
+                              }}
+                            />
+                            <div className="flex items-center gap-1">
+                              <Button
+                                size="sm"
+                                className="h-7 text-xs flex-1"
+                                onClick={() => handleFileCommit(change.file)}
+                                disabled={!fileCommitMessage.trim() || fileCommitting === change.file}
+                                data-testid={`button-confirm-file-commit-${index}`}
+                              >
+                                {fileCommitting === change.file ? (
+                                  <IconRefresh className="h-3 w-3 animate-spin" />
+                                ) : (
+                                  <>
+                                    <IconArrowUp className="h-3 w-3 mr-1" />
+                                    Commit
+                                  </>
+                                )}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-xs"
+                                onClick={() => {
+                                  setSelectedFileForCommit(null);
+                                  setFileCommitMessage("");
+                                }}
+                                data-testid={`button-cancel-file-commit-${index}`}
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-6 text-xs px-2"
+                              onClick={() => {
+                                setSelectedFileForCommit(change.file);
+                                setFileCommitMessage("");
+                              }}
+                              data-testid={`button-commit-file-${index}`}
+                            >
+                              <IconArrowUp className="h-3 w-3 mr-1" />
+                              Commit
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-6 text-xs px-2"
+                              onClick={() => setConfirmPullFile(change.file)}
+                              disabled={filePulling === change.file}
+                              data-testid={`button-pull-file-${index}`}
+                            >
+                              {filePulling === change.file ? (
+                                <IconRefresh className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <>
+                                  <IconCloudDownload className="h-3 w-3 mr-1" />
+                                  Pull
+                                </>
+                              )}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-6 text-xs px-2 text-muted-foreground"
+                              onClick={() => handleFileDiscard(change.file)}
+                              data-testid={`button-discard-file-${index}`}
+                            >
+                              <IconX className="h-3 w-3 mr-1" />
+                              Discard
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -1817,47 +2003,22 @@ export function DebugBubble() {
               )}
             </div>
             
-            {/* Commit message input */}
-            <div className="space-y-2">
-              <label htmlFor="commit-message" className="text-sm font-medium">
-                Commit Message
-              </label>
-              <textarea
-                id="commit-message"
-                value={commitMessage}
-                onChange={(e) => setCommitMessage(e.target.value)}
-                placeholder="Describe your changes..."
-                className="w-full min-h-[80px] px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-none"
-                data-testid="input-commit-message"
-              />
-            </div>
+            <p className="text-xs text-muted-foreground">
+              Use the buttons above to commit, pull, or discard changes for each file individually.
+            </p>
           </div>
 
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter>
             <Button
               variant="outline"
-              onClick={() => setCommitModalOpen(false)}
-              disabled={isCommitting}
-              data-testid="button-cancel-commit"
+              onClick={() => {
+                setCommitModalOpen(false);
+                setSelectedFileForCommit(null);
+                setFileCommitMessage("");
+              }}
+              data-testid="button-close-commit-modal"
             >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleCommit}
-              disabled={!commitMessage.trim() || pendingChanges.length === 0 || isCommitting}
-              data-testid="button-confirm-commit"
-            >
-              {isCommitting ? (
-                <>
-                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
-                  Committing...
-                </>
-              ) : (
-                <>
-                  <IconArrowUp className="h-4 w-4 mr-2" />
-                  Commit & Push
-                </>
-              )}
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1931,6 +2092,73 @@ export function DebugBubble() {
             >
               <IconCloudDownload className="h-4 w-4 mr-2" />
               Pull Anyway
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Per-file Pull Confirmation Modal */}
+      <Dialog open={confirmPullFile !== null} onOpenChange={(open) => !open && setConfirmPullFile(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <IconCloudDownload className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <DialogTitle>Pull File from Remote?</DialogTitle>
+                <DialogDescription>
+                  This will overwrite your local changes to this file.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <div className="flex items-center gap-2 p-3 bg-muted rounded-md">
+              <IconFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+              <span 
+                className="font-mono text-sm truncate" 
+                title={confirmPullFile || ''}
+              >
+                {confirmPullFile?.replace('marketing-content/', '')}
+              </span>
+            </div>
+            
+            <p className="text-xs text-muted-foreground mt-3">
+              Your local changes to this file will be replaced with the remote version. This action cannot be undone.
+            </p>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setConfirmPullFile(null)}
+              data-testid="button-cancel-pull-file"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (confirmPullFile) {
+                  handleFilePull(confirmPullFile);
+                }
+              }}
+              disabled={filePulling !== null}
+              data-testid="button-confirm-pull-file"
+            >
+              {filePulling ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Pulling...
+                </>
+              ) : (
+                <>
+                  <IconCloudDownload className="h-4 w-4 mr-2" />
+                  Pull & Overwrite
+                </>
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
