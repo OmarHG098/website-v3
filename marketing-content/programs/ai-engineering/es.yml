@@ -130,6 +130,7 @@ sections:
         difficulty: hard
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué Aprender con 4Geeks?
     description: Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje.
@@ -144,16 +145,6 @@ sections:
       - icon: Users
         title: Aprende con la comunidad
         description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
-    highlight:
-      title: Maximiza tu Progreso con Rigobot y Mentoría 1:1
-      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA diseñadas para un aprendizaje más inteligente y rápido.
-      bullets:
-        - text: Rigobot, nuestro asistente de código con IA, sigue tu progreso y te da retroalimentación personalizada exactamente cuando y como la necesitas.
-        - text: Obtén atención personal inigualable con nuestra proporción de 7:1 estudiantes por profesor, además de acceso ilimitado a sesiones 1:1 con mentores expertos y coaches de carrera.
-      cta:
-        text: ¡Comienza a aprender ahora!
-        url: /aplicar
-        variant: primary
   - type: certificate
     title: Certificado y Red de Carreras
     description: "Obtén un certificado reconocido por la industria, acreditado por el Departamento de Educación de Florida y accede a roles de alta demanda como:"

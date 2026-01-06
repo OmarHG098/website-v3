@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
-import type { AILearningSection as AILearningSectionType } from "@shared/schema";
+import type { 
+  AiLearningSection as AILearningSectionType,
+  AiLearningFeatureTabsSection,
+  AiLearningHighlightSection,
+} from "@shared/schema";
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { cn } from "@/lib/utils";
@@ -88,7 +92,33 @@ function extractYouTubeId(url: string): string | null {
   return null;
 }
 
-export function AILearningSection({ data }: AILearningSectionProps) {
+function getIcon(iconName: string, isRigobot: boolean = false, isLarge: boolean = false) {
+  if (isRigobot) {
+    return (
+      <img 
+        src={rigobotLogo} 
+        alt="Rigobot" 
+        className={isLarge ? "w-full h-full object-cover" : "w-7 h-7 object-contain"}
+      />
+    );
+  }
+  const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
+  const IconComponent = icons[`Icon${iconName}`];
+  return IconComponent ? <IconComponent size={isLarge ? 32 : 24} className="text-primary" /> : null;
+}
+
+// Type guard for feature-tabs variant
+function isFeatureTabsVariant(data: AILearningSectionType): data is AiLearningFeatureTabsSection {
+  return !('variant' in data) || data.variant !== 'highlight';
+}
+
+// Type guard for highlight variant
+function isHighlightVariant(data: AILearningSectionType): data is AiLearningHighlightSection {
+  return 'variant' in data && data.variant === 'highlight';
+}
+
+// Feature Tabs Variant Component
+function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection }) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [showAllBullets, setShowAllBullets] = useState(false);
@@ -102,21 +132,6 @@ export function AILearningSection({ data }: AILearningSectionProps) {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  const getIcon = (iconName: string, isRigobot: boolean = false, isLarge: boolean = false) => {
-    if (isRigobot) {
-      return (
-        <img 
-          src={rigobotLogo} 
-          alt="Rigobot" 
-          className={isLarge ? "w-full h-full object-cover" : "w-7 h-7 object-contain"}
-        />
-      );
-    }
-    const icons = TablerIcons as unknown as Record<string, ComponentType<{ size?: number; className?: string }>>;
-    const IconComponent = icons[`Icon${iconName}`];
-    return IconComponent ? <IconComponent size={isLarge ? 32 : 24} className="text-primary" /> : null;
-  };
 
   const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
 
@@ -144,7 +159,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
 
         {/* Hover Feature Cards */}
         <div className="grid md:grid-cols-3 gap-3 md:gap-6 mb-8">
-          {features.slice(0, 3).map((feature, index) => {
+          {features.slice(0, 3).map((feature: Feature, index: number) => {
             const showRigobotLogo = feature.show_rigobot_logo ?? feature.title?.toLowerCase().includes('rigobot') ?? false;
             return (
               <HoverFeatureCard
@@ -231,7 +246,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       <ul className="space-y-3 mb-3" data-testid="feature-bullets">
                         {displayedFeature.bullets
                           .slice(0, (!isMobile || showAllBullets) ? undefined : 2)
-                          .map((bullet, idx) => (
+                          .map((bullet: FeatureBullet, idx: number) => (
                           <li key={idx} className="flex items-start gap-3">
                             <span className="text-primary flex-shrink-0 mt-0.5">
                               {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
@@ -267,80 +282,105 @@ export function AILearningSection({ data }: AILearningSectionProps) {
             </CardContent>
           </Card>
         )}
-
-        {/* Highlight Section (separate from hover cards) */}
-        {data.highlight && (
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
-              <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
-                  <img 
-                    src={rigobotLogo} 
-                    alt="Rigobot" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 
-                    className="text-h2 text-foreground mb-2"
-                    data-testid="text-highlight-title"
-                  >
-                    {data.highlight.title}
-                  </h3>
-                </div>
-              </div>
-              
-              <p 
-                className="mb-6 text-muted-foreground text-body"
-                data-testid="text-highlight-description"
-              >
-                {data.highlight.description}
-              </p>
-
-              {data.highlight.bullets && data.highlight.bullets.length > 0 && (
-                <div className="flex flex-col justify-center gap-3 mb-6" data-testid="highlight-bullets">
-                  {data.highlight.bullets.map((bullet, idx) => (
-                    <div key={idx} className="flex items-center gap-3 ">
-                      <div className="flex items-center gap-2">
-                        <span className="text-primary flex-shrink-0">
-                          {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
-                        </span>
-                        <span className="text-muted-foreground">{bullet.text}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              
-              {data.highlight.cta && (
-                <Button
-                  variant={data.highlight.cta.variant === "primary" ? "default" : data.highlight.cta.variant === "outline" ? "outline" : "secondary"}
-                  asChild
-                  data-testid="button-highlight-cta"
-                >
-                  <a href={data.highlight.cta.url}>{data.highlight.cta.text}</a>
-                </Button>
-              )}
-            </div>
-            
-            {!videoId && data.video_url && (
-              <div 
-                className={`relative aspect-video rounded-card overflow-hidden shadow-card ${data.video_position === "left" ? "lg:order-1" : ""}`}
-                data-testid="video-container-highlight"
-              >
-                <iframe
-                  src={`https://www.youtube.com/embed/${extractYouTubeId(data.video_url)}`}
-                  title="Learn with 4Geeks"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                  data-testid="iframe-youtube-highlight"
-                />
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </section>
   );
+}
+
+// Highlight Variant Component
+function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
+  const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
+
+  return (
+    <section 
+      className=""
+      data-testid="section-ai-learning-highlight"
+    >
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div data-testid="highlight-block" className={data.video_position === "left" ? "lg:order-2" : ""}>
+            <div className="flex items-start gap-4 mb-6">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden">
+                <img 
+                  src={rigobotLogo} 
+                  alt="Rigobot" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 
+                  className="text-h2 text-foreground mb-2"
+                  data-testid="text-highlight-title"
+                >
+                  {data.title}
+                </h3>
+              </div>
+            </div>
+            
+            <p 
+              className="mb-6 text-muted-foreground text-body"
+              data-testid="text-highlight-description"
+            >
+              {data.description}
+            </p>
+
+            {data.bullets && data.bullets.length > 0 && (
+              <div className="flex flex-col justify-center gap-3 mb-6" data-testid="highlight-bullets">
+                {data.bullets.map((bullet: FeatureBullet, idx: number) => (
+                  <div key={idx} className="flex items-center gap-3 ">
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary flex-shrink-0">
+                        {bullet.icon ? getIcon(bullet.icon) : <TablerIcons.IconCheck size={20} />}
+                      </span>
+                      <span className="text-muted-foreground">{bullet.text}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {data.cta && (
+              <Button
+                variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+                asChild
+                data-testid="button-highlight-cta"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
+          </div>
+          
+          {videoId && data.video_url && (
+            <div 
+              className={`relative aspect-video rounded-card overflow-hidden shadow-card ${data.video_position === "left" ? "lg:order-1" : ""}`}
+              data-testid="video-container-highlight"
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title="Learn with 4Geeks"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+                data-testid="iframe-youtube-highlight"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Main component that routes to the correct variant
+export function AILearningSection({ data }: AILearningSectionProps) {
+  if (isHighlightVariant(data)) {
+    return <AILearningHighlight data={data} />;
+  }
+  
+  // Default to feature-tabs variant
+  if (isFeatureTabsVariant(data)) {
+    return <AILearningFeatureTabs data={data} />;
+  }
+  
+  return null;
 }

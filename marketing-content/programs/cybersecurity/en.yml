@@ -99,6 +99,7 @@ sections:
         difficulty: hard
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: Why 4Geeks?
     title: What Sets 4Geeks Apart
     description: AI-Forward Skills, Unlimited Mentorship and Career Support. Everything you need to launch and grow a career in cybersecurity.
@@ -113,13 +114,6 @@ sections:
       - icon: Users
         title: Learn faster with hyperpersonalized support
         description: Progress with instant AI feedback, personalized guidance, and small class sizes (max 15 people).
-    highlight:
-      title: Join a Global Tech Community
-      description: Connect with peers, mentors, and alumni and stay supported as you grow. Our cybersecurity curriculum was co-designed by Daniela Maissi, EC-Council member and malware specialist with 12+ certifications in cloud security, OSINT, and IT systems.
-      cta:
-        text: Start learning now!
-        url: /en/apply
-        variant: primary
   - type: certificate
     version: "1.0"
     title: Prepare for Industry Certifications

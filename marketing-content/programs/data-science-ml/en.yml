@@ -100,6 +100,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"
     description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
@@ -114,13 +115,6 @@ sections:
       - icon: "Users"
         title: "Learn with the community"
         description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
-    highlight:
-      title: "Maximize Your Learning Potential with Rigobot"
-      description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
-      cta:
-        text: "Start learning now!"
-        url: "/en/apply"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"

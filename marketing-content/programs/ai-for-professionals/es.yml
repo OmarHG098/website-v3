@@ -100,6 +100,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "¿Por Qué 4Geeks?"
     title: "¿Por Qué Aprender con 4Geeks?"
     description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te quedes atascado y acelerar tu proceso de aprendizaje."
@@ -114,13 +115,6 @@ sections:
       - icon: "Users"
         title: "Aprende con la comunidad"
         description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
-    highlight:
-      title: "Conoce a Rigobot, Nuestro Tutor de IA"
-      description: "Rigobot es nuestro tutor de IA diseñado especialmente para autodidactas, listo para abordar cualquier pregunta y equipado con retroalimentación automatizada, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
-      cta:
-        text: "¡Empieza a aprender ahora!"
-        url: "/es/aplica"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"

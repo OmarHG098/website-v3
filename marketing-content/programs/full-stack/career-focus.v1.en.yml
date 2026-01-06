@@ -98,6 +98,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "Career Support"
     title: "From Learning to Landing Your First Job"
     description: "We don't just teach you to code - we help you get hired with dedicated career services and job placement support."
@@ -112,10 +113,3 @@ sections:
       - icon: "Shield"
         title: "Job Guarantee"
         description: "If you don't get hired within 6 months, we'll refund your tuition. That's how confident we are in our program."
-    highlight:
-      title: "84% of Our Graduates Get Hired Within 6 Months"
-      description: "Join thousands of career changers who went from complete beginners to employed developers. Your new career starts here."
-      cta:
-        text: "Start Your Career Change"
-        url: "/en/apply"
-        variant: "primary"

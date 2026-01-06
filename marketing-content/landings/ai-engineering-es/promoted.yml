@@ -94,6 +94,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: ¿Por qué 4Geeks?
     title: Aprende Más Rápido, No Más Difícil
     description: Nuestra plataforma potenciada por IA y mentoría ilimitada aceleran tu aprendizaje.
@@ -108,16 +109,6 @@ sections:
       - icon: Users
         title: Comunidad Activa
         description: Aprende junto a compañeros motivados y acelera tu progreso.
-    highlight:
-      title: Maximiza Tu Progreso
-      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA para un aprendizaje más inteligente.
-      bullets:
-        - text: Rigobot sigue tu progreso y te da retroalimentación personalizada cuando la necesitas.
-        - text: Proporción 7:1 estudiante-profesor más acceso ilimitado a mentores expertos y coaches de carrera.
-      cta:
-        text: Comienza Ahora
-        url: /es/aplica?program=ai-engineering
-        variant: primary
 
   - type: certificate
     title: Certificado y Red de Carreras

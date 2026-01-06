@@ -100,6 +100,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "¿Por qué 4Geeks?"
     title: "Lo Que Nos Diferencia"
     description: "Habilidades de IA de Vanguardia, Mentoría Ilimitada y Soporte de Carrera. Todo lo que necesitas para lanzar y hacer crecer una carrera en ciberseguridad."
@@ -114,13 +115,6 @@ sections:
       - icon: "Users"
         title: "Aprende más rápido con soporte hiperpersonalizado"
         description: "Progresa con retroalimentación instantánea de IA, orientación personalizada y clases pequeñas (máximo 15 personas)."
-    highlight:
-      title: "Únete a una Comunidad Tecnológica Global"
-      description: "Conéctate con compañeros, mentores y exalumnos y mantente apoyado mientras creces. Nuestro currículo de ciberseguridad fue co-diseñado por Daniela Maissi, miembro del EC-Council y especialista en malware con más de 12 certificaciones en seguridad en la nube, OSINT y sistemas de TI."
-      cta:
-        text: "¡Empieza a aprender ahora!"
-        url: "/es/aplica"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"

@@ -86,8 +86,14 @@ export type {
 // ============================================
 export {
   chatExampleSchema,
+  aiLearningBulletSchema,
+  aiLearningFeatureSchema,
+  aiLearningFeatureTabsSectionSchema,
+  aiLearningHighlightSectionSchema,
   aiLearningSectionSchema,
   type ChatExample,
+  type AiLearningFeatureTabsSection,
+  type AiLearningHighlightSection,
   type AiLearningSection,
 } from "../marketing-content/component-registry/ai_learning/v1.0/schema";
 

@@ -98,6 +98,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "Maximum ROI"
     title: "The Best Investment in Your Future"
     description: "Our graduates see a 10x return on their tuition investment within the first year of employment."
@@ -112,10 +113,3 @@ sections:
       - icon: "Refresh"
         title: "10x ROI in Year One"
         description: "The average tuition pays for itself 10 times over in the first year through increased earnings."
-    highlight:
-      title: "Average Graduate Earns $35K More Per Year"
-      description: "That's $350K+ in additional lifetime earnings. Start investing in your future today with flexible payment options."
-      cta:
-        text: "See Payment Options"
-        url: "/en/apply"
-        variant: "primary"
