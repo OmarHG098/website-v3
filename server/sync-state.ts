@@ -385,3 +385,158 @@ export function getLastSyncedCommit(): string | null {
   const state = loadSyncState();
   return state.lastSyncedCommit;
 }
+
+/**
+ * Get status for a single file (local sha, remote sha, conflict state)
+ */
+export function getFileStatus(filePath: string): {
+  exists: boolean;
+  localSha: string | null;
+  remoteSha: string | null;
+  hasConflict: boolean;
+  status: 'synced' | 'modified' | 'added' | 'deleted' | 'conflict' | 'unknown';
+} {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  if (!shouldTrackFile(relativePath)) {
+    return { exists: false, localSha: null, remoteSha: null, hasConflict: false, status: 'unknown' };
+  }
+  
+  const state = loadSyncState();
+  const fullPath = path.join(process.cwd(), relativePath);
+  const storedInfo = state.files[relativePath];
+  
+  // Check if file exists locally
+  if (!fs.existsSync(fullPath)) {
+    // File deleted locally but exists in remote
+    if (storedInfo?.remoteSha) {
+      return { exists: false, localSha: null, remoteSha: storedInfo.remoteSha, hasConflict: false, status: 'deleted' };
+    }
+    return { exists: false, localSha: null, remoteSha: null, hasConflict: false, status: 'unknown' };
+  }
+  
+  // Compute current local SHA
+  const content = fs.readFileSync(fullPath, 'utf-8');
+  const localSha = computeFileSha(content);
+  const remoteSha = storedInfo?.remoteSha || null;
+  
+  // Determine status
+  if (!remoteSha) {
+    // No remote SHA known - file is new/added
+    return { exists: true, localSha, remoteSha: null, hasConflict: false, status: 'added' };
+  }
+  
+  if (localSha === remoteSha) {
+    return { exists: true, localSha, remoteSha, hasConflict: false, status: 'synced' };
+  }
+  
+  // Local differs from remote - modified
+  return { exists: true, localSha, remoteSha, hasConflict: false, status: 'modified' };
+}
+
+/**
+ * Update a single file's remote SHA after pulling from remote
+ */
+export function updateFileAfterPull(filePath: string): void {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  if (!shouldTrackFile(relativePath)) {
+    return;
+  }
+  
+  const state = loadSyncState();
+  const fullPath = path.join(process.cwd(), relativePath);
+  
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, 'utf-8');
+    const sha = computeFileSha(content);
+    const stats = fs.statSync(fullPath);
+    
+    state.files[relativePath] = {
+      sha,
+      lastModified: stats.mtimeMs,
+      remoteSha: sha, // After pull, local = remote
+    };
+    
+    saveSyncState(state);
+  }
+}
+
+/**
+ * Update a single file's sync state after committing to remote
+ */
+export function updateFileAfterCommit(filePath: string, commitSha: string): void {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  if (!shouldTrackFile(relativePath)) {
+    return;
+  }
+  
+  const state = loadSyncState();
+  const fullPath = path.join(process.cwd(), relativePath);
+  
+  // Update last synced commit
+  state.lastSyncedCommit = commitSha;
+  state.lastSyncedAt = new Date().toISOString();
+  
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, 'utf-8');
+    const sha = computeFileSha(content);
+    const stats = fs.statSync(fullPath);
+    
+    state.files[relativePath] = {
+      sha,
+      lastModified: stats.mtimeMs,
+      remoteSha: sha, // After commit, local = remote
+    };
+  } else {
+    // File was deleted
+    delete state.files[relativePath];
+  }
+  
+  saveSyncState(state);
+}
+
+/**
+ * Discard local changes for a file by resetting its stored SHA to match current content
+ * This marks the file as "synced" without actually reverting content
+ */
+export function discardLocalChanges(filePath: string): boolean {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  if (!shouldTrackFile(relativePath)) {
+    return false;
+  }
+  
+  const state = loadSyncState();
+  const fullPath = path.join(process.cwd(), relativePath);
+  
+  if (!fs.existsSync(fullPath)) {
+    // File doesn't exist, remove from state
+    delete state.files[relativePath];
+    saveSyncState(state);
+    return true;
+  }
+  
+  const content = fs.readFileSync(fullPath, 'utf-8');
+  const sha = computeFileSha(content);
+  const stats = fs.statSync(fullPath);
+  
+  // Reset both sha and remoteSha to current content
+  state.files[relativePath] = {
+    sha,
+    lastModified: stats.mtimeMs,
+    remoteSha: sha,
+  };
+  
+  saveSyncState(state);
+  return true;
+}

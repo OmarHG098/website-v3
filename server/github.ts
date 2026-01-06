@@ -813,3 +813,255 @@ export async function syncWithRemote(): Promise<{ success: boolean; error?: stri
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
+
+/**
+ * Get file content from GitHub remote
+ */
+export async function getRemoteFileContent(filePath: string): Promise<{ 
+  success: boolean; 
+  content?: string; 
+  sha?: string;
+  error?: string;
+}> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return { success: false, error: "GitHub not configured" };
+  }
+  
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${filePath}?ref=${config.branch}`;
+  
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (response.status === 404) {
+      return { success: false, error: "File not found on remote" };
+    }
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      return { success: false, error: `GitHub API error: ${response.status} - ${errorText}` };
+    }
+    
+    const data = await response.json();
+    
+    if (!data.content) {
+      return { success: false, error: "No content in response" };
+    }
+    
+    // GitHub returns content as base64
+    const content = Buffer.from(data.content, 'base64').toString('utf-8');
+    
+    return { success: true, content, sha: data.sha };
+  } catch (error) {
+    console.error('Error fetching remote file:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
+/**
+ * Pull a single file from remote to local
+ */
+export async function pullSingleFile(filePath: string): Promise<{ 
+  success: boolean; 
+  error?: string;
+}> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return { success: false, error: "GitHub not configured" };
+  }
+  
+  // Fetch file content from remote
+  const remoteResult = await getRemoteFileContent(filePath);
+  
+  if (!remoteResult.success || !remoteResult.content) {
+    return { success: false, error: remoteResult.error || "Failed to get remote content" };
+  }
+  
+  try {
+    // Write to local filesystem
+    const fullPath = path.join(process.cwd(), filePath);
+    const dir = path.dirname(fullPath);
+    
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    fs.writeFileSync(fullPath, remoteResult.content, 'utf-8');
+    
+    // Update sync state
+    const { updateFileAfterPull } = await import("./sync-state");
+    updateFileAfterPull(filePath);
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error writing file:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
+/**
+ * Commit a single file to remote
+ */
+export async function commitSingleFile(options: {
+  filePath: string;
+  message: string;
+  author?: string;
+}): Promise<{ 
+  success: boolean; 
+  commitSha?: string;
+  error?: string;
+}> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return { success: false, error: "GitHub not configured" };
+  }
+  
+  const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
+  if (!syncEnabled) {
+    return { success: false, error: "GitHub sync is disabled" };
+  }
+  
+  const fullPath = path.join(process.cwd(), options.filePath);
+  
+  // Check if file exists
+  if (!fs.existsSync(fullPath)) {
+    return { success: false, error: "File not found locally" };
+  }
+  
+  try {
+    const content = fs.readFileSync(fullPath, 'utf-8');
+    
+    // Format commit message with author prefix
+    let message = options.message;
+    if (options.author) {
+      message = `[Author: ${options.author}] ${message}`;
+    }
+    
+    // Get current file SHA (required for updating existing files)
+    const sha = await getFileSha(config, options.filePath);
+    
+    // Prepare the request body
+    const body: Record<string, string> = {
+      message,
+      content: Buffer.from(content).toString('base64'),
+      branch: config.branch,
+    };
+    
+    if (sha) {
+      body.sha = sha;
+    }
+    
+    // Make the commit via GitHub Contents API
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${options.filePath}`;
+    
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify(body),
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('GitHub API error:', response.status, errorText);
+      return { success: false, error: `GitHub API error: ${response.status}` };
+    }
+    
+    const data = await response.json();
+    const commitSha = data.commit?.sha;
+    
+    // Update sync state for this file
+    const { updateFileAfterCommit } = await import("./sync-state");
+    updateFileAfterCommit(options.filePath, commitSha || '');
+    
+    console.log(`File committed to GitHub: ${options.filePath}`);
+    
+    return { success: true, commitSha };
+  } catch (error) {
+    console.error('Error committing file:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
+/**
+ * Get file status comparing local vs remote
+ */
+export async function getRemoteFileStatus(filePath: string): Promise<{
+  exists: boolean;
+  localSha: string | null;
+  remoteSha: string | null;
+  hasConflict: boolean;
+  status: 'synced' | 'local-only' | 'remote-only' | 'modified' | 'conflict';
+  localContent?: string;
+  remoteContent?: string;
+}> {
+  const { getFileStatus, computeFileSha } = await import("./sync-state");
+  const localStatus = getFileStatus(filePath);
+  
+  // Get remote file info
+  const remoteResult = await getRemoteFileContent(filePath);
+  
+  const fullPath = path.join(process.cwd(), filePath);
+  let localContent: string | undefined;
+  let localSha: string | null = null;
+  
+  if (fs.existsSync(fullPath)) {
+    localContent = fs.readFileSync(fullPath, 'utf-8');
+    localSha = computeFileSha(localContent);
+  }
+  
+  const remoteSha = remoteResult.sha || null;
+  const remoteContent = remoteResult.content;
+  
+  // Compute remote content SHA for comparison
+  let remoteContentSha: string | null = null;
+  if (remoteContent) {
+    remoteContentSha = computeFileSha(remoteContent);
+  }
+  
+  // Determine status
+  if (!localSha && !remoteContentSha) {
+    return { exists: false, localSha: null, remoteSha: null, hasConflict: false, status: 'synced' };
+  }
+  
+  if (localSha && !remoteContentSha) {
+    return { exists: true, localSha, remoteSha: null, hasConflict: false, status: 'local-only', localContent };
+  }
+  
+  if (!localSha && remoteContentSha) {
+    return { exists: false, localSha: null, remoteSha: remoteContentSha, hasConflict: false, status: 'remote-only', remoteContent };
+  }
+  
+  if (localSha === remoteContentSha) {
+    return { exists: true, localSha, remoteSha: remoteContentSha, hasConflict: false, status: 'synced', localContent, remoteContent };
+  }
+  
+  // Check if there's a conflict (both local and remote have been modified)
+  // Conflict = stored remoteSha differs from current remote, AND local differs from stored remote
+  const hasConflict = localStatus.remoteSha !== null && 
+                      localStatus.remoteSha !== remoteContentSha && 
+                      localSha !== localStatus.remoteSha;
+  
+  return { 
+    exists: true, 
+    localSha, 
+    remoteSha: remoteContentSha, 
+    hasConflict, 
+    status: hasConflict ? 'conflict' : 'modified',
+    localContent,
+    remoteContent,
+  };
+}
