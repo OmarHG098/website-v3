@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings } from "@tabler/icons-react";
+import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -157,6 +157,49 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
   );
 }
 
+interface ShowOnPickerProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function ShowOnPicker({ value, onChange }: ShowOnPickerProps) {
+  const options = [
+    { id: "all", label: "Both", icon: IconDevices },
+    { id: "desktop", label: "Desktop", icon: IconDeviceDesktop },
+    { id: "mobile", label: "Mobile", icon: IconDeviceMobile },
+  ];
+
+  const currentValue = value || "all";
+
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <Label className="text-sm font-medium whitespace-nowrap">Show on</Label>
+      <div className="flex rounded-md border border-border overflow-hidden">
+        {options.map((option) => {
+          const Icon = option.icon;
+          const isSelected = currentValue === option.id;
+          return (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => onChange(option.id === "all" ? "" : option.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-sm transition-colors ${
+                isSelected
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-transparent text-muted-foreground hover:bg-muted"
+              } ${option.id !== "all" ? "border-l border-border" : ""}`}
+              data-testid={`props-showon-${option.id}`}
+            >
+              <Icon className="h-4 w-4" />
+              <span>{option.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function SectionEditorPanel({
   section,
   sectionIndex,
@@ -187,6 +230,7 @@ export function SectionEditorPanel({
   }, [yamlContent]);
 
   const currentBackground = (parsedSection?.background as string) || "";
+  const currentShowOn = (parsedSection?.showOn as string) || "";
 
   // Initialize YAML content from section
   useEffect(() => {
@@ -406,6 +450,10 @@ export function SectionEditorPanel({
 
         <TabsContent value="props" className="flex-1 overflow-auto p-4 mt-0 data-[state=inactive]:hidden">
           <div className="space-y-6">
+            <ShowOnPicker
+              value={currentShowOn}
+              onChange={(value) => updateProperty("showOn", value)}
+            />
             <BackgroundPicker
               value={currentBackground}
               onChange={(value) => updateProperty("background", value)}
