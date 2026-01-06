@@ -19,6 +19,26 @@ interface EditModeWrapperProps {
   locale?: string;
 }
 
+// Sync wrapper that only renders when edit mode is active
+// This ensures no GitHub API calls happen until user explicitly enters edit mode
+function SyncWrapper({ children }: { children: React.ReactNode }) {
+  const editMode = useEditModeOptional();
+  
+  // Only mount SyncProvider when edit mode is actually active
+  // Regular browsers (even with debug capabilities) won't trigger any sync API calls
+  if (!editMode?.isEditMode) {
+    return <>{children}</>;
+  }
+  
+  return (
+    <SyncProvider>
+      <SyncConflictBanner />
+      {children}
+      <SyncConflictModal />
+    </SyncProvider>
+  );
+}
+
 // Inner component that uses the edit mode context
 function EditModeInner({ 
   children, 
@@ -44,7 +64,7 @@ function EditModeInner({
     }
   }, [editMode]);
   
-  // If not in edit mode, just render children
+  // If not in edit mode, just render children (no editor panel)
   if (!editMode || !editMode.isEditMode) {
     return <>{children}</>;
   }
@@ -75,6 +95,7 @@ function EditModeInner({
 }
 
 // Main wrapper that provides the context
+// Edit capabilities are checked but sync is deferred until edit mode is toggled on
 export function EditModeWrapper({ 
   children, 
   sections, 
@@ -84,18 +105,21 @@ export function EditModeWrapper({
 }: EditModeWrapperProps) {
   const { canEdit, isDebugMode } = useDebugAuth();
   
+  // Non-debug users: render children directly (no overhead)
   if (!isDebugMode) {
     return <>{children}</>;
   }
   
+  // No edit capability: render children directly
   if (!canEdit) {
     return <>{children}</>;
   }
   
+  // Has edit capability: provide EditModeProvider for toggle UI
+  // SyncWrapper only activates when user actually enters edit mode
   return (
-    <SyncProvider>
-      <EditModeProvider>
-        <SyncConflictBanner />
+    <EditModeProvider>
+      <SyncWrapper>
         <EditModeInner 
           sections={sections} 
           contentType={contentType} 
@@ -104,8 +128,7 @@ export function EditModeWrapper({
         >
           {children}
         </EditModeInner>
-        <SyncConflictModal />
-      </EditModeProvider>
-    </SyncProvider>
+      </SyncWrapper>
+    </EditModeProvider>
   );
 }
