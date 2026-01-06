@@ -63,6 +63,20 @@ sections:
         label: Average Rating
       - value: 1,500+
         label: Success Stories
+  - type: features_grid
+    version: "1.0"
+    title: What You'll Learn
+    subtitle: Discover the tools that make learning faster and easier
+    items:
+      - icon: Brain
+        title: AI-Powered Learning
+        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: Rocket
+        title: Accelerated Progress
+        description: Learn how students are completing courses 3x faster with AI assistance
+      - icon: Code
+        title: Live Demo
+        description: Watch a live demonstration of our AI coding assistant in action
   - type: faq
     version: "1.0"
     title: Frequently Asked Questions

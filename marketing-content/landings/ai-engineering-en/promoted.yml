@@ -10,8 +10,8 @@ sections:
     variant: ApplyFormProductShowcase
     title: Thrive in Today’s Tech and Shape Tomorrow’s.
     brand_mark:
-      prefix: Becomee an
-      highlight: AI Engineer
+      prefix: Become an
+      highlight: AI Engineeer
       color: primary
     description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
     form:
@@ -302,7 +302,7 @@ sections:
       desktop: lg none
   - type: ai_learning
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
+    title: Why Learn with 4Geeeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: TrendingUp
