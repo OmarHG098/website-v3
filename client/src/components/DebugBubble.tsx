@@ -394,6 +394,18 @@ export function DebugBubble() {
   useEffect(() => {
     const handleOpenSyncModal = () => {
       setCommitModalOpen(true);
+      // Fetch pending changes when modal opens from banner
+      setPendingChangesLoading(true);
+      fetch("/api/github/pending-changes")
+        .then((res) => res.json())
+        .then((data: { changes: PendingChange[]; count: number }) => {
+          setPendingChanges(data.changes || []);
+          setPendingChangesLoading(false);
+        })
+        .catch(() => {
+          setPendingChanges([]);
+          setPendingChangesLoading(false);
+        });
     };
     window.addEventListener("open-sync-modal", handleOpenSyncModal);
     return () => {
