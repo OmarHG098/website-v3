@@ -65,6 +65,7 @@ sections:
     marginY: none md
   - type: awards_marquee
     version: "1.0"
+    subtitle: "Recognized, Top-Rated & Recommended"
     paddingY: lg
     marginY: none
     speed: 40
@@ -314,10 +315,8 @@ sections:
         image_id: mentoring_zoom_call
     paddingY: lg none
   - type: certificate
-    title: Certificate & Career Network
+    title: Get into Tech with our Recognized Certificate
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
-    useSolidCard: true
-    background: muted
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -361,8 +360,10 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
-    paddingY: lg
+    useSolidCard: true
     marginY: none
+    paddingY: lg
+    background: muted
   - type: pricing
     version: "1.0"
     variant: product
