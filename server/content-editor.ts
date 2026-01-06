@@ -203,6 +203,21 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
               validationErrors.push(`Section ${sectionIndex + 1}: Unknown section type "${sectionType}". Check spelling or use a valid section type.`);
               continue;
             }
+            
+            // Find the matching schema branch (where type matches) and extract its errors
+            const matchingBranch = unionErrors.find(ue => 
+              !ue.issues.some(i => i.path[0] === "type" && (i.code === "invalid_literal" || i.code === "invalid_enum_value"))
+            );
+            
+            if (matchingBranch && matchingBranch.issues.length > 0) {
+              // Extract detailed errors from the matching branch
+              const detailedErrors = matchingBranch.issues.slice(0, 3).map(i => {
+                const fieldPath = i.path.join(".");
+                return `  - ${fieldPath}: ${i.message}`;
+              });
+              validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}):\n${detailedErrors.join("\n")}`);
+              continue;
+            }
           }
           validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}): Invalid structure`);
         } else if (issue.code === "invalid_type" && issue.message === "Required") {
