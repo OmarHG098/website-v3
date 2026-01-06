@@ -214,7 +214,7 @@ export interface GitHubSyncStatus {
   syncEnabled: boolean;
   localCommit: string | null;
   remoteCommit: string | null;
-  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
+  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured' | 'invalid-credentials';
   behindBy?: number;
   aheadBy?: number;
   repoUrl?: string;
@@ -271,6 +271,18 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
     
     if (!response.ok) {
       console.error('GitHub API error getting branch ref:', response.status);
+      // Check for authentication/authorization errors
+      if (response.status === 401 || response.status === 403) {
+        return {
+          configured: true,
+          syncEnabled,
+          localCommit,
+          remoteCommit: null,
+          status: 'invalid-credentials',
+          repoUrl: process.env.GITHUB_REPO_URL,
+          branch: config.branch,
+        };
+      }
       return {
         configured: true,
         syncEnabled,

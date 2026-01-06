@@ -139,7 +139,7 @@ interface GitHubSyncStatus {
   syncEnabled: boolean;
   localCommit: string | null;
   remoteCommit: string | null;
-  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
+  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured' | 'invalid-credentials';
   behindBy?: number;
   aheadBy?: number;
   repoUrl?: string;
@@ -694,6 +694,40 @@ export function DebugBubble() {
             </div>)
           ) : menuView === "main" ? (
             <>
+              {/* Warning banner for invalid GitHub credentials */}
+              {githubSyncStatus?.syncEnabled && githubSyncStatus.status === 'invalid-credentials' && (
+                <div className="p-3 bg-red-100 dark:bg-red-900/50 border-b border-red-200 dark:border-red-800">
+                  <div className="flex items-start gap-2">
+                    <IconAlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-red-800 dark:text-red-200">
+                        Invalid GitHub Credentials for Sync
+                      </p>
+                      <p className="text-xs text-red-700 dark:text-red-300 mt-0.5">
+                        Check GITHUB_TOKEN and GITHUB_REPO_URL settings
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Warning banner when sync is disabled */}
+              {githubSyncStatus && !githubSyncStatus.syncEnabled && githubSyncStatus.configured && (
+                <div className="p-3 bg-muted/50 border-b border-border">
+                  <div className="flex items-start gap-2">
+                    <IconBrandGithub className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-foreground">
+                        GitHub Sync is Disabled
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Set GITHUB_SYNC_ENABLED=true to enable
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Warning banner when behind or diverged from GitHub */}
               {githubSyncStatus && (githubSyncStatus.status === 'behind' || githubSyncStatus.status === 'diverged') && (
                 <div className="p-3 bg-amber-100 dark:bg-amber-900/50 border-b border-amber-200 dark:border-amber-800">
@@ -804,11 +838,15 @@ export function DebugBubble() {
                   <div className="flex items-center gap-3">
                     <IconBrandGithub className="h-4 w-4 text-muted-foreground" />
                     <span>GitHub Sync</span>
-                    {githubSyncStatus?.syncEnabled && (
+                    {githubSyncStatus?.syncEnabled ? (
                       <span className="text-xs px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 font-medium">
                         Active
                       </span>
-                    )}
+                    ) : githubSyncStatus && !githubSyncStatus.syncEnabled ? (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                        Disabled
+                      </span>
+                    ) : null}
                   </div>
                   <div className="flex items-center gap-2">
                     {syncStatusLoading ? (
@@ -836,6 +874,12 @@ export function DebugBubble() {
                           <span className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                             <IconAlertTriangle className="h-3.5 w-3.5" />
                             Diverged
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'invalid-credentials' && (
+                          <span className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1 font-medium">
+                            <IconAlertTriangle className="h-3.5 w-3.5" />
+                            Invalid Credentials
                           </span>
                         )}
                         {githubSyncStatus.status === 'not-configured' && (
