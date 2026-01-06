@@ -1,42 +1,99 @@
 name: FeaturesGrid
 version: "1.0"
 component: FeaturesGrid
-file: client/src/components/features_grid/FeaturesGrid.tsx
+file: client/src/components/features-grid/FeaturesGrid.tsx
 description: >-
-  A unified grid component with three variants - "highlight" for stats/metrics cards, "detailed" for full feature cards
-  with descriptions and links, and "spotlight" for interactive cards with auto-rotation and hover highlighting.
+  A unified grid component with multiple variants for displaying features, stats, and metrics in card layouts.
+
 when_to_use: >
-  Use the "highlight" variant (default) when showcasing key metrics, statistics, or simple features with optional
-  values.
+  Use "highlight" (default) for stats/metrics with icons and values.
+  
+  Use "detailed" for program cards with descriptions, categories, and action links.
+  
+  Use "spotlight" for interactive cards with auto-rotation and hover highlighting.
+  
+  Use "stats-cards" for simple stat cards arranged in a grid.
+  
+  Use "stats-text-card" for a two-column layout with stats on left and descriptive text in a card on right.
 
-  Use the "detailed" variant when showcasing programs, services, or features that need full descriptions, categories,
-  and action links.
-
-  Use the "spotlight" variant when you want one card to be prominently highlighted while others appear faded,
-  with automatic rotation between cards and hover interaction support.
 variants:
-  detailed: {}
-  spotlight: {}
+  highlight:
+    description: Stats/metrics cards with icons and large value numbers
+    when_to_use: Showcasing key metrics, statistics, or simple features
+    best_for: Statistics, achievements, key numbers
+  detailed:
+    description: Full feature cards with descriptions, categories, and links
+    when_to_use: Programs, services, or features needing full descriptions
+    best_for: Program listings, feature showcases
+  spotlight:
+    description: Interactive cards with auto-rotation and hover highlighting
+    when_to_use: When one card should be prominently highlighted
+    best_for: Testimonials, featured programs
+  stats-cards:
+    description: Simple stat cards in a grid layout
+    when_to_use: Displaying multiple statistics in card format
+    best_for: Key performance indicators, quick stats
+  stats-text-card:
+    description: Two-column layout with stats on left and text card on right
+    when_to_use: Combining statistics with explanatory content
+    best_for: Why sections, value propositions with supporting data
+
 variant_props:
-  detailed: {}
+  highlight:
+    icon_color:
+      type: string
+      required: false
+      description: Hex color for icons (e.g., "#0097CD")
+    columns:
+      type: number
+      required: false
+      description: Number of columns (1-4)
+  detailed:
+    collapsible_mobile:
+      type: boolean
+      required: false
+      description: Whether to collapse items on mobile
+    columns:
+      type: number
+      required: false
+      description: Number of columns (1-4)
   spotlight:
     spotlight_config:
       type: object
       required: false
-      description: Configuration for the spotlight behavior
+      description: Configuration for spotlight behavior
       properties:
         initial_index:
           type: number
           required: false
-          description: Which item to highlight initially (0-indexed). Defaults to 0.
+          description: Which item to highlight initially (0-indexed)
         auto_rotate_ms:
           type: number
           required: false
-          description: Milliseconds between auto-rotation. Defaults to 4000. Set to 0 to disable.
+          description: Milliseconds between auto-rotation (default 4000)
         pause_on_hover:
           type: boolean
           required: false
-          description: Whether to pause auto-rotation when user hovers. Defaults to true.
+          description: Pause rotation on hover (default true)
+  stats-cards:
+    card_color:
+      type: string
+      required: false
+      description: Background color for cards (e.g., "bg-background")
+    use_card:
+      type: boolean
+      required: false
+      description: Whether to wrap stats in card styling
+  stats-text-card:
+    description:
+      type: string
+      required: false
+      description: Long-form text content for the card on the right
+    card_color:
+      type: string
+      required: false
+      description: Background color for the text card
+
 props:
   title:
     type: string
@@ -46,9 +103,14 @@ props:
     type: string
     required: false
     description: Supporting text below the title
+  background:
+    type: string
+    required: false
+    description: Background color class (e.g., "bg-muted/30")
   items:
     type: array
     required: true
+    description: Array of items (structure varies by variant)
     items:
       id:
         type: string
@@ -56,9 +118,25 @@ props:
       icon:
         type: string
         required: false
+        description: Icon name (for highlight variant)
       icon_color:
         type: string
         required: false
+      value:
+        type: string
+        required: false
+        description: Large value/stat number (for highlight, stats-cards, stats-text-card)
+      title:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+        description: Item description (required for detailed variant)
+      category:
+        type: string
+        required: false
+        description: Category label (for detailed variant)
       image:
         type: object
         required: false
@@ -69,34 +147,9 @@ props:
           alt:
             type: string
             required: true
-      category:
-        type: string
-        required: false
-      title:
-        type: string
-        required: true
-      description:
-        type: string
-        required: true
       link_url:
         type: string
         required: false
       link_text:
         type: string
         required: false
-    description: Array of items to display (structure varies by variant)
-  columns:
-    type: number
-    required: false
-    description: Number of columns on desktop (1-4)
-  icon_color:
-    type: string
-    required: false
-    description: Hex color for all icons in this grid (e.g., "#0097CD" for blue). If not specified, icons use their default colors.
-  collapsible_mobile:
-    type: boolean
-    required: false
-  background:
-    type: string
-    required: false
-    description: Background color class (e.g., "bg-muted/30", "bg-primary/5")
