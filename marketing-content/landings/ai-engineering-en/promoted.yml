@@ -63,22 +63,6 @@ sections:
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY: none lg
     marginY: none md
-  - type: features_grid
-    version: "1.0"
-    variant: stats-text-card
-    title: Why AI Engineering Now
-    subtitle: The talent shortage is your opportunity
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    card_color: bg-background
-    items:
-      - value: 3.5M
-        title: AI-related roles expected by 2026
-      - value: 47%
-        title: Year-over-year growth in AI job postings
-      - value: $95K-$135K
-        title: Average starting salary for AI Engineers
-    marginY: md none
-    paddingY: none md
   - type: awards_marquee
     version: "1.0"
     paddingY: lg
@@ -128,6 +112,22 @@ sections:
         logo: /attached_assets/fortune-logo_1764709618095.webp
         alt: Fortune - Best Education Company
         logoHeight: h-10 md:h-16
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text-card
+    title: Why AI Engineering Now
+    subtitle: The talent shortage is your opportunity
+    description: AI Engineers build AI-powered systems, automate workflows, and create AI-integrated products. They are leading the changes companies need today. Yet, according to McKinsey, 87% of companies report they are lacking the AI engineering talent to transform their operations. This gap is your opportunity.
+    card_color: bg-background
+    items:
+      - value: 800,000
+        title: AI-related roles by 2026
+      - value: ~30%
+        title: Year-over-year growth in AI job
+      - value: $95K-$135K
+        title: Average starting salary for AI Engineers
+    marginY: md none
+    paddingY: none md
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
