@@ -752,6 +752,7 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
 /**
  * Sync local state with remote by updating lastSyncedCommit
  * Call this after user chooses to "refresh" and accept remote changes
+ * Rebuilds the file hash cache so pending changes shows 0 after sync
  */
 export async function syncWithRemote(): Promise<{ success: boolean; error?: string }> {
   const config = getGitHubConfig();
@@ -766,11 +767,10 @@ export async function syncWithRemote(): Promise<{ success: boolean; error?: stri
       return { success: false, error: "Could not get remote HEAD" };
     }
     
-    const state = loadSyncState();
-    state.lastSyncedCommit = remoteCommit;
-    state.lastSyncedAt = new Date().toISOString();
-    state.files = {};
-    saveSyncState(state);
+    // Rebuild sync state from current local files
+    // Since local = remote after sync, all hashes should match
+    const { rebuildSyncStateFromLocal } = await import("./sync-state");
+    rebuildSyncStateFromLocal(remoteCommit);
     
     return { success: true };
   } catch (error) {

@@ -342,6 +342,43 @@ export function initializeSyncStateFromRemote(
 }
 
 /**
+ * Rebuild sync state from current local files after syncing with remote.
+ * Sets both sha and remoteSha to the current local hash (since local = remote after sync).
+ * This prevents all files from appearing as "added" after a sync.
+ */
+export function rebuildSyncStateFromLocal(commitSha: string): void {
+  const currentFiles = getAllContentFiles();
+  const state: SyncState = {
+    lastSyncedCommit: commitSha,
+    lastSyncedAt: new Date().toISOString(),
+    files: {},
+  };
+  
+  for (const filePath of currentFiles) {
+    if (!shouldTrackFile(filePath)) {
+      continue;
+    }
+    
+    const fullPath = path.join(process.cwd(), filePath);
+    try {
+      const content = fs.readFileSync(fullPath, 'utf-8');
+      const sha = computeFileSha(content);
+      const stats = fs.statSync(fullPath);
+      
+      state.files[filePath] = {
+        sha,
+        lastModified: stats.mtimeMs,
+        remoteSha: sha, // Local = remote after sync
+      };
+    } catch (error) {
+      console.error(`Error reading file ${filePath}:`, error);
+    }
+  }
+  
+  saveSyncState(state);
+}
+
+/**
  * Get the last synced commit SHA
  */
 export function getLastSyncedCommit(): string | null {
