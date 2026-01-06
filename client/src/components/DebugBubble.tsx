@@ -2006,7 +2006,13 @@ export function DebugBubble() {
                                       size="icon"
                                       variant="outline"
                                       className="h-6 w-6"
-                                      onClick={() => setConfirmPullFile(change.file)}
+                                      onClick={() => {
+                                        if (change.source === 'conflict') {
+                                          setConfirmPullFile(change.file);
+                                        } else {
+                                          handleFilePull(change.file);
+                                        }
+                                      }}
                                       disabled={filePulling === change.file}
                                       data-testid={`button-pull-file-${index}`}
                                     >
