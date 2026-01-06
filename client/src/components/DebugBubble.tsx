@@ -698,7 +698,7 @@ export function DebugBubble() {
                 </div>
               </div>
             </div>)
-          ) : menuView === "main" ? (
+          ) : (
             <>
               {/* Warning banner for invalid GitHub credentials */}
               {githubSyncStatus?.syncEnabled && githubSyncStatus.status === 'invalid-credentials' && (
@@ -753,6 +753,7 @@ export function DebugBubble() {
                 </div>
               )}
               
+              {/* Persistent Dev Tools header - visible in all menu views */}
               <div className="p-3 border-b">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm">Dev Tools</h3>
@@ -846,6 +847,9 @@ export function DebugBubble() {
                 </div>
               </div>
               
+              {/* Menu content based on current view */}
+              {menuView === "main" ? (
+              <>
               <div className="p-2 space-y-1">
                 <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
                   <button
@@ -1070,9 +1074,9 @@ export function DebugBubble() {
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
               </div>
-            </>
-          ) : menuView === "components" ? (
-            <>
+              </>
+              ) : menuView === "components" ? (
+              <>
               <div className="px-3 py-2 border-b">
                 <div className="flex items-center gap-3">
                   <button
@@ -1335,6 +1339,8 @@ export function DebugBubble() {
                   )}
                 </div>
               </ScrollArea>
+            </>
+          )}
             </>
           )}
         </PopoverContent>
