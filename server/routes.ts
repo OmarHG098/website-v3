@@ -933,6 +933,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get status for a single file (local vs remote)
+  app.get("/api/github/file-status", async (req, res) => {
+    try {
+      const filePath = req.query.file as string;
+      if (!filePath) {
+        res.status(400).json({ error: "Missing file parameter" });
+        return;
+      }
+      const { getRemoteFileStatus } = await import("./github");
+      const status = await getRemoteFileStatus(filePath);
+      res.json(status);
+    } catch (error) {
+      console.error("Error getting file status:", error);
+      res.status(500).json({ error: "Failed to get file status" });
+    }
+  });
+
+  // Commit a single file to remote
+  app.post("/api/github/commit-file", async (req, res) => {
+    try {
+      const { filePath, message, author } = req.body;
+      if (!filePath || !message) {
+        res.status(400).json({ error: "Missing filePath or message" });
+        return;
+      }
+      const { commitSingleFile } = await import("./github");
+      const result = await commitSingleFile({ filePath, message, author });
+      
+      if (result.success) {
+        res.json({ success: true, commitSha: result.commitSha });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error committing file:", error);
+      res.status(500).json({ error: "Failed to commit file" });
+    }
+  });
+
+  // Pull a single file from remote
+  app.post("/api/github/pull-file", async (req, res) => {
+    try {
+      const { filePath } = req.body;
+      if (!filePath) {
+        res.status(400).json({ error: "Missing filePath" });
+        return;
+      }
+      const { pullSingleFile } = await import("./github");
+      const result = await pullSingleFile(filePath);
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error pulling file:", error);
+      res.status(500).json({ error: "Failed to pull file" });
+    }
+  });
+
+  // Discard local changes for a single file
+  app.post("/api/github/discard-file", async (req, res) => {
+    try {
+      const { filePath } = req.body;
+      if (!filePath) {
+        res.status(400).json({ error: "Missing filePath" });
+        return;
+      }
+      const { discardLocalChanges } = await import("./sync-state");
+      const success = discardLocalChanges(filePath);
+      res.json({ success });
+    } catch (error) {
+      console.error("Error discarding file changes:", error);
+      res.status(500).json({ error: "Failed to discard changes" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
