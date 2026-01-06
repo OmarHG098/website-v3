@@ -1691,9 +1691,9 @@ export function DebugBubble() {
                     {pendingChanges.map((change, index) => (
                       <div 
                         key={`${change.file}-${index}`}
-                        className="flex items-center gap-2 text-sm"
+                        className="flex items-center gap-2 text-sm min-w-0"
                       >
-                        <span className={`w-16 text-xs font-medium px-1.5 py-0.5 rounded ${
+                        <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
                           change.status === 'added' 
                             ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
                             : change.status === 'deleted'
@@ -1702,7 +1702,7 @@ export function DebugBubble() {
                         }`}>
                           {change.status}
                         </span>
-                        <span className="text-muted-foreground truncate flex-1" title={change.file}>
+                        <span className="text-muted-foreground truncate min-w-0" title={change.file}>
                           {change.contentType}/{change.slug}
                         </span>
                       </div>
