@@ -19,7 +19,7 @@ sections:
       color: chart-5
     description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
     video:
-      url: "https://www.youtube.com/watch?v=-2ZvlgDnltc"
+      url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
     form:
       variant: inline
@@ -62,6 +62,8 @@ sections:
         description: Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves.
         image_id: geekforce_linkedin_profile
     image_position: right
+    marginY:
+      desktop: lg none
   - type: numbered_steps
     version: "1.0"
     variant: bubbleText
@@ -182,10 +184,10 @@ sections:
       - value: "84"
         unit: "%"
         label: Job placement rate
-      - value: "3-6"
+      - value: 3-6
         unit: months
         label: Average time to get hired
-      - value: "$15K"
+      - value: $15K
         label: Average salary increase after graduation
     collage_images:
       - image_id: graduates_team_1
