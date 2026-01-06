@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   IconAlertTriangle,
-  IconRefresh,
   IconDownload,
   IconUpload,
   IconChevronDown,
@@ -27,6 +26,18 @@ import {
 } from "@/components/ui/collapsible";
 import { useSync, type RemoteCommit } from "@/contexts/SyncContext";
 
+// Parse embedded author from commit message: [Author: Full Name]
+function parseCommitMessage(message: string): { author: string | null; cleanMessage: string } {
+  const authorMatch = message.match(/^\[Author:\s*([^\]]+)\]\s*/);
+  if (authorMatch) {
+    return {
+      author: authorMatch[1].trim(),
+      cleanMessage: message.replace(authorMatch[0], ''),
+    };
+  }
+  return { author: null, cleanMessage: message };
+}
+
 function formatDate(dateString: string): string {
   if (!dateString) return '';
   const date = new Date(dateString);
@@ -41,7 +52,11 @@ function formatDate(dateString: string): string {
 function CommitItem({ commit, isLast }: { commit: RemoteCommit; isLast: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const hasFiles = commit.files && commit.files.length > 0;
-  const firstLine = commit.message.split('\n')[0];
+  
+  // Parse embedded author from message, fall back to commit.author
+  const { author: embeddedAuthor, cleanMessage } = parseCommitMessage(commit.message);
+  const displayAuthor = embeddedAuthor || commit.author;
+  const firstLine = cleanMessage.split('\n')[0];
 
   return (
     <div className="border-b last:border-b-0 border-border/50">
@@ -58,7 +73,7 @@ function CommitItem({ commit, isLast }: { commit: RemoteCommit; isLast: boolean 
             <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <IconUser className="h-3 w-3" />
-                {commit.author}
+                {displayAuthor}
               </span>
               <span className="flex items-center gap-1">
                 <IconClock className="h-3 w-3" />
@@ -81,7 +96,7 @@ function CommitItem({ commit, isLast }: { commit: RemoteCommit; isLast: boolean 
         
         {hasFiles && (
           <CollapsibleContent>
-            <div className="px-3 pb-3 pl-10">
+            <div className="px-3 pb-3">
               <div className="bg-muted/50 rounded-md p-2 space-y-1">
                 {commit.files.map((file, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-xs">
@@ -110,7 +125,6 @@ export function SyncConflictModal() {
   } = useSync();
   
   const [isLoading, setIsLoading] = useState(false);
-  const [showAdvanced, setShowAdvanced] = useState(false);
 
   if (!showConflictModal || !conflictInfo) {
     return null;
@@ -129,7 +143,7 @@ export function SyncConflictModal() {
   };
 
   const handleForceCommit = () => {
-    if (!confirm('Are you sure? This will allow you to commit even though remote has newer changes. Your changes will overwrite remote.')) {
+    if (!confirm('Are you sure? This will overwrite remote changes with your local content.')) {
       return;
     }
     enableForceCommit();
@@ -143,6 +157,7 @@ export function SyncConflictModal() {
     <Dialog open={showConflictModal} onOpenChange={() => {}}>
       <DialogContent 
         className="max-w-lg"
+        hideClose
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
@@ -175,48 +190,28 @@ export function SyncConflictModal() {
           </div>
         )}
 
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 flex flex-col gap-2">
           <Button
             className="w-full"
             onClick={handleRefresh}
             disabled={isLoading}
             data-testid="button-sync-refresh"
           >
-            <IconRefresh className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-            Sync with Remote & Reload
+            <IconDownload className="h-4 w-4 mr-2" />
+            Override my local version with remote
           </Button>
           
-          <p className="text-xs text-muted-foreground text-center">
-            This will update your local content to match the remote repository.
-          </p>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleForceCommit}
+            disabled={isLoading}
+            data-testid="button-force-overwrite"
+          >
+            <IconUpload className="h-4 w-4 mr-2" />
+            My content prevails, override the remote
+          </Button>
         </div>
-
-        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-          <CollapsibleTrigger className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground mt-4">
-            {showAdvanced ? (
-              <IconChevronDown className="h-3 w-3" />
-            ) : (
-              <IconChevronRight className="h-3 w-3" />
-            )}
-            Advanced options
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 space-y-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full"
-              onClick={handleForceCommit}
-              disabled={isLoading}
-              data-testid="button-force-overwrite"
-            >
-              <IconUpload className="h-4 w-4 mr-2" />
-              Force Overwrite Remote
-            </Button>
-            <p className="text-xs text-destructive">
-              Warning: This will overwrite remote changes with your local content.
-            </p>
-          </CollapsibleContent>
-        </Collapsible>
       </DialogContent>
     </Dialog>
   );

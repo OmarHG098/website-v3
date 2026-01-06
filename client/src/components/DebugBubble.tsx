@@ -75,7 +75,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
+import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
 const componentsList = [
@@ -533,12 +533,14 @@ export function DebugBubble() {
     setIsCommitting(true);
     try {
       const forceCommit = syncContext?.forceCommitEnabled || false;
+      const author = getDebugUserName();
       const res = await fetch("/api/github/commit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           message: commitMessage.trim(),
           force: forceCommit,
+          author,
         }),
       });
       

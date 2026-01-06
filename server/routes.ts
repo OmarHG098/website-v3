@@ -295,6 +295,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const hasWebmaster = webmasterResponse.status === 200;
 
+      // Fetch user info for author name
+      let userName = "";
+      try {
+        const userResponse = await fetch(
+          "https://breathecode.herokuapp.com/v1/auth/user/me",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          },
+        );
+        if (userResponse.ok) {
+          const userData = await userResponse.json() as { first_name?: string; last_name?: string };
+          const firstName = userData.first_name || "";
+          const lastName = userData.last_name || "";
+          userName = `${firstName} ${lastName}`.trim();
+        }
+      } catch {
+        // Ignore user fetch errors - just use empty name
+      }
+
       // If has webmaster, they get all capabilities
       // In future, we could check for more granular capabilities from the API
       const capabilities = {
@@ -307,9 +329,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       if (hasWebmaster) {
-        res.json({ valid: true, capabilities });
+        res.json({ valid: true, capabilities, userName });
       } else {
-        res.json({ valid: false, capabilities });
+        res.json({ valid: false, capabilities, userName });
       }
     } catch (error) {
       console.error("Token validation error:", error);
@@ -844,14 +866,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Commit and push pending changes to GitHub
   app.post("/api/github/commit", async (req, res) => {
     try {
-      const { message, force } = req.body;
+      const { message, force, author } = req.body;
       if (!message || typeof message !== 'string' || message.trim().length === 0) {
         res.status(400).json({ error: "Commit message is required" });
         return;
       }
 
+      // Prepend author to commit message if provided
+      let finalMessage = message.trim();
+      if (author && typeof author === 'string' && author.trim()) {
+        finalMessage = `[Author: ${author.trim()}] ${finalMessage}`;
+      }
+
       const { commitAndPush } = await import("./github");
-      const result = await commitAndPush(message.trim(), { force: !!force });
+      const result = await commitAndPush(finalMessage, { force: !!force });
       
       if (result.success) {
         res.json({ success: true, commitHash: result.commitHash });
