@@ -600,9 +600,20 @@ export function DebugBubble() {
       
       if (data.success) {
         // Remove committed file from pending changes
-        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
+        const remainingChanges = pendingChanges.filter(c => c.file !== filePath);
+        setPendingChanges(remainingChanges);
         setSelectedFileForCommit(null);
         setFileCommitMessage("");
+        
+        // If all pending changes are resolved, sync with remote to update lastSyncedCommit
+        if (remainingChanges.length === 0) {
+          try {
+            await fetch("/api/github/sync-with-remote", { method: "POST" });
+          } catch {
+            // Silently fail - sync status will still be refreshed
+          }
+        }
+        
         refreshSyncStatus();
         if (syncContext) {
           syncContext.refreshSyncStatus();
@@ -631,8 +642,19 @@ export function DebugBubble() {
       
       if (data.success) {
         // Remove file from pending changes (now synced)
-        setPendingChanges(prev => prev.filter(c => c.file !== filePath));
+        const remainingChanges = pendingChanges.filter(c => c.file !== filePath);
+        setPendingChanges(remainingChanges);
         setConfirmPullFile(null);
+        
+        // If all pending changes are resolved, sync with remote to update lastSyncedCommit
+        if (remainingChanges.length === 0) {
+          try {
+            await fetch("/api/github/sync-with-remote", { method: "POST" });
+          } catch {
+            // Silently fail - sync status will still be refreshed
+          }
+        }
+        
         refreshSyncStatus();
         if (syncContext) {
           syncContext.refreshSyncStatus();
@@ -826,8 +848,8 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {/* Show "Pending" indicator when there are uncommitted changes and GitHub sync is enabled */}
-            {githubSyncStatus?.syncEnabled && pendingChanges.length > 0 && (
+            {/* Show "Commit" indicator when there are local changes that need uploading (not just incoming) */}
+            {githubSyncStatus?.syncEnabled && pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
               <button
                 onClick={() => {
                   setCommitModalOpen(true);

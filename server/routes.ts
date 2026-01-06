@@ -994,6 +994,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Sync local state with remote (update lastSyncedCommit to current remote HEAD)
+  app.post("/api/github/sync-with-remote", async (req, res) => {
+    try {
+      const { syncWithRemote } = await import("./github");
+      const result = await syncWithRemote();
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error syncing with remote:", error);
+      res.status(500).json({ error: "Failed to sync with remote" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
