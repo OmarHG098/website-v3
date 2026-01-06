@@ -1,4 +1,5 @@
-import { useState, useEffect, lazy, Suspense, useMemo } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo, useCallback } from "react";
+import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
@@ -516,10 +517,10 @@ export function DebugBubble() {
     }
   }, [githubSyncStatus?.syncEnabled]);
 
-  // Listen for content-saved event to refresh pending changes immediately
+  // Listen for content updates to refresh pending changes immediately
   useEffect(() => {
-    const handleContentSaved = () => {
-      // First ensure we have sync status, then fetch pending changes
+    const unsubscribe = subscribeToContentUpdates(() => {
+      // Refresh pending changes when any content is updated
       if (!githubSyncStatus) {
         // Fetch sync status first, which will trigger pending changes fetch
         fetch("/api/github/sync-status")
@@ -534,10 +535,9 @@ export function DebugBubble() {
       } else if (githubSyncStatus.syncEnabled) {
         fetchPendingChanges();
       }
-    };
+    });
 
-    window.addEventListener('content-saved', handleContentSaved);
-    return () => window.removeEventListener('content-saved', handleContentSaved);
+    return unsubscribe;
   }, [githubSyncStatus]);
 
   // Handle commit
