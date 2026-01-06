@@ -50,10 +50,11 @@ function HoverFeatureCard({ feature, index, isSelected, isHovering, onHover, onL
   return (
     <Card 
       className={cn(
-        "border-0 shadow-none cursor-pointer transition-all duration-300 ease-out",
+        "shadow-none cursor-pointer transition-all duration-300 ease-out",
+        "border-2 md:border-0",
         isSelected
-          ? "bg-primary/5 scale-[1.08]"
-          : "bg-[#f0f0f04d] dark:bg-[#ffffff0d] scale-100"
+          ? "scale-[1.04] md:scale-[1.08] border-primary bg-primary/5"
+          : "scale-100 border-transparent bg-[#f0f0f04d] dark:bg-[#ffffff0d]"
       )}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
@@ -242,7 +243,7 @@ export function AILearningSection({ data }: AILearningSectionProps) {
                       {isMobile && displayedFeature.bullets.length > 2 && !showAllBullets && (
                         <button
                           onClick={() => setShowAllBullets(true)}
-                          className="text-primary text-sm font-medium mb-3 flex items-center gap-1"
+                          className="text-primary text-sm font-medium mb-3 flex items-center gap-1 mb-4"
                           data-testid="button-see-more-bullets"
                         >
                           See more <TablerIcons.IconChevronDown size={16} />

@@ -42,6 +42,12 @@ import {
   IconFlask,
   IconPlus,
   IconUsersGroup,
+  IconBrandGithub,
+  IconCloudDownload,
+  IconDeviceMobile,
+  IconDeviceDesktop,
+  IconDatabase,
+  IconCopy,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -130,6 +136,18 @@ interface ExperimentsResponse {
   experiments: ExperimentConfig[];
   hasExperimentsFile: boolean;
   filePath: string;
+}
+
+interface GitHubSyncStatus {
+  configured: boolean;
+  syncEnabled: boolean;
+  localCommit: string | null;
+  remoteCommit: string | null;
+  status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured' | 'invalid-credentials';
+  behindBy?: number;
+  aheadBy?: number;
+  repoUrl?: string;
+  branch?: string;
 }
 
 interface ContentInfo {
@@ -251,7 +269,7 @@ export function DebugBubble() {
   const { session } = useSession();
   const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
-  const [pathname] = useLocation();
+  const [pathname, navigate] = useLocation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -268,10 +286,16 @@ export function DebugBubble() {
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
+  const [sessionModalOpen, setSessionModalOpen] = useState(false);
+  const [tokenCopied, setTokenCopied] = useState(false);
   
   // Experiments state
   const [experimentsData, setExperimentsData] = useState<ExperimentsResponse | null>(null);
   const [experimentsLoading, setExperimentsLoading] = useState(false);
+  
+  // GitHub sync status state
+  const [githubSyncStatus, setGithubSyncStatus] = useState<GitHubSyncStatus | null>(null);
+  const [syncStatusLoading, setSyncStatusLoading] = useState(false);
   
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
@@ -355,6 +379,37 @@ export function DebugBubble() {
       }
     }
   }, [contentInfo.type, menuView]);
+
+  // Fetch GitHub sync status on mount and when popover opens
+  useEffect(() => {
+    if (open && menuView === "main" && !githubSyncStatus && !syncStatusLoading) {
+      setSyncStatusLoading(true);
+      fetch("/api/github/sync-status")
+        .then((res) => res.json())
+        .then((data: GitHubSyncStatus) => {
+          setGithubSyncStatus(data);
+          setSyncStatusLoading(false);
+        })
+        .catch(() => {
+          setSyncStatusLoading(false);
+        });
+    }
+  }, [open, menuView]);
+
+  // Function to refresh sync status
+  const refreshSyncStatus = () => {
+    setSyncStatusLoading(true);
+    setGithubSyncStatus(null);
+    fetch("/api/github/sync-status")
+      .then((res) => res.json())
+      .then((data: GitHubSyncStatus) => {
+        setGithubSyncStatus(data);
+        setSyncStatusLoading(false);
+      })
+      .catch(() => {
+        setSyncStatusLoading(false);
+      });
+  };
 
   // Handle popover open/close - reset search but preserve menu view
   const handleOpenChange = (newOpen: boolean) => {
@@ -643,13 +698,158 @@ export function DebugBubble() {
                 </div>
               </div>
             </div>)
-          ) : menuView === "main" ? (
+          ) : (
             <>
-              <div className="p-3 border-b">
-                <h3 className="font-semibold text-sm">Debug Tools</h3>
-                <p className="text-xs text-muted-foreground">Development utilities</p>
+              {/* Warning banner for invalid GitHub credentials */}
+              {githubSyncStatus?.syncEnabled && githubSyncStatus.status === 'invalid-credentials' && (
+                <div className="p-3 bg-red-100 dark:bg-red-900/50 border-b border-red-200 dark:border-red-800">
+                  <div className="flex items-start gap-2">
+                    <IconAlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-red-800 dark:text-red-200">
+                        Invalid GitHub Credentials for Sync
+                      </p>
+                      <p className="text-xs text-red-700 dark:text-red-300 mt-0.5">
+                        Check GITHUB_TOKEN and GITHUB_REPO_URL settings
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Warning banner when sync is disabled */}
+              {githubSyncStatus && !githubSyncStatus.syncEnabled && githubSyncStatus.configured && (
+                <div className="p-3 bg-muted/50 border-b border-border">
+                  <div className="flex items-start gap-2">
+                    <IconBrandGithub className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-foreground">
+                        GitHub Sync is Disabled
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Set GITHUB_SYNC_ENABLED=true to enable
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Warning banner when behind or diverged from GitHub */}
+              {githubSyncStatus && (githubSyncStatus.status === 'behind' || githubSyncStatus.status === 'diverged') && (
+                <div className="p-3 bg-amber-100 dark:bg-amber-900/50 border-b border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-2">
+                    <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-amber-800 dark:text-amber-200">
+                        {githubSyncStatus.status === 'behind' 
+                          ? `Pull ${githubSyncStatus.behindBy} commit${(githubSyncStatus.behindBy || 0) > 1 ? 's' : ''} before publishing`
+                          : 'Local and remote have diverged'}
+                      </p>
+                      <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">
+                        Production content edits may be overwritten
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Persistent Dev Tools header - visible in all menu views */}
+              <div className="p-3 border-b pl-[8px] pr-[8px] pt-[3px] pb-[3px]">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-sm">Dev Tools</h3>
+                  <div className="flex items-center gap-2">
+                    {/* Read/Edit toggle */}
+                    {editMode && (
+                      <div 
+                        className="flex items-center bg-muted rounded-full p-0.5"
+                        data-testid="toggle-edit-mode"
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (!editMode.isEditMode) {
+                              editMode.toggleEditMode();
+                              // Navigate to preview route if on a content page
+                              if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
+                                const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${i18n.language || 'en'}`;
+                                navigate(previewUrl);
+                              }
+                            }
+                          }}
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            editMode.isEditMode 
+                              ? "bg-primary text-primary-foreground" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-edit-mode"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (editMode.isEditMode) editMode.toggleEditMode();
+                          }}
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            !editMode.isEditMode 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-read-mode"
+                        >
+                          Read
+                        </button>
+                      </div>
+                    )}
+                    {/* Preview breakpoint toggle - only visible in edit mode */}
+                    {editMode && editMode.isEditMode && (
+                      <div 
+                        className="flex items-center bg-muted rounded-full p-0.5"
+                        data-testid="toggle-preview-breakpoint"
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            editMode.setPreviewBreakpoint('desktop');
+                          }}
+                          className={`p-1.5 rounded-full transition-colors ${
+                            editMode.previewBreakpoint === 'desktop' 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-preview-desktop"
+                          title="Preview desktop view"
+                        >
+                          <IconDeviceDesktop className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            editMode.setPreviewBreakpoint('mobile');
+                          }}
+                          className={`p-1.5 rounded-full transition-colors ${
+                            editMode.previewBreakpoint === 'mobile' 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-preview-mobile"
+                          title="Preview mobile view"
+                        >
+                          <IconDeviceMobile className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               
+              {/* Menu content based on current view */}
+              {menuView === "main" ? (
+              <>
               <div className="p-2 space-y-1">
                 <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
                   <button
@@ -730,43 +930,133 @@ export function DebugBubble() {
                     </div>
                   </button>
                 )}
+                
+                {/* GitHub sync status */}
+                <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                  <div className="flex items-center gap-3">
+                    <IconBrandGithub className="h-4 w-4 text-muted-foreground" />
+                    <span>GitHub Sync</span>
+                    {githubSyncStatus?.syncEnabled ? (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 font-medium">
+                        Active
+                      </span>
+                    ) : githubSyncStatus && !githubSyncStatus.syncEnabled ? (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                        Disabled
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {syncStatusLoading ? (
+                      <IconRefresh className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+                    ) : githubSyncStatus ? (
+                      <>
+                        {githubSyncStatus.status === 'in-sync' && (
+                          <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                            <IconCheck className="h-3.5 w-3.5" />
+                            In sync
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'behind' && (
+                          <span className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                            <IconCloudDownload className="h-3.5 w-3.5" />
+                            {githubSyncStatus.behindBy} behind
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'ahead' && (
+                          <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                            {githubSyncStatus.aheadBy} ahead
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'diverged' && (
+                          <span className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                            <IconAlertTriangle className="h-3.5 w-3.5" />
+                            Diverged
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'invalid-credentials' && (
+                          <span className="text-xs text-red-600 dark:text-red-400 flex items-center gap-1 font-medium">
+                            <IconAlertTriangle className="h-3.5 w-3.5" />
+                            Invalid Credentials
+                          </span>
+                        )}
+                        {githubSyncStatus.status === 'not-configured' && (
+                          <span className="text-xs text-muted-foreground">Not configured</span>
+                        )}
+                        {githubSyncStatus.status === 'unknown' && (
+                          <span className="text-xs text-amber-600 dark:text-amber-400" title="Could not compare local and remote commits">
+                            Check failed
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">--</span>
+                    )}
+                    <button
+                      onClick={refreshSyncStatus}
+                      disabled={syncStatusLoading}
+                      className="p-1 rounded hover-elevate disabled:opacity-50"
+                      data-testid="button-refresh-sync-status"
+                      title="Refresh sync status"
+                    >
+                      <IconRefresh className={`h-3.5 w-3.5 ${syncStatusLoading ? 'animate-spin' : ''}`} />
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div className="border-t p-2 space-y-1">
-                <button
-                  onClick={() => {
-                    setSelectedLocationSlug(session.location?.slug || "");
-                    setLocationModalOpen(true);
-                  }}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-location-override"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconMapPin className="h-4 w-4 text-muted-foreground" />
-                    <span>Location</span>
-                    {currentLocationOverride && (
-                      <span className="text-xs text-muted-foreground">(override)</span>
-                    )}
+                {/* Session Group */}
+                <div className="space-y-0.5">
+                  <div className="flex items-center justify-between px-3 py-1.5">
+                    <div className="flex items-center gap-2">
+                      <IconDatabase className="h-3.5 w-3.5 text-muted-foreground" />
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Session</span>
+                    </div>
+                    <button
+                      onClick={() => setSessionModalOpen(true)}
+                      className="p-1 rounded hover-elevate"
+                      data-testid="button-session-view"
+                      title="View session data"
+                    >
+                      <IconPencil className="h-3.5 w-3.5 text-muted-foreground" />
+                    </button>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
-                      {session.location?.name || 'Detecting...'}
-                    </code>
-                    <IconPencil className="h-3 w-3 text-muted-foreground" />
+                  
+                  <div className="pl-2 space-y-0.5">
+                    <button
+                      onClick={() => {
+                        setSelectedLocationSlug(session.location?.slug || "");
+                        setLocationModalOpen(true);
+                      }}
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="button-location-override"
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconMapPin className="h-4 w-4 text-muted-foreground" />
+                        <span>Location</span>
+                        {currentLocationOverride && (
+                          <span className="text-xs text-muted-foreground">(override)</span>
+                        )}
+                      </div>
+                      <code className="text-xs bg-muted px-2 py-1 rounded max-w-[100px] truncate">
+                        {session.location?.name || 'Detecting...'}
+                      </code>
+                    </button>
+                    
+                    <button
+                      onClick={toggleLanguage}
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="button-toggle-language"
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconLanguage className="h-4 w-4 text-muted-foreground" />
+                        <span>Language</span>
+                      </div>
+                      <span className="text-xs font-medium bg-muted px-2 py-1 rounded">{currentLang}</span>
+                    </button>
                   </div>
-                </button>
-                
-                <button
-                  onClick={toggleLanguage}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-toggle-language"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconLanguage className="h-4 w-4 text-muted-foreground" />
-                    <span>Language</span>
-                  </div>
-                  <span className="text-xs font-medium bg-muted px-2 py-1 rounded">{currentLang}</span>
-                </button>
+                </div>
                 
                 <button
                   onClick={toggleTheme}
@@ -783,12 +1073,10 @@ export function DebugBubble() {
                   </div>
                   <span className="text-xs font-medium bg-muted px-2 py-1 rounded capitalize">{theme}</span>
                 </button>
-                
-                <EditModeToggle />
               </div>
-            </>
-          ) : menuView === "components" ? (
-            <>
+              </>
+              ) : menuView === "components" ? (
+              <>
               <div className="px-3 py-2 border-b">
                 <div className="flex items-center gap-3">
                   <button
@@ -1053,6 +1341,8 @@ export function DebugBubble() {
               </ScrollArea>
             </>
           )}
+            </>
+          )}
         </PopoverContent>
       </Popover>
       <Dialog open={locationModalOpen} onOpenChange={setLocationModalOpen}>
@@ -1119,6 +1409,177 @@ export function DebugBubble() {
               data-testid="button-confirm-location-override"
             >
               Override Location
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={sessionModalOpen} onOpenChange={setSessionModalOpen}>
+        <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Session Data</DialogTitle>
+            <DialogDescription>
+              Current session values captured from browser, geolocation, and URL parameters.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            {hasToken && getDebugToken() && (
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-foreground">Authentication Token</h4>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 bg-muted px-2 py-1.5 rounded text-xs font-mono truncate" data-testid="text-session-token">
+                    {getDebugToken()}
+                  </code>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 flex-shrink-0"
+                    onClick={() => {
+                      const token = getDebugToken();
+                      if (token) {
+                        navigator.clipboard.writeText(token);
+                        setTokenCopied(true);
+                        setTimeout(() => setTokenCopied(false), 2000);
+                      }
+                    }}
+                    data-testid="button-copy-token"
+                  >
+                    {tokenCopied ? (
+                      <IconCheck className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <IconCopy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+            
+            <div className={`space-y-3 ${hasToken && getDebugToken() ? 'border-t pt-3' : ''}`}>
+              <h4 className="text-sm font-semibold text-foreground">Geolocation</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Country:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.country || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">City:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.city || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Region:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.region || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Timezone:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.geo?.timezone || 'N/A'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Device</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Category:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.deviceCategory || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">OS:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.osFamily || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Browser:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.browserFamily || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Viewport:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.viewportWidth}x{session.device?.viewportHeight}</code>
+                </div>
+                <div className="flex justify-between col-span-2">
+                  <span className="text-muted-foreground">Pixel Ratio:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.device?.devicePixelRatio || 'N/A'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">UTM Parameters</h4>
+              <div className="space-y-1.5 text-sm">
+                {(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_placement', 'utm_plan'] as const).map(key => (
+                  <div key={key} className="flex justify-between">
+                    <span className="text-muted-foreground">{key}:</span>
+                    <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.[key] || '—'}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Tracking</h4>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">PPC Tracking ID:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs max-w-[150px] truncate">{session.utm?.ppc_tracking_id || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Referral:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.referral || session.utm?.ref || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Coupon:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.utm?.coupon || '—'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Experiment</h4>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Experiment:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.experiment?.experiment_slug || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Variant:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.experiment?.variant_slug || '—'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Version:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.experiment?.variant_version ?? '—'}</code>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t pt-3 space-y-3">
+              <h4 className="text-sm font-semibold text-foreground">Session Info</h4>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Language:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.language}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Browser Lang:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.browserLang || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Location Campus:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.location?.slug || 'N/A'}</code>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Initialized:</span>
+                  <code className="bg-muted px-1.5 py-0.5 rounded text-xs">{session.initialized ? 'Yes' : 'No'}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setSessionModalOpen(false)}
+              data-testid="button-close-session-modal"
+            >
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>

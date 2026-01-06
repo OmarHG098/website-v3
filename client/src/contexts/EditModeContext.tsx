@@ -1,6 +1,17 @@
 import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
 import type { Section, EditOperation } from "@shared/schema";
 
+export type PreviewBreakpoint = 'desktop' | 'mobile';
+
+const PREVIEW_BREAKPOINT_KEY = '4geeks_preview_breakpoint';
+
+function getStoredPreviewBreakpoint(): PreviewBreakpoint {
+  if (typeof localStorage === 'undefined') return 'desktop';
+  const stored = localStorage.getItem(PREVIEW_BREAKPOINT_KEY);
+  if (stored === 'mobile' || stored === 'desktop') return stored;
+  return 'desktop';
+}
+
 interface EditModeContextValue {
   isEditMode: boolean;
   enableEditMode: () => void;
@@ -14,6 +25,9 @@ interface EditModeContextValue {
   hasPendingChanges: boolean;
   isSaving: boolean;
   saveChanges: (pageKey: string, contentType: "program" | "landing" | "location", slug: string, locale: string) => Promise<boolean>;
+  previewBreakpoint: PreviewBreakpoint;
+  setPreviewBreakpoint: (breakpoint: PreviewBreakpoint) => void;
+  togglePreviewBreakpoint: () => void;
 }
 
 const EditModeContext = createContext<EditModeContextValue | null>(null);
@@ -33,6 +47,24 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null);
   const [pendingChanges, setPendingChanges] = useState<Map<string, EditOperation[]>>(new Map());
   const [isSaving, setIsSaving] = useState(false);
+  const [previewBreakpoint, setPreviewBreakpointState] = useState<PreviewBreakpoint>(getStoredPreviewBreakpoint);
+
+  const setPreviewBreakpoint = useCallback((breakpoint: PreviewBreakpoint) => {
+    setPreviewBreakpointState(breakpoint);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(PREVIEW_BREAKPOINT_KEY, breakpoint);
+    }
+  }, []);
+
+  const togglePreviewBreakpoint = useCallback(() => {
+    setPreviewBreakpointState(prev => {
+      const next = prev === 'desktop' ? 'mobile' : 'desktop';
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(PREVIEW_BREAKPOINT_KEY, next);
+      }
+      return next;
+    });
+  }, []);
 
   const enableEditMode = useCallback(() => {
     setIsEditMode(true);
@@ -130,6 +162,9 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     hasPendingChanges,
     isSaving,
     saveChanges,
+    previewBreakpoint,
+    setPreviewBreakpoint,
+    togglePreviewBreakpoint,
   }), [
     isEditMode,
     enableEditMode,
@@ -142,6 +177,9 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     hasPendingChanges,
     isSaving,
     saveChanges,
+    previewBreakpoint,
+    setPreviewBreakpoint,
+    togglePreviewBreakpoint,
   ]);
 
   return (

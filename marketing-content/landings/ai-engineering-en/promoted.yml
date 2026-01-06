@@ -51,22 +51,44 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
-    trust_bar:
-      rating: "4.89"
-      review_count: 3,524 reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
-    paddingY: none lg
-    marginY: none md
+    paddingY:
+      mobile: none
+      desktop: lg none
+    marginY:
+      mobile: none
+      desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
+    showOn: desktop
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    title: Thrive in Today’s Tech and Shape Tomorrow’s.
+    brand_mark:
+      prefix: Become an
+      highlight: AI Engineer
+      color: primary
+    description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
+    paddingY:
+      mobile: none
+      desktop: lg none
+    marginY:
+      mobile: none
+      desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
+    showOn: mobile
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      loop: false
   - type: awards_marquee
     version: "1.0"
-    paddingY: lg
-    marginY: none
+    paddingY:
+      mobile: none lg
+      desktop: none lg
+    marginY:
+      mobile: md none
+      desktop: md none
     speed: 40
     pauseOnHover: true
     gradient: true
@@ -126,8 +148,13 @@ sections:
         title: Year-over-year growth in AI job
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
-    marginY: md none
-    paddingY: none md
+    background: hsl(210 100% 50% / 0.05)
+    marginY:
+      mobile: md none
+      desktop: md none
+    paddingY:
+      mobile: none md
+      desktop: none md
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -172,91 +199,90 @@ sections:
     module_cards:
       - title: AI-First Prework
         duration: Milestone 0
-        icon: IconRocket
         objectives:
           - YAML/JSON fundamentals
           - Git version control
           - JS basics
           - Internet fundamentals
           - Coding agents
+        icon: IconRocket
       - title: Web Foundations
         duration: Milestone 1
-        icon: IconWorld
         objectives:
           - HTML, CSS, Tailwind
           - Accessibility best practices
           - Layout techniques
         projects: Build the company's first webpage
+        icon: IconWorld
       - title: Programming Foundations
         duration: Milestone 2
-        icon: IconCode
         objectives:
           - Algorithms and data structures
           - Stateflow vs controlflow
           - JavaScript mastery
         projects: Implement small features for the company
+        icon: IconCode
       - title: AI-Driven UI Engineering
         duration: Milestone 3
-        icon: IconSparkles
         objectives:
           - Vision-to-Spec prompting
           - Component generation with AI
         projects: Rebuild the company's UI using AI
+        icon: IconSparkles
       - title: React Fundamentals
         duration: Milestone 4
-        icon: IconBrandReact
         objectives:
           - SPA architecture
           - Props, state, and effects
           - Debugging techniques
         projects: Build the company's interactive frontend
+        icon: IconBrandReact
       - title: Backend for AI Frontends
         duration: Milestone 5
-        icon: IconServer
         objectives:
           - APIs and DB basics
           - Serialization and auth
           - Serverless functions
         projects: Create the company's backend
+        icon: IconServer
       - title: Telemetry & Data Pipelines
         duration: Milestone 6
-        icon: IconChartLine
         objectives:
           - Collect, transform, aggregate, report
         projects: Build telemetry for the company
+        icon: IconChartLine
       - title: RAG & Memory
         duration: Milestone 7
-        icon: IconBrain
         objectives:
           - Chunking and embeddings
           - Vector search
         projects: Add the company's knowledge layer
+        icon: IconBrain
       - title: Agent Engineering
         duration: Milestone 8
-        icon: IconRobot
         objectives:
           - Rules and memory bank
           - Tool calling
           - Multi-agent planning
         projects: Build the company's agents
+        icon: IconRobot
       - title: Agentic Workflow Generation
         duration: Milestone 9
-        icon: IconSitemap
         objectives:
           - Use LLMs to analyze company case
           - Generate and validate internal workflows
           - Implement automation pipelines
         projects: Serverless, queues, cronjobs, or n8n
+        icon: IconSitemap
       - title: Real-Time Systems
         duration: Milestone 10
-        icon: IconBolt
         objectives:
           - Streaming and sockets
           - Pub/sub patterns
         projects: Enable real-time interactions for data, customers, AI or employees
+        icon: IconBolt
       - title: Full AI-Transformed Company
         duration: Capstone
-        icon: IconTrophy
         objectives:
           - AI-generated frontend
           - API + authentication
@@ -267,8 +293,13 @@ sections:
           - Real-time communication layer
         projects: Deliver the complete transformation of their company
         orientation: horizontal
-    marginY: none
-    paddingY: lg none
+        icon: IconTrophy
+    marginY:
+      mobile: none
+      desktop: none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: ai_learning
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -312,12 +343,12 @@ sections:
           - text: Engage with peers through Slack, feedback tools, and weekly check-ins
           - text: Access Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
-    paddingY: lg none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
-    useSolidCard: true
-    background: muted
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
       - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -361,8 +392,14 @@ sections:
           - text: Networking events with hiring managers
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
-    paddingY: lg
-    marginY: none
+    useSolidCard: true
+    background: hsl(var(--muted))
+    paddingY:
+      mobile: lg
+      desktop: lg
+    marginY:
+      mobile: none
+      desktop: none
   - type: pricing
     version: "1.0"
     variant: product
@@ -373,12 +410,24 @@ sections:
     financing_amount: $299
     tech_icons:
       - openai
+      - claude
       - python
+      - pandas
+      - numpy
+      - scikitlearn
+      - pytorch
+      - matplotlib
       - react
+      - nextjs
+      - tailwindcss
       - nodejs
+      - vercel
+      - supabase
       - git
       - github
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+      - postman
+      - n8n
+    features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     features:
       - icon: certificate
         text: Build your portfolio with hundreds of real-world projects.
@@ -394,7 +443,9 @@ sections:
       text: Get plan
       url: "#hero-form"
       variant: primary
-    paddingY: lg none
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
@@ -404,7 +455,7 @@ sections:
         alt: Microsoft
       - src: /attached_assets/google-developers_1764719904190.png
         alt: Google Developers
-      - src: /attached_assets/boats_1764719939123.jpg
+      - src: /attached_assets/images-removebg-preview_1767642331872.png
         alt: Boats Group
       - src: /attached_assets/meta-logo_1764719959855.png
         alt: Meta
@@ -424,8 +475,12 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-    marginY: none xl
-    paddingY: lg none
+    marginY:
+      mobile: none xl
+      desktop: none xl
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next
@@ -441,8 +496,12 @@ sections:
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
-    marginY: xl lg
-    paddingY: none
+    marginY:
+      mobile: xl lg
+      desktop: xl lg
+    paddingY:
+      mobile: none
+      desktop: none
   - type: testimonials
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
@@ -468,8 +527,6 @@ sections:
         rating: 5
         comment: Excellent content and great mentor support. Now I'm working on cutting-edge AI.
         outcome: +100% salary increase
-    paddingY: md none
-    marginY: none lg
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
@@ -482,10 +539,16 @@ sections:
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
-    marginY: md none
+    marginY:
+      mobile: md none
+      desktop: md none
     background: hsl(var(--primary))
-    paddingY: lg
+    paddingY:
+      mobile: lg
+      desktop: lg
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
-    paddingY: lg none
+    paddingY:
+      mobile: none
+      desktop: none

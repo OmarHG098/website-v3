@@ -51,6 +51,21 @@ export function getNavigatorInfo(): string {
   });
 }
 
+export function getDeviceInfo(): string {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return JSON.stringify({});
+  }
+  
+  return JSON.stringify({
+    userAgent: navigator.userAgent,
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight,
+    screenWidth: window.screen?.width || 0,
+    screenHeight: window.screen?.height || 0,
+    devicePixelRatio: window.devicePixelRatio || 1,
+  });
+}
+
 export function createDefaultSession(): Session {
   return { ...defaultSession };
 }

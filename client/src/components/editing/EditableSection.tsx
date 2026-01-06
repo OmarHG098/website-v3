@@ -1,10 +1,14 @@
 import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } from "react";
-import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles } from "@tabler/icons-react";
-import type { Section } from "@shared/schema";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles, IconDeviceDesktop, IconDeviceMobile, IconCopy, IconCode } from "@tabler/icons-react";
+import type { Section, SectionLayout, ShowOn } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import CodeMirror from "@uiw/react-codemirror";
+import { yaml as yamlLang } from "@codemirror/lang-yaml";
+import { oneDark } from "@codemirror/theme-one-dark";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
 import { emitContentUpdated } from "@/lib/contentEvents";
@@ -37,9 +41,10 @@ interface EditableSectionProps {
   onMoveUp?: (index: number) => void;
   onMoveDown?: (index: number) => void;
   onDelete?: (index: number) => void;
+  onDuplicate?: (index: number) => void;
 }
 
-export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete }: EditableSectionProps) {
+export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete, onDuplicate }: EditableSectionProps) {
   const editMode = useEditModeOptional();
   const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -70,6 +75,9 @@ export function EditableSection({ children, section, index, sectionType, content
   const [isAdapting, setIsAdapting] = useState(false);
   const [adaptedSection, setAdaptedSection] = useState<Section | null>(null);
   const [hasAdapted, setHasAdapted] = useState(false);
+  
+  // YAML source modal state
+  const [showYamlModal, setShowYamlModal] = useState(false);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -427,6 +435,16 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconTrash className="h-4 w-4" />
           </button>
         )}
+        {onDuplicate && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDuplicate(index); }}
+            className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate"
+            data-testid={`button-duplicate-section-${index}`}
+            title="Duplicate section"
+          >
+            <IconCopy className="h-4 w-4" />
+          </button>
+        )}
         <Popover open={swapPopoverOpen} onOpenChange={setSwapPopoverOpen}>
           <PopoverTrigger asChild>
             <button 
@@ -490,6 +508,9 @@ export function EditableSection({ children, section, index, sectionType, content
                         <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
                           <IconChevronLeft className="h-3 w-3" />
                         </Button>
+                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => setShowYamlModal(true)} title="View YAML source" data-testid={`button-view-yaml-${index}`}>
+                          <IconCode className="h-3 w-3" />
+                        </Button>
                         <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
                           <IconChevronRight className="h-3 w-3" />
                         </Button>
@@ -548,6 +569,31 @@ export function EditableSection({ children, section, index, sectionType, content
           </PopoverContent>
         </Popover>
       </div>
+      
+      {/* Visibility indicator - below toolbar, only shown for restricted visibility */}
+      {(() => {
+        const showOn = (section as SectionLayout).showOn || 'all';
+        if (showOn === 'all') return null;
+        
+        const isDesktopVisible = showOn === 'desktop';
+        const isMobileVisible = showOn === 'mobile';
+        
+        return (
+          <div 
+            className={`
+              absolute top-14 right-2 z-50 
+              flex items-center gap-0.5 px-1.5 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs
+              transition-opacity duration-150
+              ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+            `}
+            title={`Visible on ${showOn} only`}
+            data-testid={`badge-visibility-${index}`}
+          >
+            <IconDeviceDesktop className={`h-3.5 w-3.5 ${isDesktopVisible ? 'text-foreground' : 'text-muted-foreground/40'}`} />
+            <IconDeviceMobile className={`h-3.5 w-3.5 ${isMobileVisible ? 'text-foreground' : 'text-muted-foreground/40'}`} />
+          </div>
+        );
+      })()}
       
       {/* Section label - bottom left */}
       <div 
@@ -630,6 +676,32 @@ export function EditableSection({ children, section, index, sectionType, content
           />
         </Suspense>
       )}
+      
+      {/* YAML Source Modal */}
+      <Dialog open={showYamlModal} onOpenChange={setShowYamlModal}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconCode className="h-5 w-5" />
+              {currentExample?.name || selectedVariant || "Variant"} - YAML Source
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-auto rounded border">
+            <CodeMirror
+              value={currentExample?.yaml || ""}
+              extensions={[yamlLang()]}
+              theme={oneDark}
+              readOnly
+              basicSetup={{
+                lineNumbers: true,
+                foldGutter: true,
+                highlightActiveLine: false,
+              }}
+              className="text-sm"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

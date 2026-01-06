@@ -821,6 +821,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: "Experiment cache cleared" });
   });
 
+  // GitHub sync status endpoint
+  app.get("/api/github/sync-status", async (req, res) => {
+    try {
+      const { getGitHubSyncStatus } = await import("./github");
+      const status = await getGitHubSyncStatus();
+      res.json(status);
+    } catch (error) {
+      console.error("Error checking GitHub sync status:", error);
+      res.status(500).json({ error: "Failed to check sync status" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
@@ -1325,7 +1337,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clearRedirectCache();
 
         // Return success with updated sections for immediate UI update
-        res.json({ success: true, updatedSections: result.updatedSections });
+        // Include warning if GitHub sync failed
+        const response: { success: boolean; updatedSections?: unknown; warning?: string } = { 
+          success: true, 
+          updatedSections: result.updatedSections 
+        };
+        if (result.warning) {
+          response.warning = result.warning;
+        }
+        res.json(response);
       } else {
         res.status(400).json({ error: result.error });
       }

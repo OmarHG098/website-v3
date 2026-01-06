@@ -48,6 +48,18 @@ export interface ExperimentData {
   variant_version?: number;
 }
 
+export interface DeviceData {
+  deviceCategory: 'mobile' | 'tablet' | 'desktop';
+  osFamily: string;
+  browserFamily: string;
+  viewportWidth: number;
+  viewportHeight: number;
+  screenWidth: number;
+  screenHeight: number;
+  devicePixelRatio: number;
+  orientation: 'portrait' | 'landscape';
+}
+
 export interface Session {
   version: number;
   initialized: boolean;
@@ -57,6 +69,7 @@ export interface Session {
   geo: GeoData | null;
   utm: UTMParams;
   experiment?: ExperimentData;
+  device?: DeviceData;
   consent: {
     geolocation: boolean | null;
   };
@@ -64,7 +77,7 @@ export interface Session {
 }
 
 export const SESSION_STORAGE_KEY = '4geeks_session';
-export const SESSION_VERSION = 1;
+export const SESSION_VERSION = 2;
 
 export const defaultSession: Session = {
   version: SESSION_VERSION,
@@ -87,6 +100,7 @@ export interface WorkerMessage {
     path: string;
     search: string;
     navigator: string;
+    device: string; // JSON stringified device info from main thread
   };
 }
 

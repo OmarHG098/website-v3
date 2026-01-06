@@ -1,4 +1,4 @@
-import type { Session, Location, GeoData, UTMParams, WorkerMessage, WorkerResponse } from '@shared/session';
+import type { Session, Location, GeoData, UTMParams, DeviceData, WorkerMessage, WorkerResponse } from '@shared/session';
 import { defaultSession, SESSION_VERSION } from '@shared/session';
 import { locations } from '../lib/locations';
 
@@ -221,8 +221,75 @@ function determineLanguage(
   return 'en';
 }
 
+function parseDeviceInfo(deviceJson: string): DeviceData | undefined {
+  try {
+    const raw = JSON.parse(deviceJson);
+    if (!raw.userAgent) return undefined;
+    
+    const ua = raw.userAgent.toLowerCase();
+    
+    // Detect OS family (order matters - iOS UAs contain "like Mac OS X", so check iOS first)
+    let osFamily = 'Unknown';
+    if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) osFamily = 'iOS';
+    else if (ua.includes('android')) osFamily = 'Android';
+    else if (ua.includes('windows phone')) osFamily = 'Windows Phone';
+    else if (ua.includes('windows')) osFamily = 'Windows';
+    else if (ua.includes('mac os') || ua.includes('macos')) osFamily = 'macOS';
+    else if (ua.includes('chrome os') || ua.includes('cros')) osFamily = 'ChromeOS';
+    else if (ua.includes('linux')) osFamily = 'Linux';
+    
+    // Detect browser family
+    let browserFamily = 'Unknown';
+    if (ua.includes('edg/') || ua.includes('edge/')) browserFamily = 'Edge';
+    else if (ua.includes('opr/') || ua.includes('opera')) browserFamily = 'Opera';
+    else if (ua.includes('chrome')) browserFamily = 'Chrome';
+    else if (ua.includes('safari') && !ua.includes('chrome')) browserFamily = 'Safari';
+    else if (ua.includes('firefox')) browserFamily = 'Firefox';
+    
+    // Detect device category (tablet first, then mobile, then desktop)
+    let deviceCategory: DeviceData['deviceCategory'] = 'desktop';
+    
+    // Tablet detection
+    const isTablet = ua.includes('ipad') || 
+      (ua.includes('android') && !ua.includes('mobile')) ||
+      ua.includes('tablet');
+    
+    // Mobile detection (phones)
+    const isMobile = !isTablet && (
+      ua.includes('iphone') ||
+      ua.includes('ipod') ||
+      (ua.includes('android') && ua.includes('mobile')) ||
+      ua.includes('windows phone') ||
+      ua.includes('blackberry') ||
+      ua.includes('opera mini') ||
+      ua.includes('opera mobi')
+    );
+    
+    if (isTablet) deviceCategory = 'tablet';
+    else if (isMobile) deviceCategory = 'mobile';
+    
+    // Orientation
+    const orientation: DeviceData['orientation'] = 
+      (raw.viewportWidth > raw.viewportHeight) ? 'landscape' : 'portrait';
+    
+    return {
+      deviceCategory,
+      osFamily,
+      browserFamily,
+      viewportWidth: raw.viewportWidth || 0,
+      viewportHeight: raw.viewportHeight || 0,
+      screenWidth: raw.screenWidth || 0,
+      screenHeight: raw.screenHeight || 0,
+      devicePixelRatio: raw.devicePixelRatio || 1,
+      orientation,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
 async function initSession(message: WorkerMessage['payload']): Promise<Session> {
-  const { cachedSession, path, search, navigator } = message;
+  const { cachedSession, path, search, navigator, device } = message;
   
   const browserLang = getBrowserLanguage(navigator);
   const newUtm = parseUTMParams(search);
@@ -262,6 +329,9 @@ async function initSession(message: WorkerMessage['payload']): Promise<Session> 
   
   const language = determineLanguage(browserLang, location, path);
   
+  // Parse device info (always refresh since viewport may change between sessions)
+  const deviceData = parseDeviceInfo(device);
+  
   const session: Session = {
     version: SESSION_VERSION,
     initialized: true,
@@ -270,6 +340,7 @@ async function initSession(message: WorkerMessage['payload']): Promise<Session> 
     browserLang,
     geo,
     utm: mergedUtm,
+    device: deviceData,
     consent: cachedSession?.consent || { geolocation: null },
     timestamp: Date.now(),
   };

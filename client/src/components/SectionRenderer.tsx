@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useCallback, useMemo, lazy, Suspense } from "react";
-import type { Section, EditOperation, SectionLayout } from "@shared/schema";
+import type { Section, EditOperation, SectionLayout, ResponsiveSpacing, ShowOn } from "@shared/schema";
 
 // ============================================
 // Component Load Strategy Registry
@@ -27,11 +27,9 @@ function resolveSpacingValue(val: string): string {
   return val; // Return as-is (custom CSS value like "20px")
 }
 
-// Parse spacing value - supports presets or custom CSS values
-// Returns null if no value provided (component handles its own spacing)
-function parseSpacing(value: string | undefined): { top: string; bottom: string } | null {
-  if (!value) return null;
-  
+// Parse a single breakpoint's spacing value - supports presets or custom CSS values
+// Returns { top, bottom } for the given value string
+function parseSpacingValue(value: string): { top: string; bottom: string } {
   // Check if it's a single preset
   if (SPACING_PRESETS[value]) {
     return SPACING_PRESETS[value];
@@ -49,11 +47,26 @@ function parseSpacing(value: string | undefined): { top: string; bottom: string 
   };
 }
 
+// Parse responsive spacing object - returns mobile and desktop values
+// Inheritance: if only one breakpoint is specified, the other inherits its value
+function parseResponsiveSpacing(value: ResponsiveSpacing | undefined): {
+  mobile: { top: string; bottom: string };
+  desktop: { top: string; bottom: string };
+} | null {
+  if (!value) return null;
+  
+  // Handle inheritance: if one is missing, use the other's value
+  const mobileValue = value.mobile ?? value.desktop ?? "none";
+  const desktopValue = value.desktop ?? value.mobile ?? "none";
+  
+  return {
+    mobile: parseSpacingValue(mobileValue),
+    desktop: parseSpacingValue(desktopValue),
+  };
+}
+
 // Default spacing when YAML doesn't specify values
-// Using padding: none (components apply their own internal padding)
-// Using margin: lg for vertical spacing between sections
-const DEFAULT_PADDING = SPACING_PRESETS.none; // Components handle their own internal padding
-const DEFAULT_MARGIN = { top: "0px", bottom: "0px" }; // No margin by default (sections stack)
+const DEFAULT_SPACING = { top: "0px", bottom: "0px" };
 
 // Semantic background tokens mapped to CSS variables
 const BACKGROUND_TOKENS: Record<string, string> = {
@@ -80,24 +93,60 @@ function parseBackground(value: string | undefined): string | undefined {
   return value;
 }
 
-// Get section layout styles - applies spacing from YAML or defaults
+// Get section layout styles - applies responsive spacing from YAML or defaults
+// Uses CSS custom properties + media query for responsive behavior
 // paddingY: Applied to wrapper (for sections that DON'T have internal content padding)
 // marginY: Applied to wrapper (for spacing between sections)
 // background: Applied to wrapper (semantic token or custom CSS)
-function getSectionLayoutStyles(section: Section): CSSProperties {
+function getSectionLayoutStyles(section: Section): CSSProperties & Record<string, string> {
   const layoutSection = section as SectionLayout;
   
-  const padding = parseSpacing(layoutSection.paddingY) || DEFAULT_PADDING;
-  const margin = parseSpacing(layoutSection.marginY) || DEFAULT_MARGIN;
+  const padding = parseResponsiveSpacing(layoutSection.paddingY);
+  const margin = parseResponsiveSpacing(layoutSection.marginY);
   const background = parseBackground(layoutSection.background);
   
-  return {
-    paddingTop: padding.top,
-    paddingBottom: padding.bottom,
-    marginTop: margin.top,
-    marginBottom: margin.bottom,
-    ...(background ? { background } : {}),
+  // Use CSS custom properties for responsive values
+  // Global CSS will handle the media query switching via .section-wrapper class
+  const styles: CSSProperties & Record<string, string> = {
+    // Apply using the responsive CSS variables set by media query in index.css
+    paddingTop: 'var(--section-pt)',
+    paddingBottom: 'var(--section-pb)',
+    marginTop: 'var(--section-mt)',
+    marginBottom: 'var(--section-mb)',
   };
+  
+  // Set CSS custom properties (index signature for custom properties)
+  styles['--section-pt-mobile'] = padding?.mobile.top ?? DEFAULT_SPACING.top;
+  styles['--section-pb-mobile'] = padding?.mobile.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-mt-mobile'] = margin?.mobile.top ?? DEFAULT_SPACING.top;
+  styles['--section-mb-mobile'] = margin?.mobile.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-pt-desktop'] = padding?.desktop.top ?? DEFAULT_SPACING.top;
+  styles['--section-pb-desktop'] = padding?.desktop.bottom ?? DEFAULT_SPACING.bottom;
+  styles['--section-mt-desktop'] = margin?.desktop.top ?? DEFAULT_SPACING.top;
+  styles['--section-mb-desktop'] = margin?.desktop.bottom ?? DEFAULT_SPACING.bottom;
+  
+  if (background) {
+    styles.background = background;
+  }
+  
+  return styles;
+}
+
+// Get CSS classes for section visibility based on showOn property
+// Uses Tailwind responsive classes to show/hide sections at breakpoints
+// mobile: hidden at md and up (>= 768px)
+// desktop: hidden below md (< 768px)
+// all or undefined: visible at all breakpoints
+function getSectionVisibilityClasses(showOn: ShowOn | undefined): string {
+  switch (showOn) {
+    case 'mobile':
+      return 'block md:hidden'; // Show on mobile, hide on desktop
+    case 'desktop':
+      return 'hidden md:block'; // Hide on mobile, show on desktop
+    case 'all':
+    default:
+      return ''; // Visible on all breakpoints
+  }
 }
 // EAGER components - commonly above the fold
 import { FeaturesGrid } from "@/components/features-grid/FeaturesGrid";
@@ -143,6 +192,27 @@ import { AddSectionButton } from "@/components/editing/AddSectionButton";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
+import { useEditModeOptional, type PreviewBreakpoint } from "@/contexts/EditModeContext";
+
+// Check if a section should be visible based on showOn and current preview breakpoint
+// In edit mode, respects previewBreakpoint; in production, always returns true (CSS handles visibility)
+function shouldShowSection(showOn: ShowOn | undefined, previewBreakpoint: PreviewBreakpoint | undefined, isEditMode: boolean): boolean {
+  // If not in edit mode or no previewBreakpoint, always show (CSS will handle responsive visibility)
+  if (!isEditMode || !previewBreakpoint) return true;
+  
+  // In edit mode, filter based on previewBreakpoint
+  const effectiveShowOn = showOn || 'all';
+  
+  switch (effectiveShowOn) {
+    case 'mobile':
+      return previewBreakpoint === 'mobile';
+    case 'desktop':
+      return previewBreakpoint === 'desktop';
+    case 'all':
+    default:
+      return true;
+  }
+}
 
 // Loading fallback for lazy sections
 function SectionSkeleton() {
@@ -320,6 +390,9 @@ export function renderSection(section: Section, index: number): React.ReactNode 
 
 export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
   const { toast } = useToast();
+  const editMode = useEditModeOptional();
+  const isEditMode = editMode?.isEditMode ?? false;
+  const previewBreakpoint = editMode?.previewBreakpoint;
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;
@@ -369,6 +442,28 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
     }
   }, [contentType, slug, locale, toast]);
+  
+  const handleDuplicate = useCallback(async (index: number) => {
+    if (!contentType || !slug || !locale) return;
+    
+    const sectionToDuplicate = sections[index];
+    if (!sectionToDuplicate) return;
+    
+    if (!window.confirm("Duplicate this section?")) {
+      return;
+    }
+    
+    const result = await sendEditOperation(contentType, slug, locale, [
+      { action: "add_item", path: "sections", index: index + 1, item: sectionToDuplicate }
+    ]);
+    
+    if (result.success) {
+      toast({ title: "Section duplicated" });
+      emitContentUpdated({ contentType, slug, locale });
+    } else {
+      toast({ title: "Failed to duplicate section", description: result.error, variant: "destructive" });
+    }
+  }, [contentType, slug, locale, sections, toast]);
 
   return (
     <>
@@ -383,11 +478,32 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSection(section, index);
         const layoutStyles = getSectionLayoutStyles(section);
+        const showOn = (section as SectionLayout).showOn;
+        
+        // In edit mode: previewBreakpoint controls visibility, no CSS classes needed
+        // In production: CSS classes handle responsive visibility
+        const isVisible = shouldShowSection(showOn, previewBreakpoint, isEditMode);
+        const visibilityClasses = isEditMode ? '' : getSectionVisibilityClasses(showOn);
         
         if (!renderedSection) return null;
         
+        // In edit mode, hide section content but keep AddSectionButton for insertion points
+        if (!isVisible && isEditMode) {
+          return (
+            <div key={index}>
+              <AddSectionButton
+                insertIndex={index + 1}
+                sections={sections}
+                contentType={contentType}
+                slug={slug}
+                locale={locale}
+              />
+            </div>
+          );
+        }
+        
         return (
-          <div key={index} style={layoutStyles}>
+          <div key={index} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}
@@ -399,6 +515,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
               onMoveUp={handleMoveUp}
               onMoveDown={handleMoveDown}
               onDelete={handleDelete}
+              onDuplicate={handleDuplicate}
             >
               {renderedSection}
             </EditableSection>

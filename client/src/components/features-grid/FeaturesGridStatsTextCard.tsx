@@ -2,8 +2,9 @@ import { useState } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
-import { IconChevronDown } from "@tabler/icons-react";
 import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
+import { Button } from "@/components/ui/button";
+import { IconChevronDown } from "@tabler/icons-react";
 
 interface FeaturesGridStatsTextCardProps {
   data: FeaturesGridStatsTextCardSection;
@@ -15,7 +16,7 @@ export function FeaturesGridStatsTextCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section className="bg-primary/5 py-12" data-testid="section-features-grid-stats-text-card">
+    <section className="py-12" data-testid="section-features-grid-stats-text-card">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 md:items-center">
           <div className="flex flex-col gap-4 md:w-[280px] lg:w-[420px] md:flex-shrink-0">
@@ -58,52 +59,65 @@ export function FeaturesGridStatsTextCard({
           </div>
 
           <Card className={`p-6 md:p-8 ${data.card_color || "bg-background"}`}>
-            <div
-              className="md:cursor-default cursor-pointer"
-              onClick={() => setIsExpanded(!isExpanded)}
-              data-testid="button-toggle-description"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  {data.title && (
-                    <h2
-                      className="text-h2 mb-2 text-foreground"
-                      data-testid="text-stats-text-card-title"
-                    >
-                      {data.title}
-                    </h2>
-                  )}
-                  {data.subtitle && (
-                    <p
-                      className="text-lg mb-2 text-primary"
-                      data-testid="text-stats-text-card-subtitle"
-                    >
-                      {data.subtitle}
-                    </p>
-                  )}
-                </div>
-                {data.description && (
-                  <IconChevronDown
-                    className={`md:hidden w-5 h-5 text-muted-foreground flex-shrink-0 mt-1 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-                  />
-                )}
-              </div>
+            <div>
+              {data.title && (
+                <h2
+                  className="text-h2 mb-2 text-foreground"
+                  data-testid="text-stats-text-card-title"
+                >
+                  {data.title}
+                </h2>
+              )}
+              {data.subtitle && (
+                <p
+                  className="text-lg mb-2 text-primary"
+                  data-testid="text-stats-text-card-subtitle"
+                >
+                  {data.subtitle}
+                </p>
+              )}
             </div>
             {data.description && (
-              <div
-                className={`overflow-hidden transition-all duration-200 md:max-h-none md:opacity-100 ${isExpanded ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0 md:mt-0"}`}
-              >
-                <p
-                  className="text-body text-muted-foreground leading-relaxed"
-                  data-testid="text-stats-text-card-description"
-                >
-                  {data.description}
-                </p>
-              </div>
+              <>
+                <div className="hidden md:block mt-2">
+                  <p
+                    className="text-body text-muted-foreground leading-relaxed"
+                    data-testid="text-stats-text-card-description"
+                  >
+                    {data.description}
+                  </p>
+                  <div className="mt-4">
+                    <AIWorkflowDiagram className="max-w-md mx-auto" />
+                  </div>
+                </div>
+                <div className="md:hidden">
+                  <Button
+                    variant="ghost"
+                    className="p-0 h-auto mt-3 text-primary text-base font-medium hover:bg-transparent hover:underline flex items-center gap-1"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    data-testid="button-toggle-description"
+                  >
+                    {isExpanded ? "See less" : "See more"}
+                    <IconChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+                    />
+                  </Button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
+                  >
+                    <p
+                      className="text-body text-muted-foreground leading-relaxed"
+                      data-testid="text-stats-text-card-description-mobile"
+                    >
+                      {data.description}
+                    </p>
+                    <div className="mt-4">
+                      <AIWorkflowDiagram className="max-w-md mx-auto" />
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
-            <div className="mt-4 hidden md:block">
-              <AIWorkflowDiagram className="max-w-md mx-auto" />
-            </div>
           </Card>
         </div>
       </div>

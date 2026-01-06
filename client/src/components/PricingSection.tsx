@@ -24,9 +24,22 @@ import {
   SiHtml5,
   SiCss3,
   SiGithub,
+  SiAnthropic,
+  SiPandas,
+  SiNumpy,
+  SiScikitlearn,
+  SiPytorch,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiVercel,
+  SiSupabase,
+  SiPostman,
+  SiN8N,
 } from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
 import RigobotIconTiny from "@/components/custom-icons/RigobotIconTiny";
+import Matplotlib from "@/components/custom-icons/Matplotlib";
+import Marquee from "react-fast-marquee";
 
 interface PricingSectionProps {
   data: PricingSectionType;
@@ -46,6 +59,18 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   css3: SiCss3,
   css: SiCss3,
   github: SiGithub,
+  claude: SiAnthropic,
+  pandas: SiPandas,
+  numpy: SiNumpy,
+  scikitlearn: SiScikitlearn,
+  pytorch: SiPytorch,
+  matplotlib: Matplotlib,
+  nextjs: SiNextdotjs,
+  tailwindcss: SiTailwindcss,
+  vercel: SiVercel,
+  supabase: SiSupabase,
+  postman: SiPostman,
+  n8n: SiN8N,
 };
 
 const featureIconMap: Record<string, Icon> = {
@@ -103,7 +128,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             )}
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
+          <div className="grid lg:grid-cols-12 gap-0 items-stretch relative overflow-hidden">
             <div
               className="relative rounded-t-2xl lg:rounded-tl-2xl lg:rounded-bl-2xl lg:rounded-tr-none lg:rounded-br-none overflow-hidden lg:col-span-4"
               data-testid="card-pricing"
@@ -168,7 +193,7 @@ export function PricingSection({ data }: PricingSectionProps) {
               </div>
             </div>
 
-            <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+            <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8 overflow-hidden">
               {data.features_title && (
                 <p
                   className="text-[#3A3A3A] font-normal text-body"
@@ -179,22 +204,26 @@ export function PricingSection({ data }: PricingSectionProps) {
               )}
 
               {data.tech_icons && data.tech_icons.length > 0 && (
-                <div
-                  className="flex flex-wrap gap-4"
-                  data-testid="tech-icons"
-                >
-                  {data.tech_icons.map((iconName, index) => {
-                    const IconComponent = techIconMap[iconName.toLowerCase()];
-                    return IconComponent ? (
-                      <div
-                        key={index}
-                        className="flex items-center justify-center p-2 text-muted-foreground"
-                        data-testid={`icon-tech-${index}`}
-                      >
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                    ) : null;
-                  })}
+                <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
+                  <Marquee
+                    speed={25}
+                    gradient={true}
+                    gradientWidth={50}
+                    pauseOnHover={true}
+                  >
+                    {data.tech_icons.map((iconName, index) => {
+                      const IconComponent = techIconMap[iconName.toLowerCase()];
+                      return IconComponent ? (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                          data-testid={`icon-tech-${index}`}
+                        >
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      ) : null;
+                    })}
+                  </Marquee>
                 </div>
               )}
 
@@ -286,7 +315,7 @@ export function PricingSection({ data }: PricingSectionProps) {
           </p>
         )}
 
-        <div className="grid lg:grid-cols-12 gap-0 items-stretch relative">
+        <div className="grid lg:grid-cols-12 gap-0 items-stretch relative overflow-hidden">
           <div
             className="flex items-center absolute -top-4 left-0 z-10"
             data-testid="badge-discount"
@@ -364,7 +393,7 @@ export function PricingSection({ data }: PricingSectionProps) {
             </div>
           </div>
 
-          <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8">
+          <div className="bg-background border border-t-0 lg:border-t lg:border-l-0 border-border rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl p-4 space-y-4 lg:col-span-8 overflow-hidden">
             {data.features_title && (
               <p
                 className="text-[#3A3A3A] font-normal text-lg"
@@ -375,22 +404,26 @@ export function PricingSection({ data }: PricingSectionProps) {
             )}
 
             {data.tech_icons && data.tech_icons.length > 0 && (
-              <div
-                className="flex flex-wrap gap-4"
-                data-testid="tech-icons"
-              >
-                {data.tech_icons.map((iconName, index) => {
-                  const IconComponent = techIconMap[iconName.toLowerCase()];
-                  return IconComponent ? (
-                    <div
-                      key={index}
-                      className="flex items-center justify-center p-2 text-muted-foreground"
-                      data-testid={`icon-tech-${index}`}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                    </div>
-                  ) : null;
-                })}
+              <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
+                <Marquee
+                  speed={25}
+                  gradient={true}
+                  gradientWidth={50}
+                  pauseOnHover={true}
+                >
+                  {data.tech_icons.map((iconName, index) => {
+                    const IconComponent = techIconMap[iconName.toLowerCase()];
+                    return IconComponent ? (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                        data-testid={`icon-tech-${index}`}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                    ) : null;
+                  })}
+                </Marquee>
               </div>
             )}
 

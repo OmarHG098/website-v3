@@ -4,6 +4,7 @@ import yaml from "js-yaml";
 import { z } from "zod";
 import type { EditOperation } from "@shared/schema";
 import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
+import { commitToGitHub } from "./github";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -130,7 +131,7 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
   }
 }
 
-export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string }> {
+export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string; warning?: string; updatedSections?: unknown[] }> {
   const { contentType, slug, locale, operations, variant, version } = request;
   
   // Validate variant/version are used together and version is valid
@@ -203,6 +204,56 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
               validationErrors.push(`Section ${sectionIndex + 1}: Unknown section type "${sectionType}". Check spelling or use a valid section type.`);
               continue;
             }
+            
+            // Find the matching schema branch (where both type AND variant match) and extract its errors
+            const sectionVariant = sections?.[sectionIndex]?.variant as string | undefined;
+            const matchingBranch = unionErrors.find(ue => {
+              // Must not have type mismatch
+              const hasTypeMismatch = ue.issues.some(i => 
+                i.path[0] === "type" && (i.code === "invalid_literal" || i.code === "invalid_enum_value")
+              );
+              // Must not have variant mismatch (if variant exists)
+              const hasVariantMismatch = sectionVariant && ue.issues.some(i => 
+                i.path[0] === "variant" && (i.code === "invalid_literal" || i.code === "invalid_enum_value")
+              );
+              return !hasTypeMismatch && !hasVariantMismatch;
+            });
+            
+            if (matchingBranch && matchingBranch.issues.length > 0) {
+              // Recursively extract all field-level errors, handling nested unions
+              const extractFieldErrors = (issues: z.ZodIssue[]): string[] => {
+                const errors: string[] = [];
+                for (const i of issues) {
+                  // Handle nested union errors
+                  if (i.code === "invalid_union") {
+                    const nestedUnionErrors = (i as { unionErrors?: z.ZodError[] }).unionErrors;
+                    if (nestedUnionErrors) {
+                      for (const nue of nestedUnionErrors) {
+                        errors.push(...extractFieldErrors(nue.issues));
+                      }
+                    }
+                  } else if (i.path.length > 0) {
+                    const fieldPath = i.path.join(".");
+                    if (i.code === "invalid_type" && i.message === "Required") {
+                      errors.push(`  - "${fieldPath}" is required`);
+                    } else {
+                      errors.push(`  - ${fieldPath}: ${i.message}`);
+                    }
+                  } else if (i.message !== "Invalid input") {
+                    // Top-level error with meaningful message
+                    errors.push(`  - ${i.message}`);
+                  }
+                }
+                return errors;
+              };
+              
+              const detailedErrors = Array.from(new Set(extractFieldErrors(matchingBranch.issues))).slice(0, 5);
+              if (detailedErrors.length > 0) {
+                const variantInfo = sectionVariant ? `, variant: ${sectionVariant}` : "";
+                validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}${variantInfo}):\n${detailedErrors.join("\n")}`);
+                continue;
+              }
+            }
           }
           validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}): Invalid structure`);
         } else if (issue.code === "invalid_type" && issue.message === "Required") {
@@ -230,7 +281,49 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     
     fs.writeFileSync(filePath, updatedYaml, "utf-8");
     
-    return { success: true };
+    // Commit changes to GitHub when sync is enabled
+    let githubWarning: string | undefined;
+    if (process.env.GITHUB_SYNC_ENABLED === "true") {
+      // Get relative path from project root for GitHub
+      const relativePath = path.relative(process.cwd(), filePath);
+      
+      // Build descriptive commit message
+      const timestamp = new Date().toISOString().split('T')[0];
+      const operationSummary = operations.map(op => {
+        if (op.action === "update_field" && op.path.includes("sections[")) {
+          const sectionMatch = op.path.match(/sections\[(\d+)\]/);
+          const sectionNum = sectionMatch ? parseInt(sectionMatch[1]) + 1 : "?";
+          return `section ${sectionNum}`;
+        }
+        if ("path" in op) {
+          return op.path;
+        }
+        return op.action;
+      }).slice(0, 3).join(", ");
+      
+      const commitMessage = `[Content] Update ${contentType}/${slug} - ${operationSummary} (${timestamp})`;
+      
+      // Await the GitHub commit to capture any errors
+      try {
+        const result = await commitToGitHub({
+          filePath: relativePath,
+          content: updatedYaml,
+          message: commitMessage,
+        });
+        
+        if (!result.success) {
+          console.error("Failed to commit to GitHub:", result.error);
+          githubWarning = `Changes saved locally but failed to sync to GitHub: ${result.error}`;
+        }
+      } catch (err) {
+        console.error("GitHub commit error:", err);
+        githubWarning = "Changes saved locally but failed to sync to GitHub";
+      }
+    }
+    
+    // Return updated sections for immediate UI update
+    const updatedSections = (content.sections as unknown[]) || [];
+    return { success: true, warning: githubWarning, updatedSections };
   } catch (error) {
     console.error("Content edit error:", error);
     return { success: false, error: error instanceof Error ? error.message : "Unknown error" };

@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings } from "@tabler/icons-react";
+import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices, IconPalette } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -76,11 +76,13 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 
   const isCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
   const [customValue, setCustomValue] = useState(isCustom ? value : "");
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   useEffect(() => {
     const isNowCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
     if (isNowCustom) {
       setCustomValue(value);
+      setShowCustomInput(true);
     } else {
       setCustomValue("");
     }
@@ -100,42 +102,49 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium">Background Color</Label>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="flex flex-wrap gap-1.5">
         <button
           type="button"
           onClick={() => onChange("")}
-          className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+          className={`w-7 h-7 rounded border-2 transition-all ${
             value === ""
               ? "border-primary ring-2 ring-primary/20"
               : "border-border hover:border-primary/50"
           }`}
           data-testid="props-background-none"
-        >
-          <span className="w-6 h-6 rounded border border-dashed border-border/50 bg-transparent" />
-          <span className="text-[10px] text-muted-foreground">None</span>
-        </button>
+          title="None"
+          style={{ background: 'repeating-conic-gradient(hsl(var(--muted)) 0% 25%, transparent 0% 50%) 50% / 8px 8px' }}
+        />
         {backgrounds.map((bg) => (
           <button
             key={bg.id}
             type="button"
-            onClick={() => onChange(bg.cssValue)}
-            className={`h-12 rounded-md border-2 transition-all flex flex-col items-center justify-center gap-1 ${
+            onClick={() => { onChange(bg.cssValue); setShowCustomInput(false); }}
+            className={`w-7 h-7 rounded border-2 transition-all ${
               isSelected(bg)
                 ? "border-primary ring-2 ring-primary/20"
                 : "border-border hover:border-primary/50"
             }`}
             data-testid={`props-background-${bg.id}`}
-          >
-            <span
-              className="w-6 h-6 rounded border border-border/50"
-              style={{ background: bg.previewStyle }}
-            />
-            <span className="text-[10px] text-muted-foreground">{bg.label}</span>
-          </button>
+            title={bg.label}
+            style={{ background: bg.previewStyle }}
+          />
         ))}
+        <button
+          type="button"
+          onClick={() => setShowCustomInput(!showCustomInput)}
+          className={`w-7 h-7 rounded border-2 transition-all flex items-center justify-center ${
+            isCustom || showCustomInput
+              ? "border-primary ring-2 ring-primary/20 bg-primary/10"
+              : "border-border hover:border-primary/50 bg-muted"
+          }`}
+          data-testid="props-background-custom-toggle"
+          title="Custom CSS value"
+        >
+          <IconPalette className="w-4 h-4 text-muted-foreground" />
+        </button>
       </div>
-      <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground">Custom CSS Value</Label>
+      {showCustomInput && (
         <Input
           type="text"
           placeholder="e.g., #ff5500, linear-gradient(...)"
@@ -148,10 +157,51 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
           }}
           className="text-sm"
           data-testid="props-background-custom"
+          autoFocus
         />
-        <p className="text-xs text-muted-foreground">
-          Enter any valid CSS color or gradient value
-        </p>
+      )}
+    </div>
+  );
+}
+
+interface ShowOnPickerProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function ShowOnPicker({ value, onChange }: ShowOnPickerProps) {
+  const options = [
+    { id: "all", label: "Both", icon: IconDevices },
+    { id: "desktop", label: "Desktop", icon: IconDeviceDesktop },
+    { id: "mobile", label: "Mobile", icon: IconDeviceMobile },
+  ];
+
+  const currentValue = value || "all";
+
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <Label className="text-sm font-medium whitespace-nowrap">Show on</Label>
+      <div className="flex rounded-md border border-border overflow-hidden">
+        {options.map((option) => {
+          const Icon = option.icon;
+          const isSelected = currentValue === option.id;
+          return (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => onChange(option.id === "all" ? "" : option.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-sm transition-colors ${
+                isSelected
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-transparent text-muted-foreground hover:bg-muted"
+              } ${option.id !== "all" ? "border-l border-border" : ""}`}
+              data-testid={`props-showon-${option.id}`}
+            >
+              <Icon className="h-4 w-4" />
+              <span>{option.label}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -187,6 +237,7 @@ export function SectionEditorPanel({
   }, [yamlContent]);
 
   const currentBackground = (parsedSection?.background as string) || "";
+  const currentShowOn = (parsedSection?.showOn as string) || "";
 
   // Initialize YAML content from section
   useEffect(() => {
@@ -255,9 +306,9 @@ export function SectionEditorPanel({
   }, [yamlContent, onPreviewChange]);
 
   // Shared save logic - returns true on success
-  const saveToServer = useCallback(async (): Promise<boolean> => {
+  const saveToServer = useCallback(async (): Promise<{ success: boolean; warning?: string }> => {
     if (!contentType || !slug || !locale) {
-      return false;
+      return { success: false };
     }
 
     let parsed: Section;
@@ -265,13 +316,13 @@ export function SectionEditorPanel({
       parsed = yamlParser.load(yamlContent) as Section;
       if (!parsed || typeof parsed !== "object") {
         setParseError("Invalid section structure");
-        return false;
+        return { success: false };
       }
     } catch (error) {
       if (error instanceof Error) {
         setParseError(error.message);
       }
-      return false;
+      return { success: false };
     }
 
     setIsSaving(true);
@@ -300,7 +351,7 @@ export function SectionEditorPanel({
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = await response.json() as { success: boolean; updatedSections?: unknown[]; warning?: string };
 
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as Section | undefined;
@@ -312,16 +363,18 @@ export function SectionEditorPanel({
 
         // Emit event to trigger page refresh
         emitContentUpdated({ contentType, slug, locale });
-        return true;
+        
+        // Return warning if present (for GitHub sync failures)
+        return { success: true, warning: result.warning };
       } else {
         const error = await response.json();
         setSaveError(error.error || "Failed to save changes");
-        return false;
+        return { success: false };
       }
     } catch (error) {
       console.error("Error saving changes:", error);
       setSaveError(error instanceof Error ? error.message : "Network error");
-      return false;
+      return { success: false };
     } finally {
       setIsSaving(false);
     }
@@ -329,12 +382,21 @@ export function SectionEditorPanel({
 
   // Save without closing editor
   const handleSave = useCallback(async () => {
-    const success = await saveToServer();
-    if (success) {
-      toast({
-        title: "Changes saved",
-        description: "Your section has been updated successfully.",
-      });
+    const result = await saveToServer();
+    if (result && result.success) {
+      if (result.warning) {
+        // Show warning toast for GitHub sync failures
+        toast({
+          title: "Changes saved with warning",
+          description: result.warning,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Changes saved",
+          description: "Your section has been updated successfully.",
+        });
+      }
     }
   }, [saveToServer, toast]);
 
@@ -406,6 +468,10 @@ export function SectionEditorPanel({
 
         <TabsContent value="props" className="flex-1 overflow-auto p-4 mt-0 data-[state=inactive]:hidden">
           <div className="space-y-6">
+            <ShowOnPicker
+              value={currentShowOn}
+              onChange={(value) => updateProperty("showOn", value)}
+            />
             <BackgroundPicker
               value={currentBackground}
               onChange={(value) => updateProperty("background", value)}

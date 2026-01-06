@@ -10,7 +10,7 @@ export function FooterSection({ data }: FooterSectionProps) {
       className="bg-background border-t"
       data-testid="section-footer"
     >
-      <div className="max-w-6xl mx-auto px-4 text-center">
+      <div className="max-w-6xl mx-auto px-4 text-center mt-2">
         <p 
           className="text-sm text-muted-foreground"
           data-testid="text-copyright"

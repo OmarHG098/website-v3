@@ -14,7 +14,7 @@ import { TiHtml5 } from "react-icons/ti";
 import { RiNextjsFill, RiSupabaseFill, RiClaudeFill } from "react-icons/ri";
 import { FaGitAlt } from "react-icons/fa";
 import { IoLogoVercel } from "react-icons/io5";
-import matplotlibLogo from "@assets/image_3_(1)_1767109507402.png";
+import { Matplotlib } from "@/components/custom-icons";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -178,7 +178,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
       </section>
     );
   }
-
+x
   return (
     <section 
       className="bg-primary/5"
@@ -256,28 +256,7 @@ function getTechIcon(iconName: string, className?: string) {
   const lowerName = iconName.toLowerCase();
   
   if (lowerName === "matplotlib") {
-    return (
-      <div className="relative">
-        <img 
-          src={matplotlibLogo} 
-          alt="Matplotlib" 
-          className={cn(
-            className || "w-6 h-6",
-            "transition-opacity duration-brand group-hover:opacity-0"
-          )} 
-          style={{ filter: 'grayscale(100%) brightness(0.6)' }}
-        />
-        <img 
-          src={matplotlibLogo} 
-          alt="Matplotlib" 
-          className={cn(
-            className || "w-6 h-6",
-            "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-brand"
-          )} 
-          style={{ filter: 'brightness(0) saturate(100%) invert(45%) sepia(98%) saturate(1500%) hue-rotate(190deg) brightness(95%) contrast(101%)' }}
-        />
-      </div>
-    );
+    return <Matplotlib className={className || "w-6 h-6"} />;
   }
   
   const IconComponent = techIconMap[lowerName];
@@ -514,7 +493,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               </div>
               
               {data.tech_logos && data.tech_logos.length > 0 && (
-                <TooltipProvider delayDuration={1000} skipDelayDuration={0}>
+                <TooltipProvider delayDuration={200} skipDelayDuration={0}>
                   <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
                     {data.tech_logos.map((logo, index) => (
                       <Tooltip key={index}>
