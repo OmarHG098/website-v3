@@ -54,15 +54,45 @@ async function getFileSha(config: GitHubConfig, filePath: string): Promise<strin
 }
 
 /**
+ * Parse GitHub repo URL to extract owner and repo name
+ * Supports formats like:
+ * - https://github.com/owner/repo
+ * - https://github.com/owner/repo.git
+ * - github.com/owner/repo
+ */
+function parseGitHubUrl(url: string): { owner: string; repo: string } | null {
+  try {
+    // Remove .git suffix if present
+    const cleanUrl = url.replace(/\.git$/, '');
+    
+    // Try to extract owner/repo from the URL
+    const match = cleanUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+    if (match) {
+      return { owner: match[1], repo: match[2] };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Commit a file to the GitHub repository
  */
 export async function commitToGitHub(options: GitHubCommitOptions): Promise<{ success: boolean; error?: string; commitUrl?: string }> {
   // Get config from environment variables
+  const token = process.env.GITHUB_TOKEN || '';
+  const repoUrl = process.env.GITHUB_REPO_URL || '';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  
+  // Parse owner/repo from URL
+  const parsed = parseGitHubUrl(repoUrl);
+  
   const config: GitHubConfig = {
-    token: process.env.GITHUB_TOKEN || '',
-    owner: process.env.GITHUB_REPO_OWNER || '',
-    repo: process.env.GITHUB_REPO_NAME || '',
-    branch: process.env.GITHUB_BRANCH || 'main',
+    token,
+    owner: parsed?.owner || '',
+    repo: parsed?.repo || '',
+    branch,
   };
   
   // Validate config
@@ -71,7 +101,7 @@ export async function commitToGitHub(options: GitHubCommitOptions): Promise<{ su
     if (process.env.NODE_ENV === "production") {
       return { 
         success: false, 
-        error: "GitHub integration not configured (missing GITHUB_TOKEN, GITHUB_REPO_OWNER, or GITHUB_REPO_NAME)" 
+        error: "GitHub integration not configured (missing GITHUB_TOKEN or GITHUB_REPO_URL)" 
       };
     }
     // In development, silently skip
