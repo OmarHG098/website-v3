@@ -436,6 +436,28 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
       toast({ title: "Failed to delete section", description: result.error, variant: "destructive" });
     }
   }, [contentType, slug, locale, toast]);
+  
+  const handleDuplicate = useCallback(async (index: number) => {
+    if (!contentType || !slug || !locale) return;
+    
+    const sectionToDuplicate = sections[index];
+    if (!sectionToDuplicate) return;
+    
+    if (!window.confirm("Duplicate this section?")) {
+      return;
+    }
+    
+    const result = await sendEditOperation(contentType, slug, locale, [
+      { action: "add_item", path: "sections", index: index + 1, item: sectionToDuplicate }
+    ]);
+    
+    if (result.success) {
+      toast({ title: "Section duplicated" });
+      emitContentUpdated({ contentType, slug, locale });
+    } else {
+      toast({ title: "Failed to duplicate section", description: result.error, variant: "destructive" });
+    }
+  }, [contentType, slug, locale, sections, toast]);
 
   return (
     <>
@@ -494,6 +516,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
               onMoveUp={handleMoveUp}
               onMoveDown={handleMoveDown}
               onDelete={handleDelete}
+              onDuplicate={handleDuplicate}
             >
               {renderedSection}
             </EditableSection>

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } from "react";
-import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles, IconDeviceDesktop, IconDeviceMobile } from "@tabler/icons-react";
+import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles, IconDeviceDesktop, IconDeviceMobile, IconCopy } from "@tabler/icons-react";
 import type { Section, SectionLayout, ShowOn } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -37,9 +37,10 @@ interface EditableSectionProps {
   onMoveUp?: (index: number) => void;
   onMoveDown?: (index: number) => void;
   onDelete?: (index: number) => void;
+  onDuplicate?: (index: number) => void;
 }
 
-export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete }: EditableSectionProps) {
+export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete, onDuplicate }: EditableSectionProps) {
   const editMode = useEditModeOptional();
   const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -425,6 +426,16 @@ export function EditableSection({ children, section, index, sectionType, content
             title="Delete section"
           >
             <IconTrash className="h-4 w-4" />
+          </button>
+        )}
+        {onDuplicate && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDuplicate(index); }}
+            className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate"
+            data-testid={`button-duplicate-section-${index}`}
+            title="Duplicate section"
+          >
+            <IconCopy className="h-4 w-4" />
           </button>
         )}
         {/* Visibility badge - shows which breakpoints this section is visible on */}
