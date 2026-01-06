@@ -863,18 +863,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get incoming changes from remote (when local is behind)
-  app.get("/api/github/incoming-changes", async (req, res) => {
-    try {
-      const { getIncomingChanges } = await import("./github");
-      const result = await getIncomingChanges();
-      res.json(result);
-    } catch (error) {
-      console.error("Error getting incoming changes:", error);
-      res.status(500).json({ error: "Failed to get incoming changes", changes: [] });
-    }
-  });
-
   // Commit and push pending changes to GitHub
   app.post("/api/github/commit", async (req, res) => {
     try {
