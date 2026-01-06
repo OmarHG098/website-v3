@@ -481,17 +481,10 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         
         if (!renderedSection) return null;
         
-        // In edit mode, if section is hidden by previewBreakpoint, show a placeholder
-        // This preserves AddSectionButton positions and allows editors to see where hidden sections are
+        // In edit mode, hide section content but keep AddSectionButton for insertion points
         if (!isVisible && isEditMode) {
           return (
             <div key={index}>
-              <div className="section-wrapper opacity-40 border border-dashed border-muted-foreground/40 rounded-md my-2 py-2" style={layoutStyles}>
-                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground py-2">
-                  <span className="font-medium">{sectionType}</span>
-                  <span>• Hidden on {previewBreakpoint}</span>
-                </div>
-              </div>
               <AddSectionButton
                 insertIndex={index + 1}
                 sections={sections}
