@@ -282,7 +282,7 @@ sections:
         outcome: Landed first tech job
   - type: faq
     version: "1.0"
-    background: "#e8f4fc"
+    background: "muted"
     title: FAQ
     items:
       - question: Are there fixed class times?

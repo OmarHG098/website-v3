@@ -298,7 +298,7 @@ sections:
         outcome: Streamlined hiring process
   - type: faq
     version: "1.0"
-    background: "#e8f4fc"
+    background: "muted"
     title: FAQ
     items:
       - question: Do I need any technical background?

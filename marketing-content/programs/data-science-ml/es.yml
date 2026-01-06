@@ -291,7 +291,7 @@ sections:
 
   - type: faq
     version: "1.0"
-    background: "#e8f4fc"
+    background: "muted"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa con datos o programación?"

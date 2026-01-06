@@ -49,7 +49,7 @@ sections:
         label: Success Stories
   - type: faq
     version: "1.0"
-    background: "#e8f4fc"
+    background: "muted"
     title: Frequently Asked Questions
     items:
       - question: Is this program really free?

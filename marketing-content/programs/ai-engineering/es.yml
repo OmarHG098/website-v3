@@ -298,7 +298,7 @@ sections:
         outcome: Primer trabajo en tech
   - type: faq
     version: "1.0"
-    background: "#e8f4fc"
+    background: "muted"
     title: FAQ
     items:
       - question: ¿Qué requisitos previos necesito para Ingeniería de IA?
