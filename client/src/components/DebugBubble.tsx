@@ -1256,13 +1256,17 @@ export function DebugBubble() {
                     </button>
                     {githubSyncStatus?.syncEnabled && (
                       <button
-                        onClick={handleSyncFromRemote}
-                        disabled={isSyncing || syncStatusLoading}
-                        className="p-1 rounded hover-elevate disabled:opacity-50"
-                        data-testid="button-sync-from-remote"
-                        title="Pull latest from GitHub"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          fetchPendingChanges();
+                          setCommitModalOpen(true);
+                        }}
+                        className="p-1 rounded hover-elevate"
+                        data-testid="button-open-sync-modal"
+                        title="Manage file sync"
                       >
-                        <IconCloudDownload className={`h-3.5 w-3.5 ${isSyncing ? 'animate-pulse' : ''}`} />
+                        <IconCloudDownload className="h-3.5 w-3.5" />
                       </button>
                     )}
                   </div>
