@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices } from "@tabler/icons-react";
+import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices, IconPalette } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -76,11 +76,13 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 
   const isCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
   const [customValue, setCustomValue] = useState(isCustom ? value : "");
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   useEffect(() => {
     const isNowCustom = value && backgrounds.length > 0 && !backgrounds.some((bg) => isSelected(bg));
     if (isNowCustom) {
       setCustomValue(value);
+      setShowCustomInput(true);
     } else {
       setCustomValue("");
     }
@@ -117,7 +119,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
           <button
             key={bg.id}
             type="button"
-            onClick={() => onChange(bg.cssValue)}
+            onClick={() => { onChange(bg.cssValue); setShowCustomInput(false); }}
             className={`w-7 h-7 rounded border-2 transition-all ${
               isSelected(bg)
                 ? "border-primary ring-2 ring-primary/20"
@@ -128,9 +130,21 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
             style={{ background: bg.previewStyle }}
           />
         ))}
+        <button
+          type="button"
+          onClick={() => setShowCustomInput(!showCustomInput)}
+          className={`w-7 h-7 rounded border-2 transition-all flex items-center justify-center ${
+            isCustom || showCustomInput
+              ? "border-primary ring-2 ring-primary/20 bg-primary/10"
+              : "border-border hover:border-primary/50 bg-muted"
+          }`}
+          data-testid="props-background-custom-toggle"
+          title="Custom CSS value"
+        >
+          <IconPalette className="w-4 h-4 text-muted-foreground" />
+        </button>
       </div>
-      <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground">Custom CSS Value</Label>
+      {showCustomInput && (
         <Input
           type="text"
           placeholder="e.g., #ff5500, linear-gradient(...)"
@@ -143,11 +157,9 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
           }}
           className="text-sm"
           data-testid="props-background-custom"
+          autoFocus
         />
-        <p className="text-xs text-muted-foreground">
-          Enter any valid CSS color or gradient value
-        </p>
-      </div>
+      )}
     </div>
   );
 }
