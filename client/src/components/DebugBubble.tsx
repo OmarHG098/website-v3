@@ -1735,7 +1735,7 @@ export function DebugBubble() {
                           {change.status}
                         </span>
                         <span 
-                          className="text-muted-foreground"
+                          className="text-muted-foreground font-mono text-xs"
                           style={{ 
                             direction: 'rtl', 
                             textAlign: 'left',
@@ -1747,7 +1747,7 @@ export function DebugBubble() {
                           }}
                           title={change.file}
                         >
-                          {change.contentType}/{change.slug}
+                          {change.file.replace('marketing-content/', '')}
                         </span>
                       </div>
                     ))}

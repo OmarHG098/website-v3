@@ -16,9 +16,15 @@ const MARKETING_CONTENT_DIR = path.join(process.cwd(), 'marketing-content');
 /**
  * Check if a file should be tracked by the sync system.
  * Only tracks YAML files in marketing-content directory.
+ * Excludes component-registry (version schemas/examples are managed separately).
  */
 export function shouldTrackFile(filePath: string): boolean {
   if (!filePath.startsWith('marketing-content/')) {
+    return false;
+  }
+  
+  // Exclude component-registry (managed separately, too many versioned files)
+  if (filePath.includes('component-registry/')) {
     return false;
   }
   
