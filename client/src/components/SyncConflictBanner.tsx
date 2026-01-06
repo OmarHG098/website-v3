@@ -5,15 +5,12 @@ import { useSyncOptional } from "@/contexts/SyncContext";
 export function SyncConflictBanner() {
   const sync = useSyncOptional();
   
-  // Only show banner when there are actual file changes to sync
-  // (not just when sync status is "behind" without specific files)
-  const fileCount = sync?.pendingFileCount || 0;
-  
-  if (!sync || !sync.syncStatus?.syncEnabled || fileCount === 0) {
+  if (!sync || !sync.isBehind || !sync.syncStatus?.syncEnabled) {
     return null;
   }
 
-  const fileText = fileCount === 1 ? 'file' : 'files';
+  const behindBy = sync.conflictInfo?.behindBy || 1;
+  const commitText = behindBy === 1 ? 'commit' : 'commits';
 
   return (
     <div 
@@ -27,21 +24,24 @@ export function SyncConflictBanner() {
           </div>
           <div>
             <p className="text-sm font-medium text-foreground">
-              {fileCount} {fileText} need syncing with remote
+              Remote repository has {behindBy} new {commitText}
             </p>
             <p className="text-xs text-muted-foreground">
-              Sync changes before editing to avoid conflicts.
+              Use the debug tools to sync changes before editing.
             </p>
           </div>
         </div>
         
         <Button
           size="sm"
-          onClick={() => sync.setSyncModalOpen(true)}
+          onClick={async () => {
+            await sync.syncWithRemote();
+            window.location.reload();
+          }}
           data-testid="button-sync-now"
         >
           <IconRefresh className="h-4 w-4 mr-1" />
-          Sync with remote
+          Sync & Reload
         </Button>
       </div>
     </div>
