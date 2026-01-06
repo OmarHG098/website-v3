@@ -1870,32 +1870,17 @@ export function DebugBubble() {
                     {pendingChanges.map((change, index) => (
                       <div 
                         key={`${change.file}-${index}`}
-                        className="space-y-1.5 py-1.5 border-b last:border-b-0"
+                        className="space-y-1 py-1.5 border-b last:border-b-0"
                       >
-                        <div className="flex items-center gap-2">
-                          <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
-                            change.source === 'conflict'
-                              ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
-                              : change.source === 'incoming'
-                              ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300'
-                              : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
-                          }`}>
-                            {change.source === 'conflict' ? 'Conflict' : change.source === 'incoming' ? 'Incoming update' : 'Local update'}
-                          </span>
-                          <span 
-                            className="flex-1 text-muted-foreground font-mono text-xs truncate"
-                            title={change.file}
-                          >
-                            {change.file.replace('marketing-content/', '')}
-                          </span>
-                          {change.author && (
-                            <span className="shrink-0 text-xs text-muted-foreground">
-                              by {change.author}
-                            </span>
-                          )}
+                        {/* Row 1: File path only */}
+                        <div 
+                          className="font-mono text-xs text-foreground truncate"
+                          title={change.file}
+                        >
+                          {change.file.replace('marketing-content/', '')}
                         </div>
                         
-                        {/* Per-file actions */}
+                        {/* Row 2: Badge | Author | Date | Commit hash | Actions */}
                         {selectedFileForCommit === change.file ? (
                           <div className="space-y-2">
                             <input
@@ -1947,53 +1932,98 @@ export function DebugBubble() {
                             </div>
                           </div>
                         ) : (
-                          <div className="flex flex-wrap items-center gap-1">
-                            {/* Show Upload button for local changes and conflicts */}
-                            {(change.source === 'local' || change.source === 'conflict') && (
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Button
-                                    size="icon"
-                                    variant="outline"
-                                    className="h-6 w-6"
-                                    onClick={() => {
-                                      setSelectedFileForCommit(change.file);
-                                      setFileCommitMessage("");
-                                    }}
-                                    data-testid={`button-commit-file-${index}`}
-                                  >
-                                    <IconArrowUp className="h-3 w-3" />
-                                  </Button>
-                                </TooltipTrigger>
-                                <TooltipContent side="top">
-                                  <p>Upload my version to remote</p>
-                                </TooltipContent>
-                              </Tooltip>
+                          <div className="flex flex-wrap items-center gap-2">
+                            {/* Badge */}
+                            <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
+                              change.source === 'conflict'
+                                ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
+                                : change.source === 'incoming'
+                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300'
+                                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+                            }`}>
+                              {change.source === 'conflict' ? 'Conflict' : change.source === 'incoming' ? 'Incoming update' : 'Local update'}
+                            </span>
+                            
+                            {/* Author */}
+                            {change.author && (
+                              <span className="text-xs text-muted-foreground">
+                                {change.author}
+                              </span>
                             )}
-                            {/* Show Download button for incoming changes and conflicts */}
-                            {(change.source === 'incoming' || change.source === 'conflict') && (
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Button
-                                    size="icon"
-                                    variant="outline"
-                                    className="h-6 w-6"
-                                    onClick={() => setConfirmPullFile(change.file)}
-                                    disabled={filePulling === change.file}
-                                    data-testid={`button-pull-file-${index}`}
-                                  >
-                                    {filePulling === change.file ? (
-                                      <IconRefresh className="h-3 w-3 animate-spin" />
-                                    ) : (
-                                      <IconCloudDownload className="h-3 w-3" />
-                                    )}
-                                  </Button>
-                                </TooltipTrigger>
-                                <TooltipContent side="top">
-                                  <p>Download and Override mine</p>
-                                </TooltipContent>
-                              </Tooltip>
+                            
+                            {/* Date */}
+                            {change.date && (
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(change.date).toLocaleDateString()}
+                              </span>
                             )}
+                            
+                            {/* Commit hash (clickable) */}
+                            {change.commitSha && syncStatus?.repoUrl && (
+                              <a
+                                href={`${syncStatus.repoUrl.replace(/\.git$/, '')}/commit/${change.commitSha}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs font-mono text-primary hover:underline"
+                                title={`View commit ${change.commitSha}`}
+                                data-testid={`link-commit-${index}`}
+                              >
+                                {change.commitSha.substring(0, 7)}
+                              </a>
+                            )}
+                            
+                            {/* Spacer to push buttons to the right */}
+                            <div className="flex-1" />
+                            
+                            {/* Action buttons */}
+                            <div className="flex items-center gap-1">
+                              {/* Show Upload button for local changes and conflicts */}
+                              {(change.source === 'local' || change.source === 'conflict') && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon"
+                                      variant="outline"
+                                      className="h-6 w-6"
+                                      onClick={() => {
+                                        setSelectedFileForCommit(change.file);
+                                        setFileCommitMessage("");
+                                      }}
+                                      data-testid={`button-commit-file-${index}`}
+                                    >
+                                      <IconArrowUp className="h-3 w-3" />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top">
+                                    <p>Upload my version to remote</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                              {/* Show Download button for incoming changes and conflicts */}
+                              {(change.source === 'incoming' || change.source === 'conflict') && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon"
+                                      variant="outline"
+                                      className="h-6 w-6"
+                                      onClick={() => setConfirmPullFile(change.file)}
+                                      disabled={filePulling === change.file}
+                                      data-testid={`button-pull-file-${index}`}
+                                    >
+                                      {filePulling === change.file ? (
+                                        <IconRefresh className="h-3 w-3 animate-spin" />
+                                      ) : (
+                                        <IconCloudDownload className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top">
+                                    <p>Download and Override mine</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
