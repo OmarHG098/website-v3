@@ -41,6 +41,10 @@ interface SyncContextValue {
   syncWithRemote: () => Promise<boolean>;
   enableForceCommit: () => void;
   refreshSyncStatus: () => void;
+  // Sync modal state (shared between DebugBubble and SyncConflictBanner)
+  syncModalOpen: boolean;
+  setSyncModalOpen: (open: boolean) => void;
+  pendingFileCount: number;
 }
 
 const SyncContext = createContext<SyncContextValue | null>(null);
@@ -53,12 +57,27 @@ export function SyncProvider({ children }: SyncProviderProps) {
   const queryClient = useQueryClient();
   const [conflictInfo, setConflictInfo] = useState<ConflictInfo | null>(null);
   const [forceCommitEnabled, setForceCommitEnabled] = useState(false);
+  const [syncModalOpen, setSyncModalOpen] = useState(false);
+  const [syncModalDismissed, setSyncModalDismissed] = useState(false);
 
   const { data: syncStatus, isLoading, refetch: refreshSyncStatus } = useQuery<SyncStatus>({
     queryKey: ['/api/github/sync-status'],
     refetchInterval: 60000,
     refetchOnWindowFocus: true,
   });
+
+  // Query pending changes to get file count
+  interface PendingChange {
+    file: string;
+    source: 'local' | 'incoming' | 'conflict';
+  }
+  const { data: pendingChanges } = useQuery<PendingChange[]>({
+    queryKey: ['/api/github/all-changes'],
+    enabled: syncStatus?.syncEnabled === true,
+    refetchInterval: 30000,
+  });
+
+  const pendingFileCount = pendingChanges?.length ?? 0;
 
   const isBehind = useMemo(() => {
     return syncStatus?.status === 'behind' || syncStatus?.status === 'diverged';
@@ -112,6 +131,21 @@ export function SyncProvider({ children }: SyncProviderProps) {
     }
   }, [syncStatus?.syncEnabled, isBehind, checkForConflicts]);
 
+  // Auto-open sync modal when there are pending changes (unless user dismissed it)
+  useEffect(() => {
+    if (pendingFileCount > 0 && !syncModalDismissed && syncStatus?.syncEnabled) {
+      setSyncModalOpen(true);
+    }
+  }, [pendingFileCount, syncModalDismissed, syncStatus?.syncEnabled]);
+
+  // Wrapper for setSyncModalOpen that tracks dismissal
+  const handleSetSyncModalOpen = useCallback((open: boolean) => {
+    setSyncModalOpen(open);
+    if (!open) {
+      setSyncModalDismissed(true);
+    }
+  }, []);
+
   // Subscribe to content updates and refresh sync status when content is edited
   useEffect(() => {
     const unsubscribe = subscribeToContentUpdates(() => {
@@ -135,6 +169,9 @@ export function SyncProvider({ children }: SyncProviderProps) {
     syncWithRemote,
     enableForceCommit,
     refreshSyncStatus: () => { refreshSyncStatus(); },
+    syncModalOpen,
+    setSyncModalOpen: handleSetSyncModalOpen,
+    pendingFileCount,
   };
 
   return (
