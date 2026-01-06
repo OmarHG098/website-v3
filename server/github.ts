@@ -211,6 +211,7 @@ interface GitHubBranchRef {
 
 export interface GitHubSyncStatus {
   configured: boolean;
+  syncEnabled: boolean;
   localCommit: string | null;
   remoteCommit: string | null;
   status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
@@ -224,11 +225,13 @@ export interface GitHubSyncStatus {
  * Get the sync status between local and remote GitHub repository
  */
 export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
+  const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
   const config = getGitHubConfig();
   
   if (!config) {
     return {
       configured: false,
+      syncEnabled,
       localCommit: null,
       remoteCommit: null,
       status: 'not-configured',
@@ -246,6 +249,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
       // Not a git repo or git not available
       return {
         configured: true,
+        syncEnabled,
         localCommit: null,
         remoteCommit: null,
         status: 'unknown',
@@ -269,6 +273,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
       console.error('GitHub API error getting branch ref:', response.status);
       return {
         configured: true,
+        syncEnabled,
         localCommit,
         remoteCommit: null,
         status: 'unknown',
@@ -284,6 +289,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
     if (localCommit === remoteCommit) {
       return {
         configured: true,
+        syncEnabled,
         localCommit,
         remoteCommit,
         status: 'in-sync',
@@ -304,6 +310,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
         // Can't determine relationship
         return {
           configured: true,
+          syncEnabled,
           localCommit,
           remoteCommit,
           status: 'unknown',
@@ -332,6 +339,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
       
       return {
         configured: true,
+        syncEnabled,
         localCommit,
         remoteCommit,
         status,
@@ -344,6 +352,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
       // Git comparison failed
       return {
         configured: true,
+        syncEnabled,
         localCommit,
         remoteCommit,
         status: localCommit === remoteCommit ? 'in-sync' : 'unknown',
@@ -355,6 +364,7 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
     console.error('Error checking GitHub sync status:', error);
     return {
       configured: true,
+      syncEnabled,
       localCommit: null,
       remoteCommit: null,
       status: 'unknown',

@@ -136,6 +136,7 @@ interface ExperimentsResponse {
 
 interface GitHubSyncStatus {
   configured: boolean;
+  syncEnabled: boolean;
   localCommit: string | null;
   remoteCommit: string | null;
   status: 'in-sync' | 'behind' | 'ahead' | 'diverged' | 'unknown' | 'not-configured';
@@ -803,6 +804,11 @@ export function DebugBubble() {
                   <div className="flex items-center gap-3">
                     <IconBrandGithub className="h-4 w-4 text-muted-foreground" />
                     <span>GitHub Sync</span>
+                    {githubSyncStatus?.syncEnabled && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 font-medium">
+                        Active
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     {syncStatusLoading ? (
