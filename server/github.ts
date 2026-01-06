@@ -1,7 +1,24 @@
 /**
  * GitHub API utility for committing content changes directly to the repository.
  * Used in production to sync content edits back to the main branch.
+ * 
+ * IMPORTANT: This module does NOT use git CLI commands.
+ * All operations use GitHub's REST API to work in production environments
+ * where git CLI may not be available (e.g., Replit deployments).
  */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import {
+  detectPendingChanges,
+  getLastSyncedCommit,
+  updateSyncStateAfterCommit,
+  markFileAsModified,
+  loadSyncState,
+  saveSyncState,
+  computeFileSha,
+  type PendingChange,
+} from './sync-state';
 
 interface GitHubCommitOptions {
   filePath: string;
@@ -9,7 +26,7 @@ interface GitHubCommitOptions {
   message: string;
 }
 
-interface GitHubConfig {
+export interface GitHubConfig {
   token: string;
   owner: string;
   repo: string;
@@ -20,6 +37,8 @@ interface GitHubFileResponse {
   sha?: string;
   content?: string;
 }
+
+export { PendingChange, markFileAsModified };
 
 /**
  * Get the current file's SHA (required for updates)
@@ -222,69 +241,234 @@ export interface GitHubSyncStatus {
 }
 
 /**
- * Get the sync status between local and remote GitHub repository
+ * Get list of pending changes in marketing-content directory
+ * Uses file hash comparison instead of git status
  */
-export interface PendingChange {
-  file: string;
-  status: 'modified' | 'added' | 'deleted';
-  contentType: string;
-  slug: string;
+export async function getPendingChanges(): Promise<PendingChange[]> {
+  return detectPendingChanges();
 }
 
 /**
- * Get list of pending changes in marketing-content directory
- * These are files modified since the last commit
+ * Create a blob in the GitHub repository
  */
-export async function getPendingChanges(): Promise<PendingChange[]> {
+async function createBlob(config: GitHubConfig, content: string): Promise<string | null> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/blobs`;
+  
   try {
-    const { execSync } = await import('child_process');
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        content: Buffer.from(content).toString('base64'),
+        encoding: 'base64',
+      }),
+    });
     
-    // Get modified/added/deleted files in marketing-content directory
-    // Using git status --porcelain for machine-readable output
-    const output = execSync('git status --porcelain marketing-content/', { encoding: 'utf-8' });
-    
-    if (!output.trim()) {
-      return [];
+    if (!response.ok) {
+      console.error('GitHub API error creating blob:', response.status);
+      return null;
     }
     
-    const changes: PendingChange[] = [];
-    const lines = output.trim().split('\n');
-    
-    for (const line of lines) {
-      if (!line.trim()) continue;
-      
-      // Parse git status format: XY filename
-      // X = index status, Y = worktree status
-      const statusCode = line.substring(0, 2);
-      const file = line.substring(3).trim();
-      
-      let status: PendingChange['status'] = 'modified';
-      if (statusCode.includes('A') || statusCode.includes('?')) {
-        status = 'added';
-      } else if (statusCode.includes('D')) {
-        status = 'deleted';
-      }
-      
-      // Extract content type and slug from path
-      // e.g., marketing-content/programs/ai-engineering/en.yml
-      const pathMatch = file.match(/marketing-content\/(programs|landings|locations|pages)\/([^\/]+)\//);
-      const contentType = pathMatch?.[1] || 'unknown';
-      const slug = pathMatch?.[2] || file;
-      
-      changes.push({ file, status, contentType, slug });
-    }
-    
-    return changes;
+    const data = await response.json();
+    return data.sha;
   } catch (error) {
-    console.error('Error getting pending changes:', error);
-    return [];
+    console.error('Error creating blob:', error);
+    return null;
   }
 }
 
 /**
- * Commit all pending changes with a custom message and push to GitHub
+ * Get the current tree SHA for a commit
  */
-export async function commitAndPush(message: string): Promise<{ success: boolean; error?: string; commitHash?: string }> {
+async function getTreeSha(config: GitHubConfig, commitSha: string): Promise<string | null> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/commits/${commitSha}`;
+  
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error getting commit:', response.status);
+      return null;
+    }
+    
+    const data = await response.json();
+    return data.tree?.sha || null;
+  } catch (error) {
+    console.error('Error getting tree SHA:', error);
+    return null;
+  }
+}
+
+/**
+ * Create a new tree with updated files
+ */
+async function createTree(
+  config: GitHubConfig,
+  baseTreeSha: string,
+  files: Array<{ path: string; blobSha: string | null; mode?: string }>
+): Promise<string | null> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/trees`;
+  
+  const tree = files.map(file => ({
+    path: file.path,
+    mode: file.mode || '100644',
+    type: 'blob' as const,
+    sha: file.blobSha,
+  }));
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        base_tree: baseTreeSha,
+        tree,
+      }),
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error creating tree:', response.status, await response.text());
+      return null;
+    }
+    
+    const data = await response.json();
+    return data.sha;
+  } catch (error) {
+    console.error('Error creating tree:', error);
+    return null;
+  }
+}
+
+/**
+ * Create a new commit
+ */
+async function createCommitObject(
+  config: GitHubConfig,
+  message: string,
+  treeSha: string,
+  parentSha: string
+): Promise<string | null> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/commits`;
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        message,
+        tree: treeSha,
+        parents: [parentSha],
+      }),
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error creating commit:', response.status, await response.text());
+      return null;
+    }
+    
+    const data = await response.json();
+    return data.sha;
+  } catch (error) {
+    console.error('Error creating commit:', error);
+    return null;
+  }
+}
+
+/**
+ * Update branch ref to point to new commit
+ */
+async function updateBranchRef(
+  config: GitHubConfig,
+  commitSha: string,
+  force: boolean = false
+): Promise<boolean> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/refs/heads/${config.branch}`;
+  
+  try {
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        sha: commitSha,
+        force,
+      }),
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('GitHub API error updating ref:', response.status, errorText);
+      return false;
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error updating branch ref:', error);
+    return false;
+  }
+}
+
+/**
+ * Get the current branch HEAD SHA
+ */
+async function getBranchHeadSha(config: GitHubConfig): Promise<string | null> {
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/ref/heads/${config.branch}`;
+  
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error getting branch head:', response.status);
+      return null;
+    }
+    
+    const data = await response.json();
+    return data.object?.sha || null;
+  } catch (error) {
+    console.error('Error getting branch head:', error);
+    return null;
+  }
+}
+
+/**
+ * Commit all pending changes with a custom message using GitHub API
+ * This method uses the Git Data API: create blobs → create tree → create commit → update ref
+ */
+export async function commitAndPush(
+  message: string,
+  options?: { force?: boolean }
+): Promise<{ success: boolean; error?: string; commitHash?: string }> {
   const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
   
   if (!syncEnabled) {
@@ -297,47 +481,79 @@ export async function commitAndPush(message: string): Promise<{ success: boolean
   }
   
   try {
-    const { execSync } = await import('child_process');
-    
-    // Check if there are pending changes
     const pendingChanges = await getPendingChanges();
     if (pendingChanges.length === 0) {
       return { success: false, error: "No pending changes to commit" };
     }
     
-    // Stage all changes in marketing-content
-    execSync('git add marketing-content/', { encoding: 'utf-8' });
+    const currentHeadSha = await getBranchHeadSha(config);
+    if (!currentHeadSha) {
+      return { success: false, error: "Could not get current branch HEAD" };
+    }
     
-    // Commit with provided message
-    const sanitizedMessage = message.replace(/"/g, '\\"');
-    execSync(`git commit -m "${sanitizedMessage}"`, { encoding: 'utf-8' });
+    const lastSyncedCommit = getLastSyncedCommit();
+    if (lastSyncedCommit && lastSyncedCommit !== currentHeadSha && !options?.force) {
+      return { 
+        success: false, 
+        error: "Remote has new commits. Please sync before committing, or use force commit." 
+      };
+    }
     
-    // Get the commit hash
-    const commitHash = execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
+    const baseTreeSha = await getTreeSha(config, currentHeadSha);
+    if (!baseTreeSha) {
+      return { success: false, error: "Could not get base tree" };
+    }
     
-    // Push to the configured branch
-    execSync(`git push origin HEAD:${config.branch}`, { encoding: 'utf-8' });
+    const treeEntries: Array<{ path: string; blobSha: string | null }> = [];
+    const committedFiles: string[] = [];
     
-    console.log(`Committed and pushed to GitHub: ${commitHash}`);
-    return { success: true, commitHash };
+    for (const change of pendingChanges) {
+      if (change.status === 'deleted') {
+        treeEntries.push({ path: change.file, blobSha: null });
+        committedFiles.push(change.file);
+      } else {
+        const fullPath = path.join(process.cwd(), change.file);
+        if (fs.existsSync(fullPath)) {
+          const content = fs.readFileSync(fullPath, 'utf-8');
+          const blobSha = await createBlob(config, content);
+          if (!blobSha) {
+            return { success: false, error: `Failed to create blob for ${change.file}` };
+          }
+          treeEntries.push({ path: change.file, blobSha });
+          committedFiles.push(change.file);
+        }
+      }
+    }
+    
+    const newTreeSha = await createTree(config, baseTreeSha, treeEntries);
+    if (!newTreeSha) {
+      return { success: false, error: "Failed to create tree" };
+    }
+    
+    const newCommitSha = await createCommitObject(config, message, newTreeSha, currentHeadSha);
+    if (!newCommitSha) {
+      return { success: false, error: "Failed to create commit" };
+    }
+    
+    const updated = await updateBranchRef(config, newCommitSha, options?.force);
+    if (!updated) {
+      return { success: false, error: "Failed to update branch ref" };
+    }
+    
+    updateSyncStateAfterCommit(newCommitSha, committedFiles);
+    
+    console.log(`Committed and pushed to GitHub via API: ${newCommitSha}`);
+    return { success: true, commitHash: newCommitSha };
   } catch (error) {
     console.error('Error committing and pushing:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    
-    // Try to provide a more helpful error message
-    if (errorMessage.includes('nothing to commit')) {
-      return { success: false, error: "No changes to commit" };
-    }
-    if (errorMessage.includes('Permission denied') || errorMessage.includes('403')) {
-      return { success: false, error: "Permission denied - check GITHUB_TOKEN permissions" };
-    }
-    
     return { success: false, error: errorMessage };
   }
 }
 
 /**
  * Get the sync status between local and remote GitHub repository
+ * Uses stored lastSyncedCommit from sync-state instead of git CLI
  */
 export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
   const syncEnabled = process.env.GITHUB_SYNC_ENABLED === "true";
@@ -354,139 +570,59 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
   }
   
   try {
-    // Get local HEAD commit using git
-    const { execSync } = await import('child_process');
-    let localCommit: string | null = null;
+    const localCommit = getLastSyncedCommit();
     
-    try {
-      localCommit = execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
-    } catch {
-      // Not a git repo or git not available
+    const remoteCommit = await getBranchHeadSha(config);
+    
+    if (!remoteCommit) {
+      return {
+        configured: true,
+        syncEnabled,
+        localCommit,
+        remoteCommit: null,
+        status: 'unknown',
+        repoUrl: process.env.GITHUB_REPO_URL,
+        branch: config.branch,
+      };
+    }
+    
+    if (!localCommit) {
       return {
         configured: true,
         syncEnabled,
         localCommit: null,
-        remoteCommit: null,
-        status: 'unknown',
+        remoteCommit,
+        status: 'behind',
         repoUrl: process.env.GITHUB_REPO_URL,
         branch: config.branch,
       };
     }
     
-    // Get remote branch ref from GitHub API
-    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/ref/heads/${config.branch}`;
-    
-    const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${config.token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      },
-    });
-    
-    if (!response.ok) {
-      console.error('GitHub API error getting branch ref:', response.status);
-      // Check for authentication/authorization errors
-      if (response.status === 401 || response.status === 403) {
-        return {
-          configured: true,
-          syncEnabled,
-          localCommit,
-          remoteCommit: null,
-          status: 'invalid-credentials',
-          repoUrl: process.env.GITHUB_REPO_URL,
-          branch: config.branch,
-        };
-      }
-      return {
-        configured: true,
-        syncEnabled,
-        localCommit,
-        remoteCommit: null,
-        status: 'unknown',
-        repoUrl: process.env.GITHUB_REPO_URL,
-        branch: config.branch,
-      };
-    }
-    
-    const data: GitHubBranchRef = await response.json();
-    const remoteCommit = data.object.sha;
-    
-    // Compare commits
     if (localCommit === remoteCommit) {
+      const pendingChanges = detectPendingChanges();
+      const hasPendingChanges = pendingChanges.length > 0;
+      
       return {
         configured: true,
         syncEnabled,
         localCommit,
         remoteCommit,
-        status: 'in-sync',
+        status: hasPendingChanges ? 'ahead' : 'in-sync',
+        aheadBy: hasPendingChanges ? pendingChanges.length : 0,
         repoUrl: process.env.GITHUB_REPO_URL,
         branch: config.branch,
       };
     }
     
-    // Check if local is behind or ahead using git merge-base
-    try {
-      // Fetch to ensure we have remote refs
-      execSync(`git fetch origin ${config.branch} --quiet 2>/dev/null || true`, { encoding: 'utf-8' });
-      
-      // Get merge base
-      const mergeBase = execSync(`git merge-base HEAD origin/${config.branch} 2>/dev/null || echo ""`, { encoding: 'utf-8' }).trim();
-      
-      if (!mergeBase) {
-        // Can't determine relationship
-        return {
-          configured: true,
-          syncEnabled,
-          localCommit,
-          remoteCommit,
-          status: 'unknown',
-          repoUrl: process.env.GITHUB_REPO_URL,
-          branch: config.branch,
-        };
-      }
-      
-      // Count commits ahead/behind
-      const behindCount = execSync(`git rev-list --count HEAD..origin/${config.branch} 2>/dev/null || echo "0"`, { encoding: 'utf-8' }).trim();
-      const aheadCount = execSync(`git rev-list --count origin/${config.branch}..HEAD 2>/dev/null || echo "0"`, { encoding: 'utf-8' }).trim();
-      
-      const behind = parseInt(behindCount) || 0;
-      const ahead = parseInt(aheadCount) || 0;
-      
-      let status: GitHubSyncStatus['status'];
-      if (behind > 0 && ahead > 0) {
-        status = 'diverged';
-      } else if (behind > 0) {
-        status = 'behind';
-      } else if (ahead > 0) {
-        status = 'ahead';
-      } else {
-        status = 'in-sync';
-      }
-      
-      return {
-        configured: true,
-        syncEnabled,
-        localCommit,
-        remoteCommit,
-        status,
-        behindBy: behind,
-        aheadBy: ahead,
-        repoUrl: process.env.GITHUB_REPO_URL,
-        branch: config.branch,
-      };
-    } catch {
-      // Git comparison failed
-      return {
-        configured: true,
-        syncEnabled,
-        localCommit,
-        remoteCommit,
-        status: localCommit === remoteCommit ? 'in-sync' : 'unknown',
-        repoUrl: process.env.GITHUB_REPO_URL,
-        branch: config.branch,
-      };
-    }
+    return {
+      configured: true,
+      syncEnabled,
+      localCommit,
+      remoteCommit,
+      status: 'behind',
+      repoUrl: process.env.GITHUB_REPO_URL,
+      branch: config.branch,
+    };
   } catch (error) {
     console.error('Error checking GitHub sync status:', error);
     return {
@@ -498,5 +634,147 @@ export async function getGitHubSyncStatus(): Promise<GitHubSyncStatus> {
       repoUrl: process.env.GITHUB_REPO_URL,
       branch: config?.branch,
     };
+  }
+}
+
+export interface RemoteCommit {
+  sha: string;
+  message: string;
+  author: string;
+  date: string;
+  files: string[];
+}
+
+export interface ConflictInfo {
+  hasConflict: boolean;
+  behindBy: number;
+  commits: RemoteCommit[];
+  lastSyncedCommit: string | null;
+  remoteCommit: string | null;
+}
+
+/**
+ * Get detailed conflict information including missed commits and changed files
+ * Uses GitHub Compare API to fetch commits between lastSyncedCommit and current HEAD
+ */
+export async function getConflictInfo(): Promise<ConflictInfo> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return {
+      hasConflict: false,
+      behindBy: 0,
+      commits: [],
+      lastSyncedCommit: null,
+      remoteCommit: null,
+    };
+  }
+  
+  const lastSyncedCommit = getLastSyncedCommit();
+  const remoteCommit = await getBranchHeadSha(config);
+  
+  if (!remoteCommit) {
+    return {
+      hasConflict: false,
+      behindBy: 0,
+      commits: [],
+      lastSyncedCommit,
+      remoteCommit: null,
+    };
+  }
+  
+  if (!lastSyncedCommit || lastSyncedCommit === remoteCommit) {
+    return {
+      hasConflict: !lastSyncedCommit && !!remoteCommit,
+      behindBy: !lastSyncedCommit ? 1 : 0,
+      commits: [],
+      lastSyncedCommit,
+      remoteCommit,
+    };
+  }
+  
+  try {
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/compare/${lastSyncedCommit}...${remoteCommit}`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error comparing commits:', response.status);
+      return {
+        hasConflict: true,
+        behindBy: 1,
+        commits: [],
+        lastSyncedCommit,
+        remoteCommit,
+      };
+    }
+    
+    const data = await response.json();
+    
+    const commits: RemoteCommit[] = (data.commits || []).map((commit: any) => ({
+      sha: commit.sha,
+      message: commit.commit?.message || '',
+      author: commit.commit?.author?.name || commit.author?.login || 'Unknown',
+      date: commit.commit?.author?.date || '',
+      files: [],
+    }));
+    
+    const changedFiles = (data.files || []).map((f: any) => f.filename);
+    if (commits.length > 0 && changedFiles.length > 0) {
+      commits[commits.length - 1].files = changedFiles;
+    }
+    
+    return {
+      hasConflict: commits.length > 0,
+      behindBy: data.behind_by || commits.length,
+      commits,
+      lastSyncedCommit,
+      remoteCommit,
+    };
+  } catch (error) {
+    console.error('Error getting conflict info:', error);
+    return {
+      hasConflict: true,
+      behindBy: 1,
+      commits: [],
+      lastSyncedCommit,
+      remoteCommit,
+    };
+  }
+}
+
+/**
+ * Sync local state with remote by updating lastSyncedCommit
+ * Call this after user chooses to "refresh" and accept remote changes
+ */
+export async function syncWithRemote(): Promise<{ success: boolean; error?: string }> {
+  const config = getGitHubConfig();
+  
+  if (!config) {
+    return { success: false, error: "GitHub not configured" };
+  }
+  
+  try {
+    const remoteCommit = await getBranchHeadSha(config);
+    if (!remoteCommit) {
+      return { success: false, error: "Could not get remote HEAD" };
+    }
+    
+    const state = loadSyncState();
+    state.lastSyncedCommit = remoteCommit;
+    state.lastSyncedAt = new Date().toISOString();
+    state.files = {};
+    saveSyncState(state);
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error syncing with remote:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
