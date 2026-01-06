@@ -1862,12 +1862,12 @@ export function DebugBubble() {
                   </p>
                 </div>
               ) : (
-                <ScrollArea className="h-[250px] rounded-md border">
-                  <div className="p-2 space-y-1">
+                <ScrollArea className="h-[250px]">
+                  <div className="space-y-1">
                     {pendingChanges.map((change, index) => (
                       <div 
                         key={`${change.file}-${index}`}
-                        className="border rounded-md p-2 space-y-2"
+                        className="space-y-1.5 py-1.5 border-b last:border-b-0"
                       >
                         <div className="flex items-center gap-2">
                           <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
