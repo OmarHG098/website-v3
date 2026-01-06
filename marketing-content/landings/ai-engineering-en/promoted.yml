@@ -142,7 +142,7 @@ sections:
     description: AI Engineers build AI-powered systems, automate workflows, and create AI-integrated products. They are leading the changes companies need today. Yet, according to McKinsey, 87% of companies report they are lacking the AI engineering talent to transform their operations. This gap is your opportunity.
     card_color: bg-background
     items:
-      - value: 3.5M
+      - value: 800,000
         title: AI-related roles expected by 2026
       - value: 47%
         title: Year-over-year growth in AI job postings
