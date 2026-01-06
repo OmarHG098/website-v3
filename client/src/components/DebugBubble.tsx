@@ -319,7 +319,9 @@ export function DebugBubble() {
   // Pending changes state
   const [pendingChanges, setPendingChanges] = useState<PendingChange[]>([]);
   const [pendingChangesLoading, setPendingChangesLoading] = useState(false);
-  const [commitModalOpen, setCommitModalOpen] = useState(false);
+  // Sync modal open state is shared via SyncContext
+  const commitModalOpen = syncContext?.syncModalOpen ?? false;
+  const setCommitModalOpen = syncContext?.setSyncModalOpen ?? (() => {});
   const [commitMessage, setCommitMessage] = useState("");
   const [isCommitting, setIsCommitting] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);

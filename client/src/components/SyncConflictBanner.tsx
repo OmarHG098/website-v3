@@ -9,8 +9,8 @@ export function SyncConflictBanner() {
     return null;
   }
 
-  const behindBy = sync.conflictInfo?.behindBy || 1;
-  const commitText = behindBy === 1 ? 'commit' : 'commits';
+  const fileCount = sync.pendingFileCount || 0;
+  const fileText = fileCount === 1 ? 'file' : 'files';
 
   return (
     <div 
@@ -24,24 +24,23 @@ export function SyncConflictBanner() {
           </div>
           <div>
             <p className="text-sm font-medium text-foreground">
-              Remote repository has {behindBy} new {commitText}
+              {fileCount > 0 
+                ? `${fileCount} ${fileText} need syncing with remote`
+                : "Remote repository has changes"}
             </p>
             <p className="text-xs text-muted-foreground">
-              Use the debug tools to sync changes before editing.
+              Sync changes before editing to avoid conflicts.
             </p>
           </div>
         </div>
         
         <Button
           size="sm"
-          onClick={async () => {
-            await sync.syncWithRemote();
-            window.location.reload();
-          }}
+          onClick={() => sync.setSyncModalOpen(true)}
           data-testid="button-sync-now"
         >
           <IconRefresh className="h-4 w-4 mr-1" />
-          Sync & Reload
+          Sync with remote
         </Button>
       </div>
     </div>
