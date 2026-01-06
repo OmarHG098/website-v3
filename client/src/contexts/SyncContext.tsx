@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { subscribeToContentUpdates } from "@/lib/contentEvents";
 
 export interface RemoteCommit {
   sha: string;
@@ -118,6 +119,18 @@ export function SyncProvider({ children }: SyncProviderProps) {
       checkForConflicts();
     }
   }, [syncStatus?.syncEnabled, isBehind, checkForConflicts]);
+
+  // Subscribe to content updates and refresh sync status when content is edited
+  useEffect(() => {
+    const unsubscribe = subscribeToContentUpdates(() => {
+      // Invalidate pending changes query to refresh the sync indicator
+      queryClient.invalidateQueries({ queryKey: ['/api/github/pending-changes'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/github/all-changes'] });
+      // Also refresh the main sync status
+      refreshSyncStatus();
+    });
+    return unsubscribe;
+  }, [queryClient, refreshSyncStatus]);
 
   const value: SyncContextValue = {
     syncStatus: syncStatus ?? null,
