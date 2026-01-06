@@ -219,18 +219,39 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
             });
             
             if (matchingBranch && matchingBranch.issues.length > 0) {
-              // Extract detailed errors from the matching branch
-              const detailedErrors = matchingBranch.issues.slice(0, 5).map(i => {
-                const fieldPath = i.path.join(".");
-                // Make "Required" messages more helpful
-                if (i.code === "invalid_type" && i.message === "Required") {
-                  return `  - "${fieldPath}" is required`;
+              // Recursively extract all field-level errors, handling nested unions
+              const extractFieldErrors = (issues: z.ZodIssue[]): string[] => {
+                const errors: string[] = [];
+                for (const i of issues) {
+                  // Handle nested union errors
+                  if (i.code === "invalid_union") {
+                    const nestedUnionErrors = (i as { unionErrors?: z.ZodError[] }).unionErrors;
+                    if (nestedUnionErrors) {
+                      for (const nue of nestedUnionErrors) {
+                        errors.push(...extractFieldErrors(nue.issues));
+                      }
+                    }
+                  } else if (i.path.length > 0) {
+                    const fieldPath = i.path.join(".");
+                    if (i.code === "invalid_type" && i.message === "Required") {
+                      errors.push(`  - "${fieldPath}" is required`);
+                    } else {
+                      errors.push(`  - ${fieldPath}: ${i.message}`);
+                    }
+                  } else if (i.message !== "Invalid input") {
+                    // Top-level error with meaningful message
+                    errors.push(`  - ${i.message}`);
+                  }
                 }
-                return `  - ${fieldPath}: ${i.message}`;
-              });
-              const variantInfo = sectionVariant ? `, variant: ${sectionVariant}` : "";
-              validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}${variantInfo}):\n${detailedErrors.join("\n")}`);
-              continue;
+                return errors;
+              };
+              
+              const detailedErrors = Array.from(new Set(extractFieldErrors(matchingBranch.issues))).slice(0, 5);
+              if (detailedErrors.length > 0) {
+                const variantInfo = sectionVariant ? `, variant: ${sectionVariant}` : "";
+                validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}${variantInfo}):\n${detailedErrors.join("\n")}`);
+                continue;
+              }
             }
           }
           validationErrors.push(`Section ${sectionIndex + 1} (${sectionType}): Invalid structure`);
