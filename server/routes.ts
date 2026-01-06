@@ -893,6 +893,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Check for pull conflicts (files changed both locally and remotely)
+  app.get("/api/github/pull-conflicts", async (req, res) => {
+    try {
+      const { checkPullConflicts } = await import("./github");
+      const result = await checkPullConflicts();
+      res.json(result);
+    } catch (error) {
+      console.error("Error checking pull conflicts:", error);
+      res.status(500).json({ error: "Failed to check pull conflicts" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;

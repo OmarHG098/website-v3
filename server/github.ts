@@ -749,6 +749,41 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
   }
 }
 
+export interface PullConflictCheck {
+  hasConflicts: boolean;
+  conflictingFiles: string[];
+  localPendingFiles: string[];
+  remoteChangedFiles: string[];
+}
+
+/**
+ * Check if pulling from remote would conflict with pending local changes
+ * Returns list of files that exist in both local pending changes and remote changes
+ */
+export async function checkPullConflicts(): Promise<PullConflictCheck> {
+  const pendingChanges = await getPendingChanges();
+  const conflictInfo = await getConflictInfo();
+  
+  // Get all local pending file paths
+  const localPendingFiles = pendingChanges.map(c => c.file);
+  
+  // Get all remote changed files from commits (filtered by shouldTrackFile)
+  const { shouldTrackFile } = await import("./sync-state");
+  const allRemoteFiles = conflictInfo.commits.flatMap(c => c.files || []);
+  const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
+  
+  // Find overlapping files
+  const localFileSet = new Set(localPendingFiles);
+  const conflictingFiles = remoteChangedFiles.filter(f => localFileSet.has(f));
+  
+  return {
+    hasConflicts: conflictingFiles.length > 0,
+    conflictingFiles,
+    localPendingFiles,
+    remoteChangedFiles,
+  };
+}
+
 /**
  * Sync local state with remote by updating lastSyncedCommit
  * Call this after user chooses to "refresh" and accept remote changes
