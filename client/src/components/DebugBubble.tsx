@@ -44,6 +44,8 @@ import {
   IconUsersGroup,
   IconBrandGithub,
   IconCloudDownload,
+  IconDeviceMobile,
+  IconDeviceDesktop,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { Button } from "@/components/ui/button";
@@ -265,7 +267,7 @@ export function DebugBubble() {
   const { session } = useSession();
   const editMode = useEditModeOptional();
   const { i18n } = useTranslation();
-  const [pathname] = useLocation();
+  const [pathname, navigate] = useLocation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
@@ -748,8 +750,96 @@ export function DebugBubble() {
               )}
               
               <div className="p-3 border-b">
-                <h3 className="font-semibold text-sm">Debug Tools</h3>
-                <p className="text-xs text-muted-foreground">Development utilities</p>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-sm">Dev Tools</h3>
+                  <div className="flex items-center gap-2">
+                    {/* Read/Edit toggle */}
+                    {editMode && (
+                      <div 
+                        className="flex items-center bg-muted rounded-full p-0.5"
+                        data-testid="toggle-edit-mode"
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (!editMode.isEditMode) {
+                              editMode.toggleEditMode();
+                              // Navigate to preview route if on a content page
+                              if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
+                                const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${i18n.language || 'en'}`;
+                                navigate(previewUrl);
+                              }
+                            }
+                          }}
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            editMode.isEditMode 
+                              ? "bg-primary text-primary-foreground" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-edit-mode"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (editMode.isEditMode) editMode.toggleEditMode();
+                          }}
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            !editMode.isEditMode 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-read-mode"
+                        >
+                          Read
+                        </button>
+                      </div>
+                    )}
+                    {/* Preview breakpoint toggle - only visible in edit mode */}
+                    {editMode && editMode.isEditMode && (
+                      <div 
+                        className="flex items-center bg-muted rounded-full p-0.5"
+                        data-testid="toggle-preview-breakpoint"
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            editMode.setPreviewBreakpoint('desktop');
+                          }}
+                          className={`p-1.5 rounded-full transition-colors ${
+                            editMode.previewBreakpoint === 'desktop' 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-preview-desktop"
+                          title="Preview desktop view"
+                        >
+                          <IconDeviceDesktop className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            editMode.setPreviewBreakpoint('mobile');
+                          }}
+                          className={`p-1.5 rounded-full transition-colors ${
+                            editMode.previewBreakpoint === 'mobile' 
+                              ? "bg-foreground text-background shadow-sm" 
+                              : "text-muted-foreground"
+                          }`}
+                          data-testid="button-preview-mobile"
+                          title="Preview mobile view"
+                        >
+                          <IconDeviceMobile className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               
               <div className="p-2 space-y-1">
