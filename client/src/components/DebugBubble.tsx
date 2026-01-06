@@ -698,7 +698,7 @@ export function DebugBubble() {
                 title={`${pendingChanges.length} pending change${pendingChanges.length > 1 ? 's' : ''} - click to commit`}
               >
                 <IconArrowUp className="h-3 w-3" />
-                <span>Pending</span>
+                <span>Commit</span>
               </button>
             )}
           </div>
@@ -1681,7 +1681,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Commit Modal */}
       <Dialog open={commitModalOpen} onOpenChange={setCommitModalOpen}>
         <DialogContent className="sm:max-w-lg">
