@@ -134,6 +134,7 @@ sections:
         logo: /attached_assets/fortune-logo_1764709618095.webp
         alt: Fortune - Best Education Company
         logoHeight: h-10 md:h-16
+    bottom_title: "Recognized, Rated, and Recommended"
   - type: features_grid
     version: "1.0"
     variant: stats-text-card
