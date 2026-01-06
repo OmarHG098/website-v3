@@ -1868,9 +1868,9 @@ export function DebugBubble() {
                 <ScrollArea className="h-[250px]">
                   <div className="space-y-1">
                     {pendingChanges.map((change, index) => (
-                      <div 
+                      <Card 
                         key={`${change.file}-${index}`}
-                        className="space-y-1 py-1.5 border-b last:border-b-0"
+                        className="p-2 space-y-1"
                       >
                         {/* Row 1: File path only */}
                         <div 
@@ -2026,7 +2026,7 @@ export function DebugBubble() {
                             </div>
                           </div>
                         )}
-                      </div>
+                      </Card>
                     ))}
                   </div>
                 </ScrollArea>
