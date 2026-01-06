@@ -178,7 +178,7 @@ function SyllabusLandingVariant({ data }: { data: SyllabusLanding }) {
       </section>
     );
   }
-x
+
   return (
     <section 
       className="bg-primary/5"
