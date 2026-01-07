@@ -703,7 +703,7 @@ export function DebugBubble() {
     if (localChanges.length === 0) return;
     
     const confirmed = window.confirm(
-      `This will discard ALL your local changes (${localChanges.length} file${localChanges.length > 1 ? 's' : ''}) and reset to the remote version. This cannot be undone. Continue?`
+      `This will erase all changes you have made to Marketing Content YAMLs (${localChanges.length} file${localChanges.length > 1 ? 's' : ''}). This cannot be undone. Continue?`
     );
     if (!confirmed) return;
     
