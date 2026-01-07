@@ -233,7 +233,7 @@ export function SectionEditorPanel({
   
   // Icon picker state
   const [iconPickerOpen, setIconPickerOpen] = useState(false);
-  const [iconPickerTarget, setIconPickerTarget] = useState<{ arrayField: string; index: number; field: string } | null>(null);
+  const [iconPickerTarget, setIconPickerTarget] = useState<{ arrayField: string; index: number; field: string; label: string; currentIcon: string } | null>(null);
 
   // Parse current YAML to extract props
   const parsedSection = useMemo(() => {
@@ -542,45 +542,37 @@ export function SectionEditorPanel({
               
               if (!Array.isArray(arrayData) || arrayData.length === 0) return null;
               
-              return (
-                <div key={fieldPath} className="space-y-3">
-                  <Label className="text-sm font-medium capitalize">{arrayField} - {itemField}</Label>
-                  <ScrollArea className="max-h-[200px] border rounded-md">
-                    <div className="p-2 space-y-1">
+              if (editorType === "icon-picker") {
+                return (
+                  <div key={fieldPath} className="space-y-2">
+                    <Label className="text-sm font-medium capitalize">{arrayField} Icons</Label>
+                    <div className="flex flex-wrap gap-2">
                       {arrayData.map((item, index) => {
                         const currentValue = (item[itemField] as string) || "";
                         const itemLabel = (item.title as string) || (item.label as string) || (item.name as string) || `Item ${index + 1}`;
                         
-                        if (editorType === "icon-picker") {
-                          return (
-                            <div 
-                              key={index}
-                              className="flex items-center gap-3 p-2 rounded hover:bg-muted/50"
-                            >
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setIconPickerTarget({ arrayField, index, field: itemField });
-                                  setIconPickerOpen(true);
-                                }}
-                                className="flex items-center justify-center w-8 h-8 rounded border bg-muted/30 hover:bg-muted transition-colors"
-                                data-testid={`props-icon-${arrayField}-${index}`}
-                                title="Click to change icon"
-                              >
-                                {renderIconByName(currentValue)}
-                              </button>
-                              <span className="text-sm text-muted-foreground flex-1 truncate">{itemLabel}</span>
-                              <span className="text-xs font-mono text-muted-foreground">{currentValue || "none"}</span>
-                            </div>
-                          );
-                        }
-                        
-                        return null;
+                        return (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => {
+                              setIconPickerTarget({ arrayField, index, field: itemField, label: itemLabel, currentIcon: currentValue });
+                              setIconPickerOpen(true);
+                            }}
+                            className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                            data-testid={`props-icon-${arrayField}-${index}`}
+                            title={`${itemLabel}: ${currentValue || "no icon"}`}
+                          >
+                            {renderIconByName(currentValue)}
+                          </button>
+                        );
                       })}
                     </div>
-                  </ScrollArea>
-                </div>
-              );
+                  </div>
+                );
+              }
+              
+              return null;
             })}
           </div>
         </TabsContent>
@@ -635,10 +627,8 @@ export function SectionEditorPanel({
       <IconPickerModal
         open={iconPickerOpen}
         onOpenChange={setIconPickerOpen}
-        currentValue={iconPickerTarget ? 
-          ((parsedSection?.[iconPickerTarget.arrayField] as Record<string, unknown>[])?.[iconPickerTarget.index]?.[iconPickerTarget.field] as string) || ""
-          : ""
-        }
+        currentValue={iconPickerTarget?.currentIcon || ""}
+        itemLabel={iconPickerTarget?.label}
         onSelect={handleIconSelect}
       />
     </div>

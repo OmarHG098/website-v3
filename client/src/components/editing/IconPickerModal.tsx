@@ -15,6 +15,7 @@ interface IconPickerModalProps {
   onOpenChange: (open: boolean) => void;
   currentValue?: string;
   onSelect: (iconName: string) => void;
+  itemLabel?: string;
 }
 
 // Get all icon names from Tabler (filter out non-icon exports)
@@ -27,6 +28,7 @@ export function IconPickerModal({
   onOpenChange,
   currentValue,
   onSelect,
+  itemLabel,
 }: IconPickerModalProps) {
   const [search, setSearch] = useState("");
 
@@ -57,7 +59,12 @@ export function IconPickerModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Select Icon</DialogTitle>
+          <DialogTitle>
+            {currentValue && itemLabel 
+              ? `Replacing ${currentValue} for ${itemLabel}`
+              : "Select Icon"
+            }
+          </DialogTitle>
         </DialogHeader>
 
         <div className="relative">

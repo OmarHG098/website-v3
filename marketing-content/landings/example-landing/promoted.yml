@@ -62,6 +62,9 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
+    paddingY:
+      desktop: md none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
