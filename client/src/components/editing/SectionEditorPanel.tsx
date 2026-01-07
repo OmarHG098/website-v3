@@ -1,7 +1,8 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices, IconPalette } from "@tabler/icons-react";
-import * as TablerIcons from "@tabler/icons-react";
+import { IconQuestionMark } from "@tabler/icons-react";
+import { getIcon } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -346,22 +347,14 @@ export function SectionEditorPanel({
   const sectionType = (section as { type: string }).type || "";
   const configuredFields = useMemo(() => getConfiguredFields(sectionType), [sectionType]);
 
-  // Render icon from name
+  // Render icon from name using shared icon utility
   const renderIconByName = useCallback((iconName: string) => {
-    // Show placeholder for empty or missing icon
     if (!iconName) {
-      return <TablerIcons.IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+      return <IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
     }
-    // Handle both short names (Rocket, rocket) and full names (IconRocket)
-    let fullName = iconName;
-    if (!iconName.startsWith("Icon")) {
-      // Capitalize first letter and prepend Icon
-      fullName = `Icon${iconName.charAt(0).toUpperCase()}${iconName.slice(1)}`;
-    }
-    const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullName];
+    const IconComponent = getIcon(iconName);
     if (!IconComponent) {
-      console.warn(`Icon not found: ${iconName} -> ${fullName}`);
-      return <TablerIcons.IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+      return <IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
     }
     return <IconComponent className="h-5 w-5" />;
   }, []);
