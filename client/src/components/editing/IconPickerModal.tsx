@@ -1,0 +1,111 @@
+import { useState, useMemo } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { IconSearch } from "@tabler/icons-react";
+import * as TablerIcons from "@tabler/icons-react";
+
+interface IconPickerModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  currentValue?: string;
+  onSelect: (iconName: string) => void;
+}
+
+// Get all icon names from Tabler (filter out non-icon exports)
+const allIconNames = Object.keys(TablerIcons).filter(
+  (name) => name.startsWith("Icon") && name !== "Icon" && typeof (TablerIcons as Record<string, unknown>)[name] === "function"
+);
+
+export function IconPickerModal({
+  open,
+  onOpenChange,
+  currentValue,
+  onSelect,
+}: IconPickerModalProps) {
+  const [search, setSearch] = useState("");
+
+  const filteredIcons = useMemo(() => {
+    if (!search.trim()) {
+      // Show first 100 icons when no search
+      return allIconNames.slice(0, 100);
+    }
+    const searchLower = search.toLowerCase();
+    return allIconNames.filter((name) =>
+      name.toLowerCase().includes(searchLower)
+    ).slice(0, 100);
+  }, [search]);
+
+  const handleSelect = (iconName: string) => {
+    onSelect(iconName);
+    onOpenChange(false);
+    setSearch("");
+  };
+
+  const renderIcon = (iconName: string) => {
+    const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName];
+    if (!IconComponent) return null;
+    return <IconComponent className="h-5 w-5" />;
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Select Icon</DialogTitle>
+        </DialogHeader>
+
+        <div className="relative">
+          <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search icons..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+            data-testid="input-icon-search"
+            autoFocus
+          />
+        </div>
+
+        <ScrollArea className="h-[300px] border rounded-md">
+          <div className="grid grid-cols-6 gap-1 p-2">
+            {filteredIcons.map((iconName) => {
+              const isSelected = currentValue === iconName;
+              return (
+                <button
+                  key={iconName}
+                  type="button"
+                  onClick={() => handleSelect(iconName)}
+                  className={`flex flex-col items-center justify-center p-2 rounded transition-colors ${
+                    isSelected
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted"
+                  }`}
+                  title={iconName}
+                  data-testid={`icon-option-${iconName}`}
+                >
+                  {renderIcon(iconName)}
+                </button>
+              );
+            })}
+          </div>
+          {filteredIcons.length === 0 && (
+            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+              No icons found
+            </div>
+          )}
+        </ScrollArea>
+
+        <p className="text-xs text-muted-foreground">
+          Showing {filteredIcons.length} of {allIconNames.length} icons.
+          {!search && " Type to search for more."}
+        </p>
+      </DialogContent>
+    </Dialog>
+  );
+}
