@@ -348,8 +348,13 @@ export function SectionEditorPanel({
 
   // Render icon from name
   const renderIconByName = useCallback((iconName: string) => {
-    // Handle both short names (Rocket) and full names (IconRocket)
-    const fullName = iconName.startsWith("Icon") ? iconName : `Icon${iconName}`;
+    if (!iconName) return <span className="text-xs text-muted-foreground">?</span>;
+    // Handle both short names (Rocket, rocket) and full names (IconRocket)
+    let fullName = iconName;
+    if (!iconName.startsWith("Icon")) {
+      // Capitalize first letter and prepend Icon
+      fullName = `Icon${iconName.charAt(0).toUpperCase()}${iconName.slice(1)}`;
+    }
     const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullName];
     if (!IconComponent) return <span className="text-xs text-muted-foreground">?</span>;
     return <IconComponent className="h-5 w-5" />;
