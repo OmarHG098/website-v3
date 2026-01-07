@@ -361,15 +361,15 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        description: Earn an industry-recognized certificate, accredited by the Florida Department of Education, and graduate with skills that lead to faster hiring, higher pay, and accelerated professional growth.
         benefits:
-          - text: Dedicated career coaching from day one
-          - text: Resume and LinkedIn profile optimization
+          - text: 1:1 career coaching and live group sessions
+          - text: Resume, LinkedIn profile and portfolio optimization
           - text: Mock interviews with industry professionals
           - text: Direct introductions to hiring partners
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        description: Most graduates secure their first role within 3-6 months of completing the program. Through our 3-step career development process you’ll gain the resources and strategies to successfully launch your career.
         benefits:
           - text: Job search strategy and planning
           - text: Salary negotiation coaching
