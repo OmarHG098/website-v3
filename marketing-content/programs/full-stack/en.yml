@@ -1,75 +1,181 @@
+slug: full-stack
+title: Full Stack Developer
 meta:
   page_title: Full Stack Developer Career Program | 4Geeks
-  description: Learn full stack development at your own pace with AI-powered tools, unlimited mentorship, and a global community.
+  description: Become a Full Stack Developer with unlimited 1:1 mentorship, career guidance, and hands-on projects. Launch a career with $65K+ starting salaries.
+  robots: index, follow
+  og_image: /images/programs/full-stack-og.jpg
+  priority: 0.9
+  change_frequency: weekly
   redirects:
     - /bootcamp/full-stack
     - /programs/fullstack-developer
     - /coding-bootcamp/full-stack
+schema:
+  include:
+    - organization
+    - website
+    - courses:full-stack
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: High-Earning Career
-    title: Earn $65K+ as a Full Stack Developer test
-    subtitle: Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available.
+    variant: singleColumn
+    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
+    title: Become a Full Stack Developer
+    subtitle: Launch a future-proof career with $65K+ average starting salaries. Train in an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hiring rate within 6 months, and our job guarantee.
+    badge: Career Program
+    cta_buttons:
+      - text: Apply Now
+        url: /en/apply
+        variant: primary
+        icon: Rocket
+      - text: Download Syllabus
+        url: /syllabus/full-stack
+        variant: outline
+        icon: Download
     trust_bar:
       rating: "4.5"
       rating_count: 1,294
-      trusted_text: $65K average starting salary
-    cta_buttons:
-      - text: See Payment Options
-        url: /en/apply
-        variant: primary
-        icon: CurrencyDollar
-      - text: Calculate Your ROI
-        url: /roi-calculator
-        variant: outline
-        icon: Calculator
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+      trusted_text: $65K+ average starting salary
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Top Coding Bootcamp
-        source: Forbes
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Best for Spanish Speakers
-        source: Fortune
-        name: Best for Spanish Speakers
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: coursereport-2025
-        alt: Course Report - Best Coding Bootcamp
-        source: Course Report
-        name: Best Coding Bootcamp
-        year: "2025"
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none md
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    background: bg-primary/5
+    title: Does the Job Guarantee deliver results you can count on?
+    subtitle: Yes, and we've got the numbers to back it up
+    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
+    card_color: bg-muted
+    items:
+      - value: 84%
+        title: Job placement rate within 6 months
+      - value: 150%
+        title: Average salary increase after graduation
+      - value: $65K+
+        title: Average starting salary for graduates
+    paddingY:
+      desktop: none md
   - type: syllabus
-    title: Get Job-Ready with Our Syllabus!
-    subtitle: We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech.
-    modules:
+    version: "1.0"
+    variant: program-modules
+    program_title: What You'll Learn in the Full Stack Program
+    program_description: Master the complete web development stack from frontend to backend. Build production-ready applications using the most in-demand technologies that employers are looking for.
+    tech_logos:
+      - name: HTML5
+        icon: html
+      - name: CSS3
+        icon: css
+      - name: JavaScript
+        icon: javascript
+      - name: React
+        icon: react
+      - name: Python
+        icon: python
+      - name: Git
+        icon: git
+    module_cards:
       - title: Introduction To HTML And CSS
-        description: Learn to create web structures with HTML and style them with CSS, essential for building visually appealing and functional websites. Mastering HTML allows you to create the foundation of any web page, while CSS gives you the power to design it to your liking, improving the user experience and site accessibility.
+        duration: Weeks 1-2
+        objectives:
+          - Create web structures with semantic HTML
+          - Style pages with modern CSS techniques
+          - Build visually appealing and accessible websites
+        projects: Build responsive landing pages from scratch
+        orientation: vertical
+        icon: IconCode
       - title: JavaScript
-        description: Master the fundamentals of JavaScript, the programming language that powers interactive web experiences. Learn variables, functions, loops, DOM manipulation, and modern ES6+ features to create dynamic, responsive websites.
+        duration: Weeks 3-5
+        objectives:
+          - Master variables, functions, and loops
+          - DOM manipulation for interactive pages
+          - Modern ES6+ features and async programming
+        projects: Create dynamic, interactive web applications
+        orientation: vertical
+        icon: IconBrandJavascript
       - title: React
-        description: Build modern user interfaces with React, the most popular JavaScript library for creating component-based applications. Learn state management, hooks, routing, and best practices for scalable frontend development.
+        duration: Weeks 6-9
+        objectives:
+          - Build component-based user interfaces
+          - State management with hooks
+          - Routing and best practices for scalable apps
+        projects: Build modern single-page applications
+        orientation: vertical
+        icon: IconBrandReact
       - title: Python
-        description: Dive into Python, a versatile programming language used in web development, data science, and automation. Master core concepts, data structures, and object-oriented programming principles.
+        duration: Weeks 10-12
+        objectives:
+          - Core programming concepts and data structures
+          - Object-oriented programming principles
+          - Web development and automation skills
+        projects: Create backend services and automation scripts
+        orientation: vertical
+        icon: IconBrandPython
       - title: Creating APIs
-        description: Learn to design and build RESTful APIs using modern frameworks. Understand HTTP methods, authentication, database integration, and API documentation to create robust backend services.
+        duration: Weeks 13-15
+        objectives:
+          - Design and build RESTful APIs
+          - Authentication and database integration
+          - API documentation and best practices
+        projects: Build a full REST API with Flask/Express
+        orientation: vertical
+        icon: IconApi
       - title: Agile Methodologies
-        description: Understand Scrum, Kanban, and other agile frameworks used by development teams worldwide. Learn sprint planning, daily standups, retrospectives, and how to collaborate effectively in modern software development environments.
+        duration: Week 16
+        objectives:
+          - Scrum, Kanban, and agile frameworks
+          - Sprint planning and daily standups
+          - Effective collaboration in dev teams
+        projects: Work in agile teams on group projects
+        orientation: vertical
+        icon: IconUsers
+    paddingY:
+      desktop: md
   - type: projects
     title: Learn by Building Real-Life Projects
-    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
+    subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
       - title: Build a StarWars REST API
         description: The StarWars Blog API will let you practice building a REST API using lightweight API frameworks like Express (for node) or Flask (for python) using SQLAlchemy ORM and Python language, while building a fun blog. Ideal for juniors looking to practice API development in python.
@@ -97,66 +203,118 @@ sections:
         duration: 40 HOURS
         date: 01/03/2023
         difficulty: hard
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
-    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
-        title: Learn with AI
-        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+        title: Progress faster with AI-powered tools
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
+          - text: Helps with debugging and problem-solving tasks
+          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
+      - icon: TrendingUp
+        title: Thrive in tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
       - icon: Headset
-        title: One-on-one mentoring sessions
-        description: Access monthly mentorship sessions with our experts and add extra sessions as needed.
-      - icon: Users
-        title: Learn with the community
-        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+        title: Unlimited 1:1 mentorship and an active community
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in coding sessions and workshops
+          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
+          - text: Access Slack channels for coding support, job boards, and career advice
+        image_id: mentoring_zoom_call
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
+    paddingY:
+      desktop: md
   - type: certificate
-    version: "1.0"
     title: Certificate & Career Network
-    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
-    stats:
-      - value: 4,000+
-        label: Graduates
-      - value: 84%
-        label: Job Placement
-      - value: 4.9/5
-        label: Student Rating
-      - value: 20+
-        label: Countries
+    description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
     benefits:
-      - text: Recognized by international institutions
-      - text: Access to 5,000+ hiring partners
-      - text: Lifetime career support
+      - text: "Full-Stack Developer: $65K–$95K"
+      - text: "Frontend Developer: $60K–$90K"
+      - text: "Backend Developer: $70K–$100K"
+      - text: "Software Engineer: $80K–$120K"
     card:
       title: Full Stack Developer
       subtitle: 4Geeks Academy Certificate
       program_name: Full-Stack Developer
-  - type: why_learn_ai
-    title: Why Should I Learn to Build and Code with AI?
-    subtitle: Software Development as You Know It Will Cease to Exist
-    description: Coding with AI will become a new standard, but it's a very different profession from traditional software development. While AI can generate a product 400% faster in the short term, building and maintaining a secure, performant codebase with 90% AI-generated code in the long term requires merging yourself with the AI. We are witnessing a new profession come to fruition before our eyes. Are you ready to become an AI Coder?
-    cta:
-      text: Join now!
-      url: /signup
-      variant: primary
+    stats:
+      - value: 84%
+        label: Hiring rate
+        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        benefits:
+          - text: Dedicated career coaching from day one
+          - text: Resume and LinkedIn profile optimization
+          - text: Mock interviews with industry professionals
+          - text: Direct introductions to hiring partners
+      - value: 3-6 months
+        label: Time to get hired
+        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        benefits:
+          - text: Job search strategy and planning
+          - text: Salary negotiation coaching
+          - text: Lifetime career support access
+          - text: Alumni network with 10,000+ professionals
+      - value: 150%
+        label: Average salary increase
+        description: Our graduates see an average 150% salary increase after transitioning into full-stack development roles. The investment pays for itself.
+        benefits:
+          - text: "Full-Stack Developer: $65K–$95K"
+          - text: "Frontend Developer: $60K–$90K"
+          - text: "Backend Developer: $70K–$100K"
+          - text: "Software Engineer: $80K–$120K"
+      - value: 5,000+
+        label: Hiring Partners
+        description: Access our network of 5,000+ hiring partners actively seeking development talent. Get exclusive job opportunities and priority referrals.
+        benefits:
+          - text: Exclusive job board access
+          - text: Priority referrals to partner companies
+          - text: Networking events with hiring managers
+          - text: Companies include Google, Meta, Amazon, startups
+    certificate_position: right
+    useSolidCard: true
+    background: hsl(var(--muted))
+    paddingY:
+      mobile: lg
+      desktop: lg
   - type: pricing
-    title: Get access to all of our learning database, courses, and services
-    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
-    monthly:
-      discount_badge: 35% OFF
-      price: "38.99"
-      period: mo
-      original_price: "59.99"
-    yearly:
-      discount_badge: 35% OFF
-      price: "311.99"
-      period: yr
-      original_price: "479.99"
-      savings_badge: Save 3 months
+    version: "1.0"
+    variant: product
+    title: Finance Your Investment
+    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    discount_text: "Full Payment Discount: Save 10% with upfront payment."
+    financing_text: "Credit-Based Financing: starting below"
+    financing_amount: $150
     tech_icons:
       - html
       - css
@@ -165,15 +323,13 @@ sections:
       - python
       - nodejs
       - git
-      - bootstrap
       - api
-      - settings
     features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
     features:
       - icon: certificate
         text: Build your portfolio with hundreds of real-world projects.
       - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
+        text: Thousands of cloud-based coding challenges (no setup needed).
       - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
         use_rigobot_icon: true
       - icon: certificate
@@ -184,10 +340,12 @@ sections:
       text: Get plan
       url: /signup
       variant: primary
+    paddingY:
+      desktop: md
   - type: whos_hiring
-    title: Who's Hiring Our Graduates?
-    subtitle: Our alumni work at top companies around the world
-    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. Our career support and strong employer network help you land roles at leading tech companies, agencies, and enterprises globally.
+    variant: carousel
+    title: Trusted by Leading Innovators
+    subtitle: Explore how 4Geeks Academy propels graduates into thriving tech careers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -213,30 +371,8 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-      - src: /attached_assets/kpmg-logo1_1764720019827.png
-        alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
-      - src: /attached_assets/blackstone_1764720124773.png
-        alt: Blackstone
-      - src: /attached_assets/cemex_1764720131666.png
-        alt: Cemex
+    paddingY:
+      desktop: none md
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -251,22 +387,22 @@ sections:
         comment: This course completely transformed my career. The instructors are incredibly knowledgeable and the curriculum is perfectly structured for real-world applications.
         outcome: +55% salary increase
       - name: Michael Chen
-        role: Data Analyst
+        role: Full Stack Developer
         company: Meta
         rating: 5
         comment: Best investment I ever made. Got a job offer before even finishing the program! The mentorship and career support were invaluable.
         outcome: Hired in 4 months
       - name: Emily Rodriguez
-        role: ML Engineer
+        role: Backend Developer
         company: Amazon
         rating: 5
-        comment: Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm working on cutting-edge AI.
+        comment: Excellent content and great support from mentors. The projects were challenging but rewarding, and now I'm building production systems.
         outcome: +100% salary increase
       - name: David Kim
         role: Full Stack Developer
         company: Startup
         rating: 5
-        comment: From zero coding knowledge to landing my dream job in 4 months. The structured curriculum and hands-on projects made all the difference.
+        comment: From zero coding knowledge to landing my dream job in 5 months. The structured curriculum and hands-on projects made all the difference.
         outcome: Career change success
       - name: Jessica Martinez
         role: Frontend Developer
@@ -275,33 +411,38 @@ sections:
         comment: Great course with practical, real-world projects. The community is supportive and the instructors are always available to help.
         outcome: +45% salary increase
       - name: Ryan Thompson
-        role: Data Scientist
+        role: Software Engineer
         company: Tech Startup
         rating: 5
         comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
         outcome: Landed first tech job
+    paddingY:
+      desktop: md none
   - type: faq
-    version: "1.0"
-    background: "muted"
     title: FAQ
     items:
-      - question: Are there fixed class times?
-        answer: No, the self-paced bootcamp is designed for learning at your own pace. You can access all materials 24/7 and progress through the curriculum whenever it suits you. Optional live workshops are available at various times if you want real-time interaction.
-      - question: How do I stay motivated learning on my own?
-        answer: You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes.
-      - question: Do I need prior coding experience?
-        answer: No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts.
-      - question: How do I schedule mentoring sessions?
-        answer: Simply go to your dashboard, select the mentorship service, choose your preferred mentor, and pick a day and time that works for you. Each session is 45 minutes and can be used for any topic you need help with.
+      - question: What prerequisites do I need for Full Stack Development?
+        answer: No prior coding experience is required. Our program starts with the fundamentals and builds up to advanced full-stack development. We teach you everything from HTML basics to building complete web applications.
+      - question: How long does the program take?
+        answer: The Full Stack program is designed to be completed in 16 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
+      - question: What kind of projects will I build?
+        answer: You'll build production-ready applications including REST APIs, authentication systems, React frontends, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
+      - question: Do I need expensive equipment?
+        answer: No! All exercises and projects run in the cloud. We provide access to cloud-based development environments, so you can learn with just a laptop and internet connection.
       - question: Is the certificate recognized by employers?
         answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor
       button_url: /contact
+    paddingY:
+      desktop: md
+    background: hsl(var(--muted))
+    marginY:
+      desktop: none
   - type: cta_banner
     version: "1.0"
-    title: Ready to Start Your Tech Career?
+    title: Ready to Become a Full Stack Developer?
     subtitle: Join thousands of graduates who have transformed their careers with 4Geeks.
     buttons:
       - text: Start Learning Now
