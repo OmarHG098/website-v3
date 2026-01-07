@@ -348,7 +348,10 @@ export function SectionEditorPanel({
 
   // Render icon from name
   const renderIconByName = useCallback((iconName: string) => {
-    if (!iconName) return <span className="text-xs text-muted-foreground">?</span>;
+    // Show placeholder for empty or missing icon
+    if (!iconName) {
+      return <TablerIcons.IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+    }
     // Handle both short names (Rocket, rocket) and full names (IconRocket)
     let fullName = iconName;
     if (!iconName.startsWith("Icon")) {
@@ -356,7 +359,10 @@ export function SectionEditorPanel({
       fullName = `Icon${iconName.charAt(0).toUpperCase()}${iconName.slice(1)}`;
     }
     const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullName];
-    if (!IconComponent) return <span className="text-xs text-muted-foreground">?</span>;
+    if (!IconComponent) {
+      console.warn(`Icon not found: ${iconName} -> ${fullName}`);
+      return <TablerIcons.IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+    }
     return <IconComponent className="h-5 w-5" />;
   }, []);
 
