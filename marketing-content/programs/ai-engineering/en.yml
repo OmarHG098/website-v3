@@ -131,7 +131,7 @@ sections:
           - Serverless functions
           - Cloud-native deployment strategies
         projects: Create a scalable API server with secure auth
-        orientation: horizontal
+        orientation: vertical
         icon: IconServer
       - title: Data Systems
         duration: Weeks 9-10
@@ -149,7 +149,7 @@ sections:
           - Contextual document retrieval
           - Connect LLMs to proprietary data
         projects: Build a retrieval-augmented generation system
-        orientation: horizontal
+        orientation: vertical
         icon: IconDatabase
       - title: Multi-Agent Systems
         duration: Weeks 15-17
@@ -167,7 +167,7 @@ sections:
           - Queues and scheduled tasks
           - AI-driven decision making
         projects: Automate business workflows with AI
-        orientation: horizontal
+        orientation: vertical
         icon: IconLayoutKanban
       - title: Real-Time Systems
         duration: Week 20

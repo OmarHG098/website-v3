@@ -131,7 +131,7 @@ sections:
           - Funciones serverless
           - Estrategias de despliegue nativas de la nube
         projects: Crea un servidor API escalable con autenticación segura
-        orientation: horizontal
+        orientation: vertical
         icon: IconServer
       - title: Sistemas de Datos
         duration: Semanas 9-10
@@ -149,7 +149,7 @@ sections:
           - Recuperación contextual de documentos
           - Conecta LLMs a datos propietarios
         projects: Construye un sistema de generación aumentada por recuperación
-        orientation: horizontal
+        orientation: vertical
         icon: IconDatabase
       - title: Sistemas Multi-Agente
         duration: Semanas 15-17
@@ -167,7 +167,7 @@ sections:
           - Colas y tareas programadas
           - Toma de decisiones impulsada por IA
         projects: Automatiza flujos de trabajo empresariales con IA
-        orientation: horizontal
+        orientation: vertical
         icon: IconLayoutKanban
       - title: Sistemas en Tiempo Real
         duration: Semana 20
