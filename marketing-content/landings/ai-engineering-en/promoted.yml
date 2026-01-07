@@ -348,7 +348,7 @@ sections:
       mobile: lg none
       desktop: lg none
   - type: certificate
-    title: Certificate & Career Network
+    title: Career Outcomes
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
@@ -394,13 +394,13 @@ sections:
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
     useSolidCard: true
-    background: hsl(var(--muted))
-    paddingY:
-      mobile: lg
-      desktop: lg
     marginY:
       mobile: none
       desktop: none
+    paddingY:
+      mobile: lg
+      desktop: lg
+    background: hsl(var(--muted))
   - type: pricing
     version: "1.0"
     variant: product
