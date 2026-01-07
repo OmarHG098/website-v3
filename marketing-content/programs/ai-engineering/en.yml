@@ -97,7 +97,7 @@ sections:
       - value: 20-40%
         title: Salary premiums for AI engineering skills
     paddingY:
-      desktop: md
+      desktop: none md
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -347,7 +347,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     paddingY:
-      desktop: md
+      desktop: none md
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -392,10 +392,8 @@ sections:
         comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
         outcome: Landed first tech job
     paddingY:
-      desktop: md
+      desktop: md none
   - type: faq
-    version: "1.0"
-    background: muted
     title: FAQ
     items:
       - question: What prerequisites do I need for AI Engineering?
@@ -414,6 +412,9 @@ sections:
       button_url: /contact
     paddingY:
       desktop: md
+    background: hsl(var(--muted))
+    marginY:
+      desktop: none
   - type: cta_banner
     version: "1.0"
     title: Ready to Become an AI Engineer?
