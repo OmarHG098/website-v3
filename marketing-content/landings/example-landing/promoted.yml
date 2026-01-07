@@ -65,7 +65,7 @@ sections:
         answer: Yes, all students have access to mentors and a supportive community.
   - type: features_grid
     version: "1.0"
-    title: What You'll Learn
+    title: What You'll Learnn
     subtitle: Discover the tools that make learning faster and easier
     items:
       - icon: Brain
