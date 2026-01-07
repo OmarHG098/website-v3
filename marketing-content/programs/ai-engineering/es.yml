@@ -80,7 +80,7 @@ sections:
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
     paddingY:
-      desktop: none md
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: stats-cards
@@ -97,7 +97,7 @@ sections:
       - value: 20-40%
         title: Primas salariales por habilidades de ingeniería de IA
     paddingY:
-      desktop: none md
+      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -347,7 +347,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     paddingY:
-      desktop: none md
+      desktop: none
   - type: testimonials
     title: Tu Nueva Carrera Comienza Aquí
     subtitle: Mira lo que nuestros graduados tienen que decir sobre su experiencia

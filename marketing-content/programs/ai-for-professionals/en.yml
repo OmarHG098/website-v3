@@ -26,62 +26,140 @@ sections:
         url: /syllabus/ai-for-professionals
         variant: outline
         icon: Download
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Top Online Bootcamp
-        source: Forbes
-        name: Top Online Bootcamp
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Best for Spanish Speakers
-        source: Fortune
-        name: Best for Spanish Speakers
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: course-report-2025
-        alt: Course Report - Best Coding Bootcamp
-        source: Course Report
-        name: Best Coding Bootcamp
-        year: "2025"
-  - type: numbered_steps
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none
+  - type: features_grid
     version: "1.0"
-    title: How the Refund Works
-    description: Our commitment to your success is backed by a simple, transparent refund policy. If you've put in the work and followed our proven methodology, but haven't landed a job within 180 days of graduation, you're eligible for a full tuition refund.
-    description_link:
-      text: Conditions Apply.
-      url: /terms-and-conditions
-    background: bg-muted/30
-    steps:
-      - icon: School
-        text: Complete our intensive coding bootcamp and graduate within 180 days of your program start date.
-      - icon: Briefcase
-        text: Actively apply for jobs using our career services, attend all coaching sessions, and follow our job search methodology.
-      - icon: Cash
-        text: If you haven't received a qualifying job offer within 180 days of graduation, request your full tuition refund.
+    variant: stats-cards
+    background: bg-primary/5
+    title: AI Skills That Drive Real Career Results
+    subtitle: Join professionals transforming their careers with AI
+    description: Workers with AI skills are commanding premium salaries and advancing faster. Our 6-week program delivers the practical skills you need to lead with AI in any industry.
+    card_color: bg-muted
+    items:
+      - value: 56%
+        title: Average wage premium for AI-skilled workers
+      - value: 6 weeks
+        title: Intensive program to master AI tools
+      - value: 40%
+        title: Of US workers now use AI at work
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
   - type: syllabus
-    title: Get Job-Ready with Our Syllabus!
-    subtitle: In just 6 weeks, learn how to leverage today's leading AI tools to optimize your workflow, improve output quality, and stay ahead in your career.
-    modules:
+    version: "1.0"
+    variant: program-modules
+    program_title: What You'll Learn in the AI for Professionals Program
+    program_description: Master the AI tools transforming every industry. In just 6 weeks, learn to leverage generative AI for content creation, workflow automation, and professional productivity.
+    tech_logos:
+      - name: OpenAI
+        icon: openai
+      - name: AI Brain
+        icon: brain
+      - name: Robot
+        icon: robot
+      - name: Sparkles
+        icon: sparkles
+    module_cards:
       - title: Introduction to AI
-        description: Understand key AI concepts and generative tools. Introduction to the fundamentals of AI with a special focus on Generative AI. Learn the structure of the course and the technologies used including ChatGPT, Claude, Gemini, and more.
+        duration: Week 1
+        objectives:
+          - Understand key AI concepts and generative tools
+          - Learn the fundamentals of Generative AI
+          - Get hands-on with ChatGPT, Claude, Gemini, and more
+        projects: Explore and compare major AI platforms
+        orientation: vertical
+        icon: IconBrain
       - title: Prompt Engineering
-        description: Learn to create effective prompts that make AI tools do exactly what you want. Explore text generation tools and start automating workflows without coding. Master prompt engineering techniques for professional outputs.
+        duration: Week 2
+        objectives:
+          - Create effective prompts for precise AI outputs
+          - Master text generation tools for any task
+          - Start automating workflows without coding
+        projects: Build a personal prompt library for your profession
+        orientation: vertical
+        icon: IconMessageCircle
       - title: Open Source vs Cloud
-        description: Compare open-source and cloud-based AI tools. Learn to test different tools and maximize their potential through effective prompting. Understand when to use each type for optimal results.
+        duration: Week 3
+        objectives:
+          - Compare open-source and cloud-based AI tools
+          - Test different tools and maximize their potential
+          - Understand when to use each type for optimal results
+        projects: Evaluate AI tools for your specific use cases
+        orientation: vertical
+        icon: IconCloud
       - title: Content Creation with AI
-        description: Explore tools for creating various types of content with AI, including images, videos, avatars, music, and more. Learn to generate professional visual content using tools like Midjourney and DALL-E.
+        duration: Week 4
+        objectives:
+          - Create images, videos, avatars, and music with AI
+          - Generate professional visual content
+          - Master tools like Midjourney and DALL-E
+        projects: Create a complete multimedia content package
+        orientation: vertical
+        icon: IconPhoto
       - title: Documents & Workflow Automation
-        description: Generate professional documents with AI tools, learn different document creation techniques, and discover markdown tricks to save hours of work. Use Zapier and similar tools to automate repetitive tasks.
+        duration: Week 5
+        objectives:
+          - Generate professional documents with AI
+          - Learn markdown tricks to save hours of work
+          - Use Zapier to automate repetitive tasks
+        projects: Build automated workflows for your daily tasks
+        orientation: vertical
+        icon: IconFileText
       - title: Websites & Chatbots
-        description: Create professional websites for yourself or your clients using AI tools, without writing a single line of code. Build interactive chatbots and learn the fundamentals of AI agents and conversational interfaces.
+        duration: Week 6
+        objectives:
+          - Create professional websites without coding
+          - Build interactive chatbots for any purpose
+          - Learn fundamentals of AI agents
+        projects: Launch your own AI-powered website and chatbot
+        orientation: vertical
+        icon: IconRobot
+    paddingY:
+      desktop: md
   - type: projects
     title: Learn by Building Real-Life Projects
     subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world professional setting. Here's a glimpse of what you'll be working on:"
@@ -117,44 +195,98 @@ sections:
         duration: 5 HOURS
         date: 15/04/2025
         difficulty: easy
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
-    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
-    video_url: https://www.youtube.com/watch?v=0yNgqAIDSXQ
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
-        title: Learn with AI
-        description: Our AI reviews your work to give you instant feedback, helps with exercises, and more!
+        title: Progress faster with AI-powered tools
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
+          - text: Helps with exercises and problem-solving tasks
+          - text: Access interactive exercises on Learnpack, our educational platform
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
+      - icon: TrendingUp
+        title: Thrive in your career with AI skills
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready portfolio and project showcase
+          - text: Learn skills that command 56% wage premium
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
       - icon: Headset
-        title: One-on-one mentoring sessions
-        description: Access unlimited mentorship sessions with our experts whenever you need guidance.
-      - icon: Users
-        title: Learn with the community
-        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+        title: Unlimited 1:1 mentorship and an active community
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in workshops
+          - text: Engage with peers through Slack and feedback tools
+          - text: Access channels for support and career advice
+        image_id: mentoring_zoom_call
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
+    paddingY:
+      desktop: md
   - type: certificate
-    version: "1.0"
     title: Certificate & Career Network
-    description: Upon completion, receive a globally recognized certificate that opens doors to professional opportunities worldwide.
-    stats:
-      - value: 4,000+
-        label: Graduates
-      - value: 84%
-        label: Job Placement
-      - value: 4.9/5
-        label: Student Rating
-      - value: 56%
-        label: Wage Premium
+    description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Apply AI skills in any role:"
     benefits:
-      - text: Recognized by international institutions
-      - text: Access to 5,000+ hiring partners
-      - text: Lifetime career support
+      - text: "Marketing & Content Creation: 3x productivity"
+      - text: "Sales & Business Development: 50% time savings"
+      - text: "Operations & Admin: Automated workflows"
+      - text: "Any Professional Role: Lead with AI"
     card:
       title: AI for Professionals
       subtitle: 4Geeks Academy Certificate
       program_name: Applied AI Professional
+    stats:
+      - value: 56%
+        label: Wage premium
+        description: Workers with AI skills earn an average 56% wage premium globally. Your investment in AI skills pays for itself quickly.
+        benefits:
+          - text: Command higher salaries with AI expertise
+          - text: Stand out in any industry
+          - text: Future-proof your career
+          - text: Join the top 40% using AI at work
+      - value: 6 weeks
+        label: Program duration
+        description: Our intensive 6-week program fits into your busy schedule. Learn practical AI skills you can apply immediately at work.
+        benefits:
+          - text: Flexible online schedule
+          - text: Live classes twice per week
+          - text: Maximum 12 students per cohort
+          - text: Immediate real-world application
+      - value: 4,000+
+        label: Graduates worldwide
+        description: Join thousands of professionals who have transformed their careers with AI skills from 4Geeks Academy.
+        benefits:
+          - text: Recognized by international institutions
+          - text: Access to 5,000+ hiring partners
+          - text: Lifetime career support
+          - text: Active alumni network
+    paddingY:
+      desktop: md
   - type: why_learn_ai
     title: Why Should I Learn AI for My Career?
     subtitle: AI Isn't Optional Anymore—It's a Core Workplace Skill
@@ -163,9 +295,12 @@ sections:
       text: Join now!
       url: /en/apply
       variant: primary
+    paddingY:
+      desktop: md
   - type: pricing
     title: Get access to all of our learning database, courses, and services
-    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
+    subtitle: Earn new skills every 30 min, never get stuck or lost again.
+    variant: product
     monthly:
       discount_badge: 35% OFF
       price: "38.99"
@@ -184,75 +319,48 @@ sections:
       - sparkles
       - zap
       - messageSquare
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+    features_title: Access hundreds of exercises, projects, tutorials and courses in the most wanted AI technologies
     features:
       - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
+        text: Build your portfolio with dozens of real-world AI projects.
       - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
-      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
+        text: Thousands of cloud-based AI challenges (no setup needed).
+      - text: You will never be stuck or alone again, our AI knows who you are, reads your work and gives you live feedback.
         use_rigobot_icon: true
       - icon: certificate
         text: Course certificates
       - icon: certificate
-        text: Earn certificates from a USA certified school by the florida department of education.
+        text: Earn certificates from a USA certified school by the Florida Department of Education.
     cta:
       text: Get plan
       url: /signup
       variant: primary
+    paddingY:
+      desktop: md
   - type: whos_hiring
-    title: Who's Hiring Our Graduates?
-    subtitle: Our alumni work at top companies around the world
-    description: From startups to Fortune 500 companies, 4Geeks graduates are making an impact across industries. 84% of our graduates land jobs within 6 months of graduation thanks to their skills and our personalized career support.
+    title: Who's Hiring AI-Skilled Professionals?
+    subtitle: AI skills are in demand across every industry
+    variant: carousel
+    description: From startups to Fortune 500 companies, employers are seeking professionals who can leverage AI. 84% of our graduates land jobs within 6 months thanks to their skills and our personalized career support.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
       - src: /attached_assets/google-developers_1764719904190.png
         alt: Google Developers
-      - src: /attached_assets/boats_1764719939123.jpg
-        alt: Boats Group
       - src: /attached_assets/meta-logo_1764719959855.png
         alt: Meta
       - src: /attached_assets/ebay_1764719967118.png
         alt: eBay
-      - src: /attached_assets/natgeo_1764719975443.png
-        alt: National Geographic
-      - src: /attached_assets/evernote_1764719981901.png
-        alt: Evernote
       - src: /attached_assets/telefonica_1764719987250.png
         alt: Telefonica
-      - src: /attached_assets/twilio_1764719992371.png
-        alt: Twilio
       - src: /attached_assets/uber_1764719999685.png
         alt: Uber
-      - src: /attached_assets/Neo9_1764720006347.png
-        alt: Neo9
-      - src: /attached_assets/jooble_1764720010702.png
-        alt: Jooble
       - src: /attached_assets/kpmg-logo1_1764720019827.png
         alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
-      - src: /attached_assets/blackstone_1764720124773.png
-        alt: Blackstone
       - src: /attached_assets/cemex_1764720131666.png
         alt: Cemex
+    paddingY:
+      desktop: md
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -296,6 +404,8 @@ sections:
         rating: 4
         comment: Great course with practical applications for HR. Now I use AI for job descriptions, candidate screening, and employee communications.
         outcome: Streamlined hiring process
+    paddingY:
+      desktop: md
   - type: faq
     version: "1.0"
     background: "muted"
@@ -315,6 +425,8 @@ sections:
       text: Still have questions?
       button_text: Talk to an Advisor
       button_url: /contact
+    paddingY:
+      desktop: md
   - type: cta_banner
     version: "1.0"
     title: Ready to Lead with AI?
@@ -326,6 +438,8 @@ sections:
       - text: Talk to an Advisor
         url: /contact
         variant: outline
+    paddingY:
+      desktop: md
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.

@@ -1,6 +1,3 @@
-# Cybersecurity Career Program - Spanish
-# This file defines all sections and content for the Cybersecurity career program page
-
 meta:
   page_title: "Bootcamp de Ciberseguridad | 4Geeks"
   description: "Inicia una carrera bien remunerada en ciberseguridad. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad."
@@ -30,49 +27,142 @@ sections:
         url: "/syllabus/cybersecurity"
         variant: "outline"
         icon: "Download"
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Top Coding Bootcamp
-        source: Forbes
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
-        source: Fortune
-        name: Mejor para Hispanohablantes
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: course-report-2025
-        alt: Course Report - Mejor Coding Bootcamp
-        source: Course Report
-        name: Mejor Coding Bootcamp
-        year: "2025"
-
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    background: bg-primary/5
+    title: "Los Especialistas en Ciberseguridad Tienen Alta Demanda"
+    subtitle: "Los números no mienten—la ciberseguridad es el futuro"
+    description: "Con millones de posiciones vacantes y un crecimiento laboral acelerado, nunca ha habido un mejor momento para entrar a este campo. Nuestro programa te prepara para un impacto inmediato."
+    card_color: bg-muted
+    items:
+      - value: "3.5M+"
+        title: "Posiciones de ciberseguridad vacantes globalmente"
+      - value: "35%"
+        title: "Crecimiento laboral proyectado hasta 2032"
+      - value: "16"
+        title: "Semanas para lanzar tu carrera en seguridad"
+    paddingY:
+      desktop: md
   - type: syllabus
-    title: "Adquiere Habilidades de Ciberseguridad desde Fundamentos hasta Avanzado"
-    subtitle: "Nuestro bootcamp intensivo de 16 semanas te entrena para proteger sistemas, detectar amenazas y responder a incidentes—usando herramientas estándar de la industria como Nessus, Nmap, Wireshark y Metasploit."
-    modules:
+    version: "1.0"
+    variant: program-modules
+    program_title: "Lo Que Aprenderás en el Programa de Ciberseguridad"
+    program_description: "Domina el stack completo de ciberseguridad desde seguridad de redes hasta pruebas de penetración. Desarrolla habilidades defensivas y ofensivas del mundo real usando herramientas estándar de la industria que los empleadores buscan."
+    tech_logos:
+      - name: Linux
+        icon: linux
+      - name: Python
+        icon: python
+      - name: Redes
+        icon: server
+      - name: Seguridad
+        icon: shield
+      - name: Terminal
+        icon: terminal
+      - name: Git
+        icon: git
+    module_cards:
       - title: "Fundamentos y Seguridad de Redes"
-        description: "Comienza con los fundamentos de seguridad informática, incluyendo amenazas, vulnerabilidades y la importancia de la ciberseguridad en el mundo actual. Aprende los elementos esenciales de seguridad de redes usando Packet Tracer para simulación visual y rastreo de paquetes."
+        duration: "Semanas 1-3"
+        objectives:
+          - "Comprender los fundamentos de seguridad informática y el panorama de amenazas"
+          - "Aprender elementos esenciales de seguridad de redes y análisis de paquetes"
+          - "Usar Packet Tracer para simulación visual y rastreo de redes"
+        projects: "Construir arquitecturas de red seguras desde cero"
+        orientation: vertical
+        icon: IconNetwork
       - title: "Linux y Administración de Servidores"
-        description: "Domina la línea de comandos de Linux y la administración de servidores. Aprende a configurar, asegurar y gestionar sistemas basados en Linux que alimentan la mayor parte de la infraestructura de internet."
+        duration: "Semanas 4-6"
+        objectives:
+          - "Dominar la línea de comandos de Linux y scripting de shell"
+          - "Configurar, asegurar y gestionar sistemas basados en Linux"
+          - "Implementar endurecimiento de servidores y controles de acceso"
+        projects: "Desplegar y asegurar servidores Linux listos para producción"
+        orientation: vertical
+        icon: IconTerminal2
       - title: "Inteligencia Cibernética"
-        description: "Desarrolla habilidades en recopilación, análisis y reportes de inteligencia de amenazas. Aprende técnicas OSINT y cómo identificar, rastrear y predecir amenazas cibernéticas antes de que se materialicen."
+        duration: "Semanas 7-9"
+        objectives:
+          - "Desarrollar habilidades de recopilación y análisis de inteligencia de amenazas"
+          - "Aprender técnicas OSINT para reconocimiento"
+          - "Identificar, rastrear y predecir amenazas cibernéticas"
+        projects: "Crear reportes completos de inteligencia de amenazas"
+        orientation: vertical
+        icon: IconSearch
       - title: "Pruebas de Penetración"
-        description: "Practica técnicas de hacking ético alineadas con los laboratorios de certificación EJPT. Aprende a descubrir vulnerabilidades, simular escenarios de ataque reales y documentar hallazgos profesionalmente usando herramientas como Metasploit y Nmap."
+        duration: "Semanas 10-12"
+        objectives:
+          - "Practicar hacking ético alineado con la certificación EJPT"
+          - "Descubrir vulnerabilidades y simular escenarios de ataque"
+          - "Documentar hallazgos usando Metasploit y Nmap"
+        projects: "Realizar pruebas de penetración completas en entornos simulados"
+        orientation: vertical
+        icon: IconShieldLock
       - title: "Prevención de Pérdida de Datos (DLP)"
-        description: "Aprende a proteger información sensible y prevenir brechas de datos. Implementa estrategias, políticas y tecnologías DLP para proteger los activos organizacionales de amenazas internas y externas."
+        duration: "Semanas 13-14"
+        objectives:
+          - "Proteger información sensible y prevenir brechas"
+          - "Implementar estrategias y políticas DLP"
+          - "Proteger activos organizacionales de amenazas internas/externas"
+        projects: "Diseñar planes de implementación DLP empresarial"
+        orientation: vertical
+        icon: IconDatabase
       - title: "Marco NIST"
-        description: "Domina el Marco de Ciberseguridad NIST para identificar, proteger, detectar, responder y recuperarse de incidentes cibernéticos. Aplica prácticas de cumplimiento y gestión de riesgos estándar de la industria."
-
+        duration: "Semanas 15-16"
+        objectives:
+          - "Dominar el Marco de Ciberseguridad NIST"
+          - "Aplicar prácticas de cumplimiento y gestión de riesgos"
+          - "Prepararse para respuesta y recuperación de incidentes"
+        projects: "Crear reportes de evaluación de seguridad organizacional"
+        orientation: vertical
+        icon: IconClipboardCheck
+    paddingY:
+      desktop: md
   - type: projects
     title: "Aprende Defendiendo Sistemas Reales"
     subtitle: "Obtén experiencia práctica con ejercicios que simulan escenarios reales de ciberseguridad. Construye un portafolio de proyectos de seguridad que demuestren tus capacidades defensivas y ofensivas."
@@ -98,60 +188,111 @@ sections:
         duration: "10 HORAS"
         date: "15/02/2025"
         difficulty: "hard"
-
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
     badge: "¿Por qué 4Geeks?"
-    title: "Lo Que Nos Diferencia"
-    description: "Habilidades de IA de Vanguardia, Mentoría Ilimitada y Soporte de Carrera. Todo lo que necesitas para lanzar y hacer crecer una carrera en ciberseguridad."
-    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
+    title: "¿Por Qué Aprender con 4Geeks?"
+    description: "Avanza más rápido y mantente motivado con nuestras herramientas impulsadas por IA y método de enseñanza hiperpersonalizado."
     features:
-      - icon: "Robot"
-        title: "Domina habilidades tecnológicas de próxima generación"
-        description: "Aprende a trabajar con las herramientas de IA y flujos de trabajo usados por equipos modernos de ciberseguridad."
-      - icon: "Headset"
-        title: "Obtén mentoría ilimitada y soporte de carrera"
-        description: "Trabaja 1:1 con mentores expertos y coaches de carrera—durante tu bootcamp y para siempre después."
-      - icon: "Users"
-        title: "Aprende más rápido con soporte hiperpersonalizado"
-        description: "Progresa con retroalimentación instantánea de IA, orientación personalizada y clases pequeñas (máximo 15 personas)."
-
+      - icon: Robot
+        title: "Progresa más rápido con herramientas potenciadas por IA"
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: "Obtén retroalimentación instantánea de Rigobot, nuestro tutor de IA personalizado"
+          - text: "Da consejos ajustados a tu nivel de habilidad y progreso"
+          - text: "Ayuda con depuración y tareas de resolución de problemas"
+          - text: "Accede a cientos de ejercicios de seguridad interactivos en Learnpack"
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: "¡Empieza a aprender ahora!"
+          url: "/es/aplica"
+          variant: primary
+      - icon: TrendingUp
+        title: "Prospera en tecnología con soporte de carrera para la Era de IA"
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: "Coaching personalizado 1:1"
+          - text: "Currículums y portafolios listos para IA"
+          - text: "Preparación de entrevistas y negociación salarial"
+          - text: "Acceso de por vida para apoyar tu crecimiento"
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: "¡Empieza a aprender ahora!"
+          url: "/es/aplica"
+          variant: primary
+      - icon: Headset
+        title: "Mentoría ilimitada 1:1 y una comunidad activa"
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: "Reserva sesiones 1-a-1 con mentores expertos a tu ritmo"
+          - text: "Aprende EN VIVO con instructores en sesiones de código y talleres"
+          - text: "Interactúa con compañeros a través de Slack, herramientas de feedback y check-ins semanales"
+          - text: "Accede a canales de Slack para soporte de seguridad, bolsas de trabajo y consejos de carrera"
+        image_id: mentoring_zoom_call
+        cta:
+          text: "¡Empieza a aprender ahora!"
+          url: "/es/aplica"
+          variant: primary
+    paddingY:
+      desktop: md
   - type: certificate
-    version: "1.0"
-    title: "Prepárate para Certificaciones de la Industria"
-    description: "Nuestro programa te pone en la vía rápida para certificaciones oficiales de ciberseguridad como EJPT y CEH. Nuestras prácticas de pentesting están alineadas con los laboratorios de certificación EJPT, equipándote con experiencia práctica."
-    stats:
-      - value: "3.5M+"
-        label: "Posiciones Vacantes"
-      - value: "35%"
-        label: "Crecimiento Laboral"
-      - value: "16"
-        label: "Semanas"
-      - value: "20+"
-        label: "Países"
+    title: "Certificado y Certificaciones de la Industria"
+    description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Nuestro programa te prepara para:"
     benefits:
-      - text: "Preparación para certificación EJPT"
-      - text: "Ruta hacia certificación CEH"
-      - text: "Soporte de carrera de por vida"
+      - text: "EJPT (eLearnSecurity Junior Penetration Tester)"
+      - text: "Ruta hacia CEH (Certified Ethical Hacker)"
+      - text: "Fundamentos de CompTIA Security+"
+      - text: "Acceso de por vida a soporte de carrera"
     card:
       title: "Especialista en Ciberseguridad"
       subtitle: "Certificado de 4Geeks Academy"
       program_name: "Especialista en Ciberseguridad"
-      certificate_label: "Certificado de Finalización"
-
-  - type: why_learn_ai
-    title: "Los Especialistas en Ciberseguridad Tienen Alta Demanda"
-    subtitle: "La demanda de profesionales de ciberseguridad continúa en aumento"
-    description: "Con 3.5 millones de posiciones vacantes globalmente y la Oficina de Estadísticas Laborales de EE.UU. proyectando un crecimiento laboral del 35% entre 2022 y 2032, nunca ha habido un mejor momento para entrar a este campo. Gartner predice que el mercado de seguridad de la información crecerá de $185 mil millones en 2023 a $287 mil millones en 2027. Únete a la próxima generación de profesionales de ciberseguridad."
-    cta:
-      text: "¡Únete ahora!"
-      url: "/signup"
-      variant: "primary"
-
+    stats:
+      - value: "84%"
+        label: "Tasa de contratación"
+        description: "El 84% de nuestros graduados consiguen un trabajo en tecnología dentro de 6 meses. Nuestro equipo de servicios de carrera trabaja contigo hasta que seas contratado."
+        benefits:
+          - text: "Coaching de carrera dedicado desde el primer día"
+          - text: "Optimización de currículum y perfil de LinkedIn"
+          - text: "Entrevistas simuladas con profesionales de la industria"
+          - text: "Presentaciones directas a socios contratantes"
+      - value: "3-6 meses"
+        label: "Tiempo para ser contratado"
+        description: "La mayoría de los graduados aseguran su primer rol dentro de 3-6 meses de completar el programa. Proporcionamos soporte continuo hasta que consigas tu trabajo soñado."
+        benefits:
+          - text: "Estrategia y planificación de búsqueda de empleo"
+          - text: "Coaching de negociación salarial"
+          - text: "Acceso de por vida a soporte de carrera"
+          - text: "Red de exalumnos con más de 10,000 profesionales"
+      - value: "$85K+"
+        label: "Salario inicial promedio"
+        description: "Los profesionales de ciberseguridad obtienen salarios premium debido a la alta demanda y habilidades especializadas. La inversión se paga sola."
+        benefits:
+          - text: "Analista de Seguridad: $70K–$95K"
+          - text: "Tester de Penetración: $80K–$110K"
+          - text: "Analista SOC: $65K–$90K"
+          - text: "Ingeniero de Seguridad: $90K–$130K"
+      - value: "5,000+"
+        label: "Socios Contratantes"
+        description: "Nuestra extensa red incluye empresas Fortune 500, agencias gubernamentales y startups innovadoras que buscan activamente talento en seguridad."
+        benefits:
+          - text: "Referidos directos a empresas socias"
+          - text: "Acceso exclusivo a bolsa de trabajo"
+          - text: "Eventos de networking con reclutadores"
+          - text: "Programa de referidos de exalumnos"
+    paddingY:
+      desktop: md
   - type: pricing
+    version: "1.0"
+    variant: product
     title: "Obtén acceso a toda nuestra base de aprendizaje, cursos y servicios"
-    subtitle: "Aprende una nueva habilidad cada 30 min, nunca te quedes atascado o perdido de nuevo."
+    subtitle: "Domina habilidades de ciberseguridad con práctica ilimitada y guía de expertos."
     monthly:
       discount_badge: "35% OFF"
       price: "38.99"
@@ -164,87 +305,55 @@ sections:
       original_price: "479.99"
       savings_badge: "Ahorra 3 meses"
     tech_icons:
-      - "html"
-      - "css"
-      - "javascript"
-      - "react"
-      - "python"
-      - "nodejs"
-      - "git"
-      - "bootstrap"
-      - "api"
-      - "settings"
-    features_title: "Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies"
+      - linux
+      - python
+      - terminal
+      - server
+      - shield
+      - git
+    features_title: "Accede a cientos de ejercicios, proyectos y tutoriales en las tecnologías de seguridad más demandadas"
     features:
       - icon: "certificate"
-        text: "Build your portfolio with hundreds of real-world projects."
+        text: "Construye tu portafolio con cientos de proyectos de seguridad del mundo real."
       - icon: "cloud"
-        text: "Thousands of and cloud-based coding challenges (no setup needed)."
-      - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
+        text: "Miles de desafíos de seguridad en la nube (sin configuración necesaria)."
+      - text: "Nunca estarás atascado o solo de nuevo, nuestra IA sabe quién eres, lee tu código y te da retroalimentación en vivo mientras programas."
         use_rigobot_icon: true
       - icon: "certificate"
-        text: "Course certificates"
+        text: "Certificados de cursos"
       - icon: "certificate"
-        text: "Earn certificates from a USA certified school by the florida department of education."
+        text: "Obtén certificados de una escuela certificada de EE.UU. por el Departamento de Educación de Florida."
     cta:
-      text: "Get plan"
-      url: "/signup"
+      text: "Obtener plan"
+      url: "/es/aplica"
       variant: "primary"
-
+    paddingY:
+      desktop: md
   - type: whos_hiring
+    version: "1.0"
+    variant: carousel
     title: "¿Quién Contrata a Nuestros Graduados?"
     subtitle: "Nuestros exalumnos trabajan en las mejores empresas del mundo"
-    description: "Las mejores empresas contratan graduados de 4Geeks, con un 84% consiguiendo empleo dentro de los 6 meses de graduación gracias a sus habilidades y nuestro soporte de carrera personalizado. Nuestros graduados no solo son contratados—lanzan carreras exitosas y consistentemente ganan reconocimiento por su experiencia técnica y profesionalismo."
+    description: "Las mejores empresas contratan graduados de 4Geeks, con un 84% consiguiendo empleo dentro de los 6 meses de graduación gracias a sus habilidades y nuestro soporte de carrera personalizado."
     logos:
       - src: "/attached_assets/microsoft_1764719829995.png"
         alt: "Microsoft"
       - src: "/attached_assets/google-developers_1764719904190.png"
         alt: "Google Developers"
-      - src: "/attached_assets/boats_1764719939123.jpg"
-        alt: "Boats Group"
       - src: "/attached_assets/meta-logo_1764719959855.png"
         alt: "Meta"
       - src: "/attached_assets/ebay_1764719967118.png"
         alt: "eBay"
-      - src: "/attached_assets/natgeo_1764719975443.png"
-        alt: "National Geographic"
-      - src: "/attached_assets/evernote_1764719981901.png"
-        alt: "Evernote"
       - src: "/attached_assets/telefonica_1764719987250.png"
         alt: "Telefonica"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
       - src: "/attached_assets/uber_1764719999685.png"
         alt: "Uber"
-      - src: "/attached_assets/Neo9_1764720006347.png"
-        alt: "Neo9"
-      - src: "/attached_assets/jooble_1764720010702.png"
-        alt: "Jooble"
       - src: "/attached_assets/kpmg-logo1_1764720019827.png"
         alt: "KPMG"
-      - src: "/attached_assets/ultimate_1764720025067.png"
-        alt: "Ultimate"
-      - src: "/attached_assets/tcg_1764720028893.png"
-        alt: "TCG"
-      - src: "/attached_assets/razz_1764720036807.png"
-        alt: "Razz"
-      - src: "/attached_assets/overseas_1764720045331.png"
-        alt: "Overseas"
-      - src: "/attached_assets/ds9_1764720051158.png"
-        alt: "DS9"
-      - src: "/attached_assets/coinet_1764720056569.jpg"
-        alt: "Coinet"
-      - src: "/attached_assets/strata_1764720063140.png"
-        alt: "Strata"
-      - src: "/attached_assets/mdc_ce_1764720089793.png"
-        alt: "MDC"
-      - src: "/attached_assets/beacon_council_1764720100166.jpg"
-        alt: "Beacon Council"
       - src: "/attached_assets/blackstone_1764720124773.png"
         alt: "Blackstone"
-      - src: "/attached_assets/cemex_1764720131666.png"
-        alt: "Cemex"
-
+    paddingY:
+      desktop: md
   - type: testimonials
     title: "Tu Nueva Carrera Comienza Aquí"
     subtitle: "Mira lo que nuestros graduados dicen sobre su experiencia"
@@ -288,7 +397,8 @@ sections:
         rating: 5
         comment: "La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación de carrera durante todo el programa."
         outcome: "Primer trabajo en seguridad"
-
+    paddingY:
+      desktop: md
   - type: faq
     version: "1.0"
     background: "muted"
@@ -307,20 +417,22 @@ sections:
     cta:
       text: "¿Aún tienes preguntas?"
       button_text: "Habla con un Asesor"
-      button_url: "/contact"
-
+      button_url: "/contacto"
+    paddingY:
+      desktop: md
   - type: cta_banner
     version: "1.0"
     title: "¿Listo para Defender el Mundo Digital?"
     subtitle: "Únete a miles de graduados que han lanzado carreras exitosas en ciberseguridad con 4Geeks."
     buttons:
       - text: "Empieza a Aprender Ahora"
-        url: "/signup"
+        url: "/es/aplica"
         variant: "secondary"
       - text: "Habla con un Asesor"
-        url: "/contact"
+        url: "/contacto"
         variant: "outline"
-
+    paddingY:
+      desktop: md
   - type: footer
     version: "1.0"
     copyright_text: "2024 4Geeks. Todos los derechos reservados."
