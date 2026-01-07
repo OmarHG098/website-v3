@@ -321,7 +321,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     paddingY:
-      desktop: md lg
+      desktop: md
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
