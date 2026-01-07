@@ -361,7 +361,7 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: Graduate with an industry-recognized certificate, a fully built AI-native company that demonstrates real engineering capability, and a job-ready professional profile aligned with today’s AI hiring practices.
+        description: Graduate with the skills, credentials, and professional profile employers are actively hiring for.
         benefits:
           - text: Certificate recognized by the Florida Department of Education
           - text: End-to-end AI-engineered company in your portfolio
