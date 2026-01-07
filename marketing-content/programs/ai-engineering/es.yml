@@ -20,7 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
+    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
     title: Conviértete en Ingeniero de IA
     subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas con mentoría personalizada 1:1 y orientación experta. Conviértete en el profesional que las empresas no pueden esperar a contratar.
     badge: Programa de Carrera
@@ -37,98 +37,149 @@ sections:
       rating: "4.5"
       rating_count: 1,294
       trusted_text: $95K+ salario inicial promedio
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Mejor Bootcamp de Código
-        source: Forbes
-        name: Mejor Bootcamp de Código
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
-        source: Fortune
-        name: Mejor para Hispanohablantes
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Bootcamp de Código
-        source: Newsweek
-        name: Top Bootcamp de Código
-        year: "2024"
-      - id: course-report-2025
-        alt: Course Report - Mejor Bootcamp de Código
-        source: Course Report
-        name: Mejor Bootcamp de Código
-        year: "2025"
+      - id: switchup-2025
+        alt: SwitchUp - Mejores Bootcamps de Código 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Mejor Bootcamp de Código 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnología Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 en Reseñas de Course Report
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Calidad Institucional
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none md
   - type: features_grid
     version: "1.0"
-    variant: highlight
+    variant: stats-cards
+    background: bg-primary/5
     title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
-    subtitle: Sí, y tenemos los números para respaldarlo. Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general.
+    subtitle: Sí, y tenemos los números para respaldarlo
+    description: Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general. Nuestro compromiso con tu éxito está respaldado por resultados reales, no solo promesas.
+    card_color: bg-muted
     items:
-      - icon: Briefcase
-        value: 3.5M
+      - value: 3.5M
         title: Roles relacionados con IA esperados para 2026
-      - icon: Graduation
-        value: 47%
+      - value: 47%
         title: Crecimiento año tras año en ofertas de trabajo de IA
-      - icon: GrowthChart
-        value: 20-40%
+      - value: 20-40%
         title: Primas salariales por habilidades de ingeniería de IA
-    columns: 3
-    icon_color: "#0097CD"
+    paddingY:
+      desktop: none md
   - type: syllabus
-    title: Lo Que Construirás en 20 Semanas
-    subtitle: Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA.
-    modules:
+    version: "1.0"
+    variant: program-modules
+    program_title: Lo Que Construirás en 20 Semanas
+    program_description: Desde el primer día, elegirás una empresa. La tuya, una que quieras construir, o una que quieras reimaginar. Durante 20 semanas, la transformarás en un negocio completamente operativo, impulsado por IA.
+    tech_logos:
+      - name: React
+        icon: react
+      - name: Python
+        icon: python
+      - name: OpenAI
+        icon: openai
+      - name: n8n
+        icon: n8n
+      - name: Git
+        icon: git
+    module_cards:
       - title: Frontend Asistido por IA
-        description: Aplicación React moderna con componentes potenciados por IA. Construye interfaces de usuario inteligentes que aprovechan la IA para experiencias de usuario mejoradas, autocompletado y sugerencias inteligentes.
+        duration: Semanas 1-4
+        objectives:
+          - Aplicación React moderna con componentes de IA
+          - Interfaces de usuario inteligentes
+          - Autocompletado y sugerencias potenciadas por IA
+        projects: Construye tu primera aplicación web mejorada con IA
+        orientation: vertical
+        icon: IconCode
       - title: Backend de Producción
-        description: APIs REST, autenticación, funciones serverless. Crea servicios backend escalables con autenticación segura, patrones de diseño de API y estrategias de despliegue nativas de la nube.
+        duration: Semanas 5-8
+        objectives:
+          - APIs REST y autenticación
+          - Funciones serverless
+          - Estrategias de despliegue nativas de la nube
+        projects: Crea un servidor API escalable con autenticación segura
+        orientation: horizontal
+        icon: IconServer
       - title: Sistemas de Datos
-        description: Telemetría, pipelines, reportes automatizados. Diseña e implementa sistemas de recolección de datos, pipelines ETL y dashboards de análisis automatizados para insights en tiempo real.
+        duration: Semanas 9-10
+        objectives:
+          - Telemetría y pipelines de datos
+          - Dashboards de reportes automatizados
+          - Analíticas en tiempo real
+        projects: Diseña pipelines ETL para insights de negocio
+        orientation: vertical
+        icon: IconChartBar
       - title: Capa de Conocimiento RAG
-        description: Búsqueda vectorial, embeddings, recuperación contextual de documentos. Construye sistemas sofisticados de generación aumentada por recuperación que conectan LLMs con tus datos propietarios.
+        duration: Semanas 11-14
+        objectives:
+          - Búsqueda vectorial y embeddings
+          - Recuperación contextual de documentos
+          - Conecta LLMs a datos propietarios
+        projects: Construye un sistema de generación aumentada por recuperación
+        orientation: horizontal
+        icon: IconDatabase
       - title: Sistemas Multi-Agente
-        description: Agentes inteligentes con memoria, enrutamiento de tareas y llamadas a herramientas. Crea sistemas de IA que pueden planificar, razonar y ejecutar tareas complejas de múltiples pasos de forma autónoma.
+        duration: Semanas 15-17
+        objectives:
+          - Agentes inteligentes con memoria
+          - Enrutamiento de tareas y llamadas a herramientas
+          - Ejecución autónoma de múltiples pasos
+        projects: Crea sistemas de IA que planifican y razonan
+        orientation: vertical
+        icon: IconRobot
       - title: Automatización de Flujos de Trabajo
-        description: Procesos generados por IA desplegados vía n8n, colas y tareas programadas. Automatiza flujos de trabajo empresariales con toma de decisiones y orquestación impulsadas por IA.
+        duration: Semanas 18-19
+        objectives:
+          - Procesos generados por IA con n8n
+          - Colas y tareas programadas
+          - Toma de decisiones impulsada por IA
+        projects: Automatiza flujos de trabajo empresariales con IA
+        orientation: horizontal
+        icon: IconLayoutKanban
       - title: Sistemas en Tiempo Real
-        description: WebSockets, respuestas de IA en streaming, arquitectura orientada a eventos. Construye aplicaciones responsivas con interacciones de IA en tiempo real y capacidades de streaming.
-  - type: projects
-    title: Aprende Construyendo Proyectos Reales
-    subtitle: "Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto real de ingeniería de IA. Aquí tienes un vistazo de lo que trabajarás:"
-    items:
-      - title: Construye una Base de Conocimiento con RAG
-        description: Crea una aplicación full-stack que permita a los usuarios consultar documentos usando lenguaje natural. Implementa embeddings vectoriales, búsqueda semántica e integra con OpenAI para respuestas inteligentes.
-        image: ml-final-project
-        tags:
-          - RAG
-          - Vector DB
-          - LLM
-        duration: 12 HORAS
-        date: 15/01/2025
-        difficulty: medium
-      - title: Orquestador de Tareas Multi-Agente
-        description: Diseña e implementa un sistema donde múltiples agentes de IA colaboran para completar tareas complejas. Aprende memoria de agentes, llamadas a herramientas y patrones de enrutamiento de tareas.
-        image: authentication
-        tags:
-          - Agentes
-          - LangChain
-        duration: 16 HORAS
-        date: 20/02/2025
-        difficulty: hard
-      - title: Aplicación Full-Stack Nativa de IA
-        description: Construye una aplicación empresarial nativa de IA completa desde cero. Combina frontend, backend, RAG, agentes y automatización en un producto listo para producción.
-        image: final-project
-        tags:
-          - Full-Stack
-          - Proyecto Final
-        duration: 40 HORAS
-        date: 01/04/2025
-        difficulty: hard
+        duration: Semana 20
+        objectives:
+          - WebSockets y respuestas en streaming
+          - Arquitectura orientada a eventos
+          - Interacciones de IA en tiempo real
+        projects: Lanza tu proyecto final de negocio impulsado por IA
+        orientation: vertical
+        icon: IconBolt
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -264,10 +315,12 @@ sections:
       text: Obtener plan
       url: /registro
       variant: primary
+    paddingY:
+      desktop: md
   - type: whos_hiring
-    title: ¿Quién Contrata a Nuestros Graduados?
-    subtitle: Nuestros egresados trabajan en las mejores empresas del mundo
-    description: Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en diversas industrias. Nuestro apoyo profesional y sólida red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y grandes corporaciones a nivel global.
+    variant: carousel
+    title: Empresas Líderes Confían en Nosotros
+    subtitle: Explora cómo 4Geeks Academy impulsa a los graduados hacia carreras tecnológicas exitosas.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -293,30 +346,8 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-      - src: /attached_assets/kpmg-logo1_1764720019827.png
-        alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
-      - src: /attached_assets/blackstone_1764720124773.png
-        alt: Blackstone
-      - src: /attached_assets/cemex_1764720131666.png
-        alt: Cemex
+    paddingY:
+      desktop: none md
   - type: testimonials
     title: Tu Nueva Carrera Comienza Aquí
     subtitle: Mira lo que nuestros graduados tienen que decir sobre su experiencia
@@ -360,9 +391,9 @@ sections:
         rating: 5
         comment: La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación profesional.
         outcome: Primer trabajo en tech
+    paddingY:
+      desktop: md none
   - type: faq
-    version: "1.0"
-    background: "muted"
     title: FAQ
     items:
       - question: ¿Qué requisitos previos necesito para Ingeniería de IA?
@@ -379,6 +410,11 @@ sections:
       text: ¿Aún tienes preguntas?
       button_text: Habla con un Asesor
       button_url: /contacto
+    paddingY:
+      desktop: md
+    background: hsl(var(--muted))
+    marginY:
+      desktop: none
   - type: cta_banner
     version: "1.0"
     title: ¿Listo para Convertirte en Ingeniero de IA?
