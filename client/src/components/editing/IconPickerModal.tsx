@@ -1,13 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { IconSearch } from "@tabler/icons-react";
+import { IconSearch, IconLoader2 } from "@tabler/icons-react";
 import * as TablerIcons from "@tabler/icons-react";
 
 interface IconPickerModalProps {
@@ -18,11 +19,6 @@ interface IconPickerModalProps {
   itemLabel?: string;
 }
 
-// Get all icon names from Tabler (filter out non-icon exports)
-const allIconNames = Object.keys(TablerIcons).filter(
-  (name) => name.startsWith("Icon") && name !== "Icon" && typeof (TablerIcons as Record<string, unknown>)[name] === "function"
-);
-
 export function IconPickerModal({
   open,
   onOpenChange,
@@ -31,17 +27,34 @@ export function IconPickerModal({
   itemLabel,
 }: IconPickerModalProps) {
   const [search, setSearch] = useState("");
+  const [iconList, setIconList] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch icon list from theme
+  useEffect(() => {
+    if (open && iconList.length === 0) {
+      setLoading(true);
+      fetch("/api/theme")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.icons && Array.isArray(data.icons)) {
+            setIconList(data.icons);
+          }
+        })
+        .catch(console.error)
+        .finally(() => setLoading(false));
+    }
+  }, [open, iconList.length]);
 
   const filteredIcons = useMemo(() => {
     if (!search.trim()) {
-      // Show first 100 icons when no search
-      return allIconNames.slice(0, 100);
+      return iconList;
     }
     const searchLower = search.toLowerCase();
-    return allIconNames.filter((name) =>
+    return iconList.filter((name) =>
       name.toLowerCase().includes(searchLower)
-    ).slice(0, 100);
-  }, [search]);
+    );
+  }, [search, iconList]);
 
   const handleSelect = (iconName: string) => {
     onSelect(iconName);
@@ -50,7 +63,9 @@ export function IconPickerModal({
   };
 
   const renderIcon = (iconName: string) => {
-    const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName];
+    // Handle both short names (Rocket) and full names (IconRocket)
+    const fullName = iconName.startsWith("Icon") ? iconName : `Icon${iconName}`;
+    const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[fullName];
     if (!IconComponent) return null;
     return <IconComponent className="h-5 w-5" />;
   };
@@ -61,10 +76,13 @@ export function IconPickerModal({
         <DialogHeader>
           <DialogTitle>
             {currentValue && itemLabel 
-              ? `Replacing ${currentValue} for ${itemLabel}`
+              ? `Replacing ${currentValue.replace("Icon", "")} for ${itemLabel}`
               : "Select Icon"
             }
           </DialogTitle>
+          <DialogDescription>
+            Choose an icon from the list below
+          </DialogDescription>
         </DialogHeader>
 
         <div className="relative">
@@ -80,28 +98,34 @@ export function IconPickerModal({
         </div>
 
         <ScrollArea className="h-[300px] border rounded-md">
-          <div className="grid grid-cols-6 gap-1 p-2">
-            {filteredIcons.map((iconName) => {
-              const isSelected = currentValue === iconName;
-              return (
-                <button
-                  key={iconName}
-                  type="button"
-                  onClick={() => handleSelect(iconName)}
-                  className={`flex flex-col items-center justify-center p-2 rounded transition-colors ${
-                    isSelected
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted"
-                  }`}
-                  title={iconName}
-                  data-testid={`icon-option-${iconName}`}
-                >
-                  {renderIcon(iconName)}
-                </button>
-              );
-            })}
-          </div>
-          {filteredIcons.length === 0 && (
+          {loading ? (
+            <div className="flex items-center justify-center h-full">
+              <IconLoader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-6 gap-1 p-2">
+              {filteredIcons.map((iconName) => {
+                const isSelected = currentValue === iconName;
+                return (
+                  <button
+                    key={iconName}
+                    type="button"
+                    onClick={() => handleSelect(iconName)}
+                    className={`flex flex-col items-center justify-center p-2 rounded transition-colors ${
+                      isSelected
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                    }`}
+                    title={iconName.replace("Icon", "")}
+                    data-testid={`icon-option-${iconName}`}
+                  >
+                    {renderIcon(iconName)}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {!loading && filteredIcons.length === 0 && (
             <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
               No icons found
             </div>
@@ -109,8 +133,8 @@ export function IconPickerModal({
         </ScrollArea>
 
         <p className="text-xs text-muted-foreground">
-          Showing {filteredIcons.length} of {allIconNames.length} icons.
-          {!search && " Type to search for more."}
+          Showing {filteredIcons.length} of {iconList.length} icons.
+          {search && " Clear search to see all."}
         </p>
       </DialogContent>
     </Dialog>
