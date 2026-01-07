@@ -134,18 +134,52 @@ sections:
     variant: feature-tabs
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué Aprender con 4Geeks?
-    description: Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    description: Avanza más rápido y mantente motivado con nuestras herramientas impulsadas por IA y método de enseñanza hiperpersonalizado.
     features:
       - icon: Robot
-        title: Aprende con IA
-        description: Nuestra IA revisa tu código para darte retroalimentación instantánea, ayuda con los ejercicios, ¡y más!
+        title: Progresa más rápido con herramientas de IA
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Obtén retroalimentación instantánea de Rigobot, nuestro tutor de IA personalizado
+          - text: Recibe consejos ajustados a tu nivel y progreso
+          - text: Ayuda con depuración y resolución de problemas
+          - text: Accede a cientos de ejercicios interactivos en Learnpack, nuestra plataforma educativa
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: ¡Empieza ahora!
+          url: /apply
+          variant: primary
+      - icon: TrendingUp
+        title: Triunfa en tech con apoyo profesional para la era de IA
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Coaching personalizado 1:1
+          - text: CVs y portafolios preparados para IA
+          - text: Preparación para entrevistas y negociación salarial
+          - text: Acceso de por vida para apoyar tu crecimiento
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: ¡Empieza ahora!
+          url: /apply
+          variant: primary
       - icon: Headset
-        title: Sesiones de mentoría 1:1 ilimitadas
-        description: Accede a sesiones de mentoría ilimitadas con nuestros expertos en ingeniería de IA cuando necesites orientación.
-      - icon: Users
-        title: Aprende con la comunidad
-        description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
+        title: Mentoría 1:1 ilimitada y comunidad activa
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Agenda sesiones 1:1 con mentores expertos a tu ritmo
+          - text: Aprende EN VIVO con instructores en sesiones y talleres de código
+          - text: Conecta con compañeros a través de Slack, herramientas de feedback y reuniones semanales
+          - text: Accede a canales de Slack para soporte, bolsa de trabajo y consejos de carrera
+        image_id: mentoring_zoom_call
+        cta:
+          text: ¡Empieza ahora!
+          url: /apply
+          variant: primary
+    paddingY:
+      desktop: md
   - type: certificate
     title: Certificado y Red de Carreras
     description: "Obtén un certificado reconocido por la industria, acreditado por el Departamento de Educación de Florida y accede a roles de alta demanda como:"

@@ -20,7 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
+    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
     title: Become an AI Engineer
     subtitle: Thrive in Today’s Tech and Shape Tomorrow’s. Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
     badge: Career Program
@@ -185,18 +185,50 @@ sections:
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
-    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
-        title: Learn with AI
-        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+        title: Progress faster with AI-powered tools
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
+          - text: Helps with debugging and problem-solving tasks
+          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
+      - icon: TrendingUp
+        title: Thrive in tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
       - icon: Headset
-        title: Unlimited 1:1 mentoring sessions
-        description: Access unlimited mentorship sessions with our AI engineering experts whenever you need guidance.
-      - icon: Users
-        title: Learn with the community
-        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+        title: Unlimited 1:1 mentorship and an active community
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in coding sessions and workshops
+          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
+          - text: Access Slack channels for coding support, job boards, and career advice
+        image_id: mentoring_zoom_call
+        cta:
+          text: Start learning now!
+          url: /apply
+          variant: primary
     paddingY:
       desktop: md
   - type: certificate
@@ -222,6 +254,8 @@ sections:
         label: Hiring Partners
     paddingY:
       desktop: md
+    marginY:
+      desktop: none md
   - type: pricing
     version: "1.0"
     variant: product
@@ -287,7 +321,7 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
     paddingY:
-      desktop: md none
+      desktop: md lg
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -332,10 +366,10 @@ sections:
         comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
         outcome: Landed first tech job
     paddingY:
-      desktop: none md
+      desktop: md
   - type: faq
     version: "1.0"
-    background: "muted"
+    background: muted
     title: FAQ
     items:
       - question: What prerequisites do I need for AI Engineering?
