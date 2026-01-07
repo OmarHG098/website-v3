@@ -182,12 +182,12 @@ sections:
       desktop: md
   - type: certificate
     title: Certificado y Red de Carreras
-    description: "Obtén un certificado reconocido por la industria, acreditado por el Departamento de Educación de Florida y accede a roles de alta demanda como:"
+    description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien remunerados:"
     benefits:
       - text: "Ingeniero de Software IA: $95K–$135K"
       - text: "Ingeniero Full-Stack (Fluente en IA): $100K–$145K"
-      - text: "Ingeniero de Agentes / Ingeniero de Automatización de Flujos: $105K–$155K"
-      - text: "Ingeniero de Automatización de Flujos: $85K–$120K"
+      - text: "Ingeniero de Agentes: $105K–$155K"
+      - text: "Ingeniero de Automatización: $85K–$120K"
     card:
       title: Ingeniero de IA
       subtitle: Certificado 4Geeks Academy
@@ -195,12 +195,42 @@ sections:
     stats:
       - value: 84%
         label: Tasa de contratación
+        description: El 84% de nuestros graduados consiguen trabajo en tech en 6 meses. Nuestro equipo de carreras trabaja contigo hasta que te contraten.
+        benefits:
+          - text: Coaching de carrera dedicado desde el primer día
+          - text: Optimización de CV y perfil de LinkedIn
+          - text: Entrevistas simuladas con profesionales
+          - text: Presentaciones directas a socios de contratación
       - value: 3-6 meses
         label: Tiempo para ser contratado
+        description: La mayoría de graduados consiguen su primer rol en 3-6 meses. Te apoyamos hasta que consigas tu trabajo soñado.
+        benefits:
+          - text: Estrategia y planificación de búsqueda de empleo
+          - text: Coaching de negociación salarial
+          - text: Acceso de por vida a soporte de carrera
+          - text: Red de alumni con más de 10,000 profesionales
       - value: 55%
         label: Aumento salarial promedio
+        description: Nuestros graduados ven un aumento salarial promedio del 55% al transicionar a roles de ingeniería de IA. La inversión se paga sola.
+        benefits:
+          - text: "Ingeniero de Software IA: $95K–$135K"
+          - text: "Ingeniero Full-Stack (Fluente en IA): $100K–$145K"
+          - text: "Ingeniero de Agentes: $105K–$155K"
+          - text: "Ingeniero de Automatización: $85K–$120K"
       - value: 5,000+
         label: Socios de contratación
+        description: Accede a nuestra red de más de 5,000 socios de contratación buscando talento en IA. Obtén oportunidades exclusivas y referencias prioritarias.
+        benefits:
+          - text: Acceso exclusivo a bolsa de trabajo
+          - text: Referencias prioritarias a empresas socias
+          - text: Eventos de networking con gerentes de contratación
+          - text: Empresas incluyen Google, Meta, Amazon, startups
+    certificate_position: right
+    useSolidCard: true
+    background: hsl(var(--muted))
+    paddingY:
+      mobile: lg
+      desktop: lg
   - type: pricing
     version: "1.0"
     variant: product
