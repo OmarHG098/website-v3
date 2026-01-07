@@ -371,10 +371,9 @@ sections:
         label: Time to get hired
         description: Most graduates land their first role within 3–6 months of completing the program. Our structured 3-step career development process helps turn technical skills into real job offers.
         benefits:
-          - text: Job search strategy and planning
-          - text: Salary negotiation coaching
-          - text: Lifetime career support access
-          - text: Alumni network with 10,000+ professionals
+          - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
+          - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
+          - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average salary increase
         description: Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself.
