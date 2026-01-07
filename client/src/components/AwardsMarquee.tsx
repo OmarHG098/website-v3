@@ -17,6 +17,7 @@ interface AwardsMarqueeProps {
   gradient?: boolean;
   gradientColor?: string;
   gradientWidth?: number;
+  bottom_title?: string;
   className?: string;
   subtitle?: string;
 }
@@ -27,6 +28,7 @@ export function AwardsMarquee({
   gradient = true,
   gradientColor,
   gradientWidth = 100,
+  bottom_title,
   className = "",
   subtitle,
 }: AwardsMarqueeProps) {

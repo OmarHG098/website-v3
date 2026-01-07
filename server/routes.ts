@@ -296,6 +296,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const hasWebmaster = webmasterResponse.status === 200;
 
+      // Fetch user info for author name
+      let userName = "";
+      try {
+        const userResponse = await fetch(
+          "https://breathecode.herokuapp.com/v1/auth/user/me",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          },
+        );
+        if (userResponse.ok) {
+          const userData = await userResponse.json() as { first_name?: string; last_name?: string };
+          const firstName = userData.first_name || "";
+          const lastName = userData.last_name || "";
+          userName = `${firstName} ${lastName}`.trim();
+        }
+      } catch {
+        // Ignore user fetch errors - just use empty name
+      }
+
       // If has webmaster, they get all capabilities
       // In future, we could check for more granular capabilities from the API
       const capabilities = {
@@ -308,9 +330,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       if (hasWebmaster) {
-        res.json({ valid: true, capabilities });
+        res.json({ valid: true, capabilities, userName });
       } else {
-        res.json({ valid: false, capabilities });
+        res.json({ valid: false, capabilities, userName });
       }
     } catch (error) {
       console.error("Token validation error:", error);
@@ -833,6 +855,166 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all sync changes (local and incoming)
+  app.get("/api/github/pending-changes", async (req, res) => {
+    try {
+      const { getAllSyncChanges } = await import("./github");
+      const changes = await getAllSyncChanges();
+      res.json({ changes, count: changes.length });
+    } catch (error) {
+      console.error("Error getting sync changes:", error);
+      res.status(500).json({ error: "Failed to get sync changes" });
+    }
+  });
+
+  // Commit and push pending changes to GitHub
+  app.post("/api/github/commit", async (req, res) => {
+    try {
+      const { message, force, author } = req.body;
+      if (!message || typeof message !== 'string' || message.trim().length === 0) {
+        res.status(400).json({ error: "Commit message is required" });
+        return;
+      }
+
+      // Prepend author to commit message if provided
+      let finalMessage = message.trim();
+      if (author && typeof author === 'string' && author.trim()) {
+        finalMessage = `[Author: ${author.trim()}] ${finalMessage}`;
+      }
+
+      const { commitAndPush } = await import("./github");
+      const result = await commitAndPush(finalMessage, { force: !!force });
+      
+      if (result.success) {
+        res.json({ success: true, commitHash: result.commitHash });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error committing to GitHub:", error);
+      res.status(500).json({ error: "Failed to commit changes" });
+    }
+  });
+
+  // Get conflict information (missed commits from remote)
+  app.get("/api/github/conflict-info", async (req, res) => {
+    try {
+      const { getConflictInfo } = await import("./github");
+      const conflictInfo = await getConflictInfo();
+      res.json(conflictInfo);
+    } catch (error) {
+      console.error("Error getting conflict info:", error);
+      res.status(500).json({ error: "Failed to get conflict info" });
+    }
+  });
+
+  // Sync local state with remote (accept remote changes)
+  app.post("/api/github/sync", async (req, res) => {
+    try {
+      const { syncWithRemote } = await import("./github");
+      const result = await syncWithRemote();
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error syncing with remote:", error);
+      res.status(500).json({ error: "Failed to sync with remote" });
+    }
+  });
+
+  // Check for pull conflicts (files changed both locally and remotely)
+  app.get("/api/github/pull-conflicts", async (req, res) => {
+    try {
+      const { checkPullConflicts } = await import("./github");
+      const result = await checkPullConflicts();
+      res.json(result);
+    } catch (error) {
+      console.error("Error checking pull conflicts:", error);
+      res.status(500).json({ error: "Failed to check pull conflicts" });
+    }
+  });
+
+  // Get status for a single file (local vs remote)
+  app.get("/api/github/file-status", async (req, res) => {
+    try {
+      const filePath = req.query.file as string;
+      if (!filePath) {
+        res.status(400).json({ error: "Missing file parameter" });
+        return;
+      }
+      const { getRemoteFileStatus } = await import("./github");
+      const status = await getRemoteFileStatus(filePath);
+      res.json(status);
+    } catch (error) {
+      console.error("Error getting file status:", error);
+      res.status(500).json({ error: "Failed to get file status" });
+    }
+  });
+
+  // Commit a single file to remote
+  app.post("/api/github/commit-file", async (req, res) => {
+    try {
+      const { filePath, message, author } = req.body;
+      if (!filePath || !message) {
+        res.status(400).json({ error: "Missing filePath or message" });
+        return;
+      }
+      const { commitSingleFile } = await import("./github");
+      const result = await commitSingleFile({ filePath, message, author });
+      
+      if (result.success) {
+        res.json({ success: true, commitSha: result.commitSha });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error committing file:", error);
+      res.status(500).json({ error: "Failed to commit file" });
+    }
+  });
+
+  // Pull a single file from remote
+  app.post("/api/github/pull-file", async (req, res) => {
+    try {
+      const { filePath } = req.body;
+      if (!filePath) {
+        res.status(400).json({ error: "Missing filePath" });
+        return;
+      }
+      const { pullSingleFile } = await import("./github");
+      const result = await pullSingleFile(filePath);
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error pulling file:", error);
+      res.status(500).json({ error: "Failed to pull file" });
+    }
+  });
+
+  // Sync local state with remote (update lastSyncedCommit to current remote HEAD)
+  app.post("/api/github/sync-with-remote", async (req, res) => {
+    try {
+      const { syncWithRemote } = await import("./github");
+      const result = await syncWithRemote();
+      
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("Error syncing with remote:", error);
+      res.status(500).json({ error: "Failed to sync with remote" });
+    }
+  });
+
   // Get available variants for a content type and slug
   app.get("/api/variants/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
@@ -1253,8 +1435,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         );
 
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
         if (capResponse.status !== 200) {
-          res.status(403).json({ error: "Insufficient permissions" });
+          res.status(403).json({ error: "You need webmaster capability to edit content" });
           return;
         }
       }

@@ -288,7 +288,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <AwardBadges key={index} items={validItems} variant={badgeSection.variant} showBorder={badgeSection.showBorder} />;
     }
     case "awards_marquee": {
-      const marqueeSection = section as unknown as { items?: unknown[]; speed?: number; gradient?: boolean; gradientWidth?: number };
+      const marqueeSection = section as unknown as { items?: unknown[]; speed?: number; gradient?: boolean; gradientWidth?: number; bottom_title?: string };
       if (!Array.isArray(marqueeSection.items) || marqueeSection.items.length === 0) {
         if (process.env.NODE_ENV === "development") {
           console.warn("awards_marquee section missing required 'items' array");
@@ -311,6 +311,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
           speed={marqueeSection.speed}
           gradient={marqueeSection.gradient}
           gradientWidth={marqueeSection.gradientWidth}
+          bottom_title={marqueeSection.bottom_title}
         />
       );
     }

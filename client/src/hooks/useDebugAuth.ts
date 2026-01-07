@@ -6,6 +6,7 @@ const DEBUG_SESSION_EXPIRY_KEY = "debug_validated_expiry";
 const DEBUG_TOKEN_KEY = "debug_token";
 const DEBUG_MODE_KEY = "debug_mode";
 const DEBUG_CAPABILITIES_KEY = "debug_capabilities";
+const DEBUG_USERNAME_KEY = "debug_username";
 const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 const DEFAULT_CAPABILITIES: Capabilities = {
@@ -86,6 +87,10 @@ export function getCachedCapabilities(): Capabilities {
   return DEFAULT_CAPABILITIES;
 }
 
+export function getDebugUserName(): string {
+  return localStorage.getItem(DEBUG_USERNAME_KEY) || "";
+}
+
 export function useDebugAuth() {
   const [isValidated, setIsValidated] = useState<boolean | null>(null);
   const [hasToken, setHasToken] = useState<boolean>(false);
@@ -164,7 +169,7 @@ export function useDebugAuth() {
       const data = await response.json();
       
       if (data.valid) {
-        // Cache the validation result, token, and capabilities with expiry (localStorage for cross-tab persistence)
+        // Cache the validation result, token, capabilities, and userName with expiry (localStorage for cross-tab persistence)
         localStorage.setItem(DEBUG_SESSION_KEY, "true");
         localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
         localStorage.setItem(DEBUG_TOKEN_KEY, token);
@@ -172,12 +177,16 @@ export function useDebugAuth() {
           localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
           setCapabilities(data.capabilities);
         }
+        if (data.userName) {
+          localStorage.setItem(DEBUG_USERNAME_KEY, data.userName);
+        }
         setIsValidated(true);
       } else {
         localStorage.removeItem(DEBUG_SESSION_KEY);
         localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
         localStorage.removeItem(DEBUG_TOKEN_KEY);
         localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+        localStorage.removeItem(DEBUG_USERNAME_KEY);
         setCapabilities(data.capabilities || DEFAULT_CAPABILITIES);
         setIsValidated(false);
       }
@@ -211,6 +220,7 @@ export function useDebugAuth() {
     localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
     localStorage.removeItem(DEBUG_TOKEN_KEY);
     localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+    localStorage.removeItem(DEBUG_USERNAME_KEY);
 
     try {
       const response = await fetch("/api/debug/validate-token", {
@@ -230,6 +240,9 @@ export function useDebugAuth() {
         if (data.capabilities) {
           localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
           setCapabilities(data.capabilities);
+        }
+        if (data.userName) {
+          localStorage.setItem(DEBUG_USERNAME_KEY, data.userName);
         }
         setIsValidated(true);
       } else {
@@ -251,6 +264,7 @@ export function useDebugAuth() {
     localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
     localStorage.removeItem(DEBUG_TOKEN_KEY);
     localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+    localStorage.removeItem(DEBUG_USERNAME_KEY);
     setHasToken(false);
     setIsValidated(false);
     setCapabilities(DEFAULT_CAPABILITIES);

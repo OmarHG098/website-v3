@@ -135,6 +135,7 @@ sections:
         logo: /attached_assets/fortune-logo_1764709618095.webp
         alt: Fortune - Best Education Company
         logoHeight: h-10 md:h-16
+    bottom_title: "Recognized, Rated, and Recommended"
   - type: features_grid
     version: "1.0"
     variant: stats-text-card
@@ -149,13 +150,13 @@ sections:
         title: Year-over-year growth in AI job
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
-    background: hsl(210 100% 50% / 0.05)
     marginY:
       mobile: md none
       desktop: md none
     paddingY:
       mobile: none md
       desktop: none md
+    background: hsl(210 100% 50% / 0.05)
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
@@ -307,7 +308,7 @@ sections:
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: TrendingUp
-        title: Thrive in today's tech with career support for the AI-Era
+        title: Thrive in tech with career support for the AI-Era
         description: ""
         show_rigobot_logo: true
         bullets:
@@ -321,21 +322,21 @@ sections:
           url: "#hero-form"
           variant: primary
       - icon: Robot
-        title: Progress faster with AI using Rigobot + Learnpack
+        title: Progress faster with AI-powered tools
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Provides instant feedback and tutoring while you code
-          - text: Tracks your skills and progress
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
           - text: Helps with debugging and problem-solving tasks
-          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
+          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: Start learning now!
           url: "#hero-form"
           variant: primary
       - icon: Headset
-        title: One-on-one mentoring sessions
+        title: Unlimited 1:1 mentorship and an active community
         description: ""
         show_rigobot_logo: true
         bullets:

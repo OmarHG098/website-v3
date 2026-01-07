@@ -1,4 +1,5 @@
-import { useState, useEffect, lazy, Suspense, useMemo } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo, useCallback } from "react";
+import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
@@ -48,8 +49,12 @@ import {
   IconDeviceDesktop,
   IconDatabase,
   IconCopy,
+  IconArrowUp,
+  IconArrowDown,
+  IconFile,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
+import { useSyncOptional } from "@/contexts/SyncContext";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -72,7 +77,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useDebugAuth, getDebugToken } from "@/hooks/useDebugAuth";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Card } from "@/components/ui/card";
+import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
 const componentsList = [
@@ -148,6 +155,17 @@ interface GitHubSyncStatus {
   aheadBy?: number;
   repoUrl?: string;
   branch?: string;
+}
+
+interface PendingChange {
+  file: string;
+  status: 'modified' | 'added' | 'deleted';
+  source: 'local' | 'incoming' | 'conflict';
+  contentType: string;
+  slug: string;
+  author?: string;
+  date?: string;
+  commitSha?: string;
 }
 
 interface ContentInfo {
@@ -268,6 +286,7 @@ export function DebugBubble() {
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
   const { session } = useSession();
   const editMode = useEditModeOptional();
+  const syncContext = useSyncOptional();
   const { i18n } = useTranslation();
   const [pathname, navigate] = useLocation();
   const [open, setOpen] = useState(false);
@@ -296,6 +315,25 @@ export function DebugBubble() {
   // GitHub sync status state
   const [githubSyncStatus, setGithubSyncStatus] = useState<GitHubSyncStatus | null>(null);
   const [syncStatusLoading, setSyncStatusLoading] = useState(false);
+  
+  // Pending changes state
+  const [pendingChanges, setPendingChanges] = useState<PendingChange[]>([]);
+  const [pendingChangesLoading, setPendingChangesLoading] = useState(false);
+  const [commitModalOpen, setCommitModalOpen] = useState(false);
+  const [commitMessage, setCommitMessage] = useState("");
+  const [isCommitting, setIsCommitting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  
+  // Pull conflict state
+  const [pullConflictModalOpen, setPullConflictModalOpen] = useState(false);
+  const [pullConflictFiles, setPullConflictFiles] = useState<string[]>([]);
+  
+  // Per-file sync state
+  const [selectedFileForCommit, setSelectedFileForCommit] = useState<string | null>(null);
+  const [fileCommitMessage, setFileCommitMessage] = useState("");
+  const [fileCommitting, setFileCommitting] = useState<string | null>(null);
+  const [filePulling, setFilePulling] = useState<string | null>(null);
+  const [confirmPullFile, setConfirmPullFile] = useState<string | null>(null);
   
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
@@ -350,6 +388,29 @@ export function DebugBubble() {
         })
         .catch(() => {});
     }
+  }, []);
+
+  // Listen for open-sync-modal event from SyncConflictBanner
+  useEffect(() => {
+    const handleOpenSyncModal = () => {
+      setCommitModalOpen(true);
+      // Fetch pending changes when modal opens from banner
+      setPendingChangesLoading(true);
+      fetch("/api/github/pending-changes")
+        .then((res) => res.json())
+        .then((data: { changes: PendingChange[]; count: number }) => {
+          setPendingChanges(data.changes || []);
+          setPendingChangesLoading(false);
+        })
+        .catch(() => {
+          setPendingChanges([]);
+          setPendingChangesLoading(false);
+        });
+    };
+    window.addEventListener("open-sync-modal", handleOpenSyncModal);
+    return () => {
+      window.removeEventListener("open-sync-modal", handleOpenSyncModal);
+    };
   }, []);
 
   // Fetch experiments when entering experiments view
@@ -409,6 +470,226 @@ export function DebugBubble() {
       .catch(() => {
         setSyncStatusLoading(false);
       });
+  };
+
+  // Function to execute the actual sync (called after conflict check)
+  const executeSyncFromRemote = async () => {
+    setIsSyncing(true);
+    try {
+      const res = await fetch("/api/github/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (res.ok) {
+        // Refresh sync status and pending changes before reload
+        await refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+        window.location.reload();
+      } else {
+        setIsSyncing(false);
+      }
+    } catch {
+      setIsSyncing(false);
+    }
+  };
+
+  // Function to sync from remote (pull latest changes) - checks for conflicts first
+  const handleSyncFromRemote = async () => {
+    setIsSyncing(true);
+    try {
+      // Check for conflicts first
+      const conflictRes = await fetch("/api/github/pull-conflicts");
+      if (conflictRes.ok) {
+        const conflictData = await conflictRes.json();
+        if (conflictData.hasConflicts && conflictData.conflictingFiles.length > 0) {
+          // Show conflict modal instead of pulling
+          setPullConflictFiles(conflictData.conflictingFiles);
+          setPullConflictModalOpen(true);
+          setIsSyncing(false);
+          return;
+        }
+      }
+      // No conflicts, proceed with sync
+      await executeSyncFromRemote();
+    } catch {
+      setIsSyncing(false);
+    }
+  };
+
+  // Fetch pending changes when GitHub sync is enabled
+  const fetchPendingChanges = () => {
+    setPendingChangesLoading(true);
+    fetch("/api/github/pending-changes")
+      .then((res) => res.json())
+      .then((data: { changes: PendingChange[]; count: number }) => {
+        setPendingChanges(data.changes || []);
+        setPendingChangesLoading(false);
+      })
+      .catch(() => {
+        setPendingChanges([]);
+        setPendingChangesLoading(false);
+      });
+  };
+
+  // Fetch pending changes when sync status indicates sync is enabled
+  useEffect(() => {
+    if (githubSyncStatus?.syncEnabled) {
+      fetchPendingChanges();
+    }
+  }, [githubSyncStatus?.syncEnabled]);
+
+  // Listen for content updates to refresh pending changes immediately
+  useEffect(() => {
+    const unsubscribe = subscribeToContentUpdates(() => {
+      // Refresh pending changes when any content is updated
+      if (!githubSyncStatus) {
+        // Fetch sync status first, which will trigger pending changes fetch
+        fetch("/api/github/sync-status")
+          .then((res) => res.json())
+          .then((data: GitHubSyncStatus) => {
+            setGithubSyncStatus(data);
+            if (data.syncEnabled) {
+              fetchPendingChanges();
+            }
+          })
+          .catch(() => {});
+      } else if (githubSyncStatus.syncEnabled) {
+        fetchPendingChanges();
+      }
+    });
+
+    return unsubscribe;
+  }, [githubSyncStatus]);
+
+  // Handle commit
+  const handleCommit = async () => {
+    if (!commitMessage.trim()) return;
+    
+    setIsCommitting(true);
+    try {
+      const forceCommit = syncContext?.forceCommitEnabled || false;
+      const author = getDebugUserName();
+      const res = await fetch("/api/github/commit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          message: commitMessage.trim(),
+          force: forceCommit,
+          author,
+        }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        setCommitModalOpen(false);
+        setCommitMessage("");
+        setPendingChanges([]);
+        refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+          syncContext.syncWithRemote();
+        }
+      } else {
+        alert(data.error || "Failed to commit changes");
+      }
+    } catch (error) {
+      alert("Failed to commit changes");
+    } finally {
+      setIsCommitting(false);
+    }
+  };
+
+  // Handle per-file commit
+  const handleFileCommit = async (filePath: string) => {
+    if (!fileCommitMessage.trim()) return;
+    
+    setFileCommitting(filePath);
+    try {
+      const author = getDebugUserName();
+      const res = await fetch("/api/github/commit-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          filePath,
+          message: fileCommitMessage.trim(),
+          author,
+        }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Remove committed file from pending changes
+        const remainingChanges = pendingChanges.filter(c => c.file !== filePath);
+        setPendingChanges(remainingChanges);
+        setSelectedFileForCommit(null);
+        setFileCommitMessage("");
+        
+        // If all pending changes are resolved, sync with remote to update lastSyncedCommit
+        if (remainingChanges.length === 0) {
+          try {
+            await fetch("/api/github/sync-with-remote", { method: "POST" });
+          } catch {
+            // Silently fail - sync status will still be refreshed
+          }
+        }
+        
+        refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+      } else {
+        alert(data.error || "Failed to commit file");
+      }
+    } catch {
+      alert("Failed to commit file");
+    } finally {
+      setFileCommitting(null);
+    }
+  };
+
+  // Handle per-file pull
+  const handleFilePull = async (filePath: string) => {
+    setFilePulling(filePath);
+    try {
+      const res = await fetch("/api/github/pull-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filePath }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Remove file from pending changes (now synced)
+        const remainingChanges = pendingChanges.filter(c => c.file !== filePath);
+        setPendingChanges(remainingChanges);
+        setConfirmPullFile(null);
+        
+        // If all pending changes are resolved, sync with remote to update lastSyncedCommit
+        if (remainingChanges.length === 0) {
+          try {
+            await fetch("/api/github/sync-with-remote", { method: "POST" });
+          } catch {
+            // Silently fail - sync status will still be refreshed
+          }
+        }
+        
+        refreshSyncStatus();
+        if (syncContext) {
+          syncContext.refreshSyncStatus();
+        }
+      } else {
+        alert(data.error || "Failed to pull file");
+      }
+    } catch {
+      alert("Failed to pull file");
+    } finally {
+      setFilePulling(null);
+    }
   };
 
   // Handle popover open/close - reset search but preserve menu view
@@ -590,19 +871,25 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {editMode?.isEditMode && (
-              <div 
-                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse"
+            {/* Show "Commit" indicator when there are local changes that need uploading (not just incoming) */}
+            {githubSyncStatus?.syncEnabled && pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
+              <button
+                onClick={() => {
+                  setCommitModalOpen(true);
+                  fetchPendingChanges(); // Refresh pending changes when opening modal
+                }}
+                className="absolute -top-1 left-full ml-1 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse cursor-pointer hover:opacity-90 transition-opacity"
                 style={{
                   backgroundColor: '#fbbf24',
                   color: '#000',
                   boxShadow: '0 0 12px 2px rgba(251, 191, 36, 0.6), 0 0 20px 4px rgba(251, 191, 36, 0.3)',
                 }}
-                data-testid="indicator-edit-mode"
+                data-testid="indicator-pending-changes"
+                title={`${pendingChanges.length} pending change${pendingChanges.length > 1 ? 's' : ''} - click to commit`}
               >
-                <IconPencil className="h-3 w-3" />
-                <span>On</span>
-              </div>
+                <IconArrowUp className="h-3 w-3" />
+                <span>Commit</span>
+              </button>
             )}
           </div>
         </PopoverTrigger>
@@ -622,7 +909,14 @@ export function DebugBubble() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-sm mb-1">No token detected</h3>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL
+                    Enter your token below or add <code className="bg-muted px-1 rounded">?token=xxx</code> to URL, or{" "}
+                    <a 
+                      href={`https://breathecode.herokuapp.com/v1/auth/view/login?url=${encodeURIComponent(window.location.href)}`}
+                      className="text-primary underline hover:no-underline"
+                      data-testid="link-login"
+                    >
+                      click here to login
+                    </a>
                   </p>
                   <div className="flex gap-2">
                     <input
@@ -936,15 +1230,11 @@ export function DebugBubble() {
                   <div className="flex items-center gap-3">
                     <IconBrandGithub className="h-4 w-4 text-muted-foreground" />
                     <span>GitHub Sync</span>
-                    {githubSyncStatus?.syncEnabled ? (
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 font-medium">
-                        Active
-                      </span>
-                    ) : githubSyncStatus && !githubSyncStatus.syncEnabled ? (
+                    {githubSyncStatus && !githubSyncStatus.syncEnabled && (
                       <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
                         Disabled
                       </span>
-                    ) : null}
+                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     {syncStatusLoading ? (
@@ -1001,6 +1291,21 @@ export function DebugBubble() {
                     >
                       <IconRefresh className={`h-3.5 w-3.5 ${syncStatusLoading ? 'animate-spin' : ''}`} />
                     </button>
+                    {githubSyncStatus?.syncEnabled && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          fetchPendingChanges();
+                          setCommitModalOpen(true);
+                        }}
+                        className="p-1 rounded hover-elevate"
+                        data-testid="button-open-sync-modal"
+                        title="Manage file sync"
+                      >
+                        <IconCloudDownload className="h-3.5 w-3.5" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1416,7 +1721,7 @@ export function DebugBubble() {
       <Dialog open={sessionModalOpen} onOpenChange={setSessionModalOpen}>
         <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Session Data</DialogTitle>
+            <DialogTitle>Session Data{getDebugUserName() ? ` - ${getDebugUserName()}` : ''}</DialogTitle>
             <DialogDescription>
               Current session values captured from browser, geolocation, and URL parameters.
             </DialogDescription>
@@ -1449,6 +1754,19 @@ export function DebugBubble() {
                     ) : (
                       <IconCopy className="h-4 w-4" />
                     )}
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 flex-shrink-0"
+                    onClick={() => {
+                      clearToken();
+                      setSessionModalOpen(false);
+                    }}
+                    data-testid="button-clear-session-token"
+                    title="Clear token"
+                  >
+                    <IconX className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
@@ -1580,6 +1898,364 @@ export function DebugBubble() {
               data-testid="button-close-session-modal"
             >
               Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      {/* Sync Files Modal */}
+      <Dialog open={commitModalOpen} onOpenChange={setCommitModalOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconBrandGithub className="h-5 w-5" />
+              Sync Files with GitHub
+            </DialogTitle>
+            <DialogDescription>
+              Upload your local changes to remote or download incoming changes from remote.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            {/* Pending changes list */}
+            <div className="space-y-2">
+              {pendingChangesLoading ? (
+                <div className="flex items-center justify-center py-4">
+                  <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                </div>
+              ) : pendingChanges.length === 0 ? (
+                <div className="py-2">
+                  <p className="text-sm text-muted-foreground">
+                    All files are in sync. No local or remote changes detected.
+                  </p>
+                </div>
+              ) : (
+                <ScrollArea className="h-[250px]">
+                  <div className="space-y-1">
+                    {pendingChanges.map((change, index) => (
+                      <Card 
+                        key={`${change.file}-${index}`}
+                        className="p-2 space-y-1"
+                      >
+                        {/* Row 1: File path only */}
+                        <div 
+                          className="font-mono text-xs text-foreground truncate"
+                          title={change.file}
+                        >
+                          {change.file.replace('marketing-content/', '')}
+                        </div>
+                        
+                        {/* Row 2: Badge | Author | Date | Commit hash | Actions */}
+                        {selectedFileForCommit === change.file ? (
+                          <div className="space-y-2">
+                            <input
+                              type="text"
+                              value={fileCommitMessage}
+                              onChange={(e) => setFileCommitMessage(e.target.value)}
+                              placeholder="Commit message..."
+                              className="w-full px-2 py-1.5 text-xs rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                              data-testid={`input-file-commit-message-${index}`}
+                              autoFocus
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && fileCommitMessage.trim()) {
+                                  handleFileCommit(change.file);
+                                } else if (e.key === 'Escape') {
+                                  setSelectedFileForCommit(null);
+                                  setFileCommitMessage("");
+                                }
+                              }}
+                            />
+                            <div className="flex items-center gap-1">
+                              <Button
+                                size="sm"
+                                className="h-7 text-xs flex-1"
+                                onClick={() => handleFileCommit(change.file)}
+                                disabled={!fileCommitMessage.trim() || fileCommitting === change.file}
+                                data-testid={`button-confirm-file-commit-${index}`}
+                              >
+                                {fileCommitting === change.file ? (
+                                  <IconRefresh className="h-3 w-3 animate-spin" />
+                                ) : (
+                                  <>
+                                    <IconArrowUp className="h-3 w-3 mr-1" />
+                                    Commit
+                                  </>
+                                )}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-xs"
+                                onClick={() => {
+                                  setSelectedFileForCommit(null);
+                                  setFileCommitMessage("");
+                                }}
+                                data-testid={`button-cancel-file-commit-${index}`}
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex flex-wrap items-center gap-2">
+                            {/* Badge */}
+                            <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
+                              change.source === 'conflict'
+                                ? 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300'
+                                : change.source === 'incoming'
+                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300'
+                                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+                            }`}>
+                              {change.source === 'conflict' ? 'Conflict' : change.source === 'incoming' ? 'Incoming update' : 'Local update'}
+                            </span>
+                            
+                            {/* Author */}
+                            {change.author && (
+                              <span className="text-xs text-muted-foreground">
+                                {change.author}
+                              </span>
+                            )}
+                            
+                            {/* Date */}
+                            {change.date && (
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(change.date).toLocaleDateString()}
+                              </span>
+                            )}
+                            
+                            {/* Commit hash (clickable) */}
+                            {change.commitSha && githubSyncStatus?.repoUrl && (
+                              <a
+                                href={`${githubSyncStatus.repoUrl.replace(/\.git$/, '')}/commit/${change.commitSha}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs font-mono text-primary hover:underline"
+                                title={`View commit ${change.commitSha}`}
+                                data-testid={`link-commit-${index}`}
+                              >
+                                {change.commitSha.substring(0, 7)}
+                              </a>
+                            )}
+                            
+                            {/* Spacer to push buttons to the right */}
+                            <div className="flex-1" />
+                            
+                            {/* Action buttons */}
+                            <div className="flex items-center gap-1">
+                              {/* Show Upload button for local changes and conflicts */}
+                              {(change.source === 'local' || change.source === 'conflict') && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon"
+                                      variant="outline"
+                                      className="h-6 w-6"
+                                      onClick={() => {
+                                        setSelectedFileForCommit(change.file);
+                                        setFileCommitMessage("");
+                                      }}
+                                      data-testid={`button-commit-file-${index}`}
+                                    >
+                                      <IconArrowUp className="h-3 w-3" />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top">
+                                    <p>Upload my version to remote</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                              {/* Show Download button for incoming changes and conflicts */}
+                              {(change.source === 'incoming' || change.source === 'conflict') && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon"
+                                      variant="outline"
+                                      className="h-6 w-6"
+                                      onClick={() => {
+                                        if (change.source === 'conflict') {
+                                          setConfirmPullFile(change.file);
+                                        } else {
+                                          handleFilePull(change.file);
+                                        }
+                                      }}
+                                      disabled={filePulling === change.file}
+                                      data-testid={`button-pull-file-${index}`}
+                                    >
+                                      {filePulling === change.file ? (
+                                        <IconRefresh className="h-3 w-3 animate-spin" />
+                                      ) : (
+                                        <IconArrowDown className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top">
+                                    <p>Download and Override mine</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </Card>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCommitModalOpen(false);
+                setSelectedFileForCommit(null);
+                setFileCommitMessage("");
+              }}
+              data-testid="button-close-commit-modal"
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Pull Conflict Modal */}
+      <Dialog open={pullConflictModalOpen} onOpenChange={setPullConflictModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <DialogTitle>Conflicting Files Detected</DialogTitle>
+                <DialogDescription>
+                  The following files have been modified both locally and on remote.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <ScrollArea className="max-h-[200px] border rounded-md">
+              <div className="p-2 space-y-1">
+                {pullConflictFiles.map((file, idx) => (
+                  <div key={idx} className="flex items-center gap-2 px-2 py-1.5 text-sm">
+                    <IconFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <span 
+                      className="font-mono text-xs truncate" 
+                      title={file}
+                    >
+                      {file.replace('marketing-content/', '')}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+            
+            <p className="text-xs text-muted-foreground mt-3">
+              Pulling will overwrite your local changes to these files.
+            </p>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setPullConflictModalOpen(false)}
+              data-testid="button-cancel-pull"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setPullConflictModalOpen(false);
+                setCommitModalOpen(true);
+              }}
+              data-testid="button-commit-first"
+            >
+              <IconArrowUp className="h-4 w-4 mr-2" />
+              Commit First
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setPullConflictModalOpen(false);
+                executeSyncFromRemote();
+              }}
+              data-testid="button-pull-anyway"
+            >
+              <IconCloudDownload className="h-4 w-4 mr-2" />
+              Pull Anyway
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Per-file Download Confirmation Modal */}
+      <Dialog open={confirmPullFile !== null} onOpenChange={(open) => !open && setConfirmPullFile(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <IconCloudDownload className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <DialogTitle>Download and Override Local File?</DialogTitle>
+                <DialogDescription>
+                  This will replace your local version with the remote version.
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <div className="flex items-center gap-2 p-3 bg-muted rounded-md">
+              <IconFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+              <span 
+                className="font-mono text-sm truncate" 
+                title={confirmPullFile || ''}
+              >
+                {confirmPullFile?.replace('marketing-content/', '')}
+              </span>
+            </div>
+            
+            <p className="text-xs text-muted-foreground mt-3">
+              Your local version will be replaced with the remote version. This action cannot be undone.
+            </p>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setConfirmPullFile(null)}
+              disabled={filePulling === confirmPullFile}
+              data-testid="button-cancel-pull-file"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (confirmPullFile) {
+                  handleFilePull(confirmPullFile);
+                }
+              }}
+              disabled={filePulling === confirmPullFile}
+              data-testid="button-confirm-pull-file"
+            >
+              {filePulling === confirmPullFile ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Downloading...
+                </>
+              ) : (
+                <>
+                  <IconCloudDownload className="h-4 w-4 mr-2" />
+                  Download and Override mine
+                </>
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

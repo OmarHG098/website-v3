@@ -2,9 +2,10 @@ import { lazy, Suspense, useState, useCallback } from "react";
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { EditModeProvider } from "@/contexts/EditModeContext";
+import { SyncProvider } from "@/contexts/SyncContext";
+import { SyncConflictBanner } from "@/components/SyncConflictBanner";
 import type { Section } from "@shared/schema";
 
-// Lazy load the section editor panel
 const SectionEditorPanel = lazy(() => 
   import("./SectionEditorPanel").then(mod => ({ default: mod.SectionEditorPanel }))
 );
@@ -15,6 +16,25 @@ interface EditModeWrapperProps {
   contentType?: "program" | "landing" | "location";
   slug?: string;
   locale?: string;
+}
+
+// Sync wrapper that only renders when edit mode is active
+// This ensures no GitHub API calls happen until user explicitly enters edit mode
+function SyncWrapper({ children }: { children: React.ReactNode }) {
+  const editMode = useEditModeOptional();
+  
+  // Only mount SyncProvider when edit mode is actually active
+  // Regular browsers (even with debug capabilities) won't trigger any sync API calls
+  if (!editMode?.isEditMode) {
+    return <>{children}</>;
+  }
+  
+  return (
+    <SyncProvider>
+      <SyncConflictBanner />
+      {children}
+    </SyncProvider>
+  );
 }
 
 // Inner component that uses the edit mode context
@@ -42,7 +62,7 @@ function EditModeInner({
     }
   }, [editMode]);
   
-  // If not in edit mode, just render children
+  // If not in edit mode, just render children (no editor panel)
   if (!editMode || !editMode.isEditMode) {
     return <>{children}</>;
   }
@@ -73,6 +93,7 @@ function EditModeInner({
 }
 
 // Main wrapper that provides the context
+// Edit capabilities are checked but sync is deferred until edit mode is toggled on
 export function EditModeWrapper({ 
   children, 
   sections, 
@@ -82,27 +103,30 @@ export function EditModeWrapper({
 }: EditModeWrapperProps) {
   const { canEdit, isDebugMode } = useDebugAuth();
   
-  // If not in debug mode at all, skip everything (zero overhead for public users)
-  // Debug mode requires ?debug=true in production, or being in development
+  // Non-debug users: render children directly (no overhead)
   if (!isDebugMode) {
     return <>{children}</>;
   }
   
-  // If in debug mode but user can't edit, still skip the provider
+  // No edit capability: render children directly
   if (!canEdit) {
     return <>{children}</>;
   }
   
+  // Has edit capability: provide EditModeProvider for toggle UI
+  // SyncWrapper only activates when user actually enters edit mode
   return (
     <EditModeProvider>
-      <EditModeInner 
-        sections={sections} 
-        contentType={contentType} 
-        slug={slug} 
-        locale={locale}
-      >
-        {children}
-      </EditModeInner>
+      <SyncWrapper>
+        <EditModeInner 
+          sections={sections} 
+          contentType={contentType} 
+          slug={slug} 
+          locale={locale}
+        >
+          {children}
+        </EditModeInner>
+      </SyncWrapper>
     </EditModeProvider>
   );
 }
