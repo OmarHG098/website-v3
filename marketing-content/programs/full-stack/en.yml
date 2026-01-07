@@ -9,6 +9,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: High-Earning Career
     title: Earn $65K+ as a Full Stack Developer test
     subtitle: Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available.
@@ -25,18 +26,30 @@ sections:
         url: /roi-calculator
         variant: outline
         icon: Calculator
-    award_badges:
-      - name: Top Coding Bootcamp
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Coding Bootcamp
         source: Forbes
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: Best for Spanish Speakers
+      - id: fortune-2024
+        alt: Fortune - Best for Spanish Speakers
         source: Fortune
+        name: Best for Spanish Speakers
         year: "2024"
-      - name: Top Coding Bootcamp
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
         source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: Best Coding Bootcamp
+      - id: coursereport-2025
+        alt: Course Report - Best Coding Bootcamp
         source: Course Report
+        name: Best Coding Bootcamp
         year: "2025"
   - type: syllabus
     title: Get Job-Ready with Our Syllabus!
@@ -86,6 +99,7 @@ sections:
         difficulty: hard
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
@@ -100,16 +114,6 @@ sections:
       - icon: Users
         title: Learn with the community
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
-    highlight:
-      title: Maximize your Progress with Rigobot and 1:1 Mentorship
-      description: Live instruction, unlimited mentorship, and AI tools built for smarter, faster learning.
-      bullets:
-        - text: Rigobot, our AI coding assistant, follows your progress and gives tailored feedback exactly when and how you need it.
-        - text: Get unmatched personal attention with our 7:1 student teacher ratio, plus unlimited access to 1:1 sessions with expert mentors and career coaches.
-      cta:
-        text: Start learning now!
-        url: /en/apply
-        variant: primary
   - type: certificate
     version: "1.0"
     title: Certificate & Career Network
@@ -278,6 +282,7 @@ sections:
         outcome: Landed first tech job
   - type: faq
     version: "1.0"
+    background: "muted"
     title: FAQ
     items:
       - question: Are there fixed class times?

@@ -396,7 +396,7 @@ export function DebugBubble() {
       setCommitModalOpen(true);
       // Fetch pending changes when modal opens from banner
       setPendingChangesLoading(true);
-      fetch("/api/github/pending-changes")
+      fetch(`/api/github/pending-changes?_t=${Date.now()}`)
         .then((res) => res.json())
         .then((data: { changes: PendingChange[]; count: number }) => {
           setPendingChanges(data.changes || []);
@@ -521,7 +521,7 @@ export function DebugBubble() {
   // Fetch pending changes when GitHub sync is enabled
   const fetchPendingChanges = () => {
     setPendingChangesLoading(true);
-    fetch("/api/github/pending-changes")
+    fetch(`/api/github/pending-changes?_t=${Date.now()}`)
       .then((res) => res.json())
       .then((data: { changes: PendingChange[]; count: number }) => {
         setPendingChanges(data.changes || []);
