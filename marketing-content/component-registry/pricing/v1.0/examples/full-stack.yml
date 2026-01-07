@@ -34,7 +34,7 @@ yaml: |
       - icon: "cloud"
         text: "Thousands of cloud-based coding challenges (no setup needed)."
       - text: "AI-powered feedback as you code."
-        use_rigobot_icon: true
+        icon: RigobotIconTiny
       - icon: "certificate"
         text: "Course certificates"
       - icon: "certificate"

@@ -434,7 +434,7 @@ sections:
       - icon: cloud
         text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
       - text: 2–3 partial scholarships available per cohort for highly qualified applicants.
-        use_rigobot_icon: true
+        icon: RigobotIconTiny
       - icon: certificate
         text: Course certificates
       - icon: certificate

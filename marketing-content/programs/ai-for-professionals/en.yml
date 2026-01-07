@@ -184,7 +184,7 @@ sections:
       - icon: cloud
         text: Thousands of and cloud-based coding challenges (no setup needed).
       - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        use_rigobot_icon: true
+        icon: RigobotIconTiny
       - icon: certificate
         text: Course certificates
       - icon: certificate

@@ -219,8 +219,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {data.features.map((feature, index) => {
-                  const iconName = feature.use_rigobot_icon ? "RigobotIconTiny" : feature.icon;
-                  const FeatureIcon = iconName ? getIcon(iconName) : null;
+                  const FeatureIcon = feature.icon ? getIcon(feature.icon) : null;
                   
                   return (
                     <div
@@ -415,9 +414,7 @@ export function PricingSection({ data }: PricingSectionProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {data.features.map((feature, index) => {
-                // Use unified icon system - supports both custom icons (Rigobot) and Tabler icons
-                const iconName = feature.use_rigobot_icon ? "RigobotIconTiny" : feature.icon;
-                const IconComponent = iconName ? getIcon(iconName) : null;
+                const IconComponent = feature.icon ? getIcon(feature.icon) : null;
                 
                 return (
                   <div

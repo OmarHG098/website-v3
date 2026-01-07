@@ -174,7 +174,7 @@ sections:
       - icon: "cloud"
         text: "Miles de desafíos de código en la nube (sin necesidad de configuración)."
       - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
-        use_rigobot_icon: true
+        icon: RigobotIconTiny
       - icon: "certificate"
         text: "Certificados de cursos"
       - icon: "certificate"
