@@ -361,12 +361,12 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: Earn an industry-recognized certificate, accredited by the Florida Department of Education, and graduate with skills that lead to faster hiring, higher pay, and accelerated professional growth.
+        description: Graduate with an industry-recognized certificate, a fully built AI-native company that demonstrates real engineering capability, and a job-ready professional profile aligned with today’s AI hiring practices.
         benefits:
-          - text: 1:1 career coaching and live group sessions
-          - text: Resume, LinkedIn profile and portfolio optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: Certificate recognized by the Florida Department of Education
+          - text: End-to-end AI-engineered company in your portfolio
+          - text: Demonstrated experience with agents, workflows, and AI systems
+          - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
         description: Most graduates secure their first role within 3-6 months of completing the program. Through our 3-step career development process you’ll gain the resources and strategies to successfully launch your career.
