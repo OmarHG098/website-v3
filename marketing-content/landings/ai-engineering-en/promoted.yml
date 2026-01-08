@@ -428,15 +428,14 @@ sections:
       - n8n
     features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     features:
-      - icon: certificate
+      - icon: IconCheck
         text: Regular tuition is $14,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
-      - icon: cloud
+      - icon: IconCheck
         text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
-      - text: 2–3 partial scholarships available per cohort for highly qualified applicants.
+      - icon: IconCheck
+        text: 2–3 partial scholarships available per cohort for highly qualified applicants.
         use_rigobot_icon: true
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
+      - icon: IconCheck
         text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
       text: Get more info
