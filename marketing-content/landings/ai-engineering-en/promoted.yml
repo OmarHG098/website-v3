@@ -447,7 +447,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Explore how 4Geeks Academy propels your career forward with top employers.
+    subtitle: Our graduates are hired by top employers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
