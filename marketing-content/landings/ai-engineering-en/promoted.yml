@@ -403,7 +403,7 @@ sections:
     version: "1.0"
     variant: product
     title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    subtitle: We offer multiple ways to fund your enrollment, so your future in tech is within reach.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $349
