@@ -582,12 +582,17 @@ export function EditableSection({ children, section, index, sectionType, content
                     {examplesForCurrentVariant.length > 1 && (
                       <>
                         <div className="w-px h-4 bg-border/50 shrink-0" />
-                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
-                          <IconChevronLeft className="h-3 w-3" />
-                        </Button>
-                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
-                          <IconChevronRight className="h-3 w-3" />
-                        </Button>
+                        <div className="flex flex-col items-center gap-0.5 shrink-0">
+                          <span className="text-[9px] text-muted-foreground uppercase tracking-wide">Examples</span>
+                          <div className="flex items-center">
+                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
+                              <IconChevronLeft className="h-3 w-3" />
+                            </Button>
+                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
+                              <IconChevronRight className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
                       </>
                     )}
                     {/* View YAML source - always visible */}
