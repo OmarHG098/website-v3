@@ -86,10 +86,14 @@ export class ContentAdapter {
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
     // Extract constraints from example YAML and build constraints block
+    // Pass the explicit targetVariant selected by the user (takes priority over extracted variant)
     let constraintsBlock = "";
     if (options.targetExampleYaml) {
       const constraints = extractConstraintsFromExample(options.targetExampleYaml);
-      constraintsBlock = buildConstraintsBlock(constraints);
+      constraintsBlock = buildConstraintsBlock(constraints, options.targetVariant);
+    } else if (options.targetVariant) {
+      // Even without example YAML, enforce the variant if specified
+      constraintsBlock = buildConstraintsBlock({ variant: null, enumValues: {}, requiredPaths: [] }, options.targetVariant);
     }
     
     // Build example reference block if example YAML is provided

@@ -97,17 +97,22 @@ export function extractConstraintsFromExample(exampleYaml: string): ExampleConst
 
 /**
  * Build a constraints block for the prompt based on extracted example constraints
+ * @param constraints - Constraints extracted from example YAML
+ * @param explicitVariant - The variant explicitly selected by the user (takes priority)
  */
-export function buildConstraintsBlock(constraints: ExampleConstraints): string {
+export function buildConstraintsBlock(constraints: ExampleConstraints, explicitVariant?: string): string {
   const lines: string[] = [];
   
   lines.push("## STRICT REQUIREMENTS (MUST FOLLOW EXACTLY)");
   lines.push("");
   
+  // Use explicit variant if provided, otherwise fall back to extracted variant
+  const variantToUse = explicitVariant || constraints.variant;
+  
   // Variant requirement
-  if (constraints.variant) {
+  if (variantToUse) {
     lines.push(`### VARIANT VALUE`);
-    lines.push(`You MUST set: variant: "${constraints.variant}"`);
+    lines.push(`You MUST set: variant: "${variantToUse}"`);
     lines.push(`This is a LITERAL string value. Do not change or paraphrase it.`);
     lines.push("");
   }
