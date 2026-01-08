@@ -406,7 +406,7 @@ sections:
     subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
+    financing_amount: $349
     tech_icons:
       - openai
       - claude
