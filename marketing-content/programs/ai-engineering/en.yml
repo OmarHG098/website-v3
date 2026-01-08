@@ -24,57 +24,57 @@ sections:
     subtitle: Thrive in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
     students_enrolled:
       avatars:
-        - "https://randomuser.me/api/portraits/women/1.jpg"
-        - "https://randomuser.me/api/portraits/men/2.jpg"
-        - "https://randomuser.me/api/portraits/women/3.jpg"
-        - "https://randomuser.me/api/portraits/men/4.jpg"
-      count: "+500 students enrolled"
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +500 students enrolled
     bullet_points:
-      - "Master large language models (LLMs) and transformer architectures"
-      - "Build production-ready AI applications with Python and modern frameworks"
-      - "Learn prompt engineering and fine-tuning techniques"
-      - "Deploy scalable AI solutions using cloud infrastructure"
-      - "Unlimited 1:1 mentorship with industry professionals"
+      - Master large language models (LLMs) and transformer architectures
+      - Build production-ready AI applications with Python and modern frameworks
+      - Learn prompt engineering and fine-tuning techniques
+      - Deploy scalable AI solutions using cloud infrastructure
+      - Unlimited 1:1 mentorship with industry professionals
     tutors:
-      - name: "Charly Chacón"
-        role: "Main Instructor"
-        image: "https://randomuser.me/api/portraits/men/10.jpg"
-      - name: "Rigo"
-        role: "AI Tutor"
-        image: "https://randomuser.me/api/portraits/lego/1.jpg"
+      - name: Charly Chacón
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: https://randomuser.me/api/portraits/lego/1.jpg
     tutors_label: "Your tutors:"
-    description: "Become the AI professional companies can't wait to hire. Our 20-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $95K-$135K starting salaries."
+    description: Become the AI professional companies can't wait to hire. Our 20-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $95K-$135K starting salaries.
     media:
       type: video
-      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop"
-      src: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      alt: "AI Engineering program introduction"
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop
+      alt: AI Engineering program introduction
     signup_card:
-      title: "Apply to the AI Engineering Program"
-      description: "Start your journey to becoming an AI Engineer"
+      title: Apply to the AI Engineering Program
+      description: Start your journey to becoming an AI Engineer
       cta_button:
-        text: "Apply Now"
-        url: "/en/apply"
+        text: Apply Now
+        url: /en/apply
         variant: primary
       login_link:
-        text: "Already a student? Login here."
-        url: "/login"
+        text: Already a student? Login here.
+        url: /login
       features:
         - icon: book
-          text: "Readings and videos"
-          count: "50+"
+          text: Readings and videos
+          count: 50+
         - icon: code
-          text: "Interactive Exercises"
-          count: "100+"
+          text: Interactive Exercises
+          count: 100+
         - icon: briefcase
-          text: "Real Projects"
+          text: Real Projects
           count: "12"
         - icon: robot
-          text: "AI-Powered Feedback"
+          text: AI-Powered Feedback
         - icon: calendar
-          text: "Live Sessions Weekly"
+          text: Live Sessions Weekly
         - icon: users
-          text: "1:1 Mentorship"
+          text: 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
@@ -120,7 +120,7 @@ sections:
     paddingY:
       desktop: none
     marginY:
-      desktop: none lg
+      desktop: md lg
   - type: features_grid
     version: "1.0"
     variant: stats-cards
