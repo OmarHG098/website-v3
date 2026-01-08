@@ -481,19 +481,18 @@ sections:
       desktop: lg none
   - type: bullet_tabs_showcase
     version: "1.0"
-    heading: Ideate and specify what to build next
-    subheading: Transform your ideas into actionable tasks seamlessly
-    image_position: right
+    heading: Is This Program Right for You?
     tabs:
       - label: Collaborative documents
-        description: Work together on specifications and requirements in real-time
+        description: Ready for an intensive commitment- 20–24 hours/week for 24 weeks
         image_id: placeholder_career_guidance
       - label: Inline comments
-        description: Add contextual feedback directly where it matters most
+        description: Focused on career outcomes- Want AI-native skills that unlock in-demand, high-paying roles
         image_id: placeholder_mentorship
       - label: Text-to-issue commands
-        description: Seamlessly move between ideation and execution
+        description: Motivated by structure- Prefer clear milestones, expert instructors, and a supportive cohort
         image_id: placeholder_strategies
+    image_position: right
     marginY:
       mobile: xl lg
       desktop: xl lg
