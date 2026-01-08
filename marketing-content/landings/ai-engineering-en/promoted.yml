@@ -57,7 +57,7 @@ sections:
     marginY:
       mobile: none
       desktop: none
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
     showOn: desktop
   - type: hero
     version: "1.0"
@@ -74,7 +74,7 @@ sections:
     marginY:
       mobile: none
       desktop: none
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
     showOn: mobile
     video:
       url: /attached_assets/ai-engineering_1765593572918.mp4
@@ -143,9 +143,9 @@ sections:
     card_color: bg-background
     items:
       - value: 800,000
-        title: AI-related roles by 2026
+        title: AI-related roles expected by 2027
       - value: ~30%
-        title: Year-over-year growth in AI job
+        title: Year-over-year growth in AI job openings
       - value: $95K-$135K
         title: Average starting salary for AI Engineers
     marginY:
@@ -361,23 +361,22 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: Earn an industry-recognized certificate, accredited by the Florida Department of Education, and graduate with skills that lead to faster hiring, higher pay, and accelerated professional growth.
+        description: Graduate with the skills, credentials, and professional profile employers are actively hiring for.
         benefits:
-          - text: 1:1 career coaching and live group sessions
-          - text: Resume, LinkedIn profile and portfolio optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: Certificate recognized by the Florida Department of Education
+          - text: End-to-end AI-engineered company in your portfolio
+          - text: Demonstrated experience with agents, workflows, and AI systems
+          - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates secure their first role within 3-6 months of completing the program. Through our 3-step career development process you’ll gain the resources and strategies to successfully launch your career.
+        description: Most students secure their first role within 3–6 months of graduation. Our 3-step career development process is built to turn job-ready skills into real offers fast.
         benefits:
-          - text: Job search strategy and planning
-          - text: Salary negotiation coaching
-          - text: Lifetime career support access
-          - text: Alumni network with 10,000+ professionals
+          - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
+          - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
+          - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average salary increase
-        description: Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself.
+        description: AI engineering skills unlock higher-value roles. Graduates see meaningful compensation growth as they move into AI-driven engineering positions.
         benefits:
           - text: "AI Software Engineer: $95K–$135K"
           - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -385,7 +384,7 @@ sections:
           - text: "Workflow Automation Engineer: $85K–$120K"
       - value: 5,000+
         label: Hiring Partners
-        description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
+        description: Access our network of 5,000+ hiring partners actively seeking AI-native talent. Get exclusive job opportunities and priority referrals.
         benefits:
           - text: Exclusive job board access
           - text: Priority referrals to partner companies
@@ -404,7 +403,7 @@ sections:
     version: "1.0"
     variant: product
     title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    subtitle: Your Future in Tech is within reach
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $299
@@ -427,7 +426,7 @@ sections:
       - github
       - postman
       - n8n
-    features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
+    features_title: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
     features:
       - icon: certificate
         text: Regular tuition is $12,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
@@ -503,6 +502,7 @@ sections:
       mobile: none
       desktop: none
   - type: testimonials
+    variant: carousel
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
     rating_summary:
