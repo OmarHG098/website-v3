@@ -300,6 +300,52 @@ sections:
     paddingY:
       mobile: lg none
       desktop: lg none
+  - type: ai_learning
+    badge: Why 4Geeks?
+    title: Why Learn AI Engineering with 4Geeks?
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
+    features:
+      - icon: TrendingUp
+        title: Thrive in tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get personalized 1:1 coaching
+          - text: Build your AI-ready resume and portfolio
+          - text: Prepare for interviews and salary negotiation
+          - text: Keep growing with lifelong access to career support
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
+      - icon: Robot
+        title: Progress faster with AI-powered tools
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Receive advice adjusted to your skill level and progress
+          - text: Get 24/7 help with debugging and problem-solving
+          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: "#hero-form"
+          variant: primary
+      - icon: Headset
+        title: Unlimited 1:1 mentorship and an active community
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Lifelong access to 1:1 mentorship sessions
+          - text: 7:1 student–teacher ratio for personalized guidance
+          - text: Peer collaboration through Slack channels and weekly check-ins
+          - text: Dedicated Slack channels for coding support, job boards, and career advice
+        image_id: mentoring_zoom_call
+    paddingY:
+      mobile: lg none
+      desktop: lg none
   - type: certificate
     title: Career Outcomes
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
@@ -353,52 +399,6 @@ sections:
       mobile: lg
       desktop: lg
     background: hsl(var(--muted))
-  - type: ai_learning
-    badge: Why 4Geeks?
-    title: Why Learn AI Engineering with 4Geeks?
-    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
-    features:
-      - icon: TrendingUp
-        title: Thrive in tech with career support for the AI-Era
-        description: ""
-        show_rigobot_logo: true
-        bullets:
-          - text: Get personalized 1:1 coaching
-          - text: Build your AI-ready resume and portfolio
-          - text: Prepare for interviews and salary negotiation
-          - text: Keep growing with lifelong access to career support
-        video_url: https://youtu.be/-2ZvlgDnltc
-        cta:
-          text: Start learning now!
-          url: "#hero-form"
-          variant: primary
-      - icon: Robot
-        title: Progress faster with AI-powered tools
-        description: ""
-        show_rigobot_logo: true
-        bullets:
-          - text: Get instant feedback from Rigobot, our custom AI tutor
-          - text: Receive advice adjusted to your skill level and progress
-          - text: Get 24/7 help with debugging and problem-solving
-          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
-        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
-        cta:
-          text: Start learning now!
-          url: "#hero-form"
-          variant: primary
-      - icon: Headset
-        title: Unlimited 1:1 mentorship and an active community
-        description: ""
-        show_rigobot_logo: true
-        bullets:
-          - text: Lifelong access to 1:1 mentorship sessions
-          - text: 7:1 student–teacher ratio for personalized guidance
-          - text: Peer collaboration through Slack channels and weekly check-ins
-          - text: Dedicated Slack channels for coding support, job boards, and career advice
-        image_id: mentoring_zoom_call
-    paddingY:
-      mobile: lg none
-      desktop: lg none
   - type: pricing
     version: "1.0"
     variant: product
