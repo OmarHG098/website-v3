@@ -158,7 +158,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
-    program_description: A progressive path from fundamentals to real-world AI engineering. Learn by building and scaling a single AI-native business, milestone by milestone, using the tools and workflows modern engineering teams rely on.
+    program_description: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     tech_logos:
       - name: OpenAI
         icon: openai
@@ -291,7 +291,7 @@ sections:
           - RAG knowledge layer
           - Agents with tool calling
           - Real-time communication layer
-        projects: Deliver the complete transformation of your chosen company
+        projects: Deliver the complete transformation of their company
         orientation: horizontal
         icon: IconTrophy
     marginY:
@@ -369,14 +369,14 @@ sections:
           - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most students secure their first role within 3–6 months of graduation. Our 3-step career development process is built to turn job-ready skills into real offers fast.
+        description: Most graduates land their first role within 3–6 months of graduation. Our structured 3-step career development process helps turn your skills into real job offers.
         benefits:
           - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
           - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
           - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average salary increase
-        description: AI engineering skills unlock higher-value roles. Graduates see meaningful compensation growth as they move into AI-driven engineering positions.
+        description: Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself.
         benefits:
           - text: "AI Software Engineer: $95K–$135K"
           - text: "Full-Stack Engineer (AI-Fluent): $100K–$145K"
@@ -384,7 +384,7 @@ sections:
           - text: "Workflow Automation Engineer: $85K–$120K"
       - value: 5,000+
         label: Hiring Partners
-        description: Access our network of 5,000+ hiring partners actively seeking AI-native talent. Get exclusive job opportunities and priority referrals.
+        description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
         benefits:
           - text: Exclusive job board access
           - text: Priority referrals to partner companies
@@ -403,10 +403,10 @@ sections:
     version: "1.0"
     variant: product
     title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment, so your future in tech is within reach.
+    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $349
+    financing_amount: $299
     tech_icons:
       - openai
       - claude
@@ -426,16 +426,17 @@ sections:
       - github
       - postman
       - n8n
-    features_title: Choose the payment option that best fits your needs.
+    features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     features:
-      - icon: IconCheck
+      - icon: certificate
         text: Regular tuition is $14,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
-      - icon: IconCheck
-        text: Finance your tuition through Climb, Fortify or Lumion. Choose among 24-36-48-60 month plans.
-      - icon: IconCheck
-        text: Apply for a partial scholarship. A limited number is available for highly qualified applicants.
+      - icon: cloud
+        text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
+      - text: 2–3 partial scholarships available per cohort for highly qualified applicants.
         use_rigobot_icon: true
-      - icon: IconCheck
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
         text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
       text: Get more info
@@ -484,13 +485,15 @@ sections:
     heading: Is This Program Right for You?
     tabs:
       - label: Collaborative documents
-        description: Ready for an intensive commitment- 20–24 hours/week for 24 weeks
+        description: |-
+          Ready for an intensive commitment: 
+          20-24 hours/week for 24 weeks.
         image_id: placeholder_career_guidance
       - label: Inline comments
-        description: Focused on career outcomes- Want AI-native skills that unlock in-demand, high-paying roles
+        description: "Focused on career outcomes: Want AI-native skills that unlock in-demand, high-paying roles."
         image_id: placeholder_mentorship
       - label: Text-to-issue commands
-        description: Motivated by structure- Prefer clear milestones, expert instructors, and a supportive cohort
+        description: "Motivated by structure: Prefer clear milestones, expert instructors, and a supportive cohort."
         image_id: placeholder_strategies
     image_position: right
     marginY:
