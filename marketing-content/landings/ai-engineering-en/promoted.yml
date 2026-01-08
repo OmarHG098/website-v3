@@ -403,7 +403,7 @@ sections:
     version: "1.0"
     variant: product
     title: Finance Your Investment
-    subtitle: Your Future in Tech is within reach
+    subtitle: We offer multiple ways to fund your enrollment, so your future in tech is within reach.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $299
@@ -426,17 +426,16 @@ sections:
       - github
       - postman
       - n8n
-    features_title: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    features_title: Choose the payment option that best fits your needs.
     features:
-      - icon: certificate
-        text: Regular tuition is $12,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
-      - icon: cloud
-        text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
-      - text: 2–3 partial scholarships available per cohort for highly qualified applicants.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
+      - icon: IconCheck
+        text: Regular tuition is $14,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
+      - icon: IconCheck
+        text: Finance your tuition through Climb, Fortify or Lumion. Choose among 24-36-48-60 month plans.
+      - icon: IconCheck
+        text: Apply for a partial scholarship. A limited number is available for highly qualified applicants.
+        use_rigobot_icon: true
+      - icon: IconCheck
         text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
       text: Get more info
