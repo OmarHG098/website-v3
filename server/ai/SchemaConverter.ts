@@ -148,8 +148,8 @@ function propToJsonSchema(prop: PropDefinition, collectRequired: boolean = true)
  * Convert a ComponentContext to JSON Schema format
  * Merges common props with variant-specific props
  * 
- * IMPORTANT: OpenAI strict mode requires ALL properties to be in the 'required' array.
- * This ensures the LLM always generates complete objects.
+ * NOTE: Only properties with propDef.required === true go into the 'required' array.
+ * This allows the LLM to omit optional properties and follow the example more closely.
  */
 export function componentToJsonSchema(
   component: ComponentContext,
@@ -169,36 +169,44 @@ export function componentToJsonSchema(
   };
   schema.required!.push("type");
 
-  // Add version property (optional but common)
+  // Add version property (optional - many examples omit it)
   schema.properties!["version"] = {
     type: "string",
     description: "Component version",
   };
-  // OpenAI strict mode: ALL properties must be in required array
-  schema.required!.push("version");
+  // Note: version is NOT added to required array - it's optional
 
-  // Add common props - ALL go into required array for OpenAI strict mode
+  // Add variant property (required when targeting a specific variant)
+  if (targetVariant) {
+    schema.properties!["variant"] = {
+      type: "string",
+      description: "Component variant identifier",
+      enum: [targetVariant], // Enforce the exact variant value
+    };
+    schema.required!.push("variant");
+  }
+
+  // Add common props - only mark as required if propDef.required === true
   for (const [propName, propDef] of Object.entries(component.props)) {
     schema.properties![propName] = propToJsonSchema(propDef);
-    // OpenAI strict mode: ALL properties must be in required array
-    if (!schema.required!.includes(propName)) {
+    // Only add to required array if the schema marks it as required
+    if (propDef.required && !schema.required!.includes(propName)) {
       schema.required!.push(propName);
     }
   }
 
-  // Add variant-specific props - ALL go into required array for OpenAI strict mode
+  // Add variant-specific props - only mark as required if propDef.required === true
   if (targetVariant && component.variant_props?.[targetVariant]) {
     const variantProps = component.variant_props[targetVariant];
     for (const [propName, propDef] of Object.entries(variantProps)) {
       schema.properties![propName] = propToJsonSchema(propDef);
-      // OpenAI strict mode: ALL properties must be in required array
-      if (!schema.required!.includes(propName)) {
+      // Only add to required array if the schema marks it as required
+      if (propDef.required && !schema.required!.includes(propName)) {
         schema.required!.push(propName);
       }
     }
   }
 
-  // Never clean up required array - OpenAI strict mode needs it
   return schema;
 }
 
