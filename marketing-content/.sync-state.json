@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "33ad2e959c0ab1501ce0a5a1b558a108631ddf9c",
-  "lastSyncedAt": "2026-01-08T19:51:49.904Z",
+  "lastSyncedCommit": "ad8553eade140c955d93119ba37a9fc5da4206fc",
+  "lastSyncedAt": "2026-01-08T20:45:20.796Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -13,9 +13,9 @@
       "remoteSha": "e5e9d3bd4c576f50c2d9678d7f51b0ab0647c6101a9016129bb0fb2ee3bae0e5"
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
-      "sha": "6b4348681ac110a84e8c404cd305f17b9e07300c34e02281ac25680566df5dc2",
-      "lastModified": 1767901866517.2695,
-      "remoteSha": "6b4348681ac110a84e8c404cd305f17b9e07300c34e02281ac25680566df5dc2"
+      "sha": "95d9c5ac6bbb4708fc17248abc1aeb68abfcc2e76188044f34072b4a4826a15a",
+      "lastModified": 1767905120601.8962,
+      "remoteSha": "95d9c5ac6bbb4708fc17248abc1aeb68abfcc2e76188044f34072b4a4826a15a"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",

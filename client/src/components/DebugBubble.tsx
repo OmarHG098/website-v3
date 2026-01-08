@@ -1158,7 +1158,7 @@ export function DebugBubble() {
                     <div className="flex-1">
                       <p className="text-xs font-medium text-amber-800 dark:text-amber-200">
                         {githubSyncStatus.status === 'behind' 
-                          ? `Pull ${githubSyncStatus.behindBy} commit${(githubSyncStatus.behindBy || 0) > 1 ? 's' : ''} before publishing`
+                          ? 'Pull latest changes before publishing'
                           : 'Local and remote have diverged'}
                       </p>
                       <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">

@@ -13,7 +13,7 @@ sections:
       prefix: Become an
       highlight: AI Engineer
       color: primary
-    description: Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
+    description: Launch your AI-driven career in 24 weeks with unlimited 1:1 mentorship and personalized career guidance. Be the professional companies can’t wait to hire.
     form:
       variant: stacked
       submit_label: Apply now
@@ -157,8 +157,8 @@ sections:
     background: hsl(210 100% 50% / 0.05)
   - type: syllabus
     variant: program-modules
-    program_title: AI Engineering
-    program_description: A progressive path from fundamentals to real-world AI engineering in 24 weeks. Learn by building and scaling a single AI-native business, milestone by milestone, using the tools and workflows modern engineering teams rely on.
+    program_title: What You'll Build in 24 Weeks
+    program_description: From day one, you'll choose one company. Yours, one you want to build, or one you want to reimagine. Over the course of 10 milestones, you'll transform it into a fully operational, AI-powered business.
     tech_logos:
       - name: OpenAI
         icon: openai
@@ -302,7 +302,7 @@ sections:
       desktop: lg none
   - type: ai_learning
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
+    title: Why Learn AI Engineering with 4Geeks?
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: TrendingUp
@@ -369,7 +369,7 @@ sections:
           - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates land their first role within 3–6 months of graduation. Our structured 3-step career development process helps turn your skills into real job offers.
+        description: Most graduates land their first role within 3–6 months of graduation. With our structured 3-step career development process, technical skills turn into job offers fast.
         benefits:
           - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
           - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
@@ -383,7 +383,7 @@ sections:
           - text: "Agent Engineer: $105K–$155K"
           - text: "Workflow Automation Engineer: $85K–$120K"
       - value: 5,000+
-        label: Hiring Partners
+        label: Hiring partners
         description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
         benefits:
           - text: Exclusive job board access
@@ -426,7 +426,7 @@ sections:
       - github
       - postman
       - n8n
-    features_title: We offer multiple ways to fund your enrollment. Choose the option that best fits your needs.
+    features_title: We offer multiple ways to fund your enrollment. Choose the option that fits you best.
     features:
       - icon: IconCheck
         text: Regular tuition is $14,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
@@ -447,7 +447,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Explore how 4Geeks Academy propels your career forward with top employers.
+    subtitle: Our graduates are hired by top employers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -486,13 +486,17 @@ sections:
       - label: Collaborative documents
         description: |-
           Ready for an intensive commitment: 
-          20-24 hours/week for 24 weeks.
+          20-24 hours/week for 24 weeks. (Live classes + ~12 hours of homework)
         image_id: placeholder_career_guidance
       - label: Inline comments
-        description: "Focused on career outcomes: Want AI-native skills that unlock in-demand, high-paying roles."
+        description: |-
+          Focused on career outcomes: 
+           Want AI-native skills that unlock in-demand, high-paying roles.
         image_id: placeholder_mentorship
       - label: Text-to-issue commands
-        description: "Motivated by structure: Prefer clear milestones, expert instructors, and a supportive cohort."
+        description: |-
+          Motivated by structure: 
+           Prefer clear milestones, expert instructors, and a supportive cohort.
         image_id: placeholder_strategies
     image_position: right
     marginY:
