@@ -51,6 +51,10 @@ sections:
       url: /syllabus/ai-engineering
       variant: outline
       icon: Download
+    video:
+      url: https://www.youtube.com/shorts/sSxJnelPJT8
+      ratio: "9:16"
+      muted: true
     paddingY:
       mobile: none
       desktop: lg none
