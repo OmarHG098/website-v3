@@ -431,7 +431,7 @@ sections:
       - icon: IconCheck
         text: Regular tuition is $14,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
       - icon: IconCheck
-        text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
+        text: Finance your tuition through Climb, Fortify or Lumion. Choose among 24-36-48-60 month plans.
       - icon: IconCheck
         text: 2–3 partial scholarships available per cohort for highly qualified applicants.
         use_rigobot_icon: true
