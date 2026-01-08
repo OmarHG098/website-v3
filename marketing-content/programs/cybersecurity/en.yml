@@ -83,7 +83,7 @@ sections:
         title: Unfilled cybersecurity positions globally
       - value: 35%
         title: Job growth projected through 2032
-      - value: 16
+      - value: "16"
         title: Weeks to launch your security career
     paddingY:
       desktop: md
