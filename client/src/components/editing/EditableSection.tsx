@@ -82,6 +82,7 @@ export function EditableSection({ children, section, index, sectionType, content
   // Review code modal state (for reviewing AI-adapted content before applying)
   const [showReviewCodeModal, setShowReviewCodeModal] = useState(false);
   const [reviewCodeYaml, setReviewCodeYaml] = useState("");
+  const [reviewCodeError, setReviewCodeError] = useState<string | null>(null);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -356,6 +357,7 @@ export function EditableSection({ children, section, index, sectionType, content
     const { type, ...sectionData } = adaptedSection as Record<string, unknown>;
     const yamlStr = yaml.dump(sectionData, { lineWidth: -1, quotingType: '"', forceQuotes: false });
     setReviewCodeYaml(yamlStr);
+    setReviewCodeError(null); // Clear any previous errors
     setShowReviewCodeModal(true);
   }, [adaptedSection]);
   
@@ -364,6 +366,7 @@ export function EditableSection({ children, section, index, sectionType, content
     if (!contentType || !slug) return;
     
     setIsConfirming(true);
+    setReviewCodeError(null);
     try {
       // Parse the edited YAML
       const parsed = yaml.load(reviewCodeYaml);
@@ -396,7 +399,14 @@ export function EditableSection({ children, section, index, sectionType, content
           sectionData: sectionToSave
         })
       });
-      if (!res.ok) throw new Error('Failed to apply section');
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        const errorMessage = errorData.error || 'Failed to apply section';
+        setReviewCodeError(errorMessage);
+        return;
+      }
+      
       setCurrentSection(sectionToSave);
       setShowReviewCodeModal(false);
       setSwapPopoverOpen(false);
@@ -406,7 +416,7 @@ export function EditableSection({ children, section, index, sectionType, content
       toast({ title: "Section applied", description: "The reviewed section has been saved." });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to apply section';
-      toast({ title: "Error", description: message, variant: "destructive" });
+      setReviewCodeError(message);
     } finally {
       setIsConfirming(false);
     }
@@ -794,6 +804,12 @@ export function EditableSection({ children, section, index, sectionType, content
               className="text-sm"
             />
           </div>
+          {reviewCodeError && (
+            <div className="rounded border border-destructive bg-destructive/10 p-3 text-sm text-destructive max-h-[150px] overflow-auto" data-testid={`error-review-code-${index}`}>
+              <p className="font-medium mb-1">Validation Error:</p>
+              <pre className="whitespace-pre-wrap text-xs">{reviewCodeError}</pre>
+            </div>
+          )}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setShowReviewCodeModal(false)} data-testid={`button-cancel-review-${index}`}>
               Cancel
