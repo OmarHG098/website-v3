@@ -177,6 +177,16 @@ export function componentToJsonSchema(
   // OpenAI strict mode: ALL properties must be in required array
   schema.required!.push("version");
 
+  // Add variant property if a target variant is specified
+  if (targetVariant) {
+    schema.properties!["variant"] = {
+      type: "string",
+      enum: [targetVariant],
+      description: `Component variant - must be "${targetVariant}"`,
+    };
+    schema.required!.push("variant");
+  }
+
   // Add common props - ALL go into required array for OpenAI strict mode
   for (const [propName, propDef] of Object.entries(component.props)) {
     schema.properties![propName] = propToJsonSchema(propDef);
@@ -238,6 +248,11 @@ export function getValidProperties(
   targetVariant?: string
 ): string[] {
   const validProps = new Set<string>(["type", "version"]);
+
+  // Add variant to valid props if a target variant is specified
+  if (targetVariant) {
+    validProps.add("variant");
+  }
 
   // Add common props
   for (const propName of Object.keys(component.props)) {
@@ -386,9 +401,10 @@ export function validateContentAgainstSchema(
   const cleaned: Record<string, unknown> = {};
   const validProps = getValidProperties(component, targetVariant);
 
-  // Copy type and version
+  // Copy type, version, and variant
   if (content.type) cleaned.type = content.type;
   if (content.version) cleaned.version = content.version;
+  if (content.variant) cleaned.variant = content.variant;
 
   // Validate common props
   for (const [propName, propDef] of Object.entries(component.props)) {
