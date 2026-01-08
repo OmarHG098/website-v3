@@ -19,24 +19,62 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: singleColumn
-    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
+    variant: course
     title: Become an AI Engineer
-    subtitle: Thrive in Today’s Tech and Shape Tomorrow’s. Launch your AI-driven career in 20 weeks with personalized 1:1 mentorship and expert guidance. Become the professional companies can’t wait to hire.
-    badge: Career Program
-    cta_buttons:
-      - text: Apply Now
-        url: /en/apply
+    subtitle: Thrive in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
+    students_enrolled:
+      avatars:
+        - "https://randomuser.me/api/portraits/women/1.jpg"
+        - "https://randomuser.me/api/portraits/men/2.jpg"
+        - "https://randomuser.me/api/portraits/women/3.jpg"
+        - "https://randomuser.me/api/portraits/men/4.jpg"
+      count: "+500 students enrolled"
+    bullet_points:
+      - "Master large language models (LLMs) and transformer architectures"
+      - "Build production-ready AI applications with Python and modern frameworks"
+      - "Learn prompt engineering and fine-tuning techniques"
+      - "Deploy scalable AI solutions using cloud infrastructure"
+      - "Unlimited 1:1 mentorship with industry professionals"
+    tutors:
+      - name: "Charly Chacón"
+        role: "Main Instructor"
+        image: "https://randomuser.me/api/portraits/men/10.jpg"
+      - name: "Rigo"
+        role: "AI Tutor"
+        image: "https://randomuser.me/api/portraits/lego/1.jpg"
+    tutors_label: "Your tutors:"
+    description: "Become the AI professional companies can't wait to hire. Our 20-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $95K-$135K starting salaries."
+    media:
+      type: video
+      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop"
+      src: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      alt: "AI Engineering program introduction"
+    signup_card:
+      title: "Apply to the AI Engineering Program"
+      description: "Start your journey to becoming an AI Engineer"
+      cta_button:
+        text: "Apply Now"
+        url: "/en/apply"
         variant: primary
-        icon: Rocket
-      - text: Download Syllabus
-        url: /syllabus/ai-engineering
-        variant: outline
-        icon: Download
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $95K+ average starting salary
+      login_link:
+        text: "Already a student? Login here."
+        url: "/login"
+      features:
+        - icon: book
+          text: "Readings and videos"
+          count: "50+"
+        - icon: code
+          text: "Interactive Exercises"
+          count: "100+"
+        - icon: briefcase
+          text: "Real Projects"
+          count: "12"
+        - icon: robot
+          text: "AI-Powered Feedback"
+        - icon: calendar
+          text: "Live Sessions Weekly"
+        - icon: users
+          text: "1:1 Mentorship"
     paddingY:
       desktop: md
     marginY:
