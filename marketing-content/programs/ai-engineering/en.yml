@@ -81,14 +81,16 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: none lg
   - type: features_grid
     version: "1.0"
     variant: stats-cards
-    background: bg-primary/5
     title: Does the Job Guarantee deliver results you can count on?
     subtitle: Yes, and we've got the numbers to back it up
     description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
     card_color: bg-muted
+    background: hsl(var(--background))
     items:
       - value: 3.5M
         title: AI-related roles expected by 2026
@@ -96,6 +98,8 @@ sections:
         title: Year-over-year growth in AI job postings
       - value: 20-40%
         title: Salary premiums for AI engineering skills
+    marginY:
+      desktop: none
     paddingY:
       desktop: none
   - type: syllabus
@@ -180,6 +184,8 @@ sections:
         icon: IconBolt
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -231,6 +237,8 @@ sections:
           variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
