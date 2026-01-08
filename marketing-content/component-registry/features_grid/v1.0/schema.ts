@@ -102,12 +102,24 @@ export const featuresGridStatsTextCardSectionSchema = z.object({
   items: z.array(featuresGridStatsCardsItemSchema),
 });
 
+export const featuresGridStatsTextSectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("stats-text"),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  description: z.string().optional(),
+  background: z.string().optional(),
+  items: z.array(featuresGridStatsCardsItemSchema),
+});
+
 export const featuresGridSectionSchema = z.union([
   featuresGridHighlightSectionSchema,
   featuresGridDetailedSectionSchema,
   featuresGridSpotlightSectionSchema,
   featuresGridStatsCardsSectionSchema,
   featuresGridStatsTextCardSectionSchema,
+  featuresGridStatsTextSectionSchema,
 ]);
 
 export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
@@ -118,5 +130,6 @@ export type FeaturesGridDetailedSection = z.infer<typeof featuresGridDetailedSec
 export type FeaturesGridSpotlightSection = z.infer<typeof featuresGridSpotlightSectionSchema>;
 export type FeaturesGridStatsCardsSection = z.infer<typeof featuresGridStatsCardsSectionSchema>;
 export type FeaturesGridStatsTextCardSection = z.infer<typeof featuresGridStatsTextCardSectionSchema>;
+export type FeaturesGridStatsTextSection = z.infer<typeof featuresGridStatsTextSectionSchema>;
 export type SpotlightConfig = z.infer<typeof spotlightConfigSchema>;
 export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;
