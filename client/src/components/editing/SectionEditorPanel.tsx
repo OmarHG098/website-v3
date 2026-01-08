@@ -19,7 +19,11 @@ import { ColorPicker } from "@/components/ui/color-picker";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
-import { parseEditorType, type ColorPickerVariant, type EditorType } from "@/lib/field-editor-registry";
+import {
+  parseEditorType,
+  type ColorPickerVariant,
+  type EditorType,
+} from "@/lib/field-editor-registry";
 import { IconPickerModal } from "./IconPickerModal";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
@@ -233,12 +237,14 @@ export function SectionEditorPanel({
 
   // Get configured field editors from the component registry API
   const sectionType = (section as { type: string }).type || "";
-  
+
   // Fetch all field editors from component registry
-  const { data: allFieldEditors } = useQuery<Record<string, Record<string, EditorType>>>({
+  const { data: allFieldEditors } = useQuery<
+    Record<string, Record<string, EditorType>>
+  >({
     queryKey: ["/api/component-registry/field-editors"],
   });
-  
+
   // Get configured fields for current section type
   const configuredFields = useMemo(
     () => allFieldEditors?.[sectionType] || {},
@@ -482,109 +488,121 @@ export function SectionEditorPanel({
               type="background"
               testIdPrefix="props-background"
             />
-
             {/* Render array fields with configured editors */}
-            {Object.entries(configuredFields).map(([fieldPath, editorTypeRaw]) => {
-              // Parse editor type with optional variant (e.g., "color-picker:background")
-              const { type: editorType, variant } = parseEditorType(editorTypeRaw);
-              
-              // Parse field path like "features[].icon"
-              const match = fieldPath.match(/^(\w+)\[\]\.(\w+)$/);
-              if (!match) return null;
+            {Object.entries(configuredFields).map(
+              ([fieldPath, editorTypeRaw]) => {
+                // Parse editor type with optional variant (e.g., "color-picker:background")
+                const { type: editorType, variant } =
+                  parseEditorType(editorTypeRaw);
 
-              const [, arrayField, itemField] = match;
-              const arrayData = parsedSection?.[arrayField] as
-                | Record<string, unknown>[]
-                | undefined;
+                // Parse field path like "features[].icon"
+                const match = fieldPath.match(/^(\w+)\[\]\.(\w+)$/);
+                if (!match) return null;
 
-              if (!Array.isArray(arrayData) || arrayData.length === 0)
+                const [, arrayField, itemField] = match;
+                const arrayData = parsedSection?.[arrayField] as
+                  | Record<string, unknown>[]
+                  | undefined;
+
+                if (!Array.isArray(arrayData) || arrayData.length === 0)
+                  return null;
+
+                if (editorType === "icon-picker") {
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">
+                        {arrayField} Icons
+                      </Label>
+                      <div className="flex flex-wrap gap-2">
+                        {arrayData.map((item, index) => {
+                          const currentValue =
+                            (item[itemField] as string) || "";
+                          const itemLabel =
+                            (item.title as string) ||
+                            (item.label as string) ||
+                            (item.name as string) ||
+                            `Item ${index + 1}`;
+
+                          return (
+                            <button
+                              key={index}
+                              type="button"
+                              onClick={() => {
+                                setIconPickerTarget({
+                                  arrayField,
+                                  index,
+                                  field: itemField,
+                                  label: itemLabel,
+                                  currentIcon: currentValue,
+                                });
+                                setIconPickerOpen(true);
+                              }}
+                              className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                              data-testid={`props-icon-${arrayField}-${index}`}
+                              title={`${itemLabel}: ${currentValue || "no icon"}`}
+                            >
+                              {renderIconByName(currentValue)}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+
+                if (editorType === "color-picker") {
+                  // Use the variant from config, defaulting to "accent"
+                  const colorType = (variant as ColorPickerVariant) || "accent";
+
+                  return (
+                    <div key={fieldPath} className="space-y-3">
+                      <Label className="text-sm font-medium capitalize">
+                        {arrayField} Colors
+                      </Label>
+                      <div className="space-y-2">
+                        {arrayData.map((item, index) => {
+                          const currentValue =
+                            (item[itemField] as string) || "";
+                          const itemLabel =
+                            (item.title as string) ||
+                            (item.label as string) ||
+                            (item.name as string) ||
+                            `Item ${index + 1}`;
+
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2"
+                            >
+                              <span className="text-sm text-muted-foreground min-w-[80px] truncate">
+                                {itemLabel}
+                              </span>
+                              <ColorPicker
+                                value={currentValue}
+                                onChange={(value) =>
+                                  updateArrayItemField(
+                                    arrayField,
+                                    index,
+                                    itemField,
+                                    value,
+                                  )
+                                }
+                                type={colorType}
+                                allowNone={true}
+                                allowCustom={true}
+                                testIdPrefix={`props-color-${arrayField}-${index}`}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+
                 return null;
-
-              if (editorType === "icon-picker") {
-                return (
-                  <div key={fieldPath} className="space-y-2">
-                    <Label className="text-sm font-medium capitalize">
-                      {arrayField} Icons
-                    </Label>
-                    <div className="flex flex-wrap gap-2">
-                      {arrayData.map((item, index) => {
-                        const currentValue = (item[itemField] as string) || "";
-                        const itemLabel =
-                          (item.title as string) ||
-                          (item.label as string) ||
-                          (item.name as string) ||
-                          `Item ${index + 1}`;
-
-                        return (
-                          <button
-                            key={index}
-                            type="button"
-                            onClick={() => {
-                              setIconPickerTarget({
-                                arrayField,
-                                index,
-                                field: itemField,
-                                label: itemLabel,
-                                currentIcon: currentValue,
-                              });
-                              setIconPickerOpen(true);
-                            }}
-                            className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
-                            data-testid={`props-icon-${arrayField}-${index}`}
-                            title={`${itemLabel}: ${currentValue || "no icon"}`}
-                          >
-                            {renderIconByName(currentValue)}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              }
-
-              if (editorType === "color-picker") {
-                // Use the variant from config, defaulting to "accent"
-                const colorType = (variant as ColorPickerVariant) || "accent";
-                
-                return (
-                  <div key={fieldPath} className="space-y-3">
-                    <Label className="text-sm font-medium capitalize">
-                      {arrayField} Colors
-                    </Label>
-                    <div className="space-y-2">
-                      {arrayData.map((item, index) => {
-                        const currentValue = (item[itemField] as string) || "";
-                        const itemLabel =
-                          (item.title as string) ||
-                          (item.label as string) ||
-                          (item.name as string) ||
-                          `Item ${index + 1}`;
-
-                        return (
-                          <div key={index} className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground min-w-[80px] truncate">
-                              {itemLabel}
-                            </span>
-                            <ColorPicker
-                              value={currentValue}
-                              onChange={(value) =>
-                                updateArrayItemField(arrayField, index, itemField, value)
-                              }
-                              type={colorType}
-                              allowNone={true}
-                              allowCustom={true}
-                              testIdPrefix={`props-color-${arrayField}-${index}`}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              }
-
-              return null;
-            })}
+              },
+            )}
           </div>
         </TabsContent>
       </Tabs>

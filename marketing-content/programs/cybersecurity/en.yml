@@ -26,47 +26,142 @@ sections:
         url: /syllabus/cybersecurity
         variant: outline
         icon: Download
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Top Coding Bootcamp
-        source: Forbes
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Best for Spanish Speakers
-        source: Fortune
-        name: Best for Spanish Speakers
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: course-report-2025
-        alt: Course Report - Best Coding Bootcamp
-        source: Course Report
-        name: Best Coding Bootcamp
-        year: "2025"
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    background: bg-primary/5
+    title: Cybersecurity Specialists Are in High Demand
+    subtitle: The numbers don't lie—cybersecurity is the future
+    description: With millions of unfilled positions and rapid job growth, there's never been a better time to enter this field. Our program prepares you for immediate impact.
+    card_color: bg-muted
+    items:
+      - value: 3.5M+
+        title: Unfilled cybersecurity positions globally
+      - value: 35%
+        title: Job growth projected through 2032
+      - value: "16"
+        title: Weeks to launch your security career
+    paddingY:
+      desktop: md
   - type: syllabus
-    title: Acquire Fundamental to Advanced Cybersecurity Skills
-    subtitle: Our 16-week intensive bootcamp trains you to protect systems, detect threats, and respond to incidents—using industry-standard tools like Nessus, Nmap, Wireshark, and Metasploit.
-    modules:
+    version: "1.0"
+    variant: program-modules
+    program_title: What You'll Learn in the Cybersecurity Program
+    program_description: Master the complete cybersecurity stack from network security to penetration testing. Build real-world defensive and offensive skills using industry-standard tools that employers are looking for.
+    tech_logos:
+      - name: Linux
+        icon: linux
+      - name: Python
+        icon: python
+      - name: Networks
+        icon: server
+      - name: Security
+        icon: shield
+      - name: Terminal
+        icon: terminal
+      - name: Git
+        icon: git
+    module_cards:
       - title: Fundamentals and Network Security
-        description: Get started with computer security fundamentals, including threats, vulnerabilities, and the importance of cybersecurity in today's world. Learn network security essentials using Packet Tracer for visual simulation and packet tracing.
+        duration: Weeks 1-3
+        objectives:
+          - Understand computer security fundamentals and threat landscapes
+          - Learn network security essentials and packet analysis
+          - Use Packet Tracer for visual simulation and network tracing
+        projects: Build secure network architectures from scratch
+        orientation: vertical
+        icon: IconNetwork
       - title: Linux and Server Administration
-        description: Master Linux command line and server administration. Learn to configure, secure, and manage Linux-based systems that power most of the internet's infrastructure.
+        duration: Weeks 4-6
+        objectives:
+          - Master Linux command line and shell scripting
+          - Configure, secure, and manage Linux-based systems
+          - Implement server hardening and access controls
+        projects: Deploy and secure production-ready Linux servers
+        orientation: vertical
+        icon: IconTerminal2
       - title: Cyber Intelligence
-        description: Develop skills in threat intelligence gathering, analysis, and reporting. Learn OSINT techniques and how to identify, track, and predict cyber threats before they materialize.
+        duration: Weeks 7-9
+        objectives:
+          - Develop threat intelligence gathering and analysis skills
+          - Learn OSINT techniques for reconnaissance
+          - Identify, track, and predict cyber threats
+        projects: Create comprehensive threat intelligence reports
+        orientation: vertical
+        icon: IconSearch
       - title: Penetration Testing
-        description: Practice ethical hacking techniques aligned with EJPT certification labs. Learn to uncover vulnerabilities, simulate real attack scenarios, and document findings professionally using tools like Metasploit and Nmap.
+        duration: Weeks 10-12
+        objectives:
+          - Practice ethical hacking aligned with EJPT certification
+          - Uncover vulnerabilities and simulate attack scenarios
+          - Document findings using Metasploit and Nmap
+        projects: Conduct full penetration tests on simulated environments
+        orientation: vertical
+        icon: IconShieldLock
       - title: Data Loss Prevention (DLP)
-        description: Learn to safeguard sensitive information and prevent data breaches. Implement DLP strategies, policies, and technologies to protect organizational assets from internal and external threats.
+        duration: Weeks 13-14
+        objectives:
+          - Safeguard sensitive information and prevent breaches
+          - Implement DLP strategies and policies
+          - Protect organizational assets from internal/external threats
+        projects: Design enterprise DLP implementation plans
+        orientation: vertical
+        icon: IconDatabase
       - title: NIST Framework
-        description: Master the NIST Cybersecurity Framework for identifying, protecting, detecting, responding to, and recovering from cyber incidents. Apply industry-standard compliance and risk management practices.
+        duration: Weeks 15-16
+        objectives:
+          - Master the NIST Cybersecurity Framework
+          - Apply compliance and risk management practices
+          - Prepare for incident response and recovery
+        projects: Create organizational security assessment reports
+        orientation: vertical
+        icon: IconClipboardCheck
+    paddingY:
+      desktop: md
   - type: projects
     title: Learn by Defending Real Systems
     subtitle: Gain hands-on experience with practical exercises that simulate real-world cybersecurity scenarios. Build a portfolio of security projects that demonstrate your defensive and offensive capabilities.
@@ -98,56 +193,111 @@ sections:
         duration: 10 HOURS
         date: 15/02/2025
         difficulty: hard
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
-    title: What Sets 4Geeks Apart
-    description: AI-Forward Skills, Unlimited Mentorship and Career Support. Everything you need to launch and grow a career in cybersecurity.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    title: Why Learn with 4Geeks?
+    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
-        title: Master next-gen tech skills
-        description: Learn to build with the AI tools and workflows used by modern cybersecurity teams.
+        title: Progress faster with AI-powered tools
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Get instant feedback from Rigobot, our custom AI tutor
+          - text: Gives advice adjusted to your skill level and progress
+          - text: Helps with debugging and problem-solving tasks
+          - text: Access hundreds of interactive security exercises on Learnpack
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
+      - icon: TrendingUp
+        title: Thrive in tech with career support for the AI-Era
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Personalized 1:1 coaching
+          - text: AI-ready resumes and portfolios
+          - text: Interview prep and salary negotiation
+          - text: Lifelong access to support your growth
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
       - icon: Headset
-        title: Get unlimited mentorship and career support
-        description: Work 1:1 with expert mentors and career coaches—during your bootcamp and forever after.
-      - icon: Users
-        title: Learn faster with hyperpersonalized support
-        description: Progress with instant AI feedback, personalized guidance, and small class sizes (max 15 people).
+        title: Unlimited 1:1 mentorship and an active community
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Book 1-on-1 sessions with expert mentors at your pace
+          - text: Learn LIVE with instructors in coding sessions and workshops
+          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
+          - text: Access Slack channels for security support, job boards, and career advice
+        image_id: mentoring_zoom_call
+        cta:
+          text: Start learning now!
+          url: /en/apply
+          variant: primary
+    paddingY:
+      desktop: md
   - type: certificate
-    version: "1.0"
-    title: Prepare for Industry Certifications
-    description: Our program puts you on the fast track for official cybersecurity certifications like EJPT and CEH. Our pen-testing practices are aligned with EJPT certification labs, equipping you with hands-on experience.
-    stats:
-      - value: 3.5M+
-        label: Unfilled Positions
-      - value: 35%
-        label: Job Growth
-      - value: "16"
-        label: Weeks
-      - value: 20+
-        label: Countries
+    title: Certificate & Industry Certifications
+    description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Our program prepares you for:"
     benefits:
-      - text: EJPT certification preparation
-      - text: CEH certification pathway
-      - text: Lifetime career support
+      - text: "EJPT (eLearnSecurity Junior Penetration Tester)"
+      - text: "CEH (Certified Ethical Hacker) pathway"
+      - text: "CompTIA Security+ foundations"
+      - text: "Lifetime career support access"
     card:
-      title: "Cybersecurity Specialist"
-      subtitle: "4Geeks Academy Certificate"
-      program_name: "Cybersecurity Specialist"
-
-  - type: why_learn_ai
-    title: Cybersecurity Specialists Are in High Demand
-    subtitle: The demand for cybersecurity professionals continues to surge
-    description: With 3.5 million unfilled positions globally and the U.S. Bureau of Labor Statistics projecting 35% job growth between 2022 and 2032, there's never been a better time to enter this field. Gartner predicts the information security market will grow from $185 billion in 2023 to $287 billion in 2027. Join the next generation of cybersecurity professionals.
-    cta:
-      text: Join now!
-      url: /signup
-      variant: primary
+      title: Cybersecurity Specialist
+      subtitle: 4Geeks Academy Certificate
+      program_name: Cybersecurity Specialist
+    stats:
+      - value: 84%
+        label: Hiring rate
+        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        benefits:
+          - text: Dedicated career coaching from day one
+          - text: Resume and LinkedIn profile optimization
+          - text: Mock interviews with industry professionals
+          - text: Direct introductions to hiring partners
+      - value: 3-6 months
+        label: Time to get hired
+        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        benefits:
+          - text: Job search strategy and planning
+          - text: Salary negotiation coaching
+          - text: Lifetime career support access
+          - text: Alumni network with 10,000+ professionals
+      - value: $85K+
+        label: Average starting salary
+        description: Cybersecurity professionals command premium salaries due to high demand and specialized skills. The investment pays for itself.
+        benefits:
+          - text: "Security Analyst: $70K–$95K"
+          - text: "Penetration Tester: $80K–$110K"
+          - text: "SOC Analyst: $65K–$90K"
+          - text: "Security Engineer: $90K–$130K"
+      - value: 5,000+
+        label: Hiring Partners
+        description: Our extensive network includes Fortune 500 companies, government agencies, and innovative startups actively seeking security talent.
+        benefits:
+          - text: Direct referrals to partner companies
+          - text: Exclusive job board access
+          - text: Networking events with recruiters
+          - text: Alumni referral program
+    paddingY:
+      desktop: md
   - type: pricing
+    version: "1.0"
+    variant: product
     title: Get access to all of our learning database, courses, and services
-    subtitle: Earn a new skills every 30 min, never get stuck or lost again.
+    subtitle: Master cybersecurity skills with unlimited practice and expert guidance.
     monthly:
       discount_badge: 35% OFF
       price: "38.99"
@@ -160,85 +310,55 @@ sections:
       original_price: "479.99"
       savings_badge: Save 3 months
     tech_icons:
-      - html
-      - css
-      - javascript
-      - react
+      - linux
       - python
-      - nodejs
+      - terminal
+      - server
+      - shield
       - git
-      - bootstrap
-      - api
-      - settings
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+    features_title: Access hundreds of exercises, projects, and tutorials in the most wanted security technologies
     features:
       - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
+        text: Build your portfolio with hundreds of real-world security projects.
       - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
+        text: Thousands of cloud-based security challenges (no setup needed).
       - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
         use_rigobot_icon: true
       - icon: certificate
         text: Course certificates
       - icon: certificate
-        text: Earn certificates from a USA certified school by the florida department of education.
+        text: Earn certificates from a USA certified school by the Florida Department of Education.
     cta:
       text: Get plan
-      url: /signup
+      url: /en/apply
       variant: primary
+    paddingY:
+      desktop: md
   - type: whos_hiring
+    version: "1.0"
+    variant: carousel
     title: Who's Hiring Our Graduates?
     subtitle: Our alumni work at top companies around the world
-    description: Top companies hire 4Geeks graduates, with 84% landing jobs within 6 months of graduation thanks to their skills and our personalized career support. Our grads don't just get hired—they launch successful careers and consistently earn recognition for their technical expertise and professionalism.
+    description: Top companies hire 4Geeks graduates, with 84% landing jobs within 6 months of graduation thanks to their skills and our personalized career support.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
       - src: /attached_assets/google-developers_1764719904190.png
         alt: Google Developers
-      - src: /attached_assets/boats_1764719939123.jpg
-        alt: Boats Group
       - src: /attached_assets/meta-logo_1764719959855.png
         alt: Meta
       - src: /attached_assets/ebay_1764719967118.png
         alt: eBay
-      - src: /attached_assets/natgeo_1764719975443.png
-        alt: National Geographic
-      - src: /attached_assets/evernote_1764719981901.png
-        alt: Evernote
       - src: /attached_assets/telefonica_1764719987250.png
         alt: Telefonica
-      - src: /attached_assets/twilio_1764719992371.png
-        alt: Twilio
       - src: /attached_assets/uber_1764719999685.png
         alt: Uber
-      - src: /attached_assets/Neo9_1764720006347.png
-        alt: Neo9
-      - src: /attached_assets/jooble_1764720010702.png
-        alt: Jooble
       - src: /attached_assets/kpmg-logo1_1764720019827.png
         alt: KPMG
-      - src: /attached_assets/ultimate_1764720025067.png
-        alt: Ultimate
-      - src: /attached_assets/tcg_1764720028893.png
-        alt: TCG
-      - src: /attached_assets/razz_1764720036807.png
-        alt: Razz
-      - src: /attached_assets/overseas_1764720045331.png
-        alt: Overseas
-      - src: /attached_assets/ds9_1764720051158.png
-        alt: DS9
-      - src: /attached_assets/coinet_1764720056569.jpg
-        alt: Coinet
-      - src: /attached_assets/strata_1764720063140.png
-        alt: Strata
-      - src: /attached_assets/mdc_ce_1764720089793.png
-        alt: MDC
-      - src: /attached_assets/beacon_council_1764720100166.jpg
-        alt: Beacon Council
       - src: /attached_assets/blackstone_1764720124773.png
         alt: Blackstone
-      - src: /attached_assets/cemex_1764720131666.png
-        alt: Cemex
+    paddingY:
+      desktop: md
   - type: testimonials
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
@@ -282,6 +402,8 @@ sections:
         rating: 5
         comment: The best online learning experience I've had. Clear explanations, practical exercises, and excellent career guidance throughout.
         outcome: Landed first security job
+    paddingY:
+      desktop: md
   - type: faq
     version: "1.0"
     background: "muted"
@@ -301,17 +423,21 @@ sections:
       text: Still have questions?
       button_text: Talk to an Advisor
       button_url: /contact
+    paddingY:
+      desktop: md
   - type: cta_banner
     version: "1.0"
     title: Ready to Defend the Digital World?
     subtitle: Join thousands of graduates who have launched successful careers in cybersecurity with 4Geeks.
     buttons:
       - text: Start Learning Now
-        url: /signup
+        url: /en/apply
         variant: secondary
       - text: Talk to an Advisor
         url: /contact
         variant: outline
+    paddingY:
+      desktop: md
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.

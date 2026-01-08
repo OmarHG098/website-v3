@@ -20,7 +20,7 @@ sections:
     trust_bar:
       rating: "4.5"
       rating_count: "1,294"
-      trusted_text: "Confianza de más de 2.5K estudiantes"
+      trusted_text: "$80K+ salario inicial promedio"
     cta_buttons:
       - text: "Aplicar Ahora"
         url: "/es/aplica"
@@ -30,48 +30,145 @@ sections:
         url: "/syllabus/data-science-ml"
         variant: "outline"
         icon: "Download"
-  - type: award_badges
-    version: "1.0"
-    variant: simple
-    showBorder: true
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
+
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 400
     items:
-      - id: forbes-2024
-        alt: Forbes - Top Coding Bootcamp
-        source: Forbes
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: fortune-2024
-        alt: Fortune - Mejor para Hispanohablantes
-        source: Fortune
-        name: Mejor para Hispanohablantes
-        year: "2024"
-      - id: newsweek-2024
-        alt: Newsweek - Top Coding Bootcamp
-        source: Newsweek
-        name: Top Coding Bootcamp
-        year: "2024"
-      - id: course-report-2025
-        alt: Course Report - Mejor Coding Bootcamp
-        source: Course Report
-        name: Mejor Coding Bootcamp
-        year: "2025"
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-14 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-14 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-14 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-14 md:h-16
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-14 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-14 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-14 md:h-16
+    paddingY:
+      desktop: none
+
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    background: bg-primary/5
+    title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
+    subtitle: Sí, y tenemos los números para respaldarlo
+    description: Estas estadísticas reflejan toda nuestra comunidad de graduados y demuestran el impacto comprobado de nuestros programas. Nuestro compromiso con tu éxito está respaldado por resultados reales, no solo promesas.
+    card_color: bg-muted
+    items:
+      - value: 84%
+        title: Tasa de colocación laboral en 6 meses
+      - value: 150%
+        title: Aumento salarial promedio después de graduarse
+      - value: $80K+
+        title: Salario inicial promedio para científicos de datos
+    paddingY:
+      desktop: none
 
   - type: syllabus
-    title: "¡Prepárate para el Trabajo con Nuestro Syllabus!"
-    subtitle: "Hemos ajustado nuestro contenido con cientos de posiciones laborales para prepararte para una entrada exitosa en ciencia de datos y machine learning."
-    modules:
-      - title: "Fundamentos de Python y Notebooks"
-        description: "Comienza tu viaje con Python, aprendiendo condicionales, funciones y listas mientras exploras Jupyter notebooks. Construye una base sólida de programación y familiarízate con tus primeros conceptos de machine learning a través de ejercicios prácticos."
-      - title: "Análisis y Visualización de Datos"
-        description: "Analiza y manipula datos con Pandas, limpia y normaliza datasets, y crea visualizaciones impactantes con Matplotlib y Seaborn. Aprende a extraer insights significativos de datos crudos y presentarlos efectivamente."
-      - title: "Recolección de Datos con SQL, Scraping y APIs"
-        description: "Recolecta datos de diferentes fuentes escribiendo consultas SQL, haciendo scraping de sitios web con BeautifulSoup y trabajando con APIs REST. Domina las habilidades esenciales para recopilar y preparar datos para análisis."
-      - title: "Fundamentos de Matemáticas y Probabilidad"
-        description: "Construye una base matemática sólida con probabilidad, estadística y álgebra lineal. Comprende conceptos clave como media, mediana, desviación estándar y operaciones matriciales que potencian los algoritmos de machine learning."
-      - title: "Machine Learning Aplicado"
-        description: "Aplica técnicas de machine learning como regresión, árboles de decisión, random forests, boosting, K-Nearest Neighbors, clustering y pronóstico de series temporales. Aprende a entrenar, evaluar y optimizar modelos para problemas del mundo real."
-      - title: "Deep Learning, NLP y Despliegue de Modelos"
-        description: "Explora deep learning con TensorFlow y Keras, procesamiento de lenguaje natural y sistemas de recomendación. Aprende cómo desplegar modelos en ambientes de producción con privacidad, seguridad y escalabilidad en mente."
+    version: "1.0"
+    variant: program-modules
+    program_title: Qué Aprenderás en el Programa de Data Science
+    program_description: Domina el stack completo de ciencia de datos y machine learning desde el análisis de datos hasta el despliegue de modelos. Construye aplicaciones de ML listas para producción usando las tecnologías más demandadas por los empleadores.
+    tech_logos:
+      - name: Python
+        icon: python
+      - name: TensorFlow
+        icon: tensorflow
+      - name: Pandas
+        icon: pandas
+      - name: NumPy
+        icon: numpy
+      - name: SQL
+        icon: sql
+      - name: Git
+        icon: git
+    module_cards:
+      - title: Fundamentos de Python y Notebooks
+        duration: Semanas 1-3
+        objectives:
+          - Domina los fundamentos de Python incluyendo condicionales, funciones y estructuras de datos
+          - Trabaja con Jupyter notebooks para exploración interactiva de datos
+          - Construye una base sólida de programación para machine learning
+        projects: Completa ejercicios de Python y crea tu primer notebook de análisis de datos
+        orientation: vertical
+        icon: IconBrandPython
+      - title: Análisis y Visualización de Datos
+        duration: Semanas 4-6
+        objectives:
+          - Analiza y manipula datos con Pandas
+          - Limpia, normaliza y transforma datasets
+          - Crea visualizaciones impactantes con Matplotlib y Seaborn
+        projects: Construye dashboards interactivos e informes de análisis exploratorio
+        orientation: vertical
+        icon: IconChartBar
+      - title: Recolección de Datos con SQL, Scraping y APIs
+        duration: Semanas 7-8
+        objectives:
+          - Escribe consultas SQL para extraer datos de bases de datos
+          - Haz scraping de sitios web con BeautifulSoup
+          - Trabaja con APIs REST para recopilar datos del mundo real
+        projects: Construye un pipeline de datos que recolecta y procesa datos de múltiples fuentes
+        orientation: vertical
+        icon: IconDatabase
+      - title: Fundamentos de Matemáticas y Probabilidad
+        duration: Semanas 9-10
+        objectives:
+          - Domina conceptos de probabilidad y estadística
+          - Comprende los fundamentos del álgebra lineal
+          - Aprende operaciones matriciales que potencian los algoritmos de ML
+        projects: Aplica análisis estadístico a datasets del mundo real
+        orientation: vertical
+        icon: IconMath
+      - title: Machine Learning Aplicado
+        duration: Semanas 11-14
+        objectives:
+          - Construye modelos de regresión y clasificación
+          - Implementa árboles de decisión, random forests y boosting
+          - Domina clustering y pronóstico de series temporales
+        projects: Entrena, evalúa y optimiza modelos de ML para problemas del mundo real
+        orientation: vertical
+        icon: IconBrain
+      - title: Deep Learning, NLP y Despliegue de Modelos
+        duration: Semanas 15-16
+        objectives:
+          - Construye redes neuronales con TensorFlow y Keras
+          - Implementa técnicas de procesamiento de lenguaje natural
+          - Despliega modelos en ambientes de producción
+        projects: Crea y despliega una aplicación web de ML completa
+        orientation: vertical
+        icon: IconRocket
+    paddingY:
+      desktop: md
 
   - type: projects
     title: "Aprende Construyendo Proyectos Reales"
@@ -98,47 +195,112 @@ sections:
         duration: "2 HORAS"
         date: "16/1/2023"
         difficulty: "hard"
+    paddingY:
+      desktop: md
 
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
     badge: "¿Por qué 4Geeks?"
     title: "¿Por qué Aprender con 4Geeks?"
-    description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
-    video_url: "https://www.youtube.com/watch?v=6m1Jyya7eCc"
+    description: "Avanza más rápido y mantente motivado con nuestras herramientas impulsadas por IA y método de enseñanza hiperpersonalizado."
     features:
-      - icon: "Robot"
-        title: "Aprende con IA"
-        description: "Nuestra IA revisa tu código para darte retroalimentación instantánea, te ayuda con los ejercicios, ¡y más!"
-      - icon: "Headset"
-        title: "Sesiones de mentoría uno a uno"
-        description: "Accede a sesiones mensuales de mentoría con nuestros expertos y añade sesiones extra según lo necesites."
-      - icon: "Users"
-        title: "Aprende con la comunidad"
-        description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
+      - icon: Robot
+        title: Progresa más rápido con herramientas potenciadas por IA
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Obtén retroalimentación instantánea de Rigobot, nuestro tutor de IA personalizado
+          - text: Da consejos ajustados a tu nivel de habilidad y progreso
+          - text: Ayuda con depuración y resolución de problemas
+          - text: Accede a cientos de ejercicios interactivos de programación en Learnpack, nuestra plataforma educativa
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
+        cta:
+          text: ¡Empieza a aprender ahora!
+          url: /es/aplica
+          variant: primary
+      - icon: TrendingUp
+        title: Prospera en tech con soporte de carrera para la era de la IA
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Coaching personalizado 1:1
+          - text: Currículums y portafolios listos para IA
+          - text: Preparación para entrevistas y negociación salarial
+          - text: Acceso de por vida para apoyar tu crecimiento
+        video_url: https://youtu.be/-2ZvlgDnltc
+        cta:
+          text: ¡Empieza a aprender ahora!
+          url: /es/aplica
+          variant: primary
+      - icon: Headset
+        title: Mentoría 1:1 ilimitada y una comunidad activa
+        description: ""
+        show_rigobot_logo: true
+        bullets:
+          - text: Reserva sesiones 1 a 1 con mentores expertos a tu ritmo
+          - text: Aprende EN VIVO con instructores en sesiones de código y talleres
+          - text: Interactúa con compañeros a través de Slack, herramientas de feedback y check-ins semanales
+          - text: Accede a canales de Slack para soporte de código, bolsas de trabajo y consejos de carrera
+        image_id: mentoring_zoom_call
+        cta:
+          text: ¡Empieza a aprender ahora!
+          url: /es/aplica
+          variant: primary
+    paddingY:
+      desktop: md
 
   - type: certificate
-    version: "1.0"
-    title: "Certificado y Red de Carreras"
-    description: "Al completar, recibe un certificado reconocido globalmente que abre puertas a oportunidades profesionales en ciencia de datos y machine learning en todo el mundo."
-    stats:
-      - value: "4,000+"
-        label: "Graduados"
-      - value: "84%"
-        label: "Colocación Laboral"
-      - value: "4.9/5"
-        label: "Calificación"
-      - value: "20+"
-        label: "Países"
+    title: Certificado y Red de Carreras
+    description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien remunerados:"
     benefits:
-      - text: "Reconocido por instituciones internacionales"
-      - text: "Acceso a más de 5,000 empresas asociadas"
-      - text: "Soporte de carrera de por vida"
+      - text: "Científico de Datos: $80K–$130K"
+      - text: "Ingeniero de Machine Learning: $90K–$150K"
+      - text: "Analista de Datos: $60K–$95K"
+      - text: "Ingeniero de IA: $100K–$160K"
     card:
-      title: "Científico de Datos"
-      subtitle: "Certificado de 4Geeks Academy"
-      program_name: "Ciencia de Datos e IA"
-      certificate_label: "Certificado de Finalización"
+      title: Científico de Datos
+      subtitle: Certificado de 4Geeks Academy
+      program_name: Ciencia de Datos & Machine Learning
+    stats:
+      - value: 84%
+        label: Tasa de contratación
+        description: El 84% de nuestros graduados consigue un trabajo en tech en 6 meses. Nuestro equipo de servicios de carrera trabaja contigo hasta que seas contratado.
+        benefits:
+          - text: Coaching de carrera dedicado desde el primer día
+          - text: Optimización de currículum y perfil de LinkedIn
+          - text: Entrevistas simuladas con profesionales de la industria
+          - text: Presentaciones directas a empresas asociadas
+      - value: 3-6 meses
+        label: Tiempo para ser contratado
+        description: La mayoría de los graduados aseguran su primer rol en 3-6 meses después de completar el programa. Proporcionamos soporte continuo hasta que consigas tu trabajo soñado.
+        benefits:
+          - text: Estrategia y planificación de búsqueda de empleo
+          - text: Coaching de negociación salarial
+          - text: Acceso de por vida al soporte de carrera
+          - text: Red de alumni con más de 10,000 profesionales
+      - value: 150%
+        label: Aumento salarial promedio
+        description: Nuestros graduados ven un aumento salarial promedio del 150% después de transicionar a roles de ciencia de datos y machine learning. La inversión se paga sola.
+        benefits:
+          - text: "Científico de Datos: $80K–$130K"
+          - text: "Ingeniero de Machine Learning: $90K–$150K"
+          - text: "Analista de Datos: $60K–$95K"
+          - text: "Ingeniero de IA: $100K–$160K"
+      - value: 5,000+
+        label: Empresas Asociadas
+        description: Accede a nuestra red de más de 5,000 empresas asociadas que buscan activamente talento en ciencia de datos. Obtén oportunidades de trabajo exclusivas y referencias prioritarias.
+        benefits:
+          - text: Acceso exclusivo a bolsa de trabajo
+          - text: Referencias prioritarias a empresas asociadas
+          - text: Eventos de networking con gerentes de contratación
+          - text: Las empresas incluyen Google, Meta, Amazon, startups
+    certificate_position: right
+    useSolidCard: true
+    background: hsl(var(--muted))
+    paddingY:
+      mobile: lg
+      desktop: lg
 
   - type: why_learn_ai
     title: "¿Por qué Debería Aprender Ciencia de Datos y Machine Learning?"
@@ -146,35 +308,29 @@ sections:
     description: "La ciencia de datos y el machine learning están transformando todas las industrias. Las empresas buscan desesperadamente profesionales que puedan convertir datos crudos en insights accionables y construir modelos predictivos. Con las herramientas de IA volviéndose más poderosas, los científicos de datos que pueden aprovechar estas tecnologías son 400% más productivos. Ya sea analizando comportamiento de clientes, prediciendo tendencias de mercado o construyendo sistemas de recomendación—estas habilidades están en alta demanda y tienen los mejores salarios. ¿Estás listo para convertirte en científico de datos?"
     cta:
       text: "¡Únete ahora!"
-      url: "/signup"
+      url: "/es/aplica"
       variant: "primary"
+    paddingY:
+      desktop: md
 
   - type: pricing
-    title: "Obtén acceso a toda nuestra base de aprendizaje, cursos y servicios"
-    subtitle: "Aprende una nueva habilidad cada 30 min, nunca te quedes atascado o perdido de nuevo."
-    monthly:
-      discount_badge: "35% OFF"
-      price: "38.99"
-      period: "mes"
-      original_price: "59.99"
-    yearly:
-      discount_badge: "35% OFF"
-      price: "311.99"
-      period: "año"
-      original_price: "479.99"
-      savings_badge: "Ahorra 3 meses"
+    version: "1.0"
+    variant: product
+    title: Financia Tu Inversión
+    subtitle: Ofrecemos múltiples formas de financiar tu inscripción. Elige la opción que mejor funcione para ti.
+    discount_text: "Descuento por Pago Completo: Ahorra 10% con pago anticipado."
+    financing_text: "Financiamiento Basado en Crédito: comenzando desde"
+    financing_amount: $150
     tech_icons:
-      - "html"
-      - "css"
-      - "javascript"
-      - "react"
-      - "python"
-      - "nodejs"
-      - "git"
-      - "bootstrap"
-      - "api"
-      - "settings"
-    features_title: "Accede a cientos de ejercicios, proyectos, tutoriales y cursos en las tecnologías más demandadas"
+      - python
+      - tensorflow
+      - pandas
+      - numpy
+      - sql
+      - git
+      - jupyter
+      - api
+    features_title: Accede a cientos de ejercicios, proyectos, tutoriales y cursos en las tecnologías más demandadas
     features:
       - icon: "certificate"
         text: "Construye tu portafolio con cientos de proyectos del mundo real."
@@ -187,63 +343,43 @@ sections:
       - icon: "certificate"
         text: "Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida."
     cta:
-      text: "Obtener plan"
-      url: "/signup"
-      variant: "primary"
+      text: Obtener plan
+      url: /es/aplica
+      variant: primary
+    paddingY:
+      desktop: md
 
   - type: whos_hiring
-    title: "¿Quién Está Contratando a Nuestros Graduados?"
-    subtitle: "Nuestros egresados trabajan en las mejores empresas del mundo"
-    description: "Desde startups hasta empresas Fortune 500, los graduados de 4Geeks están generando impacto en todas las industrias. Nuestro soporte de carrera y fuerte red de empleadores te ayudan a conseguir roles en empresas tecnológicas líderes, agencias y empresas globalmente."
+    variant: carousel
+    title: Confianza de Líderes Innovadores
+    subtitle: Explora cómo 4Geeks Academy impulsa a los graduados hacia carreras tecnológicas prósperas.
     logos:
-      - src: "/attached_assets/microsoft_1764719829995.png"
-        alt: "Microsoft"
-      - src: "/attached_assets/google-developers_1764719904190.png"
-        alt: "Google Developers"
-      - src: "/attached_assets/boats_1764719939123.jpg"
-        alt: "Boats Group"
-      - src: "/attached_assets/meta-logo_1764719959855.png"
-        alt: "Meta"
-      - src: "/attached_assets/ebay_1764719967118.png"
-        alt: "eBay"
-      - src: "/attached_assets/natgeo_1764719975443.png"
-        alt: "National Geographic"
-      - src: "/attached_assets/evernote_1764719981901.png"
-        alt: "Evernote"
-      - src: "/attached_assets/telefonica_1764719987250.png"
-        alt: "Telefonica"
-      - src: "/attached_assets/twilio_1764719992371.png"
-        alt: "Twilio"
-      - src: "/attached_assets/uber_1764719999685.png"
-        alt: "Uber"
-      - src: "/attached_assets/Neo9_1764720006347.png"
-        alt: "Neo9"
-      - src: "/attached_assets/jooble_1764720010702.png"
-        alt: "Jooble"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
-      - src: "/attached_assets/ultimate_1764720025067.png"
-        alt: "Ultimate"
-      - src: "/attached_assets/tcg_1764720028893.png"
-        alt: "TCG"
-      - src: "/attached_assets/razz_1764720036807.png"
-        alt: "Razz"
-      - src: "/attached_assets/overseas_1764720045331.png"
-        alt: "Overseas"
-      - src: "/attached_assets/ds9_1764720051158.png"
-        alt: "DS9"
-      - src: "/attached_assets/coinet_1764720056569.jpg"
-        alt: "Coinet"
-      - src: "/attached_assets/strata_1764720063140.png"
-        alt: "Strata"
-      - src: "/attached_assets/mdc_ce_1764720089793.png"
-        alt: "MDC"
-      - src: "/attached_assets/beacon_council_1764720100166.jpg"
-        alt: "Beacon Council"
-      - src: "/attached_assets/blackstone_1764720124773.png"
-        alt: "Blackstone"
-      - src: "/attached_assets/cemex_1764720131666.png"
-        alt: "Cemex"
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/boats_1764719939123.jpg
+        alt: Boats Group
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/natgeo_1764719975443.png
+        alt: National Geographic
+      - src: /attached_assets/evernote_1764719981901.png
+        alt: Evernote
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/twilio_1764719992371.png
+        alt: Twilio
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/Neo9_1764720006347.png
+        alt: Neo9
+      - src: /attached_assets/jooble_1764720010702.png
+        alt: Jooble
+    paddingY:
+      desktop: none
 
   - type: testimonials
     title: "Tu Nueva Carrera Comienza Aquí"
@@ -288,10 +424,12 @@ sections:
         rating: 4
         comment: "La transición de la industria musical a tech fue desafiante pero 4Geeks lo hizo posible. Ahora trabajo como desarrollador y Mentor, ayudando a otros a lograr el mismo sueño."
         outcome: "+100% aumento salarial"
+    paddingY:
+      desktop: md none
 
   - type: faq
     version: "1.0"
-    background: "muted"
+    background: hsl(var(--muted))
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa con datos o programación?"
@@ -307,7 +445,11 @@ sections:
     cta:
       text: "¿Todavía tienes preguntas?"
       button_text: "Habla con un Asesor"
-      button_url: "/contact"
+      button_url: "/contacto"
+    paddingY:
+      desktop: md
+    marginY:
+      desktop: none
 
   - type: cta_banner
     version: "1.0"
@@ -315,10 +457,10 @@ sections:
     subtitle: "Únete a miles de graduados que han transformado sus carreras con 4Geeks."
     buttons:
       - text: "Empieza a Aprender Ahora"
-        url: "/signup"
+        url: "/es/aplica"
         variant: "secondary"
       - text: "Habla con un Asesor"
-        url: "/contact"
+        url: "/contacto"
         variant: "outline"
 
   - type: footer

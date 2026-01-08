@@ -6,7 +6,7 @@ import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
 import flaskRenderImg from "@assets/flask-render_1765396097392.webp";
 import streamlitRenderImg from "@assets/streamlit-render_1765396163031.webp";
-import mlFinalProjectImg from "@assets/ml-final-project_1765396170981.webp";
+import mlFinalProjectImg from "@assets/final-project-applied-ai_1767880920613.webp";
 import starWarsImg from "@assets/star-wars_1764729369149.webp";
 import authenticationImg from "@assets/authentication-python_1764729364254.webp";
 import fullstackFinalImg from "@assets/fullstack-user-stories_1764729359334.webp";

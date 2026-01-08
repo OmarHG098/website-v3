@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconCheck, IconBook, IconCode, IconBriefcase, IconRobot, IconUsers, IconCalendar, IconPlayerPlay } from "@tabler/icons-react";
+import { UniversalVideo } from "@/components/UniversalVideo";
 
 interface HeroCourseProps {
   data: HeroCourseType;
@@ -29,10 +30,18 @@ export function HeroCourse({ data }: HeroCourseProps) {
           {/* Left Column */}
           <div className="space-y-6">
             <h1 
-              className="text-h1 text-primary"
+              className="text-h1 text-foreground"
               data-testid="text-hero-title"
             >
-              {data.title}
+              {data.title_highlight && data.title.includes(data.title_highlight) ? (
+                <>
+                  {data.title.split(data.title_highlight)[0]}
+                  <span className="text-primary">{data.title_highlight}</span>
+                  {data.title.split(data.title_highlight)[1]}
+                </>
+              ) : (
+                data.title
+              )}
             </h1>
             
             {data.subtitle && (
@@ -94,7 +103,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
             )}
             
             {data.description && (
-              <p className="text-sm text-muted-foreground leading-relaxed pt-4">
+              <p className="text-foreground leading-relaxed pt-4">
                 {data.description}
               </p>
             )}
@@ -105,35 +114,13 @@ export function HeroCourse({ data }: HeroCourseProps) {
             {/* Media */}
             <div className="relative rounded-lg overflow-hidden aspect-video">
               {data.media.type === "video" ? (
-                <div className="relative w-full h-full bg-muted">
-                  {data.media.thumbnail ? (
-                    <>
-                      <img 
-                        src={data.media.thumbnail} 
-                        alt={data.media.alt || "Video thumbnail"}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <a 
-                          href={data.media.src}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center hover:bg-primary transition-colors"
-                        >
-                          <IconPlayerPlay className="w-8 h-8 text-primary-foreground ml-1" />
-                        </a>
-                      </div>
-                    </>
-                  ) : (
-                    <iframe
-                      src={data.media.src}
-                      title={data.media.alt || "Video"}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  )}
-                </div>
+                <UniversalVideo
+                  url={data.media.src}
+                  ratio="16:9"
+                  autoplay={true}
+                  muted={true}
+                  loop={true}
+                />
               ) : (
                 <img 
                   src={data.media.src} 

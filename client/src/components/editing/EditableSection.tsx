@@ -508,14 +508,16 @@ export function EditableSection({ children, section, index, sectionType, content
                         <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
                           <IconChevronLeft className="h-3 w-3" />
                         </Button>
-                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => setShowYamlModal(true)} title="View YAML source" data-testid={`button-view-yaml-${index}`}>
-                          <IconCode className="h-3 w-3" />
-                        </Button>
                         <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
                           <IconChevronRight className="h-3 w-3" />
                         </Button>
                       </>
                     )}
+                    {/* View YAML source - always visible */}
+                    <div className="w-px h-4 bg-border/50 shrink-0" />
+                    <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => setShowYamlModal(true)} title="View YAML source" data-testid={`button-view-yaml-${index}`}>
+                      <IconCode className="h-3 w-3" />
+                    </Button>
                   </div>
                 ) : (
                   <span className="text-xs text-muted-foreground">No variants</span>
