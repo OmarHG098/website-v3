@@ -291,7 +291,7 @@ sections:
           - RAG knowledge layer
           - Agents with tool calling
           - Real-time communication layer
-        projects: Deliver the complete transformation of their company
+        projects: Deliver the complete transformation of your chosen company
         orientation: horizontal
         icon: IconTrophy
     marginY:
