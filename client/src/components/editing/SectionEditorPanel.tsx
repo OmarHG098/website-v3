@@ -1,13 +1,18 @@
 import { useCallback, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IconX, IconDeviceFloppy, IconLoader2, IconCode, IconSettings, IconDeviceDesktop, IconDeviceMobile, IconDevices, IconPalette } from "@tabler/icons-react";
+import { IconQuestionMark } from "@tabler/icons-react";
+import { getIcon } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
+import { getConfiguredFields, type EditorType } from "@/lib/field-editor-registry";
+import { IconPickerModal } from "./IconPickerModal";
 import type { Section } from "@shared/schema";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
@@ -226,6 +231,10 @@ export function SectionEditorPanel({
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("code");
+  
+  // Icon picker state
+  const [iconPickerOpen, setIconPickerOpen] = useState(false);
+  const [iconPickerTarget, setIconPickerTarget] = useState<{ arrayField: string; index: number; field: string; label: string; currentIcon: string } | null>(null);
 
   // Parse current YAML to extract props
   const parsedSection = useMemo(() => {
@@ -304,6 +313,59 @@ export function SectionEditorPanel({
       console.error("Error updating property:", error);
     }
   }, [yamlContent, onPreviewChange]);
+
+  // Update a specific field in an array item
+  const updateArrayItemField = useCallback((arrayField: string, index: number, field: string, value: string) => {
+    try {
+      const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+      if (!parsed || typeof parsed !== "object") return;
+      
+      const array = parsed[arrayField] as Record<string, unknown>[] | undefined;
+      if (!Array.isArray(array) || !array[index]) return;
+      
+      array[index][field] = value;
+      
+      const newYaml = yamlParser.dump(parsed, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      
+      setYamlContent(newYaml);
+      setHasChanges(true);
+      setParseError(null);
+      
+      if (onPreviewChange) {
+        onPreviewChange(parsed as Section);
+      }
+    } catch (error) {
+      console.error("Error updating array item:", error);
+    }
+  }, [yamlContent, onPreviewChange]);
+
+  // Get configured field editors for the current section type
+  const sectionType = (section as { type: string }).type || "";
+  const configuredFields = useMemo(() => getConfiguredFields(sectionType), [sectionType]);
+
+  // Render icon from name using shared icon utility
+  const renderIconByName = useCallback((iconName: string) => {
+    if (!iconName) {
+      return <IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+    }
+    const IconComponent = getIcon(iconName);
+    if (!IconComponent) {
+      return <IconQuestionMark className="h-5 w-5 text-muted-foreground" />;
+    }
+    return <IconComponent className="h-5 w-5" />;
+  }, []);
+
+  // Handle icon picker selection
+  const handleIconSelect = useCallback((iconName: string) => {
+    if (iconPickerTarget) {
+      updateArrayItemField(iconPickerTarget.arrayField, iconPickerTarget.index, iconPickerTarget.field, iconName);
+      setIconPickerTarget(null);
+    }
+  }, [iconPickerTarget, updateArrayItemField]);
 
   // Shared save logic - returns true on success
   const saveToServer = useCallback(async (): Promise<{ success: boolean; warning?: string }> => {
@@ -413,10 +475,8 @@ export function SectionEditorPanel({
     onClose();
   }, [hasChanges, onClose, onPreviewChange]);
 
-  const sectionType = (section as { type: string }).type || "unknown";
-
   return (
-    <div className="fixed right-0 top-0 bottom-0 w-[480px] bg-background border-l shadow-xl z-[100] flex flex-col">
+    <div className="fixed right-0 top-0 bottom-0 w-[480px] bg-background border-l shadow-xl z-[9999] flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div>
@@ -476,13 +536,50 @@ export function SectionEditorPanel({
               value={currentBackground}
               onChange={(value) => updateProperty("background", value)}
             />
-
-            {/* Placeholder for future props */}
-            <div className="pt-4 border-t">
-              <p className="text-xs text-muted-foreground">
-                More properties coming soon: spacing, visibility, animations...
-              </p>
-            </div>
+            
+            {/* Render array fields with configured editors */}
+            {Object.entries(configuredFields).map(([fieldPath, editorType]) => {
+              // Parse field path like "features[].icon"
+              const match = fieldPath.match(/^(\w+)\[\]\.(\w+)$/);
+              if (!match) return null;
+              
+              const [, arrayField, itemField] = match;
+              const arrayData = parsedSection?.[arrayField] as Record<string, unknown>[] | undefined;
+              
+              if (!Array.isArray(arrayData) || arrayData.length === 0) return null;
+              
+              if (editorType === "icon-picker") {
+                return (
+                  <div key={fieldPath} className="space-y-2">
+                    <Label className="text-sm font-medium capitalize">{arrayField} Icons</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {arrayData.map((item, index) => {
+                        const currentValue = (item[itemField] as string) || "";
+                        const itemLabel = (item.title as string) || (item.label as string) || (item.name as string) || `Item ${index + 1}`;
+                        
+                        return (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => {
+                              setIconPickerTarget({ arrayField, index, field: itemField, label: itemLabel, currentIcon: currentValue });
+                              setIconPickerOpen(true);
+                            }}
+                            className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                            data-testid={`props-icon-${arrayField}-${index}`}
+                            title={`${itemLabel}: ${currentValue || "no icon"}`}
+                          >
+                            {renderIconByName(currentValue)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+              
+              return null;
+            })}
           </div>
         </TabsContent>
       </Tabs>
@@ -531,6 +628,15 @@ export function SectionEditorPanel({
           </Button>
         </div>
       </div>
+      
+      {/* Icon Picker Modal */}
+      <IconPickerModal
+        open={iconPickerOpen}
+        onOpenChange={setIconPickerOpen}
+        currentValue={iconPickerTarget?.currentIcon || ""}
+        itemLabel={iconPickerTarget?.label}
+        onSelect={handleIconSelect}
+      />
     </div>
   );
 }

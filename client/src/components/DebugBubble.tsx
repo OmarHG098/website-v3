@@ -52,6 +52,7 @@ import {
   IconArrowUp,
   IconArrowDown,
   IconFile,
+  IconTrash,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -335,6 +336,10 @@ export function DebugBubble() {
   const [filePulling, setFilePulling] = useState<string | null>(null);
   const [confirmPullFile, setConfirmPullFile] = useState<string | null>(null);
   
+  // Advanced options state
+  const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState(false);
+  const [isIgnoringAllChanges, setIsIgnoringAllChanges] = useState(false);
+  
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
 
@@ -396,7 +401,7 @@ export function DebugBubble() {
       setCommitModalOpen(true);
       // Fetch pending changes when modal opens from banner
       setPendingChangesLoading(true);
-      fetch("/api/github/pending-changes")
+      fetch(`/api/github/pending-changes?_t=${Date.now()}`)
         .then((res) => res.json())
         .then((data: { changes: PendingChange[]; count: number }) => {
           setPendingChanges(data.changes || []);
@@ -521,7 +526,7 @@ export function DebugBubble() {
   // Fetch pending changes when GitHub sync is enabled
   const fetchPendingChanges = () => {
     setPendingChangesLoading(true);
-    fetch("/api/github/pending-changes")
+    fetch(`/api/github/pending-changes?_t=${Date.now()}`)
       .then((res) => res.json())
       .then((data: { changes: PendingChange[]; count: number }) => {
         setPendingChanges(data.changes || []);
@@ -689,6 +694,54 @@ export function DebugBubble() {
       alert("Failed to pull file");
     } finally {
       setFilePulling(null);
+    }
+  };
+
+  // Handle ignore all local changes - reset to remote state
+  const handleIgnoreAllChanges = async () => {
+    const localChanges = pendingChanges.filter(c => c.source === 'local' || c.source === 'conflict');
+    if (localChanges.length === 0) return;
+    
+    const confirmed = window.confirm(
+      `This will erase all changes you have made to Marketing Content YAMLs (${localChanges.length} file${localChanges.length > 1 ? 's' : ''}). This cannot be undone. Continue?`
+    );
+    if (!confirmed) return;
+    
+    setIsIgnoringAllChanges(true);
+    try {
+      // Pull each file with local changes from remote
+      for (const change of localChanges) {
+        const res = await fetch("/api/github/pull-file", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filePath: change.file }),
+        });
+        
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || `Failed to reset ${change.file}`);
+        }
+      }
+      
+      // Clear pending changes and refresh
+      setPendingChanges(pendingChanges.filter(c => c.source !== 'local' && c.source !== 'conflict'));
+      setAdvancedOptionsOpen(false);
+      
+      // Sync with remote to update status
+      try {
+        await fetch("/api/github/sync-with-remote", { method: "POST" });
+      } catch {
+        // Silently fail
+      }
+      
+      refreshSyncStatus();
+      if (syncContext) {
+        syncContext.refreshSyncStatus();
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to ignore local changes");
+    } finally {
+      setIsIgnoringAllChanges(false);
     }
   };
 
@@ -2102,6 +2155,52 @@ export function DebugBubble() {
                 </ScrollArea>
               )}
             </div>
+            
+            {/* Advanced Options */}
+            {pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
+              <div className="border-t pt-3">
+                <button
+                  type="button"
+                  onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="button-toggle-advanced-options"
+                >
+                  {advancedOptionsOpen ? (
+                    <IconChevronDown className="h-3.5 w-3.5" />
+                  ) : (
+                    <IconChevronRight className="h-3.5 w-3.5" />
+                  )}
+                  Advanced options
+                </button>
+                
+                {advancedOptionsOpen && (
+                  <div className="mt-3 p-3 bg-muted/50 rounded-md space-y-2">
+                    <p className="text-xs text-muted-foreground">
+                      Discard all your local changes and reset to the remote version.
+                    </p>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={handleIgnoreAllChanges}
+                      disabled={isIgnoringAllChanges}
+                      data-testid="button-ignore-all-changes"
+                    >
+                      {isIgnoringAllChanges ? (
+                        <>
+                          <IconRefresh className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                          Resetting...
+                        </>
+                      ) : (
+                        <>
+                          <IconTrash className="h-3.5 w-3.5 mr-1.5" />
+                          Ignore all my local changes
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <DialogFooter>
@@ -2111,6 +2210,7 @@ export function DebugBubble() {
                 setCommitModalOpen(false);
                 setSelectedFileForCommit(null);
                 setFileCommitMessage("");
+                setAdvancedOptionsOpen(false);
               }}
               data-testid="button-close-commit-modal"
             >

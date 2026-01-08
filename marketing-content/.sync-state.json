@@ -13,9 +13,9 @@
       "remoteSha": "e5e9d3bd4c576f50c2d9678d7f51b0ab0647c6101a9016129bb0fb2ee3bae0e5"
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
-      "sha": "7ef21e67b236158544ad947482850d5ccabe8a884de8dbbc84f351f547612fac",
-      "lastModified": 1767797662687.7712,
-      "remoteSha": "7ef21e67b236158544ad947482850d5ccabe8a884de8dbbc84f351f547612fac"
+      "sha": "17e5f5d580f40742aab869408ece17bd07f8ece63da1d43aa3db1d836788f60b",
+      "lastModified": 1767801767891.6577,
+      "remoteSha": "17e5f5d580f40742aab869408ece17bd07f8ece63da1d43aa3db1d836788f60b"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",
@@ -24,7 +24,7 @@
     },
     "marketing-content/landings/ai-engineering-es/promoted.yml": {
       "sha": "82d616f77c84a48c4f790a1a1ae76670f98b7d0b418636e96ab912aa6d6c5aff",
-      "lastModified": 1767737491274.3281,
+      "lastModified": 1767801760071.6733,
       "remoteSha": "82d616f77c84a48c4f790a1a1ae76670f98b7d0b418636e96ab912aa6d6c5aff"
     },
     "marketing-content/landings/example-landing/_common.yml": {
@@ -744,7 +744,7 @@
     },
     "marketing-content/programs/full-stack/en.yml": {
       "sha": "e192113e41b2cb918ec249d88c67b2566a659c36cc0fa07d8c206f2c7a35fc24",
-      "lastModified": 1767737644752.601,
+      "lastModified": 1767799692938.5256,
       "remoteSha": "e192113e41b2cb918ec249d88c67b2566a659c36cc0fa07d8c206f2c7a35fc24"
     },
     "marketing-content/programs/full-stack/es.yml": {

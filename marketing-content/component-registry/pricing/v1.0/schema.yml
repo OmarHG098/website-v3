@@ -85,15 +85,11 @@ props:
       icon:
         type: string
         required: false
-        description: Icon name (certificate, cloud, etc.)
+        description: Icon name - supports Tabler icons (robot, certificate, cloud, etc.) or custom icons (RigobotIconTiny, Rigobot)
       text:
         type: string
         required: true
         description: Feature description
-      use_rigobot_icon:
-        type: boolean
-        required: false
-        description: Use Rigobot icon instead of standard icon
     description: List of included features
   cta:
     type: object

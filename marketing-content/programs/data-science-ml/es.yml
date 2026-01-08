@@ -332,16 +332,16 @@ sections:
       - api
     features_title: Accede a cientos de ejercicios, proyectos, tutoriales y cursos en las tecnologías más demandadas
     features:
-      - icon: certificate
-        text: Construye tu portafolio con cientos de proyectos del mundo real.
-      - icon: cloud
-        text: Miles de desafíos de código en la nube (sin necesidad de configuración).
-      - text: Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas.
-        use_rigobot_icon: true
-      - icon: certificate
-        text: Certificados de cursos
-      - icon: certificate
-        text: Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida.
+      - icon: "certificate"
+        text: "Construye tu portafolio con cientos de proyectos del mundo real."
+      - icon: "cloud"
+        text: "Miles de desafíos de código en la nube (sin necesidad de configuración)."
+      - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
+        icon: RigobotIconTiny
+      - icon: "certificate"
+        text: "Certificados de cursos"
+      - icon: "certificate"
+        text: "Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida."
     cta:
       text: Obtener plan
       url: /es/aplica

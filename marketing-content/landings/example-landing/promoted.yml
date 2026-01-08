@@ -63,6 +63,9 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
+    paddingY:
+      desktop: md none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
@@ -77,6 +80,48 @@ sections:
       - icon: Code
         title: Live Demo
         description: Watch a live demonstration of our AI coding assistant in action
+  - type: pricing
+    version: "1.0"
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn new skills every 30 min, never get stuck or lost again.
+    monthly:
+      discount_badge: 35% OFF
+      price: "38.99"
+      period: mo
+      original_price: "59.99"
+    yearly:
+      discount_badge: 35% OFF
+      price: "311.99"
+      period: yr
+      original_price: "479.99"
+      savings_badge: Save 3 months
+    tech_icons:
+      - html
+      - css
+      - javascript
+      - react
+      - python
+      - nodejs
+      - git
+      - bootstrap
+      - api
+      - settings
+    features_title: Access hundreds of exercises, projects tutorials and courses
+    features:
+      - icon: IconSettings
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of cloud-based coding challenges (no setup needed).
+      - icon: RigobotIconTiny
+        text: AI-powered feedback as you code.
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school.
+    cta:
+      text: Get plan
+      url: /signup
+      variant: primary
   - type: stats
     version: "1.0"
     title: Join 50,000+ Learnerss

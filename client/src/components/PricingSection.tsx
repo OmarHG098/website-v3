@@ -4,13 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   IconFlame,
-  IconApi,
-  IconSettings,
   IconCertificate,
-  IconCloud,
-  IconRobot,
   IconSchool,
-  type Icon,
 } from "@tabler/icons-react";
 import {
   SiGit,
@@ -37,9 +32,9 @@ import {
   SiN8N,
 } from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
-import RigobotIconTiny from "@/components/custom-icons/RigobotIconTiny";
 import Matplotlib from "@/components/custom-icons/Matplotlib";
 import Marquee from "react-fast-marquee";
+import { getIcon } from "@/lib/icons";
 
 interface PricingSectionProps {
   data: PricingSectionType;
@@ -73,13 +68,6 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   n8n: SiN8N,
 };
 
-const featureIconMap: Record<string, Icon> = {
-  api: IconApi,
-  settings: IconSettings,
-  certificate: IconCertificate,
-  cloud: IconCloud,
-  robot: IconRobot,
-};
 
 export function PricingSection({ data }: PricingSectionProps) {
   const { i18n } = useTranslation();
@@ -230,33 +218,28 @@ export function PricingSection({ data }: PricingSectionProps) {
               <div className="border-t border-border" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {data.features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-2"
-                    data-testid={`feature-${index}`}
-                  >
-                    <div className="flex-shrink-0 mt-0.5">
-                      {feature.use_rigobot_icon ? (
-                        <RigobotIconTiny width="27px" height="17px" />
-                      ) : feature.icon ? (
-                        (() => {
-                          const IconComponent = featureIconMap[feature.icon.toLowerCase()];
-                          return IconComponent ? (
-                            <IconComponent size={22} className="text-primary" />
-                          ) : (
-                            <IconRobot size={22} className="text-primary" />
-                          );
-                        })()
-                      ) : (
-                        <IconCertificate size={22} className="text-primary" />
-                      )}
+                {data.features.map((feature, index) => {
+                  const FeatureIcon = feature.icon ? getIcon(feature.icon) : null;
+                  
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-start gap-2"
+                      data-testid={`feature-${index}`}
+                    >
+                      <div className="flex-shrink-0 mt-0.5">
+                        {FeatureIcon ? (
+                          <FeatureIcon width="22px" height="22px" size={22} className="text-primary" />
+                        ) : (
+                          <IconCertificate size={22} className="text-primary" />
+                        )}
+                      </div>
+                      <span className="text-[#061258] text-xs leading-relaxed">
+                        {feature.text}
+                      </span>
                     </div>
-                    <span className="text-[#061258] text-xs leading-relaxed">
-                      {feature.text}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -430,33 +413,28 @@ export function PricingSection({ data }: PricingSectionProps) {
             <div className="border-t border-border" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {data.features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-2"
-                  data-testid={`feature-${index}`}
-                >
-                  <div className="flex-shrink-0 mt-0.5">
-                    {feature.use_rigobot_icon ? (
-                      <RigobotIconTiny width="27px" height="17px" />
-                    ) : feature.icon ? (
-                      (() => {
-                        const IconComponent = featureIconMap[feature.icon.toLowerCase()];
-                        return IconComponent ? (
-                          <IconComponent size={22} className="text-primary" />
-                        ) : (
-                          <IconRobot size={22} className="text-primary" />
-                        );
-                      })()
-                    ) : (
-                      <IconCertificate size={22} className="text-primary" />
-                    )}
+              {data.features.map((feature, index) => {
+                const IconComponent = feature.icon ? getIcon(feature.icon) : null;
+                
+                return (
+                  <div
+                    key={index}
+                    className="flex items-start gap-2"
+                    data-testid={`feature-${index}`}
+                  >
+                    <div className="flex-shrink-0 mt-0.5">
+                      {IconComponent ? (
+                        <IconComponent width="22px" height="22px" size={22} className="text-primary" />
+                      ) : (
+                        <IconCertificate size={22} className="text-primary" />
+                      )}
+                    </div>
+                    <span className="text-[#061258] text-xs leading-relaxed">
+                      {feature.text}
+                    </span>
                   </div>
-                  <span className="text-[#061258] text-xs leading-relaxed">
-                    {feature.text}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

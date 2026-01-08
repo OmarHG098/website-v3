@@ -83,59 +83,57 @@ sections:
       loop: false
   - type: awards_marquee
     version: "1.0"
-    subtitle: "Recognized, Top-Rated & Recommended"
-    paddingY:
-      mobile: none lg
-      desktop: none lg
+    speed: 40
+    gradient: true
+    gradientWidth: 500
+    bottom_title: Recognized, Top-Rated, and Recommended
+    items:
+      - id: switchup-2025
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-10 md:h-16
+      - id: excelencia-educativa
+        alt: Excelencia Educativa - Institutional Quality Online Education
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: h-10 md:h-16
+      - id: course-report-2024
+        alt: Course Report - Best Coding Bootcamp 2024
+        logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
+        logoHeight: h-10 md:h-16
+      - id: tech-hub
+        alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: h-10 md:h-16
+      - id: ebootcamp
+        alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: h-10 md:h-16
+      - id: premios-tecnologia
+        alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: h-10 md:h-20
+      - id: newsweek
+        alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: h-10 md:h-16
+      - id: reviews-coursereport
+        alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: h-10 md:h-16
+      - id: forbes-1
+        alt: Forbes - Top Coding Bootcamp
+        logo: /attached_assets/forbes-logo-award_1764709625651.webp
+        logoHeight: h-10 md:h-16
+      - id: fortune-1
+        alt: Fortune - Best Education Company
+        logo: /attached_assets/fortune-logo_1764709618095.webp
+        logoHeight: h-10 md:h-16
     marginY:
       mobile: md none
       desktop: md none
-    speed: 40
-    pauseOnHover: true
-    gradient: true
-    gradientWidth: 500
-    items:
-      - id: switchup-2025
-        logo: /attached_assets/switchup_1765590146414.webp
-        alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-10 md:h-16
-      - id: excelencia-educativa
-        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
-        alt: Excelencia Educativa - Institutional Quality Online Education
-        logoHeight: h-10 md:h-16
-      - id: course-report-2024
-        logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-        alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-10 md:h-16
-      - id: tech-hub
-        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
-        alt: South Florida Tech Hub
-        logoHeight: h-10 md:h-16
-      - id: ebootcamp
-        logo: /attached_assets/ebootcamp-top_1765549056325.png
-        alt: eBootcamp Top
-        logoHeight: h-10 md:h-16
-      - id: premios-tecnologia
-        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
-        alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-10 md:h-20
-      - id: newsweek
-        logo: /attached_assets/newsweek_1764709608255.webp
-        alt: Newsweek
-        logoHeight: h-10 md:h-16
-      - id: reviews-coursereport
-        logo: /attached_assets/reviews_1765549549051.png
-        alt: 4.9 on Course Report Reviews
-        logoHeight: h-10 md:h-16
-      - id: forbes-1
-        logo: /attached_assets/forbes-logo-award_1764709625651.webp
-        alt: Forbes - Top Coding Bootcamp
-        logoHeight: h-10 md:h-16
-      - id: fortune-1
-        logo: /attached_assets/fortune-logo_1764709618095.webp
-        alt: Fortune - Best Education Company
-        logoHeight: h-10 md:h-16
-    bottom_title: "Recognized, Rated, and Recommended"
+    paddingY:
+      mobile: none lg
+      desktop: none lg
   - type: features_grid
     version: "1.0"
     variant: stats-text-card
@@ -327,8 +325,8 @@ sections:
         show_rigobot_logo: true
         bullets:
           - text: Get instant feedback from Rigobot, our custom AI tutor
-          - text: Gives advice adjusted to your skill level and progress
-          - text: Helps with debugging and problem-solving tasks
+          - text: Receive advice adjusted to your skill level and progress
+          - text: Get 24/7 help with debugging and problem-solving
           - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
@@ -432,17 +430,17 @@ sections:
     features_title: A progressive path covering the essential skills from fundamentals to real-world AI engineering.
     features:
       - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
+        text: Regular tuition is $12,999. Pay upfront and get 10% discount, or spread payments interest-free over 6 months.
       - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
-      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        use_rigobot_icon: true
+        text: Finance your tuition through Climb, Fortify or Lumion (credit check required). Choose among 24-36-48-60 month plans.
+      - text: 2–3 partial scholarships available per cohort for highly qualified applicants.
+        icon: RigobotIconTiny
       - icon: certificate
         text: Course certificates
       - icon: certificate
-        text: Earn certificates from a USA certified school by the florida department of education.
+        text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
-      text: Get plan
+      text: Get more info
       url: "#hero-form"
       variant: primary
     paddingY:

@@ -385,7 +385,7 @@ export function EditableSection({ children, section, index, sectionType, content
       {/* Edit controls - visible on hover */}
       <div 
         className={`
-          absolute top-2 right-2 z-50 flex items-center gap-1 
+          absolute top-2 right-2 z-30 flex items-center gap-1 
           transition-opacity duration-150
           ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
         `}
@@ -581,7 +581,7 @@ export function EditableSection({ children, section, index, sectionType, content
         return (
           <div 
             className={`
-              absolute top-14 right-2 z-50 
+              absolute top-14 right-2 z-30 
               flex items-center gap-0.5 px-1.5 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs
               transition-opacity duration-150
               ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
@@ -598,7 +598,7 @@ export function EditableSection({ children, section, index, sectionType, content
       {/* Section label - bottom left */}
       <div 
         className={`
-          absolute bottom-2 left-2 z-50 
+          absolute bottom-2 left-2 z-30 
           px-2 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs text-muted-foreground
           transition-opacity duration-150
           ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
