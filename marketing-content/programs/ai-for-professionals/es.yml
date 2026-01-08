@@ -11,25 +11,63 @@ meta:
 
 sections:
   - type: hero
-    variant: singleColumn
+    variant: course
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: "Programa de Carrera"
-    title: "IA para Profesionales"
-    subtitle: "Mantente relevante en tu carrera. Lidera con IA. Adquiere las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
-    trust_bar:
-      rating: "4.9"
-      rating_count: "1,294"
-      trusted_text: "Confiado por profesionales en todo el mundo"
-    cta_buttons:
-      - text: "Aplicar Ahora"
-        url: "/es/aplica"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Descargar Temario"
-        url: "/syllabus/ai-for-professionals"
-        variant: "outline"
-        icon: "Download"
+    title: IA para Profesionales
+    title_highlight: IA para Profesionales
+    subtitle: Mantente relevante en tu carrera. Lidera con IA. Adquiere las habilidades de IA en solo 6 semanas.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/11.jpg
+        - https://randomuser.me/api/portraits/men/12.jpg
+        - https://randomuser.me/api/portraits/women/13.jpg
+        - https://randomuser.me/api/portraits/men/14.jpg
+      count: +1,000 profesionales inscritos
+    bullet_points:
+      - Domina herramientas de IA generativa como ChatGPT, Claude y Gemini
+      - Crea contenido profesional con IA: imágenes, videos y documentos
+      - Automatiza flujos de trabajo sin necesidad de programar
+      - Construye chatbots y sitios web potenciados por IA
+    tutors:
+      - name: Instructor Experto
+        role: Especialista en IA
+        image: https://randomuser.me/api/portraits/men/45.jpg
+      - name: Rigo
+        role: Tutor de IA
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Tus tutores:"
+    description: Los profesionales con habilidades de IA ganan un promedio de 56% más. Nuestro programa intensivo de 6 semanas te enseña a aplicar IA en cualquier industria para mayor eficiencia, creatividad e impacto inmediato.
+    media:
+      type: video
+      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      thumbnail: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop
+      alt: Introducción al programa IA para Profesionales
+    signup_card:
+      title: Aplica al Programa IA para Profesionales
+      description: Comienza tu camino para liderar con IA
+      cta_button:
+        text: Aplicar Ahora
+        url: /es/aplica
+        variant: primary
+      login_link:
+        text: ¿Ya eres estudiante? Inicia sesión aquí.
+        url: /login
+      features:
+        - icon: book
+          text: Lecturas y videos
+          count: 30+
+        - icon: code
+          text: Ejercicios Prácticos
+          count: 50+
+        - icon: briefcase
+          text: Proyectos Reales
+          count: "6"
+        - icon: robot
+          text: Retroalimentación con IA
+        - icon: calendar
+          text: Clases en Vivo 2x/semana
+        - icon: users
+          text: Mentoría 1:1
     paddingY:
       desktop: md
     marginY:
@@ -74,25 +112,25 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: md lg
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: Habilidades de IA que Impulsan Resultados Reales
     subtitle: Únete a profesionales transformando sus carreras con IA
     description: Los trabajadores con habilidades de IA están obteniendo salarios premium y avanzando más rápido. Nuestro programa de 6 semanas entrega las habilidades prácticas que necesitas para liderar con IA en cualquier industria.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 56%
+      - id: "1"
+        value: 56%
         title: Prima salarial promedio para trabajadores con habilidades de IA
-      - value: 6 semanas
+      - id: "2"
+        value: 6 semanas
         title: Programa intensivo para dominar herramientas de IA
-      - value: 40%
+      - id: "3"
+        value: 40%
         title: De trabajadores en EE.UU. ya usan IA en el trabajo
-    paddingY:
-      desktop: md
-    marginY:
-      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -164,6 +202,8 @@ sections:
         icon: IconRobot
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: projects
     title: "Aprende Construyendo Proyectos Reales"
     subtitle: "Las tareas que abordarás se asemejarán a las encontradas en un entorno profesional real. Aquí tienes un vistazo de en qué estarás trabajando:"
@@ -242,6 +282,8 @@ sections:
           variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: certificate
     title: Certificado y Red Profesional
     description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Aplica habilidades de IA en cualquier rol:"
@@ -327,7 +369,7 @@ sections:
         text: "Obtén certificados de una escuela certificada de EE.UU. por el Departamento de Educación de Florida."
     cta:
       text: "Obtener plan"
-      url: "/signup"
+      url: "/es/aplica"
       variant: "primary"
     paddingY:
       desktop: md
@@ -402,7 +444,7 @@ sections:
       desktop: md
   - type: faq
     version: "1.0"
-    background: "muted"
+    background: hsl(var(--muted))
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito algún conocimiento técnico previo?"
@@ -421,6 +463,8 @@ sections:
       button_url: "/contacto"
     paddingY:
       desktop: md
+    marginY:
+      desktop: none
   - type: cta_banner
     version: "1.0"
     title: "¿Listo para Liderar con IA?"

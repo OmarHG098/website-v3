@@ -19,24 +19,62 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: singleColumn
-    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
+    variant: course
     title: Conviértete en Desarrollador Full Stack
-    subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo.
-    badge: Programa de Carrera
-    cta_buttons:
-      - text: Aplicar Ahora
+    title_highlight: Full Stack
+    subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/5.jpg
+        - https://randomuser.me/api/portraits/men/6.jpg
+        - https://randomuser.me/api/portraits/women/7.jpg
+        - https://randomuser.me/api/portraits/men/8.jpg
+      count: +2,500 estudiantes inscritos
+    bullet_points:
+      - Domina HTML, CSS, JavaScript y React para interfaces modernas
+      - Construye APIs robustas con Python y Flask
+      - Aprende bases de datos SQL y arquitectura de aplicaciones
+      - Despliega aplicaciones completas en la nube
+    tutors:
+      - name: Alejandro Sánchez
+        role: Instructor Principal
+        image: https://randomuser.me/api/portraits/men/32.jpg
+      - name: Rigo
+        role: Tutor de IA
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Tus tutores:"
+    description: Conviértete en el desarrollador que las empresas buscan. Nuestro programa intensivo de 16 semanas combina proyectos prácticos con mentoría personalizada, respaldado por una tasa de contratación del 84% y nuestra garantía de empleo.
+    media:
+      type: video
+      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      thumbnail: https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop
+      alt: Introducción al programa Full Stack
+    signup_card:
+      title: Aplica al Programa Full Stack
+      description: Comienza tu camino para convertirte en Desarrollador Full Stack
+      cta_button:
+        text: Aplicar Ahora
         url: /es/aplica
         variant: primary
-        icon: Rocket
-      - text: Descargar Programa
-        url: /programa/full-stack
-        variant: outline
-        icon: Download
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $65K+ salario inicial promedio
+      login_link:
+        text: ¿Ya eres estudiante? Inicia sesión aquí.
+        url: /login
+      features:
+        - icon: book
+          text: Lecturas y videos
+          count: 80+
+        - icon: code
+          text: Ejercicios Interactivos
+          count: 200+
+        - icon: briefcase
+          text: Proyectos Reales
+          count: "15"
+        - icon: robot
+          text: Retroalimentación con IA
+        - icon: calendar
+          text: Sesiones en Vivo Semanales
+        - icon: users
+          text: Mentoría 1:1
     paddingY:
       desktop: md
     marginY:
@@ -81,23 +119,25 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: md lg
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
     subtitle: Sí, y tenemos los números para respaldarlo
     description: Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general. Nuestro compromiso con tu éxito está respaldado por resultados reales, no solo promesas.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 84%
+      - id: "1"
+        value: 84%
         title: Tasa de colocación laboral en 6 meses
-      - value: 150%
+      - id: "2"
+        value: 150%
         title: Aumento salarial promedio después de graduarse
-      - value: $65K+
+      - id: "3"
+        value: $65K+
         title: Salario inicial promedio para graduados
-    paddingY:
-      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -173,6 +213,8 @@ sections:
         icon: IconUsers
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: projects
     title: Aprende Construyendo Proyectos Reales
     subtitle: "Las tareas que abordarás se asemejarán mucho a las que encontrarás en un puesto tecnológico real. Aquí tienes un vistazo de lo que trabajarás:"
@@ -256,6 +298,8 @@ sections:
           variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: certificate
     title: Certificado y Red de Carreras
     description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien remunerados:"
@@ -338,7 +382,7 @@ sections:
         text: Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida.
     cta:
       text: Obtener plan
-      url: /registro
+      url: /es/aplica
       variant: primary
     paddingY:
       desktop: md
@@ -446,7 +490,7 @@ sections:
     subtitle: Únete a miles de graduados que han transformado sus carreras con 4Geeks.
     buttons:
       - text: Comienza Ahora
-        url: /registro
+        url: /es/aplica
         variant: secondary
       - text: Habla con un Asesor
         url: /contacto

@@ -11,25 +11,63 @@ meta:
 
 sections:
   - type: hero
-    variant: singleColumn
+    variant: course
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: "Programa de Carrera"
-    title: "Ciencia de Datos y Machine Learning con IA"
-    subtitle: "Entra a uno de los campos tecnológicos de más rápido crecimiento y mejores salarios. Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales—respaldado por mentoría experta, 84% de tasa de contratación en 6 meses y nuestra garantía de empleo."
-    trust_bar:
-      rating: "4.5"
-      rating_count: "1,294"
-      trusted_text: "$80K+ salario inicial promedio"
-    cta_buttons:
-      - text: "Aplicar Ahora"
-        url: "/es/aplica"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Descargar Syllabus"
-        url: "/syllabus/data-science-ml"
-        variant: "outline"
-        icon: "Download"
+    title: Ciencia de Datos y Machine Learning con IA
+    title_highlight: Ciencia de Datos
+    subtitle: Entra a uno de los campos tecnológicos de más rápido crecimiento y mejores salarios.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/31.jpg
+        - https://randomuser.me/api/portraits/men/32.jpg
+        - https://randomuser.me/api/portraits/women/33.jpg
+        - https://randomuser.me/api/portraits/men/34.jpg
+      count: +1,500 estudiantes inscritos
+    bullet_points:
+      - Domina Python, Pandas, NumPy y Jupyter Notebooks
+      - Construye modelos de Machine Learning con Scikit-learn y TensorFlow
+      - Aprende SQL, web scraping y pipelines de datos
+      - Despliega modelos de ML en aplicaciones web reales
+    tutors:
+      - name: Instructor de Data Science
+        role: Instructor Principal
+        image: https://randomuser.me/api/portraits/men/65.jpg
+      - name: Rigo
+        role: Tutor de IA
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Tus tutores:"
+    description: Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales—respaldado por mentoría experta, 84% de tasa de contratación en 6 meses y nuestra garantía de empleo.
+    media:
+      type: video
+      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      thumbnail: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop
+      alt: Introducción al programa de Data Science
+    signup_card:
+      title: Aplica al Programa de Data Science
+      description: Comienza tu camino en ciencia de datos
+      cta_button:
+        text: Aplicar Ahora
+        url: /es/aplica
+        variant: primary
+      login_link:
+        text: ¿Ya eres estudiante? Inicia sesión aquí.
+        url: /login
+      features:
+        - icon: book
+          text: Lecturas y videos
+          count: 70+
+        - icon: code
+          text: Ejercicios Interactivos
+          count: 150+
+        - icon: briefcase
+          text: Proyectos de ML
+          count: "12"
+        - icon: robot
+          text: Retroalimentación con IA
+        - icon: calendar
+          text: Sesiones en Vivo Semanales
+        - icon: users
+          text: Mentoría 1:1
     paddingY:
       desktop: md
     marginY:
@@ -75,24 +113,26 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: md lg
 
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
     subtitle: Sí, y tenemos los números para respaldarlo
     description: Estas estadísticas reflejan toda nuestra comunidad de graduados y demuestran el impacto comprobado de nuestros programas. Nuestro compromiso con tu éxito está respaldado por resultados reales, no solo promesas.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 84%
+      - id: "1"
+        value: 84%
         title: Tasa de colocación laboral en 6 meses
-      - value: 150%
+      - id: "2"
+        value: 150%
         title: Aumento salarial promedio después de graduarse
-      - value: $80K+
+      - id: "3"
+        value: $80K+
         title: Salario inicial promedio para científicos de datos
-    paddingY:
-      desktop: none
 
   - type: syllabus
     version: "1.0"
@@ -169,6 +209,8 @@ sections:
         icon: IconRocket
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
 
   - type: projects
     title: "Aprende Construyendo Proyectos Reales"
@@ -249,6 +291,8 @@ sections:
           variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
 
   - type: certificate
     title: Certificado y Red de Carreras

@@ -19,24 +19,62 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: singleColumn
-    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
+    variant: course
     title: Become a Full Stack Developer
-    subtitle: Launch a future-proof career with $65K+ average starting salaries. Train in an AI-powered full-stack curriculum, backed by unlimited mentorship, an 84% hiring rate within 6 months, and our job guarantee.
-    badge: Career Program
-    cta_buttons:
-      - text: Apply Now
+    title_highlight: Full Stack Developer
+    subtitle: Launch your web development career in 16 weeks with $65K+ starting salaries.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +1,000 students enrolled
+    bullet_points:
+      - Master HTML, CSS, JavaScript, and React for modern frontends
+      - Build scalable backend APIs with Python and Flask
+      - Learn database design, authentication, and deployment
+      - Work on real-world projects with industry best practices
+    tutors:
+      - name: Expert Instructor
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Your tutors:"
+    description: Become the full-stack developer companies can't wait to hire. Our 16-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $65K+ starting salaries.
+    media:
+      type: video
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=450&fit=crop
+      alt: Full Stack Developer program introduction
+    signup_card:
+      title: Apply to the Full Stack Program
+      description: Start your journey to becoming a Full Stack Developer
+      cta_button:
+        text: Apply Now
         url: /en/apply
         variant: primary
-        icon: Rocket
-      - text: Download Syllabus
-        url: /syllabus/full-stack
-        variant: outline
-        icon: Download
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $65K+ average starting salary
+      login_link:
+        text: Already a student? Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: 40+
+        - icon: code
+          text: Interactive Exercises
+          count: 100+
+        - icon: briefcase
+          text: Real Projects
+          count: "10"
+        - icon: robot
+          text: AI-Powered Feedback
+        - icon: calendar
+          text: Live Sessions Weekly
+        - icon: users
+          text: 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
@@ -83,21 +121,21 @@ sections:
       desktop: none
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: Does the Job Guarantee deliver results you can count on?
     subtitle: Yes, and we've got the numbers to back it up
     description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 84%
+      - id: "1"
+        value: 84%
         title: Job placement rate within 6 months
-      - value: 150%
+      - id: "2"
+        value: 150%
         title: Average salary increase after graduation
-      - value: $65K+
+      - id: "3"
+        value: $65K+
         title: Average starting salary for graduates
-    paddingY:
-      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules

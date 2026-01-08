@@ -19,24 +19,62 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: singleColumn
-    background: linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))
+    variant: course
     title: Conviértete en Ingeniero de IA
-    subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas con mentoría personalizada 1:1 y orientación experta. Conviértete en el profesional que las empresas no pueden esperar a contratar.
-    badge: Programa de Carrera
-    cta_buttons:
-      - text: Aplicar Ahora
+    title_highlight: Ingeniero de IA
+    subtitle: Prospera en la tecnología de hoy y da forma al mañana. Inicia tu carrera impulsada por IA en 20 semanas.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +500 estudiantes inscritos
+    bullet_points:
+      - Domina modelos de lenguaje grandes (LLMs) y arquitecturas transformer
+      - Construye aplicaciones de IA listas para producción con Python y frameworks modernos
+      - Aprende ingeniería de prompts y técnicas de fine-tuning
+      - Despliega soluciones de IA escalables usando infraestructura en la nube
+    tutors:
+      - name: Charly Chacón
+        role: Instructor Principal
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: Tutor de IA
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Tus tutores:"
+    description: Conviértete en el profesional de IA que las empresas no pueden esperar a contratar. Nuestro programa intensivo de 20 semanas combina proyectos prácticos con mentoría personalizada para prepararte para roles con salarios iniciales de $95K-$135K.
+    media:
+      type: video
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop
+      alt: Introducción al programa de Ingeniería de IA
+    signup_card:
+      title: Aplica al Programa de Ingeniería de IA
+      description: Comienza tu camino para convertirte en Ingeniero de IA
+      cta_button:
+        text: Aplicar Ahora
         url: /es/aplica
         variant: primary
-        icon: Rocket
-      - text: Descargar Programa
-        url: /programa/ai-engineering
-        variant: outline
-        icon: Download
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: $95K+ salario inicial promedio
+      login_link:
+        text: ¿Ya eres estudiante? Inicia sesión aquí.
+        url: /login
+      features:
+        - icon: book
+          text: Lecturas y videos
+          count: 50+
+        - icon: code
+          text: Ejercicios Interactivos
+          count: 100+
+        - icon: briefcase
+          text: Proyectos Reales
+          count: "12"
+        - icon: robot
+          text: Retroalimentación con IA
+        - icon: calendar
+          text: Sesiones en Vivo Semanales
+        - icon: users
+          text: Mentoría 1:1
     paddingY:
       desktop: md
     marginY:
@@ -81,23 +119,25 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: md lg
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: ¿La Garantía de Empleo entrega resultados en los que puedes confiar?
     subtitle: Sí, y tenemos los números para respaldarlo
     description: Estas estadísticas reflejan nuestra comunidad completa de graduados y demuestran el impacto comprobado de nuestros programas en general. Nuestro compromiso con tu éxito está respaldado por resultados reales, no solo promesas.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 3.5M
+      - id: "1"
+        value: 3.5M
         title: Roles relacionados con IA esperados para 2026
-      - value: 47%
+      - id: "2"
+        value: 47%
         title: Crecimiento año tras año en ofertas de trabajo de IA
-      - value: 20-40%
-        title: Primas salariales por habilidades de ingeniería de IA
-    paddingY:
-      desktop: none
+      - id: "3"
+        value: $95K-$135K
+        title: Salario inicial promedio para Ingenieros de IA
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -180,6 +220,8 @@ sections:
         icon: IconBolt
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -199,7 +241,7 @@ sections:
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: ¡Empieza ahora!
-          url: /apply
+          url: /es/aplica
           variant: primary
       - icon: TrendingUp
         title: Triunfa en tech con apoyo profesional para la era de IA
@@ -213,7 +255,7 @@ sections:
         video_url: https://youtu.be/-2ZvlgDnltc
         cta:
           text: ¡Empieza ahora!
-          url: /apply
+          url: /es/aplica
           variant: primary
       - icon: Headset
         title: Mentoría 1:1 ilimitada y comunidad activa
@@ -227,10 +269,12 @@ sections:
         image_id: mentoring_zoom_call
         cta:
           text: ¡Empieza ahora!
-          url: /apply
+          url: /es/aplica
           variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: certificate
     title: Certificado y Red de Carreras
     description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien remunerados:"
@@ -313,7 +357,7 @@ sections:
         text: Obtén certificados de una escuela certificada en EE.UU. por el departamento de educación de Florida.
     cta:
       text: Obtener plan
-      url: /registro
+      url: /es/aplica
       variant: primary
     paddingY:
       desktop: md
@@ -421,7 +465,7 @@ sections:
     subtitle: Únete a miles de graduados que han transformado sus carreras con 4Geeks.
     buttons:
       - text: Comienza Ahora
-        url: /registro
+        url: /es/aplica
         variant: secondary
       - text: Habla con un Asesor
         url: /contacto

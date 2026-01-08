@@ -7,25 +7,63 @@ meta:
     - /coding-bootcamp/applied-ai-course
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: Career Program
+    variant: course
     title: AI for Professionals
-    subtitle: Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.
-    trust_bar:
-      rating: "4.9"
-      rating_count: 1,294
-      trusted_text: Trusted by professionals worldwide
-    cta_buttons:
-      - text: Apply Now
+    title_highlight: AI for Professionals
+    subtitle: Stay relevant in your career. Lead with AI in just 6 weeks.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +4,000 professionals enrolled
+    bullet_points:
+      - Master generative AI tools like ChatGPT, Claude, and Gemini
+      - Create professional content with AI-powered image and video tools
+      - Automate workflows without coding using Zapier and no-code platforms
+      - Build chatbots and websites to enhance your professional presence
+    tutors:
+      - name: Expert Instructor
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Your tutors:"
+    description: Gain the AI skills to stay competitive and advance your career. Learn to apply AI at work for greater efficiency, creativity, and impact. Workers with AI skills earn 56% more on average.
+    media:
+      type: video
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop
+      alt: AI for Professionals program introduction
+    signup_card:
+      title: Apply to the AI for Professionals Program
+      description: Start your journey to mastering AI tools
+      cta_button:
+        text: Apply Now
         url: /en/apply
         variant: primary
-        icon: Rocket
-      - text: Download Syllabus
-        url: /syllabus/ai-for-professionals
-        variant: outline
-        icon: Download
+      login_link:
+        text: Already a student? Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: 30+
+        - icon: code
+          text: Interactive Exercises
+          count: 50+
+        - icon: briefcase
+          text: Real Projects
+          count: "6"
+        - icon: robot
+          text: AI-Powered Feedback
+        - icon: calendar
+          text: Live Sessions Weekly
+        - icon: users
+          text: 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
@@ -72,23 +110,21 @@ sections:
       desktop: none
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: AI Skills That Drive Real Career Results
     subtitle: Join professionals transforming their careers with AI
     description: Workers with AI skills are commanding premium salaries and advancing faster. Our 6-week program delivers the practical skills you need to lead with AI in any industry.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 56%
+      - id: "1"
+        value: 56%
         title: Average wage premium for AI-skilled workers
-      - value: 6 weeks
+      - id: "2"
+        value: 6 weeks
         title: Intensive program to master AI tools
-      - value: 40%
+      - id: "3"
+        value: 40%
         title: Of US workers now use AI at work
-    paddingY:
-      desktop: md
-    marginY:
-      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules

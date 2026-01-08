@@ -7,25 +7,63 @@ meta:
     - /coding-bootcamp/cybersecurity
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: Career Program
+    variant: course
     title: Become a Cybersecurity Specialist
-    subtitle: Launch a high-paying career in one of tech's most in-demand fields. Learn to defend systems and respond to real-world cyber threats with a hands-on, AI-integrated curriculum—designed by leading cybersecurity experts and backed by a job guarantee option.
-    trust_bar:
-      rating: "4.5"
-      rating_count: 1,294
-      trusted_text: Trusted by 2.5K+ learners
-    cta_buttons:
-      - text: Apply Now
+    title_highlight: "Cybersecurity Specialist"
+    subtitle: Defend systems, respond to threats, and launch a high-paying security career in 16 weeks.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +2,500 students enrolled
+    bullet_points:
+      - Master network security fundamentals and threat detection
+      - Learn penetration testing with industry-standard tools
+      - Build incident response and digital forensics skills
+      - Prepare for EJPT and CEH certifications
+    tutors:
+      - name: Security Expert
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Your tutors:"
+    description: Become the cybersecurity professional companies can't wait to hire. Our 16-week intensive program combines hands-on labs with personalized mentorship to prepare you for roles with $70K-$130K starting salaries.
+    media:
+      type: video
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop
+      alt: Cybersecurity program introduction
+    signup_card:
+      title: Apply to the Cybersecurity Program
+      description: Start your journey to becoming a Cybersecurity Specialist
+      cta_button:
+        text: Apply Now
         url: /en/apply
         variant: primary
-        icon: Rocket
-      - text: Download Syllabus
-        url: /syllabus/cybersecurity
-        variant: outline
-        icon: Download
+      login_link:
+        text: Already a student? Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: 40+
+        - icon: code
+          text: Interactive Exercises
+          count: 80+
+        - icon: briefcase
+          text: Real Projects
+          count: "10"
+        - icon: robot
+          text: AI-Powered Feedback
+        - icon: calendar
+          text: Live Sessions Weekly
+        - icon: users
+          text: 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
@@ -72,21 +110,21 @@ sections:
       desktop: none
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: Cybersecurity Specialists Are in High Demand
     subtitle: The numbers don't lie—cybersecurity is the future
     description: With millions of unfilled positions and rapid job growth, there's never been a better time to enter this field. Our program prepares you for immediate impact.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 3.5M+
+      - id: "1"
+        value: 3.5M+
         title: Unfilled cybersecurity positions globally
-      - value: 35%
+      - id: "2"
+        value: 35%
         title: Job growth projected through 2032
-      - value: "16"
+      - id: "3"
+        value: "16"
         title: Weeks to launch your security career
-    paddingY:
-      desktop: md
   - type: syllabus
     version: "1.0"
     variant: program-modules

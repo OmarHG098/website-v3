@@ -11,25 +11,63 @@ meta:
 
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
-    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
-    badge: "Career Program"
-    title: "Data Science and Machine Learning with AI"
-    subtitle: "Break into one of tech's fastest-growing, highest-paying fields. Learn to analyze data, build predictive models, and use AI tools to solve real-world problems—backed by expert mentorship, an 84% hire rate within 6 months, and our job guarantee."
-    trust_bar:
-      rating: "4.5"
-      rating_count: "1,294"
-      trusted_text: "$80K+ average starting salary"
-    cta_buttons:
-      - text: "Apply Now"
-        url: "/en/apply"
-        variant: "primary"
-        icon: "Rocket"
-      - text: "Download Syllabus"
-        url: "/syllabus/data-science-ml"
-        variant: "outline"
-        icon: "Download"
+    variant: course
+    title: Data Science and Machine Learning with AI
+    title_highlight: Data Science
+    subtitle: Master data science and ML in 16 weeks. Build predictive models and launch a career with $80K+ starting salaries.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +500 students enrolled
+    bullet_points:
+      - Master Python, Pandas, and data visualization for analysis
+      - Build machine learning models with TensorFlow and Scikit-learn
+      - Learn SQL, data pipelines, and real-world data collection
+      - Deploy ML applications to production environments
+    tutors:
+      - name: Charly Chacón
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: /attached_assets/rigobot-logo_1764707022198.webp
+    tutors_label: "Your tutors:"
+    description: Become the data scientist companies can't wait to hire. Our 16-week program combines hands-on projects with personalized mentorship to prepare you for roles with $80K+ starting salaries.
+    media:
+      type: video
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
+      thumbnail: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop
+      alt: Data Science program introduction
+    signup_card:
+      title: Apply to the Data Science Program
+      description: Start your journey to becoming a Data Scientist
+      cta_button:
+        text: Apply Now
+        url: /en/apply
+        variant: primary
+      login_link:
+        text: Already a student? Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: 50+
+        - icon: code
+          text: Interactive Exercises
+          count: 100+
+        - icon: briefcase
+          text: Real Projects
+          count: "10"
+        - icon: robot
+          text: AI-Powered Feedback
+        - icon: calendar
+          text: Live Sessions Weekly
+        - icon: users
+          text: 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
@@ -78,21 +116,21 @@ sections:
 
   - type: features_grid
     version: "1.0"
-    variant: stats-cards
-    background: bg-primary/5
+    variant: stats-text
     title: Does the Job Guarantee deliver results you can count on?
     subtitle: Yes, and we've got the numbers to back it up
     description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
-    card_color: bg-muted
+    background: bg-muted/30
     items:
-      - value: 84%
+      - id: "1"
+        value: 84%
         title: Job placement rate within 6 months
-      - value: 150%
+      - id: "2"
+        value: 150%
         title: Average salary increase after graduation
-      - value: $80K+
+      - id: "3"
+        value: $80K+
         title: Average starting salary for data scientists
-    paddingY:
-      desktop: none
 
   - type: syllabus
     version: "1.0"
