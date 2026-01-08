@@ -85,9 +85,30 @@ export class ContentAdapter {
     const contextBlock = buildContextBlock(context);
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
+    // Build example reference block if example YAML is provided
+    let exampleBlock = "";
+    if (options.targetExampleYaml) {
+      exampleBlock = `
+
+## REFERENCE EXAMPLE (USE THIS AS A TEMPLATE)
+
+This is a working example of the target component. Your output MUST follow this exact structure:
+
+\`\`\`yaml
+${options.targetExampleYaml}
+\`\`\`
+
+CRITICAL: Copy the exact field names and nested structure from this example. Only change the text content to match the source.`;
+    }
+    
+    // Explicit variant enforcement
+    const variantEnforcement = options.targetVariant 
+      ? `\n\nCRITICAL REQUIREMENT: You MUST set "variant: ${options.targetVariant}" exactly as written. This is a literal value, not a description.`
+      : "";
+    
     const prompt = `${contextBlock}
 
-${structureBlock}
+${structureBlock}${exampleBlock}
 
 ## SOURCE CONTENT TO ADAPT
 
@@ -100,9 +121,10 @@ ${options.sourceYaml}
 Transform the source content to match the target component structure while:
 1. Maintaining the core message and value proposition
 2. Adapting language to match brand voice guidelines
-3. Ensuring all required properties are filled with appropriate content
+3. Ensuring ALL required properties are filled with appropriate content (check the example for exact field names)
 4. Using appropriate content from the source or generating contextually appropriate content
 5. Following the component's when_to_use guidance
+6. IMPORTANT: Include all nested required properties (e.g., if trust_bar has trusted_text, you MUST include it)${variantEnforcement}
 
 Respond with a JSON object that matches the target component structure.`;
 
