@@ -21,6 +21,7 @@ sections:
     version: "1.0"
     variant: course
     title: Become an AI Engineer
+    title_highlight: AI Engineer
     subtitle: Thrive in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
     students_enrolled:
       avatars:
@@ -34,14 +35,13 @@ sections:
       - Build production-ready AI applications with Python and modern frameworks
       - Learn prompt engineering and fine-tuning techniques
       - Deploy scalable AI solutions using cloud infrastructure
-      - Unlimited 1:1 mentorship with industry professionals
     tutors:
       - name: Charly Chacón
         role: Main Instructor
         image: https://randomuser.me/api/portraits/men/10.jpg
       - name: Rigo
         role: AI Tutor
-        image: https://randomuser.me/api/portraits/lego/1.jpg
+        image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
     description: Become the AI professional companies can't wait to hire. Our 20-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $95K-$135K starting salaries.
     media:

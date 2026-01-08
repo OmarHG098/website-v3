@@ -164,6 +164,7 @@ export const heroCourseSchema = z.object({
   version: z.string().optional(),
   variant: z.literal("course"),
   title: z.string(),
+  title_highlight: z.string().optional(),
   subtitle: z.string().optional(),
   students_enrolled: z.object({
     avatars: z.array(z.string()).optional(),

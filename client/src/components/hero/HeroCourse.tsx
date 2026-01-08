@@ -29,10 +29,18 @@ export function HeroCourse({ data }: HeroCourseProps) {
           {/* Left Column */}
           <div className="space-y-6">
             <h1 
-              className="text-h1 text-primary"
+              className="text-h1 text-foreground"
               data-testid="text-hero-title"
             >
-              {data.title}
+              {data.title_highlight && data.title.includes(data.title_highlight) ? (
+                <>
+                  {data.title.split(data.title_highlight)[0]}
+                  <span className="text-primary">{data.title_highlight}</span>
+                  {data.title.split(data.title_highlight)[1]}
+                </>
+              ) : (
+                data.title
+              )}
             </h1>
             
             {data.subtitle && (
@@ -94,7 +102,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
             )}
             
             {data.description && (
-              <p className="text-sm text-muted-foreground leading-relaxed pt-4">
+              <p className="text-foreground leading-relaxed pt-4">
                 {data.description}
               </p>
             )}
