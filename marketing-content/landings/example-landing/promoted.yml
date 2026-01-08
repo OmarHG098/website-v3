@@ -6,46 +6,42 @@ meta:
     - /demo/landing-page
 sections:
   - type: hero
-    version: "1.0"
     variant: productShowcase
-    title: You Are Not Alone Anymore
-    subtitle: Receive personalized career support tailored to your goals
+    title: Career Development for the AI Era
+    subtitle: Unlimited 1:1 career support tailored to your goals—for life.
     welcome_text: Welcome to
     brand_mark:
-      prefix: Personalizee
-      highlight: Support
+      prefix: Geek
+      highlight: FORCE
+      suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 mentorship and career guidance designed to help you succeed in the tech industry. From resume building to interview prep, we've got you covered for life.
-    background_image:
-      src: /attached_assets/ai-engineering-light.jpg
-      alt: AI Engineering Background
+    description: From resume and portfolio building to mastering interviews and AI-driven hiring platforms, we’re here to support your career journey every step of the way.
+    video:
+      url: https://www.youtube.com/shorts/sSxJnelPJT8
+      ratio: "9:16"
+      muted: true
+      autoplay: false
+      loop: true
+      preview_image_url: ""
     form:
       variant: inline
-      title: Start Your Journey
-      subtitle: Join thousands of learners building their tech careers
-      submit_label: Get Started →
-      tags: website-lead,personalized-support
-      automations: welcome-email
+      title: Stay Ahead in Your Career
+      subtitle: Sign up with your work email to unlock free resources.
+      submit_label: Sign up free →
+      tags: career, AI, tech
+      automations: subscribe
       fields:
         email:
-          visible: true
-          placeholder: Enter your work email
+          required: true
       success:
-        message: Thank you for signing up! We'll be in touch soon.
-      terms_url: /terms-and-conditions
-      privacy_url: /privacy-policy
-      consent:
-        email: true
+        message: Thank you for signing up! Check your inbox for resources.
+      terms_url: /terms
+      privacy_url: /privacy
+      consent: {}
       show_terms: true
-      className: inline-form
-    cta_button:
-      text: Explore Programs
-      url: /programs
-      variant: primary
-      icon: arrow-right
     trust_bar:
       rating: "4.5"
-      review_count: Based on 5149+ reviewss
+      review_count: Based on 5149+ reviews
       review_logos:
         - name: Google
           logo: /attached_assets/google_1765590146414.webp
@@ -53,7 +49,6 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-    background: hsl(var(--secondary))
   - type: faq
     title: Frequently Asked Questionss
     items:
@@ -91,12 +86,12 @@ sections:
       - settings
     features_title: Access hundreds of exercises, projects tutorials and courses
     features:
-      - icon: certificate
+      - icon: IconSearch
         text: Build your portfolio with hundreds of real-world projects.
       - icon: cloud
         text: Thousands of cloud-based coding challenges (no setup needed).
-      - text: AI-powered feedback as you code.
-        icon: RigobotIconTiny
+      - icon: RigobotIconTiny
+        text: AI-powered feedback as you code.
       - icon: certificate
         text: Course certificates
       - icon: certificate
