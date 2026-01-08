@@ -158,7 +158,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering
-    program_description: A progressive path from fundamentals to real-world AI engineering. Learn by building and scaling a single AI-native business, milestone by milestone, using the tools and workflows modern engineering teams rely on.
+    program_description: A progressive path from fundamentals to real-world AI engineering in 24 weeks. Learn by building and scaling a single AI-native business, milestone by milestone, using the tools and workflows modern engineering teams rely on.
     tech_logos:
       - name: OpenAI
         icon: openai
