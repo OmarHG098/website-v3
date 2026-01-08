@@ -155,8 +155,15 @@ Respond with a JSON object that matches the target component structure.`;
         // Continue with cleaned content, letting downstream validation handle issues
       }
 
+      // Force inject the variant field if targetVariant is specified
+      // This ensures the output always has the correct variant regardless of LLM behavior
+      const finalContent = validation.cleaned as Record<string, unknown>;
+      if (context.targetVariant) {
+        finalContent.variant = context.targetVariant;
+      }
+
       // Convert to YAML
-      const adaptedYaml = yaml.dump(validation.cleaned, { 
+      const adaptedYaml = yaml.dump(finalContent, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -236,7 +243,14 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       // Additional schema validation for the retry
       const parsed = retryValidation.parsed as Record<string, unknown>;
       const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-      const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+      
+      // Force inject the variant field if targetVariant is specified
+      const retryFinalContent = schemaValidation.cleaned as Record<string, unknown>;
+      if (context.targetVariant) {
+        retryFinalContent.variant = context.targetVariant;
+      }
+      
+      const finalYaml = yaml.dump(retryFinalContent, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -260,7 +274,14 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
     // Validate parsed YAML against component schema
     const parsed = validation.parsed as Record<string, unknown>;
     const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-    const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+    
+    // Force inject the variant field if targetVariant is specified
+    const finalContent = schemaValidation.cleaned as Record<string, unknown>;
+    if (context.targetVariant) {
+      finalContent.variant = context.targetVariant;
+    }
+    
+    const finalYaml = yaml.dump(finalContent, { 
       indent: 2, 
       lineWidth: 120,
       noRefs: true,
