@@ -29,17 +29,31 @@ export function extractConstraintsFromExample(exampleYaml: string): ExampleConst
   };
 
   try {
-    const parsed = yaml.load(exampleYaml) as Record<string, unknown>;
+    let parsed = yaml.load(exampleYaml) as Record<string, unknown>;
     if (!parsed || typeof parsed !== "object") {
       return constraints;
     }
 
-    // Extract variant
-    if (typeof parsed.variant === "string") {
-      constraints.variant = parsed.variant;
+    // Handle case where the example has a nested 'yaml' property containing the actual content
+    // This happens when parsing example files from the registry which have structure:
+    // { name: "...", description: "...", yaml: "- type: hero\n  variant: ..." }
+    if (typeof parsed.yaml === "string") {
+      const innerParsed = yaml.load(parsed.yaml);
+      if (Array.isArray(innerParsed) && innerParsed.length > 0) {
+        // It's an array of sections, use the first one
+        parsed = innerParsed[0] as Record<string, unknown>;
+      } else if (innerParsed && typeof innerParsed === "object") {
+        parsed = innerParsed as Record<string, unknown>;
+      }
+    }
+    
+    // Also handle if the input is already an array (e.g., sections array)
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      parsed = parsed[0] as Record<string, unknown>;
     }
 
     // Recursively extract paths and enum values
+    // Also capture the FIRST variant encountered at any depth
     const traverse = (obj: Record<string, unknown>, path: string = ""): void => {
       for (const [key, value] of Object.entries(obj)) {
         const currentPath = path ? `${path}.${key}` : key;
@@ -50,9 +64,14 @@ export function extractConstraintsFromExample(exampleYaml: string): ExampleConst
             constraints.requiredPaths.push(currentPath);
           }
           
-          // Check if this is a known enum field
+          // Check if this is a known enum field (including variant)
           if (KNOWN_ENUM_FIELDS.includes(key) && typeof value === "string") {
             constraints.enumValues[currentPath] = value;
+            
+            // Capture the FIRST variant value encountered (at any depth)
+            if (key === "variant" && constraints.variant === null) {
+              constraints.variant = value;
+            }
           }
           
           // Recurse into nested objects
@@ -106,17 +125,20 @@ export function buildConstraintsBlock(constraints: ExampleConstraints): string {
   }
   
   // Key required paths (show important nested ones)
-  const nestedPaths = constraints.requiredPaths.filter(p => p.includes(".") && !p.includes("[]"));
+  // Include paths with "[]" but normalize them to "[0]" for clarity
+  const nestedPaths = constraints.requiredPaths
+    .filter(p => p.includes("."))
+    .map(p => p.replace(/\[\]/g, "[0]")); // Normalize array notation
   if (nestedPaths.length > 0) {
     lines.push(`### REQUIRED NESTED FIELDS`);
     lines.push(`Your output MUST include these nested fields (found in the example):`);
-    // Group by parent and show first 20 most important
-    const importantPaths = nestedPaths.slice(0, 20);
+    // Group by parent and show first 25 most important
+    const importantPaths = nestedPaths.slice(0, 25);
     for (const path of importantPaths) {
       lines.push(`- ${path}`);
     }
-    if (nestedPaths.length > 20) {
-      lines.push(`- ... and ${nestedPaths.length - 20} more nested fields (follow the example structure)`);
+    if (nestedPaths.length > 25) {
+      lines.push(`- ... and ${nestedPaths.length - 25} more nested fields (follow the example structure)`);
     }
     lines.push("");
   }
