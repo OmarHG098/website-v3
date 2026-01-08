@@ -157,8 +157,8 @@ sections:
     background: hsl(210 100% 50% / 0.05)
   - type: syllabus
     variant: program-modules
-    program_title: AI Engineering
-    program_description: A progressive path from fundamentals to real-world AI engineering in 24 weeks. Learn by building and scaling a single AI-native business, milestone by milestone, using the tools and workflows modern engineering teams rely on.
+    program_title: What You'll Build
+    program_description: From day one, you'll choose one company. Yours, one you want to build, or one you want to reimagine. Over 24 weeks, you'll transform it into a fully operational, AI-powered business.
     tech_logos:
       - name: OpenAI
         icon: openai
