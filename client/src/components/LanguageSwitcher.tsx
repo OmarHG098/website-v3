@@ -8,36 +8,48 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { pageSlugMappings, getTranslatedSlug } from '@shared/slugMappings';
 
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' }
 ];
 
-const routeMappings = [
-  { en: '/en/career-programs', es: '/es/programas-de-carrera' },
-  { en: '/en/apply', es: '/es/aplica' },
-];
-
 function getLocalizedPath(currentPath: string, targetLang: string): string | null {
-  for (const mapping of routeMappings) {
-    // Exact match for listing pages
-    if (targetLang === 'es' && currentPath === mapping.en) {
-      return mapping.es;
+  const fromLang = currentPath.startsWith('/es/') ? 'es' : 'en';
+  
+  // Handle /en/:slug or /es/:slug pattern
+  const enMatch = currentPath.match(/^\/en\/(.+)$/);
+  const esMatch = currentPath.match(/^\/es\/(.+)$/);
+  
+  if (enMatch && targetLang === 'es') {
+    const slug = enMatch[1];
+    // Check if this slug has a detail path (e.g., /en/career-programs/ai-engineering)
+    const parts = slug.split('/');
+    if (parts.length > 1) {
+      const baseSlug = parts[0];
+      const detailSlug = parts.slice(1).join('/');
+      const translatedBase = getTranslatedSlug(baseSlug, 'en', 'es');
+      return `/es/${translatedBase}/${detailSlug}`;
     }
-    if (targetLang === 'en' && currentPath === mapping.es) {
-      return mapping.en;
-    }
-    // Match with trailing slug (detail pages)
-    if (targetLang === 'es' && currentPath.startsWith(mapping.en + '/')) {
-      const slug = currentPath.slice(mapping.en.length + 1);
-      return mapping.es + '/' + slug;
-    }
-    if (targetLang === 'en' && currentPath.startsWith(mapping.es + '/')) {
-      const slug = currentPath.slice(mapping.es.length + 1);
-      return mapping.en + '/' + slug;
-    }
+    const translatedSlug = getTranslatedSlug(slug, 'en', 'es');
+    return `/es/${translatedSlug}`;
   }
+  
+  if (esMatch && targetLang === 'en') {
+    const slug = esMatch[1];
+    // Check if this slug has a detail path
+    const parts = slug.split('/');
+    if (parts.length > 1) {
+      const baseSlug = parts[0];
+      const detailSlug = parts.slice(1).join('/');
+      const translatedBase = getTranslatedSlug(baseSlug, 'es', 'en');
+      return `/en/${translatedBase}/${detailSlug}`;
+    }
+    const translatedSlug = getTranslatedSlug(slug, 'es', 'en');
+    return `/en/${translatedSlug}`;
+  }
+  
   return null;
 }
 

@@ -19,6 +19,7 @@ interface AwardsMarqueeProps {
   gradientWidth?: number;
   bottom_title?: string;
   className?: string;
+  subtitle?: string;
 }
 
 export function AwardsMarquee({ 
@@ -29,6 +30,7 @@ export function AwardsMarquee({
   gradientWidth = 100,
   bottom_title,
   className = "",
+  subtitle,
 }: AwardsMarqueeProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   
@@ -82,9 +84,9 @@ export function AwardsMarquee({
           ))}
         </Marquee>
       </div>
-      {bottom_title && (
+      {subtitle && (
         <div className="max-w-6xl mx-auto px-4 pt-8">
-          <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">{bottom_title}</p>
+          <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">{subtitle}</p>
         </div>
       )}
     </section>

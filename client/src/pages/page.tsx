@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { TemplatePage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -11,8 +10,8 @@ import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 import Header from "@/components/Header";
 
 export default function Page() {
-  const { i18n } = useTranslation();
-  const locale = i18n.language === "es" ? "es" : "en";
+  const [location] = useLocation();
+  const locale = location.startsWith("/es/") ? "es" : "en";
   const params = useParams<{ slug: string }>();
   const slug = params.slug || "";
 

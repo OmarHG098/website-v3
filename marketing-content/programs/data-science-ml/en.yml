@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Career Program"
     title: "Data Science and Machine Learning with AI"
     subtitle: "Break into one of tech's fastest-growing, highest-paying fields. Learn to analyze data, build predictive models, and use AI tools to solve real-world problems—backed by expert mentorship, an 84% hire rate within 6 months, and our job guarantee."
@@ -29,18 +30,30 @@ sections:
         url: "/syllabus/data-science-ml"
         variant: "outline"
         icon: "Download"
-    award_badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Coding Bootcamp
+        source: Forbes
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Best for Spanish Speakers"
-        source: "Fortune"
+      - id: fortune-2024
+        alt: Fortune - Best for Spanish Speakers
+        source: Fortune
+        name: Best for Spanish Speakers
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
+        source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Best Coding Bootcamp"
-        source: "Course Report"
+      - id: course-report-2025
+        alt: Course Report - Best Coding Bootcamp
+        source: Course Report
+        name: Best Coding Bootcamp
         year: "2025"
 
   - type: syllabus
@@ -88,6 +101,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "Why 4Geeks?"
     title: "Why Learn with 4Geeks?"
     description: "We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process."
@@ -102,13 +116,6 @@ sections:
       - icon: "Users"
         title: "Learn with the community"
         description: "Learning alongside others is more fun and helps you progress faster. Join our active community."
-    highlight:
-      title: "Maximize Your Learning Potential with Rigobot"
-      description: "Rigobot is our custom-designed AI tutor for self-learners, ready to address any coding-related issues and equipped with automated tests for immediate feedback, allowing for an interactive learning experience anytime!"
-      cta:
-        text: "Start learning now!"
-        url: "/en/apply"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"
@@ -173,7 +180,7 @@ sections:
       - icon: "cloud"
         text: "Thousands of and cloud-based coding challenges (no setup needed)."
       - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: "certificate"
         text: "Course certificates"
       - icon: "certificate"
@@ -283,6 +290,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "muted"
     title: "FAQ"
     items:
       - question: "Do I need prior experience with data or coding?"

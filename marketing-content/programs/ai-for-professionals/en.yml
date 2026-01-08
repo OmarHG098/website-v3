@@ -9,6 +9,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: Career Program
     title: AI for Professionals
     subtitle: Stay relevant in your career. Lead with AI. Gain the AI skills to stay competitive and advance your career in just 6 weeks. Learn to apply AI at work for greater efficiency, creativity, and impact.
@@ -25,18 +26,30 @@ sections:
         url: /syllabus/ai-for-professionals
         variant: outline
         icon: Download
-    award_badges:
-      - name: Top Online Bootcamp
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Online Bootcamp
         source: Forbes
+        name: Top Online Bootcamp
         year: "2024"
-      - name: Best for Spanish Speakers
+      - id: fortune-2024
+        alt: Fortune - Best for Spanish Speakers
         source: Fortune
+        name: Best for Spanish Speakers
         year: "2024"
-      - name: Top Coding Bootcamp
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
         source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: Best Coding Bootcamp
+      - id: course-report-2025
+        alt: Course Report - Best Coding Bootcamp
         source: Course Report
+        name: Best Coding Bootcamp
         year: "2025"
   - type: numbered_steps
     version: "1.0"
@@ -106,6 +119,7 @@ sections:
         difficulty: easy
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
     description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
@@ -120,13 +134,6 @@ sections:
       - icon: Users
         title: Learn with the community
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
-    highlight:
-      title: Meet Rigobot, Our AI Tutor
-      description: Rigobot is our custom-designed AI tutor for self-learners, ready to address any questions and equipped with automated feedback, allowing for an interactive learning experience anytime!
-      cta:
-        text: Start learning now!
-        url: /en/apply
-        variant: primary
   - type: certificate
     version: "1.0"
     title: Certificate & Career Network
@@ -184,7 +191,7 @@ sections:
       - icon: cloud
         text: Thousands of and cloud-based coding challenges (no setup needed).
       - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: certificate
         text: Course certificates
       - icon: certificate
@@ -291,6 +298,7 @@ sections:
         outcome: Streamlined hiring process
   - type: faq
     version: "1.0"
+    background: "muted"
     title: FAQ
     items:
       - question: Do I need any technical background?

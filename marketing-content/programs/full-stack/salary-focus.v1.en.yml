@@ -11,6 +11,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "High-Earning Career"
     title: "Earn $65K+ as a Full Stack Developer"
     subtitle: "Our graduates see an average 150% salary increase. Learn the skills that command top salaries in tech - with payment plans starting at $150/month and no upfront cost options available."
@@ -27,18 +28,30 @@ sections:
         url: "/roi-calculator"
         variant: "outline"
         icon: "Calculator"
-    award_badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Coding Bootcamp
+        source: Forbes
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Best for Spanish Speakers"
-        source: "Fortune"
+      - id: fortune-2024
+        alt: Fortune - Best for Spanish Speakers
+        source: Fortune
+        name: Best for Spanish Speakers
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
+        source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Best Coding Bootcamp"
-        source: "Course Report"
+      - id: course-report-2025
+        alt: Course Report - Best Coding Bootcamp
+        source: Course Report
+        name: Best Coding Bootcamp
         year: "2025"
 
   - type: syllabus
@@ -86,6 +99,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "Maximum ROI"
     title: "The Best Investment in Your Future"
     description: "Our graduates see a 10x return on their tuition investment within the first year of employment."
@@ -100,10 +114,3 @@ sections:
       - icon: "Refresh"
         title: "10x ROI in Year One"
         description: "The average tuition pays for itself 10 times over in the first year through increased earnings."
-    highlight:
-      title: "Average Graduate Earns $35K More Per Year"
-      description: "That's $350K+ in additional lifetime earnings. Start investing in your future today with flexible payment options."
-      cta:
-        text: "See Payment Options"
-        url: "/en/apply"
-        variant: "primary"

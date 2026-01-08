@@ -1,0 +1,126 @@
+# Graduados y Proyectos - Español
+
+slug: "alumnos-y-proyectos"
+template: "default"
+title: "Alumnos y Proyectos"
+
+meta:
+  page_title: "Proyectos de Graduados y Alumni | 4Geeks Academy"
+  description: "Explora proyectos finales de graduados de 4Geeks Academy: apps reales y soluciones que muestran las habilidades y creatividad de nuestros alumni."
+  redirects:
+    - "/es/alumnos-y-proyectos"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    title: "Mira lo que Construyeron Nuestros Estudiantes"
+    subtitle: "Explora proyectos finales de graduados de 4Geeks Academy: apps reales y soluciones que muestran las habilidades, creatividad y talento listo para el mercado de nuestros alumni."
+    background: "bg-primary/5"
+    badge: "Proyectos y Alumni del Coding Bootcamp"
+    image:
+      src: "/attached_assets/caracas-graduates_1765387638222.png"
+      alt: "Graduados de 4Geeks Academy con certificados"
+
+  - type: projects_showcase
+    version: "1.0"
+    items:
+      - project_title: "Raspberry Sky"
+        project_url: "https://sattelite-beta.vercel.app/"
+        description: "Una plataforma capaz de recibir información (viento, temperatura, geolocalización, etc) de cohetes lanzados al espacio. También permite hacer arreglos para enviar tu propio cohete, rastrearlo y recibir mensajes de él."
+        creators:
+          - name: "Luis Rivera"
+            role: "QA Analyst"
+            github_url: "https://github.com/Luis846"
+            linkedin_url: "https://linkedin.com/in/luis-rivera-68779714b/"
+          - name: "Naila Kaliyeva"
+            role: "Web Developer"
+            github_url: "https://github.com/nailakaliyeva"
+            linkedin_url: "https://www.linkedin.com/in/naila-kaliyeva-a8863a181/"
+        media:
+          - type: "image"
+            src: "/attached_assets/image_1765318479754.png"
+            alt: "Raspberry Sky - Acceso satelital para todos"
+          - type: "video"
+            src: "OZfv9kYl0_o"
+
+      - project_title: "IMS: Seguimiento de Inventario"
+        project_url: "https://ims-frontend.vercel.app/react-hello-webapp/private/dashboard"
+        description: "IMS es un sistema de inventario y logística para farmacias construido con Python, Javascript, React, e integración con lectores de código de barras, SMS, API de Twilio y sistemas de rastreo GPS."
+        creators:
+          - name: "Jonathan Perez"
+            role: "Business Administration"
+            github_url: "https://github.com/Jphendrix51"
+          - name: "Sebastian Pinto"
+            role: "Pharmacy Owner"
+            github_url: "https://github.com/sebastianpd1"
+          - name: "Paola Castro"
+            role: "Fuel Industry"
+            github_url: "https://github.com/paocastrob"
+        media:
+          - type: "image"
+            src: "/attached_assets/image_1765318521904.png"
+            alt: "Dashboard IMS"
+          - type: "video"
+            src: "TTjSZ2Lud2E"
+
+      - project_title: "The Hour"
+        project_url: "#"
+        description: "¡Happy Hour! ¿Qué haces hoy? The Hour es tu compañero perfecto de noche, encuentra información de happy hour sobre bares, clubes nocturnos y lo que pasa en la ciudad. Esta app destaca por su UI/UX, muy fácil de usar, mobile first y construida con React.js y Headless WordPress API."
+        creators:
+          - name: "Darius Bounds"
+            role: "Interaction Designer"
+            github_url: "https://github.com/dcbounds"
+            linkedin_url: "https://www.linkedin.com/in/dariusbounds/"
+          - name: "Christian Valdes"
+            role: "Government Project Manager"
+            github_url: "https://github.com/CxJAY26"
+        media:
+          - type: "video"
+            src: "KTeOIU3eVrc"
+
+      - project_title: "WonderTracker"
+        project_url: "https://wandertrackerfront-end-gmihov001.vercel.app/"
+        description: "Una plataforma capaz de mantener tu información de viaje y documentos guardados en un sistema absolutamente seguro. También te permite rastrear lugares donde has estado y guardar información importante."
+        creators:
+          - name: "Fernando Funes"
+            role: "Web Developer"
+            github_url: "https://github.com/ferfunes"
+          - name: "George Mihov"
+            role: "Web Developer and Mentor"
+            github_url: "https://github.com/gmihov001"
+            linkedin_url: "https://www.linkedin.com/in/gmihov/"
+        media:
+          - type: "image"
+            src: "/attached_assets/image_1765318556862.png"
+            alt: "WonderTracker - Planea Viajes, Guarda Recuerdos"
+          - type: "image"
+            src: "/attached_assets/fernando-funez_1765315920677.jpg"
+            alt: "Miembro del equipo WonderTracker"
+
+      - project_title: "reMindful"
+        project_url: "https://re-mindful.vercel.app/"
+        description: "Generando conciencia sobre reciclaje y considerando todos los pasos necesarios. Crearon una app que integra software y hardware para pesar la cantidad de plástico, vidrio o basura en un contenedor y su impacto en el proceso de reciclaje y el medio ambiente."
+        creators:
+          - name: "Jordan Aguiriano"
+            role: "Web Developer"
+            github_url: "https://github.com/JordanAguiriano"
+          - name: "Gabriela Rodriguez"
+            role: "Web Developer"
+            github_url: "https://github.com/gabsssrod"
+        media:
+          - type: "image"
+            src: "/attached_assets/image_1765318600261.png"
+            alt: "reMindful - Reduce, Reusa, Recicla"
+          - type: "video"
+            src: "cKcZD0_1IKk"
+
+  - type: about
+    version: "1.0"
+    height: "420px"
+    title: "Más Sobre 4Geeks Academy"
+    description: "4Geeks Academy fue fundada en 2015. Lo que empezó como un proyecto interno para entrenar más desarrolladores se ha convertido en nuestra pasión. 4Geeks es hoy un Coding Bootcamp con sede en USA que busca construir un nuevo marco para la Educación en Código. 4Geeks Academy tiene ahora ubicaciones en 12 ciudades, 13 campus activos y más de 600 graduados."
+    link_text: "Leer Más"
+    link_url: "/es/sobre-la-academia"
+    image_src: "/attached_assets/our-story_1765323971104.webp"
+    image_alt: "Fundadores de 4Geeks Academy"

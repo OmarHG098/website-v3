@@ -29,30 +29,30 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
   if (hasDescriptionNoValue) {
     return (
       <Card 
-        className="p-3 md:p-5"
+        className="p-4 md:p-6 shadow-sm"
         data-testid={`card-feature-${itemId}`}
       >
-        <div className="flex items-center gap-3 md:hidden">
-          <div className="flex-shrink-0 w-10 h-10">
-            {getIcon(item.icon, "w-full h-full", iconColor)}
+        <div className="flex items-start gap-4 md:hidden">
+          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+            {getIcon(item.icon, "w-6 h-6", iconColor || "hsl(var(--primary))")}
           </div>
           <div>
             <div className="font-semibold text-foreground text-sm">
               {item.title}
             </div>
-            <div className="text-xs text-muted-foreground mt-0.5">
+            <div className="text-xs text-muted-foreground mt-1">
               {item.description}
             </div>
           </div>
         </div>
         <div className="hidden md:block">
-          <div className="w-14 h-14 mb-3">
-            {getIcon(item.icon, "w-full h-full", iconColor)}
+          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+            {getIcon(item.icon, "w-6 h-6", iconColor || "hsl(var(--primary))")}
           </div>
           <div className="font-semibold text-foreground text-lg">
             {item.title}
           </div>
-          <div className="text-sm text-muted-foreground mt-1">
+          <div className="text-sm text-muted-foreground mt-2 leading-relaxed">
             {item.description}
           </div>
         </div>
@@ -62,11 +62,11 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
   
   return (
     <Card 
-      className="p-3 md:p-5 flex items-center gap-3 md:gap-5"
+      className="p-4 md:p-6 flex items-center gap-4 md:gap-5 shadow-sm transition-transform duration-200 hover:scale-105"
       data-testid={`card-feature-${itemId}`}
     >
-      <div className="flex-shrink-0 w-10 h-10 md:w-16 md:h-16">
-        {getIcon(item.icon, "w-full h-full", iconColor)}
+      <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg bg-primary/10 flex items-center justify-center">
+        {getIcon(item.icon, "w-6 h-6 md:w-8 md:h-8", iconColor || "hsl(var(--primary))")}
       </div>
       <div>
         {item.value && (
@@ -78,7 +78,7 @@ function HighlightCard({ item, iconColor }: { item: FeaturesGridHighlightItem; i
           {item.title}
         </div>
         {item.description && (
-          <div className="text-sm text-muted-foreground mt-0.5">
+          <div className="text-sm text-muted-foreground mt-1">
             {item.description}
           </div>
         )}
@@ -111,7 +111,7 @@ export function FeaturesGridHighlight({ data }: FeaturesGridHighlightProps) {
           <div className="text-center mb-8">
             {data.title && (
               <h2 
-                className="text-3xl md:text-4xl font-bold mb-6 text-foreground"
+                className="text-3xl md:text-4xl font-bold mb-4 text-foreground"
                 data-testid="text-features-grid-title"
               >
                 {data.title}

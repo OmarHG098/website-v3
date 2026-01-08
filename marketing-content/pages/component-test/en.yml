@@ -1,0 +1,59 @@
+# Component Test Page - Split Cards
+# This page demonstrates the SplitCards component with both variants
+
+slug: "component-test"
+template: "default"
+title: "Component Test"
+
+meta:
+  page_title: "Component Test | 4Geeks Academy"
+  description: "Testing the SplitCards component with both variants"
+  robots: "noindex, nofollow"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    title: "Component Test Page"
+    subtitle: "Testing the SplitCards component with responsive card layout and both variants"
+    badge: "Development Only"
+
+  - type: split_cards
+    variant: primary-left
+    primary:
+      badge: "AI-Powered Learning"
+      heading: "Design Smarter with AI Copilots"
+      description: "Go beyond traditional design. Learn to use tools like ChatGPT, Claude, and Figma's AI features to generate ideas, refine your designs, and create exceptional experiences faster than ever."
+      tool_icons:
+        - icon: "BrandOpenai"
+          size: lg
+          position:
+            bottom: "15%"
+            left: "55%"
+        - icon: "BrandFigma"
+          size: md
+          position:
+            bottom: "30%"
+            right: "5%"
+        - icon: "Code"
+          size: sm
+          position:
+            top: "20%"
+            right: "15%"
+    secondary:
+      benefits:
+        - text: "Generate design ideas in seconds"
+        - text: "Automate routine tasks and focus on creativity"
+        - text: "Secure your career for the future"
+
+  - type: split_cards
+    variant: primary-right
+    background: muted
+    primary:
+      heading: "The Confidence of a Job Guarantee"
+      description: "We back our model with a Job Guarantee. Get hired within 9 months, or we refund your tuition in full. That's how much we believe in our program."
+    secondary:
+      benefits:
+        - text: "Industry-aligned, AI-ready curriculum"
+        - text: "Unlimited, personalized mentorship"
+        - text: "Career support that never expires"

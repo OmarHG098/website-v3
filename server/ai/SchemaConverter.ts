@@ -50,6 +50,9 @@ function isPrimitiveItemsDefinition(items: Record<string, PropDefinition>): bool
 /**
  * Convert a PropDefinition to JSON Schema format
  * Handles nested objects, arrays of primitives, and arrays of objects
+ * 
+ * IMPORTANT: OpenAI strict mode requires ALL properties to be in the 'required' array.
+ * Properties that are semantically optional should use nullable types or have default values.
  */
 function propToJsonSchema(prop: PropDefinition, collectRequired: boolean = true): JSONSchema {
   const schema: JSONSchema = { type: "string" };
@@ -83,29 +86,27 @@ function propToJsonSchema(prop: PropDefinition, collectRequired: boolean = true)
             properties: {},
             additionalProperties: false,
           };
-          const requiredItems: string[] = [];
+          // OpenAI strict mode: ALL properties must be in required array
+          const allItemKeys: string[] = [];
           
           // Explicit object pattern: items has 'properties' key
           if ('properties' in itemsAny && typeof itemsAny.properties === 'object') {
             const propsMap = itemsAny.properties as Record<string, PropDefinition>;
             for (const [itemKey, itemProp] of Object.entries(propsMap)) {
               schema.items.properties![itemKey] = propToJsonSchema(itemProp as PropDefinition, true);
-              if ((itemProp as PropDefinition).required) {
-                requiredItems.push(itemKey);
-              }
+              allItemKeys.push(itemKey);
             }
           } else {
             // Shorthand pattern: items is the property map directly
             for (const [itemKey, itemProp] of Object.entries(prop.items)) {
               schema.items.properties![itemKey] = propToJsonSchema(itemProp as PropDefinition, true);
-              if ((itemProp as PropDefinition).required) {
-                requiredItems.push(itemKey);
-              }
+              allItemKeys.push(itemKey);
             }
           }
           
-          if (requiredItems.length > 0) {
-            schema.items.required = requiredItems;
+          // OpenAI strict mode requires ALL properties in required array
+          if (allItemKeys.length > 0) {
+            schema.items.required = allItemKeys;
           }
         }
       } else {
@@ -117,15 +118,15 @@ function propToJsonSchema(prop: PropDefinition, collectRequired: boolean = true)
       schema.additionalProperties = false;
       if (prop.properties) {
         schema.properties = {};
-        const requiredProps: string[] = [];
+        // OpenAI strict mode: ALL properties must be in required array
+        const allPropKeys: string[] = [];
         for (const [propKey, propValue] of Object.entries(prop.properties)) {
           schema.properties[propKey] = propToJsonSchema(propValue as PropDefinition, true);
-          if ((propValue as PropDefinition).required) {
-            requiredProps.push(propKey);
-          }
+          allPropKeys.push(propKey);
         }
-        if (requiredProps.length > 0) {
-          schema.required = requiredProps;
+        // OpenAI strict mode requires ALL properties in required array
+        if (allPropKeys.length > 0) {
+          schema.required = allPropKeys;
         }
       }
       break;
@@ -146,6 +147,9 @@ function propToJsonSchema(prop: PropDefinition, collectRequired: boolean = true)
 /**
  * Convert a ComponentContext to JSON Schema format
  * Merges common props with variant-specific props
+ * 
+ * IMPORTANT: OpenAI strict mode requires ALL properties to be in the 'required' array.
+ * This ensures the LLM always generates complete objects.
  */
 export function componentToJsonSchema(
   component: ComponentContext,
@@ -170,33 +174,31 @@ export function componentToJsonSchema(
     type: "string",
     description: "Component version",
   };
+  // OpenAI strict mode: ALL properties must be in required array
+  schema.required!.push("version");
 
-  // Add common props
+  // Add common props - ALL go into required array for OpenAI strict mode
   for (const [propName, propDef] of Object.entries(component.props)) {
     schema.properties![propName] = propToJsonSchema(propDef);
-    if (propDef.required) {
+    // OpenAI strict mode: ALL properties must be in required array
+    if (!schema.required!.includes(propName)) {
       schema.required!.push(propName);
     }
   }
 
-  // Add variant-specific props
+  // Add variant-specific props - ALL go into required array for OpenAI strict mode
   if (targetVariant && component.variant_props?.[targetVariant]) {
     const variantProps = component.variant_props[targetVariant];
     for (const [propName, propDef] of Object.entries(variantProps)) {
       schema.properties![propName] = propToJsonSchema(propDef);
-      if (propDef.required) {
-        if (!schema.required!.includes(propName)) {
-          schema.required!.push(propName);
-        }
+      // OpenAI strict mode: ALL properties must be in required array
+      if (!schema.required!.includes(propName)) {
+        schema.required!.push(propName);
       }
     }
   }
 
-  // Clean up empty required array
-  if (schema.required!.length === 0) {
-    delete schema.required;
-  }
-
+  // Never clean up required array - OpenAI strict mode needs it
   return schema;
 }
 

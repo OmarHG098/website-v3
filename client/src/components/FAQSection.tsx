@@ -22,7 +22,6 @@ export function FAQSection({ data }: FAQSectionProps) {
   
   return (
     <section 
-      className="bg-[#e8f4fc] dark:bg-muted/30"
       data-testid="section-faq"
     >
       <div className="max-w-6xl mx-auto px-4">

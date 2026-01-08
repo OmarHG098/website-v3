@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "Conviértete en Especialista en Ciberseguridad"
     subtitle: "Inicia una carrera bien remunerada en uno de los campos más demandados de la tecnología. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad y respaldado por una garantía de empleo."
@@ -29,18 +30,30 @@ sections:
         url: "/syllabus/cybersecurity"
         variant: "outline"
         icon: "Download"
-    award_badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Coding Bootcamp
+        source: Forbes
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Mejor para Hispanohablantes"
-        source: "Fortune"
+      - id: fortune-2024
+        alt: Fortune - Mejor para Hispanohablantes
+        source: Fortune
+        name: Mejor para Hispanohablantes
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
+        source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Mejor Coding Bootcamp"
-        source: "Course Report"
+      - id: course-report-2025
+        alt: Course Report - Mejor Coding Bootcamp
+        source: Course Report
+        name: Mejor Coding Bootcamp
         year: "2025"
 
   - type: syllabus
@@ -88,6 +101,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "¿Por qué 4Geeks?"
     title: "Lo Que Nos Diferencia"
     description: "Habilidades de IA de Vanguardia, Mentoría Ilimitada y Soporte de Carrera. Todo lo que necesitas para lanzar y hacer crecer una carrera en ciberseguridad."
@@ -102,13 +116,6 @@ sections:
       - icon: "Users"
         title: "Aprende más rápido con soporte hiperpersonalizado"
         description: "Progresa con retroalimentación instantánea de IA, orientación personalizada y clases pequeñas (máximo 15 personas)."
-    highlight:
-      title: "Únete a una Comunidad Tecnológica Global"
-      description: "Conéctate con compañeros, mentores y exalumnos y mantente apoyado mientras creces. Nuestro currículo de ciberseguridad fue co-diseñado por Daniela Maissi, miembro del EC-Council y especialista en malware con más de 12 certificaciones en seguridad en la nube, OSINT y sistemas de TI."
-      cta:
-        text: "¡Empieza a aprender ahora!"
-        url: "/es/aplica"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"
@@ -174,7 +181,7 @@ sections:
       - icon: "cloud"
         text: "Thousands of and cloud-based coding challenges (no setup needed)."
       - text: "You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code."
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: "certificate"
         text: "Course certificates"
       - icon: "certificate"
@@ -284,6 +291,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "muted"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa en ciberseguridad?"

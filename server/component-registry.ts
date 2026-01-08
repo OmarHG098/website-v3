@@ -244,6 +244,80 @@ export function getExampleFilePath(componentType: string, version: string): stri
   return path.join("marketing-content", "component-registry", componentType, version, "examples");
 }
 
+export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
+
+export interface AllFieldEditors {
+  [componentType: string]: Record<string, EditorType>;
+}
+
+/**
+ * Load all field editors from component registry
+ * Scans all component folders for field-editors.ts files
+ */
+export function loadAllFieldEditors(): AllFieldEditors {
+  const result: AllFieldEditors = {};
+  
+  try {
+    const components = listComponents();
+    
+    for (const componentType of components) {
+      // Skip common folder
+      if (componentType === "common") continue;
+      
+      const versions = listVersions(componentType);
+      if (versions.length === 0) continue;
+      
+      // Use latest version
+      const latestVersion = versions[0];
+      const fieldEditorsPath = path.join(
+        REGISTRY_PATH, 
+        componentType, 
+        latestVersion, 
+        "field-editors.ts"
+      );
+      
+      if (fs.existsSync(fieldEditorsPath)) {
+        try {
+          const content = fs.readFileSync(fieldEditorsPath, "utf8");
+          
+          // Parse the TypeScript file to extract fieldEditors object
+          // Look for: export const fieldEditors: Record<string, EditorType> = { ... };
+          const match = content.match(/export\s+const\s+fieldEditors\s*[^=]*=\s*(\{[\s\S]*?\});/);
+          
+          if (match) {
+            // Simple parser for the object literal
+            const objStr = match[1];
+            const entries: Record<string, EditorType> = {};
+            
+            // Match patterns like: "features[].icon": "icon-picker",
+            const entryRegex = /"([^"]+)":\s*"([^"]+)"/g;
+            let entryMatch;
+            
+            while ((entryMatch = entryRegex.exec(objStr)) !== null) {
+              const [, fieldPath, editorType] = entryMatch;
+              // Parse base type (e.g., "color-picker:background" -> "color-picker")
+              const baseType = editorType.split(":")[0];
+              if (["icon-picker", "color-picker", "image-picker", "link-picker"].includes(baseType)) {
+                entries[fieldPath] = editorType as EditorType;
+              }
+            }
+            
+            if (Object.keys(entries).length > 0) {
+              result[componentType] = entries;
+            }
+          }
+        } catch (parseError) {
+          console.error(`Error parsing field-editors for ${componentType}:`, parseError);
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error loading field editors:", error);
+  }
+  
+  return result;
+}
+
 export function saveExample(
   componentType: string, 
   version: string, 

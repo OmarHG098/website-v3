@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "Ciencia de Datos y Machine Learning con IA"
     subtitle: "Entra a uno de los campos tecnológicos de más rápido crecimiento y mejores salarios. Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales—respaldado por mentoría experta, 84% de tasa de contratación en 6 meses y nuestra garantía de empleo."
@@ -29,18 +30,30 @@ sections:
         url: "/syllabus/data-science-ml"
         variant: "outline"
         icon: "Download"
-    award_badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Top Coding Bootcamp
+        source: Forbes
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Mejor para Hispanohablantes"
-        source: "Fortune"
+      - id: fortune-2024
+        alt: Fortune - Mejor para Hispanohablantes
+        source: Fortune
+        name: Mejor para Hispanohablantes
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - id: newsweek-2024
+        alt: Newsweek - Top Coding Bootcamp
+        source: Newsweek
+        name: Top Coding Bootcamp
         year: "2024"
-      - name: "Mejor Coding Bootcamp"
-        source: "Course Report"
+      - id: course-report-2025
+        alt: Course Report - Mejor Coding Bootcamp
+        source: Course Report
+        name: Mejor Coding Bootcamp
         year: "2025"
 
   - type: syllabus
@@ -88,6 +101,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "¿Por qué 4Geeks?"
     title: "¿Por qué Aprender con 4Geeks?"
     description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje."
@@ -102,13 +116,6 @@ sections:
       - icon: "Users"
         title: "Aprende con la comunidad"
         description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
-    highlight:
-      title: "Maximiza Tu Potencial de Aprendizaje con Rigobot"
-      description: "Rigobot es nuestro tutor de IA diseñado especialmente para estudiantes autodidactas, listo para abordar cualquier problema de programación y equipado con pruebas automatizadas para retroalimentación inmediata, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
-      cta:
-        text: "¡Empieza a aprender ahora!"
-        url: "/es/aplica"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"
@@ -174,7 +181,7 @@ sections:
       - icon: "cloud"
         text: "Miles de desafíos de código en la nube (sin necesidad de configuración)."
       - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: "certificate"
         text: "Certificados de cursos"
       - icon: "certificate"
@@ -284,6 +291,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "muted"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito experiencia previa con datos o programación?"

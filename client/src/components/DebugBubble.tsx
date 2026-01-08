@@ -53,6 +53,7 @@ import {
   IconArrowDown,
   IconFile,
   IconTrash,
+  IconDeviceFloppy,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -80,6 +81,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 
@@ -284,11 +286,12 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
-  const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken } = useDebugAuth();
+  const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
   const editMode = useEditModeOptional();
   const syncContext = useSyncOptional();
   const { i18n } = useTranslation();
+  const { toast } = useToast();
   const [pathname, navigate] = useLocation();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -339,6 +342,12 @@ export function DebugBubble() {
   // Advanced options state
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState(false);
   const [isIgnoringAllChanges, setIsIgnoringAllChanges] = useState(false);
+  
+  // Session check state
+  const [isCheckingSession, setIsCheckingSession] = useState(false);
+  
+  // Breathecode host state
+  const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
   
   // Detect current content info from URL
   const contentInfo = useMemo(() => detectContentInfo(pathname), [pathname]);
@@ -393,6 +402,16 @@ export function DebugBubble() {
         })
         .catch(() => {});
     }
+  }, []);
+
+  // Fetch Breathecode host on mount
+  useEffect(() => {
+    fetch("/api/debug/breathecode-host")
+      .then((res) => res.json())
+      .then((data) => {
+        setBreathecodeHost(data);
+      })
+      .catch(() => {});
   }, []);
 
   // Listen for open-sync-modal event from SyncConflictBanner
@@ -536,6 +555,47 @@ export function DebugBubble() {
         setPendingChanges([]);
         setPendingChangesLoading(false);
       });
+  };
+
+  // Handle session check (validates without clearing cache first)
+  const handleCheckSession = async () => {
+    setIsCheckingSession(true);
+    try {
+      const result = await checkSession();
+      if (result.valid) {
+        toast({
+          title: "Session valid",
+          description: "Your authentication is still active.",
+        });
+      } else if (result.networkError) {
+        // Network error - session not cleared, just inform user
+        toast({
+          title: "Network error",
+          description: "Could not reach server to verify session. Try again later.",
+          variant: "destructive",
+        });
+      } else if (result.expired) {
+        toast({
+          title: "Session expired",
+          description: "Please log in again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Session invalid",
+          description: "Please log in again.",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Check failed",
+        description: "Could not verify session.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCheckingSession(false);
+    }
   };
 
   // Fetch pending changes when sync status indicates sync is enabled
@@ -924,8 +984,8 @@ export function DebugBubble() {
             >
               {open ? <IconX className="h-5 w-5" /> : <IconBug className="h-5 w-5" />}
             </Button>
-            {/* Show "Commit" indicator when there are local changes that need uploading (not just incoming) */}
-            {githubSyncStatus?.syncEnabled && pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
+            {/* Show "Commit" indicator when there are local changes that need uploading - only when logged in */}
+            {githubSyncStatus?.syncEnabled && pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && !noTokenDetected && !tokenWithoutCapabilities && (
               <button
                 onClick={() => {
                   setCommitModalOpen(true);
@@ -998,6 +1058,15 @@ export function DebugBubble() {
                       )}
                     </Button>
                   </div>
+                  {breathecodeHost && !breathecodeHost.isDefault && (
+                    <div className="flex items-start gap-1.5 mt-2 text-amber-600 dark:text-amber-400">
+                      <IconAlertTriangle className="h-3.5 w-3.5 flex-shrink-0 mt-0.5" />
+                      <div className="text-xs">
+                        <div>The host is pointing to</div>
+                        <div className="font-mono break-all">{breathecodeHost.host}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -1370,15 +1439,29 @@ export function DebugBubble() {
                     <div className="flex items-center gap-2">
                       <IconDatabase className="h-3.5 w-3.5 text-muted-foreground" />
                       <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Session</span>
+                      {!hasToken && (
+                        <span className="text-xs text-amber-600 dark:text-amber-400">(no auth)</span>
+                      )}
                     </div>
-                    <button
-                      onClick={() => setSessionModalOpen(true)}
-                      className="p-1 rounded hover-elevate"
-                      data-testid="button-session-view"
-                      title="View session data"
-                    >
-                      <IconPencil className="h-3.5 w-3.5 text-muted-foreground" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={handleCheckSession}
+                        disabled={isCheckingSession}
+                        className="p-1 rounded hover-elevate"
+                        data-testid="button-session-refresh"
+                        title="Check session validity"
+                      >
+                        <IconRefresh className={`h-3.5 w-3.5 text-muted-foreground ${isCheckingSession ? 'animate-spin' : ''}`} />
+                      </button>
+                      <button
+                        onClick={() => setSessionModalOpen(true)}
+                        className="p-1 rounded hover-elevate"
+                        data-testid="button-session-view"
+                        title="View session data"
+                      >
+                        <IconPencil className="h-3.5 w-3.5 text-muted-foreground" />
+                      </button>
+                    </div>
                   </div>
                   
                   <div className="pl-2 space-y-0.5">
@@ -2094,6 +2177,58 @@ export function DebugBubble() {
                             
                             {/* Action buttons */}
                             <div className="flex items-center gap-1">
+                              {/* Backup download button - always visible */}
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-6 w-6"
+                                    onClick={async () => {
+                                      try {
+                                        const token = getDebugToken();
+                                        const headers: Record<string, string> = {};
+                                        if (token) {
+                                          headers["Authorization"] = `Token ${token}`;
+                                        }
+                                        const response = await fetch(`/api/content/file?path=${encodeURIComponent(change.file)}`, { headers });
+                                        if (!response.ok) throw new Error('Failed to fetch file');
+                                        const content = await response.text();
+                                        const blob = new Blob([content], { type: 'application/x-yaml' });
+                                        const url = URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        const pathParts = change.file.replace('marketing-content/', '').split('/');
+                                        const fileName = pathParts.length >= 2 
+                                          ? `${pathParts[pathParts.length - 2]}.${pathParts[pathParts.length - 1]}`
+                                          : pathParts.pop() || 'backup.yml';
+                                        a.download = fileName;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        document.body.removeChild(a);
+                                        URL.revokeObjectURL(url);
+                                        toast({
+                                          title: "Backup downloaded",
+                                          description: `Downloaded ${change.file.split('/').pop()}`,
+                                        });
+                                      } catch (error) {
+                                        console.error('Failed to download backup:', error);
+                                        toast({
+                                          title: "Download failed",
+                                          description: "Could not download the backup file",
+                                          variant: "destructive",
+                                        });
+                                      }
+                                    }}
+                                    data-testid={`button-backup-file-${index}`}
+                                  >
+                                    <IconDeviceFloppy className="h-3 w-3" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent side="top">
+                                  <p>Download a backup of my page</p>
+                                </TooltipContent>
+                              </Tooltip>
                               {/* Show Upload button for local changes and conflicts */}
                               {(change.source === 'local' || change.source === 'conflict') && (
                                 <Tooltip>

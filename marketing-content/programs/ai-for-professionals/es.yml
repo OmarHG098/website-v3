@@ -13,6 +13,7 @@ sections:
   - type: hero
     variant: singleColumn
     version: "1.0"
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     badge: "Programa de Carrera"
     title: "IA para Profesionales"
     subtitle: "Mantente relevante en tu carrera. Lidera con IA. Adquiere las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
@@ -29,18 +30,30 @@ sections:
         url: "/syllabus/ai-for-professionals"
         variant: "outline"
         icon: "Download"
-    award_badges:
-      - name: "Mejor Bootcamp Online"
-        source: "Forbes"
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Mejor Bootcamp Online
+        source: Forbes
+        name: Mejor Bootcamp Online
         year: "2024"
-      - name: "Mejor para Hispanohablantes"
-        source: "Fortune"
+      - id: fortune-2024
+        alt: Fortune - Mejor para Hispanohablantes
+        source: Fortune
+        name: Mejor para Hispanohablantes
         year: "2024"
-      - name: "Mejor Bootcamp de Coding"
-        source: "Newsweek"
+      - id: newsweek-2024
+        alt: Newsweek - Mejor Bootcamp de Coding
+        source: Newsweek
+        name: Mejor Bootcamp de Coding
         year: "2024"
-      - name: "Mejor Bootcamp de Coding"
-        source: "Course Report"
+      - id: course-report-2025
+        alt: Course Report - Mejor Bootcamp de Coding
+        source: Course Report
+        name: Mejor Bootcamp de Coding
         year: "2025"
 
   - type: syllabus
@@ -88,6 +101,7 @@ sections:
 
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: "¿Por Qué 4Geeks?"
     title: "¿Por Qué Aprender con 4Geeks?"
     description: "Hemos desarrollado herramientas para mantenerte motivado, evitar que te quedes atascado y acelerar tu proceso de aprendizaje."
@@ -102,13 +116,6 @@ sections:
       - icon: "Users"
         title: "Aprende con la comunidad"
         description: "Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa."
-    highlight:
-      title: "Conoce a Rigobot, Nuestro Tutor de IA"
-      description: "Rigobot es nuestro tutor de IA diseñado especialmente para autodidactas, listo para abordar cualquier pregunta y equipado con retroalimentación automatizada, ¡permitiendo una experiencia de aprendizaje interactiva en cualquier momento!"
-      cta:
-        text: "¡Empieza a aprender ahora!"
-        url: "/es/aplica"
-        variant: "primary"
 
   - type: certificate
     version: "1.0"
@@ -169,7 +176,7 @@ sections:
       - icon: "cloud"
         text: "Miles de desafíos de programación en la nube (sin necesidad de configuración)."
       - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras codificas."
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: "certificate"
         text: "Certificados de cursos"
       - icon: "certificate"
@@ -279,6 +286,7 @@ sections:
 
   - type: faq
     version: "1.0"
+    background: "muted"
     title: "Preguntas Frecuentes"
     items:
       - question: "¿Necesito algún conocimiento técnico previo?"

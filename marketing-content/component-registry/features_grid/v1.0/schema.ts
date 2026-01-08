@@ -86,6 +86,7 @@ export const featuresGridStatsCardsSectionSchema = z.object({
   description: z.string().optional(),
   card_color: z.string().optional(),
   use_card: z.boolean().optional(),
+  background: z.string().optional(),
   items: z.array(featuresGridStatsCardsItemSchema),
 });
 
@@ -97,6 +98,7 @@ export const featuresGridStatsTextCardSectionSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string().optional(),
   card_color: z.string().optional(),
+  background: z.string().optional(),
   items: z.array(featuresGridStatsCardsItemSchema),
 });
 

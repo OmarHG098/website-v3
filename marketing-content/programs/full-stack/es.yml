@@ -9,6 +9,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
+    background: "linear-gradient(to bottom, hsl(var(--primary) / 0.05), hsl(var(--background)))"
     title: Desarrollo Full Stack con IA
     subtitle: Inicia una carrera a prueba de futuro con salarios iniciales promedio de $65K+. Entrénate en un currículum full-stack potenciado por IA, respaldado por mentoría ilimitada, una tasa de contratación del 84% en 6 meses, y nuestra garantía de empleo.
     badge: Programa de Carrera
@@ -25,18 +26,30 @@ sections:
       rating: "4.5"
       rating_count: 1,294
       trusted_text: Confiado por más de 2.5K estudiantes
-    award_badges:
-      - name: Mejor Bootcamp de Código
+  - type: award_badges
+    version: "1.0"
+    variant: simple
+    showBorder: true
+    items:
+      - id: forbes-2024
+        alt: Forbes - Mejor Bootcamp de Código
         source: Forbes
+        name: Mejor Bootcamp de Código
         year: "2024"
-      - name: Mejor para Hispanohablantes
+      - id: fortune-2024
+        alt: Fortune - Mejor para Hispanohablantes
         source: Fortune
+        name: Mejor para Hispanohablantes
         year: "2024"
-      - name: Top Bootcamp de Código
+      - id: newsweek-2024
+        alt: Newsweek - Top Bootcamp de Código
         source: Newsweek
+        name: Top Bootcamp de Código
         year: "2024"
-      - name: Mejor Bootcamp de Código
+      - id: coursereport-2025
+        alt: Course Report - Mejor Bootcamp de Código
         source: Course Report
+        name: Mejor Bootcamp de Código
         year: "2025"
   - type: syllabus
     title: ¡Prepárate para el Trabajo con Nuestro Programa!
@@ -86,6 +99,7 @@ sections:
         difficulty: hard
   - type: ai_learning
     version: "1.0"
+    variant: feature-tabs
     badge: Por qué 4Geeks?
     title: ¿Por qué Aprender con 4Geeks?
     description: Hemos desarrollado herramientas para mantenerte motivado, evitar que te atasques y acelerar tu proceso de aprendizaje.
@@ -100,16 +114,6 @@ sections:
       - icon: Users
         title: Aprende con la comunidad
         description: Aprender junto a otros es más divertido y te ayuda a progresar más rápido. Únete a nuestra comunidad activa.
-    highlight:
-      title: Maximiza tu Progreso con Rigobot y Mentoría 1:1
-      description: Instrucción en vivo, mentoría ilimitada y herramientas de IA diseñadas para un aprendizaje más inteligente y rápido.
-      bullets:
-        - text: Rigobot, nuestro asistente de código con IA, sigue tu progreso y te da retroalimentación personalizada exactamente cuando y como la necesitas.
-        - text: Obtén atención personal inigualable con nuestra proporción de 7:1 estudiantes por profesor, además de acceso ilimitado a sesiones 1:1 con mentores expertos y coaches de carrera.
-      cta:
-        text: ¡Comienza a aprender ahora!
-        url: /es/aplica
-        variant: primary
   - type: certificate
     version: "1.0"
     title: Certificado y Red de Carreras
@@ -172,7 +176,7 @@ sections:
       - icon: cloud
         text: Miles de desafíos de código en la nube (sin configuración necesaria).
       - text: Nunca más te quedarás atascado o solo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas.
-        icon: RigobotIconTiny
+        use_rigobot_icon: true
       - icon: certificate
         text: Certificados de cursos
       - icon: certificate
@@ -279,6 +283,7 @@ sections:
         outcome: Primer trabajo en tech
   - type: faq
     version: "1.0"
+    background: "muted"
     title: FAQ
     items:
       - question: ¿Hay horarios de clase fijos?

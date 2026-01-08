@@ -162,7 +162,7 @@ const CertificateSection = lazy(() => import("./CertificateSection").then(m => (
 const WhyLearnAISection = lazy(() => import("./WhyLearnAISection").then(m => ({ default: m.WhyLearnAISection })));
 const PricingSection = lazy(() => import("./PricingSection").then(m => ({ default: m.PricingSection })));
 const FAQSection = lazy(() => import("./FAQSection").then(m => ({ default: m.FAQSection })));
-const Testimonials = lazy(() => import("./testimonials/Testimonials").then(m => ({ default: m.Testimonials })));
+const TestimonialsSection = lazy(() => import("./TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const WhosHiring = lazy(() => import("@/components/whos-hiring/WhosHiring").then(m => ({ default: m.WhosHiring })));
 const FooterSection = lazy(() => import("./FooterSection").then(m => ({ default: m.FooterSection })));
 const TwoColumn = lazy(() => import("@/components/TwoColumn").then(m => ({ default: m.TwoColumn })));
@@ -184,6 +184,8 @@ const CommunitySupport = lazy(() => import("@/components/CommunitySupport").then
 const TwoColumnAccordionCard = lazy(() => import("@/components/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
 const BulletTabsShowcase = lazy(() => import("@/components/BulletTabsShowcase").then(m => ({ default: m.BulletTabsShowcase })));
 const GraduatesStats = lazy(() => import("@/components/graduates_stats").then(m => ({ default: m.GraduatesStats })));
+const ValueProofPanel = lazy(() => import("@/components/ValueProofPanel").then(m => ({ default: m.ValueProofPanel })));
+const SplitCards = lazy(() => import("@/components/SplitCards").then(m => ({ default: m.SplitCards })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -330,7 +332,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "faq":
       return <LazySection key={index}><FAQSection data={section as Parameters<typeof FAQSection>[0]["data"]} /></LazySection>;
     case "testimonials":
-      return <LazySection key={index}><Testimonials data={section as Parameters<typeof Testimonials>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><TestimonialsSection data={section as Parameters<typeof TestimonialsSection>[0]["data"]} /></LazySection>;
     case "whos_hiring":
       return <LazySection key={index}><WhosHiring data={section as Parameters<typeof WhosHiring>[0]["data"]} /></LazySection>;
     case "footer":
@@ -374,6 +376,10 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><GraduatesStats data={section as Parameters<typeof GraduatesStats>[0]["data"]} /></LazySection>;
     case "apply_form":
       return <LazySection key={index}><ApplyFormSection data={section as Parameters<typeof ApplyFormSection>[0]["data"]} /></LazySection>;
+    case "value_proof_panel":
+      return <LazySection key={index}><ValueProofPanel data={section as Parameters<typeof ValueProofPanel>[0]["data"]} /></LazySection>;
+    case "split_cards":
+      return <LazySection key={index}><SplitCards data={section as Parameters<typeof SplitCards>[0]["data"]} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

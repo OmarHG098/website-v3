@@ -8,8 +8,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: You Are Not Alone Anymoree
-    subtitle: Receive personalized career support tailored to your goal
+    title: You Are Not Alone Anymore
+    subtitle: Receive personalized career support tailored to your goals
     welcome_text: Welcome to
     brand_mark:
       prefix: Personalizee
@@ -53,6 +53,7 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
+    background: hsl(var(--secondary))
   - type: faq
     title: Frequently Asked Questionss
     items:
@@ -62,23 +63,6 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
-    paddingY:
-      desktop: md none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-  - type: features_grid
-    version: "1.0"
-    title: What You'll Learn
-    subtitle: Discover the tools that make learning faster and easier
-    items:
-      - icon: Brain
-        title: AI-Powered Learning
-        description: See how AI tutors provide instant feedback and personalized guidance 24/7
-      - icon: Rocket
-        title: Accelerated Progress
-        description: Learn how students are completing courses 3x faster with AI assistance
-      - icon: Code
-        title: Live Demo
-        description: Watch a live demonstration of our AI coding assistant in action
   - type: pricing
     version: "1.0"
     title: Get access to all of our learning database, courses, and services
@@ -107,12 +91,12 @@ sections:
       - settings
     features_title: Access hundreds of exercises, projects tutorials and courses
     features:
-      - icon: IconSettings
+      - icon: certificate
         text: Build your portfolio with hundreds of real-world projects.
       - icon: cloud
         text: Thousands of cloud-based coding challenges (no setup needed).
-      - icon: RigobotIconTiny
-        text: AI-powered feedback as you code.
+      - text: AI-powered feedback as you code.
+        icon: RigobotIconTiny
       - icon: certificate
         text: Course certificates
       - icon: certificate
@@ -121,6 +105,20 @@ sections:
       text: Get plan
       url: /signup
       variant: primary
+  - type: features_grid
+    version: "1.0"
+    title: What You'll Learn
+    subtitle: Discover the tools that make learning faster and easier
+    items:
+      - icon: Brain
+        title: AI-Powered Learning
+        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: Rocket
+        title: Accelerated Progress
+        description: Learn how students are completing courses 3x faster with AI assistance
+      - icon: Code
+        title: Live Demo
+        description: Watch a live demonstration of our AI coding assistant in action
   - type: stats
     version: "1.0"
     title: Join 50,000+ Learnerss

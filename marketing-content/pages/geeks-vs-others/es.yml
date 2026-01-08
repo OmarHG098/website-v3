@@ -1,0 +1,145 @@
+# Geeks vs Otros - Español
+
+slug: "geeks-vs-otros"
+template: "default"
+title: "4Geeks vs Otros"
+
+meta:
+  page_title: "4Geeks vs Otros Bootcamps | 4Geeks Academy"
+  description: "Compara 4Geeks Academy con otros coding bootcamps. Descubre por qué nuestra mentoría ilimitada, apoyo profesional y resultados probados nos distinguen."
+  redirects:
+    - "/es/geeks-vs-otros"
+
+sections:
+  - type: hero
+    variant: simpleTwoColumn
+    version: "1.0"
+    title: "4Geeks Academy vs Otros Bootcamps"
+    subtitle: "Descubre por qué 4Geeks Academy es diferente. Nuestro currículo integrado con IA, proyectos prácticos y mentoría personalizada ayudan a estudiantes a lanzar carreras tech de alta demanda. Con mentoría y apoyo profesional de por vida, nos aseguramos de que sigas creciendo después de graduarte."
+    badge: "Por Qué 4Geeks Destaca"
+    image:
+      src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
+      alt: "Estudiantes programando juntos en una mesa con laptops"
+
+  - type: comparison_table
+    version: "1.0"
+    title: "Lanzando Carreras Tech Exitosas en la Era de la IA"
+    subtitle: "Ayudar a estudiantes a construir carreras tech duraderas es nuestra misión. Desde un syllabus alineado con la industria hasta un sistema de apoyo de por vida, así es como superamos a la competencia:"
+    columns:
+      - name: "Característica"
+      - name: "4Geeks Academy"
+        highlight: true
+      - name: "Promedio de la Industria / Competidores"
+    rows:
+      - feature: "Apoyo Profesional"
+        values: ["Apoyo personalizado de por vida", "Limitado, termina con el 1er empleo"]
+      - feature: "Ratio Profesor:Estudiante"
+        values: ["1:7", "1:10+"]
+      - feature: "Feedback con IA"
+        values: ["Personalizado a tu progreso", "Genérico o inexistente"]
+      - feature: "Mentoría 1:1"
+        values: ["Ilimitada y de por vida", "Sesiones limitadas"]
+      - feature: "Currículo"
+        values: ["Actualizado constantemente según la industria", "Lento para adaptarse"]
+      - feature: "% Tasa de Contratación"
+        values: ["~84% en 6 meses", "Frecuentemente Desconocido"]
+      - feature: "Comunidad"
+        values: ["Fuerte red local y global", "Depende de la escuela"]
+      - feature: "Formato de Clases"
+        values: ["Online, presencial", "Usualmente solo un formato"]
+      - feature: "Conocimiento Previo"
+        values: ["Ninguno", "Tests de entrada o experiencia previa"]
+
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    columns: 3
+    title: "Aprendizaje Hiperpersonalizado y Apoyo de Por Vida"
+    subtitle: "La mayoría de bootcamps te dan horas limitadas de mentoría y te abandonan cuando consigues empleo. En 4Geeks, construimos un sistema de apoyo alrededor de la personalización."
+    items:
+      - icon: "Users"
+        title: "Mentoría 1:1 Ilimitada"
+        description: "Obtén tanta guía personal como necesites, de por vida. Desde debuggear código hasta prepararte para un rol senior, nuestros mentores siempre están disponibles."
+      - icon: "Robot"
+        title: "Feedback con IA"
+        description: "Rigobot + LearnPack se adaptan a tu estilo de aprendizaje, dándote feedback instantáneo y ayudándote a debuggear más rápido."
+      - icon: "Headset"
+        title: "Apoyo Profesional de Por Vida"
+        description: "GeekFORCE no es solo para tu primer empleo. Es coaching de carrera personalizado que puedes usar una y otra vez, ya sea cambiando de rol o subiendo a liderazgo."
+
+  - type: two_column
+    version: "1.0"
+    variant: benefitCards
+    background: "bg-muted/30"
+    title: "Haciendo las Carreras Tech Accesibles"
+    subtitle: "Las carreras tech cambian vidas, y creemos que las finanzas nunca deberían ser un obstáculo. Por eso construimos algunas de las opciones más flexibles de la industria:"
+    benefit_items:
+      - icon: "CurrencyDollar"
+        title: "Matrícula Accesible"
+        description: "Entre las matrículas más asequibles de cualquier bootcamp top (reconocido por Forbes)."
+      - icon: "CreditCard"
+        title: "Financiamiento Flexible"
+        description: "Opciones de financiamiento desde menos de $299/mes."
+      - icon: "Coin"
+        title: "Pago Basado en Ingresos"
+        description: "Opciones de pago basadas en ingresos, donde solo pagas cuando estés ganando."
+      - icon: "School"
+        title: "Becas Disponibles"
+        description: "Becas completas y parciales disponibles para estudiantes elegibles."
+    cta_button:
+      text: "Ver opciones de financiamiento"
+      url: "/es/financiacion"
+      variant: "primary"
+    right:
+      image: "/attached_assets/reservation-es_1764814854635.webp"
+      image_alt: "Mujer trabajando en laptop"
+
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    title: "Resultados en los que Puedes Confiar"
+    subtitle: "Los números importan — y los nuestros hablan por sí solos."
+    use_card: true
+    items:
+      - value: "84%"
+        title: "Tasa de colocación laboral"
+      - value: "3-6 meses"
+        title: "Tiempo promedio para conseguir empleo"
+      - value: "55%"
+        title: "Aumento salarial después de graduarte"
+
+  - type: split_cards
+    variant: primary-left
+    background: muted
+    primary:
+      badge: "Promesa Respaldada"
+      heading: "La Confianza de una Garantía de Empleo"
+      description: "¿La prueba más fuerte de que creemos en nuestro modelo? Lo respaldamos con Garantía de Empleo. En 4Geeks prometemos resultados: consigue empleo en 9 meses, o te devolvemos tu matrícula. Aplican condiciones."
+    secondary:
+      benefits:
+        - text: "Currículo alineado con la industria y listo para IA"
+        - text: "Mentoría ilimitada y personalizada"
+        - text: "Apoyo profesional que nunca expira"
+
+  - type: value_proof_panel
+    title: "Reconocidos Globalmente por Excelencia"
+    subtitle: "No solo lo decimos — el reconocimiento de fuentes confiables lo demuestra."
+    evidence_items:
+      - icon: Trophy
+        title: "Top 5 Coding Bootcamps en el Mundo"
+        source: "Newsweek, Forbes, SwitchUp, Course Report"
+      - icon: Award
+        title: "Mejor Apoyo Estudiantil y Mejor Valor"
+        source: "Course Report, SwitchUp"
+      - icon: Users
+        title: "35,000+ Graduados en 20+ Países"
+        description: "Una comunidad global de profesionales tech exitosos"
+      - icon: Certificate
+        title: "Certificados Reconocidos por la Industria"
+        description: "Credenciales que los empleadores valoran"
+    media:
+      type: image
+      src: "/attached_assets/community-support-2_1765406601448.webp"
+      alt: "Comunidad y apoyo de 4Geeks Academy"
+      aspect_ratio: "4:3"
+      style: rounded

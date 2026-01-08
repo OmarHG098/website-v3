@@ -86,8 +86,14 @@ export type {
 // ============================================
 export {
   chatExampleSchema,
+  aiLearningBulletSchema,
+  aiLearningFeatureSchema,
+  aiLearningFeatureTabsSectionSchema,
+  aiLearningHighlightSectionSchema,
   aiLearningSectionSchema,
   type ChatExample,
+  type AiLearningFeatureTabsSection,
+  type AiLearningHighlightSection,
   type AiLearningSection,
 } from "../marketing-content/component-registry/ai_learning/v1.0/schema";
 
@@ -176,13 +182,39 @@ export {
 export {
   twoColumnBulletSchema,
   bulletGroupSchema,
+  benefitItemSchema,
   twoColumnColumnSchema,
   twoColumnSectionSchema,
   type TwoColumnBullet,
   type BulletGroup,
+  type BenefitItem,
   type TwoColumnColumn,
   type TwoColumnSection,
 } from "../marketing-content/component-registry/two_column/v1.0/schema";
+
+// ============================================
+// Re-export Value Proof Panel Schemas from Component Registry
+// ============================================
+export {
+  evidenceItemSchema,
+  valueProofPanelMediaSchema,
+  valueProofPanelSectionSchema,
+  type EvidenceItem,
+  type ValueProofPanelMedia,
+  type ValueProofPanelSection,
+} from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
+
+// ============================================
+// Re-export Split Cards Schemas from Component Registry
+// ============================================
+export {
+  toolIconSchema,
+  splitCardsBenefitSchema,
+  splitCardsSectionSchema,
+  type ToolIcon,
+  type SplitCardsBenefit,
+  type SplitCardsSection,
+} from "../marketing-content/component-registry/split_cards/v1.0/schema";
 
 // ============================================
 // Re-export Numbered Steps Schemas from Component Registry
@@ -611,12 +643,13 @@ import { comparisonTableSectionSchema } from "../marketing-content/component-reg
 import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab } from "../marketing-content/component-registry/bullet_tabs_showcase/v1.0/schema";
 export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
 import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
+import { splitCardsSectionSchema } from "../marketing-content/component-registry/split_cards/v1.0/schema";
 export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage };
 import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
 import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
-
+import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -686,6 +719,8 @@ const baseSectionSchema = z.union([
   twoColumnAccordionCardSectionSchema,
   bulletTabsShowcaseSectionSchema,
   graduatesStatsSectionSchema,
+  valueProofPanelSectionSchema,
+  splitCardsSectionSchema,
 ]);
 
 // Combined section schema with layout fields

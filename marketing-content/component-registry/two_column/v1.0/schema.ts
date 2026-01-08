@@ -16,6 +16,12 @@ export const bulletGroupSchema = z.object({
   bullets: z.array(z.object({ text: z.string() })).optional(),
 });
 
+export const benefitItemSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
+
 export const twoColumnColumnSchema = z.object({
   video: z.string().optional(),
   video_height: z.string().optional(),
@@ -48,6 +54,7 @@ export const twoColumnColumnSchema = z.object({
 
 export const twoColumnSectionSchema = z.object({
   type: z.literal("two_column"),
+  variant: z.enum(["default", "benefitCards"]).optional(),
   proportions: z.tuple([z.number(), z.number()]).optional(),
   background: z.string().optional(),
   alignment: z.enum(["start", "center", "end"]).optional(),
@@ -59,9 +66,14 @@ export const twoColumnSectionSchema = z.object({
   gap: z.string().optional(),
   padding_left: z.string().optional(),
   padding_right: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  benefit_items: z.array(benefitItemSchema).optional(),
+  cta_button: ctaButtonSchema.optional(),
 });
 
 export type TwoColumnBullet = z.infer<typeof twoColumnBulletSchema>;
 export type BulletGroup = z.infer<typeof bulletGroupSchema>;
+export type BenefitItem = z.infer<typeof benefitItemSchema>;
 export type TwoColumnColumn = z.infer<typeof twoColumnColumnSchema>;
 export type TwoColumnSection = z.infer<typeof twoColumnSectionSchema>;

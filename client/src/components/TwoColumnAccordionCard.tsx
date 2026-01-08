@@ -31,13 +31,13 @@ export function TwoColumnAccordionCard({ data }: TwoColumnAccordionCardProps) {
   return (
     <section className="" data-testid="section-two-column-accordion-card">
       <div className="max-w-6xl mx-auto px-4">
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden shadow-sm">
           <CardContent className="p-0">
             <div className={`grid grid-cols-1 md:grid-cols-12 md:min-h-[580px] ${reverse ? "md:flex-row-reverse" : ""}`}>
               <div className={`col-span-1 md:col-span-7 p-6 md:p-10 flex flex-col justify-center ${reverse ? "md:order-2" : "md:order-1"}`}>
                 {title && (
                   <h2 
-                    className="text-2xl md:text-3xl font-bold text-foreground mb-4"
+                    className="text-h2 text-foreground mb-4"
                     data-testid="text-two-column-accordion-title"
                   >
                     {title}
