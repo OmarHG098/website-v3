@@ -2,7 +2,127 @@
  * Prompt templates for AI Content Adaptation
  */
 
+import * as yaml from "js-yaml";
 import type { FullContext, ComponentContext } from "./types";
+
+// Known enum fields that should have their values extracted and enforced
+const KNOWN_ENUM_FIELDS = ["color", "variant", "background", "theme", "size", "alignment"];
+
+export interface ExampleConstraints {
+  variant: string | null;
+  enumValues: Record<string, string>; // e.g., { "brand_mark.color": "primary" }
+  requiredPaths: string[]; // All nested paths found in the example
+}
+
+/**
+ * Extract constraints from an example YAML string
+ * This parses the example and extracts:
+ * - The exact variant value
+ * - Values for known enum fields (like color)
+ * - All nested paths that exist in the example
+ */
+export function extractConstraintsFromExample(exampleYaml: string): ExampleConstraints {
+  const constraints: ExampleConstraints = {
+    variant: null,
+    enumValues: {},
+    requiredPaths: [],
+  };
+
+  try {
+    const parsed = yaml.load(exampleYaml) as Record<string, unknown>;
+    if (!parsed || typeof parsed !== "object") {
+      return constraints;
+    }
+
+    // Extract variant
+    if (typeof parsed.variant === "string") {
+      constraints.variant = parsed.variant;
+    }
+
+    // Recursively extract paths and enum values
+    const traverse = (obj: Record<string, unknown>, path: string = ""): void => {
+      for (const [key, value] of Object.entries(obj)) {
+        const currentPath = path ? `${path}.${key}` : key;
+        
+        // Add to required paths if it's a leaf value (not an object/array)
+        if (value !== null && value !== undefined) {
+          if (typeof value !== "object" || Array.isArray(value)) {
+            constraints.requiredPaths.push(currentPath);
+          }
+          
+          // Check if this is a known enum field
+          if (KNOWN_ENUM_FIELDS.includes(key) && typeof value === "string") {
+            constraints.enumValues[currentPath] = value;
+          }
+          
+          // Recurse into nested objects
+          if (typeof value === "object" && !Array.isArray(value)) {
+            traverse(value as Record<string, unknown>, currentPath);
+          }
+          
+          // For arrays, traverse first item to get structure
+          if (Array.isArray(value) && value.length > 0 && typeof value[0] === "object") {
+            traverse(value[0] as Record<string, unknown>, `${currentPath}[]`);
+          }
+        }
+      }
+    };
+
+    traverse(parsed);
+  } catch (error) {
+    console.warn("Failed to parse example YAML for constraints:", error);
+  }
+
+  return constraints;
+}
+
+/**
+ * Build a constraints block for the prompt based on extracted example constraints
+ */
+export function buildConstraintsBlock(constraints: ExampleConstraints): string {
+  const lines: string[] = [];
+  
+  lines.push("## STRICT REQUIREMENTS (MUST FOLLOW EXACTLY)");
+  lines.push("");
+  
+  // Variant requirement
+  if (constraints.variant) {
+    lines.push(`### VARIANT VALUE`);
+    lines.push(`You MUST set: variant: "${constraints.variant}"`);
+    lines.push(`This is a LITERAL string value. Do not change or paraphrase it.`);
+    lines.push("");
+  }
+  
+  // Enum values
+  if (Object.keys(constraints.enumValues).length > 0) {
+    lines.push(`### ENUM FIELD VALUES`);
+    lines.push(`The following fields have specific allowed values. Use ONLY these exact values:`);
+    for (const [path, value] of Object.entries(constraints.enumValues)) {
+      if (path !== "variant") { // Don't duplicate variant
+        lines.push(`- ${path}: "${value}" (use this exact value from the example)`);
+      }
+    }
+    lines.push("");
+  }
+  
+  // Key required paths (show important nested ones)
+  const nestedPaths = constraints.requiredPaths.filter(p => p.includes(".") && !p.includes("[]"));
+  if (nestedPaths.length > 0) {
+    lines.push(`### REQUIRED NESTED FIELDS`);
+    lines.push(`Your output MUST include these nested fields (found in the example):`);
+    // Group by parent and show first 20 most important
+    const importantPaths = nestedPaths.slice(0, 20);
+    for (const path of importantPaths) {
+      lines.push(`- ${path}`);
+    }
+    if (nestedPaths.length > 20) {
+      lines.push(`- ... and ${nestedPaths.length - 20} more nested fields (follow the example structure)`);
+    }
+    lines.push("");
+  }
+  
+  return lines.join("\n");
+}
 
 // System prompt establishing the AI's role and constraints
 export const SYSTEM_PROMPT = `You are a content adaptation specialist for 4Geeks Academy, a coding bootcamp. Your role is to transform content from one format to another while maintaining brand voice and messaging guidelines.

@@ -7,7 +7,7 @@ import * as yaml from "js-yaml";
 import type { AdaptOptions, AdaptResult, FullContext } from "./types";
 import { getContextManager, type ContextManager } from "./ContextManager";
 import { getLLMService, type LLMService } from "./LLMService";
-import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock } from "./prompts";
+import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock, extractConstraintsFromExample, buildConstraintsBlock } from "./prompts";
 import { componentToJsonSchema, validateContentAgainstSchema } from "./SchemaConverter";
 
 // Singleton instance
@@ -85,6 +85,13 @@ export class ContentAdapter {
     const contextBlock = buildContextBlock(context);
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
+    // Extract constraints from example YAML and build constraints block
+    let constraintsBlock = "";
+    if (options.targetExampleYaml) {
+      const constraints = extractConstraintsFromExample(options.targetExampleYaml);
+      constraintsBlock = buildConstraintsBlock(constraints);
+    }
+    
     // Build example reference block if example YAML is provided
     let exampleBlock = "";
     if (options.targetExampleYaml) {
@@ -101,12 +108,9 @@ ${options.targetExampleYaml}
 CRITICAL: Copy the exact field names and nested structure from this example. Only change the text content to match the source.`;
     }
     
-    // Explicit variant enforcement
-    const variantEnforcement = options.targetVariant 
-      ? `\n\nCRITICAL REQUIREMENT: You MUST set "variant: ${options.targetVariant}" exactly as written. This is a literal value, not a description.`
-      : "";
-    
-    const prompt = `${contextBlock}
+    const prompt = `${constraintsBlock}
+
+${contextBlock}
 
 ${structureBlock}${exampleBlock}
 
@@ -124,7 +128,7 @@ Transform the source content to match the target component structure while:
 3. Ensuring ALL required properties are filled with appropriate content (check the example for exact field names)
 4. Using appropriate content from the source or generating contextually appropriate content
 5. Following the component's when_to_use guidance
-6. IMPORTANT: Include all nested required properties (e.g., if trust_bar has trusted_text, you MUST include it)${variantEnforcement}
+6. IMPORTANT: Include all nested required properties listed in STRICT REQUIREMENTS above
 
 Respond with a JSON object that matches the target component structure.`;
 
