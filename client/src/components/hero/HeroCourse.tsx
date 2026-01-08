@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconCheck, IconBook, IconCode, IconBriefcase, IconRobot, IconUsers, IconCalendar, IconPlayerPlay } from "@tabler/icons-react";
+import { UniversalVideo } from "@/components/UniversalVideo";
 
 interface HeroCourseProps {
   data: HeroCourseType;
@@ -113,35 +114,13 @@ export function HeroCourse({ data }: HeroCourseProps) {
             {/* Media */}
             <div className="relative rounded-lg overflow-hidden aspect-video">
               {data.media.type === "video" ? (
-                <div className="relative w-full h-full bg-muted">
-                  {data.media.thumbnail ? (
-                    <>
-                      <img 
-                        src={data.media.thumbnail} 
-                        alt={data.media.alt || "Video thumbnail"}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <a 
-                          href={data.media.src}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center hover:bg-primary transition-colors"
-                        >
-                          <IconPlayerPlay className="w-8 h-8 text-primary-foreground ml-1" />
-                        </a>
-                      </div>
-                    </>
-                  ) : (
-                    <iframe
-                      src={data.media.src}
-                      title={data.media.alt || "Video"}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  )}
-                </div>
+                <UniversalVideo
+                  url={data.media.src}
+                  ratio="16:9"
+                  autoplay={true}
+                  muted={true}
+                  loop={true}
+                />
               ) : (
                 <img 
                   src={data.media.src} 
