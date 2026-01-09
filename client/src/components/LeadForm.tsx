@@ -1021,7 +1021,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {showTerms && (
-            <p className="text-xs text-center text-[#ffffff]" data-testid="text-terms">
+            <p className="text-xs text-center text-[#00071a]" data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
               <a 
                 href={data.terms_url || "/terms"} 
