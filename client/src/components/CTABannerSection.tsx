@@ -55,7 +55,15 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
               className="flex-1 max-w-md mx-auto lg:mx-0"
               data-testid="cta-banner-form"
             >
-              <LeadForm data={data.form} />
+              {data.form ? (
+                <LeadForm data={data.form} />
+              ) : (
+                <div className="bg-card/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <p className="text-primary-foreground/70 text-sm">
+                    Lead form configuration required
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
