@@ -1,8 +1,10 @@
 name: "Start Your Career CTA"
 description: "Multi-button CTA for career pages"
+variant: default
 
 data:
   type: cta_banner
+  variant: default
   title: "Ready to Start Your Tech Career?"
   subtitle: "Join thousands of graduates who have transformed their careers with 4Geeks."
   buttons:
