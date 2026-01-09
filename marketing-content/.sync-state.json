@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "19d3a93223bff6fc04b31bfb26d77125378735c6",
-  "lastSyncedAt": "2026-01-09T18:21:27.605Z",
+  "lastSyncedCommit": "87d54c9dcbc58a8082e4e986aa4cfd10770dd496",
+  "lastSyncedAt": "2026-01-09T21:10:38.026Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -13,9 +13,9 @@
       "remoteSha": "e5e9d3bd4c576f50c2d9678d7f51b0ab0647c6101a9016129bb0fb2ee3bae0e5"
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
-      "sha": "92504b7e58fa7afadf9b66f5056bdc766abf667be0a31f138742dfa6e7870375",
-      "lastModified": 1767982872254.8064,
-      "remoteSha": "92504b7e58fa7afadf9b66f5056bdc766abf667be0a31f138742dfa6e7870375"
+      "sha": "595d72ab7d73ccc3e7b51b8c3c653479897ed3bacfd77331b8cabe772ba1d465",
+      "lastModified": 1767993033665.2373,
+      "remoteSha": "595d72ab7d73ccc3e7b51b8c3c653479897ed3bacfd77331b8cabe772ba1d465"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",
@@ -678,14 +678,14 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "20e47a933bac8860c7a5e8ee4299f0d9d57e36f7c416d2d45596da95027837df",
-      "lastModified": 1767901904991.2422,
-      "remoteSha": "20e47a933bac8860c7a5e8ee4299f0d9d57e36f7c416d2d45596da95027837df"
+      "sha": "21405fb86f3c404c611031cc2ed752b98459ce0452b75324e0a36de0f72f7a57",
+      "lastModified": 1767993034045.2327,
+      "remoteSha": "21405fb86f3c404c611031cc2ed752b98459ce0452b75324e0a36de0f72f7a57"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
-      "sha": "1be1a178cdd748286bf14ceba0f2415d28a75706a2f88af82160c59256837466",
-      "lastModified": 1767901905247.242,
-      "remoteSha": "1be1a178cdd748286bf14ceba0f2415d28a75706a2f88af82160c59256837466"
+      "sha": "f5de9f9b914bf84e0411d4201ed51501908a16a4608c1d613241634ed59102c5",
+      "lastModified": 1767993034443.2278,
+      "remoteSha": "f5de9f9b914bf84e0411d4201ed51501908a16a4608c1d613241634ed59102c5"
     },
     "marketing-content/programs/ai-for-professionals/_common.yml": {
       "sha": "cd6ef75b6e0719ae5bc0fa822a1c0a11edd73fb259fe6b8869143a37773448c2",
@@ -693,14 +693,14 @@
       "remoteSha": "cd6ef75b6e0719ae5bc0fa822a1c0a11edd73fb259fe6b8869143a37773448c2"
     },
     "marketing-content/programs/ai-for-professionals/en.yml": {
-      "sha": "9e1cd61e26eef0827c3b86166e4e7fc7279ebb40889ab692885bb6fe57cdfa4e",
-      "lastModified": 1767901905742.2417,
-      "remoteSha": "9e1cd61e26eef0827c3b86166e4e7fc7279ebb40889ab692885bb6fe57cdfa4e"
+      "sha": "c8a55a99e98ca430ad54107fdd65e401e2ad1b1333149d91e755e2b18ed9c0b3",
+      "lastModified": 1767993034827.2231,
+      "remoteSha": "c8a55a99e98ca430ad54107fdd65e401e2ad1b1333149d91e755e2b18ed9c0b3"
     },
     "marketing-content/programs/ai-for-professionals/es.yml": {
-      "sha": "18ba06b87fcb5c7ee7af916fe0456baaa7e63005b069780815d069a19213d7a6",
-      "lastModified": 1767901906066.2415,
-      "remoteSha": "18ba06b87fcb5c7ee7af916fe0456baaa7e63005b069780815d069a19213d7a6"
+      "sha": "c47d399661e957d6b3b9f506cadb7b89e9a6297801317d3d878c20dd97a0b094",
+      "lastModified": 1767993035246.218,
+      "remoteSha": "c47d399661e957d6b3b9f506cadb7b89e9a6297801317d3d878c20dd97a0b094"
     },
     "marketing-content/programs/cybersecurity/_common.yml": {
       "sha": "dc8aaeadafdb3036d27c562a2d255afb1412fcbf901f186ddc78fc634ba3c056",
@@ -708,14 +708,14 @@
       "remoteSha": "dc8aaeadafdb3036d27c562a2d255afb1412fcbf901f186ddc78fc634ba3c056"
     },
     "marketing-content/programs/cybersecurity/en.yml": {
-      "sha": "6c928b9e7457bdaa09f24568124fda5cf489b175d7889b51fe7e151910e92b55",
-      "lastModified": 1767901906643.241,
-      "remoteSha": "6c928b9e7457bdaa09f24568124fda5cf489b175d7889b51fe7e151910e92b55"
+      "sha": "007ea6f4299226133f408c9d2c432b9621ed0b090901a7299eb9938e20e11676",
+      "lastModified": 1767993035651.213,
+      "remoteSha": "007ea6f4299226133f408c9d2c432b9621ed0b090901a7299eb9938e20e11676"
     },
     "marketing-content/programs/cybersecurity/es.yml": {
-      "sha": "60ec203fce8a796001f9b192e0d4173aab3b4c2d0f93acef33568a605efc368a",
-      "lastModified": 1767901906944.241,
-      "remoteSha": "60ec203fce8a796001f9b192e0d4173aab3b4c2d0f93acef33568a605efc368a"
+      "sha": "451b8acc27f959b96756d9c566f331450608600e9083953bff686f12393824ea",
+      "lastModified": 1767993036111.2073,
+      "remoteSha": "451b8acc27f959b96756d9c566f331450608600e9083953bff686f12393824ea"
     },
     "marketing-content/programs/data-science-ml/_common.yml": {
       "sha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e",
@@ -723,14 +723,14 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "0e52607507a2ec295e3abe49196d4d8e11bb8f74acff305c3e8635d5ec99c619",
-      "lastModified": 1767901907540.2405,
-      "remoteSha": "0e52607507a2ec295e3abe49196d4d8e11bb8f74acff305c3e8635d5ec99c619"
+      "sha": "8e5b5b99cde1b6e93c29128d6b23625cae187cfbe9ffad34e966ab47cf633593",
+      "lastModified": 1767993036569.2017,
+      "remoteSha": "8e5b5b99cde1b6e93c29128d6b23625cae187cfbe9ffad34e966ab47cf633593"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
-      "sha": "4605ce5a139590803dfcd17e24f03d28aea9e80542da15de504171c86ab9cb99",
-      "lastModified": 1767901907807.2402,
-      "remoteSha": "4605ce5a139590803dfcd17e24f03d28aea9e80542da15de504171c86ab9cb99"
+      "sha": "374a17dae910123617a1812c7da60d568e56c140b96cc01577f010adb61b54bc",
+      "lastModified": 1767993036942.197,
+      "remoteSha": "374a17dae910123617a1812c7da60d568e56c140b96cc01577f010adb61b54bc"
     },
     "marketing-content/programs/full-stack/_common.yml": {
       "sha": "e452dff5af02b1b193448d8c4744da2ca6a31a4a0d32371dd16e464b3d14475c",
@@ -743,14 +743,14 @@
       "remoteSha": "9ce8ca356f6954b2647a703bccb63963ccc10f5e60790b2cccbfae6146990f24"
     },
     "marketing-content/programs/full-stack/en.yml": {
-      "sha": "7cfa6a6a3e26ba6bbd0c3f1960472de82a51c1d7f82036f464b8ea5c4f0e2470",
-      "lastModified": 1767901908653.2397,
-      "remoteSha": "7cfa6a6a3e26ba6bbd0c3f1960472de82a51c1d7f82036f464b8ea5c4f0e2470"
+      "sha": "bc4a7ca662830d0701e8bd7c83392ff51026c2e4f4d83d22eac685979e6d9307",
+      "lastModified": 1767993037315.1924,
+      "remoteSha": "bc4a7ca662830d0701e8bd7c83392ff51026c2e4f4d83d22eac685979e6d9307"
     },
     "marketing-content/programs/full-stack/es.yml": {
-      "sha": "3e6c3c9468f6a5a30351b626f3547975ec91d1b2f9b1192cd16afb8d0aa4f68e",
-      "lastModified": 1767901908911.2395,
-      "remoteSha": "3e6c3c9468f6a5a30351b626f3547975ec91d1b2f9b1192cd16afb8d0aa4f68e"
+      "sha": "70d933fafe20efd98ca22393ca46829e7f53ac9c5376b847554fef7d4c3b5a6d",
+      "lastModified": 1767993037672.188,
+      "remoteSha": "70d933fafe20efd98ca22393ca46829e7f53ac9c5376b847554fef7d4c3b5a6d"
     },
     "marketing-content/programs/full-stack/experiments.yml": {
       "sha": "d006cdc4b1a0e8c6af88f37b21b1efb897635cb0a1af131bb883e9985ab70990",
