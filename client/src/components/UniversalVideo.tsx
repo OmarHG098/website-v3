@@ -1,10 +1,8 @@
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import SolidCard from './SolidCard';
-
-// @ts-expect-error - react-responsive-embed lacks TypeScript types
-const ResponsiveEmbed = lazy(() => import('react-responsive-embed'));
 
 export interface VideoConfig {
   url: string;
@@ -62,6 +60,13 @@ const parseRatio = (ratio?: string): { paddingTop: string } => {
   return { paddingTop: "56.25%" };
 };
 
+const parseRatioValue = (ratio?: string): number => {
+  if (!ratio) return 16 / 9;
+  const [w, h] = ratio.split(":").map(Number);
+  if (w && h) return w / h;
+  return 16 / 9;
+};
+
 export function UniversalVideo({
   url,
   ratio = "16:9",
@@ -76,6 +81,7 @@ export function UniversalVideo({
 }: UniversalVideoProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const aspectRatio = parseRatio(ratio);
+  const ratioValue = parseRatioValue(ratio);
   const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
 
   const isYouTube = isYouTubeUrl(url);
@@ -138,48 +144,40 @@ export function UniversalVideo({
   const renderVideoPlayer = () => {
     if (isYouTube && youtubeId) {
       return (
-        <Suspense fallback={<div className="w-full aspect-video bg-muted animate-pulse rounded-lg" />}>
-          <div className="w-full overflow-hidden rounded-lg" data-testid="video-modal-player">
-            <ResponsiveEmbed
-              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
-              ratio={ratio}
-              title="Video"
-            />
-          </div>
-        </Suspense>
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+          title="Video"
+          className="w-full h-full rounded-lg"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          data-testid="video-modal-player"
+        />
       );
     }
 
     if (isLocalVideo(url)) {
       return (
-        <div 
-          className="relative overflow-hidden rounded-lg w-full"
-          style={aspectRatio}
+        <video
+          src={url}
+          autoPlay
+          loop={loop}
+          muted={muted}
+          playsInline
+          controls
+          className="w-full h-full object-contain rounded-lg"
           data-testid="video-modal-player"
-        >
-          <video
-            src={url}
-            autoPlay
-            loop={loop}
-            muted={muted}
-            playsInline
-            controls
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </div>
+        />
       );
     }
 
     return (
-      <Suspense fallback={<div className="w-full aspect-video bg-muted animate-pulse rounded-lg" />}>
-        <div className="w-full overflow-hidden rounded-lg" data-testid="video-modal-player">
-          <ResponsiveEmbed
-            src={url}
-            ratio={ratio}
-            title="Video"
-          />
-        </div>
-      </Suspense>
+      <iframe
+        src={url}
+        title="Video"
+        className="w-full h-full rounded-lg"
+        allowFullScreen
+        data-testid="video-modal-player"
+      />
     );
   };
 
@@ -196,8 +194,20 @@ export function UniversalVideo({
       {wrappedPreview}
       
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black border-none">
-          <div className="p-4">
+        <DialogContent 
+          className="p-4 bg-black border-none overflow-hidden flex items-center justify-center"
+          style={{
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            width: `min(90vw, calc(85vh * ${ratioValue}))`,
+            height: `min(85vh, calc(90vw / ${ratioValue}))`,
+          }}
+          aria-describedby={undefined}
+        >
+          <VisuallyHidden>
+            <DialogTitle>Video Player</DialogTitle>
+          </VisuallyHidden>
+          <div className="w-full h-full">
             {isModalOpen && renderVideoPlayer()}
           </div>
         </DialogContent>
