@@ -26,7 +26,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
   
   const hasMultipleButtons = filteredButtons && filteredButtons.length > 0;
   const showMobileForm = data.mobile_form && isMobile;
-  const showMobileButton = data.mobile_button && isMobile;
+  const showMobileButton = data.mobile_button && isMobile && !data.mobile_form;
   
   return (
     <section 
