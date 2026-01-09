@@ -35,6 +35,9 @@ sections:
         phone:
           visible: true
           required: true
+        program:
+          visible: false
+          default: ai-engineering
       success:
         message: Check your inbox! Your syllabus is on the way.
       terms_url: /terms-and-conditions
@@ -104,9 +107,8 @@ sections:
           visible: true
           required: false
         program:
-          visible: true
-          required: true
-          default: auto
+          visible: false
+          default: ai-engineering
       success:
         message: Thanks! We'll be in touch within 24 hours.
   - type: awards_marquee
