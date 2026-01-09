@@ -61,16 +61,16 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
         {showMobileButton ? (
           <div className="flex flex-wrap justify-center gap-4 pb-2">
             <Button
-              variant="outline"
+              variant="secondary"
               size="lg"
               asChild
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
+              className="bg-white text-black border-white hover:bg-white/90"
               data-testid="button-cta-banner-mobile"
             >
               <a href={data.mobile_button!.url}>{data.mobile_button!.text}</a>
             </Button>
           </div>
-        ) : hasMultipleButtons ? (
+        ) : hasMultipleButtons && !isMobile ? (
           <div className="flex flex-wrap justify-center gap-4 pb-2">
             {filteredButtons!.map((button, index) => {
               const variant = button.variant === "primary" ? "default" : button.variant === "secondary" ? "secondary" : "outline";
