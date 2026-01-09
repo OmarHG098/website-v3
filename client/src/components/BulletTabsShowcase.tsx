@@ -49,7 +49,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
               data-testid={`button-bullet-tab-${index}`}
             >
               <p 
-                className={`text-foreground font-normal ${isWithoutBorder ? "text-base" : "text-lg"}`}
+                className={`text-foreground font-normal whitespace-pre-line ${isWithoutBorder ? "text-base" : "text-lg"}`}
                 data-testid={`text-bullet-tab-description-${index}`}
               >
                 {tab.description || tab.label}

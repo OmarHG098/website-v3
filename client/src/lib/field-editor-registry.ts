@@ -1,70 +1,35 @@
 /**
- * Field Editor Registry
+ * Field Editor Registry - Type Definitions
  * 
- * Manual configuration for which YAML fields should use special editors.
- * No automatic detection - all field-to-editor mappings are explicit.
- */
-
-export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
-
-/**
- * Global editors - apply to ALL components
- * Key is the field path (supports [] for array items)
- */
-export const globalEditors: Record<string, EditorType> = {
-  // Example: any field called "icon" at root level
-  // "icon": "icon-picker",
-};
-
-/**
- * Component-specific editors
- * First level key is the component type (e.g., "pricing", "hero")
- * Second level key is the field path within that component
+ * Field editor configurations are now managed in the component registry:
+ * marketing-content/component-registry/{component}/v{x.y}/field-editors.ts
  * 
- * Path syntax:
- * - "fieldName" - direct field
- * - "parent.child" - nested field
- * - "items[].icon" - field inside array items
+ * The server aggregates all field-editors.ts files and serves them via:
+ * GET /api/component-registry/field-editors
+ * 
+ * This file only exports the EditorType for use in components.
+ * 
+ * Editor types can include parameters using colon notation:
+ * - "icon-picker" - Icon picker
+ * - "color-picker" - Color picker (defaults to accent colors)
+ * - "color-picker:background" - Color picker with background colors
+ * - "color-picker:accent" - Color picker with accent colors
+ * - "color-picker:text" - Color picker with text colors
+ * - "image-picker" - Image picker
+ * - "link-picker" - Link picker
  */
-export const componentEditors: Record<string, Record<string, EditorType>> = {
-  pricing: {
-    "features[].icon": "icon-picker",
-  },
-};
 
-/**
- * Get the editor type for a specific field path in a component
- * Returns null if no special editor is configured
- */
-export function getEditorType(
-  componentType: string,
-  fieldPath: string
-): EditorType | null {
-  // Check component-specific first
-  const componentConfig = componentEditors[componentType];
-  if (componentConfig && componentConfig[fieldPath]) {
-    return componentConfig[fieldPath];
-  }
-  
-  // Check global editors
-  if (globalEditors[fieldPath]) {
-    return globalEditors[fieldPath];
-  }
-  
-  return null;
-}
+export type EditorType = string;
 
-/**
- * Get all configured field paths for a component
- * Returns both global and component-specific editors
- */
-export function getConfiguredFields(componentType: string): Record<string, EditorType> {
-  const result: Record<string, EditorType> = { ...globalEditors };
-  
-  const componentConfig = componentEditors[componentType];
-  if (componentConfig) {
-    Object.assign(result, componentConfig);
-  }
-  
-  return result;
+export type ColorPickerVariant = "background" | "accent" | "text";
+
+export function parseEditorType(editorType: string): { 
+  type: string; 
+  variant?: string;
+} {
+  const parts = editorType.split(":");
+  return {
+    type: parts[0],
+    variant: parts[1],
+  };
 }

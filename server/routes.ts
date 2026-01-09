@@ -41,6 +41,7 @@ import {
   createNewVersion,
   getExampleFilePath,
   saveExample,
+  loadAllFieldEditors,
 } from "./component-registry";
 import { editContent, getContentForEdit } from "./content-editor";
 import {
@@ -282,9 +283,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
+      // Get token info including expiration from Breathecode
+      let expiresAt: string | null = null;
+      try {
+        const tokenInfoResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/token/${token}`,
+          { method: "GET" },
+        );
+        if (tokenInfoResponse.ok) {
+          const tokenInfo = await tokenInfoResponse.json() as { expires_at?: string };
+          expiresAt = tokenInfo.expires_at || null;
+        }
+      } catch {
+        // Token info fetch failed - token may be invalid
+      }
+
       // Check webmaster capability
       const webmasterResponse = await fetch(
-        "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
+        `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
         {
           method: "GET",
           headers: {
@@ -300,7 +316,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let userName = "";
       try {
         const userResponse = await fetch(
-          "https://breathecode.herokuapp.com/v1/auth/user/me",
+          `${BREATHECODE_HOST}/v1/auth/user/me`,
           {
             method: "GET",
             headers: {
@@ -330,13 +346,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       if (hasWebmaster) {
-        res.json({ valid: true, capabilities, userName });
+        res.json({ valid: true, capabilities, userName, expiresAt });
       } else {
-        res.json({ valid: false, capabilities, userName });
+        res.json({ valid: false, capabilities, userName, expiresAt });
       }
     } catch (error) {
       console.error("Token validation error:", error);
       res.json({ valid: false, capabilities: {} });
+    }
+  });
+
+  // Check token validity without full re-validation (for session refresh)
+  app.post("/api/debug/check-session", async (req, res) => {
+    try {
+      const { token } = req.body;
+
+      if (!token) {
+        res.status(400).json({ valid: false, error: "Token required" });
+        return;
+      }
+
+      // Get token info including expiration from Breathecode
+      let tokenInfoResponse;
+      try {
+        tokenInfoResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/token/${token}`,
+          { method: "GET" },
+        );
+      } catch (networkError) {
+        // Network error - don't invalidate session, return error status
+        console.error("Network error checking session:", networkError);
+        res.json({ valid: false, networkError: true, error: "Network error checking token" });
+        return;
+      }
+
+      if (!tokenInfoResponse.ok) {
+        // Token is invalid or expired (401/404 etc)
+        res.json({ valid: false, expired: true });
+        return;
+      }
+
+      const tokenInfo = await tokenInfoResponse.json() as { 
+        token?: string;
+        token_type?: string;
+        expires_at?: string;
+        user_id?: number;
+      };
+
+      // Check if token is expired
+      if (tokenInfo.expires_at) {
+        const expiresAt = new Date(tokenInfo.expires_at);
+        if (expiresAt <= new Date()) {
+          res.json({ valid: false, expired: true, expiresAt: tokenInfo.expires_at });
+          return;
+        }
+      }
+
+      res.json({ 
+        valid: true, 
+        expired: false, 
+        expiresAt: tokenInfo.expires_at || null 
+      });
+    } catch (error) {
+      console.error("Session check error:", error);
+      // Unknown error - don't invalidate session
+      res.json({ valid: false, networkError: true, error: "Failed to check session" });
     }
   });
 
@@ -719,6 +793,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.set("Content-Type", "application/xml");
     res.set("Cache-Control", "public, max-age=3600"); // Browser cache for 1 hour
     res.send(xml);
+  });
+
+  // Get Breathecode host configuration (for debug tools)
+  app.get("/api/debug/breathecode-host", (req, res) => {
+    const defaultHost = "https://breathecode.herokuapp.com";
+    res.json({
+      host: BREATHECODE_HOST,
+      isDefault: BREATHECODE_HOST === defaultHost,
+    });
   });
 
   // Sitemap cache status (for debug tools)
@@ -1280,6 +1363,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(overview);
   });
 
+  // Field editors endpoint - returns all field editor configs from component registry
+  app.get("/api/component-registry/field-editors", (_req, res) => {
+    const fieldEditors = loadAllFieldEditors();
+    res.json(fieldEditors);
+  });
+
   app.get("/api/component-registry/:componentType", (req, res) => {
     const { componentType } = req.params;
     const info = getComponentInfo(componentType);
@@ -1400,6 +1489,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // Get raw file content for backup download
+  app.get("/api/content/file", (req, res) => {
+    try {
+      const filePath = req.query.path as string;
+      
+      if (!filePath) {
+        res.status(400).json({ error: "File path is required" });
+        return;
+      }
+      
+      // Security: only allow files within marketing-content directory
+      const normalizedPath = path.normalize(filePath);
+      if (!normalizedPath.startsWith("marketing-content/") || normalizedPath.includes("..")) {
+        res.status(403).json({ error: "Access denied: Only marketing-content files allowed" });
+        return;
+      }
+      
+      const fullPath = path.join(process.cwd(), normalizedPath);
+      
+      if (!fs.existsSync(fullPath)) {
+        res.status(404).json({ error: "File not found" });
+        return;
+      }
+      
+      const content = fs.readFileSync(fullPath, "utf-8");
+      res.type("text/yaml").send(content);
+    } catch (error) {
+      console.error("Error reading file:", error);
+      res.status(500).json({ error: "Failed to read file" });
+    }
+  });
+
   // Content editing API
   app.post("/api/content/edit", async (req, res) => {
     try {
@@ -1425,7 +1546,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Verify token has edit capabilities
         const capResponse = await fetch(
-          "https://breathecode.herokuapp.com/v1/auth/user/me/capability/webmaster",
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
           {
             method: "GET",
             headers: {

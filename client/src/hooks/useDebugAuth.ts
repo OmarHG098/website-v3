@@ -7,7 +7,6 @@ const DEBUG_TOKEN_KEY = "debug_token";
 const DEBUG_MODE_KEY = "debug_mode";
 const DEBUG_CAPABILITIES_KEY = "debug_capabilities";
 const DEBUG_USERNAME_KEY = "debug_username";
-const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 const DEFAULT_CAPABILITIES: Capabilities = {
   webmaster: false,
@@ -169,9 +168,13 @@ export function useDebugAuth() {
       const data = await response.json();
       
       if (data.valid) {
-        // Cache the validation result, token, capabilities, and userName with expiry (localStorage for cross-tab persistence)
+        // Cache the validation result, token, capabilities, and userName with real expiry from Breathecode
         localStorage.setItem(DEBUG_SESSION_KEY, "true");
-        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        // Use real expiry from Breathecode API, or fallback to 24 hours if not provided
+        const expiryTime = data.expiresAt 
+          ? new Date(data.expiresAt).getTime() 
+          : Date.now() + (24 * 60 * 60 * 1000);
+        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(expiryTime));
         localStorage.setItem(DEBUG_TOKEN_KEY, token);
         if (data.capabilities) {
           localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
@@ -235,7 +238,11 @@ export function useDebugAuth() {
       
       if (data.valid) {
         localStorage.setItem(DEBUG_SESSION_KEY, "true");
-        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+        // Use real expiry from Breathecode API, or fallback to 24 hours if not provided
+        const expiryTime = data.expiresAt 
+          ? new Date(data.expiresAt).getTime() 
+          : Date.now() + (24 * 60 * 60 * 1000);
+        localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(expiryTime));
         localStorage.setItem(DEBUG_TOKEN_KEY, manualToken);
         if (data.capabilities) {
           localStorage.setItem(DEBUG_CAPABILITIES_KEY, JSON.stringify(data.capabilities));
@@ -256,6 +263,55 @@ export function useDebugAuth() {
     }
 
     setIsLoading(false);
+  }, []);
+
+  // Check session validity without clearing cache - useful for refresh button
+  const checkSession = useCallback(async (): Promise<{ valid: boolean; expired?: boolean; networkError?: boolean }> => {
+    const cachedToken = localStorage.getItem(DEBUG_TOKEN_KEY);
+    
+    if (!cachedToken) {
+      return { valid: false };
+    }
+
+    try {
+      const response = await fetch("/api/debug/check-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: cachedToken }),
+      });
+
+      const data = await response.json();
+      
+      if (data.valid) {
+        // Update expiry time if provided
+        if (data.expiresAt) {
+          const expiryTime = new Date(data.expiresAt).getTime();
+          localStorage.setItem(DEBUG_SESSION_EXPIRY_KEY, String(expiryTime));
+        }
+        return { valid: true };
+      } else if (data.networkError) {
+        // Network error - don't clear cache, just report error
+        console.warn("Network error checking session:", data.error);
+        return { valid: false, networkError: true };
+      } else {
+        // Token is actually invalid or expired - clear cache
+        localStorage.removeItem(DEBUG_SESSION_KEY);
+        localStorage.removeItem(DEBUG_SESSION_EXPIRY_KEY);
+        localStorage.removeItem(DEBUG_TOKEN_KEY);
+        localStorage.removeItem(DEBUG_CAPABILITIES_KEY);
+        localStorage.removeItem(DEBUG_USERNAME_KEY);
+        setHasToken(false);
+        setIsValidated(false);
+        setCapabilities(DEFAULT_CAPABILITIES);
+        return { valid: false, expired: data.expired };
+      }
+    } catch (error) {
+      // Client-side network error - don't clear cache
+      console.error("Session check error:", error);
+      return { valid: false, networkError: true };
+    }
   }, []);
 
   // Clear token and reset to "no token" state
@@ -291,6 +347,7 @@ export function useDebugAuth() {
     canEdit,
     retryValidation, 
     validateManualToken, 
-    clearToken 
+    clearToken,
+    checkSession
   };
 }

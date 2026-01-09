@@ -31,6 +31,14 @@ The platform utilizes a modern web stack: React with TypeScript, Vite, Tailwind 
         2. **Add SectionRenderer case**: Ensure `client/src/components/SectionRenderer.tsx` has a `case` statement mapping the section type to the React component.
         3. **Match YAML to schema**: The YAML content must match the schema exactly (field names, required properties). Check the component's `examples/` folder for correct YAML format.
     -   **Schema-Component Alignment**: Always verify that the component registry schema (`schema.ts`) matches the actual React component's props interface. If they differ, the schema is the source of truth for validation but the component props determine runtime behavior.
+    -   **Field Editors System**: Each component can define a `field-editors.ts` file in its version folder to configure special editors (icon picker, color picker, etc.) for specific YAML fields. The server auto-discovers these files via `GET /api/component-registry/field-editors`. Example:
+        ```typescript
+        // marketing-content/component-registry/pricing/v1.0/field-editors.ts
+        export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
+        export const fieldEditors: Record<string, EditorType> = {
+          "features[].icon": "icon-picker",
+        };
+        ```
 -   **Session Management System**: A hybrid client-side system provides IP-based geolocation, nearest campus calculation, UTM parameter tracking, and language detection. It uses a Web Worker for heavy processing, `SessionContext` for React hooks, and caches data in localStorage.
 -   **A/B Testing Experiment System**: A performant, cookie-based system for content variants, managed by `ExperimentManager.ts`. It supports various targeting variables, debug endpoints, zero-latency design, and a comprehensive `Experiment Editor` for managing tests with live preview. It includes a `Visitor Tracking System` for unique visitor counting and experiment auto-stopping.
 -   **UniversalVideo Component**: A mandatory component (`client/src/components/UniversalVideo.tsx`) for all video content, handling local videos natively and lazy-loading `react-player` for external sources. Configurable via YAML with schema validation.

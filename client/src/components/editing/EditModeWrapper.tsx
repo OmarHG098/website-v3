@@ -101,11 +101,29 @@ export function EditModeWrapper({
   slug, 
   locale 
 }: EditModeWrapperProps) {
-  const { canEdit, isDebugMode } = useDebugAuth();
+  const { canEdit, isDebugMode, isLoading } = useDebugAuth();
   
   // Non-debug users: render children directly (no overhead)
   if (!isDebugMode) {
     return <>{children}</>;
+  }
+  
+  // While auth is loading, provide EditModeProvider so the toggle can appear
+  // Once loaded, if user has no edit capabilities, they still see the toggle but can't edit
+  if (isLoading) {
+    // Provide context while loading so DebugBubble can show the toggle
+    return (
+      <EditModeProvider>
+        <EditModeInner 
+          sections={sections} 
+          contentType={contentType} 
+          slug={slug} 
+          locale={locale}
+        >
+          {children}
+        </EditModeInner>
+      </EditModeProvider>
+    );
   }
   
   // No edit capability: render children directly

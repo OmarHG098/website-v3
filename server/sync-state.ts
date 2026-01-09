@@ -40,6 +40,7 @@ export interface FileSyncInfo {
   sha: string;
   lastModified: number;
   remoteSha?: string;
+  pulledFromCommit?: string;  // Track which commit this file was pulled from
 }
 
 export interface SyncState {
@@ -446,8 +447,10 @@ export function getFileStatus(filePath: string): {
 
 /**
  * Update a single file's remote SHA after pulling from remote
+ * @param filePath - Path to the file
+ * @param pulledFromCommit - The commit SHA this file was pulled from
  */
-export function updateFileAfterPull(filePath: string): void {
+export function updateFileAfterPull(filePath: string, pulledFromCommit?: string): void {
   const relativePath = filePath.startsWith('marketing-content/') 
     ? filePath 
     : `marketing-content/${filePath}`;
@@ -468,10 +471,31 @@ export function updateFileAfterPull(filePath: string): void {
       sha,
       lastModified: stats.mtimeMs,
       remoteSha: sha, // After pull, local = remote
+      pulledFromCommit, // Track which commit this was pulled from
     };
     
     saveSyncState(state);
   }
+}
+
+/**
+ * Check if a file was pulled from a specific commit or later
+ * Used to filter out files that have already been individually pulled
+ */
+export function wasFilePulledFromCommit(filePath: string, commitSha: string): boolean {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  const state = loadSyncState();
+  const fileInfo = state.files[relativePath];
+  
+  if (!fileInfo || !fileInfo.pulledFromCommit) {
+    return false;
+  }
+  
+  // Check if this file was pulled from the specified commit
+  return fileInfo.pulledFromCommit === commitSha;
 }
 
 /**
@@ -509,6 +533,26 @@ export function updateFileAfterCommit(filePath: string, commitSha: string): void
   }
   
   saveSyncState(state);
+}
+
+/**
+ * Check if a file is already synced (local sha matches remote sha in sync state)
+ * Used to filter out individually-pulled files from incoming changes list
+ */
+export function isFileSynced(filePath: string): boolean {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  const state = loadSyncState();
+  const fileInfo = state.files[relativePath];
+  
+  if (!fileInfo) {
+    return false;
+  }
+  
+  // File is synced if local sha equals remote sha
+  return fileInfo.sha === fileInfo.remoteSha;
 }
 
 /**

@@ -101,6 +101,7 @@ export interface AdaptOptions {
   targetVersion: string;
   targetVariant?: string;
   sourceYaml: string;
+  targetExampleYaml?: string; // Example YAML from component registry to use as reference
   targetStructure?: Record<string, unknown>;
   userOverrides?: FullContext["userOverrides"];
 }

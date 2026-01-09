@@ -2,7 +2,154 @@
  * Prompt templates for AI Content Adaptation
  */
 
+import * as yaml from "js-yaml";
 import type { FullContext, ComponentContext } from "./types";
+
+// Known enum fields that should have their values extracted and enforced
+const KNOWN_ENUM_FIELDS = ["color", "variant", "background", "theme", "size", "alignment"];
+
+export interface ExampleConstraints {
+  variant: string | null;
+  enumValues: Record<string, string>; // e.g., { "brand_mark.color": "primary" }
+  requiredPaths: string[]; // All nested paths found in the example
+}
+
+/**
+ * Extract constraints from an example YAML string
+ * This parses the example and extracts:
+ * - The exact variant value
+ * - Values for known enum fields (like color)
+ * - All nested paths that exist in the example
+ */
+export function extractConstraintsFromExample(exampleYaml: string): ExampleConstraints {
+  const constraints: ExampleConstraints = {
+    variant: null,
+    enumValues: {},
+    requiredPaths: [],
+  };
+
+  try {
+    let parsed = yaml.load(exampleYaml) as Record<string, unknown>;
+    if (!parsed || typeof parsed !== "object") {
+      return constraints;
+    }
+
+    // Handle case where the example has a nested 'yaml' property containing the actual content
+    // This happens when parsing example files from the registry which have structure:
+    // { name: "...", description: "...", yaml: "- type: hero\n  variant: ..." }
+    if (typeof parsed.yaml === "string") {
+      const innerParsed = yaml.load(parsed.yaml);
+      if (Array.isArray(innerParsed) && innerParsed.length > 0) {
+        // It's an array of sections, use the first one
+        parsed = innerParsed[0] as Record<string, unknown>;
+      } else if (innerParsed && typeof innerParsed === "object") {
+        parsed = innerParsed as Record<string, unknown>;
+      }
+    }
+    
+    // Also handle if the input is already an array (e.g., sections array)
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      parsed = parsed[0] as Record<string, unknown>;
+    }
+
+    // Recursively extract paths and enum values
+    // Also capture the FIRST variant encountered at any depth
+    const traverse = (obj: Record<string, unknown>, path: string = ""): void => {
+      for (const [key, value] of Object.entries(obj)) {
+        const currentPath = path ? `${path}.${key}` : key;
+        
+        // Add to required paths if it's a leaf value (not an object/array)
+        if (value !== null && value !== undefined) {
+          if (typeof value !== "object" || Array.isArray(value)) {
+            constraints.requiredPaths.push(currentPath);
+          }
+          
+          // Check if this is a known enum field (including variant)
+          if (KNOWN_ENUM_FIELDS.includes(key) && typeof value === "string") {
+            constraints.enumValues[currentPath] = value;
+            
+            // Capture the FIRST variant value encountered (at any depth)
+            if (key === "variant" && constraints.variant === null) {
+              constraints.variant = value;
+            }
+          }
+          
+          // Recurse into nested objects
+          if (typeof value === "object" && !Array.isArray(value)) {
+            traverse(value as Record<string, unknown>, currentPath);
+          }
+          
+          // For arrays, traverse first item to get structure
+          if (Array.isArray(value) && value.length > 0 && typeof value[0] === "object") {
+            traverse(value[0] as Record<string, unknown>, `${currentPath}[]`);
+          }
+        }
+      }
+    };
+
+    traverse(parsed);
+  } catch (error) {
+    console.warn("Failed to parse example YAML for constraints:", error);
+  }
+
+  return constraints;
+}
+
+/**
+ * Build a constraints block for the prompt based on extracted example constraints
+ * @param constraints - Constraints extracted from example YAML
+ * @param explicitVariant - The variant explicitly selected by the user (takes priority)
+ */
+export function buildConstraintsBlock(constraints: ExampleConstraints, explicitVariant?: string): string {
+  const lines: string[] = [];
+  
+  lines.push("## STRICT REQUIREMENTS (MUST FOLLOW EXACTLY)");
+  lines.push("");
+  
+  // Use explicit variant if provided, otherwise fall back to extracted variant
+  const variantToUse = explicitVariant || constraints.variant;
+  
+  // Variant requirement
+  if (variantToUse) {
+    lines.push(`### VARIANT VALUE`);
+    lines.push(`You MUST set: variant: "${variantToUse}"`);
+    lines.push(`This is a LITERAL string value. Do not change or paraphrase it.`);
+    lines.push("");
+  }
+  
+  // Enum values
+  if (Object.keys(constraints.enumValues).length > 0) {
+    lines.push(`### ENUM FIELD VALUES`);
+    lines.push(`The following fields have specific allowed values. Use ONLY these exact values:`);
+    for (const [path, value] of Object.entries(constraints.enumValues)) {
+      if (path !== "variant") { // Don't duplicate variant
+        lines.push(`- ${path}: "${value}" (use this exact value from the example)`);
+      }
+    }
+    lines.push("");
+  }
+  
+  // Key required paths (show important nested ones)
+  // Include paths with "[]" but normalize them to "[0]" for clarity
+  const nestedPaths = constraints.requiredPaths
+    .filter(p => p.includes("."))
+    .map(p => p.replace(/\[\]/g, "[0]")); // Normalize array notation
+  if (nestedPaths.length > 0) {
+    lines.push(`### REQUIRED NESTED FIELDS`);
+    lines.push(`Your output MUST include these nested fields (found in the example):`);
+    // Group by parent and show first 25 most important
+    const importantPaths = nestedPaths.slice(0, 25);
+    for (const path of importantPaths) {
+      lines.push(`- ${path}`);
+    }
+    if (nestedPaths.length > 25) {
+      lines.push(`- ... and ${nestedPaths.length - 25} more nested fields (follow the example structure)`);
+    }
+    lines.push("");
+  }
+  
+  return lines.join("\n");
+}
 
 // System prompt establishing the AI's role and constraints
 export const SYSTEM_PROMPT = `You are a content adaptation specialist for 4Geeks Academy, a coding bootcamp. Your role is to transform content from one format to another while maintaining brand voice and messaging guidelines.

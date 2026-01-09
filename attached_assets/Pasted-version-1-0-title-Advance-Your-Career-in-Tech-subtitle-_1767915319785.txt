@@ -1,0 +1,112 @@
+version: "1.0"
+title: Advance Your Career in Tech
+subtitle: Learn skills and land your dream job in the tech industry
+welcome_text: Join us at
+brand_mark:
+  prefix: 4Geeks
+  highlight: Academy
+  suffix: —
+  color: chart-5
+description: Experience a transformative journey into tech with personalized mentorship, hands-on projects, and lifelong career support.
+video:
+  url: /assets/videos/4geeks_intro.mp4
+  title: Discover 4Geeks Academy
+  ratio: "16:9"
+  muted: true
+  autoplay: true
+  loop: true
+  preview_image_url: /assets/images/video_thumbnail.jpg
+image:
+  src: /assets/images/hero_image.jpg
+  alt: Coding bootcamp students
+background_image:
+  src: /assets/images/background.jpg
+  alt: Abstract tech design
+form:
+  variant: inline
+  title: Get Started
+  subtitle: Sign up today to begin your journey
+  submit_label: Join Now
+  tags: coding, bootcamp, tech
+  automations: lead_capture
+  fields:
+    email:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your email to stay updated
+      placeholder: Your email address
+    first_name:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your first name
+      placeholder: Your first name
+    last_name:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your last name
+      placeholder: Your last name
+    phone:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your phone number
+      placeholder: Your phone number
+    program:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Choose a program
+      placeholder: Select a program
+    region:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Select your region
+      placeholder: Region
+    location:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Select your location
+      placeholder: Location
+    coupon:
+      visible: true
+      required: false
+      default: ""
+      helper_text: Enter your coupon code if you have one
+      placeholder: Coupon code
+    comment:
+      visible: true
+      required: false
+      default: ""
+      helper_text: Leave a comment or question
+      placeholder: Your message
+  success:
+    url: /thank-you
+    message: Thank you for signing up!
+  terms_url: /terms
+  privacy_url: /privacy
+  consent:
+    email: true
+    sms: false
+    whatsapp: false
+  show_terms: true
+  className: hero-form
+cta_button:
+  text: Learn More
+  url: /courses
+  variant: primary
+  icon: info
+trust_bar:
+  rating: "4.8"
+  review_count: Based on 6523+ reviews
+  review_logos:
+    - name: Google
+      logo: /assets/logos/google_logo.webp
+    - name: Course Report
+      logo: /assets/logos/course_report_logo.webp
+    - name: SwitchUp
+      logo: /assets/logos/switchup_logo.webp

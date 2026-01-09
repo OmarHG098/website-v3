@@ -78,6 +78,11 @@ export function EditableSection({ children, section, index, sectionType, content
   
   // YAML source modal state
   const [showYamlModal, setShowYamlModal] = useState(false);
+  
+  // Review code modal state (for reviewing AI-adapted content before applying)
+  const [showReviewCodeModal, setShowReviewCodeModal] = useState(false);
+  const [reviewCodeYaml, setReviewCodeYaml] = useState("");
+  const [reviewCodeError, setReviewCodeError] = useState<string | null>(null);
 
   const selectedVariant = variants[selectedVariantIndex] || "";
   
@@ -266,7 +271,8 @@ export function EditableSection({ children, section, index, sectionType, content
           targetComponent: sectionType,
           targetVersion: selectedVersion || 'v1.0',
           targetVariant: selectedVariant || currentExample.variant || 'default',
-          sourceYaml: currentExample.yaml
+          sourceYaml: currentExample.yaml,
+          targetExampleYaml: currentExample.yaml // Pass example as reference template for AI
         })
       });
       
@@ -296,7 +302,7 @@ export function EditableSection({ children, section, index, sectionType, content
       const adapted = { type: sectionType, ...sectionData } as Section;
       setAdaptedSection(adapted);
       setHasAdapted(true);
-      toast({ title: "Content adapted", description: "AI has adapted the content to match your brand. Review and confirm." });
+      toast({ title: "Content adapted", description: "AI has adapted the content. Click 'Review Code' to view, edit, and apply." });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to adapt content';
       toast({ title: "AI Adaptation Error", description: message, variant: "destructive" });
@@ -344,6 +350,78 @@ export function EditableSection({ children, section, index, sectionType, content
       setIsConfirming(false);
     }
   }, [previewSection, adaptedSection, hasAdapted, contentType, slug, locale, variant, version, index, toast]);
+  
+  // Open review code modal with adapted section YAML
+  const handleOpenReviewCode = useCallback(() => {
+    if (!adaptedSection) return;
+    // Convert adapted section to YAML for editing
+    const { type, ...sectionData } = adaptedSection as Record<string, unknown>;
+    const yamlStr = yaml.dump(sectionData, { lineWidth: -1, quotingType: '"', forceQuotes: false });
+    setReviewCodeYaml(yamlStr);
+    setReviewCodeError(null); // Clear any previous errors
+    setShowReviewCodeModal(true);
+  }, [adaptedSection]);
+  
+  // Apply changes from the review code modal (parse edited YAML and save)
+  const handleApplyReviewedCode = useCallback(async () => {
+    if (!contentType || !slug) return;
+    
+    setIsConfirming(true);
+    setReviewCodeError(null);
+    try {
+      // Parse the edited YAML
+      const parsed = yaml.load(reviewCodeYaml);
+      let sectionData: Record<string, unknown>;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        sectionData = parsed[0] as Record<string, unknown>;
+      } else if (parsed && typeof parsed === 'object') {
+        sectionData = parsed as Record<string, unknown>;
+      } else {
+        throw new Error('Invalid YAML format');
+      }
+      
+      const sectionToSave = { type: sectionType, ...sectionData } as Section;
+      
+      const token = getDebugToken();
+      const res = await fetch('/api/content/edit', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(token ? { 'X-Debug-Token': token } : {})
+        },
+        body: JSON.stringify({
+          operation: 'update_section',
+          contentType,
+          slug,
+          locale: locale || 'en',
+          variant: variant || 'default',
+          version: version || 1,
+          sectionIndex: index,
+          sectionData: sectionToSave
+        })
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        const errorMessage = errorData.error || 'Failed to apply section';
+        setReviewCodeError(errorMessage);
+        return;
+      }
+      
+      setCurrentSection(sectionToSave);
+      setShowReviewCodeModal(false);
+      setSwapPopoverOpen(false);
+      setAdaptedSection(null);
+      setHasAdapted(false);
+      emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale || 'en' });
+      toast({ title: "Section applied", description: "The reviewed section has been saved." });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to apply section';
+      setReviewCodeError(message);
+    } finally {
+      setIsConfirming(false);
+    }
+  }, [reviewCodeYaml, sectionType, contentType, slug, locale, variant, version, index, toast]);
   
   const handleOpenEditor = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -505,12 +583,17 @@ export function EditableSection({ children, section, index, sectionType, content
                     {examplesForCurrentVariant.length > 1 && (
                       <>
                         <div className="w-px h-4 bg-border/50 shrink-0" />
-                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
-                          <IconChevronLeft className="h-3 w-3" />
-                        </Button>
-                        <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
-                          <IconChevronRight className="h-3 w-3" />
-                        </Button>
+                        <div className="flex flex-col items-center gap-0.5 shrink-0">
+                          <span className="text-[9px] text-muted-foreground uppercase tracking-wide">Examples</span>
+                          <div className="flex items-center">
+                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
+                              <IconChevronLeft className="h-3 w-3" />
+                            </Button>
+                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
+                              <IconChevronRight className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
                       </>
                     )}
                     {/* View YAML source - always visible */}
@@ -532,13 +615,9 @@ export function EditableSection({ children, section, index, sectionType, content
                     <IconX className="h-4 w-4" />
                   </Button>
                   {hasAdapted ? (
-                    <Button size="sm" className="h-7 px-3" onClick={handleConfirmSwap} disabled={!adaptedSection || isConfirming} data-testid={`button-confirm-swap-${index}`}>
-                      {isConfirming ? (
-                        <IconLoader2 className="h-3 w-3 animate-spin mr-1" />
-                      ) : (
-                        <IconCheck className="h-3 w-3 mr-1" />
-                      )}
-                      Confirm
+                    <Button size="sm" className="h-7 px-3" onClick={handleOpenReviewCode} disabled={!adaptedSection} data-testid={`button-review-code-${index}`}>
+                      <IconCode className="h-3 w-3 mr-1" />
+                      Review Code
                     </Button>
                   ) : (
                     <Button size="sm" className="h-7 px-3" onClick={handleAdaptWithAI} disabled={!previewSection || isAdapting} data-testid={`button-adapt-ai-${index}`}>
@@ -701,6 +780,54 @@ export function EditableSection({ children, section, index, sectionType, content
               }}
               className="text-sm"
             />
+          </div>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Review Code Modal - editable YAML for AI-adapted content */}
+      <Dialog open={showReviewCodeModal} onOpenChange={setShowReviewCodeModal}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconSparkles className="h-5 w-5" />
+              Review AI-Generated Code
+            </DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            Review and edit the YAML below. Fix any issues before applying.
+          </p>
+          <div className="flex-1 overflow-auto rounded border min-h-[300px]">
+            <CodeMirror
+              value={reviewCodeYaml}
+              onChange={(value) => setReviewCodeYaml(value)}
+              extensions={[yamlLang()]}
+              theme={oneDark}
+              basicSetup={{
+                lineNumbers: true,
+                foldGutter: true,
+                highlightActiveLine: true,
+              }}
+              className="text-sm"
+            />
+          </div>
+          {reviewCodeError && (
+            <div className="rounded border border-destructive bg-destructive/10 p-3 text-sm text-destructive max-h-[150px] overflow-auto" data-testid={`error-review-code-${index}`}>
+              <p className="font-medium mb-1">Validation Error:</p>
+              <pre className="whitespace-pre-wrap text-xs">{reviewCodeError}</pre>
+            </div>
+          )}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="outline" onClick={() => setShowReviewCodeModal(false)} data-testid={`button-cancel-review-${index}`}>
+              Cancel
+            </Button>
+            <Button onClick={handleApplyReviewedCode} disabled={isConfirming} data-testid={`button-apply-review-${index}`}>
+              {isConfirming ? (
+                <IconLoader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <IconCheck className="h-4 w-4 mr-2" />
+              )}
+              Apply Changes
+            </Button>
           </div>
         </DialogContent>
       </Dialog>

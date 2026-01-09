@@ -7,7 +7,7 @@ import * as yaml from "js-yaml";
 import type { AdaptOptions, AdaptResult, FullContext } from "./types";
 import { getContextManager, type ContextManager } from "./ContextManager";
 import { getLLMService, type LLMService } from "./LLMService";
-import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock } from "./prompts";
+import { SYSTEM_PROMPT, buildAdaptationPrompt, buildContextBlock, buildTargetStructureBlock, extractConstraintsFromExample, buildConstraintsBlock } from "./prompts";
 import { componentToJsonSchema, validateContentAgainstSchema } from "./SchemaConverter";
 
 // Singleton instance
@@ -85,9 +85,38 @@ export class ContentAdapter {
     const contextBlock = buildContextBlock(context);
     const structureBlock = buildTargetStructureBlock(context.component, context.targetVariant);
     
-    const prompt = `${contextBlock}
+    // Extract constraints from example YAML and build constraints block
+    // Pass the explicit targetVariant selected by the user (takes priority over extracted variant)
+    let constraintsBlock = "";
+    if (options.targetExampleYaml) {
+      const constraints = extractConstraintsFromExample(options.targetExampleYaml);
+      constraintsBlock = buildConstraintsBlock(constraints, options.targetVariant);
+    } else if (options.targetVariant) {
+      // Even without example YAML, enforce the variant if specified
+      constraintsBlock = buildConstraintsBlock({ variant: null, enumValues: {}, requiredPaths: [] }, options.targetVariant);
+    }
+    
+    // Build example reference block if example YAML is provided
+    let exampleBlock = "";
+    if (options.targetExampleYaml) {
+      exampleBlock = `
 
-${structureBlock}
+## REFERENCE EXAMPLE (USE THIS AS A TEMPLATE)
+
+This is a working example of the target component. Your output MUST follow this exact structure:
+
+\`\`\`yaml
+${options.targetExampleYaml}
+\`\`\`
+
+CRITICAL: Copy the exact field names and nested structure from this example. Only change the text content to match the source.`;
+    }
+    
+    const prompt = `${constraintsBlock}
+
+${contextBlock}
+
+${structureBlock}${exampleBlock}
 
 ## SOURCE CONTENT TO ADAPT
 
@@ -100,9 +129,10 @@ ${options.sourceYaml}
 Transform the source content to match the target component structure while:
 1. Maintaining the core message and value proposition
 2. Adapting language to match brand voice guidelines
-3. Ensuring all required properties are filled with appropriate content
+3. Ensuring ALL required properties are filled with appropriate content (check the example for exact field names)
 4. Using appropriate content from the source or generating contextually appropriate content
 5. Following the component's when_to_use guidance
+6. IMPORTANT: Include all nested required properties listed in STRICT REQUIREMENTS above
 
 Respond with a JSON object that matches the target component structure.`;
 
@@ -125,8 +155,15 @@ Respond with a JSON object that matches the target component structure.`;
         // Continue with cleaned content, letting downstream validation handle issues
       }
 
+      // Force inject the variant field if targetVariant is specified
+      // This ensures the output always has the correct variant regardless of LLM behavior
+      const finalContent = validation.cleaned as Record<string, unknown>;
+      if (context.targetVariant) {
+        finalContent.variant = context.targetVariant;
+      }
+
       // Convert to YAML
-      const adaptedYaml = yaml.dump(validation.cleaned, { 
+      const adaptedYaml = yaml.dump(finalContent, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -206,7 +243,14 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
       // Additional schema validation for the retry
       const parsed = retryValidation.parsed as Record<string, unknown>;
       const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-      const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+      
+      // Force inject the variant field if targetVariant is specified
+      const retryFinalContent = schemaValidation.cleaned as Record<string, unknown>;
+      if (context.targetVariant) {
+        retryFinalContent.variant = context.targetVariant;
+      }
+      
+      const finalYaml = yaml.dump(retryFinalContent, { 
         indent: 2, 
         lineWidth: 120,
         noRefs: true,
@@ -230,7 +274,14 @@ No explanations, no markdown code blocks, just the corrected YAML content:`;
     // Validate parsed YAML against component schema
     const parsed = validation.parsed as Record<string, unknown>;
     const schemaValidation = validateContentAgainstSchema(parsed, context.component, context.targetVariant);
-    const finalYaml = yaml.dump(schemaValidation.cleaned, { 
+    
+    // Force inject the variant field if targetVariant is specified
+    const finalContent = schemaValidation.cleaned as Record<string, unknown>;
+    if (context.targetVariant) {
+      finalContent.variant = context.targetVariant;
+    }
+    
+    const finalYaml = yaml.dump(finalContent, { 
       indent: 2, 
       lineWidth: 120,
       noRefs: true,

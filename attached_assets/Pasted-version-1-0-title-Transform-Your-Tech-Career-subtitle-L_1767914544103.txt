@@ -1,0 +1,112 @@
+version: "1.0"
+title: Transform Your Tech Career
+subtitle: Learn coding with real-world projects and get career support for life.
+welcome_text: Welcome to
+brand_mark:
+  prefix: 4Geeks Academy
+  highlight: Unlimited Mentorship
+  suffix: .
+  color: chart-5
+description: At 4Geeks Academy, you gain access to unlimited 1:1 mentorship, AI-driven learning tools, and career support that never expires. Start your journey in tech with confidence.
+video:
+  url: https://example.com/intro_video.mp4
+  title: Introduction to 4Geeks Academy
+  ratio: "16:9"
+  muted: true
+  autoplay: true
+  loop: true
+  preview_image_url: https://example.com/video_thumbnail.jpg
+image:
+  src: https://example.com/showcase_image.jpg
+  alt: Coding students collaborating
+background_image:
+  src: https://example.com/background_image.jpg
+  alt: Abstract tech background
+form:
+  variant: inline
+  title: Sign Up Today
+  subtitle: Join a community of learners and achievers.
+  submit_label: Get Started
+  tags: coding, career, mentorship
+  automations: lead_capture
+  fields:
+    email:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Use your email to stay updated.
+      placeholder: Your email address
+    first_name:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your first name.
+      placeholder: First Name
+    last_name:
+      visible: true
+      required: true
+      default: ""
+      helper_text: Enter your last name.
+      placeholder: Last Name
+    phone:
+      visible: false
+      required: false
+      default: ""
+      helper_text: ""
+      placeholder: ""
+    program:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Select your program.
+      placeholder: Program
+    region:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Choose your region.
+      placeholder: Region
+    location:
+      visible: true
+      required: true
+      default: auto
+      helper_text: Select your preferred campus.
+      placeholder: Campus
+    coupon:
+      visible: false
+      required: false
+      default: ""
+      helper_text: ""
+      placeholder: ""
+    comment:
+      visible: false
+      required: false
+      default: ""
+      helper_text: ""
+      placeholder: ""
+  success:
+    url: https://example.com/thank_you
+    message: Thank you for signing up!
+  terms_url: https://example.com/terms
+  privacy_url: https://example.com/privacy
+  consent:
+    email: true
+    sms: false
+    whatsapp: false
+  show_terms: true
+  className: hero-form
+cta_button:
+  text: Explore Programs
+  url: https://example.com/programs
+  variant: primary
+  icon: arrow-right
+trust_bar:
+  rating: "4.8"
+  review_count: Based on 3000+ reviews
+  review_logos:
+    - name: Google
+      logo: https://example.com/google_logo.png
+    - name: Course Report
+      logo: https://example.com/course_report_logo.png
+    - name: SwitchUp
+      logo: https://example.com/switchup_logo.png

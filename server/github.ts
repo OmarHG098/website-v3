@@ -202,6 +202,42 @@ export function isGitHubConfigured(): boolean {
 }
 
 /**
+ * Fetch all marketing-content files from a commit tree
+ * Used when there's no lastSyncedCommit to compare against
+ */
+async function fetchFilesFromTree(config: GitHubConfig, commitSha: string): Promise<string[]> {
+  try {
+    // Get the tree for the commit recursively
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/git/trees/${commitSha}?recursive=1`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${config.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    
+    if (!response.ok) {
+      console.error('GitHub API error fetching tree:', response.status);
+      return [];
+    }
+    
+    const data = await response.json();
+    
+    // Filter to only marketing-content files
+    const files: string[] = (data.tree || [])
+      .filter((item: any) => item.type === 'blob' && item.path.startsWith('marketing-content/'))
+      .map((item: any) => item.path);
+    
+    return files;
+  } catch (error) {
+    console.error('Error fetching files from tree:', error);
+    return [];
+  }
+}
+
+/**
  * Get GitHub config from environment variables
  */
 export function getGitHubConfig(): GitHubConfig | null {
@@ -649,6 +685,7 @@ export interface ConflictInfo {
   hasConflict: boolean;
   behindBy: number;
   commits: RemoteCommit[];
+  changedFiles: string[];  // All files changed between lastSyncedCommit and remoteCommit
   lastSyncedCommit: string | null;
   remoteCommit: string | null;
 }
@@ -665,6 +702,7 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
       hasConflict: false,
       behindBy: 0,
       commits: [],
+      changedFiles: [],
       lastSyncedCommit: null,
       remoteCommit: null,
     };
@@ -678,16 +716,32 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
       hasConflict: false,
       behindBy: 0,
       commits: [],
+      changedFiles: [],
       lastSyncedCommit,
       remoteCommit: null,
     };
   }
   
   if (!lastSyncedCommit || lastSyncedCommit === remoteCommit) {
+    // If no lastSyncedCommit, we need to fetch all files from the remote
+    // This happens on first sync or when sync state is missing
+    if (!lastSyncedCommit && remoteCommit) {
+      // Fetch files from the latest commit tree
+      const changedFiles = await fetchFilesFromTree(config, remoteCommit);
+      return {
+        hasConflict: true,
+        behindBy: 1,
+        commits: [],
+        changedFiles,
+        lastSyncedCommit,
+        remoteCommit,
+      };
+    }
     return {
-      hasConflict: !lastSyncedCommit && !!remoteCommit,
-      behindBy: !lastSyncedCommit ? 1 : 0,
+      hasConflict: false,
+      behindBy: 0,
       commits: [],
+      changedFiles: [],
       lastSyncedCommit,
       remoteCommit,
     };
@@ -710,6 +764,7 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
         hasConflict: true,
         behindBy: 1,
         commits: [],
+        changedFiles: [],
         lastSyncedCommit,
         remoteCommit,
       };
@@ -725,15 +780,19 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
       files: [],
     }));
     
-    const changedFiles = (data.files || []).map((f: any) => f.filename);
+    // Extract all changed files from the compare response (this is the aggregate of all changes)
+    const changedFiles: string[] = (data.files || []).map((f: any) => f.filename);
+    
+    // Also assign files to the last commit for backward compatibility
     if (commits.length > 0 && changedFiles.length > 0) {
       commits[commits.length - 1].files = changedFiles;
     }
     
     return {
-      hasConflict: commits.length > 0,
+      hasConflict: commits.length > 0 || changedFiles.length > 0,
       behindBy: data.behind_by || commits.length,
       commits,
+      changedFiles,  // Direct access to all changed files
       lastSyncedCommit,
       remoteCommit,
     };
@@ -743,6 +802,7 @@ export async function getConflictInfo(): Promise<ConflictInfo> {
       hasConflict: true,
       behindBy: 1,
       commits: [],
+      changedFiles: [],
       lastSyncedCommit,
       remoteCommit,
     };
@@ -767,10 +827,9 @@ export async function checkPullConflicts(): Promise<PullConflictCheck> {
   // Get all local pending file paths
   const localPendingFiles = pendingChanges.map(c => c.file);
   
-  // Get all remote changed files from commits (filtered by shouldTrackFile)
+  // Use changedFiles directly from conflictInfo (filtered by shouldTrackFile)
   const { shouldTrackFile } = await import("./sync-state");
-  const allRemoteFiles = conflictInfo.commits.flatMap(c => c.files || []);
-  const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
+  const remoteChangedFiles = conflictInfo.changedFiles.filter(shouldTrackFile);
   
   // Find overlapping files
   const localFileSet = new Set(localPendingFiles);
@@ -798,10 +857,9 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
   const localChanges = await getPendingChanges();
   const conflictInfo = await getConflictInfo();
   
-  // Get all remote changed files from commits (filtered by shouldTrackFile)
+  // Use changedFiles directly from conflictInfo (filtered by shouldTrackFile)
   const { shouldTrackFile } = await import("./sync-state");
-  const allRemoteFiles = conflictInfo.commits.flatMap(c => c.files || []);
-  const remoteChangedFiles = [...new Set(allRemoteFiles)].filter(shouldTrackFile);
+  const remoteChangedFiles = conflictInfo.changedFiles.filter(shouldTrackFile);
   const remoteFileSet = new Set(remoteChangedFiles);
   
   // Build maps for file metadata from commits
@@ -853,8 +911,17 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
   }
   
   // Add incoming changes (files changed on remote but not locally modified)
+  // Filter out files that have already been individually pulled from the current remote commit
+  const { wasFilePulledFromCommit } = await import("./sync-state");
+  const currentRemoteCommit = conflictInfo.remoteCommit;
+  
   for (const filePath of remoteChangedFiles) {
     if (!localFileMap.has(filePath)) {
+      // Skip files that have already been pulled from the current remote commit
+      if (currentRemoteCommit && wasFilePulledFromCommit(filePath, currentRemoteCommit)) {
+        continue;
+      }
+      
       // Parse content type and slug from file path
       const pathMatch = filePath.match(/marketing-content\/(programs|landings|locations|pages|component-registry)\/([^\/]+)/);
       changes.push({
@@ -968,6 +1035,9 @@ export async function pullSingleFile(filePath: string): Promise<{
     return { success: false, error: "GitHub not configured" };
   }
   
+  // Get current remote commit SHA for tracking
+  const remoteCommit = await getBranchHeadSha(config);
+  
   // Fetch file content from remote
   const remoteResult = await getRemoteFileContent(filePath);
   
@@ -986,9 +1056,9 @@ export async function pullSingleFile(filePath: string): Promise<{
     
     fs.writeFileSync(fullPath, remoteResult.content, 'utf-8');
     
-    // Update sync state
+    // Update sync state with the commit we pulled from
     const { updateFileAfterPull } = await import("./sync-state");
-    updateFileAfterPull(filePath);
+    updateFileAfterPull(filePath, remoteCommit || undefined);
     
     return { success: true };
   } catch (error) {
