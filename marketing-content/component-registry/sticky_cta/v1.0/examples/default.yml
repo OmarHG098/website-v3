@@ -5,6 +5,7 @@ yaml: |
     version: "1.0"
     heading: "Ready to start your tech career?"
     button_label: "Apply Now"
+    show_dismiss: false
     form:
       variant: inline
       submit_label: "Submit Application"

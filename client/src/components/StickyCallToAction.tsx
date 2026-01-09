@@ -12,6 +12,7 @@ export interface StickyCtaData {
   version?: string;
   heading: string;
   button_label?: string;
+  show_dismiss?: boolean;
   form?: LeadFormData;
 }
 
@@ -91,33 +92,7 @@ export function StickyCallToAction({ data }: StickyCallToActionProps) {
                 {buttonLabel}
                 <IconChevronUp className="h-4 w-4 ml-1" />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsDismissed(true)}
-                aria-label="Dismiss"
-                data-testid="sticky-cta-dismiss"
-              >
-                <IconX className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="py-4">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-base font-medium text-foreground">
-                {data.heading}
-              </p>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsExpanded(false)}
-                  data-testid="sticky-cta-collapse-button"
-                >
-                  <IconChevronDown className="h-4 w-4 mr-1" />
-                  Collapse
-                </Button>
+              {data.show_dismiss && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -127,7 +102,24 @@ export function StickyCallToAction({ data }: StickyCallToActionProps) {
                 >
                   <IconX className="h-4 w-4" />
                 </Button>
-              </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="py-4">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-base font-medium text-foreground">
+                {data.heading}
+              </p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsExpanded(false)}
+                data-testid="sticky-cta-collapse-button"
+              >
+                <IconChevronDown className="h-4 w-4 mr-1" />
+                Collapse
+              </Button>
             </div>
             {data.form && (
               <Suspense fallback={<FormSkeleton />}>
