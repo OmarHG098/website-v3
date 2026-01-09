@@ -650,6 +650,8 @@ import { awardBadgesSectionSchema } from "../marketing-content/component-registr
 import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
 import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
+import { stickyCtaSectionSchema } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
+export { stickyCtaSectionSchema, type StickyCtaSection } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -721,6 +723,7 @@ const baseSectionSchema = z.union([
   graduatesStatsSectionSchema,
   valueProofPanelSectionSchema,
   splitCardsSectionSchema,
+  stickyCtaSectionSchema,
 ]);
 
 // Combined section schema with layout fields
