@@ -723,7 +723,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           {data.subtitle}
         </p>
       )}
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-4">
@@ -1022,7 +1021,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {showTerms && (
-            <p className="text-xs text-muted-foreground text-center" data-testid="text-terms">
+            <p className="text-xs text-center text-[#ffffff]" data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
               <a 
                 href={data.terms_url || "/terms"} 
