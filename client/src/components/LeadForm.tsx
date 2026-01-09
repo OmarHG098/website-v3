@@ -74,6 +74,8 @@ export interface LeadFormData {
   };
   show_terms?: boolean;
   className?: string;
+  button_className?: string;
+  terms_className?: string;
   turnstile?: {
     enabled?: boolean;
     theme?: "light" | "dark" | "auto";
@@ -1021,7 +1023,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           )}
 
           {showTerms && (
-            <p className="text-xs text-center text-[#00071a]" data-testid="text-terms">
+            <p className={`text-xs text-center ${data.terms_className || "text-muted-foreground"}`} data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
               <a 
                 href={data.terms_url || "/terms"} 
@@ -1047,7 +1049,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
           <Button 
             type="submit" 
-            className="w-full"
+            className={`w-full ${data.button_className || ""}`}
             disabled={submitMutation.isPending}
             data-testid="button-submit"
           >

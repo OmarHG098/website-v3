@@ -81,6 +81,8 @@ export const leadFormDataSchema = z.object({
   }).optional(),
   show_terms: z.boolean().optional(),
   className: z.string().optional(),
+  button_className: z.string().optional(),
+  terms_className: z.string().optional(),
 });
 
 export type LeadFormData = z.infer<typeof leadFormDataSchema>;
