@@ -78,7 +78,7 @@ sections:
       ratio: "9:16"
       muted: true
     paddingY:
-      mobile: none
+      mobile: md none
       desktop: lg none
     marginY:
       mobile: none
