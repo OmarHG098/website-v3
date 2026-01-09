@@ -56,7 +56,7 @@ sections:
       ratio: "9:16"
       muted: true
     paddingY:
-      mobile: none
+      mobile: md none
       desktop: lg none
     marginY:
       mobile: none
@@ -549,8 +549,8 @@ sections:
     mobile_form:
       variant: stacked
       submit_label: Apply Now
-      button_className: "bg-white text-primary hover:bg-white/90 border-white"
-      terms_className: "text-white/80"
+      button_className: bg-white text-primary hover:bg-white/90 border-white
+      terms_className: text-white/80
       show_terms: true
       fields:
         email:
