@@ -540,12 +540,34 @@ sections:
     subtitle: Limited spots available. Start your transformation today.
     buttons:
       - text: Apply Now
-        url: "#hero-form"
+        url: "#hero-0"
         variant: secondary
       - text: Talk to an Advisor
         url: https://calendly.com/epilowsky-4geeksacademy/30min
         variant: outline
         us_only: true
+    mobile_form:
+      variant: stacked
+      submit_label: Apply Now
+      fields:
+        email:
+          visible: true
+          required: true
+          placeholder: Your email address
+        first_name:
+          visible: true
+          required: true
+          placeholder: First name
+        phone:
+          visible: true
+          required: false
+          placeholder: Phone number
+      success:
+        message: Thank you! We'll be in touch soon.
+      consent:
+        email: true
+        marketing: true
+        marketing_text: I agree to receive information about courses and promotions
     marginY:
       mobile: md none
       desktop: md none
