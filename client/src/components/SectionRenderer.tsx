@@ -504,7 +504,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
         }
         
         return (
-          <div key={index} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
+          <div key={index} id={`${sectionType}-${index}`} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}
