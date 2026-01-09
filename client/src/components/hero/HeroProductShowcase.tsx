@@ -112,7 +112,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {data.description && (
                 <div className="relative">
-                  <p className="text-body text-foreground mb-10 max-w-xl leading-relaxed">
+                  <p className="text-body text-foreground mb-0 md:mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
                 </div>

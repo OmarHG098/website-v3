@@ -815,7 +815,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                     <FormControl>
                       <Input 
                         type="email" 
-                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "Correo electrónico" : "Email")} 
+                        placeholder={getFieldConfig("email").placeholder || (locale === "es" ? "Escribe tu correo, ej: usuario@dominio.com" : "Type your email, ex: username@domain.com")} 
                         {...field} 
                         data-testid="input-email"
                       />
@@ -833,10 +833,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                 rules={{ required: getFieldConfig("program").required ? (locale === "es" ? "Programa requerido" : "Program is required") : false }}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Programa" : "Program"}
-                      {getFieldConfig("program").required && " *"}
-                    </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-program">
