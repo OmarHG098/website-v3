@@ -14,6 +14,7 @@ export const ctaBannerSectionSchema = z.object({
   buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
   mobile_form: leadFormDataSchema.optional(),
+  mobile_button: ctaButtonSchema.optional(),
 }).refine(
   (data) => (data.cta_text && data.cta_url) || (data.buttons && data.buttons.length > 0),
   { message: "Either cta_text/cta_url or buttons array must be provided" }
