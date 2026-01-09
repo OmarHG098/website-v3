@@ -118,14 +118,15 @@ sections:
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
     paddingY:
-      desktop: none
+      mobile: md
+      desktop: none md
   - type: features_grid
     version: "1.0"
     variant: stats-text
     title: Does the Job Guarantee deliver results you can count on?
     subtitle: Yes, and we've got the numbers to back it up
     description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
-    background: bg-muted/30
+    background: hsl(var(--secondary))
     items:
       - id: "1"
         value: 84%

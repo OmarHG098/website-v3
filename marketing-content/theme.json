@@ -55,7 +55,8 @@
     { "id": "accent", "label": "Accent", "cssVar": "--accent" },
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },
     { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
-    { "id": "sidebar", "label": "Sidebar", "cssVar": "--sidebar-background" }
+    { "id": "sidebar", "label": "Sidebar", "cssVar": "--sidebar-background" },
+    { "id": "light-blue-5", "label": "Light Blue 5%", "value": "hsl(210 100% 50% / 0.05)" }
   ],
   "accents": [
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },

@@ -510,11 +510,10 @@ sections:
       mobile: none
       desktop: none
   - type: testimonials
-    variant: carousel
     title: Real Results from Real Graduates
     subtitle: Join thousands who've transformed their careers
     rating_summary:
-      average: "4.5"
+      average: "4.7"
       count: 1,294
     items:
       - name: Sarah Johnson

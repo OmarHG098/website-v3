@@ -2,7 +2,7 @@
  * CTA Banner Component Schemas - v1.0
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
+import { ctaButtonSchema, leadFormDataSchema } from "../../common/schema";
 
 export const ctaBannerSectionSchema = z.object({
   type: z.literal("cta_banner"),
@@ -13,6 +13,7 @@ export const ctaBannerSectionSchema = z.object({
   cta_url: z.string().optional(),
   buttons: z.array(ctaButtonSchema).optional(),
   background: z.string().optional(),
+  mobile_form: leadFormDataSchema.optional(),
 }).refine(
   (data) => (data.cta_text && data.cta_url) || (data.buttons && data.buttons.length > 0),
   { message: "Either cta_text/cta_url or buttons array must be provided" }

@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { LeadForm } from "@/components/LeadForm";
 
 interface CTABannerSectionProps {
   data: CTABannerSectionType;
@@ -11,6 +13,7 @@ interface CTABannerSectionProps {
 export function CTABannerSection({ data }: CTABannerSectionProps) {
   const sessionContext = useSession();
   const session = sessionContext?.session;
+  const isMobile = useIsMobile();
   
   const isUS = session?.geo?.country_code === 'US' || session?.location?.country_code === 'US';
   
@@ -22,6 +25,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
   });
   
   const hasMultipleButtons = filteredButtons && filteredButtons.length > 0;
+  const hasMobileForm = data.mobile_form && isMobile;
   
   return (
     <section 
@@ -44,7 +48,14 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
           </p>
         )}
         
-        {hasMultipleButtons ? (
+        {hasMobileForm ? (
+          <div 
+            className="max-w-md mx-auto"
+            data-testid="cta-banner-mobile-form"
+          >
+            <LeadForm data={data.mobile_form!} />
+          </div>
+        ) : hasMultipleButtons ? (
           <div className="flex flex-wrap justify-center gap-4 pb-2">
             {filteredButtons!.map((button, index) => {
               const variant = button.variant === "primary" ? "default" : button.variant === "secondary" ? "secondary" : "outline";
