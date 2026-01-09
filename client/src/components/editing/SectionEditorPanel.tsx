@@ -87,6 +87,43 @@ function ShowOnPicker({ value, onChange }: ShowOnPickerProps) {
   );
 }
 
+interface VariantPickerProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: { id: string; label: string }[];
+  label?: string;
+}
+
+function VariantPicker({ value, onChange, options, label = "Variant" }: VariantPickerProps) {
+  const currentValue = value || options[0]?.id || "";
+
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <Label className="text-sm font-medium whitespace-nowrap">{label}</Label>
+      <div className="flex rounded-md border border-border overflow-hidden">
+        {options.map((option, index) => {
+          const isSelected = currentValue === option.id;
+          return (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => onChange(option.id)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-sm transition-colors ${
+                isSelected
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-transparent text-muted-foreground hover:bg-muted"
+              } ${index !== 0 ? "border-l border-border" : ""}`}
+              data-testid={`props-variant-${option.id}`}
+            >
+              <span>{option.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function SectionEditorPanel({
   section,
   sectionIndex,
@@ -482,6 +519,19 @@ export function SectionEditorPanel({
               value={currentShowOn}
               onChange={(value) => updateProperty("showOn", value)}
             />
+            
+            {/* CTA Banner variant picker */}
+            {sectionType === "cta_banner" && (
+              <VariantPicker
+                value={(parsedSection?.variant as string) || "default"}
+                onChange={(value) => updateProperty("variant", value)}
+                options={[
+                  { id: "default", label: "Default (Buttons)" },
+                  { id: "form", label: "Form" },
+                ]}
+              />
+            )}
+            
             <ColorPicker
               value={currentBackground}
               onChange={(value) => updateProperty("background", value)}

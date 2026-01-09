@@ -560,17 +560,10 @@ sections:
         outcome: +100% salary increase
   - type: cta_banner
     version: "1.0"
+    variant: form
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
-    buttons:
-      - text: Apply Now
-        url: "#hero-0"
-        variant: secondary
-      - text: Talk to an Advisor
-        url: https://calendly.com/epilowsky-4geeksacademy/30min
-        variant: outline
-        us_only: true
-    mobile_form:
+    form:
       variant: stacked
       submit_label: Apply Now
       button_className: bg-white text-primary hover:bg-white/90 border-white
@@ -599,10 +592,6 @@ sections:
         email: true
         marketing: true
         marketing_text: I agree to receive information about courses and promotions
-    mobile_button:
-      text: Apply Now
-      url: "#cta_banner-11"
-      variant: outline
     marginY:
       mobile: md none
       desktop: md none

@@ -461,16 +461,10 @@ sections:
       desktop: none
   - type: cta_banner
     version: "1.0"
+    variant: form
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
-    buttons:
-      - text: Start Learning Now
-        url: /signup
-        variant: secondary
-      - text: Talk to an Advisor
-        url: /contact
-        variant: outline
-    mobile_form:
+    form:
       variant: stacked
       submit_label: Apply Now
       button_className: "bg-white text-primary hover:bg-white/90 border-white"

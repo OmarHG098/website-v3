@@ -304,7 +304,11 @@ export {
 // ============================================
 export {
   ctaBannerSectionSchema,
+  ctaBannerDefaultSchema,
+  ctaBannerFormSchema,
   type CtaBannerSection,
+  type CtaBannerDefault,
+  type CtaBannerForm,
 } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
 
 // Type alias for backward compatibility
