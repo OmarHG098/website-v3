@@ -459,6 +459,39 @@ sections:
     background: hsl(var(--muted))
     marginY:
       desktop: none
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Become an AI Engineer?
+    subtitle: Limited spots available. Start your transformation today.
+    buttons:
+      - text: Start Learning Now
+        url: /signup
+        variant: secondary
+      - text: Talk to an Advisor
+        url: /contact
+        variant: outline
+    mobile_form:
+      variant: stacked
+      submit_label: Apply Now
+      fields:
+        email:
+          visible: true
+          required: true
+          placeholder: Your email address
+        first_name:
+          visible: true
+          required: true
+          placeholder: First name
+        phone:
+          visible: true
+          required: false
+          placeholder: Phone number
+      success:
+        message: Thank you! We'll be in touch soon.
+      consent:
+        email: true
+        marketing: true
+        marketing_text: I agree to receive information about courses and promotions
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
