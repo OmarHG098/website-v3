@@ -274,7 +274,7 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
                       asChild
                       data-testid="button-feature-cta"
                     >
-                      <a href={displayedFeature.cta.url}>{displayedFeature.cta.text}</a>
+                      <a href={isMobile ? "#cta_banner-11" : displayedFeature.cta.url}>{displayedFeature.cta.text}</a>
                     </Button>
                   )}
                 </div>
@@ -345,7 +345,7 @@ function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
                 asChild
                 data-testid="button-highlight-cta"
               >
-                <a href={data.cta.url}>{data.cta.text}</a>
+                <a href={window.innerWidth < 768 ? "#cta_banner-11" : data.cta.url}>{data.cta.text}</a>
               </Button>
             )}
           </div>
