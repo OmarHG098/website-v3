@@ -63,11 +63,16 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
             <Button
               variant="secondary"
               size="lg"
-              asChild
+              onClick={() => {
+                const form = document.querySelector('form');
+                if (form) {
+                  form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }
+              }}
               className="bg-white text-black border-white hover:bg-white/90"
               data-testid="button-cta-banner-mobile"
             >
-              <a href={data.mobile_button!.url}>{data.mobile_button!.text}</a>
+              {data.mobile_button!.text}
             </Button>
           </div>
         ) : hasMultipleButtons && !isMobile ? (

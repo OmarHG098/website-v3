@@ -1021,22 +1021,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             </p>
           )}
 
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={submitMutation.isPending}
-            data-testid="button-submit"
-          >
-            {submitMutation.isPending ? (
-              <>
-                <IconLoader2 className="w-4 h-4 mr-2 animate-spin" />
-                {locale === "es" ? "Enviando..." : "Submitting..."}
-              </>
-            ) : (
-              data.submit_label || (locale === "es" ? "Obtener información" : "Get Information")
-            )}
-          </Button>
-
           {showTerms && (
             <p className="text-xs text-muted-foreground text-center" data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
