@@ -81,6 +81,7 @@ export default function CareerProgramDetail() {
         contentType="program"
         slug={slug}
         locale={locale}
+        programSlug={slug}
       />
     </div>
   );

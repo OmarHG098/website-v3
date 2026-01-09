@@ -7,6 +7,7 @@ import { LeadForm } from "@/components/LeadForm";
 
 interface CTABannerSectionProps {
   data: CTABannerSectionType;
+  programContext?: string;
 }
 
 function isFormVariant(data: CTABannerSectionType): data is CtaBannerForm {
@@ -17,7 +18,7 @@ function isDefaultVariant(data: CTABannerSectionType): data is CtaBannerDefault 
   return !data.variant || data.variant === "default";
 }
 
-export function CTABannerSection({ data }: CTABannerSectionProps) {
+export function CTABannerSection({ data, programContext }: CTABannerSectionProps) {
   const sessionContext = useSession();
   const session = sessionContext?.session;
   
@@ -56,7 +57,7 @@ export function CTABannerSection({ data }: CTABannerSectionProps) {
               data-testid="cta-banner-form"
             >
               {data.form ? (
-                <LeadForm data={data.form} />
+                <LeadForm data={data.form} programContext={programContext} />
               ) : (
                 <div className="bg-card/10 backdrop-blur-sm rounded-lg p-6 text-center">
                   <p className="text-primary-foreground/70 text-sm">

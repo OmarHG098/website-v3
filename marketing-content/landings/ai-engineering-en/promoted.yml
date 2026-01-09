@@ -586,6 +586,9 @@ sections:
           visible: true
           required: false
           placeholder: Phone number
+        program:
+          visible: false
+          default: ai-engineering
       success:
         message: Thank you! We'll be in touch soon.
       consent:

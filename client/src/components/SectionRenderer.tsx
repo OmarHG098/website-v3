@@ -233,6 +233,7 @@ interface SectionRendererProps {
   contentType?: "program" | "landing" | "location" | "page";
   slug?: string;
   locale?: string;
+  programSlug?: string;
 }
 
 async function sendEditOperation(
@@ -392,11 +393,25 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
-export function SectionRenderer({ sections, contentType, slug, locale }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale, programSlug }: SectionRendererProps) {
   const { toast } = useToast();
   const editMode = useEditModeOptional();
   const isEditMode = editMode?.isEditMode ?? false;
   const previewBreakpoint = editMode?.previewBreakpoint;
+  
+  const renderSectionWithContext = useCallback((section: Section, index: number) => {
+    const sectionType = (section as { type: string }).type;
+    
+    if (sectionType === "cta_banner") {
+      return <LazySection key={index}><CTABannerSection data={section as Parameters<typeof CTABannerSection>[0]["data"]} programContext={programSlug} /></LazySection>;
+    }
+    
+    if (sectionType === "lead_form") {
+      return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} programContext={programSlug} /></LazySection>;
+    }
+    
+    return renderSection(section, index);
+  }, [programSlug]);
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;
@@ -480,7 +495,7 @@ export function SectionRenderer({ sections, contentType, slug, locale }: Section
       />
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
-        const renderedSection = renderSection(section, index);
+        const renderedSection = renderSectionWithContext(section, index);
         const layoutStyles = getSectionLayoutStyles(section);
         const showOn = (section as SectionLayout).showOn;
         
