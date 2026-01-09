@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
-// @ts-expect-error - react-responsive-embed lacks TypeScript types
-import ResponsiveEmbed from 'react-responsive-embed';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import SolidCard from './SolidCard';
+
+// @ts-expect-error - react-responsive-embed lacks TypeScript types
+const ResponsiveEmbed = lazy(() => import('react-responsive-embed'));
 
 export interface VideoConfig {
   url: string;
@@ -47,6 +49,10 @@ const extractYouTubeId = (url: string): string | null => {
   return null;
 };
 
+const getYouTubeThumbnail = (videoId: string): string => {
+  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+};
+
 const parseRatio = (ratio?: string): { paddingTop: string } => {
   if (!ratio) return { paddingTop: "56.25%" };
   const [w, h] = ratio.split(":").map(Number);
@@ -68,99 +74,136 @@ export function UniversalVideo({
   useSolidCard = false,
   bordered = false,
 }: UniversalVideoProps) {
-  const [isPlaying, setIsPlaying] = useState(autoplay);
-  const [showPreview, setShowPreview] = useState(!autoplay && !!preview_image_url);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const aspectRatio = parseRatio(ratio);
+  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
 
-  const handlePlay = () => {
-    setShowPreview(false);
-    setIsPlaying(true);
+  const isYouTube = isYouTubeUrl(url);
+  const youtubeId = isYouTube ? extractYouTubeId(url) : null;
+  
+  const thumbnailUrl = preview_image_url || (youtubeId ? getYouTubeThumbnail(youtubeId) : null);
+
+  const handleClick = () => {
+    setIsModalOpen(true);
   };
 
-  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
-  
-  const renderVideo = () => {
-    if (isYouTubeUrl(url)) {
-      const videoId = extractYouTubeId(url);
-      if (videoId) {
-        return (
-          <div 
-            className={`overflow-hidden rounded-lg ${borderClasses} ${className}`}
-            data-testid="video-container"
-          >
-            <ResponsiveEmbed
-              src={`https://www.youtube.com/embed/${videoId}`}
-              ratio={ratio}
-              title="Video"
-            />
-          </div>
-        );
-      }
-    }
-
-    if (isLocalVideo(url)) {
+  const renderPreview = () => {
+    if (thumbnailUrl) {
       return (
         <div 
-          className={`relative overflow-hidden rounded-lg shadow-lg ${borderClasses} ${className}`}
+          className={`relative overflow-hidden rounded-lg cursor-pointer group ${borderClasses} ${className}`}
           style={aspectRatio}
-          data-testid="video-container"
+          onClick={handleClick}
+          data-testid="video-preview"
         >
-          {showPreview ? (
-            <div 
-              className="absolute inset-0 cursor-pointer group"
-              onClick={handlePlay}
-              data-testid="video-preview"
-            >
-              <img
-                src={preview_image_url}
-                alt="Video preview"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <IconPlayerPlayFilled className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" />
-                </div>
-              </div>
+          <img
+            src={thumbnailUrl}
+            alt="Video preview"
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (youtubeId && thumbnailUrl.includes('maxresdefault')) {
+                target.src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+              }
+            }}
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <IconPlayerPlayFilled className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" />
             </div>
-          ) : (
-            <video
-              src={url}
-              autoPlay={isPlaying || autoplay}
-              loop={loop}
-              muted={muted}
-              playsInline
-              controls={!autoplay}
-              className="absolute inset-0 w-full h-full object-cover"
-              data-testid="video-native"
-            />
-          )}
+          </div>
         </div>
       );
     }
 
     return (
       <div 
-        className={`overflow-hidden rounded-lg ${borderClasses} ${className}`}
-        data-testid="video-container"
+        className={`relative overflow-hidden rounded-lg cursor-pointer group bg-muted ${borderClasses} ${className}`}
+        style={aspectRatio}
+        onClick={handleClick}
+        data-testid="video-placeholder"
       >
-        <ResponsiveEmbed
-          src={url}
-          ratio={ratio}
-          title="Video"
-        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/80 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <IconPlayerPlayFilled className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" />
+          </div>
+          <p className="text-sm text-muted-foreground text-center px-4">
+            Video preview not available
+          </p>
+        </div>
       </div>
     );
   };
 
-  if (withShadowBorder || useSolidCard) {
-    return (
-      <SolidCard className="!p-0 !min-h-0 overflow-hidden">
-        {renderVideo()}
-      </SolidCard>
-    );
-  }
+  const renderVideoPlayer = () => {
+    if (isYouTube && youtubeId) {
+      return (
+        <Suspense fallback={<div className="w-full aspect-video bg-muted animate-pulse rounded-lg" />}>
+          <div className="w-full overflow-hidden rounded-lg" data-testid="video-modal-player">
+            <ResponsiveEmbed
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+              ratio={ratio}
+              title="Video"
+            />
+          </div>
+        </Suspense>
+      );
+    }
 
-  return renderVideo();
+    if (isLocalVideo(url)) {
+      return (
+        <div 
+          className="relative overflow-hidden rounded-lg w-full"
+          style={aspectRatio}
+          data-testid="video-modal-player"
+        >
+          <video
+            src={url}
+            autoPlay
+            loop={loop}
+            muted={muted}
+            playsInline
+            controls
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
+      );
+    }
+
+    return (
+      <Suspense fallback={<div className="w-full aspect-video bg-muted animate-pulse rounded-lg" />}>
+        <div className="w-full overflow-hidden rounded-lg" data-testid="video-modal-player">
+          <ResponsiveEmbed
+            src={url}
+            ratio={ratio}
+            title="Video"
+          />
+        </div>
+      </Suspense>
+    );
+  };
+
+  const previewContent = renderPreview();
+
+  const wrappedPreview = (withShadowBorder || useSolidCard) ? (
+    <SolidCard className="!p-0 !min-h-0 overflow-hidden">
+      {previewContent}
+    </SolidCard>
+  ) : previewContent;
+
+  return (
+    <>
+      {wrappedPreview}
+      
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black border-none">
+          <div className="p-4">
+            {isModalOpen && renderVideoPlayer()}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
 }
 
 export default UniversalVideo;
