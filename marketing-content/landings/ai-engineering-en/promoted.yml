@@ -605,3 +605,5 @@ sections:
     paddingY:
       mobile: none
       desktop: none
+    marginY:
+      desktop: sm none
