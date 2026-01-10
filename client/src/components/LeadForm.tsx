@@ -30,6 +30,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { IconLoader2, IconCheck } from "@tabler/icons-react";
 import { PhoneInput } from "@/components/ui/phone-input";
 import type { Country } from "react-phone-number-input";
+import { trackFormSubmission, type ConversionName } from "@/lib/tracking";
 
 interface FieldConfig {
   visible?: boolean;
@@ -41,6 +42,7 @@ interface FieldConfig {
 
 export interface LeadFormData {
   variant?: "stacked" | "inline";
+  conversion_name?: ConversionName;
   title?: string;
   subtitle?: string;
   submit_label?: string;
@@ -410,7 +412,24 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
 
       return apiRequest("POST", "/api/leads", payload);
     },
-    onSuccess: () => {
+    onSuccess: async (_response, variables) => {
+      // Track conversion if conversion_name is defined
+      if (data.conversion_name) {
+        const experimentAssignment = session.experiment?.experiment_slug && session.experiment?.variant_slug
+          ? { slug: session.experiment.experiment_slug, variant: session.experiment.variant_slug }
+          : undefined;
+        
+        await trackFormSubmission(
+          data.conversion_name,
+          {
+            email: variables.email,
+            program: variables.program || programContext,
+            location: variables.location || sessionLocation?.slug,
+          },
+          experimentAssignment
+        );
+      }
+
       if (data.success?.url) {
         window.location.href = data.success.url;
       } else {
