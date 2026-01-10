@@ -106,9 +106,7 @@ function pushToDataLayer(data: Record<string, unknown>): void {
   
   window.dataLayer.push(data);
   
-  if (import.meta.env.DEV) {
-    console.log("[Tracking] dataLayer.push:", data);
-  }
+  console.log("[Tracking] dataLayer.push:", data);
 }
 
 /**
@@ -142,9 +140,7 @@ export function trackConversion(
     ...payload,
   });
 
-  if (import.meta.env.DEV) {
-    console.log(`[Tracking] Conversion: ${eventName}`, payload);
-  }
+  console.log(`[Tracking] Conversion: ${eventName}`, payload);
 }
 
 /**
@@ -163,9 +159,7 @@ export function track(
     ...payload,
   });
 
-  if (import.meta.env.DEV) {
-    console.log(`[Tracking] Event: ${eventName}`, payload);
-  }
+  console.log(`[Tracking] Event: ${eventName}`, payload);
 }
 
 /**
@@ -182,9 +176,7 @@ export function setVisitorContext(context: VisitorContext): void {
     ...context.utm,
   });
 
-  if (import.meta.env.DEV) {
-    console.log("[Tracking] Visitor context set:", context);
-  }
+  console.log("[Tracking] Visitor context set:", context);
 }
 
 /**
