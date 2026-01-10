@@ -96,7 +96,13 @@ export default function LandingHero() {
                       className="text-yellow-500 w-5 h-5"
                     />
                   ))}
-                  <IconStar className="text-yellow-500 w-5 h-5" />
+                  <div className="relative w-5 h-5">
+                    <IconStar className="text-yellow-500 w-5 h-5 absolute inset-0" />
+                    <IconStarFilled 
+                      className="text-yellow-500 w-5 h-5 absolute inset-0"
+                      style={{ clipPath: "inset(0 50% 0 0)" }}
+                    />
+                  </div>
                 </div>
               </div>
               <span className="text-sm text-muted-foreground">
