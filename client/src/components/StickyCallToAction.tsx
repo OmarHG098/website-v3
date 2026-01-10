@@ -80,8 +80,8 @@ export function StickyCallToAction({ data }: StickyCallToActionProps) {
     >
       <div className="container mx-auto px-4">
         {!isExpanded ? (
-          <div className="flex items-center justify-between py-4 gap-4">
-            <p className="text-sm md:text-base font-medium text-foreground flex-1">
+          <div className="flex items-center justify-center py-4 gap-4">
+            <p className="text-sm md:text-base font-medium text-foreground">
               {data.heading}
             </p>
             <div className="flex items-center gap-2">
