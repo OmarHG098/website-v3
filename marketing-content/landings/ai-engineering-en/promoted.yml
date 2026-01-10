@@ -103,6 +103,9 @@ sections:
         first_name:
           visible: true
           required: true
+        last_name:
+          visible: true
+          required: false
         phone:
           visible: true
           required: false
