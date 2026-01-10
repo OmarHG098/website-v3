@@ -414,6 +414,14 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
     },
     onSuccess: async (_response, variables) => {
       // Track conversion if conversion_name is defined
+      if (!data.conversion_name) {
+        console.error(
+          '[LeadForm] Missing conversion_name in form configuration. ' +
+          'Add conversion_name to the form YAML to enable tracking. ' +
+          'Available values: student_application, request_more_info, financing_guide_download, ' +
+          'partner_application, job_application, newsletter_signup, contact_us, outcomes_report'
+        );
+      }
       if (data.conversion_name) {
         const experimentAssignment = session.experiment?.experiment_slug && session.experiment?.variant_slug
           ? { slug: session.experiment.experiment_slug, variant: session.experiment.variant_slug }
