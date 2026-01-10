@@ -136,6 +136,43 @@ Content edits made through the inline editor can be automatically committed back
 - `server/content-editor.ts`: Integrates GitHub commit after YAML file saves
 - Commit messages follow format: `[Content] Update {type}/{slug} - {sections} ({date})`
 
+### Conversion Tracking System
+A centralized tracking module (`client/src/lib/tracking.ts`) provides type-safe analytics and conversion tracking via Google Tag Manager.
+
+**Pre-defined Conversion Names:**
+- `student_application` - Main application form submissions
+- `request_more_info` - Syllabus/info requests
+- `financing_guide_download` - Guide downloads
+- `partner_application` - Hiring partner applications
+- `job_application` - Job applications
+- `newsletter_signup` - Newsletter signups
+- `contact_us` - Contact form submissions
+- `outcomes_report` - Outcomes report requests
+
+**Usage in LeadForm YAML:**
+```yaml
+form:
+  conversion_name: student_application  # Required for tracking
+  fields:
+    email:
+      visible: true
+      required: true
+```
+
+**Key Functions:**
+- `trackFormSubmission(conversionName, formData, experimentAssignment)` - Tracks form conversions with hashed email and experiment data
+- `track(eventName, payload)` - General event tracking
+- `setVisitorContext(context)` - Sets session-level visitor data
+
+**GTM Setup:**
+1. Replace `GTM-XXXXXXX` in `client/index.html` with your container ID
+2. Uncomment the GTM scripts in the `<head>` and `<body>` sections
+3. Configure triggers in GTM for the conversion events
+
+**Privacy:**
+- Email addresses are SHA-256 hashed before sending to dataLayer
+- Only the first 16 characters of the hash are transmitted
+
 ### External Dependencies
 -   **4geeks Breathecode API**: Intended for user authentication, profile management, and educational content delivery.
 -   **@tabler/icons-react**: Icon library.
