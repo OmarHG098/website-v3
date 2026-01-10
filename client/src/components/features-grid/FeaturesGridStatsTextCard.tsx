@@ -58,7 +58,7 @@ export function FeaturesGridStatsTextCard({
             )}
           </div>
 
-          <Card className={`p-6 md:p-8 ${data.card_color || "bg-background"}`}>
+          <Card className={`p-6 md:p-8 order-first md:order-last ${data.card_color || "bg-background"}`}>
             <div>
               {data.title && (
                 <h2
