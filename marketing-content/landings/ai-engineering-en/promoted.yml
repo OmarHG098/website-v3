@@ -17,6 +17,7 @@ sections:
     form:
       variant: stacked
       submit_label: Apply now
+      conversion_name: student_application
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email
       fields:
@@ -96,6 +97,7 @@ sections:
     form:
       variant: inline
       submit_label: Submit Application
+      conversion_name: student_application
       fields:
         email:
           visible: true
@@ -577,6 +579,7 @@ sections:
     form:
       variant: stacked
       submit_label: Apply Now
+      conversion_name: student_application
       button_className: bg-white text-primary hover:bg-white/90 border-white
       terms_className: text-white/80
       show_terms: true
