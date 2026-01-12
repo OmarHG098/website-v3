@@ -159,12 +159,6 @@ sections:
       - value: $15K
         label: Average salary increase after graduation
     collage_images:
-      - image_id: graduates_celebration
-        col_span: 7
-        row_span: 2
-      - image_id: graduates_workspace
-        col_span: 5
-        row_span: 2
       - image_id: graduates_team_1
         col_span: 5
         row_span: 2
