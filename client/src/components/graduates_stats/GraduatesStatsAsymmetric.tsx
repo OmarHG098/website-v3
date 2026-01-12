@@ -70,8 +70,12 @@ export function GraduatesStatsAsymmetric({ data }: GraduatesStatsAsymmetricProps
           </div>
         )}
 
-        <div className="hidden lg:grid lg:grid-cols-12 gap-4 items-stretch" data-testid="graduates-stats-asymmetric-desktop">
-          <div className="col-span-4 h-[400px]">
+        <div 
+          className="hidden lg:grid lg:grid-cols-12 gap-4 items-stretch" 
+          style={{ "--section-height": "480px" } as React.CSSProperties}
+          data-testid="graduates-stats-asymmetric-desktop"
+        >
+          <div className="col-span-4" style={{ height: "var(--section-height)" }}>
             <UniversalImage
               id={tall_image}
               preset="card"
@@ -80,9 +84,12 @@ export function GraduatesStatsAsymmetric({ data }: GraduatesStatsAsymmetricProps
             />
           </div>
           
-          <div className="col-span-4 flex flex-col gap-4">
+          <div 
+            className="col-span-4 grid grid-rows-2 gap-4" 
+            style={{ height: "var(--section-height)" }}
+          >
             {stacked_images && stacked_images.length > 0 && (
-              <div className="flex-1 min-h-0">
+              <div className="min-h-0 overflow-hidden">
                 <UniversalImage
                   id={stacked_images[0]}
                   preset="card"
@@ -92,7 +99,7 @@ export function GraduatesStatsAsymmetric({ data }: GraduatesStatsAsymmetricProps
               </div>
             )}
             {stacked_images && stacked_images.length > 1 && (
-              <div className="flex-1 min-h-0">
+              <div className="min-h-0 overflow-hidden">
                 <UniversalImage
                   id={stacked_images[1]}
                   preset="card"
@@ -103,7 +110,7 @@ export function GraduatesStatsAsymmetric({ data }: GraduatesStatsAsymmetricProps
             )}
           </div>
           
-          <div className="col-span-4 pl-4">
+          <div className="col-span-4 pl-4 flex" style={{ height: "var(--section-height)" }}>
             {renderStats()}
           </div>
         </div>
