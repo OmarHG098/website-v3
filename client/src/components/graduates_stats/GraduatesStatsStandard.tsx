@@ -24,6 +24,7 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
         return (
           <div 
             key={index}
+            className="rounded-[0.8rem] overflow-hidden"
             style={{
               gridColumn: `span ${colSpan} / span ${colSpan}`,
               gridRow: `span ${rowSpan} / span ${rowSpan}`,
