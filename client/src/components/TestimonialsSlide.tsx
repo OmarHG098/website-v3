@@ -201,37 +201,41 @@ interface MasonryColumn {
 }
 
 function createMasonryColumns(testimonials: TestimonialsSlideTestimonial[]): MasonryColumn[] {
-  const patterns: CardSize[][] = [
+  const twoCardPatterns: CardSize[][] = [
     ["large", "small"],
-    ["small", "medium"],
-    ["medium", "large"],
-    ["small", "small", "small"],
+    ["small", "large"],
+    ["medium", "medium"],
     ["large", "medium"],
     ["medium", "small"],
+    ["small", "medium"],
   ];
   
   const columns: MasonryColumn[] = [];
-  let testimonialIndex = 0;
-  let patternIndex = 0;
   
-  while (testimonialIndex < testimonials.length) {
-    const pattern = patterns[patternIndex % patterns.length];
+  for (let i = 0; i < testimonials.length; i += 2) {
+    const pattern = twoCardPatterns[(i / 2) % twoCardPatterns.length];
     const column: MasonryColumn = { cards: [] };
     
-    for (const size of pattern) {
-      if (testimonialIndex < testimonials.length) {
-        column.cards.push({
-          testimonial: testimonials[testimonialIndex],
-          size
-        });
-        testimonialIndex++;
-      }
+    column.cards.push({
+      testimonial: testimonials[i],
+      size: pattern[0]
+    });
+    
+    if (i + 1 < testimonials.length) {
+      column.cards.push({
+        testimonial: testimonials[i + 1],
+        size: pattern[1]
+      });
+    } else if (columns.length > 0) {
+      const lastColumn = columns[columns.length - 1];
+      lastColumn.cards.push({
+        testimonial: testimonials[i],
+        size: "medium"
+      });
+      continue;
     }
     
-    if (column.cards.length > 0) {
-      columns.push(column);
-    }
-    patternIndex++;
+    columns.push(column);
   }
   
   return columns;
@@ -337,14 +341,21 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         </div>
         
         <div 
-          className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-10"
+          className="absolute inset-0 pointer-events-none z-10"
           style={{
-            background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 40%, transparent 100%)'
+            background: 'radial-gradient(ellipse 70% 50% at center, transparent 0%, transparent 30%, hsl(var(--background) / 0.7) 60%, hsl(var(--background)) 85%)'
           }}
         />
         
         <div 
-          className="absolute top-0 left-0 right-0 h-8 pointer-events-none z-10"
+          className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-10"
+          style={{
+            background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 30%, transparent 100%)'
+          }}
+        />
+        
+        <div 
+          className="absolute top-0 left-0 right-0 h-12 pointer-events-none z-10"
           style={{
             background: 'linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%)'
           }}
