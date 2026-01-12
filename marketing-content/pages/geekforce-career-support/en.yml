@@ -171,7 +171,6 @@ sections:
       - image_id: graduates_friends
         col_span: 6
         row_span: 2
-    background: bg-muted/30
   - type: testimonials_slide
     version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students
