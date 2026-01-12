@@ -75,19 +75,19 @@ function LogoCard({
       }}
     >
       {isHero ? (
-        <>
-          <div className="flex items-start">
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <div className="flex items-center justify-center mb-6 w-full">
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-10 max-w-[140px] object-contain logo-grayscale"
+              className="h-16 max-w-[200px] object-contain logo-grayscale"
               loading="lazy"
             />
           </div>
-          <p className="text-sm text-muted-foreground/70 leading-relaxed">
+          <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-[280px]">
             {heroText}
           </p>
-        </>
+        </div>
       ) : (
         <img
           src={logo.src}
