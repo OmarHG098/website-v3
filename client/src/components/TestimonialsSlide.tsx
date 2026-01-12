@@ -102,15 +102,6 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
     achievement: "She got a 120% increase in her salary"
   },
   {
-    name: "Leandro Matonte",
-    img: "/attached_assets/Leandro_1764725403142.jpeg",
-    status: "Graduated",
-    country: { iso: "uy", name: "Uruguay" },
-    contributor: "UTEC-BID",
-    description: "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
-    achievement: "He got a 60% increase in his salary"
-  },
-  {
     name: "Melanie Galaretto",
     img: "/attached_assets/MelamnieGalaretto_1764725408397.jpeg",
     status: "Graduated",
@@ -135,6 +126,15 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
     contributor: "CINDE-BID",
     description: "Luis came to the program without any previous experience, He is now a software developer working on a tech firm in Costa Rica.",
     achievement: "He got a 50% increase in his salary"
+  },
+  {
+    name: "Leandro Matonte",
+    img: "/attached_assets/Leandro_1764725403142.jpeg",
+    status: "Graduated",
+    country: { iso: "uy", name: "Uruguay" },
+    contributor: "UTEC-BID",
+    description: "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
+    achievement: "He got a 60% increase in his salary"
   }
 ];
 
@@ -337,9 +337,9 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         </div>
         
         <div 
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
           style={{
-            background: 'linear-gradient(to top, var(--background) 0%, transparent 100%)'
+            background: 'linear-gradient(to top, var(--background) 0%, var(--background) 20%, transparent 100%)'
           }}
         />
         
