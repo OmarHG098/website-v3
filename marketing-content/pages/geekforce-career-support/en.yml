@@ -21,32 +21,6 @@ sections:
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
-    form:
-      variant: inline
-      title: Sign up for lifetime support
-      subtitle: Keep work and life separate by using your work email
-      submit_label: Sign up free →
-      tags: career, support, AI
-      automations: email
-      fields:
-        email:
-          placeholder: Enter your work email
-      success:
-        message: Thank you for signing up!
-      terms_url: /terms
-      privacy_url: /privacy
-      show_consent: true
-      show_terms: true
-    trust_bar:
-      rating: "4.5"
-      review_count: Based on 5149+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
     paddingY:
       desktop: none
   - type: bullet_tabs_showcase

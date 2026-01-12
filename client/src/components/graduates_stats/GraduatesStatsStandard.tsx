@@ -112,8 +112,8 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
           <div 
             className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none"
             style={{ 
-              top: '-1.5rem',
-              bottom: '-1.5rem',
+              top: '2.5rem',
+              bottom: '2.5rem',
               left: '-1rem',
               right: '-1rem'
             }}
