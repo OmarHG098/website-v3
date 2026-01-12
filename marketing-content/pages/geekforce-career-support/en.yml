@@ -47,6 +47,8 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
+    paddingY:
+      desktop: none
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Unlimited Career Support – Always Ahead of Job Market Trends
@@ -89,15 +91,14 @@ sections:
           - Create a personalized job search plan aligned with your goals.
           - Navigate AI-driven hiring platforms, from resume scanners to automated interviews.
           - Connect with our extensive network of global hiring partners.
+    paddingY:
+      desktop: md none
   - type: two_column
-    version: "1.0"
     proportions:
       - 5
       - 7
-    background: bg-primary/5
+    background: hsl(210 100% 50% / 0.05)
     alignment: center
-    reverse_on_mobile: true
-    padding_right: "6"
     left:
       image: /attached_assets/community_1764717588840.png
       image_alt: 4Geeks Academy community members collaborating on a project
@@ -105,12 +106,16 @@ sections:
     right:
       heading: Accelerate Your Results with Hyperpersonalized Career Support
       description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:"
-      bullets_visible: 2
       bullets:
         - text: Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.
         - text: Practice technical interviews and behavioral questions with AI-guided exercises.
         - text: Get expert coaching from our mentors who tailor advice to your unique profile and goals.
+      bullets_visible: 2
       font_size: base
+    reverse_on_mobile: true
+    padding_right: "6"
+    paddingY:
+      desktop: md
   - type: whos_hiring
     variant: carousel
     title: Trusted by the World's Leading Companies
