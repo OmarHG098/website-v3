@@ -1,5 +1,6 @@
 import { UniversalImage } from "@/components/UniversalImage";
 import type { GraduatesStatsSection } from "@shared/schema";
+import { cn } from "@/lib/utils";
 
 interface GraduatesStatsStandardProps {
   data: GraduatesStatsSection;
@@ -47,25 +48,28 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
       className="flex flex-col justify-center"
       data-testid="graduates-stats-numbers"
     >
-      <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-2 gap-y-12 gap-x-8">
         {stats.map((stat, index) => {
-          const isFirstColumn = index % 2 === 0;
+          const isLastItem = index === stats.length - 1 && stats.length % 2 !== 0;
           
           return (
             <div 
               key={index} 
-              className={`text-center lg:text-left ${isFirstColumn ? 'lg:mr-auto' : 'lg:ml-auto'}`}
+              className={cn(
+                "text-center",
+                isLastItem && "col-span-2 mt-4"
+              )}
               data-testid={`stat-item-${index}`}
             >
               <p 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-1"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-2"
                 data-testid={`text-stat-value-${index}`}
               >
                 {stat.value}
                 {stat.unit && <span className="text-2xl md:text-3xl font-semibold ml-1">{stat.unit}</span>}
               </p>
               <p 
-                className="text-sm md:text-base text-muted-foreground"
+                className="text-sm md:text-base text-muted-foreground max-w-[200px] mx-auto"
                 data-testid={`text-stat-label-${index}`}
               >
                 {stat.label}
