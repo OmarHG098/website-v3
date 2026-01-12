@@ -341,23 +341,20 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         </div>
         
         <div 
-          className="absolute inset-0 pointer-events-none z-10"
+          className="absolute inset-0 top-auto pointer-events-none z-10"
           style={{
-            background: 'radial-gradient(ellipse 70% 50% at center, transparent 0%, transparent 30%, hsl(var(--background) / 0.7) 60%, hsl(var(--background)) 85%)'
+            height: '100%',
+            maxHeight: '400px',
+            background: 'radial-gradient(50% 100% at 50% 0%, transparent 0%, transparent 50%, hsl(var(--background)) 100%)'
           }}
         />
         
         <div 
-          className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-10"
+          className="absolute left-0 right-0 pointer-events-none z-10"
           style={{
-            background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 30%, transparent 100%)'
-          }}
-        />
-        
-        <div 
-          className="absolute top-0 left-0 right-0 h-12 pointer-events-none z-10"
-          style={{
-            background: 'linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%)'
+            top: 0,
+            bottom: 0,
+            background: 'linear-gradient(to right, hsl(var(--background)) 0%, transparent 15%, transparent 85%, hsl(var(--background)) 100%)'
           }}
         />
       </div>
