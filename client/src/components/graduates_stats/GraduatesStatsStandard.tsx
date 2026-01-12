@@ -13,43 +13,32 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
   }
 
   const renderCollageImages = () => (
-    <div className="relative">
-      <div 
-        className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none"
-        style={{ 
-          top: '-1rem',
-          bottom: '-1rem',
-          left: '-1rem',
-          right: '-1rem'
-        }}
-      />
-      <div 
-        className="relative grid grid-cols-12 auto-rows-[80px] gap-3"
-        data-testid="graduates-stats-collage"
-      >
-        {collage_images && collage_images.map((img, index) => {
-          const colSpan = img.col_span || 6;
-          const rowSpan = img.row_span || 2;
-          
-          return (
-            <div 
-              key={index}
-              className="rounded-[0.8rem] overflow-hidden"
-              style={{
-                gridColumn: `span ${colSpan} / span ${colSpan}`,
-                gridRow: `span ${rowSpan} / span ${rowSpan}`,
-              }}
-            >
-              <UniversalImage
-                id={img.image_id}
-                preset="card"
-                className="w-full h-full object-cover shadow-sm"
-                alt={`Graduate photo ${index + 1}`}
-              />
-            </div>
-          );
-        })}
-      </div>
+    <div 
+      className="relative grid grid-cols-12 auto-rows-[80px] gap-3"
+      data-testid="graduates-stats-collage"
+    >
+      {collage_images && collage_images.map((img, index) => {
+        const colSpan = img.col_span || 6;
+        const rowSpan = img.row_span || 2;
+        
+        return (
+          <div 
+            key={index}
+            className="rounded-[0.8rem] overflow-hidden"
+            style={{
+              gridColumn: `span ${colSpan} / span ${colSpan}`,
+              gridRow: `span ${rowSpan} / span ${rowSpan}`,
+            }}
+          >
+            <UniversalImage
+              id={img.image_id}
+              preset="card"
+              className="w-full h-full object-cover shadow-sm"
+              alt={`Graduate photo ${index + 1}`}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 
@@ -115,9 +104,20 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center">
-          {renderCollageImages()}
-          {renderStats()}
+        <div className="relative">
+          <div 
+            className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none"
+            style={{ 
+              top: '-1.5rem',
+              bottom: '-1.5rem',
+              left: '-1rem',
+              right: '-1rem'
+            }}
+          />
+          <div className="relative grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center px-4 py-8">
+            {renderCollageImages()}
+            {renderStats()}
+          </div>
         </div>
       </div>
     </section>
