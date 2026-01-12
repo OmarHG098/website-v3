@@ -1,12 +1,16 @@
 import { UniversalImage } from "@/components/UniversalImage";
-import type { GraduatesStatsSection } from "@shared/schema";
+import type { GraduatesStatsSection, GraduatesCollageImage, GraduatesFeaturedImage } from "@shared/schema";
 
 interface GraduatesStatsFullBleedProps {
   data: GraduatesStatsSection;
 }
 
 export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) {
-  const { heading, subheading, stats, collage_images, background } = data;
+  const heading = data.heading;
+  const subheading = data.subheading;
+  const stats = data.stats;
+  const background = data.background;
+  const collage_images = 'collage_images' in data ? data.collage_images : undefined;
   const featured_images = 'featured_images' in data ? data.featured_images : undefined;
 
   if (!stats || stats.length === 0) {
