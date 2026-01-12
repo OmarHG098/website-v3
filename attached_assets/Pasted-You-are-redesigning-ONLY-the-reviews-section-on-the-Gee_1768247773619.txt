@@ -1,0 +1,74 @@
+You are redesigning ONLY the reviews section on the GeekForce page.
+Objective
+Create a new reviews carousel that looks and behaves like the Supabase testimonials grid:
+- Horizontal carousel
+- Masonry / Pinterest layout with cards of different sizes
+- Smooth, premium motion
+But adapted to our white background and our existing design system.
+Important references
+1) Supabase testimonials section: masonry cards with different sizes + carousel feel + bottom shadow fade.
+2) Our existing “Trusted by the World’s Leading…” component on GeekForce: use the same card surface style (light gray surface + subtle shadow + border radius). Do NOT invent a new card style.
+Data source and reuse
+- Reuse the existing GeekForce reviews component content (name, role, text, outcome tag).
+- Extract the profile image from the existing reviews component and place it in the new cards.
+- Profile image must be shown as a circle avatar at the top-left corner of each card.
+Card style (must match our existing GeekForce cards)
+- Use the same surface treatment we already implemented in “Trusted by the World’s Leading…”:
+  - light gray muted surface (the same bg-muted/30 approach)
+  - subtle border (very light)
+  - soft shadow for depth (barely visible)
+  - same border radius as the rest of GeekForce
+- No dark cards.
+- No new color variations.
+- Keep typography consistent with the page.
+Masonry layout requirements (Supabase-like)
+- Cards must have different sizes and create an editorial mosaic:
+  - some small cards
+  - some medium cards
+  - some large cards that include more text
+- Avoid a uniform grid or same-height rows.
+- Create repeating patterns similar to Supabase:
+  - two smaller cards stacked next to one large card
+  - occasionally swap sides for variation
+- Keep consistent gutters between cards.
+Carousel behavior
+- The masonry grid must live inside a horizontally scrolling carousel track.
+- Infinite loop: duplicate content so there is no visible reset.
+- Slow constant auto-scroll.
+- Pause on hover.
+- Allow touch scroll on mobile.
+- No arrows or dots unless absolutely necessary (if added, keep extremely minimal).
+Avatar and header layout inside each card
+Top row inside card:
+- Circular avatar on the top-left (from existing review profile image).
+- Name and role/job line to the right of avatar.
+- Keep this area compact and aligned.
+- Remove any non-monochrome avatar styles; photos are fine but should be lightly desaturated if needed to fit the aesthetic.
+Review content
+- Keep the review text unchanged.
+- For smaller cards, clamp to a fixed number of lines (ex: 3 to 4) so the layout stays tidy.
+- For larger cards, allow more text (ex: 6 to 8 lines).
+- Do NOT edit or rewrite the review text.
+Outcome tag / chip
+- Keep the existing chip (ex: “Hired in X months”, “salary increase”).
+- Place it near the bottom of the card consistently.
+White background fade shadow (like Supabase, but inverted)
+- Add a soft fade overlay on the bottom of the carousel area to create depth like Supabase.
+- On Supabase it fades to black; here it must fade to white:
+  - gradient from transparent to white
+- The fade should partially cover the bottom of the cards slightly, subtle and premium.
+- Optional: also add a very subtle top fade to soften edges.
+Responsiveness
+- Desktop: show the full masonry carousel with multiple columns.
+- Tablet: fewer columns, still masonry.
+- Mobile: single column or 2-column masonry with horizontal scroll, still not a simple strip.
+Accessibility
+- Respect prefers-reduced-motion:
+  - stop auto-scroll
+  - allow manual scroll only
+Acceptance criteria
+- The reviews section looks like Supabase in layout and motion, but uses our GeekForce card style.
+- Cards are different sizes and form a masonry mosaic (Pinterest-like).
+- Each card has a circular profile photo top-left, pulled from the original GeekForce reviews component.
+- Bottom fade overlay is present and fades to white (not black).
+- No redesign of other sections. Only this reviews section is modified.
