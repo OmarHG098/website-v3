@@ -147,13 +147,8 @@ sections:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
   - type: graduates_stats
-    variant: asymmetric
     heading: Does the Job Guarantee deliver results?
     subheading: Yes, and we've got the numbers to back it up.
-    tall_image: graduates_celebration
-    stacked_images:
-      - graduates_workspace
-      - graduates_team_1
     stats:
       - value: "84"
         unit: "%"
@@ -163,6 +158,25 @@ sections:
         label: Average time to get hired
       - value: $15K
         label: Average salary increase after graduation
+    collage_images:
+      - image_id: graduates_celebration
+        col_span: 7
+        row_span: 2
+      - image_id: graduates_workspace
+        col_span: 5
+        row_span: 2
+      - image_id: graduates_team_1
+        col_span: 5
+        row_span: 2
+      - image_id: graduates_team_2
+        col_span: 7
+        row_span: 2
+      - image_id: graduates_coding
+        col_span: 6
+        row_span: 2
+      - image_id: graduates_friends
+        col_span: 6
+        row_span: 2
     background: bg-muted/30
   - type: testimonials_slide
     version: "1.0"
