@@ -339,14 +339,14 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         <div 
           className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-10"
           style={{
-            background: 'linear-gradient(to top, var(--background) 0%, var(--background) 40%, transparent 100%)'
+            background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 40%, transparent 100%)'
           }}
         />
         
         <div 
           className="absolute top-0 left-0 right-0 h-8 pointer-events-none z-10"
           style={{
-            background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)'
+            background: 'linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%)'
           }}
         />
       </div>
