@@ -13,7 +13,7 @@ function TextOnlyCard({ item }: { item: FeaturesGridTextOnlyItem }) {
         {item.headline}
       </h3>
       {item.subline && (
-        <p className="text-base text-foreground leading-snug mb-2">
+        <p className="text-base text-foreground leading-snug mb-2 text-center">
           {item.subline}
         </p>
       )}
