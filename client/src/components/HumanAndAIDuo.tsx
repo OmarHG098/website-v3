@@ -193,7 +193,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <span className="text-primary flex-shrink-0">{getIcon(group.icon, "w-10 h-10")}</span>
                       ) : (
                         <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
-                          <img src={group.image || rigobotLogo} alt="Support icon" className="w-full h-full object-cover" />
+                          <img src="https://randomuser.me/api/portraits/men/10.jpg" alt="Support icon" className="w-full h-full object-cover" />
                         </div>
                       )}
                       <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">{group.title}</h4>
