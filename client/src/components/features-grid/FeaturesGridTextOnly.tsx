@@ -2,47 +2,23 @@ import type { FeaturesGridTextOnlySection, FeaturesGridTextOnlyItem } from "@sha
 import { Card } from "@/components/ui/card";
 
 function TextOnlyCard({ item }: { item: FeaturesGridTextOnlyItem }) {
-  const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
-  
-  const renderHighlightedTitle = () => {
-    const title = item.title;
-    const highlightWords = item.highlight_words;
-    
-    if (!highlightWords) {
-      return <span className="text-foreground">{title}</span>;
-    }
-    
-    const lowerTitle = title.toLowerCase();
-    const lowerHighlight = highlightWords.toLowerCase();
-    const startIndex = lowerTitle.indexOf(lowerHighlight);
-    
-    if (startIndex === -1) {
-      return <span className="text-foreground">{title}</span>;
-    }
-    
-    const beforeHighlight = title.slice(0, startIndex);
-    const highlighted = title.slice(startIndex, startIndex + highlightWords.length);
-    const afterHighlight = title.slice(startIndex + highlightWords.length);
-    
-    return (
-      <>
-        {beforeHighlight && <span className="text-foreground">{beforeHighlight}</span>}
-        <span className="text-primary">{highlighted}</span>
-        {afterHighlight && <span className="text-foreground">{afterHighlight}</span>}
-      </>
-    );
-  };
+  const itemId = item.id || (item.headline || 'item').toLowerCase().replace(/\s+/g, '-');
 
   return (
     <Card 
-      className="p-5 md:p-6 shadow-sm border border-border/50 hover:shadow-md hover:border-border transition-all duration-200"
+      className="p-5 md:p-6 shadow-sm border border-border/50 hover:shadow-md hover:border-border transition-all duration-200 text-left"
       data-testid={`card-feature-${itemId}`}
     >
-      <h3 className="font-semibold text-lg leading-tight mb-2">
-        {renderHighlightedTitle()}
+      <h3 className="font-semibold text-lg text-primary leading-tight mb-1">
+        {item.headline}
       </h3>
+      {item.subline && (
+        <p className="text-base text-foreground leading-snug mb-2">
+          {item.subline}
+        </p>
+      )}
       {item.description && (
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed mt-3">
           {item.description}
         </p>
       )}

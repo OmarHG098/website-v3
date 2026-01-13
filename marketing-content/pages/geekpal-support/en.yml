@@ -58,17 +58,17 @@ sections:
     title: Advance Faster, Never Lose Momentum
     subtitle: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
     items:
-      - title: ✓ Always supported, never stuck
-        highlight_words: ✓ Always supported,
+      - headline: Always supported
+        subline: never stuck
         description: Get help the moment friction appears, before you lose momentum.
-      - title: ✓ Instant guidance, 24/7
-        highlight_words: ✓ Instant guidance,
+      - headline: Instant guidance
+        subline: 24/7
         description: The AI Tutor helps you unblock fast without breaking your learning flow.
-      - title: ✓ Real humans, when it matters
-        highlight_words: ✓ Real humans,
+      - headline: Real humans
+        subline: when it matters
         description: Mentors step in with context, feedback, and direction when you need it.
-      - title: ✓ Community support, built in
-        highlight_words: ✓ Community support,
+      - headline: Community support
+        subline: built in
         description: Peers and alumni help you move forward with examples and encouragement.
     columns: 4
     background: bg-primary/5

@@ -14,8 +14,8 @@ export const featuresGridHighlightItemSchema = z.object({
 
 export const featuresGridTextOnlyItemSchema = z.object({
   id: z.string().optional(),
-  title: z.string(),
-  highlight_words: z.string().optional(),
+  headline: z.string(),
+  subline: z.string().optional(),
   description: z.string().optional(),
 });
 
