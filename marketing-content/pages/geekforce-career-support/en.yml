@@ -19,9 +19,6 @@ sections:
       color: chart-5
     description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
     marquee:
-      speed: 40
-      gradient: true
-      gradientWidth: 50
       items:
         - id: switchup-2025
           alt: SwitchUp - Best Coding Bootcamps 2025
@@ -43,6 +40,9 @@ sections:
           alt: Fortune - Best Education Company
           logo: /attached_assets/fortune-logo_1764709618095.webp
           logoHeight: h-8 md:h-12
+      speed: 40
+      gradient: true
+      gradientWidth: 150
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
