@@ -4,6 +4,7 @@
  */
 import { z } from "zod";
 import { ctaButtonSchema, videoConfigSchema, leadFormDataSchema } from "../../common/schema";
+import { awardsMarqueeItemSchema } from "../../awards_marquee/v1.0/schema";
 
 // Trust bar for singleColumn variant
 export const trustBarSchema = z.object({
@@ -44,6 +45,15 @@ export const productShowcaseTrustBarSchema = z.object({
   rating: z.string().optional(),
   review_count: z.string().optional(),
   review_logos: z.array(reviewLogoSchema).optional(),
+});
+
+// Embedded marquee for productShowcase (renders below description)
+export const embeddedMarqueeSchema = z.object({
+  items: z.array(awardsMarqueeItemSchema),
+  speed: z.number().optional(),
+  gradient: z.boolean().optional(),
+  gradientColor: z.string().optional(),
+  gradientWidth: z.number().optional(),
 });
 
 // Course tutor
@@ -98,6 +108,8 @@ export const heroProductShowcaseSchema = z.object({
   welcome_text: z.string().optional(),
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
+  // Embedded marquee renders below description (optional)
+  marquee: embeddedMarqueeSchema.nullish(),
   video: videoConfigSchema.optional(),
   video_id: z.string().optional(),
   video_ratio: z.string().optional(),
@@ -224,6 +236,7 @@ export type HeroImage = z.infer<typeof heroImageSchema>;
 export type BrandMark = z.infer<typeof brandMarkSchema>;
 export type ReviewLogo = z.infer<typeof reviewLogoSchema>;
 export type ProductShowcaseTrustBar = z.infer<typeof productShowcaseTrustBarSchema>;
+export type EmbeddedMarquee = z.infer<typeof embeddedMarqueeSchema>;
 export type HeroCourseTutor = z.infer<typeof heroCourseTutorSchema>;
 export type HeroCourseFeature = z.infer<typeof heroCourseFeatureSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;
