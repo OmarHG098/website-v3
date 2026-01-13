@@ -111,9 +111,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <ul className="space-y-2">
                           {group.bullets.map((bullet, bulletIndex) => (
                             <li key={bulletIndex} className="flex items-start gap-3">
-                              <span className="text-primary mt-0.5 flex-shrink-0">
-                                <TablerIcons.IconCircleCheckFilled className="w-5 h-5" />
-                              </span>
+                              <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-foreground text-base">{bullet.text}</span>
                             </li>
                           ))}
@@ -163,9 +161,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                   <ul className="space-y-2 ms-12">
                     {group.bullets.map((bullet, bulletIndex) => (
                       <li key={bulletIndex} className="flex items-start gap-3">
-                        <span className="text-primary mt-0.5 flex-shrink-0">
-                          <TablerIcons.IconCircleCheckFilled className="w-5 h-5" />
-                        </span>
+                        <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                         <span className="text-foreground text-base">{bullet.text}</span>
                       </li>
                     ))}
@@ -208,9 +204,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <ul className="space-y-2">
                           {group.bullets.map((bullet, bulletIndex) => (
                             <li key={bulletIndex} className="flex items-start gap-3">
-                              <span className="text-primary mt-0.5 flex-shrink-0">
-                                <TablerIcons.IconCircleCheckFilled className="w-5 h-5" />
-                              </span>
+                              <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-foreground text-base">{bullet.text}</span>
                             </li>
                           ))}
