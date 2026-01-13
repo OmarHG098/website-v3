@@ -50,27 +50,28 @@ sections:
       autoplay: false
       loop: true
     paddingY:
-      desktop: none
+      mobile: none lg
+      desktop: md lg
   - type: features_grid
     version: "1.0"
     variant: textOnly
     title: Advance Faster, Never Lose Momentum
     subtitle: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
+    items:
+      - title: ✓ Always supported, never stuck
+        highlight_words: ✓ Always supported,
+        description: Get help the moment friction appears, before you lose momentum.
+      - title: ✓ Instant guidance, 24/7
+        highlight_words: ✓ Instant guidance,
+        description: The AI Tutor helps you unblock fast without breaking your learning flow.
+      - title: ✓ Real humans, when it matters
+        highlight_words: ✓ Real humans,
+        description: Mentors step in with context, feedback, and direction when you need it.
+      - title: ✓ Community support, built in
+        highlight_words: ✓ Community support,
+        description: Peers and alumni help you move forward with examples and encouragement.
     columns: 4
     background: bg-primary/5
-    items:
-      - title: Always supported, never stuck
-        highlight_words: Always
-        description: Get help the moment friction appears, before you lose momentum.
-      - title: Instant guidance, 24/7
-        highlight_words: Instant
-        description: The AI Tutor helps you unblock fast without breaking your learning flow.
-      - title: Real humans, when it matters
-        highlight_words: Real humans
-        description: Mentors step in with context, feedback, and direction when you need it.
-      - title: Community support, built in
-        highlight_words: Community
-        description: Peers and alumni help you move forward with examples and encouragement.
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
@@ -101,6 +102,8 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: bg-background
+    paddingY:
+      desktop: lg none
   - type: community_support
     version: "1.0"
     heading: A Global Developer Community Supporting Your Growth
