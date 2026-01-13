@@ -17,37 +17,43 @@ sections:
       suffix: ":"
       color: destructive
     description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
+    marquee:
+      speed: 40
+      gradient: true
+      gradientWidth: 50
+      items:
+        - id: switchup-2025
+          alt: SwitchUp - Best Coding Bootcamps 2025
+          logo: /attached_assets/switchup_1765590146414.webp
+          logoHeight: h-8 md:h-12
+        - id: course-report-2024
+          alt: Course Report - Best Coding Bootcamp 2024
+          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
+          logoHeight: h-8 md:h-12
+        - id: newsweek
+          alt: Newsweek
+          logo: /attached_assets/newsweek_1764709608255.webp
+          logoHeight: h-8 md:h-12
+        - id: forbes
+          alt: Forbes - Top Coding Bootcamp
+          logo: /attached_assets/forbes-logo-award_1764709625651.webp
+          logoHeight: h-8 md:h-12
+        - id: fortune
+          alt: Fortune - Best Education Company
+          logo: /attached_assets/fortune-logo_1764709618095.webp
+          logoHeight: h-8 md:h-12
     video:
       url: https://youtu.be/D5nUZNL52-Q
       ratio: "3:4"
       muted: true
       autoplay: false
       loop: true
-    form:
-      variant: inline
-      title: Stay Updated
-      subtitle: Enter your work email to start your journey
-      submit_label: Sign up free →
-      tags: career, support, AI
-      automations: email
-      fields:
-        email: {}
-      success:
-        message: Thank you for signing up!
-      terms_url: /terms
-      privacy_url: /privacy
-      show_terms: true
-      className: lead-form
-    trust_bar:
-      rating: "4.5"
-      review_count: Based on 5149+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
+    cta_button:
+      text: Sign up free →
+      url: /apply
+      variant: default
+    paddingY:
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: highlight

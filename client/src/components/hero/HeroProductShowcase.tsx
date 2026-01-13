@@ -159,23 +159,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 </div>
               )}
 
-              {data.form && (
-                <div className="mt-2 mb-8 flex justify-center md:justify-start">
-                  <LeadForm
-                    data={
-                      {
-                        ...data.form,
-                        variant: data.form.variant || "inline",
-                        consent: data.form.consent,
-                        show_terms: data.form.show_terms ?? false,
-                        className: "w-full max-w-md",
-                      } as LeadFormData
-                    }
-                  />
-                </div>
-              )}
-
-              {data.cta_button && !data.form && (
+              {data.cta_button && (
                 <div className="mt-2 mb-8">
                   <Button
                     variant={
@@ -192,87 +176,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                       <IconArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
-                </div>
-              )}
-
-              {data.trust_bar && (
-                <div className="flex justify-center md:justify-start">
-                  <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/50 rounded-card px-4 py-3 transition-all duration-brand ease-brand">
-                    <div className="flex flex-col gap-1">
-                      {data.trust_bar.rating && (
-                        <div className="flex items-center gap-1">
-                          <div className="flex">
-                            {[1, 2, 3, 4, 5].map((star) => {
-                              const rating = parseFloat(
-                                data.trust_bar!.rating || "0",
-                              );
-                              const fullStars = Math.floor(rating);
-                              const hasHalf = rating % 1 >= 0.5;
-                              const isHalfStar =
-                                hasHalf && star === fullStars + 1;
-
-                              if (star <= fullStars) {
-                                return (
-                                  <IconStarFilled
-                                    key={star}
-                                    className="h-6 w-6 text-yellow-500"
-                                  />
-                                );
-                              } else if (isHalfStar) {
-                                return (
-                                  <div key={star} className="relative h-6 w-6">
-                                    <IconStarFilled className="h-6 w-6 text-muted" />
-                                    <div
-                                      className="absolute inset-0 overflow-hidden"
-                                      style={{ width: "50%" }}
-                                    >
-                                      <IconStarFilled className="h-6 w-6 text-yellow-500" />
-                                    </div>
-                                  </div>
-                                );
-                              } else {
-                                return (
-                                  <IconStarFilled
-                                    key={star}
-                                    className="h-6 w-6 text-muted"
-                                  />
-                                );
-                              }
-                            })}
-                          </div>
-                        </div>
-                      )}
-                      {data.trust_bar.review_count && (
-                        <span className="text-[12px] font-bold">
-                          {data.trust_bar.review_count}
-                        </span>
-                      )}
-                    </div>
-                    {data.trust_bar.review_logos &&
-                      data.trust_bar.review_logos.length > 0 && (
-                        <div className="flex items-center gap-3">
-                          {data.trust_bar.review_logos.map((logo, index) =>
-                            logo.logo ? (
-                              <img
-                                key={index}
-                                src={logo.logo}
-                                alt={logo.name}
-                                className="h-10 object-contain"
-                                data-testid={`img-review-logo-${index}`}
-                              />
-                            ) : (
-                              <span
-                                key={index}
-                                className="font-medium text-foreground"
-                                data-testid={`text-review-logo-${index}`}
-                              >
-                                {logo.name}
-                              </span>
-                            ),
-                          )}
-                        </div>
-                      )}
-                  </div>
                 </div>
               )}
             </div>
