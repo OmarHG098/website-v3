@@ -8,6 +8,7 @@ meta:
     - /geekpal-support
 sections:
   - type: hero
+    version: "1.0"
     variant: productShowcase
     title: Lifetime Mentorship & AI-Powered Coding Support
     welcome_text: Welcome to
