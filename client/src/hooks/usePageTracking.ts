@@ -22,7 +22,7 @@ export function usePageTracking() {
     (window as unknown as { dataLayer: DataLayerEvent[] }).dataLayer = dataLayer;
     
     dataLayer.push({
-      event: "virtual_pageview",
+      event: "website-route-change",
       pagePath: location,
       pageTitle: document.title,
     });
