@@ -683,6 +683,7 @@ export type ShowOn = z.infer<typeof showOnSchema>;
 // background: semantic token (muted, card, etc.) or custom CSS value
 // showOn: controls breakpoint visibility (mobile, desktop, or all)
 export const sectionLayoutSchema = z.object({
+  section_id: z.string().optional(), // Stable anchor ID that overrides position-based ID (e.g., "reviews" instead of "reviews-5")
   marginY: responsiveSpacingSchema.optional(),
   paddingY: responsiveSpacingSchema.optional(),
   background: z.string().optional(),

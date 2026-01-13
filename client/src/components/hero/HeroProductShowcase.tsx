@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Marquee from "react-fast-marquee";
 import type {
   HeroProductShowcase as HeroProductShowcaseType,
   HeroApplyFormProductShowcase,
@@ -34,7 +33,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const subtitle = "subtitle" in data ? data.subtitle : null;
   const video = "video" in data ? data.video : null;
   const image = "image" in data ? data.image : null;
-  const marquee = "marquee" in data ? data.marquee : null;
 
   const shouldShowBackground = backgroundImage && showBackground;
 
@@ -66,8 +64,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
     >
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">
-            <div className="text-center md:text-left relative w-full min-w-0">
+          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
+            <div className="text-center md:text-left relative w-full">
               {welcomeText && (
                 <p className="text-body text-muted-foreground mb-4">
                   {welcomeText}
@@ -120,46 +118,23 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 </div>
               )}
 
-              {marquee && marquee.items && marquee.items.length > 0 && (
-                <div className="w-full mt-6 mb-8" data-testid="hero-embedded-marquee">
-                  <Marquee
-                    speed={marquee.speed ?? 40}
-                    pauseOnHover={false}
-                    gradient={marquee.gradient ?? true}
-                    gradientColor={marquee.gradientColor}
-                    gradientWidth={marquee.gradientWidth ?? 50}
-                    autoFill={true}
-                  >
-                    {marquee.items.map((item, index) => (
-                      <div 
-                        key={item.id || `marquee-item-${index}`}
-                        className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
-                        data-testid={`hero-marquee-item-${index}`}
-                      >
-                        {item.logo ? (
-                          <img 
-                            src={item.logo} 
-                            alt={item.alt}
-                            className={`${item.logoHeight || "h-10 md:h-14"} w-auto object-contain`}
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="flex flex-col items-center text-center">
-                            <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                              {item.source} {item.year && `${item.year}`}
-                            </span>
-                            <span className="text-sm font-medium text-foreground mt-0.5">
-                              {item.name}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </Marquee>
+              {data.form && (
+                <div className="mt-2 mb-8 flex justify-center md:justify-start">
+                  <LeadForm
+                    data={
+                      {
+                        ...data.form,
+                        variant: data.form.variant || "inline",
+                        consent: data.form.consent,
+                        show_terms: data.form.show_terms ?? false,
+                        className: "w-full max-w-md",
+                      } as LeadFormData
+                    }
+                  />
                 </div>
               )}
 
-              {data.cta_button && (
+              {data.cta_button && !data.form && (
                 <div className="mt-2 mb-8">
                   <Button
                     variant={
@@ -176,6 +151,87 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                       <IconArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
+                </div>
+              )}
+
+              {data.trust_bar && (
+                <div className="flex justify-center md:justify-start">
+                  <div className="inline-flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/50 rounded-card px-4 py-3 transition-all duration-brand ease-brand">
+                    <div className="flex flex-col gap-1">
+                      {data.trust_bar.rating && (
+                        <div className="flex items-center gap-1">
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map((star) => {
+                              const rating = parseFloat(
+                                data.trust_bar!.rating || "0",
+                              );
+                              const fullStars = Math.floor(rating);
+                              const hasHalf = rating % 1 >= 0.5;
+                              const isHalfStar =
+                                hasHalf && star === fullStars + 1;
+
+                              if (star <= fullStars) {
+                                return (
+                                  <IconStarFilled
+                                    key={star}
+                                    className="h-6 w-6 text-yellow-500"
+                                  />
+                                );
+                              } else if (isHalfStar) {
+                                return (
+                                  <div key={star} className="relative h-6 w-6">
+                                    <IconStarFilled className="h-6 w-6 text-muted" />
+                                    <div
+                                      className="absolute inset-0 overflow-hidden"
+                                      style={{ width: "50%" }}
+                                    >
+                                      <IconStarFilled className="h-6 w-6 text-yellow-500" />
+                                    </div>
+                                  </div>
+                                );
+                              } else {
+                                return (
+                                  <IconStarFilled
+                                    key={star}
+                                    className="h-6 w-6 text-muted"
+                                  />
+                                );
+                              }
+                            })}
+                          </div>
+                        </div>
+                      )}
+                      {data.trust_bar.review_count && (
+                        <span className="text-[12px] font-bold">
+                          {data.trust_bar.review_count}
+                        </span>
+                      )}
+                    </div>
+                    {data.trust_bar.review_logos &&
+                      data.trust_bar.review_logos.length > 0 && (
+                        <div className="flex items-center gap-3">
+                          {data.trust_bar.review_logos.map((logo, index) =>
+                            logo.logo ? (
+                              <img
+                                key={index}
+                                src={logo.logo}
+                                alt={logo.name}
+                                className="h-10 object-contain"
+                                data-testid={`img-review-logo-${index}`}
+                              />
+                            ) : (
+                              <span
+                                key={index}
+                                className="font-medium text-foreground"
+                                data-testid={`text-review-logo-${index}`}
+                              >
+                                {logo.name}
+                              </span>
+                            ),
+                          )}
+                        </div>
+                      )}
+                  </div>
                 </div>
               )}
             </div>

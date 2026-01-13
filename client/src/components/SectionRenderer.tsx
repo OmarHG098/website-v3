@@ -521,8 +521,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
           );
         }
         
+        const sectionId = (section as SectionLayout).section_id || `${sectionType}-${index}`;
         return (
-          <div key={index} id={`${sectionType}-${index}`} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
+          <div key={index} id={sectionId} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}

@@ -183,6 +183,11 @@ export const heroCourseSchema = z.object({
     count: z.string(),
   }).optional(),
   bullet_points: z.array(z.string()).optional(),
+  rating: z.object({
+    value: z.number(), // e.g., 4.5
+    count: z.string(), // e.g., "(1346 Ratings)"
+    reviews_anchor: z.string().optional(), // e.g., "#reviews" - links to reviews section
+  }).optional(),
   tutors: z.array(heroCourseTutorSchema).optional(),
   tutors_label: z.string().optional(),
   description: z.string().optional(),

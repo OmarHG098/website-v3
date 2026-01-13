@@ -2,7 +2,7 @@ import type { HeroCourse as HeroCourseType } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IconCheck, IconBook, IconCode, IconBriefcase, IconRobot, IconUsers, IconCalendar, IconPlayerPlay } from "@tabler/icons-react";
+import { IconCheck, IconBook, IconCode, IconBriefcase, IconRobot, IconUsers, IconCalendar, IconPlayerPlay, IconStarFilled } from "@tabler/icons-react";
 import { UniversalVideo } from "@/components/UniversalVideo";
 
 interface HeroCourseProps {
@@ -78,6 +78,58 @@ export function HeroCourse({ data }: HeroCourseProps) {
                   </li>
                 ))}
               </ul>
+            )}
+
+            {data.rating && (
+              <div className="flex items-center gap-2" data-testid="hero-rating">
+                <span className="text-foreground font-medium">{data.rating.value}</span>
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const fullStars = Math.floor(data.rating!.value);
+                    const hasHalf = data.rating!.value % 1 >= 0.5;
+                    const isHalfStar = hasHalf && star === fullStars + 1;
+
+                    if (star <= fullStars) {
+                      return (
+                        <IconStarFilled
+                          key={star}
+                          className="h-5 w-5 text-yellow-500"
+                        />
+                      );
+                    } else if (isHalfStar) {
+                      return (
+                        <div key={star} className="relative h-5 w-5">
+                          <IconStarFilled className="h-5 w-5 text-muted" />
+                          <div
+                            className="absolute inset-0 overflow-hidden"
+                            style={{ width: "50%" }}
+                          >
+                            <IconStarFilled className="h-5 w-5 text-yellow-500" />
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <IconStarFilled
+                          key={star}
+                          className="h-5 w-5 text-muted"
+                        />
+                      );
+                    }
+                  })}
+                </div>
+                {data.rating.reviews_anchor ? (
+                  <a 
+                    href={data.rating.reviews_anchor}
+                    className="text-primary hover:underline text-sm"
+                    data-testid="link-hero-rating"
+                  >
+                    {data.rating.count}
+                  </a>
+                ) : (
+                  <span className="text-muted-foreground text-sm">{data.rating.count}</span>
+                )}
+              </div>
             )}
             
             {data.tutors && data.tutors.length > 0 && (
