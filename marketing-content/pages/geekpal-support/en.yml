@@ -19,9 +19,6 @@ sections:
       color: destructive
     description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
     marquee:
-      speed: 40
-      gradient: true
-      gradientWidth: 50
       items:
         - id: switchup-2025
           alt: SwitchUp - Best Coding Bootcamps 2025
@@ -43,16 +40,15 @@ sections:
           alt: Fortune - Best Education Company
           logo: /attached_assets/fortune-logo_1764709618095.webp
           logoHeight: h-8 md:h-12
+      speed: 40
+      gradient: true
+      gradientWidth: 50
     video:
       url: https://youtu.be/D5nUZNL52-Q
       ratio: "3:4"
       muted: true
       autoplay: false
       loop: true
-    cta_button:
-      text: Sign up free →
-      url: /apply
-      variant: primary
     paddingY:
       desktop: none
   - type: features_grid
