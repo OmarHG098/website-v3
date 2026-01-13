@@ -16,6 +16,7 @@ sections:
     description: Launch your AI-driven career in 24 weeks with unlimited 1:1 mentorship and personalized career guidance. Be the professional companies can’t wait to hire.
     form:
       variant: stacked
+      conversion_name: student_application
       submit_label: Apply now
       tags: website-lead,ai-engineering-campaign
       automations: welcome-email

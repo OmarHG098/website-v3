@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "e9a689dbbcbc9c545e8f39593de92ed8e4b3d50c",
-  "lastSyncedAt": "2026-01-12T14:32:29.092Z",
+  "lastSyncedCommit": "c689397877601603d1ab713391626867d8afb60a",
+  "lastSyncedAt": "2026-01-13T21:18:09.234Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -13,9 +13,9 @@
       "remoteSha": "e5e9d3bd4c576f50c2d9678d7f51b0ab0647c6101a9016129bb0fb2ee3bae0e5"
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
-      "sha": "89a1c9529c0746fc607ad69f0b6e7f66395b2a9de89882a4eaec8be64ae8c1d0",
-      "lastModified": 1768228348809.0688,
-      "remoteSha": "89a1c9529c0746fc607ad69f0b6e7f66395b2a9de89882a4eaec8be64ae8c1d0"
+      "sha": "14aae697ebac502790b574ecc51d2e571c69edaa427ad4837d459001b6c7b82e",
+      "lastModified": 1768339088137.7148,
+      "remoteSha": "14aae697ebac502790b574ecc51d2e571c69edaa427ad4837d459001b6c7b82e"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",
@@ -598,9 +598,9 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "65463f071bebaf8a591d28ec4bc667afa67e3c131ae4996e477a9378a6c1f292",
-      "lastModified": 1767715982210.596,
-      "remoteSha": "65463f071bebaf8a591d28ec4bc667afa67e3c131ae4996e477a9378a6c1f292"
+      "sha": "5fd3b04a4b6f93f3deccecf42dca82d5a18c93d95da8a332dc3b4705216e0a25",
+      "lastModified": 1768339088501.7146,
+      "remoteSha": "5fd3b04a4b6f93f3deccecf42dca82d5a18c93d95da8a332dc3b4705216e0a25"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -613,9 +613,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "078c8f2b28d8adb99130f58a8e437d29f9dce7e2c1c329c9aa042da3ff88a7e2",
-      "lastModified": 1766154367199.2974,
-      "remoteSha": "078c8f2b28d8adb99130f58a8e437d29f9dce7e2c1c329c9aa042da3ff88a7e2"
+      "sha": "a6968f7488d02daf102bbc7076f6ddf6214d790bb02432efe7a4e9c9d97cb2e8",
+      "lastModified": 1768339088897.714,
+      "remoteSha": "a6968f7488d02daf102bbc7076f6ddf6214d790bb02432efe7a4e9c9d97cb2e8"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "31362ec9f9095d6f243f29e273478c0c84dc3903d94f506d21481504fd84f52b",
