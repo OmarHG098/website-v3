@@ -52,7 +52,7 @@ sections:
     cta_button:
       text: Sign up free →
       url: /apply
-      variant: default
+      variant: primary
     paddingY:
       desktop: none
   - type: features_grid
