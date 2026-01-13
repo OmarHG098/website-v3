@@ -271,9 +271,11 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
+  featuresGridTextOnlyItemSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
+  type FeaturesGridTextOnlyItem,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
@@ -285,6 +287,7 @@ export type {
   FeaturesGridStatsCardsSection,
   FeaturesGridStatsTextCardSection,
   FeaturesGridStatsTextSection,
+  FeaturesGridTextOnlySection,
   FeaturesGridStatsCardsItem,
   SpotlightConfig,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";

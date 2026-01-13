@@ -1,10 +1,11 @@
-import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridSpotlightSection, FeaturesGridStatsCardsSection, FeaturesGridStatsTextCardSection, FeaturesGridStatsTextSection } from "@shared/schema";
+import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridSpotlightSection, FeaturesGridStatsCardsSection, FeaturesGridStatsTextCardSection, FeaturesGridStatsTextSection, FeaturesGridTextOnlySection } from "@shared/schema";
 import { FeaturesGridHighlight } from "./FeaturesGridHighlight";
 import { FeaturesGridDetailed } from "./FeaturesGridDetailed";
 import { FeaturesGridSpotlight } from "./FeaturesGridSpotlight";
 import { FeaturesGridStatsCards } from "./FeaturesGridStatsCards";
 import { FeaturesGridStatsTextCard } from "./FeaturesGridStatsTextCard";
 import { FeaturesGridStatsText } from "./FeaturesGridStatsText";
+import { FeaturesGridTextOnly } from "./FeaturesGridTextOnly";
 
 interface FeaturesGridProps {
   data: FeaturesGridSection;
@@ -24,11 +25,13 @@ export function FeaturesGrid({ data }: FeaturesGridProps) {
       return <FeaturesGridStatsTextCard data={data as FeaturesGridStatsTextCardSection} />;
     case "stats-text":
       return <FeaturesGridStatsText data={data as FeaturesGridStatsTextSection} />;
+    case "textOnly":
+      return <FeaturesGridTextOnly data={data as FeaturesGridTextOnlySection} />;
     case "highlight":
     default:
       return <FeaturesGridHighlight data={data as FeaturesGridHighlightSection} />;
   }
 }
 
-export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridSpotlight, FeaturesGridStatsCards, FeaturesGridStatsTextCard, FeaturesGridStatsText };
+export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridSpotlight, FeaturesGridStatsCards, FeaturesGridStatsTextCard, FeaturesGridStatsText, FeaturesGridTextOnly };
 export type { FeaturesGridProps };

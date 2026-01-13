@@ -53,28 +53,24 @@ sections:
       desktop: none
   - type: features_grid
     version: "1.0"
-    variant: highlight
+    variant: textOnly
     title: Advance Faster, Never Lose Momentum
-    subtitle: "The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help you with your challenges— so you never lose momentum and keep advancing fast."
+    subtitle: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
     columns: 4
     background: bg-primary/5
     items:
-      - icon: PeopleGroup
-        icon_color: "#0097CD"
-        title: 7:1 Student–Teacher Ratio
-        description: Individual attention in every class.
-      - icon: Handshake
-        icon_color: "#BE8BFF"
-        title: Unlimited 1:1 Mentorship
-        description: From day one — and for a lifetime.
-      - icon: Rocket
-        icon_color: "#FFB718"
-        title: 24/7 AI Coding Assistant (Rigobot)
-        description: Instant feedback while you code.
-      - icon: HandsGroup
-        icon_color: "#E74C3C"
-        title: Real Community Support
-        description: Mentors, alumni & peers always ready to help.
+      - title: Always supported, never stuck
+        highlight_words: Always
+        description: Get help the moment friction appears, before you lose momentum.
+      - title: Instant guidance, 24/7
+        highlight_words: Instant
+        description: The AI Tutor helps you unblock fast without breaking your learning flow.
+      - title: Real humans, when it matters
+        highlight_words: Real humans
+        description: Mentors step in with context, feedback, and direction when you need it.
+      - title: Community support, built in
+        highlight_words: Community
+        description: Peers and alumni help you move forward with examples and encouragement.
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
