@@ -9,6 +9,7 @@ import NotFound from "@/pages/not-found";
 import { DebugBubble } from "@/components/DebugBubble";
 import { SessionProvider } from "@/contexts/SessionContext";
 import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
+import { usePageTracking } from "@/hooks/usePageTracking";
 import "./i18n";
 
 const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
@@ -107,6 +108,11 @@ function Router() {
   );
 }
 
+function PageTracker() {
+  usePageTracking();
+  return null;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -114,6 +120,7 @@ function App() {
         <TooltipProvider>
           <EditModeWrapper>
             <Toaster />
+            <PageTracker />
             <Router />
             <DebugBubble />
           </EditModeWrapper>
