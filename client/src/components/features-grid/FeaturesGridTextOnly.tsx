@@ -18,7 +18,7 @@ function TextOnlyCard({ item }: { item: FeaturesGridTextOnlyItem }) {
         </p>
       )}
       {item.description && (
-        <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+        <p className="text-sm text-muted-foreground leading-relaxed mt-3 text-center">
           {item.description}
         </p>
       )}
