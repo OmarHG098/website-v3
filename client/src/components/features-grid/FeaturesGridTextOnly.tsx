@@ -6,7 +6,7 @@ function TextOnlyCard({ item }: { item: FeaturesGridTextOnlyItem }) {
 
   return (
     <Card 
-      className="p-5 md:p-6 shadow-sm border border-border/50 hover:shadow-md hover:border-border transition-all duration-200 text-left"
+      className="p-5 md:p-6 shadow-sm border border-border/50 hover:shadow-md hover:border-border transition-all duration-200 text-center"
       data-testid={`card-feature-${itemId}`}
     >
       <h3 className="font-semibold text-lg text-primary leading-tight mb-1">
