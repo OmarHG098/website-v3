@@ -6,49 +6,62 @@ meta:
     - /demo/landing-page
 sections:
   - type: hero
-    variant: productShowcase
-    title: Career Development for the AI Era
-    subtitle: Unlimited 1:1 career support tailored to your goals—for life.
-    welcome_text: Welcome to
-    brand_mark:
-      prefix: Geek
-      highlight: FORCE
-      suffix: ":"
-      color: chart-5
-    description: From resume and portfolio building to mastering interviews and AI-driven hiring platforms, we’re here to support your career journey every step of the way.
-    video:
-      url: https://www.youtube.com/shorts/sSxJnelPJT8
-      ratio: "9:16"
-      muted: true
-      autoplay: false
-      loop: true
-      preview_image_url: ""
-    form:
-      variant: inline
-      title: Stay Ahead in Your Career
-      subtitle: Sign up with your work email to unlock free resources.
-      submit_label: Sign up free →
-      tags: career, AI, tech
-      automations: subscribe
-      fields:
-        email:
-          required: true
-      success:
-        message: Thank you for signing up! Check your inbox for resources.
-      terms_url: /terms
-      privacy_url: /privacy
-      consent: {}
-      show_terms: true
-    trust_bar:
-      rating: "4.5"
-      review_count: Based on 5149+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
+    title: Work smarter, not harder, apply AI at Work
+    subtitle: Boost your career, harness the power of Applied AI.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +48 students enrolled
+    bullet_points:
+      - Learn prompt engineering techniques to control AI outputs precisely
+      - Create professional images, videos, and documents using AI tools
+      - Build automated workflows that save hours of repetitive work
+      - Develop websites and chatbots without writing code
+      - Apply AI to enhance your learning and personal development
+    tutors:
+      - name: Charly Chacón
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: https://randomuser.me/api/portraits/lego/1.jpg
+    tutors_label: "Your tutors:"
+    description: Unlock the power of Applied AI and Generative AI in your professional life—no coding required. This self-paced course teaches you how to master prompt engineering, automate workflows, and create content using advanced AI tools. Learn to compare open source and cloud-based solutions, generate documents and websites, build chatbots, and optimize your productivity with automation platforms.
+    media:
+      type: video
+      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      thumbnail: https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&h=450&fit=crop
+      alt: Course introduction video
+    signup_card:
+      title: Sign up to 4Geeks Plus
+      description: Subscribe and get access to hundreds of challenges, projects, and courses.
+      cta_button:
+        text: Join now from $39/mo.
+        url: /signup
+        variant: primary
+      login_link:
+        text: Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: "31"
+        - icon: code
+          text: Interactive Exercises
+          count: "2"
+        - icon: briefcase
+          text: Interactive Projects
+          count: "8"
+        - icon: robot
+          text: Real Time AI Feedback
+        - icon: calendar
+          text: Workshops every week
+        - icon: users
+          text: Community Gatherings.
+    variant: course
   - type: faq
     title: Frequently Asked Questionss
     items:
