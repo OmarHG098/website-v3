@@ -72,6 +72,34 @@ sections:
         icon_color: "#E74C3C"
         title: Comunidad de Apoyo Real
         description: Mentores, alumni y compañeros siempre listos para ayudar.
+  - type: bento_cards
+    version: "1.0"
+    title: "7 Formas en que Rigobot Te Mantiene Avanzando"
+    subtitle: "Nunca te quedes atascado"
+    description: "Rigobot es tu compañero de programación con IA que asegura que nunca pierdas impulso. Ya sea que estés depurando a las 2am o preparándote para un examen, Rigobot está ahí para ayudarte a superar desafíos y seguir aprendiendo."
+    background: bg-background
+    items:
+      - icon: CodeReview
+        title: "Revisión de Código"
+        description: "Obtén feedback instantáneo sobre la calidad de tu código, mejores prácticas y posibles mejoras."
+      - icon: Brain
+        title: "Mentoría con IA"
+        description: "Guía personalizada que se adapta a tu estilo y ritmo de aprendizaje."
+      - icon: School
+        title: "Preparación de Tareas y Exámenes"
+        description: "Problemas de práctica y explicaciones para ayudarte a aprobar tus evaluaciones."
+      - icon: TrendingUp
+        title: "Desarrollo de Habilidades"
+        description: "Ejercicios específicos para fortalecer áreas débiles y construir nuevas competencias."
+      - icon: Bug
+        title: "Asistente de Debugging"
+        description: "Ayuda paso a paso para entender y corregir errores en tu código."
+      - icon: Lightbulb
+        title: "Explicación de Conceptos"
+        description: "Explicaciones claras y pacientes de conceptos de programación complejos."
+      - icon: Clock
+        title: "Disponibilidad 24/7"
+        description: "Obtén ayuda cuando la necesites, sin esperar horarios de oficina."
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Humano + IA: El Dúo de Apoyo Perfecto"

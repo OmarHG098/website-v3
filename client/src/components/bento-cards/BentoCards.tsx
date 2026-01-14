@@ -1,6 +1,23 @@
 import { Card } from "@/components/ui/card";
-import { getIcon } from "@/lib/icons";
+import * as TablerIcons from "@tabler/icons-react";
+import { getCustomIcon } from "@/components/custom-icons";
+import type { ComponentType } from "react";
 import type { BentoCardsSection } from "@shared/schema";
+
+function getIcon(iconName: string, className?: string, color?: string) {
+  const CustomIcon = getCustomIcon(iconName);
+  if (CustomIcon) {
+    return <CustomIcon width="100%" height="100%" color={color} className={className} />;
+  }
+  
+  const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  if (IconComponent) {
+    const style = color ? { color } : undefined;
+    return <IconComponent className={className || "w-full h-full text-primary"} style={style} />;
+  }
+  const style = color ? { color } : undefined;
+  return <TablerIcons.IconBox className={className || "w-full h-full text-primary"} style={style} />;
+}
 
 interface BentoCardsProps {
   data: BentoCardsSection;
@@ -85,7 +102,7 @@ export function BentoCards({ data }: BentoCardsProps) {
                   >
                     <div>
                       {item.icon && (
-                        <div className="mb-3">
+                        <div className="mb-3 w-6 h-6">
                           {getIcon(
                             item.icon,
                             "w-6 h-6",
@@ -160,7 +177,7 @@ export function BentoCards({ data }: BentoCardsProps) {
                   data-testid={`card-bento-mobile-${itemId}`}
                 >
                   {item.icon && (
-                    <div className="mb-2">
+                    <div className="mb-2 w-5 h-5">
                       {getIcon(
                         item.icon,
                         "w-5 h-5",
