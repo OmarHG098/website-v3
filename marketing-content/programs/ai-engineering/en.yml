@@ -141,7 +141,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering Program Overview
-    program_description: A progressive learning path from AI fundamentals to real-world AI systems. You’ll build and scale a single AI-native business through 10 consecutive milestones, each building on the last. The program concludes with the fully realized version of your chosen company—now an operational, AI-powered business that demonstrates the skills, architecture, and workflows used by modern engineering teams.
+    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams.
     tech_logos:
       - name: React
         icon: react
