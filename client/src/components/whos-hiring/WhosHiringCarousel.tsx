@@ -80,7 +80,7 @@ function LogoCard({
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-16 max-w-[200px] object-contain logo-grayscale"
+              className="max-h-16 max-w-[180px] object-contain logo-grayscale"
               loading="lazy"
             />
           </div>
@@ -92,7 +92,11 @@ function LogoCard({
         <img
           src={logo.src}
           alt={logo.alt}
-          className="h-10 max-w-[160px] object-contain logo-grayscale"
+          className={`object-contain logo-grayscale ${
+            isSmall 
+              ? (isMobile ? "max-h-8 max-w-[90px]" : "max-h-10 max-w-[140px]")
+              : (isMobile ? "max-h-10 max-w-[120px]" : "max-h-12 max-w-[180px]")
+          }`}
           loading="lazy"
         />
       )}
