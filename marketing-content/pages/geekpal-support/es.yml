@@ -74,22 +74,32 @@ sections:
         description: Mentores, alumni y compañeros siempre listos para ayudar.
   - type: bento_cards
     version: "1.0"
-    title: "Cómo Rigobot Te Mantiene Avanzando"
+    title: "7 Formas en que Rigobot Te Mantiene Avanzando"
+    subtitle: "Nunca te quedes atascado"
     description: "Rigobot es tu compañero de programación con IA que asegura que nunca pierdas impulso. Ya sea que estés depurando a las 2am o preparándote para un examen, Rigobot está ahí para ayudarte a superar desafíos y seguir aprendiendo."
     background: bg-background
     items:
       - icon: CodeReview
-        title: "Revisión de Código Instantánea"
-        description: "Obtén feedback inmediato sobre la calidad de tu código, mejores prácticas y posibles mejoras antes de entregar."
-      - icon: Bug
-        title: "Asistente de Debugging"
-        description: "Ayuda paso a paso para entender y corregir errores. Nunca más pases horas atascado en el mismo problema."
-      - icon: Clock
-        title: "Disponible 24/7"
-        description: "Obtén ayuda cuando la necesites, de día o de noche. Sin esperar horarios de oficina ni disponibilidad de mentores. Rigobot siempre está listo para ayudarte con cualquier desafío de programación."
+        title: "Revisión de Código"
+        description: "Obtén feedback instantáneo sobre la calidad de tu código, mejores prácticas y posibles mejoras."
+      - icon: Brain
+        title: "Mentoría con IA"
+        description: "Guía personalizada que se adapta a tu estilo y ritmo de aprendizaje."
       - icon: School
         title: "Preparación de Tareas y Exámenes"
-        description: "Problemas de práctica, explicaciones y guías de estudio para ayudarte a aprobar tus evaluaciones. Rigobot se adapta a tu estilo y ritmo de aprendizaje."
+        description: "Problemas de práctica y explicaciones para ayudarte a aprobar tus evaluaciones."
+      - icon: TrendingUp
+        title: "Desarrollo de Habilidades"
+        description: "Ejercicios específicos para fortalecer áreas débiles y construir nuevas competencias."
+      - icon: Bug
+        title: "Asistente de Debugging"
+        description: "Ayuda paso a paso para entender y corregir errores en tu código."
+      - icon: Lightbulb
+        title: "Explicación de Conceptos"
+        description: "Explicaciones claras y pacientes de conceptos de programación complejos."
+      - icon: Clock
+        title: "Disponibilidad 24/7"
+        description: "Obtén ayuda cuando la necesites, sin esperar horarios de oficina."
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Humano + IA: El Dúo de Apoyo Perfecto"
