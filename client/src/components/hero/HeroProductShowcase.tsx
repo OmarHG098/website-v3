@@ -121,7 +121,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {marquee && marquee.items && marquee.items.length > 0 && (
-                <div className="w-full max-w-xl mt-6 mb-8" data-testid="hero-embedded-marquee">
+                <div className="w-full max-w-xl mt-6 mb-8 overflow-hidden" data-testid="hero-embedded-marquee">
                   <Marquee
                     speed={marquee.speed || 40}
                     pauseOnHover={false}
