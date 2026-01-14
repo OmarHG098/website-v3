@@ -66,8 +66,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
     >
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
-            <div className="text-center md:text-left relative w-full">
+          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">
+            <div className="text-center md:text-left relative w-full min-w-0">
               {welcomeText && (
                 <p className="text-body text-muted-foreground mb-4">
                   {welcomeText}
