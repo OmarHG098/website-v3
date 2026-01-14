@@ -131,10 +131,10 @@ sections:
     items:
       - id: "1"
         value: 800,000
-        title: AI-related roles expected by 2026
+        title: AI-related roles expected by 2027
       - id: "2"
-        value: 47%
-        title: Year-over-year growth in AI job postings
+        value: ~30%
+        title: Year-over-year growth in AI job posts
       - id: "3"
         value: $95K-$135K
         title: Average starting salary for AI Engineers
