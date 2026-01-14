@@ -329,8 +329,8 @@ sections:
   - type: pricing
     version: "1.0"
     variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment to ensure your future in tech is within reach.
+    title: Tuition and Financing Options
+    subtitle: We offer multiple payment and financing options to support your enrollment.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $299
@@ -343,7 +343,7 @@ sections:
       - brain
       - robot
       - settings
-    features_title: Choose the financing option that fits you best.
+    features_title: Choose the option that fits you best.
     features:
       - icon: certificate
         text: Build your portfolio with hundreds of real-world projects.
