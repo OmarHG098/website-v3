@@ -348,6 +348,16 @@ export {
 } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
 
 // ============================================
+// Re-export Bento Cards Schemas from Component Registry
+// ============================================
+export {
+  bentoCardItemSchema,
+  bentoCardsSectionSchema,
+  type BentoCardItem,
+  type BentoCardsSection,
+} from "../marketing-content/component-registry/bento_cards/v1.0/schema";
+
+// ============================================
 // Image Registry Schemas (not in component registry)
 // ============================================
 export const imagePresetSchema = z.object({

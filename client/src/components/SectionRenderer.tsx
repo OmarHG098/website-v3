@@ -187,6 +187,7 @@ const GraduatesStats = lazy(() => import("@/components/graduates_stats").then(m 
 const ValueProofPanel = lazy(() => import("@/components/ValueProofPanel").then(m => ({ default: m.ValueProofPanel })));
 const SplitCards = lazy(() => import("@/components/SplitCards").then(m => ({ default: m.SplitCards })));
 const StickyCallToAction = lazy(() => import("@/components/StickyCallToAction").then(m => ({ default: m.StickyCallToAction })));
+const BentoCards = lazy(() => import("@/components/bento-cards/BentoCards").then(m => ({ default: m.BentoCards })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -384,6 +385,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><SplitCards data={section as Parameters<typeof SplitCards>[0]["data"]} /></LazySection>;
     case "sticky_cta":
       return <LazySection key={index}><StickyCallToAction data={section as Parameters<typeof StickyCallToAction>[0]["data"]} /></LazySection>;
+    case "bento_cards":
+      return <LazySection key={index}><BentoCards data={section as Parameters<typeof BentoCards>[0]["data"]} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
