@@ -15,7 +15,7 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
 
   const renderCollageImages = () => (
     <div 
-      className="relative grid grid-cols-12 auto-rows-[80px] gap-3"
+      className="relative grid grid-cols-12 auto-rows-[60px] lg:auto-rows-[70px] gap-2 lg:gap-3"
       data-testid="graduates-stats-collage"
     >
       {collage_images && collage_images.map((img, index) => {
@@ -111,16 +111,14 @@ export function GraduatesStatsStandard({ data }: GraduatesStatsStandardProps) {
         <div className="relative">
           <div 
             className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none"
-            style={{ 
-              top: '2.5rem',
-              bottom: '2.5rem',
-              left: '-1rem',
-              right: '-1rem'
-            }}
           />
           <div className="relative grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center px-4 py-8">
-            {renderCollageImages()}
-            {renderStats()}
+            <div className="order-2 lg:order-1">
+              {renderCollageImages()}
+            </div>
+            <div className="order-1 lg:order-2">
+              {renderStats()}
+            </div>
           </div>
         </div>
       </div>
