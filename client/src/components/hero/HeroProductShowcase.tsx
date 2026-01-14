@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Marquee from "react-fast-marquee";
 import type {
   HeroProductShowcase as HeroProductShowcaseType,
   HeroApplyFormProductShowcase,
@@ -33,6 +34,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const subtitle = "subtitle" in data ? data.subtitle : null;
   const video = "video" in data ? data.video : null;
   const image = "image" in data ? data.image : null;
+  const marquee = "marquee" in data ? data.marquee : null;
 
   const shouldShowBackground = backgroundImage && showBackground;
 
@@ -115,6 +117,45 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   <p className="text-body text-foreground mb-0 md:mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
+                </div>
+              )}
+
+              {marquee && marquee.items && marquee.items.length > 0 && (
+                <div className="w-full max-w-xl mt-6 mb-8 overflow-hidden" data-testid="hero-embedded-marquee">
+                  <Marquee
+                    speed={marquee.speed || 40}
+                    pauseOnHover={false}
+                    gradient={marquee.gradient ?? true}
+                    gradientColor={marquee.gradientColor}
+                    gradientWidth={marquee.gradientWidth || 50}
+                    autoFill={true}
+                  >
+                    {marquee.items.map((item, index) => (
+                      <div 
+                        key={item.id}
+                        className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
+                        data-testid={`hero-marquee-item-${index}`}
+                      >
+                        {item.logo ? (
+                          <img 
+                            src={item.logo} 
+                            alt={item.alt}
+                            className={`${item.logoHeight || "h-8 md:h-12"} w-auto object-contain`}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="flex flex-col items-center text-center">
+                            <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                              {item.source} {item.year && `${item.year}`}
+                            </span>
+                            <span className="text-sm font-medium text-foreground mt-0.5">
+                              {item.name}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </Marquee>
                 </div>
               )}
 
