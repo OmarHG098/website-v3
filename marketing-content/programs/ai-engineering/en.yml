@@ -329,7 +329,7 @@ sections:
     version: "1.0"
     variant: product
     title: Tuition & Financing Options
-    subtitle: We offer multiple ways to fund your enrollment, so you can invest in your career without financial stress.
+    subtitle: We offer multiple ways to fund your enrollment, making it easier to invest in your career.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $299
