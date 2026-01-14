@@ -18,31 +18,6 @@ sections:
       suffix: ":"
       color: destructive
     description: Get unlimited 1:1 coding mentorship and AI-powered guidance from Rigobot 24/7. Never code alone, get instant feedback, and join a global developer community — all designed to help you learn faster, stay motivated, and thrive in tech for life.
-    marquee:
-      items:
-        - id: switchup-2025
-          alt: SwitchUp - Best Coding Bootcamps 2025
-          logo: /attached_assets/switchup_1765590146414.webp
-          logoHeight: h-8 md:h-12
-        - id: course-report-2024
-          alt: Course Report - Best Coding Bootcamp 2024
-          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-          logoHeight: h-8 md:h-12
-        - id: newsweek
-          alt: Newsweek
-          logo: /attached_assets/newsweek_1764709608255.webp
-          logoHeight: h-8 md:h-12
-        - id: forbes
-          alt: Forbes - Top Coding Bootcamp
-          logo: /attached_assets/forbes-logo-award_1764709625651.webp
-          logoHeight: h-8 md:h-12
-        - id: fortune
-          alt: Fortune - Best Education Company
-          logo: /attached_assets/fortune-logo_1764709618095.webp
-          logoHeight: h-8 md:h-12
-      speed: 40
-      gradient: true
-      gradientWidth: 50
     video:
       url: https://youtu.be/D5nUZNL52-Q
       ratio: "3:4"
