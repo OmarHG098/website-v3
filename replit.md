@@ -12,6 +12,7 @@ The AI Reskilling Platform is a minimalistic Learning Management System (LMS) we
 - Colors: ONLY semantic tokens - NEVER use hardcoded colors like `bg-blue-500`, `text-red-600`, or arbitrary hex values. Only use semantic classes: `bg-primary`, `text-foreground`, `bg-muted`, etc.
 - Video: ALWAYS use the `UniversalVideo` component (`client/src/components/UniversalVideo.tsx`) for ALL video content. NEVER use raw `<video>` tags, `<iframe>` embeds, or other video libraries directly.
 - Images: ALWAYS use the `UniversalImage` component (`client/src/components/UniversalImage.tsx`) for ALL image content. Reference images by ID from the centralized registry (`marketing-content/image-registry.json`). NEVER use hardcoded image paths in components.
+- URL Routing: Use `/en/` prefix for English pages and `/es/` prefix for Spanish pages. NEVER use `/us/` - this is incorrect. Example: `/en/geekforce-career-support` (correct), `/us/geekforce-career-support` (wrong).
 
 ### System Architecture
 The platform utilizes a modern web stack: React with TypeScript, Vite, Tailwind CSS, shadcn UI, wouter, and TanStack Query. The backend is built with Express, designed for integration with the 4geeks Breathecode API.
@@ -19,7 +20,7 @@ The platform utilizes a modern web stack: React with TypeScript, Vite, Tailwind 
 **Key Architectural Decisions & Features:**
 -   **Design System**: Features a clean, card-based layout with a semantic color system, Lato typography, and `@tabler/icons-react` for all icons.
 -   **Content Management System (CMS)**: A YAML-based system enables marketing teams to manage content for career programs, landing pages, location pages, and template pages. Content is stored in a structured directory `marketing-content/` with specific YAML files for different content types, all dynamically rendered by a unified `SectionRenderer` component.
--   **Template Pages System**: A single generic page template (`client/src/pages/page.tsx`) renders all YAML-based pages, supporting `/us/:slug` and `/es/:slug` routes. An API endpoint (`GET /api/pages/:slug?locale=en|es`) fetches content, with sitemap generation automatically including template pages.
+-   **Template Pages System**: A single generic page template (`client/src/pages/page.tsx`) renders all YAML-based pages, supporting `/en/:slug` and `/es/:slug` routes. An API endpoint (`GET /api/pages/:slug?locale=en|es`) fetches content, with sitemap generation automatically including template pages.
 -   **Internationalization (i18n)**: Supports English and Spanish using `react-i18next`, with browser language detection and a language switcher.
 -   **SEO & Performance**: Includes comprehensive meta tags, Open Graph, Twitter Cards, Schema.org JSON-LD, `robots.txt`, dynamic sitemaps, route-level code splitting, self-hosted WOFF2 fonts, server-side Gzip compression, React component memoization, and native lazy loading.
 -   **Schema.org System**: Centralized in `marketing-content/schema-org.yml` for structured data, allowing pages to reference and override schemas. The `useSchemaOrg` hook injects JSON-LD.
