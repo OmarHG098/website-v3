@@ -96,7 +96,6 @@ sections:
     proportions:
       - 5
       - 7
-    background: hsl(210 100% 50% / 0.05)
     alignment: center
     left:
       image: /attached_assets/community_1764717588840.png
@@ -114,7 +113,7 @@ sections:
     reverse_on_mobile: true
     padding_right: "6"
     paddingY:
-      desktop: md
+      desktop: md lg
   - type: whos_hiring
     variant: carousel
     title: Trusted by the World's Leading Companies
@@ -145,6 +144,8 @@ sections:
         alt: Neo9
       - src: /attached_assets/google-developers_1764719904190.png
         alt: Google Developers
+    paddingY:
+      desktop: md none
   - type: graduates_stats
     heading: Does the Job Guarantee deliver results?
     subheading: Yes, and we've got the numbers to back it up.
