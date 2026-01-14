@@ -121,3 +121,25 @@ sections:
       text_align: center
       video: MBXqEnhodx0
       video_width: 900px
+  - type: testimonials_slide
+    version: "1.0"
+    title: Real Careers Start Here — Just Ask Our Students
+    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
+    testimonials:
+      - name: Loretta Simpson
+        img: /assets/testimonial-1.jpg
+        status: Graduated
+        country:
+          name: United States
+          iso: US
+        contributor: Full Stack Developer
+        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
+        achievement: Hired at top tech company
+      - name: Carlos Martinez
+        img: /assets/testimonial-2.jpg
+        status: Graduated
+        country:
+          name: Spain
+          iso: ES
+        contributor: Software Engineer
+        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.

@@ -685,7 +685,7 @@ export function EditableSection({ children, section, index, sectionType, content
           ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
         `}
       >
-        Section {index + 1}
+        {section.id ? `${section.id}` : `Section ${index + 1}`}
       </div>
       
       {/* Content with pointer events enabled - show preview section when cycling variants */}
