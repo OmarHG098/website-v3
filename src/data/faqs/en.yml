@@ -1,0 +1,262 @@
+# Centralized FAQ Data - English
+# This file contains all FAQs that should be displayed across the site
+# Filtered by locations and related_features as needed
+
+faqs:
+  # About 4Geeks
+  - question: "Why 4Geeks Academy?"
+    answer: |-
+      We offer several advantages that make us stand out from other coding bootcamps:<br>
+      - **Unlimited mentorship**: For life.<br>
+      - **Coding-centric approach**: We focus exclusively on coding.<br>
+      - **Lifetime career support**: We're here to help you throughout your career.<br>
+
+      You can compare us to other bootcamps by visiting our page: <a class="faq-link" href="/us/geeks-vs-others">4Geeks Vs Others</a>.
+    locations: ["all"]
+    related_features: ["mentors-and-teachers", "career-support"]
+    priority: 3
+
+  - question: "Is 4Geeks a certified institution?"
+    answer: |-
+      Absolutely! 4Geeks Academy is a licensed institution by the Commission for Independent Education of the Florida Department of Education. This ensures that our programs meet rigorous educational standards and provide you with a valuable credential upon completion.
+    locations: ["all"]
+    related_features: ["certification"]
+    priority: 2
+
+  - question: "Who is that face in the logo?"
+    answer: |-
+      Meet Rigoberto! He is the heart and spirit of everyone working at 4Geeks Academy.
+    locations: ["all"]
+    related_features: ["rigobot"]
+    priority: 1
+
+  # Enrollment
+  - question: "What is your admission process?"
+    answer: |-
+      Our admission process begins with an email from one of our student counselors once you initiate the application. We'll assist you through each step. Upon receiving our email, simply reply to schedule a call at your convenience. Following the call, you'll be invited to an online or in-person interview.<br>
+      Additionally, you're welcome to visit our campus to meet the team and explore our facilities. This is an opportunity to share your motivations for pursuing a career in development.
+    locations: ["all"]
+    related_features: []
+    priority: 2
+
+  # Programs
+  - question: "GeekForce or GeekPal, which one to choose?"
+    answer: |-
+      <span style="font-weight: 700;">GeekForce and GeekPal</span> are both valuable mentorship programs offered by 4Geeks Academy, and choosing between them depends on your current needs.<br>
+      <a class="faq-link" href="/us/geekpal-support">GeekPal</a> is ideal if you're looking for technical coaching, such as code debugging, problem-solving, and interview preparation. It's perfect for honing your technical skills and getting hands-on guidance.<br>
+      <a class="faq-link" href="/us/geekforce-career-support">GeekForce</a>, on the other hand, is focused on career coaching, including soft skills development, career advice, and resume building. This is a great choice if you're looking to enhance your employability and professional development.<br>
+      Remember, both services are unlimited and for life, so you can always switch or use both as your needs evolve throughout your career.
+    locations: ["all"]
+    related_features: ["mentors-and-teachers", "career-support"]
+    priority: 3
+
+  - question: "How many hours do I need to have available?"
+    answer: |-
+      In order to excel in your chosen field, whether it's <span style="font-weight: 700;">software development, data science, or cybersecurity</span>, dedication is crucial across all our programs. <br>For instance, in our Part-Time program, classes are <span style="font-weight: 700;">scheduled for 3 hours a day, 3 times a week<span>, requiring approximately 20-24 hours of study per week.<br>
+
+      Alternatively, our Full-Time program entails 8-hour classes each day, with an additional recommended study time of around 48 hours per week. Regardless of the specific program you choose, commitment to study and practice is essential for success.
+    locations: ["all"]
+    related_features: ["content-and-syllabus"]
+    priority: 2
+
+  - question: 'Why "Part-time?" and how does it work?'
+    answer: |-
+      We believe that the future of education is <span style="font-weight: 700;">"part-time."</span> Our approach is a blended education that leverages two proven formats: part-time training and flipped classroom. This methodology combines the following four pillars:<br><br>
+      <span style="font-weight: 700;">Flipped Classroom:</span> The theory is taught through videos, animation, images, and infographics. Class time is used to discuss, create and build projects, and to be mentored in solving practical exercises.<br><br>
+      <span style="font-weight: 700;">Personalized Mentoring:</span> Each student has the opportunity to have private conversations with a lead mentor on a regular basis.<br><br>
+      <span style="font-weight: 700;">Mentor-Student Ratio 1:7 (on average):</span> A close and personalized environment allows our academy to adapt to the particular pace of each student.<br><br>
+      <span style="font-weight: 700;">Talent Tree:</span> The curriculum charts 44 skills in which students earn points for each skill learned in a playful way.<br><br>
+      Learn more about our part-time bootcamp on our <a class="faq-link" href="/us/coding-bootcamp/part-time-bootcamps">part-time bootcamp</a> page.
+    locations: ["all"]
+    related_features: ["content-and-syllabus", "mentors-and-teachers"]
+    priority: 2
+
+  - question: 'Why "Full-time?" and how does it work?'
+    answer: |-
+      Our Full-Time program is perfect for those looking to rapidly advance their careers. This intensive program covers the most wanted and highest paid technologies, focusing on Python and JavaScript, the top programming languages of 2024. You'll start coding in web development languages, learn algorithm scripting, build apps with front-end libraries, and use APIs to consume data.<br><br>
+      The program culminates in the presentation of your final project, preparing you for further web development experiences. Along the way, you'll reshape your mind to embrace new logical, developmental, and researching skills.<br><br>
+      <span style="font-weight: 700;">Duration:</span> 10 weeks<br>
+      <span style="font-weight: 700;">Classes:</span> 4 classes weekly<br>
+      <span style="font-weight: 700;">Requisites:</span> No previous coding skills or advanced math required<br>
+      <span style="font-weight: 700;">Language:</span> Choose between English and Spanish for the syllabus and content; live classes are taught in the language of your campus.<br><br>
+      Learn more about our full-time bootcamp on our <a class="faq-link" href="/us/coding-bootcamps/full-time-full-stack-developer">Full-Time Bootcamp</a> page.
+    locations: ["all"]
+    related_features: ["content-and-syllabus", "full-stack"]
+    priority: 2
+
+  - question: "What is the difference between a Full-Stack program and other programs that are more junior such as Website Developer?"
+    answer: |-
+      In the case of Website Developer, the curriculum includes: HTML, CSS, PHP, JavaScript, WordPress, API and more.
+      Now, the Full Stack Software Development program is designed in four stages:
+      Prework + Learn to code + Create websites + Create web applications
+      It lasts 16 weeks and includes more than 300 hours of learning.
+      The technology stack here are: JavaScript, React, Python, Flask, API, AJAX, JWT, HTML, CSS, and more.
+      We will guide you and help you find a job after the course through our Placement Program.
+      You will have lifetime access to our learning platform Breatheco.de
+      You will be able to create and build websites, but you will get the skills and tools to tackle more challenging projects like: data analytics, machine learning and augmented reality, to name a few.
+    locations: ["all"]
+    related_features: ["full-stack", "content-and-syllabus"]
+    priority: 2
+
+  - question: "What are the class schedules?"
+    answer: |-
+      The schedules vary depending on the location.<br>
+      - Part-time:<br>
+        1. Spain: Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturdays from 10:00 AM to 1:00 PM.<br>
+        2. Chile and the United States: Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturday from 9:00 AM to 12:00 PM.<br>
+        3. LATAM: Monday, Wednesday and Friday from 4:00 PM to 6:00 PM.<br>
+      - Full-time:<br>
+        Monday to Friday from 9:00 AM to 6:00 PM.
+    locations: ["all"]
+    related_features: ["content-and-syllabus"]
+    priority: 2
+
+  - question: "Do I get a job after completing the program?"
+    answer: |-
+      At 4Geeks Academy, we are dedicated to preparing you for the job market and supporting you in your job search after completing the program. While we cannot guarantee a job, we provide unlimited and lifelong technical and career support, including assistance with resume building, interview preparation, and access to our network of associated employers. 
+
+      Additionally, according to our statistics, 84% of graduates in the US who complete the stages and requirements secure employment with an average salary over $50k per year. To understand more about our job support and the steps we take to help you succeed, visit our <a class="faq-link" target="_blank" href="/us/job-guarantee">Job Guarantee</a> page and learn about our comprehensive <a class="faq-link" target="_blank" href="/us/geekforce-career-support">Geekforce Career Support</a> program.
+
+      To learn more about career paths in tech, check out these articles:
+      - <a class="faq-link" href="/us/blog/full-stack-developer">How to Become a Full Stack Developer</a>
+      - <a class="faq-link" href="/us/blog/full-stack-developer-jobs">Full Stack Developer Jobs</a>
+    locations: ["all"]
+    related_features: ["career-support", "job-guarantee", "outcomes"]
+    priority: 3
+
+  # Experience
+  - question: "Why JavaScript?"
+    answer: |-
+      JavaScript "owns" the web; it is the only language that all web browsers understand. It is also the most used coding language in the world. Every site needs it, and it's the most demanded language by companies, at least ten times more than the rest. 
+
+      To learn more about why JavaScript is essential and how you can master it, check out our detailed article on how to <a class="faq-link" target="_blank"  href="/us/blog/learn-javascript">learn JavaScript</a>.
+    locations: ["all"]
+    related_features: ["content-and-syllabus", "full-stack"]
+    priority: 1
+
+  - question: "Why Python?"
+    answer: |-
+      Python is the fastest growing language in the wealthiest countries. It is widely used in virtually every industry and has top-quality libraries for all fields, growing to be "the future" in areas like Web, AI, Robotics, Big Data, and more. According to MIT Professors, it is the essential programming language to learn. Go ahead and take a look for yourself <a class="faq-link" target="_blank" rel="noopener noreferrer nofollow" href="https://www.python.org/">here</a>. Python is the way to go. It offers more job opportunities, helps you learn to code, and supports you with other back-end languages and frameworks. Even Google endorses Python and has incorporated it everywhere!
+
+      To delve deeper into Python and its significance, check out our articles on <a class="faq-link" target="_blank" href="/us/blog/learn-python">learn Python</a>.
+    locations: ["all"]
+    related_features: ["content-and-syllabus", "data-science", "applied-ai"]
+    priority: 1
+
+  - question: "Why not Node JS?"
+    answer: |-
+      Node.js is indeed an impressive technology, challenging the traditional approach to web development. However, only a small fraction, about 0.3%, of the web has adopted Node.js, and its growth rate has slowed in recent months. Meanwhile, languages like Python, Java, and PHP continue to dominate the industry and are unlikely to change anytime soon. These languages operate differently from Node.js, and our goal is to prepare you for the 'real world' by teaching the most standard and professional technologies. You can find a detailed argument explaining our decision not to teach Node.js in our Full-Stack Development Program <a class="faq-link" href="/us/trends-and-tech/dont-teach-nodejs-full-stack-development-program">here</a>.
+    locations: ["all"]
+    related_features: ["content-and-syllabus"]
+    priority: 1
+
+  - question: "Do I need to have previous experience in programming to join the bootcamp?"
+    answer: |-
+      No, previous programming experience is not required to join our bootcamp. All you need is the desire to learn. We believe that everyone has the potential to code, and we'll help you discover it! If you can already open your browser and check Facebook, you're off to a great start!<br><br>
+      Ready to begin your coding journey? Check out our available bootcamps:<br>
+      Read about our <a class="faq-link" target="_blank" href="/us/blog/online-coding-bootcamp">Online Coding Bootcamp</a> for flexible learning options.<br>
+      Learn more about our <a class="faq-link" target="_blank" href="/us/blog/data-science-bootcamp">Data Science Bootcamp</a> to dive into data science.<br>
+      Explore our comprehensive <a class="faq-link" target="_blank" href="/us/blog/coding-bootcamp">Coding Bootcamp</a> that covers everything from the ground up.<br><br>
+      We also have a lot of free content on our website <a class="faq-link" href="https://4geeks.com">4geeks.com</a> to help you get started.
+    locations: ["all"]
+    related_features: ["content-and-syllabus"]
+    priority: 3
+
+  - question: "Do I graduate as a 'Senior Developer?"
+    answer: |-
+      No, graduating from any Bootcamp does not automatically make you a 'Senior'. The title of 'Senior' typically comes with years of experience in the field. However, our bootcamp is designed to equip you with the necessary skills and knowledge to start your career as a 'Junior Developer' and with the dedication and continuous learning, you can work your way up to a senior position.
+    locations: ["all"]
+    related_features: ["outcomes"]
+    priority: 1
+
+  - question: "What is the market like for companies seeking developers?"
+    answer: |-
+      According to estimations by the IDB between 2020 and 2025, there will be a need for 10.5 million professionals in the tech industry worldwide. Currently, there are over 1.4 million job openings for programmers in the United States, and this number is expected to increase by 2021. In Spain, during the pandemic, 1,500 job openings for programming were created on a single job search platform. On the other hand, in Latin America, around 1.2 million tech professionals will be needed to help reduce the gap. Therefore, the market for companies seeking to hire programmers is going to continue to grow at a rapid pace to keep up with the large demand.
+
+      Interested in learning more about the job market? Explore our blog for further insights: <a class="faq-link" href="/us/blog">4Geeks Academy Blog</a>.
+    locations: ["all"]
+    related_features: ["outcomes", "career-support"]
+    priority: 2
+
+  # Job Guarantee
+  - question: "How does the 4Geeks Academy Job Guarantee work?"
+    answer: |-
+      Our Job Guarantee ensures that if you meet all program requirements and still don't get a qualifying tech job within 9 months of graduation, you are eligible for a full refund of your tuition. It's our way of backing the real-world outcomes our bootcamp delivers. <a href="https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf" target="_blank" rel="noopener noreferrer">Conditions apply</a>.
+    locations: ["all"]
+    related_features: ["job-guarantee", "outcomes"]
+    priority: 3
+
+  - question: "Does the Job Guarantee refund the full tuition if I don't get hired?"
+    answer: |-
+      Yes. If you qualify for the Job Guarantee and don't receive a qualifying job offer within the job search window, you'll receive a full tuition refund.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 2
+
+  - question: "How long do I have to look for a job before the refund is issued?"
+    answer: |-
+      You'll have up to 9 months after graduating to secure qualifying employment. If you meet all requirements and are still not hired within that time, you can apply for a full refund.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 2
+
+  - question: "What kinds of jobs count toward the Job Guarantee?"
+    answer: |-
+      Full-time or contract positions in tech (such as software development, QA, or related roles) qualify. Remote jobs and freelance positions may be eligible depending on terms.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 2
+
+  - question: "Is there a minimum salary for jobs that count?"
+    answer: |-
+      There is no set salary threshold, but the job must be aligned with the skills taught in the program and be a legitimate entry-level tech role.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 1
+
+  - question: "What do I need to do to qualify for the Job Guarantee?"
+    answer: |-
+      You must:
+      - Complete 100% of coursework and projects
+      - Attend sessions consistently
+      - Follow the steps our career services team advises
+      - Actively apply to jobs and document your search
+      - Hold valid U.S. work authorization
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 2
+
+  - question: "Do I need to have work authorization to qualify?"
+    answer: |-
+      Yes, you must have valid U.S. work authorization to be eligible for the Job Guarantee.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 1
+
+  - question: "Is attendance important for the Job Guarantee?"
+    answer: |-
+      Yes, maintaining good attendance throughout the bootcamp is mandatory for eligibility.
+    locations: ["all"]
+    related_features: ["job-guarantee"]
+    priority: 1
+
+  - question: "What coursework or projects must I complete?"
+    answer: |-
+      You'll need to finish your final project in a satisfactory manner, plus all assigned coding projects, exercises, and coursework provided during the bootcamp.
+    locations: ["all"]
+    related_features: ["job-guarantee", "content-and-syllabus"]
+    priority: 1
+
+  - question: "What does it mean to follow the career team's guidance?"
+    answer: |-
+      It includes completing your resume and portfolio according to our guidelines, participating in mock interviews, and applying to a minimum number of jobs weekly — all with the support of our career services team.
+    locations: ["all"]
+    related_features: ["job-guarantee", "career-support"]
+    priority: 1
+
+  - question: "Can I finance the additional $2,000 Job Guarantee fee with my tuition?"
+    answer: |-
+      Yes, in many cases the Job Guarantee fee can be bundled into your overall tuition financing plan.
+    locations: ["all"]
+    related_features: ["job-guarantee", "price"]
+    priority: 1
