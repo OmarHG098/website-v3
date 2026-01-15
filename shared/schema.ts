@@ -146,6 +146,7 @@ export {
   faqSectionSchema,
   type FaqItem,
   type FaqSection,
+  type FAQ,
 } from "../marketing-content/component-registry/faq/v1.0/schema";
 
 // Type alias for backward compatibility
