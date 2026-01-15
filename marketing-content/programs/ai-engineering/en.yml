@@ -21,7 +21,7 @@ sections:
     version: "1.0"
     variant: course
     title: AI Engineering
-    title_highlight: AI Engineer
+    title_highlight: AI Engineering
     subtitle: Learn to design, build, and deploy complete AI systems used in real-world production.
     students_enrolled:
       avatars:
@@ -29,10 +29,10 @@ sections:
         - https://randomuser.me/api/portraits/men/2.jpg
         - https://randomuser.me/api/portraits/women/3.jpg
         - https://randomuser.me/api/portraits/men/4.jpg
-      count: +500 students enrolled
+      count: +7000 graduates
     bullet_points:
-      - Design and deliver complete AI systems using agents, workflows, and automation
-      - Create a fully AI-native business, developed end to end through the program
+      - Create a fully AI-native business, developed end to end throughout the program
+      - Integrate AI directly into real products, from user-facing features to internal operations
       - Use modern AI tools and AI-assisted workflows to build and ship production-ready software faster
     tutors:
       - name: Charly Chacón
@@ -42,7 +42,7 @@ sections:
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Become the AI engineer companies are actively hiring for. Learn to build production-ready AI systems with hands-on projects, real mentorship, and the skills modern engineering teams expect.
+    description: Build real, production-ready AI systems with hands-on projects, supported by unlimited mentorship and career guidance. Become the AI engineer companies are actively hiring for.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
@@ -59,21 +59,18 @@ sections:
         text: Already a student? Login here.
         url: /login
       features:
-        - icon: book
-          text: Readings and videos
-          count: 50+
-        - icon: code
-          text: Interactive Exercises
-          count: 100+
-        - icon: briefcase
-          text: Real Projects
-          count: "12"
-        - icon: robot
-          text: AI-Powered Feedback
         - icon: calendar
-          text: Live Sessions Weekly
+          text: 24-Week Intensive Program
+        - icon: briefcase
+          text: Career-Focused, Project-Driven Training
+        - icon: robot
+          text: AI-Powered Learning & Feedback
         - icon: users
-          text: 1:1 Mentorship
+          text: 7:1 Student-to-Instructor Ratio
+        - icon: users
+          text: Unlimited 1:1 Mentorship
+        - icon: book
+          text: Real-World Portfolio Project
     paddingY:
       desktop: md
     marginY:
@@ -129,19 +126,18 @@ sections:
     background: bg-muted/30
     items:
       - id: "1"
-        value: 3.5M
-        title: AI-related roles expected by 2026
+        value: 800,000
+        title: AI-related roles expected by 2027
       - id: "2"
-        value: 47%
-        title: Year-over-year growth in AI job postings
+        value: ~30%
+        title: Year-over-year growth in AI job posts
       - id: "3"
         value: $95K-$135K
         title: Average starting salary for AI Engineers
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: What You'll Build in 20 Weeks
-    program_description: From day one, you'll choose one company. Yours, one you want to build, or one you want to reimagine. Over 20 weeks, you'll transform it into a fully operational, AI-powered business.
+    program_title: AI Engineering Program Overview
+    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams.
     tech_logos:
       - name: React
         icon: react
@@ -217,10 +213,10 @@ sections:
         projects: Launch your capstone AI-powered business
         orientation: vertical
         icon: IconBolt
-    paddingY:
-      desktop: md
     marginY:
       desktop: md none
+    paddingY:
+      desktop: md
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -275,7 +271,7 @@ sections:
     marginY:
       desktop: md none
   - type: certificate
-    title: Certificate & Career Network
+    title: Career Outcomes
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
     benefits:
       - text: "AI Software Engineer: $95K–$135K"
@@ -289,20 +285,19 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        description: Graduate with the skills, credentials, and professional profile employers are actively hiring for.
         benefits:
-          - text: Dedicated career coaching from day one
-          - text: Resume and LinkedIn profile optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: Certificate recognized by the Florida Department of Education
+          - text: End-to-end AI-engineered company in your portfolio
+          - text: Demonstrated experience with agents, workflows, and AI systems
+          - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        description: Most graduates land their first role within 3–6 months of graduation. With our structured 3-step career development process, technical skills turn into job offers fast.
         benefits:
-          - text: Job search strategy and planning
-          - text: Salary negotiation coaching
-          - text: Lifetime career support access
-          - text: Alumni network with 10,000+ professionals
+          - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
+          - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
+          - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average salary increase
         description: Our graduates see an average 55% salary increase after transitioning into AI engineering roles. The investment pays for itself.
@@ -312,7 +307,7 @@ sections:
           - text: "Agent Engineer: $105K–$155K"
           - text: "Workflow Automation Engineer: $85K–$120K"
       - value: 5,000+
-        label: Hiring Partners
+        label: Hiring partners
         description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
         benefits:
           - text: Exclusive job board access
@@ -321,18 +316,21 @@ sections:
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
     useSolidCard: true
-    background: hsl(var(--muted))
+    marginY:
+      mobile: none
+      desktop: none
     paddingY:
       mobile: lg
       desktop: lg
+    background: hsl(var(--muted))
   - type: pricing
     version: "1.0"
     variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    title: Tuition & Financing Options
+    subtitle: We offer multiple ways to fund your enrollment, making it easier to invest in your career.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
+    financing_amount: $349
     tech_icons:
       - openai
       - python
@@ -342,20 +340,19 @@ sections:
       - brain
       - robot
       - settings
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+    features_title: Choose the option that fits you best.
     features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
-      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school by the florida department of education.
+      - icon: IconCheck
+        text: Standard tuition is $14,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
+      - icon: IconCheck
+        text: Finance your tuition through Climb, Fortify, or Lumion with 24, 36, 48, or 60-month plans.
+      - icon: IconCheck
+        text: 2–3 merit-based scholarships available per cohort for highly qualified applicants.
+        use_rigobot_icon: true
+      - icon: IconCheck
+        text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
-      text: Get plan
+      text: Get more info
       url: /signup
       variant: primary
     paddingY:
