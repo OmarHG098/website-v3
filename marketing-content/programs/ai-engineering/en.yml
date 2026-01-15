@@ -229,8 +229,8 @@ sections:
         show_rigobot_logo: true
         bullets:
           - text: Get instant feedback from Rigobot, our custom AI tutor
-          - text: Gives advice adjusted to your skill level and progress
-          - text: Helps with debugging and problem-solving tasks
+          - text: Receive advice adjusted to your skill level and progress
+          - text: Get 24/7 help with debugging and problem-solving
           - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
