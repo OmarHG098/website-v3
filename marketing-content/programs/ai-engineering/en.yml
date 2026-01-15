@@ -20,9 +20,9 @@ sections:
   - type: hero
     version: "1.0"
     variant: course
-    title: Become an AI Engineer
+    title: AI Engineering
     title_highlight: AI Engineer
-    subtitle: Thrive in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
+    subtitle: Learn to design, build, and deploy complete AI systems used in real-world production.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
@@ -31,10 +31,9 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +500 students enrolled
     bullet_points:
-      - Master large language models (LLMs) and transformer architectures
-      - Build production-ready AI applications with Python and modern frameworks
-      - Learn prompt engineering and fine-tuning techniques
-      - Deploy scalable AI solutions using cloud infrastructure
+      - Design and deliver complete AI systems using agents, workflows, and automation
+      - Create a fully AI-native business, developed end to end through the program
+      - Use modern AI tools and AI-assisted workflows to build and ship production-ready software faster
     tutors:
       - name: Charly Chacón
         role: Main Instructor
@@ -43,7 +42,7 @@ sections:
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Become the AI professional companies can't wait to hire. Our 20-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $95K-$135K starting salaries.
+    description: Become the AI engineer companies are actively hiring for. Learn to build production-ready AI systems with hands-on projects, real mentorship, and the skills modern engineering teams expect.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
@@ -467,8 +466,8 @@ sections:
     form:
       variant: stacked
       submit_label: Apply Now
-      button_className: "bg-white text-primary hover:bg-white/90 border-white"
-      terms_className: "text-white/80"
+      button_className: bg-white text-primary hover:bg-white/90 border-white
+      terms_className: text-white/80
       show_terms: true
       fields:
         email:

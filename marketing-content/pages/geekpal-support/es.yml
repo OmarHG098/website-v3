@@ -48,30 +48,46 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-  - type: features_grid
+  - type: split_cards
+    variant: primary-left
+    background: muted
+    primary:
+      heading: "Avanza Más Rápido, Nunca Pierdas el Impulso"
+      description: "¿La razón #1 por la que la gente abandona cuando aprende a programar? Quedarse atascado. En 4Geeks, construimos un sistema de apoyo personalizado donde siempre tendrás a alguien que te ayude."
+    secondary:
+      benefits:
+        - text: "Ratio 7:1 Estudiante-Profesor — Atención individual en cada clase."
+        - text: "Mentoría 1:1 Ilimitada — Desde el primer día y de por vida."
+        - text: "Asistente de Coding con IA 24/7 (Rigobot) — Feedback instantáneo mientras programas."
+        - text: "Comunidad de Apoyo Real — Mentores, alumni y compañeros siempre listos para ayudar."
+  - type: bento_cards
     version: "1.0"
-    variant: highlight
-    title: Avanza Más Rápido, Nunca Pierdas el Impulso
-    subtitle: "¿La razón #1 por la que la gente abandona cuando aprende a programar? Quedarse atascado. En 4Geeks, construimos un sistema de apoyo personalizado donde siempre tendrás a alguien que te ayude."
-    columns: 4
-    background: bg-primary/5
+    title: "7 Formas en que Rigobot Te Mantiene Avanzando"
+    subtitle: "Nunca te quedes atascado"
+    description: "Rigobot es tu compañero de programación con IA que asegura que nunca pierdas impulso. Ya sea que estés depurando a las 2am o preparándote para un examen, Rigobot está ahí para ayudarte a superar desafíos y seguir aprendiendo."
+    background: bg-background
     items:
-      - icon: PeopleGroup
-        icon_color: "#0097CD"
-        title: Ratio 7:1 Estudiante-Profesor
-        description: Atención individual en cada clase.
-      - icon: Handshake
-        icon_color: "#BE8BFF"
-        title: Mentoría 1:1 Ilimitada
-        description: Desde el primer día y de por vida.
-      - icon: Rocket
-        icon_color: "#FFB718"
-        title: Asistente de Coding con IA 24/7 (Rigobot)
-        description: Feedback instantáneo mientras programas.
-      - icon: HandsGroup
-        icon_color: "#E74C3C"
-        title: Comunidad de Apoyo Real
-        description: Mentores, alumni y compañeros siempre listos para ayudar.
+      - icon: CodeReview
+        title: "Revisión de Código"
+        description: "Obtén feedback instantáneo sobre la calidad de tu código, mejores prácticas y posibles mejoras."
+      - icon: Brain
+        title: "Mentoría con IA"
+        description: "Guía personalizada que se adapta a tu estilo y ritmo de aprendizaje."
+      - icon: School
+        title: "Preparación de Tareas y Exámenes"
+        description: "Problemas de práctica y explicaciones para ayudarte a aprobar tus evaluaciones."
+      - icon: TrendingUp
+        title: "Desarrollo de Habilidades"
+        description: "Ejercicios específicos para fortalecer áreas débiles y construir nuevas competencias."
+      - icon: Bug
+        title: "Asistente de Debugging"
+        description: "Ayuda paso a paso para entender y corregir errores en tu código."
+      - icon: Lightbulb
+        title: "Explicación de Conceptos"
+        description: "Explicaciones claras y pacientes de conceptos de programación complejos."
+      - icon: Clock
+        title: "Disponibilidad 24/7"
+        description: "Obtén ayuda cuando la necesites, sin esperar horarios de oficina."
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Humano + IA: El Dúo de Apoyo Perfecto"
