@@ -27,26 +27,18 @@ sections:
     paddingY:
       mobile: none lg
       desktop: md lg
-  - type: features_grid
-    version: "1.0"
-    variant: textOnly
-    title: Advance Faster, Never Lose Momentum
-    subtitle: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
-    items:
-      - headline: Always supported
-        subline: never stuck
-        description: Get help the moment friction appears, before you lose momentum.
-      - headline: Instant guidance
-        subline: 24/7
-        description: The AI Tutor helps you unblock fast without breaking your learning flow.
-      - headline: Real humans
-        subline: when it matters
-        description: Mentors step in with context, feedback, and direction when you need it.
-      - headline: Community support
-        subline: built in
-        description: Peers and alumni help you move forward with examples and encouragement.
-    columns: 4
-    background: bg-primary/5
+  - type: split_cards
+    variant: primary-left
+    background: muted
+    primary:
+      heading: "Advance Faster, Never Lose Momentum"
+      description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
+    secondary:
+      benefits:
+        - text: "Always supported, never stuck — Get help the moment friction appears, before you lose momentum."
+        - text: "Instant 24/7 guidance — The AI Tutor helps you unblock fast without breaking your learning flow."
+        - text: "Real humans when it matters — Mentors step in with context, feedback, and direction when you need it."
+        - text: "Community support built in — Peers and alumni help you move forward with examples and encouragement."
   - type: bento_cards
     version: "1.0"
     title: "7 Ways Rigobot Keeps You Moving"
