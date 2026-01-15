@@ -221,10 +221,10 @@ sections:
     variant: feature-tabs
     badge: Why 4Geeks?
     title: How You’ll Learn and Get Supported
-    description: Move faster and stay motivated with AI-driven tools, personalized mentorship, and career-focused support.
+    description: Progress faster and stay motivated with AI-driven tools, personalized mentorship, and career-focused support.
     features:
       - icon: Robot
-        title: Progress faster with AI-powered tools
+        title: Learn faster with Rigobot
         description: ""
         show_rigobot_logo: true
         bullets:
