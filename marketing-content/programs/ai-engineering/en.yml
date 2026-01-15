@@ -129,10 +129,10 @@ sections:
     background: bg-muted/30
     items:
       - id: "1"
-        value: 3.5M
+        value: 800,000
         title: AI-related roles expected by 2026
       - id: "2"
-        value: 47%
+        value: ~30%
         title: Year-over-year growth in AI job postings
       - id: "3"
         value: $95K-$135K
