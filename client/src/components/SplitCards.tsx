@@ -1,5 +1,5 @@
 import { memo } from "react";
-import type { SplitCardsSection, SplitCardsBenefit, SplitCardsBullet, ToolIcon } from "@shared/schema";
+import type { SplitCardsSection, SplitCardsBenefit, ToolIcon } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 import { 
   IconCheck, 
@@ -162,24 +162,6 @@ export const SplitCards = memo(function SplitCards({
           >
             {primary.description}
           </p>
-        )}
-        {primary.bullets && primary.bullets.length > 0 && (
-          <ul className="space-y-2 mt-4" data-testid="list-primary-bullets">
-            {primary.bullets.map((bullet: SplitCardsBullet, index: number) => (
-              <li 
-                key={index} 
-                className="flex items-start gap-2"
-                data-testid={`bullet-primary-${index}`}
-              >
-                <IconCheck 
-                  className="text-white flex-shrink-0 mt-0.5" 
-                  size={18} 
-                  stroke={2.5}
-                />
-                <span className="text-white/90 text-sm leading-relaxed">{bullet.text}</span>
-              </li>
-            ))}
-          </ul>
         )}
       </div>
 

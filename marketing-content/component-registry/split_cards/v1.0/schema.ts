@@ -28,10 +28,6 @@ export const splitCardsBenefitSchema = z.object({
   icon: z.string().optional(),
 });
 
-export const splitCardsBulletSchema = z.object({
-  text: z.string(),
-});
-
 export const splitCardsSectionSchema = z.object({
   type: z.literal("split_cards"),
   variant: z.enum(["primary-left", "primary-right"]).optional().default("primary-left"),
@@ -39,7 +35,6 @@ export const splitCardsSectionSchema = z.object({
     heading: z.string(),
     description: z.string().optional(),
     badge: z.string().optional(),
-    bullets: z.array(splitCardsBulletSchema).optional(),
     tool_icons: z.array(toolIconSchema).optional(),
   }),
   secondary: z.object({
@@ -50,5 +45,4 @@ export const splitCardsSectionSchema = z.object({
 
 export type ToolIcon = z.infer<typeof toolIconSchema>;
 export type SplitCardsBenefit = z.infer<typeof splitCardsBenefitSchema>;
-export type SplitCardsBullet = z.infer<typeof splitCardsBulletSchema>;
 export type SplitCardsSection = z.infer<typeof splitCardsSectionSchema>;
