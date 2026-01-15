@@ -29,7 +29,7 @@ sections:
         - https://randomuser.me/api/portraits/men/2.jpg
         - https://randomuser.me/api/portraits/women/3.jpg
         - https://randomuser.me/api/portraits/men/4.jpg
-      count: +500 students enrolled
+      count: +7000 graduates
     bullet_points:
       - Create a fully AI-native business, developed end to end throughout the program
       - Integrate AI directly into real products, from user-facing features to internal operations
