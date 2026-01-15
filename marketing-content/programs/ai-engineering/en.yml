@@ -66,14 +66,14 @@ sections:
           text: AI Agents & Workflow Automation
           count: 100+
         - icon: briefcase
-          text: Real Projects
+          text: Build a Complete AI-Native Business
           count: "12"
         - icon: robot
           text: AI-Powered Feedback
         - icon: calendar
-          text: Live Sessions Weekly
+          text: 7:1 Student-to-Instructor Ratio
         - icon: users
-          text: 1:1 Mentorship
+          text: Unlimited 1:1 Mentorship
     paddingY:
       desktop: md
     marginY:
