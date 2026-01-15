@@ -220,8 +220,8 @@ sections:
   - type: ai_learning
     variant: feature-tabs
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
-    description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
+    title: How You’ll Learn and Get Supported
+    description: Move faster and stay motivated with AI-driven tools, personalized mentorship, and career-focused support.
     features:
       - icon: Robot
         title: Progress faster with AI-powered tools
