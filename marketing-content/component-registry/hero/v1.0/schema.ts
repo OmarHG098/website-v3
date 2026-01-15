@@ -56,6 +56,11 @@ export const embeddedMarqueeSchema = z.object({
   gradientWidth: z.number().optional(),
 });
 
+// Bullet item for productShowcase (renders below description)
+export const bulletItemSchema = z.object({
+  text: z.string(),
+});
+
 // Course tutor
 export const heroCourseTutorSchema = z.object({
   name: z.string(),
@@ -108,6 +113,8 @@ export const heroProductShowcaseSchema = z.object({
   welcome_text: z.string().optional(),
   brand_mark: brandMarkSchema.optional(),
   description: z.string().optional(),
+  // Bullet points render below description (optional)
+  bullets: z.array(bulletItemSchema).nullish(),
   // Embedded marquee renders below description (optional)
   marquee: embeddedMarqueeSchema.nullish(),
   video: videoConfigSchema.optional(),
@@ -242,6 +249,7 @@ export type BrandMark = z.infer<typeof brandMarkSchema>;
 export type ReviewLogo = z.infer<typeof reviewLogoSchema>;
 export type ProductShowcaseTrustBar = z.infer<typeof productShowcaseTrustBarSchema>;
 export type EmbeddedMarquee = z.infer<typeof embeddedMarqueeSchema>;
+export type BulletItem = z.infer<typeof bulletItemSchema>;
 export type HeroCourseTutor = z.infer<typeof heroCourseTutorSchema>;
 export type HeroCourseFeature = z.infer<typeof heroCourseFeatureSchema>;
 export type HeroSingleColumn = z.infer<typeof heroSingleColumnSchema>;

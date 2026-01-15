@@ -6,7 +6,7 @@ import type {
 } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
-import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
+import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
 
 interface HeroProductShowcaseProps {
@@ -35,6 +35,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const video = "video" in data ? data.video : null;
   const image = "image" in data ? data.image : null;
   const marquee = "marquee" in data ? data.marquee : null;
+  const bullets = "bullets" in data ? data.bullets : null;
 
   const shouldShowBackground = backgroundImage && showBackground;
 
@@ -118,6 +119,21 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                     {data.description}
                   </p>
                 </div>
+              )}
+
+              {bullets && bullets.length > 0 && (
+                <ul className="mt-4 mb-6 space-y-2 max-w-xl" data-testid="hero-bullets">
+                  {bullets.map((bullet, index) => (
+                    <li 
+                      key={index} 
+                      className="flex items-start gap-3 text-foreground"
+                      data-testid={`hero-bullet-${index}`}
+                    >
+                      <IconCheck className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                      <span className="text-body leading-relaxed">{bullet.text}</span>
+                    </li>
+                  ))}
+                </ul>
               )}
 
               {marquee && marquee.items && marquee.items.length > 0 && (
