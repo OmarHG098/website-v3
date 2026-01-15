@@ -14,9 +14,9 @@
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
       "sha": "f27c3031a92f2c35359757f47a258323f760bfa797fea6894b05959e6c6e0520",
-      "lastModified": 1768423658343.6836,
+      "lastModified": 1768502459501.2024,
       "remoteSha": "f27c3031a92f2c35359757f47a258323f760bfa797fea6894b05959e6c6e0520",
-      "pulledFromCommit": "b603b013784d779b618a54700348e1b4c111ce21"
+      "pulledFromCommit": "2527604647d2b966a7e008e782f4dcc26cc5e499"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",
@@ -45,9 +45,9 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "91fd5e1ffc6d0978ae1515e3466b720e7a91eb70be154f578edd86e429e6ecd7",
-      "lastModified": 1768423652952.6892,
+      "lastModified": 1768502462039.2004,
       "remoteSha": "91fd5e1ffc6d0978ae1515e3466b720e7a91eb70be154f578edd86e429e6ecd7",
-      "pulledFromCommit": "b603b013784d779b618a54700348e1b4c111ce21"
+      "pulledFromCommit": "2527604647d2b966a7e008e782f4dcc26cc5e499"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -680,10 +680,10 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "a0ced015318546f32794dda546907c0261e7e1099d69f95e4961e59acd4c8e7c",
-      "lastModified": 1768423655804.6863,
-      "remoteSha": "a0ced015318546f32794dda546907c0261e7e1099d69f95e4961e59acd4c8e7c",
-      "pulledFromCommit": "b603b013784d779b618a54700348e1b4c111ce21"
+      "sha": "4873f91d6651f695714b9bcffbfded08e9cd84c3eb5eadda0d75d719bf5f5199",
+      "lastModified": 1768502464702.1982,
+      "remoteSha": "4873f91d6651f695714b9bcffbfded08e9cd84c3eb5eadda0d75d719bf5f5199",
+      "pulledFromCommit": "2527604647d2b966a7e008e782f4dcc26cc5e499"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f5de9f9b914bf84e0411d4201ed51501908a16a4608c1d613241634ed59102c5",

@@ -76,23 +76,15 @@ sections:
         image: /attached_assets/profile-pic6_1764775742734.webp
         bullets:
           - text: Provides personalized guidance on coding challenges and best practices
-            icon: CircleCheck
           - text: Offers live troubleshooting and debugging support
-            icon: Bug
           - text: Expert bug fixing assistance
-            icon: Settings
           - text: Shares industry insights, career advice, and learning strategies
-            icon: Bulb
       - title: "Rigobot + Learnpack:"
         bullets:
           - text: Provides instant feedback and tutoring while you code
-            icon: Message
           - text: Tracks your skills and progress
-            icon: ChartBar
           - text: Helps with debugging and problem-solving tasks
-            icon: Puzzle
           - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
-            icon: Code
     footer_description: Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence.
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
