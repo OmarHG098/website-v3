@@ -14,6 +14,7 @@ export const relatedFeaturesEnum = z.enum([
   "cybersecurity",
   "data-science",
   "applied-ai",
+  "ai-engineering",
   "outcomes",
   "scholarships",
   "rigobot",
