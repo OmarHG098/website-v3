@@ -134,13 +134,16 @@ export const SplitCards = memo(function SplitCards({
 
   const PrimaryCard = (
     <div 
-      className="relative bg-primary text-primary-foreground rounded-[0.8rem] p-8 md:p-10 lg:p-12 overflow-hidden min-h-[320px] md:min-h-[360px]"
+      className="relative text-white rounded-[0.8rem] p-8 md:p-10 lg:p-12 overflow-hidden min-h-[320px] md:min-h-[360px]"
+      style={{
+        background: "linear-gradient(135deg, #366bff 0%, #4aa5ff 100%)",
+      }}
       data-testid="card-primary"
     >
       <div className="relative z-10 max-w-md">
         {primary.badge && (
           <span 
-            className="inline-block text-sm font-medium text-primary-foreground/80 mb-3"
+            className="inline-block text-sm font-medium text-white/80 mb-3"
             data-testid="text-primary-badge"
           >
             {primary.badge}
@@ -154,7 +157,7 @@ export const SplitCards = memo(function SplitCards({
         </h2>
         {primary.description && (
           <p 
-            className="text-primary-foreground/85 leading-relaxed text-base md:text-lg"
+            className="text-white/85 leading-relaxed text-base md:text-lg"
             data-testid="text-primary-description"
           >
             {primary.description}
@@ -173,7 +176,7 @@ export const SplitCards = memo(function SplitCards({
       <div className="absolute bottom-4 left-8 opacity-20">
         <div className="grid grid-cols-4 gap-2">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="w-1.5 h-1.5 rounded-full bg-primary-foreground" />
+            <div key={i} className="w-1.5 h-1.5 rounded-full bg-white" />
           ))}
         </div>
       </div>
