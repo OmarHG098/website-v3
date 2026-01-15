@@ -60,10 +60,10 @@ sections:
         url: /login
       features:
         - icon: book
-          text: Readings and videos
+          text: 24-Week Intensive Program
           count: 50+
         - icon: code
-          text: Interactive Exercises
+          text: AI Agents & Workflow Automation
           count: 100+
         - icon: briefcase
           text: Real Projects
