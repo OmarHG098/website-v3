@@ -59,21 +59,18 @@ sections:
         text: Already a student? Login here.
         url: /login
       features:
-        - icon: book
-          text: 24-Week Intensive Program
-          count: 50+
-        - icon: code
-          text: AI Agents & Workflow Automation
-          count: 100+
-        - icon: briefcase
-          text: Build a Complete AI-Native Business
-          count: "12"
-        - icon: robot
-          text: AI-Powered Learning
         - icon: calendar
+          text: 24-Week Intensive Program
+        - icon: briefcase
+          text: Career-Focused, Project-Driven Training
+        - icon: robot
+          text: AI-Powered Learning & Feedback
+        - icon: users
           text: 7:1 Student-to-Instructor Ratio
         - icon: users
           text: Unlimited 1:1 Mentorship
+        - icon: book
+          text: Real-World Portfolio Project
     paddingY:
       desktop: md
     marginY:
