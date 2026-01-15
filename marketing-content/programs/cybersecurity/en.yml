@@ -445,18 +445,8 @@ sections:
   - type: faq
     version: "1.0"
     background: "muted"
-    title: FAQ
-    items:
-      - question: Do I need prior cybersecurity experience?
-        answer: No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts like penetration testing and incident response.
-      - question: What tools will I learn to use?
-        answer: You'll gain hands-on experience with industry-standard tools including Nessus, Nmap, Wireshark, Metasploit, and more. These are the same tools used by security professionals at top companies worldwide.
-      - question: Will this prepare me for certifications?
-        answer: Yes! Our program puts you on the fast track for certifications like EJPT and CEH. Our pen-testing practices are specifically aligned with EJPT certification labs to give you the hands-on experience you need.
-      - question: How long is the program?
-        answer: The program is 16 weeks with 3 live online classes per week. Class sizes are kept small (max 15 people) to ensure personalized attention and hands-on guidance.
-      - question: Is the certificate recognized by employers?
-        answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
+    title: Frequently Asked Questions
+    related_features: ["cybersecurity"]
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor

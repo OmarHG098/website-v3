@@ -438,18 +438,9 @@ sections:
     paddingY:
       desktop: md none
   - type: faq
-    title: FAQ
-    items:
-      - question: ¿Qué requisitos previos necesito para Ingeniería de IA?
-        answer: Se recomienda conocimiento básico de programación pero no es obligatorio. Nuestro programa comienza con conceptos fundamentales y avanza hasta ingeniería de IA avanzada. Si eres nuevo en programación, tenemos materiales preparatorios para ayudarte a comenzar.
-      - question: ¿Cuánto tiempo dura el programa?
-        answer: El programa de Ingeniería de IA está diseñado para completarse en 20 semanas. Sin embargo, como programa a tu ritmo, puedes acelerar o tomar más tiempo según tu horario y ritmo de aprendizaje.
-      - question: ¿Qué tipo de proyectos construiré?
-        answer: Construirás aplicaciones de IA listas para producción incluyendo sistemas RAG, orquestadores multi-agente, aplicaciones de IA en tiempo real y un proyecto final completo. Todos los proyectos usan tecnologías y patrones del mundo real utilizados por las principales empresas.
-      - question: ¿Necesito hardware costoso para desarrollo de IA?
-        answer: ¡No! Todos los ejercicios y proyectos se ejecutan en la nube. Proporcionamos acceso a entornos de desarrollo en la nube y APIs de IA, así que puedes aprender solo con una laptop y conexión a internet.
-      - question: ¿El certificado es reconocido por empleadores?
-        answer: ¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación.
+    version: "1.0"
+    title: Preguntas Frecuentes
+    related_features: ["ai-engineering"]
     cta:
       text: ¿Aún tienes preguntas?
       button_text: Habla con un Asesor

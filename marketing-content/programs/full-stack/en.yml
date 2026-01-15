@@ -458,18 +458,9 @@ sections:
     paddingY:
       desktop: md none
   - type: faq
-    title: FAQ
-    items:
-      - question: What prerequisites do I need for Full Stack Development?
-        answer: No prior coding experience is required. Our program starts with the fundamentals and builds up to advanced full-stack development. We teach you everything from HTML basics to building complete web applications.
-      - question: How long does the program take?
-        answer: The Full Stack program is designed to be completed in 16 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
-      - question: What kind of projects will I build?
-        answer: You'll build production-ready applications including REST APIs, authentication systems, React frontends, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
-      - question: Do I need expensive equipment?
-        answer: No! All exercises and projects run in the cloud. We provide access to cloud-based development environments, so you can learn with just a laptop and internet connection.
-      - question: Is the certificate recognized by employers?
-        answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
+    version: "1.0"
+    title: Frequently Asked Questions
+    related_features: ["full-stack"]
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor

@@ -474,22 +474,12 @@ sections:
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
-    title: "Preguntas Frecuentes"
-    items:
-      - question: "¿Necesito experiencia previa con datos o programación?"
-        answer: "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos de Python y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados de machine learning."
-      - question: "¿Qué herramientas y tecnologías aprenderé?"
-        answer: "Dominarás Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras y Flask. Estas son las herramientas estándar de la industria usadas por científicos de datos e ingenieros de ML en todo el mundo."
-      - question: "¿Cómo me mantengo motivado aprendiendo solo?"
-        answer: "¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales."
-      - question: "¿Cuánto tiempo toma completar el programa?"
-        answer: "El programa autodidacta puede completarse en tan solo 16 semanas con estudio dedicado. Sin embargo, tienes acceso de por vida a todos los materiales y puedes aprender a tu propio ritmo—ya sean 30 minutos al día o sesiones intensivas de fin de semana."
-      - question: "¿El certificado es reconocido por empleadores?"
-        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores coding bootcamps."
+    title: Preguntas Frecuentes
+    related_features: ["data-science"]
     cta:
-      text: "¿Todavía tienes preguntas?"
-      button_text: "Habla con un Asesor"
-      button_url: "/contacto"
+      text: ¿Todavía tienes preguntas?
+      button_text: Habla con un Asesor
+      button_url: /contacto
     paddingY:
       desktop: md
     marginY:

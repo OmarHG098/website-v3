@@ -445,18 +445,8 @@ sections:
   - type: faq
     version: "1.0"
     background: "muted"
-    title: FAQ
-    items:
-      - question: Do I need any technical background?
-        answer: No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there.
-      - question: What tools will I learn to use?
-        answer: You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier.
-      - question: How are the live classes structured?
-        answer: Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time.
-      - question: What kind of support is available?
-        answer: You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot for instant feedback, and a supportive community of fellow professionals learning alongside you.
-      - question: Is the certificate recognized by employers?
-        answer: Yes! Our certificate is recognized by employers worldwide. 4Geeks Academy is licensed by the Florida Department of Education and has been featured by Forbes, Newsweek, and Course Report as one of the top bootcamps.
+    title: Frequently Asked Questions
+    related_features: ["applied-ai"]
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor

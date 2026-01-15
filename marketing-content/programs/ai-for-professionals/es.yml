@@ -445,22 +445,12 @@ sections:
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
-    title: "Preguntas Frecuentes"
-    items:
-      - question: "¿Necesito algún conocimiento técnico previo?"
-        answer: "No se requiere experiencia previa. Este curso está diseñado para profesionales de todos los campos que quieren aprovechar la IA en su trabajo. Empezamos con los fundamentos y construimos desde ahí."
-      - question: "¿Qué herramientas aprenderé a usar?"
-        answer: "Tendrás experiencia práctica con modelos generativos como ChatGPT, Gemini y Claude, así como herramientas modernas de imagen y video como Midjourney y DALL-E. También aprenderás herramientas de automatización sin código como Zapier."
-      - question: "¿Cómo están estructuradas las clases en vivo?"
-        answer: "Las clases se realizan dos veces por semana online con un máximo de 12 estudiantes por cohorte. Esto asegura atención personalizada y la capacidad de tener tus preguntas respondidas en tiempo real."
-      - question: "¿Qué tipo de apoyo está disponible?"
-        answer: "Tendrás acceso a sesiones de mentoría 1:1 ilimitadas, nuestro tutor de IA Rigobot para retroalimentación instantánea, y una comunidad de apoyo de compañeros profesionales aprendiendo junto a ti."
-      - question: "¿El certificado es reconocido por empleadores?"
-        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. 4Geeks Academy está licenciada por el Departamento de Educación de Florida y ha sido destacada por Forbes, Newsweek y Course Report como uno de los mejores bootcamps."
+    title: Preguntas Frecuentes
+    related_features: ["applied-ai"]
     cta:
-      text: "¿Aún tienes preguntas?"
-      button_text: "Habla con un Asesor"
-      button_url: "/contacto"
+      text: ¿Aún tienes preguntas?
+      button_text: Habla con un Asesor
+      button_url: /contacto
     paddingY:
       desktop: md
     marginY:

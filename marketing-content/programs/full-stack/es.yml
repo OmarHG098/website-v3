@@ -463,18 +463,9 @@ sections:
     paddingY:
       desktop: md none
   - type: faq
-    title: FAQ
-    items:
-      - question: ¿Qué requisitos previos necesito para Desarrollo Full Stack?
-        answer: No se requiere experiencia previa en programación. Nuestro programa comienza con los fundamentos y avanza hasta desarrollo full-stack avanzado. Te enseñamos todo desde lo básico de HTML hasta construir aplicaciones web completas.
-      - question: ¿Cuánto tiempo dura el programa?
-        answer: El programa Full Stack está diseñado para completarse en 16 semanas. Sin embargo, como programa a tu ritmo, puedes acelerar o tomar más tiempo según tu horario y ritmo de aprendizaje.
-      - question: ¿Qué tipo de proyectos construiré?
-        answer: Construirás aplicaciones listas para producción incluyendo APIs REST, sistemas de autenticación, frontends en React y un proyecto final completo. Todos los proyectos usan tecnologías y patrones del mundo real utilizados por las principales empresas.
-      - question: ¿Necesito equipo costoso?
-        answer: ¡No! Todos los ejercicios y proyectos se ejecutan en la nube. Proporcionamos acceso a entornos de desarrollo en la nube, así que puedes aprender solo con una laptop y conexión a internet.
-      - question: ¿El certificado es reconocido por empleadores?
-        answer: ¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación.
+    version: "1.0"
+    title: Preguntas Frecuentes
+    related_features: ["full-stack"]
     cta:
       text: ¿Aún tienes preguntas?
       button_text: Habla con un Asesor
