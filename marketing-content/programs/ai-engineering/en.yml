@@ -137,7 +137,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering Program Overview
-    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams.
+    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate in 24 weeks with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams.
     tech_logos:
       - name: React
         icon: react
