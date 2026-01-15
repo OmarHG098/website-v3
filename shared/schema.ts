@@ -210,9 +210,11 @@ export {
 export {
   toolIconSchema,
   splitCardsBenefitSchema,
+  splitCardsBulletSchema,
   splitCardsSectionSchema,
   type ToolIcon,
   type SplitCardsBenefit,
+  type SplitCardsBullet,
   type SplitCardsSection,
 } from "../marketing-content/component-registry/split_cards/v1.0/schema";
 
