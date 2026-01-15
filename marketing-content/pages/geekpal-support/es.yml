@@ -48,18 +48,30 @@ sections:
           logo: /attached_assets/course-report_1765590146414.webp
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
-  - type: split_cards
-    variant: primary-left
-    background: muted
-    primary:
-      heading: "Avanza Más Rápido, Nunca Pierdas el Impulso"
-      description: "¿La razón #1 por la que la gente abandona cuando aprende a programar? Quedarse atascado. En 4Geeks, construimos un sistema de apoyo personalizado donde siempre tendrás a alguien que te ayude."
-    secondary:
-      benefits:
-        - text: "Ratio 7:1 Estudiante-Profesor — Atención individual en cada clase."
-        - text: "Mentoría 1:1 Ilimitada — Desde el primer día y de por vida."
-        - text: "Asistente de Coding con IA 24/7 (Rigobot) — Feedback instantáneo mientras programas."
-        - text: "Comunidad de Apoyo Real — Mentores, alumni y compañeros siempre listos para ayudar."
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: Avanza Más Rápido, Nunca Pierdas el Impulso
+    subtitle: "¿La razón #1 por la que la gente abandona cuando aprende a programar? Quedarse atascado. En 4Geeks, construimos un sistema de apoyo personalizado donde siempre tendrás a alguien que te ayude."
+    columns: 4
+    background: bg-primary/5
+    items:
+      - icon: PeopleGroup
+        icon_color: "#0097CD"
+        title: Ratio 7:1 Estudiante-Profesor
+        description: Atención individual en cada clase.
+      - icon: Handshake
+        icon_color: "#BE8BFF"
+        title: Mentoría 1:1 Ilimitada
+        description: Desde el primer día y de por vida.
+      - icon: Rocket
+        icon_color: "#FFB718"
+        title: Asistente de Coding con IA 24/7 (Rigobot)
+        description: Feedback instantáneo mientras programas.
+      - icon: HandsGroup
+        icon_color: "#E74C3C"
+        title: Comunidad de Apoyo Real
+        description: Mentores, alumni y compañeros siempre listos para ayudar.
   - type: bento_cards
     version: "1.0"
     title: "7 Formas en que Rigobot Te Mantiene Avanzando"

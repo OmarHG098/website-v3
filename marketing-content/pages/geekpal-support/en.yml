@@ -27,46 +27,54 @@ sections:
     paddingY:
       mobile: none lg
       desktop: md lg
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Advance Faster, Never Lose Momentum
-      description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
-    secondary:
-      benefits:
-        - text: Always supported
-        - text: Instant 24/7 guidance
-        - text: Real humans when it matters
-        - text: Community support built in
-    background: muted
+  - type: features_grid
+    version: "1.0"
+    variant: textOnly
+    title: Advance Faster, Never Lose Momentum
+    subtitle: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
+    items:
+      - headline: Always supported
+        subline: never stuck
+        description: Get help the moment friction appears, before you lose momentum.
+      - headline: Instant guidance
+        subline: 24/7
+        description: The AI Tutor helps you unblock fast without breaking your learning flow.
+      - headline: Real humans
+        subline: when it matters
+        description: Mentors step in with context, feedback, and direction when you need it.
+      - headline: Community support
+        subline: built in
+        description: Peers and alumni help you move forward with examples and encouragement.
+    columns: 4
+    background: bg-primary/5
   - type: bento_cards
     version: "1.0"
-    title: 7 Ways Rigobot Keeps You Moving
-    subtitle: Never get stuck again
-    description: Rigobot is your AI-powered coding companion that ensures you never lose momentum. Whether you're debugging at 2am or preparing for an exam, Rigobot is there to help you push through challenges and keep learning.
+    title: "7 Ways Rigobot Keeps You Moving"
+    subtitle: "Never get stuck again"
+    description: "Rigobot is your AI-powered coding companion that ensures you never lose momentum. Whether you're debugging at 2am or preparing for an exam, Rigobot is there to help you push through challenges and keep learning."
     background: bg-background
     items:
       - icon: CodeReview
-        title: Code Review
-        description: Get instant feedback on your code quality, best practices, and potential improvements.
+        title: "Code Review"
+        description: "Get instant feedback on your code quality, best practices, and potential improvements."
       - icon: Brain
-        title: AI Mentoring
-        description: Personalized guidance that adapts to your learning style and pace.
+        title: "AI Mentoring"
+        description: "Personalized guidance that adapts to your learning style and pace."
       - icon: School
-        title: Homework & Exam Prep
-        description: Practice problems and explanations to help you ace your assessments.
+        title: "Homework & Exam Prep"
+        description: "Practice problems and explanations to help you ace your assessments."
       - icon: TrendingUp
-        title: Skill Building
-        description: Targeted exercises to strengthen weak areas and build new competencies.
+        title: "Skill Building"
+        description: "Targeted exercises to strengthen weak areas and build new competencies."
       - icon: Bug
-        title: Debugging Assistant
-        description: Step-by-step help to understand and fix errors in your code.
+        title: "Debugging Assistant"
+        description: "Step-by-step help to understand and fix errors in your code."
       - icon: Lightbulb
-        title: Concept Explanations
-        description: Clear, patient explanations of complex programming concepts.
+        title: "Concept Explanations"
+        description: "Clear, patient explanations of complex programming concepts."
       - icon: Clock
-        title: 24/7 Availability
-        description: Get help whenever you need it, no waiting for office hours.
+        title: "24/7 Availability"
+        description: "Get help whenever you need it, no waiting for office hours."
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
