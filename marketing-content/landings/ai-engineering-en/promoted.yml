@@ -16,10 +16,10 @@ sections:
     description: Launch your AI-driven career in 24 weeks with unlimited 1:1 mentorship and personalized career guidance. Be the professional companies can’t wait to hire.
     form:
       variant: stacked
-      submit_label: Apply now
       conversion_name: student_application
-      tags: website-lead,ai-engineering-campaign
-      automations: welcome-email
+      submit_label: Apply now
+      tags: website-lead
+      automations: strong
       fields:
         email:
           visible: true
@@ -96,8 +96,10 @@ sections:
     show_dismiss: false
     form:
       variant: inline
-      submit_label: Submit Application
       conversion_name: student_application
+      submit_label: Submit Application
+      tags: website-lead
+      automations: strong
       fields:
         email:
           visible: true
@@ -114,12 +116,6 @@ sections:
         program:
           visible: false
           default: ai-engineering
-        consent:
-          sms: true
-          marketing: true
-          marketing_text: I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We'll never share your contact information, and you can easily opt out at any moment.
-          sms_text: I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month. We will never share your contact information, and you can easily opt out at any moment.
-          sms_usa_only: true
       success:
         message: Thanks! We'll be in touch within 24 hours.
   - type: awards_marquee
@@ -573,16 +569,16 @@ sections:
         outcome: +100% salary increase
   - type: cta_banner
     version: "1.0"
-    variant: form
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
+    background: hsl(var(--primary))
+    variant: form
     form:
       variant: stacked
-      submit_label: Apply Now
       conversion_name: student_application
-      button_className: bg-white text-primary hover:bg-white/90 border-white
-      terms_className: text-white/80
-      show_terms: true
+      submit_label: Apply Now
+      tags: website-lead
+      automations: strong
       fields:
         email:
           visible: true
@@ -609,10 +605,12 @@ sections:
         email: true
         marketing: true
         marketing_text: I agree to receive information about courses and promotions
+      show_terms: true
+      button_className: bg-white text-primary hover:bg-white/90 border-white
+      terms_className: text-white/80
     marginY:
       mobile: md none
       desktop: md none
-    background: hsl(var(--primary))
     paddingY:
       mobile: lg
       desktop: lg
