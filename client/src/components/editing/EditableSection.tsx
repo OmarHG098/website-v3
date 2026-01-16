@@ -676,16 +676,16 @@ export function EditableSection({ children, section, index, sectionType, content
         );
       })()}
       
-      {/* Section label - bottom left */}
+      {/* Section label - top left */}
       <div 
         className={`
-          absolute bottom-2 left-2 z-30 
+          absolute top-2 left-2 z-30 
           px-2 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs text-muted-foreground
           transition-opacity duration-150
           ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
         `}
       >
-        Section {index + 1}
+        {sectionType}-{index}
       </div>
       
       {/* Content with pointer events enabled - show preview section when cycling variants */}

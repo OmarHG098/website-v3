@@ -111,11 +111,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <ul className="space-y-2">
                           {group.bullets.map((bullet, bulletIndex) => (
                             <li key={bulletIndex} className="flex items-start gap-3">
-                              {bullet.icon ? (
-                                <span className="text-primary mt-0.5 flex-shrink-0">{getIcon(bullet.icon)}</span>
-                              ) : (
-                                <span className="text-foreground mt-1 flex-shrink-0">•</span>
-                              )}
+                              <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-foreground text-base">{bullet.text}</span>
                             </li>
                           ))}
@@ -165,11 +161,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                   <ul className="space-y-2 ms-12">
                     {group.bullets.map((bullet, bulletIndex) => (
                       <li key={bulletIndex} className="flex items-start gap-3">
-                        {bullet.icon ? (
-                          <span className="text-primary mt-0.5 flex-shrink-0">{getIcon(bullet.icon)}</span>
-                        ) : (
-                          <span className="text-foreground mt-1 flex-shrink-0">•</span>
-                        )}
+                        <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                         <span className="text-foreground text-base">{bullet.text}</span>
                       </li>
                     ))}
@@ -201,7 +193,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <span className="text-primary flex-shrink-0">{getIcon(group.icon, "w-10 h-10")}</span>
                       ) : (
                         <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
-                          <img src={group.image || rigobotLogo} alt="Support icon" className="w-full h-full object-cover" />
+                          <img src=" /attached_assets/rigobot-logo_1764707022198.webp" alt="Support icon" className="w-full h-full object-cover" />
                         </div>
                       )}
                       <h4 className="font-bold text-foreground uppercase tracking-wide text-sm">{group.title}</h4>
@@ -212,12 +204,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                         <ul className="space-y-2">
                           {group.bullets.map((bullet, bulletIndex) => (
                             <li key={bulletIndex} className="flex items-start gap-3">
-                              {bullet.icon ? (
-                                <span className="text-primary mt-0.5 flex-shrink-0">{getIcon(bullet.icon)}</span>
-                              ) : (
-                                <span className="text-foreground mt-1 flex-shrink-0">•</span>
-                              )}
-                              <span className="w-px bg-border self-stretch flex-shrink-0" />
+                              <TablerIcons.IconCheck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-foreground text-base">{bullet.text}</span>
                             </li>
                           ))}

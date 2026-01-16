@@ -12,6 +12,13 @@ export const featuresGridHighlightItemSchema = z.object({
   description: z.string().optional(),
 });
 
+export const featuresGridTextOnlyItemSchema = z.object({
+  id: z.string().optional(),
+  headline: z.string(),
+  subline: z.string().optional(),
+  description: z.string().optional(),
+});
+
 export const featuresGridDetailedItemSchema = z.object({
   id: z.string().optional(),
   icon: z.string().optional(),
@@ -113,6 +120,17 @@ export const featuresGridStatsTextSectionSchema = z.object({
   items: z.array(featuresGridStatsCardsItemSchema),
 });
 
+export const featuresGridTextOnlySectionSchema = z.object({
+  type: z.literal("features_grid"),
+  version: z.string().optional(),
+  variant: z.literal("textOnly"),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  items: z.array(featuresGridTextOnlyItemSchema),
+  columns: z.number().optional(),
+  background: z.string().optional(),
+});
+
 export const featuresGridSectionSchema = z.union([
   featuresGridHighlightSectionSchema,
   featuresGridDetailedSectionSchema,
@@ -120,9 +138,11 @@ export const featuresGridSectionSchema = z.union([
   featuresGridStatsCardsSectionSchema,
   featuresGridStatsTextCardSectionSchema,
   featuresGridStatsTextSectionSchema,
+  featuresGridTextOnlySectionSchema,
 ]);
 
 export type FeaturesGridHighlightItem = z.infer<typeof featuresGridHighlightItemSchema>;
+export type FeaturesGridTextOnlyItem = z.infer<typeof featuresGridTextOnlyItemSchema>;
 export type FeaturesGridDetailedItem = z.infer<typeof featuresGridDetailedItemSchema>;
 export type FeaturesGridStatsCardsItem = z.infer<typeof featuresGridStatsCardsItemSchema>;
 export type FeaturesGridHighlightSection = z.infer<typeof featuresGridHighlightSectionSchema>;
@@ -131,5 +151,6 @@ export type FeaturesGridSpotlightSection = z.infer<typeof featuresGridSpotlightS
 export type FeaturesGridStatsCardsSection = z.infer<typeof featuresGridStatsCardsSectionSchema>;
 export type FeaturesGridStatsTextCardSection = z.infer<typeof featuresGridStatsTextCardSectionSchema>;
 export type FeaturesGridStatsTextSection = z.infer<typeof featuresGridStatsTextSectionSchema>;
+export type FeaturesGridTextOnlySection = z.infer<typeof featuresGridTextOnlySectionSchema>;
 export type SpotlightConfig = z.infer<typeof spotlightConfigSchema>;
 export type FeaturesGridSection = z.infer<typeof featuresGridSectionSchema>;

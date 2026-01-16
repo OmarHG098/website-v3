@@ -58,6 +58,7 @@ import {
   loadCommonData,
 } from "./utils/contentLoader";
 import { getFolderFromSlug } from "@shared/slugMappings";
+import { loadFaqs } from "./faq-loader";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
 
@@ -785,6 +786,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     res.json(page);
+  });
+
+  // Centralized FAQs API
+  app.get("/api/faqs", (req, res) => {
+    const locale = (req.query.locale as string) || "en";
+    const location = req.query.location as string | undefined;
+    const featuresParam = req.query.related_features as string | undefined;
+    const minPriorityParam = req.query.min_priority as string | undefined;
+    const limitParam = req.query.limit as string | undefined;
+
+    const relatedFeatures = featuresParam
+      ? (featuresParam.split(",") as import("../marketing-content/component-registry/faq/v1.0/schema").RelatedFeature[])
+      : undefined;
+    const minPriority = minPriorityParam ? parseInt(minPriorityParam, 10) : undefined;
+    const limit = limitParam ? parseInt(limitParam, 10) : undefined;
+
+    const result = loadFaqs({
+      locale,
+      location,
+      relatedFeatures,
+      minPriority,
+      limit,
+    });
+
+    if (!result.success) {
+      res.status(404).json({ error: result.error });
+      return;
+    }
+
+    res.json({ faqs: result.faqs });
   });
 
   // Dynamic sitemap with caching

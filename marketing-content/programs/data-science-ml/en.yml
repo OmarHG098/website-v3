@@ -468,22 +468,12 @@ sections:
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
-    title: "FAQ"
-    items:
-      - question: "Do I need prior experience with data or coding?"
-        answer: "No prior experience is required. Our bootcamp starts with Python fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced machine learning concepts."
-      - question: "What tools and technologies will I learn?"
-        answer: "You'll master Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras, and Flask. These are the industry-standard tools used by data scientists and ML engineers worldwide."
-      - question: "How do I stay motivated learning on my own?"
-        answer: "You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes."
-      - question: "How long does it take to complete the program?"
-        answer: "The self-paced program can be completed in as little as 16 weeks with dedicated study. However, you have lifetime access to all materials and can learn at your own pace—whether that's 30 minutes a day or intensive weekend sessions."
-      - question: "Is the certificate recognized by employers?"
-        answer: "Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps."
+    title: Frequently Asked Questions
+    related_features: ["data-science"]
     cta:
-      text: "Still have questions?"
-      button_text: "Talk to an Advisor"
-      button_url: "/contact"
+      text: Still have questions?
+      button_text: Talk to an Advisor
+      button_url: /contact
     paddingY:
       desktop: md
     marginY:

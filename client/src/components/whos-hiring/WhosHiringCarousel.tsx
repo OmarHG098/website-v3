@@ -13,7 +13,7 @@ interface LogoItem {
 
 interface MosaicGroup {
   id: string;
-  pattern: "stack-hero" | "hero-stack";
+  pattern: "stack" | "hero";
   items: LogoItem[];
 }
 
@@ -75,24 +75,28 @@ function LogoCard({
       }}
     >
       {isHero ? (
-        <>
-          <div className="flex items-start">
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <div className="flex items-center justify-center mb-6 w-full">
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-10 max-w-[140px] object-contain logo-grayscale"
+              className="max-h-16 max-w-[180px] object-contain logo-grayscale"
               loading="lazy"
             />
           </div>
-          <p className="text-sm text-muted-foreground/70 leading-relaxed">
+          <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-[280px]">
             {heroText}
           </p>
-        </>
+        </div>
       ) : (
         <img
           src={logo.src}
           alt={logo.alt}
-          className="h-10 max-w-[160px] object-contain logo-grayscale"
+          className={`object-contain logo-grayscale ${
+            isSmall 
+              ? (isMobile ? "max-h-8 max-w-[90px]" : "max-h-10 max-w-[140px]")
+              : (isMobile ? "max-h-10 max-w-[120px]" : "max-h-12 max-w-[180px]")
+          }`}
           loading="lazy"
         />
       )}
@@ -106,26 +110,19 @@ function MosaicGroupComponent({ group, textIndex, isMobile }: { group: MosaicGro
   const heroHeight = isMobile ? HERO_CARD_HEIGHT_MOBILE : HERO_CARD_HEIGHT_DESKTOP;
   const gap = isMobile ? GAP_MOBILE : GAP_DESKTOP;
 
-  if (pattern === "stack-hero" && items.length >= 3) {
+  if (pattern === "stack" && items.length >= 2) {
     return (
-      <div className="flex" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
-        <div className="flex flex-col" style={{ gap: `${gap}px` }}>
-          <LogoCard logo={items[0]} size="small" isMobile={isMobile} />
-          <LogoCard logo={items[1]} size="small" isMobile={isMobile} />
-        </div>
-        <LogoCard logo={items[2]} size="hero" heroText={heroText} isMobile={isMobile} />
+      <div className="flex flex-col" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
+        <LogoCard logo={items[0]} size="small" isMobile={isMobile} />
+        <LogoCard logo={items[1]} size="small" isMobile={isMobile} />
       </div>
     );
   }
 
-  if (pattern === "hero-stack" && items.length >= 3) {
+  if (pattern === "hero" && items.length >= 1) {
     return (
       <div className="flex" style={{ height: `${heroHeight}px`, gap: `${gap}px` }}>
         <LogoCard logo={items[0]} size="hero" heroText={heroText} isMobile={isMobile} />
-        <div className="flex flex-col" style={{ gap: `${gap}px` }}>
-          <LogoCard logo={items[1]} size="small" isMobile={isMobile} />
-          <LogoCard logo={items[2]} size="small" isMobile={isMobile} />
-        </div>
       </div>
     );
   }
@@ -165,7 +162,7 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
 
   const mosaicGroups = useMemo(() => {
     const groups: MosaicGroup[] = [];
-    const patterns: Array<"stack-hero" | "hero-stack"> = ["stack-hero", "hero-stack"];
+    const patterns: Array<"stack" | "hero"> = ["stack", "hero"];
     
     let logoIndex = 0;
     let patternIndex = 0;
@@ -173,13 +170,14 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
     while (logoIndex < logos.length) {
       const pattern = patterns[patternIndex % patterns.length];
       const items: LogoItem[] = [];
+      const count = pattern === "stack" ? 2 : 1;
       
-      for (let i = 0; i < 3 && logoIndex < logos.length; i++) {
+      for (let i = 0; i < count && logoIndex < logos.length; i++) {
         items.push(logos[logoIndex % logos.length]);
         logoIndex++;
       }
       
-      if (items.length >= 3) {
+      if (items.length > 0) {
         groups.push({
           id: `group-${groups.length}`,
           pattern,

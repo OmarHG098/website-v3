@@ -32,18 +32,21 @@ sections:
     paddingY:
       mobile: none lg
       desktop: md lg
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Advance Faster, Never Lose Momentum
-      description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
-    secondary:
-      benefits:
-        - text: Always supported
-        - text: Instant 24/7 guidance
-        - text: Real humans when it matters
-        - text: Community support built in
-    background: muted
+  - type: banner
+    version: "1.0"
+    logo: /images/rigobot-icon.png
+    avatars:
+      - https://randomuser.me/api/portraits/women/1.jpg
+      - https://randomuser.me/api/portraits/men/2.jpg
+      - https://randomuser.me/api/portraits/women/3.jpg
+      - https://randomuser.me/api/portraits/men/4.jpg
+    title: Advance Faster, Never Lose Momentum
+    description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
+    cta:
+      text: Learn More
+      url: "#"
+      variant: primary
+    background: gradient
   - type: bento_cards
     version: "1.0"
     title: 7 Ways Rigobot Keeps You Moving

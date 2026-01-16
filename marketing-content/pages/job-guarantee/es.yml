@@ -141,32 +141,4 @@ sections:
   - type: faq
     version: "1.0"
     title: Preguntas Frecuentes sobre la Garantía de Empleo
-    items:
-      - question: ¿Cómo funciona la Garantía de Empleo de 4Geeks Academy?
-        answer: Nuestra Garantía de Empleo asegura que si cumples todos los requisitos del programa y aún no consigues un trabajo tech calificado en 9 meses después de graduarte, eres elegible para un reembolso completo de tu matrícula. Aplican condiciones.
-      - question: ¿La Garantía de Empleo reembolsa la matrícula completa si no me contratan?
-        answer: Sí. Si calificas para la Garantía de Empleo y no recibes una oferta de trabajo calificada dentro del período de búsqueda, recibirás un reembolso completo.
-      - question: ¿Cuánto tiempo tengo para buscar trabajo antes de recibir el reembolso?
-        answer: Tendrás hasta 9 meses después de graduarte para conseguir empleo calificado. Si cumples todos los requisitos y aún no te contratan, puedes solicitar un reembolso completo.
-      - question: ¿Qué tipos de trabajos cuentan para la Garantía de Empleo?
-        answer: Posiciones de tiempo completo o contrato en tech (como desarrollo de software, QA o roles relacionados) califican. Trabajos remotos y freelance pueden ser elegibles según los términos.
-      - question: ¿Hay un salario mínimo para los trabajos que cuentan?
-        answer: No hay un umbral de salario establecido, pero el trabajo debe estar alineado con las habilidades enseñadas en el programa y ser un rol tech legítimo de nivel inicial.
-      - question: ¿Qué necesito hacer para calificar para la Garantía de Empleo?
-        answer: "Debes: Completar 100% del trabajo del curso y proyectos, asistir a sesiones consistentemente, seguir los pasos que nuestro equipo de carrera aconseja, aplicar activamente a trabajos y documentar tu búsqueda, y tener autorización de trabajo válida en EE.UU."
-      - question: ¿Necesito tener autorización de trabajo para calificar?
-        answer: Sí, debes tener autorización de trabajo válida en EE.UU. para ser elegible para la Garantía de Empleo.
-      - question: ¿La asistencia es importante para la Garantía de Empleo?
-        answer: Sí, mantener buena asistencia durante todo el bootcamp es obligatorio para la elegibilidad.
-      - question: ¿Qué trabajo del curso o proyectos debo completar?
-        answer: Necesitarás terminar tu proyecto final de manera satisfactoria, más todos los proyectos de coding asignados, ejercicios y trabajo del curso durante el bootcamp.
-      - question: ¿Qué significa seguir la guía del equipo de carrera?
-        answer: Incluye completar tu CV y portafolio según nuestras guías, participar en entrevistas simuladas y aplicar a un número mínimo de trabajos semanalmente — todo con apoyo de nuestro equipo de servicios de carrera.
-      - question: ¿Puedo financiar la tarifa adicional de $2,000 de Garantía de Empleo con mi matrícula?
-        answer: Sí, en muchos casos la tarifa de Garantía de Empleo puede incluirse en tu plan de financiamiento de matrícula.
-      - question: ¿La Garantía de Empleo está disponible para todos los cursos?
-        answer: No — actualmente solo está disponible para bootcamps selectos, incluyendo el programa de Desarrollo Full Stack. Por favor verifica la elegibilidad de tu programa.
-      - question: ¿Cuál es el tiempo promedio que toma a los graduados de 4Geeks conseguir empleo?
-        answer: La mayoría de graduados de 4Geeks Academy encuentran trabajo dentro de 90 a 180 días de completar el bootcamp, dependiendo de su ubicación, dedicación y experiencia previa.
-      - question: Si me ofrecen un trabajo por contrato, ¿cuenta para la garantía?
-        answer: Sí, trabajos por contrato pueden calificar si son relevantes al entrenamiento del bootcamp y cumplen nuestros estándares mínimos de legitimidad y compensación.
+    related_features: ["job-guarantee"]

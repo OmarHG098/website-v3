@@ -1,0 +1,19 @@
+name: "Default Banner"
+description: "A centered banner with logo and avatars on top border, title, description and CTA button using gradient background"
+
+yaml: |
+  type: banner
+  version: "1.0"
+  logo: /images/rigobot-icon.png
+  avatars:
+    - https://randomuser.me/api/portraits/women/1.jpg
+    - https://randomuser.me/api/portraits/men/2.jpg
+    - https://randomuser.me/api/portraits/women/3.jpg
+    - https://randomuser.me/api/portraits/men/4.jpg
+  title: Lorem ipsum dolor sit amet
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+  cta:
+    text: Learn More
+    url: "#"
+    variant: primary
+  background: gradient

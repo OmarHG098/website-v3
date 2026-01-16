@@ -1,0 +1,51 @@
+You are working on the GeekPal page. We need to redesign ONLY the existing component/section titled:
+“Advance Faster, Never Lose Momentum”
+This is a VARIANT of the current component (same section location). Do not change other sections of the page.
+Goal
+- Keep the same overall layout structure: a section title + a short subtitle + a 4-item grid.
+- Remove ALL icons. We are no longer using icons in this section.
+- Use a clean, consistent, monochromatic style that matches the Full Stack page components (same borders, same subtle shadow, same blue tones, same typography scale).
+- The visual “accent” will be typographic highlight: in each card title, highlight only the first 1–2 words in the primary blue. No other colors.
+Section styling (must match existing site system)
+- Background stays the same as the current section (light / subtle blue-tinted background).
+- Section width, paddings, and spacing must match the Full Stack page sections (do not invent new spacing rules).
+- Use the same border radius, border color, and shadow style used across the Full Stack page cards.
+Header
+- Keep the same headline text: “Advance Faster, Never Lose Momentum”
+- Keep a short supporting paragraph under it (1–2 lines) consistent with the site tone:
+  “The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it.”
+Cards (4)
+- Keep as 4 boxes in a grid (desktop: 4 columns if there is space, otherwise 2x2; mobile: stacked).
+- Each box must be simple: no icon area, no image.
+- Each box has:
+  1) Title (one line) where the first 1–2 words are highlighted in primary blue, the rest in the standard heading color.
+  2) Description (one short sentence, max 2 lines) in muted text.
+Card titles + descriptions (use exactly these)
+1) Title: “Always supported, never stuck”
+   Description: “Get help the moment friction appears, before you lose momentum.”
+2) Title: “Instant guidance, 24/7”
+   Description: “The AI Tutor helps you unblock fast without breaking your learning flow.”
+3) Title: “Real humans, when it matters”
+   Description: “Mentors step in with context, feedback, and direction when you need it.”
+4) Title: “Community support, built in”
+   Description: “Peers and alumni help you move forward with examples and encouragement.”
+Highlight rule (important)
+- For each title, highlight ONLY:
+  - “Always”
+  - “Instant”
+  - “Real humans”
+  - “Community”
+- Do not highlight anything else. No gradients. No multi-color accents.
+Typography and spacing
+- Match the same heading sizes used in the Full Stack page.
+- Keep the cards readable: adequate padding, consistent vertical rhythm, no cramped lines.
+- Do not add extra decorative elements (no numbered circles, no badges, no dividers).
+Interaction (optional but subtle)
+- On hover: slightly increase shadow or border contrast (very subtle), consistent with existing hover behavior elsewhere on the site.
+- No animations that introduce new styles.
+Acceptance checklist
+- Section still reads as: Title + subtitle + 4-card grid.
+- No icons anywhere in this section.
+- Highlight is typographic only and monochromatic.
+- Borders/shadows/typography match the Full Stack page system.
+- No changes to any other component on the page.

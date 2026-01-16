@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import Marquee from "react-fast-marquee";
 import type {
   HeroProductShowcase as HeroProductShowcaseType,
   HeroApplyFormProductShowcase,
 } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
-import { IconStarFilled, IconArrowRight } from "@tabler/icons-react";
+import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
 
 interface HeroProductShowcaseProps {
@@ -33,6 +34,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const subtitle = "subtitle" in data ? data.subtitle : null;
   const video = "video" in data ? data.video : null;
   const image = "image" in data ? data.image : null;
+  const marquee = "marquee" in data ? data.marquee : null;
+  const bullets = "bullets" in data ? data.bullets : null;
 
   const shouldShowBackground = backgroundImage && showBackground;
 
@@ -64,8 +67,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
     >
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start">
-            <div className="text-center md:text-left relative w-full">
+          <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">
+            <div className="text-center md:text-left relative w-full min-w-0 pl-[0px] pr-[0px] mt-[24px] mb-[24px]">
               {welcomeText && (
                 <p className="text-body text-muted-foreground mb-4">
                   {welcomeText}
@@ -115,6 +118,60 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                   <p className="text-body text-foreground mb-0 md:mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
+                </div>
+              )}
+
+              {bullets && bullets.length > 0 && (
+                <ul className="mt-4 mb-6 space-y-2 max-w-xl" data-testid="hero-bullets">
+                  {bullets.map((bullet, index) => (
+                    <li 
+                      key={index} 
+                      className="flex items-start gap-3 text-foreground"
+                      data-testid={`hero-bullet-${index}`}
+                    >
+                      <IconCheck className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                      <span className="text-body leading-relaxed">{bullet.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {marquee && marquee.items && marquee.items.length > 0 && (
+                <div className="w-full max-w-xl mt-6 mb-8 overflow-hidden" data-testid="hero-embedded-marquee">
+                  <Marquee
+                    speed={marquee.speed || 40}
+                    pauseOnHover={false}
+                    gradient={marquee.gradient ?? true}
+                    gradientColor={marquee.gradientColor}
+                    gradientWidth={marquee.gradientWidth || 50}
+                    autoFill={true}
+                  >
+                    {marquee.items.map((item, index) => (
+                      <div 
+                        key={item.id}
+                        className="flex items-center justify-center mx-4 transition-opacity duration-brand ease-brand hover:opacity-80"
+                        data-testid={`hero-marquee-item-${index}`}
+                      >
+                        {item.logo ? (
+                          <img 
+                            src={item.logo} 
+                            alt={item.alt}
+                            className={`${item.logoHeight || "h-8 md:h-12"} w-auto object-contain`}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="flex flex-col items-center text-center">
+                            <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                              {item.source} {item.year && `${item.year}`}
+                            </span>
+                            <span className="text-sm font-medium text-foreground mt-0.5">
+                              {item.name}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </Marquee>
                 </div>
               )}
 

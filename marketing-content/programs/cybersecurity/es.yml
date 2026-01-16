@@ -446,22 +446,12 @@ sections:
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
-    title: "Preguntas Frecuentes"
-    items:
-      - question: "¿Necesito experiencia previa en ciberseguridad?"
-        answer: "No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados como pruebas de penetración y respuesta a incidentes."
-      - question: "¿Qué herramientas aprenderé a usar?"
-        answer: "Obtendrás experiencia práctica con herramientas estándar de la industria incluyendo Nessus, Nmap, Wireshark, Metasploit y más. Estas son las mismas herramientas usadas por profesionales de seguridad en las mejores empresas del mundo."
-      - question: "¿Esto me preparará para certificaciones?"
-        answer: "¡Sí! Nuestro programa te pone en la vía rápida para certificaciones como EJPT y CEH. Nuestras prácticas de pentesting están específicamente alineadas con los laboratorios de certificación EJPT para darte la experiencia práctica que necesitas."
-      - question: "¿Cuánto dura el programa?"
-        answer: "El programa es de 16 semanas con 3 clases en línea en vivo por semana. Los tamaños de clase se mantienen pequeños (máximo 15 personas) para asegurar atención personalizada y orientación práctica."
-      - question: "¿El certificado es reconocido por los empleadores?"
-        answer: "¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación."
+    title: Preguntas Frecuentes
+    related_features: ["cybersecurity"]
     cta:
-      text: "¿Aún tienes preguntas?"
-      button_text: "Habla con un Asesor"
-      button_url: "/contacto"
+      text: ¿Aún tienes preguntas?
+      button_text: Habla con un Asesor
+      button_url: /contacto
     paddingY:
       desktop: md
     marginY:

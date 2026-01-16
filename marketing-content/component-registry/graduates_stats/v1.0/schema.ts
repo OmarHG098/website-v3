@@ -57,6 +57,18 @@ export const graduatesStatsFullBleedSchema = z.object({
   background: z.string().optional(),
 });
 
+export const graduatesStatsAsymmetricSchema = z.object({
+  type: z.literal("graduates_stats"),
+  version: z.string().optional(),
+  variant: z.literal("asymmetric"),
+  heading: z.string().optional(),
+  subheading: z.string().optional(),
+  stats: z.array(graduatesStatItemSchema),
+  tall_image: z.string().describe("Image ID for the tall portrait image on the left"),
+  stacked_images: z.array(z.string()).describe("Array of 2 image IDs for the stacked landscape images"),
+  background: z.string().optional(),
+});
+
 // ============================================
 // Combined Schema (Union of all variants)
 // ============================================
@@ -64,6 +76,7 @@ export const graduatesStatsFullBleedSchema = z.object({
 export const graduatesStatsSectionSchema = z.union([
   graduatesStatsStandardSchema,
   graduatesStatsFullBleedSchema,
+  graduatesStatsAsymmetricSchema,
 ]);
 
 // ============================================
@@ -75,4 +88,5 @@ export type GraduatesCollageImage = z.infer<typeof graduatesCollageImageSchema>;
 export type GraduatesFeaturedImage = z.infer<typeof graduatesFeaturedImageSchema>;
 export type GraduatesStatsStandard = z.infer<typeof graduatesStatsStandardSchema>;
 export type GraduatesStatsFullBleed = z.infer<typeof graduatesStatsFullBleedSchema>;
+export type GraduatesStatsAsymmetric = z.infer<typeof graduatesStatsAsymmetricSchema>;
 export type GraduatesStatsSection = z.infer<typeof graduatesStatsSectionSchema>;

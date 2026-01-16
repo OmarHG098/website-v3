@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { IconSchool, IconFlag } from "@tabler/icons-react";
+import { IconFlag } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 export interface TestimonialsSlideTestimonial {
   name: string;
@@ -25,6 +25,8 @@ export interface TestimonialsSlideData {
 interface TestimonialsSlideProps {
   data: TestimonialsSlideData;
 }
+
+type CardSize = "small" | "medium" | "large";
 
 const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
   {
@@ -100,15 +102,6 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
     achievement: "She got a 120% increase in her salary"
   },
   {
-    name: "Leandro Matonte",
-    img: "/attached_assets/Leandro_1764725403142.jpeg",
-    status: "Graduated",
-    country: { iso: "uy", name: "Uruguay" },
-    contributor: "UTEC-BID",
-    description: "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
-    achievement: "He got a 60% increase in his salary"
-  },
-  {
     name: "Melanie Galaretto",
     img: "/attached_assets/MelamnieGalaretto_1764725408397.jpeg",
     status: "Graduated",
@@ -133,88 +126,179 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
     contributor: "CINDE-BID",
     description: "Luis came to the program without any previous experience, He is now a software developer working on a tech firm in Costa Rica.",
     achievement: "He got a 50% increase in his salary"
+  },
+  {
+    name: "Leandro Matonte",
+    img: "/attached_assets/Leandro_1764725403142.jpeg",
+    status: "Graduated",
+    country: { iso: "uy", name: "Uruguay" },
+    contributor: "UTEC-BID",
+    description: "Leandro got into the program with the expectation to achieve a better understanding and some coding skills that will help with his decision of being a computer scientist graduate. Now he is a software developer at a tech firm in Uruguay.",
+    achievement: "He got a 60% increase in his salary"
   }
 ];
 
-function TestimonialCard({ testimonial }: { testimonial: TestimonialsSlideTestimonial }) {
+const sizeConfig: Record<CardSize, { lineClamp: string; minHeight: string }> = {
+  small: { lineClamp: "line-clamp-2", minHeight: "min-h-[140px]" },
+  medium: { lineClamp: "line-clamp-4", minHeight: "min-h-[180px]" },
+  large: { lineClamp: "line-clamp-6", minHeight: "min-h-[220px]" }
+};
+
+function MasonryCard({ 
+  testimonial, 
+  size = "medium" 
+}: { 
+  testimonial: TestimonialsSlideTestimonial; 
+  size?: CardSize;
+}) {
+  const config = sizeConfig[size];
+  
   return (
-    <Card 
-      className="w-[300px] h-[490px] -mx-8 md:mx-2 flex-shrink-0 overflow-visible flex flex-col scale-[0.75] md:scale-100 origin-center"
+    <div 
+      className={cn(
+        "bg-muted/30 border border-border/50 rounded-[0.8rem] p-4 shadow-sm",
+        config.minHeight
+      )}
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
-      <div className="h-[170px] w-full overflow-hidden flex-shrink-0">
+      <div className="flex items-center gap-3 mb-3">
         <img 
           src={testimonial.img} 
           alt={testimonial.name}
-          className="w-full h-full object-cover"
+          className="w-10 h-10 rounded-full object-cover flex-shrink-0"
         />
+        <div className="min-w-0 flex-1">
+          <h4 className="font-semibold text-foreground text-sm leading-tight truncate">
+            {testimonial.name}
+          </h4>
+          <p className="text-xs text-muted-foreground truncate">
+            {testimonial.contributor}
+          </p>
+        </div>
       </div>
       
-      <div className="p-4 flex flex-col flex-1 overflow-hidden">
-        <div className="flex items-center justify-between mb-1 gap-2">
-          <h4 className="font-bold text-foreground text-lg leading-tight">{testimonial.name}</h4>
-          {testimonial.status === "Graduated" && (
-            <div className="flex items-center gap-1 text-muted-foreground flex-shrink-0">
-              <IconSchool className="w-5 h-5" />
-              <span className="text-base">Graduated</span>
-            </div>
-          )}
+      <p className={cn(
+        "text-sm text-foreground leading-relaxed mb-3",
+        config.lineClamp
+      )}>
+        {testimonial.description}
+      </p>
+      
+      {testimonial.achievement && (
+        <div className="bg-primary/10 rounded-md px-2.5 py-1.5 inline-flex items-center gap-1.5">
+          <IconFlag className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+          <span className="text-xs font-medium text-primary">
+            {testimonial.achievement}
+          </span>
         </div>
-        
-        <div className="flex items-center gap-1.5 mb-1">
-          <span 
-            className={`flag flag-xs flag-country-${testimonial.country.iso.toLowerCase()}`}
-            style={{ transform: 'scale(0.8)', transformOrigin: 'left center' }}
-          />
-          <span className="text-base text-foreground">{testimonial.country.name}</span>
-        </div>
-        
-        <p className="text-base text-muted-foreground mb-2">
-          Contributor: {testimonial.contributor}
-        </p>
-        
-        <div className="border-t border-border mb-2" />
-        
-        <p className="text-base text-foreground flex-1 overflow-hidden line-clamp-5 mb-2">
-          {testimonial.description}
-        </p>
-        
-        {testimonial.achievement ? (
-          <div className="bg-amber-100 dark:bg-amber-900/30 rounded-md p-2 flex items-start gap-1.5 mt-auto flex-shrink-0">
-            <IconFlag className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
-              {testimonial.achievement}
-            </p>
-          </div>
-        ) : (
-          <div className="h-10 mt-auto flex-shrink-0" />
-        )}
-      </div>
-    </Card>
+      )}
+    </div>
+  );
+}
+
+interface MasonryColumn {
+  cards: { testimonial: TestimonialsSlideTestimonial; size: CardSize }[];
+}
+
+function createMasonryColumns(testimonials: TestimonialsSlideTestimonial[]): MasonryColumn[] {
+  const twoCardPatterns: CardSize[][] = [
+    ["large", "small"],
+    ["small", "large"],
+    ["medium", "medium"],
+    ["large", "medium"],
+    ["medium", "small"],
+    ["small", "medium"],
+  ];
+  
+  const columns: MasonryColumn[] = [];
+  
+  for (let i = 0; i < testimonials.length; i += 2) {
+    const pattern = twoCardPatterns[(i / 2) % twoCardPatterns.length];
+    const column: MasonryColumn = { cards: [] };
+    
+    column.cards.push({
+      testimonial: testimonials[i],
+      size: pattern[0]
+    });
+    
+    if (i + 1 < testimonials.length) {
+      column.cards.push({
+        testimonial: testimonials[i + 1],
+        size: pattern[1]
+      });
+    } else if (columns.length > 0) {
+      const lastColumn = columns[columns.length - 1];
+      lastColumn.cards.push({
+        testimonial: testimonials[i],
+        size: "medium"
+      });
+      continue;
+    }
+    
+    columns.push(column);
+  }
+  
+  return columns;
+}
+
+function MasonryColumnComponent({ column }: { column: MasonryColumn }) {
+  return (
+    <div className="flex flex-col gap-4 w-[280px] flex-shrink-0 mx-2">
+      {column.cards.map((card, index) => (
+        <MasonryCard 
+          key={index} 
+          testimonial={card.testimonial} 
+          size={card.size} 
+        />
+      ))}
+    </div>
   );
 }
 
 export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    if (mediaQuery.matches) {
+      setIsPlaying(false);
+    }
+    
+    const handler = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+      if (e.matches) {
+        setIsPlaying(false);
+      }
+    };
+    
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
-  const handleTouchStart = useCallback(() => {
+  const handleInteractionStart = useCallback(() => {
+    if (prefersReducedMotion) return;
     if (resumeTimeoutRef.current) {
       clearTimeout(resumeTimeoutRef.current);
       resumeTimeoutRef.current = null;
     }
     setIsPlaying(false);
-  }, []);
+  }, [prefersReducedMotion]);
 
-  const handleTouchEnd = useCallback(() => {
+  const handleInteractionEnd = useCallback(() => {
+    if (prefersReducedMotion) return;
     resumeTimeoutRef.current = setTimeout(() => {
       setIsPlaying(true);
-    }, 300);
-  }, []);
+    }, 500);
+  }, [prefersReducedMotion]);
+
+  const masonryColumns = createMasonryColumns(DEFAULT_TESTIMONIALS);
 
   return (
     <section 
-      className={`py-12 md:py-16 ${data.background || "bg-sidebar"}`}
+      className={`py-12 md:py-16 ${data.background || ""}`}
       data-testid="section-testimonials-slide"
     >
       <div className="max-w-6xl mx-auto px-4 mb-8">
@@ -232,22 +316,47 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
         </p>
       </div>
       
-      <div
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseEnter={handleTouchStart}
-        onMouseLeave={handleTouchEnd}
-      >
-        <Marquee 
-          gradient={false} 
-          speed={40} 
-          play={isPlaying}
-          data-testid="marquee-testimonials-slide"
+      <div className="relative">
+        <div
+          className={cn(
+            prefersReducedMotion && "overflow-x-auto"
+          )}
+          onTouchStart={handleInteractionStart}
+          onTouchEnd={handleInteractionEnd}
+          onMouseEnter={handleInteractionStart}
+          onMouseLeave={handleInteractionEnd}
         >
-          {DEFAULT_TESTIMONIALS.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} />
-          ))}
-        </Marquee>
+          <Marquee 
+            gradient={false} 
+            speed={25} 
+            play={isPlaying && !prefersReducedMotion}
+            data-testid="marquee-testimonials-slide"
+          >
+            <div className="flex items-start py-4">
+              {masonryColumns.map((column, index) => (
+                <MasonryColumnComponent key={index} column={column} />
+              ))}
+            </div>
+          </Marquee>
+        </div>
+        
+        <div 
+          className="absolute inset-0 top-auto pointer-events-none z-10"
+          style={{
+            height: '100%',
+            maxHeight: '400px',
+            background: 'radial-gradient(50% 100% at 50% 0%, transparent 0%, transparent 50%, hsl(var(--background)) 100%)'
+          }}
+        />
+        
+        <div 
+          className="absolute left-0 right-0 pointer-events-none z-10"
+          style={{
+            top: 0,
+            bottom: 0,
+            background: 'linear-gradient(to right, hsl(var(--background)) 0%, transparent 15%, transparent 85%, hsl(var(--background)) 100%)'
+          }}
+        />
       </div>
     </section>
   );

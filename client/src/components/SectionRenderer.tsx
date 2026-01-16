@@ -187,6 +187,8 @@ const GraduatesStats = lazy(() => import("@/components/graduates_stats").then(m 
 const ValueProofPanel = lazy(() => import("@/components/ValueProofPanel").then(m => ({ default: m.ValueProofPanel })));
 const SplitCards = lazy(() => import("@/components/SplitCards").then(m => ({ default: m.SplitCards })));
 const StickyCallToAction = lazy(() => import("@/components/StickyCallToAction").then(m => ({ default: m.StickyCallToAction })));
+const BentoCards = lazy(() => import("@/components/bento-cards/BentoCards").then(m => ({ default: m.BentoCards })));
+const Banner = lazy(() => import("@/components/Banner").then(m => ({ default: m.Banner })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -384,6 +386,10 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><SplitCards data={section as Parameters<typeof SplitCards>[0]["data"]} /></LazySection>;
     case "sticky_cta":
       return <LazySection key={index}><StickyCallToAction data={section as Parameters<typeof StickyCallToAction>[0]["data"]} /></LazySection>;
+    case "bento_cards":
+      return <LazySection key={index}><BentoCards data={section as Parameters<typeof BentoCards>[0]["data"]} /></LazySection>;
+    case "banner":
+      return <LazySection key={index}><Banner data={section as Parameters<typeof Banner>[0]["data"]} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
@@ -521,8 +527,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
           );
         }
         
+        const sectionId = (section as SectionLayout).section_id || `${sectionType}-${index}`;
         return (
-          <div key={index} id={`${sectionType}-${index}`} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
+          <div key={index} id={sectionId} className={`section-wrapper ${visibilityClasses}`.trim()} style={layoutStyles}>
             <EditableSection
               section={section}
               index={index}

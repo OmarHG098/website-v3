@@ -238,14 +238,27 @@ export function SectionEditorPanel({
     [yamlContent, onPreviewChange],
   );
 
-  // Update a specific field in an array item
+  // Update a specific field in an array item (supports nested paths like "signup_card.features")
   const updateArrayItemField = useCallback(
-    (arrayField: string, index: number, field: string, value: string) => {
+    (arrayPath: string, index: number, field: string, value: string) => {
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
 
-        const array = parsed[arrayField] as
+        // Support nested paths like "signup_card.features" by splitting on dots
+        const pathParts = arrayPath.split(".");
+        let current: Record<string, unknown> = parsed;
+        
+        // Traverse to the parent object containing the array
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part] || typeof current[part] !== "object") return;
+          current = current[part] as Record<string, unknown>;
+        }
+        
+        // Get the array from the final path part
+        const arrayField = pathParts[pathParts.length - 1];
+        const array = current[arrayField] as
           | Record<string, unknown>[]
           | undefined;
         if (!Array.isArray(array) || !array[index]) return;
@@ -545,23 +558,40 @@ export function SectionEditorPanel({
                 const { type: editorType, variant } =
                   parseEditorType(editorTypeRaw);
 
-                // Parse field path like "features[].icon"
-                const match = fieldPath.match(/^(\w+)\[\]\.(\w+)$/);
+                // Parse field path like "features[].icon" or "signup_card.features[].icon"
+                // Matches: optional.nested.path.arrayName[].fieldName
+                const match = fieldPath.match(/^([\w.]+)\[\]\.(\w+)$/);
                 if (!match) return null;
 
-                const [, arrayField, itemField] = match;
-                const arrayData = parsedSection?.[arrayField] as
-                  | Record<string, unknown>[]
-                  | undefined;
+                const [, arrayPath, itemField] = match;
+                
+                // Support nested paths by traversing the object
+                const getArrayData = () => {
+                  if (!parsedSection) return undefined;
+                  const pathParts = arrayPath.split(".");
+                  let current: Record<string, unknown> = parsedSection as Record<string, unknown>;
+                  
+                  for (const part of pathParts) {
+                    if (!current || typeof current !== "object") return undefined;
+                    current = current[part] as Record<string, unknown>;
+                  }
+                  
+                  return current as unknown as Record<string, unknown>[] | undefined;
+                };
+                
+                const arrayData = getArrayData();
 
                 if (!Array.isArray(arrayData) || arrayData.length === 0)
                   return null;
+                
+                // For display, use the last part of the path as the label
+                const arrayFieldLabel = arrayPath.split(".").pop() || arrayPath;
 
                 if (editorType === "icon-picker") {
                   return (
                     <div key={fieldPath} className="space-y-2">
                       <Label className="text-sm font-medium capitalize">
-                        {arrayField} Icons
+                        {arrayFieldLabel} Icons
                       </Label>
                       <div className="flex flex-wrap gap-2">
                         {arrayData.map((item, index) => {
@@ -579,7 +609,7 @@ export function SectionEditorPanel({
                               type="button"
                               onClick={() => {
                                 setIconPickerTarget({
-                                  arrayField,
+                                  arrayField: arrayPath,
                                   index,
                                   field: itemField,
                                   label: itemLabel,
@@ -588,7 +618,7 @@ export function SectionEditorPanel({
                                 setIconPickerOpen(true);
                               }}
                               className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
-                              data-testid={`props-icon-${arrayField}-${index}`}
+                              data-testid={`props-icon-${arrayFieldLabel}-${index}`}
                               title={`${itemLabel}: ${currentValue || "no icon"}`}
                             >
                               {renderIconByName(currentValue)}
@@ -607,7 +637,7 @@ export function SectionEditorPanel({
                   return (
                     <div key={fieldPath} className="space-y-3">
                       <Label className="text-sm font-medium capitalize">
-                        {arrayField} Colors
+                        {arrayFieldLabel} Colors
                       </Label>
                       <div className="space-y-2">
                         {arrayData.map((item, index) => {
@@ -631,7 +661,7 @@ export function SectionEditorPanel({
                                 value={currentValue}
                                 onChange={(value) =>
                                   updateArrayItemField(
-                                    arrayField,
+                                    arrayPath,
                                     index,
                                     itemField,
                                     value,
@@ -640,7 +670,7 @@ export function SectionEditorPanel({
                                 type={colorType}
                                 allowNone={true}
                                 allowCustom={true}
-                                testIdPrefix={`props-color-${arrayField}-${index}`}
+                                testIdPrefix={`props-color-${arrayFieldLabel}-${index}`}
                               />
                             </div>
                           );

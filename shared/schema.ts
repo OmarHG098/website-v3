@@ -55,6 +55,7 @@ export {
   brandMarkSchema,
   reviewLogoSchema,
   productShowcaseTrustBarSchema,
+  bulletItemSchema,
   heroCourseTutorSchema,
   heroCourseFeatureSchema,
   heroSectionSchema,
@@ -64,6 +65,7 @@ export {
   type BrandMark,
   type ReviewLogo,
   type ProductShowcaseTrustBar,
+  type BulletItem,
   type HeroCourseTutor,
   type HeroCourseFeature,
   type HeroSection,
@@ -144,6 +146,7 @@ export {
   faqSectionSchema,
   type FaqItem,
   type FaqSection,
+  type FAQ,
 } from "../marketing-content/component-registry/faq/v1.0/schema";
 
 // Type alias for backward compatibility
@@ -271,9 +274,11 @@ export {
 export {
   featuresGridHighlightItemSchema,
   featuresGridDetailedItemSchema,
+  featuresGridTextOnlyItemSchema,
   featuresGridSectionSchema,
   type FeaturesGridHighlightItem,
   type FeaturesGridDetailedItem,
+  type FeaturesGridTextOnlyItem,
   type FeaturesGridSection,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
 
@@ -285,6 +290,7 @@ export type {
   FeaturesGridStatsCardsSection,
   FeaturesGridStatsTextCardSection,
   FeaturesGridStatsTextSection,
+  FeaturesGridTextOnlySection,
   FeaturesGridStatsCardsItem,
   SpotlightConfig,
 } from "../marketing-content/component-registry/features_grid/v1.0/schema";
@@ -343,6 +349,16 @@ export {
   type ComparisonTableRow,
   type ComparisonTableSection,
 } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+
+// ============================================
+// Re-export Bento Cards Schemas from Component Registry
+// ============================================
+export {
+  bentoCardItemSchema,
+  bentoCardsSectionSchema,
+  type BentoCardItem,
+  type BentoCardsSection,
+} from "../marketing-content/component-registry/bento_cards/v1.0/schema";
 
 // ============================================
 // Image Registry Schemas (not in component registry)
@@ -647,9 +663,9 @@ import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../
 import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
 import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab } from "../marketing-content/component-registry/bullet_tabs_showcase/v1.0/schema";
 export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
-import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
+import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage, type GraduatesStatsAsymmetric } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
 import { splitCardsSectionSchema } from "../marketing-content/component-registry/split_cards/v1.0/schema";
-export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage };
+export { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage, type GraduatesStatsAsymmetric };
 import { applyFormSectionSchema } from "../marketing-content/component-registry/apply_form/v1.0/schema";
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
 import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
@@ -657,6 +673,9 @@ export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqu
 import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 import { stickyCtaSectionSchema } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
 export { stickyCtaSectionSchema, type StickyCtaSection } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
+import { bentoCardsSectionSchema } from "../marketing-content/component-registry/bento_cards/v1.0/schema";
+import { bannerSectionSchema, type BannerSection } from "../marketing-content/component-registry/banner/v1.0/schema";
+export { bannerSectionSchema, type BannerSection };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -680,6 +699,7 @@ export type ShowOn = z.infer<typeof showOnSchema>;
 // background: semantic token (muted, card, etc.) or custom CSS value
 // showOn: controls breakpoint visibility (mobile, desktop, or all)
 export const sectionLayoutSchema = z.object({
+  section_id: z.string().optional(), // Stable anchor ID that overrides position-based ID (e.g., "reviews" instead of "reviews-5")
   marginY: responsiveSpacingSchema.optional(),
   paddingY: responsiveSpacingSchema.optional(),
   background: z.string().optional(),
@@ -729,6 +749,8 @@ const baseSectionSchema = z.union([
   valueProofPanelSectionSchema,
   splitCardsSectionSchema,
   stickyCtaSectionSchema,
+  bentoCardsSectionSchema,
+  bannerSectionSchema,
 ]);
 
 // Combined section schema with layout fields

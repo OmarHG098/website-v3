@@ -1,7 +1,7 @@
 name: FAQ Section
 version: "1.0"
 component: FAQSection
-file: client/src/components/career-programs/FAQSection.tsx
+file: client/src/components/FAQSection.tsx
 description: Collapsible accordion with frequently asked questions
 when_to_use: |
   Use to address common objections and questions.
@@ -23,7 +23,46 @@ props:
         type: string
         required: true
         example: No prior experience is required. We start from the fundamentals.
-    description: "Q&A pairs (recommended: 5-7 items)"
+      locations:
+        type: array
+        required: false
+        items:
+          type: string
+        default: ["all"]
+        description: Array of location slugs where this FAQ applies. Use ["all"] for global FAQs.
+        example: ["all"]
+      related_features:
+        type: array
+        required: false
+        items:
+          type: string
+          enum:
+            - online-platform
+            - mentors-and-teachers
+            - price
+            - career-support
+            - content-and-syllabus
+            - job-guarantee
+            - full-stack
+            - cybersecurity
+            - data-science
+            - applied-ai
+            - ai-engineering
+            - outcomes
+            - scholarships
+            - rigobot
+            - learnpack
+            - certification
+        default: []
+        description: Features this FAQ relates to, for filtering purposes.
+        example: ["career-support", "job-guarantee"]
+      priority:
+        type: integer
+        required: false
+        default: 0
+        description: Higher priority FAQs appear first. Use for sorting/filtering.
+        example: 1
+    description: "Q&A pairs with optional filtering metadata (recommended: 5-7 items)"
   cta:
     type: object
     required: false
