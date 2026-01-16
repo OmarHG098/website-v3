@@ -1,0 +1,18 @@
+name: "Default Banner"
+description: "A centered banner with icon, title, description and CTA button using gradient background"
+
+yaml: |
+  type: banner
+  version: "1.0"
+  icon:
+    type: image
+    src: /images/rigobot-icon.png
+    alt: Rigobot
+    background_color: "hsl(var(--primary))"
+  title: Lorem ipsum dolor sit amet
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+  cta:
+    text: Learn More
+    url: "#"
+    variant: primary
+  background: gradient
