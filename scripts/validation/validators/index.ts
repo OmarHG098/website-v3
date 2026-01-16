@@ -11,6 +11,7 @@ import { schemaValidator } from "./schema";
 import { sitemapValidator } from "./sitemap";
 import { componentsValidator } from "./components";
 import { backgroundsValidator } from "./backgrounds";
+import { faqsValidator } from "./faqs";
 
 export const validators: Validator[] = [
   redirectValidator,
@@ -19,6 +20,7 @@ export const validators: Validator[] = [
   sitemapValidator,
   componentsValidator,
   backgroundsValidator,
+  faqsValidator,
 ];
 
 export const validatorMap = new Map<string, Validator>(
@@ -50,4 +52,5 @@ export {
   sitemapValidator,
   componentsValidator,
   backgroundsValidator,
+  faqsValidator,
 };

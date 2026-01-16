@@ -15,6 +15,7 @@ faqs:
       You can compare us to other bootcamps by visiting our Geeks Vs Others page.
     locations: ["all"]
     related_features: ["mentors-and-teachers", "career-support"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: Is 4Geeks a certified institution?
@@ -22,6 +23,7 @@ faqs:
       Absolutely! 4Geeks Academy is a licensed institution by the Commission for Independent Education of the Florida Department of Education. This ensures that our programs meet rigorous educational standards and provide you with a valuable credential upon completion.
     locations: ["all"]
     related_features: ["certification"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Who is that face in the logo?
@@ -29,6 +31,7 @@ faqs:
       Meet Rigoberto! He is the heart and spirit of everyone working at 4Geeks Academy.
     locations: ["all"]
     related_features: ["rigobot"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: Is the certificate recognized by employers?
@@ -36,6 +39,7 @@ faqs:
       Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
     locations: ["all"]
     related_features: ["certification", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   # ============================================
@@ -47,6 +51,7 @@ faqs:
       Additionally, you're welcome to visit our campus to meet the team and explore our facilities. This is an opportunity to share your motivations for pursuing a career in development.
     locations: ["all"]
     related_features: []
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How many hours do I need to have available?
@@ -55,6 +60,7 @@ faqs:
       Alternatively, our Full-Time program entails 8-hour classes each day, with an additional recommended study time of around 48 hours per week. Regardless of the specific program you choose, commitment to study and practice is essential for success.
     locations: ["all"]
     related_features: ["content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What are the class schedules?
@@ -67,6 +73,7 @@ faqs:
       Full-time: Monday to Friday from 9:00 AM to 6:00 PM.
     locations: ["all"]
     related_features: ["content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -80,6 +87,7 @@ faqs:
       Remember, both services are unlimited and for life, so you can always switch or use both as your needs evolve throughout your career.
     locations: ["all"]
     related_features: ["mentors-and-teachers", "career-support"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: Why "Part-time?" and how does it work?
@@ -91,6 +99,7 @@ faqs:
       Talent Tree: The curriculum charts 44 skills in which students earn points for each skill learned in a playful way.
     locations: ["all"]
     related_features: ["content-and-syllabus", "mentors-and-teachers"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Why "Full-time?" and how does it work?
@@ -103,6 +112,7 @@ faqs:
       Language: Choose between English and Spanish for the syllabus and content; live classes are taught in the language of your campus.
     locations: ["all"]
     related_features: ["content-and-syllabus", "full-stack"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What is the difference between a Full-Stack program and other programs that are more junior such as Website Developer?
@@ -116,6 +126,7 @@ faqs:
       You will be able to create and build websites, but you will get the skills and tools to tackle more challenging projects like: data analytics, machine learning and augmented reality, to name a few.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -127,6 +138,7 @@ faqs:
       Additionally, according to our statistics, 84% of graduates in the US who complete the stages and requirements secure employment with an average salary over $50k per year. To understand more about our job support and the steps we take to help you succeed, visit our Job Guarantee page and learn about our comprehensive Geekforce Career Support program.
     locations: ["all"]
     related_features: ["career-support", "job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   # ============================================
@@ -137,6 +149,7 @@ faqs:
       Our Job Guarantee ensures that if you meet all program requirements and still don't get a qualifying tech job within 9 months of graduation, you are eligible for a full refund of your tuition. It's our way of backing the real-world outcomes our bootcamp delivers. Conditions apply.
     locations: ["all"]
     related_features: ["job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: Does the Job Guarantee refund the full tuition if I don't get hired?
@@ -144,6 +157,7 @@ faqs:
       Yes. If you qualify for the Job Guarantee and don't receive a qualifying job offer within the job search window, you'll receive a full tuition refund.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: How long do I have to look for a job before the refund is issued?
@@ -151,6 +165,7 @@ faqs:
       You'll have up to 9 months after graduating to secure qualifying employment. If you meet all requirements and are still not hired within that time, you can apply for a full refund.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What kinds of jobs count toward the Job Guarantee?
@@ -158,6 +173,7 @@ faqs:
       Full-time or contract positions in tech (such as software development, QA, or related roles) qualify. Remote jobs and freelance positions may be eligible depending on terms.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Is there a minimum salary for jobs that count?
@@ -165,6 +181,7 @@ faqs:
       There is no set salary threshold, but the job must be aligned with the skills taught in the program and be a legitimate entry-level tech role.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What do I need to do to qualify for the Job Guarantee?
@@ -172,6 +189,7 @@ faqs:
       You must: Complete 100% of coursework and projects, attend sessions consistently, follow the steps our career services team advises, actively apply to jobs and document your search, and hold valid U.S. work authorization.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Do I need to have work authorization to qualify?
@@ -179,6 +197,7 @@ faqs:
       Yes, you must have valid U.S. work authorization to be eligible for the Job Guarantee.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Is attendance important for the Job Guarantee?
@@ -186,6 +205,7 @@ faqs:
       Yes, maintaining good attendance throughout the bootcamp is mandatory for eligibility.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: What coursework or projects must I complete?
@@ -193,6 +213,7 @@ faqs:
       You'll need to finish your final project in a satisfactory manner, plus all assigned coding projects, exercises, and coursework provided during the bootcamp.
     locations: ["all"]
     related_features: ["job-guarantee", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: What does it mean to follow the career team's guidance?
@@ -200,6 +221,7 @@ faqs:
       It includes completing your resume and portfolio according to our guidelines, participating in mock interviews, and applying to a minimum number of jobs weekly — all with the support of our career services team.
     locations: ["all"]
     related_features: ["job-guarantee", "career-support"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: Can I finance the additional $2,000 Job Guarantee fee with my tuition?
@@ -207,6 +229,7 @@ faqs:
       Yes, in many cases the Job Guarantee fee can be bundled into your overall tuition financing plan.
     locations: ["all"]
     related_features: ["job-guarantee", "price"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: Is the Job Guarantee available for all courses?
@@ -214,6 +237,7 @@ faqs:
       No — it is currently only available for select bootcamps, including the Full Stack Development program. Please check your program's eligibility.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What's the average time it takes for 4Geeks grads to get hired?
@@ -221,6 +245,7 @@ faqs:
       Most 4Geeks Academy graduates find a job within 90 to 180 days of completing the bootcamp, depending on their location, dedication, and prior experience.
     locations: ["all"]
     related_features: ["job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: If I'm offered a contract job, does it count toward the guarantee?
@@ -228,6 +253,7 @@ faqs:
       Yes, contract jobs can qualify if they are relevant to the bootcamp training and meet our minimum standards for legitimacy and compensation.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 1
 
   # ============================================
@@ -238,6 +264,7 @@ faqs:
       No prior coding experience is required. Our program starts with the fundamentals and builds up to advanced full-stack development. We teach you everything from HTML basics to building complete web applications.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How long does the Full Stack program take?
@@ -245,6 +272,7 @@ faqs:
       The Full Stack program is designed to be completed in 16 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What kind of projects will I build in Full Stack?
@@ -252,6 +280,7 @@ faqs:
       You'll build production-ready applications including REST APIs, authentication systems, React frontends, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Do I need expensive equipment?
@@ -259,6 +288,7 @@ faqs:
       No! All exercises and projects run in the cloud. We provide access to cloud-based development environments, so you can learn with just a laptop and internet connection.
     locations: ["all"]
     related_features: ["online-platform", "learnpack"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -269,6 +299,7 @@ faqs:
       No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts like penetration testing and incident response.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What cybersecurity tools will I learn to use?
@@ -276,6 +307,7 @@ faqs:
       You'll gain hands-on experience with industry-standard tools including Nessus, Nmap, Wireshark, Metasploit, and more. These are the same tools used by security professionals at top companies worldwide.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Will this prepare me for certifications?
@@ -283,6 +315,7 @@ faqs:
       Yes! Our program puts you on the fast track for certifications like EJPT and CEH. Our pen-testing practices are specifically aligned with EJPT certification labs to give you the hands-on experience you need.
     locations: ["all"]
     related_features: ["cybersecurity", "certification"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How long is the cybersecurity program?
@@ -290,6 +323,7 @@ faqs:
       The program is 16 weeks with 3 live online classes per week. Class sizes are kept small (max 15 people) to ensure personalized attention and hands-on guidance.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -300,6 +334,7 @@ faqs:
       No prior experience is required. Our bootcamp starts with Python fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced machine learning concepts.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What tools and technologies will I learn in Data Science?
@@ -307,6 +342,7 @@ faqs:
       You'll master Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras, and Flask. These are the industry-standard tools used by data scientists and ML engineers worldwide.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How do I stay motivated learning on my own?
@@ -314,6 +350,7 @@ faqs:
       You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes.
     locations: ["all"]
     related_features: ["data-science", "mentors-and-teachers", "rigobot"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How long does it take to complete the Data Science program?
@@ -321,6 +358,7 @@ faqs:
       The self-paced program can be completed in as little as 16 weeks with dedicated study. However, you have lifetime access to all materials and can learn at your own pace—whether that's 30 minutes a day or intensive weekend sessions.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -331,6 +369,7 @@ faqs:
       Basic programming knowledge is recommended but not required. Our program starts with foundational concepts and builds up to advanced AI engineering. If you're new to coding, we have preparatory materials to help you get started.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How long does the AI Engineering program take?
@@ -338,6 +377,7 @@ faqs:
       The AI Engineering program is designed to be completed in 20 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What kind of projects will I build in AI Engineering?
@@ -345,6 +385,7 @@ faqs:
       You'll build production-ready AI applications including RAG systems, multi-agent orchestrators, real-time AI applications, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Do I need expensive hardware for AI development?
@@ -352,6 +393,7 @@ faqs:
       No! All exercises and projects run in the cloud. We provide access to cloud-based development environments and AI APIs, so you can learn with just a laptop and internet connection.
     locations: ["all"]
     related_features: ["ai-engineering", "online-platform"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -362,6 +404,7 @@ faqs:
       No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there.
     locations: ["all"]
     related_features: ["applied-ai", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What tools will I learn to use?
@@ -369,6 +412,7 @@ faqs:
       You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier.
     locations: ["all"]
     related_features: ["applied-ai", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: How are the live classes structured?
@@ -376,6 +420,7 @@ faqs:
       Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time.
     locations: ["all"]
     related_features: ["applied-ai", "mentors-and-teachers"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: What kind of support is available?
@@ -383,4 +428,5 @@ faqs:
       You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot for instant feedback, and a supportive community of fellow professionals learning alongside you.
     locations: ["all"]
     related_features: ["applied-ai", "mentors-and-teachers", "rigobot"]
+    last_updated: "2026-01-16"
     priority: 2

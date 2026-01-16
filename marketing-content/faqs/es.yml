@@ -15,6 +15,7 @@ faqs:
       En 4Geeks Academy, integramos herramientas de inteligencia artificial desarrolladas por nosotros en nuestro enfoque educativo, haciendo que aprender a programar sea divertido y relevante para la vida cotidiana.
     locations: ["all"]
     related_features: ["mentors-and-teachers", "career-support", "rigobot"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Es 4Geeks una institución certificada?
@@ -22,6 +23,7 @@ faqs:
       ¡Absolutamente! 4Geeks Academy es una institución licenciada por la Comisión de Educación Independiente del Departamento de Educación de Florida. Esto asegura que nuestros programas cumplen con rigurosos estándares educativos y te proporcionan una credencial valiosa al completar.
     locations: ["all"]
     related_features: ["certification"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué diferencia cada uno de nuestros campus?
@@ -29,6 +31,7 @@ faqs:
       El panorama laboral y tecnológico varía significativamente en cada país, y por eso en 4Geeks Academy contamos con equipos locales en cada una de nuestras sedes. Estos equipos desarrollan alianzas con empresas locales y adaptan la formación a las necesidades específicas del mercado laboral de cada región. Te aconsejamos estudiar en la sede del país donde deseas desarrollarte profesionalmente.
     locations: ["all"]
     related_features: ["career-support"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Quién es esa cara en el logo?
@@ -36,6 +39,7 @@ faqs:
       ¡Conoce a Rigoberto! Él es el corazón y el espíritu de todos los que trabajamos en 4Geeks Academy.
     locations: ["all"]
     related_features: ["rigobot"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿El certificado es reconocido por empleadores?
@@ -43,6 +47,7 @@ faqs:
       ¡Sí! Nuestro certificado es reconocido por empleadores en todo el mundo. Estamos licenciados por el Departamento de Educación de Florida y hemos sido destacados por Forbes, Newsweek y Course Report como uno de los mejores bootcamps de programación.
     locations: ["all"]
     related_features: ["certification", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   # ============================================
@@ -57,6 +62,7 @@ faqs:
       Después de enviar el formulario, recibirás información detallada sobre el programa seleccionado. Además, nuestro equipo de especialistas en carrera está disponible para responder cualquier pregunta que tengas.
     locations: ["all"]
     related_features: []
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Cuál es el proceso de admisión?
@@ -68,6 +74,7 @@ faqs:
       4. Visita al Campus: Te invitamos a visitar nuestro campus para conocer al equipo y explorar nuestras instalaciones.
     locations: ["all"]
     related_features: []
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Necesito tener mi propia laptop/portátil/notebook?
@@ -77,6 +84,7 @@ faqs:
       Las clases y ejercicios de todos los programas se acceden a través de la nube.
     locations: ["all"]
     related_features: ["online-platform"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿4Geeks Academy ofrece apoyo profesional?
@@ -85,6 +93,7 @@ faqs:
       Esto incluye optimizar tu currículum vitae, perfiles de LinkedIn y GitHub, conectarte con eventos y nuestra red de contratación, y prepararte para entrevistas técnicas y conductuales.
     locations: ["all"]
     related_features: ["career-support", "mentors-and-teachers"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Puedo pagar después de conseguir un trabajo?
@@ -93,6 +102,7 @@ faqs:
       Estos modelos están diseñados para apoyar tu trayectoria de aprendizaje, permitiéndote centrarte en la educación antes de empezar a pagar una vez que estés empleado. Sin embargo, los términos y condiciones varían según el programa y la ubicación que elijas.
     locations: ["all"]
     related_features: ["price", "scholarships"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuántas horas necesito tener disponibles?
@@ -101,6 +111,7 @@ faqs:
       Alternativamente, nuestro programa Full-Time implica clases de 8 horas cada día, con un tiempo de estudio adicional recomendado de alrededor de 48 horas por semana.
     locations: ["all"]
     related_features: ["content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuáles son los horarios de clase?
@@ -113,6 +124,7 @@ faqs:
       Full-time: Lunes a Viernes de 9:00 AM a 6:00 PM.
     locations: ["all"]
     related_features: ["content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -126,6 +138,7 @@ faqs:
       Recuerda, ambos servicios son ilimitados y de por vida.
     locations: ["all"]
     related_features: ["mentors-and-teachers", "career-support"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Por qué "Part-time?" y cómo funciona?
@@ -137,6 +150,7 @@ faqs:
       Árbol de Talentos: El currículo traza 44 habilidades en las que los estudiantes ganan puntos de manera lúdica.
     locations: ["all"]
     related_features: ["content-and-syllabus", "mentors-and-teachers"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Por qué "Full-time?" y cómo funciona?
@@ -148,6 +162,7 @@ faqs:
       Idioma: Elige entre inglés y español para el plan de estudios y contenido.
     locations: ["all"]
     related_features: ["content-and-syllabus", "full-stack"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuál es la diferencia entre un programa Full-Stack y otros programas más junior como Desarrollador Web?
@@ -159,6 +174,7 @@ faqs:
       Te guiaremos y ayudaremos a encontrar trabajo después del curso a través de nuestro Programa de Colocación.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Necesito experiencia previa en programación para inscribirme en el programa?
@@ -167,6 +183,7 @@ faqs:
       La programación es una habilidad que todos pueden aprender con dedicación y práctica. En 4Geeks Academy, te ayudaremos a descubrir y desarrollar tu talento para la programación con el apoyo de nuestra herramienta de inteligencia artificial y mentorías ilimitadas en cada etapa del proceso.
     locations: ["all"]
     related_features: ["content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Por qué Javascript?
@@ -174,6 +191,7 @@ faqs:
       JavaScript es esencial para la web, es el único lenguaje que todos los navegadores web entienden y es el lenguaje de programación más utilizado en el mundo. Todos los sitios web lo necesitan, y es el más demandado por las empresas, superando diez veces al siguiente lenguaje más popular.
     locations: ["all"]
     related_features: ["content-and-syllabus", "full-stack"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿Por qué Python?
@@ -182,6 +200,7 @@ faqs:
       Tiene que ser Python. Encontrarás más oportunidades laborales, aprenderás a programar y te ayudará con otros lenguajes y frameworks. ¡Incluso Google aprobó Python y lo ha incorporado en todas partes!
     locations: ["all"]
     related_features: ["content-and-syllabus", "data-science", "applied-ai"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿Me gradúo como Senior Developer?
@@ -190,6 +209,7 @@ faqs:
       Hacer nuestro programa Full Stack significa que tu vida tendrá una nueva habilidad, pero también desarrollará una nueva forma de pensar. Te gradúas como Desarrollador Junior, pero como un Desarrollador Junior REALMENTE BUENO.
     locations: ["all"]
     related_features: ["outcomes"]
+    last_updated: "2026-01-16"
     priority: 1
 
   # ============================================
@@ -201,6 +221,7 @@ faqs:
       Según nuestras estadísticas, el 84% de los graduados en EE.UU. que completan las etapas y requisitos consiguen empleo con un salario promedio superior a $50k por año.
     locations: ["all"]
     related_features: ["career-support", "job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Cómo es el panorama laboral y qué oportunidades existen para los desarrolladores?
@@ -208,6 +229,7 @@ faqs:
       El futuro para los desarrolladores de software es muy prometedor, con un crecimiento proyectado del empleo de un 25% entre 2022 y 2032, según el Bureau of Labor Statistics. Este aumento se atribuye a la continua digitalización de las industrias.
     locations: ["all"]
     related_features: ["outcomes", "career-support"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cómo es el mercado para las empresas que buscan desarrolladores?
@@ -215,6 +237,7 @@ faqs:
       El mercado para las empresas que buscan desarrolladores está en constante crecimiento. Según el IDC, se proyecta que entre 2020 y 2025 se necesitarán 10.5 millones de profesionales en tecnología a nivel mundial. Actualmente, en Estados Unidos hay más de 1.4 millones de puestos de trabajo de programación abiertos, y se espera que este número aumente. En Latinoamérica, se estima que se necesitarán alrededor de 1.2 millones de profesionales para cubrir la demanda en el sector tecnológico.
     locations: ["all"]
     related_features: ["outcomes", "career-support"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -225,6 +248,7 @@ faqs:
       Nuestra Garantía de Empleo asegura que si cumples todos los requisitos del programa y aún no consigues un trabajo tech calificado en 9 meses después de graduarte, eres elegible para un reembolso completo de tu matrícula. Aplican condiciones.
     locations: ["all"]
     related_features: ["job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿La Garantía de Empleo reembolsa la matrícula completa si no me contratan?
@@ -232,6 +256,7 @@ faqs:
       Sí. Si calificas para la Garantía de Empleo y no recibes una oferta de trabajo calificada dentro del período de búsqueda, recibirás un reembolso completo.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 3
 
   - question: ¿Cuánto tiempo tengo para buscar trabajo antes de recibir el reembolso?
@@ -239,6 +264,7 @@ faqs:
       Tendrás hasta 9 meses después de graduarte para conseguir empleo calificado. Si cumples todos los requisitos y aún no te contratan, puedes solicitar un reembolso completo.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué tipos de trabajos cuentan para la Garantía de Empleo?
@@ -246,6 +272,7 @@ faqs:
       Posiciones de tiempo completo o contrato en tech (como desarrollo de software, QA o roles relacionados) califican. Trabajos remotos y freelance pueden ser elegibles según los términos.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Hay un salario mínimo para los trabajos que cuentan?
@@ -253,6 +280,7 @@ faqs:
       No hay un umbral de salario establecido, pero el trabajo debe estar alineado con las habilidades enseñadas en el programa y ser un rol tech legítimo de nivel inicial.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué necesito hacer para calificar para la Garantía de Empleo?
@@ -260,6 +288,7 @@ faqs:
       Debes: Completar 100% del trabajo del curso y proyectos, asistir a sesiones consistentemente, seguir los pasos que nuestro equipo de carrera aconseja, aplicar activamente a trabajos y documentar tu búsqueda, y tener autorización de trabajo válida en EE.UU.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Necesito tener autorización de trabajo para calificar?
@@ -267,6 +296,7 @@ faqs:
       Sí, debes tener autorización de trabajo válida en EE.UU. para ser elegible para la Garantía de Empleo.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿La asistencia es importante para la Garantía de Empleo?
@@ -274,6 +304,7 @@ faqs:
       Sí, mantener buena asistencia durante todo el bootcamp es obligatorio para la elegibilidad.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿Qué trabajo del curso o proyectos debo completar?
@@ -281,6 +312,7 @@ faqs:
       Necesitarás terminar tu proyecto final de manera satisfactoria, más todos los proyectos de coding asignados, ejercicios y trabajo del curso durante el bootcamp.
     locations: ["all"]
     related_features: ["job-guarantee", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿Qué significa seguir la guía del equipo de carrera?
@@ -288,6 +320,7 @@ faqs:
       Incluye completar tu CV y portafolio según nuestras guías, participar en entrevistas simuladas y aplicar a un número mínimo de trabajos semanalmente — todo con apoyo de nuestro equipo de servicios de carrera.
     locations: ["all"]
     related_features: ["job-guarantee", "career-support"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿Puedo financiar la tarifa adicional de $2,000 de Garantía de Empleo con mi matrícula?
@@ -295,6 +328,7 @@ faqs:
       Sí, en muchos casos la tarifa de Garantía de Empleo puede incluirse en tu plan de financiamiento de matrícula.
     locations: ["all"]
     related_features: ["job-guarantee", "price"]
+    last_updated: "2026-01-16"
     priority: 1
 
   - question: ¿La Garantía de Empleo está disponible para todos los cursos?
@@ -302,6 +336,7 @@ faqs:
       No — actualmente solo está disponible para bootcamps selectos, incluyendo el programa de Desarrollo Full Stack. Por favor verifica la elegibilidad de tu programa.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuál es el tiempo promedio que toma a los graduados de 4Geeks conseguir empleo?
@@ -309,6 +344,7 @@ faqs:
       La mayoría de graduados de 4Geeks Academy encuentran trabajo dentro de 90 a 180 días de completar el bootcamp, dependiendo de su ubicación, dedicación y experiencia previa.
     locations: ["all"]
     related_features: ["job-guarantee", "outcomes"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: Si me ofrecen un trabajo por contrato, ¿cuenta para la garantía?
@@ -316,6 +352,7 @@ faqs:
       Sí, trabajos por contrato pueden calificar si son relevantes al entrenamiento del bootcamp y cumplen nuestros estándares mínimos de legitimidad y compensación.
     locations: ["all"]
     related_features: ["job-guarantee"]
+    last_updated: "2026-01-16"
     priority: 1
 
   # ============================================
@@ -326,6 +363,7 @@ faqs:
       No se requiere experiencia previa en programación. Nuestro programa comienza con los fundamentos y avanza hasta desarrollo full-stack avanzado. Te enseñamos todo desde lo básico de HTML hasta construir aplicaciones web completas.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuánto tiempo dura el programa Full Stack?
@@ -333,6 +371,7 @@ faqs:
       El programa Full Stack está diseñado para completarse en 16 semanas. Sin embargo, como programa a tu ritmo, puedes acelerar o tomar más tiempo según tu horario y ritmo de aprendizaje.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué tipo de proyectos construiré en Full Stack?
@@ -340,6 +379,7 @@ faqs:
       Construirás aplicaciones listas para producción incluyendo APIs REST, sistemas de autenticación, frontends en React y un proyecto final completo. Todos los proyectos usan tecnologías y patrones del mundo real utilizados por las principales empresas.
     locations: ["all"]
     related_features: ["full-stack", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Necesito equipo costoso?
@@ -347,6 +387,7 @@ faqs:
       ¡No! Todos los ejercicios y proyectos se ejecutan en la nube. Proporcionamos acceso a entornos de desarrollo en la nube, así que puedes aprender solo con una laptop y conexión a internet.
     locations: ["all"]
     related_features: ["online-platform", "learnpack"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -357,6 +398,7 @@ faqs:
       No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados como pruebas de penetración y respuesta a incidentes.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué herramientas de ciberseguridad aprenderé a usar?
@@ -364,6 +406,7 @@ faqs:
       Obtendrás experiencia práctica con herramientas estándar de la industria incluyendo Nessus, Nmap, Wireshark, Metasploit y más. Estas son las mismas herramientas usadas por profesionales de seguridad en las mejores empresas del mundo.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Esto me preparará para certificaciones?
@@ -371,6 +414,7 @@ faqs:
       ¡Sí! Nuestro programa te pone en la vía rápida para certificaciones como EJPT y CEH. Nuestras prácticas de pentesting están específicamente alineadas con los laboratorios de certificación EJPT para darte la experiencia práctica que necesitas.
     locations: ["all"]
     related_features: ["cybersecurity", "certification"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuánto dura el programa de ciberseguridad?
@@ -378,6 +422,7 @@ faqs:
       El programa es de 16 semanas con 3 clases en línea en vivo por semana. Los tamaños de clase se mantienen pequeños (máximo 15 personas) para asegurar atención personalizada y orientación práctica.
     locations: ["all"]
     related_features: ["cybersecurity", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -388,6 +433,7 @@ faqs:
       No se requiere experiencia previa. Nuestro bootcamp comienza con los fundamentos de Python y te enseña todo desde cero. Nos enfocamos en construir una base sólida antes de pasar a conceptos avanzados de machine learning.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué herramientas y tecnologías aprenderé en Data Science?
@@ -395,6 +441,7 @@ faqs:
       Dominarás Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras y Flask. Estas son las herramientas estándar de la industria usadas por científicos de datos e ingenieros de ML en todo el mundo.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cómo me mantengo motivado aprendiendo solo?
@@ -402,6 +449,7 @@ faqs:
       ¡Nunca estás realmente solo! Nuestras herramientas de IA proporcionan retroalimentación instantánea, tienes acceso a sesiones de mentoría, y nuestra comunidad activa de estudiantes siempre está disponible para apoyo y colaboración. Muchos estudiantes encuentran que esta combinación los mantiene más comprometidos que las clases tradicionales.
     locations: ["all"]
     related_features: ["data-science", "mentors-and-teachers", "rigobot"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuánto tiempo toma completar el programa de Data Science?
@@ -409,6 +457,7 @@ faqs:
       El programa autodidacta puede completarse en tan solo 16 semanas con estudio dedicado. Sin embargo, tienes acceso de por vida a todos los materiales y puedes aprender a tu propio ritmo—ya sean 30 minutos al día o sesiones intensivas de fin de semana.
     locations: ["all"]
     related_features: ["data-science", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -419,6 +468,7 @@ faqs:
       Se recomienda conocimiento básico de programación pero no es obligatorio. Nuestro programa comienza con conceptos fundamentales y avanza hasta ingeniería de IA avanzada. Si eres nuevo en programación, tenemos materiales preparatorios para ayudarte a comenzar.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cuánto tiempo dura el programa de Ingeniería de IA?
@@ -426,6 +476,7 @@ faqs:
       El programa de Ingeniería de IA está diseñado para completarse en 20 semanas. Sin embargo, como programa a tu ritmo, puedes acelerar o tomar más tiempo según tu horario y ritmo de aprendizaje.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué tipo de proyectos construiré en Ingeniería de IA?
@@ -433,6 +484,7 @@ faqs:
       Construirás aplicaciones de IA listas para producción incluyendo sistemas RAG, orquestadores multi-agente, aplicaciones de IA en tiempo real y un proyecto final completo. Todos los proyectos usan tecnologías y patrones del mundo real utilizados por las principales empresas.
     locations: ["all"]
     related_features: ["ai-engineering", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Necesito hardware costoso para desarrollo de IA?
@@ -440,6 +492,7 @@ faqs:
       ¡No! Todos los ejercicios y proyectos se ejecutan en la nube. Proporcionamos acceso a entornos de desarrollo en la nube y APIs de IA, así que puedes aprender solo con una laptop y conexión a internet.
     locations: ["all"]
     related_features: ["ai-engineering", "online-platform"]
+    last_updated: "2026-01-16"
     priority: 2
 
   # ============================================
@@ -450,6 +503,7 @@ faqs:
       No se requiere experiencia previa. Este curso está diseñado para profesionales de todos los campos que quieren aprovechar la IA en su trabajo. Empezamos con los fundamentos y construimos desde ahí.
     locations: ["all"]
     related_features: ["applied-ai", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué herramientas aprenderé a usar?
@@ -457,6 +511,7 @@ faqs:
       Tendrás experiencia práctica con modelos generativos como ChatGPT, Gemini y Claude, así como herramientas modernas de imagen y video como Midjourney y DALL-E. También aprenderás herramientas de automatización sin código como Zapier.
     locations: ["all"]
     related_features: ["applied-ai", "content-and-syllabus"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Cómo están estructuradas las clases en vivo?
@@ -464,6 +519,7 @@ faqs:
       Las clases se realizan dos veces por semana online con un máximo de 12 estudiantes por cohorte. Esto asegura atención personalizada y la capacidad de tener tus preguntas respondidas en tiempo real.
     locations: ["all"]
     related_features: ["applied-ai", "mentors-and-teachers"]
+    last_updated: "2026-01-16"
     priority: 2
 
   - question: ¿Qué tipo de apoyo está disponible?
@@ -471,4 +527,5 @@ faqs:
       Tendrás acceso a sesiones de mentoría 1:1 ilimitadas, nuestro tutor de IA Rigobot para retroalimentación instantánea, y una comunidad de apoyo de compañeros profesionales aprendiendo junto a ti.
     locations: ["all"]
     related_features: ["applied-ai", "mentors-and-teachers", "rigobot"]
+    last_updated: "2026-01-16"
     priority: 2
