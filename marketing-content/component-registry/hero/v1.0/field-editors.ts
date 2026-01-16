@@ -10,5 +10,5 @@
 export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
 
 export const fieldEditors: Record<string, EditorType> = {
-  "features[].icon": "icon-picker",
+  "signup_card.features[].icon": "icon-picker",
 };
