@@ -436,7 +436,8 @@ sections:
   - type: faq
     version: "1.0"
     title: Frequently Asked Questions
-    related_features: ["ai-engineering"]
+    related_features:
+      - ai-engineering
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor
@@ -448,15 +449,12 @@ sections:
       desktop: none
   - type: cta_banner
     version: "1.0"
-    variant: form
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
+    variant: form
     form:
       variant: stacked
       submit_label: Apply Now
-      button_className: bg-white text-primary hover:bg-white/90 border-white
-      terms_className: text-white/80
-      show_terms: true
       fields:
         email:
           visible: true
@@ -476,6 +474,10 @@ sections:
         email: true
         marketing: true
         marketing_text: I agree to receive information about courses and promotions
+      show_terms: true
+      button_className: bg-white text-primary hover:bg-white/90 border-white
+      terms_className: text-white/80
+    background: hsl(var(--primary))
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
