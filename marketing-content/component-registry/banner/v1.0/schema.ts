@@ -10,6 +10,7 @@ import { ctaButtonSchema } from "../../common/schema";
 export const bannerSectionSchema = z.object({
   type: z.literal("banner"),
   version: z.string().optional(),
+  logo: z.string().optional(),
   avatars: z.array(z.string()).optional(),
   title: z.string(),
   description: z.string().optional(),

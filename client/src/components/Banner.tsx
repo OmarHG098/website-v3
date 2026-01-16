@@ -6,7 +6,7 @@ interface BannerProps {
 }
 
 export function Banner({ data }: BannerProps) {
-  const { avatars, title, description, cta, background = "gradient" } = data;
+  const { logo, avatars, title, description, cta, background = "gradient" } = data;
 
   const getBackgroundStyle = () => {
     switch (background) {
@@ -29,7 +29,12 @@ export function Banner({ data }: BannerProps) {
   const descriptionColorClass = isGradient ? "text-white/85" : "text-muted-foreground";
 
   const renderAvatars = () => {
-    if (!avatars || avatars.length === 0) return null;
+    const hasLogo = !!logo;
+    const hasAvatars = avatars && avatars.length > 0;
+    
+    if (!hasLogo && !hasAvatars) return null;
+
+    const totalItems = (hasLogo ? 1 : 0) + (avatars?.length || 0);
 
     return (
       <div 
@@ -37,11 +42,27 @@ export function Banner({ data }: BannerProps) {
         data-testid="banner-avatars"
       >
         <div className="flex -space-x-3">
-          {avatars.map((avatarUrl, index) => (
+          {hasLogo && (
+            <div
+              className="w-14 h-14 rounded-full border-4 border-white overflow-hidden flex items-center justify-center"
+              style={{ 
+                backgroundColor: "hsl(var(--primary))",
+                zIndex: totalItems,
+              }}
+              data-testid="banner-logo"
+            >
+              <img 
+                src={logo} 
+                alt="Logo" 
+                className="w-9 h-9 object-contain"
+              />
+            </div>
+          )}
+          {avatars?.map((avatarUrl, index) => (
             <div
               key={index}
               className="w-14 h-14 rounded-full border-4 border-white overflow-hidden flex items-center justify-center bg-muted"
-              style={{ zIndex: avatars.length - index }}
+              style={{ zIndex: totalItems - index - (hasLogo ? 1 : 0) }}
               data-testid={`banner-avatar-${index}`}
             >
               <img 

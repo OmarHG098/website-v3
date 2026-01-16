@@ -34,6 +34,7 @@ sections:
       desktop: md lg
   - type: banner
     version: "1.0"
+    logo: /images/rigobot-icon.png
     avatars:
       - https://randomuser.me/api/portraits/women/1.jpg
       - https://randomuser.me/api/portraits/men/2.jpg
