@@ -99,9 +99,14 @@ export function Banner({ data }: BannerProps) {
 
           {cta && (
             <Button
-              variant={isGradient ? "secondary" : "default"}
+              variant={
+                cta.variant === "primary" ? (isGradient ? "secondary" : "default") :
+                cta.variant === "secondary" ? "secondary" :
+                "outline"
+              }
               size="lg"
               asChild
+              className={cta.variant === "outline" && isGradient ? "border-white text-white hover:bg-white/10" : ""}
               data-testid="button-banner-cta"
             >
               <a href={cta.url}>{cta.text}</a>

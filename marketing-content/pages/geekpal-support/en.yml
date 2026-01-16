@@ -32,6 +32,20 @@ sections:
     paddingY:
       mobile: none lg
       desktop: md lg
+  - type: banner
+    version: "1.0"
+    icon:
+      type: image
+      src: /images/rigobot-icon.png
+      alt: Rigobot
+      background_color: "hsl(var(--primary))"
+    title: Lorem ipsum dolor sit amet
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+    cta:
+      text: Learn More
+      url: "#"
+      variant: primary
+    background: gradient
   - type: split_cards
     variant: primary-left
     primary:
