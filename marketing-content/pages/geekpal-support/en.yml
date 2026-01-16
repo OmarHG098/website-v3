@@ -40,25 +40,13 @@ sections:
       - https://randomuser.me/api/portraits/men/2.jpg
       - https://randomuser.me/api/portraits/women/3.jpg
       - https://randomuser.me/api/portraits/men/4.jpg
-    title: Lorem ipsum dolor sit amet
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+    title: Advance Faster, Never Lose Momentum
+    description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
     cta:
       text: Learn More
       url: "#"
       variant: primary
     background: gradient
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Advance Faster, Never Lose Momentum
-      description: "The #1 reason people quit when learning to code? Getting stuck. GeekPal keeps you moving with support that shows up exactly when you need it."
-    secondary:
-      benefits:
-        - text: Always supported
-        - text: Instant 24/7 guidance
-        - text: Real humans when it matters
-        - text: Community support built in
-    background: muted
   - type: bento_cards
     version: "1.0"
     title: 7 Ways Rigobot Keeps You Moving
