@@ -32,46 +32,53 @@ export function BentoCards({ data }: BentoCardsProps) {
 
   return (
     <section
-      className={`py-16 md:py-24 ${background || ""}`}
+      className={`py-16 md:py-24 overflow-hidden ${background || ""}`}
       data-testid="section-bento-cards"
     >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-10">
-          {title && (
-            <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3"
-              data-testid="text-bento-cards-title"
-            >
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p
-              className="text-lg font-semibold text-primary mb-3"
-              data-testid="text-bento-cards-subtitle"
-            >
-              {subtitle}
-            </p>
-          )}
-          {description && (
-            <p
-              className="text-muted-foreground text-base leading-relaxed max-w-3xl"
-              data-testid="text-bento-cards-description"
-            >
-              {description}
-            </p>
-          )}
-        </div>
+      <div className="max-w-6xl mx-auto px-4 mb-10">
+        {title && (
+          <h2
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3"
+            data-testid="text-bento-cards-title"
+          >
+            {title}
+          </h2>
+        )}
+        {subtitle && (
+          <p
+            className="text-lg font-semibold text-primary mb-3"
+            data-testid="text-bento-cards-subtitle"
+          >
+            {subtitle}
+          </p>
+        )}
+        {description && (
+          <p
+            className="text-muted-foreground text-base leading-relaxed max-w-3xl"
+            data-testid="text-bento-cards-description"
+          >
+            {description}
+          </p>
+        )}
+      </div>
 
-        <div className="hidden lg:block">
+      <div className="hidden lg:block">
+        <div
+          className="pl-4"
+          style={{
+            marginLeft: "max(1rem, calc(50vw - 576px))",
+            marginRight: "-100vw",
+            paddingRight: "100vw",
+          }}
+        >
           <div
-            className="grid grid-cols-3 auto-rows-[220px] gap-5"
+            className="grid grid-cols-3 xl:grid-cols-4 auto-rows-[200px] gap-5"
             data-testid="bento-cards-grid"
           >
             {items.map((item, index) => {
               const itemId =
                 item.id || item.title.toLowerCase().replace(/\s+/g, "-");
-              const gridConfig = getGridConfig(index, items.length);
+              const gridConfig = getGridConfig(index);
 
               return (
                 <Card
@@ -111,8 +118,10 @@ export function BentoCards({ data }: BentoCardsProps) {
             })}
           </div>
         </div>
+      </div>
 
-        <div className="lg:hidden">
+      <div className="lg:hidden">
+        <div className="max-w-6xl mx-auto px-4">
           <div
             className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             data-testid="bento-cards-grid-mobile"
@@ -160,39 +169,23 @@ export function BentoCards({ data }: BentoCardsProps) {
   );
 }
 
-function getGridConfig(
-  index: number,
-  totalItems: number
-): { colSpan: string; rowSpan: string } {
-  if (totalItems === 4) {
-    const configs = [
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 2", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 2" },
-    ];
-    if (index === 3) {
-      configs[3] = { colSpan: "span 1", rowSpan: "span 2" };
-      configs[3] = { colSpan: "3 / 4", rowSpan: "1 / 3" };
-    }
-    return configs[index] || { colSpan: "span 1", rowSpan: "span 1" };
-  }
+function getGridConfig(index: number): { colSpan: string; rowSpan: string } {
+  const cycleIndex = Math.floor(index / 4);
+  const positionInCycle = index % 4;
+  const baseRow = cycleIndex * 2 + 1;
 
-  if (totalItems >= 5) {
-    const configs = [
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "3 / 4", rowSpan: "1 / 3" },
-      { colSpan: "span 2", rowSpan: "span 1" },
-    ];
-    
-    if (index < 4) {
-      return configs[index];
-    }
-    return { colSpan: "span 1", rowSpan: "span 1" };
+  switch (positionInCycle) {
+    case 0:
+      return { colSpan: "span 1", rowSpan: `${baseRow} / ${baseRow + 1}` };
+    case 1:
+      return { colSpan: "span 1", rowSpan: `${baseRow} / ${baseRow + 1}` };
+    case 2:
+      return { colSpan: "span 2", rowSpan: `${baseRow + 1} / ${baseRow + 2}` };
+    case 3:
+      return { colSpan: "3 / 4", rowSpan: `${baseRow} / ${baseRow + 2}` };
+    default:
+      return { colSpan: "span 1", rowSpan: "span 1" };
   }
-
-  return { colSpan: "span 1", rowSpan: "span 1" };
 }
 
 export default BentoCards;
