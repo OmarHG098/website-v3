@@ -30,6 +30,9 @@ export function BentoCards({ data }: BentoCardsProps) {
     return null;
   }
 
+  const numCycles = Math.ceil(items.length / 4);
+  const totalColumns = numCycles * 3;
+
   return (
     <section
       className={`py-16 md:py-24 overflow-hidden ${background || ""}`}
@@ -67,12 +70,14 @@ export function BentoCards({ data }: BentoCardsProps) {
           className="pl-4"
           style={{
             marginLeft: "max(1rem, calc(50vw - 576px))",
-            marginRight: "-100vw",
-            paddingRight: "100vw",
           }}
         >
           <div
-            className="grid grid-cols-3 xl:grid-cols-4 auto-rows-[200px] gap-5"
+            className="grid auto-rows-[200px] gap-5"
+            style={{
+              gridTemplateColumns: `repeat(${totalColumns}, minmax(280px, 320px))`,
+              gridTemplateRows: "repeat(2, 200px)",
+            }}
             data-testid="bento-cards-grid"
           >
             {items.map((item, index) => {
@@ -172,17 +177,17 @@ export function BentoCards({ data }: BentoCardsProps) {
 function getGridConfig(index: number): { colSpan: string; rowSpan: string } {
   const cycleIndex = Math.floor(index / 4);
   const positionInCycle = index % 4;
-  const baseRow = cycleIndex * 2 + 1;
+  const baseCol = cycleIndex * 3 + 1;
 
   switch (positionInCycle) {
     case 0:
-      return { colSpan: "span 1", rowSpan: `${baseRow} / ${baseRow + 1}` };
+      return { colSpan: `${baseCol} / ${baseCol + 1}`, rowSpan: "1 / 2" };
     case 1:
-      return { colSpan: "span 1", rowSpan: `${baseRow} / ${baseRow + 1}` };
+      return { colSpan: `${baseCol + 1} / ${baseCol + 2}`, rowSpan: "1 / 2" };
     case 2:
-      return { colSpan: "span 2", rowSpan: `${baseRow + 1} / ${baseRow + 2}` };
+      return { colSpan: `${baseCol} / ${baseCol + 2}`, rowSpan: "2 / 3" };
     case 3:
-      return { colSpan: "3 / 4", rowSpan: `${baseRow} / ${baseRow + 2}` };
+      return { colSpan: `${baseCol + 2} / ${baseCol + 3}`, rowSpan: "1 / 3" };
     default:
       return { colSpan: "span 1", rowSpan: "span 1" };
   }
