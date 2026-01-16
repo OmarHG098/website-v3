@@ -30,8 +30,8 @@ export function BentoCards({ data }: BentoCardsProps) {
     return null;
   }
 
-  const numCycles = Math.ceil(items.length / 3);
-  const totalColumns = numCycles * 2;
+  const numCycles = Math.ceil(items.length / 4);
+  const totalColumns = numCycles * 3;
 
   return (
     <section
@@ -67,15 +67,15 @@ export function BentoCards({ data }: BentoCardsProps) {
 
       <div className="hidden lg:block">
         <div
-          className="pl-4 overflow-x-auto scrollbar-thin"
+          className="pl-4"
           style={{
             marginLeft: "max(1rem, calc(50vw - 576px))",
           }}
         >
           <div
-            className="grid gap-5 pb-4"
+            className="grid auto-rows-[200px] gap-5"
             style={{
-              gridTemplateColumns: `repeat(${totalColumns}, 280px)`,
+              gridTemplateColumns: `repeat(${totalColumns}, minmax(280px, 320px))`,
               gridTemplateRows: "repeat(2, 200px)",
             }}
             data-testid="bento-cards-grid"
@@ -175,9 +175,9 @@ export function BentoCards({ data }: BentoCardsProps) {
 }
 
 function getGridConfig(index: number): { colSpan: string; rowSpan: string } {
-  const cycleIndex = Math.floor(index / 3);
-  const positionInCycle = index % 3;
-  const baseCol = cycleIndex * 2 + 1;
+  const cycleIndex = Math.floor(index / 4);
+  const positionInCycle = index % 4;
+  const baseCol = cycleIndex * 3 + 1;
 
   switch (positionInCycle) {
     case 0:
@@ -186,6 +186,8 @@ function getGridConfig(index: number): { colSpan: string; rowSpan: string } {
       return { colSpan: `${baseCol + 1} / ${baseCol + 2}`, rowSpan: "1 / 2" };
     case 2:
       return { colSpan: `${baseCol} / ${baseCol + 2}`, rowSpan: "2 / 3" };
+    case 3:
+      return { colSpan: `${baseCol + 2} / ${baseCol + 3}`, rowSpan: "1 / 3" };
     default:
       return { colSpan: "span 1", rowSpan: "span 1" };
   }
