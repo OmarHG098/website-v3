@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
-import type { ComponentType } from "react";
+import { useRef, useState, type ComponentType, type MouseEvent } from "react";
 import type { BentoCardsSection } from "@shared/schema";
 
 function getIcon(iconName: string, className?: string, color?: string) {
@@ -25,6 +25,10 @@ interface BentoCardsProps {
 
 export function BentoCards({ data }: BentoCardsProps) {
   const { title, subtitle, description, items, background } = data;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   if (!items || items.length === 0) {
     return null;
@@ -32,6 +36,29 @@ export function BentoCards({ data }: BentoCardsProps) {
 
   const numCycles = Math.ceil(items.length / 4);
   const totalColumns = numCycles * 3;
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   return (
     <section
@@ -67,16 +94,22 @@ export function BentoCards({ data }: BentoCardsProps) {
 
       <div className="hidden lg:block">
         <div
-          className="pl-4"
+          ref={scrollRef}
+          className={`pl-4 overflow-x-auto scrollbar-hide ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{
             marginLeft: "max(1rem, calc(50vw - 576px))",
           }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          data-testid="bento-cards-scroll-container"
         >
           <div
-            className="grid auto-rows-[200px] gap-5"
+            className="grid gap-5 select-none"
             style={{
-              gridTemplateColumns: `repeat(${totalColumns}, minmax(280px, 320px))`,
-              gridTemplateRows: "repeat(2, 200px)",
+              gridTemplateColumns: `repeat(${totalColumns}, minmax(320px, 380px))`,
+              gridTemplateRows: "repeat(2, 260px)",
             }}
             data-testid="bento-cards-grid"
           >
@@ -88,7 +121,7 @@ export function BentoCards({ data }: BentoCardsProps) {
               return (
                 <Card
                   key={itemId}
-                  className="p-6 flex flex-col bg-card border-border/50 hover-elevate transition-all duration-300"
+                  className="p-8 flex flex-col bg-card border-border/50 hover-elevate transition-all duration-300"
                   style={{
                     gridColumn: gridConfig.colSpan,
                     gridRow: gridConfig.rowSpan,
@@ -96,16 +129,16 @@ export function BentoCards({ data }: BentoCardsProps) {
                   data-testid={`card-bento-${itemId}`}
                 >
                   {item.icon && (
-                    <div className="mb-4 w-8 h-8">
+                    <div className="mb-5 w-10 h-10">
                       {getIcon(
                         item.icon,
-                        "w-8 h-8",
+                        "w-10 h-10",
                         item.icon_color || "hsl(var(--primary))"
                       )}
                     </div>
                   )}
                   <h3
-                    className="font-semibold text-foreground text-base mb-3"
+                    className="font-semibold text-foreground text-lg mb-3"
                     data-testid={`text-bento-title-${itemId}`}
                   >
                     {item.title}
