@@ -22,13 +22,25 @@ interface FeatureBullet {
   icon?: string;
 }
 
+interface VideoConfig {
+  url: string;
+  ratio?: string;
+  muted?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
+  preview_image_url?: string;
+  with_shadow_border?: boolean;
+}
+
 interface Feature {
   icon: string;
   title: string;
   description: string;
   show_rigobot_logo?: boolean;
   bullets?: FeatureBullet[];
+  /** @deprecated Use video.url instead */
   video_url?: string;
+  video?: VideoConfig;
   image_id?: string;
   cta?: {
     text: string;
@@ -202,21 +214,28 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
                         bordered={true}
                       />
                     </div>
-                  ) : displayedFeature.video_url ? (
+                  ) : (displayedFeature.video?.url || displayedFeature.video_url) ? (
                     <div data-testid="video-container-feature">
                       <UniversalVideo
-                        url={displayedFeature.video_url}
-                        autoplay={displayedFeature.video_url.includes('.mp4')}
-                        loop={displayedFeature.video_url.includes('.mp4')}
-                        muted={displayedFeature.video_url.includes('.mp4')}
-                        bordered={true}
+                        url={displayedFeature.video?.url || displayedFeature.video_url!}
+                        autoplay={displayedFeature.video?.autoplay ?? (displayedFeature.video?.url || displayedFeature.video_url || '').includes('.mp4')}
+                        loop={displayedFeature.video?.loop ?? (displayedFeature.video?.url || displayedFeature.video_url || '').includes('.mp4')}
+                        muted={displayedFeature.video?.muted ?? (displayedFeature.video?.url || displayedFeature.video_url || '').includes('.mp4')}
+                        bordered={displayedFeature.video?.with_shadow_border ?? true}
+                        ratio={displayedFeature.video?.ratio}
+                        preview_image_url={displayedFeature.video?.preview_image_url}
                       />
                     </div>
                   ) : videoId ? (
                     <div data-testid="video-container-ai">
                       <UniversalVideo
-                        url={data.video_url!}
-                        bordered={true}
+                        url={data.video?.url || data.video_url!}
+                        autoplay={data.video?.autoplay}
+                        loop={data.video?.loop}
+                        muted={data.video?.muted}
+                        bordered={data.video?.with_shadow_border ?? true}
+                        ratio={data.video?.ratio}
+                        preview_image_url={data.video?.preview_image_url}
                       />
                     </div>
                   ) : null}
@@ -289,7 +308,8 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
 
 // Highlight Variant Component
 function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
-  const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
+  const videoUrl = data.video?.url || data.video_url;
+  const hasVideo = !!videoUrl;
 
   return (
     <section 
@@ -350,18 +370,19 @@ function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
             )}
           </div>
           
-          {videoId && data.video_url && (
+          {hasVideo && (
             <div 
-              className={`relative aspect-video rounded-card overflow-hidden shadow-card ${data.video_position === "left" ? "lg:order-1" : ""}`}
+              className={data.video_position === "left" ? "lg:order-1" : ""}
               data-testid="video-container-highlight"
             >
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}`}
-                title="Learn with 4Geeks"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-                data-testid="iframe-youtube-highlight"
+              <UniversalVideo
+                url={videoUrl!}
+                autoplay={data.video?.autoplay}
+                loop={data.video?.loop}
+                muted={data.video?.muted}
+                bordered={data.video?.with_shadow_border ?? true}
+                ratio={data.video?.ratio}
+                preview_image_url={data.video?.preview_image_url}
               />
             </div>
           )}
