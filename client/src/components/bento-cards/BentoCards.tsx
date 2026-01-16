@@ -32,134 +32,87 @@ export function BentoCards({ data }: BentoCardsProps) {
 
   return (
     <section
-      className={`py-16 md:py-24 overflow-hidden ${background || ""}`}
+      className={`py-16 md:py-24 ${background || ""}`}
       data-testid="section-bento-cards"
     >
-      <div className="hidden lg:block">
-        <div className="flex items-start">
-          <div
-            className="flex-shrink-0 pl-4"
-            style={{
-              width: "calc(50vw - 576px + 280px)",
-              minWidth: "280px",
-              maxWidth: "360px",
-              marginLeft: "max(1rem, calc(50vw - 576px))",
-            }}
-          >
-            <div className="flex flex-col justify-start pt-4 pr-8">
-              {title && (
-                <h2
-                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3"
-                  data-testid="text-bento-cards-title"
-                >
-                  {title}
-                </h2>
-              )}
-              {subtitle && (
-                <p
-                  className="text-lg font-semibold text-primary mb-3"
-                  data-testid="text-bento-cards-subtitle"
-                >
-                  {subtitle}
-                </p>
-              )}
-              {description && (
-                <p
-                  className="text-muted-foreground text-base leading-relaxed"
-                  data-testid="text-bento-cards-description"
-                >
-                  {description}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div
-            className="flex-1"
-            style={{
-              marginRight: "-100vw",
-              paddingRight: "100vw",
-            }}
-          >
-            <div
-              className="grid grid-cols-3 xl:grid-cols-4 auto-rows-[180px] gap-5"
-              data-testid="bento-cards-grid"
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="mb-10">
+          {title && (
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3"
+              data-testid="text-bento-cards-title"
             >
-              {items.map((item, index) => {
-                const itemId =
-                  item.id || item.title.toLowerCase().replace(/\s+/g, "-");
-                const gridConfig = getGridConfig(index, items.length);
+              {title}
+            </h2>
+          )}
+          {subtitle && (
+            <p
+              className="text-lg font-semibold text-primary mb-3"
+              data-testid="text-bento-cards-subtitle"
+            >
+              {subtitle}
+            </p>
+          )}
+          {description && (
+            <p
+              className="text-muted-foreground text-base leading-relaxed max-w-3xl"
+              data-testid="text-bento-cards-description"
+            >
+              {description}
+            </p>
+          )}
+        </div>
 
-                return (
-                  <Card
-                    key={itemId}
-                    className="p-6 flex flex-col bg-card border-border/50 hover-elevate transition-all duration-300"
-                    style={{
-                      gridColumn: gridConfig.colSpan,
-                      gridRow: gridConfig.rowSpan,
-                    }}
-                    data-testid={`card-bento-${itemId}`}
+        <div className="hidden lg:block">
+          <div
+            className="grid grid-cols-3 auto-rows-[220px] gap-5"
+            data-testid="bento-cards-grid"
+          >
+            {items.map((item, index) => {
+              const itemId =
+                item.id || item.title.toLowerCase().replace(/\s+/g, "-");
+              const gridConfig = getGridConfig(index, items.length);
+
+              return (
+                <Card
+                  key={itemId}
+                  className="p-6 flex flex-col bg-card border-border/50 hover-elevate transition-all duration-300"
+                  style={{
+                    gridColumn: gridConfig.colSpan,
+                    gridRow: gridConfig.rowSpan,
+                  }}
+                  data-testid={`card-bento-${itemId}`}
+                >
+                  {item.icon && (
+                    <div className="mb-4 w-8 h-8">
+                      {getIcon(
+                        item.icon,
+                        "w-8 h-8",
+                        item.icon_color || "hsl(var(--primary))"
+                      )}
+                    </div>
+                  )}
+                  <h3
+                    className="font-semibold text-foreground text-base mb-3"
+                    data-testid={`text-bento-title-${itemId}`}
                   >
-                    {item.icon && (
-                      <div className="mb-4 w-8 h-8">
-                        {getIcon(
-                          item.icon,
-                          "w-8 h-8",
-                          item.icon_color || "hsl(var(--primary))"
-                        )}
-                      </div>
-                    )}
-                    <h3
-                      className="font-semibold text-foreground text-base mb-3"
-                      data-testid={`text-bento-title-${itemId}`}
+                    {item.title}
+                  </h3>
+                  {item.description && (
+                    <p
+                      className="text-sm text-muted-foreground leading-relaxed"
+                      data-testid={`text-bento-desc-${itemId}`}
                     >
-                      {item.title}
-                    </h3>
-                    {item.description && (
-                      <p
-                        className="text-sm text-muted-foreground leading-relaxed"
-                        data-testid={`text-bento-desc-${itemId}`}
-                      >
-                        {item.description}
-                      </p>
-                    )}
-                  </Card>
-                );
-              })}
-            </div>
+                      {item.description}
+                    </p>
+                  )}
+                </Card>
+              );
+            })}
           </div>
         </div>
-      </div>
 
-      <div className="lg:hidden">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="mb-8">
-            {title && (
-              <h2
-                className="text-2xl md:text-3xl font-bold text-foreground leading-tight mb-3"
-                data-testid="text-bento-cards-title-mobile"
-              >
-                {title}
-              </h2>
-            )}
-            {subtitle && (
-              <p
-                className="text-lg font-semibold text-primary mb-3"
-                data-testid="text-bento-cards-subtitle-mobile"
-              >
-                {subtitle}
-              </p>
-            )}
-            {description && (
-              <p
-                className="text-muted-foreground text-base leading-relaxed"
-                data-testid="text-bento-cards-description-mobile"
-              >
-                {description}
-              </p>
-            )}
-          </div>
-
+        <div className="lg:hidden">
           <div
             className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             data-testid="bento-cards-grid-mobile"
@@ -211,39 +164,32 @@ function getGridConfig(
   index: number,
   totalItems: number
 ): { colSpan: string; rowSpan: string } {
-  if (totalItems >= 7) {
+  if (totalItems === 4) {
     const configs = [
       { colSpan: "span 1", rowSpan: "span 1" },
       { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
       { colSpan: "span 2", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
+      { colSpan: "span 1", rowSpan: "span 2" },
     ];
+    if (index === 3) {
+      configs[3] = { colSpan: "span 1", rowSpan: "span 2" };
+      configs[3] = { colSpan: "3 / 4", rowSpan: "1 / 3" };
+    }
     return configs[index] || { colSpan: "span 1", rowSpan: "span 1" };
   }
 
-  if (totalItems >= 4) {
+  if (totalItems >= 5) {
     const configs = [
       { colSpan: "span 1", rowSpan: "span 1" },
       { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
+      { colSpan: "3 / 4", rowSpan: "1 / 3" },
       { colSpan: "span 2", rowSpan: "span 1" },
     ];
+    
     if (index < 4) {
       return configs[index];
     }
     return { colSpan: "span 1", rowSpan: "span 1" };
-  }
-
-  if (totalItems === 3) {
-    const configs = [
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 1", rowSpan: "span 1" },
-      { colSpan: "span 2", rowSpan: "span 1" },
-    ];
-    return configs[index];
   }
 
   return { colSpan: "span 1", rowSpan: "span 1" };
