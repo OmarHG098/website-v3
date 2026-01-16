@@ -37,19 +37,16 @@ export function Banner({ data }: BannerProps) {
         data-testid="banner-avatars"
       >
         <div className="flex -space-x-3">
-          {avatars.map((avatar, index) => (
+          {avatars.map((avatarUrl, index) => (
             <div
               key={index}
-              className="w-14 h-14 rounded-full border-4 border-white overflow-hidden flex items-center justify-center"
-              style={{ 
-                backgroundColor: avatar.background_color || "hsl(var(--muted))",
-                zIndex: avatars.length - index,
-              }}
+              className="w-14 h-14 rounded-full border-4 border-white overflow-hidden flex items-center justify-center bg-muted"
+              style={{ zIndex: avatars.length - index }}
               data-testid={`banner-avatar-${index}`}
             >
               <img 
-                src={avatar.src} 
-                alt={avatar.alt || ""} 
+                src={avatarUrl} 
+                alt="" 
                 className="w-full h-full object-cover"
               />
             </div>

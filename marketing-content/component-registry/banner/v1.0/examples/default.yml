@@ -5,15 +5,10 @@ yaml: |
   type: banner
   version: "1.0"
   avatars:
-    - src: /images/rigobot-icon.png
-      alt: Rigobot
-      background_color: "hsl(var(--primary))"
-    - src: /attached_assets/profile-pic6_1764775742734.webp
-      alt: Mentor
-    - src: /attached_assets/profile-pic5_1764775742734.webp
-      alt: Mentor
-    - src: /attached_assets/profile-pic4_1764775742734.webp
-      alt: Mentor
+    - https://randomuser.me/api/portraits/women/1.jpg
+    - https://randomuser.me/api/portraits/men/2.jpg
+    - https://randomuser.me/api/portraits/women/3.jpg
+    - https://randomuser.me/api/portraits/men/4.jpg
   title: Lorem ipsum dolor sit amet
   description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
   cta:
