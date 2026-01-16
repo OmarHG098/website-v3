@@ -1,13 +1,12 @@
 import type { BannerSection as BannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import * as TablerIcons from "@tabler/icons-react";
 
 interface BannerProps {
   data: BannerSectionType;
 }
 
 export function Banner({ data }: BannerProps) {
-  const { icon, title, description, cta, background = "gradient" } = data;
+  const { avatars, title, description, cta, background = "gradient" } = data;
 
   const getBackgroundStyle = () => {
     switch (background) {
@@ -29,43 +28,35 @@ export function Banner({ data }: BannerProps) {
   const textColorClass = isGradient ? "text-white" : "text-foreground";
   const descriptionColorClass = isGradient ? "text-white/85" : "text-muted-foreground";
 
-  const renderIcon = () => {
-    if (!icon) return null;
+  const renderAvatars = () => {
+    if (!avatars || avatars.length === 0) return null;
 
-    const iconBgColor = icon.background_color || "hsl(var(--primary))";
-
-    if (icon.type === "image" && icon.src) {
-      return (
-        <div 
-          className="w-16 h-16 rounded-full flex items-center justify-center mx-auto -mt-8 mb-6"
-          style={{ backgroundColor: iconBgColor }}
-          data-testid="banner-icon"
-        >
-          <img 
-            src={icon.src} 
-            alt={icon.alt || ""} 
-            className="w-10 h-10 object-contain"
-          />
+    return (
+      <div 
+        className="flex justify-center -mt-14 mb-6"
+        data-testid="banner-avatars"
+      >
+        <div className="flex -space-x-3">
+          {avatars.map((avatar, index) => (
+            <div
+              key={index}
+              className="w-14 h-14 rounded-full border-4 border-white overflow-hidden flex items-center justify-center"
+              style={{ 
+                backgroundColor: avatar.background_color || "hsl(var(--muted))",
+                zIndex: avatars.length - index,
+              }}
+              data-testid={`banner-avatar-${index}`}
+            >
+              <img 
+                src={avatar.src} 
+                alt={avatar.alt || ""} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
-      );
-    }
-
-    if (icon.type === "tabler" && icon.name) {
-      const IconComponent = (TablerIcons as unknown as Record<string, React.ComponentType<{ size?: number; className?: string }>>)[icon.name];
-      if (IconComponent) {
-        return (
-          <div 
-            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto -mt-8 mb-6"
-            style={{ backgroundColor: iconBgColor }}
-            data-testid="banner-icon"
-          >
-            <IconComponent size={32} className="text-white" />
-          </div>
-        );
-      }
-    }
-
-    return null;
+      </div>
+    );
   };
 
   return (
@@ -75,11 +66,11 @@ export function Banner({ data }: BannerProps) {
     >
       <div className="max-w-6xl mx-auto px-4">
         <div 
-          className="rounded-[0.8rem] px-6 py-12 md:px-12 md:py-16 text-center"
+          className="relative rounded-[0.8rem] px-6 pt-10 pb-12 md:px-12 md:pt-10 md:pb-16 text-center"
           style={getBackgroundStyle()}
           data-testid="banner-container"
         >
-          {renderIcon()}
+          {renderAvatars()}
 
           <h2 
             className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 max-w-3xl mx-auto ${textColorClass}`}

@@ -674,8 +674,8 @@ import { valueProofPanelSectionSchema } from "../marketing-content/component-reg
 import { stickyCtaSectionSchema } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
 export { stickyCtaSectionSchema, type StickyCtaSection } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
 import { bentoCardsSectionSchema } from "../marketing-content/component-registry/bento_cards/v1.0/schema";
-import { bannerSectionSchema, type BannerSection, type BannerIcon } from "../marketing-content/component-registry/banner/v1.0/schema";
-export { bannerSectionSchema, type BannerSection, type BannerIcon };
+import { bannerSectionSchema, type BannerSection, type BannerAvatar } from "../marketing-content/component-registry/banner/v1.0/schema";
+export { bannerSectionSchema, type BannerSection, type BannerAvatar };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
