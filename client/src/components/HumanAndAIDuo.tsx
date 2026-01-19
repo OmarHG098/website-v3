@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
-import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
+import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
 import { getCustomIcon } from "@/components/custom-icons";
 import student1 from "@assets/student-1-asian.png";
 import student2 from "@assets/student-2-latin.png";
@@ -95,7 +95,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                       <span className="text-primary flex-shrink-0">{getIcon(group.icon, "w-6 h-6")}</span>
                     ) : (
                       <div className="flex-shrink-0 w-6 h-6 rounded-full overflow-hidden">
-                        <img src={group.image || rigobotLogo} alt="Support icon" className="w-full h-full object-cover" />
+                        <img src={group.image || rigobotAvatar} alt="Support icon" className="w-full h-full object-cover" />
                       </div>
                     )}
                     <h4 className="font-semibold text-foreground uppercase tracking-wide text-xs">{group.title}</h4>
@@ -151,7 +151,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                       <span className="text-primary flex-shrink-0">{getIcon(group.icon, "w-7 h-7")}</span>
                     ) : (
                       <div className="flex-shrink-0 w-7 h-7 rounded-full overflow-hidden">
-                        <img src={group.image || rigobotLogo} alt="Support icon" className="w-full h-full object-cover" />
+                        <img src={group.image || rigobotAvatar} alt="Support icon" className="w-full h-full object-cover" />
                       </div>
                     )}
                     <h4 className="font-semibold text-foreground uppercase tracking-wide text-xs">{group.title}</h4>
@@ -207,7 +207,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
                       <span className="text-primary flex-shrink-0">{getIcon(group.icon, "w-8 h-8")}</span>
                     ) : (
                       <div className="flex-shrink-0 w-8 h-8 rounded-full overflow-hidden">
-                        <img src={group.image || rigobotLogo} alt="Support icon" className="w-full h-full object-cover" />
+                        <img src={group.image || rigobotAvatar} alt="Support icon" className="w-full h-full object-cover" />
                       </div>
                     )}
                     <h4 className="font-semibold text-foreground uppercase tracking-wide text-xs">{group.title}</h4>
