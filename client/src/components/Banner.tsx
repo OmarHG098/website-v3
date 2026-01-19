@@ -99,7 +99,7 @@ export function Banner({ data }: BannerProps) {
 
           {description && (
             <p 
-              className="text-[30px] mx-auto mb-8 text-white/85"
+              className="mx-auto mb-8 text-white/85 text-[26px]"
               data-testid="text-banner-description"
             >
               {description}
