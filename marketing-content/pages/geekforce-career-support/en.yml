@@ -17,11 +17,8 @@ sections:
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
+    description: Get unlimited 1:1 career support tailored to your goals, background, and experience—for life. From resumes and portfolios to interviews, job strategy, and navigating AI-driven hiring platforms, we help you succeed in today’s tech job market.
     marquee:
-      speed: 40
-      gradient: true
-      gradientWidth: 50
       items:
         - id: switchup-2025
           alt: SwitchUp - Best Coding Bootcamps 2025
@@ -43,6 +40,9 @@ sections:
           alt: Fortune - Best Education Company
           logo: /attached_assets/fortune-logo_1764709618095.webp
           logoHeight: h-8 md:h-12
+      speed: 40
+      gradient: true
+      gradientWidth: 50
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
