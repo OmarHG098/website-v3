@@ -333,7 +333,8 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
             data-testid="marquee-testimonials-slide"
           >
             <div className="flex items-start py-4">
-              {masonryColumns.map((column, index) => (
+              {/* Duplicate columns 3x to ensure seamless loop on ultra-wide screens */}
+              {[...masonryColumns, ...masonryColumns, ...masonryColumns].map((column, index) => (
                 <MasonryColumnComponent key={index} column={column} />
               ))}
             </div>
