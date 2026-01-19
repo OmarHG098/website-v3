@@ -100,7 +100,7 @@ export function FAQSection({ data }: FAQSectionProps) {
     >
       <div className="max-w-6xl mx-auto px-4">
         <h2 
-          className="text-h2 mb-8 text-center text-foreground"
+          className="mb-8 text-center text-foreground text-[36px]"
           data-testid="text-faq-title"
         >
           {data.title}
