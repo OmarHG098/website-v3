@@ -3,6 +3,17 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { getCustomIcon } from "@/components/custom-icons";
+import student1 from "@assets/student-1-asian.png";
+import student2 from "@assets/student-2-latin.png";
+import student3 from "@assets/student-3-african.png";
+import student4 from "@assets/student-4-lady-latin.png";
+
+const studentImages = [
+  { src: student1, alt: "Student 1" },
+  { src: student2, alt: "Student 2" },
+  { src: student3, alt: "Student 3" },
+  { src: student4, alt: "Student 4" },
+];
 
 interface BulletItem {
   text: string;
@@ -63,17 +74,18 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               {data.description}
             </p>
           </div>
-          {data.image && (
-            <div className="flex justify-center">
-              <img 
-                src={data.image} 
-                alt={data.image_alt || "Section image"}
-                className="rounded-md max-w-[220px] h-auto"
-                loading="lazy"
-                data-testid="img-human-ai-mobile"
-              />
-            </div>
-          )}
+          <div className="flex justify-center gap-2" data-testid="img-students-mobile">
+            {studentImages.map((image, index) => (
+              <div key={index} className="w-16 h-24 flex-shrink-0">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover rounded-lg"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
           <Card className="p-0 overflow-hidden" data-testid="card-info-container-mobile">
             <div className="divide-y divide-border">
               {data.bullet_groups.map((group, groupIndex) => (
@@ -117,17 +129,18 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
-            {data.image && (
-              <div className="col-span-5 flex justify-end">
-                <img 
-                  src={data.image} 
-                  alt={data.image_alt || "Section image"} 
-                  className="rounded-md w-auto max-w-[200px] h-auto" 
-                  loading="lazy" 
-                  data-testid="img-human-ai-tablet" 
-                />
-              </div>
-            )}
+            <div className="col-span-5 flex justify-end gap-2" data-testid="img-students-tablet">
+              {studentImages.map((image, index) => (
+                <div key={index} className="w-12 h-28 flex-shrink-0">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover rounded-lg"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <Card className="p-0 overflow-hidden hover:shadow-md transition-shadow duration-200" data-testid="card-info-container-tablet">
             <div className="grid grid-cols-2 divide-x divide-border">
@@ -172,17 +185,18 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
-            {data.image && (
-              <div className="col-span-5 flex justify-end items-start">
-                <img 
-                  src={data.image} 
-                  alt={data.image_alt || "Section image"} 
-                  className="rounded-md w-auto max-w-[280px] h-auto" 
-                  loading="lazy" 
-                  data-testid="img-human-ai" 
-                />
-              </div>
-            )}
+            <div className="col-span-5 flex justify-end items-start gap-2" data-testid="img-students-desktop">
+              {studentImages.map((image, index) => (
+                <div key={index} className="w-14 h-32 flex-shrink-0">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover rounded-lg"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <Card className="p-0 overflow-hidden hover:shadow-md transition-shadow duration-200" data-testid="card-info-container">
             <div className="grid grid-cols-2 divide-x divide-border" data-testid="list-human-ai-groups">
