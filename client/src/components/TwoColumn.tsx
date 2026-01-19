@@ -220,7 +220,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
         <div className={`flex flex-col ${gapClass} w-full ${textAlignClass}`}>
           {column.heading && (
             <h2 
-              className={`text-h2 text-foreground ${column.text_align ? '' : 'text-center md:text-left'} ${hideHeadingOnTablet ? "md:hidden lg:block" : ""}`}
+              className="text-foreground text-[36px]"
               data-testid="text-two-column-heading"
             >
               {column.heading}
@@ -364,7 +364,6 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           )}
         </div>
       )}
-      
       {column.image && (() => {
         const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
         
@@ -393,7 +392,6 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
           </div>
         );
       })()}
-      
       {column.video && (
         <div className={`w-full flex ${getJustifyClass(column.justify)}`}>
           <div 

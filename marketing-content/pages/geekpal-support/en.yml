@@ -125,6 +125,8 @@ sections:
           text: Visit Now
           url: https://4geeks.com
           variant: primary
+    paddingY:
+      desktop: none md
   - type: two_column
     version: "1.0"
     proportions:
@@ -142,6 +144,8 @@ sections:
       text_align: center
       video: MBXqEnhodx0
       video_width: 900px
+    paddingY:
+      desktop: lg md
   - type: testimonials_slide
     version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students
@@ -164,6 +168,8 @@ sections:
           iso: ES
         contributor: Software Engineer
         description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+    paddingY:
+      desktop: md none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
