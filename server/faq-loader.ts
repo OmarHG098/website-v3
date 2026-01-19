@@ -1,7 +1,7 @@
 /**
  * FAQ Loader Utility
  * 
- * Loads centralized FAQs from src/data/faqs/ YAML files.
+ * Loads centralized FAQs from marketing-content/faqs/ YAML files.
  * Supports filtering by locale, location, related_features, and priority.
  */
 
@@ -14,7 +14,7 @@ import {
   type RelatedFeature,
 } from "../marketing-content/component-registry/faq/v1.0/schema";
 
-const FAQ_DATA_PATH = path.join(process.cwd(), "src", "data", "faqs");
+const FAQ_DATA_PATH = path.join(process.cwd(), "marketing-content", "faqs");
 
 export interface LoadFaqsOptions {
   locale: string;
