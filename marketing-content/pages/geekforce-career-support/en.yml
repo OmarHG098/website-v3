@@ -51,7 +51,7 @@ sections:
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Unlimited Career Support— Built for an AI-Driven Job Market
-    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 career mentorship and group coaching, you’ll get practical guidance, proven frameworks, and up-to-date strategies designed for today’s AI-powered job market.
+    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 career mentorship and group coaching, you’ll receive practical guidance and up-to-date strategies designed for today’s AI-driven job market.
     tabs:
       - label: Personalized Guidance
         description: Receive tailored guidance aligned with your goals, context, and challenges.
