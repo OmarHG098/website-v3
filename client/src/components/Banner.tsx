@@ -91,7 +91,7 @@ export function Banner({ data }: BannerProps) {
           {renderAvatars()}
 
           <h2 
-            className="text-[50px] font-bold mb-4 text-white"
+            className="font-bold mb-4 text-white text-[44px]"
             data-testid="text-banner-title"
           >
             {title}
