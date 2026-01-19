@@ -70,6 +70,7 @@ sections:
     image_alt: Woman working on laptop in cafe
     background: bg-background
     paddingY:
+      mobile: sm none
       desktop: lg none
   - type: bento_cards
     version: "1.0"

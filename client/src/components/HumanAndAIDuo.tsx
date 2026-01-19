@@ -74,9 +74,9 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               {data.description}
             </p>
           </div>
-          <div className="flex justify-center gap-2" data-testid="img-students-mobile">
+          <div className="flex justify-center gap-3 w-full" data-testid="img-students-mobile">
             {studentImages.map((image, index) => (
-              <div key={index} className="w-24 h-36 flex-shrink-0">
+              <div key={index} className="flex-1 h-36">
                 <img
                   src={image.src}
                   alt={image.alt}
@@ -129,9 +129,9 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
-            <div className="col-span-5 flex justify-end gap-2" data-testid="img-students-tablet">
+            <div className="col-span-5 flex gap-3" data-testid="img-students-tablet">
               {studentImages.map((image, index) => (
-                <div key={index} className="w-16 h-40 flex-shrink-0">
+                <div key={index} className="flex-1 h-40">
                   <img
                     src={image.src}
                     alt={image.alt}
@@ -185,9 +185,9 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
-            <div className="col-span-5 flex justify-end items-start gap-2" data-testid="img-students-desktop">
+            <div className="col-span-5 flex items-start gap-4" data-testid="img-students-desktop">
               {studentImages.map((image, index) => (
-                <div key={index} className="w-20 h-44 flex-shrink-0">
+                <div key={index} className="flex-1 h-44">
                   <img
                     src={image.src}
                     alt={image.alt}
