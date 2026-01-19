@@ -1,0 +1,56 @@
+You are working on the 4Geeks page and must redesign ONLY the existing component/section titled:
+“Human + AI: The Perfect Support Duo”
+This is a VARIANT of the current component in the same place on the page. Do NOT change any other sections.
+Design reference and intent
+- Use the same overall layout concept as the Notion example provided:
+  1) Title on the top-left
+  2) Subtitle directly under the title (left side)
+  3) A dedicated right-side area for imagery (top-right)
+  4) A large information container at the bottom (in Notion it’s a 3-column box, here we will adapt it)
+We are NOT building a pricing calculator. We are only borrowing the layout structure.
+Visual system constraints (must match 4Geeks Full Stack page styling)
+- Keep the same borders, subtle shadows, blue tones, typography, spacing, and radius used across the Full Stack page components.
+- Monochromatic and consistent. No random new colors.
+- Background stays clean and light, aligned with the rest of the page.
+- Do not add new icon styles. Reuse only existing checkmark/list styling that already exists on the site (or convert to simple bullet points if needed).
+Layout requirements (match Notion-like composition)
+1) Top row: Split into two columns
+   - Left column (60%):
+     - H2 title: “Human + AI: The Perfect Support Duo”
+     - Subtitle paragraph under it (1–2 lines max). Keep the existing meaning but tighten it for readability.
+   - Right column (40%):
+     - Reserve a visual area for imagery.
+     - For now, place the current image of the woman with the laptop in the TOP-RIGHT area (where Notion has the crossed-out icons).
+     - Do NOT add more new images yet. Just position this existing image cleanly and responsively.
+     - Make sure the image does not overflow and stays aligned vertically with the title/subtitle block.
+2) Bottom row: One large container (the “info box”)
+   - Full width, aligned to the grid.
+   - Inside, show TWO mentor types side-by-side (not stacked).
+   - Use a 2-column layout (desktop) and stacked layout (mobile).
+Bottom container structure
+- Create two internal cards/columns within the bottom container:
+Left column: “Expert Mentors (Humans)”
+- Label (small uppercase): “OUR TEAM OF EXPERT MENTORS”
+- Keep the 4 items (or tighten text slightly) as a simple list with checkmarks (no new icons).
+- Ensure line length is readable, not too wide.
+Right column: “Rigobot + LearnPack (AI Tutor)”
+- Label (small uppercase): “RIGOBOT + LEARNPACK”
+- Keep the 4 items (or tighten text slightly) as a simple list with checkmarks (no new icons).
+Important positioning rule
+- Currently these two boxes appear stacked on the left in the old component. Change them so they appear in a single bottom container with two columns, similar to the Notion “3 column info box” area.
+Copy rules
+- Keep meaning accurate and consistent with current claims. Do not invent metrics, promises, or quotes.
+- Keep everything concise and scannable.
+Interaction (optional but minimal)
+- On hover (over the bottom container or the two columns), apply a very subtle border/shadow emphasis consistent with other components on the site.
+- No heavy animations.
+Responsive behavior
+- Desktop: Top split layout (text left, image right). Bottom container 2 columns.
+- Tablet: Keep split if possible, otherwise stack image under text but keep spacing consistent.
+- Mobile: Stack everything vertically: title, subtitle, image, then the bottom container with the two sections stacked.
+Acceptance checklist
+- Section now visually matches the Notion layout concept: top-left text + top-right imagery + bottom info container.
+- The laptop-woman image is placed in the top-right reserved area (temporary).
+- The two mentor blocks are side-by-side inside a single bottom container (not stacked on the left).
+- Styling matches Full Stack page: borders, radius, shadows, spacing, typography.
+- No other sections on the page are modified.
