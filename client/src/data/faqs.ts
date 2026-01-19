@@ -769,11 +769,18 @@ export interface SimpleFaq {
   answer: string;
 }
 
+export interface FilterFaqsOptions {
+  relatedFeatures?: string[];
+  location?: string;
+  minPriority?: number;
+  limit?: number;
+}
+
 export function filterFaqsByRelatedFeatures(
   faqs: FaqItem[],
-  relatedFeatures: string[],
-  location?: string
+  options: FilterFaqsOptions = {}
 ): SimpleFaq[] {
+  const { relatedFeatures, location, minPriority, limit } = options;
   let filtered = faqs;
 
   if (location) {
@@ -783,14 +790,22 @@ export function filterFaqsByRelatedFeatures(
     });
   }
 
-  if (relatedFeatures.length > 0) {
+  if (relatedFeatures && relatedFeatures.length > 0) {
     filtered = filtered.filter((faq) => {
       const faqFeatures = faq.related_features || [];
       return relatedFeatures.some((feature) => faqFeatures.includes(feature as RelatedFeature));
     });
   }
 
+  if (minPriority !== undefined) {
+    filtered = filtered.filter((faq) => (faq.priority ?? 0) >= minPriority);
+  }
+
   filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+
+  if (limit !== undefined && limit > 0) {
+    filtered = filtered.slice(0, limit);
+  }
 
   return filtered.map(({ question, answer }) => ({ question, answer }));
 }
