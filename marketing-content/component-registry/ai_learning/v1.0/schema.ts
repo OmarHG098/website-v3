@@ -6,7 +6,7 @@
  * - highlight: Shows text + video side-by-side layout
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
+import { ctaButtonSchema, videoConfigSchema } from "../../common/schema";
 
 export const chatExampleSchema = z.object({
   bot_name: z.string(),
@@ -28,7 +28,9 @@ export const aiLearningFeatureSchema = z.object({
   description: z.string(),
   show_rigobot_logo: z.boolean().optional(),
   bullets: z.array(aiLearningBulletSchema).optional(),
+  /** @deprecated Use video.url instead */
   video_url: z.string().optional(),
+  video: videoConfigSchema.optional(),
   image_id: z.string().optional(),
   cta: ctaButtonSchema.optional(),
 });
@@ -42,7 +44,9 @@ export const aiLearningFeatureTabsSectionSchema = z.object({
   description: z.string(),
   features: z.array(aiLearningFeatureSchema),
   chat_example: chatExampleSchema.optional(),
+  /** @deprecated Use video.url instead */
   video_url: z.string().optional(),
+  video: videoConfigSchema.optional(),
 });
 
 // Variant: highlight - Shows text + video side-by-side layout
@@ -53,7 +57,9 @@ export const aiLearningHighlightSectionSchema = z.object({
   title: z.string(),
   description: z.string(),
   bullets: z.array(aiLearningBulletSchema).optional(),
+  /** @deprecated Use video.url instead */
   video_url: z.string().optional(),
+  video: videoConfigSchema.optional(),
   video_position: z.enum(["left", "right"]).optional(),
   cta: ctaButtonSchema.optional(),
 });

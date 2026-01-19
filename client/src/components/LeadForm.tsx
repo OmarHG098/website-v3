@@ -1045,6 +1045,19 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
             </p>
           )}
 
+          <Button 
+            type="submit" 
+            className={`w-full ${data.button_className || ""}`}
+            disabled={submitMutation.isPending}
+            data-testid="button-submit"
+          >
+            {submitMutation.isPending ? (
+              <IconLoader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              data.submit_label || (locale === "es" ? "Enviar" : "Submit")
+            )}
+          </Button>
+
           {showTerms && (
             <p className={`text-xs text-center ${data.terms_className || "text-muted-foreground"}`} data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
@@ -1069,19 +1082,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               </a>
             </p>
           )}
-
-          <Button 
-            type="submit" 
-            className={`w-full ${data.button_className || ""}`}
-            disabled={submitMutation.isPending}
-            data-testid="button-submit"
-          >
-            {submitMutation.isPending ? (
-              <IconLoader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              data.submit_label || (locale === "es" ? "Enviar" : "Submit")
-            )}
-          </Button>
         </form>
       </Form>
     </div>
