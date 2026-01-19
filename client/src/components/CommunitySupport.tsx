@@ -62,7 +62,7 @@ export function CommunitySupport({ data }: CommunitySupportProps) {
       <div className="max-w-6xl mx-auto px-4">
         {/* Header with image on right of title/description */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center mb-8">
-          <div className="col-span-1 md:col-span-8 text-center md:text-start order-2 md:order-1">
+          <div className="col-span-1 md:col-span-12 text-center md:text-start order-2 md:order-1">
             <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
               Our Community
             </span>
@@ -79,19 +79,6 @@ export function CommunitySupport({ data }: CommunitySupportProps) {
               {data.description}
             </p>
           </div>
-          {data.image && (
-            <div className="col-span-1 md:col-span-4 order-1 md:order-2">
-              <div className="flex justify-center">
-                <img 
-                  src={data.image} 
-                  alt={data.image_alt || "Section image"}
-                  className="rounded-md h-auto md:max-w-full"
-                  loading="lazy"
-                  data-testid="img-community-header"
-                />
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Community groups displayed side by side with accent bars */}
