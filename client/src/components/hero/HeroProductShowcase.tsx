@@ -130,7 +130,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                       data-testid={`hero-bullet-${index}`}
                     >
                       <IconCheck className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                      <span className="text-body leading-relaxed">{bullet.text}</span>
+                      <span className="text-body leading-relaxed text-left">{bullet.text}</span>
                     </li>
                   ))}
                 </ul>
