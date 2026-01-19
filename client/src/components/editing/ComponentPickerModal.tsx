@@ -60,6 +60,7 @@ import {
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
 import { emitContentUpdated } from "@/lib/contentEvents";
+import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -198,6 +199,7 @@ export default function ComponentPickerModal({
   const [isAdding, setIsAdding] = useState(false);
   const [useAiAdaptation, setUseAiAdaptation] = useState(false);
   const [isAdapting, setIsAdapting] = useState(false);
+  const [selectedRelatedFeatures, setSelectedRelatedFeatures] = useState<string[]>([]);
   const { toast } = useToast();
 
   const { data: registryData, isLoading: isLoadingRegistry } = useQuery<RegistryOverview>({
@@ -270,6 +272,7 @@ export default function ComponentPickerModal({
     setExamples([]);
     setSelectedVersion("");
     setSelectedExample("");
+    setSelectedRelatedFeatures([]);
   }, []);
 
   const handleBack = useCallback(() => {
@@ -279,6 +282,7 @@ export default function ComponentPickerModal({
     setExamples([]);
     setSelectedVersion("");
     setSelectedExample("");
+    setSelectedRelatedFeatures([]);
   }, []);
 
   const handleAddSection = useCallback(async () => {
@@ -349,10 +353,19 @@ export default function ComponentPickerModal({
         }
       }
       
+      // For FAQ sections with related_features, use centralized mode (remove inline items)
+      let sectionContent = { ...finalContent };
+      if (selectedComponent.type === "faq" && selectedRelatedFeatures.length > 0) {
+        sectionContent = {
+          title: (finalContent.title as string) || "Frequently Asked Questions",
+          related_features: selectedRelatedFeatures,
+        };
+      }
+
       const sectionToAdd = {
         type: selectedComponent.type,
         version: selectedVersion,
-        ...finalContent,
+        ...sectionContent,
       };
 
       const token = getDebugToken();
@@ -389,7 +402,7 @@ export default function ComponentPickerModal({
     } finally {
       setIsAdding(false);
     }
-  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onClose, useAiAdaptation, toast]);
+  }, [selectedExampleData, selectedComponent, selectedVersion, contentType, slug, locale, variant, version, insertIndex, onClose, useAiAdaptation, selectedRelatedFeatures, toast]);
 
   const previewUrl = useMemo(() => {
     if (!selectedComponent || !selectedVersion || !selectedExample) {
@@ -531,6 +544,17 @@ export default function ComponentPickerModal({
                   </Select>
                 </div>
               </div>
+              
+              {/* FAQ-specific: Related features picker */}
+              {selectedComponent?.type === "faq" && (
+                <div className="w-full border-t pt-3 mt-1">
+                  <RelatedFeaturesPicker
+                    value={selectedRelatedFeatures}
+                    onChange={setSelectedRelatedFeatures}
+                    locale={locale || "en"}
+                  />
+                </div>
+              )}
               
               <Tooltip>
                 <TooltipTrigger asChild>
