@@ -16,6 +16,27 @@ export type RelatedFeature =
   | "learnpack"
   | "certification";
 
+export const AVAILABLE_RELATED_FEATURES: RelatedFeature[] = [
+  "online-platform",
+  "mentors-and-teachers",
+  "price",
+  "career-support",
+  "content-and-syllabus",
+  "job-guarantee",
+  "full-stack",
+  "cybersecurity",
+  "data-science",
+  "applied-ai",
+  "ai-engineering",
+  "outcomes",
+  "scholarships",
+  "rigobot",
+  "learnpack",
+  "certification",
+];
+
+export const MAX_RELATED_FEATURES = 3;
+
 export interface FaqItem {
   question: string;
   answer: string;

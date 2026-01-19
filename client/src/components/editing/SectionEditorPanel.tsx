@@ -9,6 +9,7 @@ import {
   IconDeviceDesktop,
   IconDeviceMobile,
   IconDevices,
+  IconCheck,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -30,6 +31,13 @@ import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
 import * as yamlParser from "js-yaml";
+import {
+  AVAILABLE_RELATED_FEATURES,
+  MAX_RELATED_FEATURES,
+  centralizedFaqs,
+  filterFaqsByRelatedFeatures,
+  type RelatedFeature,
+} from "@/data/faqs";
 
 interface SectionEditorPanelProps {
   section: Section;
@@ -116,6 +124,97 @@ function VariantPicker({ value, onChange, options, label = "Variant" }: VariantP
               data-testid={`props-variant-${option.id}`}
             >
               <span>{option.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+interface RelatedFeaturesPickerProps {
+  value: string[];
+  onChange: (value: string[]) => void;
+  locale?: string;
+}
+
+function RelatedFeaturesPicker({ value, onChange, locale = "en" }: RelatedFeaturesPickerProps) {
+  const selectedFeatures = value || [];
+  
+  const faqCounts = useMemo(() => {
+    const faqData = centralizedFaqs[locale as "en" | "es"] || centralizedFaqs.en;
+    const counts: Record<string, number> = {};
+    
+    for (const feature of AVAILABLE_RELATED_FEATURES) {
+      const filtered = filterFaqsByRelatedFeatures(faqData.faqs, {
+        relatedFeatures: [feature],
+      });
+      counts[feature] = filtered.length;
+    }
+    
+    return counts;
+  }, [locale]);
+  
+  const totalFaqsForSelection = useMemo(() => {
+    if (selectedFeatures.length === 0) return 0;
+    const faqData = centralizedFaqs[locale as "en" | "es"] || centralizedFaqs.en;
+    return filterFaqsByRelatedFeatures(faqData.faqs, {
+      relatedFeatures: selectedFeatures,
+    }).length;
+  }, [selectedFeatures, locale]);
+
+  const toggleFeature = (feature: RelatedFeature) => {
+    if (selectedFeatures.includes(feature)) {
+      onChange(selectedFeatures.filter(f => f !== feature));
+    } else if (selectedFeatures.length < MAX_RELATED_FEATURES) {
+      onChange([...selectedFeatures, feature]);
+    }
+  };
+
+  const formatLabel = (feature: string) => {
+    return feature
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Label className="text-sm font-medium">FAQ Topics</Label>
+        <span className="text-xs text-muted-foreground">
+          {selectedFeatures.length}/{MAX_RELATED_FEATURES} selected
+          {totalFaqsForSelection > 0 && (
+            <span className="ml-1 text-primary">({totalFaqsForSelection} FAQs)</span>
+          )}
+        </span>
+      </div>
+      <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
+        {AVAILABLE_RELATED_FEATURES.map((feature) => {
+          const isSelected = selectedFeatures.includes(feature);
+          const isDisabled = !isSelected && selectedFeatures.length >= MAX_RELATED_FEATURES;
+          const count = faqCounts[feature] || 0;
+          
+          return (
+            <button
+              key={feature}
+              type="button"
+              onClick={() => toggleFeature(feature)}
+              disabled={isDisabled}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs transition-colors ${
+                isSelected
+                  ? "bg-primary text-primary-foreground"
+                  : isDisabled
+                  ? "bg-muted text-muted-foreground/50 cursor-not-allowed"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+              data-testid={`props-feature-${feature}`}
+            >
+              {isSelected && <IconCheck className="h-3 w-3" />}
+              <span>{formatLabel(feature)}</span>
+              <span className={`text-[10px] ${isSelected ? "opacity-75" : "opacity-50"}`}>
+                ({count})
+              </span>
             </button>
           );
         })}
@@ -233,6 +332,40 @@ export function SectionEditorPanel({
         }
       } catch (error) {
         console.error("Error updating property:", error);
+      }
+    },
+    [yamlContent, onPreviewChange],
+  );
+
+  // Update an array property in the YAML (e.g., related_features)
+  const updateArrayProperty = useCallback(
+    (key: string, value: string[]) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        if (value && value.length > 0) {
+          parsed[key] = value;
+        } else {
+          delete parsed[key];
+        }
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
+        // Trigger live preview
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error updating array property:", error);
       }
     },
     [yamlContent, onPreviewChange],
@@ -542,6 +675,15 @@ export function SectionEditorPanel({
                   { id: "default", label: "Default (Buttons)" },
                   { id: "form", label: "Form" },
                 ]}
+              />
+            )}
+            
+            {/* FAQ related features picker */}
+            {sectionType === "faq" && (
+              <RelatedFeaturesPicker
+                value={(parsedSection?.related_features as string[]) || []}
+                onChange={(value) => updateArrayProperty("related_features", value)}
+                locale={locale}
               />
             )}
             

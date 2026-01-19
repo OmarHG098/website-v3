@@ -29,10 +29,8 @@ export function FAQSection({ data }: FAQSectionProps) {
   const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
   
   const faqItems: SimpleFaq[] = useMemo(() => {
-    if (hasInlineItems) {
-      return data.items!;
-    }
-    
+    // Prioritize centralized FAQs (related_features) over inline items
+    // Inline items are kept as fallback during transition
     if (hasRelatedFeatures) {
       const faqData = centralizedFaqs[locale] || centralizedFaqs.en;
       return filterFaqsByRelatedFeatures(faqData.faqs, {
@@ -41,8 +39,13 @@ export function FAQSection({ data }: FAQSectionProps) {
       });
     }
     
+    // Fallback to inline items (deprecated, for transition only)
+    if (hasInlineItems) {
+      return data.items!;
+    }
+    
     return [];
-  }, [hasInlineItems, hasRelatedFeatures, data.items, data.related_features, locale, location?.country_code]);
+  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, locale, location?.country_code]);
   
   if (faqItems.length === 0) {
     return null;

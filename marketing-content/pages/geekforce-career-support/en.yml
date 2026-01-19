@@ -174,17 +174,21 @@ sections:
     description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing."
   - type: faq
     version: v1.0
-    title: Frequently Asked Questions
+    title: Geekforce Career Support FAQs
     items:
       - question: Do I need prior coding experience?
-        answer: No prior experience is required. Our program is designed to take you from complete beginner to job-ready developer. We start with the fundamentals and progressively build your skills.
+        answer: You don't need any prior experience. Our program guides you from a beginner to a job-ready developer, starting with the basics and building your skills progressively.
       - question: How long does the program take to complete?
-        answer: The full-time program takes 16 weeks, while our part-time option spans 26 weeks. Both tracks cover the same comprehensive curriculum and lead to the same career outcomes.
+        answer: Our full-time program is 16 weeks, and the part-time option is 26 weeks. Both cover the same comprehensive curriculum, leading to successful career outcomes.
       - question: What kind of job support do you provide?
-        answer: We offer lifetime career support including resume reviews, interview preparation, job placement assistance, and access to our employer network. Our career coaches work with you one-on-one until you land your first tech role.
+        answer: We provide lifetime career support, including resume reviews, interview preparation, job placement assistance, and access to our employer network. Our career coaches work with you one-on-one until you secure your first tech role.
       - question: Can I pay in installments?
-        answer: Yes! We offer flexible payment plans with monthly installments. We also have income share agreements (ISA) where you only pay after you get hired. Financial aid and scholarships are available for qualifying students.
+        answer: Absolutely! We offer flexible payment plans with monthly installments. We also have income share agreements (ISA) where you pay only after you're hired. Financial aid and scholarships are available for those who qualify.
       - question: What technologies will I learn?
-        answer: You'll master modern web technologies including HTML, CSS, JavaScript, React, Python, Flask, SQL databases, Git, and deployment tools. Our curriculum is continuously updated to match industry demands.
+        answer: You'll learn modern web technologies like HTML, CSS, JavaScript, React, Python, Flask, SQL databases, Git, and deployment tools. Our curriculum is regularly updated to meet industry demands.
       - question: Is this program available online?
-        answer: Yes, we offer both online and in-person options. Our online program provides the same quality instruction with live sessions, mentorship, and collaborative projects - all accessible from anywhere in the world.
+        answer: Yes, we offer both online and in-person options. Our online program delivers the same quality instruction with live sessions, mentorship, and collaborative projects, accessible from anywhere in the world.
+    cta:
+      text: Ready to start your tech career?
+      button_text: Apply Now
+      button_url: https://4geeksacademy.com/apply
