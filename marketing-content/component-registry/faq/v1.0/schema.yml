@@ -11,9 +11,34 @@ props:
     type: string
     required: true
     example: Frequently Asked Questions
+  related_features:
+    type: array
+    required: false
+    items:
+      type: string
+      enum:
+        - online-platform
+        - mentors-and-teachers
+        - price
+        - career-support
+        - content-and-syllabus
+        - job-guarantee
+        - full-stack
+        - cybersecurity
+        - data-science
+        - applied-ai
+        - ai-engineering
+        - outcomes
+        - scholarships
+        - rigobot
+        - learnpack
+        - certification
+    description: Select up to 3 topics to pull FAQs from centralized data. Sorted by match count and priority. Max 9 FAQs displayed.
+    example: ["career-support", "job-guarantee"]
   items:
     type: array
-    required: true
+    required: false
+    deprecated: true
     items:
       question:
         type: string
@@ -23,46 +48,7 @@ props:
         type: string
         required: true
         example: No prior experience is required. We start from the fundamentals.
-      locations:
-        type: array
-        required: false
-        items:
-          type: string
-        default: ["all"]
-        description: Array of location slugs where this FAQ applies. Use ["all"] for global FAQs.
-        example: ["all"]
-      related_features:
-        type: array
-        required: false
-        items:
-          type: string
-          enum:
-            - online-platform
-            - mentors-and-teachers
-            - price
-            - career-support
-            - content-and-syllabus
-            - job-guarantee
-            - full-stack
-            - cybersecurity
-            - data-science
-            - applied-ai
-            - ai-engineering
-            - outcomes
-            - scholarships
-            - rigobot
-            - learnpack
-            - certification
-        default: []
-        description: Features this FAQ relates to, for filtering purposes.
-        example: ["career-support", "job-guarantee"]
-      priority:
-        type: integer
-        required: false
-        default: 0
-        description: Higher priority FAQs appear first. Use for sorting/filtering.
-        example: 1
-    description: "Q&A pairs with optional filtering metadata (recommended: 5-7 items)"
+    description: "Deprecated: Use related_features instead. Inline Q&A pairs as fallback only."
   cta:
     type: object
     required: false

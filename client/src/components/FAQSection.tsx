@@ -36,6 +36,7 @@ export function FAQSection({ data }: FAQSectionProps) {
       return filterFaqsByRelatedFeatures(faqData.faqs, {
         relatedFeatures: data.related_features!,
         location: location?.country_code,
+        limit: 9,
       });
     }
     

@@ -822,7 +822,24 @@ export function filterFaqsByRelatedFeatures(
     filtered = filtered.filter((faq) => (faq.priority ?? 0) >= minPriority);
   }
 
-  filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  // Sort by: 1) number of matching related_features (descending), 2) priority (descending)
+  if (relatedFeatures && relatedFeatures.length > 0) {
+    filtered = filtered.sort((a, b) => {
+      const aFeatures = a.related_features || [];
+      const bFeatures = b.related_features || [];
+      const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f as RelatedFeature)).length;
+      const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f as RelatedFeature)).length;
+      
+      // First sort by match count (more matches = higher priority)
+      if (bMatchCount !== aMatchCount) {
+        return bMatchCount - aMatchCount;
+      }
+      // Then by priority
+      return (b.priority ?? 0) - (a.priority ?? 0);
+    });
+  } else {
+    filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  }
 
   if (limit !== undefined && limit > 0) {
     filtered = filtered.slice(0, limit);

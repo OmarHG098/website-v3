@@ -338,19 +338,67 @@ export function SectionEditorPanel({
   );
 
   // Update an array property in the YAML (e.g., related_features)
+  // For related_features, insert after title to maintain YAML structure
   const updateArrayProperty = useCallback(
     (key: string, value: string[]) => {
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
 
+        // Build ordered result with related_features after title
+        const buildOrderedResult = (
+          obj: Record<string, unknown>,
+          keyToInsert: string,
+          valueToInsert: string[]
+        ): Record<string, unknown> => {
+          const result: Record<string, unknown> = {};
+          let inserted = false;
+
+          for (const [k, v] of Object.entries(obj)) {
+            if (k === keyToInsert) continue; // Skip - we'll insert in correct position
+            result[k] = v;
+            // Insert after title
+            if (k === "title" && !inserted) {
+              result[keyToInsert] = valueToInsert;
+              inserted = true;
+            }
+          }
+
+          // Fallback: insert after type if no title found
+          if (!inserted) {
+            const fallback: Record<string, unknown> = {};
+            for (const [k, v] of Object.entries(result)) {
+              fallback[k] = v;
+              if (k === "type" && !inserted) {
+                fallback[keyToInsert] = valueToInsert;
+                inserted = true;
+              }
+            }
+            return inserted ? fallback : { ...result, [keyToInsert]: valueToInsert };
+          }
+
+          return result;
+        };
+
+        let updated: Record<string, unknown>;
+
         if (value && value.length > 0) {
-          parsed[key] = value;
+          if (key === "related_features") {
+            updated = buildOrderedResult(parsed, key, value);
+          } else {
+            updated = { ...parsed, [key]: value };
+          }
         } else {
-          delete parsed[key];
+          // Remove the key
+          updated = {};
+          for (const [k, v] of Object.entries(parsed)) {
+            if (k !== key) {
+              updated[k] = v;
+            }
+          }
         }
 
-        const newYaml = yamlParser.dump(parsed, {
+        const newYaml = yamlParser.dump(updated, {
           lineWidth: -1,
           noRefs: true,
           quotingType: '"',
@@ -360,9 +408,9 @@ export function SectionEditorPanel({
         setHasChanges(true);
         setParseError(null);
 
-        // Trigger live preview
+        // Trigger live preview with updated object
         if (onPreviewChange) {
-          onPreviewChange(parsed as Section);
+          onPreviewChange(updated as Section);
         }
       } catch (error) {
         console.error("Error updating array property:", error);
