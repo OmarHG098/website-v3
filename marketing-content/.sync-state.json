@@ -608,9 +608,10 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "5c75d71971ce6f11817c7ae4d0bc6873d14406cbf0635d3d11600e612d58f20a",
-      "lastModified": 1768504112891.658,
-      "remoteSha": "5c75d71971ce6f11817c7ae4d0bc6873d14406cbf0635d3d11600e612d58f20a"
+      "sha": "91b02d52732bb09f53d540854e97d10a28934d9111eac97989a888d9aac56cf7",
+      "lastModified": 1768849352445.1235,
+      "remoteSha": "91b02d52732bb09f53d540854e97d10a28934d9111eac97989a888d9aac56cf7",
+      "pulledFromCommit": "e4d2601787bbd4638fdcadb332fc8be0daa5c88a"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
