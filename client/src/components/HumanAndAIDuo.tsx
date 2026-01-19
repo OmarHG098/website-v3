@@ -185,7 +185,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
-            <div className="col-span-5 flex items-start gap-4" data-testid="img-students-desktop">
+            <div className="col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-students-desktop">
               {studentImages.map((image, index) => (
                 <div key={index} className="flex-1 h-44">
                   <img
