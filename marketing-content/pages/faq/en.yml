@@ -8,3 +8,9 @@ meta:
     - /faq
     - /faqs
     - /frequently-asked-questions
+
+sections:
+  - type: faq_editor
+    version: v1.0
+    title: Frequently Asked Questions
+    subtitle: Edit and manage all FAQs from this centralized location

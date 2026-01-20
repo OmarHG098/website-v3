@@ -10,13 +10,75 @@ import { IconMessageCircle } from "@tabler/icons-react";
 import type { FAQSection as FAQSectionType } from "@shared/schema";
 import { useLocation } from "@/contexts/SessionContext";
 import { useTranslation } from "react-i18next";
-import { centralizedFaqs, filterFaqsByRelatedFeatures, type SimpleFaq } from "@/data/faqs";
+import { useQuery } from "@tanstack/react-query";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+  locations?: string[];
+  related_features?: string[];
+  last_updated?: string;
+  priority?: number;
+}
+
+interface SimpleFaq {
+  question: string;
+  answer: string;
+}
 
 interface FAQSectionProps {
   data: FAQSectionType;
 }
 
 const CALENDLY_URL = "https://calendly.com/epilowsky-4geeksacademy/30min?month=2025-12";
+
+function filterFaqsByRelatedFeatures(
+  faqs: FaqItem[],
+  options: {
+    relatedFeatures?: string[];
+    location?: string;
+    limit?: number;
+  } = {}
+): SimpleFaq[] {
+  const { relatedFeatures, location, limit } = options;
+  let filtered = [...faqs];
+
+  if (location) {
+    filtered = filtered.filter((faq) => {
+      const locations = faq.locations || ["all"];
+      return locations.includes("all") || locations.includes(location);
+    });
+  }
+
+  if (relatedFeatures && relatedFeatures.length > 0) {
+    filtered = filtered.filter((faq) => {
+      const faqFeatures = faq.related_features || [];
+      return relatedFeatures.some((feature) => faqFeatures.includes(feature));
+    });
+  }
+
+  if (relatedFeatures && relatedFeatures.length > 0) {
+    filtered = filtered.sort((a, b) => {
+      const aFeatures = a.related_features || [];
+      const bFeatures = b.related_features || [];
+      const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
+      const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
+      
+      if (bMatchCount !== aMatchCount) {
+        return bMatchCount - aMatchCount;
+      }
+      return (b.priority ?? 0) - (a.priority ?? 0);
+    });
+  } else {
+    filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  }
+
+  if (limit !== undefined && limit > 0) {
+    filtered = filtered.slice(0, limit);
+  }
+
+  return filtered.map(({ question, answer }) => ({ question, answer }));
+}
 
 export function FAQSection({ data }: FAQSectionProps) {
   const location = useLocation();
@@ -28,25 +90,44 @@ export function FAQSection({ data }: FAQSectionProps) {
   const hasInlineItems = data.items && data.items.length > 0;
   const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
   
+  const { data: faqsData, isLoading } = useQuery<{ faqs: FaqItem[] }>({
+    queryKey: ["/api/faqs", locale],
+    enabled: hasRelatedFeatures,
+    staleTime: 5 * 60 * 1000,
+  });
+  
   const faqItems: SimpleFaq[] = useMemo(() => {
-    // Prioritize centralized FAQs (related_features) over inline items
-    // Inline items are kept as fallback during transition
-    if (hasRelatedFeatures) {
-      const faqData = centralizedFaqs[locale] || centralizedFaqs.en;
-      return filterFaqsByRelatedFeatures(faqData.faqs, {
+    if (hasRelatedFeatures && faqsData?.faqs) {
+      return filterFaqsByRelatedFeatures(faqsData.faqs, {
         relatedFeatures: data.related_features!,
         location: location?.country_code,
         limit: 9,
       });
     }
     
-    // Fallback to inline items (deprecated, for transition only)
     if (hasInlineItems) {
       return data.items!;
     }
     
     return [];
-  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, locale, location?.country_code]);
+  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, faqsData, location?.country_code]);
+  
+  if (isLoading && hasRelatedFeatures) {
+    return (
+      <section data-testid="section-faq">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="animate-pulse">
+            <div className="h-10 w-64 bg-muted rounded mx-auto mb-8" />
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-16 bg-muted rounded" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   
   if (faqItems.length === 0) {
     return null;
@@ -80,7 +161,7 @@ export function FAQSection({ data }: FAQSectionProps) {
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent 
-                  className="text-muted-foreground pb-4 leading-relaxed"
+                  className="text-muted-foreground pb-4 leading-relaxed whitespace-pre-line"
                   data-testid={`text-faq-answer-${index}`}
                 >
                   {item.answer}

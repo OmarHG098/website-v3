@@ -2071,6 +2071,122 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ============================================
+  // Centralized FAQs API
+  // ============================================
+  
+  // Get centralized FAQs from YAML file
+  app.get("/api/faqs/:locale", (req, res) => {
+    const { locale } = req.params;
+    const normalizedLocale = normalizeLocale(locale);
+    
+    const faqsPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "faqs",
+      `${normalizedLocale}.yml`
+    );
+    
+    if (!fs.existsSync(faqsPath)) {
+      res.status(404).json({ error: "FAQs not found for locale" });
+      return;
+    }
+    
+    try {
+      const content = fs.readFileSync(faqsPath, "utf8");
+      const data = yaml.load(content) as { faqs: unknown[] };
+      res.json(data);
+    } catch (error) {
+      console.error("Error loading FAQs:", error);
+      res.status(500).json({ error: "Failed to load FAQs" });
+    }
+  });
+  
+  // Save centralized FAQs to YAML file (edit mode only)
+  app.post("/api/faqs/:locale", async (req, res) => {
+    try {
+      const { locale } = req.params;
+      const normalizedLocale = normalizeLocale(locale);
+      
+      // Auth check (same as content edit)
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+      
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+      
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          }
+        );
+        
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to edit FAQs" });
+          return;
+        }
+      }
+      
+      const { faqs } = req.body;
+      
+      if (!faqs || !Array.isArray(faqs)) {
+        res.status(400).json({ error: "Missing required field: faqs (array)" });
+        return;
+      }
+      
+      const faqsPath = path.join(
+        process.cwd(),
+        "marketing-content",
+        "faqs",
+        `${normalizedLocale}.yml`
+      );
+      
+      // Generate YAML with comment header
+      const header = `# Centralized FAQ Data - ${normalizedLocale === 'en' ? 'English' : 'Spanish'}
+# All FAQs should be stored here and referenced by pages via related_features filter
+# No HTML tags - plain text only
+
+`;
+      const yamlContent = header + yaml.dump({ faqs }, { 
+        lineWidth: -1, 
+        quotingType: '"',
+        forceQuotes: false,
+        flowLevel: -1
+      });
+      
+      fs.writeFileSync(faqsPath, yamlContent, "utf8");
+      
+      // Clear relevant caches
+      clearSitemapCache();
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving FAQs:", error);
+      res.status(500).json({ error: "Failed to save FAQs" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

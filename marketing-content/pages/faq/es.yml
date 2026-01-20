@@ -7,3 +7,9 @@ meta:
   redirects:
     - /es/faqs
     - /es/preguntas-frecuentes
+
+sections:
+  - type: faq_editor
+    version: v1.0
+    title: Preguntas Frecuentes
+    subtitle: Edita y administra todas las preguntas frecuentes desde esta ubicación centralizada

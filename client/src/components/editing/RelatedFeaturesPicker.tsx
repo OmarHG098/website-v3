@@ -1,13 +1,14 @@
 import { useMemo } from "react";
 import { IconCheck } from "@tabler/icons-react";
 import { Label } from "@/components/ui/label";
+import { useQuery } from "@tanstack/react-query";
 import {
-  centralizedFaqs,
-  filterFaqsByRelatedFeatures,
   AVAILABLE_RELATED_FEATURES,
   MAX_RELATED_FEATURES,
+  filterFaqsByRelatedFeatures,
   type RelatedFeature,
-} from "@/data/faqs";
+  type FaqItem,
+} from "@/lib/faqConstants";
 
 interface RelatedFeaturesPickerProps {
   value: string[];
@@ -18,27 +19,32 @@ interface RelatedFeaturesPickerProps {
 export function RelatedFeaturesPicker({ value, onChange, locale = "en" }: RelatedFeaturesPickerProps) {
   const selectedFeatures = value || [];
   
+  const { data: faqsData } = useQuery<{ faqs: FaqItem[] }>({
+    queryKey: ["/api/faqs", locale],
+    staleTime: 5 * 60 * 1000,
+  });
+  
+  const faqs = faqsData?.faqs ?? [];
+  
   const faqCounts = useMemo(() => {
-    const faqData = centralizedFaqs[locale as "en" | "es"] || centralizedFaqs.en;
     const counts: Record<string, number> = {};
     
     for (const feature of AVAILABLE_RELATED_FEATURES) {
-      const filtered = filterFaqsByRelatedFeatures(faqData.faqs, {
+      const filtered = filterFaqsByRelatedFeatures(faqs, {
         relatedFeatures: [feature],
       });
       counts[feature] = filtered.length;
     }
     
     return counts;
-  }, [locale]);
+  }, [faqs]);
   
   const totalFaqsForSelection = useMemo(() => {
     if (selectedFeatures.length === 0) return 0;
-    const faqData = centralizedFaqs[locale as "en" | "es"] || centralizedFaqs.en;
-    return filterFaqsByRelatedFeatures(faqData.faqs, {
+    return filterFaqsByRelatedFeatures(faqs, {
       relatedFeatures: selectedFeatures,
     }).length;
-  }, [selectedFeatures, locale]);
+  }, [selectedFeatures, faqs]);
 
   const toggleFeature = (feature: RelatedFeature) => {
     if (selectedFeatures.includes(feature)) {

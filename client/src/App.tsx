@@ -28,7 +28,6 @@ const TemplatePage = lazy(() => import("@/pages/page"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
 const TermsPage = lazy(() => import("@/pages/TermsPage"));
 const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
-const FAQPage = lazy(() => import("@/pages/faq-page"));
 
 function LoadingFallback() {
   return (
@@ -100,10 +99,7 @@ function Router() {
         <Route path="/terminos-condiciones" component={TermsPage} />
         <Route path="/privacy-policy" component={PrivacyPage} />
         <Route path="/politica-privacidad" component={PrivacyPage} />
-        {/* FAQ page - dedicated routes */}
-        <Route path="/en/faq" component={FAQPage} />
-        <Route path="/es/faq" component={FAQPage} />
-        {/* Template pages - dynamic YAML-based pages */}
+        {/* Template pages - dynamic YAML-based pages (includes FAQ page) */}
         <Route path="/en/:slug" component={TemplatePage} />
         <Route path="/es/:slug" component={TemplatePage} />
         <Route component={NotFound} />
