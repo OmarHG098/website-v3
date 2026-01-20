@@ -145,7 +145,7 @@ function SinglePieChart({
     return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
   };
 
-  const size = 140;
+  const size = 130;
   const cx = size / 2;
   const cy = size / 2;
   const radius = size / 2 - 4;
@@ -161,7 +161,7 @@ function SinglePieChart({
     };
   };
 
-  const hoverScale = 1.4;
+  const hoverScale = 1.3;
   const containerSize = 280;
   const chartOffset = (containerSize - size) / 2;
 
