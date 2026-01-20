@@ -121,26 +121,6 @@ sections:
         logoHeight: h-12 md:h-14
     paddingY:
       desktop: md none
-  - type: awards_row
-    version: "1.0"
-    title: Recognized, Rated, and Recommended
-    link_text: See more
-    link_url: /us/awards
-    badges:
-      - name: Top Coding Bootcamp
-        source: Forbes
-        year: "2024"
-      - name: Best for Spanish Speakers
-        source: Fortune
-        year: "2024"
-      - name: Top Coding Bootcamp
-        source: Newsweek
-        year: "2024"
-      - name: Best Coding Bootcamp
-        source: Course Report
-        year: Mid 2025
-    paddingY:
-      desktop: md none
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
