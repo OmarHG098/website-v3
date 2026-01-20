@@ -92,6 +92,29 @@ sections:
           - Connect with our extensive network of global hiring partners.
     paddingY:
       desktop: md none
+  - type: graduates_stats
+    heading: Does the Job Guarantee deliver results?
+    subheading: Yes, and we've got the numbers to back it up.
+    stats:
+      - value: 84%
+        label: Job placement rate
+      - value: $15K
+        label: Average salary increase after graduation
+      - value: 3-6 months
+        label: Average time to get hired
+    collage_images:
+      - image_id: graduates_team_1
+        col_span: 5
+        row_span: 2
+      - image_id: graduates_team_2
+        col_span: 7
+        row_span: 2
+      - image_id: graduates_coding
+        col_span: 6
+        row_span: 2
+      - image_id: graduates_friends
+        col_span: 6
+        row_span: 2
   - type: two_column
     proportions:
       - 5
@@ -145,29 +168,6 @@ sections:
         alt: Google Developers
     paddingY:
       desktop: md none
-  - type: graduates_stats
-    heading: Does the Job Guarantee deliver results?
-    subheading: Yes, and we've got the numbers to back it up.
-    stats:
-      - value: 84%
-        label: Job placement rate
-      - value: $15K
-        label: Average salary increase after graduation
-      - value: 3-6 months
-        label: Average time to get hired
-    collage_images:
-      - image_id: graduates_team_1
-        col_span: 5
-        row_span: 2
-      - image_id: graduates_team_2
-        col_span: 7
-        row_span: 2
-      - image_id: graduates_coding
-        col_span: 6
-        row_span: 2
-      - image_id: graduates_friends
-        col_span: 6
-        row_span: 2
   - type: testimonials_slide
     title: Real Careers Start Here — Just Ask Our Students
     description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing."
