@@ -17,8 +17,11 @@ sections:
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 career support tailored to your goals, background, and experience—for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
+    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
     marquee:
+      speed: 40
+      gradient: true
+      gradientWidth: 50
       items:
         - id: switchup-2025
           alt: SwitchUp - Best Coding Bootcamps 2025
@@ -40,9 +43,6 @@ sections:
           alt: Fortune - Best Education Company
           logo: /attached_assets/fortune-logo_1764709618095.webp
           logoHeight: h-8 md:h-12
-      speed: 40
-      gradient: true
-      gradientWidth: 50
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
@@ -50,17 +50,17 @@ sections:
       desktop: none
   - type: bullet_tabs_showcase
     version: "1.0"
-    heading: Unlimited Career Support— Built for an AI-Driven Job Market
-    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 career mentorship and group coaching, you’ll receive practical guidance and up-to-date strategies designed for today’s AI-driven job market.
+    heading: Unlimited Career Support – Always Ahead of Job Market Trends
+    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 mentorship and group coaching, you’ll gain insights, resources, and strategies designed to keep you ahead in the AI-powered job market.
     tabs:
       - label: Personalized Guidance
-        description: Personalized career guidance aligned with your goals, background, and target roles
+        description: Receive tailored guidance aligned with your goals, context, and challenges.
         image_id: geekforce_rigobot_ai
       - label: Unlimited Mentorship
-        description: Expert support to navigate AI-driven hiring processes and a changing job market
+        description: Meet mentors online or in-person whenever you need support—unlimited, for life.
         image_id: placeholder_career_guidance
       - label: Proven Strategies
-        description: Continued mentorship to stay relevant as your career and tech roles evolve
+        description: Access proven tools and strategies to make smarter career moves and stay relevant as the tech industry evolves.
         image_id: geekforce_linkedin_profile
     image_position: right
     marginY:
@@ -92,6 +92,29 @@ sections:
           - Connect with our extensive network of global hiring partners.
     paddingY:
       desktop: md none
+  - type: graduates_stats
+    heading: Hiring Outcomes and Career Results
+    subheading: "The data proves it: our career support works."
+    stats:
+      - value: 84%
+        label: Job placement rate
+      - value: $15K
+        label: Average salary increase after graduation
+      - value: 3-6 months
+        label: Average time to get hired
+    collage_images:
+      - image_id: graduates_team_1
+        col_span: 5
+        row_span: 2
+      - image_id: graduates_team_2
+        col_span: 7
+        row_span: 2
+      - image_id: graduates_coding
+        col_span: 6
+        row_span: 2
+      - image_id: graduates_friends
+        col_span: 6
+        row_span: 2
   - type: two_column
     proportions:
       - 5
@@ -102,22 +125,24 @@ sections:
       image_alt: 4Geeks Academy community members collaborating on a project
       justify: start
     right:
-      heading: Accelerate Your Results with Hyperpersonalized Career Support
-      description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:"
+      heading: AI-Powered, Personalized Career Support to Get You Hired Faster
+      description: GeekFORCE blends human mentorship and AI-powered tools to help you apply smarter, interview better, and land offers faster.
       bullets:
-        - text: Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.
-        - text: Practice technical interviews and behavioral questions with AI-guided exercises.
-        - text: Get expert coaching from our mentors who tailor advice to your unique profile and goals.
-      bullets_visible: 2
+        - text: Rigobot, our custom AI, provides instant, actionable feedback to help optimize your professional profile and portfolio.
+        - text: AI-guided practice helps you prepare for technical and behavioral interviews using realistic, role-specific scenarios.
+        - text: Dedicated career mentors review your progress, refine your strategy, and tailor guidance to your goals and background.
       font_size: base
     reverse_on_mobile: true
     padding_right: "6"
     paddingY:
       desktop: md lg
+  - type: testimonials_slide
+    title: Real Students. Real Career Stories.
+    description: See how 4Geeks graduates moved from program completion to successful tech careers.
   - type: whos_hiring
     variant: carousel
-    title: Trusted by the World's Leading Companies
-    subtitle: Our graduates have been hired by top organizations, proving the value of hands-on learning and lifetime support.
+    title: Trusted by Leading Companies
+    subtitle: Our graduates are hired by top companies worldwide
     description: Our graduates are shaping the future of technology, with career support that never expires. These companies and many others trust 4Geeks alumni to deliver real-world results.
     logos:
       - src: /attached_assets/twilio_1764719992371.png
@@ -146,34 +171,3 @@ sections:
         alt: Google Developers
     paddingY:
       desktop: md none
-  - type: graduates_stats
-    heading: Does the Job Guarantee deliver results?
-    subheading: Yes, and we've got the numbers to back it up.
-    stats:
-      - value: 84%
-        label: Job placement rate
-      - value: $15K
-        label: Average salary increase after graduation
-      - value: 3-6 months
-        label: Average time to get hired
-    collage_images:
-      - image_id: graduates_team_1
-        col_span: 5
-        row_span: 2
-      - image_id: graduates_team_2
-        col_span: 7
-        row_span: 2
-      - image_id: graduates_coding
-        col_span: 6
-        row_span: 2
-      - image_id: graduates_friends
-        col_span: 6
-        row_span: 2
-  - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing."
-  - type: faq
-    title: Frequently Asked Questions
-    related_features:
-      - career-support
-      - mentors-and-teachers
