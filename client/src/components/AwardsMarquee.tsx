@@ -96,6 +96,13 @@ export function AwardsMarquee({
         >
           Recognized, Rated, and Recommended
         </p>
+        <a 
+          href="#outcomes" 
+          className="text-primary hover:underline text-sm mt-1 inline-block"
+          data-testid="link-see-more-awards"
+        >
+          See more
+        </a>
       </div>
     </section>
   );
