@@ -102,13 +102,12 @@ sections:
       image_alt: 4Geeks Academy community members collaborating on a project
       justify: start
     right:
-      heading: Accelerate Your Results with Hyperpersonalized Career Support
-      description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:"
+      heading: AI-Powered, Personalized Career Support to Get You Hired Faster
+      description: GeekFORCE blends human mentorship and AI-powered tools to help you apply smarter, interview better, and land offers faster.
       bullets:
-        - text: Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.
-        - text: Practice technical interviews and behavioral questions with AI-guided exercises.
-        - text: Get expert coaching from our mentors who tailor advice to your unique profile and goals.
-      bullets_visible: 2
+        - text: Rigobot, our custom AI, provides instant, actionable feedback to help optimize your professional profile and portfolio.
+        - text: AI-guided practice helps you prepare for technical and behavioral interviews using realistic, role-specific scenarios.
+        - text: Dedicated career mentors review your progress, refine your strategy, and tailor guidance to your goals and background.
       font_size: base
     reverse_on_mobile: true
     padding_right: "6"
