@@ -290,26 +290,6 @@ export function FaqEditor({ data }: FaqEditorProps) {
               return (
                 <Card key={originalIndex} className="p-4" data-testid={`card-faq-${originalIndex}`}>
                   <div className="flex items-start gap-4">
-                    <div className="flex flex-col gap-1">
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => handleMoveFaq(originalIndex, "up")}
-                        disabled={originalIndex === 0}
-                        data-testid={`button-move-up-${originalIndex}`}
-                      >
-                        <IconChevronUp className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => handleMoveFaq(originalIndex, "down")}
-                        disabled={originalIndex === faqs.length - 1}
-                        data-testid={`button-move-down-${originalIndex}`}
-                      >
-                        <IconChevronDown className="w-4 h-4" />
-                      </Button>
-                    </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-foreground mb-1 truncate">{faq.question}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">{faq.answer}</p>
