@@ -67,7 +67,7 @@ sections:
     version: "1.0"
     title: Outcomes by the Numbers
     subtitle: Real results from our graduates across different regions
-    background: muted
+    background: hsl(210 100% 50% / 0.05)
     items:
       - value: 84%
         label: of U.S. graduates hired within 6 months
@@ -80,7 +80,7 @@ sections:
       - value: 3-6 months
         label: average time to get hired across all markets
     paddingY:
-      desktop: none md
+      desktop: lg
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -88,39 +88,39 @@ sections:
     gradientWidth: 100
     items:
       - id: switchup-2025
-        logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: h-16 md:h-18
       - id: course-report-2024
-        logo: /attached_assets/course-report_1765590146414.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: h-16 md:h-18
       - id: tech-hub
-        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         logoHeight: h-12 md:h-14
       - id: ebootcamp
-        logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
         logoHeight: h-12 md:h-14
       - id: premios-tecnologia
-        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         logoHeight: h-12 md:h-14
       - id: newsweek
-        logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
         logoHeight: h-12 md:h-14
       - id: reviews-coursereport
-        logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
+        logo: /attached_assets/reviews_1765549549051.png
         logoHeight: h-12 md:h-14
       - id: excelencia-educativa
-        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-12 md:h-14
     paddingY:
-      desktop: md none
+      desktop: lg md
   - type: awards_row
     version: "1.0"
     title: Recognized, Rated, and Recommended

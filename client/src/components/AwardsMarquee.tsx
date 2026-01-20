@@ -89,6 +89,14 @@ export function AwardsMarquee({
           <p className="text-body text-muted-foreground max-w-3xl mx-auto text-center">{subtitle}</p>
         </div>
       )}
+      <div className="mt-4 text-center">
+        <p 
+          className="font-medium" 
+          style={{ color: "#737373", fontSize: "16px" }}
+        >
+          Recognized, Rated, and Recommended
+        </p>
+      </div>
     </section>
   );
 }
