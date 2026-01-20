@@ -5,9 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { IconAlertTriangle } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import Header from "@/components/Header";
 import {
   centralizedFaqs,
@@ -67,21 +65,18 @@ const pageContent = {
     title: "Frequently Asked Questions",
     subtitle: "Do you have any questions? We may have already answered it in this section. If your question is not there, we invite you to contact us.",
     sectionTitle: (label: string) => `Frequently Asked Questions about ${label}`,
-    editWarning: "Changes to FAQs here will affect all pages across the site that display these questions.",
   },
   es: {
     breadcrumb: "Preguntas Frecuentes Bootcamp",
     title: "Preguntas Frecuentes",
     subtitle: "¿Tienes alguna pregunta? Es posible que ya la hayamos respondido en esta sección. Si tu pregunta no está aquí, te invitamos a contactarnos.",
     sectionTitle: (label: string) => `Preguntas Frecuentes sobre ${label}`,
-    editWarning: "Los cambios a las FAQs aquí afectarán todas las páginas del sitio que muestran estas preguntas.",
   },
 };
 
 export default function FAQPage() {
   const { i18n } = useTranslation();
   const locale = i18n.language?.startsWith("es") ? "es" : "en";
-  const isDebugMode = isDebugModeActive();
   
   const content = pageContent[locale];
   const labels = featureLabels[locale];
@@ -144,18 +139,6 @@ export default function FAQPage() {
             {content.subtitle}
           </p>
         </div>
-        
-        {isDebugMode && (
-          <div 
-            className="mb-8 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg flex items-start gap-3"
-            data-testid="alert-faq-edit-warning"
-          >
-            <IconAlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-amber-800 dark:text-amber-200">
-              {content.editWarning}
-            </p>
-          </div>
-        )}
         
         <div className="space-y-12">
           {groupedFaqs.map((group) => (
