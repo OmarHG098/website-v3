@@ -708,8 +708,21 @@ export const sectionLayoutSchema = z.object({
 
 export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
 
+// ============================================
+// FAQ Editor Section (specialized for FAQ page template only)
+// ============================================
+export const faqEditorSectionSchema = z.object({
+  type: z.literal("faq_editor"),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+});
+
+export type FaqEditorSection = z.infer<typeof faqEditorSectionSchema>;
+
 // Base section schema union (component-specific fields)
 const baseSectionSchema = z.union([
+  faqEditorSectionSchema,
   heroSchema,
   featuresGridSchema,
   syllabusSectionSchema,
