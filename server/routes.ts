@@ -881,7 +881,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/schema/:key", (req, res) => {
     const { key } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     const schema = getSchema(key, locale);
 
@@ -895,7 +895,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/schema/merge", (req, res) => {
     const { include, overrides } = req.body;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     if (!include || !Array.isArray(include)) {
       res.status(400).json({ error: "include array required" });
@@ -1666,7 +1666,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/content/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     if (!["program", "landing", "location"].includes(contentType)) {
       res.status(400).json({ error: "Invalid content type" });
@@ -1690,7 +1690,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get form options (programs and locations for dropdowns)
   app.get("/api/form-options", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     // Get all programs for dropdown
     const programs = listCareerPrograms(locale).map((p) => ({
