@@ -136,6 +136,9 @@ sections:
     padding_right: "6"
     paddingY:
       desktop: md lg
+  - type: testimonials_slide
+    title: Real Students. Real Career Stories.
+    description: See how 4Geeks graduates move from program completion to successful tech careers.
   - type: whos_hiring
     variant: carousel
     title: Trusted by the World's Leading Companies
@@ -168,6 +171,3 @@ sections:
         alt: Google Developers
     paddingY:
       desktop: md none
-  - type: testimonials_slide
-    title: Real Students. Real Career Stories.
-    description: See how 4Geeks graduates move from program completion to successful tech careers.
