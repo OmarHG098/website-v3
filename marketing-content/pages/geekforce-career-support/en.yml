@@ -138,7 +138,7 @@ sections:
       desktop: md lg
   - type: testimonials_slide
     title: Real Students. Real Career Stories.
-    description: See how 4Geeks graduates move from program completion to successful tech careers.
+    description: See how 4Geeks graduates moved from program completion to successful tech careers.
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Companies
