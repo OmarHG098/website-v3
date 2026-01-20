@@ -33,6 +33,45 @@ const AVAILABLE_FEATURES = [
   "certification",
 ] as const;
 
+const AVAILABLE_LOCATIONS = [
+  "all",
+  "atlanta-usa",
+  "austin-usa",
+  "barcelona-spain",
+  "berlin-germany",
+  "bogota-colombia",
+  "buenosaires-argentina",
+  "caracas-venezuela",
+  "chicago-usa",
+  "costa-rica",
+  "dallas-usa",
+  "dublin-ireland",
+  "hamburg-germany",
+  "houston-usa",
+  "lapaz-bolivia",
+  "lima-peru",
+  "lisbon-portugal",
+  "losangeles-usa",
+  "madrid-spain",
+  "malaga-spain",
+  "mexicocity-mexico",
+  "miami-usa",
+  "milan-italy",
+  "montevideo-uruguay",
+  "munich-germany",
+  "newyork-usa",
+  "orlando-usa",
+  "panamacity-panama",
+  "quito-ecuador",
+  "rome-italy",
+  "santiago-chile",
+  "tampa-usa",
+  "toronto-canada",
+  "valencia-spain",
+] as const;
+
+const MAX_FEATURES = 3;
+
 type RelatedFeature = typeof AVAILABLE_FEATURES[number];
 
 interface FaqItem {
@@ -181,10 +220,27 @@ export function FaqEditor({ data }: FaqEditorProps) {
   const toggleFeature = useCallback((feature: string) => {
     if (!editingFaq) return;
     const features = editingFaq.related_features || [];
-    const newFeatures = features.includes(feature)
-      ? features.filter((f) => f !== feature)
-      : [...features, feature];
-    setEditingFaq({ ...editingFaq, related_features: newFeatures });
+    if (features.includes(feature)) {
+      setEditingFaq({ ...editingFaq, related_features: features.filter((f) => f !== feature) });
+    } else if (features.length < MAX_FEATURES) {
+      setEditingFaq({ ...editingFaq, related_features: [...features, feature] });
+    } else {
+      toast({ title: "Maximum reached", description: `You can select up to ${MAX_FEATURES} related features.`, variant: "destructive" });
+    }
+  }, [editingFaq, toast]);
+
+  const toggleLocation = useCallback((location: string) => {
+    if (!editingFaq) return;
+    const locations = editingFaq.locations || ["all"];
+    if (location === "all") {
+      setEditingFaq({ ...editingFaq, locations: ["all"] });
+    } else if (locations.includes(location)) {
+      const newLocations = locations.filter((l) => l !== location);
+      setEditingFaq({ ...editingFaq, locations: newLocations.length ? newLocations : ["all"] });
+    } else {
+      const newLocations = locations.filter((l) => l !== "all");
+      setEditingFaq({ ...editingFaq, locations: [...newLocations, location] });
+    }
   }, [editingFaq]);
 
   const groupedFaqs = faqs.reduce((groups, faq) => {
@@ -401,35 +457,36 @@ export function FaqEditor({ data }: FaqEditorProps) {
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-1 block">Priority (1-5)</label>
+                <label className="text-sm font-medium mb-1 block">Priority</label>
                 <Select
                   value={String(editingFaq.priority || 1)}
                   onValueChange={(v) => setEditingFaq({ ...editingFaq, priority: parseInt(v) })}
                 >
                   <SelectTrigger data-testid="select-faq-priority">
-                    <SelectValue />
+                    <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[1, 2, 3, 4, 5].map((p) => (
-                      <SelectItem key={p} value={String(p)}>
-                        {p} - {p === 1 ? "Low" : p === 3 ? "Medium" : p === 5 ? "High" : ""}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="1">1 - High</SelectItem>
+                    <SelectItem value="2">2 - Medium</SelectItem>
+                    <SelectItem value="3">3 - Low</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Related Features</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Related Features <span className="text-muted-foreground font-normal">(max {MAX_FEATURES})</span>
+                </label>
                 <div className="flex flex-wrap gap-2">
                   {AVAILABLE_FEATURES.map((feature) => {
                     const isSelected = editingFaq.related_features?.includes(feature);
+                    const isDisabled = !isSelected && (editingFaq.related_features?.length || 0) >= MAX_FEATURES;
                     return (
                       <Badge
                         key={feature}
                         variant={isSelected ? "default" : "outline"}
-                        className="cursor-pointer"
-                        onClick={() => toggleFeature(feature)}
+                        className={`cursor-pointer ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                        onClick={() => !isDisabled && toggleFeature(feature)}
                         data-testid={`badge-feature-${feature}`}
                       >
                         {feature.replace(/-/g, " ")}
@@ -440,18 +497,26 @@ export function FaqEditor({ data }: FaqEditorProps) {
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-1 block">Locations (comma-separated)</label>
-                <Input
-                  value={editingFaq.locations?.join(", ") || "all"}
-                  onChange={(e) =>
-                    setEditingFaq({
-                      ...editingFaq,
-                      locations: e.target.value.split(",").map((s) => s.trim()),
-                    })
-                  }
-                  placeholder="all, US, ES, etc."
-                  data-testid="input-faq-locations"
-                />
+                <label className="text-sm font-medium mb-2 block">
+                  Locations <span className="text-muted-foreground font-normal">(select "all" for global, or pick specific locations)</span>
+                </label>
+                <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
+                  {AVAILABLE_LOCATIONS.map((location) => {
+                    const isSelected = editingFaq.locations?.includes(location) || 
+                      (location === "all" && (!editingFaq.locations || editingFaq.locations.length === 0));
+                    return (
+                      <Badge
+                        key={location}
+                        variant={isSelected ? "default" : "outline"}
+                        className="cursor-pointer"
+                        onClick={() => toggleLocation(location)}
+                        data-testid={`badge-location-${location}`}
+                      >
+                        {location === "all" ? "All (default)" : location.replace(/-/g, " ")}
+                      </Badge>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           )}
