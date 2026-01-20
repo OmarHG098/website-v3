@@ -1,6 +1,8 @@
 import type { BannerSection as BannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 
+import rigo_avatar_1763181725290 from "@assets/rigo-avatar_1763181725290.png";
+
 interface BannerProps {
   data: BannerSectionType;
 }
@@ -52,7 +54,7 @@ export function Banner({ data }: BannerProps) {
               data-testid="banner-logo"
             >
               <img 
-                src={logo} 
+                src={rigo_avatar_1763181725290} 
                 alt="Logo" 
                 className="w-9 h-9 object-contain"
               />
