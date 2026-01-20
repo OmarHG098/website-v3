@@ -117,8 +117,9 @@ export default function FAQPage() {
     
     const uncategorizedFaqs = faqData.faqs.filter((_, index) => !usedFaqIndices.has(index));
     if (uncategorizedFaqs.length > 0) {
+      uncategorizedFaqs.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
       groups.push({
-        feature: "online-platform" as RelatedFeature,
+        feature: "general" as RelatedFeature,
         label: locale === "es" ? "General" : "General",
         faqs: uncategorizedFaqs,
       });
