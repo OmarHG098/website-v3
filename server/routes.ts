@@ -58,6 +58,7 @@ import {
   loadCommonData,
 } from "./utils/contentLoader";
 import { getFolderFromSlug } from "@shared/slugMappings";
+import { normalizeLocale } from "@shared/locale";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
 
@@ -498,7 +499,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/career-programs", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     const _location = req.query.location as string | undefined;
     const programs = listCareerPrograms(locale);
     res.json(programs);
@@ -506,7 +507,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/career-programs/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     const forceVariant = req.query.force_variant as string | undefined;
     const forceVersion = req.query.force_version
       ? parseInt(req.query.force_version as string, 10)
@@ -665,7 +666,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Locations API
   app.get("/api/locations", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     const region = req.query.region as string | undefined;
     let locations = listLocationPages(locale);
 
@@ -678,7 +679,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/locations/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     const location = loadLocationPage(slug, locale);
 
@@ -692,14 +693,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Template Pages API
   app.get("/api/pages", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     const pages = listTemplatePages(locale);
     res.json(pages);
   });
 
   // Special handler for career-programs listing page (custom page type)
   app.get("/api/pages/career-programs", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     
     const page = loadCareerProgramsListing(locale);
     
@@ -713,7 +714,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Special handler for apply page (includes programs and locations from _common.yml)
   app.get("/api/pages/apply", (req, res) => {
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
     
     const page = loadTemplatePage("apply", locale);
     
@@ -772,7 +773,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/pages/:slug", (req, res) => {
     const { slug } = req.params;
-    const locale = (req.query.locale as string) || "en";
+    const locale = normalizeLocale(req.query.locale as string);
 
     // Resolve translated slug to folder name
     const folder = getFolderFromSlug(slug, locale);

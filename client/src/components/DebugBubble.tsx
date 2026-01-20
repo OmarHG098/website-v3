@@ -84,6 +84,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
+import { normalizeLocale } from "@shared/locale";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -1188,7 +1189,8 @@ export function DebugBubble() {
                               editMode.toggleEditMode();
                               // Navigate to preview route if on a content page
                               if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
-                                const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${i18n.language || 'en'}`;
+                                const normalizedLocale = normalizeLocale(i18n.language);
+                                const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${normalizedLocale}`;
                                 navigate(previewUrl);
                               }
                             }

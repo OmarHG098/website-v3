@@ -4,6 +4,7 @@ import yaml from "js-yaml";
 import { z } from "zod";
 import type { EditOperation } from "@shared/schema";
 import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
+import { normalizeLocale } from "@shared/locale";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -131,7 +132,10 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
 }
 
 export async function editContent(request: ContentEditRequest): Promise<{ success: boolean; error?: string; warning?: string; updatedSections?: unknown[] }> {
-  const { contentType, slug, locale, operations, variant, version } = request;
+  const { contentType, slug, locale: rawLocale, operations, variant, version } = request;
+  
+  // Normalize locale to prevent es-ES, en-US etc from causing file lookup failures
+  const locale = normalizeLocale(rawLocale);
   
   // Validate variant/version are used together and version is valid
   const hasVariant = variant !== undefined && variant !== null && variant !== "";
@@ -295,10 +299,13 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
 export function getContentForEdit(
   contentType: "program" | "landing" | "location",
   slug: string,
-  locale: string,
+  rawLocale: string,
   variant?: string,
   version?: number
 ): { content: Record<string, unknown> | null; error?: string } {
+  // Normalize locale to prevent es-ES, en-US etc from causing file lookup failures
+  const locale = normalizeLocale(rawLocale);
+  
   // Validate variant/version are used together and version is valid
   const hasVariant = variant !== undefined && variant !== null && variant !== "";
   const hasValidVersion = version !== undefined && version !== null && Number.isFinite(version);
