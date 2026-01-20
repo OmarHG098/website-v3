@@ -31,24 +31,17 @@ const defaultColors = [
   "hsl(210, 100%, 70%)",  // Light blue
   "hsl(210, 100%, 50%)",  // Brand blue
   "hsl(210, 100%, 40%)",  // Medium-dark blue
-  "hsl(210, 100%, 30%)",  // Dark blue
 ];
 
 function toColor(color: string): string {
   if (color.startsWith("chart-")) {
     const chartNum = parseInt(color.replace("chart-", ""));
-    // Map existing chart colors to our blue palette
-    // chart-1: brand blue (50%)
-    // chart-2: light blue (70%)
-    // chart-3: medium-dark blue (40%)
-    // chart-4: dark blue (30%)
-    // chart-5: very dark blue (25%)
+    // Map existing chart colors to our vertical bar blue palette
+    // Light blue, Brand blue, Medium-dark blue
     const bluePalette = [
-      "hsl(210, 100%, 50%)",
       "hsl(210, 100%, 70%)",
-      "hsl(210, 100%, 40%)",
-      "hsl(210, 100%, 30%)",
-      "hsl(210, 100%, 25%)"
+      "hsl(210, 100%, 50%)",
+      "hsl(210, 100%, 40%)"
     ];
     return bluePalette[(chartNum - 1) % bluePalette.length];
   }
