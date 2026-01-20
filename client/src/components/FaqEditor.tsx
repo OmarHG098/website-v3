@@ -187,6 +187,24 @@ export function FaqEditor({ data }: FaqEditorProps) {
     setEditingFaq({ ...editingFaq, related_features: newFeatures });
   }, [editingFaq]);
 
+  const groupedFaqs = faqs.reduce((groups, faq) => {
+    const features = faq.related_features?.length ? faq.related_features : ["general"];
+    features.forEach((feature) => {
+      if (!groups[feature]) {
+        groups[feature] = [];
+      }
+      groups[feature].push(faq);
+    });
+    return groups;
+  }, {} as Record<string, FaqItem[]>);
+
+  const formatFeatureName = (feature: string) => {
+    return feature
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   if (!isEditMode) {
     return (
       <section className="py-12">
@@ -195,20 +213,33 @@ export function FaqEditor({ data }: FaqEditorProps) {
             {data?.title || "Frequently Asked Questions"}
           </h2>
           <p className="text-muted-foreground text-center mb-8">
-            This section is only editable in debug mode.
+            {data?.subtitle || "Do you have any questions? We may have already answered it in this section."}
           </p>
-          <Accordion type="single" collapsible className="bg-card rounded-lg border">
-            {faqs.slice(0, 10).map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-0 border-b last:border-b-0 px-6">
-                <AccordionTrigger className="text-left font-medium hover:no-underline py-4">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4 whitespace-pre-line">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+          <div className="space-y-8">
+            {Object.entries(groupedFaqs).map(([feature, faqList]) => (
+              <div key={feature}>
+                <h3 className="text-lg font-semibold text-center mb-4" data-testid={`text-faq-group-${feature}`}>
+                  Frequently Asked Questions about {formatFeatureName(feature)}
+                </h3>
+                <Accordion type="single" collapsible className="bg-card rounded-lg border">
+                  {faqList.map((faq, index) => (
+                    <AccordionItem 
+                      key={`${feature}-${index}`} 
+                      value={`${feature}-item-${index}`} 
+                      className="border-0 border-b last:border-b-0 px-6"
+                    >
+                      <AccordionTrigger className="text-left font-medium hover:no-underline py-4">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground pb-4 whitespace-pre-line">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
             ))}
-          </Accordion>
+          </div>
         </div>
       </section>
     );
