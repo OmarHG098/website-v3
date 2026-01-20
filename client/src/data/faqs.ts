@@ -42,6 +42,7 @@ export interface FaqItem {
   answer: string;
   locations?: string[];
   related_features?: RelatedFeature[];
+  last_updated?: string;
   priority?: number;
 }
 
