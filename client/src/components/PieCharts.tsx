@@ -134,7 +134,7 @@ function SinglePieChart({
     return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
   };
 
-  const size = 180;
+  const size = 140;
   const cx = size / 2;
   const cy = size / 2;
   const radius = size / 2 - 4;
@@ -150,8 +150,8 @@ function SinglePieChart({
     };
   };
 
-  const hoverScale = 1.25;
-  const containerSize = 360;
+  const hoverScale = 1.4;
+  const containerSize = 280;
   const chartOffset = (containerSize - size) / 2;
 
   return (
@@ -214,17 +214,17 @@ function SinglePieChart({
           const centerX = containerSize / 2;
           const centerY = containerSize / 2;
           
-          const startRadius = scaledRadius + 5;
+          const startRadius = scaledRadius + 4;
           const startX = centerX + startRadius * Math.cos(midRad);
           const startY = centerY + startRadius * Math.sin(midRad);
           
           // Mid point for the angled line
-          const midRadius = scaledRadius + 30;
+          const midRadius = scaledRadius + 18;
           const midPointX = centerX + midRadius * Math.cos(midRad);
           const midPointY = centerY + midRadius * Math.sin(midRad);
           
           // End point extends horizontally from the mid point
-          const horizontalExtend = 35;
+          const horizontalExtend = 20;
           const isRightSideCalc = midPointX > centerX;
           const endX = isRightSideCalc ? midPointX + horizontalExtend : midPointX - horizontalExtend;
           const endY = midPointY;
