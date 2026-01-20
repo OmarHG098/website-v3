@@ -172,6 +172,10 @@ sections:
       desktop: md none
   - type: faq
     title: Frequently Asked Questions
+    related_features:
+      - career-support
+      - mentors-and-teachers
+      - online-platform
     items:
       - question: Do I need prior coding experience?
         answer: No prior experience is required. Our program is designed to take you from complete beginner to job-ready developer. We start with the fundamentals and progressively build your skills.
@@ -209,8 +213,5 @@ sections:
           - all
         related_features: []
         priority: 0
-    related_features:
-      - career-support
-      - mentors-and-teachers
     paddingY:
       desktop: none md
