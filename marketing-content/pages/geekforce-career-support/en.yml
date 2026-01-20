@@ -139,7 +139,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by the World's Leading Companies
-    subtitle: Our graduates have been hired by top organizations, proving the value of hands-on learning and lifetime support.
+    subtitle: Our graduates are hired by top organizations, proving the value of hands-on learning and lifetime support.
     description: Our graduates are shaping the future of technology, with career support that never expires. These companies and many others trust 4Geeks alumni to deliver real-world results.
     logos:
       - src: /attached_assets/twilio_1764719992371.png
