@@ -92,29 +92,6 @@ sections:
           - Connect with our extensive network of global hiring partners.
     paddingY:
       desktop: md none
-  - type: graduates_stats
-    heading: Does the Job Guarantee deliver results?
-    subheading: Yes, and we've got the numbers to back it up.
-    stats:
-      - value: 84%
-        label: Job placement rate
-      - value: $15K
-        label: Average salary increase after graduation
-      - value: 3-6 months
-        label: Average time to get hired
-    collage_images:
-      - image_id: graduates_team_1
-        col_span: 5
-        row_span: 2
-      - image_id: graduates_team_2
-        col_span: 7
-        row_span: 2
-      - image_id: graduates_coding
-        col_span: 6
-        row_span: 2
-      - image_id: graduates_friends
-        col_span: 6
-        row_span: 2
   - type: two_column
     proportions:
       - 5
@@ -125,12 +102,13 @@ sections:
       image_alt: 4Geeks Academy community members collaborating on a project
       justify: start
     right:
-      heading: AI-Powered, Personalized Career Support to Get You Hired Faster
-      description: GeekFORCE blends human mentorship and AI-powered tools to help you apply smarter, interview better, and land offers faster.
+      heading: Accelerate Your Results with Hyperpersonalized Career Support
+      description: "Combine unlimited 1:1 human mentorship with AI-powered tools to launch your career faster and smarter:"
       bullets:
-        - text: Rigobot, our custom AI, provides instant, actionable feedback to help optimize your professional profile and portfolio.
-        - text: AI-guided practice helps you prepare for technical and behavioral interviews using realistic, role-specific scenarios.
-        - text: Dedicated career mentors review your progress, refine your strategy, and tailor guidance to your goals and background.
+        - text: Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.
+        - text: Practice technical interviews and behavioral questions with AI-guided exercises.
+        - text: Get expert coaching from our mentors who tailor advice to your unique profile and goals.
+      bullets_visible: 2
       font_size: base
     reverse_on_mobile: true
     padding_right: "6"
@@ -168,6 +146,29 @@ sections:
         alt: Google Developers
     paddingY:
       desktop: md none
+  - type: graduates_stats
+    heading: Hiring Outcomes and Career Results
+    subheading: "The data proves it: our career support works."
+    stats:
+      - value: 84%
+        label: Job placement rate
+      - value: $15K
+        label: Average salary increase after graduation
+      - value: 3-6 months
+        label: Average time to get hired
+    collage_images:
+      - image_id: graduates_team_1
+        col_span: 5
+        row_span: 2
+      - image_id: graduates_team_2
+        col_span: 7
+        row_span: 2
+      - image_id: graduates_coding
+        col_span: 6
+        row_span: 2
+      - image_id: graduates_friends
+        col_span: 6
+        row_span: 2
   - type: testimonials_slide
     title: Real Careers Start Here — Just Ask Our Students
     description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing."
