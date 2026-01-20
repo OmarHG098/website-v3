@@ -1,180 +1,217 @@
-slug: "outcomes"
-template: "default"
-title: "Outcomes"
-
+slug: outcomes
+template: default
+title: Outcomes
 meta:
-  page_title: "4Geeks Academy Outcomes Report | Career Success Data"
-  description: "Discover the career outcomes of 4Geeks Academy graduates. See employment rates, salary increases, and success stories from our coding bootcamp alumni."
-  robots: "index, follow"
-
+  page_title: 4Geeks Academy Outcomes Report | Career Success Data
+  description: Discover the career outcomes of 4Geeks Academy graduates. See employment rates, salary increases, and success stories from our coding bootcamp alumni.
+  robots: index, follow
 schema:
   include:
     - organization
     - website
-
 sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: "Proven Outcomes That Launch Tech Careers"
-    subtitle: "At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it."
-    badge: "4Geeks Academy Outcomes Report"
+    title: Proven Outcomes That Launch Tech Careers
+    subtitle: At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it.
+    badge: 4Geeks Academy Outcomes Report
     image:
-      src: "/attached_assets/outcomes_1765562850573.png"
-      alt: "Student outcomes growth chart"
-
+      src: /attached_assets/outcomes_1765562850573.png
+      alt: Student outcomes growth chart
   - type: vertical_bars_cards
     version: "1.0"
-    title: "Hired Success Metrics"
-    subtitle: "Track our students' career outcomes across recent years"
+    title: Hired Success Metrics
+    subtitle: Track our students' career outcomes across recent years
     metrics:
-      - title: "Job Placement Rate"
-        unit: "Graduates hired within 6 months"
-        description: "Our job placement rate consistently remains above 80%, demonstrating the effectiveness of our career support program. We track employment outcomes for up to 6 months after graduation, ensuring accurate and reliable data. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+      - title: Job Placement Rate
+        unit: Graduates hired within 6 months
+        description: Our job placement rate consistently remains above 80%, demonstrating the effectiveness of our career support program. We track employment outcomes for up to 6 months after graduation, ensuring accurate and reliable data. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
         years:
           - year: "2023"
             value: 86
-            displayValue: "86%"
+            displayValue: 86%
           - year: "2024"
             value: 84
-            displayValue: "84%"
-          - year: "Mid 2025"
+            displayValue: 84%
+          - year: Mid 2025
             value: 82
-            displayValue: "82%"
-      - title: "Average Salary Increase"
-        unit: "Compared to pre-bootcamp salary"
-        description: "Graduates see significant salary improvements after completing our program. This increase reflects the high market demand for tech skills and the quality of training our students receive. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            displayValue: 82%
+      - title: Average Salary Increase
+        unit: Compared to pre-bootcamp salary
+        description: Graduates see significant salary improvements after completing our program. This increase reflects the high market demand for tech skills and the quality of training our students receive. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         years:
           - year: "2023"
             value: 12500
-            displayValue: "$12.5k"
+            displayValue: $12.5k
           - year: "2024"
             value: 14200
-            displayValue: "$14.2k"
-          - year: "Mid 2025"
+            displayValue: $14.2k
+          - year: Mid 2025
             value: 15800
-            displayValue: "$15.8k"
-      - title: "Days to First Job"
-        unit: "Average time from graduation to offer"
-        description: "Our students are getting hired faster than ever. With personalized career coaching and an extensive employer network, we help graduates land their first tech role in record time. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia."
+            displayValue: $15.8k
+      - title: Days to First Job
+        unit: Average time from graduation to offer
+        description: Our students are getting hired faster than ever. With personalized career coaching and an extensive employer network, we help graduates land their first tech role in record time. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
         years:
           - year: "2023"
             value: 52
-            displayValue: "52 days"
+            displayValue: 52 days
           - year: "2024"
             value: 48
-            displayValue: "48 days"
-          - year: "Mid 2025"
+            displayValue: 48 days
+          - year: Mid 2025
             value: 45
-            displayValue: "45 days"
-
+            displayValue: 45 days
   - type: stats
     version: "1.0"
-    title: "Outcomes by the Numbers"
-    subtitle: "Real results from our graduates across different regions"
-    background: "muted"
+    title: Outcomes by the Numbers
+    subtitle: Real results from our graduates across different regions
+    background: muted
     items:
-      - value: "84%"
-        label: "of U.S. graduates hired within 6 months"
-      - value: "+55%"
-        label: "average U.S. salary increase"
-      - value: "+233%"
-        label: "average salary increase in LATAM"
-      - value: "85%"
-        label: "placement rate in Spain"
-      - value: "3-6 months"
-        label: "average time to get hired across all markets"
-
+      - value: 84%
+        label: of U.S. graduates hired within 6 months
+      - value: +55%
+        label: average U.S. salary increase
+      - value: +233%
+        label: average salary increase in LATAM
+      - value: 85%
+        label: placement rate in Spain
+      - value: 3-6 months
+        label: average time to get hired across all markets
+    paddingY:
+      desktop: none md
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 100
+    items:
+      - id: switchup-2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logoHeight: h-12 md:h-14
+      - id: course-report-2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        alt: Course Report - Best Coding Bootcamp 2024
+        logoHeight: h-12 md:h-14
+      - id: tech-hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: South Florida Tech Hub
+        logoHeight: h-12 md:h-14
+      - id: ebootcamp
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        alt: eBootcamp Top
+        logoHeight: h-12 md:h-14
+      - id: premios-tecnologia
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        alt: Premios Tecnologia Siglo XXI
+        logoHeight: h-12 md:h-14
+      - id: newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        alt: Newsweek
+        logoHeight: h-12 md:h-14
+      - id: reviews-coursereport
+        logo: /attached_assets/reviews_1765549549051.png
+        alt: 4.9 on Course Report Reviews
+        logoHeight: h-12 md:h-14
+      - id: excelencia-educativa
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        alt: Excelencia Educativa - Institutional Quality
+        logoHeight: h-12 md:h-14
+    paddingY:
+      desktop: md none
   - type: awards_row
     version: "1.0"
-    title: "Recognized, Rated, and Recommended"
-    link_text: "See more"
-    link_url: "/us/awards"
+    title: Recognized, Rated, and Recommended
+    link_text: See more
+    link_url: /us/awards
     badges:
-      - name: "Top Coding Bootcamp"
-        source: "Forbes"
+      - name: Top Coding Bootcamp
+        source: Forbes
         year: "2024"
-      - name: "Best for Spanish Speakers"
-        source: "Fortune"
+      - name: Best for Spanish Speakers
+        source: Fortune
         year: "2024"
-      - name: "Top Coding Bootcamp"
-        source: "Newsweek"
+      - name: Top Coding Bootcamp
+        source: Newsweek
         year: "2024"
-      - name: "Best Coding Bootcamp"
-        source: "Course Report"
-        year: "Mid 2025"
-
+      - name: Best Coding Bootcamp
+        source: Course Report
+        year: Mid 2025
+    paddingY:
+      desktop: md none
   - type: pie_charts
     version: "1.0"
-    title: "Our Student Body at a Glance"
-    subtitle: "These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions."
+    title: Our Student Body at a Glance
+    subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
     charts:
-      - title: "Age"
+      - title: Age
         items:
-          - label: "22-25"
+          - label: 22-25
             value: 30
-            color: "chart-5"
-          - label: "26-32"
+            color: chart-5
+          - label: 26-32
             value: 44
-          - label: "33-42"
+          - label: 33-42
             value: 26
-      - title: "Gender"
+      - title: Gender
         items:
-          - label: "Male"
+          - label: Male
             value: 76
-          - label: "Female"
+          - label: Female
             value: 24
-            color: "chart-5"
-      - title: "Region"
+            color: chart-5
+      - title: Region
         items:
-          - label: "North America"
+          - label: North America
             value: 50
-            color: "chart-5"
-          - label: "Lat.Am."
+            color: chart-5
+          - label: Lat.Am.
             value: 28
-          - label: "Europe"
+          - label: Europe
             value: 21
-          - label: "Asia"
+          - label: Asia
             value: 1
-
   - type: features_grid
     version: "1.0"
     variant: highlight
-    title: "Making Tech Careers Accessible"
+    title: Making Tech Careers Accessible
     subtitle: "Tech careers should be open to everyone. That's why we offer:"
     columns: 3
     items:
-      - icon: "CurrencyDollar"
-        title: "Affordable Tuition"
-        description: "Lowest among top-rated bootcamps (recognized by Forbes as Best Bootcamp for Students on a Budget)."
-      - icon: "CreditCard"
-        title: "Flexible Financing"
-        description: "Options starting below $299/month, plus affordable loans and income-based payment plans."
-      - icon: "School"
-        title: "Full and Partial Scholarships"
-        description: "Location-based options thanks to important institutional partnerships and government initiatives."
-
+      - icon: CurrencyDollar
+        title: Affordable Tuition
+        description: Lowest among top-rated bootcamps (recognized by Forbes as Best Bootcamp for Students on a Budget).
+      - icon: CreditCard
+        title: Flexible Financing
+        description: Options starting below $299/month, plus affordable loans and income-based payment plans.
+      - icon: School
+        title: Full and Partial Scholarships
+        description: Location-based options thanks to important institutional partnerships and government initiatives.
   - type: two_column
     version: "1.0"
-    proportions: [5, 7]
-    alignment: "center"
+    proportions:
+      - 5
+      - 7
+    alignment: center
     gap: "12"
     left:
-      image: "/attached_assets/feliz-empresario-laptop_1765406479465.png"
-      image_alt: "Happy businesswoman with laptop"
-      justify: "center"
+      image: /attached_assets/feliz-empresario-laptop_1765406479465.png
+      image_alt: Happy businesswoman with laptop
+      justify: center
     right:
-      heading: "The Confidence of a Job Guarantee"
+      heading: The Confidence of a Job Guarantee
       description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
       sub_heading: "We can do this because:"
       bullets:
-        - text: "Our curriculum is industry-aligned and AI-ready"
-        - text: "Our mentorship is unlimited and personalized"
-        - text: "Our career support never expires"
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
       bullets_visible: 1
-      text_align: "left"
+      text_align: left
       button:
-        text: "Learn More"
-        url: "/en/job-guarantee"
-        variant: "primary"
-      footer: "Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp."
+        text: Learn More
+        url: /en/job-guarantee
+        variant: primary
+      footer: Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp.

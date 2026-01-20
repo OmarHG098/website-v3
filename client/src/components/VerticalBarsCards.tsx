@@ -37,11 +37,9 @@ interface CardRect {
 }
 
 const chartColors = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-5))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
+  "hsl(210, 100%, 70%)",  // Light blue
+  "hsl(210, 100%, 50%)",  // Brand blue
+  "hsl(210, 100%, 40%)",  // Medium-dark blue
 ];
 
 export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
