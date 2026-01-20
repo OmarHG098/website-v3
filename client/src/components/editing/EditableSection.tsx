@@ -481,7 +481,7 @@ export function EditableSection({ children, section, index, sectionType, content
             )}
           </div>
         </button>
-        {onMoveUp && sectionType !== "faq_editor" && (
+        {onMoveUp && (
           <button
             onClick={(e) => { e.stopPropagation(); onMoveUp(index); }}
             disabled={!canMoveUp}
@@ -492,7 +492,7 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconArrowUp className="h-4 w-4" />
           </button>
         )}
-        {onMoveDown && sectionType !== "faq_editor" && (
+        {onMoveDown && (
           <button
             onClick={(e) => { e.stopPropagation(); onMoveDown(index); }}
             disabled={!canMoveDown}
@@ -503,7 +503,7 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconArrowDown className="h-4 w-4" />
           </button>
         )}
-        {onDelete && sectionType !== "faq_editor" && (
+        {onDelete && (
           <button
             onClick={(e) => { e.stopPropagation(); onDelete(index); }}
             className="p-2 bg-destructive text-destructive-foreground rounded-md shadow-lg hover-elevate"
@@ -513,7 +513,7 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconTrash className="h-4 w-4" />
           </button>
         )}
-        {onDuplicate && sectionType !== "faq_editor" && (
+        {onDuplicate && (
           <button
             onClick={(e) => { e.stopPropagation(); onDuplicate(index); }}
             className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate"
@@ -523,18 +523,17 @@ export function EditableSection({ children, section, index, sectionType, content
             <IconCopy className="h-4 w-4" />
           </button>
         )}
-        {sectionType !== "faq_editor" && (
-          <Popover open={swapPopoverOpen} onOpenChange={setSwapPopoverOpen}>
-            <PopoverTrigger asChild>
-              <button 
-                className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate" 
-                title="Swap variant"
-                data-testid={`button-swap-section-${index}`}
-              >
-                <IconArrowsExchange className="h-4 w-4" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto min-w-[500px] max-w-[700px] p-2" onClick={(e) => e.stopPropagation()}>
+        <Popover open={swapPopoverOpen} onOpenChange={setSwapPopoverOpen}>
+          <PopoverTrigger asChild>
+            <button 
+              className="p-2 bg-muted text-muted-foreground rounded-md shadow-lg hover-elevate" 
+              title="Swap variant"
+              data-testid={`button-swap-section-${index}`}
+            >
+              <IconArrowsExchange className="h-4 w-4" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto min-w-[500px] max-w-[700px] p-2" onClick={(e) => e.stopPropagation()}>
             {isLoadingSwap ? (
               <div className="flex items-center justify-center py-2 px-4" data-testid={`loader-swap-section-${index}`}>
                 <IconLoader2 className="h-4 w-4 animate-spin text-muted-foreground mr-2" />
