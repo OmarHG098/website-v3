@@ -155,14 +155,14 @@ function SinglePieChart({
   const chartOffset = (containerSize - size) / 2;
 
   return (
-    <div 
-      className={`flex flex-col items-center transition-all duration-300 ease-out cursor-pointer ${
+    <Card 
+      className={`flex flex-col items-center p-6 transition-all duration-300 ease-out cursor-pointer ${
         isOtherHovered ? "opacity-30 duration-150" : "opacity-100"
       }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
+      <h3 className="text-lg font-semibold text-foreground mb-4 uppercase tracking-wide" data-testid="text-pie-chart-title">
         {chart.title}
       </h3>
       
@@ -218,17 +218,19 @@ function SinglePieChart({
           const startX = centerX + startRadius * Math.cos(midRad);
           const startY = centerY + startRadius * Math.sin(midRad);
           
-          const endRadius = scaledRadius + 55;
-          const endX = centerX + endRadius * Math.cos(midRad);
-          const endY = centerY + endRadius * Math.sin(midRad);
+          // Mid point for the angled line
+          const midRadius = scaledRadius + 30;
+          const midPointX = centerX + midRadius * Math.cos(midRad);
+          const midPointY = centerY + midRadius * Math.sin(midRad);
           
-          const controlRadius = scaledRadius + 30;
-          const perpRad = midRad + Math.PI / 2;
-          const controlOffset = 18;
-          const controlX = centerX + controlRadius * Math.cos(midRad) + controlOffset * Math.cos(perpRad);
-          const controlY = centerY + controlRadius * Math.sin(midRad) + controlOffset * Math.sin(perpRad);
+          // End point extends horizontally from the mid point
+          const horizontalExtend = 35;
+          const isRightSideCalc = midPointX > centerX;
+          const endX = isRightSideCalc ? midPointX + horizontalExtend : midPointX - horizontalExtend;
+          const endY = midPointY;
           
-          const curvePath = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+          // Angled path: start -> mid point -> horizontal end
+          const angledPath = `M ${startX} ${startY} L ${midPointX} ${midPointY} L ${endX} ${endY}`;
           
           const isRightSide = endX > centerX;
           
@@ -252,7 +254,7 @@ function SinglePieChart({
                 style={{ overflow: "visible" }}
               >
                 <path
-                  d={curvePath}
+                  d={angledPath}
                   stroke="hsl(var(--foreground))"
                   strokeWidth={1.5}
                   fill="none"
@@ -281,7 +283,7 @@ function SinglePieChart({
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 }
 
@@ -342,7 +344,7 @@ export function PieCharts({ data }: PieChartsProps) {
         </div>
       )}
 
-      <div className={`grid gap-0 items-start justify-items-center overflow-visible ${
+      <div className={`grid gap-4 items-start justify-items-center overflow-visible ${
         data.charts.length === 1 ? 'grid-cols-1' :
         data.charts.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
         'grid-cols-1 md:grid-cols-3'
