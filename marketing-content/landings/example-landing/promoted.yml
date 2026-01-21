@@ -62,6 +62,75 @@ sections:
         - icon: users
           text: Community Gatherings.
     variant: course
+    paddingY:
+      desktop: none lg
+    marginY:
+      desktop: none md
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 100
+    items:
+      - id: switchup-2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logoHeight: h-12 md:h-14
+      - id: course-report-2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        alt: Course Report - Best Coding Bootcamp 2024
+        logoHeight: h-12 md:h-14
+      - id: tech-hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: South Florida Tech Hub
+        logoHeight: h-12 md:h-14
+      - id: ebootcamp
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        alt: eBootcamp Top
+        logoHeight: h-12 md:h-14
+      - id: premios-tecnologia
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        alt: Premios Tecnologia Siglo XXI
+        logoHeight: h-12 md:h-14
+      - id: newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        alt: Newsweek
+        logoHeight: h-12 md:h-14
+      - id: reviews-coursereport
+        logo: /attached_assets/reviews_1765549549051.png
+        alt: 4.9 on Course Report Reviews
+        logoHeight: h-12 md:h-14
+      - id: excelencia-educativa
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        alt: Excelencia Educativa - Institutional Quality
+        logoHeight: h-12 md:h-14
+    paddingY:
+      desktop: none lg
+  - type: comparison_table
+    version: "1.0"
+    title: How We Compare
+    subtitle: See how our approach stacks up against typical alternatives
+    columns:
+      - name: Feature
+      - name: Our Brand
+        highlight: true
+      - name: Others
+    rows:
+      - feature: 1:1 Support
+        values:
+          - Unlimited
+          - Limited
+        feature_description: Get personalized guidance whenever you need it
+      - feature: Guarantee
+        values:
+          - "Yes"
+          - "No"
+        feature_description: Money back if not satisfied
+      - feature: Pricing
+        values:
+          - Flexible
+          - Fixed
+    footer_note: "* Based on industry research"
   - type: faq
     title: Frequently Asked Questionss
     items:
@@ -71,6 +140,8 @@ sections:
         answer: No prior experience needed. This program is designed for complete beginners.
       - question: Will there be support available?
         answer: Yes, all students have access to mentors and a supportive community.
+    paddingY:
+      desktop: lg none
   - type: sticky_cta
     version: "1.0"
     heading: Ready to start your tech career?
@@ -95,6 +166,22 @@ sections:
       success:
         message: Thanks! We'll be in touch within 24 hours.
     showOn: mobile
+    paddingY:
+      desktop: none lg
+  - type: two_column_accordion_card
+    version: "1.0"
+    title: Why Choose Our Program?
+    description: "Learn what makes our bootcamp different:"
+    bullets:
+      - heading: Industry-Ready Skills
+        text: Graduate with a portfolio of real-world projects that demonstrate your abilities to employers.
+      - heading: Career Support
+        text: Access to our job placement team and alumni network to help you land your first role.
+      - heading: Money-Back Guarantee
+        text: If you don't land a job within 6 months, we'll refund your tuition.
+    image: https://example.com/course-benefits.png
+    image_alt: Graduate celebrating success
+    reverse: true
   - type: pricing
     version: "1.0"
     title: Get access to all of our learning database, courses, and services
@@ -137,6 +224,8 @@ sections:
       text: Get plan
       url: /signup
       variant: primary
+    paddingY:
+      desktop: lg none
   - type: features_grid
     version: "1.0"
     title: What You'll Learn
