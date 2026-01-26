@@ -1,0 +1,27 @@
+---
+description: Code formatting, naming conventions, and file organization
+globs: "**/*.{ts,tsx}",**/*.ts,**/*.tsx
+alwaysApply: false
+---
+# Code Style and Organization
+
+TypeScript strict mode. ESM only.
+
+## Naming Conventions
+
+- **Components**: PascalCase (`SectionRenderer`, `HeroCourse`, `GraduatesStats`).
+- **Files**: PascalCase for page/component modules (`CareerProgramDetail.tsx`); kebab-case for UI primitives (`accordion.tsx`, `color-picker.tsx`) and feature folders (`bento-cards`, `custom-icons`).
+- **Component registry**: snake_case folders (`hero`, `graduates_stats`, `sticky_cta`).
+- **Variables/functions**: camelCase. Constants: UPPER_SNAKE or PascalCase for config objects.
+
+## File Organization
+
+- **Client**: `pages/` for route-level components; `components/` with feature subfolders; `contexts/`, `hooks/`, `lib/` for shared logic.
+- **Server**: Routes and app logic in `server/`; AI in `server/ai/`, experiments in `server/experiments/`, content loading helpers in `server/utils/`.
+- **Component registry**: `marketing-content/component-registry/{component_name}/v1.0/` with `schema.ts`, `examples/`, optional `schema.yml` and `field-editors/`.
+
+Use barrel `index.ts` in feature folders when exporting multiple related components.
+
+## Formatting
+
+No project Prettier/ESLint yet; suggest adding both and matching existing style (2 spaces, double quotes, trailing commas where already used).
