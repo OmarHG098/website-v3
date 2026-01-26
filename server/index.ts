@@ -4,6 +4,13 @@ import { setupVite, serveStatic, log } from "./vite";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+// Define __dirname for ESM modules (needed for both dev and bundled builds)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+globalThis.__dirname = __dirname;
 
 const app = express();
 
