@@ -1189,7 +1189,11 @@ export function DebugBubble() {
                               editMode.toggleEditMode();
                               // Navigate to preview route if on a content page
                               if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
-                                const normalizedLocale = normalizeLocale(i18n.language);
+                                // Extract locale from URL path (e.g., /en/career-programs/... → en)
+                                // This is more reliable than i18n.language which can return browser locale like en-US
+                                const pathSegments = pathname.split('/').filter(Boolean);
+                                const urlLocale = pathSegments[0];
+                                const normalizedLocale = normalizeLocale(urlLocale || i18n.language);
                                 const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${normalizedLocale}`;
                                 navigate(previewUrl);
                               }
