@@ -20,9 +20,9 @@ sections:
   - type: hero
     version: "1.0"
     variant: course
-    title: Become an AI Engineer
-    title_highlight: AI Engineer
-    subtitle: Thrivee in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
+    title: Become an AI Engineeer
+    title_highlight: AI Engineeer
+    subtitle: Thrive in Today's Tech and Shape Tomorrow's. Launch your AI-driven career in 20 weeks.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
