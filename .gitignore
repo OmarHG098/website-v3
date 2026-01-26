@@ -4,3 +4,18 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# Environment variables
+.env
+.env.local
+
+# Log files
+*.log
+
+# IDE settings (uncomment if not sharing across team)
+# .vscode/
+# .idea/
+
+# Cursor IDE settings (optional - uncomment if not sharing rules)
+# Note: .cursor/rules/ should be committed if sharing team rules
+# .cursor/

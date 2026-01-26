@@ -1,0 +1,168 @@
+# Cursor Instructions for Website V3
+
+## Architecture Overview
+
+This is a full-stack marketing website with **content-driven pages** and **A/B experimentation**. The codebase uses Vite + React (client), Express (server), and PostgreSQL via Drizzle ORM. Content lives in YAML/JSON under `marketing-content/`, not in the database.
+
+### Key Structure
+- **Client** (`client/src/`): React pages, components, hooks, contexts
+- **Server** (`server/`): Express routes, content loading, AI adaptation, GitHub sync
+- **Shared** (`shared/`): TypeScript schemas (Drizzle + Zod), utilities
+- **Content** (`marketing-content/`): YAML pages organized by type (programs, landings, locations, pages)
+
+### Content Organization
+Content files follow a **slug-based hierarchical structure** in `marketing-content/{contentType}/{slug}/`:
+- `index.yml` or variant files (e.g., `promoted.yml`, `variant-a.yml`)
+- `_common.yml` for metadata (locale, programs, locations)
+- `_experiments.yml` for A/B tests (in any content folder)
+
+Localized content uses suffixes: `index.en.yml`, `index.es.yml` (resolved via `normalizeLocale()` in [shared/locale.ts](shared/locale.ts))
+
+## Critical Developer Workflows
+
+### Build & Run
+```bash
+npm run dev          # Start dev server (Vite + Express SSR)
+npm run build        # Build client (Vite) + server (esbuild to dist/)
+npm start           # Run production build (uses dist/index.js)
+npm run check       # TypeScript check
+npm run db:push     # Apply Drizzle migrations
+```
+
+**Important**: The server is built separately with esbuild (ESM format, bundles dependencies). Development uses `tsx` for live reload.
+
+### Testing Content Changes
+- **Page reload** triggers `registerRoutes()` which loads fresh YAML content
+- **API debugging endpoints**: `/api/debug/*` (token validation, cache status, sync status)
+- **Content edit**: POST `/api/content/edit` with operations array (validates, commits to GitHub, clears cache)
+
+## Content Type Patterns
+
+### Loading Content
+Server-side: Use [server/utils/contentLoader.ts](server/utils/contentLoader.ts) helpers (`loadContent`, `listContentSlugs`, `loadCommonData`). Always validate against Zod schemas from [shared/schema.ts](shared/schema.ts).
+
+**Example route pattern** (see [server/routes.ts](server/routes.ts) line 508-600):
+```typescript
+app.get("/api/:type/:slug", (req, res) => {
+  const content = loadContent({ contentType: "programs", slug, schema: careerProgramSchema, localeOrVariant: locale });
+  if (!content.success) return res.status(404);
+  res.json(content.data);
+});
+```
+
+### Content Types
+1. **Career Programs** (`programs/`): Career path pages with structured curriculum
+2. **Landings** (`landings/`): High-converting marketing pages with hero, CTAs, testimonials
+3. **Locations** (`locations/{city}/`): Campus/location pages with campus.yml metadata
+4. **Template Pages** (`pages/`): Reusable page templates (apply form, terms, privacy)
+
+Each has a **component-based section model**: pages contain arrays of `{ type: "hero", variant: "...", data: {...} }` sections rendered dynamically by components.
+
+## Experimentation System
+
+### How A/B Testing Works
+- **Experiments file**: `{contentType}/{slug}/_experiments.yml` defines variants and allocation
+- **Manager**: [server/experiments/ExperimentManager.ts](server/experiments/ExperimentManager.ts) handles assignment logic (visitor hashing, targeting rules)
+- **Cookie-based**: Session ID + assignments stored in `experiments` cookie
+- **Variant loading**: [server/experiments/ExperimentManager.ts](server/experiments/ExperimentManager.ts) `getVariantContent()` loads `variant-{name}.yml` with merged sections
+
+**Key routes**:
+- GET `/api/career-programs/:slug?force_variant=&force_version=` — loads variant with experiment tracking
+- PATCH `/api/experiments/:contentType/:slug/:experimentSlug` — updates active experiments
+- POST `/api/experiments/:contentType/:slug/create` — creates new experiment
+
+## AI Content Adaptation
+
+### System Architecture
+Located in [server/ai/](server/ai/):
+- **ContextManager**: Loads brand context (voice, tone, guidelines) from `marketing-content/brand-context.yml`
+- **LLMService**: Wraps OpenAI API with caching and retry logic
+- **ContentAdapter**: Orchestrates context → prompt → LLM → validation flow
+- **SchemaConverter**: Converts Drizzle/Zod schemas to JSON schema for LLM constraints
+
+### Adaptation Flow
+1. **POST `/api/content/adapt-with-ai`** receives `{ componentType, variant, targetContext, targetSchema }`
+2. Builds **layered context**: brand context + content context + component schema
+3. Prompts LLM with constraints (required fields, enums, structure)
+4. Validates output against schema; returns adapted content or error
+5. LLM cache keyed by context hash (avoids duplicate calls)
+
+**Important**: Adaptation respects Zod schema constraints — LLM output is validated before returning to client.
+
+## Key Files Reference
+
+### Configuration
+- [vite.config.ts](vite.config.ts) — Path aliases: `@/*` → `client/src`, `@shared/*` → `shared`
+- [drizzle.config.ts](drizzle.config.ts) — PostgreSQL migrations config
+- [tsconfig.json](tsconfig.json) — Includes `client/src/**`, `shared/**`, `server/**`
+
+### Content Patterns
+- [marketing-content/brand-context.yml](marketing-content/brand-context.yml) — Global brand voice/tone (used by AI adaptation)
+- [marketing-content/theme.json](marketing-content/theme.json) — Tailwind config override for landing pages
+- [marketing-content/molecules.json](marketing-content/molecules.json) — Reusable UI molecule definitions
+
+### Schema & Validation
+- [shared/schema.ts](shared/schema.ts) — All Zod schemas (users, pages, components)
+- [scripts/validation/service.ts](scripts/validation/service.ts) — Content validation service (runs on startup/manually)
+
+### Component Registry
+- [server/component-registry.ts](server/component-registry.ts) — Loads component metadata, versions, examples, schemas
+- [marketing-content/component-registry/](marketing-content/component-registry/) — Component definitions with schema.ts, examples, field editors
+
+### Utilities
+- [shared/locale.ts](shared/locale.ts) — `normalizeLocale()` handles en/es with fallbacks
+- [shared/slugMappings.ts](shared/slugMappings.ts) — Maps translated slugs to folder names
+- [server/github.ts](server/github.ts) — GitHub API for committing changes (requires GITHUB_TOKEN env var)
+
+## GitHub Sync & Content Editing
+
+### Workflow
+1. **Local changes**: User edits YAML via UI, calls POST `/api/content/edit`
+2. **Validation**: Content validated against schema
+3. **Commit**: [server/github.ts](server/github.ts) commits to GitHub with message format `[Author: X] Message`
+4. **Sync status**: GET `/api/github/sync-status` shows pending local/remote changes
+5. **Conflict handling**: Can force-push or pull remote changes
+
+**Environment variables needed**:
+- `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH` — Repo coordinates
+- `GITHUB_TOKEN` — Personal access token with repo write access
+- `DATABASE_URL` — PostgreSQL connection
+
+## Common Patterns & Conventions
+
+### YAML Content Structure
+- Top-level `meta` object: SEO (title, description, robots, priority, change_frequency, redirects)
+- `sections` array: Components with `type`, `variant`, `data`
+- Localized variants: Use file suffixes (`index.en.yml`, `index.es.yml`)
+- Multilingual metadata in `_common.yml`
+
+### API Response Format
+Success: `{ ...contentData }` or `{ success: true, data: ... }`
+Error: `{ error: "message" }` with appropriate HTTP status
+
+### Error Handling
+- **Content not found**: Return 404 with `{ error: "Content not found" }`
+- **Validation fails**: Return 400 with `{ error: "...", details: [...] }`
+- **Auth required**: Return 401; in dev mode auth can be bypassed with `X-Debug-Token` header
+
+### Component Development
+- Components defined in [marketing-content/component-registry/{name}/](marketing-content/component-registry/)
+- Each version (v1.0, v1.1, etc.) has `schema.ts` (Zod) + `examples/` folder
+- Use `@shared/schema` exports for reusable component schemas (e.g., `ctaButtonSchema`, `imageSchema`)
+- Field editors (custom UI for YAML editing) placed in `field-editors/` folder
+
+## Debugging Tips
+
+- **Cache issues**: POST `/api/debug/clear-sitemap-cache`, `/api/debug/clear-schema-cache`, `/api/debug/clear-experiment-cache`
+- **Token validation**: POST `/api/debug/validate-token` checks Breathecode API integration
+- **Session check**: POST `/api/debug/check-session` verifies token expiration
+- **Content loading**: Check `server/routes.ts` route definitions; trace through `loadContent()` to verify YAML parsing
+- **Schema mismatch**: Run scripts/validation/service.ts or POST `/api/validation/run` to validate all content
+
+## Important Notes
+
+1. **No database for content**: YAML files are source of truth; database only stores users/sessions
+2. **Locale fallback**: Missing locale defaults to "en" via `normalizeLocale()`
+3. **Experiments are ephemeral**: In-memory in ExperimentManager; survives page reloads but not server restart
+4. **GitHub token required for edits**: Without `GITHUB_TOKEN`, POST `/api/content/edit` fails in production
+5. **Theme customization**: Landing pages respect `marketing-content/theme.json` for Tailwind color overrides
