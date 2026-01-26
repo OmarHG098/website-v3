@@ -5,8 +5,53 @@ import { z } from "zod";
 import type { EditOperation } from "@shared/schema";
 import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
 import { normalizeLocale } from "@shared/locale";
+import { deepMerge } from "./utils/deepMerge";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
+
+function getContentFolder(contentType: string, slug: string): string {
+  switch (contentType) {
+    case "program":
+      return path.join(CONTENT_BASE_PATH, "programs", slug);
+    case "landing":
+      return path.join(CONTENT_BASE_PATH, "landings", slug);
+    case "location":
+      return path.join(CONTENT_BASE_PATH, "locations", slug);
+    case "page":
+      return path.join(CONTENT_BASE_PATH, "pages", slug);
+    default:
+      throw new Error(`Unknown content type: ${contentType}`);
+  }
+}
+
+/**
+ * Recursively strip null values from an object, converting them to undefined.
+ * This is needed because YAML files may have explicit null values, but Zod
+ * schemas use .optional() which only accepts undefined, not null.
+ * For arrays, null elements are removed entirely (not replaced with undefined),
+ * since arrays with embedded undefined can fail Zod validation.
+ */
+function stripNullValues<T>(obj: T): T {
+  if (obj === null) {
+    return undefined as unknown as T;
+  }
+  if (Array.isArray(obj)) {
+    return obj
+      .map((item) => stripNullValues(item))
+      .filter((item) => item !== undefined) as unknown as T;
+  }
+  if (typeof obj === "object" && obj !== null) {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== null) {
+        result[key] = stripNullValues(value);
+      }
+      // If value is null, we simply don't include the key, making it undefined
+    }
+    return result as T;
+  }
+  return obj;
+}
 
 interface ContentEditRequest {
   contentType: "program" | "landing" | "location" | "page";
@@ -152,9 +197,21 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
       return { success: false, error: `Content file not found: ${filePath}` };
     }
     
-    // Read current content
+    // Load _common.yml if it exists
+    const contentFolder = getContentFolder(contentType, slug);
+    const commonPath = path.join(contentFolder, "_common.yml");
+    let commonData: Record<string, unknown> = {};
+    if (fs.existsSync(commonPath)) {
+      const commonContent = fs.readFileSync(commonPath, "utf-8");
+      commonData = yaml.load(commonContent) as Record<string, unknown>;
+    }
+    
+    // Read current content from locale file
     const fileContent = fs.readFileSync(filePath, "utf-8");
-    const content = yaml.load(fileContent) as Record<string, unknown>;
+    const localeData = yaml.load(fileContent) as Record<string, unknown>;
+    
+    // Merge _common.yml with locale file (locale data overrides common)
+    const content = deepMerge(commonData, localeData);
     
     // Apply all operations
     for (const operation of operations) {
@@ -183,7 +240,10 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
         schema = landingPageSchema; // fallback
     }
     
-    const result = schema.safeParse(content);
+    // Strip null values before validation (Zod .optional() expects undefined, not null)
+    const cleanedContent = stripNullValues(content);
+    
+    const result = schema.safeParse(cleanedContent);
     
     if (!result.success) {
       // Parse the error to provide user-friendly messages
@@ -320,8 +380,21 @@ export function getContentForEdit(
       return { content: null, error: `Content file not found` };
     }
     
+    // Load _common.yml if it exists
+    const contentFolder = getContentFolder(contentType, slug);
+    const commonPath = path.join(contentFolder, "_common.yml");
+    let commonData: Record<string, unknown> = {};
+    if (fs.existsSync(commonPath)) {
+      const commonContent = fs.readFileSync(commonPath, "utf-8");
+      commonData = yaml.load(commonContent) as Record<string, unknown>;
+    }
+    
+    // Read locale file content
     const fileContent = fs.readFileSync(filePath, "utf-8");
-    const content = yaml.load(fileContent) as Record<string, unknown>;
+    const localeData = yaml.load(fileContent) as Record<string, unknown>;
+    
+    // Merge _common.yml with locale file (locale data overrides common)
+    const content = deepMerge(commonData, localeData);
     
     return { content };
   } catch (error) {
