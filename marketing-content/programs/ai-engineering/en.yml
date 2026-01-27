@@ -204,8 +204,8 @@ sections:
         projects: Automate business workflows with AI
         orientation: vertical
         icon: IconLayoutKanban
-      - title: Real-Time Systems
-        duration: Week 20
+      - title: RAG & Memory
+        duration: Milestone 7
         objectives:
           - WebSockets and streaming responses
           - Event-driven architecture
