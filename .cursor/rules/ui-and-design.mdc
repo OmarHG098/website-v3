@@ -1,0 +1,23 @@
+---
+description: UI design tokens, color system, and component library conventions
+globs: "client/**/*.{ts,tsx,css}",client/**/*.ts,client/**/*.tsx,client/**/*.css
+alwaysApply: false
+---
+# UI and Design
+
+## Colors
+
+Use only semantic tokens from [design_guidelines.md](design_guidelines.md) and [tailwind.config.ts](tailwind.config.ts): `bg-background`, `bg-card`, `text-foreground`, `text-muted-foreground`, `bg-primary`, `text-destructive`, etc.
+
+**NEVER use**: `bg-blue-500`, `text-red-600`, or `#...` in class names.
+
+- Charts: `chart-1`…`chart-5`.
+- Status: `status-online`, `status-away`, `status-busy`, `status-offline`.
+
+## Component Library
+
+shadcn/ui (new-york style). Use `cn()` from `@/lib/utils` for class name merging.
+
+## Section Rendering
+
+Section types map to components via [SectionRenderer](client/src/components/SectionRenderer.tsx); respect lazy vs eager loading and existing registries.

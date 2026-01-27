@@ -1,0 +1,20 @@
+---
+description: Project architecture overview and path alias conventions
+alwaysApply: true
+---
+
+# Project Architecture and Path Aliases
+
+This is a content-driven marketing site: Vite + React (client), Express (server), Drizzle + PostgreSQL, YAML content in `marketing-content/`.
+
+Content is the source of truth in YAML; DB stores users/sessions only.
+
+Use [cursor-instructions.mdc](.cursor/rules/cursor-instructions.mdc) and [design_guidelines.md](design_guidelines.md) as canonical references for architecture, content model, and design tokens.
+
+## Path Aliases
+
+- **Client**: `@/` → `client/src`. Use for components, hooks, lib, pages (e.g. `@/components/...`, `@/hooks/...`, `@/lib/utils`).
+- **Shared**: `@shared/` → `shared`. Use for schemas, locale, slugMappings (e.g. `@shared/schema`, `@shared/locale`).
+- **Assets**: `@assets` → `attached_assets` (Vite); use for static assets.
+
+Use `import type` for type-only imports. Prefer aliases over relative paths that cross layer boundaries.
