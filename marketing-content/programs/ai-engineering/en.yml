@@ -150,6 +150,15 @@ sections:
       - name: Git
         icon: git
     module_cards:
+      - title: AI‑First Prework
+        duration: Milestone 0
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
       - title: Web Foundations
         duration: Milestone 1
         objectives:
