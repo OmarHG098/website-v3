@@ -186,8 +186,8 @@ sections:
         projects: Build a retrieval-augmented generation system
         orientation: vertical
         icon: IconDatabase
-      - title: Multi-Agent Systems
-        duration: Weeks 15-17
+      - title: Backend for AI Frontends
+        duration: Milestone 5
         objectives:
           - Intelligent agents with memory
           - Task routing and tool calling
@@ -195,8 +195,8 @@ sections:
         projects: Create AI systems that plan and reason
         orientation: vertical
         icon: IconRobot
-      - title: Workflow Automation
-        duration: Weeks 18-19
+      - title: Telemetry & Data Pipelines
+        duration: Milestone 6
         objectives:
           - AI-generated processes with n8n
           - Queues and scheduled tasks
