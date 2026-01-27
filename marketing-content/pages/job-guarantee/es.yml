@@ -1,14 +1,12 @@
-slug: "trabajo-garantizado"
-template: "default"
-title: "Trabajo Garantizado"
-
+slug: trabajo-garantizado
+template: default
+title: Trabajo Garantizado
 meta:
   page_title: Trabajo Garantizado | 4Geeks Academy
   description: Entra a tech con nuestra Garantía de Empleo. Consigue trabajo en 9 meses después de graduarte, o te devolvemos tu matrícula.
-  robots: "index, follow"
+  robots: index, follow
   redirects:
     - /es/trabajo-garantizado
-
 sections:
   - type: hero
     version: "1.0"
@@ -141,4 +139,5 @@ sections:
   - type: faq
     version: "1.0"
     title: Preguntas Frecuentes sobre la Garantía de Empleo
-    related_features: ["job-guarantee"]
+    related_features:
+      - job-guarantee
