@@ -152,6 +152,42 @@ const variantLabels: Record<string, string> = {
   default: "Default",
   subscription: "Subscription",
   product: "Product",
+  // Hero variants
+  course: "Course",
+  twoColumn: "Two Column",
+  // Features Grid variants
+  "stats-cards": "Stats Cards",
+  "stats-text-card": "Stats Text Card",
+  "stats-text": "Stats Text",
+  cardHeader: "Card Header",
+  spotlight: "Spotlight",
+  textOnly: "Text Only",
+  // AI Learning variants
+  "feature-tabs": "Feature Tabs",
+  // Graduates Stats variants
+  standard: "Standard",
+  fullBleed: "Full Bleed",
+  asymmetric: "Asymmetric",
+  // Split Cards variants
+  "primary-left": "Primary Left",
+  "primary-right": "Primary Right",
+  // Who's Hiring variants
+  grid: "Grid",
+  carousel: "Carousel",
+  // Lead Form variants
+  inline: "Inline",
+  stacked: "Stacked",
+  // Numbered Steps variants
+  bubbleText: "Bubble Text",
+  // Bullet Tabs Showcase variants
+  withoutBorder: "Without Border",
+  // CTA Banner variants
+  form: "Form",
+  // Syllabus variants
+  "landing-syllabus": "Landing Syllabus",
+  "program-modules": "Program Modules",
+  // Award Badges variants
+  simple: "Simple",
 };
 
 function slugify(text: string): string {
@@ -243,8 +279,14 @@ export default function ComponentPickerModal({
           const apiExamples: ApiExample[] = data.examples || [];
           const processed: ProcessedExample[] = apiExamples.map((ex, idx) => {
             const content = parseYamlContent(ex.yaml);
-            // Ensure variant is set - use extracted variant or fallback to 'default'
-            const variant = ex.variant || 'default';
+            // Extract variant from content if not provided by API
+            let variant = ex.variant;
+            if (!variant && content && typeof content === 'object' && 'variant' in content) {
+              variant = content.variant as string;
+            }
+            // Fallback to 'default' if no variant found
+            variant = variant || 'default';
+            
             return {
               name: ex.name,
               slug: slugify(ex.name) || `example-${idx}`,
@@ -260,11 +302,14 @@ export default function ComponentPickerModal({
           setExamples(processed);
           if (processed.length > 0) {
             setSelectedExample(processed[0].slug);
+          } else {
+            setSelectedExample("");
           }
         })
         .catch((error) => {
           console.error('Error loading examples:', error);
           setExamples([]);
+          setSelectedExample("");
         })
         .finally(() => setIsLoading(false));
     }
@@ -552,12 +597,20 @@ export default function ComponentPickerModal({
                 
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">Example:</span>
-                  <Select value={selectedExample} onValueChange={setSelectedExample}>
+                  <Select 
+                    value={selectedExample || undefined} 
+                    onValueChange={setSelectedExample}
+                    disabled={examples.length === 0}
+                  >
                     <SelectTrigger className="w-64" data-testid="select-example">
-                      <SelectValue placeholder="Select" />
+                      <SelectValue placeholder={examples.length === 0 ? "No examples" : "Select example"} />
                     </SelectTrigger>
                     <SelectContent>
-                      {exampleSelectItems}
+                      {exampleSelectItems || (
+                        <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                          No examples available
+                        </div>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>

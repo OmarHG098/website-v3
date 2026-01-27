@@ -1,4 +1,4 @@
-name: split_cards
+name: Split Cards
 version: "1.0"
 description: "Two-card split layout with responsive sizing. Primary card (3/4 desktop, 50% tablet) has dark background with heading, description, and optional floating icons. Secondary card (1/4 desktop, 50% tablet) displays a benefits list with checkmarks."
 
