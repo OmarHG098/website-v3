@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "10dd6188d4fa9d04aecd8f1df97b353338dde7cb",
-  "lastSyncedAt": "2026-01-26T15:01:40.620Z",
+  "lastSyncedCommit": "3cd9fbf01098d30c995f4442a64430846f7c7d2c",
+  "lastSyncedAt": "2026-01-27T15:14:30.912Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -618,9 +618,9 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "e82d783cdd50fdec9633467bf0580110c829e94f79d4e3714d99c8cc2772c2fa",
-      "lastModified": 1769093770257.436,
-      "remoteSha": "e82d783cdd50fdec9633467bf0580110c829e94f79d4e3714d99c8cc2772c2fa"
+      "sha": "fa1eba0512f62e6a3f6ec1dcad307268894e3a5b2cbddb352a0b6071e4345a06",
+      "lastModified": 1769526452232.9565,
+      "remoteSha": "fa1eba0512f62e6a3f6ec1dcad307268894e3a5b2cbddb352a0b6071e4345a06"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -648,9 +648,9 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "30082ffa4b440bdd52b3657b1a5ec3e96319e6083c3ff2c6563c9254d893d5cd",
-      "lastModified": 1767901902161.2441,
-      "remoteSha": "30082ffa4b440bdd52b3657b1a5ec3e96319e6083c3ff2c6563c9254d893d5cd"
+      "sha": "32f647cfc43ff915006cbcbd2b996b28201b0c45079b1e4098b5e18ceefb7aeb",
+      "lastModified": 1769526452578.9563,
+      "remoteSha": "32f647cfc43ff915006cbcbd2b996b28201b0c45079b1e4098b5e18ceefb7aeb"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
@@ -698,9 +698,9 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "5ddc4a908887027517dc10be2ffa6e1dfb6eb1e7688da0649677099c3ff923c3",
-      "lastModified": 1768584215765.7202,
-      "remoteSha": "5ddc4a908887027517dc10be2ffa6e1dfb6eb1e7688da0649677099c3ff923c3"
+      "sha": "2b7a5b3de414ca24bbc5db6f3e7fb5d8890f5fab74286057fb5a713574cf9006",
+      "lastModified": 1769526870679.6472,
+      "remoteSha": "2b7a5b3de414ca24bbc5db6f3e7fb5d8890f5fab74286057fb5a713574cf9006"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
@@ -713,9 +713,9 @@
       "remoteSha": "cd6ef75b6e0719ae5bc0fa822a1c0a11edd73fb259fe6b8869143a37773448c2"
     },
     "marketing-content/programs/ai-for-professionals/en.yml": {
-      "sha": "f0ff232342d70237c8559ebe38dbc80839fe148f29b8a4f265e729ad4526a3bc",
-      "lastModified": 1768584216361.7202,
-      "remoteSha": "f0ff232342d70237c8559ebe38dbc80839fe148f29b8a4f265e729ad4526a3bc"
+      "sha": "a3af8c84c425a6ed5e633f38bbce5e49aec5af1261091d205aff5213077eadd2",
+      "lastModified": 1769526453278.9556,
+      "remoteSha": "a3af8c84c425a6ed5e633f38bbce5e49aec5af1261091d205aff5213077eadd2"
     },
     "marketing-content/programs/ai-for-professionals/es.yml": {
       "sha": "7234b8eb4aaff85deaac6f850a3fe23dd952b62a5064d12d1c8694fb0a5c5733",
