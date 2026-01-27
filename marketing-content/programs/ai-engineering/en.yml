@@ -155,7 +155,7 @@ sections:
         objectives:
           - Git, JS basics
           - Internet fundamentals
-          - coding agents
+          - Coding agents
         projects: Understand the foundations
         orientation: vertical
         icon: IconCode
@@ -171,10 +171,10 @@ sections:
       - title: Programming Foundations
         duration: Milestone 2
         objectives:
-          - REST APIs and authentication
-          - Serverless functions
-          - Cloud-native deployment strategies
-        projects: Create a scalable API server with secure auth
+          - Algorithms
+          - Stateflow vs controlflow
+          - JS mastery
+        projects: Implement small features for the company.
         orientation: vertical
         icon: IconServer
       - title: AI‑Driven UI Engineering
@@ -183,7 +183,7 @@ sections:
           - Telemetry and data pipelines
           - Automated reporting dashboards
           - Real-time analytics
-        projects: Design ETL pipelines for business insights
+        projects: Rebuild the company's UI using AI.
         orientation: vertical
         icon: IconChartBar
       - title: React Fundamentals
