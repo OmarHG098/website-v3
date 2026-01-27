@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
 import type { Section, EditOperation } from "@shared/schema";
+import { getDebugUserName } from "@/hooks/useDebugAuth";
 
 export type PreviewBreakpoint = 'desktop' | 'mobile';
 
@@ -119,6 +120,7 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     setIsSaving(true);
     try {
       const token = sessionStorage.getItem("debug_token");
+      const author = getDebugUserName() || undefined;
       const response = await fetch("/api/content/edit", {
         method: "POST",
         headers: {
@@ -130,6 +132,7 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
           slug,
           locale,
           operations,
+          author,
         }),
       });
 
