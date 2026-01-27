@@ -535,17 +535,19 @@ export default function ComponentPickerModal({
 
   // Helper function to render example items in the Select dropdown
   const renderExampleItems = () => {
-    if (examples.length === 0) {
-      return null;
-    }
-
     const { grouped, sortedVariants } = groupedExamples;
     
+    if (sortedVariants.length === 0) {
+      return (
+        <SelectItem value="no examples available" disabled>
+          No examples available
+        </SelectItem>
+      );
+    }
+    
     // Flat list scenarios: no variants or only 'default' variant
-    if (sortedVariants.length === 0 || 
-        (sortedVariants.length === 1 && sortedVariants[0] === 'default')) {
-      const itemsToShow = sortedVariants.length === 0 ? examples : grouped['default'];
-      return itemsToShow.map(ex => (
+    if (sortedVariants.length === 1 && sortedVariants[0] === 'default') {
+      return grouped['default'].map(ex => (
         <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
       ));
     }
