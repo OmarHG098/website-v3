@@ -1581,7 +1581,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         sectionData,
         variant,
         version,
+        author: requestAuthor,
       } = req.body;
+
+      // Use author from request body (sent by client from session context)
+      const authorName = requestAuthor && typeof requestAuthor === 'string' ? requestAuthor : undefined;
 
       if (!contentType || !slug || !locale) {
         res
@@ -1638,6 +1642,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         operations: finalOperations,
         variant: effectiveVariant,
         version: effectiveVersion,
+        author: authorName,
       });
 
       if (result.success) {

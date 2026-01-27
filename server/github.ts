@@ -903,10 +903,11 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
       ...change,
       source: isConflict ? 'conflict' : 'local',
       // For conflicts, include the remote author/date/commitSha
-      // For local changes, use "Yourself" as author and current date
-      author: isConflict ? fileAuthorMap.get(change.file) : 'Yourself',
-      date: isConflict ? fileDateMap.get(change.file) : new Date().toISOString(),
-      commitSha: isConflict ? fileCommitShaMap.get(change.file) : undefined,
+      // For local changes, use stored author from sync state (undefined for legacy entries without author tracking)
+      author: isConflict ? fileAuthorMap.get(change.file) : change.author,
+      date: isConflict ? fileDateMap.get(change.file) : (change.date || new Date().toISOString()),
+      // Use specific commit SHA if mapped, otherwise fall back to remoteCommit (HEAD)
+      commitSha: isConflict ? (fileCommitShaMap.get(change.file) || conflictInfo.remoteCommit || undefined) : undefined,
     });
   }
   
@@ -933,7 +934,8 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
         localSha: '',
         author: fileAuthorMap.get(filePath),
         date: fileDateMap.get(filePath),
-        commitSha: fileCommitShaMap.get(filePath),
+        // Use specific commit SHA if mapped, otherwise fall back to remoteCommit (HEAD)
+        commitSha: fileCommitShaMap.get(filePath) || conflictInfo.remoteCommit || undefined,
       });
     }
   }

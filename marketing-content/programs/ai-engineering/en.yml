@@ -63,11 +63,11 @@ sections:
           text: 24-Week Intensive Program
         - icon: briefcase
           text: Career-Focused, Project-Driven Training
-        - icon: robot
+        - icon: IconRobot
           text: AI-Powered Learning & Feedback
         - icon: users
           text: 7:1 Student-to-Instructor Ratio
-        - icon: IconUserCheck
+        - icon: IconHome
           text: Unlimited 1:1 Mentorship
         - icon: book
           text: Real-World Portfolio Project
@@ -150,53 +150,62 @@ sections:
       - name: Git
         icon: git
     module_cards:
-      - title: AI-Assisted Frontend
-        duration: Weeks 1-4
+      - title: AI‑First Prework
+        duration: Milestone 0
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build your first AI-enhanced web application
+          - Git, JS basics
+          - Internet fundamentals
+          - Coding agents
+        projects: Understand the foundations
         orientation: vertical
         icon: IconCode
-      - title: Production Backend
-        duration: Weeks 5-8
+      - title: Web Foundations
+        duration: Milestone 1
         objectives:
-          - REST APIs and authentication
-          - Serverless functions
-          - Cloud-native deployment strategies
-        projects: Create a scalable API server with secure auth
+          - HTML, CSS, Tailwind
+          - Accessibility
+          - Layouts
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
+      - title: Programming Foundations
+        duration: Milestone 2
+        objectives:
+          - Algorithms
+          - Stateflow vs controlflow
+          - JS mastery
+        projects: Implement small features for the company.
         orientation: vertical
         icon: IconServer
-      - title: Data Systems
-        duration: Weeks 9-10
+      - title: AI‑Driven UI Engineering
+        duration: Milestone 3
         objectives:
-          - Telemetry and data pipelines
-          - Automated reporting dashboards
-          - Real-time analytics
-        projects: Design ETL pipelines for business insights
+          - Vision‑to‑Spec prompting
+          - Component generation
+        projects: Rebuild the company's UI using AI.
         orientation: vertical
         icon: IconChartBar
-      - title: RAG Knowledge Layer
-        duration: Weeks 11-14
+      - title: React Fundamentals
+        duration: Milestone 4
         objectives:
-          - Vector search and embeddings
-          - Contextual document retrieval
-          - Connect LLMs to proprietary data
-        projects: Build a retrieval-augmented generation system
+          - SPA architecture
+          - Props/state/effects
+          - Debugging
+        projects: Build the company's interactive frontend.
         orientation: vertical
         icon: IconDatabase
-      - title: Multi-Agent Systems
-        duration: Weeks 15-17
+      - title: Backend for AI Frontends
+        duration: Milestone 5
         objectives:
-          - Intelligent agents with memory
-          - Task routing and tool calling
-          - Autonomous multi-step execution
-        projects: Create AI systems that plan and reason
+          - APIs
+          - DB basics
+          - Serialization, authentictation
+          - Serverless functions
+        projects: Create the company’s backend.
         orientation: vertical
         icon: IconRobot
-      - title: Workflow Automation
-        duration: Weeks 18-19
+      - title: Telemetry & Data Pipelines
+        duration: Milestone 6
         objectives:
           - AI-generated processes with n8n
           - Queues and scheduled tasks
@@ -204,8 +213,8 @@ sections:
         projects: Automate business workflows with AI
         orientation: vertical
         icon: IconLayoutKanban
-      - title: Real-Time Systems
-        duration: Week 20
+      - title: RAG & Memory
+        duration: Milestone 7
         objectives:
           - WebSockets and streaming responses
           - Event-driven architecture
@@ -213,6 +222,42 @@ sections:
         projects: Launch your capstone AI-powered business
         orientation: vertical
         icon: IconBolt
+      - title: Web Foundations
+        duration: Milestone 1
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
+      - title: Web Foundations
+        duration: Milestone 8
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
+      - title: Web Foundations
+        duration: Milestone 9
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
+      - title: Web Foundations
+        duration: Milestone 10
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
     marginY:
       desktop: md none
     paddingY:

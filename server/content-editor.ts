@@ -6,6 +6,7 @@ import type { EditOperation } from "@shared/schema";
 import { landingPageSchema, careerProgramSchema, templatePageSchema, locationPageSchema } from "@shared/schema";
 import { normalizeLocale } from "@shared/locale";
 import { deepMerge } from "./utils/deepMerge";
+import { markFileAsModified } from "./sync-state";
 
 const CONTENT_BASE_PATH = path.join(process.cwd(), "marketing-content");
 
@@ -60,6 +61,7 @@ interface ContentEditRequest {
   operations: EditOperation[];
   variant?: string;
   version?: number;
+  author?: string;  // Who made this edit (for sync tracking)
 }
 
 function getContentPath(contentType: string, slug: string, locale: string, variant?: string, version?: number): string {
@@ -343,6 +345,9 @@ export async function editContent(request: ContentEditRequest): Promise<{ succes
     });
     
     fs.writeFileSync(filePath, updatedYaml, "utf-8");
+    
+    // Track who modified this file for sync purposes
+    markFileAsModified(filePath, request.author);
     
     // Note: GitHub commits are now handled manually via /api/github/commit endpoint
     // Changes are saved locally and users commit when ready
