@@ -21,7 +21,7 @@ sections:
     version: "1.0"
     variant: course
     title: AI Engineering
-    title_highlight: AI Engineering
+    title_highlight: AI Enginerering
     subtitle: Learn to design, build, and deploy complete AI systems used in real-world production.
     students_enrolled:
       avatars:
