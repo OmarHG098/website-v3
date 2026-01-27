@@ -438,7 +438,11 @@ export default function ComponentPickerModal({
     const { grouped, sortedVariants } = groupedExamples;
     
     if (sortedVariants.length === 0) {
-      return null;
+      return (
+        <SelectItem value="no examples available" disabled>
+          No examples available
+        </SelectItem>
+      );
     }
     
     if (sortedVariants.length === 1 && sortedVariants[0] === 'default') {
