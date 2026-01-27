@@ -359,7 +359,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Our graduates are hired by important companies worldwide
+    subtitle: Our graduates are hired by leading companies worldwide
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -388,8 +388,8 @@ sections:
     paddingY:
       desktop: none
   - type: testimonials
-    title: Your New Career Starts Here
-    subtitle: See what our graduates have to say about their experience
+    title: Real Students. Real Careers.
+    subtitle: What our graduates have to say about the program
     rating_summary:
       average: "4.5"
       count: 1,294
