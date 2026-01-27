@@ -1,0 +1,38 @@
+---
+description: Environment variables, local development setup, and Replit transition
+alwaysApply: true
+---
+
+# Environment and Local Development
+
+## Required Environment Variables
+
+- **For run**: `DATABASE_URL`, `SESSION_SECRET`.
+- **Content edit / GitHub**: `GITHUB_TOKEN`, `GITHUB_REPO_URL` (or owner/repo), `GITHUB_BRANCH`.
+- **Optional**: `GITHUB_SYNC_ENABLED`, Turnstile keys, `VITE_BREATHECODE_HOST`, `OPENAI_API_KEY` / `AI_INTEGRATIONS_*` for AI features.
+
+## Local Development
+
+`npm run dev` (no Replit). Use `PORT` (default 5000) and `SITE_URL` for canonical URLs when needed. Avoid relying on `REPL_ID` or `REPLIT_DEV_DOMAIN`.
+
+## Replit Configuration
+
+**vite.config.ts**: Already updated to work locally. Replit plugins (cartographer, dev-banner) are conditionally loaded only when `REPL_ID` is set, so local development works without Replit-specific tooling. Runtime error overlay plugin is always included.
+
+## Gitignore for Local Development
+
+Since the site is still deployed on Replit, add local-only files to `.gitignore` to prevent conflicts:
+- `.env` (environment variables with secrets)
+- `.env.local` (local overrides)
+- `.cursor/` (Cursor IDE settings - optional, team may want to share some rules)
+- `*.log` (local log files)
+- `.DS_Store` (already present)
+- IDE-specific files (`.vscode/`, `.idea/`) if not shared across team
+
+## Environment Setup
+
+Document local setup: `npm install`, `cp .env.example .env`, set `DATABASE_URL` and required vars, `npm run db:push`, `npm run dev`. Provide `.env.example` with all required keys (no real secrets).
+
+## URL Configuration
+
+Use `process.env.SITE_URL` (or equivalent) for sitemap/canonical URLs instead of `REPLIT_DEV_DOMAIN`. Replace hardcoded `replit.app` URLs (e.g. in [SchemaOrg](client/src/components/SchemaOrg.tsx)) with configurable base URL.
