@@ -67,7 +67,7 @@ sections:
           text: AI-Powered Learning & Feedback
         - icon: users
           text: 7:1 Student-to-Instructor Ratio
-        - icon: users
+        - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
           text: Real-World Portfolio Project
@@ -359,7 +359,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Explore how 4Geeks Academy propels graduates into thriving tech careers.
+    subtitle: Our graduates are hired by important companies worldwide
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
