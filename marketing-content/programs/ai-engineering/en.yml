@@ -63,11 +63,11 @@ sections:
           text: 24-Week Intensive Program
         - icon: briefcase
           text: Career-Focused, Project-Driven Training
-        - icon: robot
+        - icon: IconRobot
           text: AI-Powered Learning & Feedback
         - icon: users
           text: 7:1 Student-to-Instructor Ratio
-        - icon: IconUserCheck
+        - icon: IconHome
           text: Unlimited 1:1 Mentorship
         - icon: book
           text: Real-World Portfolio Project
