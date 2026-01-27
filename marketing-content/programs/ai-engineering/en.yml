@@ -191,7 +191,7 @@ sections:
           - Vector search and embeddings
           - Contextual document retrieval
           - Connect LLMs to proprietary data
-        projects: Build a retrieval-augmented generation system
+        projects: Build the company's interactive frontend.
         orientation: vertical
         icon: IconDatabase
       - title: Backend for AI Frontends
