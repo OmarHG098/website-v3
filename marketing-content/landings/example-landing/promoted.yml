@@ -1,9 +1,20 @@
+slug: example-landing
+title: Example Landing Page
+locale: en
 meta:
+  robots: index, follow
+  og_image: /images/landing-og.jpg
+  priority: 0.9
+  change_frequency: weekly
   page_title: Example Landing Page | 4Geeks
   description: This is an example landing page demonstrating the various section types and layouts available.
   redirects:
     - /example/landing
     - /demo/landing-page
+schema:
+  include:
+    - organization
+    - website
 sections:
   - type: hero
     title: Work smarter, not harder, apply AI at Work
@@ -66,6 +77,46 @@ sections:
       desktop: none lg
     marginY:
       desktop: none md
+  - type: ai_learning
+    version: "1.0"
+    variant: feature-tabs
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+      - icon: Headset
+        title: Unlimited 1:1 mentoring sessions
+        description: Access unlimited mentorship sessions with our experts whenever you need guidance.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+  - type: two_column
+    version: v1.0
+    proportions:
+      - 5
+      - 7
+    background: bg-muted/30
+    alignment: center
+    gap: "12"
+    reverse_on_mobile: true
+    left:
+      image: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop
+      image_alt: Team collaborating on a project
+      justify: center
+    right:
+      heading: Why Choose Us
+      description: We provide comprehensive support for your learning journey from day one to career success.
+      bullets:
+        - text: Personalized mentorship from industry experts
+        - text: Flexible learning schedule that fits your life
+        - text: Real-world projects to build your portfolio
+        - text: Career support that lasts a lifetime
+      bullet_icon: Check
+      font_size: base
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -244,19 +295,24 @@ sections:
     paddingY:
       desktop: lg none
   - type: features_grid
-    version: "1.0"
-    title: What You'll Learn
-    subtitle: Discover the tools that make learning faster and easier
+    title: Advance Faster, Never Lose Momentum
+    subtitle: "The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help."
     items:
-      - icon: Brain
-        title: AI-Powered Learning
-        description: See how AI tutors provide instant feedback and personalized guidance 24/7
+      - icon: PeopleGroup
+        title: 7:1 Student-Teacher Ratio
+        description: Get the personalized attention you need to master coding.
+      - icon: Handshake
+        title: Unlimited 1:1 Mentorship
+        description: Access expert guidance from day one—and for life.
       - icon: Rocket
-        title: Accelerated Progress
-        description: Learn how students are completing courses 3x faster with AI assistance
-      - icon: Code
-        title: Live Demo
-        description: Watch a live demonstration of our AI coding assistant in action
+        title: 24/7 AI Coding Assistant
+        description: Receive instant feedback and support while coding.
+      - icon: HandsGroup
+        title: Real Community Support
+        description: Collaborate with mentors, alumni, and peers who’ve got your back.
+    icon_color: "#0097CD"
+    columns: 4
+    variant: highlight
   - type: stats
     version: "1.0"
     title: Join 50,000+ Learnerss
