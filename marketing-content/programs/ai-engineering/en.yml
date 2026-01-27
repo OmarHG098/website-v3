@@ -21,7 +21,7 @@ sections:
     version: "1.0"
     variant: course
     title: AI Engineering
-    title_highlight: AI Engineering
+    title_highlight: AI Enginerering
     subtitle: Learn to design, build, and deploy complete AI systems used in real-world production.
     students_enrolled:
       avatars:
@@ -67,7 +67,7 @@ sections:
           text: AI-Powered Learning & Feedback
         - icon: users
           text: 7:1 Student-to-Instructor Ratio
-        - icon: users
+        - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
           text: Real-World Portfolio Project
@@ -120,9 +120,9 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Does the Job Guarantee deliver results you can count on?
-    subtitle: Yes, and we've got the numbers to back it up
-    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
+    title: Why AI Engineering Now
+    subtitle: The talent gap is your opportunity
+    description: According to LinkedIn’s Jobs on the Rise 2026, AI Engineers are among the fastest-growing roles in the U.S. Demand is accelerating, and companies are actively hiring for these skills now.
     background: bg-muted/30
     items:
       - id: "1"
@@ -150,17 +150,17 @@ sections:
       - name: Git
         icon: git
     module_cards:
-      - title: AI-Assisted Frontend
-        duration: Weeks 1-4
+      - title: Web Foundations
+        duration: Milestone 1
         objectives:
           - Modern React application with AI components
           - Intelligent user interfaces
           - AI-powered auto-completion and suggestions
-        projects: Build your first AI-enhanced web application
+        projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
-      - title: Production Backend
-        duration: Weeks 5-8
+      - title: Programming Foundations
+        duration: Milestone 2
         objectives:
           - REST APIs and authentication
           - Serverless functions
@@ -168,8 +168,8 @@ sections:
         projects: Create a scalable API server with secure auth
         orientation: vertical
         icon: IconServer
-      - title: Data Systems
-        duration: Weeks 9-10
+      - title: AI‑Driven UI Engineering
+        duration: Milestone 3
         objectives:
           - Telemetry and data pipelines
           - Automated reporting dashboards
@@ -177,8 +177,8 @@ sections:
         projects: Design ETL pipelines for business insights
         orientation: vertical
         icon: IconChartBar
-      - title: RAG Knowledge Layer
-        duration: Weeks 11-14
+      - title: React Fundamentals
+        duration: Milestone 4
         objectives:
           - Vector search and embeddings
           - Contextual document retrieval
@@ -186,8 +186,8 @@ sections:
         projects: Build a retrieval-augmented generation system
         orientation: vertical
         icon: IconDatabase
-      - title: Multi-Agent Systems
-        duration: Weeks 15-17
+      - title: Backend for AI Frontends
+        duration: Milestone 5
         objectives:
           - Intelligent agents with memory
           - Task routing and tool calling
@@ -195,8 +195,8 @@ sections:
         projects: Create AI systems that plan and reason
         orientation: vertical
         icon: IconRobot
-      - title: Workflow Automation
-        duration: Weeks 18-19
+      - title: Telemetry & Data Pipelines
+        duration: Milestone 6
         objectives:
           - AI-generated processes with n8n
           - Queues and scheduled tasks
@@ -204,8 +204,8 @@ sections:
         projects: Automate business workflows with AI
         orientation: vertical
         icon: IconLayoutKanban
-      - title: Real-Time Systems
-        duration: Week 20
+      - title: RAG & Memory
+        duration: Milestone 7
         objectives:
           - WebSockets and streaming responses
           - Event-driven architecture
@@ -359,7 +359,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Explore how 4Geeks Academy propels graduates into thriving tech careers.
+    subtitle: Our graduates are hired by leading companies worldwide
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -388,10 +388,10 @@ sections:
     paddingY:
       desktop: none
   - type: testimonials
-    title: Your New Career Starts Here
-    subtitle: See what our graduates have to say about their experience
+    title: Real Students. Real Careers.
+    subtitle: What our graduates have to say about the program
     rating_summary:
-      average: "4.5"
+      average: "4.8"
       count: 1,294
     items:
       - name: Sarah Johnson
