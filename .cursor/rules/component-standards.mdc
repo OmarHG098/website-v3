@@ -1,0 +1,159 @@
+---
+description: Standards and requirements for creating and maintaining components in the component registry
+globs: "marketing-content/component-registry/**",client/src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Component Registry Standards
+
+This document defines the standards for creating, maintaining, and ensuring components are accessible via dev tools.
+
+## Directory Structure
+
+All components must follow this structure:
+
+```
+marketing-content/component-registry/{component_name}/v{version}/
+├── schema.yml          # Human-readable schema (required)
+├── schema.ts           # Zod validation schema (required)
+├── examples/           # Example files directory (required)
+│   ├── default.yml     # Default example (recommended)
+│   └── {variant}.yml   # Variant-specific examples
+└── field-editors.ts    # Optional: custom field editors
+```
+
+### Required Files
+
+1. **schema.yml**: Human-readable schema with:
+   - `name`: Component display name
+   - `version`: Version string (e.g., "1.0")
+   - `component`: React component name
+   - `file`: Path to component file
+   - `description`: Component description
+   - `when_to_use`: Usage guidelines
+   - `variants`: Variant definitions (if applicable)
+   - `props`: Property definitions
+
+2. **schema.ts**: Zod validation schema that:
+   - Exports a Zod schema matching the component's data structure
+   - Validates all required and optional fields
+   - Reuses shared schemas from `@shared/schema` when possible
+   - Is used by the validation system
+
+3. **examples/**: Directory containing example YAML files
+
+## Example File Format
+
+Example files must follow this structure:
+
+```yaml
+name: "Example Name"
+description: "Brief description of what this example demonstrates"
+yaml: |
+  - type: {component_name}
+    version: "{version}"
+    variant: {variant_name}  # Optional, defaults to component default
+    # ... component-specific properties
+```
+
+### Example Requirements
+
+1. **Required Fields**:
+   - `name`: Human-readable example name (displayed in UI)
+   - `description`: Brief description (helpful for users)
+   - `yaml`: The actual YAML content (must be valid YAML)
+
+2. **Variant Specification**:
+   - Variant should be specified in the YAML content itself: `variant: {variant_name}`
+   - The variant will be automatically extracted by the system
+   - If no variant is specified, it defaults to `'default'`
+
+3. **YAML Content Structure**:
+   - Must be a YAML array with at least one section object
+   - First item should have `type: {component_name}` and `version: "{version}"`
+   - All component-specific properties follow
+
+### Default Example
+
+**Always include a `default.yml` example** that:
+- Uses the component's default variant (or most common variant)
+- Demonstrates basic usage with minimal required fields
+- Serves as a starting point for users
+
+Example:
+```yaml
+name: "Default"
+description: "Default example showing basic usage"
+yaml: |
+  - type: features_grid
+    version: "1.0"
+    variant: highlight
+    title: "Key Features"
+    items:
+      - icon: Star
+        value: "100%"
+        title: "Satisfaction Rate"
+```
+
+## Dev Tools Accessibility
+
+For components to appear and work correctly in ComponentPickerModal:
+
+1. **Examples Must Load**: Examples are loaded via `/api/component-registry/{componentType}/{version}/examples`
+   - Ensure example files are valid YAML
+   - Variants must be extractable from YAML content
+   - Examples must parse correctly
+
+2. **Variant Handling**:
+   - Variants are automatically extracted from YAML content
+   - If extraction fails, variant defaults to `'default'`
+   - Examples are grouped by variant in the UI
+   - If only one variant exists and it's `'default'`, examples show as a flat list
+
+3. **Content Parsing**:
+   - YAML content must be parseable by `js-yaml`
+   - Content structure must match component schema
+   - Invalid examples are filtered out (ensure examples are valid)
+
+4. **Component Implementation**:
+   - Component must be implemented in `client/src/components/`
+   - Component must accept `data` prop matching the schema
+   - Component must handle all defined variants
+
+## Testing Checklist
+
+Before considering a component complete, verify:
+
+- [ ] Schema files (`schema.yml` and `schema.ts`) exist and are valid
+- [ ] At least one example file exists in `examples/` directory
+- [ ] `default.yml` example exists (recommended)
+- [ ] All example files have `name`, `description`, and `yaml` fields
+- [ ] YAML content in examples is valid and parseable
+- [ ] Variants are correctly specified in example YAML content
+- [ ] Component appears in ComponentPickerModal
+- [ ] Examples load and display in the example dropdown
+- [ ] Selecting an example shows a preview
+- [ ] Adding a section with an example works correctly
+- [ ] Validation script (`scripts/validation`) passes without warnings
+
+## Common Pitfalls
+
+1. **Missing Variant in YAML**: If variant isn't in the YAML content, it won't be extracted correctly
+2. **Invalid YAML**: Malformed YAML causes examples to be filtered out
+3. **Empty Content**: Examples with no parseable content are filtered out
+4. **Missing Default Example**: Users may have trouble finding a starting point
+5. **Schema Mismatch**: Example YAML doesn't match schema, causing validation errors
+
+## Best Practices
+
+1. **Multiple Examples**: Provide examples for each variant to help users understand options
+2. **Descriptive Names**: Use clear, descriptive names for examples (e.g., "Stats Cards" not "example1")
+3. **Realistic Data**: Use realistic, representative data in examples
+4. **Documentation**: Include helpful descriptions explaining when to use each variant
+5. **Consistency**: Follow the same structure and naming conventions as existing components
+
+## Related Documentation
+
+- [Content and API Patterns](.cursor/rules/content-and-api.mdc) - Component registry overview
+- [Project Architecture](.cursor/rules/project-architecture.mdc) - Path aliases and structure
+- Component validation: `scripts/validation/validators/components.ts`

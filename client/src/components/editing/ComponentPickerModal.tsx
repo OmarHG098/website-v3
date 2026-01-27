@@ -243,20 +243,29 @@ export default function ComponentPickerModal({
           const apiExamples: ApiExample[] = data.examples || [];
           const processed: ProcessedExample[] = apiExamples.map((ex, idx) => {
             const content = parseYamlContent(ex.yaml);
+            // Ensure variant is set - use extracted variant or fallback to 'default'
+            const variant = ex.variant || 'default';
             return {
               name: ex.name,
               slug: slugify(ex.name) || `example-${idx}`,
-              variant: ex.variant || 'default',
+              variant: variant,
               content: content || {},
             };
-          }).filter(ex => Object.keys(ex.content).length > 0);
+          }).filter(ex => {
+            // Only filter out examples with completely empty content
+            // Allow examples even if content parsing had issues (they might still be valid)
+            return ex.content !== null && typeof ex.content === 'object';
+          });
           
           setExamples(processed);
           if (processed.length > 0) {
             setSelectedExample(processed[0].slug);
           }
         })
-        .catch(() => setExamples([]))
+        .catch((error) => {
+          console.error('Error loading examples:', error);
+          setExamples([]);
+        })
         .finally(() => setIsLoading(false));
     }
   }, [selectedComponent, selectedVersion]);
@@ -437,16 +446,25 @@ export default function ComponentPickerModal({
   const exampleSelectItems = useMemo(() => {
     const { grouped, sortedVariants } = groupedExamples;
     
+    // If no variants but examples exist, show them as a flat list
     if (sortedVariants.length === 0) {
-      return null;
+      if (examples.length === 0) {
+        return null;
+      }
+      // Fallback: show all examples without grouping
+      return examples.map(ex => (
+        <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
+      ));
     }
     
+    // If only one variant and it's 'default', show flat list
     if (sortedVariants.length === 1 && sortedVariants[0] === 'default') {
       return grouped['default'].map(ex => (
         <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
       ));
     }
     
+    // Multiple variants: show grouped by variant
     return sortedVariants.map(variant => (
       <SelectGroup key={variant}>
         <SelectLabel className="text-xs text-muted-foreground uppercase tracking-wide">
@@ -457,7 +475,7 @@ export default function ComponentPickerModal({
         ))}
       </SelectGroup>
     ));
-  }, [groupedExamples]);
+  }, [groupedExamples, examples]);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
