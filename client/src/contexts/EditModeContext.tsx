@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
 import type { Section, EditOperation } from "@shared/schema";
-import { getDebugUserName } from "@/hooks/useDebugAuth";
+import { editContent } from "@/lib/contentApi";
 
 export type PreviewBreakpoint = 'desktop' | 'mobile';
 
@@ -119,29 +119,18 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
 
     setIsSaving(true);
     try {
-      const token = sessionStorage.getItem("debug_token");
-      const author = getDebugUserName() || "Unknown";
-      const response = await fetch("/api/content/edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { "Authorization": `Token ${token}` } : {}),
-        },
-        body: JSON.stringify({
-          contentType,
-          slug,
-          locale,
-          operations,
-          author,
-        }),
+      const result = await editContent({
+        contentType,
+        slug,
+        locale,
+        operations,
       });
 
-      if (response.ok) {
+      if (result.success) {
         clearPendingChanges(pageKey);
         return true;
       } else {
-        const error = await response.json();
-        console.error("Failed to save changes:", error);
+        console.error("Failed to save changes:", result.error);
         return false;
       }
     } catch (error) {

@@ -19,7 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { useToast } from "@/hooks/use-toast";
-import { getDebugToken } from "@/hooks/useDebugAuth";
+import { editContent } from "@/lib/contentApi";
 import { emitContentUpdated } from "@/lib/contentEvents";
 import {
   parseEditorType,
@@ -441,35 +441,22 @@ export function SectionEditorPanel({
     setSaveError(null);
 
     try {
-      const token = getDebugToken();
-      const response = await fetch("/api/content/edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Token ${token}` } : {}),
-        },
-        body: JSON.stringify({
-          contentType,
-          slug,
-          locale,
-          variant,
-          version,
-          operations: [
-            {
-              action: "update_section",
-              index: sectionIndex,
-              section: parsed as Record<string, unknown>,
-            },
-          ],
-        }),
+      const result = await editContent({
+        contentType,
+        slug,
+        locale,
+        variant,
+        version,
+        operations: [
+          {
+            action: "update_section",
+            index: sectionIndex,
+            section: parsed as Record<string, unknown>,
+          },
+        ],
       });
 
-      if (response.ok) {
-        const result = (await response.json()) as {
-          success: boolean;
-          updatedSections?: unknown[];
-          warning?: string;
-        };
+      if (result.success) {
 
         // Use server-confirmed section data if available, fallback to local parsed
         const confirmedSection = result.updatedSections?.[sectionIndex] as
@@ -489,8 +476,7 @@ export function SectionEditorPanel({
         // Return warning if present (for GitHub sync failures)
         return { success: true, warning: result.warning };
       } else {
-        const error = await response.json();
-        setSaveError(error.error || "Failed to save changes");
+        setSaveError(result.error || "Failed to save changes");
         return { success: false };
       }
     } catch (error) {
