@@ -230,7 +230,7 @@ export default function ComponentPickerModal({
   const [versions, setVersions] = useState<string[]>([]);
   const [selectedVersion, setSelectedVersion] = useState<string>("");
   const [examples, setExamples] = useState<ProcessedExample[]>([]);
-  const [selectedExample, setSelectedExample] = useState<string>("");
+  const [selectedExample, setSelectedExample] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [useAiAdaptation, setUseAiAdaptation] = useState(false);
@@ -300,22 +300,67 @@ export default function ComponentPickerModal({
           });
           
           setExamples(processed);
+          // Set selectedExample - try to preserve current selection if it's still valid
           if (processed.length > 0) {
-            setSelectedExample(processed[0].slug);
+            // Use functional update to check current selection against new examples
+            setSelectedExample(current => {
+              // Handle undefined case
+              if (!current) {
+                return processed[0].slug;
+              }
+              // Check if current selection exists in new examples
+              const currentExampleExists = processed.some(ex => ex.slug === current);
+              if (currentExampleExists) {
+                // Keep current selection if it's still valid
+                return current;
+              } else {
+                // Otherwise select the first example
+                return processed[0].slug;
+              }
+            });
           } else {
-            setSelectedExample("");
+            setSelectedExample(undefined);
           }
         })
         .catch((error) => {
           console.error('Error loading examples:', error);
           setExamples([]);
-          setSelectedExample("");
+          setSelectedExample(undefined);
         })
         .finally(() => setIsLoading(false));
     }
   }, [selectedComponent, selectedVersion]);
 
+  // Validate that selectedExample always matches an available example
+  // This runs when examples change to ensure selectedExample is valid
+  // This is a safety net for edge cases where examples might change externally
+  useEffect(() => {
+    if (examples.length > 0) {
+      // Use functional update to get latest selectedExample value
+      setSelectedExample(current => {
+        // Handle undefined case
+        if (!current) {
+          return examples[0].slug;
+        }
+        // Check if current selection is valid
+        const exampleExists = examples.some(ex => ex.slug === current);
+        if (!exampleExists) {
+          // Current selection is invalid, reset to first example
+          return examples[0].slug;
+        }
+        // Current selection is valid, keep it (no state update needed)
+        return current;
+      });
+    } else {
+      // Examples cleared, clear selection
+      setSelectedExample(undefined);
+    }
+    // Note: The examples loading useEffect handles initial selection,
+    // this effect is a safety net for external changes to examples
+  }, [examples]); // Only depend on examples, not selectedExample to avoid loops
+
   const selectedExampleData = useMemo(() => {
+    if (!selectedExample) return null;
     return examples.find(e => e.slug === selectedExample) || null;
   }, [examples, selectedExample]);
 
@@ -325,7 +370,7 @@ export default function ComponentPickerModal({
     setVersions([]);
     setExamples([]);
     setSelectedVersion("");
-    setSelectedExample("");
+    setSelectedExample(undefined);
     setSelectedRelatedFeatures([]);
   }, []);
 
@@ -335,7 +380,7 @@ export default function ComponentPickerModal({
     setVersions([]);
     setExamples([]);
     setSelectedVersion("");
-    setSelectedExample("");
+    setSelectedExample(undefined);
     setSelectedRelatedFeatures([]);
   }, []);
 
@@ -488,23 +533,19 @@ export default function ComponentPickerModal({
     return { grouped, sortedVariants };
   }, [examples]);
 
-  const exampleSelectItems = useMemo(() => {
+  // Helper function to render example items in the Select dropdown
+  const renderExampleItems = () => {
+    if (examples.length === 0) {
+      return null;
+    }
+
     const { grouped, sortedVariants } = groupedExamples;
     
-    // If no variants but examples exist, show them as a flat list
-    if (sortedVariants.length === 0) {
-      if (examples.length === 0) {
-        return null;
-      }
-      // Fallback: show all examples without grouping
-      return examples.map(ex => (
-        <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
-      ));
-    }
-    
-    // If only one variant and it's 'default', show flat list
-    if (sortedVariants.length === 1 && sortedVariants[0] === 'default') {
-      return grouped['default'].map(ex => (
+    // Flat list scenarios: no variants or only 'default' variant
+    if (sortedVariants.length === 0 || 
+        (sortedVariants.length === 1 && sortedVariants[0] === 'default')) {
+      const itemsToShow = sortedVariants.length === 0 ? examples : grouped['default'];
+      return itemsToShow.map(ex => (
         <SelectItem key={ex.slug} value={ex.slug}>{ex.name}</SelectItem>
       ));
     }
@@ -520,7 +561,7 @@ export default function ComponentPickerModal({
         ))}
       </SelectGroup>
     ));
-  }, [groupedExamples, examples]);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -606,11 +647,7 @@ export default function ComponentPickerModal({
                       <SelectValue placeholder={examples.length === 0 ? "No examples" : "Select example"} />
                     </SelectTrigger>
                     <SelectContent>
-                      {exampleSelectItems || (
-                        <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                          No examples available
-                        </div>
-                      )}
+                      {renderExampleItems()}
                     </SelectContent>
                   </Select>
                 </div>
