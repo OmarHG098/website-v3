@@ -188,9 +188,9 @@ sections:
       - title: React Fundamentals
         duration: Milestone 4
         objectives:
-          - Vector search and embeddings
-          - Contextual document retrieval
-          - Connect LLMs to proprietary data
+          - SPA architecture
+          - Props/state/effects
+          - Debugging
         projects: Build the company's interactive frontend.
         orientation: vertical
         icon: IconDatabase
