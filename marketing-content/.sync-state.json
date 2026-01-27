@@ -53,9 +53,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "b8b350686dab87280376912db2e6546cbe61bb6b45beb5b3fab0239b4791194d",
-      "lastModified": 1769439698754.641,
-      "remoteSha": "b8b350686dab87280376912db2e6546cbe61bb6b45beb5b3fab0239b4791194d"
+      "sha": "4f9bb9f5b97000855670e01f910fb39005cd10a2fd631bdcbda3eed8f60b8b8e",
+      "lastModified": 1769532498773.5447,
+      "remoteSha": "b8b350686dab87280376912db2e6546cbe61bb6b45beb5b3fab0239b4791194d",
+      "author": "Developer",
+      "modifiedAt": "2026-01-27T16:48:18.775Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
