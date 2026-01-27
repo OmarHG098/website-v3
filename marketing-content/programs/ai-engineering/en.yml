@@ -120,9 +120,9 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Does the Job Guarantee deliver results you can count on?
-    subtitle: Yes, and we've got the numbers to back it up
-    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
+    title: Why AI Engineering Now
+    subtitle: The talent gap is your opportunity
+    description: According to LinkedIn’s Jobs on the Rise 2026, AI Engineers are among the fastest-growing roles in the U.S. Demand is accelerating, and companies are actively hiring for these skills now.
     background: bg-muted/30
     items:
       - id: "1"
