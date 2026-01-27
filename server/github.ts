@@ -903,9 +903,9 @@ export async function getAllSyncChanges(): Promise<PendingChange[]> {
       ...change,
       source: isConflict ? 'conflict' : 'local',
       // For conflicts, include the remote author/date/commitSha
-      // For local changes, use "Yourself" as author and current date
-      author: isConflict ? fileAuthorMap.get(change.file) : 'Yourself',
-      date: isConflict ? fileDateMap.get(change.file) : new Date().toISOString(),
+      // For local changes, use stored author from sync state (or fallback to "Local edit")
+      author: isConflict ? fileAuthorMap.get(change.file) : (change.author || 'Local edit'),
+      date: isConflict ? fileDateMap.get(change.file) : (change.date || new Date().toISOString()),
       // Use specific commit SHA if mapped, otherwise fall back to remoteCommit (HEAD)
       commitSha: isConflict ? (fileCommitShaMap.get(change.file) || conflictInfo.remoteCommit || undefined) : undefined,
     });
