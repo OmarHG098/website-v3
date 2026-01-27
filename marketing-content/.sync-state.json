@@ -53,11 +53,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "4f9bb9f5b97000855670e01f910fb39005cd10a2fd631bdcbda3eed8f60b8b8e",
-      "lastModified": 1769532498773.5447,
+      "sha": "19ab74ddae01ff51955cb9d712dbe1b1c5a54827aba4701a9ceaa5dd36bf16b9",
+      "lastModified": 1769532862257.2812,
       "remoteSha": "b8b350686dab87280376912db2e6546cbe61bb6b45beb5b3fab0239b4791194d",
       "author": "Developer",
-      "modifiedAt": "2026-01-27T16:48:18.775Z"
+      "modifiedAt": "2026-01-27T16:54:22.259Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -65,9 +65,10 @@
       "remoteSha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198"
     },
     "marketing-content/locations/atlanta-usa/en.yml": {
-      "sha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422",
-      "lastModified": 1767901868880.268,
-      "remoteSha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422"
+      "sha": "12f92d571ed84fcf3a35e1c13a8276497ca281da0779f1f22e736e8230f2d2d7",
+      "lastModified": 1769532936123.2278,
+      "remoteSha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422",
+      "modifiedAt": "2026-01-27T16:55:36.125Z"
     },
     "marketing-content/locations/atlanta-usa/es.yml": {
       "sha": "df970fe0054ecf12e893f476c7fdd4927f42056d20a543c0d43e00071367baef",
