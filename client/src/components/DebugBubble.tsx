@@ -2151,11 +2151,9 @@ export function DebugBubble() {
                             </span>
                             
                             {/* Author */}
-                            {change.author && (
-                              <span className="text-xs text-muted-foreground">
-                                {change.author}
-                              </span>
-                            )}
+                            <span className="text-xs text-muted-foreground">
+                              {change.author || (change.source === 'local' ? 'Legacy yourself' : '')}
+                            </span>
                             
                             {/* Date */}
                             {change.date && (

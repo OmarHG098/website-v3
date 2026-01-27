@@ -120,7 +120,7 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     setIsSaving(true);
     try {
       const token = sessionStorage.getItem("debug_token");
-      const author = getDebugUserName() || undefined;
+      const author = getDebugUserName() || "Unknown";
       const response = await fetch("/api/content/edit", {
         method: "POST",
         headers: {
