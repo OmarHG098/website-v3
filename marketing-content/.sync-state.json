@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "3cd9fbf01098d30c995f4442a64430846f7c7d2c",
-  "lastSyncedAt": "2026-01-27T15:14:30.912Z",
+  "lastSyncedCommit": "9522f407bbb1a80268c29486c80713225ef19ad3",
+  "lastSyncedAt": "2026-01-27T17:14:38.760Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -24,7 +24,7 @@
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
       "sha": "8f9bae1b482f144cfd67d5323340bdacc6c58fbde34e14822421473bbe88891d",
-      "lastModified": 1769439698406.6414,
+      "lastModified": 1769534077939.3982,
       "remoteSha": "8f9bae1b482f144cfd67d5323340bdacc6c58fbde34e14822421473bbe88891d"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
@@ -53,11 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "19ab74ddae01ff51955cb9d712dbe1b1c5a54827aba4701a9ceaa5dd36bf16b9",
-      "lastModified": 1769532862257.2812,
-      "remoteSha": "b8b350686dab87280376912db2e6546cbe61bb6b45beb5b3fab0239b4791194d",
-      "author": "Developer",
-      "modifiedAt": "2026-01-27T16:54:22.259Z"
+      "sha": "abdc28710f34b121535fc149b95b16912e8154f16a2d7848e8b112b8a5a99dbd",
+      "lastModified": 1769534078232.398,
+      "remoteSha": "abdc28710f34b121535fc149b95b16912e8154f16a2d7848e8b112b8a5a99dbd"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -65,10 +63,9 @@
       "remoteSha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198"
     },
     "marketing-content/locations/atlanta-usa/en.yml": {
-      "sha": "12f92d571ed84fcf3a35e1c13a8276497ca281da0779f1f22e736e8230f2d2d7",
-      "lastModified": 1769532936123.2278,
-      "remoteSha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422",
-      "modifiedAt": "2026-01-27T16:55:36.125Z"
+      "sha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422",
+      "lastModified": 1769534078549.3977,
+      "remoteSha": "ca6239f18bd4419c922f36680ce62df3b661214714ffb2cad69f511111b77422"
     },
     "marketing-content/locations/atlanta-usa/es.yml": {
       "sha": "df970fe0054ecf12e893f476c7fdd4927f42056d20a543c0d43e00071367baef",
