@@ -150,17 +150,17 @@ sections:
       - name: Git
         icon: git
     module_cards:
-      - title: AI-Assisted Frontend
-        duration: Weeks 1-4
+      - title: Web Foundations
+        duration: Milestone 1
         objectives:
           - Modern React application with AI components
           - Intelligent user interfaces
           - AI-powered auto-completion and suggestions
-        projects: Build your first AI-enhanced web application
+        projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
-      - title: Production Backend
-        duration: Weeks 5-8
+      - title: Programming Foundations
+        duration: Milestone 2
         objectives:
           - REST APIs and authentication
           - Serverless functions
@@ -168,8 +168,8 @@ sections:
         projects: Create a scalable API server with secure auth
         orientation: vertical
         icon: IconServer
-      - title: Data Systems
-        duration: Weeks 9-10
+      - title: AI‑Driven UI Engineering
+        duration: Milestone 3
         objectives:
           - Telemetry and data pipelines
           - Automated reporting dashboards
@@ -177,8 +177,8 @@ sections:
         projects: Design ETL pipelines for business insights
         orientation: vertical
         icon: IconChartBar
-      - title: RAG Knowledge Layer
-        duration: Weeks 11-14
+      - title: React Fundamentals
+        duration: Milestone 4
         objectives:
           - Vector search and embeddings
           - Contextual document retrieval
