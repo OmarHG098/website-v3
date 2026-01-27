@@ -223,7 +223,7 @@ sections:
         orientation: vertical
         icon: IconCode
       - title: Web Foundations
-        duration: Milestone 1
+        duration: Milestone 8
         objectives:
           - Modern React application with AI components
           - Intelligent user interfaces
