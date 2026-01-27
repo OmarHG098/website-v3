@@ -180,9 +180,8 @@ sections:
       - title: AI‑Driven UI Engineering
         duration: Milestone 3
         objectives:
-          - Telemetry and data pipelines
-          - Automated reporting dashboards
-          - Real-time analytics
+          - Vision‑to‑Spec prompting
+          - Component generation
         projects: Rebuild the company's UI using AI.
         orientation: vertical
         icon: IconChartBar
