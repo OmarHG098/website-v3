@@ -231,6 +231,15 @@ sections:
         projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
+      - title: Web Foundations
+        duration: Milestone 9
+        objectives:
+          - Modern React application with AI components
+          - Intelligent user interfaces
+          - AI-powered auto-completion and suggestions
+        projects: Build the company's first webpage.
+        orientation: vertical
+        icon: IconCode
     marginY:
       desktop: md none
     paddingY:
