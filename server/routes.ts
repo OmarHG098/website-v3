@@ -1538,6 +1538,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         token = debugToken;
       }
 
+      // Track who made the edit
+      let authorName: string | undefined;
+
       // In production, require valid token
       if (!isDevelopment) {
         if (!token) {
@@ -1566,6 +1569,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
           res.status(403).json({ error: "You need webmaster capability to edit content" });
           return;
         }
+
+        // Fetch user info for author tracking
+        try {
+          const userResponse = await fetch(
+            `${BREATHECODE_HOST}/v1/auth/user/me`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            },
+          );
+          if (userResponse.ok) {
+            const userData = await userResponse.json() as { first_name?: string; last_name?: string; email?: string };
+            if (userData.first_name || userData.last_name) {
+              authorName = [userData.first_name, userData.last_name].filter(Boolean).join(" ");
+            } else if (userData.email) {
+              authorName = userData.email;
+            }
+          }
+        } catch {
+          // Non-critical: proceed without author name
+        }
+      } else {
+        // In development, use "Developer" as author
+        authorName = "Developer";
       }
 
       // Support both formats:
@@ -1638,6 +1667,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         operations: finalOperations,
         variant: effectiveVariant,
         version: effectiveVersion,
+        author: authorName,
       });
 
       if (result.success) {
