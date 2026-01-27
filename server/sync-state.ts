@@ -133,9 +133,20 @@ export function saveSyncState(state: SyncState): void {
  * @param author - Optional author name who made the modification
  */
 export function markFileAsModified(filePath: string, author?: string): void {
-  const relativePath = filePath.startsWith('marketing-content/') 
-    ? filePath 
-    : `marketing-content/${filePath}`;
+  // Handle both absolute and relative paths
+  const cwd = process.cwd();
+  let relativePath: string;
+  
+  if (path.isAbsolute(filePath)) {
+    // Extract relative path from absolute path
+    relativePath = filePath.startsWith(cwd) 
+      ? filePath.slice(cwd.length + 1)  // Remove cwd + leading slash
+      : filePath;
+  } else if (filePath.startsWith('marketing-content/')) {
+    relativePath = filePath;
+  } else {
+    relativePath = `marketing-content/${filePath}`;
+  }
   
   // Only track YAML files
   if (!shouldTrackFile(relativePath)) {
@@ -143,7 +154,7 @@ export function markFileAsModified(filePath: string, author?: string): void {
   }
   
   const state = loadSyncState();
-  const fullPath = path.join(process.cwd(), relativePath);
+  const fullPath = path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), relativePath);
   
   if (fs.existsSync(fullPath)) {
     const content = fs.readFileSync(fullPath, 'utf-8');

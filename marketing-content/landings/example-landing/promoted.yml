@@ -1,12 +1,24 @@
+slug: example-landing
+title: Example Landing Page
+locale: en
 meta:
+  robots: index, follow
+  og_image: /images/landing-og.jpg
+  priority: 0.9
+  change_frequency: weekly
   page_title: Example Landing Page | 4Geeks
   description: This is an example landing page demonstrating the various section types and layouts available.
   redirects:
     - /example/landing
     - /demo/landing-page
+schema:
+  include:
+    - organization
+    - website
 sections:
   - type: hero
-    title: Work smarter, not harder, apply AI at Work
+    variant: course
+    title: Work smartr, not harder, apply AI at Work
     subtitle: Boost your career, harness the power of Applied AI.
     students_enrolled:
       avatars:
@@ -61,7 +73,6 @@ sections:
           text: Workshops every week
         - icon: users
           text: Community Gatherings.
-    variant: course
     paddingY:
       desktop: none lg
     marginY:
