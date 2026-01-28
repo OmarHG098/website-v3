@@ -5,12 +5,10 @@ import * as fs from "fs";
 import * as path from "path";
 import * as yaml from "js-yaml";
 import {
-  careerProgramSchema,
   landingPageSchema,
   locationPageSchema,
   templatePageSchema,
   experimentUpdateSchema,
-  type CareerProgram,
   type LandingPage,
   type LocationPage,
   type TemplatePage,
@@ -64,89 +62,6 @@ import { z } from "zod";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
-
-// Schema for career-programs listing page (custom page type)
-const careerProgramsListingSchema = z.object({
-  slug: z.string(),
-  template: z.string(),
-  title: z.string(),
-  meta: z.object({
-    page_title: z.string(),
-    description: z.string(),
-    redirects: z.array(z.string()).optional(),
-    robots: z.string().optional(),
-    priority: z.number().optional(),
-    change_frequency: z.string().optional(),
-  }),
-  page_content: z.object({
-    hero_title: z.string(),
-    hero_subtitle: z.string(),
-    search_placeholder: z.string(),
-    difficulty_label: z.string(),
-    difficulty_all: z.string(),
-    difficulty_beginner: z.string(),
-    difficulty_intermediate: z.string(),
-    difficulty_advanced: z.string(),
-    no_results: z.string(),
-  }),
-  courses: z.array(z.object({
-    id: z.string(),
-    title: z.string(),
-    description: z.string(),
-    duration: z.string(),
-    difficulty: z.string(),
-    lessons: z.number(),
-    link: z.string().optional(),
-  })),
-});
-
-function loadCareerProgramsListing(locale: string) {
-  const result = loadContent({
-    contentType: "pages",
-    slug: "career-programs",
-    schema: careerProgramsListingSchema,
-    localeOrVariant: locale,
-  });
-  
-  if (!result.success) {
-    console.error(result.error);
-    return null;
-  }
-  
-  return result.data;
-}
-
-function loadCareerProgram(slug: string, locale: string): CareerProgram | null {
-  const result = loadContent({
-    contentType: "programs",
-    slug,
-    schema: careerProgramSchema,
-    localeOrVariant: locale,
-  });
-
-  if (!result.success) {
-    console.error(result.error);
-    return null;
-  }
-
-  return result.data;
-}
-
-function listCareerPrograms(
-  locale: string,
-): Array<{ slug: string; title: string }> {
-  const slugs = listContentSlugs("programs");
-  const programs: Array<{ slug: string; title: string }> = [];
-
-  for (const slug of slugs) {
-    const program = loadCareerProgram(slug, locale);
-    if (program) {
-      programs.push({ slug: program.slug, title: program.title });
-    }
-  }
-
-  return programs;
-}
 
 function loadLandingPage(slug: string): LandingPage | null {
   const result = loadContent({
@@ -498,111 +413,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/career-programs", (req, res) => {
-    const locale = normalizeLocale(req.query.locale as string);
-    const _location = req.query.location as string | undefined;
-    const programs = listCareerPrograms(locale);
-    res.json(programs);
-  });
-
-  app.get("/api/career-programs/:slug", (req, res) => {
-    const { slug } = req.params;
-    const locale = normalizeLocale(req.query.locale as string);
-    const forceVariant = req.query.force_variant as string | undefined;
-    const forceVersion = req.query.force_version
-      ? parseInt(req.query.force_version as string, 10)
-      : undefined;
-
-    let program: CareerProgram | null = null;
-    let experimentInfo: {
-      experiment: string;
-      variant: string;
-      version: number;
-    } | null = null;
-
-    // If force_variant is provided, load that variant directly (for preview)
-    if (forceVariant && forceVersion !== undefined) {
-      const experimentManager = getExperimentManager();
-      const forcedContent = experimentManager.getVariantContent(
-        slug,
-        {
-          experiment_slug: "preview",
-          variant_slug: forceVariant,
-          variant_version: forceVersion,
-          assigned_at: Date.now(),
-        },
-        locale,
-      );
-      if (forcedContent) {
-        program = forcedContent;
-        experimentInfo = {
-          experiment: "preview",
-          variant: forceVariant,
-          version: forceVersion,
-        };
-      }
-    }
-
-    // Normal experiment flow if not forcing a variant
-    if (!program) {
-      // Get or create session for experiment tracking
-      const sessionId = getOrCreateSessionId(req, res);
-      const experimentCookie = getExperimentCookie(req);
-      const existingAssignments = experimentCookie?.assignments || [];
-
-      // Check for active experiments
-      const experimentManager = getExperimentManager();
-      const visitorContext = buildVisitorContext(req, sessionId);
-      const assignment = experimentManager.getAssignment(
-        slug,
-        visitorContext,
-        existingAssignments,
-      );
-
-      if (assignment) {
-        // Try to load variant content
-        const variantContent = experimentManager.getVariantContent(
-          slug,
-          assignment,
-          locale,
-        );
-        if (variantContent) {
-          program = variantContent;
-          experimentInfo = {
-            experiment: assignment.experiment_slug,
-            variant: assignment.variant_slug,
-            version: assignment.variant_version,
-          };
-
-          // Update cookie with new assignment
-          const updatedAssignments = [
-            ...existingAssignments.filter(
-              (a) => a.experiment_slug !== assignment.experiment_slug,
-            ),
-            assignment,
-          ];
-          setExperimentCookie(res, sessionId, updatedAssignments);
-        }
-      }
-    }
-
-    // Fall back to default content
-    if (!program) {
-      program = loadCareerProgram(slug, locale);
-    }
-
-    if (!program) {
-      res.status(404).json({ error: "Career program not found" });
-      return;
-    }
-
-    // Include experiment info in response for analytics
-    res.json({
-      ...program,
-      _experiment: experimentInfo,
-    });
-  });
-
   // Landing pages API
   app.get("/api/landings", (_req, res) => {
     const landings = listLandingPages();
@@ -696,20 +506,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const locale = normalizeLocale(req.query.locale as string);
     const pages = listTemplatePages(locale);
     res.json(pages);
-  });
-
-  // Special handler for career-programs listing page (custom page type)
-  app.get("/api/pages/career-programs", (req, res) => {
-    const locale = normalizeLocale(req.query.locale as string);
-    
-    const page = loadCareerProgramsListing(locale);
-    
-    if (!page) {
-      res.status(404).json({ error: "Career programs listing page not found" });
-      return;
-    }
-    
-    res.json(page);
   });
 
   // Special handler for apply page (includes programs and locations from _common.yml)
@@ -2074,12 +1870,6 @@ sections: []
   app.get("/api/form-options", (req, res) => {
     const locale = normalizeLocale(req.query.locale as string);
 
-    // Get all programs for dropdown
-    const programs = listCareerPrograms(locale).map((p) => ({
-      slug: p.slug,
-      title: p.title,
-    }));
-
     // Get all visible locations grouped by region
     const locationsPath = path.join(
       process.cwd(),
@@ -2141,7 +1931,6 @@ sections: []
     ];
 
     res.json({
-      programs,
       locations: locationsList,
       regions,
     });
