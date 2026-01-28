@@ -372,7 +372,11 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
             </div>
           </div>
         ) : (
-          <div className={`absolute top-full left-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}>
+          <div 
+            className={`absolute top-full left-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {renderDropdownContent()}
           </div>
         )
