@@ -2,22 +2,13 @@ import type { HeroCourse as HeroCourseType } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IconCheck, IconBook, IconCode, IconBriefcase, IconRobot, IconUsers, IconCalendar, IconPlayerPlay, IconStarFilled } from "@tabler/icons-react";
+import { IconCheck, IconBook, IconStarFilled } from "@tabler/icons-react";
 import { UniversalVideo } from "@/components/UniversalVideo";
+import { getIcon } from "@/lib/icons";
 
 interface HeroCourseProps {
   data: HeroCourseType;
 }
-
-const iconMap: Record<string, typeof IconBook> = {
-  book: IconBook,
-  code: IconCode,
-  briefcase: IconBriefcase,
-  robot: IconRobot,
-  users: IconUsers,
-  calendar: IconCalendar,
-  play: IconPlayerPlay,
-};
 
 export function HeroCourse({ data }: HeroCourseProps) {
   return (
@@ -216,7 +207,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
               {data.signup_card.features && data.signup_card.features.length > 0 && (
                 <div className="border-t pt-4 space-y-3">
                   {data.signup_card.features.map((feature, index) => {
-                    const IconComponent = iconMap[feature.icon] || IconBook;
+                    const IconComponent = getIcon(feature.icon) || IconBook;
                     return (
                       <div key={index} className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-3">

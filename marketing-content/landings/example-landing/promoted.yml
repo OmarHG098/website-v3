@@ -17,6 +17,7 @@ schema:
     - website
 sections:
   - type: hero
+    variant: course
     title: Work smarter, not harder, apply AI at Work
     subtitle: Boost your career, harness the power of Applied AI.
     students_enrolled:
@@ -70,16 +71,14 @@ sections:
           text: Real Time AI Feedback
         - icon: calendar
           text: Workshops every week
-        - icon: users
+        - icon: IconHeart
           text: Community Gatherings.
-    variant: course
     paddingY:
       desktop: none lg
     marginY:
       desktop: none md
   - type: whos_hiring
     variant: carousel
-    pretitle: TEXTO
     title: Trusted by the world's most innovative companies
     subtitle: See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth.
     logos:
