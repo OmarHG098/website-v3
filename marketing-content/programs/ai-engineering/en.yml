@@ -223,15 +223,6 @@ sections:
         orientation: vertical
         icon: IconBolt
       - title: Web Foundations
-        duration: Milestone 1
-        objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
-        orientation: vertical
-        icon: IconCode
-      - title: Web Foundations
         duration: Milestone 8
         objectives:
           - Modern React application with AI components
