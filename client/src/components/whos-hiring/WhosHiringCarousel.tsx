@@ -202,12 +202,12 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
     >
       <div className="bg-primary/5 py-4 flex items-center justify-center min-h-[200px]">
         <div className="text-center">
-          {data.pretitle !== "" && data.pretitle !== null && (
+          {data.pretitle !== "" && (
             <p 
               className="text-sm uppercase tracking-wider text-muted-foreground mb-3"
               data-testid="text-whos-hiring-pretitle"
             >
-              {data.pretitle}
+              {data.pretitle ?? "Customer Stories"}
             </p>
           )}
           <h2 
