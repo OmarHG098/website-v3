@@ -62,7 +62,7 @@ sections:
         - icon: calendar
           text: 24-Week Intensive Program
         - icon: briefcase
-          text: Career-Focused, Project-Driven Training
+          text: Employment-First Curriculum
         - icon: IconRobot
           text: AI-Powered Learning & Feedback
         - icon: users
@@ -70,7 +70,7 @@ sections:
         - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
-          text: Real-World Portfolio Project
+          text: Production-Grade Portfolio
     paddingY:
       desktop: md
     marginY:
