@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "9522f407bbb1a80268c29486c80713225ef19ad3",
-  "lastSyncedAt": "2026-01-27T17:14:38.760Z",
+  "lastSyncedCommit": "3ace3447024208c96dbc32a8c78e79582d3c8df2",
+  "lastSyncedAt": "2026-01-28T14:22:50.677Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -54,9 +54,8 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "f1839888969f1f5c9e6db825f2ed35311e6474994774551fbd397649dbfaacc1",
-      "lastModified": 1769561899969.5266,
-      "remoteSha": "abdc28710f34b121535fc149b95b16912e8154f16a2d7848e8b112b8a5a99dbd",
-      "modifiedAt": "2026-01-28T00:58:19.975Z"
+      "lastModified": 1769610169736.871,
+      "remoteSha": "f1839888969f1f5c9e6db825f2ed35311e6474994774551fbd397649dbfaacc1"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -619,9 +618,9 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "fa1eba0512f62e6a3f6ec1dcad307268894e3a5b2cbddb352a0b6071e4345a06",
-      "lastModified": 1769526452232.9565,
-      "remoteSha": "fa1eba0512f62e6a3f6ec1dcad307268894e3a5b2cbddb352a0b6071e4345a06"
+      "sha": "db73d86cbcb0acc7f2f1294b8bb54a3c6f663bfc46f857c5b3fb77e00187842e",
+      "lastModified": 1769610170012.8708,
+      "remoteSha": "db73d86cbcb0acc7f2f1294b8bb54a3c6f663bfc46f857c5b3fb77e00187842e"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -699,9 +698,9 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "2b7a5b3de414ca24bbc5db6f3e7fb5d8890f5fab74286057fb5a713574cf9006",
-      "lastModified": 1769526870679.6472,
-      "remoteSha": "2b7a5b3de414ca24bbc5db6f3e7fb5d8890f5fab74286057fb5a713574cf9006"
+      "sha": "954d04ec332b73b2deb4f465dea2260374d67857cd8183fb4d6eddaaaf02893d",
+      "lastModified": 1769610170408.8704,
+      "remoteSha": "954d04ec332b73b2deb4f465dea2260374d67857cd8183fb4d6eddaaaf02893d"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
