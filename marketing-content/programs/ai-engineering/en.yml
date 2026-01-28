@@ -67,7 +67,7 @@ sections:
           text: AI-Powered Learning & Feedback
         - icon: users
           text: 7:1 Student-to-Instructor Ratio
-        - icon: IconHome
+        - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
           text: Real-World Portfolio Project
@@ -468,7 +468,6 @@ sections:
         outcome: Landed first tech job
     paddingY:
       desktop: md none
-    background: hsl(var(--accent))
   - type: faq
     title: FAQ
     items:
@@ -493,15 +492,13 @@ sections:
       desktop: none
   - type: cta_banner
     version: "1.0"
-    variant: form
     title: Ready to Become an AI Engineer?
     subtitle: Limited spots available. Start your transformation today.
+    background: hsl(var(--primary))
+    variant: form
     form:
       variant: stacked
       submit_label: Apply Now
-      button_className: bg-white text-primary hover:bg-white/90 border-white
-      terms_className: text-white/80
-      show_terms: true
       fields:
         email:
           visible: true
@@ -521,6 +518,9 @@ sections:
         email: true
         marketing: true
         marketing_text: I agree to receive information about courses and promotions
+      show_terms: true
+      button_className: bg-white text-primary hover:bg-white/90 border-white
+      terms_className: text-white/80
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.
