@@ -400,7 +400,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Our graduates are hired by leading companies worldwide
+    subtitle: Leading companies worldwide hire our graduates
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
