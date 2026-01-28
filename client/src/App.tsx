@@ -57,7 +57,7 @@ function Router() {
           {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="es" />}
         </Route>
         <Route path="/preview-frame" component={PreviewFrame} />
-        <Route path="/private/:rest*" component={PrivateRouter} />
+        <Route path="/private/*" component={PrivateRouter} />
         {/* Apply page - dedicated routes */}
         <Route path="/en/apply" component={ApplyPage} />
         <Route path="/es/aplica" component={ApplyPage} />
