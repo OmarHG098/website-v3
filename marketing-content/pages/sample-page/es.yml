@@ -1,9 +1,0 @@
-slug: sample-page
-template: default
-title: sample page
-meta:
-  page_title: sample page | 4Geeks Academy
-  description: sample page - Aprende más sobre este tema en 4Geeks Academy.
-  redirects:
-    - /sample-page
-sections: []

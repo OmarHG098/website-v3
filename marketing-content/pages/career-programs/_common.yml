@@ -1,11 +1,11 @@
 # Common properties shared across all language variants
-slug: "sample-page"
+slug: "career-programs"
 template: "default"
-title: "sample page"
+title: "Career Programs"
 
 meta:
   robots: "index, follow"
-  priority: 0.8
+  priority: 0.9
   change_frequency: "weekly"
 
 schema:
