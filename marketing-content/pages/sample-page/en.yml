@@ -1,0 +1,14 @@
+slug: sample-page
+template: default
+title: sample page
+meta:
+  page_title: sample page | 4Geeks Academy
+  description: sample page - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /sample-page
+sections:
+  - type: hero
+    variant: default
+    title: sample page
+    subtitle: Welcome
+    description: Add your content here.
