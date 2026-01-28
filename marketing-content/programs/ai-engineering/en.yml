@@ -468,7 +468,6 @@ sections:
         outcome: Landed first tech job
     paddingY:
       desktop: md none
-    background: hsl(var(--accent))
   - type: faq
     title: FAQ
     items:
