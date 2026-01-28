@@ -344,6 +344,14 @@ export function DebugBubble() {
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState(false);
   const [isIgnoringAllChanges, setIsIgnoringAllChanges] = useState(false);
   
+  // Create content modal state
+  const [createContentModalOpen, setCreateContentModalOpen] = useState(false);
+  const [createContentType, setCreateContentType] = useState<'location' | 'page' | 'program'>('page');
+  const [createContentTitle, setCreateContentTitle] = useState("");
+  const [createContentSlug, setCreateContentSlug] = useState("");
+  const [createContentSlugStatus, setCreateContentSlugStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [isCreatingContent, setIsCreatingContent] = useState(false);
+  
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
   
@@ -1674,6 +1682,14 @@ export function DebugBubble() {
                   </div>
                   <div className="flex items-center gap-1">
                     <button
+                      onClick={() => setCreateContentModalOpen(true)}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Create new content"
+                      data-testid="button-create-content"
+                    >
+                      <IconPlus className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                    <button
                       onClick={() => setShowSitemapSearch(!showSitemapSearch)}
                       className={`p-1.5 rounded hover-elevate ${showSitemapSearch ? 'bg-muted' : ''}`}
                       title="Toggle search"
@@ -2491,6 +2507,245 @@ export function DebugBubble() {
                 <>
                   <IconCloudDownload className="h-4 w-4 mr-2" />
                   Download and Override mine
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Create Content Modal */}
+      <Dialog open={createContentModalOpen} onOpenChange={(open) => {
+        setCreateContentModalOpen(open);
+        if (!open) {
+          setCreateContentTitle("");
+          setCreateContentSlug("");
+          setCreateContentSlugStatus('idle');
+          setCreateContentType('page');
+        }
+      }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconPlus className="h-5 w-5" />
+              Create New Content
+            </DialogTitle>
+            <DialogDescription>
+              Create a new page, location, or program with starter YAML files.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Content Type</label>
+              <Select 
+                value={createContentType} 
+                onValueChange={(v) => {
+                  setCreateContentType(v as 'location' | 'page' | 'program');
+                  if (createContentSlug) {
+                    setCreateContentSlugStatus('checking');
+                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlug}`)
+                      .then(res => res.json())
+                      .then(data => {
+                        setCreateContentSlugStatus(data.available ? 'available' : 'taken');
+                      })
+                      .catch(() => setCreateContentSlugStatus('idle'));
+                  }
+                }}
+              >
+                <SelectTrigger data-testid="select-content-type">
+                  <SelectValue placeholder="Select type..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="page">Page</SelectItem>
+                  <SelectItem value="program">Program</SelectItem>
+                  <SelectItem value="location">Location</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Title</label>
+              <input
+                type="text"
+                value={createContentTitle}
+                onChange={(e) => {
+                  const title = e.target.value;
+                  setCreateContentTitle(title);
+                  const slug = title
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+                  setCreateContentSlug(slug);
+                  if (slug) {
+                    setCreateContentSlugStatus('checking');
+                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}`)
+                      .then(res => res.json())
+                      .then(data => {
+                        setCreateContentSlugStatus(data.available ? 'available' : 'taken');
+                      })
+                      .catch(() => setCreateContentSlugStatus('idle'));
+                  } else {
+                    setCreateContentSlugStatus('idle');
+                  }
+                }}
+                placeholder="e.g., Career Development Guide"
+                className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                data-testid="input-content-title"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">URL Slug</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={createContentSlug}
+                  onChange={(e) => {
+                    const slug = e.target.value
+                      .toLowerCase()
+                      .replace(/[^a-z0-9-]/g, '')
+                      .replace(/-+/g, '-');
+                    setCreateContentSlug(slug);
+                    if (slug) {
+                      setCreateContentSlugStatus('checking');
+                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}`)
+                        .then(res => res.json())
+                        .then(data => {
+                          setCreateContentSlugStatus(data.available ? 'available' : 'taken');
+                        })
+                        .catch(() => setCreateContentSlugStatus('idle'));
+                    } else {
+                      setCreateContentSlugStatus('idle');
+                    }
+                  }}
+                  placeholder="e.g., career-development-guide"
+                  className="w-full px-3 py-2 pr-10 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring font-mono"
+                  data-testid="input-content-slug"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {createContentSlugStatus === 'checking' && (
+                    <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                  )}
+                  {createContentSlugStatus === 'available' && (
+                    <IconCheck className="h-4 w-4 text-green-600" />
+                  )}
+                  {createContentSlugStatus === 'taken' && (
+                    <IconX className="h-4 w-4 text-red-600" />
+                  )}
+                </div>
+              </div>
+              {createContentSlugStatus === 'taken' && (
+                <p className="text-xs text-red-600">This slug is already taken. Please choose a different one.</p>
+              )}
+            </div>
+            
+            {createContentSlug && createContentSlugStatus === 'available' && (
+              <div className="space-y-3 p-3 bg-muted/50 rounded-md">
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground">URLs that will be created:</p>
+                  <div className="space-y-0.5">
+                    <code className="block text-xs bg-background px-2 py-1 rounded">/en/{createContentSlug}</code>
+                    <code className="block text-xs bg-background px-2 py-1 rounded">/es/{createContentSlug}</code>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground">Files that will be created:</p>
+                  <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
+                    <div>marketing-content/{createContentType === 'location' ? 'locations' : createContentType === 'program' ? 'programs' : 'pages'}/{createContentSlug}/</div>
+                    <div className="pl-4">├── _common.yml</div>
+                    <div className="pl-4">├── en.yml</div>
+                    <div className="pl-4">└── es.yml</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setCreateContentModalOpen(false)}
+              data-testid="button-cancel-create-content"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!createContentSlug || createContentSlugStatus !== 'available') return;
+                
+                setIsCreatingContent(true);
+                try {
+                  const token = getDebugToken();
+                  const response = await fetch('/api/content/create', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      ...(token ? { Authorization: `Token ${token}` } : {}),
+                    },
+                    body: JSON.stringify({
+                      type: createContentType,
+                      slug: createContentSlug,
+                      title: createContentTitle || createContentSlug,
+                    }),
+                  });
+                  
+                  const data = await response.json();
+                  
+                  if (response.ok && data.success) {
+                    toast({
+                      title: "Content created",
+                      description: `Created new ${createContentType} at /en/${createContentSlug}`,
+                    });
+                    setCreateContentModalOpen(false);
+                    setCreateContentTitle("");
+                    setCreateContentSlug("");
+                    setCreateContentSlugStatus('idle');
+                    
+                    // Refresh sitemap
+                    setSitemapLoading(true);
+                    const sitemapRes = await fetch('/api/debug/sitemap-urls');
+                    if (sitemapRes.ok) {
+                      const urls = await sitemapRes.json();
+                      setSitemapUrls(urls);
+                    }
+                    setSitemapLoading(false);
+                    
+                    // Navigate to the new page
+                    window.location.href = `/en/${createContentSlug}`;
+                  } else {
+                    toast({
+                      title: "Failed to create content",
+                      description: data.error || "An error occurred",
+                      variant: "destructive",
+                    });
+                  }
+                } catch (error) {
+                  console.error('Error creating content:', error);
+                  toast({
+                    title: "Failed to create content",
+                    description: "Network error occurred",
+                    variant: "destructive",
+                  });
+                } finally {
+                  setIsCreatingContent(false);
+                }
+              }}
+              disabled={!createContentSlug || createContentSlugStatus !== 'available' || isCreatingContent}
+              data-testid="button-confirm-create-content"
+            >
+              {isCreatingContent ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <IconPlus className="h-4 w-4 mr-2" />
+                  Create {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
               )}
             </Button>
