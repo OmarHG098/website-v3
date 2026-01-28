@@ -55,6 +55,7 @@ import {
   IconFile,
   IconTrash,
   IconDeviceFloppy,
+  IconMenu2,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -87,6 +88,7 @@ import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugA
 import { locations } from "@/lib/locations";
 import { normalizeLocale } from "@shared/locale";
 import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
+import { useQuery } from "@tanstack/react-query";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -114,7 +116,7 @@ const componentsList = [
   { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "experiments";
+type MenuView = "main" | "components" | "sitemap" | "experiments" | "menus";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -249,12 +251,110 @@ function detectContentInfo(pathname: string): ContentInfo {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments" || stored === "menus") {
       return stored;
     }
   }
   return "main";
 };
+
+interface MenuItem {
+  name: string;
+  file: string;
+}
+
+interface MenuData {
+  navbar?: {
+    items?: Array<{
+      label: string;
+      href: string;
+      component: string;
+      dropdown?: unknown;
+    }>;
+  };
+}
+
+function MenusView() {
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  
+  const { data: menusData, isLoading } = useQuery<{ menus: MenuItem[] }>({
+    queryKey: ["/api/menus"],
+  });
+  
+  const { data: menuDetailData, isFetching: isMenuLoading } = useQuery<{ name: string; data: MenuData }>({
+    queryKey: ["/api/menus", expandedMenu],
+    enabled: !!expandedMenu,
+  });
+
+  const menus = menusData?.menus || [];
+  const menuData = menuDetailData?.data;
+
+  const toggleMenu = (name: string) => {
+    setExpandedMenu(expandedMenu === name ? null : name);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (menus.length === 0) {
+    return (
+      <div className="text-center py-8 px-4">
+        <IconMenu2 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+        <p className="text-sm text-muted-foreground mb-2">No menus found</p>
+        <p className="text-xs text-muted-foreground">
+          Add <code className="bg-muted px-1 rounded">.yml</code> files to{" "}
+          <code className="bg-muted px-1 rounded">marketing-content/menus/</code>
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {menus.map((menu) => (
+        <div key={menu.name} className="mb-1">
+          <button
+            onClick={() => toggleMenu(menu.name)}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+            data-testid={`button-menu-${menu.name}`}
+          >
+            {isMenuLoading && expandedMenu === menu.name ? (
+              <IconRefresh className="h-4 w-4 text-muted-foreground animate-spin flex-shrink-0" />
+            ) : expandedMenu === menu.name ? (
+              <IconChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            ) : (
+              <IconChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            )}
+            <IconMenu2 className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium">{menu.name}</span>
+            <span className="text-xs text-muted-foreground ml-auto">{menu.file}</span>
+          </button>
+
+          {expandedMenu === menu.name && menuData && (
+            <div className="ml-4 border-l pl-2 space-y-1 mt-1">
+              {menuData?.navbar?.items?.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="flex items-center justify-between px-3 py-1.5 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer"
+                  data-testid={`link-menu-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  <span>{item.label}</span>
+                  <span className="text-xs opacity-60">{item.component}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
 
 // Edit Mode Toggle Component - uses optional hook to handle being outside provider
 function EditModeToggle() {
@@ -1350,6 +1450,18 @@ export function DebugBubble() {
                   </div>
                 </a>
                 
+                <button
+                  onClick={() => setMenuView("menus")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-menus-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconMenu2 className="h-4 w-4 text-muted-foreground" />
+                    <span>Menus</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
+                
                 {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
                   <button
@@ -1667,6 +1779,30 @@ export function DebugBubble() {
                       );
                     })
                   )}
+                </div>
+              </ScrollArea>
+            </>
+          ) : menuView === "menus" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setMenuView("main")}
+                    className="p-1 rounded-md hover-elevate"
+                    data-testid="button-back-to-main-menus"
+                  >
+                    <IconArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div>
+                    <h3 className="font-semibold text-sm">Menus</h3>
+                    <p className="text-xs text-muted-foreground">Navigation menu configurations</p>
+                  </div>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  <MenusView />
                 </div>
               </ScrollArea>
             </>
