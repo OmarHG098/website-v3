@@ -86,6 +86,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 import { normalizeLocale } from "@shared/locale";
+import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -2587,18 +2588,23 @@ export function DebugBubble() {
                 {createContentType === 'landing' && (
                   <Select value={createLandingLocale} onValueChange={(v) => setCreateLandingLocale(v as 'en' | 'es')}>
                     <SelectTrigger className="w-36" data-testid="select-landing-locale">
-                      <SelectValue />
+                      <SelectValue>
+                        <span className="flex items-center gap-2">
+                          <LocaleFlag locale={createLandingLocale} />
+                          <span>{createLandingLocale === 'en' ? 'English' : 'Spanish'}</span>
+                        </span>
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="en">
                         <span className="flex items-center gap-2">
-                          <span className="text-base">🇺🇸</span>
+                          <LocaleFlag locale="en" />
                           <span>English</span>
                         </span>
                       </SelectItem>
                       <SelectItem value="es">
                         <span className="flex items-center gap-2">
-                          <span className="text-base">🇪🇸</span>
+                          <LocaleFlag locale="es" />
                           <span>Spanish</span>
                         </span>
                       </SelectItem>
