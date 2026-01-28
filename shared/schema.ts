@@ -39,10 +39,10 @@ export {
   type CardItem,
   type StatItem,
   type LogoItem,
-} from "../marketing-content/component-registry/common/schema";
+} from "../marketing-content/component-registry/_common/schema";
 
 // Alias for backward compatibility
-export { leadFormDataSchema as productShowcaseFormSchema } from "../marketing-content/component-registry/common/schema";
+export { leadFormDataSchema as productShowcaseFormSchema } from "../marketing-content/component-registry/_common/schema";
 
 // ============================================
 // Re-export Hero Schemas from Component Registry
@@ -320,8 +320,8 @@ export {
 
 // Type alias for backward compatibility
 export type CTABannerSection = import("../marketing-content/component-registry/cta_banner/v1.0/schema").CtaBannerSection;
-export type CTAButton = import("../marketing-content/component-registry/common/schema").CtaButton;
-export type LeadFormFieldConfig = z.infer<typeof import("../marketing-content/component-registry/common/schema").leadFormFieldConfigSchema>;
+export type CTAButton = import("../marketing-content/component-registry/_common/schema").CtaButton;
+export type LeadFormFieldConfig = z.infer<typeof import("../marketing-content/component-registry/_common/schema").leadFormFieldConfigSchema>;
 
 // ============================================
 // Re-export Project Showcase Schemas from Component Registry

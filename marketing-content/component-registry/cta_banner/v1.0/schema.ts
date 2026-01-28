@@ -2,7 +2,7 @@
  * CTA Banner Component Schemas - v1.0
  */
 import { z } from "zod";
-import { ctaButtonSchema, leadFormDataSchema } from "../../common/schema";
+import { ctaButtonSchema, leadFormDataSchema } from "../../_common/schema";
 
 // Base schema with common fields
 const ctaBannerBaseSchema = z.object({

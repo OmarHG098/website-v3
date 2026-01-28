@@ -209,12 +209,17 @@ export default function ComponentPickerModal({
 
   const componentsList: ComponentInfo[] = useMemo(() => {
     if (!registryData?.components) return [];
-    return registryData.components.map((comp) => ({
-      type: comp.type,
-      label: comp.name,
-      icon: iconMap[comp.type] || IconComponents,
-      description: comp.description || "",
-    }));
+    
+    const RESERVED_COMPONENT_NAMES = ["common", "_common", "shared", "_shared", "utils", "_utils"];
+    
+    return registryData.components
+      .filter((comp) => !RESERVED_COMPONENT_NAMES.includes(comp.type.toLowerCase()))
+      .map((comp) => ({
+        type: comp.type,
+        label: comp.name,
+        icon: iconMap[comp.type] || IconComponents,
+        description: comp.description || "",
+      }));
   }, [registryData]);
 
   useEffect(() => {

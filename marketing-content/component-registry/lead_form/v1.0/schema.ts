@@ -2,7 +2,7 @@
  * Lead Form Component Schemas - v1.0
  */
 import { z } from "zod";
-import { leadFormDataSchema } from "../../common/schema";
+import { leadFormDataSchema } from "../../_common/schema";
 
 export const leadFormSectionSchema = z.object({
   type: z.literal("lead_form"),

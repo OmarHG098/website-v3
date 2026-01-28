@@ -3,7 +3,7 @@
  * Abstracts GTM/dataLayer and provides type-safe event tracking.
  */
 
-// Pre-defined conversion event names - keep in sync with marketing-content/component-registry/common/schema.ts
+// Pre-defined conversion event names - keep in sync with marketing-content/component-registry/_common/schema.ts
 export const CONVERSION_NAMES = [
   "student_application",
   "request_more_info",

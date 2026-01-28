@@ -2,7 +2,7 @@
  * TwoColumn Component Schemas - v1.0
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
+import { ctaButtonSchema } from "../../_common/schema";
 
 export const twoColumnBulletSchema = z.object({
   text: z.string(),

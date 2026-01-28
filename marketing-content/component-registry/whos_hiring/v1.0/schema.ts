@@ -2,7 +2,7 @@
  * Who's Hiring Component Schemas - v1.0
  */
 import { z } from "zod";
-import { logoItemSchema } from "../../common/schema";
+import { logoItemSchema } from "../../_common/schema";
 
 export const whosHiringSectionSchema = z.object({
   type: z.literal("whos_hiring"),

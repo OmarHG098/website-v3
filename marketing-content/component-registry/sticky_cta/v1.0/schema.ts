@@ -2,7 +2,7 @@
  * Sticky CTA Component Schemas - v1.0
  */
 import { z } from "zod";
-import { leadFormDataSchema } from "../../common/schema";
+import { leadFormDataSchema } from "../../_common/schema";
 
 export const stickyCtaSectionSchema = z.object({
   type: z.literal("sticky_cta"),

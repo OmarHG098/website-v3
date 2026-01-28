@@ -2,7 +2,7 @@
  * Mentorship Component Schemas - v1.0
  */
 import { z } from "zod";
-import { cardItemSchema } from "../../common/schema";
+import { cardItemSchema } from "../../_common/schema";
 
 export const mentorshipSectionSchema = z.object({
   type: z.literal("mentorship"),
