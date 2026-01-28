@@ -85,7 +85,7 @@ export interface DropdownProps {
 
 function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
   return (
-    <div className="w-full max-w-4xl p-6">
+    <div className="p-6">
       {(dropdown.title || dropdown.description) && (
         <div className="mb-6">
           {dropdown.title && (
@@ -97,7 +97,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
         </div>
       )}
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 gap-6">
         {dropdown.items.map((item, index) => {
           const IconComponent = item.icon ? iconMap[item.icon] : null;
           return (
@@ -296,6 +296,28 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
 export function Dropdown({ label, href, dropdown }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   
+  const getDropdownWidth = () => {
+    switch (dropdown.type) {
+      case "cards":
+        return "w-[900px]";
+      case "columns":
+        return "w-[800px]";
+      case "simple-list":
+        return "w-[400px]";
+      case "grouped-list":
+        return "w-[550px]";
+      default:
+        return "";
+    }
+  };
+  
+  const getPositionClass = () => {
+    if (dropdown.type === "cards" || dropdown.type === "columns") {
+      return "left-1/2 -translate-x-1/2";
+    }
+    return "left-0";
+  };
+  
   const renderDropdownContent = () => {
     switch (dropdown.type) {
       case "cards":
@@ -327,7 +349,7 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       </a>
       
       {isOpen && (
-        <div className="absolute top-full left-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg">
+        <div className={`absolute top-full ${getPositionClass()} z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}>
           {renderDropdownContent()}
         </div>
       )}
