@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "b21c45a436fb69e6b35c6a031b20f2cbf1b2e288",
-  "lastSyncedAt": "2026-01-28T22:06:22.765Z",
+  "lastSyncedCommit": "52a06fa315807b1e0f6c4e2f1224a9cadc712a2e",
+  "lastSyncedAt": "2026-01-28T22:15:48.656Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -39,22 +39,22 @@
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
-      "lastModified": 1769631526847.3975,
+      "lastModified": 1769638432339.858,
       "remoteSha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e"
     },
     "marketing-content/landings/example-landing/colorful.v1.en.yml": {
       "sha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce",
-      "lastModified": 1769631527153.3975,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce"
     },
     "marketing-content/landings/example-landing/experiments.yml": {
       "sha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5",
-      "lastModified": 1769631527412.3972,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
-      "lastModified": 1769637981999.5742,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
@@ -584,17 +584,17 @@
     },
     "marketing-content/pages/career-programs/_common.yml": {
       "sha": "aecb34cd9663c8587713bbc718fcc513c909b6ffe688e89375d180efea1b6f10",
-      "lastModified": 1769631528019.3967,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "aecb34cd9663c8587713bbc718fcc513c909b6ffe688e89375d180efea1b6f10"
     },
     "marketing-content/pages/career-programs/en.yml": {
       "sha": "6c9698b771f6ea2a4ff9a3ed2a888c688e0dae4d6c9e0cb1736f291a7d1869d2",
-      "lastModified": 1769631528305.3965,
+      "lastModified": 1769638432341.3582,
       "remoteSha": "6c9698b771f6ea2a4ff9a3ed2a888c688e0dae4d6c9e0cb1736f291a7d1869d2"
     },
     "marketing-content/pages/career-programs/es.yml": {
       "sha": "93191b6c013979458be3f6bdc73d454f854ca8f71ba0b3a49db83705f9a5b3a6",
-      "lastModified": 1769631528607.3962,
+      "lastModified": 1769638432341.3582,
       "remoteSha": "93191b6c013979458be3f6bdc73d454f854ca8f71ba0b3a49db83705f9a5b3a6"
     },
     "marketing-content/pages/component-test/en.yml": {
@@ -672,6 +672,21 @@
       "lastModified": 1767901903206.2434,
       "remoteSha": "cc12e3d32ecd569f6fe71d4558f81316ef96dc090a1338128601114c6c953d1f"
     },
+    "marketing-content/pages/home/_common.yml": {
+      "sha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a",
+      "lastModified": 1769638547802.7478,
+      "remoteSha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a"
+    },
+    "marketing-content/pages/home/en.yml": {
+      "sha": "8d6aa1f6e3e3d0b7e0c1797fe003bebec68b729c7a3cfbc371adc6018b3f6510",
+      "lastModified": 1769638548079.7476,
+      "remoteSha": "8d6aa1f6e3e3d0b7e0c1797fe003bebec68b729c7a3cfbc371adc6018b3f6510"
+    },
+    "marketing-content/pages/home/es.yml": {
+      "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
+      "lastModified": 1769638548398.7473,
+      "remoteSha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d"
+    },
     "marketing-content/pages/job-guarantee/_common.yml": {
       "sha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c",
       "lastModified": 1767901903496.2434,
@@ -689,7 +704,7 @@
     },
     "marketing-content/pages/outcomes/en.yml": {
       "sha": "94092a44808249ec9f09e850c8abfde1bdd171c55572d1eb5cba5f8ea9d2d6ce",
-      "lastModified": 1769637982241.574,
+      "lastModified": 1769638432419.858,
       "remoteSha": "94092a44808249ec9f09e850c8abfde1bdd171c55572d1eb5cba5f8ea9d2d6ce"
     },
     "marketing-content/pages/outcomes/es.yml": {
@@ -704,7 +719,7 @@
     },
     "marketing-content/programs/ai-engineering/en.yml": {
       "sha": "29a9a6eeef7558101661f2cf351c6187c3ad208f878500992f501cf52841226e",
-      "lastModified": 1769637982541.5737,
+      "lastModified": 1769638432421.6523,
       "remoteSha": "29a9a6eeef7558101661f2cf351c6187c3ad208f878500992f501cf52841226e"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
