@@ -478,14 +478,9 @@ export default function ComponentPickerModal({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0">
         <DialogHeader className="p-4 border-b flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <DialogTitle>
-              {step === "select" ? "Choose a Component" : `Configure ${selectedComponent?.label}`}
-            </DialogTitle>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <IconX className="h-4 w-4" />
-            </Button>
-          </div>
+          <DialogTitle>
+            {step === "select" ? "Choose a Component" : `Configure ${selectedComponent?.label}`}
+          </DialogTitle>
           <DialogDescription className="sr-only">
             {step === "select" ? "Select a component type to add to the page" : "Configure the component version and example"}
           </DialogDescription>
