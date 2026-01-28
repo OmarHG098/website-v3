@@ -32,8 +32,8 @@ sections:
       count: +7000 graduates
     bullet_points:
       - Transform an entire business case into a fully AI-native system, layer by layer.
-      - Integrate AI into real products, from user-facing features to internal operations
-      - Use modern AI tools and AI-assisted workflows to build and ship software faster
+      - Integrate AI into real software, connecting intelligent models to users and data.
+      - Use modern AI tools and coding agents to build and ship software faster.
     tutors:
       - name: Charly Chacón
         role: Main Instructor
