@@ -4,7 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
-import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import { DebugBubble } from "@/components/DebugBubble";
 import { SessionProvider } from "@/contexts/SessionContext";
@@ -17,6 +16,7 @@ const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 const PrivateRouter = lazy(() => import("@/pages/PrivateRouter"));
 const TemplatePage = lazy(() => import("@/pages/page"));
+const HomePage = lazy(() => import("@/pages/HomePage"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
 const TermsPage = lazy(() => import("@/pages/TermsPage"));
 const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
@@ -42,7 +42,9 @@ function Router() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" component={HomePage} />
+        <Route path="/en/" component={HomePage} />
+        <Route path="/es/" component={HomePage} />
         <Route path="/en/career-programs/:slug">
           {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="en" />}
         </Route>

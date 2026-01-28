@@ -8,16 +8,10 @@ meta:
     - /home
 sections:
   - type: hero
-    variant: landing
+    variant: productShowcase
     title: The AI Reskilling Platform
-    subtitle: Transform your career with personalized, AI-powered learning
+    subtitle: Transform your career
     description: Master in-demand tech skills with expert mentors, cutting-edge AI tools, and unlimited career support. Join thousands who've launched successful tech careers.
-    cta:
-      text: Get Started
-      href: /apply
-    secondary_cta:
-      text: Explore Programs
-      href: /programs
     marquee:
       items:
         - id: switchup-2025
@@ -43,11 +37,15 @@ sections:
       speed: 40
       gradient: true
       gradientWidth: 50
+    cta_button:
+      text: Get Started
+      url: /apply
+      variant: primary
 
   - type: features_grid
     variant: highlight
     title: Our mission is to get you into tech. You choose how.
-    features:
+    items:
       - icon: https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress
         title: Fast Launch
         description: Get started quickly with our streamlined onboarding and structured curriculum
@@ -61,29 +59,6 @@ sections:
         title: Career Booster
         description: Enhance your resume, networking, and interview skills.
 
-  - type: two_column
-    proportions:
-      - 6
-      - 6
-    alignment: center
-    left:
-      heading: Welcome to Hyper-personalized Learning.
-      subheading: Progress Like Never Before.
-      description: Every student receives a LearnPack package generated from their diagnostics, past performance, pace, errors, and career goals.
-      bullets:
-        - text: Adaptive, AI-driven learning paths
-        - text: Human-guided calibration and oversight
-        - text: Deep, context-aware AI feedback
-        - text: Personalized skill-gap detection
-      cta:
-        text: Explore all automations
-        href: /courses
-    right:
-      image_id: rigobot_ai_tutor
-      image_alt: Rigobot AI Tutor
-    paddingY:
-      desktop: lg lg
-
   - type: testimonials_slide
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
@@ -94,7 +69,7 @@ sections:
       - 7
     alignment: center
     left:
-      image_id: students_collaborating
+      image: /attached_assets/community_1764717588840.png
       image_alt: Students collaborating on a project
       justify: start
     right:
@@ -107,47 +82,27 @@ sections:
     paddingY:
       desktop: md lg
 
-  - type: two_column
-    proportions:
-      - 7
-      - 5
-    alignment: center
-    left:
-      heading: Fuel Your Company's Growth with Top Early Talent
-      description: Partner with us to access a pipeline of skilled, job-ready tech professionals. Our graduates are trained in the latest technologies and best practices, ready to contribute from day one.
-      cta:
-        text: Partner With Us
-        href: /partner
-    right:
-      image_id: tech_team_group
-      image_alt: Tech team group photo
-    paddingY:
-      desktop: md lg
-
   - type: features_grid
     variant: highlight
     title: The Key to Your Success
     subtitle: AI-Powered Tools and Unmatched Human Support
-    features:
-      - icon: rocket
+    items:
+      - icon: IconRocket
         title: AI-Powered Learning
         description: Personalized curriculum adapts to your pace and learning style
-      - icon: users
+      - icon: IconUsers
         title: Expert Mentorship
         description: 1-on-1 guidance from industry professionals with real-world experience
-      - icon: briefcase
+      - icon: IconBriefcase
         title: Career Support
         description: Job placement assistance and interview preparation included
 
   - type: awards_row
     title: Important Awards and Top Ratings
-    awards:
-      - rating: 5.0
+    badges:
+      - name: "5.0 Rating"
         source: Course Report
-      - rating: 4.9
+      - name: "4.9 Rating"
         source: SwitchUp
-      - label: Best Coding Bootcamp
-        sublabel: 2024 Awards
-
-  - type: footer
-    variant: default
+      - name: Best Coding Bootcamp
+        source: "2024 Awards"
