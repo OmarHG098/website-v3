@@ -1,0 +1,374 @@
+slug: example-landing
+title: Example Landing Page
+locale: en
+meta:
+  robots: index, follow
+  og_image: /images/landing-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+  page_title: Example Landing Page | 4Geeks
+  description: This is an example landing page demonstrating the various section types and layouts available.
+  redirects:
+    - /example/landing
+    - /demo/landing-page
+schema:
+  include:
+    - organization
+    - website
+sections:
+  - type: hero
+    title: Work smarter, not harder, apply AI at Work
+    subtitle: Boost your career, harness the power of Applied AI.
+    students_enrolled:
+      avatars:
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +48 students enrolled
+    bullet_points:
+      - Learn prompt engineering techniques to control AI outputs precisely
+      - Create professional images, videos, and documents using AI tools
+      - Build automated workflows that save hours of repetitive work
+      - Develop websites and chatbots without writing code
+      - Apply AI to enhance your learning and personal development
+    tutors:
+      - name: Charly Chacón
+        role: Main Instructor
+        image: https://randomuser.me/api/portraits/men/10.jpg
+      - name: Rigo
+        role: AI Tutor
+        image: https://randomuser.me/api/portraits/lego/1.jpg
+    tutors_label: "Your tutors:"
+    description: Unlock the power of Applied AI and Generative AI in your professional life—no coding required. This self-paced course teaches you how to master prompt engineering, automate workflows, and create content using advanced AI tools. Learn to compare open source and cloud-based solutions, generate documents and websites, build chatbots, and optimize your productivity with automation platforms.
+    media:
+      type: video
+      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      thumbnail: https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&h=450&fit=crop
+      alt: Course introduction video
+    signup_card:
+      title: Sign up to 4Geeks Plus
+      description: Subscribe and get access to hundreds of challenges, projects, and courses.
+      cta_button:
+        text: Join now from $39/mo.
+        url: /signup
+        variant: primary
+      login_link:
+        text: Login here.
+        url: /login
+      features:
+        - icon: book
+          text: Readings and videos
+          count: "31"
+        - icon: code
+          text: Interactive Exercises
+          count: "2"
+        - icon: briefcase
+          text: Interactive Projects
+          count: "8"
+        - icon: robot
+          text: Real Time AI Feedback
+        - icon: calendar
+          text: Workshops every week
+        - icon: users
+          text: Community Gatherings.
+    variant: course
+    paddingY:
+      desktop: none lg
+    marginY:
+      desktop: none md
+  - type: ai_learning
+    variant: feature-tabs
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process. Test
+    features:
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+      - icon: Headset
+        title: Unlimited 1:1 mentoring sessions
+        description: Access unlimited mentorship sessions with our experts whenever you need guidance.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+  - type: two_column
+    version: v1.0
+    proportions:
+      - 5
+      - 7
+    background: bg-muted/30
+    alignment: center
+    gap: "12"
+    reverse_on_mobile: true
+    left:
+      image: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop
+      image_alt: Team collaborating on a project
+      justify: center
+    right:
+      heading: Why Choose Us
+      description: We provide comprehensive support for your learning journey from day one to career success.
+      bullets:
+        - text: Personalized mentorship from industry experts
+        - text: Flexible learning schedule that fits your life
+        - text: Real-world projects to build your portfolio
+        - text: Career support that lasts a lifetime
+      bullet_icon: Check
+      font_size: base
+  - type: community_support
+    version: "1.0"
+    heading: A Global Developer Community Supporting Your Growth
+    description: 4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
+    background: bg-primary/5
+    image: /attached_assets/Group-6606.webp
+    image_alt: 4Geeks global developer community
+    bullet_groups:
+      - title: Slack Community
+        badge: 6,000+ Members
+        icon: BrandSlack
+        accent_color: primary
+        description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
+        button:
+          text: Join Now
+          url: https://4geeks.com/slack
+          variant: primary
+      - title: 4Geeks.com
+        icon: Rigobot
+        accent_color: primary
+        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
+        button:
+          text: Visit Now
+          url: https://4geeks.com
+          variant: primary
+  - type: ai_learning
+    version: "1.0"
+    variant: feature-tabs
+    badge: Why 4Geeks?
+    title: Why Learn with 4Geeks?
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    features:
+      - icon: Robot
+        title: Learn with AI
+        description: Our AI reviews your code to give you instant feedback, helps with the exercises, and more!
+      - icon: Headset
+        title: Unlimited 1:1 mentoring sessions
+        description: Access unlimited mentorship sessions with our experts whenever you need guidance.
+      - icon: Users
+        title: Learn with the community
+        description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+  - type: certificate
+    version: v1.0
+    title: Certificate & Career Network
+    description: Graduate with a recognized certificate and join our global alumni network of over 5,000 developers working at top companies.
+    benefits:
+      - text: Internationally recognized certificate
+      - text: Access to exclusive job board with 300+ partner companies
+      - text: Lifetime membership in our alumni community
+    card:
+      title: Full Stack Developer
+      subtitle: 4Geeks Academy Certificate
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 100
+    items:
+      - id: switchup-2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logoHeight: h-12 md:h-14
+      - id: course-report-2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        alt: Course Report - Best Coding Bootcamp 2024
+        logoHeight: h-12 md:h-14
+      - id: tech-hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: South Florida Tech Hub
+        logoHeight: h-12 md:h-14
+      - id: ebootcamp
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        alt: eBootcamp Top
+        logoHeight: h-12 md:h-14
+      - id: premios-tecnologia
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        alt: Premios Tecnologia Siglo XXI
+        logoHeight: h-12 md:h-14
+      - id: newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        alt: Newsweek
+        logoHeight: h-12 md:h-14
+      - id: reviews-coursereport
+        logo: /attached_assets/reviews_1765549549051.png
+        alt: 4.9 on Course Report Reviews
+        logoHeight: h-12 md:h-14
+      - id: excelencia-educativa
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        alt: Excelencia Educativa - Institutional Quality
+        logoHeight: h-12 md:h-14
+    paddingY:
+      desktop: none lg
+  - type: comparison_table
+    version: "1.0"
+    title: How We Compare
+    subtitle: See how our approach stacks up against typical alternatives
+    columns:
+      - name: Feature
+      - name: Our Brand
+        highlight: true
+      - name: Others
+    rows:
+      - feature: 1:1 Support
+        values:
+          - Unlimited
+          - Limited
+        feature_description: Get personalized guidance whenever you need it
+      - feature: Guarantee
+        values:
+          - "Yes"
+          - "No"
+        feature_description: Money back if not satisfied
+      - feature: Pricing
+        values:
+          - Flexible
+          - Fixed
+    footer_note: "* Based on industry research"
+  - type: faq
+    title: Frequently Asked Questionss
+    items:
+      - question: Is this program really free?
+        answer: Yes! We offer free introductory content to help you get started.
+      - question: Do I need any coding experience?
+        answer: No prior experience needed. This program is designed for complete beginners.
+      - question: Will there be support available?
+        answer: Yes, all students have access to mentors and a supportive community.
+    paddingY:
+      desktop: lg none
+  - type: sticky_cta
+    version: "1.0"
+    heading: Ready to start your tech career?
+    button_label: Apply Now
+    form:
+      variant: inline
+      submit_label: Submit Application
+      fields:
+        email:
+          visible: true
+          required: true
+        first_name:
+          visible: true
+          required: true
+        phone:
+          visible: true
+          required: false
+        program:
+          visible: true
+          required: true
+          default: auto
+      success:
+        message: Thanks! We'll be in touch within 24 hours.
+    showOn: mobile
+    paddingY:
+      desktop: none lg
+  - type: two_column_accordion_card
+    version: "1.0"
+    title: Why Choose Our Program?
+    description: "Learn what makes our bootcamp different:"
+    bullets:
+      - heading: Industry-Ready Skills
+        text: Graduate with a portfolio of real-world projects that demonstrate your abilities to employers.
+      - heading: Career Support
+        text: Access to our job placement team and alumni network to help you land your first role.
+      - heading: Money-Back Guarantee
+        text: If you don't land a job within 6 months, we'll refund your tuition.
+    image: https://example.com/course-benefits.png
+    image_alt: Graduate celebrating success
+    reverse: true
+  - type: pricing
+    version: "1.0"
+    title: Get access to all of our learning database, courses, and services
+    subtitle: Earn new skills every 30 min, never get stuck or lost again.
+    monthly:
+      discount_badge: 35% OFF
+      price: "38.99"
+      period: mo
+      original_price: "59.99"
+    yearly:
+      discount_badge: 35% OFF
+      price: "311.99"
+      period: yr
+      original_price: "479.99"
+      savings_badge: Save 3 months
+    tech_icons:
+      - html
+      - css
+      - javascript
+      - react
+      - python
+      - nodejs
+      - git
+      - bootstrap
+      - api
+      - settings
+    features_title: Access hundreds of exercises, projects tutorials and courses
+    features:
+      - icon: IconSearch
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of cloud-based coding challenges (no setup needed).
+      - icon: RigobotIconTiny
+        text: AI-powered feedback as you code.
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school.
+    cta:
+      text: Get plan
+      url: /signup
+      variant: primary
+    paddingY:
+      desktop: lg none
+  - type: features_grid
+    title: Advance Faster, Never Lose Momentum
+    subtitle: "The #1 reason people quit when learning to code? Getting stuck. At 4Geeks, we've built a personalized support system where you'll always have someone to help."
+    items:
+      - icon: PeopleGroup
+        title: 7:1 Student-Teacher Ratio
+        description: Get the personalized attention you need to master coding.
+      - icon: Handshake
+        title: Unlimited 1:1 Mentorship
+        description: Access expert guidance from day one—and for life.
+      - icon: Rocket
+        title: 24/7 AI Coding Assistant
+        description: Receive instant feedback and support while coding.
+      - icon: HandsGroup
+        title: Real Community Support
+        description: Collaborate with mentors, alumni, and peers who’ve got your back.
+    icon_color: "#0097CD"
+    columns: 4
+    variant: highlight
+  - type: stats
+    version: "1.0"
+    title: Join 50,000+ Learnerss
+    items:
+      - value: 50,000+
+        label: Students Worldwide
+      - value: 4.8/5
+        label: Average Rating
+      - value: 1,500+
+        label: Success Stories
+  - type: cta_banner
+    version: "1.0"
+    title: Ready to Transform Your Learning?
+    subtitle: Get started today. Limited spots available!
+    buttons:
+      - text: Get Started
+        url: /signup
+        variant: primary
+      - text: Ask a Question
+        url: /contact
+        variant: outline
+  - type: footer
+    version: "1.0"
+    copyright_text: 2024 4Geeks. All rights reserved.

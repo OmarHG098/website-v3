@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect, lazy, Suspense } from "react";
 import type { Section, EditOperation, SectionLayout, ResponsiveSpacing, ShowOn } from "@shared/schema";
 
 // ============================================
@@ -466,6 +466,62 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
+// Mobile Preview using real iframe for proper media query support
+function MobilePreviewFrame({ sections }: { sections: Section[] }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  
+  // Send sections to iframe
+  const sendToIframe = useCallback(() => {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentWindow) return;
+    
+    const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    iframe.contentWindow.postMessage({ type: 'preview-update', sections }, '*');
+    iframe.contentWindow.postMessage({ type: 'theme-update', theme }, '*');
+  }, [sections]);
+  
+  // Listen for iframe ready message and send sections
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') {
+        sendToIframe();
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [sendToIframe]);
+  
+  // Re-send when sections change
+  useEffect(() => {
+    sendToIframe();
+  }, [sections, sendToIframe]);
+  
+  const handleIframeLoad = useCallback(() => {
+    // Send after iframe loads
+    setTimeout(sendToIframe, 100);
+  }, [sendToIframe]);
+  
+  return (
+    <div className="flex justify-center bg-muted/50 min-h-screen py-8">
+      <div 
+        className="w-[375px] bg-background shadow-2xl rounded-[32px] overflow-hidden border-4 border-foreground/20 relative"
+        style={{ height: 'calc(100vh - 4rem)' }}
+      >
+        {/* Phone notch */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-foreground/20 rounded-b-xl z-10" />
+        <iframe
+          ref={iframeRef}
+          onLoad={handleIframeLoad}
+          src="/preview-frame"
+          className="w-full h-full border-0"
+          title="Vista previa móvil"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function SectionRenderer({ sections, contentType, slug, locale, programSlug }: SectionRendererProps) {
   const { toast } = useToast();
   const editMode = useEditModeOptional();
@@ -557,7 +613,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
     }
   }, [contentType, slug, locale, sections, toast]);
 
-  return (
+  const isMobilePreview = isEditMode && previewBreakpoint === 'mobile';
+  
+  const content = (
     <>
       <AddSectionButton
         insertIndex={0}
@@ -632,4 +690,12 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
       })}
     </>
   );
+  
+  if (isMobilePreview) {
+    return (
+      <MobilePreviewFrame sections={sections} />
+    );
+  }
+  
+  return content;
 }

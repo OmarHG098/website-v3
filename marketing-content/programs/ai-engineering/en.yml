@@ -31,9 +31,9 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +7000 graduates
     bullet_points:
-      - Create a fully AI-native business, developed end to end throughout the program
-      - Integrate AI directly into real products, from user-facing features to internal operations
-      - Use modern AI tools and AI-assisted workflows to build and ship software faster
+      - Transform an entire business case into a fully AI-native system, layer by layer.
+      - Integrate AI into real software, connecting intelligent models to users and data.
+      - Use modern AI tools and coding agents to build and ship software faster.
     tutors:
       - name: Charly Chacón
         role: Main Instructor
@@ -42,17 +42,17 @@ sections:
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Build real, production-ready AI systems with hands-on projects, supported by unlimited mentorship and career guidance. Become the AI engineer companies are actively hiring for.
+    description: Build real, production-ready systems in our comprehensive AI Engineering program, supported by hands-on projects, unlimited mentorship, and career guidance. Become the software engineer companies are actively hiring for.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
       thumbnail: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop
       alt: AI Engineering program introduction
     signup_card:
-      title: Apply to the AI Engineering Program
-      description: Start your journey to becoming an AI Engineer
+      title: Get the Full Syllabus
+      description: Access the full 10-milestone roadmap and Company Case methodology
       cta_button:
-        text: Apply Now
+        text: Send me the Curriculum
         url: /en/apply
         variant: primary
       login_link:
@@ -62,7 +62,7 @@ sections:
         - icon: calendar
           text: 24-Week Intensive Program
         - icon: briefcase
-          text: Career-Focused, Project-Driven Training
+          text: Employment-First Curriculum
         - icon: IconRobot
           text: AI-Powered Learning & Feedback
         - icon: users
@@ -70,7 +70,7 @@ sections:
         - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
-          text: Real-World Portfolio Project
+          text: Production-Grade Portfolio
     paddingY:
       desktop: md
     marginY:
@@ -153,10 +153,11 @@ sections:
       - title: AI‑First Prework
         duration: Milestone 0
         objectives:
-          - Git, JS basics
+          - Git, JavaScript basics
           - Internet fundamentals
           - Coding agents
-        projects: Understand the foundations
+          - How to communicate with AI (Markdown/YAML/JSON)
+        projects: Understand AI and internet foundations.
         orientation: vertical
         icon: IconCode
       - title: Web Foundations
@@ -165,6 +166,7 @@ sections:
           - HTML, CSS, Tailwind
           - Accessibility
           - Layouts
+          - SEO/GEO
         projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
@@ -173,7 +175,7 @@ sections:
         objectives:
           - Algorithms
           - Stateflow vs controlflow
-          - JS mastery
+          - Typed JS mastery
         projects: Implement small features for the company.
         orientation: vertical
         icon: IconServer
@@ -185,10 +187,11 @@ sections:
         projects: Rebuild the company's UI using AI.
         orientation: vertical
         icon: IconChartBar
-      - title: React Fundamentals
+      - title: Next.js Fundamentals (React)
         duration: Milestone 4
         objectives:
           - SPA architecture
+          - Multi-page architecture
           - Props/state/effects
           - Debugging
         projects: Build the company's interactive frontend.
@@ -199,7 +202,7 @@ sections:
         objectives:
           - APIs
           - DB basics
-          - Serialization, authentictation
+          - Serialization, authentication
           - Serverless functions
         projects: Create the company’s backend.
         orientation: vertical
@@ -207,46 +210,48 @@ sections:
       - title: Telemetry & Data Pipelines
         duration: Milestone 6
         objectives:
-          - AI-generated processes with n8n
-          - Queues and scheduled tasks
-          - AI-driven decision making
-        projects: Automate business workflows with AI
+          - Collect
+          - Transform
+          - Aggregate
+          - Report.
+        projects: Build telemetry for the company.
         orientation: vertical
         icon: IconLayoutKanban
       - title: RAG & Memory
         duration: Milestone 7
         objectives:
-          - WebSockets and streaming responses
-          - Event-driven architecture
-          - Real-time AI interactions
-        projects: Launch your capstone AI-powered business
+          - Data chunking
+          - Embeddings
+          - Vector search
+        projects: Add the company’s knowledge layer.
         orientation: vertical
         icon: IconBolt
-      - title: Web Foundations
+      - title: Agent Engineering
         duration: Milestone 8
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Rules
+          - Memory banks
+          - Tool calling
+          - Multi-agent planning.
+        projects: Build the company’s agents.
         orientation: vertical
         icon: IconCode
-      - title: Web Foundations
+      - title: Agentic Workflow Generation
         duration: Milestone 9
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Analyze the company case with LLMs
+          - Generate and validate internal workflows
+          - Implement automation pipelines (serverless, queues, cronjobs, n8n)
+        projects: Build the company's agentic workflows.
         orientation: vertical
         icon: IconCode
-      - title: Web Foundations
+      - title: Real-Time Systems
         duration: Milestone 10
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Real-time systems streaming
+          - Sockets
+          - Pub/sub
+        projects: Enable real-time interactions for data, customers, employees and AI.
         orientation: vertical
         icon: IconCode
     marginY:
@@ -328,10 +333,10 @@ sections:
           - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates land their first role within 3–6 months of graduation. With our structured 3-step career development process, technical skills turn into job offers fast.
+        description: Land your first role within 3–6 months of graduation. With our structured 3-step career development process, your skills turn into job offers fast.
         benefits:
           - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
-          - text: Prepare through mock technical and behavioral interviews with real-world problem-solving practice
+          - text: Practice for technical and behavioral interviews
           - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average salary increase
@@ -395,7 +400,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Our graduates are hired by leading companies worldwide
+    subtitle: Leading companies worldwide hire our graduates
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft

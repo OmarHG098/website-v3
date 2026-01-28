@@ -31,6 +31,7 @@ import {
   IconChartBar as IconVerticalBars,
   IconHandClick,
   IconColumns,
+  IconSearch,
 } from "@tabler/icons-react";
 import {
   Dialog,
@@ -200,6 +201,7 @@ export default function ComponentPickerModal({
   const [useAiAdaptation, setUseAiAdaptation] = useState(false);
   const [isAdapting, setIsAdapting] = useState(false);
   const [selectedRelatedFeatures, setSelectedRelatedFeatures] = useState<string[]>([]);
+  const [componentSearch, setComponentSearch] = useState("");
   const { toast } = useToast();
 
   const { data: registryData, isLoading: isLoadingRegistry } = useQuery<RegistryOverview>({
@@ -221,6 +223,17 @@ export default function ComponentPickerModal({
         description: comp.description || "",
       }));
   }, [registryData]);
+
+  const filteredComponentsList = useMemo(() => {
+    if (!componentSearch.trim()) return componentsList;
+    const searchLower = componentSearch.toLowerCase();
+    return componentsList.filter(
+      (comp) =>
+        comp.label.toLowerCase().includes(searchLower) ||
+        comp.type.toLowerCase().includes(searchLower) ||
+        comp.description.toLowerCase().includes(searchLower)
+    );
+  }, [componentsList, componentSearch]);
 
   useEffect(() => {
     if (selectedComponent) {
@@ -270,6 +283,14 @@ export default function ComponentPickerModal({
     return examples.find(e => e.slug === selectedExample) || null;
   }, [examples, selectedExample]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setComponentSearch("");
+      setStep("select");
+      setSelectedComponent(null);
+    }
+  }, [isOpen]);
+
   const handleSelectComponent = useCallback((component: ComponentInfo) => {
     setSelectedComponent(component);
     setStep("configure");
@@ -288,6 +309,7 @@ export default function ComponentPickerModal({
     setSelectedVersion("");
     setSelectedExample("");
     setSelectedRelatedFeatures([]);
+    setComponentSearch("");
   }, []);
 
   const handleAddSection = useCallback(async () => {
@@ -487,39 +509,54 @@ export default function ComponentPickerModal({
         </DialogHeader>
         
         {step === "select" ? (
-          <ScrollArea className="flex-1 p-4">
-            {isLoadingRegistry ? (
-              <div className="flex items-center justify-center h-full py-12">
-                <IconRefresh className="h-8 w-8 animate-spin text-muted-foreground" />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="px-4 pt-2 pb-3 flex-shrink-0">
+              <div className="relative">
+                <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search components..."
+                  value={componentSearch}
+                  onChange={(e) => setComponentSearch(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                  data-testid="input-search-components"
+                />
               </div>
-            ) : componentsList.length === 0 ? (
-              <div className="flex items-center justify-center h-full py-12 text-muted-foreground">
-                No components available
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {componentsList.map((component) => {
-                  const Icon = component.icon;
-                  return (
-                    <button
-                      key={component.type}
-                      onClick={() => handleSelectComponent(component)}
-                      className="flex flex-col items-center gap-2 p-4 rounded-lg border bg-card hover:border-primary hover:bg-primary/5 transition-all text-left"
-                      data-testid={`component-option-${component.type}`}
-                    >
-                      <div className="p-3 rounded-full bg-muted">
-                        <Icon className="h-6 w-6 text-muted-foreground" />
-                      </div>
-                      <div className="text-center">
-                        <div className="font-medium text-sm">{component.label}</div>
-                        <div className="text-xs text-muted-foreground mt-0.5">{component.description}</div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </ScrollArea>
+            </div>
+            <ScrollArea className="flex-1 px-4 pb-4">
+              {isLoadingRegistry ? (
+                <div className="flex items-center justify-center h-full py-12">
+                  <IconRefresh className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+              ) : filteredComponentsList.length === 0 ? (
+                <div className="flex items-center justify-center h-full py-12 text-muted-foreground">
+                  {componentSearch ? "No components match your search" : "No components available"}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {filteredComponentsList.map((component) => {
+                    const Icon = component.icon;
+                    return (
+                      <button
+                        key={component.type}
+                        onClick={() => handleSelectComponent(component)}
+                        className="flex flex-col items-center gap-2 p-4 rounded-lg border bg-card hover:border-primary hover:bg-primary/5 transition-all text-left"
+                        data-testid={`component-option-${component.type}`}
+                      >
+                        <div className="p-3 rounded-full bg-muted">
+                          <Icon className="h-6 w-6 text-muted-foreground" />
+                        </div>
+                        <div className="text-center">
+                          <div className="font-medium text-sm">{component.label}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">{component.description}</div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </ScrollArea>
+          </div>
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="p-4 border-b flex items-center gap-4 flex-shrink-0 flex-wrap">

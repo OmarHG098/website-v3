@@ -63,11 +63,15 @@ sections:
           - year: Mid 2025
             value: 45
             displayValue: 45 days
+    marginY:
+      desktop: none
+    paddingY:
+      desktop: none
   - type: stats
     version: "1.0"
     title: Outcomes by the Numbers
     subtitle: Real results from our graduates across different regions
-    background: muted
+    background: hsl(210 100% 50% / 0.05)
     items:
       - value: 84%
         label: of U.S. graduates hired within 6 months
@@ -79,8 +83,10 @@ sections:
         label: placement rate in Spain
       - value: 3-6 months
         label: average time to get hired across all markets
-    paddingY:
+    marginY:
       desktop: none md
+    paddingY:
+      desktop: md
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -120,11 +126,14 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logoHeight: h-12 md:h-14
     paddingY:
-      desktop: md none
+      desktop: md
+    marginY:
+      desktop: none sm
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
     subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
+    background: hsl(var(--background))
     charts:
       - title: Age
         items:
@@ -153,22 +162,24 @@ sections:
             value: 21
           - label: Asia
             value: 1
-  - type: features_grid
-    version: "1.0"
-    variant: highlight
-    title: Making Tech Careers Accessible
-    subtitle: "Tech careers should be open to everyone. That's why we offer:"
-    columns: 3
-    items:
-      - icon: CurrencyDollar
-        title: Affordable Tuition
-        description: Lowest among top-rated bootcamps (recognized by Forbes as Best Bootcamp for Students on a Budget).
-      - icon: CreditCard
-        title: Flexible Financing
-        description: Options starting below $299/month, plus affordable loans and income-based payment plans.
-      - icon: School
-        title: Full and Partial Scholarships
-        description: Location-based options thanks to important institutional partnerships and government initiatives.
+    marginY:
+      desktop: none
+    paddingY:
+      desktop: none
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: Making Tech Careers Accessible
+      description: Tech careers should be open to everyone. At 4Geeks, we remove financial barriers by offering affordable tuition, flexible financing options, and access to scholarships. Our goal is to ensure that cost is never the reason someone cannot pursue a career in technology.
+      badge: Accessible Education
+    secondary:
+      benefits:
+        - text: Financing options starting below $299/month
+        - text: Full and partial scholarships (location-based)
+        - text: Tuition recognized by Forbes as budget-friendly
+    background: hsl(var(--accent))
+    paddingY:
+      desktop: none
   - type: two_column
     version: "1.0"
     proportions:
