@@ -786,6 +786,11 @@
       "sha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2",
       "lastModified": 1767901909696.239,
       "remoteSha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2"
+    },
+    "marketing-content/pages/sample-page/en.yml": {
+      "sha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4",
+      "lastModified": 1769618234802.1636,
+      "modifiedAt": "2026-01-28T16:37:14.804Z"
     }
   }
 }
