@@ -197,11 +197,10 @@ sections:
       - title: Backend for AI Frontends
         duration: Milestone 5
         objectives:
-          - APIs
-          - DB basics
-          - Serialization, authentictation
-          - Serverless functions
-        projects: Create the company’s backend.
+          - Intelligent agents with memory
+          - Task routing and tool calling
+          - Autonomous multi-step execution
+        projects: Create AI systems that plan and reason
         orientation: vertical
         icon: IconRobot
       - title: Telemetry & Data Pipelines
