@@ -156,6 +156,7 @@ sections:
           - Git, JS basics
           - Internet fundamentals
           - Coding agents
+          - How to communicate with AI (Markdown/YAML/JSON)
         projects: Understand the foundations
         orientation: vertical
         icon: IconCode
@@ -165,6 +166,7 @@ sections:
           - HTML, CSS, Tailwind
           - Accessibility
           - Layouts
+          - SEO/GEO
         projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
