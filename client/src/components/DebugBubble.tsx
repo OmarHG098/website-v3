@@ -2667,7 +2667,7 @@ export function DebugBubble() {
               <div className="space-y-3 p-3 bg-muted/50 rounded-md">
                 {/* Single slug for landings */}
                 <div className="space-y-2">
-                  <p className="text-xs font-medium text-muted-foreground">URL:</p>
+                  <p className="text-xs font-medium text-muted-foreground">Sitemap URL:</p>
                   <div className="flex items-center gap-2">
                     {editingSlugEn ? (
                       <div className="flex-1 flex items-center gap-1">
