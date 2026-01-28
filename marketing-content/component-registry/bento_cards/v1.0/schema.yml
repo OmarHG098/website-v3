@@ -1,0 +1,5 @@
+name: Bento Cards Section
+version: "1.0"
+component: BentoCards
+file: client/src/components/bento-cards/BentoCards.tsx
+description: A bento-box style card grid that bleeds to the right edge of the viewport. Displays feature cards with icons, titles, and descriptions in an asymmetric grid layout.

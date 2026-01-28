@@ -1,4 +1,4 @@
-import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridSpotlightSection, FeaturesGridStatsCardsSection, FeaturesGridStatsTextCardSection, FeaturesGridStatsTextSection, FeaturesGridTextOnlySection } from "@shared/schema";
+import type { FeaturesGridSection, FeaturesGridHighlightSection, FeaturesGridDetailedSection, FeaturesGridSpotlightSection, FeaturesGridStatsCardsSection, FeaturesGridStatsTextCardSection, FeaturesGridStatsTextSection, FeaturesGridTextOnlySection, FeaturesGridCardHeaderSection } from "@shared/schema";
 import { FeaturesGridHighlight } from "./FeaturesGridHighlight";
 import { FeaturesGridDetailed } from "./FeaturesGridDetailed";
 import { FeaturesGridSpotlight } from "./FeaturesGridSpotlight";
@@ -6,6 +6,7 @@ import { FeaturesGridStatsCards } from "./FeaturesGridStatsCards";
 import { FeaturesGridStatsTextCard } from "./FeaturesGridStatsTextCard";
 import { FeaturesGridStatsText } from "./FeaturesGridStatsText";
 import { FeaturesGridTextOnly } from "./FeaturesGridTextOnly";
+import { FeaturesGridCardHeader } from "./FeaturesGridCardHeader";
 
 interface FeaturesGridProps {
   data: FeaturesGridSection;
@@ -27,11 +28,13 @@ export function FeaturesGrid({ data }: FeaturesGridProps) {
       return <FeaturesGridStatsText data={data as FeaturesGridStatsTextSection} />;
     case "textOnly":
       return <FeaturesGridTextOnly data={data as FeaturesGridTextOnlySection} />;
+    case "cardHeader":
+      return <FeaturesGridCardHeader data={data as FeaturesGridCardHeaderSection} />;
     case "highlight":
     default:
       return <FeaturesGridHighlight data={data as FeaturesGridHighlightSection} />;
   }
 }
 
-export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridSpotlight, FeaturesGridStatsCards, FeaturesGridStatsTextCard, FeaturesGridStatsText, FeaturesGridTextOnly };
+export { FeaturesGridHighlight, FeaturesGridDetailed, FeaturesGridSpotlight, FeaturesGridStatsCards, FeaturesGridStatsTextCard, FeaturesGridStatsText, FeaturesGridTextOnly, FeaturesGridCardHeader };
 export type { FeaturesGridProps };

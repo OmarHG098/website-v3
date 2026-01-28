@@ -395,7 +395,13 @@ export default function ComponentPickerModal({
         // Emit event to trigger page refresh
         emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale! });
       } else {
-        console.error("Failed to add section");
+        const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+        console.error("Failed to add section:", errorData);
+        toast({
+          title: "Failed to add section",
+          description: errorData.error || "Unknown error occurred",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Error adding section:", error);
