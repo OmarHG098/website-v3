@@ -502,6 +502,38 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
         slug={slug}
         locale={locale}
       />
+      {sections.length === 0 && (
+        <div 
+          className="min-h-[60vh] flex items-center justify-center"
+          data-testid="empty-sections-state"
+        >
+          {isEditMode ? (
+            <div className="text-center space-y-4 p-8">
+              <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center">
+                <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-foreground">
+                  {locale === "es" ? "Esta página está vacía" : "This page is empty"}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {locale === "es" 
+                    ? "Haz clic en el botón + arriba para agregar tu primera sección" 
+                    : "Click the + button above to add your first section"}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center p-8">
+              <p className="text-muted-foreground">
+                {locale === "es" ? "Contenido próximamente" : "Content coming soon"}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSectionWithContext(section, index);

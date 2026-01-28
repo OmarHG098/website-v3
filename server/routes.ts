@@ -1817,12 +1817,7 @@ meta:
   description: ${title} - Learn more about this topic at 4Geeks Academy.
   redirects:
     - /${enSlug}
-sections:
-  - type: hero
-    variant: default
-    title: ${title}
-    subtitle: Welcome
-    description: Add your content here.
+sections: []
 `;
 
         esYml = `slug: ${esSlug}
@@ -1833,12 +1828,7 @@ meta:
   description: ${title} - Aprende más sobre este tema en 4Geeks Academy.
   redirects:
     - /${esSlug}
-sections:
-  - type: hero
-    variant: default
-    title: ${title}
-    subtitle: Bienvenido
-    description: Agrega tu contenido aquí.
+sections: []
 `;
       } else if (type === 'program') {
         commonYml = `# Common properties shared across all variants
@@ -1863,12 +1853,7 @@ meta:
   description: Learn ${title} at 4Geeks Academy. Become job-ready with our intensive program.
   redirects:
     - /${enSlug}
-sections:
-  - type: hero
-    variant: default
-    title: ${title}
-    subtitle: Start Your Career
-    description: Add your program description here.
+sections: []
 `;
 
         esYml = `slug: ${esSlug}
@@ -1878,12 +1863,7 @@ meta:
   description: Aprende ${title} en 4Geeks Academy. Prepárate para el trabajo con nuestro programa intensivo.
   redirects:
     - /${esSlug}
-sections:
-  - type: hero
-    variant: default
-    title: ${title}
-    subtitle: Inicia Tu Carrera
-    description: Agrega la descripción de tu programa aquí.
+sections: []
 `;
       } else {
         // location
@@ -1913,24 +1893,14 @@ schema:
 meta:
   page_title: ${title} Coding Bootcamp | 4Geeks Academy
   description: Join 4Geeks Academy in ${title}. Learn to code with our immersive bootcamp programs.
-sections:
-  - type: hero
-    variant: default
-    title: Coding Bootcamp in ${title}
-    subtitle: Learn to Code
-    description: Add your location description here.
+sections: []
 `;
 
         esYml = `slug: ${esSlug}
 meta:
   page_title: Bootcamp de Programación en ${title} | 4Geeks Academy
   description: Únete a 4Geeks Academy en ${title}. Aprende a programar con nuestros programas de bootcamp.
-sections:
-  - type: hero
-    variant: default
-    title: Bootcamp de Programación en ${title}
-    subtitle: Aprende a Programar
-    description: Agrega la descripción de tu ubicación aquí.
+sections: []
 `;
       }
 
