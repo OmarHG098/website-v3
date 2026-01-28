@@ -31,7 +31,7 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +7000 graduates
     bullet_points:
-      - Create a fully AI-native business, developed end to end
+      - Create a fully AI-native business, developed end-to-end
       - Integrate AI into real products, from user-facing features to internal operations
       - Use modern AI tools and AI-assisted workflows to build and ship software faster
     tutors:
