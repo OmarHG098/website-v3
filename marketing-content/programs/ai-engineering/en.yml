@@ -42,7 +42,7 @@ sections:
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Build real, production-ready AI systems with hands-on projects, supported by unlimited mentorship and career guidance. Become the AI engineer companies are actively hiring for.
+    description: Build real, production-ready systems in our comprehensive AI Engineering program, supported by hands-on projects, unlimited mentorship, and career guidance. Become the software engineer companies are actively hiring for.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
