@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ChevronDown, ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -295,8 +295,23 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
 
 export function Dropdown({ label, href, dropdown }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const isWideDropdown = dropdown.type === "cards" || dropdown.type === "columns";
+  
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setIsOpen(true);
+  };
+  
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 100);
+  };
   
   const getDropdownWidth = () => {
     switch (dropdown.type) {
@@ -331,8 +346,8 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
   return (
     <div
       className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <a
         href={href}
@@ -345,11 +360,13 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       
       {isOpen && (
         isWideDropdown ? (
-          <div className="fixed top-16 left-0 right-0 z-50 flex justify-center">
+          <div 
+            className="fixed top-16 left-0 right-0 z-50 flex justify-center"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <div 
               className={`bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
-              onMouseEnter={() => setIsOpen(true)}
-              onMouseLeave={() => setIsOpen(false)}
             >
               {renderDropdownContent()}
             </div>
