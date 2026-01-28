@@ -2295,51 +2295,49 @@ export function DebugBubble() {
               )}
             </div>
             
-            {/* Advanced Options */}
-            {pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
-              <div className="border-t pt-3">
-                <button
-                  type="button"
-                  onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
-                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="button-toggle-advanced-options"
-                >
-                  {advancedOptionsOpen ? (
-                    <IconChevronDown className="h-3.5 w-3.5" />
-                  ) : (
-                    <IconChevronRight className="h-3.5 w-3.5" />
-                  )}
-                  Advanced options
-                </button>
-                
-                {advancedOptionsOpen && (
-                  <div className="mt-3 p-3 bg-muted/50 rounded-md space-y-2">
-                    <p className="text-xs text-muted-foreground">
-                      Discard all your local changes and reset to the remote version.
-                    </p>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={handleIgnoreAllChanges}
-                      disabled={isIgnoringAllChanges}
-                      data-testid="button-ignore-all-changes"
-                    >
-                      {isIgnoringAllChanges ? (
-                        <>
-                          <IconRefresh className="h-3.5 w-3.5 mr-1.5 animate-spin" />
-                          Resetting...
-                        </>
-                      ) : (
-                        <>
-                          <IconTrash className="h-3.5 w-3.5 mr-1.5" />
-                          Ignore all my local changes
-                        </>
-                      )}
-                    </Button>
-                  </div>
+            {/* Advanced Options - always visible */}
+            <div className="border-t pt-3">
+              <button
+                type="button"
+                onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                data-testid="button-toggle-advanced-options"
+              >
+                {advancedOptionsOpen ? (
+                  <IconChevronDown className="h-3.5 w-3.5" />
+                ) : (
+                  <IconChevronRight className="h-3.5 w-3.5" />
                 )}
-              </div>
-            )}
+                Advanced options
+              </button>
+              
+              {advancedOptionsOpen && (
+                <div className="mt-3 p-3 bg-muted/50 rounded-md space-y-2">
+                  <p className="text-xs text-muted-foreground">
+                    Discard all your local changes and reset to the remote version.
+                  </p>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleIgnoreAllChanges}
+                    disabled={isIgnoringAllChanges || !pendingChanges.some(c => c.source === 'local' || c.source === 'conflict')}
+                    data-testid="button-ignore-all-changes"
+                  >
+                    {isIgnoringAllChanges ? (
+                      <>
+                        <IconRefresh className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                        Resetting...
+                      </>
+                    ) : (
+                      <>
+                        <IconTrash className="h-3.5 w-3.5 mr-1.5" />
+                        Ignore all my local changes
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
 
           <DialogFooter>
