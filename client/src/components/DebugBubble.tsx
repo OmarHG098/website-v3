@@ -2540,48 +2540,72 @@ export function DebugBubble() {
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Content Type</label>
-              <Select 
-                value={createContentType} 
-                onValueChange={(v) => {
-                  setCreateContentType(v as 'location' | 'page' | 'program' | 'landing');
-                  // Re-validate slugs with new type (skip for landing - uses different validation)
-                  if (v !== 'landing') {
-                    if (createContentSlugEn) {
-                      setCreateContentSlugEnStatus('checking');
-                      fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
-                        .then(res => res.json())
-                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
-                        .catch(() => setCreateContentSlugEnStatus('idle'));
+              <div className="flex items-center gap-2">
+                <Select 
+                  value={createContentType} 
+                  onValueChange={(v) => {
+                    setCreateContentType(v as 'location' | 'page' | 'program' | 'landing');
+                    // Re-validate slugs with new type (skip for landing - uses different validation)
+                    if (v !== 'landing') {
+                      if (createContentSlugEn) {
+                        setCreateContentSlugEnStatus('checking');
+                        fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEnStatus('idle'));
+                      }
+                      if (createContentSlugEs) {
+                        setCreateContentSlugEsStatus('checking');
+                        fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEsStatus('idle'));
+                      }
+                    } else {
+                      // For landings, validate single slug
+                      if (createContentSlugEn) {
+                        setCreateContentSlugEnStatus('checking');
+                        fetch(`/api/content/check-slug?type=landing&slug=${createContentSlugEn}`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEnStatus('idle'));
+                      }
                     }
-                    if (createContentSlugEs) {
-                      setCreateContentSlugEsStatus('checking');
-                      fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
-                        .then(res => res.json())
-                        .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
-                        .catch(() => setCreateContentSlugEsStatus('idle'));
-                    }
-                  } else {
-                    // For landings, validate single slug
-                    if (createContentSlugEn) {
-                      setCreateContentSlugEnStatus('checking');
-                      fetch(`/api/content/check-slug?type=landing&slug=${createContentSlugEn}`)
-                        .then(res => res.json())
-                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
-                        .catch(() => setCreateContentSlugEnStatus('idle'));
-                    }
-                  }
-                }}
-              >
-                <SelectTrigger data-testid="select-content-type">
-                  <SelectValue placeholder="Select type..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="page">Page</SelectItem>
-                  <SelectItem value="program">Program</SelectItem>
-                  <SelectItem value="location">Location</SelectItem>
-                  <SelectItem value="landing">Landing</SelectItem>
-                </SelectContent>
-              </Select>
+                  }}
+                >
+                  <SelectTrigger data-testid="select-content-type" className={createContentType === 'landing' ? 'flex-1' : 'w-full'}>
+                    <SelectValue placeholder="Select type..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="page">Page</SelectItem>
+                    <SelectItem value="program">Program</SelectItem>
+                    <SelectItem value="location">Location</SelectItem>
+                    <SelectItem value="landing">Landing</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                {createContentType === 'landing' && (
+                  <Select value={createLandingLocale} onValueChange={(v) => setCreateLandingLocale(v as 'en' | 'es')}>
+                    <SelectTrigger className="w-36" data-testid="select-landing-locale">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">
+                        <span className="flex items-center gap-2">
+                          <span className="text-base">🇺🇸</span>
+                          <span>English</span>
+                        </span>
+                      </SelectItem>
+                      <SelectItem value="es">
+                        <span className="flex items-center gap-2">
+                          <span className="text-base">🇪🇸</span>
+                          <span>Spanish</span>
+                        </span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -2635,20 +2659,6 @@ export function DebugBubble() {
             
             {createContentSlugEn && createContentType === 'landing' && (
               <div className="space-y-3 p-3 bg-muted/50 rounded-md">
-                {/* Locale selector for landings */}
-                <div className="space-y-2">
-                  <p className="text-xs font-medium text-muted-foreground">Locale:</p>
-                  <Select value={createLandingLocale} onValueChange={(v) => setCreateLandingLocale(v as 'en' | 'es')}>
-                    <SelectTrigger className="w-24" data-testid="select-landing-locale">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="es">Spanish</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
                 {/* Single slug for landings */}
                 <div className="space-y-2">
                   <p className="text-xs font-medium text-muted-foreground">URL:</p>
