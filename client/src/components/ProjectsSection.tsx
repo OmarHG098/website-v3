@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IconChevronLeft, IconChevronRight, IconClock, IconCalendar } from "@tabler/icons-react";
+import SolidCard from "@/components/SolidCard";
 import type { ProjectsSection as ProjectsSectionType } from "@shared/schema";
 
 import flaskRenderImg from "@assets/flask-render_1765396097392.webp";
@@ -93,19 +94,20 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
         <div className="relative">
           <div 
-            className="bg-card border rounded-lg p-4 md:p-5 min-h-[480px] md:min-h-[320px]"
+            className="bg-muted border rounded-lg p-4 md:p-5 flex items-center min-h-[480px] md:min-h-[320px]"
             data-testid={`card-project-${currentIndex}`}
           >
-            <div className="flex flex-col md:flex-row gap-5 h-full">
+            <div className="flex flex-col md:flex-row gap-7 h-full">
+
               <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0">
                 <img 
                   src={imageSrc}
                   alt={currentProject.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover "
                   loading="lazy"
                 />
               </div>
-              
+
               <div className="md:w-3/5 flex flex-col">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                   {currentProject.title}
