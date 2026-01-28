@@ -15,11 +15,6 @@ export default function Header() {
 
   const { data: menuConfig, isLoading } = useQuery<NavbarConfig>({
     queryKey: ["/api/menus", "main-navbar"],
-    queryFn: async () => {
-      const response = await fetch("/api/menus/main-navbar");
-      if (!response.ok) throw new Error("Failed to load menu");
-      return response.json();
-    },
   });
 
   useEffect(() => {
