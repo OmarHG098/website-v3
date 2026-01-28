@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo, lazy, Suspense } from "react";
 import type { Section, EditOperation, SectionLayout, ResponsiveSpacing, ShowOn } from "@shared/schema";
 
 // ============================================
@@ -193,6 +193,7 @@ const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ defau
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
+import ComponentPickerModal from "@/components/editing/ComponentPickerModal";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
@@ -237,6 +238,69 @@ interface SectionRendererProps {
   slug?: string;
   locale?: string;
   programSlug?: string;
+}
+
+function EmptyPageState({ 
+  isEditMode, 
+  locale, 
+  contentType, 
+  slug 
+}: { 
+  isEditMode: boolean; 
+  locale?: string; 
+  contentType?: "program" | "landing" | "location" | "page";
+  slug?: string;
+}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  return (
+    <div 
+      className="min-h-[60vh] flex items-center justify-center"
+      data-testid="empty-sections-state"
+    >
+      {isEditMode ? (
+        <>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="text-center space-y-4 p-8 rounded-lg border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-muted/50 transition-all cursor-pointer"
+            data-testid="button-add-first-section"
+          >
+            <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-foreground">
+                {locale === "es" ? "Esta página está vacía" : "This page is empty"}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {locale === "es" 
+                  ? "Haz clic aquí para agregar tu primera sección" 
+                  : "Click here to add your first section"}
+              </p>
+            </div>
+          </button>
+          {isModalOpen && (
+            <ComponentPickerModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              insertIndex={0}
+              contentType={contentType}
+              slug={slug}
+              locale={locale}
+            />
+          )}
+        </>
+      ) : (
+        <div className="text-center p-8">
+          <p className="text-muted-foreground">
+            {locale === "es" ? "Contenido próximamente" : "Content coming soon"}
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 async function sendEditOperation(
@@ -503,36 +567,12 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
         locale={locale}
       />
       {sections.length === 0 && (
-        <div 
-          className="min-h-[60vh] flex items-center justify-center"
-          data-testid="empty-sections-state"
-        >
-          {isEditMode ? (
-            <div className="text-center space-y-4 p-8">
-              <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center">
-                <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium text-foreground">
-                  {locale === "es" ? "Esta página está vacía" : "This page is empty"}
-                </h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {locale === "es" 
-                    ? "Haz clic en el botón + arriba para agregar tu primera sección" 
-                    : "Click the + button above to add your first section"}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center p-8">
-              <p className="text-muted-foreground">
-                {locale === "es" ? "Contenido próximamente" : "Content coming soon"}
-              </p>
-            </div>
-          )}
-        </div>
+        <EmptyPageState 
+          isEditMode={isEditMode} 
+          locale={locale} 
+          contentType={contentType}
+          slug={slug}
+        />
       )}
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
