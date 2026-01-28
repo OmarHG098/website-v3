@@ -202,7 +202,7 @@ sections:
         objectives:
           - APIs
           - DB basics
-          - Serialization, authentictation
+          - Serialization, authentication
           - Serverless functions
         projects: Create the company’s backend.
         orientation: vertical
@@ -210,28 +210,30 @@ sections:
       - title: Telemetry & Data Pipelines
         duration: Milestone 6
         objectives:
-          - AI-generated processes with n8n
-          - Queues and scheduled tasks
-          - AI-driven decision making
-        projects: Automate business workflows with AI
+          - Collect
+          - Transform
+          - Aggregate
+          - Report.
+        projects: Build telemetry for the company.
         orientation: vertical
         icon: IconLayoutKanban
       - title: RAG & Memory
         duration: Milestone 7
         objectives:
-          - WebSockets and streaming responses
-          - Event-driven architecture
-          - Real-time AI interactions
-        projects: Launch your capstone AI-powered business
+          - Data chunking
+          - Embeddings
+          - Vector search
+        projects: Add the company’s knowledge layer.
         orientation: vertical
         icon: IconBolt
-      - title: Web Foundations
+      - title: Agent Engineering
         duration: Milestone 8
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Rules
+          - Memory banks
+          - Tool calling
+          - Multi-agent planning.
+        projects: Build the company’s agents.
         orientation: vertical
         icon: IconCode
       - title: Web Foundations
