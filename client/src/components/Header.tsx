@@ -13,9 +13,11 @@ export default function Header() {
   const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { data: menuConfig, isLoading } = useQuery<NavbarConfig>({
+  const { data: menuResponse, isLoading } = useQuery<{ name: string; data: NavbarConfig }>({
     queryKey: ["/api/menus", "main-navbar"],
   });
+  
+  const menuConfig = menuResponse?.data;
 
   useEffect(() => {
     const handleScroll = () => {
