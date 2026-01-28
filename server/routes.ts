@@ -867,6 +867,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Menus API - list all menu files
+  app.get("/api/menus", (_req, res) => {
+    const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    
+    if (!fs.existsSync(menusDir)) {
+      res.json({ menus: [] });
+      return;
+    }
+    
+    const files = fs.readdirSync(menusDir).filter(f => f.endsWith(".yml") || f.endsWith(".yaml"));
+    const menus = files.map(file => {
+      const name = file.replace(/\.(yml|yaml)$/, "");
+      return { name, file };
+    });
+    
+    res.json({ menus });
+  });
+
+  // Menus API - get a specific menu file
+  app.get("/api/menus/:name", (req, res) => {
+    const { name } = req.params;
+    const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    
+    // Try both .yml and .yaml extensions
+    let filePath = path.join(menusDir, `${name}.yml`);
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${name}.yaml`);
+    }
+    
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ error: "Menu not found" });
+      return;
+    }
+    
+    try {
+      const content = fs.readFileSync(filePath, "utf-8");
+      const data = yaml.load(content);
+      res.json({ name, data });
+    } catch (error) {
+      console.error(`Error loading menu ${name}:`, error);
+      res.status(500).json({ error: "Failed to parse menu file" });
+    }
+  });
+
   // Clear redirect cache (for debug tools)
   app.post("/api/debug/clear-redirect-cache", (req, res) => {
     clearRedirectCache();
