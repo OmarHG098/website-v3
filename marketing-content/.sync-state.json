@@ -698,10 +698,10 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "30d72afd25735a14df29191ebe979dd8f7be502bbebf029d69fd8a6baa69438e",
-      "lastModified": 1769630358619.2695,
-      "remoteSha": "30d72afd25735a14df29191ebe979dd8f7be502bbebf029d69fd8a6baa69438e",
-      "pulledFromCommit": "3162ac239a941729bb4e0405130c56cc9c80cd7b"
+      "sha": "0b73f90bc5475bbebbef01e4e67e23967ea1b21122a578b962d3360d820ed700",
+      "lastModified": 1769631082951.734,
+      "remoteSha": "0b73f90bc5475bbebbef01e4e67e23967ea1b21122a578b962d3360d820ed700",
+      "pulledFromCommit": "46f31170f8f1f4d5d3062ed203461baf8266b284"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",

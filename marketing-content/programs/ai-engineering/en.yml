@@ -157,7 +157,7 @@ sections:
           - Internet fundamentals
           - Coding agents
           - How to communicate with AI (Markdown/YAML/JSON)
-        projects: Understand the foundations
+        projects: Understand AI and internet foundations.
         orientation: vertical
         icon: IconCode
       - title: Web Foundations
@@ -236,22 +236,22 @@ sections:
         projects: Build the company’s agents.
         orientation: vertical
         icon: IconCode
-      - title: Web Foundations
+      - title: Agentic Workflow Generation
         duration: Milestone 9
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Analyze the company case with LLMs
+          - Generate and validate internal workflows
+          - Implement automation pipelines (serverless, queues, cronjobs, n8n)
+        projects: Build the company's agentic workflows.
         orientation: vertical
         icon: IconCode
-      - title: Web Foundations
+      - title: Real-Time Systems
         duration: Milestone 10
         objectives:
-          - Modern React application with AI components
-          - Intelligent user interfaces
-          - AI-powered auto-completion and suggestions
-        projects: Build the company's first webpage.
+          - Real-time systems streaming
+          - Sockets
+          - Pub/sub
+        projects: Enable real-time interactions for data, customers, employees and AI.
         orientation: vertical
         icon: IconCode
     marginY:
