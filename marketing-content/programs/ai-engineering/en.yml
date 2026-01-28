@@ -153,9 +153,10 @@ sections:
       - title: AI‑First Prework
         duration: Milestone 0
         objectives:
-          - Git, JS basics
+          - Git, JavaScript basics
           - Internet fundamentals
           - Coding agents
+          - How to communicate with AI (Markdown/YAML/JSON)
         projects: Understand the foundations
         orientation: vertical
         icon: IconCode
@@ -165,6 +166,7 @@ sections:
           - HTML, CSS, Tailwind
           - Accessibility
           - Layouts
+          - SEO/GEO
         projects: Build the company's first webpage.
         orientation: vertical
         icon: IconCode
@@ -173,7 +175,7 @@ sections:
         objectives:
           - Algorithms
           - Stateflow vs controlflow
-          - JS mastery
+          - Typed JS mastery
         projects: Implement small features for the company.
         orientation: vertical
         icon: IconServer
@@ -185,10 +187,11 @@ sections:
         projects: Rebuild the company's UI using AI.
         orientation: vertical
         icon: IconChartBar
-      - title: React Fundamentals
+      - title: Next.js Fundamentals (React)
         duration: Milestone 4
         objectives:
           - SPA architecture
+          - Multi-page architecture
           - Props/state/effects
           - Debugging
         projects: Build the company's interactive frontend.
