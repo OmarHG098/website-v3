@@ -3,6 +3,7 @@ description: "Simple configuration with just 4 logos - no navigation arrows show
 
 yaml: |
   - type: whos_hiring
+    pretitle: "Customer Stories"
     title: "Trusted by Industry Leaders"
     logos:
       - src: "/attached_assets/microsoft_1764719829995.png"
