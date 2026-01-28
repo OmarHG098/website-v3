@@ -1,0 +1,14 @@
+slug: "home"
+template: "default"
+title: "The AI Reskilling Platform"
+
+meta:
+  robots: "index, follow"
+  priority: 1.0
+  change_frequency: "daily"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+    - "educational"

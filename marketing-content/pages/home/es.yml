@@ -1,0 +1,153 @@
+slug: home
+template: default
+title: La Plataforma de Recapacitación con IA
+meta:
+  page_title: 4Geeks Academy | La Plataforma de Recapacitación con IA
+  description: Transforma tu carrera con aprendizaje potenciado por IA. Obtén educación personalizada, mentoría experta y apoyo profesional para lanzar tu carrera tecnológica.
+  redirects:
+    - /inicio
+sections:
+  - type: hero
+    variant: landing
+    title: La Plataforma de Recapacitación con IA
+    subtitle: Transforma tu carrera con aprendizaje personalizado potenciado por IA
+    description: Domina habilidades tecnológicas demandadas con mentores expertos, herramientas de IA de vanguardia y apoyo profesional ilimitado. Únete a miles que han lanzado carreras tecnológicas exitosas.
+    cta:
+      text: Comenzar
+      href: /es/aplicar
+    secondary_cta:
+      text: Explorar Programas
+      href: /es/programas
+    marquee:
+      items:
+        - id: switchup-2025
+          alt: SwitchUp - Mejores Bootcamps de Programación 2025
+          logo: /attached_assets/switchup_1765590146414.webp
+          logoHeight: h-8 md:h-12
+        - id: course-report-2024
+          alt: Course Report - Mejor Bootcamp de Programación 2024
+          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
+          logoHeight: h-8 md:h-12
+        - id: newsweek
+          alt: Newsweek
+          logo: /attached_assets/newsweek_1764709608255.webp
+          logoHeight: h-8 md:h-12
+        - id: forbes
+          alt: Forbes - Top Bootcamp de Programación
+          logo: /attached_assets/forbes-logo-award_1764709625651.webp
+          logoHeight: h-8 md:h-12
+        - id: fortune
+          alt: Fortune - Mejor Empresa Educativa
+          logo: /attached_assets/fortune-logo_1764709618095.webp
+          logoHeight: h-8 md:h-12
+      speed: 40
+      gradient: true
+      gradientWidth: 50
+
+  - type: features_grid
+    variant: highlight
+    title: Nuestra misión es llevarte a la tecnología. Tú eliges cómo.
+    features:
+      - icon: https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress
+        title: Inicio Rápido
+        description: Comienza rápidamente con nuestra incorporación simplificada y currículo estructurado
+      - icon: https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress
+        title: Comunidad Global
+        description: Únete a miles de estudiantes en todo el mundo en el mismo camino hacia el dominio tecnológico
+      - icon: https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress
+        title: Cursos a tu ritmo
+        description: Aprende a tu propio ritmo con recursos guiados por expertos.
+      - icon: https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress
+        title: Impulso Profesional
+        description: Mejora tu currículum, networking y habilidades de entrevista.
+
+  - type: two_column
+    proportions:
+      - 6
+      - 6
+    alignment: center
+    left:
+      heading: Bienvenido al Aprendizaje Hiperpersonalizado.
+      subheading: Progresa Como Nunca Antes.
+      description: Cada estudiante recibe un paquete LearnPack generado a partir de sus diagnósticos, rendimiento pasado, ritmo, errores y objetivos profesionales.
+      bullets:
+        - text: Rutas de aprendizaje adaptativas impulsadas por IA
+        - text: Calibración y supervisión guiada por humanos
+        - text: Retroalimentación de IA profunda y consciente del contexto
+        - text: Detección personalizada de brechas de habilidades
+      cta:
+        text: Explorar automatizaciones
+        href: /es/cursos
+    right:
+      image_id: rigobot_ai_tutor
+      image_alt: Tutor IA Rigobot
+    paddingY:
+      desktop: lg lg
+
+  - type: testimonials_slide
+    title: Lo Que Dicen Nuestros Estudiantes
+    description: Descubre cómo nuestros graduados transformaron sus carreras con aprendizaje personalizado y apoyo profesional.
+
+  - type: two_column
+    proportions:
+      - 5
+      - 7
+    alignment: center
+    left:
+      image_id: students_collaborating
+      image_alt: Estudiantes colaborando en un proyecto
+      justify: start
+    right:
+      heading: Haciendo las Carreras Tecnológicas Accesibles
+      description: Creemos que todos merecen la oportunidad de construir una carrera en tecnología. Nuestra plataforma elimina barreras con horarios de aprendizaje flexibles, opciones de precios accesibles y soporte integral desde el primer día hasta la colocación laboral.
+      cta:
+        text: Comienza Tu Camino
+        href: /es/rutas-de-aprendizaje
+    reverse_on_mobile: true
+    paddingY:
+      desktop: md lg
+
+  - type: two_column
+    proportions:
+      - 7
+      - 5
+    alignment: center
+    left:
+      heading: Impulsa el Crecimiento de Tu Empresa con Talento Temprano de Primera
+      description: Asóciate con nosotros para acceder a un flujo de profesionales tecnológicos capacitados y listos para trabajar. Nuestros graduados están entrenados en las últimas tecnologías y mejores prácticas, listos para contribuir desde el primer día.
+      cta:
+        text: Asóciate Con Nosotros
+        href: /es/socios
+    right:
+      image_id: tech_team_group
+      image_alt: Foto grupal del equipo tecnológico
+    paddingY:
+      desktop: md lg
+
+  - type: features_grid
+    variant: highlight
+    title: La Clave de Tu Éxito
+    subtitle: Herramientas Potenciadas por IA y Soporte Humano Sin Igual
+    features:
+      - icon: rocket
+        title: Aprendizaje con IA
+        description: El currículo personalizado se adapta a tu ritmo y estilo de aprendizaje
+      - icon: users
+        title: Mentoría Experta
+        description: Guía 1 a 1 de profesionales de la industria con experiencia del mundo real
+      - icon: briefcase
+        title: Apoyo Profesional
+        description: Asistencia de colocación laboral y preparación para entrevistas incluidas
+
+  - type: awards_row
+    title: Premios Importantes y Calificaciones Destacadas
+    awards:
+      - rating: 5.0
+        source: Course Report
+      - rating: 4.9
+        source: SwitchUp
+      - label: Mejor Bootcamp de Programación
+        sublabel: Premios 2024
+
+  - type: footer
+    variant: default

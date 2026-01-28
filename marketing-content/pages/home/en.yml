@@ -1,0 +1,153 @@
+slug: home
+template: default
+title: The AI Reskilling Platform
+meta:
+  page_title: 4Geeks Academy | The AI Reskilling Platform
+  description: Transform your career with AI-powered learning. Get personalized education, expert mentorship, and career support to launch your tech career.
+  redirects:
+    - /home
+sections:
+  - type: hero
+    variant: landing
+    title: The AI Reskilling Platform
+    subtitle: Transform your career with personalized, AI-powered learning
+    description: Master in-demand tech skills with expert mentors, cutting-edge AI tools, and unlimited career support. Join thousands who've launched successful tech careers.
+    cta:
+      text: Get Started
+      href: /apply
+    secondary_cta:
+      text: Explore Programs
+      href: /programs
+    marquee:
+      items:
+        - id: switchup-2025
+          alt: SwitchUp - Best Coding Bootcamps 2025
+          logo: /attached_assets/switchup_1765590146414.webp
+          logoHeight: h-8 md:h-12
+        - id: course-report-2024
+          alt: Course Report - Best Coding Bootcamp 2024
+          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
+          logoHeight: h-8 md:h-12
+        - id: newsweek
+          alt: Newsweek
+          logo: /attached_assets/newsweek_1764709608255.webp
+          logoHeight: h-8 md:h-12
+        - id: forbes
+          alt: Forbes - Top Coding Bootcamp
+          logo: /attached_assets/forbes-logo-award_1764709625651.webp
+          logoHeight: h-8 md:h-12
+        - id: fortune
+          alt: Fortune - Best Education Company
+          logo: /attached_assets/fortune-logo_1764709618095.webp
+          logoHeight: h-8 md:h-12
+      speed: 40
+      gradient: true
+      gradientWidth: 50
+
+  - type: features_grid
+    variant: highlight
+    title: Our mission is to get you into tech. You choose how.
+    features:
+      - icon: https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress
+        title: Fast Launch
+        description: Get started quickly with our streamlined onboarding and structured curriculum
+      - icon: https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress
+        title: Global Community
+        description: Join thousands of learners worldwide on the same journey to tech mastery
+      - icon: https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress
+        title: Self-paced courses
+        description: Learn at your own pace with expert-guided resources.
+      - icon: https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress
+        title: Career Booster
+        description: Enhance your resume, networking, and interview skills.
+
+  - type: two_column
+    proportions:
+      - 6
+      - 6
+    alignment: center
+    left:
+      heading: Welcome to Hyper-personalized Learning.
+      subheading: Progress Like Never Before.
+      description: Every student receives a LearnPack package generated from their diagnostics, past performance, pace, errors, and career goals.
+      bullets:
+        - text: Adaptive, AI-driven learning paths
+        - text: Human-guided calibration and oversight
+        - text: Deep, context-aware AI feedback
+        - text: Personalized skill-gap detection
+      cta:
+        text: Explore all automations
+        href: /courses
+    right:
+      image_id: rigobot_ai_tutor
+      image_alt: Rigobot AI Tutor
+    paddingY:
+      desktop: lg lg
+
+  - type: testimonials_slide
+    title: What Our Students Say
+    description: See how our graduates transformed their careers with personalized learning and career support.
+
+  - type: two_column
+    proportions:
+      - 5
+      - 7
+    alignment: center
+    left:
+      image_id: students_collaborating
+      image_alt: Students collaborating on a project
+      justify: start
+    right:
+      heading: Making Tech Careers Accessible
+      description: We believe everyone deserves the opportunity to build a career in technology. Our platform removes barriers with flexible learning schedules, affordable pricing options, and comprehensive support from day one to job placement.
+      cta:
+        text: Start Your Journey
+        href: /learning-paths
+    reverse_on_mobile: true
+    paddingY:
+      desktop: md lg
+
+  - type: two_column
+    proportions:
+      - 7
+      - 5
+    alignment: center
+    left:
+      heading: Fuel Your Company's Growth with Top Early Talent
+      description: Partner with us to access a pipeline of skilled, job-ready tech professionals. Our graduates are trained in the latest technologies and best practices, ready to contribute from day one.
+      cta:
+        text: Partner With Us
+        href: /partner
+    right:
+      image_id: tech_team_group
+      image_alt: Tech team group photo
+    paddingY:
+      desktop: md lg
+
+  - type: features_grid
+    variant: highlight
+    title: The Key to Your Success
+    subtitle: AI-Powered Tools and Unmatched Human Support
+    features:
+      - icon: rocket
+        title: AI-Powered Learning
+        description: Personalized curriculum adapts to your pace and learning style
+      - icon: users
+        title: Expert Mentorship
+        description: 1-on-1 guidance from industry professionals with real-world experience
+      - icon: briefcase
+        title: Career Support
+        description: Job placement assistance and interview preparation included
+
+  - type: awards_row
+    title: Important Awards and Top Ratings
+    awards:
+      - rating: 5.0
+        source: Course Report
+      - rating: 4.9
+        source: SwitchUp
+      - label: Best Coding Bootcamp
+        sublabel: 2024 Awards
+
+  - type: footer
+    variant: default
