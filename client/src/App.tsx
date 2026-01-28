@@ -12,11 +12,10 @@ import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import "./i18n";
 
-const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
+const ContentTypeDetail = lazy(() => import("@/pages/ContentTypeDetail"));
 const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
-const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
 const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
@@ -50,17 +49,19 @@ function Router() {
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route
-          path="/en/career-programs/:slug"
-          component={CareerProgramDetail}
-        />
-        <Route
-          path="/es/programas-de-carrera/:slug"
-          component={CareerProgramDetail}
-        />
+        <Route path="/en/career-programs/:slug">
+          {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="en" />}
+        </Route>
+        <Route path="/es/programas-de-carrera/:slug">
+          {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="es" />}
+        </Route>
         <Route path="/landing/:slug" component={LandingDetail} />
-        <Route path="/en/location/:slug" component={LocationDetail} />
-        <Route path="/es/ubicacion/:slug" component={LocationDetail} />
+        <Route path="/en/location/:slug">
+          {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="en" />}
+        </Route>
+        <Route path="/es/ubicacion/:slug">
+          {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="es" />}
+        </Route>
         <Route path="/preview-frame" component={PreviewFrame} />
         <Route
           path="/private/component-showcase"
