@@ -557,7 +557,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
     }
   }, [contentType, slug, locale, sections, toast]);
 
-  return (
+  const isMobilePreview = isEditMode && previewBreakpoint === 'mobile';
+  
+  const content = (
     <>
       <AddSectionButton
         insertIndex={0}
@@ -632,4 +634,21 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
       })}
     </>
   );
+  
+  if (isMobilePreview) {
+    return (
+      <div className="flex justify-center bg-muted/50 min-h-screen py-8">
+        <div 
+          className="w-[375px] bg-background shadow-2xl rounded-lg overflow-hidden border"
+          style={{ maxHeight: 'calc(100vh - 4rem)' }}
+        >
+          <div className="overflow-y-auto h-full">
+            {content}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  return content;
 }

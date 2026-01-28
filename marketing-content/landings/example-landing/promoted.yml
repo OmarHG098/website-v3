@@ -64,7 +64,7 @@ sections:
         - icon: code
           text: Interactive Exercises
           count: "2"
-        - icon: briefcase
+        - icon: IconSettings
           text: Interactive Projects
           count: "8"
         - icon: robot
@@ -73,6 +73,9 @@ sections:
           text: Workshops every week
         - icon: IconHeart
           text: Community Gatherings.
+        - icon: IconBook
+          text: Texto de prueba
+          count: "0"
     paddingY:
       desktop: none lg
     marginY:
