@@ -31,7 +31,7 @@
       // ============================================================================
 
       type ChangeFreq = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-      type EntryType = "static" | "landing" | "location" | "template_page";
+      type EntryType = "static" | "program" | "landing" | "location" | "template_page";
 
       interface CanonicalSitemapEntry {
         loc: string;
@@ -60,6 +60,13 @@
         priority?: number;
         change_frequency?: ChangeFreq;
         redirects?: string[];
+      }
+
+      interface AvailableProgram {
+        slug: string;
+        locale: string;
+        title: string;
+        meta: ContentMeta;
       }
 
       interface AvailableLanding {
@@ -113,6 +120,35 @@
         } catch (error) {
           console.error(`Error loading ${contentType}/${slug}/${localeOrVariant}:`, error);
           return null;
+        }
+      }
+
+      function getAvailablePrograms(): AvailableProgram[] {
+        try {
+          const programs: AvailableProgram[] = [];
+          const slugs = listContentSlugs("programs");
+
+          for (const slug of slugs) {
+            const locales = getAvailableLocalesOrVariants("programs", slug);
+
+            for (const locale of locales) {
+              const merged = loadMergedContent("programs", slug, locale);
+              if (!merged) continue;
+
+              const meta = (merged.meta as ContentMeta) || {};
+              programs.push({
+                slug: (merged.slug as string) || slug,
+                locale,
+                title: meta.page_title || (merged.title as string) || slug,
+                meta,
+              });
+            }
+          }
+
+          return programs;
+        } catch (error) {
+          console.error("Error scanning programs:", error);
+          return [];
         }
       }
 
@@ -261,6 +297,8 @@
         // Static pages
         const staticPages: Array<{ path: string; label: string; changefreq: ChangeFreq; priority: number }> = [
           { path: "/", label: "Home", changefreq: "weekly", priority: 1.0 },
+          { path: "/en/career-programs", label: "Career Programs (EN)", changefreq: "weekly", priority: 0.9 },
+          { path: "/es/programas-de-carrera", label: "Programas de Carrera (ES)", changefreq: "weekly", priority: 0.9 },
         ];
 
         for (const page of staticPages) {
@@ -271,6 +309,29 @@
             priority: page.priority,
             label: page.label,
             type: "static",
+          });
+        }
+
+        // Dynamic career program pages
+        const programs = getAvailablePrograms();
+        for (const program of programs) {
+          if (!shouldIndex(program.meta.robots)) {
+            console.log(`[Sitemap] Skipping noindex program: ${program.slug} (${program.locale})`);
+            continue;
+          }
+
+          const url = program.locale === "es"
+            ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
+            : `${getBaseUrl()}/en/career-programs/${program.slug}`;
+
+          entries.push({
+            loc: url,
+            lastmod: today,
+            changefreq: program.meta.change_frequency || "weekly",
+            priority: program.meta.priority || 0.8,
+            label: `${program.title} (${formatLocaleLabel(program.locale)})`,
+            type: "program",
+            locale: program.locale,
           });
         }
 
