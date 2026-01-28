@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "5a1aeb7f2d447c0ddce44a9896fdd789574a8c90",
-  "lastSyncedAt": "2026-01-28T20:50:27.077Z",
+  "lastSyncedCommit": "b21c45a436fb69e6b35c6a031b20f2cbf1b2e288",
+  "lastSyncedAt": "2026-01-28T22:06:22.765Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -53,11 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "fefe9cba4da506ea334018a63ed88e4132ff7199cc7ad7046ab611884a4d20fe",
-      "lastModified": 1769635921854.1104,
-      "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
-      "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-01-28T21:32:01.855Z"
+      "sha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
+      "lastModified": 1769637981999.5742,
+      "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -690,9 +688,9 @@
       "remoteSha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e"
     },
     "marketing-content/pages/outcomes/en.yml": {
-      "sha": "9a6f5f19dc73cd5ae91d3be792600e129eb608d706b1b9f7af8c3b6ccfcb3ae3",
-      "lastModified": 1769439700276.6401,
-      "remoteSha": "9a6f5f19dc73cd5ae91d3be792600e129eb608d706b1b9f7af8c3b6ccfcb3ae3"
+      "sha": "94092a44808249ec9f09e850c8abfde1bdd171c55572d1eb5cba5f8ea9d2d6ce",
+      "lastModified": 1769637982241.574,
+      "remoteSha": "94092a44808249ec9f09e850c8abfde1bdd171c55572d1eb5cba5f8ea9d2d6ce"
     },
     "marketing-content/pages/outcomes/es.yml": {
       "sha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d",
@@ -705,9 +703,9 @@
       "remoteSha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "47210946e88192268ad3bdd37c624df0c64001982a41c6f2fc37c6c752b4e91f",
-      "lastModified": 1769633426857.9648,
-      "remoteSha": "47210946e88192268ad3bdd37c624df0c64001982a41c6f2fc37c6c752b4e91f"
+      "sha": "29a9a6eeef7558101661f2cf351c6187c3ad208f878500992f501cf52841226e",
+      "lastModified": 1769637982541.5737,
+      "remoteSha": "29a9a6eeef7558101661f2cf351c6187c3ad208f878500992f501cf52841226e"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
