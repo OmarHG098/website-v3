@@ -1669,6 +1669,283 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Check if a slug is available for a given content type
+  app.get("/api/content/check-slug", (req, res) => {
+    const { type, slug } = req.query;
+    
+    if (!type || !slug || typeof type !== 'string' || typeof slug !== 'string') {
+      res.status(400).json({ error: "Missing required query params: type, slug" });
+      return;
+    }
+    
+    const validTypes = ['location', 'page', 'program'];
+    if (!validTypes.includes(type)) {
+      res.status(400).json({ error: `Invalid type. Must be one of: ${validTypes.join(', ')}` });
+      return;
+    }
+    
+    // Map type to folder name
+    const folderMap: Record<string, string> = {
+      location: 'locations',
+      page: 'pages',
+      program: 'programs',
+    };
+    
+    const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], slug);
+    const exists = fs.existsSync(folderPath);
+    
+    res.json({ available: !exists, slug, type });
+  });
+
+  // Create new content (location/page/program)
+  app.post("/api/content/create", async (req, res) => {
+    try {
+      // Same auth check as content edit
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          },
+        );
+
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to create content" });
+          return;
+        }
+      }
+
+      const { type, slug, title } = req.body;
+      
+      if (!type || !slug || !title) {
+        res.status(400).json({ error: "Missing required fields: type, slug, title" });
+        return;
+      }
+
+      const validTypes = ['location', 'page', 'program'];
+      if (!validTypes.includes(type)) {
+        res.status(400).json({ error: `Invalid type. Must be one of: ${validTypes.join(', ')}` });
+        return;
+      }
+
+      // Validate slug format
+      const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+      if (!slugRegex.test(slug)) {
+        res.status(400).json({ error: "Invalid slug format. Use lowercase letters, numbers, and hyphens only." });
+        return;
+      }
+
+      // Map type to folder name
+      const folderMap: Record<string, string> = {
+        location: 'locations',
+        page: 'pages',
+        program: 'programs',
+      };
+
+      const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], slug);
+      
+      // Check if folder already exists
+      if (fs.existsSync(folderPath)) {
+        res.status(409).json({ error: `A ${type} with slug "${slug}" already exists` });
+        return;
+      }
+
+      // Create folder
+      fs.mkdirSync(folderPath, { recursive: true });
+
+      // Create starter YAML files based on type
+      let commonYml: string;
+      let enYml: string;
+      let esYml: string;
+
+      if (type === 'page') {
+        commonYml = `# Common properties shared across all language variants
+slug: "${slug}"
+template: "default"
+title: "${title}"
+
+meta:
+  robots: "index, follow"
+  priority: 0.8
+  change_frequency: "weekly"
+
+schema:
+  include:
+    - "organization"
+    - "website"
+`;
+
+        enYml = `slug: ${slug}
+template: default
+title: ${title}
+meta:
+  page_title: ${title} | 4Geeks Academy
+  description: ${title} - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /${slug}
+sections:
+  - type: hero
+    variant: default
+    title: ${title}
+    subtitle: Welcome
+    description: Add your content here.
+`;
+
+        esYml = `slug: ${slug}
+template: default
+title: ${title}
+meta:
+  page_title: ${title} | 4Geeks Academy
+  description: ${title} - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /${slug}
+sections:
+  - type: hero
+    variant: default
+    title: ${title}
+    subtitle: Bienvenido
+    description: Agrega tu contenido aquí.
+`;
+      } else if (type === 'program') {
+        commonYml = `# Common properties shared across all variants
+slug: ${slug}
+title: ${title}
+
+meta:
+  robots: index, follow
+  priority: 0.9
+  change_frequency: weekly
+
+schema:
+  include:
+    - organization
+    - website
+`;
+
+        enYml = `slug: ${slug}
+title: ${title}
+meta:
+  page_title: ${title} | 4Geeks Academy
+  description: Learn ${title} at 4Geeks Academy. Become job-ready with our intensive program.
+  redirects:
+    - /${slug}
+sections:
+  - type: hero
+    variant: default
+    title: ${title}
+    subtitle: Start Your Career
+    description: Add your program description here.
+`;
+
+        esYml = `slug: ${slug}
+title: ${title}
+meta:
+  page_title: ${title} | 4Geeks Academy
+  description: Aprende ${title} en 4Geeks Academy. Prepárate para el trabajo con nuestro programa intensivo.
+  redirects:
+    - /${slug}
+sections:
+  - type: hero
+    variant: default
+    title: ${title}
+    subtitle: Inicia Tu Carrera
+    description: Agrega la descripción de tu programa aquí.
+`;
+      } else {
+        // location
+        commonYml = `slug: ${slug}
+name: ${title}
+city: ${title}
+country: Unknown
+country_code: XX
+latitude: 0
+longitude: 0
+region: online
+default_language: en
+timezone: UTC
+visibility: listed
+phone: ""
+address: ""
+available_programs:
+  - "full-stack"
+
+schema:
+  include:
+    - organization
+    - website
+`;
+
+        enYml = `slug: ${slug}
+meta:
+  page_title: ${title} Coding Bootcamp | 4Geeks Academy
+  description: Join 4Geeks Academy in ${title}. Learn to code with our immersive bootcamp programs.
+sections:
+  - type: hero
+    variant: default
+    title: Coding Bootcamp in ${title}
+    subtitle: Learn to Code
+    description: Add your location description here.
+`;
+
+        esYml = `slug: ${slug}
+meta:
+  page_title: Bootcamp de Programación en ${title} | 4Geeks Academy
+  description: Únete a 4Geeks Academy en ${title}. Aprende a programar con nuestros programas de bootcamp.
+sections:
+  - type: hero
+    variant: default
+    title: Bootcamp de Programación en ${title}
+    subtitle: Aprende a Programar
+    description: Agrega la descripción de tu ubicación aquí.
+`;
+      }
+
+      // Write files
+      fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+      fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
+      fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+
+      // Clear sitemap cache so the new content appears
+      clearSitemapCache();
+
+      res.json({ 
+        success: true, 
+        slug,
+        type,
+        folder: `marketing-content/${folderMap[type]}/${slug}`,
+        files: ['_common.yml', 'en.yml', 'es.yml'],
+      });
+    } catch (error) {
+      console.error("Content create error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.get("/api/content/:contentType/:slug", (req, res) => {
     const { contentType, slug } = req.params;
     const locale = normalizeLocale(req.query.locale as string);
