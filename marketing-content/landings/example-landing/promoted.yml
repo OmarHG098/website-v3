@@ -78,12 +78,10 @@ sections:
     marginY:
       desktop: none md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
-    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process.
-    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    description: We've developed tools to keep you motivated, prevent you from getting stuck, and accelerate your learning process. Test
     features:
       - icon: Robot
         title: Learn with AI
@@ -94,6 +92,7 @@ sections:
       - icon: Users
         title: Learn with the community
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
+    video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
   - type: two_column
     version: v1.0
     proportions:
