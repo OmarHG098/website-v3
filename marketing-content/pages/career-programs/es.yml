@@ -1,0 +1,57 @@
+# Career Programs Listing Page - Spanish
+
+meta:
+  page_title: "Programas de Carrera | 4Geeks Academy"
+  description: "Explora nuestros programas de carrera en programación, ciencia de datos, IA y ciberseguridad. Inicia tu carrera tecnológica con formación práctica y apoyo en colocación laboral."
+  redirects:
+    - "/programas-de-carrera"
+    - "/cursos"
+    - "/programas"
+
+page_content:
+  hero_title: "Programas de Carrera"
+  hero_subtitle: "Inicia tu carrera tecnológica con nuestros bootcamps líderes en la industria"
+  search_placeholder: "Buscar programas..."
+  difficulty_label: "Nivel"
+  difficulty_all: "Todos los Niveles"
+  difficulty_beginner: "Principiante"
+  difficulty_intermediate: "Intermedio"
+  difficulty_advanced: "Avanzado"
+  no_results: "No se encontraron programas que coincidan con tu búsqueda."
+
+courses:
+  - id: "1"
+    title: "Desarrollo Full Stack con IA"
+    description: "Nuestros graduados ven un aumento salarial promedio del 150%. Aprende las habilidades que demandan los mejores salarios en tecnología - con planes de pago desde $150/mes."
+    duration: "18 semanas"
+    difficulty: "Intermedio"
+    lessons: 48
+    link: "full-stack"
+  - id: "2"
+    title: "Ciencia de Datos y Machine Learning"
+    description: "Entra en uno de los campos de mayor crecimiento y mejor pago en tecnología. Aprende a analizar datos, construir modelos predictivos y usar herramientas de IA para resolver problemas reales."
+    duration: "16 semanas"
+    difficulty: "Intermedio"
+    lessons: 64
+    link: "data-science-ml"
+  - id: "3"
+    title: "Especialista en Ciberseguridad"
+    description: "Inicia una carrera bien pagada en uno de los campos más demandados en tecnología. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico integrado con IA."
+    duration: "16 semanas"
+    difficulty: "Intermedio"
+    lessons: 48
+    link: "cybersecurity"
+  - id: "4"
+    title: "Ingeniería de IA"
+    description: "Conviértete en Ingeniero de IA en 20 semanas con mentoría ilimitada 1:1, orientación profesional y proyectos prácticos. Inicia una carrera con salarios iniciales de $95K-$135K."
+    duration: "20 semanas"
+    difficulty: "Avanzado"
+    lessons: 72
+    link: "ai-engineering"
+  - id: "5"
+    title: "IA para Profesionales"
+    description: "Obtén las habilidades de IA para mantenerte competitivo y avanzar en tu carrera en solo 6 semanas. Aprende a aplicar IA en el trabajo para mayor eficiencia, creatividad e impacto."
+    duration: "6 semanas"
+    difficulty: "Principiante"
+    lessons: 12
+    link: "ai-for-professionals"
