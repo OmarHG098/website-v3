@@ -1740,10 +1740,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      const { type, slug, title } = req.body;
+      const { type, slugEn, slugEs, title } = req.body;
       
-      if (!type || !slug || !title) {
-        res.status(400).json({ error: "Missing required fields: type, slug, title" });
+      // Support both old format (slug) and new format (slugEn/slugEs)
+      const enSlug = slugEn || req.body.slug;
+      const esSlug = slugEs || req.body.slug;
+      
+      if (!type || !enSlug || !esSlug || !title) {
+        res.status(400).json({ error: "Missing required fields: type, slugEn, slugEs, title" });
         return;
       }
 
@@ -1753,10 +1757,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      // Validate slug format
+      // Validate slug format for both
       const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-      if (!slugRegex.test(slug)) {
-        res.status(400).json({ error: "Invalid slug format. Use lowercase letters, numbers, and hyphens only." });
+      if (!slugRegex.test(enSlug)) {
+        res.status(400).json({ error: "Invalid English slug format. Use lowercase letters, numbers, and hyphens only." });
+        return;
+      }
+      if (!slugRegex.test(esSlug)) {
+        res.status(400).json({ error: "Invalid Spanish slug format. Use lowercase letters, numbers, and hyphens only." });
         return;
       }
 
@@ -1767,11 +1775,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         program: 'programs',
       };
 
-      const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], slug);
+      // Use English slug for folder name (primary identifier)
+      const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], enSlug);
       
       // Check if folder already exists
       if (fs.existsSync(folderPath)) {
-        res.status(409).json({ error: `A ${type} with slug "${slug}" already exists` });
+        res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
         return;
       }
 
@@ -1785,7 +1794,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (type === 'page') {
         commonYml = `# Common properties shared across all language variants
-slug: "${slug}"
+slug: "${enSlug}"
 template: "default"
 title: "${title}"
 
@@ -1800,14 +1809,14 @@ schema:
     - "website"
 `;
 
-        enYml = `slug: ${slug}
+        enYml = `slug: ${enSlug}
 template: default
 title: ${title}
 meta:
   page_title: ${title} | 4Geeks Academy
   description: ${title} - Learn more about this topic at 4Geeks Academy.
   redirects:
-    - /${slug}
+    - /${enSlug}
 sections:
   - type: hero
     variant: default
@@ -1816,14 +1825,14 @@ sections:
     description: Add your content here.
 `;
 
-        esYml = `slug: ${slug}
+        esYml = `slug: ${esSlug}
 template: default
 title: ${title}
 meta:
   page_title: ${title} | 4Geeks Academy
   description: ${title} - Aprende más sobre este tema en 4Geeks Academy.
   redirects:
-    - /${slug}
+    - /${esSlug}
 sections:
   - type: hero
     variant: default
@@ -1833,7 +1842,7 @@ sections:
 `;
       } else if (type === 'program') {
         commonYml = `# Common properties shared across all variants
-slug: ${slug}
+slug: ${enSlug}
 title: ${title}
 
 meta:
@@ -1847,13 +1856,13 @@ schema:
     - website
 `;
 
-        enYml = `slug: ${slug}
+        enYml = `slug: ${enSlug}
 title: ${title}
 meta:
   page_title: ${title} | 4Geeks Academy
   description: Learn ${title} at 4Geeks Academy. Become job-ready with our intensive program.
   redirects:
-    - /${slug}
+    - /${enSlug}
 sections:
   - type: hero
     variant: default
@@ -1862,13 +1871,13 @@ sections:
     description: Add your program description here.
 `;
 
-        esYml = `slug: ${slug}
+        esYml = `slug: ${esSlug}
 title: ${title}
 meta:
   page_title: ${title} | 4Geeks Academy
   description: Aprende ${title} en 4Geeks Academy. Prepárate para el trabajo con nuestro programa intensivo.
   redirects:
-    - /${slug}
+    - /${esSlug}
 sections:
   - type: hero
     variant: default
@@ -1878,7 +1887,7 @@ sections:
 `;
       } else {
         // location
-        commonYml = `slug: ${slug}
+        commonYml = `slug: ${enSlug}
 name: ${title}
 city: ${title}
 country: Unknown
@@ -1900,7 +1909,7 @@ schema:
     - website
 `;
 
-        enYml = `slug: ${slug}
+        enYml = `slug: ${enSlug}
 meta:
   page_title: ${title} Coding Bootcamp | 4Geeks Academy
   description: Join 4Geeks Academy in ${title}. Learn to code with our immersive bootcamp programs.
@@ -1912,7 +1921,7 @@ sections:
     description: Add your location description here.
 `;
 
-        esYml = `slug: ${slug}
+        esYml = `slug: ${esSlug}
 meta:
   page_title: Bootcamp de Programación en ${title} | 4Geeks Academy
   description: Únete a 4Geeks Academy en ${title}. Aprende a programar con nuestros programas de bootcamp.
@@ -1935,9 +1944,10 @@ sections:
 
       res.json({ 
         success: true, 
-        slug,
+        slugEn: enSlug,
+        slugEs: esSlug,
         type,
-        folder: `marketing-content/${folderMap[type]}/${slug}`,
+        folder: `marketing-content/${folderMap[type]}/${enSlug}`,
         files: ['_common.yml', 'en.yml', 'es.yml'],
       });
     } catch (error) {

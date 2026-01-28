@@ -348,8 +348,12 @@ export function DebugBubble() {
   const [createContentModalOpen, setCreateContentModalOpen] = useState(false);
   const [createContentType, setCreateContentType] = useState<'location' | 'page' | 'program'>('page');
   const [createContentTitle, setCreateContentTitle] = useState("");
-  const [createContentSlug, setCreateContentSlug] = useState("");
-  const [createContentSlugStatus, setCreateContentSlugStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [createContentSlugEn, setCreateContentSlugEn] = useState("");
+  const [createContentSlugEs, setCreateContentSlugEs] = useState("");
+  const [createContentSlugEnStatus, setCreateContentSlugEnStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [createContentSlugEsStatus, setCreateContentSlugEsStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [editingSlugEn, setEditingSlugEn] = useState(false);
+  const [editingSlugEs, setEditingSlugEs] = useState(false);
   const [isCreatingContent, setIsCreatingContent] = useState(false);
   
   // Session check state
@@ -2519,8 +2523,12 @@ export function DebugBubble() {
         setCreateContentModalOpen(open);
         if (!open) {
           setCreateContentTitle("");
-          setCreateContentSlug("");
-          setCreateContentSlugStatus('idle');
+          setCreateContentSlugEn("");
+          setCreateContentSlugEs("");
+          setCreateContentSlugEnStatus('idle');
+          setCreateContentSlugEsStatus('idle');
+          setEditingSlugEn(false);
+          setEditingSlugEs(false);
           setCreateContentType('page');
         }
       }}>
@@ -2542,14 +2550,20 @@ export function DebugBubble() {
                 value={createContentType} 
                 onValueChange={(v) => {
                   setCreateContentType(v as 'location' | 'page' | 'program');
-                  if (createContentSlug) {
-                    setCreateContentSlugStatus('checking');
-                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlug}`)
+                  // Re-validate both slugs with new type
+                  if (createContentSlugEn) {
+                    setCreateContentSlugEnStatus('checking');
+                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
                       .then(res => res.json())
-                      .then(data => {
-                        setCreateContentSlugStatus(data.available ? 'available' : 'taken');
-                      })
-                      .catch(() => setCreateContentSlugStatus('idle'));
+                      .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                      .catch(() => setCreateContentSlugEnStatus('idle'));
+                  }
+                  if (createContentSlugEs) {
+                    setCreateContentSlugEsStatus('checking');
+                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
+                      .then(res => res.json())
+                      .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                      .catch(() => setCreateContentSlugEsStatus('idle'));
                   }
                 }}
               >
@@ -2579,17 +2593,23 @@ export function DebugBubble() {
                     .replace(/\s+/g, '-')
                     .replace(/-+/g, '-')
                     .replace(/^-|-$/g, '');
-                  setCreateContentSlug(slug);
+                  setCreateContentSlugEn(slug);
+                  setCreateContentSlugEs(slug);
                   if (slug) {
-                    setCreateContentSlugStatus('checking');
-                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}`)
+                    // Validate both slugs
+                    setCreateContentSlugEnStatus('checking');
+                    setCreateContentSlugEsStatus('checking');
+                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
                       .then(res => res.json())
-                      .then(data => {
-                        setCreateContentSlugStatus(data.available ? 'available' : 'taken');
-                      })
-                      .catch(() => setCreateContentSlugStatus('idle'));
+                      .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                      .catch(() => setCreateContentSlugEnStatus('idle'));
+                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
+                      .then(res => res.json())
+                      .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                      .catch(() => setCreateContentSlugEsStatus('idle'));
                   } else {
-                    setCreateContentSlugStatus('idle');
+                    setCreateContentSlugEnStatus('idle');
+                    setCreateContentSlugEsStatus('idle');
                   }
                 }}
                 placeholder="e.g., Career Development Guide"
@@ -2598,64 +2618,146 @@ export function DebugBubble() {
               />
             </div>
             
-            <div className="space-y-2">
-              <label className="text-sm font-medium">URL Slug</label>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={createContentSlug}
-                  onChange={(e) => {
-                    const slug = e.target.value
-                      .toLowerCase()
-                      .replace(/[^a-z0-9-]/g, '')
-                      .replace(/-+/g, '-');
-                    setCreateContentSlug(slug);
-                    if (slug) {
-                      setCreateContentSlugStatus('checking');
-                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}`)
-                        .then(res => res.json())
-                        .then(data => {
-                          setCreateContentSlugStatus(data.available ? 'available' : 'taken');
-                        })
-                        .catch(() => setCreateContentSlugStatus('idle'));
-                    } else {
-                      setCreateContentSlugStatus('idle');
-                    }
-                  }}
-                  placeholder="e.g., career-development-guide"
-                  className="w-full px-3 py-2 pr-10 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring font-mono"
-                  data-testid="input-content-slug"
-                />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  {createContentSlugStatus === 'checking' && (
-                    <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
-                  )}
-                  {createContentSlugStatus === 'available' && (
-                    <IconCheck className="h-4 w-4 text-green-600" />
-                  )}
-                  {createContentSlugStatus === 'taken' && (
-                    <IconX className="h-4 w-4 text-red-600" />
-                  )}
-                </div>
-              </div>
-              {createContentSlugStatus === 'taken' && (
-                <p className="text-xs text-red-600">This slug is already taken. Please choose a different one.</p>
-              )}
-            </div>
-            
-            {createContentSlug && createContentSlugStatus === 'available' && (
+            {createContentSlugEn && (
               <div className="space-y-3 p-3 bg-muted/50 rounded-md">
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <p className="text-xs font-medium text-muted-foreground">URLs that will be created:</p>
-                  <div className="space-y-0.5">
-                    <code className="block text-xs bg-background px-2 py-1 rounded">/en/{createContentSlug}</code>
-                    <code className="block text-xs bg-background px-2 py-1 rounded">/es/{createContentSlug}</code>
+                  
+                  {/* English URL Row */}
+                  <div className="flex items-center gap-2">
+                    {editingSlugEn ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">/en/</span>
+                        <input
+                          type="text"
+                          value={createContentSlugEn}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEn(slug);
+                            if (slug) {
+                              setCreateContentSlugEnStatus('checking');
+                              fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEnStatus('idle'));
+                            } else {
+                              setCreateContentSlugEnStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-en"
+                          autoFocus
+                          onBlur={() => setEditingSlugEn(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEn(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEn(true)}
+                        data-testid="url-preview-en"
+                      >
+                        /en/{createContentSlugEn}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEn(!editingSlugEn)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit English slug"
+                      data-testid="button-edit-slug-en"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEnStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEnStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEnStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
                   </div>
+                  {createContentSlugEnStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">English slug is taken</p>
+                  )}
+                  
+                  {/* Spanish URL Row */}
+                  <div className="flex items-center gap-2">
+                    {editingSlugEs ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">/es/</span>
+                        <input
+                          type="text"
+                          value={createContentSlugEs}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEs(slug);
+                            if (slug) {
+                              setCreateContentSlugEsStatus('checking');
+                              fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEsStatus('idle'));
+                            } else {
+                              setCreateContentSlugEsStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-es"
+                          autoFocus
+                          onBlur={() => setEditingSlugEs(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEs(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEs(true)}
+                        data-testid="url-preview-es"
+                      >
+                        /es/{createContentSlugEs}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEs(!editingSlugEs)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit Spanish slug"
+                      data-testid="button-edit-slug-es"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEsStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEsStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEsStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                  </div>
+                  {createContentSlugEsStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">Spanish slug is taken</p>
+                  )}
                 </div>
+                
                 <div className="space-y-1">
                   <p className="text-xs font-medium text-muted-foreground">Files that will be created:</p>
                   <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
-                    <div>marketing-content/{createContentType === 'location' ? 'locations' : createContentType === 'program' ? 'programs' : 'pages'}/{createContentSlug}/</div>
+                    <div>marketing-content/{createContentType === 'location' ? 'locations' : createContentType === 'program' ? 'programs' : 'pages'}/{createContentSlugEn}/</div>
                     <div className="pl-4">├── _common.yml</div>
                     <div className="pl-4">├── en.yml</div>
                     <div className="pl-4">└── es.yml</div>
@@ -2675,7 +2777,9 @@ export function DebugBubble() {
             </Button>
             <Button
               onClick={async () => {
-                if (!createContentSlug || createContentSlugStatus !== 'available') return;
+                if (!createContentSlugEn || !createContentSlugEs || 
+                    createContentSlugEnStatus !== 'available' || 
+                    createContentSlugEsStatus !== 'available') return;
                 
                 setIsCreatingContent(true);
                 try {
@@ -2688,8 +2792,9 @@ export function DebugBubble() {
                     },
                     body: JSON.stringify({
                       type: createContentType,
-                      slug: createContentSlug,
-                      title: createContentTitle || createContentSlug,
+                      slugEn: createContentSlugEn,
+                      slugEs: createContentSlugEs,
+                      title: createContentTitle || createContentSlugEn,
                     }),
                   });
                   
@@ -2698,12 +2803,14 @@ export function DebugBubble() {
                   if (response.ok && data.success) {
                     toast({
                       title: "Content created",
-                      description: `Created new ${createContentType} at /en/${createContentSlug}`,
+                      description: `Created new ${createContentType} at /en/${createContentSlugEn}`,
                     });
                     setCreateContentModalOpen(false);
                     setCreateContentTitle("");
-                    setCreateContentSlug("");
-                    setCreateContentSlugStatus('idle');
+                    setCreateContentSlugEn("");
+                    setCreateContentSlugEs("");
+                    setCreateContentSlugEnStatus('idle');
+                    setCreateContentSlugEsStatus('idle');
                     
                     // Refresh sitemap
                     setSitemapLoading(true);
@@ -2715,7 +2822,7 @@ export function DebugBubble() {
                     setSitemapLoading(false);
                     
                     // Navigate to the new page
-                    window.location.href = `/en/${createContentSlug}`;
+                    window.location.href = `/en/${createContentSlugEn}`;
                   } else {
                     toast({
                       title: "Failed to create content",
@@ -2734,7 +2841,10 @@ export function DebugBubble() {
                   setIsCreatingContent(false);
                 }
               }}
-              disabled={!createContentSlug || createContentSlugStatus !== 'available' || isCreatingContent}
+              disabled={!createContentSlugEn || !createContentSlugEs || 
+                        createContentSlugEnStatus !== 'available' || 
+                        createContentSlugEsStatus !== 'available' || 
+                        isCreatingContent}
               data-testid="button-confirm-create-content"
             >
               {isCreatingContent ? (
