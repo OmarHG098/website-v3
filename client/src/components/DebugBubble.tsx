@@ -347,7 +347,7 @@ export function DebugBubble() {
   
   // Create content modal state
   const [createContentModalOpen, setCreateContentModalOpen] = useState(false);
-  const [createContentType, setCreateContentType] = useState<'location' | 'page' | 'program'>('page');
+  const [createContentType, setCreateContentType] = useState<'location' | 'page' | 'program' | 'landing'>('page');
   const [createContentTitle, setCreateContentTitle] = useState("");
   const [createContentSlugEn, setCreateContentSlugEn] = useState("");
   const [createContentSlugEs, setCreateContentSlugEs] = useState("");
@@ -356,6 +356,7 @@ export function DebugBubble() {
   const [editingSlugEn, setEditingSlugEn] = useState(false);
   const [editingSlugEs, setEditingSlugEs] = useState(false);
   const [isCreatingContent, setIsCreatingContent] = useState(false);
+  const [createLandingLocale, setCreateLandingLocale] = useState<'en' | 'es'>('en');
   
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
@@ -2532,7 +2533,7 @@ export function DebugBubble() {
               Create New Content
             </DialogTitle>
             <DialogDescription>
-              Create a new page, location, or program with starter YAML files.
+              Create a new page, location, program, or landing with starter YAML files.
             </DialogDescription>
           </DialogHeader>
           
@@ -2542,21 +2543,32 @@ export function DebugBubble() {
               <Select 
                 value={createContentType} 
                 onValueChange={(v) => {
-                  setCreateContentType(v as 'location' | 'page' | 'program');
-                  // Re-validate both slugs with new type
-                  if (createContentSlugEn) {
-                    setCreateContentSlugEnStatus('checking');
-                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
-                      .then(res => res.json())
-                      .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
-                      .catch(() => setCreateContentSlugEnStatus('idle'));
-                  }
-                  if (createContentSlugEs) {
-                    setCreateContentSlugEsStatus('checking');
-                    fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
-                      .then(res => res.json())
-                      .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
-                      .catch(() => setCreateContentSlugEsStatus('idle'));
+                  setCreateContentType(v as 'location' | 'page' | 'program' | 'landing');
+                  // Re-validate slugs with new type (skip for landing - uses different validation)
+                  if (v !== 'landing') {
+                    if (createContentSlugEn) {
+                      setCreateContentSlugEnStatus('checking');
+                      fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                    }
+                    if (createContentSlugEs) {
+                      setCreateContentSlugEsStatus('checking');
+                      fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEsStatus('idle'));
+                    }
+                  } else {
+                    // For landings, validate single slug
+                    if (createContentSlugEn) {
+                      setCreateContentSlugEnStatus('checking');
+                      fetch(`/api/content/check-slug?type=landing&slug=${createContentSlugEn}`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                    }
                   }
                 }}
               >
@@ -2567,6 +2579,7 @@ export function DebugBubble() {
                   <SelectItem value="page">Page</SelectItem>
                   <SelectItem value="program">Program</SelectItem>
                   <SelectItem value="location">Location</SelectItem>
+                  <SelectItem value="landing">Landing</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -2589,17 +2602,26 @@ export function DebugBubble() {
                   setCreateContentSlugEn(slug);
                   setCreateContentSlugEs(slug);
                   if (slug) {
-                    // Validate both slugs
-                    setCreateContentSlugEnStatus('checking');
-                    setCreateContentSlugEsStatus('checking');
-                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
-                      .then(res => res.json())
-                      .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
-                      .catch(() => setCreateContentSlugEnStatus('idle'));
-                    fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
-                      .then(res => res.json())
-                      .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
-                      .catch(() => setCreateContentSlugEsStatus('idle'));
+                    if (createContentType === 'landing') {
+                      // Landings: single slug validation
+                      setCreateContentSlugEnStatus('checking');
+                      fetch(`/api/content/check-slug?type=landing&slug=${slug}`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                    } else {
+                      // Other types: validate both EN/ES slugs
+                      setCreateContentSlugEnStatus('checking');
+                      setCreateContentSlugEsStatus('checking');
+                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEsStatus('idle'));
+                    }
                   } else {
                     setCreateContentSlugEnStatus('idle');
                     setCreateContentSlugEsStatus('idle');
@@ -2611,7 +2633,103 @@ export function DebugBubble() {
               />
             </div>
             
-            {createContentSlugEn && (
+            {createContentSlugEn && createContentType === 'landing' && (
+              <div className="space-y-3 p-3 bg-muted/50 rounded-md">
+                {/* Locale selector for landings */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">Locale:</p>
+                  <Select value={createLandingLocale} onValueChange={(v) => setCreateLandingLocale(v as 'en' | 'es')}>
+                    <SelectTrigger className="w-24" data-testid="select-landing-locale">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                {/* Single slug for landings */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">URL:</p>
+                  <div className="flex items-center gap-2">
+                    {editingSlugEn ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">/landing/</span>
+                        <input
+                          type="text"
+                          value={createContentSlugEn}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEn(slug);
+                            if (slug) {
+                              setCreateContentSlugEnStatus('checking');
+                              fetch(`/api/content/check-slug?type=landing&slug=${slug}`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEnStatus('idle'));
+                            } else {
+                              setCreateContentSlugEnStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-landing"
+                          autoFocus
+                          onBlur={() => setEditingSlugEn(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEn(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEn(true)}
+                        data-testid="url-preview-landing"
+                      >
+                        /landing/{createContentSlugEn}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEn(!editingSlugEn)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit slug"
+                      data-testid="button-edit-slug-landing"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEnStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEnStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEnStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                  </div>
+                  {createContentSlugEnStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">This slug is already taken</p>
+                  )}
+                </div>
+                
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground">Files that will be created:</p>
+                  <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
+                    <div>marketing-content/landings/{createContentSlugEn}/</div>
+                    <div className="pl-4">├── _common.yml</div>
+                    <div className="pl-4">└── promoted.yml</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {createContentSlugEn && createContentType !== 'landing' && (
               <div className="space-y-3 p-3 bg-muted/50 rounded-md">
                 <div className="space-y-2">
                   <p className="text-xs font-medium text-muted-foreground">URLs that will be created:</p>
@@ -2776,59 +2894,116 @@ export function DebugBubble() {
             </Button>
             <Button
               onClick={async () => {
-                if (!createContentSlugEn || !createContentSlugEs || 
-                    createContentSlugEnStatus !== 'available' || 
-                    createContentSlugEsStatus !== 'available') return;
+                // Validation differs for landings vs other types
+                if (createContentType === 'landing') {
+                  if (!createContentSlugEn || createContentSlugEnStatus !== 'available') return;
+                } else {
+                  if (!createContentSlugEn || !createContentSlugEs || 
+                      createContentSlugEnStatus !== 'available' || 
+                      createContentSlugEsStatus !== 'available') return;
+                }
                 
                 setIsCreatingContent(true);
                 try {
                   const token = getDebugToken();
-                  const response = await fetch('/api/content/create', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      ...(token ? { Authorization: `Token ${token}` } : {}),
-                    },
-                    body: JSON.stringify({
-                      type: createContentType,
-                      slugEn: createContentSlugEn,
-                      slugEs: createContentSlugEs,
-                      title: createContentTitle || createContentSlugEn,
-                    }),
-                  });
                   
-                  const data = await response.json();
-                  
-                  if (response.ok && data.success) {
-                    const newUrl = buildContentUrl(createContentType as ContentType, createContentSlugEn, 'en');
-                    toast({
-                      title: "Content created",
-                      description: `Created new ${createContentType} at ${newUrl}`,
+                  // Different endpoint for landings
+                  if (createContentType === 'landing') {
+                    const response = await fetch('/api/content/create-landing', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { Authorization: `Token ${token}` } : {}),
+                      },
+                      body: JSON.stringify({
+                        slug: createContentSlugEn,
+                        locale: createLandingLocale,
+                        title: createContentTitle || createContentSlugEn,
+                      }),
                     });
-                    setCreateContentModalOpen(false);
-                    setCreateContentTitle("");
-                    setCreateContentSlugEn("");
-                    setCreateContentSlugEs("");
-                    setCreateContentSlugEnStatus('idle');
-                    setCreateContentSlugEsStatus('idle');
                     
-                    // Refresh sitemap
-                    setSitemapLoading(true);
-                    const sitemapRes = await fetch('/api/debug/sitemap-urls');
-                    if (sitemapRes.ok) {
-                      const urls = await sitemapRes.json();
-                      setSitemapUrls(urls);
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                      const newUrl = `/landing/${createContentSlugEn}`;
+                      toast({
+                        title: "Landing created",
+                        description: `Created new landing at ${newUrl}`,
+                      });
+                      setCreateContentModalOpen(false);
+                      setCreateContentTitle("");
+                      setCreateContentSlugEn("");
+                      setCreateContentSlugEs("");
+                      setCreateContentSlugEnStatus('idle');
+                      setCreateContentSlugEsStatus('idle');
+                      setCreateLandingLocale('en');
+                      
+                      // Refresh sitemap
+                      setSitemapLoading(true);
+                      const sitemapRes = await fetch('/api/debug/sitemap-urls');
+                      if (sitemapRes.ok) {
+                        const urls = await sitemapRes.json();
+                        setSitemapUrls(urls);
+                      }
+                      setSitemapLoading(false);
+                      
+                      // Navigate to the new landing
+                      window.location.href = newUrl;
+                    } else {
+                      toast({
+                        title: "Failed to create landing",
+                        description: data.error || "An error occurred",
+                        variant: "destructive",
+                      });
                     }
-                    setSitemapLoading(false);
-                    
-                    // Navigate to the new page
-                    window.location.href = newUrl;
                   } else {
-                    toast({
-                      title: "Failed to create content",
-                      description: data.error || "An error occurred",
-                      variant: "destructive",
+                    const response = await fetch('/api/content/create', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { Authorization: `Token ${token}` } : {}),
+                      },
+                      body: JSON.stringify({
+                        type: createContentType,
+                        slugEn: createContentSlugEn,
+                        slugEs: createContentSlugEs,
+                        title: createContentTitle || createContentSlugEn,
+                      }),
                     });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                      const newUrl = buildContentUrl(createContentType as ContentType, createContentSlugEn, 'en');
+                      toast({
+                        title: "Content created",
+                        description: `Created new ${createContentType} at ${newUrl}`,
+                      });
+                      setCreateContentModalOpen(false);
+                      setCreateContentTitle("");
+                      setCreateContentSlugEn("");
+                      setCreateContentSlugEs("");
+                      setCreateContentSlugEnStatus('idle');
+                      setCreateContentSlugEsStatus('idle');
+                      
+                      // Refresh sitemap
+                      setSitemapLoading(true);
+                      const sitemapRes = await fetch('/api/debug/sitemap-urls');
+                      if (sitemapRes.ok) {
+                        const urls = await sitemapRes.json();
+                        setSitemapUrls(urls);
+                      }
+                      setSitemapLoading(false);
+                      
+                      // Navigate to the new page
+                      window.location.href = newUrl;
+                    } else {
+                      toast({
+                        title: "Failed to create content",
+                        description: data.error || "An error occurred",
+                        variant: "destructive",
+                      });
+                    }
                   }
                 } catch (error) {
                   console.error('Error creating content:', error);
@@ -2841,10 +3016,10 @@ export function DebugBubble() {
                   setIsCreatingContent(false);
                 }
               }}
-              disabled={!createContentSlugEn || !createContentSlugEs || 
-                        createContentSlugEnStatus !== 'available' || 
-                        createContentSlugEsStatus !== 'available' || 
-                        isCreatingContent}
+              disabled={
+                isCreatingContent || !createContentSlugEn || createContentSlugEnStatus !== 'available' ||
+                (createContentType !== 'landing' && (!createContentSlugEs || createContentSlugEsStatus !== 'available'))
+              }
               data-testid="button-confirm-create-content"
             >
               {isCreatingContent ? (

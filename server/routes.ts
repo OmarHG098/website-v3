@@ -1678,7 +1678,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const validTypes = ['location', 'page', 'program'];
+    const validTypes = ['location', 'page', 'program', 'landing'];
     if (!validTypes.includes(type)) {
       res.status(400).json({ error: `Invalid type. Must be one of: ${validTypes.join(', ')}` });
       return;
@@ -1689,9 +1689,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       location: 'locations',
       page: 'pages',
       program: 'programs',
+      landing: 'landings',
     };
     
     const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], slug);
+    
+    // For landings, also check that it's not a reserved name (starts with _)
+    if (type === 'landing' && slug.startsWith('_')) {
+      res.json({ available: false, slug, type, reason: "Reserved prefix" });
+      return;
+    }
+    
     const exists = fs.existsSync(folderPath);
     
     res.json({ available: !exists, slug, type });
@@ -1922,6 +1930,118 @@ sections: []
       });
     } catch (error) {
       console.error("Content create error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Create new landing page
+  app.post("/api/content/create-landing", async (req, res) => {
+    try {
+      // Same auth check as content edit
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          },
+        );
+
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to create content" });
+          return;
+        }
+      }
+
+      const { slug, locale, title } = req.body;
+      
+      if (!slug || !title) {
+        res.status(400).json({ error: "Missing required fields: slug, title" });
+        return;
+      }
+
+      const validLocales = ['en', 'es'];
+      const landingLocale = locale && validLocales.includes(locale) ? locale : 'en';
+
+      // Validate slug format
+      const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+      if (!slugRegex.test(slug)) {
+        res.status(400).json({ error: "Invalid slug format. Use lowercase letters, numbers, and hyphens only." });
+        return;
+      }
+
+      // Don't allow reserved prefixes
+      if (slug.startsWith('_')) {
+        res.status(400).json({ error: "Slug cannot start with underscore (reserved)" });
+        return;
+      }
+
+      const folderPath = path.join(process.cwd(), 'marketing-content', 'landings', slug);
+      
+      // Check if folder already exists
+      if (fs.existsSync(folderPath)) {
+        res.status(409).json({ error: `A landing with slug "${slug}" already exists` });
+        return;
+      }
+
+      // Create folder
+      fs.mkdirSync(folderPath, { recursive: true });
+
+      // Create starter YAML files for landings (_common.yml and promoted.yml)
+      const commonYml = `slug: "${slug}"
+locale: "${landingLocale}"
+title: "${title}"
+
+meta:
+  page_title: "${title} | 4Geeks Academy"
+  description: "${title} - Learn more at 4Geeks Academy."
+  robots: "index, follow"
+`;
+
+      const promotedYml = `# Promoted variant - customize for marketing campaigns
+sections: []
+`;
+
+      // Write files
+      fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+      fs.writeFileSync(path.join(folderPath, 'promoted.yml'), promotedYml);
+
+      // Clear sitemap cache so the new content appears
+      clearSitemapCache();
+
+      res.json({ 
+        success: true, 
+        slug,
+        locale: landingLocale,
+        folder: `marketing-content/landings/${slug}`,
+        files: ['_common.yml', 'promoted.yml'],
+      });
+    } catch (error) {
+      console.error("Landing create error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
