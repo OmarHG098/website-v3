@@ -2637,6 +2637,7 @@ export function DebugBubble() {
                           onChange={(e) => {
                             const slug = e.target.value
                               .toLowerCase()
+                              .replace(/\s+/g, '-')
                               .replace(/[^a-z0-9-]/g, '')
                               .replace(/-+/g, '-');
                             setCreateContentSlugEn(slug);
@@ -2704,6 +2705,7 @@ export function DebugBubble() {
                           onChange={(e) => {
                             const slug = e.target.value
                               .toLowerCase()
+                              .replace(/\s+/g, '-')
                               .replace(/[^a-z0-9-]/g, '')
                               .replace(/-+/g, '-');
                             setCreateContentSlugEs(slug);
