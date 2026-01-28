@@ -13,15 +13,9 @@ import { usePageTracking } from "@/hooks/usePageTracking";
 import "./i18n";
 
 const ContentTypeDetail = lazy(() => import("@/pages/ContentTypeDetail"));
-const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
-const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
-const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
-const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
-const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
-const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
-const MoleculesShowcase = lazy(() => import("@/pages/MoleculesShowcase"));
+const PrivateRouter = lazy(() => import("@/pages/PrivateRouter"));
 const TemplatePage = lazy(() => import("@/pages/page"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
 const TermsPage = lazy(() => import("@/pages/TermsPage"));
@@ -63,32 +57,7 @@ function Router() {
           {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="es" />}
         </Route>
         <Route path="/preview-frame" component={PreviewFrame} />
-        <Route
-          path="/private/component-showcase"
-          component={ComponentShowcase}
-        />
-        <Route
-          path="/private/component-showcase/:componentType"
-          component={ComponentShowcase}
-        />
-        <Route
-          path="/private/component-showcase/:componentType/preview"
-          component={ComponentPreview}
-        />
-        <Route path="/private/redirects" component={PrivateRedirects} />
-        <Route path="/private/media-gallery" component={MediaGallery} />
-        <Route
-          path="/private/molecules-showcase"
-          component={MoleculesShowcase}
-        />
-        <Route
-          path="/private/preview/:contentType/:slug"
-          component={PrivatePreview}
-        />
-        <Route
-          path="/private/:contentType/:contentSlug/experiment/:experimentSlug"
-          component={ExperimentEditor}
-        />
+        <Route path="/private/:rest*" component={PrivateRouter} />
         {/* Apply page - dedicated routes */}
         <Route path="/en/apply" component={ApplyPage} />
         <Route path="/es/aplica" component={ApplyPage} />
