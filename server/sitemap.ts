@@ -297,8 +297,6 @@
         // Static pages
         const staticPages: Array<{ path: string; label: string; changefreq: ChangeFreq; priority: number }> = [
           { path: "/", label: "Home", changefreq: "weekly", priority: 1.0 },
-          { path: "/en/career-programs", label: "Career Programs (EN)", changefreq: "weekly", priority: 0.9 },
-          { path: "/es/programas-de-carrera", label: "Programas de Carrera (ES)", changefreq: "weekly", priority: 0.9 },
         ];
 
         for (const page of staticPages) {
@@ -309,29 +307,6 @@
             priority: page.priority,
             label: page.label,
             type: "static",
-          });
-        }
-
-        // Dynamic career program pages
-        const programs = getAvailablePrograms();
-        for (const program of programs) {
-          if (!shouldIndex(program.meta.robots)) {
-            console.log(`[Sitemap] Skipping noindex program: ${program.slug} (${program.locale})`);
-            continue;
-          }
-
-          const url = program.locale === "es"
-            ? `${getBaseUrl()}/es/programas-de-carrera/${program.slug}`
-            : `${getBaseUrl()}/en/career-programs/${program.slug}`;
-
-          entries.push({
-            loc: url,
-            lastmod: today,
-            changefreq: program.meta.change_frequency || "weekly",
-            priority: program.meta.priority || 0.8,
-            label: `${program.title} (${formatLocaleLabel(program.locale)})`,
-            type: "program",
-            locale: program.locale,
           });
         }
 

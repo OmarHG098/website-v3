@@ -17,8 +17,8 @@ export const contentTypePrefixes: Record<ContentType, ContentTypePrefix> = {
     es: '',
   },
   program: {
-    en: 'career-programs',
-    es: 'programas-de-carrera',
+    en: 'program',
+    es: 'programa',
   },
   location: {
     en: 'location',
@@ -45,7 +45,6 @@ export const pageSlugMappings: SlugMapping[] = [
   { en: "job-guarantee", es: "trabajo-garantizado", folder: "job-guarantee" },
   { en: "outcomes", es: "resultados", folder: "outcomes" },
   { en: "apply", es: "aplica", folder: "apply" },
-  { en: "career-programs", es: "programas-de-carrera", folder: "career-programs" },
 ];
 
 export function getSlugForLocale(folder: string, locale: string): string {

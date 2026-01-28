@@ -11,8 +11,6 @@ export default function Header() {
   const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   
-  const careerProgramsUrl = i18n.language === "es" ? "/es/programas-de-carrera" : "/en/career-programs";
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -40,13 +38,6 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Link 
-            href={careerProgramsUrl} 
-            className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
-            data-testid="link-career-programs"
-          >
-            {t('nav.careerPrograms')}
-          </Link>
           <Link 
             href="/dashboard" 
             className="text-sm font-medium hover-elevate rounded-md px-3 py-2" 
