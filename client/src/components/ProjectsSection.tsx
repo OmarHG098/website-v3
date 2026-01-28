@@ -99,7 +99,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           >
             <div className="flex flex-col md:flex-row gap-7 h-full">
 
-              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0">
+              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0 shadow-lg">
                 <img 
                   src={imageSrc}
                   alt={currentProject.title}
