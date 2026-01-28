@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "3ace3447024208c96dbc32a8c78e79582d3c8df2",
-  "lastSyncedAt": "2026-01-28T14:22:50.677Z",
+  "lastSyncedCommit": "fd1c7226d53ee260787fa216d59f2f3139497cd5",
+  "lastSyncedAt": "2026-01-28T15:29:35.841Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -53,9 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "f1839888969f1f5c9e6db825f2ed35311e6474994774551fbd397649dbfaacc1",
-      "lastModified": 1769610169736.871,
-      "remoteSha": "f1839888969f1f5c9e6db825f2ed35311e6474994774551fbd397649dbfaacc1"
+      "sha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
+      "lastModified": 1769614175533.0164,
+      "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -698,9 +698,9 @@
       "remoteSha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "954d04ec332b73b2deb4f465dea2260374d67857cd8183fb4d6eddaaaf02893d",
-      "lastModified": 1769610170408.8704,
-      "remoteSha": "954d04ec332b73b2deb4f465dea2260374d67857cd8183fb4d6eddaaaf02893d"
+      "sha": "6b0e9daf22ec063f6430b12473745292d5a35917b5bf132a633a72d33b005589",
+      "lastModified": 1769612591573.564,
+      "remoteSha": "6b0e9daf22ec063f6430b12473745292d5a35917b5bf132a633a72d33b005589"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
