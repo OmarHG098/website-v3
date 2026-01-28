@@ -296,6 +296,8 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
 export function Dropdown({ label, href, dropdown }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   
+  const isWideDropdown = dropdown.type === "cards" || dropdown.type === "columns";
+  
   const getDropdownWidth = () => {
     switch (dropdown.type) {
       case "cards":
@@ -309,13 +311,6 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       default:
         return "";
     }
-  };
-  
-  const getPositionClass = () => {
-    if (dropdown.type === "cards" || dropdown.type === "columns") {
-      return "left-1/2 -translate-x-1/2";
-    }
-    return "left-0";
   };
   
   const renderDropdownContent = () => {
@@ -349,9 +344,21 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       </a>
       
       {isOpen && (
-        <div className={`absolute top-full ${getPositionClass()} z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}>
-          {renderDropdownContent()}
-        </div>
+        isWideDropdown ? (
+          <div className="fixed top-16 left-0 right-0 z-50 flex justify-center">
+            <div 
+              className={`bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+              onMouseEnter={() => setIsOpen(true)}
+              onMouseLeave={() => setIsOpen(false)}
+            >
+              {renderDropdownContent()}
+            </div>
+          </div>
+        ) : (
+          <div className={`absolute top-full left-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}>
+            {renderDropdownContent()}
+          </div>
+        )
       )}
     </div>
   );
