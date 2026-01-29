@@ -155,7 +155,7 @@ sections:
       desktop: md none
   - type: graduates_stats
     heading: Career Placement
-    subheading: Turn your education into employment. See the real-world impact of our coaching.
+    subheading: We turn your education into employment. See the real-world impact of our coaching.
     stats:
       - value: 84%
         label: Job placement rate
@@ -177,5 +177,5 @@ sections:
         col_span: 6
         row_span: 2
   - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: How our students transformed their careers
+    title: The Stories Behind the Stats
+    description: Discover how our graduates transformed their careers
