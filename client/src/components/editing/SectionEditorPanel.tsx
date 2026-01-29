@@ -1112,6 +1112,8 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const altValue = (item.alt as string) || "";
+                          // For ID fields, look up the actual src from registry
+                          const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
 
                           return (
                             <button
@@ -1133,7 +1135,7 @@ export function SectionEditorPanel({
                             >
                               {currentValue ? (
                                 <img
-                                  src={currentValue}
+                                  src={displaySrc}
                                   alt={altValue || `Image ${index + 1}`}
                                   className="w-full h-full object-cover"
                                 />
@@ -1257,15 +1259,19 @@ export function SectionEditorPanel({
                     type="button"
                     onClick={() => {
                       if (imagePickerTarget) {
+                        // For fields ending in _id (like image_id), save the registry ID
+                        // Otherwise save the full path
+                        const fieldName = imagePickerTarget.srcField || imagePickerTarget.fieldPath || "";
+                        const isIdField = fieldName.endsWith("_id");
                         setImagePickerTarget({
                           ...imagePickerTarget,
-                          currentSrc: img.src,
+                          currentSrc: isIdField ? id : img.src,
                           currentAlt: img.alt,
                         });
                       }
                     }}
                     className={`mb-2 rounded-md overflow-hidden bg-muted border-2 transition-colors block w-full ${
-                      imagePickerTarget?.currentSrc === img.src
+                      imagePickerTarget?.currentSrc === img.src || imagePickerTarget?.currentSrc === id
                         ? "border-primary"
                         : "border-transparent hover:border-muted-foreground/50"
                     }`}
@@ -1308,7 +1314,10 @@ export function SectionEditorPanel({
                 <div className="w-16 h-16 rounded-md overflow-hidden bg-muted border flex-shrink-0">
                   {imagePickerTarget?.currentSrc ? (
                     <img
-                      src={imagePickerTarget.currentSrc}
+                      src={
+                        // If currentSrc is an ID, look up the actual src from registry
+                        imageRegistry?.images?.[imagePickerTarget.currentSrc]?.src || imagePickerTarget.currentSrc
+                      }
                       alt={imagePickerTarget.currentAlt || "Preview"}
                       className="w-full h-full object-cover"
                     />
