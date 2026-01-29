@@ -61,11 +61,11 @@ sections:
       features:
         - icon: calendar
           text: 24-Week Intensive Program
-        - icon: briefcase
+        - icon: IconBriefcase
           text: Employment-First Curriculum
         - icon: IconRobot
           text: AI-Powered Learning & Feedback
-        - icon: users
+        - icon: IconUsers
           text: 7:1 Student-to-Instructor Ratio
         - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship

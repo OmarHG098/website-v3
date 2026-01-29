@@ -1792,7 +1792,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      const { type, slugEn, slugEs, title } = req.body;
+      const { type, slugEn, slugEs, title, sourceUrl } = req.body;
       
       // Support both old format (slug) and new format (slugEn/slugEs)
       const enSlug = slugEn || req.body.slug;
@@ -1838,6 +1838,99 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Create folder
       fs.mkdirSync(folderPath, { recursive: true });
+
+      // If duplicating from source, copy content from source page
+      if (sourceUrl) {
+        try {
+          // Parse source URL to get content info
+          const sourceUrlObj = new URL(sourceUrl);
+          const sourcePath = sourceUrlObj.pathname;
+          const pathParts = sourcePath.split('/').filter(Boolean);
+          
+          // Detect source locale and slug from path
+          const sourceLocale = pathParts[0] === 'es' ? 'es' : 'en';
+          let sourceSlug = '';
+          let sourceFolder = '';
+          
+          // Determine source folder and slug based on type
+          if (type === 'page') {
+            sourceSlug = pathParts.slice(1).join('-') || pathParts[pathParts.length - 1];
+            sourceFolder = path.join(process.cwd(), 'marketing-content', 'pages');
+          } else if (type === 'program') {
+            // Programs are under /bootcamp/ or /course/
+            sourceSlug = pathParts[pathParts.length - 1];
+            sourceFolder = path.join(process.cwd(), 'marketing-content', 'programs');
+          } else if (type === 'location') {
+            // Locations are under /coding-campus/
+            sourceSlug = pathParts[pathParts.length - 1];
+            sourceFolder = path.join(process.cwd(), 'marketing-content', 'locations');
+          }
+          
+          // Find the source folder by checking which folder contains matching content
+          const possibleFolders = fs.readdirSync(sourceFolder);
+          let foundSourceFolder = '';
+          
+          for (const folder of possibleFolders) {
+            const testPath = path.join(sourceFolder, folder);
+            if (fs.statSync(testPath).isDirectory()) {
+              // Check if en.yml or es.yml contains matching slug
+              const enFile = path.join(testPath, 'en.yml');
+              const esFile = path.join(testPath, 'es.yml');
+              
+              if (fs.existsSync(enFile)) {
+                const content = fs.readFileSync(enFile, 'utf8');
+                if (content.includes(`slug: ${sourceSlug}`) || content.includes(`slug: "${sourceSlug}"`)) {
+                  foundSourceFolder = testPath;
+                  break;
+                }
+              }
+              if (!foundSourceFolder && fs.existsSync(esFile)) {
+                const content = fs.readFileSync(esFile, 'utf8');
+                if (content.includes(`slug: ${sourceSlug}`) || content.includes(`slug: "${sourceSlug}"`)) {
+                  foundSourceFolder = testPath;
+                  break;
+                }
+              }
+            }
+          }
+          
+          if (foundSourceFolder) {
+            // Copy all files from source folder
+            const sourceFiles = fs.readdirSync(foundSourceFolder);
+            for (const file of sourceFiles) {
+              let content = fs.readFileSync(path.join(foundSourceFolder, file), 'utf8');
+              
+              // Replace slug in content
+              const oldSlug = path.basename(foundSourceFolder);
+              content = content.replace(new RegExp(`slug:\\s*["']?${oldSlug}["']?`, 'g'), `slug: ${file === 'es.yml' ? esSlug : enSlug}`);
+              content = content.replace(new RegExp(`slug:\\s*["']?${sourceSlug}["']?`, 'g'), `slug: ${file === 'es.yml' ? esSlug : enSlug}`);
+              
+              // Replace title if it's a locale file
+              if (file === 'en.yml' || file === 'es.yml') {
+                content = content.replace(/title:\s*.*$/m, `title: ${title}`);
+              }
+              
+              fs.writeFileSync(path.join(folderPath, file), content);
+            }
+            
+            // Clear sitemap cache so the new content appears
+            clearSitemapCache();
+            
+            res.json({ 
+              success: true, 
+              slugEn: enSlug,
+              slugEs: esSlug,
+              type,
+              folder: `marketing-content/${folderMap[type]}/${enSlug}`,
+              duplicatedFrom: sourceUrl,
+            });
+            return;
+          }
+        } catch (dupError) {
+          console.error("Error duplicating content:", dupError);
+          // Fall through to create new content if duplication fails
+        }
+      }
 
       // Create starter YAML files based on type
       let commonYml: string;
@@ -2021,7 +2114,7 @@ sections: []
         }
       }
 
-      const { slug, locale, title } = req.body;
+      const { slug, locale, title, sourceUrl } = req.body;
       
       if (!slug || !title) {
         res.status(400).json({ error: "Missing required fields: slug, title" });
@@ -2054,6 +2147,60 @@ sections: []
 
       // Create folder
       fs.mkdirSync(folderPath, { recursive: true });
+
+      // If duplicating from source, copy content from source landing
+      if (sourceUrl) {
+        try {
+          // Parse source URL to get landing slug
+          const sourceUrlObj = new URL(sourceUrl);
+          const sourcePath = sourceUrlObj.pathname;
+          const pathParts = sourcePath.split('/').filter(Boolean);
+          
+          // Landing URLs are like /landing/example-landing or /us/landing/example-landing
+          let sourceSlug = '';
+          const landingIndex = pathParts.indexOf('landing');
+          if (landingIndex !== -1 && pathParts.length > landingIndex + 1) {
+            sourceSlug = pathParts[landingIndex + 1];
+          }
+          
+          if (sourceSlug) {
+            const sourceFolderPath = path.join(process.cwd(), 'marketing-content', 'landings', sourceSlug);
+            
+            if (fs.existsSync(sourceFolderPath)) {
+              // Copy all files from source folder
+              const sourceFiles = fs.readdirSync(sourceFolderPath);
+              for (const file of sourceFiles) {
+                let content = fs.readFileSync(path.join(sourceFolderPath, file), 'utf8');
+                
+                // Replace slug in content
+                content = content.replace(new RegExp(`slug:\\s*["']?${sourceSlug}["']?`, 'g'), `slug: "${slug}"`);
+                
+                // Replace title if it's _common.yml
+                if (file === '_common.yml') {
+                  content = content.replace(/title:\s*["']?.*["']?$/m, `title: "${title}"`);
+                }
+                
+                fs.writeFileSync(path.join(folderPath, file), content);
+              }
+              
+              // Clear sitemap cache so the new content appears
+              clearSitemapCache();
+              
+              res.json({ 
+                success: true, 
+                slug,
+                locale: landingLocale,
+                folder: `marketing-content/landings/${slug}`,
+                duplicatedFrom: sourceUrl,
+              });
+              return;
+            }
+          }
+        } catch (dupError) {
+          console.error("Error duplicating landing:", dupError);
+          // Fall through to create new content if duplication fails
+        }
+      }
 
       // Create starter YAML files for landings (_common.yml and promoted.yml)
       const commonYml = `slug: "${slug}"

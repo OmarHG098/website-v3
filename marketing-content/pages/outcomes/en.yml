@@ -87,6 +87,66 @@ sections:
       desktop: none md
     paddingY:
       desktop: md
+  - type: pie_charts
+    version: "1.0"
+    title: Our Student Body at a Glance
+    subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
+    background: hsl(var(--background))
+    charts:
+      - title: Age
+        items:
+          - label: 22-25
+            value: 30
+            color: chart-5
+          - label: 26-32
+            value: 44
+          - label: 33-42
+            value: 26
+      - title: Gender
+        items:
+          - label: Male
+            value: 76
+          - label: Female
+            value: 24
+            color: chart-5
+      - title: Region
+        items:
+          - label: North America
+            value: 50
+            color: chart-5
+          - label: Lat.Am.
+            value: 28
+          - label: Europe
+            value: 21
+          - label: Asia
+            value: 1
+    marginY:
+      desktop: none
+    paddingY:
+      desktop: none
+  - type: value_proof_panel
+    title: Recognized Globally for Excellence
+    subtitle: We don't just say we deliver, recognition from trusted sources proves our worth.
+    evidence_items:
+      - icon: Trophy
+        title: Top 5 Coding Bootcamps Worldwide
+        source: Newsweek, Forbes, SwitchUp, Course Report
+      - icon: Award
+        title: Best Student Support & Best Value
+        source: Course Report, SwitchUp
+      - icon: Users
+        title: 35,000+ Graduates Across 20+ Countries
+        description: A global community of successful tech professionals
+      - icon: Certificate
+        title: Industry-Recognized Certificates
+        description: Credentials that employers trust and value
+    media:
+      type: image
+      src: /attached_assets/awards-collage.webp
+      alt: 4Geeks Academy awards and recognitions
+      aspect_ratio: "4:3"
+      style: rounded
+    background: hsl(var(--card))
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -129,41 +189,18 @@ sections:
       desktop: md
     marginY:
       desktop: none sm
-  - type: pie_charts
-    version: "1.0"
-    title: Our Student Body at a Glance
-    subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
-    background: hsl(var(--background))
-    charts:
-      - title: Age
-        items:
-          - label: 22-25
-            value: 30
-            color: chart-5
-          - label: 26-32
-            value: 44
-          - label: 33-42
-            value: 26
-      - title: Gender
-        items:
-          - label: Male
-            value: 76
-          - label: Female
-            value: 24
-            color: chart-5
-      - title: Region
-        items:
-          - label: North America
-            value: 50
-            color: chart-5
-          - label: Lat.Am.
-            value: 28
-          - label: Europe
-            value: 21
-          - label: Asia
-            value: 1
-    marginY:
-      desktop: none
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: Making Tech Careers Accessible
+      description: Tech careers should be open to everyone. At 4Geeks, we remove financial barriers by offering affordable tuition, flexible financing options, and access to scholarships. Our goal is to ensure that cost is never the reason someone cannot pursue a career in technology.
+      badge: Accessible Education
+    secondary:
+      benefits:
+        - text: Financing options starting below $299/month
+        - text: Full and partial scholarships (location-based)
+        - text: Tuition recognized by Forbes as budget-friendly
+    background: hsl(var(--secondary))
     paddingY:
       desktop: none
   - type: two_column_accordion_card
@@ -183,20 +220,6 @@ sections:
     image: https://example.com/learning-support.png
     image_alt: Student receiving personalized support
     background: hsl(var(--background))
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Making Tech Careers Accessible
-      description: Tech careers should be open to everyone. At 4Geeks, we remove financial barriers by offering affordable tuition, flexible financing options, and access to scholarships. Our goal is to ensure that cost is never the reason someone cannot pursue a career in technology.
-      badge: Accessible Education
-    secondary:
-      benefits:
-        - text: Financing options starting below $299/month
-        - text: Full and partial scholarships (location-based)
-        - text: Tuition recognized by Forbes as budget-friendly
-    background: hsl(var(--secondary))
-    paddingY:
-      desktop: none
   - type: testimonials
     version: v1.0
     title: What Our Students Say
@@ -270,9 +293,13 @@ sections:
         variant: primary
       footer: Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp.
     marginY:
-      desktop: none lg
+      desktop: none md
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
     related_features:
       - outcomes
+    paddingY:
+      desktop: lg none
+    marginY:
+      desktop: md none

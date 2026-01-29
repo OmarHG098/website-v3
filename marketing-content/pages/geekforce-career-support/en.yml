@@ -2,10 +2,17 @@ slug: geekforce-career-support
 template: default
 title: GeekForce Career Support
 meta:
+  robots: index, follow
+  priority: 0.9
+  change_frequency: weekly
   page_title: GeekForce Career Support | 4Geeks Academy
   description: Get unlimited 1:1 career support designed for your unique profile and goals, for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
   redirects:
     - /geekforce-career-support
+schema:
+  include:
+    - organization
+    - website
 sections:
   - type: hero
     variant: productShowcase
@@ -51,7 +58,7 @@ sections:
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Unlimited Career Support— Built for an AI-Driven Job Market
-    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career. Through unlimited 1:1 career mentorship and group coaching, you’ll receive practical guidance and up-to-date strategies designed for today’s AI-driven job market.
+    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career.
     tabs:
       - label: Personalized Guidance
         description: Personalized career guidance aligned with your goals, background, and target roles
@@ -69,8 +76,7 @@ sections:
     version: "1.0"
     variant: bubbleText
     title: Get Hired with Our 3-Step Career Development Process
-    description: Once you've mastered the technical skills, our structured process helps you build a lasting career in tech — taking you from learning to landing the job.
-    background: bg-background
+    description: Our structured process is designed to get you hired — fast.
     steps:
       - icon: Optimization
         title: Profile Optimization
@@ -90,6 +96,7 @@ sections:
           - Create a personalized job search plan aligned with your goals.
           - Navigate AI-driven hiring platforms, from resume scanners to automated interviews.
           - Connect with our extensive network of global hiring partners.
+    background: bg-background
     paddingY:
       desktop: md none
   - type: two_column
@@ -107,7 +114,7 @@ sections:
       bullets:
         - text: Rigobot, our custom AI, gives instant feedback on your resume, portfolio, and projects.
         - text: Practice technical interviews and behavioral questions with AI-guided exercises.
-        - text: Get expert coaching from our mentors who tailor advice to your unique profile and goals.
+        - text: Get expert coaching from our mentors, tailored to your unique profile and goals.
       bullets_visible: 2
       font_size: base
     reverse_on_mobile: true
@@ -116,8 +123,8 @@ sections:
       desktop: md lg
   - type: whos_hiring
     variant: carousel
-    title: Trusted by the World's Leading Companies
-    subtitle: Our graduates have been hired by top organizations, proving the value of hands-on learning and lifetime support.
+    title: Trusted by Leading Companies
+    subtitle: Our graduates are hired by top companies worldwide.
     description: Our graduates are shaping the future of technology, with career support that never expires. These companies and many others trust 4Geeks alumni to deliver real-world results.
     logos:
       - src: /attached_assets/twilio_1764719992371.png
@@ -147,8 +154,8 @@ sections:
     paddingY:
       desktop: md none
   - type: graduates_stats
-    heading: Does the Job Guarantee deliver results?
-    subheading: Yes, and we've got the numbers to back it up.
+    heading: Career Placement
+    subheading: We turn your education into employment. See the real-world impact of our coaching.
     stats:
       - value: 84%
         label: Job placement rate
@@ -170,5 +177,5 @@ sections:
         col_span: 6
         row_span: 2
   - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: "Our grads are in high demand, with over 84% hired within six months of finishing the program. Student reviews and career results speak for themselves: You'll leave with the technical skills, confidence, and career strategy to break into one of tech's most rewarding fields—and keep growing."
+    title: The Stories Behind the Stats
+    description: Discover how our graduates transformed their careers

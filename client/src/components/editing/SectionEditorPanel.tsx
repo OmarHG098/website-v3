@@ -889,6 +889,11 @@ export function SectionEditorPanel({
                 };
                 
                 const arrayData = getArrayData();
+                
+                // Skip if the array field doesn't exist in the current section data
+                // This prevents showing editors for fields that don't apply to the current variant
+                if (arrayData === undefined) return null;
+                
                 const safeArrayData = Array.isArray(arrayData) ? arrayData : [];
                 
                 // For display, use the last part of the path as the label
