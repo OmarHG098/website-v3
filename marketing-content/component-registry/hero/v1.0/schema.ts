@@ -130,6 +130,9 @@ export const heroProductShowcaseSchema = z.object({
     src: z.string(),
     alt: z.string().optional(),
   }).nullish(),
+  // Decorative images displayed on left and right sides (optional)
+  left_images: z.array(heroImageSchema).optional(),
+  right_images: z.array(heroImageSchema).optional(),
   form: leadFormDataSchema.nullish(),
   cta_button: ctaButtonSchema.nullish(),
   trust_bar: productShowcaseTrustBarSchema.nullish(),

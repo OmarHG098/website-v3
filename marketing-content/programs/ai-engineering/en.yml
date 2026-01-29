@@ -35,14 +35,14 @@ sections:
       - Integrate AI into real software, connecting intelligent models to users and data.
       - Use modern AI tools and coding agents to build and ship software faster.
     tutors:
-      - name: Charly Chacón
+      - name: Marco Gonzalo
         role: Main Instructor
         image: https://randomuser.me/api/portraits/men/10.jpg
       - name: Rigo
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Build real, production-ready systems in our comprehensive AI Engineering program, supported by hands-on projects, unlimited mentorship, and career guidance. Become the software engineer companies are actively hiring for.
+    description: Build real, production-ready systems in our comprehensive AI Engineering program, supported by unlimited mentorship and career guidance. Become the software engineer companies are actively hiring for.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
@@ -400,7 +400,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Leading companies worldwide hire our graduates
+    subtitle: Our graduates are hired  by leading companies worldwide
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft

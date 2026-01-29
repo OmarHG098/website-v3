@@ -119,6 +119,8 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: md lg
   - type: features_grid
     version: "1.0"
     variant: stats-text
@@ -211,6 +213,8 @@ sections:
         icon: IconRocket
     paddingY:
       desktop: md
+    marginY:
+      desktop: md none
   - type: projects
     title: Learn by Building Real-Life Projects
     subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
@@ -359,15 +363,15 @@ sections:
       mobile: lg
       desktop: lg
   - type: why_learn_ai
-    variant: laptop-edge
-    title: Why Learn AI-Powered Development?
-    subtitle: The Future of Software Development Awaits
-    description: La ciencia de datos y el machine learning están transformando todas las industrias. Las empresas buscan desesperadamente profesionales que puedan convertir datos crudos en insights accionables y construir modelos predictivos. Con las herramientas de IA volviéndose más poderosas, los científicos de datos que pueden aprovechar estas tecnologías son 400% más productivos. Ya sea analizando comportamiento de clientes, prediciendo tendencias de mercado o construyendo sistemas de recomendación—estas habilidades están en alta demanda y tienen los mejores salarios. ¿Estás listo para convertirte en científico de datos?
+    title: Why Should I Learn Data Science and Machine Learning?
+    subtitle: Data-Driven Decision Making is the New Standard
+    description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
     cta:
-      text: Join Now
-      url: /signup
+      text: Join now!
+      url: /en/apply
       variant: primary
-      icon: ""
+    paddingY:
+      desktop: md
   - type: pricing
     version: "1.0"
     variant: product
@@ -479,6 +483,8 @@ sections:
         outcome: +100% salary increase
     paddingY:
       desktop: md none
+    marginY:
+      desktop: none md
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
@@ -490,7 +496,7 @@ sections:
       button_text: Talk to an Advisor
       button_url: /contact
     paddingY:
-      desktop: md
+      desktop: sm md
     marginY:
       desktop: none
   - type: cta_banner
@@ -505,6 +511,8 @@ sections:
       - text: Talk to an Advisor
         url: /contact
         variant: outline
+    paddingY:
+      desktop: md
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. All rights reserved.

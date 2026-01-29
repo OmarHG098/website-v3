@@ -27,15 +27,20 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
     return () => window.removeEventListener("resize", checkWidth);
   }, []);
 
+  // Cast to the full type to access optional properties
+  const fullData = data as HeroProductShowcaseType;
+  
   // Safely access properties that may not exist on all variants
-  const backgroundImage =
-    "background_image" in data ? data.background_image : null;
-  const welcomeText = "welcome_text" in data ? data.welcome_text : null;
-  const subtitle = "subtitle" in data ? data.subtitle : null;
-  const video = "video" in data ? data.video : null;
-  const image = "image" in data ? data.image : null;
-  const marquee = "marquee" in data ? data.marquee : null;
-  const bullets = "bullets" in data ? data.bullets : null;
+  const backgroundImage = fullData.background_image ?? null;
+  const welcomeText = fullData.welcome_text ?? null;
+  const subtitle = fullData.subtitle ?? null;
+  const video = fullData.video ?? null;
+  const image = fullData.image ?? null;
+  const marquee = fullData.marquee ?? null;
+  const bullets = fullData.bullets ?? null;
+  const leftImages = fullData.left_images ?? null;
+  const rightImages = fullData.right_images ?? null;
+  const hasDecorativeImages = (leftImages && leftImages.length > 0) || (rightImages && rightImages.length > 0);
 
   const shouldShowBackground = backgroundImage && showBackground;
 
@@ -65,6 +70,60 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
       }
       data-testid="section-hero"
     >
+      {/* Left decorative images - only shown on xl screens when images exist */}
+      {hasDecorativeImages && leftImages && leftImages.length > 0 && (
+        <div className="absolute left-0 top-0 h-full w-[200px] hidden xl:block pointer-events-none z-0">
+          <div className="relative h-full">
+            {leftImages.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute w-44 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] pointer-events-auto ${
+                  index === 0 
+                    ? "top-[80px] left-4 -rotate-6" 
+                    : "top-[240px] left-12 rotate-3"
+                }`}
+                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+                data-testid={`img-hero-left-${index}`}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-40 object-cover rounded-lg"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Right decorative images - only shown on xl screens when images exist */}
+      {hasDecorativeImages && rightImages && rightImages.length > 0 && (
+        <div className="absolute right-0 top-0 h-full w-[200px] hidden xl:block pointer-events-none z-0">
+          <div className="relative h-full">
+            {rightImages.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute w-44 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] pointer-events-auto ${
+                  index === 0 
+                    ? "top-[80px] right-4 rotate-6" 
+                    : "top-[240px] right-12 -rotate-3"
+                }`}
+                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+                data-testid={`img-hero-right-${index}`}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-40 object-cover rounded-lg"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">

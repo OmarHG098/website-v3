@@ -1,0 +1,12 @@
+type: image_row
+images:
+  - src: /attached_assets/student-1-asian.png
+    alt: "Asian student learning to code"
+  - src: /attached_assets/student-2-latin.png
+    alt: "Latino student working on a project"
+  - src: /attached_assets/student-3-african.png
+    alt: "African student collaborating with team"
+
+height: "20rem"
+gap: lg
+rounded: true

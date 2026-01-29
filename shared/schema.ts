@@ -376,6 +376,7 @@ export const imageEntrySchema = z.object({
   alt: z.string(),
   focal_point: z.enum(["center", "top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"]).optional(),
   tags: z.array(z.string()).optional(),
+  usage_count: z.number().optional(),
 });
 
 export const imageRegistrySchema = z.object({
@@ -677,6 +678,8 @@ export { stickyCtaSectionSchema, type StickyCtaSection } from "../marketing-cont
 import { bentoCardsSectionSchema } from "../marketing-content/component-registry/bento_cards/v1.0/schema";
 import { bannerSectionSchema, type BannerSection } from "../marketing-content/component-registry/banner/v1.0/schema";
 export { bannerSectionSchema, type BannerSection };
+import { imageRowSectionSchema, type ImageRowSection } from "../marketing-content/component-registry/image_row/v1.0/schema";
+export { imageRowSectionSchema, type ImageRowSection };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -765,6 +768,7 @@ const baseSectionSchema = z.union([
   stickyCtaSectionSchema,
   bentoCardsSectionSchema,
   bannerSectionSchema,
+  imageRowSectionSchema,
 ]);
 
 // Combined section schema with layout fields

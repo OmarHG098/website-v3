@@ -82,7 +82,13 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
                         className="text-yellow-500 w-5 h-5"
                       />
                     ))}
-                    <IconStar className="text-yellow-500 w-5 h-5" />
+                    {/* Partially filled star for decimal rating (e.g., 4.9 = 90% filled) */}
+                    <div className="relative w-5 h-5">
+                      <IconStar className="absolute text-yellow-500 w-5 h-5" />
+                      <div className="absolute overflow-hidden" style={{ width: '90%' }}>
+                        <IconStarFilled className="text-yellow-500 w-5 h-5" />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <span className="text-sm text-muted-foreground">
@@ -108,7 +114,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
           <div>
             <Button
               size="lg"
-              className="text-body px-8 mb-1"
+              className="text-body px-8 mb-1 text-primary-foreground"
               asChild
               data-testid="button-hero-cta"
             >
@@ -126,8 +132,8 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
               key={index}
               className={`absolute w-56 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] ${
                 index === 0 
-                  ? "top-[94px] right-0 rotate-6 z-30" 
-                  : "top-[222px] right-[100px] -rotate-3 z-20"
+                  ? "top-[94px] right-0 rotate-6 z-20" 
+                  : "top-[222px] right-[100px] -rotate-3 z-30"
               }`}
               style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
             >
