@@ -12,54 +12,53 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
       className="relative overflow-hidden"
       data-testid="section-why-learn-ai"
     >
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center py-16">
-          <div>
-            <h2 
-              className="text-h2 mb-4 text-foreground"
-              data-testid="text-why-learn-title"
-            >
-              {data.title}
-            </h2>
-            
-            <h3 
-              className="text-body font-bold mb-6 text-foreground"
-              data-testid="text-why-learn-subtitle"
-            >
-              {data.subtitle}
-            </h3>
-            
-            <p 
-              className="text-body text-muted-foreground mb-8 leading-relaxed"
-              data-testid="text-why-learn-description"
-            >
-              {data.description}
-            </p>
-            
-            {data.cta && (
-              <Button
-                variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
-                asChild
-                data-testid="button-why-learn-cta"
-              >
-                <a href={data.cta.url}>{data.cta.text}</a>
-              </Button>
-            )}
-          </div>
+      <div 
+        className="absolute right-0 top-0 bottom-0 w-1/2 bg-primary/5"
+        aria-hidden="true"
+      />
+      
+      <div className="relative grid lg:grid-cols-2 items-center">
+        <div className="max-w-3xl ml-auto px-4 lg:px-8 py-16 lg:pr-12">
+          <h2 
+            className="text-h2 mb-4 text-foreground"
+            data-testid="text-why-learn-title"
+          >
+            {data.title}
+          </h2>
           
-          <div className="relative flex justify-end items-center min-h-[300px] lg:min-h-[400px]">
-            <div 
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[120%] bg-primary/5 rounded-l-3xl"
-              aria-hidden="true"
-            />
-            <img 
-              src={laptopCodeEditor}
-              alt="Code editor on laptop"
-              className="relative z-10 w-full max-w-[600px] lg:max-w-none lg:w-[120%] lg:-mr-[20%] h-auto object-contain"
-              loading="lazy"
-              data-testid="img-why-learn-ai"
-            />
-          </div>
+          <h3 
+            className="text-body font-bold mb-6 text-foreground"
+            data-testid="text-why-learn-subtitle"
+          >
+            {data.subtitle}
+          </h3>
+          
+          <p 
+            className="text-body text-muted-foreground mb-8 leading-relaxed"
+            data-testid="text-why-learn-description"
+          >
+            {data.description}
+          </p>
+          
+          {data.cta && (
+            <Button
+              variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+              asChild
+              data-testid="button-why-learn-cta"
+            >
+              <a href={data.cta.url}>{data.cta.text}</a>
+            </Button>
+          )}
+        </div>
+        
+        <div className="relative flex items-center justify-end min-h-[300px] lg:min-h-[450px]">
+          <img 
+            src={laptopCodeEditor}
+            alt="Code editor on laptop"
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-[140%] max-w-none h-auto object-contain object-left"
+            loading="lazy"
+            data-testid="img-why-learn-ai"
+          />
         </div>
       </div>
     </section>
