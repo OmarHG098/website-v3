@@ -86,7 +86,7 @@ sections:
         text: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
       - heading: Lifelong Career Support
         text: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing r
-    image: /attached_assets/community_1764717588840.png
+    image: https://example.com/course-benefits.png
     image_alt: Graduate celebrating success
     reverse: true
     paddingY:
