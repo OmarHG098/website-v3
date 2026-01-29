@@ -154,8 +154,8 @@ sections:
     paddingY:
       desktop: md none
   - type: graduates_stats
-    heading: Does the Job Guarantee deliver results?
-    subheading: Yes, and we've got the numbers to back it up.
+    heading: Career Placement
+    subheading: Turn your education into employment. See the real-world impact of our coaching.
     stats:
       - value: 84%
         label: Job placement rate
