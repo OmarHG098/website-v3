@@ -61,7 +61,7 @@ sections:
       features:
         - icon: calendar
           text: 24-Week Intensive Program
-        - icon: briefcase
+        - icon: IconBriefcase
           text: Employment-First Curriculum
         - icon: IconRobot
           text: AI-Powered Learning & Feedback
