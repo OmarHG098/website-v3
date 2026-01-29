@@ -638,9 +638,11 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "737b5e60714c91d8c4ece8c896250ccc46e05479c62627a83f6175849f9509b5",
-      "lastModified": 1769716219717.764,
-      "remoteSha": "737b5e60714c91d8c4ece8c896250ccc46e05479c62627a83f6175849f9509b5"
+      "sha": "68453123b2d5b0637d149343f4841209e744de78afe92e5cd450bf6120572370",
+      "lastModified": 1769721066579.8926,
+      "remoteSha": "737b5e60714c91d8c4ece8c896250ccc46e05479c62627a83f6175849f9509b5",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-01-29T21:11:06.581Z"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
