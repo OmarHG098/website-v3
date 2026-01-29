@@ -39,22 +39,22 @@
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
-      "lastModified": 1769638432339.858,
+      "lastModified": 1769631526847.3975,
       "remoteSha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e"
     },
     "marketing-content/landings/example-landing/colorful.v1.en.yml": {
       "sha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce",
-      "lastModified": 1769638432341.0369,
+      "lastModified": 1769631527153.3975,
       "remoteSha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce"
     },
     "marketing-content/landings/example-landing/experiments.yml": {
       "sha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5",
-      "lastModified": 1769638432341.0369,
+      "lastModified": 1769631527412.3972,
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
-      "lastModified": 1769638432341.0369,
+      "lastModified": 1769705118630.887,
       "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
@@ -554,7 +554,7 @@
     },
     "marketing-content/menus/main-navbar.yml": {
       "sha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f",
-      "lastModified": 1769648563397.151,
+      "lastModified": 1769698462782.9956,
       "remoteSha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f"
     },
     "marketing-content/pages/apply/_common.yml": {
@@ -608,9 +608,9 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "db73d86cbcb0acc7f2f1294b8bb54a3c6f663bfc46f857c5b3fb77e00187842e",
-      "lastModified": 1769610170012.8708,
-      "remoteSha": "db73d86cbcb0acc7f2f1294b8bb54a3c6f663bfc46f857c5b3fb77e00187842e"
+      "sha": "57cb831dbac117fb361af823c660cdf0ead6799d9d3531b3bb21ed4b3bb38ed6",
+      "lastModified": 1769709588937.5425,
+      "remoteSha": "57cb831dbac117fb361af823c660cdf0ead6799d9d3531b3bb21ed4b3bb38ed6"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -623,9 +623,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "fcde4bfb5e38ffc40acc2df2b93eb5fb5828cdd87a05541b8884ac7f061493ac",
-      "lastModified": 1769439699899.6404,
-      "remoteSha": "fcde4bfb5e38ffc40acc2df2b93eb5fb5828cdd87a05541b8884ac7f061493ac"
+      "sha": "bf0f1781339ffcfb9929a8454c81521a02ff232559f47fe5b62ecee64adc630e",
+      "lastModified": 1769713856966.409,
+      "remoteSha": "bf0f1781339ffcfb9929a8454c81521a02ff232559f47fe5b62ecee64adc630e"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "9f6fdf9dfe26772aefa7d6d68397d69eb0fe8ee8d88cb6d4c631f4997ff0440b",
@@ -664,7 +664,7 @@
     },
     "marketing-content/pages/home/_common.yml": {
       "sha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a",
-      "lastModified": 1769638547802.7478,
+      "lastModified": 1769698462782.9956,
       "remoteSha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a"
     },
     "marketing-content/pages/home/en.yml": {
@@ -674,7 +674,7 @@
     },
     "marketing-content/pages/home/es.yml": {
       "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
-      "lastModified": 1769638548398.7473,
+      "lastModified": 1769698462783.6685,
       "remoteSha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d"
     },
     "marketing-content/pages/job-guarantee/_common.yml": {

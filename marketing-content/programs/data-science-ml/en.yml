@@ -126,7 +126,7 @@ sections:
     variant: stats-text
     title: Does the Job Guarantee deliver results you can count on?
     subtitle: Yes, and we've got the numbers to back it up
-    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
+    description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
     background: bg-muted/30
     items:
       - id: "1"
@@ -310,7 +310,7 @@ sections:
           url: /en/apply
           variant: primary
     paddingY:
-      desktop: md
+      desktop: md none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
@@ -362,16 +362,6 @@ sections:
     paddingY:
       mobile: lg
       desktop: lg
-  - type: why_learn_ai
-    title: Why Should I Learn Data Science and Machine Learning?
-    subtitle: Data-Driven Decision Making is the New Standard
-    description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
-    cta:
-      text: Join now!
-      url: /en/apply
-      variant: primary
-    paddingY:
-      desktop: md
   - type: pricing
     version: "1.0"
     variant: product
@@ -389,24 +379,22 @@ sections:
       - git
       - jupyter
       - api
-    features_title: Access hundreds of exercises, projects tutorials to develop and courses in the most wanted technologies
+    features_title: Choose the option that fits you best.
     features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of and cloud-based coding challenges (no setup needed).
-      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school by the florida department of education.
+      - icon: IconCheck
+        text: Standard tuition is $14,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
+      - icon: IconCheck
+        text: Finance your tuition through Climb, Fortify, or Lumion with 24, 36, 48, or 60-month plans.
+      - icon: IconCheck
+        text: 2–3 merit-based scholarships available per cohort for highly qualified applicants.
+      - icon: IconCheck
+        text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
       text: Get plan
       url: /en/apply
       variant: primary
     paddingY:
-      desktop: md
+      desktop: sm md
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators

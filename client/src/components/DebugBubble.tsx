@@ -459,6 +459,9 @@ export function DebugBubble() {
   const [isCreatingContent, setIsCreatingContent] = useState(false);
   const [createLandingLocale, setCreateLandingLocale] = useState<'en' | 'es'>('en');
   
+  // Duplicate page state
+  const [duplicatingPage, setDuplicatingPage] = useState<{ loc: string; label: string; contentType: 'location' | 'page' | 'program' | 'landing' } | null>(null);
+  
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
   
@@ -1031,6 +1034,45 @@ export function DebugBubble() {
   };
 
   const currentLang = i18n.language === "es" ? "ES" : "EN";
+
+  // Detect content type from URL path
+  const getContentTypeFromPath = (path: string): 'page' | 'program' | 'landing' | 'location' | null => {
+    const parts = path.split('/').filter(Boolean);
+    
+    // Check if first part is a locale
+    const hasLocale = parts[0] === 'us' || parts[0] === 'es';
+    const contentParts = hasLocale ? parts.slice(1) : parts;
+    
+    if (contentParts.length === 0) return null;
+    
+    // Check content type based on first path segment
+    if (contentParts[0] === 'landing') return 'landing';
+    if (contentParts[0] === 'bootcamp' || contentParts[0] === 'course') return 'program';
+    if (contentParts[0] === 'coding-campus') return 'location';
+    
+    // If has locale prefix, it's a page
+    if (hasLocale) return 'page';
+    
+    return null;
+  };
+  
+  // Handle duplicate page action
+  const handleDuplicatePage = (url: SitemapUrl) => {
+    const path = new URL(url.loc).pathname;
+    const contentType = getContentTypeFromPath(path);
+    if (contentType) {
+      setDuplicatingPage({ loc: url.loc, label: url.label, contentType });
+      setCreateContentType(contentType);
+      setCreateContentTitle("");
+      setCreateContentSlugEn("");
+      setCreateContentSlugEs("");
+      setCreateContentSlugEnStatus('idle');
+      setCreateContentSlugEsStatus('idle');
+      setCreateContentModalOpen(true);
+    } else {
+      toast({ title: "No se puede duplicar", description: "Tipo de contenido no reconocido", variant: "destructive" });
+    }
+  };
 
   const clearSitemapCache = async () => {
     setCacheClearStatus("loading");
@@ -1906,14 +1948,29 @@ export function DebugBubble() {
                               {folder.urls.map((url, urlIndex) => {
                                 const path = new URL(url.loc).pathname;
                                 return (
-                                  <a
+                                  <div
                                     key={`${folder.name}-${urlIndex}-${url.loc}`}
-                                    href={path}
-                                    className="block px-3 py-1 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer truncate"
-                                    data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                    className="group flex items-center gap-1 px-3 py-1 rounded-md hover-elevate"
                                   >
-                                    {path}
-                                  </a>
+                                    <a
+                                      href={path}
+                                      className="flex-1 text-xs text-muted-foreground cursor-pointer truncate"
+                                      data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                    >
+                                      {path}
+                                    </a>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDuplicatePage(url);
+                                      }}
+                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                      title="Duplicar página"
+                                      data-testid={`button-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                    >
+                                      <IconCopy className="h-3 w-3 text-muted-foreground" />
+                                    </button>
+                                  </div>
                                 );
                               })}
                             </div>
@@ -1923,14 +1980,29 @@ export function DebugBubble() {
                       {rootUrls.map((url, urlIndex) => {
                         const path = new URL(url.loc).pathname;
                         return (
-                          <a
+                          <div
                             key={`root-${urlIndex}-${url.loc}`}
-                            href={path}
-                            className="block px-3 py-1.5 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer truncate"
-                            data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            className="group flex items-center gap-1 px-3 py-1.5 rounded-md hover-elevate"
                           >
-                            {path}
-                          </a>
+                            <a
+                              href={path}
+                              className="flex-1 text-xs text-muted-foreground cursor-pointer truncate"
+                              data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
+                              {path}
+                            </a>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDuplicatePage(url);
+                              }}
+                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                              title="Duplicar página"
+                              data-testid={`button-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
+                              <IconCopy className="h-3 w-3 text-muted-foreground" />
+                            </button>
+                          </div>
                         );
                       })}
                     </>
@@ -2661,16 +2733,30 @@ export function DebugBubble() {
           setEditingSlugEn(false);
           setEditingSlugEs(false);
           setCreateContentType('page');
+          setDuplicatingPage(null);
         }
       }}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <IconPlus className="h-5 w-5" />
-              Create New Content
+              {duplicatingPage ? (
+                <>
+                  <IconCopy className="h-5 w-5" />
+                  Duplicando página
+                </>
+              ) : (
+                <>
+                  <IconPlus className="h-5 w-5" />
+                  Create New Content
+                </>
+              )}
             </DialogTitle>
             <DialogDescription>
-              Create a new page, location, program, or landing with starter YAML files.
+              {duplicatingPage ? (
+                <>Estás duplicando: <strong>{duplicatingPage.label}</strong></>
+              ) : (
+                <>Create a new page, location, program, or landing with starter YAML files.</>
+              )}
             </DialogDescription>
           </DialogHeader>
           
@@ -2680,6 +2766,7 @@ export function DebugBubble() {
               <div className="flex items-center gap-2">
                 <Select 
                   value={createContentType} 
+                  disabled={!!duplicatingPage}
                   onValueChange={(v) => {
                     setCreateContentType(v as 'location' | 'page' | 'program' | 'landing');
                     // Re-validate slugs with new type (skip for landing - uses different validation)
@@ -3071,6 +3158,7 @@ export function DebugBubble() {
                         slug: createContentSlugEn,
                         locale: createLandingLocale,
                         title: createContentTitle || createContentSlugEn,
+                        ...(duplicatingPage ? { sourceUrl: duplicatingPage.loc } : {}),
                       }),
                     });
                     
@@ -3120,6 +3208,7 @@ export function DebugBubble() {
                         slugEn: createContentSlugEn,
                         slugEs: createContentSlugEs,
                         title: createContentTitle || createContentSlugEn,
+                        ...(duplicatingPage ? { sourceUrl: duplicatingPage.loc } : {}),
                       }),
                     });
                     
@@ -3128,8 +3217,10 @@ export function DebugBubble() {
                     if (response.ok && data.success) {
                       const newUrl = buildContentUrl(createContentType as ContentType, createContentSlugEn, 'en');
                       toast({
-                        title: "Content created",
-                        description: `Created new ${createContentType} at ${newUrl}`,
+                        title: duplicatingPage ? "Página duplicada" : "Content created",
+                        description: duplicatingPage 
+                          ? `Creada copia en ${newUrl}` 
+                          : `Created new ${createContentType} at ${newUrl}`,
                       });
                       setCreateContentModalOpen(false);
                       setCreateContentTitle("");
@@ -3137,6 +3228,7 @@ export function DebugBubble() {
                       setCreateContentSlugEs("");
                       setCreateContentSlugEnStatus('idle');
                       setCreateContentSlugEsStatus('idle');
+                      setDuplicatingPage(null);
                       
                       // Refresh sitemap
                       setSitemapLoading(true);
@@ -3177,7 +3269,12 @@ export function DebugBubble() {
               {isCreatingContent ? (
                 <>
                   <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
-                  Creating...
+                  {duplicatingPage ? "Duplicando..." : "Creating..."}
+                </>
+              ) : duplicatingPage ? (
+                <>
+                  <IconCopy className="h-4 w-4 mr-2" />
+                  Duplicar {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
               ) : (
                 <>
