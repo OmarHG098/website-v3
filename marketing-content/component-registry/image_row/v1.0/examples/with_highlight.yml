@@ -1,12 +1,12 @@
 type: image_row
 images:
-  - id: student-1
+  - src: /attached_assets/student-1-asian.png
     alt: "Student learning to code"
-  - id: student-2
+  - src: /attached_assets/student-2-latin.png
     alt: "Developer working on project"
-  - id: student-3
+  - src: /attached_assets/student-3-african.png
     alt: "Team collaboration session"
-  - id: student-4
+  - src: /attached_assets/student-4-lady-latin.png
     alt: "Graduate celebrating success"
 
 highlight:

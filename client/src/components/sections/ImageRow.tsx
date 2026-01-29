@@ -71,19 +71,33 @@ export default function ImageRow({ data }: ImageRowProps) {
               className="contents"
               style={{ display: "contents" }}
             >
-              {images.map((image, index) => (
-                <div
-                  key={image.id}
-                  className="flex-1 min-w-0 h-[var(--image-row-height-mobile)] md:h-[var(--image-row-height-desktop)]"
-                  data-testid={`image-row-item-${image.id}`}
-                >
-                  <UniversalImage
-                    id={image.id}
-                    alt={image.alt}
-                    className={`w-full h-full object-cover ${roundedClass}`}
-                  />
-                </div>
-              ))}
+              {images.map((image, index) => {
+                const imageKey = image.id || image.src || `image-${index}`;
+                
+                return (
+                  <div
+                    key={imageKey}
+                    className="flex-1 min-w-0 h-[var(--image-row-height-mobile)] md:h-[var(--image-row-height-desktop)]"
+                    data-testid={`image-row-item-${index}`}
+                  >
+                    {image.id ? (
+                      <UniversalImage
+                        id={image.id}
+                        alt={image.alt}
+                        className={`w-full h-full object-cover ${roundedClass}`}
+                      />
+                    ) : image.src ? (
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className={`w-full h-full object-cover ${roundedClass}`}
+                        loading="lazy"
+                        data-testid={`img-image-row-${index}`}
+                      />
+                    ) : null}
+                  </div>
+                );
+              })}
 
               {highlight && (
                 <div 
