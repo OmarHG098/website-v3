@@ -310,7 +310,7 @@ sections:
           url: /en/apply
           variant: primary
     paddingY:
-      desktop: md
+      desktop: md none
   - type: certificate
     title: Certificate & Career Network
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
