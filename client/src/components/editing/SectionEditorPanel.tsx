@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useMemo } from "react";
+import { useCallback, useState, useEffect, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   IconX,
@@ -177,25 +177,52 @@ export function SectionEditorPanel({
     currentAlt: string;
   } | null>(null);
   const [imageGallerySearch, setImageGallerySearch] = useState("");
+  const [visibleImageCount, setVisibleImageCount] = useState(48);
+  const gallerySentinelRef = useRef<HTMLDivElement>(null);
 
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
     queryKey: ["/api/image-registry"],
   });
 
-  // Filter gallery images based on search
+  // Filter and sort gallery images by usage count (most used first)
   const filteredGalleryImages = useMemo(() => {
     if (!imageRegistry?.images) return [];
     const searchLower = imageGallerySearch.toLowerCase();
-    return Object.entries(imageRegistry.images).filter(([id, img]) => {
-      if (!searchLower) return true;
-      return (
-        id.toLowerCase().includes(searchLower) ||
-        img.alt.toLowerCase().includes(searchLower) ||
-        img.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
-      );
-    });
+    return Object.entries(imageRegistry.images)
+      .filter(([id, img]) => {
+        if (!searchLower) return true;
+        return (
+          id.toLowerCase().includes(searchLower) ||
+          img.alt.toLowerCase().includes(searchLower) ||
+          img.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
+        );
+      })
+      .sort((a, b) => (b[1].usage_count ?? 0) - (a[1].usage_count ?? 0));
   }, [imageRegistry, imageGallerySearch]);
+
+  // Reset visible count when search changes or modal opens
+  useEffect(() => {
+    setVisibleImageCount(48);
+  }, [imageGallerySearch, imagePickerOpen]);
+
+  // Infinite scroll for image gallery
+  useEffect(() => {
+    const sentinel = gallerySentinelRef.current;
+    if (!sentinel || !imagePickerOpen) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleImageCount((prev) => Math.min(prev + 24, filteredGalleryImages.length));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [imagePickerOpen, filteredGalleryImages.length]);
 
   // Parse current YAML to extract props
   const parsedSection = useMemo(() => {
@@ -1146,7 +1173,7 @@ export function SectionEditorPanel({
             {/* Gallery grid */}
             <div className="flex-1 overflow-y-auto min-h-0">
               <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
-                {filteredGalleryImages.slice(0, 48).map(([id, img]) => (
+                {filteredGalleryImages.slice(0, visibleImageCount).map(([id, img]) => (
                   <button
                     key={id}
                     type="button"
@@ -1176,6 +1203,12 @@ export function SectionEditorPanel({
                   </button>
                 ))}
               </div>
+              {/* Sentinel for infinite scroll */}
+              {visibleImageCount < filteredGalleryImages.length && (
+                <div ref={gallerySentinelRef} className="h-8 flex items-center justify-center text-muted-foreground text-sm">
+                  Loading more...
+                </div>
+              )}
               {filteredGalleryImages.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   No images found
