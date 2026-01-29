@@ -12,6 +12,7 @@ import {
   IconCheck,
   IconAlertTriangle,
   IconPlus,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -170,9 +171,14 @@ export function SectionEditorPanel({
   // Image picker modal state
   const [imagePickerOpen, setImagePickerOpen] = useState(false);
   const [imagePickerTarget, setImagePickerTarget] = useState<{
-    arrayPath: string;
-    index: number;
-    srcField: string;
+    // For array fields
+    arrayPath?: string;
+    index?: number;
+    srcField?: string;
+    // For simple fields
+    fieldPath?: string;
+    label?: string;
+    // Common
     currentSrc: string;
     currentAlt: string;
   } | null>(null);
@@ -897,7 +903,8 @@ export function SectionEditorPanel({
                             setImagePickerTarget({
                               fieldPath,
                               label: fieldLabel,
-                              currentImage: currentValue,
+                              currentSrc: currentValue,
+                              currentAlt: "",
                             });
                             setImagePickerOpen(true);
                           }}
