@@ -768,11 +768,11 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "ee2b8daeee2c33ec6fd53a75d42fd353a67c4ba119c4fa93e5615d2ecdbf1fce",
-      "lastModified": 1769654038580.7988,
+      "sha": "a8b290ba2f30fb66fc41051721bd9788146cb94a3992cea404cd16d11f37dbbb",
+      "lastModified": 1769659517054.0715,
       "remoteSha": "8c0ab084091580d92613573a89ea74258fb620fd34fd01c756654c8357275f4b",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-29T02:33:58.583Z"
+      "modifiedAt": "2026-01-29T04:05:17.057Z"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",

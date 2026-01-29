@@ -17,49 +17,53 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
         aria-hidden="true"
       />
       
-      <div className="relative grid lg:grid-cols-2 items-center">
-        <div className="max-w-3xl ml-auto px-4 lg:px-8 py-16 lg:pr-12">
-          <h2 
-            className="text-h2 mb-4 text-foreground"
-            data-testid="text-why-learn-title"
-          >
-            {data.title}
-          </h2>
-          
-          <h3 
-            className="text-body font-bold mb-6 text-foreground"
-            data-testid="text-why-learn-subtitle"
-          >
-            {data.subtitle}
-          </h3>
-          
-          <p 
-            className="text-body text-muted-foreground mb-8 leading-relaxed"
-            data-testid="text-why-learn-description"
-          >
-            {data.description}
-          </p>
-          
-          {data.cta && (
-            <Button
-              variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
-              asChild
-              data-testid="button-why-learn-cta"
+      <div className="relative max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-8 items-center py-16">
+          <div>
+            <h2 
+              className="text-h2 mb-4 text-foreground"
+              data-testid="text-why-learn-title"
             >
-              <a href={data.cta.url}>{data.cta.text}</a>
-            </Button>
-          )}
+              {data.title}
+            </h2>
+            
+            <h3 
+              className="text-body font-bold mb-6 text-foreground"
+              data-testid="text-why-learn-subtitle"
+            >
+              {data.subtitle}
+            </h3>
+            
+            <p 
+              className="text-body text-muted-foreground mb-8 leading-relaxed"
+              data-testid="text-why-learn-description"
+            >
+              {data.description}
+            </p>
+            
+            {data.cta && (
+              <Button
+                variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+                asChild
+                data-testid="button-why-learn-cta"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
+          </div>
+          
+          <div className="relative min-h-[300px] lg:min-h-[400px]" />
         </div>
-        
-        <div className="relative flex items-center justify-end min-h-[300px] lg:min-h-[450px]">
-          <img 
-            src={laptopCodeEditor}
-            alt="Code editor on laptop"
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-[140%] max-w-none h-auto object-contain object-left"
-            loading="lazy"
-            data-testid="img-why-learn-ai"
-          />
-        </div>
+      </div>
+      
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center pointer-events-none">
+        <img 
+          src={laptopCodeEditor}
+          alt="Code editor on laptop"
+          className="w-[140%] max-w-none h-auto object-contain object-left"
+          loading="lazy"
+          data-testid="img-why-learn-ai"
+        />
       </div>
     </section>
   );
