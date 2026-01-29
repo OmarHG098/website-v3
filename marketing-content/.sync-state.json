@@ -743,9 +743,11 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "8c0ab084091580d92613573a89ea74258fb620fd34fd01c756654c8357275f4b",
-      "lastModified": 1769638200080.727,
-      "remoteSha": "8c0ab084091580d92613573a89ea74258fb620fd34fd01c756654c8357275f4b"
+      "sha": "b6522f029c708cf4e7f690c6f6cf127860aa449a5e8e41148ee2e88abd19c125",
+      "lastModified": 1769649737299.9285,
+      "remoteSha": "8c0ab084091580d92613573a89ea74258fb620fd34fd01c756654c8357275f4b",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-01-29T01:22:17.303Z"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",

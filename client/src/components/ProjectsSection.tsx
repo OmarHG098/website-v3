@@ -92,14 +92,14 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           )}
         </div>
 
-        <div className="relative">
+        <div className="relative bg-secondary rounded-xl">
           <div 
             className="bg-muted border rounded-lg p-4 md:p-5 flex items-center min-h-[480px] md:min-h-[320px]"
             data-testid={`card-project-${currentIndex}`}
           >
             <div className="flex flex-col md:flex-row gap-7 h-full">
 
-              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0 shadow-lg">
+              <div className="md:w-2/5 aspect-video md:aspect-auto md:min-h-[240px] overflow-hidden bg-muted rounded-lg shrink-0 shadow-xs border">
                 <img 
                   src={imageSrc}
                   alt={currentProject.title}
@@ -173,7 +173,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex items-center justify-between py-2">
             <Button
               variant="ghost"
               size="icon"
