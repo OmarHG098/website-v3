@@ -1,9 +1,10 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense, useState, useCallback, useEffect, useRef } from "react";
 import { useDebugAuth } from "@/hooks/useDebugAuth";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { EditModeProvider } from "@/contexts/EditModeContext";
 import { SyncProvider } from "@/contexts/SyncContext";
 import { SyncConflictBanner } from "@/components/SyncConflictBanner";
+import { PageHistoryProvider, usePageHistoryOptional } from "@/contexts/PageHistoryContext";
 import type { Section } from "@shared/schema";
 
 const SectionEditorPanel = lazy(() => 
@@ -46,7 +47,41 @@ function EditModeInner({
   locale 
 }: EditModeWrapperProps) {
   const editMode = useEditModeOptional();
+  const pageHistory = usePageHistoryOptional();
   const [localSections, setLocalSections] = useState<Section[]>(sections || []);
+  const localSectionsRef = useRef<Section[]>(localSections);
+  
+  // Keep ref in sync with state
+  useEffect(() => {
+    localSectionsRef.current = localSections;
+  }, [localSections]);
+  
+  // Sync localSections when sections prop changes (e.g., after refetch)
+  useEffect(() => {
+    if (sections) {
+      setLocalSections(sections);
+    }
+  }, [sections]);
+  
+  // Register page context with history provider
+  // Keep context registered even when exiting edit mode so undo/redo still works
+  useEffect(() => {
+    if (pageHistory && contentType && slug && locale) {
+      pageHistory.setPageContext({
+        contentType: contentType as "program" | "landing" | "location" | "page",
+        slug,
+        locale,
+        onSectionsRestore: (restoredSections: Section[]) => {
+          setLocalSections(restoredSections);
+        },
+        getCurrentSections: () => localSectionsRef.current,
+      });
+      
+      return () => {
+        pageHistory.setPageContext(null);
+      };
+    }
+  }, [pageHistory, contentType, slug, locale]);
   
   const handleSectionUpdate = useCallback((index: number, updatedSection: Section) => {
     setLocalSections(prev => {
@@ -85,6 +120,7 @@ function EditModeInner({
             locale={locale}
             onUpdate={(updated) => handleSectionUpdate(selectedSectionIndex, updated)}
             onClose={handleCloseEditor}
+            allSections={localSections}
           />
         </Suspense>
       )}
@@ -114,14 +150,16 @@ export function EditModeWrapper({
     // Provide context while loading so DebugBubble can show the toggle
     return (
       <EditModeProvider>
-        <EditModeInner 
-          sections={sections} 
-          contentType={contentType} 
-          slug={slug} 
-          locale={locale}
-        >
-          {children}
-        </EditModeInner>
+        <PageHistoryProvider enabled={true}>
+          <EditModeInner 
+            sections={sections} 
+            contentType={contentType} 
+            slug={slug} 
+            locale={locale}
+          >
+            {children}
+          </EditModeInner>
+        </PageHistoryProvider>
       </EditModeProvider>
     );
   }
@@ -135,16 +173,18 @@ export function EditModeWrapper({
   // SyncWrapper only activates when user actually enters edit mode
   return (
     <EditModeProvider>
-      <SyncWrapper>
-        <EditModeInner 
-          sections={sections} 
-          contentType={contentType} 
-          slug={slug} 
-          locale={locale}
-        >
-          {children}
-        </EditModeInner>
-      </SyncWrapper>
+      <PageHistoryProvider enabled={true}>
+        <SyncWrapper>
+          <EditModeInner 
+            sections={sections} 
+            contentType={contentType} 
+            slug={slug} 
+            locale={locale}
+          >
+            {children}
+          </EditModeInner>
+        </SyncWrapper>
+      </PageHistoryProvider>
     </EditModeProvider>
   );
 }

@@ -46,6 +46,7 @@ import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
 import * as yamlParser from "js-yaml";
 import { useUndoRedo } from "@/hooks/useUndoRedo";
+import { usePageHistoryOptional } from "@/contexts/PageHistoryContext";
 
 interface SectionEditorPanelProps {
   section: Section;
@@ -58,6 +59,7 @@ interface SectionEditorPanelProps {
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
   onPreviewChange?: (previewSection: Section | null) => void;
+  allSections?: Section[];
 }
 
 interface ShowOnPickerProps {
@@ -151,6 +153,7 @@ export function SectionEditorPanel({
   onUpdate,
   onClose,
   onPreviewChange,
+  allSections,
 }: SectionEditorPanelProps) {
   const { toast } = useToast();
   const [yamlContent, setYamlContent] = useState("");
@@ -203,6 +206,8 @@ export function SectionEditorPanel({
     handleUndoRedoRestore,
     { enableKeyboardShortcuts: true }
   );
+  
+  const pageHistory = usePageHistoryOptional();
 
   // Store initial state when section loads for undo capability
   const initialYamlRef = useRef<string | null>(null);
@@ -717,6 +722,11 @@ export function SectionEditorPanel({
 
     setIsSaving(true);
     setSaveError(null);
+    
+    // Save page snapshot for undo before making changes
+    if (pageHistory && allSections) {
+      pageHistory.pushSnapshot(allSections, `Antes de editar sección ${sectionIndex + 1}`);
+    }
 
     try {
       const result = await editContent({
@@ -776,6 +786,8 @@ export function SectionEditorPanel({
     variant,
     version,
     onUpdate,
+    pageHistory,
+    allSections,
   ]);
 
   // Save without closing editor

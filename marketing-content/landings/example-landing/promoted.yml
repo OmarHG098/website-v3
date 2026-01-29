@@ -18,7 +18,7 @@ schema:
 sections:
   - type: hero
     variant: course
-    title: not harder, apply AI at Work
+    title: Work not harder, apply AI at Work
     subtitle: Boost your career, harness the power of Applied AI.
     students_enrolled:
       avatars:
@@ -71,7 +71,7 @@ sections:
           text: Real Time AI Feedback
         - icon: calendar
           text: Workshops every week
-        - icon: users
+        - icon: IconClock
           text: Community Gatherings.
     paddingY:
       desktop: none lg

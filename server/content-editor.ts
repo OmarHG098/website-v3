@@ -175,6 +175,12 @@ function applyOperation(content: Record<string, unknown>, operation: EditOperati
       sections[operation.index] = operation.section;
       break;
     }
+    
+    case "replace_all_sections": {
+      if (!Array.isArray(operation.sections)) throw new Error("sections must be an array");
+      content.sections = operation.sections;
+      break;
+    }
   }
 }
 
