@@ -204,10 +204,24 @@ export function SectionEditorPanel({
     { enableKeyboardShortcuts: true }
   );
 
-  // Clear undo history when section changes to prevent cross-section undo
+  // Store initial state when section loads for undo capability
+  const initialYamlRef = useRef<string | null>(null);
+  
+  // Clear undo history and store initial state when section changes
   useEffect(() => {
     clearUndoHistory();
-  }, [sectionIndex, clearUndoHistory]);
+    // Store the initial YAML so we can undo back to it
+    try {
+      const yamlStr = yamlParser.dump(section, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      initialYamlRef.current = yamlStr;
+    } catch {
+      initialYamlRef.current = null;
+    }
+  }, [sectionIndex, section, clearUndoHistory]);
 
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
@@ -264,6 +278,11 @@ export function SectionEditorPanel({
 
   const handleYamlChange = useCallback(
     (value: string) => {
+      // Save the initial state on first edit so user can undo back to it
+      if (!hasChanges && initialYamlRef.current && yamlContent !== value) {
+        pushUndoState(initialYamlRef.current);
+      }
+      
       setYamlContent(value);
       setHasChanges(true);
 
@@ -282,7 +301,7 @@ export function SectionEditorPanel({
         }
       }
     },
-    [onPreviewChange],
+    [onPreviewChange, hasChanges, yamlContent, pushUndoState],
   );
 
   // Update a specific property in the YAML
@@ -728,6 +747,9 @@ export function SectionEditorPanel({
         }
         onUpdate(confirmedSection || parsed);
         setHasChanges(false);
+        
+        // Update initial state reference so next undo session starts from saved state
+        initialYamlRef.current = yamlContent;
 
         // Emit event to trigger page refresh
         emitContentUpdated({ contentType, slug, locale });
