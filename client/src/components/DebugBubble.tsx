@@ -1037,13 +1037,22 @@ export function DebugBubble() {
 
   // Detect content type from URL path
   const getContentTypeFromPath = (path: string): 'page' | 'program' | 'landing' | 'location' | null => {
-    if (path.startsWith('/us/') || path.startsWith('/es/')) {
-      const afterLocale = path.split('/').slice(2);
-      if (afterLocale[0] === 'landing') return 'landing';
-      if (afterLocale[0] === 'bootcamp' || afterLocale[0] === 'course') return 'program';
-      if (afterLocale[0] === 'coding-campus') return 'location';
-      return 'page';
-    }
+    const parts = path.split('/').filter(Boolean);
+    
+    // Check if first part is a locale
+    const hasLocale = parts[0] === 'us' || parts[0] === 'es';
+    const contentParts = hasLocale ? parts.slice(1) : parts;
+    
+    if (contentParts.length === 0) return null;
+    
+    // Check content type based on first path segment
+    if (contentParts[0] === 'landing') return 'landing';
+    if (contentParts[0] === 'bootcamp' || contentParts[0] === 'course') return 'program';
+    if (contentParts[0] === 'coding-campus') return 'location';
+    
+    // If has locale prefix, it's a page
+    if (hasLocale) return 'page';
+    
     return null;
   };
   

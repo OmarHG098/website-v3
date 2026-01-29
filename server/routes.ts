@@ -2114,7 +2114,7 @@ sections: []
         }
       }
 
-      const { slug, locale, title } = req.body;
+      const { slug, locale, title, sourceUrl } = req.body;
       
       if (!slug || !title) {
         res.status(400).json({ error: "Missing required fields: slug, title" });
@@ -2147,6 +2147,60 @@ sections: []
 
       // Create folder
       fs.mkdirSync(folderPath, { recursive: true });
+
+      // If duplicating from source, copy content from source landing
+      if (sourceUrl) {
+        try {
+          // Parse source URL to get landing slug
+          const sourceUrlObj = new URL(sourceUrl);
+          const sourcePath = sourceUrlObj.pathname;
+          const pathParts = sourcePath.split('/').filter(Boolean);
+          
+          // Landing URLs are like /landing/example-landing or /us/landing/example-landing
+          let sourceSlug = '';
+          const landingIndex = pathParts.indexOf('landing');
+          if (landingIndex !== -1 && pathParts.length > landingIndex + 1) {
+            sourceSlug = pathParts[landingIndex + 1];
+          }
+          
+          if (sourceSlug) {
+            const sourceFolderPath = path.join(process.cwd(), 'marketing-content', 'landings', sourceSlug);
+            
+            if (fs.existsSync(sourceFolderPath)) {
+              // Copy all files from source folder
+              const sourceFiles = fs.readdirSync(sourceFolderPath);
+              for (const file of sourceFiles) {
+                let content = fs.readFileSync(path.join(sourceFolderPath, file), 'utf8');
+                
+                // Replace slug in content
+                content = content.replace(new RegExp(`slug:\\s*["']?${sourceSlug}["']?`, 'g'), `slug: "${slug}"`);
+                
+                // Replace title if it's _common.yml
+                if (file === '_common.yml') {
+                  content = content.replace(/title:\s*["']?.*["']?$/m, `title: "${title}"`);
+                }
+                
+                fs.writeFileSync(path.join(folderPath, file), content);
+              }
+              
+              // Clear sitemap cache so the new content appears
+              clearSitemapCache();
+              
+              res.json({ 
+                success: true, 
+                slug,
+                locale: landingLocale,
+                folder: `marketing-content/landings/${slug}`,
+                duplicatedFrom: sourceUrl,
+              });
+              return;
+            }
+          }
+        } catch (dupError) {
+          console.error("Error duplicating landing:", dupError);
+          // Fall through to create new content if duplication fails
+        }
+      }
 
       // Create starter YAML files for landings (_common.yml and promoted.yml)
       const commonYml = `slug: "${slug}"
