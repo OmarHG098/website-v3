@@ -2,67 +2,64 @@ slug: home
 template: default
 title: The AI Reskilling Platform
 meta:
+  robots: index, follow
+  priority: 1
+  change_frequency: daily
   page_title: 4Geeks Academy | The AI Reskilling Platform
   description: Transform your career with AI-powered learning. Get personalized education, expert mentorship, and career support to launch your tech career.
   redirects:
     - /home
+schema:
+  include:
+    - organization
+    - website
+    - educational
 sections:
   - type: hero
-    variant: productShowcase
-    title: The AI Reskilling Platform
-    subtitle: Transform your career
-    description: Master in-demand tech skills with expert mentors, cutting-edge AI tools, and unlimited career support. Join thousands who've launched successful tech careers.
-    marquee:
-      items:
-        - id: switchup-2025
-          alt: SwitchUp - Best Coding Bootcamps 2025
-          logo: /attached_assets/switchup_1765590146414.webp
-          logoHeight: h-8 md:h-12
-        - id: course-report-2024
-          alt: Course Report - Best Coding Bootcamp 2024
-          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-          logoHeight: h-8 md:h-12
-        - id: newsweek
-          alt: Newsweek
-          logo: /attached_assets/newsweek_1764709608255.webp
-          logoHeight: h-8 md:h-12
-        - id: forbes
-          alt: Forbes - Top Coding Bootcamp
-          logo: /attached_assets/forbes-logo-award_1764709625651.webp
-          logoHeight: h-8 md:h-12
-        - id: fortune
-          alt: Fortune - Best Education Company
-          logo: /attached_assets/fortune-logo_1764709618095.webp
-          logoHeight: h-8 md:h-12
-      speed: 40
-      gradient: true
-      gradientWidth: 50
+    variant: showcase
+    title: Launch Your Tech Career
+    subtitle: Transform your future with real-world projects and lifelong support.
+    trust_bar:
+      rating: 4.9/5
+      rating_count: 3,000+
+      trusted_text: Trusted by students worldwide
     cta_button:
-      text: Get Started
-      url: /apply
+      text: Choose Your Path
+      url: /programs
       variant: primary
-
-  - type: features_grid
-    variant: highlight
-    title: Our mission is to get you into tech. You choose how.
-    items:
-      - icon: https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress
-        title: Fast Launch
-        description: Get started quickly with our streamlined onboarding and structured curriculum
-      - icon: https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress
-        title: Global Community
-        description: Join thousands of learners worldwide on the same journey to tech mastery
-      - icon: https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress
-        title: Self-paced courses
-        description: Learn at your own pace with expert-guided resources.
-      - icon: https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress
-        title: Career Booster
-        description: Enhance your resume, networking, and interview skills.
-
+      icon: ""
+    left_images:
+      - src: /attached_assets/community_1764717588840.png
+        alt: Community illustration
+      - src: /attached_assets/caracas-graduates_1765387638222.png
+        alt: Caracas graduates celebration
+    right_images:
+      - src: /attached_assets/fernando-funez_1765315920677.jpg
+        alt: Fernando Funez testimonial
+      - src: /attached_assets/feliz-empresario-laptop_1765406479465.png
+        alt: Happy professional with laptop
+    show_arrow: true
+    marginY:
+      desktop: md none
+  - type: image_row
+    images:
+      - id: campus-miami
+        alt: Latina student celebrating success
+        src: /attached_assets/student-4-lady-latin.png
+      - id: campus-madrid
+        alt: African student collaborating with team
+        src: /attached_assets/student-3-african.png
+      - id: campus-santiago
+        alt: Latino student working on a project
+        src: /attached_assets/student-2-latin.png
+      - src: /attached_assets/student-1-asian.png
+        alt: Asian student learning to code
+    height: 20rem
+    gap: lg
+    rounded: true
   - type: testimonials_slide
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
-
   - type: two_column
     proportions:
       - 5
@@ -81,7 +78,6 @@ sections:
     reverse_on_mobile: true
     paddingY:
       desktop: md lg
-
   - type: features_grid
     variant: highlight
     title: The Key to Your Success
@@ -96,13 +92,12 @@ sections:
       - icon: IconBriefcase
         title: Career Support
         description: Job placement assistance and interview preparation included
-
   - type: awards_row
     title: Important Awards and Top Ratings
     badges:
-      - name: "5.0 Rating"
+      - name: 5.0 Rating
         source: Course Report
-      - name: "4.9 Rating"
+      - name: 4.9 Rating
         source: SwitchUp
       - name: Best Coding Bootcamp
-        source: "2024 Awards"
+        source: 2024 Awards
