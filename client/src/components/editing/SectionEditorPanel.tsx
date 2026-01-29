@@ -268,10 +268,31 @@ export function SectionEditorPanel({
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
 
-        if (value) {
-          parsed[key] = value;
+        // Handle nested paths like "left.image" or "media.src"
+        const pathParts = key.split(".");
+        if (pathParts.length === 1) {
+          // Simple key
+          if (value) {
+            parsed[key] = value;
+          } else {
+            delete parsed[key];
+          }
         } else {
-          delete parsed[key];
+          // Nested path - traverse and set
+          let current: Record<string, unknown> = parsed;
+          for (let i = 0; i < pathParts.length - 1; i++) {
+            const part = pathParts[i];
+            if (!current[part] || typeof current[part] !== "object") {
+              current[part] = {};
+            }
+            current = current[part] as Record<string, unknown>;
+          }
+          const finalKey = pathParts[pathParts.length - 1];
+          if (value) {
+            current[finalKey] = value;
+          } else {
+            delete current[finalKey];
+          }
         }
 
         const newYaml = yamlParser.dump(parsed, {
