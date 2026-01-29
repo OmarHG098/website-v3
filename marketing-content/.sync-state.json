@@ -678,11 +678,11 @@
       "remoteSha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a"
     },
     "marketing-content/pages/home/en.yml": {
-      "sha": "83aae0687663ee82179795adf42207b0db7f45549d5f11045e835385acfb3985",
-      "lastModified": 1769649094907.634,
+      "sha": "8e1dbb3e7b31cfaa08d7465f6489d466bd582226aec204fd5c76daf941f5be97",
+      "lastModified": 1769649684708.0632,
       "remoteSha": "8d6aa1f6e3e3d0b7e0c1797fe003bebec68b729c7a3cfbc371adc6018b3f6510",
       "author": "Alejandro Sanchez",
-      "modifiedAt": "2026-01-29T01:11:34.912Z"
+      "modifiedAt": "2026-01-29T01:21:24.710Z"
     },
     "marketing-content/pages/home/es.yml": {
       "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",

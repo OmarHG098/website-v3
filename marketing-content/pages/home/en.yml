@@ -41,6 +41,18 @@ sections:
     show_arrow: true
     marginY:
       desktop: md none
+  - type: image_row
+    version: v1.0
+    images:
+      - id: campus-miami
+        alt: 4Geeks Miami campus
+      - id: campus-madrid
+        alt: 4Geeks Madrid campus
+      - id: campus-santiago
+        alt: 4Geeks Santiago campus
+    height: 20rem
+    gap: lg
+    rounded: true
   - type: testimonials_slide
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
