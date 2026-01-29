@@ -1,0 +1,12 @@
+type: image_row
+images:
+  - id: campus-miami
+    alt: "4Geeks Miami campus"
+  - id: campus-madrid
+    alt: "4Geeks Madrid campus"
+  - id: campus-santiago
+    alt: "4Geeks Santiago campus"
+
+height: "20rem"
+gap: lg
+rounded: true

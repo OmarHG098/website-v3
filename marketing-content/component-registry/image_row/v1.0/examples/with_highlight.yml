@@ -1,0 +1,21 @@
+type: image_row
+images:
+  - id: student-1
+    alt: "Student learning to code"
+  - id: student-2
+    alt: "Developer working on project"
+  - id: student-3
+    alt: "Team collaboration session"
+  - id: student-4
+    alt: "Graduate celebrating success"
+
+highlight:
+  heading: "The 'average student' doesn't exist."
+  text: "YOU DO—with your unique strengths, weaknesses and learning style."
+  background: primary
+  width: 2
+
+height: "31rem"
+mobile_height: "24rem"
+gap: md
+rounded: true
