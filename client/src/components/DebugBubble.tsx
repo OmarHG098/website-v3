@@ -3158,6 +3158,7 @@ export function DebugBubble() {
                         slug: createContentSlugEn,
                         locale: createLandingLocale,
                         title: createContentTitle || createContentSlugEn,
+                        ...(duplicatingPage ? { sourceUrl: duplicatingPage.loc } : {}),
                       }),
                     });
                     
