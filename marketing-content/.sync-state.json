@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "4f68b6e5b9f57fa4ec6393e1fef9c82b9c2a9ecb",
-  "lastSyncedAt": "2026-01-29T17:59:51.648Z",
+  "lastSyncedCommit": "7adf131687a0391445a45804f36f201842079572",
+  "lastSyncedAt": "2026-01-29T19:08:22.217Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -623,9 +623,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "a007b58ac58cf68d09301b80085fba16542c4d5a784ef35180d684862e7dfda2",
-      "lastModified": 1769709589225.5425,
-      "remoteSha": "a007b58ac58cf68d09301b80085fba16542c4d5a784ef35180d684862e7dfda2"
+      "sha": "1268557403f2f8d663b7865217d9e0aa5bac174469e18ac6c9ebbb3496ef4625",
+      "lastModified": 1769713702024.526,
+      "remoteSha": "1268557403f2f8d663b7865217d9e0aa5bac174469e18ac6c9ebbb3496ef4625"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "9f6fdf9dfe26772aefa7d6d68397d69eb0fe8ee8d88cb6d4c631f4997ff0440b",
