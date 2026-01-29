@@ -370,6 +370,7 @@ sections:
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $150
+    static_icons: true
     tech_icons:
       - python
       - tensorflow
