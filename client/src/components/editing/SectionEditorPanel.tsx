@@ -867,6 +867,71 @@ export function SectionEditorPanel({
                 const { type: editorType, variant } =
                   parseEditorType(editorTypeRaw);
 
+                // Handle simple field paths (e.g., "image" or "nested.image")
+                const isSimpleField = !fieldPath.includes("[]");
+                if (isSimpleField && editorType === "image-picker") {
+                  // Get the current value by traversing the path
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">
+                        {fieldLabel.replace(/_/g, " ")}
+                      </Label>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImagePickerTarget({
+                              fieldPath,
+                              label: fieldLabel,
+                              currentImage: currentValue,
+                            });
+                            setImagePickerOpen(true);
+                          }}
+                          className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                          data-testid={`props-image-${fieldLabel}`}
+                          title={`Change ${fieldLabel}`}
+                        >
+                          {currentValue ? (
+                            <>
+                              <img
+                                src={currentValue}
+                                alt={fieldLabel}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <IconPhoto className="h-5 w-5 text-white" />
+                              </div>
+                            </>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                            </div>
+                          )}
+                        </button>
+                        {currentValue && (
+                          <span className="text-xs text-muted-foreground truncate max-w-[150px]">
+                            {currentValue.split("/").pop()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                }
+
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
                 const match = fieldPath.match(/^([\w.]+)\[\]\.(\w+)$/);
