@@ -42,14 +42,18 @@ sections:
     marginY:
       desktop: md none
   - type: image_row
-    version: v1.0
     images:
       - id: campus-miami
-        alt: 4Geeks Miami campus
+        alt: Latina student celebrating success
+        src: /attached_assets/student-4-lady-latin.png
       - id: campus-madrid
-        alt: 4Geeks Madrid campus
+        alt: African student collaborating with team
+        src: /attached_assets/student-3-african.png
       - id: campus-santiago
-        alt: 4Geeks Santiago campus
+        alt: Latino student working on a project
+        src: /attached_assets/student-2-latin.png
+      - src: /attached_assets/student-1-asian.png
+        alt: Asian student learning to code
     height: 20rem
     gap: lg
     rounded: true
