@@ -422,6 +422,56 @@ export function SectionEditorPanel({
     [yamlContent, onPreviewChange],
   );
 
+  // Replace an entire array field
+  const updateArrayField = useCallback(
+    (arrayPath: string, newArray: Record<string, unknown>[]) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        // Support nested paths like "signup_card.features" by splitting on dots
+        const pathParts = arrayPath.split(".");
+        let current: Record<string, unknown> = parsed;
+        
+        // Traverse to the parent object containing the array
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part] || typeof current[part] !== "object") {
+            current[part] = {};
+          }
+          current = current[part] as Record<string, unknown>;
+        }
+        
+        // Set the array from the final path part
+        const arrayField = pathParts[pathParts.length - 1];
+        
+        if (newArray.length === 0) {
+          // Remove the field if array is empty
+          delete current[arrayField];
+        } else {
+          current[arrayField] = newArray;
+        }
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error updating array field:", error);
+      }
+    },
+    [yamlContent, onPreviewChange],
+  );
+
   // Get configured field editors from the component registry API
   const sectionType = (section as { type: string }).type || "";
 
@@ -432,11 +482,34 @@ export function SectionEditorPanel({
     queryKey: ["/api/component-registry/field-editors"],
   });
 
-  // Get configured fields for current section type
-  const configuredFields = useMemo(
-    () => allFieldEditors?.[sectionType] || {},
-    [allFieldEditors, sectionType],
-  );
+  // Get configured fields for current section type, filtering by variant
+  const configuredFields = useMemo(() => {
+    const rawFields = allFieldEditors?.[sectionType] || {};
+    const result: Record<string, EditorType> = {};
+    
+    // Get current variant from parsed section
+    const currentVariant = parsedSection?.variant as string | undefined;
+    
+    for (const [fieldPath, editorType] of Object.entries(rawFields)) {
+      // Check if field path has variant prefix (e.g., "productShowcase:left_images[].src")
+      const colonIndex = fieldPath.indexOf(":");
+      if (colonIndex > 0 && !fieldPath.startsWith("color-picker:")) {
+        // This is a variant-specific field
+        const variantPrefix = fieldPath.substring(0, colonIndex);
+        const actualFieldPath = fieldPath.substring(colonIndex + 1);
+        
+        // Only include if current variant matches
+        if (currentVariant === variantPrefix) {
+          result[actualFieldPath] = editorType;
+        }
+      } else {
+        // Global field - include for all variants
+        result[fieldPath] = editorType;
+      }
+    }
+    
+    return result;
+  }, [allFieldEditors, sectionType, parsedSection?.variant]);
 
   // Render icon from name using shared icon utility
   const renderIconByName = useCallback((iconName: string) => {
@@ -834,6 +907,105 @@ export function SectionEditorPanel({
                             </div>
                           );
                         })}
+                      </div>
+                    </div>
+                  );
+                }
+
+                if (editorType === "image-picker") {
+                  return (
+                    <div key={fieldPath} className="space-y-3">
+                      <Label className="text-sm font-medium capitalize">
+                        {arrayFieldLabel.replace(/_/g, " ")}
+                      </Label>
+                      <div className="space-y-2">
+                        {safeArrayData.map((item, index) => {
+                          const currentValue =
+                            (item[itemField] as string) || "";
+                          const altValue = (item.alt as string) || "";
+
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2 p-2 border rounded-md bg-muted/20"
+                            >
+                              <div className="w-16 h-12 rounded overflow-hidden bg-muted flex-shrink-0">
+                                {currentValue ? (
+                                  <img
+                                    src={currentValue}
+                                    alt={altValue || `Image ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                                    No image
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <input
+                                  type="text"
+                                  value={currentValue}
+                                  onChange={(e) =>
+                                    updateArrayItemField(
+                                      arrayPath,
+                                      index,
+                                      itemField,
+                                      e.target.value,
+                                    )
+                                  }
+                                  placeholder="Image URL"
+                                  className="w-full text-sm px-2 py-1 border rounded bg-background"
+                                  data-testid={`props-image-${arrayFieldLabel}-${index}-src`}
+                                />
+                                <input
+                                  type="text"
+                                  value={altValue}
+                                  onChange={(e) =>
+                                    updateArrayItemField(
+                                      arrayPath,
+                                      index,
+                                      "alt",
+                                      e.target.value,
+                                    )
+                                  }
+                                  placeholder="Alt text"
+                                  className="w-full text-sm px-2 py-1 border rounded bg-background mt-1"
+                                  data-testid={`props-image-${arrayFieldLabel}-${index}-alt`}
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  // Remove this item from the array
+                                  const newArray = [...safeArrayData];
+                                  newArray.splice(index, 1);
+                                  updateArrayField(arrayPath, newArray);
+                                }}
+                                className="p-1 text-muted-foreground hover:text-destructive transition-colors"
+                                data-testid={`props-image-${arrayFieldLabel}-${index}-remove`}
+                                title="Remove image"
+                              >
+                                <IconX className="h-4 w-4" />
+                              </button>
+                            </div>
+                          );
+                        })}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const defaultItem: Record<string, unknown> = {
+                              [itemField]: "",
+                              alt: "",
+                            };
+                            addArrayItem(arrayPath, defaultItem);
+                          }}
+                          className="flex items-center gap-2 px-3 py-2 text-sm rounded border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors w-full justify-center"
+                          data-testid={`props-image-${arrayFieldLabel}-add`}
+                        >
+                          <IconPlus className="h-4 w-4" />
+                          Add image
+                        </button>
                       </div>
                     </div>
                   );
