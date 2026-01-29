@@ -1,13 +1,11 @@
 type: image_row
 images:
-  # Using direct URLs
-  - src: /attached_assets/campus-miami.jpg
-    alt: "4Geeks Miami campus"
-  - src: /attached_assets/campus-madrid.jpg
-    alt: "4Geeks Madrid campus"
-  # Can also use registry IDs
-  - id: campus-santiago
-    alt: "4Geeks Santiago campus"
+  - src: /attached_assets/student-1-asian.png
+    alt: "Asian student learning to code"
+  - src: /attached_assets/student-2-latin.png
+    alt: "Latino student working on a project"
+  - src: /attached_assets/student-3-african.png
+    alt: "African student collaborating with team"
 
 height: "20rem"
 gap: lg

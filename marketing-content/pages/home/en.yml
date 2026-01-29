@@ -43,15 +43,12 @@ sections:
       desktop: md none
   - type: image_row
     images:
-      - id: campus-miami
+      - src: /attached_assets/student-4-lady-latin.png
         alt: Latina student celebrating success
-        src: /attached_assets/student-4-lady-latin.png
-      - id: campus-madrid
+      - src: /attached_assets/student-3-african.png
         alt: African student collaborating with team
-        src: /attached_assets/student-3-african.png
-      - id: campus-santiago
+      - src: /attached_assets/student-2-latin.png
         alt: Latino student working on a project
-        src: /attached_assets/student-2-latin.png
       - src: /attached_assets/student-1-asian.png
         alt: Asian student learning to code
     height: 20rem

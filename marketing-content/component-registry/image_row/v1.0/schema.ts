@@ -7,13 +7,9 @@
 import { z } from "zod";
 
 export const imageRowImageSchema = z.object({
-  id: z.string().optional().describe("Image ID from image-registry.json (use either id or src)"),
-  src: z.string().optional().describe("Direct image URL (use either id or src)"),
+  src: z.string().describe("Image URL or path"),
   alt: z.string().describe("Alt text for accessibility"),
-}).refine(
-  (data) => data.id || data.src,
-  { message: "Either 'id' or 'src' must be provided for each image" }
-);
+});
 
 export const imageRowHighlightSchema = z.object({
   heading: z.string().describe("Small heading text above main message"),
