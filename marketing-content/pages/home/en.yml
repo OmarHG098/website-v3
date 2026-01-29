@@ -16,6 +16,7 @@ schema:
     - educational
 sections:
   - type: hero
+    variant: showcase
     title: Launch Your Tech Career
     subtitle: Transform your future with real-world projects and lifelong support.
     trust_bar:
@@ -29,16 +30,15 @@ sections:
       icon: ""
     left_images:
       - src: /images/students-collab.webp
-        alt: Students collaborating on a project
+        alt: Community illustration
       - src: /images/happy-developer.webp
-        alt: Happy developer at work
+        alt: Caracas graduates celebration
     right_images:
       - src: /images/woman-coding.webp
-        alt: Woman coding on laptop
+        alt: Our story image
       - src: /images/tech-team.webp
         alt: Tech team group photo
     show_arrow: true
-    variant: showcase
   - type: features_grid
     variant: highlight
     title: Our mission is to get you into tech. You choose how.

@@ -410,6 +410,51 @@ export function SectionEditorPanel({
     [yamlContent, onPreviewChange],
   );
 
+  // Update multiple fields of an array item at once (avoids stale state issues)
+  const updateArrayItemFields = useCallback(
+    (arrayPath: string, index: number, updates: Record<string, string>) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        const pathParts = arrayPath.split(".");
+        let current: Record<string, unknown> = parsed;
+        
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part] || typeof current[part] !== "object") return;
+          current = current[part] as Record<string, unknown>;
+        }
+        
+        const arrayField = pathParts[pathParts.length - 1];
+        const array = current[arrayField] as Record<string, unknown>[] | undefined;
+        if (!Array.isArray(array) || !array[index]) return;
+
+        // Apply all updates at once
+        for (const [field, value] of Object.entries(updates)) {
+          array[index][field] = value;
+        }
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error updating array item fields:", error);
+      }
+    },
+    [yamlContent, onPreviewChange],
+  );
+
   // Add a new item to an array field
   const addArrayItem = useCallback(
     (arrayPath: string, defaultItem: Record<string, unknown>) => {
@@ -1229,17 +1274,14 @@ export function SectionEditorPanel({
                 type="button"
                 onClick={() => {
                   if (imagePickerTarget) {
-                    updateArrayItemField(
+                    // Update both src and alt in a single operation to avoid stale state
+                    updateArrayItemFields(
                       imagePickerTarget.arrayPath,
                       imagePickerTarget.index,
-                      imagePickerTarget.srcField,
-                      imagePickerTarget.currentSrc,
-                    );
-                    updateArrayItemField(
-                      imagePickerTarget.arrayPath,
-                      imagePickerTarget.index,
-                      "alt",
-                      imagePickerTarget.currentAlt,
+                      {
+                        [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
+                        alt: imagePickerTarget.currentAlt,
+                      },
                     );
                   }
                   setImagePickerOpen(false);
