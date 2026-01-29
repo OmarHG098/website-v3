@@ -37,7 +37,8 @@ import {
 } from "@/lib/field-editor-registry";
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
-import type { Section } from "@shared/schema";
+import type { Section, ImageRegistry } from "@shared/schema";
+import { IconSearch } from "@tabler/icons-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
@@ -175,6 +176,26 @@ export function SectionEditorPanel({
     currentSrc: string;
     currentAlt: string;
   } | null>(null);
+  const [imageGallerySearch, setImageGallerySearch] = useState("");
+
+  // Fetch image registry for gallery picker
+  const { data: imageRegistry } = useQuery<ImageRegistry>({
+    queryKey: ["/api/image-registry"],
+  });
+
+  // Filter gallery images based on search
+  const filteredGalleryImages = useMemo(() => {
+    if (!imageRegistry?.images) return [];
+    const searchLower = imageGallerySearch.toLowerCase();
+    return Object.entries(imageRegistry.images).filter(([id, img]) => {
+      if (!searchLower) return true;
+      return (
+        id.toLowerCase().includes(searchLower) ||
+        img.alt.toLowerCase().includes(searchLower) ||
+        img.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
+      );
+    });
+  }, [imageRegistry, imageGallerySearch]);
 
   // Parse current YAML to extract props
   const parsedSection = useMemo(() => {
@@ -1056,54 +1077,114 @@ export function SectionEditorPanel({
       />
 
       {/* Image Picker Modal */}
-      <Dialog open={imagePickerOpen} onOpenChange={setImagePickerOpen}>
-        <DialogContent className="sm:max-w-md">
+      <Dialog open={imagePickerOpen} onOpenChange={(open) => {
+        setImagePickerOpen(open);
+        if (!open) setImageGallerySearch("");
+      }}>
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Edit Image</DialogTitle>
+            <DialogTitle>Select Image</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            {imagePickerTarget?.currentSrc && (
-              <div className="w-full h-32 rounded-lg overflow-hidden bg-muted border">
-                <img
-                  src={imagePickerTarget.currentSrc}
-                  alt={imagePickerTarget.currentAlt || "Preview"}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            )}
-            <div className="space-y-2">
-              <Label htmlFor="image-url">Image URL</Label>
+          <div className="flex-1 overflow-hidden flex flex-col gap-4 py-2">
+            {/* Search bar */}
+            <div className="relative">
+              <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                id="image-url"
-                value={imagePickerTarget?.currentSrc || ""}
-                onChange={(e) => {
-                  if (imagePickerTarget) {
-                    setImagePickerTarget({
-                      ...imagePickerTarget,
-                      currentSrc: e.target.value,
-                    });
-                  }
-                }}
-                placeholder="https://example.com/image.jpg"
-                data-testid="input-image-url"
+                placeholder="Search images..."
+                value={imageGallerySearch}
+                onChange={(e) => setImageGallerySearch(e.target.value)}
+                className="pl-10"
+                data-testid="input-image-gallery-search"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="image-alt">Alt Text</Label>
-              <Input
-                id="image-alt"
-                value={imagePickerTarget?.currentAlt || ""}
-                onChange={(e) => {
-                  if (imagePickerTarget) {
-                    setImagePickerTarget({
-                      ...imagePickerTarget,
-                      currentAlt: e.target.value,
-                    });
-                  }
-                }}
-                placeholder="Describe the image"
-                data-testid="input-image-alt"
-              />
+
+            {/* Gallery grid */}
+            <div className="flex-1 overflow-y-auto min-h-0">
+              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
+                {filteredGalleryImages.slice(0, 48).map(([id, img]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => {
+                      if (imagePickerTarget) {
+                        setImagePickerTarget({
+                          ...imagePickerTarget,
+                          currentSrc: img.src,
+                          currentAlt: img.alt,
+                        });
+                      }
+                    }}
+                    className={`aspect-square rounded-md overflow-hidden bg-muted border-2 transition-colors ${
+                      imagePickerTarget?.currentSrc === img.src
+                        ? "border-primary"
+                        : "border-transparent hover:border-muted-foreground/50"
+                    }`}
+                    title={img.alt}
+                    data-testid={`gallery-image-${id}`}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+              {filteredGalleryImages.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                  No images found
+                </div>
+              )}
+            </div>
+
+            {/* Selected image preview and fields */}
+            <div className="border-t pt-4 space-y-3">
+              <div className="flex gap-3">
+                <div className="w-16 h-16 rounded-md overflow-hidden bg-muted border flex-shrink-0">
+                  {imagePickerTarget?.currentSrc ? (
+                    <img
+                      src={imagePickerTarget.currentSrc}
+                      alt={imagePickerTarget.currentAlt || "Preview"}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                      None
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1 space-y-2">
+                  <Input
+                    value={imagePickerTarget?.currentSrc || ""}
+                    onChange={(e) => {
+                      if (imagePickerTarget) {
+                        setImagePickerTarget({
+                          ...imagePickerTarget,
+                          currentSrc: e.target.value,
+                        });
+                      }
+                    }}
+                    placeholder="Image URL"
+                    className="text-sm"
+                    data-testid="input-image-url"
+                  />
+                  <Input
+                    value={imagePickerTarget?.currentAlt || ""}
+                    onChange={(e) => {
+                      if (imagePickerTarget) {
+                        setImagePickerTarget({
+                          ...imagePickerTarget,
+                          currentAlt: e.target.value,
+                        });
+                      }
+                    }}
+                    placeholder="Alt text"
+                    className="text-sm"
+                    data-testid="input-image-alt"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <DialogFooter className="flex-row gap-2 sm:justify-between">
