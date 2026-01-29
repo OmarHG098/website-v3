@@ -20,13 +20,27 @@ function isEditableElement(element: Element | null): boolean {
   if (!element) return false;
   
   const tagName = element.tagName.toLowerCase();
-  if (tagName === "input" || tagName === "textarea") return true;
+  if (tagName === "input" || tagName === "textarea" || tagName === "select") return true;
   if (element.getAttribute("contenteditable") === "true") return true;
   
   const isCodeMirror = element.closest(".cm-editor") !== null;
   if (isCodeMirror) return true;
   
+  const isRadixSelect = element.closest("[data-radix-select-viewport]") !== null;
+  if (isRadixSelect) return true;
+  
   return false;
+}
+
+function safeClone<T>(value: T): T {
+  try {
+    return structuredClone(value);
+  } catch {
+    if (typeof value === "string") {
+      return value;
+    }
+    return JSON.parse(JSON.stringify(value));
+  }
 }
 
 export function useUndoRedo<T>(
@@ -54,7 +68,7 @@ export function useUndoRedo<T>(
     if (isRestoringRef.current) return;
     
     setHistory(prev => {
-      const newUndoStack = [...prev.undoStack, structuredClone(state)];
+      const newUndoStack = [...prev.undoStack, safeClone(state)];
       if (newUndoStack.length > MAX_HISTORY_SIZE) {
         newUndoStack.shift();
       }
@@ -74,7 +88,7 @@ export function useUndoRedo<T>(
       const newUndoStack = [...prev.undoStack];
       const stateToRestore = newUndoStack.pop()!;
       
-      const newRedoStack = [...prev.redoStack, structuredClone(currentStateRef.current)];
+      const newRedoStack = [...prev.redoStack, safeClone(currentStateRef.current)];
       if (newRedoStack.length > MAX_HISTORY_SIZE) {
         newRedoStack.shift();
       }
@@ -107,7 +121,7 @@ export function useUndoRedo<T>(
       const newRedoStack = [...prev.redoStack];
       const stateToRestore = newRedoStack.pop()!;
       
-      const newUndoStack = [...prev.undoStack, structuredClone(currentStateRef.current)];
+      const newUndoStack = [...prev.undoStack, safeClone(currentStateRef.current)];
       if (newUndoStack.length > MAX_HISTORY_SIZE) {
         newUndoStack.shift();
       }

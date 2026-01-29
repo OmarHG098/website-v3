@@ -12,6 +12,8 @@ import {
   IconCheck,
   IconAlertTriangle,
   IconPlus,
+  IconArrowBackUp,
+  IconArrowForwardUp,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -43,6 +45,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
 import * as yamlParser from "js-yaml";
+import { useUndoRedo } from "@/hooks/useUndoRedo";
 
 interface SectionEditorPanelProps {
   section: Section;
@@ -179,6 +182,33 @@ export function SectionEditorPanel({
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
 
+  const handleUndoRedoRestore = useCallback((content: string) => {
+    setYamlContent(content);
+    setHasChanges(true);
+    try {
+      const parsed = yamlParser.load(content) as Section;
+      setParseError(null);
+      if (parsed && typeof parsed === "object" && onPreviewChange) {
+        onPreviewChange(parsed);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setParseError(error.message);
+      }
+    }
+  }, [onPreviewChange]);
+
+  const { pushState: pushUndoState, canUndo, canRedo, undo, redo, clear: clearUndoHistory } = useUndoRedo(
+    yamlContent,
+    handleUndoRedoRestore,
+    { enableKeyboardShortcuts: true }
+  );
+
+  // Clear undo history when section changes to prevent cross-section undo
+  useEffect(() => {
+    clearUndoHistory();
+  }, [sectionIndex, clearUndoHistory]);
+
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
     queryKey: ["/api/image-registry"],
@@ -262,6 +292,8 @@ export function SectionEditorPanel({
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
 
+        pushUndoState(yamlContent);
+
         if (value) {
           parsed[key] = value;
         } else {
@@ -286,7 +318,7 @@ export function SectionEditorPanel({
         console.error("Error updating property:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update an array property in the YAML (e.g., related_features)
@@ -296,6 +328,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Build ordered result with related_features after title
         const buildOrderedResult = (
@@ -368,7 +402,7 @@ export function SectionEditorPanel({
         console.error("Error updating array property:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update a specific field in an array item (supports nested paths like "signup_card.features")
@@ -377,6 +411,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -415,7 +451,7 @@ export function SectionEditorPanel({
         console.error("Error updating array item:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update multiple fields of an array item at once (avoids stale state issues)
@@ -424,6 +460,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         const pathParts = arrayPath.split(".");
         let current: Record<string, unknown> = parsed;
@@ -460,7 +498,7 @@ export function SectionEditorPanel({
         console.error("Error updating array item fields:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Add a new item to an array field
@@ -469,6 +507,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -511,7 +551,7 @@ export function SectionEditorPanel({
         console.error("Error adding array item:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Replace an entire array field
@@ -520,6 +560,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -561,7 +603,7 @@ export function SectionEditorPanel({
         console.error("Error updating array field:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Get configured field editors from the component registry API
@@ -754,19 +796,41 @@ export function SectionEditorPanel({
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div>
-          <h2 className="font-semibold">Edit Section</h2>
+          <h2 className="font-semibold">Editar Sección</h2>
           <p className="text-sm text-muted-foreground">
-            {sectionType} (Section {sectionIndex + 1})
+            {sectionType} (Sección {sectionIndex + 1})
           </p>
         </div>
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={handleClose}
-          data-testid="button-close-editor"
-        >
-          <IconX className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-1">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={undo}
+            disabled={!canUndo}
+            title="Deshacer (Ctrl+Z)"
+            data-testid="button-undo"
+          >
+            <IconArrowBackUp className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={redo}
+            disabled={!canRedo}
+            title="Rehacer (Ctrl+Shift+Z)"
+            data-testid="button-redo"
+          >
+            <IconArrowForwardUp className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleClose}
+            data-testid="button-close-editor"
+          >
+            <IconX className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Tabs */}
