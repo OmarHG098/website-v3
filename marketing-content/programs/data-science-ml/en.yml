@@ -266,7 +266,8 @@ sections:
         title: Progress faster with AI-powered tools
         description: ""
         show_rigobot_logo: true
-        preview_image_url: https://s1.significados.com/foto/paisaje-og.jpg?class=ogImageSquare
+        video:
+          preview_image_url: https://s1.significados.com/foto/paisaje-og.jpg?class=ogImageSquare
         bullets:
           - text: Get instant feedback from Rigobot, our custom AI tutor
           - text: Gives advice adjusted to your skill level and progress
