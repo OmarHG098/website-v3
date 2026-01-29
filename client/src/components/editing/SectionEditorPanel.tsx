@@ -1336,17 +1336,22 @@ export function SectionEditorPanel({
               variant="destructive"
               onClick={() => {
                 if (imagePickerTarget) {
-                  // Get current array and remove this item
-                  const pathParts = imagePickerTarget.arrayPath.split(".");
-                  let current: Record<string, unknown> | null = parsedSection;
-                  for (let i = 0; i < pathParts.length - 1 && current; i++) {
-                    current = current[pathParts[i]] as Record<string, unknown> | null;
+                  if (imagePickerTarget.fieldPath) {
+                    // Simple field - clear the value
+                    updateProperty(imagePickerTarget.fieldPath, "");
+                  } else if (imagePickerTarget.arrayPath && imagePickerTarget.index !== undefined) {
+                    // Array field - remove this item
+                    const pathParts = imagePickerTarget.arrayPath.split(".");
+                    let current: Record<string, unknown> | null = parsedSection;
+                    for (let i = 0; i < pathParts.length - 1 && current; i++) {
+                      current = current[pathParts[i]] as Record<string, unknown> | null;
+                    }
+                    const arrayField = pathParts[pathParts.length - 1];
+                    const array = current?.[arrayField] as Record<string, unknown>[] || [];
+                    const newArray = [...array];
+                    newArray.splice(imagePickerTarget.index, 1);
+                    updateArrayField(imagePickerTarget.arrayPath, newArray);
                   }
-                  const arrayField = pathParts[pathParts.length - 1];
-                  const array = current?.[arrayField] as Record<string, unknown>[] || [];
-                  const newArray = [...array];
-                  newArray.splice(imagePickerTarget.index, 1);
-                  updateArrayField(imagePickerTarget.arrayPath, newArray);
                 }
                 setImagePickerOpen(false);
                 setImagePickerTarget(null);
@@ -1372,15 +1377,20 @@ export function SectionEditorPanel({
                 type="button"
                 onClick={() => {
                   if (imagePickerTarget) {
-                    // Update both src and alt in a single operation to avoid stale state
-                    updateArrayItemFields(
-                      imagePickerTarget.arrayPath,
-                      imagePickerTarget.index,
-                      {
-                        [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
-                        alt: imagePickerTarget.currentAlt,
-                      },
-                    );
+                    if (imagePickerTarget.fieldPath) {
+                      // Simple field - update directly
+                      updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
+                    } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
+                      // Array field - update both src and alt in a single operation
+                      updateArrayItemFields(
+                        imagePickerTarget.arrayPath,
+                        imagePickerTarget.index,
+                        {
+                          [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
+                          alt: imagePickerTarget.currentAlt,
+                        },
+                      );
+                    }
                   }
                   setImagePickerOpen(false);
                   setImagePickerTarget(null);
