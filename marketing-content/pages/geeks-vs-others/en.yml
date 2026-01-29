@@ -23,6 +23,8 @@ sections:
     image:
       src: /attached_assets/unsplash_QckxruozjRg_1765395521123.png
       alt: Students coding together at a table with laptops
+    paddingY:
+      desktop: none lg
   - type: comparison_table
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
@@ -69,22 +71,27 @@ sections:
         values:
           - None
           - Entry tests or prior coding experience
-  - type: features_grid
+    paddingY:
+      desktop: md lg
+    marginY:
+      desktop: none md
+  - type: two_column_accordion_card
     version: "1.0"
-    variant: highlight
     title: Hyperpersonalized Learning & Support That Lasts a Lifetime
-    subtitle: Most bootcamps give you limited mentorship hours and leave you once you're hired. At 4Geeks, we built an entire support system around personalization.
-    items:
-      - icon: Users
-        title: Unlimited 1:1 Mentorship
-        description: Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role, our mentors are always just a message away.
-      - icon: Robot
-        title: AI-Powered Feedback
-        description: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
-      - icon: Headset
-        title: Lifelong Career Support
-        description: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing roles or leveling up.
-    columns: 3
+    description: Most bootcamps give you limited mentorship hours and leave you once you're hired. At 4Geeks, we built an entire support system around personalization.
+    bullets:
+      - heading: Unlimited 1:1 Mentorship
+        text: Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role, our mentors are always just a message away.
+      - heading: AI-Powered Feedback
+        text: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
+      - heading: Lifelong Career Support
+        text: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing r
+    image: https://example.com/course-benefits.png
+    image_alt: Graduate celebrating success
+    reverse: true
+    paddingY:
+      desktop: lg
+    background: hsl(var(--muted))
   - type: two_column
     version: "1.0"
     variant: benefitCards
