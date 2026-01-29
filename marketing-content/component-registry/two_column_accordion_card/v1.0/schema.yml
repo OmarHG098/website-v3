@@ -11,6 +11,13 @@ schema:
       type: string
       const: two_column_accordion_card
       description: Section type identifier
+    variant:
+      type: string
+      enum:
+        - default
+        - image_background
+      description: Visual style variant. "default" shows image in plain container, "image_background" shows smaller image on colored background
+      default: default
     version:
       type: string
       description: Schema version
