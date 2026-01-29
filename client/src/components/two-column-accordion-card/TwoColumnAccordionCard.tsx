@@ -1,4 +1,4 @@
-import type { TwoColumnAccordionCardSection, TwoColumnAccordionCardImageBackgroundSection } from "@shared/schema";
+import type { TwoColumnAccordionCardSection } from "@shared/schema";
 import { TwoColumnAccordionCardDefault } from "./TwoColumnAccordionCardDefault";
 import { TwoColumnAccordionCardImageBackground } from "./TwoColumnAccordionCardImageBackground";
 
@@ -11,7 +11,7 @@ export function TwoColumnAccordionCard({ data }: TwoColumnAccordionCardProps) {
   
   switch (variant) {
     case "image_background":
-      return <TwoColumnAccordionCardImageBackground data={data as TwoColumnAccordionCardImageBackgroundSection} />;
+      return <TwoColumnAccordionCardImageBackground data={data} />;
     case "default":
     default:
       return <TwoColumnAccordionCardDefault data={data} />;

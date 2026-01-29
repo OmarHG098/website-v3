@@ -627,6 +627,7 @@ export const twoColumnAccordionCardBulletSchema = z.object({
 
 export const twoColumnAccordionCardSectionSchema = z.object({
   type: z.literal("two_column_accordion_card"),
+  variant: z.enum(["default", "image_background"]).optional(),
   version: z.string().optional(),
   title: z.string().optional(),
   description: z.string().optional(),

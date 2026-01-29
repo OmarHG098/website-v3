@@ -181,7 +181,7 @@ const LeadForm = lazy(() => import("@/components/LeadForm").then(m => ({ default
 const ApplyFormSection = lazy(() => import("@/components/ApplyFormSection").then(m => ({ default: m.ApplyFormSection })));
 const HumanAndAIDuo = lazy(() => import("@/components/HumanAndAIDuo").then(m => ({ default: m.HumanAndAIDuo })));
 const CommunitySupport = lazy(() => import("@/components/CommunitySupport").then(m => ({ default: m.CommunitySupport })));
-const TwoColumnAccordionCard = lazy(() => import("@/components/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
+const TwoColumnAccordionCard = lazy(() => import("@/components/two-column-accordion-card/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
 const BulletTabsShowcase = lazy(() => import("@/components/BulletTabsShowcase").then(m => ({ default: m.BulletTabsShowcase })));
 const GraduatesStats = lazy(() => import("@/components/graduates_stats").then(m => ({ default: m.GraduatesStats })));
 const ValueProofPanel = lazy(() => import("@/components/ValueProofPanel").then(m => ({ default: m.ValueProofPanel })));
