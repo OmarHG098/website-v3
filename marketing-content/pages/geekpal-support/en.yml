@@ -72,7 +72,34 @@ sections:
     background: bg-background
     paddingY:
       mobile: sm none
-      desktop: lg none
+      desktop: md none
+  - type: community_support
+    version: "1.0"
+    heading: A Global Developer Community Supporting Your Growth
+    description: 4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
+    background: bg-primary/5
+    image: /attached_assets/Group-6606.webp
+    image_alt: 4Geeks global developer community
+    bullet_groups:
+      - title: Slack Community
+        badge: 6,000+ Members
+        icon: BrandSlack
+        accent_color: primary
+        description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
+        button:
+          text: Join Now
+          url: https://4geeks.com/slack
+          variant: primary
+      - title: 4Geeks.com
+        icon: Rigobot
+        accent_color: primary
+        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
+        button:
+          text: Visit Now
+          url: https://4geeks.com
+          variant: primary
+    paddingY:
+      desktop: none md
   - type: bento_cards
     version: "1.0"
     title: 7 Ways Rigobot Keeps You Moving
@@ -101,33 +128,6 @@ sections:
       - icon: Clock
         title: 24/7 Availability
         description: Get help whenever you need it, no waiting for office hours.
-  - type: community_support
-    version: "1.0"
-    heading: A Global Developer Community Supporting Your Growth
-    description: 4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
-    background: bg-primary/5
-    image: /attached_assets/Group-6606.webp
-    image_alt: 4Geeks global developer community
-    bullet_groups:
-      - title: Slack Community
-        badge: 6,000+ Members
-        icon: BrandSlack
-        accent_color: primary
-        description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
-        button:
-          text: Join Now
-          url: https://4geeks.com/slack
-          variant: primary
-      - title: 4Geeks.com
-        icon: Rigobot
-        accent_color: primary
-        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
-        button:
-          text: Visit Now
-          url: https://4geeks.com
-          variant: primary
-    paddingY:
-      desktop: none md
   - type: two_column
     version: "1.0"
     proportions:
