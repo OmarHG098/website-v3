@@ -379,6 +379,7 @@ sections:
       - git
       - jupyter
       - api
+    static_icons: true
     features_title: Choose the option that fits you best.
     features:
       - icon: IconCheck
