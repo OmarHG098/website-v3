@@ -39,22 +39,8 @@ sections:
       - src: /attached_assets/feliz-empresario-laptop_1765406479465.png
         alt: Happy professional with laptop
     show_arrow: true
-  - type: features_grid
-    variant: highlight
-    title: Our mission is to get you into tech. You choose how.
-    items:
-      - icon: https://images.prismic.io/4geeks/aBu1IydWJ-7kRuaG_imagen_2025-05-07_153146531.png?auto=format,compress
-        title: Fast Launch
-        description: Get started quickly with our streamlined onboarding and structured curriculum
-      - icon: https://images.prismic.io/4geeks/aBu4FydWJ-7kRub-_imagen_2025-05-07_154423512.png?auto=format,compress
-        title: Global Community
-        description: Join thousands of learners worldwide on the same journey to tech mastery
-      - icon: https://images.prismic.io/4geeks/aBu2USdWJ-7kRuat_imagen_2025-05-07_153648922.png?auto=format,compress
-        title: Self-paced courses
-        description: Learn at your own pace with expert-guided resources.
-      - icon: https://images.prismic.io/4geeks/aBu2kidWJ-7kRua__imagen_2025-05-07_153754062.png?auto=format,compress
-        title: Career Booster
-        description: Enhance your resume, networking, and interview skills.
+    marginY:
+      desktop: md none
   - type: testimonials_slide
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
