@@ -132,8 +132,8 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
               key={index}
               className={`absolute w-56 transform transition-transform duration-brand ease-brand hover:rotate-0 hover:scale-[1.02] ${
                 index === 0 
-                  ? "top-[94px] right-0 rotate-6 z-30" 
-                  : "top-[222px] right-[100px] -rotate-3 z-20"
+                  ? "top-[94px] right-0 rotate-6 z-20" 
+                  : "top-[222px] right-[100px] -rotate-3 z-30"
               }`}
               style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
             >
