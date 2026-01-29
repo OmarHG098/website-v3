@@ -613,3 +613,13 @@ export function discardLocalChanges(filePath: string): boolean {
   saveSyncState(state);
   return true;
 }
+
+export function removeFileFromState(filePath: string): void {
+  const relativePath = filePath.startsWith('marketing-content/') 
+    ? filePath 
+    : `marketing-content/${filePath}`;
+  
+  const state = loadSyncState();
+  delete state.files[relativePath];
+  saveSyncState(state);
+}

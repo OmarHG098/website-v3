@@ -3,6 +3,7 @@ import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
+import { buildContentUrl, type ContentType } from "@shared/slugMappings";
 import {
   IconBug,
   IconMap,
@@ -54,6 +55,7 @@ import {
   IconFile,
   IconTrash,
   IconDeviceFloppy,
+  IconMenu2,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -85,6 +87,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useDebugAuth, getDebugToken, getDebugUserName } from "@/hooks/useDebugAuth";
 import { locations } from "@/lib/locations";
 import { normalizeLocale } from "@shared/locale";
+import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
+import { useQuery } from "@tanstack/react-query";
 
 const componentsList = [
   { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
@@ -112,7 +116,7 @@ const componentsList = [
   { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
 ];
 
-type MenuView = "main" | "components" | "sitemap" | "experiments";
+type MenuView = "main" | "components" | "sitemap" | "experiments" | "menus";
 
 const STORAGE_KEY = "debug-bubble-menu-view";
 
@@ -247,12 +251,110 @@ function detectContentInfo(pathname: string): ContentInfo {
 const getPersistedMenuView = (): MenuView => {
   if (typeof window !== "undefined") {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments") {
+    if (stored === "main" || stored === "components" || stored === "sitemap" || stored === "experiments" || stored === "menus") {
       return stored;
     }
   }
   return "main";
 };
+
+interface MenuItem {
+  name: string;
+  file: string;
+}
+
+interface MenuData {
+  navbar?: {
+    items?: Array<{
+      label: string;
+      href: string;
+      component: string;
+      dropdown?: unknown;
+    }>;
+  };
+}
+
+function MenusView() {
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  
+  const { data: menusData, isLoading } = useQuery<{ menus: MenuItem[] }>({
+    queryKey: ["/api/menus"],
+  });
+  
+  const { data: menuDetailData, isFetching: isMenuLoading } = useQuery<{ name: string; data: MenuData }>({
+    queryKey: ["/api/menus", expandedMenu],
+    enabled: !!expandedMenu,
+  });
+
+  const menus = menusData?.menus || [];
+  const menuData = menuDetailData?.data;
+
+  const toggleMenu = (name: string) => {
+    setExpandedMenu(expandedMenu === name ? null : name);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (menus.length === 0) {
+    return (
+      <div className="text-center py-8 px-4">
+        <IconMenu2 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+        <p className="text-sm text-muted-foreground mb-2">No menus found</p>
+        <p className="text-xs text-muted-foreground">
+          Add <code className="bg-muted px-1 rounded">.yml</code> files to{" "}
+          <code className="bg-muted px-1 rounded">marketing-content/menus/</code>
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {menus.map((menu) => (
+        <div key={menu.name} className="mb-1">
+          <button
+            onClick={() => toggleMenu(menu.name)}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+            data-testid={`button-menu-${menu.name}`}
+          >
+            {isMenuLoading && expandedMenu === menu.name ? (
+              <IconRefresh className="h-4 w-4 text-muted-foreground animate-spin flex-shrink-0" />
+            ) : expandedMenu === menu.name ? (
+              <IconChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            ) : (
+              <IconChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            )}
+            <IconMenu2 className="h-4 w-4 text-primary flex-shrink-0" />
+            <span className="font-medium">{menu.name}</span>
+            <span className="text-xs text-muted-foreground ml-auto">{menu.file}</span>
+          </button>
+
+          {expandedMenu === menu.name && menuData && (
+            <div className="ml-4 border-l pl-2 space-y-1 mt-1">
+              {menuData?.navbar?.items?.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="flex items-center justify-between px-3 py-1.5 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer"
+                  data-testid={`link-menu-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  <span>{item.label}</span>
+                  <span className="text-xs opacity-60">{item.component}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
 
 // Edit Mode Toggle Component - uses optional hook to handle being outside provider
 function EditModeToggle() {
@@ -343,6 +445,19 @@ export function DebugBubble() {
   // Advanced options state
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState(false);
   const [isIgnoringAllChanges, setIsIgnoringAllChanges] = useState(false);
+  
+  // Create content modal state
+  const [createContentModalOpen, setCreateContentModalOpen] = useState(false);
+  const [createContentType, setCreateContentType] = useState<'location' | 'page' | 'program' | 'landing'>('page');
+  const [createContentTitle, setCreateContentTitle] = useState("");
+  const [createContentSlugEn, setCreateContentSlugEn] = useState("");
+  const [createContentSlugEs, setCreateContentSlugEs] = useState("");
+  const [createContentSlugEnStatus, setCreateContentSlugEnStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [createContentSlugEsStatus, setCreateContentSlugEsStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [editingSlugEn, setEditingSlugEn] = useState(false);
+  const [editingSlugEs, setEditingSlugEs] = useState(false);
+  const [isCreatingContent, setIsCreatingContent] = useState(false);
+  const [createLandingLocale, setCreateLandingLocale] = useState<'en' | 'es'>('en');
   
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
@@ -1335,6 +1450,18 @@ export function DebugBubble() {
                   </div>
                 </a>
                 
+                <button
+                  onClick={() => setMenuView("menus")}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="button-menus-menu"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconMenu2 className="h-4 w-4 text-muted-foreground" />
+                    <span>Menus</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
+                
                 {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
                   <button
@@ -1655,6 +1782,30 @@ export function DebugBubble() {
                 </div>
               </ScrollArea>
             </>
+          ) : menuView === "menus" ? (
+            <>
+              <div className="px-3 py-2 border-b">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setMenuView("main")}
+                    className="p-1 rounded-md hover-elevate"
+                    data-testid="button-back-to-main-menus"
+                  >
+                    <IconArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div>
+                    <h3 className="font-semibold text-sm">Menus</h3>
+                    <p className="text-xs text-muted-foreground">Navigation menu configurations</p>
+                  </div>
+                </div>
+              </div>
+              
+              <ScrollArea className="h-[280px]">
+                <div className="p-2 space-y-1">
+                  <MenusView />
+                </div>
+              </ScrollArea>
+            </>
           ) : (
             <>
               <div className="px-3 py-2 border-b">
@@ -1673,6 +1824,14 @@ export function DebugBubble() {
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setCreateContentModalOpen(true)}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Create new content"
+                      data-testid="button-create-content"
+                    >
+                      <IconPlus className="h-4 w-4 text-muted-foreground" />
+                    </button>
                     <button
                       onClick={() => setShowSitemapSearch(!showSitemapSearch)}
                       className={`p-1.5 rounded hover-elevate ${showSitemapSearch ? 'bg-muted' : ''}`}
@@ -1750,14 +1909,10 @@ export function DebugBubble() {
                                   <a
                                     key={`${folder.name}-${urlIndex}-${url.loc}`}
                                     href={path}
-                                    className="flex items-center gap-3 px-3 py-1.5 rounded-md text-sm hover-elevate cursor-pointer"
+                                    className="block px-3 py-1 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer truncate"
                                     data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
                                   >
-                                    <IconMap className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                                    <div className="flex-1 min-w-0">
-                                      <div className="font-medium text-sm">{url.label}</div>
-                                      <div className="text-xs text-muted-foreground truncate">{path}</div>
-                                    </div>
+                                    {path}
                                   </a>
                                 );
                               })}
@@ -1771,14 +1926,10 @@ export function DebugBubble() {
                           <a
                             key={`root-${urlIndex}-${url.loc}`}
                             href={path}
-                            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                            className="block px-3 py-1.5 rounded-md text-xs text-muted-foreground hover-elevate cursor-pointer truncate"
                             data-testid={`link-sitemap-url-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
                           >
-                            <IconMap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <div className="font-medium">{url.label}</div>
-                              <div className="text-xs text-muted-foreground truncate">{path}</div>
-                            </div>
+                            {path}
                           </a>
                         );
                       })}
@@ -2295,51 +2446,49 @@ export function DebugBubble() {
               )}
             </div>
             
-            {/* Advanced Options */}
-            {pendingChanges.some(c => c.source === 'local' || c.source === 'conflict') && (
-              <div className="border-t pt-3">
-                <button
-                  type="button"
-                  onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
-                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="button-toggle-advanced-options"
-                >
-                  {advancedOptionsOpen ? (
-                    <IconChevronDown className="h-3.5 w-3.5" />
-                  ) : (
-                    <IconChevronRight className="h-3.5 w-3.5" />
-                  )}
-                  Advanced options
-                </button>
-                
-                {advancedOptionsOpen && (
-                  <div className="mt-3 p-3 bg-muted/50 rounded-md space-y-2">
-                    <p className="text-xs text-muted-foreground">
-                      Discard all your local changes and reset to the remote version.
-                    </p>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={handleIgnoreAllChanges}
-                      disabled={isIgnoringAllChanges}
-                      data-testid="button-ignore-all-changes"
-                    >
-                      {isIgnoringAllChanges ? (
-                        <>
-                          <IconRefresh className="h-3.5 w-3.5 mr-1.5 animate-spin" />
-                          Resetting...
-                        </>
-                      ) : (
-                        <>
-                          <IconTrash className="h-3.5 w-3.5 mr-1.5" />
-                          Ignore all my local changes
-                        </>
-                      )}
-                    </Button>
-                  </div>
+            {/* Advanced Options - always visible */}
+            <div className="border-t pt-3">
+              <button
+                type="button"
+                onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                data-testid="button-toggle-advanced-options"
+              >
+                {advancedOptionsOpen ? (
+                  <IconChevronDown className="h-3.5 w-3.5" />
+                ) : (
+                  <IconChevronRight className="h-3.5 w-3.5" />
                 )}
-              </div>
-            )}
+                Advanced options
+              </button>
+              
+              {advancedOptionsOpen && (
+                <div className="mt-3 p-3 bg-muted/50 rounded-md space-y-2">
+                  <p className="text-xs text-muted-foreground">
+                    Discard all your local changes and reset to the remote version.
+                  </p>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleIgnoreAllChanges}
+                    disabled={isIgnoringAllChanges || !pendingChanges.some(c => c.source === 'local' || c.source === 'conflict')}
+                    data-testid="button-ignore-all-changes"
+                  >
+                    {isIgnoringAllChanges ? (
+                      <>
+                        <IconRefresh className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                        Resetting...
+                      </>
+                    ) : (
+                      <>
+                        <IconTrash className="h-3.5 w-3.5 mr-1.5" />
+                        Ignore all my local changes
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
 
           <DialogFooter>
@@ -2493,6 +2642,547 @@ export function DebugBubble() {
                 <>
                   <IconCloudDownload className="h-4 w-4 mr-2" />
                   Download and Override mine
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Create Content Modal */}
+      <Dialog open={createContentModalOpen} onOpenChange={(open) => {
+        setCreateContentModalOpen(open);
+        if (!open) {
+          setCreateContentTitle("");
+          setCreateContentSlugEn("");
+          setCreateContentSlugEs("");
+          setCreateContentSlugEnStatus('idle');
+          setCreateContentSlugEsStatus('idle');
+          setEditingSlugEn(false);
+          setEditingSlugEs(false);
+          setCreateContentType('page');
+        }
+      }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconPlus className="h-5 w-5" />
+              Create New Content
+            </DialogTitle>
+            <DialogDescription>
+              Create a new page, location, program, or landing with starter YAML files.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Content Type</label>
+              <div className="flex items-center gap-2">
+                <Select 
+                  value={createContentType} 
+                  onValueChange={(v) => {
+                    setCreateContentType(v as 'location' | 'page' | 'program' | 'landing');
+                    // Re-validate slugs with new type (skip for landing - uses different validation)
+                    if (v !== 'landing') {
+                      if (createContentSlugEn) {
+                        setCreateContentSlugEnStatus('checking');
+                        fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEn}&locale=en`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEnStatus('idle'));
+                      }
+                      if (createContentSlugEs) {
+                        setCreateContentSlugEsStatus('checking');
+                        fetch(`/api/content/check-slug?type=${v}&slug=${createContentSlugEs}&locale=es`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEsStatus('idle'));
+                      }
+                    } else {
+                      // For landings, validate single slug
+                      if (createContentSlugEn) {
+                        setCreateContentSlugEnStatus('checking');
+                        fetch(`/api/content/check-slug?type=landing&slug=${createContentSlugEn}`)
+                          .then(res => res.json())
+                          .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                          .catch(() => setCreateContentSlugEnStatus('idle'));
+                      }
+                    }
+                  }}
+                >
+                  <SelectTrigger data-testid="select-content-type" className={createContentType === 'landing' ? 'flex-1' : 'w-full'}>
+                    <SelectValue placeholder="Select type..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="page">Page</SelectItem>
+                    <SelectItem value="program">Program</SelectItem>
+                    <SelectItem value="location">Location</SelectItem>
+                    <SelectItem value="landing">Landing</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                {createContentType === 'landing' && (
+                  <Select value={createLandingLocale} onValueChange={(v) => setCreateLandingLocale(v as 'en' | 'es')}>
+                    <SelectTrigger className="w-36" data-testid="select-landing-locale">
+                      <SelectValue>
+                        <span className="flex items-center gap-2">
+                          <LocaleFlag locale={createLandingLocale} />
+                          <span>{createLandingLocale === 'en' ? 'English' : 'Spanish'}</span>
+                        </span>
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">
+                        <span className="flex items-center gap-2">
+                          <LocaleFlag locale="en" />
+                          <span>English</span>
+                        </span>
+                      </SelectItem>
+                      <SelectItem value="es">
+                        <span className="flex items-center gap-2">
+                          <LocaleFlag locale="es" />
+                          <span>Spanish</span>
+                        </span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Title</label>
+              <input
+                type="text"
+                value={createContentTitle}
+                onChange={(e) => {
+                  const title = e.target.value;
+                  setCreateContentTitle(title);
+                  const slug = title
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+                  setCreateContentSlugEn(slug);
+                  setCreateContentSlugEs(slug);
+                  if (slug) {
+                    if (createContentType === 'landing') {
+                      // Landings: single slug validation
+                      setCreateContentSlugEnStatus('checking');
+                      fetch(`/api/content/check-slug?type=landing&slug=${slug}`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                    } else {
+                      // Other types: validate both EN/ES slugs
+                      setCreateContentSlugEnStatus('checking');
+                      setCreateContentSlugEsStatus('checking');
+                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEnStatus('idle'));
+                      fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
+                        .then(res => res.json())
+                        .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                        .catch(() => setCreateContentSlugEsStatus('idle'));
+                    }
+                  } else {
+                    setCreateContentSlugEnStatus('idle');
+                    setCreateContentSlugEsStatus('idle');
+                  }
+                }}
+                placeholder="e.g., Career Development Guide"
+                className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                data-testid="input-content-title"
+              />
+            </div>
+            
+            {createContentSlugEn && createContentType === 'landing' && (
+              <div className="space-y-3 p-3 bg-muted/50 rounded-md">
+                {/* Single slug for landings */}
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">Sitemap URL:</p>
+                  <div className="flex items-center gap-2">
+                    {editingSlugEn ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">/landing/</span>
+                        <input
+                          type="text"
+                          value={createContentSlugEn}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEn(slug);
+                            if (slug) {
+                              setCreateContentSlugEnStatus('checking');
+                              fetch(`/api/content/check-slug?type=landing&slug=${slug}`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEnStatus('idle'));
+                            } else {
+                              setCreateContentSlugEnStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-landing"
+                          autoFocus
+                          onBlur={() => setEditingSlugEn(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEn(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEn(true)}
+                        data-testid="url-preview-landing"
+                      >
+                        /landing/{createContentSlugEn}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEn(!editingSlugEn)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit slug"
+                      data-testid="button-edit-slug-landing"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEnStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEnStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEnStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                  </div>
+                  {createContentSlugEnStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">This slug is already taken</p>
+                  )}
+                </div>
+                
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground">Files that will be created:</p>
+                  <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
+                    <div>marketing-content/landings/{createContentSlugEn}/</div>
+                    <div className="pl-4">├── _common.yml</div>
+                    <div className="pl-4">└── promoted.yml</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {createContentSlugEn && createContentType !== 'landing' && (
+              <div className="space-y-3 p-3 bg-muted/50 rounded-md">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">URLs that will be created:</p>
+                  
+                  {/* English URL Row */}
+                  <div className="flex items-center gap-2">
+                    {editingSlugEn ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">
+                          {buildContentUrl(createContentType as ContentType, '', 'en').slice(0, -1)}
+                        </span>
+                        <input
+                          type="text"
+                          value={createContentSlugEn}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEn(slug);
+                            if (slug) {
+                              setCreateContentSlugEnStatus('checking');
+                              fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=en`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEnStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEnStatus('idle'));
+                            } else {
+                              setCreateContentSlugEnStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-en"
+                          autoFocus
+                          onBlur={() => setEditingSlugEn(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEn(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEn(true)}
+                        data-testid="url-preview-en"
+                      >
+                        {buildContentUrl(createContentType as ContentType, createContentSlugEn, 'en')}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEn(!editingSlugEn)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit English slug"
+                      data-testid="button-edit-slug-en"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEnStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEnStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEnStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                  </div>
+                  {createContentSlugEnStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">English slug is taken</p>
+                  )}
+                  
+                  {/* Spanish URL Row */}
+                  <div className="flex items-center gap-2">
+                    {editingSlugEs ? (
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-xs font-mono text-muted-foreground">
+                          {buildContentUrl(createContentType as ContentType, '', 'es').slice(0, -1)}
+                        </span>
+                        <input
+                          type="text"
+                          value={createContentSlugEs}
+                          onChange={(e) => {
+                            const slug = e.target.value
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9-]/g, '')
+                              .replace(/-+/g, '-');
+                            setCreateContentSlugEs(slug);
+                            if (slug) {
+                              setCreateContentSlugEsStatus('checking');
+                              fetch(`/api/content/check-slug?type=${createContentType}&slug=${slug}&locale=es`)
+                                .then(res => res.json())
+                                .then(data => setCreateContentSlugEsStatus(data.available ? 'available' : 'taken'))
+                                .catch(() => setCreateContentSlugEsStatus('idle'));
+                            } else {
+                              setCreateContentSlugEsStatus('idle');
+                            }
+                          }}
+                          className="flex-1 px-2 py-1 text-xs font-mono rounded border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-slug-es"
+                          autoFocus
+                          onBlur={() => setEditingSlugEs(false)}
+                          onKeyDown={(e) => e.key === 'Enter' && setEditingSlugEs(false)}
+                        />
+                      </div>
+                    ) : (
+                      <code 
+                        className="flex-1 text-xs bg-background px-2 py-1 rounded cursor-pointer hover-elevate"
+                        onClick={() => setEditingSlugEs(true)}
+                        data-testid="url-preview-es"
+                      >
+                        {buildContentUrl(createContentType as ContentType, createContentSlugEs, 'es')}
+                      </code>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setEditingSlugEs(!editingSlugEs)}
+                      className="p-1 rounded hover-elevate"
+                      title="Edit Spanish slug"
+                      data-testid="button-edit-slug-es"
+                    >
+                      <IconPencil className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                    <div className="w-4">
+                      {createContentSlugEsStatus === 'checking' && (
+                        <IconRefresh className="h-4 w-4 animate-spin text-muted-foreground" />
+                      )}
+                      {createContentSlugEsStatus === 'available' && (
+                        <IconCheck className="h-4 w-4 text-green-600" />
+                      )}
+                      {createContentSlugEsStatus === 'taken' && (
+                        <IconX className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                  </div>
+                  {createContentSlugEsStatus === 'taken' && (
+                    <p className="text-xs text-red-600 pl-1">Spanish slug is taken</p>
+                  )}
+                </div>
+                
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground">Files that will be created:</p>
+                  <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
+                    <div>marketing-content/{createContentType === 'location' ? 'locations' : createContentType === 'program' ? 'programs' : 'pages'}/{createContentSlugEn}/</div>
+                    <div className="pl-4">├── _common.yml</div>
+                    <div className="pl-4">├── en.yml</div>
+                    <div className="pl-4">└── es.yml</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setCreateContentModalOpen(false)}
+              data-testid="button-cancel-create-content"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                // Validation differs for landings vs other types
+                if (createContentType === 'landing') {
+                  if (!createContentSlugEn || createContentSlugEnStatus !== 'available') return;
+                } else {
+                  if (!createContentSlugEn || !createContentSlugEs || 
+                      createContentSlugEnStatus !== 'available' || 
+                      createContentSlugEsStatus !== 'available') return;
+                }
+                
+                setIsCreatingContent(true);
+                try {
+                  const token = getDebugToken();
+                  
+                  // Different endpoint for landings
+                  if (createContentType === 'landing') {
+                    const response = await fetch('/api/content/create-landing', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { Authorization: `Token ${token}` } : {}),
+                      },
+                      body: JSON.stringify({
+                        slug: createContentSlugEn,
+                        locale: createLandingLocale,
+                        title: createContentTitle || createContentSlugEn,
+                      }),
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                      const newUrl = `/landing/${createContentSlugEn}`;
+                      toast({
+                        title: "Landing created",
+                        description: `Created new landing at ${newUrl}`,
+                      });
+                      setCreateContentModalOpen(false);
+                      setCreateContentTitle("");
+                      setCreateContentSlugEn("");
+                      setCreateContentSlugEs("");
+                      setCreateContentSlugEnStatus('idle');
+                      setCreateContentSlugEsStatus('idle');
+                      setCreateLandingLocale('en');
+                      
+                      // Refresh sitemap
+                      setSitemapLoading(true);
+                      const sitemapRes = await fetch('/api/debug/sitemap-urls');
+                      if (sitemapRes.ok) {
+                        const urls = await sitemapRes.json();
+                        setSitemapUrls(urls);
+                      }
+                      setSitemapLoading(false);
+                      
+                      // Navigate to the new landing
+                      window.location.href = newUrl;
+                    } else {
+                      toast({
+                        title: "Failed to create landing",
+                        description: data.error || "An error occurred",
+                        variant: "destructive",
+                      });
+                    }
+                  } else {
+                    const response = await fetch('/api/content/create', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { Authorization: `Token ${token}` } : {}),
+                      },
+                      body: JSON.stringify({
+                        type: createContentType,
+                        slugEn: createContentSlugEn,
+                        slugEs: createContentSlugEs,
+                        title: createContentTitle || createContentSlugEn,
+                      }),
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                      const newUrl = buildContentUrl(createContentType as ContentType, createContentSlugEn, 'en');
+                      toast({
+                        title: "Content created",
+                        description: `Created new ${createContentType} at ${newUrl}`,
+                      });
+                      setCreateContentModalOpen(false);
+                      setCreateContentTitle("");
+                      setCreateContentSlugEn("");
+                      setCreateContentSlugEs("");
+                      setCreateContentSlugEnStatus('idle');
+                      setCreateContentSlugEsStatus('idle');
+                      
+                      // Refresh sitemap
+                      setSitemapLoading(true);
+                      const sitemapRes = await fetch('/api/debug/sitemap-urls');
+                      if (sitemapRes.ok) {
+                        const urls = await sitemapRes.json();
+                        setSitemapUrls(urls);
+                      }
+                      setSitemapLoading(false);
+                      
+                      // Navigate to the new page
+                      window.location.href = newUrl;
+                    } else {
+                      toast({
+                        title: "Failed to create content",
+                        description: data.error || "An error occurred",
+                        variant: "destructive",
+                      });
+                    }
+                  }
+                } catch (error) {
+                  console.error('Error creating content:', error);
+                  toast({
+                    title: "Failed to create content",
+                    description: "Network error occurred",
+                    variant: "destructive",
+                  });
+                } finally {
+                  setIsCreatingContent(false);
+                }
+              }}
+              disabled={
+                isCreatingContent || !createContentSlugEn || createContentSlugEnStatus !== 'available' ||
+                (createContentType !== 'landing' && (!createContentSlugEs || createContentSlugEsStatus !== 'available'))
+              }
+              data-testid="button-confirm-create-content"
+            >
+              {isCreatingContent ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <IconPlus className="h-4 w-4 mr-2" />
+                  Create {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
               )}
             </Button>

@@ -2,7 +2,7 @@
  * Certificate Component Schemas - v1.0
  */
 import { z } from "zod";
-import { statItemSchema } from "../../common/schema";
+import { statItemSchema } from "../../_common/schema";
 
 export const certificateSectionSchema = z.object({
   type: z.literal("certificate"),

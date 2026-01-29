@@ -4,6 +4,7 @@ description: "Auto-scrolling masonry-style carousel with grayscale logos that co
 yaml: |
   - type: whos_hiring
     variant: carousel
+    pretitle: "Customer Stories"
     title: "Trusted by the world's most innovative companies"
     subtitle: "See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth."
     logos:

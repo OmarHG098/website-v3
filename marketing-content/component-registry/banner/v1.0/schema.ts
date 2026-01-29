@@ -5,7 +5,7 @@
  * Supports different background styles including gradient.
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
+import { ctaButtonSchema } from "../../_common/schema";
 
 export const bannerSectionSchema = z.object({
   type: z.literal("banner"),

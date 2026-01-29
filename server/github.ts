@@ -1043,6 +1043,37 @@ export async function pullSingleFile(filePath: string): Promise<{
   // Fetch file content from remote
   const remoteResult = await getRemoteFileContent(filePath);
   
+  // If file doesn't exist on remote, delete it locally (reset to remote state)
+  if (remoteResult.error === "File not found on remote") {
+    try {
+      const fullPath = path.join(process.cwd(), filePath);
+      
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+        
+        // Try to remove parent directory if empty
+        const dir = path.dirname(fullPath);
+        try {
+          const filesInDir = fs.readdirSync(dir);
+          if (filesInDir.length === 0) {
+            fs.rmdirSync(dir);
+          }
+        } catch {
+          // Ignore errors removing empty directory
+        }
+      }
+      
+      // Remove from sync state
+      const { removeFileFromState } = await import("./sync-state");
+      removeFileFromState(filePath);
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting local file:', error);
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+  
   if (!remoteResult.success || !remoteResult.content) {
     return { success: false, error: remoteResult.error || "Failed to get remote content" };
   }

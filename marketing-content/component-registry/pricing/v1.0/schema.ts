@@ -2,7 +2,7 @@
  * Pricing Component Schemas - v1.0
  */
 import { z } from "zod";
-import { ctaButtonSchema } from "../../common/schema";
+import { ctaButtonSchema } from "../../_common/schema";
 
 export const pricingFeatureSchema = z.object({
   icon: z.string().optional(),

@@ -6,7 +6,7 @@
  * - highlight: Shows text + video side-by-side layout
  */
 import { z } from "zod";
-import { ctaButtonSchema, videoConfigSchema } from "../../common/schema";
+import { ctaButtonSchema, videoConfigSchema } from "../../_common/schema";
 
 export const chatExampleSchema = z.object({
   bot_name: z.string(),

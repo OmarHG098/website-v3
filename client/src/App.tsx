@@ -4,7 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
-import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import { DebugBubble } from "@/components/DebugBubble";
 import { SessionProvider } from "@/contexts/SessionContext";
@@ -12,19 +11,13 @@ import { EditModeWrapper } from "@/components/editing/EditModeWrapper";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import "./i18n";
 
-const CareerProgramDetail = lazy(() => import("@/pages/CareerProgramDetail"));
-const CareerPrograms = lazy(() => import("@/pages/CareerPrograms"));
-const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
-const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
+const ContentTypeDetail = lazy(() => import("@/pages/ContentTypeDetail"));
 const LandingDetail = lazy(() => import("@/pages/LandingDetail"));
-const LocationDetail = lazy(() => import("@/pages/LocationDetail"));
 const PreviewFrame = lazy(() => import("@/pages/PreviewFrame"));
-const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
-const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
-const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
-const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
-const MoleculesShowcase = lazy(() => import("@/pages/MoleculesShowcase"));
+const PrivateRouter = lazy(() => import("@/pages/PrivateRouter"));
 const TemplatePage = lazy(() => import("@/pages/page"));
+const HomePage = lazy(() => import("@/pages/HomePage"));
+const OldHome = lazy(() => import("@/pages/old-home"));
 const ApplyPage = lazy(() => import("@/pages/ApplyPage"));
 const TermsPage = lazy(() => import("@/pages/TermsPage"));
 const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
@@ -50,47 +43,25 @@ function Router() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/en/career-programs" component={CareerPrograms} />
-        <Route path="/es/programas-de-carrera" component={CareerPrograms} />
-        <Route
-          path="/en/career-programs/:slug"
-          component={CareerProgramDetail}
-        />
-        <Route
-          path="/es/programas-de-carrera/:slug"
-          component={CareerProgramDetail}
-        />
+        <Route path="/" component={HomePage} />
+        <Route path="/en/" component={HomePage} />
+        <Route path="/es/" component={HomePage} />
+        <Route path="/old-home" component={OldHome} />
+        <Route path="/en/career-programs/:slug">
+          {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="en" />}
+        </Route>
+        <Route path="/es/programas-de-carrera/:slug">
+          {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="es" />}
+        </Route>
         <Route path="/landing/:slug" component={LandingDetail} />
-        <Route path="/en/location/:slug" component={LocationDetail} />
-        <Route path="/es/ubicacion/:slug" component={LocationDetail} />
+        <Route path="/en/location/:slug">
+          {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="en" />}
+        </Route>
+        <Route path="/es/ubicacion/:slug">
+          {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="es" />}
+        </Route>
         <Route path="/preview-frame" component={PreviewFrame} />
-        <Route
-          path="/private/component-showcase"
-          component={ComponentShowcase}
-        />
-        <Route
-          path="/private/component-showcase/:componentType"
-          component={ComponentShowcase}
-        />
-        <Route
-          path="/private/component-showcase/:componentType/preview"
-          component={ComponentPreview}
-        />
-        <Route path="/private/redirects" component={PrivateRedirects} />
-        <Route path="/private/media-gallery" component={MediaGallery} />
-        <Route
-          path="/private/molecules-showcase"
-          component={MoleculesShowcase}
-        />
-        <Route
-          path="/private/preview/:contentType/:slug"
-          component={PrivatePreview}
-        />
-        <Route
-          path="/private/:contentType/:contentSlug/experiment/:experimentSlug"
-          component={ExperimentEditor}
-        />
+        <Route path="/private/*" component={PrivateRouter} />
         {/* Apply page - dedicated routes */}
         <Route path="/en/apply" component={ApplyPage} />
         <Route path="/es/aplica" component={ApplyPage} />

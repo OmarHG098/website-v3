@@ -3,7 +3,7 @@
  * All hero variant Zod schemas for validation
  */
 import { z } from "zod";
-import { ctaButtonSchema, videoConfigSchema, leadFormDataSchema } from "../../common/schema";
+import { ctaButtonSchema, videoConfigSchema, leadFormDataSchema } from "../../_common/schema";
 import { awardsMarqueeItemSchema } from "../../awards_marquee/v1.0/schema";
 
 // Trust bar for singleColumn variant

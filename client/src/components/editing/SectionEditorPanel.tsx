@@ -11,6 +11,7 @@ import {
   IconDevices,
   IconCheck,
   IconAlertTriangle,
+  IconPlus,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -370,6 +371,57 @@ export function SectionEditorPanel({
     [yamlContent, onPreviewChange],
   );
 
+  // Add a new item to an array field
+  const addArrayItem = useCallback(
+    (arrayPath: string, defaultItem: Record<string, unknown>) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        // Support nested paths like "signup_card.features" by splitting on dots
+        const pathParts = arrayPath.split(".");
+        let current: Record<string, unknown> = parsed;
+        
+        // Traverse to the parent object containing the array
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part] || typeof current[part] !== "object") {
+            current[part] = {};
+          }
+          current = current[part] as Record<string, unknown>;
+        }
+        
+        // Get or create the array from the final path part
+        const arrayField = pathParts[pathParts.length - 1];
+        let array = current[arrayField] as Record<string, unknown>[] | undefined;
+        
+        if (!Array.isArray(array)) {
+          array = [];
+          current[arrayField] = array;
+        }
+
+        array.push(defaultItem);
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error adding array item:", error);
+      }
+    },
+    [yamlContent, onPreviewChange],
+  );
+
   // Get configured field editors from the component registry API
   const sectionType = (section as { type: string }).type || "";
 
@@ -673,9 +725,7 @@ export function SectionEditorPanel({
                 };
                 
                 const arrayData = getArrayData();
-
-                if (!Array.isArray(arrayData) || arrayData.length === 0)
-                  return null;
+                const safeArrayData = Array.isArray(arrayData) ? arrayData : [];
                 
                 // For display, use the last part of the path as the label
                 const arrayFieldLabel = arrayPath.split(".").pop() || arrayPath;
@@ -687,7 +737,7 @@ export function SectionEditorPanel({
                         {arrayFieldLabel} Icons
                       </Label>
                       <div className="flex flex-wrap gap-2">
-                        {arrayData.map((item, index) => {
+                        {safeArrayData.map((item, index) => {
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =
@@ -718,6 +768,22 @@ export function SectionEditorPanel({
                             </button>
                           );
                         })}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const defaultItem: Record<string, unknown> = {
+                              [itemField]: "IconBook",
+                              text: "New feature",
+                              count: "0",
+                            };
+                            addArrayItem(arrayPath, defaultItem);
+                          }}
+                          className="flex items-center justify-center w-10 h-10 rounded border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors"
+                          data-testid={`props-icon-${arrayFieldLabel}-add`}
+                          title="Add new item"
+                        >
+                          <IconPlus className="h-5 w-5 text-muted-foreground" />
+                        </button>
                       </div>
                     </div>
                   );
@@ -733,7 +799,7 @@ export function SectionEditorPanel({
                         {arrayFieldLabel} Colors
                       </Label>
                       <div className="space-y-2">
-                        {arrayData.map((item, index) => {
+                        {safeArrayData.map((item, index) => {
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =

@@ -4,6 +4,38 @@ export interface SlugMapping {
   folder: string;
 }
 
+export type ContentType = 'page' | 'program' | 'location';
+
+export interface ContentTypePrefix {
+  en: string;
+  es: string;
+}
+
+export const contentTypePrefixes: Record<ContentType, ContentTypePrefix> = {
+  page: {
+    en: '',
+    es: '',
+  },
+  program: {
+    en: 'career-programs',
+    es: 'programas-de-carrera',
+  },
+  location: {
+    en: 'location',
+    es: 'ubicacion',
+  },
+};
+
+export function getContentTypeUrlPrefix(contentType: ContentType, locale: 'en' | 'es'): string {
+  const prefix = contentTypePrefixes[contentType]?.[locale] || '';
+  return prefix ? `/${prefix}` : '';
+}
+
+export function buildContentUrl(contentType: ContentType, slug: string, locale: 'en' | 'es'): string {
+  const prefix = getContentTypeUrlPrefix(contentType, locale);
+  return `/${locale}${prefix}/${slug}`;
+}
+
 export const pageSlugMappings: SlugMapping[] = [
   { en: "awards", es: "premios", folder: "awards" },
   { en: "geekforce-career-support", es: "geekforce", folder: "geekforce-career-support" },

@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { useCallback, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect, lazy, Suspense } from "react";
 import type { Section, EditOperation, SectionLayout, ResponsiveSpacing, ShowOn } from "@shared/schema";
 
 // ============================================
@@ -193,6 +193,7 @@ const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ defau
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
+import ComponentPickerModal from "@/components/editing/ComponentPickerModal";
 import { useToast } from "@/hooks/use-toast";
 import { getDebugToken } from "@/hooks/useDebugAuth";
 import { emitContentUpdated } from "@/lib/contentEvents";
@@ -237,6 +238,69 @@ interface SectionRendererProps {
   slug?: string;
   locale?: string;
   programSlug?: string;
+}
+
+function EmptyPageState({ 
+  isEditMode, 
+  locale, 
+  contentType, 
+  slug 
+}: { 
+  isEditMode: boolean; 
+  locale?: string; 
+  contentType?: "program" | "landing" | "location" | "page";
+  slug?: string;
+}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  return (
+    <div 
+      className="min-h-[60vh] flex items-center justify-center"
+      data-testid="empty-sections-state"
+    >
+      {isEditMode ? (
+        <>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="text-center space-y-4 p-8 rounded-lg border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-muted/50 transition-all cursor-pointer"
+            data-testid="button-add-first-section"
+          >
+            <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-foreground">
+                {locale === "es" ? "Esta página está vacía" : "This page is empty"}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {locale === "es" 
+                  ? "Haz clic aquí para agregar tu primera sección" 
+                  : "Click here to add your first section"}
+              </p>
+            </div>
+          </button>
+          {isModalOpen && (
+            <ComponentPickerModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              insertIndex={0}
+              contentType={contentType}
+              slug={slug}
+              locale={locale}
+            />
+          )}
+        </>
+      ) : (
+        <div className="text-center p-8">
+          <p className="text-muted-foreground">
+            {locale === "es" ? "Contenido próximamente" : "Content coming soon"}
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 async function sendEditOperation(
@@ -402,6 +466,62 @@ export function renderSection(section: Section, index: number): React.ReactNode 
   }
 }
 
+// Mobile Preview using real iframe for proper media query support
+function MobilePreviewFrame({ sections }: { sections: Section[] }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  
+  // Send sections to iframe
+  const sendToIframe = useCallback(() => {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentWindow) return;
+    
+    const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    iframe.contentWindow.postMessage({ type: 'preview-update', sections }, '*');
+    iframe.contentWindow.postMessage({ type: 'theme-update', theme }, '*');
+  }, [sections]);
+  
+  // Listen for iframe ready message and send sections
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') {
+        sendToIframe();
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [sendToIframe]);
+  
+  // Re-send when sections change
+  useEffect(() => {
+    sendToIframe();
+  }, [sections, sendToIframe]);
+  
+  const handleIframeLoad = useCallback(() => {
+    // Send after iframe loads
+    setTimeout(sendToIframe, 100);
+  }, [sendToIframe]);
+  
+  return (
+    <div className="flex justify-center bg-muted/50 min-h-screen py-8">
+      <div 
+        className="w-[375px] bg-background shadow-2xl rounded-[32px] overflow-hidden border-4 border-foreground/20 relative"
+        style={{ height: 'calc(100vh - 4rem)' }}
+      >
+        {/* Phone notch */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-foreground/20 rounded-b-xl z-10" />
+        <iframe
+          ref={iframeRef}
+          onLoad={handleIframeLoad}
+          src="/preview-frame"
+          className="w-full h-full border-0"
+          title="Vista previa móvil"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function SectionRenderer({ sections, contentType, slug, locale, programSlug }: SectionRendererProps) {
   const { toast } = useToast();
   const editMode = useEditModeOptional();
@@ -493,7 +613,9 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
     }
   }, [contentType, slug, locale, sections, toast]);
 
-  return (
+  const isMobilePreview = isEditMode && previewBreakpoint === 'mobile';
+  
+  const content = (
     <>
       <AddSectionButton
         insertIndex={0}
@@ -502,6 +624,14 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
         slug={slug}
         locale={locale}
       />
+      {sections.length === 0 && (
+        <EmptyPageState 
+          isEditMode={isEditMode} 
+          locale={locale} 
+          contentType={contentType}
+          slug={slug}
+        />
+      )}
       {sections.map((section, index) => {
         const sectionType = (section as { type: string }).type;
         const renderedSection = renderSectionWithContext(section, index);
@@ -560,4 +690,12 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
       })}
     </>
   );
+  
+  if (isMobilePreview) {
+    return (
+      <MobilePreviewFrame sections={sections} />
+    );
+  }
+  
+  return content;
 }
