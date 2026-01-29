@@ -374,7 +374,6 @@ sections:
       - git
       - jupyter
       - api
-    static_icons: true
     features_title: Accede a cientos de ejercicios, proyectos, tutoriales y cursos en las tecnologías más demandadas
     features:
       - icon: "certificate"
