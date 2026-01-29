@@ -166,6 +166,23 @@ sections:
       desktop: none
     paddingY:
       desktop: none
+  - type: two_column_accordion_card
+    version: "1.0"
+    title: Why Students Get Results with Us
+    description: "We don’t just teach skills, we make sure you can turn them into a career. Every 4Geeks student gets:"
+    bullets:
+      - heading: GeekFORCE Career Support (for life)
+        text: Unlimited 1:1 career mentorship, interview training, resume/portfolio coaching, and expert job search strategies.
+      - heading: GeekPAL Mentorship (for life)
+        text: Unlimited coding help from real human mentors for life.
+      - heading: AI-Powered Support
+        text: 24/7 personalized coding feedback and career development tools.
+      - heading: 5,000+ Hiring Partners
+        text: A global network of companies that trust and hire 4Geeks graduates.
+    footer: Support that lasts a lifetime, not just through graduation.
+    image: https://example.com/learning-support.png
+    image_alt: Student receiving personalized support
+    background: hsl(var(--background))
   - type: split_cards
     variant: primary-left
     primary:
@@ -177,9 +194,55 @@ sections:
         - text: Financing options starting below $299/month
         - text: Full and partial scholarships (location-based)
         - text: Tuition recognized by Forbes as budget-friendly
-    background: hsl(var(--accent))
+    background: hsl(var(--secondary))
     paddingY:
       desktop: none
+  - type: testimonials
+    version: v1.0
+    title: What Our Students Say
+    subtitle: Real stories from graduates who transformed their careers
+    rating_summary:
+      average: "4.9"
+      count: 2,847
+    items:
+      - name: Maria Rodriguez
+        role: Software Engineer
+        company: Google
+        rating: 5
+        comment: This program changed my life. I went from zero coding experience to landing my dream job in 6 months.
+        outcome: Hired in 4 months
+      - name: James Chen
+        role: Full Stack Developer
+        company: Spotify
+        rating: 5
+        comment: The mentorship was incredible. Having unlimited access to senior developers made all the difference.
+        outcome: 3x salary increase
+      - name: Sarah Williams
+        role: Frontend Developer
+        company: Meta
+        rating: 5
+        comment: The AI-powered learning tools helped me understand complex concepts faster than any other course I've tried.
+        outcome: Career change at 35
+      - name: Carlos Mendez
+        role: Backend Engineer
+        company: Amazon
+        rating: 4
+        comment: Practical projects and real-world scenarios prepared me better than my computer science degree.
+        outcome: Remote work achieved
+      - name: Emily Thompson
+        role: DevOps Engineer
+        company: Netflix
+        rating: 5
+        comment: The career support team helped me negotiate a 50% higher salary than I expected.
+        outcome: 50% salary boost
+      - name: David Kim
+        role: Tech Lead
+        company: Uber
+        rating: 5
+        comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
+        outcome: Promoted in 1 year
+    paddingY:
+      desktop: none lg
   - type: two_column
     version: "1.0"
     proportions:
@@ -206,3 +269,10 @@ sections:
         url: /en/job-guarantee
         variant: primary
       footer: Follow the program, lean on your mentors, and if you still don't land a job, we take full responsibility— that's the level of trust we have in the effectiveness of our bootcamp.
+    marginY:
+      desktop: none lg
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - outcomes
