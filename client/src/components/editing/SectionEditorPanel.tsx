@@ -1153,7 +1153,7 @@ export function SectionEditorPanel({
 
             {/* Gallery grid */}
             <div className="flex-1 overflow-y-auto min-h-0">
-              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
+              <div className="columns-4 sm:columns-5 md:columns-6 gap-2">
                 {filteredGalleryImages.slice(0, visibleImageCount).map(([id, img]) => (
                   <button
                     key={id}
@@ -1167,7 +1167,7 @@ export function SectionEditorPanel({
                         });
                       }
                     }}
-                    className={`aspect-square rounded-md overflow-hidden bg-muted border-2 transition-colors ${
+                    className={`mb-2 rounded-md overflow-hidden bg-muted border-2 transition-colors block w-full ${
                       imagePickerTarget?.currentSrc === img.src
                         ? "border-primary"
                         : "border-transparent hover:border-muted-foreground/50"
@@ -1178,7 +1178,7 @@ export function SectionEditorPanel({
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto"
                       loading="lazy"
                     />
                   </button>
