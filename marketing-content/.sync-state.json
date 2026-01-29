@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "0bfdcdb629d0f83b0d7a15e3bc9120764edf3234",
-  "lastSyncedAt": "2026-01-29T21:54:43.798Z",
+  "lastSyncedCommit": "8bd9e25214dd6c057c057ad3411ff05a6cd27623",
+  "lastSyncedAt": "2026-01-29T22:25:27.667Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -54,10 +54,8 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd",
-      "lastModified": 1769724217985.7344,
-      "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
-      "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-01-29T22:03:37.987Z"
+      "lastModified": 1769725459900.8127,
+      "remoteSha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
