@@ -159,7 +159,7 @@ const SyllabusSection = lazy(() => import("./SyllabusSection").then(m => ({ defa
 const ProjectsSection = lazy(() => import("./ProjectsSection").then(m => ({ default: m.ProjectsSection })));
 const AILearningSection = lazy(() => import("./AILearningSection").then(m => ({ default: m.AILearningSection })));
 const CertificateSection = lazy(() => import("./CertificateSection").then(m => ({ default: m.CertificateSection })));
-const WhyLearnAISection = lazy(() => import("./why-learn-ai").then(m => ({ default: m.WhyLearnAISection })));
+const WhyLearnAISection = lazy(() => import("./why-learn-ai/WhyLearnAI").then(m => ({ default: m.WhyLearnAISection })));
 const PricingSection = lazy(() => import("./PricingSection").then(m => ({ default: m.PricingSection })));
 const FAQSection = lazy(() => import("./FAQSection").then(m => ({ default: m.FAQSection })));
 const TestimonialsSection = lazy(() => import("./TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));

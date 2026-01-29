@@ -1,7 +1,7 @@
 name: Why Learn AI Section
 version: "1.0"
 component: WhyLearnAISection
-file: client/src/components/career-programs/WhyLearnAISection.tsx
+file: client/src/components/why-learn-ai/WhyLearnAI.tsx
 description: Compelling section about the importance of learning AI-powered development
 when_to_use: |
   Use to motivate students about the future of AI in software development.
