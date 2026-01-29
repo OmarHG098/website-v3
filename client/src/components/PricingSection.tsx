@@ -203,25 +203,42 @@ export function PricingSection({ data }: PricingSectionProps) {
 
               {data.tech_icons && data.tech_icons.length > 0 && (
                 <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
-                  <Marquee
-                    speed={25}
-                    gradient={true}
-                    gradientWidth={50}
-                    pauseOnHover={true}
-                  >
-                    {data.tech_icons.map((iconName, index) => {
-                      const IconComponent = techIconMap[iconName.toLowerCase()];
-                      return IconComponent ? (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                          data-testid={`icon-tech-${index}`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                        </div>
-                      ) : null;
-                    })}
-                  </Marquee>
+                  {data.static_icons ? (
+                    <div className="flex flex-wrap gap-2">
+                      {data.tech_icons.map((iconName, index) => {
+                        const IconComponent = techIconMap[iconName.toLowerCase()];
+                        return IconComponent ? (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                            data-testid={`icon-tech-${index}`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  ) : (
+                    <Marquee
+                      speed={25}
+                      gradient={true}
+                      gradientWidth={50}
+                      pauseOnHover={true}
+                    >
+                      {data.tech_icons.map((iconName, index) => {
+                        const IconComponent = techIconMap[iconName.toLowerCase()];
+                        return IconComponent ? (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                            data-testid={`icon-tech-${index}`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                          </div>
+                        ) : null;
+                      })}
+                    </Marquee>
+                  )}
                 </div>
               )}
 
@@ -398,25 +415,42 @@ export function PricingSection({ data }: PricingSectionProps) {
 
             {data.tech_icons && data.tech_icons.length > 0 && (
               <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
-                <Marquee
-                  speed={25}
-                  gradient={true}
-                  gradientWidth={50}
-                  pauseOnHover={true}
-                >
-                  {data.tech_icons.map((iconName, index) => {
-                    const IconComponent = techIconMap[iconName.toLowerCase()];
-                    return IconComponent ? (
-                      <div
-                        key={index}
-                        className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                        data-testid={`icon-tech-${index}`}
-                      >
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                    ) : null;
-                  })}
-                </Marquee>
+                {data.static_icons ? (
+                  <div className="flex flex-wrap gap-2">
+                    {data.tech_icons.map((iconName, index) => {
+                      const IconComponent = techIconMap[iconName.toLowerCase()];
+                      return IconComponent ? (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                          data-testid={`icon-tech-${index}`}
+                        >
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      ) : null;
+                    })}
+                  </div>
+                ) : (
+                  <Marquee
+                    speed={25}
+                    gradient={true}
+                    gradientWidth={50}
+                    pauseOnHover={true}
+                  >
+                    {data.tech_icons.map((iconName, index) => {
+                      const IconComponent = techIconMap[iconName.toLowerCase()];
+                      return IconComponent ? (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                          data-testid={`icon-tech-${index}`}
+                        >
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      ) : null;
+                    })}
+                  </Marquee>
+                )}
               </div>
             )}
 
