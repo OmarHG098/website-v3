@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "cb08bbdecf6c0701caefc326084df3d37705b429",
-  "lastSyncedAt": "2026-01-29T15:46:03.208Z",
+  "lastSyncedCommit": "8bd9e25214dd6c057c057ad3411ff05a6cd27623",
+  "lastSyncedAt": "2026-01-29T22:37:59.167Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -39,23 +39,23 @@
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
-      "lastModified": 1769631526847.3975,
+      "lastModified": 1769638432339.858,
       "remoteSha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e"
     },
     "marketing-content/landings/example-landing/colorful.v1.en.yml": {
       "sha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce",
-      "lastModified": 1769631527153.3975,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce"
     },
     "marketing-content/landings/example-landing/experiments.yml": {
       "sha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5",
-      "lastModified": 1769631527412.3972,
+      "lastModified": 1769638432341.0369,
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff",
-      "lastModified": 1769705118630.887,
-      "remoteSha": "64138128d84cd05ceb51c450ed62d5e0a355a2df9469b3c1ad421cee9c3ffeff"
+      "sha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd",
+      "lastModified": 1769726278277.6904,
+      "remoteSha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -554,7 +554,7 @@
     },
     "marketing-content/menus/main-navbar.yml": {
       "sha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f",
-      "lastModified": 1769698462782.9956,
+      "lastModified": 1769648563397.151,
       "remoteSha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f"
     },
     "marketing-content/pages/apply/_common.yml": {
@@ -609,7 +609,7 @@
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
       "sha": "57cb831dbac117fb361af823c660cdf0ead6799d9d3531b3bb21ed4b3bb38ed6",
-      "lastModified": 1769709588937.5425,
+      "lastModified": 1769725997052.8914,
       "remoteSha": "57cb831dbac117fb361af823c660cdf0ead6799d9d3531b3bb21ed4b3bb38ed6"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
@@ -623,9 +623,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "bf0f1781339ffcfb9929a8454c81521a02ff232559f47fe5b62ecee64adc630e",
-      "lastModified": 1769713856966.409,
-      "remoteSha": "bf0f1781339ffcfb9929a8454c81521a02ff232559f47fe5b62ecee64adc630e"
+      "sha": "b415221b54ea82e2281635023b776da824eea054d52b5f5c3c198f1ccb90b761",
+      "lastModified": 1769726278597.6902,
+      "remoteSha": "b415221b54ea82e2281635023b776da824eea054d52b5f5c3c198f1ccb90b761"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "9f6fdf9dfe26772aefa7d6d68397d69eb0fe8ee8d88cb6d4c631f4997ff0440b",
@@ -664,7 +664,7 @@
     },
     "marketing-content/pages/home/_common.yml": {
       "sha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a",
-      "lastModified": 1769698462782.9956,
+      "lastModified": 1769638547802.7478,
       "remoteSha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a"
     },
     "marketing-content/pages/home/en.yml": {
@@ -674,7 +674,7 @@
     },
     "marketing-content/pages/home/es.yml": {
       "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
-      "lastModified": 1769698462783.6685,
+      "lastModified": 1769638548398.7473,
       "remoteSha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d"
     },
     "marketing-content/pages/job-guarantee/_common.yml": {
@@ -753,9 +753,9 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "c89ea4969dcf5073d4a450ce7a6d1fac9e00c2269b86e6c142e7690e9c733b9f",
-      "lastModified": 1769701561789.6414,
-      "remoteSha": "c89ea4969dcf5073d4a450ce7a6d1fac9e00c2269b86e6c142e7690e9c733b9f"
+      "sha": "a2257e52211c596f60e190a7f40ae256be3f9f10a088178a569f43707cfd3ddd",
+      "lastModified": 1769726278907.69,
+      "remoteSha": "a2257e52211c596f60e190a7f40ae256be3f9f10a088178a569f43707cfd3ddd"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
