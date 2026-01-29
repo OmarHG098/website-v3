@@ -30,6 +30,11 @@ import {
   SiSupabase,
   SiPostman,
   SiN8N,
+  SiTensorflow,
+  SiJupyter,
+  SiApachespark,
+  SiKeras,
+  SiPolars,
 } from "react-icons/si";
 import type { PricingSection as PricingSectionType } from "@shared/schema";
 import Matplotlib from "@/components/custom-icons/Matplotlib";
