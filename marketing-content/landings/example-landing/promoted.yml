@@ -17,6 +17,7 @@ schema:
     - website
 sections:
   - type: hero
+    variant: course
     title: Work smarter, not harder, apply AI at Work
     subtitle: Boost your career, harness the power of Applied AI.
     students_enrolled:
@@ -72,7 +73,6 @@ sections:
           text: Workshops every week
         - icon: users
           text: Community Gatherings.
-    variant: course
     paddingY:
       desktop: none lg
     marginY:
