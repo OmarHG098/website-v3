@@ -18,7 +18,15 @@ import { getIcon } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { ColorPicker } from "@/components/ui/color-picker";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { editContent } from "@/lib/contentApi";
 import { emitContentUpdated } from "@/lib/contentEvents";
@@ -156,6 +164,16 @@ export function SectionEditorPanel({
     field: string;
     label: string;
     currentIcon: string;
+  } | null>(null);
+
+  // Image picker modal state
+  const [imagePickerOpen, setImagePickerOpen] = useState(false);
+  const [imagePickerTarget, setImagePickerTarget] = useState<{
+    arrayPath: string;
+    index: number;
+    srcField: string;
+    currentSrc: string;
+    currentAlt: string;
   } | null>(null);
 
   // Parse current YAML to extract props
@@ -914,81 +932,46 @@ export function SectionEditorPanel({
 
                 if (editorType === "image-picker") {
                   return (
-                    <div key={fieldPath} className="space-y-3">
+                    <div key={fieldPath} className="space-y-2">
                       <Label className="text-sm font-medium capitalize">
                         {arrayFieldLabel.replace(/_/g, " ")}
                       </Label>
-                      <div className="space-y-2">
+                      <div className="flex flex-wrap gap-2">
                         {safeArrayData.map((item, index) => {
                           const currentValue =
                             (item[itemField] as string) || "";
                           const altValue = (item.alt as string) || "";
 
                           return (
-                            <div
+                            <button
                               key={index}
-                              className="flex items-center gap-2 p-2 border rounded-md bg-muted/20"
+                              type="button"
+                              onClick={() => {
+                                setImagePickerTarget({
+                                  arrayPath,
+                                  index,
+                                  srcField: itemField,
+                                  currentSrc: currentValue,
+                                  currentAlt: altValue,
+                                });
+                                setImagePickerOpen(true);
+                              }}
+                              className="w-12 h-12 rounded-md overflow-hidden bg-muted border border-border hover:border-primary transition-colors flex-shrink-0 relative group"
+                              data-testid={`props-image-${arrayFieldLabel}-${index}`}
+                              title={altValue || `Image ${index + 1}`}
                             >
-                              <div className="w-16 h-12 rounded overflow-hidden bg-muted flex-shrink-0">
-                                {currentValue ? (
-                                  <img
-                                    src={currentValue}
-                                    alt={altValue || `Image ${index + 1}`}
-                                    className="w-full h-full object-cover"
-                                  />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
-                                    No image
-                                  </div>
-                                )}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <input
-                                  type="text"
-                                  value={currentValue}
-                                  onChange={(e) =>
-                                    updateArrayItemField(
-                                      arrayPath,
-                                      index,
-                                      itemField,
-                                      e.target.value,
-                                    )
-                                  }
-                                  placeholder="Image URL"
-                                  className="w-full text-sm px-2 py-1 border rounded bg-background"
-                                  data-testid={`props-image-${arrayFieldLabel}-${index}-src`}
+                              {currentValue ? (
+                                <img
+                                  src={currentValue}
+                                  alt={altValue || `Image ${index + 1}`}
+                                  className="w-full h-full object-cover"
                                 />
-                                <input
-                                  type="text"
-                                  value={altValue}
-                                  onChange={(e) =>
-                                    updateArrayItemField(
-                                      arrayPath,
-                                      index,
-                                      "alt",
-                                      e.target.value,
-                                    )
-                                  }
-                                  placeholder="Alt text"
-                                  className="w-full text-sm px-2 py-1 border rounded bg-background mt-1"
-                                  data-testid={`props-image-${arrayFieldLabel}-${index}-alt`}
-                                />
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  // Remove this item from the array
-                                  const newArray = [...safeArrayData];
-                                  newArray.splice(index, 1);
-                                  updateArrayField(arrayPath, newArray);
-                                }}
-                                className="p-1 text-muted-foreground hover:text-destructive transition-colors"
-                                data-testid={`props-image-${arrayFieldLabel}-${index}-remove`}
-                                title="Remove image"
-                              >
-                                <IconX className="h-4 w-4" />
-                              </button>
-                            </div>
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                                  ?
+                                </div>
+                              )}
+                            </button>
                           );
                         })}
                         <button
@@ -1000,11 +983,11 @@ export function SectionEditorPanel({
                             };
                             addArrayItem(arrayPath, defaultItem);
                           }}
-                          className="flex items-center gap-2 px-3 py-2 text-sm rounded border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors w-full justify-center"
+                          className="w-12 h-12 rounded-md border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors flex items-center justify-center"
                           data-testid={`props-image-${arrayFieldLabel}-add`}
+                          title="Add image"
                         >
-                          <IconPlus className="h-4 w-4" />
-                          Add image
+                          <IconPlus className="h-5 w-5 text-muted-foreground" />
                         </button>
                       </div>
                     </div>
@@ -1071,6 +1054,125 @@ export function SectionEditorPanel({
         itemLabel={iconPickerTarget?.label}
         onSelect={handleIconSelect}
       />
+
+      {/* Image Picker Modal */}
+      <Dialog open={imagePickerOpen} onOpenChange={setImagePickerOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Image</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            {imagePickerTarget?.currentSrc && (
+              <div className="w-full h-32 rounded-lg overflow-hidden bg-muted border">
+                <img
+                  src={imagePickerTarget.currentSrc}
+                  alt={imagePickerTarget.currentAlt || "Preview"}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
+            <div className="space-y-2">
+              <Label htmlFor="image-url">Image URL</Label>
+              <Input
+                id="image-url"
+                value={imagePickerTarget?.currentSrc || ""}
+                onChange={(e) => {
+                  if (imagePickerTarget) {
+                    setImagePickerTarget({
+                      ...imagePickerTarget,
+                      currentSrc: e.target.value,
+                    });
+                  }
+                }}
+                placeholder="https://example.com/image.jpg"
+                data-testid="input-image-url"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="image-alt">Alt Text</Label>
+              <Input
+                id="image-alt"
+                value={imagePickerTarget?.currentAlt || ""}
+                onChange={(e) => {
+                  if (imagePickerTarget) {
+                    setImagePickerTarget({
+                      ...imagePickerTarget,
+                      currentAlt: e.target.value,
+                    });
+                  }
+                }}
+                placeholder="Describe the image"
+                data-testid="input-image-alt"
+              />
+            </div>
+          </div>
+          <DialogFooter className="flex-row gap-2 sm:justify-between">
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => {
+                if (imagePickerTarget) {
+                  // Get current array and remove this item
+                  const pathParts = imagePickerTarget.arrayPath.split(".");
+                  let current: Record<string, unknown> | null = parsedSection;
+                  for (let i = 0; i < pathParts.length - 1 && current; i++) {
+                    current = current[pathParts[i]] as Record<string, unknown> | null;
+                  }
+                  const arrayField = pathParts[pathParts.length - 1];
+                  const array = current?.[arrayField] as Record<string, unknown>[] || [];
+                  const newArray = [...array];
+                  newArray.splice(imagePickerTarget.index, 1);
+                  updateArrayField(imagePickerTarget.arrayPath, newArray);
+                }
+                setImagePickerOpen(false);
+                setImagePickerTarget(null);
+              }}
+              data-testid="button-image-remove"
+            >
+              <IconX className="h-4 w-4 mr-2" />
+              Remove
+            </Button>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setImagePickerOpen(false);
+                  setImagePickerTarget(null);
+                }}
+                data-testid="button-image-cancel"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  if (imagePickerTarget) {
+                    updateArrayItemField(
+                      imagePickerTarget.arrayPath,
+                      imagePickerTarget.index,
+                      imagePickerTarget.srcField,
+                      imagePickerTarget.currentSrc,
+                    );
+                    updateArrayItemField(
+                      imagePickerTarget.arrayPath,
+                      imagePickerTarget.index,
+                      "alt",
+                      imagePickerTarget.currentAlt,
+                    );
+                  }
+                  setImagePickerOpen(false);
+                  setImagePickerTarget(null);
+                }}
+                data-testid="button-image-save"
+              >
+                <IconCheck className="h-4 w-4 mr-2" />
+                Save
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
