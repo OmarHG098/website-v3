@@ -82,7 +82,13 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
                         className="text-yellow-500 w-5 h-5"
                       />
                     ))}
-                    <IconStar className="text-yellow-500 w-5 h-5" />
+                    {/* Partially filled star for decimal rating (e.g., 4.9 = 90% filled) */}
+                    <div className="relative w-5 h-5">
+                      <IconStar className="absolute text-yellow-500 w-5 h-5" />
+                      <div className="absolute overflow-hidden" style={{ width: '90%' }}>
+                        <IconStarFilled className="text-yellow-500 w-5 h-5" />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <span className="text-sm text-muted-foreground">
