@@ -72,7 +72,7 @@ sections:
           - text: Tracks your skills and progress
           - text: Helps with debugging and problem-solving tasks
           - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
-    footer_description: Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence.
+    footer_description: null
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: bg-background
