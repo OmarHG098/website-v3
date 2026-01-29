@@ -178,7 +178,6 @@ export function SectionEditorPanel({
   } | null>(null);
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
-  const gallerySentinelRef = useRef<HTMLDivElement>(null);
   const galleryScrollRef = useRef<HTMLDivElement>(null);
 
   // Fetch image registry for gallery picker
@@ -207,23 +206,23 @@ export function SectionEditorPanel({
     setVisibleImageCount(48);
   }, [imageGallerySearch, imagePickerOpen]);
 
-  // Infinite scroll for image gallery
+  // Infinite scroll for image gallery using scroll events
   useEffect(() => {
-    const sentinel = gallerySentinelRef.current;
     const scrollContainer = galleryScrollRef.current;
-    if (!sentinel || !scrollContainer || !imagePickerOpen) return;
+    if (!scrollContainer || !imagePickerOpen) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setVisibleImageCount((prev) => Math.min(prev + 24, filteredGalleryImages.length));
-        }
-      },
-      { root: scrollContainer, threshold: 0.1 }
-    );
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+      if (scrollHeight - scrollTop - clientHeight < 100) {
+        setVisibleImageCount((prev) => {
+          const newCount = prev + 24;
+          return Math.min(newCount, filteredGalleryImages.length);
+        });
+      }
+    };
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, [imagePickerOpen, filteredGalleryImages.length]);
 
   // Parse current YAML to extract props
@@ -1205,10 +1204,10 @@ export function SectionEditorPanel({
                   </button>
                 ))}
               </div>
-              {/* Sentinel for infinite scroll */}
+              {/* Load more indicator */}
               {visibleImageCount < filteredGalleryImages.length && (
-                <div ref={gallerySentinelRef} className="h-8 flex items-center justify-center text-muted-foreground text-sm">
-                  Loading more...
+                <div className="h-8 flex items-center justify-center text-muted-foreground text-sm">
+                  Scroll for more...
                 </div>
               )}
               {filteredGalleryImages.length === 0 && (
