@@ -81,10 +81,10 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
               {image && (
                 <div className={`col-span-1 md:col-span-5 flex items-center ${reverse ? "md:order-1 justify-start" : "md:order-2 justify-end"}`}>
                   <div 
-                    className={`relative bg-primary/30 rounded-2xl py-14 ${reverse ? "pr-4 pl-0" : "pl-4 pr-0"} flex ${reverse ? "justify-start" : "justify-end"} min-h-[300px] md:min-h-[400px] w-full`}
+                    className={`relative bg-primary/30 rounded-2xl py-14 ${reverse ? "pr-4 pl-0" : "pl-4 pr-0"} flex items-center ${reverse ? "justify-start" : "justify-end"} min-h-[300px] md:min-h-[400px] w-full`}
                     data-testid="img-two-column-accordion-background"
                   >
-                    <div className="w-[90%]">
+                    <div className="w-[90%] flex items-center">
                       <img
                         src={image}
                         alt={image_alt || ""}
