@@ -257,6 +257,7 @@ sections:
     paddingY:
       desktop: md
   - type: ai_learning
+    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -266,15 +267,12 @@ sections:
         title: Progress faster with AI-powered tools
         description: ""
         show_rigobot_logo: true
-        video:
-          preview_image_url: https://s1.significados.com/foto/paisaje-og.jpg?class=ogImageSquare
-          url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
-
         bullets:
           - text: Get instant feedback from Rigobot, our custom AI tutor
           - text: Gives advice adjusted to your skill level and progress
           - text: Helps with debugging and problem-solving tasks
           - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
+        video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: Start learning now!
           url: /en/apply
@@ -499,6 +497,7 @@ sections:
     version: "1.0"
     title: Ready to Start Your Data Science Career?
     subtitle: Join thousands of graduates who have transformed their careers with 4Geeks.
+    background: primary
     buttons:
       - text: Start Learning Now
         url: /en/apply
