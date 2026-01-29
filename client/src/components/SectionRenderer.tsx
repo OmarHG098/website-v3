@@ -190,6 +190,7 @@ const StickyCallToAction = lazy(() => import("@/components/StickyCallToAction").
 const BentoCards = lazy(() => import("@/components/bento-cards/BentoCards").then(m => ({ default: m.BentoCards })));
 const Banner = lazy(() => import("@/components/Banner").then(m => ({ default: m.Banner })));
 const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ default: m.FaqEditor })));
+const ImageRow = lazy(() => import("@/components/sections/ImageRow"));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -457,6 +458,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><Banner data={section as Parameters<typeof Banner>[0]["data"]} /></LazySection>;
     case "faq_editor":
       return <LazySection key={index}><FaqEditor data={section as Parameters<typeof FaqEditor>[0]["data"]} /></LazySection>;
+    case "image_row":
+      return <LazySection key={index}><ImageRow data={section as Parameters<typeof ImageRow>[0]["data"]} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);
