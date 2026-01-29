@@ -181,13 +181,38 @@ export function UniversalVideo({
     );
   };
 
-  const previewContent = renderPreview();
+  const renderInlineVideo = () => {
+    return (
+      <div 
+        className={`relative overflow-hidden rounded-lg ${borderClasses} ${className}`}
+        style={aspectRatio}
+        data-testid="video-inline"
+      >
+        <video
+          src={url}
+          autoPlay
+          loop={loop}
+          muted={muted}
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    );
+  };
+
+  const shouldPlayInline = autoplay && isLocalVideo(url);
+
+  const previewContent = shouldPlayInline ? renderInlineVideo() : renderPreview();
 
   const wrappedPreview = (withShadowBorder || useSolidCard) ? (
     <SolidCard className="!p-0 !min-h-0 overflow-hidden">
       {previewContent}
     </SolidCard>
   ) : previewContent;
+
+  if (shouldPlayInline) {
+    return wrappedPreview;
+  }
 
   return (
     <>
