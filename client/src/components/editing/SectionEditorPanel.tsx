@@ -668,6 +668,18 @@ export function SectionEditorPanel({
               />
             )}
             
+            {/* Why Learn AI variant picker */}
+            {sectionType === "why_learn_ai" && (
+              <VariantPicker
+                value={(parsedSection?.variant as string) || "default"}
+                onChange={(value) => updateProperty("variant", value)}
+                options={[
+                  { id: "default", label: "Default (Man with laptop)" },
+                  { id: "laptop-edge", label: "Laptop Edge (Code editor)" },
+                ]}
+              />
+            )}
+            
             {/* FAQ related features picker */}
             {sectionType === "faq" && (
               <>
