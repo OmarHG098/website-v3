@@ -71,6 +71,11 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
   supabase: SiSupabase,
   postman: SiPostman,
   n8n: SiN8N,
+  tensorflow: SiTensorflow,
+  jupyter: SiJupyter,
+  spark: SiApachespark,
+  keras: SiKeras,
+  polars: SiPolars,
 };
 
 
