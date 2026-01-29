@@ -487,6 +487,30 @@
       "alt": "4Geeks mentors and students in a live online session",
       "focal_point": "center",
       "tags": ["mentoring", "zoom", "live", "community"]
+    },
+    "student_asian": {
+      "src": "/attached_assets/student-1-asian.png",
+      "alt": "Asian student learning to code",
+      "focal_point": "center",
+      "tags": ["student", "portrait", "diversity"]
+    },
+    "student_latin_male": {
+      "src": "/attached_assets/student-2-latin.png",
+      "alt": "Latino student working on a project",
+      "focal_point": "center",
+      "tags": ["student", "portrait", "diversity"]
+    },
+    "student_african": {
+      "src": "/attached_assets/student-3-african.png",
+      "alt": "African student collaborating with team",
+      "focal_point": "center",
+      "tags": ["student", "portrait", "diversity"]
+    },
+    "student_latina_female": {
+      "src": "/attached_assets/student-4-lady-latin.png",
+      "alt": "Latina student celebrating success",
+      "focal_point": "center",
+      "tags": ["student", "portrait", "diversity"]
     }
   }
 }
