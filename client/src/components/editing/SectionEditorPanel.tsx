@@ -178,7 +178,6 @@ export function SectionEditorPanel({
   } | null>(null);
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
-  const galleryScrollRef = useRef<HTMLDivElement>(null);
 
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
@@ -205,25 +204,6 @@ export function SectionEditorPanel({
   useEffect(() => {
     setVisibleImageCount(48);
   }, [imageGallerySearch, imagePickerOpen]);
-
-  // Infinite scroll for image gallery using scroll events
-  useEffect(() => {
-    const scrollContainer = galleryScrollRef.current;
-    if (!scrollContainer || !imagePickerOpen) return;
-
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
-        setVisibleImageCount((prev) => {
-          const newCount = prev + 24;
-          return Math.min(newCount, filteredGalleryImages.length);
-        });
-      }
-    };
-
-    scrollContainer.addEventListener("scroll", handleScroll);
-    return () => scrollContainer.removeEventListener("scroll", handleScroll);
-  }, [imagePickerOpen, filteredGalleryImages.length]);
 
   // Parse current YAML to extract props
   const parsedSection = useMemo(() => {
@@ -1172,7 +1152,7 @@ export function SectionEditorPanel({
             </div>
 
             {/* Gallery grid */}
-            <div ref={galleryScrollRef} className="flex-1 overflow-y-auto min-h-0">
+            <div className="flex-1 overflow-y-auto min-h-0">
               <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
                 {filteredGalleryImages.slice(0, visibleImageCount).map(([id, img]) => (
                   <button
@@ -1204,10 +1184,18 @@ export function SectionEditorPanel({
                   </button>
                 ))}
               </div>
-              {/* Load more indicator */}
+              {/* Load more button */}
               {visibleImageCount < filteredGalleryImages.length && (
-                <div className="h-8 flex items-center justify-center text-muted-foreground text-sm">
-                  Scroll for more...
+                <div className="py-3 flex justify-center">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setVisibleImageCount((prev) => Math.min(prev + 24, filteredGalleryImages.length))}
+                    data-testid="button-load-more-images"
+                  >
+                    Load more ({filteredGalleryImages.length - visibleImageCount} remaining)
+                  </Button>
                 </div>
               )}
               {filteredGalleryImages.length === 0 && (
