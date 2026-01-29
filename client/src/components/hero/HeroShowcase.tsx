@@ -108,7 +108,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
           <div>
             <Button
               size="lg"
-              className="text-body px-8 mb-1"
+              className="text-body px-8 mb-1 text-primary-foreground"
               asChild
               data-testid="button-hero-cta"
             >

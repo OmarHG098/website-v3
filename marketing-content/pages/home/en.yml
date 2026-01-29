@@ -29,15 +29,15 @@ sections:
       variant: primary
       icon: ""
     left_images:
-      - src: /images/students-collab.webp
+      - src: /attached_assets/community_1764717588840.png
         alt: Community illustration
-      - src: /images/happy-developer.webp
+      - src: /attached_assets/caracas-graduates_1765387638222.png
         alt: Caracas graduates celebration
     right_images:
-      - src: /images/woman-coding.webp
-        alt: Our story image
-      - src: /images/tech-team.webp
-        alt: Tech team group photo
+      - src: /attached_assets/fernando-funez_1765315920677.jpg
+        alt: Fernando Funez testimonial
+      - src: /attached_assets/feliz-empresario-laptop_1765406479465.png
+        alt: Happy professional with laptop
     show_arrow: true
   - type: features_grid
     variant: highlight
