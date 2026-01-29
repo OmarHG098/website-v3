@@ -179,6 +179,7 @@ export function SectionEditorPanel({
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
   const gallerySentinelRef = useRef<HTMLDivElement>(null);
+  const galleryScrollRef = useRef<HTMLDivElement>(null);
 
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
@@ -209,7 +210,8 @@ export function SectionEditorPanel({
   // Infinite scroll for image gallery
   useEffect(() => {
     const sentinel = gallerySentinelRef.current;
-    if (!sentinel || !imagePickerOpen) return;
+    const scrollContainer = galleryScrollRef.current;
+    if (!sentinel || !scrollContainer || !imagePickerOpen) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -217,7 +219,7 @@ export function SectionEditorPanel({
           setVisibleImageCount((prev) => Math.min(prev + 24, filteredGalleryImages.length));
         }
       },
-      { threshold: 0.1 }
+      { root: scrollContainer, threshold: 0.1 }
     );
 
     observer.observe(sentinel);
@@ -1171,7 +1173,7 @@ export function SectionEditorPanel({
             </div>
 
             {/* Gallery grid */}
-            <div className="flex-1 overflow-y-auto min-h-0">
+            <div ref={galleryScrollRef} className="flex-1 overflow-y-auto min-h-0">
               <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
                 {filteredGalleryImages.slice(0, visibleImageCount).map(([id, img]) => (
                   <button
