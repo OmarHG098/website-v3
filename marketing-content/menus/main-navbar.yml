@@ -1,0 +1,160 @@
+navbar:
+  items:
+    - label: PROGRAMS
+      href: /programs
+      component: Dropdown
+      dropdown:
+        type: cards
+        title: Programs
+        description: From beginner to job-ready in record time. Train in today's most in-demand tech fields and launch a lasting career.
+        items:
+          - title: Full Stack with AI
+            description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
+            cta: View program
+            href: /full-stack-development
+            icon: code
+          - title: Data Science and Machine Learning with AI
+            description: Master AI-powered data analysis with Python. Build intelligent models using cutting-edge Machine Learning and AI techniques to solve real-world problems.
+            cta: View program
+            href: /data-science-machine-learning
+            icon: chart
+          - title: Cybersecurity
+            description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
+            cta: View program
+            href: /cybersecurity
+            icon: shield
+          - title: Applied AI
+            description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
+            cta: View program
+            href: /applied-ai
+            icon: brain
+        footer:
+          text: Unsure which program fits you best? See our program comparison
+          linkText: here
+          href: /program-comparison
+
+    - label: WHY 4GEEKS
+      href: /why-4geeks
+      component: Dropdown
+      dropdown:
+        type: columns
+        title: Why 4Geeks Academy
+        description: Launch your tech career with the unlimited support of expert mentors, AI-powered tools, and personalized career guidance. With strong outcomes and global recognition, we've helped thousands thrive in tech.
+        icon: medal
+        columns:
+          - title: Support
+            items:
+              - label: Mentors and teachers
+                href: /mentors-teachers
+              - label: Career Support
+                href: /career-support
+              - label: Online Platform
+                href: /online-platform
+              - label: Rigobot
+                href: /rigobot
+              - label: LearnPack
+                href: /learnpack
+          - title: Validation
+            items:
+              - label: Awards
+                href: /awards
+              - label: Outcomes
+                href: /outcomes
+              - label: 4Geeks Vs Others
+                href: /4geeks-vs-others
+          - title: Pricing
+            items:
+              - label: Financing
+                href: /financing
+              - label: Scholarships
+                href: /scholarships
+              - label: Job Guarantee
+                href: /job-guarantee
+          - title: Our Students
+            items:
+              - label: Alumni & Projects
+                href: /alumni-projects
+              - label: Testimonials
+                href: /testimonials
+              - label: Talent
+                href: /talent
+
+    - label: THE ACADEMY
+      href: /the-academy
+      component: Dropdown
+      dropdown:
+        type: simple-list
+        title: The Academy
+        description: Join a global learning community where tech, community, and innovation come together to accelerate careers.
+        icon: graduation-cap
+        items:
+          - label: Hire our alumni
+            href: /hire-alumni
+          - label: Partner with 4Geeks
+            href: /partner
+          - label: Work with us
+            href: /work-with-us
+          - label: Who we are
+            href: /who-we-are
+          - label: Press
+            href: /press
+          - label: Blog
+            href: /blog
+
+    - label: CAMPUS
+      href: /campus
+      component: Dropdown
+      dropdown:
+        type: grouped-list
+        title: Our Campus
+        description: Study in-person at one of our global campuses, or join remotely and access the same world-class training and community.
+        icon: building
+        groups:
+          - title: US & CANADA
+            items:
+              - label: Miami, USA
+                href: /campus/miami
+              - label: New York, USA
+                href: /campus/nyc
+              - label: Dallas, USA
+                href: /campus/dallas
+              - label: Toronto, Canada
+                href: /campus/toronto
+              - label: Atlanta, USA
+                href: /campus/atlanta
+              - label: Austin, USA
+                href: /campus/austin
+              - label: Chicago, USA
+                href: /campus/chicago
+              - label: Houston, USA
+                href: /campus/houston
+              - label: Los Angeles, USA
+                href: /campus/los-angeles
+              - label: Remote, USA
+                href: /campus/remote
+          - title: EUROPE
+            items:
+              - label: Madrid, Spain
+                href: /campus/madrid
+              - label: Barcelona, Spain
+                href: /campus/barcelona
+              - label: Valencia, Spain
+                href: /campus/valencia
+              - label: Malaga, Spain
+                href: /campus/malaga
+              - label: Berlin, Germany
+                href: /campus/berlin
+          - title: LATAM
+            items:
+              - label: Santiago, Chile
+                href: /campus/santiago
+              - label: Bogota, Colombia
+                href: /campus/bogota
+              - label: Mexico City, Mexico
+                href: /campus/mexico-city
+              - label: Caracas, Venezuela
+                href: /campus/caracas
+
+    - label: UPCOMING DATES
+      href: /upcoming-dates
+      component: SimpleLink
