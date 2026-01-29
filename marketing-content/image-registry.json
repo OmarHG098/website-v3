@@ -83,6 +83,17 @@
     }
   },
   "images": {
+    "clark_university": {
+      "src": "/attached_assets/clark-university_1769653206336.png",
+      "alt": "Clark University Logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "university",
+        "partner"
+      ],
+      "usage_count": 0
+    },
     "arp_logo_certification": {
       "src": "/attached_assets/arp-logo-certification_1765548854924.png",
       "alt": "ARP Certification Logo",

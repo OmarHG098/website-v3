@@ -47,22 +47,22 @@ sections:
     showBorder: false
     items:
       - id: coursereport-detailed
-        logo: /images/awards/course-report.svg
-        alt: Course Report - Best Coding Bootcamp
+        alt: Forbes Award logo
+        logo: /attached_assets/forbes-logo-award_1764709625651.webp
         logoHeight: h-16
         description: Recognized as one of the best coding bootcamps worldwide
         link: https://www.coursereport.com
         linkText: Read reviews
       - id: switchup-detailed
-        logo: /images/awards/switchup.svg
         alt: SwitchUp - Top Bootcamp
+        logo: /images/awards/switchup.svg
         logoHeight: h-16
         description: Top-rated bootcamp based on verified student reviews
         link: https://www.switchup.org
         linkText: See rankings
       - id: careerkarma-detailed
-        logo: /images/awards/career-karma.svg
-        alt: Career Karma - Best Value
+        alt: Award badges
+        logo: /attached_assets/badges-new.avif
         logoHeight: h-16
         description: Best value for career changers and beginners
         link: https://careerkarma.com
