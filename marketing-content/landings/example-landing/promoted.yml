@@ -116,7 +116,7 @@ sections:
         - text: Career support that lasts a lifetime
       bullet_icon: Check
       font_size: base
-  - type: feature_quad
+  - type: features_quad
     version: "1.0"
     variant: laptopEdge
     compact: true
@@ -144,6 +144,7 @@ sections:
       - icon: Rocket
         title: Fast-Track Career
         description: Job-ready portfolio
+    background: hsl(var(--muted))
   - type: community_support
     version: "1.0"
     heading: A Global Developer Community Supporting Your Growth

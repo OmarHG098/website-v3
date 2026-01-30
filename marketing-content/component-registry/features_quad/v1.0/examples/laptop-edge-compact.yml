@@ -1,7 +1,7 @@
-name: "Feature Quad - Laptop Edge Compact"
+name: "Features Quad - Laptop Edge Compact"
 description: "Compact cards with laptop image and optional images - minimal text"
 yaml: |
-  - type: feature_quad
+  - type: features_quad
     version: "1.0"
     variant: laptopEdge
     compact: true

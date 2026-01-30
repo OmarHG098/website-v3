@@ -68,13 +68,28 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
       <div className="relative max-w-6xl mx-auto px-4 py-14">
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-6">
-          <div className="text-left">
-            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading">
-              {data.heading}
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {data.description}
-            </p>
+          <div className="flex gap-4 items-start">
+            <div className="flex-1 text-left">
+              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading">
+                {data.heading}
+              </h2>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {data.description}
+              </p>
+            </div>
+            {images.length > 0 && (
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[80px]" data-testid="img-feature-quad-mobile">
+                {images.slice(0, 4).map((image, index) => (
+                  <div key={index} className="flex-1 h-full">
+                    <UniversalImage
+                      id={image.image_id}
+                      alt={image.alt || `Image ${index + 1}`}
+                      className="w-full h-full object-cover object-top rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-feature-quad-mobile">
             {data.cards.map((card, index) => (
@@ -88,11 +103,26 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className="text-left">
-            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
-              {data.heading}
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+          <div className="flex gap-6 items-start">
+            <div className="flex-1 text-left">
+              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
+                {data.heading}
+              </h2>
+              <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+            </div>
+            {images.length > 0 && (
+              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card h-[100px]" data-testid="img-feature-quad-tablet">
+                {images.slice(0, 4).map((image, index) => (
+                  <div key={index} className="flex-1 h-full">
+                    <UniversalImage
+                      id={image.image_id}
+                      alt={image.alt || `Image ${index + 1}`}
+                      className="w-full h-full object-cover object-top rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-tablet">
             {data.cards.map((card, index) => (
@@ -116,13 +146,13 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
                 </div>
                 {images.length > 0 && (
-                  <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card max-w-[400px] h-[100px]" data-testid="img-feature-quad-desktop">
+                  <div className="flex items-start gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] h-[120px]" data-testid="img-feature-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
                       <div key={index} className="flex-1 h-full">
                         <UniversalImage
                           id={image.image_id}
                           alt={image.alt || `Image ${index + 1}`}
-                          className="w-full h-full object-cover object-top rounded-lg"
+                          className="w-[35px] h-full object-cover object-top rounded-lg"
                         />
                       </div>
                     ))}
@@ -143,7 +173,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
       </div>
 
       {/* Laptop image - desktop only */}
-      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
+      <div className="hidden lg:flex absolute lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"

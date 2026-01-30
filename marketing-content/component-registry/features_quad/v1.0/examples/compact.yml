@@ -1,7 +1,7 @@
-name: "Feature Quad - Compact"
+name: "Features Quad - Compact"
 description: "Compact cards showing only icon and title (no description)"
 yaml: |
-  - type: feature_quad
+  - type: features_quad
     version: "1.0"
     variant: default
     compact: true

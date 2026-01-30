@@ -1,7 +1,7 @@
-name: "Feature Quad - Laptop Edge"
+name: "Features Quad - Laptop Edge"
 description: "Cards on the left with a laptop image extending to the right edge, plus optional images"
 yaml: |
-  - type: feature_quad
+  - type: features_quad
     version: "1.0"
     variant: laptopEdge
     heading: "Master AI Development Tools"

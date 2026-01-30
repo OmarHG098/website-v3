@@ -1,7 +1,7 @@
-name: "Feature Quad - Default"
+name: "Features Quad - Default"
 description: "Header with images and 4 feature cards in a 2x2 grid layout"
 yaml: |
-  - type: feature_quad
+  - type: features_quad
     version: "1.0"
     variant: default
     heading: "Why Choose Our AI Engineering Program?"

@@ -412,7 +412,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><TwoColumn data={section as Parameters<typeof TwoColumn>[0]["data"]} /></LazySection>;
     case "human_and_ai_duo":
       return <LazySection key={index}><HumanAndAIDuo data={section as Parameters<typeof HumanAndAIDuo>[0]["data"]} /></LazySection>;
-    case "feature_quad":
+    case "features_quad":
       return <LazySection key={index}><FeatureQuad data={section as Parameters<typeof FeatureQuad>[0]["data"]} /></LazySection>;
     case "community_support":
       return <LazySection key={index}><CommunitySupport data={section as Parameters<typeof CommunitySupport>[0]["data"]} /></LazySection>;
