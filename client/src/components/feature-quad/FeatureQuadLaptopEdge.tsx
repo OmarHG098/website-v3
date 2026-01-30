@@ -1,6 +1,7 @@
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
+import { UniversalImage } from "@/components/UniversalImage";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
 interface FeatureQuadLaptopEdgeProps {
@@ -43,6 +44,7 @@ function FullCard({ card, index }: { card: { icon: string; title: string; descri
 export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
+  const images = data.images || [];
 
   return (
     <section 
@@ -106,20 +108,35 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
         <div className="hidden lg:block">
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-7 space-y-6">
-              <div className="text-left">
-                <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
-                  {data.heading}
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+              <div>
+                <div className="text-left">
+                  <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
+                    {data.heading}
+                  </h2>
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
+                  {data.cards.map((card, index) => (
+                    <CardComponent key={index} card={card} index={index} />
+                  ))}
+                </div>
+                {data.footer_description && (
+                  <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
+                )}
+                {images.length > 0 && (
+                  <div className="flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-feature-quad-desktop">
+                    {images.slice(0, 4).map((image, index) => (
+                      <div key={index} className="flex-1 h-44">
+                        <UniversalImage
+                          id={image.image_id}
+                          alt={image.alt || `Image ${index + 1}`}
+                          className="w-full h-full object-cover object-top rounded-lg"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
-                {data.cards.map((card, index) => (
-                  <CardComponent key={index} card={card} index={index} />
-                ))}
-              </div>
-              {data.footer_description && (
-                <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
-              )}
             </div>
           </div>
         </div>

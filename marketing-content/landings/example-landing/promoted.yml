@@ -93,6 +93,25 @@ sections:
         title: Learn with the community
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+  - type: feature_quad
+    version: "1.0"
+    variant: laptopEdge
+    compact: true
+    heading: What You'll Learn
+    description: Master the essential skills for AI engineering.
+    cards:
+      - icon: Code
+        title: Hands-On Coding
+        description: Build real projects
+      - icon: Brain
+        title: Deep Learning
+        description: Neural networks
+      - icon: Cloud
+        title: Cloud Deployment
+        description: AWS, GCP, Azure
+      - icon: Rocket
+        title: Fast-Track Career
+        description: Job-ready portfolio
   - type: two_column
     version: v1.0
     proportions:
