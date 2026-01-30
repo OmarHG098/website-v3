@@ -55,25 +55,26 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
       className="flex flex-col justify-center"
       data-testid="graduates-stats-numbers"
     >
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-1 gap-y-6 gap-x-4 lg:gap-4">
         {stats.map((stat, index) => {
           const isEven = index % 2 === 0;
+          const isLastOdd = index === stats.length - 1 && stats.length % 2 !== 0;
           
           return (
             <div 
               key={index} 
-              className={`text-center lg:text-left max-w-[200px]  ${isEven ? 'lg:mr-auto' : 'lg:ml-auto'}`}
+              className={`text-center lg:text-left lg:max-w-[200px] ${isLastOdd ? 'col-span-2 lg:col-span-1' : ''} ${isEven ? 'lg:mr-auto' : 'lg:ml-auto'}`}
               data-testid={`stat-item-${index}`}
             >
               <p 
-                className="text-3xl md:text-5xl font-bold text-primary mb-1"
+                className="text-3xl md:text-4xl lg:text-6xl font-bold text-primary mb-1"
                 data-testid={`text-stat-value-${index}`}
               >
                 {stat.value}
-                {stat.unit && <span className="text-xl md:text-2xl font-semibold ml-1">{stat.unit}</span>}
+                {stat.unit && <span className="text-lg md:text-xl lg:text-2xl font-semibold ml-1">{stat.unit}</span>}
               </p>
               <p 
-                className="text-sm text-muted-foreground"
+                className="text-sm md:text-base text-muted-foreground max-w-[180px] mx-auto lg:mx-0"
                 data-testid={`text-stat-label-${index}`}
               >
                 {stat.label}
@@ -182,28 +183,29 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
       </div>
 
       <div className="lg:hidden">
-        <div className="max-w-6xl mx-auto px-4 space-y-8">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="h-[200px]">
-              <UniversalImage
-                id={featured_images[0].image_id}
-                preset="card"
-                className="w-full h-full object-cover shadow-sm rounded-lg"
-                alt="Featured graduate photo 1"
-              />
-            </div>
-            <div className="h-[200px]">
-              <UniversalImage
-                id={featured_images[1].image_id}
-                preset="card"
-                className="w-full h-full object-cover shadow-sm rounded-lg"
-                alt="Featured graduate photo 2"
-              />
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="relative">
+            <div className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none" />
+            <div className="relative grid grid-cols-1 gap-6 items-center px-4 py-8">
+              <div className="order-1">
+                {renderStatsCompact()}
+              </div>
+              <div className="order-2">
+                <div className="grid grid-cols-2 gap-3">
+                  {featured_images.slice(0, 4).map((img, index) => (
+                    <div key={index} className="h-[140px] md:h-[160px]">
+                      <UniversalImage
+                        id={img.image_id}
+                        preset="card"
+                        className="w-full h-full object-cover shadow-sm rounded-lg"
+                        alt={`Graduate photo ${index + 1}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-          
-          {renderCollageImages()}
-          {renderStatsCompact()}
         </div>
       </div>
     </section>
