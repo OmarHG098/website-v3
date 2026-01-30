@@ -22,7 +22,7 @@ sections:
     variant: course
     title: Data Science and Machine Learning with AI
     title_highlight: Data Science
-    subtitle: Master data science and ML in 16 weeks. Build predictive models and launch a career with $80K+ starting salaries.
+    subtitle: Master the skills powering the AI revolution. Learn to analyze data and build models that drive real-world decisions.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
@@ -31,10 +31,9 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +500 students enrolled
     bullet_points:
-      - Master Python, Pandas, and data visualization for analysis
-      - Build machine learning models with TensorFlow and Scikit-learn
-      - Learn SQL, data pipelines, and real-world data collection
-      - Deploy ML applications to production environments
+      - Transform raw data into clear insights and predictive models, step by step.
+      - Master Python, SQL, and AI tools to analyze information and automate decisions.
+      - Integrate Machine Learning into business systems to drive real results.
     tutors:
       - name: Charly Chacón
         role: Main Instructor
