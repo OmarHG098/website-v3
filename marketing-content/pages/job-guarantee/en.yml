@@ -109,6 +109,29 @@ sections:
       image: /attached_assets/reservation-es_1764814854635.webp
       image_alt: Woman working on laptop
       image_max_width: 420px
+  - type: bullet_tabs_showcase
+    version: "1.0"
+    heading: Who's Elegible?
+    subheading: "You'll qualify for the Job Guarantee if you:"
+    subheading_centered: false
+    tabs:
+      - label: U.S. authorization
+        description: Have U.S. work authorization
+        image_id: feliz_empresario_laptop
+        alt: Happy professional with laptop
+      - label: Logic test
+        description: Pass our logic test
+        image_id: graduates_coding
+        alt: Student coding at a desk with multiple monitors
+      - label: Courseowrk
+        description: Complete all coursework and projects
+        image_id: graduates_team_1
+        alt: 4Geeks team members smiling together
+      - label: Guidance
+        description: Follow our career team's guidance
+        image_id: placeholder_career_guidance
+        alt: Career guidance placeholder
+    image_position: right
   - type: features_grid
     version: "1.0"
     variant: detailed
