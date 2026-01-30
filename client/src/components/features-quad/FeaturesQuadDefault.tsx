@@ -53,19 +53,12 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
     >
       <div className="max-w-6xl mx-auto px-4">
         {/* ===== MOBILE LAYOUT ===== */}
-        <div className="md:hidden space-y-6">
-          <div className="text-left">
-            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading">
-              {data.heading}
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {data.description}
-            </p>
-          </div>
+        <div className="md:hidden space-y-4">
+          {/* Images above title */}
           {images.length > 0 && (
-            <div className="flex justify-center gap-3 w-full" data-testid="img-features-quad-mobile">
+            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20" data-testid="img-features-quad-mobile">
               {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="flex-1 h-36">
+                <div key={index} className="flex-1">
                   <UniversalImage
                     id={image.image_id}
                     alt={image.alt || `Image ${index + 1}`}
@@ -75,13 +68,23 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
               ))}
             </div>
           )}
-          <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-features-quad-mobile">
+          {/* Title and description */}
+          <div className="text-left">
+            <h2 className="text-2xl font-bold text-foreground mb-2" data-testid="text-features-quad-heading">
+              {data.heading}
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {data.description}
+            </p>
+          </div>
+          {/* Cards stacked vertically - always compact on mobile */}
+          <div className="grid grid-cols-1 gap-2" data-testid="cards-features-quad-mobile">
             {data.cards.map((card, index) => (
-              <CardComponent key={index} card={card} index={index} />
+              <CompactCard key={index} card={card} index={index} />
             ))}
           </div>
           {data.footer_description && (
-            <p className="text-sm text-muted-foreground leading-relaxed italic text-center">{data.footer_description}</p>
+            <p className="text-xs text-muted-foreground leading-relaxed italic text-center">{data.footer_description}</p>
           )}
         </div>
 
