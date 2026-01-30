@@ -149,6 +149,7 @@ export const featuresGridCardHeaderSectionSchema = z.object({
   image: z.string().optional(),
   image_alt: z.string().optional(),
   background: z.string().optional(),
+  collapsible_mobile: z.boolean().optional(),
   cards: z.array(featuresGridCardHeaderCardSchema),
 });
 

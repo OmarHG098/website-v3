@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "../custom-icons";
 import type { FeaturesGridCardHeaderSection } from "@shared/schema";
 
-const { IconCheck } = TablerIcons;
+const { IconCheck, IconChevronDown } = TablerIcons;
 
 interface FeaturesGridCardHeaderProps {
   data: FeaturesGridCardHeaderSection;
@@ -12,6 +13,8 @@ interface FeaturesGridCardHeaderProps {
 
 export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
   const backgroundClass = data.background || "bg-background";
+  const [isExpanded, setIsExpanded] = useState(false);
+  const collapsibleMobile = data.collapsible_mobile ?? false;
 
   return (
     <section 
@@ -21,42 +24,62 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
       <div className="max-w-6xl mx-auto px-4">
         <Card className="mb-8 overflow-hidden border-t-4 border-t-primary/20">
           <CardContent className="p-0">
-            <div className="grid md:grid-cols-12 gap-0">
-              <div className="md:col-span-8 p-6 md:p-8 flex flex-col justify-center">
-                <h2 
-                  className="text-2xl md:text-3xl font-bold text-foreground mb-4"
-                  data-testid="text-features-grid-heading"
-                >
+            {/* Mobile collapsible header */}
+            {collapsibleMobile && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="md:hidden w-full p-6 flex items-center justify-between text-left"
+                data-testid="button-toggle-header"
+              >
+                <h2 className="text-2xl font-bold text-foreground">
                   {data.heading}
                 </h2>
-                {data.description && (
-                  <p 
-                    className="text-muted-foreground text-base md:text-lg"
-                    data-testid="text-features-grid-description"
+                <IconChevronDown 
+                  className={`w-6 h-6 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                />
+              </button>
+            )}
+            
+            {/* Mobile non-collapsible or expanded content */}
+            <div className={`${collapsibleMobile ? `md:block ${isExpanded ? 'block' : 'hidden'}` : ''}`}>
+              <div className="grid md:grid-cols-12 gap-0">
+                <div className={`md:col-span-8 p-6 md:p-8 flex flex-col justify-center ${collapsibleMobile ? 'pt-0 md:pt-8' : ''}`}>
+                  {/* Show heading only on desktop when collapsible, always on mobile when not collapsible */}
+                  <h2 
+                    className={`text-2xl md:text-3xl font-bold text-foreground mb-4 ${collapsibleMobile ? 'hidden md:block' : ''}`}
+                    data-testid="text-features-grid-heading"
                   >
-                    {data.description}
-                  </p>
-                )}
-                {data.cta && (
-                  <Button 
-                    asChild
-                    className="mt-4 w-fit"
-                    data-testid="button-features-grid-cta"
-                  >
-                    <a href={data.cta.url}>{data.cta.text}</a>
-                  </Button>
+                    {data.heading}
+                  </h2>
+                  {data.description && (
+                    <p 
+                      className="text-muted-foreground text-base md:text-lg"
+                      data-testid="text-features-grid-description"
+                    >
+                      {data.description}
+                    </p>
+                  )}
+                  {data.cta && (
+                    <Button 
+                      asChild
+                      className="mt-4 w-fit"
+                      data-testid="button-features-grid-cta"
+                    >
+                      <a href={data.cta.url}>{data.cta.text}</a>
+                    </Button>
+                  )}
+                </div>
+                {data.image && (
+                  <div className="md:col-span-4 flex items-center justify-center p-6 md:p-8">
+                    <img
+                      src={data.image}
+                      alt={data.image_alt || ""}
+                      className="w-full max-w-[220px] md:max-w-[280px] object-contain"
+                      data-testid="img-features-grid-main"
+                    />
+                  </div>
                 )}
               </div>
-              {data.image && (
-                <div className="md:col-span-4 flex items-center justify-center p-6 md:p-8">
-                  <img
-                    src={data.image}
-                    alt={data.image_alt || ""}
-                    className="w-full max-w-[220px] md:max-w-[280px] object-contain"
-                    data-testid="img-features-grid-main"
-                  />
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>
