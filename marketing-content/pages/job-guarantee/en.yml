@@ -85,30 +85,6 @@ sections:
         col_start: 1
         row_start: 3
     background: bg-muted/30
-  - type: two_column
-    version: "1.0"
-    proportions:
-      - 8
-      - 4
-    background: bg-primary/5
-    left:
-      heading: Who's Eligible?
-      sub_heading: "You'll qualify for the Job Guarantee if you:"
-      bullets:
-        - text: Have U.S. work authorization
-        - text: Pass our logic test
-        - text: Complete all coursework and projects
-        - text: Follow our career team's guidance
-      description: "*Conditions apply depending on your country or U.S. state"
-      button:
-        text: Apply
-        url: "#apply"
-        variant: primary
-      font_size: lg
-    right:
-      image: /attached_assets/reservation-es_1764814854635.webp
-      image_alt: Woman working on laptop
-      image_max_width: 420px
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Who's Elegible?
@@ -161,6 +137,8 @@ sections:
         icon: Security
         link_url: "#"
         link_text: Read More
+    marginY:
+      desktop: md
   - type: numbered_steps
     version: "1.0"
     title: How the Refund Works
@@ -175,33 +153,27 @@ sections:
         icon: ClipboardCheck
       - text: Receive the full refund within 30 days.
         icon: CashBanknote
-  - type: two_column
-    proportions:
-      - 5
-      - 7
-    alignment: center
-    left:
-      image: /attached_assets/hombre-joven-con-laptop_1764691956393.webp
-      image_alt: Happy graduate with laptop showing the 4Geeks Academy logo
-      justify: start
-    right:
-      heading: Why We Have the Confidence to Offer a Job Guarantee
-      description: Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.
-      button:
-        text: Apply
-        url: "#apply"
-        variant: primary
-      bullets:
-        - text: Our program's effectiveness is backed by strong placement rates
-        - text: The tech industry continues to grow with high demand for talent
-        - text: We believe in our teaching approach and your commitment to succeed
-      bullets_visible: 2
-      bullet_icon: Check
-      font_size: base
-    reverse_on_mobile: true
-    gap: "12"
+  - type: features_grid
+    version: "1.0"
+    variant: cardHeader
+    heading: Why We Have the Confidence to Offer a Job Guarantee
+    description: Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.
+    image: /attached_assets/comunity-support_1765908983485.png
+    image_alt: 4Geeks Academy community support
+    background: bg-primary/5
+    cards:
+      - icon: BriefcaseFilled
+        text: Our program's effectiveness is backed by strong placement rates
+      - icon: BrandStackshare
+        text: The tech industry continues to grow with high demand for talent
+      - icon: ChalkboardTeacher
+        text: We believe in our teaching approach and your commitment to succeed
   - type: faq
     version: "1.0"
     title: Frequently Asked Questions about the Job Guarantee
     related_features:
       - job-guarantee
+    paddingY:
+      desktop: none
+    marginY:
+      desktop: lg none
