@@ -124,8 +124,8 @@ sections:
     version: "1.0"
     variant: stats-text
     title: Why Data Science now?
-    subtitle: Data science and machine learning are among tech's fastest growing fields
-    description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
+    subtitle: Data is the fuel for the AI revolution.
+    description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
     background: bg-muted/30
     items:
       - id: "1"
