@@ -1,11 +1,20 @@
 name: "Feature Quad - Laptop Edge"
-description: "Cards on the left with a laptop image extending to the right edge"
+description: "Cards on the left with images grid and a laptop image extending to the right edge"
 yaml: |
   - type: feature_quad
     version: "1.0"
     variant: laptopEdge
     heading: "Master AI Development Tools"
     description: "Learn to build production-ready AI applications with industry-standard tools and frameworks."
+    images:
+      - image_id: "student-1"
+        alt: "Student 1"
+      - image_id: "student-2"
+        alt: "Student 2"
+      - image_id: "student-3"
+        alt: "Student 3"
+      - image_id: "student-4"
+        alt: "Student 4"
     cards:
       - icon: "Code"
         title: "Hands-On Coding"
