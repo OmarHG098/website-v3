@@ -12,7 +12,6 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
   const background = data.background;
   const collage_images = 'collage_images' in data ? data.collage_images : undefined;
   const featured_images = 'featured_images' in data ? data.featured_images : undefined;
-  const image_bordered = 'image_bordered' in data ? data.image_bordered !== false : true;
 
   if (!stats || stats.length === 0) {
     return null;
@@ -42,7 +41,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
             <UniversalImage
               id={img.image_id}
               preset="card"
-              className={`w-full h-full object-cover shadow-sm rounded-lg ${image_bordered ? 'border-2 border-foreground/20' : ''}`}
+              className="w-full h-full object-cover shadow-sm rounded-lg"
               alt={`Graduate photo ${index + 1}`}
             />
           </div>
@@ -138,7 +137,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
                     <UniversalImage
                       id={img.image_id}
                       preset="card"
-                      className={`w-full h-full object-cover shadow-sm rounded-lg ${image_bordered ? 'border-2 border-foreground/20' : ''}`}
+                      className="w-full h-full object-cover shadow-sm rounded-lg"
                       alt={`Featured graduate photo ${index + 1}`}
                     />
                   </div>
@@ -160,7 +159,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
                     <UniversalImage
                       id={img.image_id}
                       preset="card"
-                      className={`w-full h-full object-cover shadow-sm rounded-lg ${image_bordered ? 'border-2 border-foreground/20' : ''}`}
+                      className="w-full h-full object-cover shadow-sm rounded-lg"
                       alt={`Graduate photo ${index + 1}`}
                     />
                   </div>
@@ -189,7 +188,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
               <UniversalImage
                 id={featured_images[0].image_id}
                 preset="card"
-                className={`w-full h-full object-cover shadow-sm rounded-lg ${image_bordered ? 'border-2 border-foreground/20' : ''}`}
+                className="w-full h-full object-cover shadow-sm rounded-lg"
                 alt="Featured graduate photo 1"
               />
             </div>
@@ -197,7 +196,7 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
               <UniversalImage
                 id={featured_images[1].image_id}
                 preset="card"
-                className={`w-full h-full object-cover shadow-sm rounded-lg ${image_bordered ? 'border-2 border-foreground/20' : ''}`}
+                className="w-full h-full object-cover shadow-sm rounded-lg"
                 alt="Featured graduate photo 2"
               />
             </div>
