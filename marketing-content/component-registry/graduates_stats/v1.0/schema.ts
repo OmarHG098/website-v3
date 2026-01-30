@@ -55,6 +55,7 @@ export const graduatesStatsFullBleedSchema = z.object({
   collage_images: z.array(graduatesCollageImageSchema),
   featured_images: z.array(graduatesFeaturedImageSchema),
   background: z.string().optional(),
+  image_bordered: z.boolean().optional().default(true),
 });
 
 export const graduatesStatsAsymmetricSchema = z.object({

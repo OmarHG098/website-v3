@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "d4c7a20fe2b2e920185958de7297dfd56b52a174",
-  "lastSyncedAt": "2026-01-29T23:07:19.972Z",
+  "lastSyncedCommit": "31012d1c8d7fe13e6051f2edb947d08741e77030",
+  "lastSyncedAt": "2026-01-30T13:43:48.569Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -638,9 +638,9 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "737b5e60714c91d8c4ece8c896250ccc46e05479c62627a83f6175849f9509b5",
-      "lastModified": 1769728039419.4624,
-      "remoteSha": "737b5e60714c91d8c4ece8c896250ccc46e05479c62627a83f6175849f9509b5"
+      "sha": "36e52201680b826725fb89ac638cc079250caa11c335d5edb04201d4c033744c",
+      "lastModified": 1769780627135.9312,
+      "remoteSha": "36e52201680b826725fb89ac638cc079250caa11c335d5edb04201d4c033744c"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
@@ -738,9 +738,9 @@
       "remoteSha": "dc8aaeadafdb3036d27c562a2d255afb1412fcbf901f186ddc78fc634ba3c056"
     },
     "marketing-content/programs/cybersecurity/en.yml": {
-      "sha": "114c5cb585f7dcf9a94e412431be802474f7e48147d33f0bb244a26400b37c1d",
-      "lastModified": 1769715148774.5715,
-      "remoteSha": "114c5cb585f7dcf9a94e412431be802474f7e48147d33f0bb244a26400b37c1d"
+      "sha": "a9f12fdca4cc465ba41dd07aa792fc8603757b1f12c8ee6abaa05f37b0e1592f",
+      "lastModified": 1769780627615.9307,
+      "remoteSha": "a9f12fdca4cc465ba41dd07aa792fc8603757b1f12c8ee6abaa05f37b0e1592f"
     },
     "marketing-content/programs/cybersecurity/es.yml": {
       "sha": "9c24d1986f3cf238ec3167e278e64ca80ba5e7fdd5a14d7cfd10c2b78a2ca748",
@@ -753,9 +753,9 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "a2257e52211c596f60e190a7f40ae256be3f9f10a088178a569f43707cfd3ddd",
-      "lastModified": 1769719666933.0112,
-      "remoteSha": "a2257e52211c596f60e190a7f40ae256be3f9f10a088178a569f43707cfd3ddd"
+      "sha": "200ce1c5d4d51fcb7caac7c218f9dc85ee3309554837c42c25fc8f365a6cc5d8",
+      "lastModified": 1769780628100.9302,
+      "remoteSha": "200ce1c5d4d51fcb7caac7c218f9dc85ee3309554837c42c25fc8f365a6cc5d8"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
