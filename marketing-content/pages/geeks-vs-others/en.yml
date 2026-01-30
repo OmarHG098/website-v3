@@ -24,7 +24,9 @@ sections:
       src: /attached_assets/unsplash_QckxruozjRg_1765395521123.png
       alt: Students coding together at a table with laptops
     paddingY:
-      desktop: none lg
+      desktop: md none
+    marginY:
+      desktop: none md
   - type: comparison_table
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
@@ -74,8 +76,9 @@ sections:
     paddingY:
       desktop: md lg
     marginY:
-      desktop: none md
+      desktop: md
   - type: two_column_accordion_card
+    variant: image_background
     version: "1.0"
     title: Hyperpersonalized Learning & Support That Lasts a Lifetime
     description: Most bootcamps give you limited mentorship hours and leave you once you're hired. At 4Geeks, we built an entire support system around personalization.
@@ -86,16 +89,34 @@ sections:
         text: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
       - heading: Lifelong Career Support
         text: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing r
-    image: https://example.com/course-benefits.png
-    image_alt: Graduate celebrating success
+    footer: Over 10,000 graduates have launched new careers with us.
+    image: /attached_assets/community_1764717588840.png
+    image_alt: Student learning with mentor support
     reverse: true
-    paddingY:
-      desktop: lg
-    background: hsl(var(--muted))
-  - type: two_column
+    background: hsl(var(--background))
+  - type: features_grid
     version: "1.0"
+    variant: stats-cards
+    title: Results You Can Count On
+    subtitle: Numbers matter — and ours speak for themselves.
+    use_card: true
+    items:
+      - value: 84%
+        title: Job placement rate
+      - value: 3-6 months
+        title: Average time to get hired
+      - value: 55%
+        title: Salary increase after graduation
+    marginY:
+      desktop: lg md
+  - type: two_column
     variant: benefitCards
     background: bg-muted/30
+    left:
+      image: /attached_assets/caracas-graduates_1765387638222.png
+    right:
+      image: /attached_assets/caracas-graduates_1765387638222.png
+      image_alt: Woman working on laptop
     title: Making Tech Careers Accessible
     subtitle: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
     benefit_items:
@@ -115,22 +136,6 @@ sections:
       text: See financing options
       url: /en/financials
       variant: primary
-    right:
-      image: /attached_assets/reservation-es_1764814854635.webp
-      image_alt: Woman working on laptop
-  - type: features_grid
-    version: "1.0"
-    variant: stats-cards
-    title: Results You Can Count On
-    subtitle: Numbers matter — and ours speak for themselves.
-    use_card: true
-    items:
-      - value: 84%
-        title: Job placement rate
-      - value: 3-6 months
-        title: Average time to get hired
-      - value: 55%
-        title: Salary increase after graduation
   - type: split_cards
     variant: primary-left
     background: muted
@@ -161,7 +166,58 @@ sections:
         description: Credentials that employers trust and value
     media:
       type: image
-      src: /attached_assets/community-support-2_1765406601448.webp
+      src: /attached_assets/Group-original_1765419144159.webp
       alt: 4Geeks Academy community and support
       aspect_ratio: "4:3"
       style: rounded
+    marginY:
+      desktop: none
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 100
+    items:
+      - id: switchup-2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logoHeight: h-12 md:h-14
+      - id: course-report-2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        alt: Course Report - Best Coding Bootcamp 2024
+        logoHeight: h-12 md:h-14
+      - id: tech-hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: South Florida Tech Hub
+        logoHeight: h-12 md:h-14
+      - id: ebootcamp
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        alt: eBootcamp Top
+        logoHeight: h-12 md:h-14
+      - id: premios-tecnologia
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        alt: Premios Tecnologia Siglo XXI
+        logoHeight: h-12 md:h-14
+      - id: newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        alt: Newsweek
+        logoHeight: h-12 md:h-14
+      - id: reviews-coursereport
+        logo: /attached_assets/reviews_1765549549051.png
+        alt: 4.9 on Course Report Reviews
+        logoHeight: h-12 md:h-14
+      - id: excelencia-educativa
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        alt: Excelencia Educativa - Institutional Quality
+        logoHeight: h-12 md:h-14
+    paddingY:
+      desktop: none xl
+    marginY:
+      desktop: none
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - price
+      - certification
+      - online-platform
