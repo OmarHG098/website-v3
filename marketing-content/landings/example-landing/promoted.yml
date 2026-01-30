@@ -95,24 +95,25 @@ sections:
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
   - type: two_column
     proportions:
-      - 6
-      - 6
-    alignment: center
+      - 7
+      - 5
+    alignment: start
     left:
-      video: "-2ZvlgDnltc"
-      video_height: auto
-      video_width: 100%
-      justify: center
+      heading: Why Choose 4Geeks Academy
+      description: Discover a learning experience designed to help you succeed in tech, with support that never ends.
+      bullet_groups:
+        - title: Unlimited 1:1 Mentorship
+          description: Work with industry experts who provide personalized guidance throughout your journey and beyond.
+        - title: Flexible Learning Options
+          description: Balance your schedule with part-time or full-time programs, including evening and weekend classes.
+        - title: Career Support for Life
+          description: Access our career services team and alumni network anytime to stay on track with your goals.
+      bullet_groups_collapsible: false
     right:
-      heading: See It In Action
-      sub_heading: Discover how we help you build a tech career
-      description: Experience our AI-powered learning platform designed to adapt to your unique pace and style, delivering personalized guidance every step of the way. You'll never code alone with our unmatched support system.
-      button:
-        text: Start Free Trial
-        url: /signup
-        variant: primary
-        icon: Rocket
-    gap: "8"
+      image: https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=500&fit=crop
+      image_alt: Team collaboration meeting
+      justify: center
+    gap: "12"
     variant: default
   - type: community_support
     version: "1.0"
