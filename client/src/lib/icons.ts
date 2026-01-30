@@ -42,6 +42,7 @@ export const CUSTOM_ICON_NAMES = [
 
 // Common Tabler icons for the picker (curated list)
 export const TABLER_ICON_NAMES = [
+  // General UI icons
   "IconRocket", "IconUsers", "IconBriefcase", "IconShield", "IconCheck",
   "IconX", "IconPlus", "IconMinus", "IconStar", "IconHeart",
   "IconHome", "IconSettings", "IconSearch", "IconMail", "IconPhone",
@@ -60,7 +61,7 @@ export const TABLER_ICON_NAMES = [
   "IconArrowRight", "IconChevronUp", "IconChevronDown", "IconChevronLeft", "IconChevronRight",
   "IconMenu", "IconDotsVertical", "IconDots", "IconFilter", "IconSort",
   "IconZoomIn", "IconZoomOut", "IconMaximize", "IconMinimize", "IconFullscreen",
-  "IconCode", "IconTerminal", "IconBrandGithub", "IconBrandLinkedin", "IconBrandTwitter",
+  "IconCode", "IconTerminal",
   "IconMessage", "IconMessageCircle", "IconMessages", "IconBell", "IconBellRinging",
   "IconAlertCircle", "IconAlertTriangle", "IconInfoCircle", "IconHelp", "IconQuestionMark",
   "IconBulb", "IconLightbulb", "IconFlame", "IconBolt", "IconZap",
@@ -70,6 +71,30 @@ export const TABLER_ICON_NAMES = [
   "IconWifi", "IconSun", "IconMoon",
   "IconSchool", "IconBook", "IconBooks", "IconNotebook", "IconBackpack",
   "IconGraduationCap", "IconRobot", "IconBrain", "IconActivity", "IconPulse",
+  "IconApi", "IconSparkles", "IconWand",
+  // Tech brand icons
+  "IconBrandPython", "IconBrandJavascript", "IconBrandTypescript", "IconBrandHtml5", "IconBrandCss3",
+  "IconBrandReact", "IconBrandNextjs", "IconBrandNodejs", "IconBrandNpm", "IconBrandBun",
+  "IconBrandTailwind", "IconBrandBootstrap", "IconBrandSass", "IconBrandVue", "IconBrandAngular",
+  "IconBrandSvelte", "IconBrandDeno", "IconBrandRust", "IconBrandGolang", "IconBrandSwift",
+  "IconBrandKotlin", "IconBrandPhp", "IconBrandLaravel", "IconBrandDjango", "IconBrandFlask",
+  // AI & Cloud brands
+  "IconBrandOpenai", "IconBrandAws", "IconBrandAzure", "IconBrandGoogleCloud",
+  "IconBrandFirebase", "IconBrandVercel", "IconBrandCloudflare", "IconBrandDigitalocean",
+  // Database brands
+  "IconBrandMongodb", "IconBrandMysql", "IconBrandSupabase", "IconBrandPrisma",
+  // Tools & DevOps brands
+  "IconBrandGithub", "IconBrandGitlab", "IconBrandBitbucket", "IconBrandGit",
+  "IconBrandDocker", "IconBrandKubernetes", "IconBrandTerraform",
+  "IconBrandVscode", "IconBrandFigma", "IconBrandSketch", "IconBrandNotion",
+  // Social & Communication brands
+  "IconBrandLinkedin", "IconBrandTwitter", "IconBrandX", "IconBrandFacebook", "IconBrandInstagram",
+  "IconBrandYoutube", "IconBrandTiktok", "IconBrandDiscord", "IconBrandSlack", "IconBrandZoom",
+  "IconBrandTelegram", "IconBrandWhatsapp", "IconBrandSpotify", "IconBrandReddit",
+  // Company brands
+  "IconBrandGoogle", "IconBrandApple", "IconBrandMicrosoft", "IconBrandMeta",
+  "IconBrandAmazon", "IconBrandNetflix", "IconBrandPaypal", "IconBrandStripe",
+  "IconBrandShopify", "IconBrandWordpress", "IconBrandMedium",
 ];
 
 // Type for icon components
