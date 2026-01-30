@@ -271,6 +271,17 @@ sections:
     showOn: mobile
     paddingY:
       desktop: none lg
+  - type: features_grid
+    title: Why AI Engineering Now
+    subtitle: The talent ashortage is your opportunity
+    items:
+      - value: 3.5M
+        title: AI-related roles expected by 2026
+      - value: 47%
+        title: Year-over-year growth in AI job postings
+      - value: $95K-$135K
+        title: Average starting salary for AI Engineers
+    variant: stats-text
   - type: two_column_accordion_card
     version: "1.0"
     title: Why Choose Our Program?

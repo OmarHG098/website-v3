@@ -22,7 +22,7 @@ sections:
     variant: course
     title: Data Science and Machine Learning with AI
     title_highlight: Data Science
-    subtitle: Master data science and ML in 16 weeks. Build predictive models and launch a career with $80K+ starting salaries.
+    subtitle: Master the skills powering the AI revolution. Learn to analyze data and build models that drive real-world decisions.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
@@ -31,10 +31,9 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +500 students enrolled
     bullet_points:
-      - Master Python, Pandas, and data visualization for analysis
-      - Build machine learning models with TensorFlow and Scikit-learn
-      - Learn SQL, data pipelines, and real-world data collection
-      - Deploy ML applications to production environments
+      - Transform raw data into clear insights and predictive models, step by step.
+      - Master Python, SQL, and AI tools to analyze information and automate decisions.
+      - Integrate Machine Learning into business systems to drive real results.
     tutors:
       - name: Charly Chacón
         role: Main Instructor
@@ -124,14 +123,14 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Does the Job Guarantee deliver results you can count on?
-    subtitle: Yes, and we've got the numbers to back it up
-    description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
+    title: Why Data Science now?
+    subtitle: Data is the fuel for the AI revolution.
+    description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
     background: bg-muted/30
     items:
       - id: "1"
-        value: 84%
-        title: Job placement rate within 6 months
+        value: 36%
+        title: projected growth rate the next decade
       - id: "2"
         value: 150%
         title: Average salary increase after graduation
