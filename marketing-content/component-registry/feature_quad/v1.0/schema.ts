@@ -1,0 +1,27 @@
+import { z } from "zod";
+
+export const featureQuadCardSchema = z.object({
+  icon: z.string().describe("Tabler icon name (e.g., 'Trophy', 'Wallet', 'Clock')"),
+  title: z.string().describe("Card title"),
+  description: z.string().describe("Card description text"),
+});
+
+export const featureQuadImageSchema = z.object({
+  image_id: z.string().describe("Image ID from the image registry"),
+  alt: z.string().optional().describe("Alt text for the image"),
+});
+
+export const featureQuadSectionSchema = z.object({
+  type: z.literal("feature_quad"),
+  version: z.string().optional().default("1.0"),
+  heading: z.string().describe("Section heading"),
+  description: z.string().describe("Section description"),
+  images: z.array(featureQuadImageSchema).optional().describe("Array of images (up to 4) displayed in the header"),
+  cards: z.array(featureQuadCardSchema).min(4).max(4).describe("Array of exactly 4 feature cards"),
+  footer_description: z.string().optional().describe("Optional footer text (italic)"),
+  background: z.string().optional().describe("Background CSS class (e.g., 'bg-muted/30')"),
+});
+
+export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;
+export type FeatureQuadImage = z.infer<typeof featureQuadImageSchema>;
+export type FeatureQuadSection = z.infer<typeof featureQuadSectionSchema>;
