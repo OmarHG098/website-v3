@@ -121,7 +121,7 @@ sections:
     variant: laptopEdge
     compact: true
     heading: What You'll Learn
-    description: Master the essential skills for AI engineering.
+    description: aster the essential skills for AI engineering.
     images:
       - image_id: student_asian
         alt: Asian student learning to code
