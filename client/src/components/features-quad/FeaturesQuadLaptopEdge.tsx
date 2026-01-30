@@ -70,9 +70,9 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
         <div className="md:hidden space-y-4">
           {/* Images above title - aligned left */}
           {images.length > 0 && (
-            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20 w-fit" data-testid="img-features-quad-mobile">
+            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
               {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="w-10">
+                <div key={index} className="w-16">
                   <UniversalImage
                     id={image.image_id}
                     alt={image.alt || `Image ${index + 1}`}

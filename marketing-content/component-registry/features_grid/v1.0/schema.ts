@@ -63,6 +63,7 @@ export const featuresGridDetailedSectionSchema = z.object({
   icon_color: z.string().optional(),
   collapsible_mobile: z.boolean().optional(),
   background: z.string().optional(),
+  show_workflow_diagram: z.boolean().optional(),
 });
 
 export const featuresGridSpotlightSectionSchema = z.object({

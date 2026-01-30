@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
+import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 
 function getIcon(iconName: string, className?: string, color?: string) {
   const CustomIcon = getCustomIcon(iconName);
@@ -57,15 +58,15 @@ function DetailedCard({
               {item.category}
             </span>
           )}
-          <h3 className={`text-lg md:text-xl font-bold text-foreground ${item.category ? 'mt-1' : ''}`}>
+          <h3 className={`flex items-center gap-2 text-lg md:text-xl font-bold text-foreground ${item.category ? 'mt-1' : ''}`}>
+            {!hasImage && item.icon && (
+              <span className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
+                {getIcon(item.icon, "w-full h-full", iconColor)}
+              </span>
+            )}
             {item.title}
           </h3>
         </div>
-        {!hasImage && item.icon && (
-          <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
-            {getIcon(item.icon, "w-full h-full", iconColor)}
-          </div>
-        )}
         {collapsible && (
           <TablerIcons.IconChevronDown 
             className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ml-2 ${isOpen ? 'rotate-180' : ''}`}
@@ -157,6 +158,12 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
             />
           ))}
         </div>
+
+        {data.show_workflow_diagram && (
+          <div className="mt-8">
+            <AIWorkflowDiagram />
+          </div>
+        )}
       </div>
     </section>
   );
