@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "../custom-icons";
 import type { FeaturesGridCardHeaderSection } from "@shared/schema";
@@ -35,6 +36,15 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
                   >
                     {data.description}
                   </p>
+                )}
+                {data.cta && (
+                  <Button 
+                    asChild
+                    className="mt-4 w-fit"
+                    data-testid="button-features-grid-cta"
+                  >
+                    <a href={data.cta.url}>{data.cta.text}</a>
+                  </Button>
                 )}
               </div>
               {data.image && (

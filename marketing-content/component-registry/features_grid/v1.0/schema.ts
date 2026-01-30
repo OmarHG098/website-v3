@@ -142,6 +142,10 @@ export const featuresGridCardHeaderSectionSchema = z.object({
   variant: z.literal("cardHeader"),
   heading: z.string(),
   description: z.string().optional(),
+  cta: z.object({
+    text: z.string(),
+    url: z.string(),
+  }).optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
   background: z.string().optional(),

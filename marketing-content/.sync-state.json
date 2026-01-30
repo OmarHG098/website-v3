@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "31012d1c8d7fe13e6051f2edb947d08741e77030",
-  "lastSyncedAt": "2026-01-30T13:43:48.569Z",
+  "lastSyncedCommit": "1a3894f7baa1838fb9f67943466c5e4b75404486",
+  "lastSyncedAt": "2026-01-30T13:58:37.915Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -54,7 +54,7 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd",
-      "lastModified": 1769728038595.463,
+      "lastModified": 1769781517411.045,
       "remoteSha": "0dfa343dcbd7a13af8e4652b34f55e3b29670184e774f9c63741ff959e4ebacd"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
@@ -683,9 +683,9 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "8f2ceb3f0324d7be40fbdc8567fa0e92190695f7b95681f9e1c0be4349e72001",
-      "lastModified": 1769533048563.3936,
-      "remoteSha": "8f2ceb3f0324d7be40fbdc8567fa0e92190695f7b95681f9e1c0be4349e72001"
+      "sha": "903d5256fe4fd78270f8f55edcef2ab3c39322606e7e8d4649f299a1e15c8aa9",
+      "lastModified": 1769781510527.5518,
+      "remoteSha": "903d5256fe4fd78270f8f55edcef2ab3c39322606e7e8d4649f299a1e15c8aa9"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
