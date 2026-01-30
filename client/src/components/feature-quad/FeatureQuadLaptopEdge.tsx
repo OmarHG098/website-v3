@@ -107,26 +107,18 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
         {/* ===== DESKTOP LAYOUT with laptop ===== */}
         <div className="hidden lg:block">
           <div className="grid grid-cols-12 gap-8 items-start">
-            <div className="col-span-7 space-y-6">
-              <div>
-                <div className="text-left">
+            <div className="col-span-9 space-y-6">
+              <div className="flex justify-between">
+                <div className="text-left me-24">
                   <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
                     {data.heading}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
-                  {data.cards.map((card, index) => (
-                    <CardComponent key={index} card={card} index={index} />
-                  ))}
-                </div>
-                {data.footer_description && (
-                  <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
-                )}
                 {images.length > 0 && (
-                  <div className="flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-feature-quad-desktop">
+                  <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card max-w-[400px] h-[100px]" data-testid="img-feature-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
-                      <div key={index} className="flex-1 h-44">
+                      <div key={index} className="flex-1 h-full">
                         <UniversalImage
                           id={image.image_id}
                           alt={image.alt || `Image ${index + 1}`}
@@ -137,17 +129,25 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
                   </div>
                 )}
               </div>
+                <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
+                  {data.cards.map((card, index) => (
+                    <CardComponent key={index} card={card} index={index} />
+                  ))}
+                </div>
+                {data.footer_description && (
+                  <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
+                )}
             </div>
           </div>
         </div>
       </div>
 
       {/* Laptop image - desktop only */}
-      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-1/2 items-center pointer-events-none">
+      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
-          className="w-[100%] max-w-none h-auto object-contain object-left"
+          className="w-[90%] max-w-none h-auto object-contain object-left"
           loading="lazy"
           data-testid="img-feature-quad-laptop"
         />
