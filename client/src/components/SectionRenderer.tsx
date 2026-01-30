@@ -180,7 +180,7 @@ const PieCharts = lazy(() => import("@/components/PieCharts").then(m => ({ defau
 const LeadForm = lazy(() => import("@/components/LeadForm").then(m => ({ default: m.LeadForm })));
 const ApplyFormSection = lazy(() => import("@/components/ApplyFormSection").then(m => ({ default: m.ApplyFormSection })));
 const HumanAndAIDuo = lazy(() => import("@/components/HumanAndAIDuo").then(m => ({ default: m.HumanAndAIDuo })));
-const FeatureQuad = lazy(() => import("@/components/feature-quad").then(m => ({ default: m.FeatureQuad })));
+const FeaturesQuad = lazy(() => import("@/components/features-quad").then(m => ({ default: m.FeaturesQuad })));
 const CommunitySupport = lazy(() => import("@/components/CommunitySupport").then(m => ({ default: m.CommunitySupport })));
 const TwoColumnAccordionCard = lazy(() => import("@/components/two-column-accordion-card/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
 const BulletTabsShowcase = lazy(() => import("@/components/BulletTabsShowcase").then(m => ({ default: m.BulletTabsShowcase })));
@@ -413,7 +413,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "human_and_ai_duo":
       return <LazySection key={index}><HumanAndAIDuo data={section as Parameters<typeof HumanAndAIDuo>[0]["data"]} /></LazySection>;
     case "features_quad":
-      return <LazySection key={index}><FeatureQuad data={section as Parameters<typeof FeatureQuad>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><FeaturesQuad data={section as Parameters<typeof FeaturesQuad>[0]["data"]} /></LazySection>;
     case "community_support":
       return <LazySection key={index}><CommunitySupport data={section as Parameters<typeof CommunitySupport>[0]["data"]} /></LazySection>;
     case "numbered_steps":

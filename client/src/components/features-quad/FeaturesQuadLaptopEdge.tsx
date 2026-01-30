@@ -4,7 +4,7 @@ import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
-interface FeatureQuadLaptopEdgeProps {
+interface FeaturesQuadLaptopEdgeProps {
   data: FeatureQuadSection;
 }
 
@@ -13,7 +13,7 @@ function CompactCard({ card, index }: { card: { icon: string; title: string; des
   return (
     <div 
       className="flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm"
-      data-testid={`feature-quad-card-compact-${index}`}
+      data-testid={`features-quad-card-compact-${index}`}
     >
       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={16} />}
@@ -28,7 +28,7 @@ function FullCard({ card, index }: { card: { icon: string; title: string; descri
   return (
     <div 
       className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
-      data-testid={`feature-quad-card-${index}`}
+      data-testid={`features-quad-card-${index}`}
     >
       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={24} />}
@@ -41,7 +41,7 @@ function FullCard({ card, index }: { card: { icon: string; title: string; descri
   );
 }
 
-export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
+export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
   const images = data.images || [];
@@ -49,7 +49,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
   return (
     <section 
       className="relative overflow-hidden"
-      data-testid="section-feature-quad-laptop"
+      data-testid="section-features-quad-laptop"
     >
       {/* Background split */}
       <div className="hidden lg:block">
@@ -70,7 +70,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
         <div className="md:hidden space-y-6">
           <div className="flex gap-4 items-start">
             <div className="flex-1 text-left">
-              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading">
+              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading">
                 {data.heading}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">
@@ -78,7 +78,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
               </p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[80px]" data-testid="img-feature-quad-mobile">
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[80px]" data-testid="img-features-quad-mobile">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1 h-full">
                     <UniversalImage
@@ -91,7 +91,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
               </div>
             )}
           </div>
-          <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-feature-quad-mobile">
+          <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-features-quad-mobile">
             {data.cards.map((card, index) => (
               <CardComponent key={index} card={card} index={index} />
             ))}
@@ -105,13 +105,13 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
         <div className="hidden md:block lg:hidden space-y-8">
           <div className="flex gap-6 items-start">
             <div className="flex-1 text-left">
-              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
+              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
                 {data.heading}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card h-[100px]" data-testid="img-feature-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card h-[100px]" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1 h-full">
                     <UniversalImage
@@ -124,7 +124,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-tablet">
+          <div className="grid grid-cols-2 gap-4" data-testid="cards-features-quad-tablet">
             {data.cards.map((card, index) => (
               <CardComponent key={index} card={card} index={index} />
             ))}
@@ -140,13 +140,13 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
             <div className="col-span-9 space-y-6">
               <div className="flex justify-between">
                 <div className="text-left me-24">
-                  <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
+                  <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
                     {data.heading}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
                 </div>
                 {images.length > 0 && (
-                  <div className="flex items-start gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] h-[120px]" data-testid="img-feature-quad-desktop">
+                  <div className="flex items-start gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] h-[120px]" data-testid="img-features-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
                       <div key={index} className="flex-1 h-full">
                         <UniversalImage
@@ -159,7 +159,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
                   </div>
                 )}
               </div>
-                <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
+                <div className="grid grid-cols-2 gap-4" data-testid="cards-features-quad-desktop">
                   {data.cards.map((card, index) => (
                     <CardComponent key={index} card={card} index={index} />
                   ))}
@@ -179,7 +179,7 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
           alt="Code editor on laptop"
           className="w-[90%] max-w-none h-auto object-contain object-left"
           loading="lazy"
-          data-testid="img-feature-quad-laptop"
+          data-testid="img-features-quad-laptop"
         />
       </div>
     </section>
