@@ -223,27 +223,39 @@ export function EditableSection({ children, section, index, sectionType, content
     }
   }, [swapPopoverOpen, sectionType, currentExample]);
 
-  // Cycle through variants
-  const cycleVariant = useCallback((direction: number) => {
-    if (variants.length === 0) return;
-    setSelectedVariantIndex(prev => {
-      let next = prev + direction;
-      if (next < 0) next = variants.length - 1;
-      if (next >= variants.length) next = 0;
-      return next;
-    });
-  }, [variants.length]);
+  // Calculate global index (across all examples in all variants)
+  const totalExamples = examplesWithVariants.length;
+  const globalExampleIndex = useMemo(() => {
+    let index = 0;
+    for (let i = 0; i < selectedVariantIndex; i++) {
+      const variantName = variants[i];
+      index += examplesWithVariants.filter(e => e.variant === variantName).length;
+    }
+    return index + selectedExampleIndex;
+  }, [selectedVariantIndex, selectedExampleIndex, variants, examplesWithVariants]);
 
-  // Cycle through examples within current variant
-  const cycleExample = useCallback((direction: number) => {
-    if (examplesForCurrentVariant.length <= 1) return;
-    setSelectedExampleIndex(prev => {
-      let next = prev + direction;
-      if (next < 0) next = examplesForCurrentVariant.length - 1;
-      if (next >= examplesForCurrentVariant.length) next = 0;
-      return next;
-    });
-  }, [examplesForCurrentVariant.length]);
+  // Cycle through ALL examples linearly (across variants)
+  const cycleGlobal = useCallback((direction: number) => {
+    if (totalExamples === 0) return;
+    
+    // Calculate new global index
+    let newGlobalIndex = globalExampleIndex + direction;
+    if (newGlobalIndex < 0) newGlobalIndex = totalExamples - 1;
+    if (newGlobalIndex >= totalExamples) newGlobalIndex = 0;
+    
+    // Find which variant and example this corresponds to
+    let runningIndex = 0;
+    for (let vi = 0; vi < variants.length; vi++) {
+      const variantName = variants[vi];
+      const variantExamples = examplesWithVariants.filter(e => e.variant === variantName);
+      if (newGlobalIndex < runningIndex + variantExamples.length) {
+        setSelectedVariantIndex(vi);
+        setSelectedExampleIndex(newGlobalIndex - runningIndex);
+        return;
+      }
+      runningIndex += variantExamples.length;
+    }
+  }, [totalExamples, globalExampleIndex, variants, examplesWithVariants]);
 
   // Handle AI adaptation of the selected variant
   const handleAdaptWithAI = useCallback(async () => {
@@ -572,38 +584,21 @@ export function EditableSection({ children, section, index, sectionType, content
                 {/* Divider */}
                 <div className="w-px h-6 bg-border shrink-0" />
                 
-                {/* Center: Variant navigation */}
+                {/* Center: Variant/Example navigation (linear through all examples) */}
                 {variants.length > 0 ? (
                   <div className="flex items-center gap-1 min-w-0 flex-1">
-                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(-1)} disabled={variants.length <= 1} data-testid={`button-variant-prev-${index}`}>
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleGlobal(-1)} disabled={totalExamples <= 1} data-testid={`button-variant-prev-${index}`}>
                       <IconChevronLeft className="h-4 w-4" />
                     </Button>
                     <span className="text-xs font-medium truncate min-w-[80px] text-center" data-testid={`text-variant-${index}`}>
                       {deslugify(selectedVariant || "default")}
-                      {examplesForCurrentVariant.length > 1 && (
-                        <span className="text-muted-foreground ml-1">({selectedExampleIndex + 1}/{examplesForCurrentVariant.length})</span>
+                      {totalExamples > 1 && (
+                        <span className="text-muted-foreground ml-1">({globalExampleIndex + 1}/{totalExamples})</span>
                       )}
                     </span>
-                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleVariant(1)} disabled={variants.length <= 1} data-testid={`button-variant-next-${index}`}>
+                    <Button size="icon" variant="ghost" className="h-7 w-7 shrink-0" onClick={() => cycleGlobal(1)} disabled={totalExamples <= 1} data-testid={`button-variant-next-${index}`}>
                       <IconChevronRight className="h-4 w-4" />
                     </Button>
-                    {/* Example navigation (only if multiple examples in variant) */}
-                    {examplesForCurrentVariant.length > 1 && (
-                      <>
-                        <div className="w-px h-4 bg-border/50 shrink-0" />
-                        <div className="flex flex-col items-center gap-0.5 shrink-0">
-                          <span className="text-[9px] text-muted-foreground uppercase tracking-wide">Examples</span>
-                          <div className="flex items-center">
-                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(-1)} data-testid={`button-example-prev-${index}`}>
-                              <IconChevronLeft className="h-3 w-3" />
-                            </Button>
-                            <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => cycleExample(1)} data-testid={`button-example-next-${index}`}>
-                              <IconChevronRight className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                      </>
-                    )}
                     {/* View YAML source - always visible */}
                     <div className="w-px h-4 bg-border/50 shrink-0" />
                     <Button size="icon" variant="ghost" className="h-6 w-6 shrink-0" onClick={() => setShowYamlModal(true)} title="View YAML source" data-testid={`button-view-yaml-${index}`}>
