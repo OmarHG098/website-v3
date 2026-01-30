@@ -254,6 +254,18 @@ sections:
         projects: Enable real-time interactions for data, customers, employees and AI.
         orientation: vertical
         icon: IconCode
+      - title: Fully AI‑Transformed Company
+        duration: Capstone Project
+        objectives:
+          - AI-generated frontend, API + authentication
+          - Telemetry + reporting pipeline
+          - Workflow automation
+          - RAG knowledge layer
+          - Real-time communication layer
+          - Agents with tool calling
+        projects: Your fully operational AI-first business system deployed end‑to‑end.
+        orientation: vertical
+        icon: IconCode
     marginY:
       desktop: md none
     paddingY:
