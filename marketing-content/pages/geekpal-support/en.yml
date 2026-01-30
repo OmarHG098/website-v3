@@ -56,17 +56,16 @@ sections:
       - title: "Our Team of Expert Mentors:"
         image: /attached_assets/profile-pic6_1764775742734.webp
         bullets:
-          - text: Provides personalized guidance on coding challenges and best practices
-          - text: Offers live troubleshooting and debugging support
+          - text: Personalized guidance
+          - text: Live troubleshooting
           - text: Expert bug fixing assistance
-          - text: Shares industry insights, career advice, and learning strategies
+          - text: Industry insights and career advice
       - title: "Rigobot + Learnpack:"
         bullets:
-          - text: Provides instant feedback and tutoring while you code
+          - text: Instant feedback and tutoring as you code
           - text: Tracks your skills and progress
-          - text: Helps with debugging and problem-solving tasks
-          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
-    footer_description: null
+          - text: Debugging and problem-solving support
+          - text: Hundreds of hands-on coding exercises and tests
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: bg-background
