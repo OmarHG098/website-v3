@@ -23,30 +23,19 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
 
   const renderCollageImages = () => (
     <div 
-      className="grid grid-cols-12 auto-rows-[80px] gap-3"
+      className="grid grid-cols-2 gap-3"
       data-testid="graduates-stats-collage"
     >
-      {collage_images && collage_images.map((img, index) => {
-        const colSpan = img.col_span || 6;
-        const rowSpan = img.row_span || 2;
-        
-        return (
-          <div 
-            key={index}
-            style={{
-              gridColumn: `span ${colSpan} / span ${colSpan}`,
-              gridRow: `span ${rowSpan} / span ${rowSpan}`,
-            }}
-          >
-            <UniversalImage
-              id={img.image_id}
-              preset="card"
-              className="w-full h-full object-cover shadow-sm rounded-lg"
-              alt={`Graduate photo ${index + 1}`}
-            />
-          </div>
-        );
-      })}
+      {collage_images && collage_images.slice(0, 4).map((img, index) => (
+        <div key={index} className="h-[120px] md:h-[140px]">
+          <UniversalImage
+            id={img.image_id}
+            preset="card"
+            className="w-full h-full object-cover shadow-sm rounded-lg"
+            alt={`Graduate photo ${index + 1}`}
+          />
+        </div>
+      ))}
     </div>
   );
 
