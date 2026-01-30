@@ -87,7 +87,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className="flex gap-6 items-start">
+          <div className="flex gap-6 items-stretch">
             <div className="flex-1 text-left">
               <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
                 {data.heading}
@@ -95,7 +95,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[280px] h-fit max-h-32" data-testid="img-features-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[280px] min-h-24" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
@@ -120,7 +120,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== DESKTOP LAYOUT ===== */}
         <div className="hidden lg:block space-y-8">
-          <div className="flex gap-8 items-start">
+          <div className="flex gap-8 items-stretch">
             <div className="flex-1 text-left">
               <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
                 {data.heading}
@@ -128,7 +128,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[320px] h-fit max-h-36" data-testid="img-features-quad-desktop">
+              <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[320px] min-h-28" data-testid="img-features-quad-desktop">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
