@@ -40,6 +40,11 @@ export const spotlightConfigSchema = z.object({
   pause_on_hover: z.boolean().optional(),
 }).strict();
 
+export const footerLinkSchema = z.object({
+  url: z.string(),
+  text: z.string(),
+});
+
 export const featuresGridHighlightSectionSchema = z.object({
   type: z.literal("features_grid"),
   version: z.string().optional(),
@@ -50,6 +55,8 @@ export const featuresGridHighlightSectionSchema = z.object({
   columns: z.number().optional(),
   icon_color: z.string().optional(),
   background: z.string().optional(),
+  footer_link: footerLinkSchema.optional(),
+  footer_note: z.string().optional(),
 });
 
 export const featuresGridDetailedSectionSchema = z.object({
