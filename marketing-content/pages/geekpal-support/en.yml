@@ -74,59 +74,23 @@ sections:
       desktop: md none
   - type: community_support
     version: "1.0"
-    heading: A Global Developer Community Supporting Your Growth
-    description: 4Geeks is more than a bootcamp — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
-    background: bg-primary/5
-    image: /attached_assets/Group-6606.webp
-    image_alt: 4Geeks global developer community
+    heading: A Global Tech Community Supporting Your Growth
+    description: 4Geeks is more than a program — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
     bullet_groups:
       - title: Slack Community
-        badge: 6,000+ Members
-        icon: BrandSlack
-        accent_color: primary
         description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
-        button:
-          text: Join Now
-          url: https://4geeks.com/slack
-          variant: primary
+        icon: BrandSlack
+        badge: 6,000+ Members
+        accent_color: primary
       - title: 4Geeks.com
+        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
         icon: Rigobot
         accent_color: primary
-        description: Keep advancing your skills with further training resources, live events, and collaborative projects. Connect with people who've been where you are — and know how to help you get where you want to go.
-        button:
-          text: Visit Now
-          url: https://4geeks.com
-          variant: primary
+    image: /attached_assets/Group-6606.webp
+    image_alt: 4Geeks global developer community
+    background: bg-primary/5
     paddingY:
       desktop: none md
-  - type: bento_cards
-    version: "1.0"
-    title: 7 Ways Rigobot Keeps You Moving
-    subtitle: Never get stuck again
-    description: Rigobot is your AI-powered coding companion that ensures you never lose momentum. Whether you're debugging at 2am or preparing for an exam, Rigobot is there to help you push through challenges and keep learning.
-    background: bg-background
-    items:
-      - icon: CodeReview
-        title: Code Review
-        description: Get instant feedback on your code quality, best practices, and potential improvements.
-      - icon: Brain
-        title: AI Mentoring
-        description: Personalized guidance that adapts to your learning style and pace.
-      - icon: School
-        title: Homework & Exam Prep
-        description: Practice problems and explanations to help you ace your assessments.
-      - icon: TrendingUp
-        title: Skill Building
-        description: Targeted exercises to strengthen weak areas and build new competencies.
-      - icon: Bug
-        title: Debugging Assistant
-        description: Step-by-step help to understand and fix errors in your code.
-      - icon: Lightbulb
-        title: Concept Explanations
-        description: Clear, patient explanations of complex programming concepts.
-      - icon: Clock
-        title: 24/7 Availability
-        description: Get help whenever you need it, no waiting for office hours.
   - type: two_column
     version: "1.0"
     proportions:
@@ -148,7 +112,7 @@ sections:
       desktop: lg md
   - type: testimonials_slide
     title: Real Careers Start Here
-    description: Read how our alumni achieved their goals
+    description: See how our alumni achieved their goals
     paddingY:
       desktop: md none
   - type: faq
