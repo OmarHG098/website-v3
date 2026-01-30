@@ -99,11 +99,6 @@ sections:
     compact: true
     heading: What You'll Learn
     description: Master the essential skills for AI engineering.
-    images:
-      - image_id: student-1
-        alt: Student 1
-      - image_id: student-2
-        alt: Student 2
     cards:
       - icon: Code
         title: Hands-On Coding
