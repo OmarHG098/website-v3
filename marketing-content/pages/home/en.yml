@@ -90,6 +90,37 @@ sections:
     rounded: true
     paddingY:
       desktop: md none
+  - type: two_column_accordion_card
+    variant: image_background
+    version: "1.0"
+    title: Succeed in tech with AI-powered learning and lifelong human support
+    description: 4Geeks combines AI-powered learning with real human mentorship to support you at every stage of your tech career. From personalized learning paths to lifelong access to expert mentors and career coaches, you’re never navigating your growth alone. Whether you’re learning your first skill or advancing years later, the platform adapts with you.
+    bullets:
+      - heading: Personalized Learning at Every Level
+        text: Benefit from an unmatched student-to-teacher ratio, unlimited access to human mentors, plus AI-powered coaching tailored to your learning journey.
+      - heading: Lifelong Mentorship & Career Support
+        text: Get 1:1 guidance from expert human mentors and career coaches whenever you need it, for life.
+      - heading: AI-integrated Curriculum and Learning Tools
+        text: Master the latest AI tools and stay ahead of job market trends.
+    footer: Over 10,000 graduates have launched new careers with us.
+    image: /attached_assets/community_1764717588840.png
+    image_alt: Student learning with mentor support
+    reverse: true
+    marginY:
+      desktop: none xl
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Why AI Engineering Now
+    subtitle: The talent shortage is your opportunity
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    items:
+      - value: 3.5M
+        title: AI-related roles expected by 2026
+      - value: 47%
+        title: Year-over-year growth in AI job postings
+      - value: $95K-$135K
+        title: Average starting salary for AI Engineers
   - type: testimonials_slide
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
