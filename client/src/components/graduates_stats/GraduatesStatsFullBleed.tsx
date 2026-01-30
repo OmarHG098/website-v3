@@ -184,26 +184,12 @@ export function GraduatesStatsFullBleed({ data }: GraduatesStatsFullBleedProps) 
 
       <div className="lg:hidden">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary/5 rounded-3xl pointer-events-none" />
-            <div className="relative grid grid-cols-1 gap-6 items-center px-4 py-8">
-              <div className="order-1">
-                {renderStatsCompact()}
-              </div>
-              <div className="order-2">
-                <div className="grid grid-cols-2 gap-3">
-                  {featured_images.slice(0, 4).map((img, index) => (
-                    <div key={index} className="h-[140px] md:h-[160px]">
-                      <UniversalImage
-                        id={img.image_id}
-                        preset="card"
-                        className="w-full h-full object-cover shadow-sm rounded-lg"
-                        alt={`Graduate photo ${index + 1}`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="grid grid-cols-1 gap-6 items-center">
+            <div className="order-1">
+              {renderStatsCompact()}
+            </div>
+            <div className="order-2">
+              {renderCollageImages()}
             </div>
           </div>
         </div>
