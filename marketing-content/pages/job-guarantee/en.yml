@@ -85,27 +85,29 @@ sections:
         col_start: 1
         row_start: 3
     background: bg-muted/30
-  - type: feature_quad
-    version: "1.0"
-    variant: laptopEdge
-    compact: true
-    heading: Who's Eligible?
-    description: "You'll qualify for the Job Guarantee if you:"
-    cards:
-      - icon: Code
-        title: Have U.S. work authorization
-        description: Have U.S. work authorization
-      - icon: Brain
-        title: Pass our logic test
-        description: Pass our logic test
-      - icon: Cloud
-        title: Complete all coursework and projects
-        description: Complete all coursework and projects
-      - icon: Rocket
-        title: Follow our career team's guidance
-        description: Follow our career team's guidance
-    paddingY:
-      desktop: none
+  - type: two_column
+    proportions:
+      - 8
+      - 4
+    background: bg-primary/5
+    left:
+      heading: Who's Eligible?
+      sub_heading: "You'll qualify for the Job Guarantee if you:"
+      description: "*Conditions apply depending on your country or U.S. state"
+      button:
+        text: Apply
+        url: "#apply"
+        variant: primary
+      bullets:
+        - text: Have U.S. work authorization
+        - text: Pass our logic test
+        - text: Complete all coursework and projects
+        - text: Follow our career team's guidance
+      font_size: lg
+    right:
+      image: /attached_assets/reservation-es_1764814854635.webp
+      image_alt: Woman working on laptop
+      image_max_width: 420px
   - type: features_grid
     version: "1.0"
     variant: detailed

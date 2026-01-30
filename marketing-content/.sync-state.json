@@ -684,11 +684,9 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "a2a7ecd9364214a10641da5871c16a6b17d0f39ec5ad704607f9c36b6461a21a",
-      "lastModified": 1769808831810.5823,
-      "remoteSha": "1b408b1dab4b0e1b85d87ff68d41626d4320ae85b1355af7fc1b5d132c1cfd1c",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-30T21:33:51.812Z"
+      "sha": "1b408b1dab4b0e1b85d87ff68d41626d4320ae85b1355af7fc1b5d132c1cfd1c",
+      "lastModified": 1769805055094.843,
+      "remoteSha": "1b408b1dab4b0e1b85d87ff68d41626d4320ae85b1355af7fc1b5d132c1cfd1c"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",

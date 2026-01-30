@@ -1,7 +1,6 @@
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
-import { UniversalImage } from "@/components/UniversalImage";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
 interface FeatureQuadLaptopEdgeProps {
@@ -44,7 +43,6 @@ function FullCard({ card, index }: { card: { icon: string; title: string; descri
 export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
-  const images = data.images || [];
 
   return (
     <section 
@@ -76,19 +74,6 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
               {data.description}
             </p>
           </div>
-          {images.length > 0 && (
-            <div className="flex justify-center gap-3 w-full" data-testid="img-feature-quad-mobile">
-              {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="flex-1 h-36">
-                  <UniversalImage
-                    id={image.image_id}
-                    alt={image.alt || `Image ${index + 1}`}
-                    className="w-full h-full object-cover object-top rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
           <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-feature-quad-mobile">
             {data.cards.map((card, index) => (
               <CardComponent key={index} card={card} index={index} />
@@ -101,26 +86,11 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className="grid grid-cols-12 gap-6 items-start">
-            <div className="col-span-7 text-left">
-              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
-                {data.heading}
-              </h2>
-              <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
-            </div>
-            {images.length > 0 && (
-              <div className="col-span-5 flex gap-3" data-testid="img-feature-quad-tablet">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="flex-1 h-40">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full object-cover object-top rounded-lg"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="text-left">
+            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
+              {data.heading}
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
           </div>
           <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-tablet">
             {data.cards.map((card, index) => (
@@ -134,46 +104,33 @@ export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
 
         {/* ===== DESKTOP LAYOUT with laptop ===== */}
         <div className="hidden lg:block">
-          <div className="space-y-6">
-            <div className="grid grid-cols-12 gap-8 items-start">
-              <div className="col-span-7 text-left">
+          <div className="grid grid-cols-12 gap-8 items-start">
+            <div className="col-span-7 space-y-6">
+              <div className="text-left">
                 <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
                   {data.heading}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
               </div>
-              {images.length > 0 && (
-                <div className="col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-feature-quad-desktop">
-                  {images.slice(0, 4).map((image, index) => (
-                    <div key={index} className="flex-1 h-44">
-                      <UniversalImage
-                        id={image.image_id}
-                        alt={image.alt || `Image ${index + 1}`}
-                        className="w-full h-full object-cover object-top rounded-lg"
-                      />
-                    </div>
-                  ))}
-                </div>
+              <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
+                {data.cards.map((card, index) => (
+                  <CardComponent key={index} card={card} index={index} />
+                ))}
+              </div>
+              {data.footer_description && (
+                <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
-              {data.cards.map((card, index) => (
-                <CardComponent key={index} card={card} index={index} />
-              ))}
-            </div>
-            {data.footer_description && (
-              <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
-            )}
           </div>
         </div>
       </div>
 
       {/* Laptop image - desktop only */}
-      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
+      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-1/2 items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
-          className="w-[80%] max-w-none h-auto object-contain object-left"
+          className="w-[100%] max-w-none h-auto object-contain object-left"
           loading="lazy"
           data-testid="img-feature-quad-laptop"
         />

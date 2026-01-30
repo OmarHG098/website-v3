@@ -1,5 +1,5 @@
 name: "Feature Quad - Laptop Edge Compact"
-description: "Compact cards with images grid and laptop image - minimal text"
+description: "Compact cards with laptop image - minimal text"
 yaml: |
   - type: feature_quad
     version: "1.0"
@@ -7,11 +7,6 @@ yaml: |
     compact: true
     heading: "What You'll Learn"
     description: "Master the essential skills for AI engineering."
-    images:
-      - image_id: "student-1"
-        alt: "Student 1"
-      - image_id: "student-2"
-        alt: "Student 2"
     cards:
       - icon: "Code"
         title: "Hands-On Coding"
