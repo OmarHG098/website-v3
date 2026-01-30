@@ -1,16 +1,27 @@
+slug: cybersecurity
+title: Cybersecurity
 meta:
+  robots: index, follow
+  og_image: /images/programs/cybersecurity-og.jpg
+  priority: 0.9
+  change_frequency: weekly
   page_title: Cybersecurity Bootcamp | 4Geeks
   description: Launch a high-paying career in cybersecurity. Learn to defend systems and respond to real-world cyber threats with a hands-on, AI-integrated curriculum—designed by leading cybersecurity experts.
   redirects:
     - /bootcamp/cybersecurity
     - /programs/cybersecurity-specialist
     - /coding-bootcamp/cybersecurity
+schema:
+  include:
+    - organization
+    - website
+    - courses:cybersecurity
 sections:
   - type: hero
     version: "1.0"
     variant: course
     title: Become a Cybersecurity Specialist
-    title_highlight: "Cybersecurity Specialist"
+    title_highlight: Cybersecurity Specialist
     subtitle: Defend systems, respond to threats, and launch a high-paying security career in 16 weeks.
     students_enrolled:
       avatars:
@@ -55,7 +66,7 @@ sections:
         - icon: code
           text: Interactive Exercises
           count: 80+
-        - icon: briefcase
+        - icon: IconDeviceDesktop
           text: Real Projects
           count: "10"
         - icon: robot
@@ -65,7 +76,7 @@ sections:
         - icon: users
           text: 1:1 Mentorship
     paddingY:
-      desktop: md
+      desktop: md lg
     marginY:
       desktop: none
   - type: awards_marquee
@@ -108,6 +119,8 @@ sections:
         logoHeight: h-14 md:h-16
     paddingY:
       desktop: none
+    marginY:
+      desktop: none lg
   - type: features_grid
     version: "1.0"
     variant: stats-text
@@ -288,10 +301,10 @@ sections:
     title: Certificate & Industry Certifications
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Our program prepares you for:"
     benefits:
-      - text: "EJPT (eLearnSecurity Junior Penetration Tester)"
-      - text: "CEH (Certified Ethical Hacker) pathway"
-      - text: "CompTIA Security+ foundations"
-      - text: "Lifetime career support access"
+      - text: EJPT (eLearnSecurity Junior Penetration Tester)
+      - text: CEH (Certified Ethical Hacker) pathway
+      - text: CompTIA Security+ foundations
+      - text: Lifetime career support access
     card:
       title: Cybersecurity Specialist
       subtitle: 4Geeks Academy Certificate
@@ -329,6 +342,8 @@ sections:
           - text: Exclusive job board access
           - text: Networking events with recruiters
           - text: Alumni referral program
+    certificate_position: right
+    useSolidCard: true
     paddingY:
       desktop: md
   - type: pricing
@@ -336,17 +351,9 @@ sections:
     variant: product
     title: Get access to all of our learning database, courses, and services
     subtitle: Master cybersecurity skills with unlimited practice and expert guidance.
-    monthly:
-      discount_badge: 35% OFF
-      price: "38.99"
-      period: mo
-      original_price: "59.99"
-    yearly:
-      discount_badge: 35% OFF
-      price: "311.99"
-      period: yr
-      original_price: "479.99"
-      savings_badge: Save 3 months
+    discount_text: "Full Payment Discount: Save 10% with upfront payment."
+    financing_text: "Credit-Based Financing: starting below"
+    financing_amount: $349
     tech_icons:
       - linux
       - python
@@ -360,8 +367,8 @@ sections:
         text: Build your portfolio with hundreds of real-world security projects.
       - icon: cloud
         text: Thousands of cloud-based security challenges (no setup needed).
-      - text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-        icon: RigobotIconTiny
+      - icon: RigobotIconTiny
+        text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
       - icon: certificate
         text: Course certificates
       - icon: certificate
@@ -444,9 +451,10 @@ sections:
       desktop: md
   - type: faq
     version: "1.0"
-    background: "muted"
+    background: muted
     title: Frequently Asked Questions
-    related_features: ["cybersecurity"]
+    related_features:
+      - cybersecurity
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor
@@ -457,6 +465,7 @@ sections:
     version: "1.0"
     title: Ready to Defend the Digital World?
     subtitle: Join thousands of graduates who have launched successful careers in cybersecurity with 4Geeks.
+    background: primary
     buttons:
       - text: Start Learning Now
         url: /en/apply

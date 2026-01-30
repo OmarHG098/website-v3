@@ -142,7 +142,7 @@ sections:
         description: Credentials that employers trust and value
     media:
       type: image
-      src: /attached_assets/awards-collage.webp
+      src: /attached_assets/caracas-graduates_1765387638222.png
       alt: 4Geeks Academy awards and recognitions
       aspect_ratio: "4:3"
       style: rounded
@@ -217,7 +217,7 @@ sections:
       - heading: 5,000+ Hiring Partners
         text: A global network of companies that trust and hire 4Geeks graduates.
     footer: Support that lasts a lifetime, not just through graduation.
-    image: https://example.com/learning-support.png
+    image: /attached_assets/community_1764717588840.png
     image_alt: Student receiving personalized support
     background: hsl(var(--background))
   - type: testimonials
@@ -303,3 +303,8 @@ sections:
       desktop: lg none
     marginY:
       desktop: md none
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
+    marginY:
+      desktop: lg none

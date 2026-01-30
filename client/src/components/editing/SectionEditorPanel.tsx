@@ -14,6 +14,7 @@ import {
   IconPlus,
   IconArrowBackUp,
   IconArrowForwardUp,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -176,9 +177,14 @@ export function SectionEditorPanel({
   // Image picker modal state
   const [imagePickerOpen, setImagePickerOpen] = useState(false);
   const [imagePickerTarget, setImagePickerTarget] = useState<{
-    arrayPath: string;
-    index: number;
-    srcField: string;
+    // For array fields
+    arrayPath?: string;
+    index?: number;
+    srcField?: string;
+    // For simple fields
+    fieldPath?: string;
+    label?: string;
+    // Common
     currentSrc: string;
     currentAlt: string;
   } | null>(null);
@@ -318,10 +324,31 @@ export function SectionEditorPanel({
 
         pushUndoState(yamlContent);
 
-        if (value) {
-          parsed[key] = value;
+        // Handle nested paths like "left.image" or "media.src"
+        const pathParts = key.split(".");
+        if (pathParts.length === 1) {
+          // Simple key
+          if (value) {
+            parsed[key] = value;
+          } else {
+            delete parsed[key];
+          }
         } else {
-          delete parsed[key];
+          // Nested path - traverse and set
+          let current: Record<string, unknown> = parsed;
+          for (let i = 0; i < pathParts.length - 1; i++) {
+            const part = pathParts[i];
+            if (!current[part] || typeof current[part] !== "object") {
+              current[part] = {};
+            }
+            current = current[part] as Record<string, unknown>;
+          }
+          const finalKey = pathParts[pathParts.length - 1];
+          if (value) {
+            current[finalKey] = value;
+          } else {
+            delete current[finalKey];
+          }
         }
 
         const newYaml = yamlParser.dump(parsed, {
@@ -930,7 +957,6 @@ export function SectionEditorPanel({
                 ]}
               />
             )}
-            
             {/* FAQ related features picker */}
             {sectionType === "faq" && (
               <>
@@ -965,6 +991,72 @@ export function SectionEditorPanel({
                 // Parse editor type with optional variant (e.g., "color-picker:background")
                 const { type: editorType, variant } =
                   parseEditorType(editorTypeRaw);
+
+                // Handle simple field paths (e.g., "image" or "nested.image")
+                const isSimpleField = !fieldPath.includes("[]");
+                if (isSimpleField && editorType === "image-picker") {
+                  // Get the current value by traversing the path
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">
+                        {fieldLabel.replace(/_/g, " ")}
+                      </Label>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImagePickerTarget({
+                              fieldPath,
+                              label: fieldLabel,
+                              currentSrc: currentValue,
+                              currentAlt: "",
+                            });
+                            setImagePickerOpen(true);
+                          }}
+                          className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                          data-testid={`props-image-${fieldLabel}`}
+                          title={`Change ${fieldLabel}`}
+                        >
+                          {currentValue ? (
+                            <>
+                              <img
+                                src={currentValue}
+                                alt={fieldLabel}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <IconPhoto className="h-5 w-5 text-white" />
+                              </div>
+                            </>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                            </div>
+                          )}
+                        </button>
+                        {currentValue && (
+                          <span className="text-xs text-muted-foreground truncate max-w-[150px]">
+                            {currentValue.split("/").pop()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                }
 
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
@@ -1118,6 +1210,8 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const altValue = (item.alt as string) || "";
+                          // For ID fields, look up the actual src from registry
+                          const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
 
                           return (
                             <button
@@ -1139,7 +1233,7 @@ export function SectionEditorPanel({
                             >
                               {currentValue ? (
                                 <img
-                                  src={currentValue}
+                                  src={displaySrc}
                                   alt={altValue || `Image ${index + 1}`}
                                   className="w-full h-full object-cover"
                                 />
@@ -1263,15 +1357,19 @@ export function SectionEditorPanel({
                     type="button"
                     onClick={() => {
                       if (imagePickerTarget) {
+                        // For fields ending in _id (like image_id), save the registry ID
+                        // Otherwise save the full path
+                        const fieldName = imagePickerTarget.srcField || imagePickerTarget.fieldPath || "";
+                        const isIdField = fieldName.endsWith("_id");
                         setImagePickerTarget({
                           ...imagePickerTarget,
-                          currentSrc: img.src,
+                          currentSrc: isIdField ? id : img.src,
                           currentAlt: img.alt,
                         });
                       }
                     }}
                     className={`mb-2 rounded-md overflow-hidden bg-muted border-2 transition-colors block w-full ${
-                      imagePickerTarget?.currentSrc === img.src
+                      imagePickerTarget?.currentSrc === img.src || imagePickerTarget?.currentSrc === id
                         ? "border-primary"
                         : "border-transparent hover:border-muted-foreground/50"
                     }`}
@@ -1314,7 +1412,10 @@ export function SectionEditorPanel({
                 <div className="w-16 h-16 rounded-md overflow-hidden bg-muted border flex-shrink-0">
                   {imagePickerTarget?.currentSrc ? (
                     <img
-                      src={imagePickerTarget.currentSrc}
+                      src={
+                        // If currentSrc is an ID, look up the actual src from registry
+                        imageRegistry?.images?.[imagePickerTarget.currentSrc]?.src || imagePickerTarget.currentSrc
+                      }
                       alt={imagePickerTarget.currentAlt || "Preview"}
                       className="w-full h-full object-cover"
                     />
@@ -1363,17 +1464,22 @@ export function SectionEditorPanel({
               variant="destructive"
               onClick={() => {
                 if (imagePickerTarget) {
-                  // Get current array and remove this item
-                  const pathParts = imagePickerTarget.arrayPath.split(".");
-                  let current: Record<string, unknown> | null = parsedSection;
-                  for (let i = 0; i < pathParts.length - 1 && current; i++) {
-                    current = current[pathParts[i]] as Record<string, unknown> | null;
+                  if (imagePickerTarget.fieldPath) {
+                    // Simple field - clear the value
+                    updateProperty(imagePickerTarget.fieldPath, "");
+                  } else if (imagePickerTarget.arrayPath && imagePickerTarget.index !== undefined) {
+                    // Array field - remove this item
+                    const pathParts = imagePickerTarget.arrayPath.split(".");
+                    let current: Record<string, unknown> | null = parsedSection;
+                    for (let i = 0; i < pathParts.length - 1 && current; i++) {
+                      current = current[pathParts[i]] as Record<string, unknown> | null;
+                    }
+                    const arrayField = pathParts[pathParts.length - 1];
+                    const array = current?.[arrayField] as Record<string, unknown>[] || [];
+                    const newArray = [...array];
+                    newArray.splice(imagePickerTarget.index, 1);
+                    updateArrayField(imagePickerTarget.arrayPath, newArray);
                   }
-                  const arrayField = pathParts[pathParts.length - 1];
-                  const array = current?.[arrayField] as Record<string, unknown>[] || [];
-                  const newArray = [...array];
-                  newArray.splice(imagePickerTarget.index, 1);
-                  updateArrayField(imagePickerTarget.arrayPath, newArray);
                 }
                 setImagePickerOpen(false);
                 setImagePickerTarget(null);
@@ -1399,15 +1505,20 @@ export function SectionEditorPanel({
                 type="button"
                 onClick={() => {
                   if (imagePickerTarget) {
-                    // Update both src and alt in a single operation to avoid stale state
-                    updateArrayItemFields(
-                      imagePickerTarget.arrayPath,
-                      imagePickerTarget.index,
-                      {
-                        [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
-                        alt: imagePickerTarget.currentAlt,
-                      },
-                    );
+                    if (imagePickerTarget.fieldPath) {
+                      // Simple field - update directly
+                      updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
+                    } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
+                      // Array field - update both src and alt in a single operation
+                      updateArrayItemFields(
+                        imagePickerTarget.arrayPath,
+                        imagePickerTarget.index,
+                        {
+                          [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
+                          alt: imagePickerTarget.currentAlt,
+                        },
+                      );
+                    }
                   }
                   setImagePickerOpen(false);
                   setImagePickerTarget(null);

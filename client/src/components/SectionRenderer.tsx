@@ -159,7 +159,7 @@ const SyllabusSection = lazy(() => import("./SyllabusSection").then(m => ({ defa
 const ProjectsSection = lazy(() => import("./ProjectsSection").then(m => ({ default: m.ProjectsSection })));
 const AILearningSection = lazy(() => import("./AILearningSection").then(m => ({ default: m.AILearningSection })));
 const CertificateSection = lazy(() => import("./CertificateSection").then(m => ({ default: m.CertificateSection })));
-const WhyLearnAISection = lazy(() => import("./WhyLearnAISection").then(m => ({ default: m.WhyLearnAISection })));
+const WhyLearnAISection = lazy(() => import("./why-learn-ai/WhyLearnAI").then(m => ({ default: m.WhyLearnAISection })));
 const PricingSection = lazy(() => import("./PricingSection").then(m => ({ default: m.PricingSection })));
 const FAQSection = lazy(() => import("./FAQSection").then(m => ({ default: m.FAQSection })));
 const TestimonialsSection = lazy(() => import("./TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
@@ -181,7 +181,7 @@ const LeadForm = lazy(() => import("@/components/LeadForm").then(m => ({ default
 const ApplyFormSection = lazy(() => import("@/components/ApplyFormSection").then(m => ({ default: m.ApplyFormSection })));
 const HumanAndAIDuo = lazy(() => import("@/components/HumanAndAIDuo").then(m => ({ default: m.HumanAndAIDuo })));
 const CommunitySupport = lazy(() => import("@/components/CommunitySupport").then(m => ({ default: m.CommunitySupport })));
-const TwoColumnAccordionCard = lazy(() => import("@/components/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
+const TwoColumnAccordionCard = lazy(() => import("@/components/two-column-accordion-card/TwoColumnAccordionCard").then(m => ({ default: m.TwoColumnAccordionCard })));
 const BulletTabsShowcase = lazy(() => import("@/components/BulletTabsShowcase").then(m => ({ default: m.BulletTabsShowcase })));
 const GraduatesStats = lazy(() => import("@/components/graduates_stats").then(m => ({ default: m.GraduatesStats })));
 const ValueProofPanel = lazy(() => import("@/components/ValueProofPanel").then(m => ({ default: m.ValueProofPanel })));

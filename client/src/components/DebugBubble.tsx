@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useMemo, useCallback } from "react";
+import { useState, useEffect, lazy, Suspense, useMemo, useCallback, useRef } from "react";
 import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
@@ -409,6 +409,8 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [pendingAutoEditMode, setPendingAutoEditMode] = useState(false);
+  const prevIsValidatedRef = useRef<boolean | null>(null);
   const [redirectsList, setRedirectsList] = useState<RedirectItem[]>([]);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [selectedLocationSlug, setSelectedLocationSlug] = useState<string>("");
@@ -496,6 +498,32 @@ export function DebugBubble() {
       setMenuViewState("experiments");
     }
   }, [pathname, contentInfo.type, contentInfo.slug]);
+
+  // Auto-enable edit mode after successful token validation
+  useEffect(() => {
+    // Detect when isValidated changes from false/null to true
+    const wasValidated = prevIsValidatedRef.current;
+    prevIsValidatedRef.current = isValidated;
+    
+    if (pendingAutoEditMode && isValidated === true && wasValidated !== true && !isLoading) {
+      setPendingAutoEditMode(false);
+      setTokenInput("");
+      
+      // Enable edit mode and navigate to preview
+      if (editMode && !editMode.isEditMode) {
+        editMode.toggleEditMode();
+        
+        // Navigate to preview route if on a content page
+        if (contentInfo.type && contentInfo.slug && !pathname.startsWith('/private/preview/')) {
+          const pathSegments = pathname.split('/').filter(Boolean);
+          const urlLocale = pathSegments[0];
+          const normalizedLocale = normalizeLocale(urlLocale || i18n.language);
+          const previewUrl = `/private/preview/${contentInfo.type}/${contentInfo.slug}?locale=${normalizedLocale}`;
+          navigate(previewUrl);
+        }
+      }
+    }
+  }, [isValidated, isLoading, pendingAutoEditMode, editMode, contentInfo, pathname, i18n.language, navigate]);
 
   // Fetch sitemap URLs when entering sitemap view
   useEffect(() => {
@@ -1197,6 +1225,7 @@ export function DebugBubble() {
                       onChange={(e) => setTokenInput(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && tokenInput.trim()) {
+                          setPendingAutoEditMode(true);
                           validateManualToken(tokenInput.trim());
                         }
                       }}
@@ -1205,7 +1234,10 @@ export function DebugBubble() {
                     />
                     <Button
                       size="sm"
-                      onClick={() => validateManualToken(tokenInput.trim())}
+                      onClick={() => {
+                        setPendingAutoEditMode(true);
+                        validateManualToken(tokenInput.trim());
+                      }}
                       disabled={!tokenInput.trim() || isLoading}
                       data-testid="button-validate-token"
                     >
