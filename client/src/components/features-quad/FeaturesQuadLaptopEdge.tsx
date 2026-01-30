@@ -68,7 +68,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
       <div className="relative max-w-6xl mx-auto px-4 py-14">
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-6">
-          <div className="flex gap-4 items-stretch">
+          <div className="flex gap-4 items-start">
             <div className="flex-1 text-left">
               <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading">
                 {data.heading}
@@ -78,7 +78,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
               </p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card" data-testid="img-features-quad-mobile">
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-fit max-h-20" data-testid="img-features-quad-mobile">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
@@ -103,7 +103,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className="flex gap-6 items-stretch">
+          <div className="flex gap-6 items-start">
             <div className="flex-1 text-left">
               <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
                 {data.heading}
@@ -111,7 +111,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card" data-testid="img-features-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card h-fit max-h-28" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
@@ -138,7 +138,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
         <div className="hidden lg:block">
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-9 space-y-6">
-              <div className="flex justify-between items-stretch">
+              <div className="flex justify-between items-start">
                 <div className="text-left me-24">
                   <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
                     {data.heading}
@@ -146,7 +146,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
                 </div>
                 {images.length > 0 && (
-                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card max-w-[400px]" data-testid="img-features-quad-desktop">
+                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] h-fit max-h-32" data-testid="img-features-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
                       <div key={index} className="flex-1">
                         <UniversalImage
