@@ -1,6 +1,7 @@
 import { memo } from "react";
 import type { SplitCardsSection, SplitCardsBenefit, ToolIcon } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import * as TablerIcons from "@tabler/icons-react";
 import { 
   IconCheck, 
   IconBrandOpenai,
@@ -91,18 +92,26 @@ function ToolIconBadge({
 
 function BenefitRow({ 
   benefit, 
-  index 
+  index,
+  defaultIcon
 }: { 
   benefit: SplitCardsBenefit; 
   index: number;
+  defaultIcon?: string;
 }) {
+  const iconName = benefit.icon || defaultIcon;
+  const fullIconName = iconName ? `Icon${iconName}` : null;
+  const IconComponent = fullIconName 
+    ? (TablerIcons as unknown as Record<string, TablerIconType>)[fullIconName] || IconCheck
+    : IconCheck;
+
   return (
     <div 
       className="flex items-start gap-3 py-3"
       data-testid={`benefit-item-${index}`}
     >
       <div className="flex-shrink-0 mt-0.5">
-        <IconCheck 
+        <IconComponent 
           className="text-primary" 
           size={20} 
           stroke={2.5}
@@ -118,7 +127,7 @@ function BenefitRow({
 export const SplitCards = memo(function SplitCards({ 
   data 
 }: SplitCardsProps) {
-  const { primary, secondary, background, variant } = data;
+  const { primary, secondary, background, variant, primary_width } = data;
 
   const backgroundClass = background === "muted" 
     ? "bg-muted" 
@@ -128,9 +137,16 @@ export const SplitCards = memo(function SplitCards({
 
   const isPrimaryRight = variant === "primary-right";
 
-  const gridClass = isPrimaryRight
-    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] gap-4 md:gap-6"
-    : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[3fr_1fr] gap-4 md:gap-6";
+  // Width ratios for lg breakpoint: narrow = 2fr/3fr, default = 3fr/1fr, wide = 4fr/1fr
+  const getLgGridTemplate = () => {
+    const width = primary_width || "default";
+    if (width === "narrow") {
+      return isPrimaryRight ? "1fr 2fr" : "2fr 1fr";
+    } else if (width === "wide") {
+      return isPrimaryRight ? "1fr 4fr" : "4fr 1fr";
+    }
+    return isPrimaryRight ? "1fr 3fr" : "3fr 1fr";
+  };
 
   const PrimaryCard = (
     <div 
@@ -190,7 +206,7 @@ export const SplitCards = memo(function SplitCards({
     >
       <div className="space-y-1">
         {secondary.benefits.map((benefit: SplitCardsBenefit, index: number) => (
-          <BenefitRow key={index} benefit={benefit} index={index} />
+          <BenefitRow key={index} benefit={benefit} index={index} defaultIcon={secondary.bullet_icon} />
         ))}
       </div>
     </div>
@@ -202,7 +218,17 @@ export const SplitCards = memo(function SplitCards({
       data-testid="section-split-cards"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className={gridClass}>
+        <style>{`
+          @media (min-width: 1024px) {
+            [data-split-cards-grid] {
+              grid-template-columns: ${getLgGridTemplate()} !important;
+            }
+          }
+        `}</style>
+        <div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          data-split-cards-grid
+        >
           {isPrimaryRight ? (
             <>
               {SecondaryCard}

@@ -31,6 +31,7 @@ export const splitCardsBenefitSchema = z.object({
 export const splitCardsSectionSchema = z.object({
   type: z.literal("split_cards"),
   variant: z.enum(["primary-left", "primary-right"]).optional().default("primary-left"),
+  primary_width: z.enum(["narrow", "default", "wide"]).optional(),
   primary: z.object({
     heading: z.string(),
     description: z.string().optional(),
@@ -39,6 +40,7 @@ export const splitCardsSectionSchema = z.object({
   }),
   secondary: z.object({
     benefits: z.array(splitCardsBenefitSchema).min(1).max(5),
+    bullet_icon: z.string().optional(),
   }),
   background: z.string().optional(),
 });
