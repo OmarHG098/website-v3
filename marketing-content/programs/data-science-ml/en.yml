@@ -124,8 +124,8 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Does the Job Guarantee deliver results you can count on?
-    subtitle: Yes, and we've got the numbers to back it up
+    title: Why Data Science now?
+    subtitle: Data science and machine learning are among tech's fastest growing fields
     description: Data science and machine learning are transforming every industry. Companies are desperately seeking professionals who can turn raw data into actionable insights and build predictive models. With AI tools becoming more powerful, data scientists who can leverage these technologies are 400% more productive. Whether you're analyzing customer behavior, predicting market trends, or building recommendation systems—these skills are in high demand and command top salaries. Are you ready to become a data scientist?
     background: bg-muted/30
     items:
