@@ -140,7 +140,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: Data Science and Machine Learning Program Overview
-    program_description: Master the complete data science and machine learning stack from data analysis to model deployment. Build production-ready ML applications using the most in-demand technologies that employers are looking for.
+    program_description: Master the industry-standard toolkit used by modern data teams. Go beyond simple analysis to build production-ready systems—from engineering raw data to deploying the predictive models that companies use to drive innovation and scale.
     tech_logos:
       - name: Python
         icon: python
