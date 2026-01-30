@@ -138,10 +138,9 @@ sections:
         value: $80K+
         title: Average starting salary for data scientists
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: What You'll Learn in the Data Science Program
-    program_description: Master the complete data science and machine learning stack from data analysis to model deployment. Build production-ready ML applications using the most in-demand technologies that employers are looking for.
+    program_title: Data Science and Machine Learning Program Overview
+    program_description: Master the industry-standard toolkit used by modern data teams. Go beyond simple analysis to build production-ready systems—from engineering raw data to deploying the predictive models that companies use to drive innovation and scale.
     tech_logos:
       - name: Python
         icon: python
@@ -210,10 +209,10 @@ sections:
         projects: Create and deploy a complete ML web application
         orientation: vertical
         icon: IconRocket
-    paddingY:
-      desktop: md
     marginY:
       desktop: md none
+    paddingY:
+      desktop: md
   - type: projects
     title: Learn by Building Real-Life Projects
     subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"

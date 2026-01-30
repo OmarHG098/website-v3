@@ -12,6 +12,8 @@ import {
   IconCheck,
   IconAlertTriangle,
   IconPlus,
+  IconArrowBackUp,
+  IconArrowForwardUp,
   IconPhoto,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
@@ -44,6 +46,8 @@ import CodeMirror from "@uiw/react-codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { oneDark } from "@codemirror/theme-one-dark";
 import * as yamlParser from "js-yaml";
+import { useUndoRedo } from "@/hooks/useUndoRedo";
+import { usePageHistoryOptional } from "@/contexts/PageHistoryContext";
 
 interface SectionEditorPanelProps {
   section: Section;
@@ -56,6 +60,7 @@ interface SectionEditorPanelProps {
   onUpdate: (updatedSection: Section) => void;
   onClose: () => void;
   onPreviewChange?: (previewSection: Section | null) => void;
+  allSections?: Section[];
 }
 
 interface ShowOnPickerProps {
@@ -149,6 +154,7 @@ export function SectionEditorPanel({
   onUpdate,
   onClose,
   onPreviewChange,
+  allSections,
 }: SectionEditorPanelProps) {
   const { toast } = useToast();
   const [yamlContent, setYamlContent] = useState("");
@@ -184,6 +190,49 @@ export function SectionEditorPanel({
   } | null>(null);
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
+
+  const handleUndoRedoRestore = useCallback((content: string) => {
+    setYamlContent(content);
+    setHasChanges(true);
+    try {
+      const parsed = yamlParser.load(content) as Section;
+      setParseError(null);
+      if (parsed && typeof parsed === "object" && onPreviewChange) {
+        onPreviewChange(parsed);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setParseError(error.message);
+      }
+    }
+  }, [onPreviewChange]);
+
+  const { pushState: pushUndoState, canUndo, canRedo, undo, redo, clear: clearUndoHistory } = useUndoRedo(
+    yamlContent,
+    handleUndoRedoRestore,
+    { enableKeyboardShortcuts: true }
+  );
+  
+  const pageHistory = usePageHistoryOptional();
+
+  // Store initial state when section loads for undo capability
+  const initialYamlRef = useRef<string | null>(null);
+  
+  // Clear undo history and store initial state when section changes
+  useEffect(() => {
+    clearUndoHistory();
+    // Store the initial YAML so we can undo back to it
+    try {
+      const yamlStr = yamlParser.dump(section, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      initialYamlRef.current = yamlStr;
+    } catch {
+      initialYamlRef.current = null;
+    }
+  }, [sectionIndex, section, clearUndoHistory]);
 
   // Fetch image registry for gallery picker
   const { data: imageRegistry } = useQuery<ImageRegistry>({
@@ -240,6 +289,11 @@ export function SectionEditorPanel({
 
   const handleYamlChange = useCallback(
     (value: string) => {
+      // Save the initial state on first edit so user can undo back to it
+      if (!hasChanges && initialYamlRef.current && yamlContent !== value) {
+        pushUndoState(initialYamlRef.current);
+      }
+      
       setYamlContent(value);
       setHasChanges(true);
 
@@ -258,7 +312,7 @@ export function SectionEditorPanel({
         }
       }
     },
-    [onPreviewChange],
+    [onPreviewChange, hasChanges, yamlContent, pushUndoState],
   );
 
   // Update a specific property in the YAML
@@ -267,6 +321,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Handle nested paths like "left.image" or "media.src"
         const pathParts = key.split(".");
@@ -313,7 +369,7 @@ export function SectionEditorPanel({
         console.error("Error updating property:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update an array property in the YAML (e.g., related_features)
@@ -323,6 +379,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Build ordered result with related_features after title
         const buildOrderedResult = (
@@ -395,7 +453,7 @@ export function SectionEditorPanel({
         console.error("Error updating array property:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update a specific field in an array item (supports nested paths like "signup_card.features")
@@ -404,6 +462,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -442,7 +502,7 @@ export function SectionEditorPanel({
         console.error("Error updating array item:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Update multiple fields of an array item at once (avoids stale state issues)
@@ -451,6 +511,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         const pathParts = arrayPath.split(".");
         let current: Record<string, unknown> = parsed;
@@ -487,7 +549,7 @@ export function SectionEditorPanel({
         console.error("Error updating array item fields:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Add a new item to an array field
@@ -496,6 +558,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -538,7 +602,7 @@ export function SectionEditorPanel({
         console.error("Error adding array item:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Replace an entire array field
@@ -547,6 +611,8 @@ export function SectionEditorPanel({
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
 
         // Support nested paths like "signup_card.features" by splitting on dots
         const pathParts = arrayPath.split(".");
@@ -588,7 +654,7 @@ export function SectionEditorPanel({
         console.error("Error updating array field:", error);
       }
     },
-    [yamlContent, onPreviewChange],
+    [yamlContent, onPreviewChange, pushUndoState],
   );
 
   // Get configured field editors from the component registry API
@@ -683,6 +749,11 @@ export function SectionEditorPanel({
 
     setIsSaving(true);
     setSaveError(null);
+    
+    // Save page snapshot for undo before making changes
+    if (pageHistory && allSections) {
+      pageHistory.pushSnapshot(allSections, `Antes de editar sección ${sectionIndex + 1}`);
+    }
 
     try {
       const result = await editContent({
@@ -713,6 +784,9 @@ export function SectionEditorPanel({
         }
         onUpdate(confirmedSection || parsed);
         setHasChanges(false);
+        
+        // Update initial state reference so next undo session starts from saved state
+        initialYamlRef.current = yamlContent;
 
         // Emit event to trigger page refresh
         emitContentUpdated({ contentType, slug, locale });
@@ -739,6 +813,8 @@ export function SectionEditorPanel({
     variant,
     version,
     onUpdate,
+    pageHistory,
+    allSections,
   ]);
 
   // Save without closing editor
@@ -781,19 +857,41 @@ export function SectionEditorPanel({
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div>
-          <h2 className="font-semibold">Edit Section</h2>
+          <h2 className="font-semibold">Editar Sección</h2>
           <p className="text-sm text-muted-foreground">
-            {sectionType} (Section {sectionIndex + 1})
+            {sectionType} (Sección {sectionIndex + 1})
           </p>
         </div>
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={handleClose}
-          data-testid="button-close-editor"
-        >
-          <IconX className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-1">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={undo}
+            disabled={!canUndo}
+            title="Deshacer (Ctrl+Z)"
+            data-testid="button-undo"
+          >
+            <IconArrowBackUp className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={redo}
+            disabled={!canRedo}
+            title="Rehacer (Ctrl+Shift+Z)"
+            data-testid="button-redo"
+          >
+            <IconArrowForwardUp className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleClose}
+            data-testid="button-close-editor"
+          >
+            <IconX className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Tabs */}

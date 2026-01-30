@@ -924,6 +924,10 @@ export const editOperationSchema = z.discriminatedUnion("action", [
     index: z.number(),
     section: z.record(z.unknown()),
   }),
+  z.object({
+    action: z.literal("replace_all_sections"),
+    sections: z.array(z.record(z.unknown())),
+  }),
 ]);
 
 export type EditOperation = z.infer<typeof editOperationSchema>;

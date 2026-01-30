@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef, lazy, Suspense, useMemo } fro
 import { IconPencil, IconArrowsExchange, IconTrash, IconArrowUp, IconArrowDown, IconChevronLeft, IconChevronRight, IconCheck, IconLoader2, IconX, IconSparkles, IconDeviceDesktop, IconDeviceMobile, IconCopy, IconCode } from "@tabler/icons-react";
 import type { Section, SectionLayout, ShowOn } from "@shared/schema";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
+import { usePageHistoryOptional } from "@/contexts/PageHistoryContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ interface EditableSectionProps {
 
 export function EditableSection({ children, section, index, sectionType, contentType, slug, locale, variant, version, totalSections = 0, onMoveUp, onMoveDown, onDelete, onDuplicate }: EditableSectionProps) {
   const editMode = useEditModeOptional();
+  const pageHistory = usePageHistoryOptional();
   const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
@@ -368,6 +370,12 @@ export function EditableSection({ children, section, index, sectionType, content
     
     setIsConfirming(true);
     setReviewCodeError(null);
+    
+    // Save page snapshot for undo before making changes
+    if (pageHistory) {
+      pageHistory.saveCurrentSnapshot(`Antes de aplicar adaptación en sección ${index + 1}`);
+    }
+    
     try {
       // Parse the edited YAML
       const parsed = yaml.load(reviewCodeYaml);
@@ -421,7 +429,7 @@ export function EditableSection({ children, section, index, sectionType, content
     } finally {
       setIsConfirming(false);
     }
-  }, [reviewCodeYaml, sectionType, contentType, slug, locale, variant, version, index, toast]);
+  }, [reviewCodeYaml, sectionType, contentType, slug, locale, variant, version, index, toast, pageHistory]);
   
   const handleOpenEditor = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
