@@ -130,8 +130,8 @@ sections:
     background: bg-muted/30
     items:
       - id: "1"
-        value: 84%
-        title: Job placement rate within 6 months
+        value: 36%
+        title: projected growth rate the next decade
       - id: "2"
         value: 150%
         title: Average salary increase after graduation
