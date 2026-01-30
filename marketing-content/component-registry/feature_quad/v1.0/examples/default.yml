@@ -3,6 +3,7 @@ description: "Header with images and 4 feature cards in a 2x2 grid layout"
 yaml: |
   - type: feature_quad
     version: "1.0"
+    variant: default
     heading: "Why Choose Our AI Engineering Program?"
     description: "Get the skills, support, and job placement assistance you need to launch your career in AI engineering."
     images:

@@ -3,13 +3,48 @@ import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 
-interface FeatureQuadProps {
+interface FeatureQuadDefaultProps {
   data: FeatureQuadSection;
 }
 
-export function FeatureQuad({ data }: FeatureQuadProps) {
+function CompactCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  return (
+    <div 
+      className="flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm"
+      data-testid={`feature-quad-card-compact-${index}`}
+    >
+      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+        {IconComponent && <IconComponent className="text-primary" size={16} />}
+      </div>
+      <span className="text-sm font-medium text-foreground">{card.title}</span>
+    </div>
+  );
+}
+
+function FullCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  return (
+    <div 
+      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
+      data-testid={`feature-quad-card-${index}`}
+    >
+      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+        {IconComponent && <IconComponent className="text-primary" size={24} />}
+      </div>
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
+        <p className="text-sm text-muted-foreground">{card.description}</p>
+      </div>
+    </div>
+  );
+}
+
+export function FeatureQuadDefault({ data }: FeatureQuadDefaultProps) {
   const backgroundClass = data.background || "bg-background";
   const images = data.images || [];
+  const isCompact = data.compact === true;
+  const CardComponent = isCompact ? CompactCard : FullCard;
 
   return (
     <section 
@@ -17,7 +52,7 @@ export function FeatureQuad({ data }: FeatureQuadProps) {
       data-testid="section-feature-quad"
     >
       <div className="max-w-6xl mx-auto px-4">
-        {/* ===== MOBILE LAYOUT (base, hidden at md+) ===== */}
+        {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-6">
           <div className="text-left">
             <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading">
@@ -40,32 +75,17 @@ export function FeatureQuad({ data }: FeatureQuadProps) {
               ))}
             </div>
           )}
-          <div className="flex flex-col gap-6" data-testid="cards-feature-quad-mobile">
-            {data.cards.map((card, index) => {
-              const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
-              return (
-                <div 
-                  key={index}
-                  className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
-                  data-testid={`feature-quad-card-${index}`}
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {IconComponent && <IconComponent className="text-primary" size={24} />}
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
-                    <p className="text-sm text-muted-foreground">{card.description}</p>
-                  </div>
-                </div>
-              );
-            })}
+          <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-feature-quad-mobile">
+            {data.cards.map((card, index) => (
+              <CardComponent key={index} card={card} index={index} />
+            ))}
           </div>
           {data.footer_description && (
             <p className="text-sm text-muted-foreground leading-relaxed italic text-center">{data.footer_description}</p>
           )}
         </div>
 
-        {/* ===== TABLET LAYOUT (md to lg-1, hidden below md and at lg+) ===== */}
+        {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
           <div className="grid grid-cols-12 gap-6 items-start">
             <div className="col-span-7 text-left">
@@ -88,32 +108,17 @@ export function FeatureQuad({ data }: FeatureQuadProps) {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-6" data-testid="cards-feature-quad-tablet">
-            {data.cards.map((card, index) => {
-              const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
-              return (
-                <div 
-                  key={index}
-                  className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
-                  data-testid={`feature-quad-card-${index}`}
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {IconComponent && <IconComponent className="text-primary" size={24} />}
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
-                    <p className="text-sm text-muted-foreground">{card.description}</p>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-tablet">
+            {data.cards.map((card, index) => (
+              <CardComponent key={index} card={card} index={index} />
+            ))}
           </div>
           {data.footer_description && (
             <p className="text-sm text-muted-foreground leading-relaxed italic text-left">{data.footer_description}</p>
           )}
         </div>
 
-        {/* ===== DESKTOP LAYOUT (lg+) ===== */}
+        {/* ===== DESKTOP LAYOUT ===== */}
         <div className="hidden lg:block space-y-8">
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-7 text-left">
@@ -137,24 +142,9 @@ export function FeatureQuad({ data }: FeatureQuadProps) {
             )}
           </div>
           <div className="grid grid-cols-2 gap-6" data-testid="cards-feature-quad-desktop">
-            {data.cards.map((card, index) => {
-              const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
-              return (
-                <div 
-                  key={index}
-                  className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
-                  data-testid={`feature-quad-card-${index}`}
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    {IconComponent && <IconComponent className="text-primary" size={24} />}
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
-                    <p className="text-sm text-muted-foreground">{card.description}</p>
-                  </div>
-                </div>
-              );
-            })}
+            {data.cards.map((card, index) => (
+              <CardComponent key={index} card={card} index={index} />
+            ))}
           </div>
           {data.footer_description && (
             <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>

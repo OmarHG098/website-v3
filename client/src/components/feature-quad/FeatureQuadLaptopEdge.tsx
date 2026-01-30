@@ -1,0 +1,140 @@
+import * as TablerIcons from "@tabler/icons-react";
+import type { ComponentType } from "react";
+import type { FeatureQuadSection } from "@shared/schema";
+import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+
+interface FeatureQuadLaptopEdgeProps {
+  data: FeatureQuadSection;
+}
+
+function CompactCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  return (
+    <div 
+      className="flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm"
+      data-testid={`feature-quad-card-compact-${index}`}
+    >
+      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+        {IconComponent && <IconComponent className="text-primary" size={16} />}
+      </div>
+      <span className="text-sm font-medium text-foreground">{card.title}</span>
+    </div>
+  );
+}
+
+function FullCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  return (
+    <div 
+      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
+      data-testid={`feature-quad-card-${index}`}
+    >
+      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+        {IconComponent && <IconComponent className="text-primary" size={24} />}
+      </div>
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
+        <p className="text-sm text-muted-foreground">{card.description}</p>
+      </div>
+    </div>
+  );
+}
+
+export function FeatureQuadLaptopEdge({ data }: FeatureQuadLaptopEdgeProps) {
+  const isCompact = data.compact === true;
+  const CardComponent = isCompact ? CompactCard : FullCard;
+
+  return (
+    <section 
+      className="relative overflow-hidden"
+      data-testid="section-feature-quad-laptop"
+    >
+      {/* Background split */}
+      <div className="hidden lg:block">
+        <div 
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10"
+          aria-hidden="true"
+        />
+        <div 
+          className="absolute left-0 top-0 bottom-0 w-[80%] bg-muted"
+          aria-hidden="true"
+        />
+      </div>
+      {/* Mobile/tablet full bg */}
+      <div className="lg:hidden absolute inset-0 bg-muted" aria-hidden="true" />
+
+      <div className="relative max-w-6xl mx-auto px-4 py-14">
+        {/* ===== MOBILE LAYOUT ===== */}
+        <div className="md:hidden space-y-6">
+          <div className="text-left">
+            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading">
+              {data.heading}
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              {data.description}
+            </p>
+          </div>
+          <div className={`grid ${isCompact ? "grid-cols-2 gap-3" : "grid-cols-1 gap-6"}`} data-testid="cards-feature-quad-mobile">
+            {data.cards.map((card, index) => (
+              <CardComponent key={index} card={card} index={index} />
+            ))}
+          </div>
+          {data.footer_description && (
+            <p className="text-sm text-muted-foreground leading-relaxed italic text-center">{data.footer_description}</p>
+          )}
+        </div>
+
+        {/* ===== TABLET LAYOUT ===== */}
+        <div className="hidden md:block lg:hidden space-y-8">
+          <div className="text-left">
+            <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-feature-quad-heading-tablet">
+              {data.heading}
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-tablet">
+            {data.cards.map((card, index) => (
+              <CardComponent key={index} card={card} index={index} />
+            ))}
+          </div>
+          {data.footer_description && (
+            <p className="text-sm text-muted-foreground leading-relaxed italic text-left">{data.footer_description}</p>
+          )}
+        </div>
+
+        {/* ===== DESKTOP LAYOUT with laptop ===== */}
+        <div className="hidden lg:block">
+          <div className="grid grid-cols-12 gap-8 items-start">
+            <div className="col-span-7 space-y-6">
+              <div className="text-left">
+                <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-feature-quad-heading-desktop">
+                  {data.heading}
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4" data-testid="cards-feature-quad-desktop">
+                {data.cards.map((card, index) => (
+                  <CardComponent key={index} card={card} index={index} />
+                ))}
+              </div>
+              {data.footer_description && (
+                <p className="text-base text-muted-foreground leading-relaxed italic">{data.footer_description}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Laptop image - desktop only */}
+      <div className="hidden lg:flex absolute right-[-250px] top-0 bottom-0 w-1/2 items-center pointer-events-none">
+        <img 
+          src={laptopCodeEditor}
+          alt="Code editor on laptop"
+          className="w-[100%] max-w-none h-auto object-contain object-left"
+          loading="lazy"
+          data-testid="img-feature-quad-laptop"
+        />
+      </div>
+    </section>
+  );
+}

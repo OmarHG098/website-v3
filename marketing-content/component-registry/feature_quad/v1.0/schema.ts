@@ -14,9 +14,11 @@ export const featureQuadImageSchema = z.object({
 export const featureQuadSectionSchema = z.object({
   type: z.literal("feature_quad"),
   version: z.string().optional().default("1.0"),
+  variant: z.enum(["default", "laptopEdge"]).optional().describe("Layout variant: default (images on right) or laptopEdge (laptop image on right)"),
+  compact: z.boolean().optional().describe("If true, cards show only icon + title (no description)"),
   heading: z.string().describe("Section heading"),
   description: z.string().describe("Section description"),
-  images: z.array(featureQuadImageSchema).optional().describe("Array of images (up to 4) displayed in the header"),
+  images: z.array(featureQuadImageSchema).optional().describe("Array of images (up to 4) displayed in the header (only for default variant)"),
   cards: z.array(featureQuadCardSchema).min(4).max(4).describe("Array of exactly 4 feature cards"),
   footer_description: z.string().optional().describe("Optional footer text (italic)"),
   background: z.string().optional().describe("Background CSS class (e.g., 'bg-muted/30')"),

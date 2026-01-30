@@ -731,6 +731,8 @@ export const featureQuadImageSchema = z.object({
 export const featureQuadSectionSchema = z.object({
   type: z.literal("feature_quad"),
   version: z.string().optional(),
+  variant: z.enum(["default", "laptopEdge"]).optional(),
+  compact: z.boolean().optional(),
   heading: z.string(),
   description: z.string(),
   images: z.array(featureQuadImageSchema).optional(),
