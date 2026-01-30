@@ -63,7 +63,7 @@ sections:
       - title: "Rigobot + Learnpack:"
         bullets:
           - text: Instant feedback and tutoring 24/7
-          - text: Tracks your skills and progress
+          - text: Adjusts advice to your skills and progress
           - text: Debugging and problem-solving support
           - text: Hundreds of hands-on coding exercises and tests
     image: /attached_assets/Group_6685_(1)_1765300162049.png
@@ -74,8 +74,8 @@ sections:
       desktop: md none
   - type: community_support
     version: "1.0"
-    heading: A Global Tech Community Supporting Your Growth
-    description: 4Geeks is more than a program — it's a supportive network of tech pros, mentors, and fellow geeks to keep you moving forward in your career.
+    heading: A Global Tech Community to Support Your Growth
+    description: 4Geeks is more than a program — it's an active network of tech pros, mentors, and fellow geeks that keeps you progressing in your career.
     bullet_groups:
       - title: Slack Community
         description: Get real-time help from mentors, alumni, and peers through our active, theme specific channels — from coding support, to job boards and career advice (and yes, there's coding humor too!).
@@ -92,22 +92,21 @@ sections:
     paddingY:
       desktop: none md
   - type: two_column
-    version: "1.0"
     proportions:
       - 12
       - 0
     background: bg-background
     alignment: center
-    gap: "8"
-    heading_above_on_md: false
     left:
-      heading: Hear From One of Our Graduates
-      description: Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career.
-      font_size: lg
-      justify: center
-      text_align: center
       video: MBXqEnhodx0
       video_width: 900px
+      heading: Hear From Our Graduates
+      description: Listen to Joao talk about his experience during and after our bootcamp and how unlimited access to coding mentorship made a huge difference to his career.
+      justify: center
+      text_align: center
+      font_size: lg
+    heading_above_on_md: false
+    gap: "8"
     paddingY:
       desktop: lg md
   - type: testimonials_slide
