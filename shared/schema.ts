@@ -233,6 +233,7 @@ export {
 export type {
   NumberedStepsDefaultSection,
   NumberedStepsBubbleTextSection,
+  NumberedStepsVerticalCardsSection,
 } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
 
 // ============================================

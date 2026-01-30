@@ -4,6 +4,7 @@ import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { NumberedStepsBubbleText } from "@/components/numbered-steps/NumberedStepsBubbleText";
+import { NumberedStepsVerticalCards } from "@/components/numbered-steps/NumberedStepsVerticalCards";
 
 export interface NumberedStepsStep {
   icon: string;
@@ -28,7 +29,7 @@ export interface NumberedStepsData {
   bullet_icon_color?: string;
   bullet_char?: string;
   collapsible_mobile?: boolean;
-  variant?: "default" | "spotlight" | "bubbleText";
+  variant?: "default" | "spotlight" | "bubbleText" | "verticalCards";
 }
 
 interface NumberedStepsProps {
@@ -311,6 +312,10 @@ export default function NumberedSteps({ data }: NumberedStepsProps) {
   
   if (variant === "bubbleText") {
     return <NumberedStepsBubbleText data={data as Parameters<typeof NumberedStepsBubbleText>[0]["data"]} />;
+  }
+  
+  if (variant === "verticalCards") {
+    return <NumberedStepsVerticalCards data={data as Parameters<typeof NumberedStepsVerticalCards>[0]["data"]} />;
   }
   
   return <NumberedStepsDefault data={data} />;
