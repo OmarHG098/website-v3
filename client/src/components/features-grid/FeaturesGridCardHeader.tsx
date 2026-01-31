@@ -34,9 +34,9 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
                 <h2 className="text-2xl font-bold text-foreground">
                   {data.heading}
                 </h2>
-                <IconChevronDown 
-                  className={`w-8 h-8 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-                />
+                <span className="text-sm font-medium text-primary">
+                  {isExpanded ? 'see less' : 'see more'}
+                </span>
               </button>
             )}
             
