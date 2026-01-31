@@ -1,6 +1,6 @@
 {
   "lastSyncedCommit": "57429953ece86e90868c4651159d73cb80f6d490",
-  "lastSyncedAt": "2026-01-31T01:34:05.775Z",
+  "lastSyncedAt": "2026-01-31T01:55:13.377Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -683,11 +683,9 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "bcbcb978cd8ab6e7dd79cf7d005a57fe71d980980e967b89a33ebd75ebd443ab",
-      "lastModified": 1769823939129.3835,
-      "remoteSha": "0f6ba1966c0aeac6d2eb9077d8ac86a8af3a58778bd9fd783341ef79c76c4efb",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-31T01:45:39.132Z"
+      "sha": "0f6ba1966c0aeac6d2eb9077d8ac86a8af3a58778bd9fd783341ef79c76c4efb",
+      "lastModified": 1769824512965.7307,
+      "remoteSha": "0f6ba1966c0aeac6d2eb9077d8ac86a8af3a58778bd9fd783341ef79c76c4efb"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",

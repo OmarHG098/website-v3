@@ -31,12 +31,14 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
                 className="md:hidden w-full p-6 flex items-center justify-between text-left"
                 data-testid="button-toggle-header"
               >
-                <h2 className="text-2xl font-bold text-foreground">
-                  {data.heading}
-                </h2>
-                <span className="text-sm font-medium text-primary">
-                  {isExpanded ? 'see less' : 'see more'}
-                </span>
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">
+                    {data.heading}
+                  </h2>
+                  <span className="text-sm font-medium text-primary">
+                    {isExpanded ? 'See less' : 'See more'}
+                  </span>
+                </div>
               </button>
             )}
             
