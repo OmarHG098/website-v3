@@ -5,7 +5,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "../custom-icons";
 import type { FeaturesGridCardHeaderSection } from "@shared/schema";
 
-const { IconCheck, IconChevronDown } = TablerIcons;
+const { IconCheck } = TablerIcons;
 
 interface FeaturesGridCardHeaderProps {
   data: FeaturesGridCardHeaderSection;
