@@ -64,6 +64,7 @@ export const featuresGridDetailedSectionSchema = z.object({
   collapsible_mobile: z.boolean().optional(),
   background: z.string().optional(),
   show_workflow_diagram: z.boolean().optional(),
+  workflow_diagram_label: z.string().optional(),
 });
 
 export const featuresGridSpotlightSectionSchema = z.object({

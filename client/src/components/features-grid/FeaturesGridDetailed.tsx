@@ -54,16 +54,18 @@ function DetailedCard({
       >
         <div className="flex-1">
           {item.category && (
-            <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-              {item.category}
-            </span>
-          )}
-          <h3 className={`flex items-center gap-2 text-lg md:text-xl font-bold text-foreground ${item.category ? 'mt-1' : ''}`}>
-            {!hasImage && item.icon && (
-              <span className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0">
-                {getIcon(item.icon, "w-full h-full", iconColor)}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                {item.category}
               </span>
-            )}
+              {!hasImage && item.icon && (
+                <span className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-primary">
+                  {getIcon(item.icon, "w-full h-full", "hsl(var(--primary))")}
+                </span>
+              )}
+            </div>
+          )}
+          <h3 className={`text-lg md:text-xl font-bold text-foreground ${item.category ? 'mt-1' : ''}`}>
             {item.title}
           </h3>
         </div>
@@ -160,8 +162,8 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
         </div>
 
         {data.show_workflow_diagram && (
-          <div className="mt-8">
-            <AIWorkflowDiagram />
+          <div className="mt-8 mx-auto w-[50%]">
+            <AIWorkflowDiagram centerLabel={data.workflow_diagram_label} />
           </div>
         )}
       </div>
