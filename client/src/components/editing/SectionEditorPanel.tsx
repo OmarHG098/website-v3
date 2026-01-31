@@ -1342,7 +1342,11 @@ export function SectionEditorPanel({
       }}>
         <DialogContent className="sm:max-w-2xl max-h-[80vh] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Select Image</DialogTitle>
+            <DialogTitle>
+              {imagePickerTarget?.tagFilter 
+                ? `Select ${imagePickerTarget.tagFilter.charAt(0).toUpperCase() + imagePickerTarget.tagFilter.slice(1)}` 
+                : "Select Image"}
+            </DialogTitle>
           </DialogHeader>
           <div className="flex-1 overflow-hidden flex flex-col gap-4 py-2">
             {/* Search bar */}

@@ -7,12 +7,8 @@
  * EditorType options: "icon-picker" | "color-picker" | "image-picker" | "link-picker"
  */
 
-export type EditorType =
-  | "icon-picker"
-  | "color-picker"
-  | "image-picker"
-  | "link-picker";
+export type EditorType = string;
 
 export const fieldEditors: Record<string, EditorType> = {
-  "items[].logo": "image-picker",
+  "items[].logo": "image-picker:logo",
 };
