@@ -30,6 +30,7 @@ export const valueProofPanelSectionSchema = z.object({
   media: valueProofPanelMediaSchema.optional(),
   background: z.string().optional(),
   reverse_layout: z.boolean().optional(),
+  stacked_header: z.boolean().optional(),
 });
 
 export type EvidenceItem = z.infer<typeof evidenceItemSchema>;

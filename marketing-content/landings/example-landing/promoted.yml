@@ -94,6 +94,32 @@ sections:
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
   - type: two_column
+    variant: benefitCards
+    stacked_header: true
+    background: bg-muted/30
+    right:
+      image: /attached_assets/Group-original_1765419144159.webp
+      image_alt: Students learning in classroom
+    title: Making Tech Careers Accessible
+    subtitle: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
+    benefit_items:
+      - icon: CurrencyDollar
+        title: Affordable Tuition
+        description: Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes).
+      - icon: CreditCard
+        title: Flexible Financing
+        description: Financing options start at $150/month with 0% interest available for qualified applicants.
+      - icon: Briefcase
+        title: Pay After You Get Hired
+        description: Our Income Share Agreement lets you pay only after landing a job making $40k+/year.
+      - icon: Gift
+        title: Scholarships Available
+        description: Merit and need-based scholarships available for qualifying students.
+    cta_button:
+      text: Explore Financing Options
+      url: /financing
+      variant: primary
+  - type: two_column
     version: v1.0
     proportions:
       - 5
