@@ -1,5 +1,6 @@
 type: two_column
-variant: benefitCardsStacked
+variant: benefitCards
+stacked_header: true
 background: bg-muted/30
 title: Making Tech Careers Accessible
 subtitle: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"

@@ -54,7 +54,8 @@ export const twoColumnColumnSchema = z.object({
 
 export const twoColumnSectionSchema = z.object({
   type: z.literal("two_column"),
-  variant: z.enum(["default", "benefitCards", "benefitCardsStacked"]).optional(),
+  variant: z.enum(["default", "benefitCards"]).optional(),
+  stacked_header: z.boolean().optional(),
   proportions: z.tuple([z.number(), z.number()]).optional(),
   background: z.string().optional(),
   alignment: z.enum(["start", "center", "end"]).optional(),

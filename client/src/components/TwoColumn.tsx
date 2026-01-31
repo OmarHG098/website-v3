@@ -414,6 +414,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
 
 function BenefitCardsVariant({ data }: TwoColumnProps) {
   const backgroundClass = data.background || "bg-muted/30";
+  const stackedHeader = data.stacked_header === true;
   
   return (
     <section 
@@ -421,15 +422,31 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
       data-testid="section-two-column-benefit-cards"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Left Column: Title + Subtitle + Benefit Cards + CTA */}
-          <div className="flex flex-col">
+        {/* Stacked header: Title and subtitle above both columns */}
+        {stackedHeader && (data.title || data.subtitle) && (
+          <div className="mb-8">
             {data.title && (
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-title">
                 {data.title}
               </h2>
             )}
             {data.subtitle && (
+              <p className="text-muted-foreground" data-testid="text-benefit-cards-subtitle">
+                {data.subtitle}
+              </p>
+            )}
+          </div>
+        )}
+        
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${stackedHeader ? 'items-center' : ''}`}>
+          {/* Left Column: Title + Subtitle (if not stacked) + Benefit Cards + CTA */}
+          <div className="flex flex-col">
+            {!stackedHeader && data.title && (
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-title">
+                {data.title}
+              </h2>
+            )}
+            {!stackedHeader && data.subtitle && (
               <p className="text-muted-foreground mb-8" data-testid="text-benefit-cards-subtitle">
                 {data.subtitle}
               </p>
@@ -473,7 +490,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
             )}
           </div>
           
-          {/* Right Column: Image */}
+          {/* Right Column: Image (centered vertically when stacked) */}
           {data.right?.image && (
             <div className="flex items-center justify-center">
               <img 
@@ -491,98 +508,10 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
   );
 }
 
-function BenefitCardsStackedVariant({ data }: TwoColumnProps) {
-  const backgroundClass = data.background || "bg-muted/30";
-  
-  return (
-    <section 
-      className={`py-section ${backgroundClass}`}
-      data-testid="section-two-column-benefit-cards-stacked"
-    >
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Title and Subtitle above everything, left-aligned */}
-        {(data.title || data.subtitle) && (
-          <div className="mb-8">
-            {data.title && (
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-stacked-title">
-                {data.title}
-              </h2>
-            )}
-            {data.subtitle && (
-              <p className="text-muted-foreground" data-testid="text-benefit-cards-stacked-subtitle">
-                {data.subtitle}
-              </p>
-            )}
-          </div>
-        )}
-        
-        {/* Two columns: Bullets on left, Image centered vertically on right */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Column: Benefit Cards + CTA */}
-          <div className="flex flex-col">
-            {data.benefit_items && data.benefit_items.length > 0 && (
-              <div className="flex flex-col gap-6 mb-8">
-                {data.benefit_items.map((item, index) => {
-                  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${item.icon}`];
-                  return (
-                    <div 
-                      key={index}
-                      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
-                      data-testid={`benefit-card-stacked-${index}`}
-                    >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        {IconComponent && <IconComponent className="text-primary" size={24} />}
-                      </div>
-                      <div className="flex flex-col">
-                        <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            
-            {data.cta_button && (
-              <div>
-                <Link href={data.cta_button.url || "#"}>
-                  <Button 
-                    variant={data.cta_button.variant === "outline" ? "outline" : "default"}
-                    size="lg"
-                    data-testid="button-benefit-cards-stacked-cta"
-                  >
-                    {data.cta_button.text}
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
-          
-          {/* Right Column: Image vertically centered */}
-          {data.right?.image && (
-            <div className="flex items-center justify-center">
-              <img 
-                src={data.right.image}
-                alt={data.right.image_alt || "Section image"}
-                className="rounded-md w-full h-auto max-w-md"
-                loading="lazy"
-                data-testid="img-benefit-cards-stacked"
-              />
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function TwoColumn({ data }: TwoColumnProps) {
-  // Route to variants if specified
+  // Route to benefitCards variant if specified
   if (data.variant === "benefitCards") {
     return <BenefitCardsVariant data={data} />;
-  }
-  if (data.variant === "benefitCardsStacked") {
-    return <BenefitCardsStackedVariant data={data} />;
   }
   
   const [leftProportion, rightProportion] = data.proportions || [6, 6];
