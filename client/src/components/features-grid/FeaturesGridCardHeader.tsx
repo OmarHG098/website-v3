@@ -22,8 +22,8 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
       data-testid="section-features-grid-card-header"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <Card className="mb-8 overflow-hidden border-t-4 border-t-primary/20">
-          <CardContent className="p-0">
+        <Card className="mb-8 overflow-hidden border-t-4 p-0 border-t-primary/20">
+          <CardContent className="!p-0 md:p-card">
             {/* Mobile collapsible header */}
             {collapsibleMobile && (
               <button
@@ -35,7 +35,7 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
                   {data.heading}
                 </h2>
                 <IconChevronDown 
-                  className={`w-6 h-6 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                  className={`w-8 h-8 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                 />
               </button>
             )}

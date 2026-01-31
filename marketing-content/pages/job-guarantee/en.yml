@@ -137,9 +137,6 @@ sections:
         link_text: Read More
     columns: 3
     collapsible_mobile: true
-    show_workflow_diagram: true
-    workflow_diagram_label: Tech Programs
-
     marginY:
       desktop: md
   - type: numbered_steps
@@ -177,6 +174,7 @@ sections:
     image: /attached_assets/comunity-support_1765908983485.png
     image_alt: 4Geeks Academy community support
     background: bg-primary/5
+    collapsible_mobile: true
     cards:
       - icon: BriefcaseFilled
         text: Our program's effectiveness is backed by strong placement rates

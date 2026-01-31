@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "bdf052226e81a109a23ef0837c886bc56f70d2ec",
-  "lastSyncedAt": "2026-01-30T20:34:03.345Z",
+  "lastSyncedCommit": "57429953ece86e90868c4651159d73cb80f6d490",
+  "lastSyncedAt": "2026-01-31T01:34:05.775Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -53,11 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "ba4abe76e10a5e01d8862b0e606d45082d0f16a91728bec37570e0462d4bb54a",
-      "lastModified": 1769820805669.9644,
-      "remoteSha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-31T00:53:25.671Z"
+      "sha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc",
+      "lastModified": 1769823243558.1736,
+      "remoteSha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -670,9 +668,9 @@
       "remoteSha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a"
     },
     "marketing-content/pages/home/en.yml": {
-      "sha": "9f0cd1a247cba51f3b6e5dc246ce2c929ffc83e27343f388da8706060b04f4a0",
-      "lastModified": 1769653728187.8103,
-      "remoteSha": "9f0cd1a247cba51f3b6e5dc246ce2c929ffc83e27343f388da8706060b04f4a0"
+      "sha": "608eae9ebb5e7c34f93f5681d2f520d259d24793c2c45a19ec0c5d6135ca8727",
+      "lastModified": 1769823243977.173,
+      "remoteSha": "608eae9ebb5e7c34f93f5681d2f520d259d24793c2c45a19ec0c5d6135ca8727"
     },
     "marketing-content/pages/home/es.yml": {
       "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
@@ -685,11 +683,11 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "dbc87dc13af7c5c612d0925ab316625103076ca18eb554e9d3fe1a6a482550c5",
-      "lastModified": 1769817860075.3083,
-      "remoteSha": "1b408b1dab4b0e1b85d87ff68d41626d4320ae85b1355af7fc1b5d132c1cfd1c",
+      "sha": "bcbcb978cd8ab6e7dd79cf7d005a57fe71d980980e967b89a33ebd75ebd443ab",
+      "lastModified": 1769823939129.3835,
+      "remoteSha": "0f6ba1966c0aeac6d2eb9077d8ac86a8af3a58778bd9fd783341ef79c76c4efb",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-31T00:04:20.077Z"
+      "modifiedAt": "2026-01-31T01:45:39.132Z"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
@@ -712,11 +710,9 @@
       "remoteSha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "885249a8817bf9264218b3d62a5442a8d8c726ebee6781559b4e40528b494a7d",
-      "lastModified": 1769823076616.3625,
-      "remoteSha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-01-31T01:31:16.618Z"
+      "sha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24",
+      "lastModified": 1769823244965.172,
+      "remoteSha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
@@ -759,9 +755,9 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "0d405a622b93846f91b03ce211c21fd3ef6e6be3aea8d514f4cb236ae05e28bb",
-      "lastModified": 1769805242994.6282,
-      "remoteSha": "0d405a622b93846f91b03ce211c21fd3ef6e6be3aea8d514f4cb236ae05e28bb"
+      "sha": "68ea2fb0373f2ae12ccd05bbe8dfd6225fd43f19a5dc3a8c71c85238a074d734",
+      "lastModified": 1769823245385.1716,
+      "remoteSha": "68ea2fb0373f2ae12ccd05bbe8dfd6225fd43f19a5dc3a8c71c85238a074d734"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
