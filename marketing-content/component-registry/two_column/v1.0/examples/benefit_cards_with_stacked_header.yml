@@ -23,4 +23,4 @@ right:
 cta_button:
   text: Explore Financing Options
   url: /financing
-  variant: default
+  variant: primary
