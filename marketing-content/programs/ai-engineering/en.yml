@@ -90,8 +90,8 @@ sections:
         logo: /attached_assets/course-report_1765590146414.webp
         logoHeight: h-14 md:h-16
       - id: tech-hub
-        alt: South Florida Tech Hub
-        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: eBootcamp Top Award
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
         logoHeight: h-14 md:h-16
       - id: ebootcamp
         alt: eBootcamp Top
@@ -113,10 +113,10 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
-    paddingY:
-      desktop: none
     marginY:
       desktop: md lg
+    paddingY:
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: stats-text

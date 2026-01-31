@@ -367,8 +367,7 @@ sections:
     subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $150
-    static_icons: true
+    financing_amount: $299
     tech_icons:
       - python
       - tensorflow
@@ -378,10 +377,11 @@ sections:
       - git
       - jupyter
       - api
+    static_icons: true
     features_title: Choose the option that fits you best.
     features:
       - icon: IconCheck
-        text: Standard tuition is $14,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
+        text: Standard tuition is $10,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
       - icon: IconCheck
         text: Finance your tuition through Climb, Fortify, or Lumion with 24, 36, 48, or 60-month plans.
       - icon: IconCheck

@@ -115,21 +115,21 @@ sections:
     subtitle: Choose your career path. Master the skills and get hired.
     items:
       - id: fullstack
-        icon: Code
+        icon: CodeWindow
         category: Full Stack
         title: Full Stack Development with AI
         description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
         link_url: "#"
         link_text: Read More
       - id: datascience
-        icon: DeviceDesktop
+        icon: RocketOff
         category: With Python
         title: Data Science and Machine Learning with AI
         description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
         link_url: "#"
         link_text: Read More
       - id: cybersecurity
-        icon: ShieldCode
+        icon: Security
         category: For Windows & Linux
         title: Cybersecurity
         description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
@@ -139,6 +139,7 @@ sections:
     collapsible_mobile: true
     show_workflow_diagram: true
     workflow_diagram_label: Tech Programs
+
     marginY:
       desktop: md
   - type: numbered_steps

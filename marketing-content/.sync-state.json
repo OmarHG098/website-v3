@@ -712,9 +712,11 @@
       "remoteSha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
-      "sha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24",
-      "lastModified": 1769804347880.8716,
-      "remoteSha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24"
+      "sha": "885249a8817bf9264218b3d62a5442a8d8c726ebee6781559b4e40528b494a7d",
+      "lastModified": 1769823076616.3625,
+      "remoteSha": "f05680a7154bd46bd9e79c28755bba87e689268d78f8b8813d6718e1995cfa24",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-01-31T01:31:16.618Z"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
