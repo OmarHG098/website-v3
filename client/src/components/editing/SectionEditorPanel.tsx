@@ -187,6 +187,8 @@ export function SectionEditorPanel({
     // Common
     currentSrc: string;
     currentAlt: string;
+    // Optional tag filter (e.g., "logo" to show only logos)
+    tagFilter?: string;
   } | null>(null);
   const [imageGallerySearch, setImageGallerySearch] = useState("");
   const [visibleImageCount, setVisibleImageCount] = useState(48);
@@ -243,8 +245,13 @@ export function SectionEditorPanel({
   const filteredGalleryImages = useMemo(() => {
     if (!imageRegistry?.images) return [];
     const searchLower = imageGallerySearch.toLowerCase();
+    const tagFilter = imagePickerTarget?.tagFilter?.toLowerCase();
     return Object.entries(imageRegistry.images)
       .filter(([id, img]) => {
+        // Apply tag filter first (e.g., "logo" to show only logos)
+        if (tagFilter && !img.tags?.some((tag) => tag.toLowerCase() === tagFilter)) {
+          return false;
+        }
         if (!searchLower) return true;
         return (
           id.toLowerCase().includes(searchLower) ||
@@ -253,7 +260,7 @@ export function SectionEditorPanel({
         );
       })
       .sort((a, b) => (b[1].usage_count ?? 0) - (a[1].usage_count ?? 0));
-  }, [imageRegistry, imageGallerySearch]);
+  }, [imageRegistry, imageGallerySearch, imagePickerTarget?.tagFilter]);
 
   // Reset visible count when search changes or modal opens
   useEffect(() => {
@@ -1024,6 +1031,7 @@ export function SectionEditorPanel({
                               label: fieldLabel,
                               currentSrc: currentValue,
                               currentAlt: "",
+                              tagFilter: variant, // e.g., "logo" from "image-picker:logo"
                             });
                             setImagePickerOpen(true);
                           }}
@@ -1224,6 +1232,7 @@ export function SectionEditorPanel({
                                   srcField: itemField,
                                   currentSrc: currentValue,
                                   currentAlt: altValue,
+                                  tagFilter: variant, // e.g., "logo" from "image-picker:logo"
                                 });
                                 setImagePickerOpen(true);
                               }}
