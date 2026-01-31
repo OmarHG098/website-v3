@@ -122,14 +122,14 @@ sections:
         link_url: "#"
         link_text: Read More
       - id: datascience
-        icon: Monitor
+        icon: DeviceDesktop
         category: With Python
         title: Data Science and Machine Learning with AI
         description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
         link_url: "#"
         link_text: Read More
       - id: cybersecurity
-        icon: Security
+        icon: ShieldCode
         category: For Windows & Linux
         title: Cybersecurity
         description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
@@ -138,6 +138,7 @@ sections:
     columns: 3
     collapsible_mobile: true
     show_workflow_diagram: true
+    workflow_diagram_label: Tech Programs
     marginY:
       desktop: md
   - type: numbered_steps

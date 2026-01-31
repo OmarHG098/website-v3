@@ -59,7 +59,7 @@ function DetailedCard({
                 {item.category}
               </span>
               {!hasImage && item.icon && (
-                <span className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-primary">
+                <span className="w-4 h-4 md:w-5 md:h-6 flex-shrink-0 text-primary">
                   {getIcon(item.icon, "w-full h-full", "hsl(var(--primary))")}
                 </span>
               )}
