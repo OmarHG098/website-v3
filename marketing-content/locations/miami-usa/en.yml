@@ -191,6 +191,45 @@ sections:
     image_alt: Student working on AI project
     paddingY:
       desktop: lg none
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: The Confidence of a Job Guarantee
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      badge: Results-Backed Promise
+    secondary:
+      benefits:
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
+    background: hsl(var(--secondary))
+  - type: testimonials_slide
+    version: "1.0"
+    title: Real Careers Start Here — Just Ask Our Students
+    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
+    testimonials:
+      - name: Loretta Simpson
+        img: /assets/testimonial-1.jpg
+        status: Graduated
+        country:
+          name: United States
+          iso: US
+        contributor: Full Stack Developer
+        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
+        achievement: Hired at top tech company
+      - name: Carlos Martinez
+        img: /assets/testimonial-2.jpg
+        status: Graduated
+        country:
+          name: Spain
+          iso: ES
+        contributor: Software Engineer
+        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+  - type: why_learn_ai
+    variant: laptop-edge
+    title: Why Miami Is a Smart Place to Launch Your Tech Career
+    subtitle: Software Development as You Know It Will Cease to Exist
+    description: Miami is one of the fastest growing tech ecosystems in the world. Join the number 1 part-time Coding Bootcamp in Miami and become part of the best place to learn to code in Florida. Career Support and Mentorship for our students is for life. Located in Brickell and 5 mins away from the Metro Mover (subway station). Our place is full of amenities, and close to everything. We have parking (free for students and members of the community), and we have a great terrace! Brickell is one of the most active areas in the city. The office is opened 24/7 during the week and on Saturday we host our famous 'Coding Weekends' when students and other developers gather to code all day with mentors, pizzas and drinks on the house!
   - type: mentorship
     version: v1.0
     title: Mentorship & Support
@@ -219,30 +258,18 @@ sections:
       - icon: headset
         title: 24/7 Community Support
         description: Join our Slack community of students and alumni. Get help anytime from peers who understand your journey.
-  - type: features_grid
-    version: "1.0"
-    title: Why Choose Miami?
-    items:
-      - icon: Buildingg
-        title: Prime Location
-        description: Located in the heart of Brickell, Miami's financial district.
-      - icon: Users
-        title: Tech Community
-        description: Access to Miami's thriving tech startup ecosystem.
-      - icon: Globe
-        title: International Hub
-        description: Connect with a diverse, multicultural community of learners.
-      - icon: Briefcase
-        title: Job Opportunities
-        description: Strong hiring demand from local and remote tech companies.
-  - type: programs_list
-    version: "1.0"
-    title: Programs Available in Miami
-    filter_by_location: miami-usa
   - type: testimonials
     version: "1.0"
     title: Miami Graduate Success Stories
     filter_by_location: miami-usa
+    marginY:
+      desktop: none lg
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - certification
+      - job-guarantee
   - type: cta_banner
     version: "1.0"
     title: Ready to Start Your Tech Career in Miami?
