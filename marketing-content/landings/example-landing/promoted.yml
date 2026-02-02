@@ -135,19 +135,14 @@ sections:
     tabs:
       - label: Collaborative documents
         description: Work together on specifications and requirements in real-time
-        image_id: placeholder_career_guidance
-        src: /attached_assets/community-support-2_1765406601448.webp
-        alt: Community support image
+        image_id: feliz_empresario_laptop
+        height: 100px
       - label: Inline comments
         description: Add contextual feedback directly where it matters most
         image_id: placeholder_mentorship
-        src: /attached_assets/feliz-empresario-laptop_1765406479465.png
-        alt: Happy professional with laptop
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
-        src: /attached_assets/fernando-funez_1765315920677.jpg
-        alt: Fernando Funez testimonial
     image_position: right
   - type: image_row
     images:
@@ -174,13 +169,11 @@ sections:
         text: Access to our job placement team and alumni network to help you land your first role.
       - heading: Money-Back Guarantee
         text: If you don't land a job within 6 months, we'll refund your tuition.
-    image: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
+    image: /attached_assets/our-story_1765323971104.webp
     image_alt: Graduate celebrating success
+    image_object_fit: cover
+    image_object_position: center center
     reverse: true
-    "":
-      image_object_fit: cover
-      image_max_width: 700px
-      image_max_height: 700px
   - type: value_proof_panel
     title: Recognized Globally for Excellence
     subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.

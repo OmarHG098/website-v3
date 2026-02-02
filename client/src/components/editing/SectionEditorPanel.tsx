@@ -1518,6 +1518,15 @@ export function SectionEditorPanel({
                   const MAX_IMAGES = 4;
                   const hasImages = safeArrayData.length > 0;
                   
+                  // Detect if this is a "tabs" array (bullet_tabs_showcase) which has limited styling options
+                  // vs a regular "images" array which has full styling options
+                  const isTabsArray = arrayPath === "tabs" || arrayPath.endsWith(".tabs");
+                  
+                  // For tabs: use image_object_fit/image_object_position (schema naming)
+                  // For images: use object_fit/object_position
+                  const objectFitField = isTabsArray ? "image_object_fit" : "object_fit";
+                  const objectPositionField = isTabsArray ? "image_object_position" : "object_position";
+                  
                   const initializeDefaultImages = () => {
                     const defaultImages = [
                       { src: "", alt: "Student 1", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
@@ -1532,9 +1541,9 @@ export function SectionEditorPanel({
                     <div key={fieldPath} className="space-y-3">
                       <div className="flex items-center justify-between">
                         <Label className="text-sm font-medium">
-                          Imágenes ({safeArrayData.length}/{MAX_IMAGES})
+                          {isTabsArray ? `Imágenes de Tabs (${safeArrayData.length})` : `Imágenes (${safeArrayData.length}/${MAX_IMAGES})`}
                         </Label>
-                        {!hasImages && (
+                        {!hasImages && !isTabsArray && (
                           <Button
                             type="button"
                             variant="outline"
@@ -1548,7 +1557,7 @@ export function SectionEditorPanel({
                         )}
                       </div>
                       
-                      {!hasImages && (
+                      {!hasImages && !isTabsArray && (
                         <div className="p-4 border border-dashed rounded-md text-center text-sm text-muted-foreground">
                           <IconPhoto className="h-8 w-8 mx-auto mb-2 opacity-50" />
                           <p>Este componente usa imágenes por defecto.</p>
@@ -1636,25 +1645,27 @@ export function SectionEditorPanel({
                                         data-testid={`props-image-style-${index}-alt`}
                                       />
                                     </div>
-                                    <Button
-                                      type="button"
-                                      variant="ghost"
-                                      size="icon"
-                                      onClick={() => removeArrayItem(arrayPath, index)}
-                                      className="text-muted-foreground hover:text-destructive"
-                                      data-testid={`props-image-style-${index}-delete`}
-                                      title="Eliminar imagen"
-                                    >
-                                      <IconTrash className="h-4 w-4" />
-                                    </Button>
+                                    {!isTabsArray && (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeArrayItem(arrayPath, index)}
+                                        className="text-muted-foreground hover:text-destructive"
+                                        data-testid={`props-image-style-${index}-delete`}
+                                        title="Eliminar imagen"
+                                      >
+                                        <IconTrash className="h-4 w-4" />
+                                      </Button>
+                                    )}
                                   </div>
 
                                   <div className="grid grid-cols-2 gap-3">
                                     <div className="space-y-1">
                                       <Label className="text-xs text-muted-foreground">Object Fit</Label>
                                       <Select
-                                        value={(item.object_fit as string) || "cover"}
-                                        onValueChange={(value) => updateArrayItemField(arrayPath, index, "object_fit", value)}
+                                        value={(item[objectFitField] as string) || "cover"}
+                                        onValueChange={(value) => updateArrayItemField(arrayPath, index, objectFitField, value)}
                                       >
                                         <SelectTrigger className="h-8 text-sm" data-testid={`props-image-style-${index}-object-fit`}>
                                           <SelectValue />
@@ -1672,70 +1683,76 @@ export function SectionEditorPanel({
                                     <div className="space-y-1">
                                       <Label className="text-xs text-muted-foreground">Object Position</Label>
                                       <Input
-                                        value={(item.object_position as string) || "center top"}
-                                        onChange={(e) => updateArrayItemField(arrayPath, index, "object_position", e.target.value)}
+                                        value={(item[objectPositionField] as string) || "center top"}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, objectPositionField, e.target.value)}
                                         placeholder="center top"
                                         className="h-8 text-sm"
                                         data-testid={`props-image-style-${index}-object-position`}
                                       />
                                     </div>
 
-                                    <div className="space-y-1">
-                                      <Label className="text-xs text-muted-foreground">Border Radius</Label>
-                                      <Input
-                                        value={(item.border_radius as string) || "0.5rem"}
-                                        onChange={(e) => updateArrayItemField(arrayPath, index, "border_radius", e.target.value)}
-                                        placeholder="0.5rem"
-                                        className="h-8 text-sm"
-                                        data-testid={`props-image-style-${index}-border-radius`}
-                                      />
-                                    </div>
+                                    {!isTabsArray && (
+                                      <>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">Border Radius</Label>
+                                          <Input
+                                            value={(item.border_radius as string) || "0.5rem"}
+                                            onChange={(e) => updateArrayItemField(arrayPath, index, "border_radius", e.target.value)}
+                                            placeholder="0.5rem"
+                                            className="h-8 text-sm"
+                                            data-testid={`props-image-style-${index}-border-radius`}
+                                          />
+                                        </div>
 
-                                    <div className="space-y-1">
-                                      <Label className="text-xs text-muted-foreground">Opacidad</Label>
-                                      <Input
-                                        type="number"
-                                        min={0}
-                                        max={1}
-                                        step={0.1}
-                                        value={(item.opacity as number) ?? 1}
-                                        onChange={(e) => updateArrayItemField(arrayPath, index, "opacity", parseFloat(e.target.value) || 1)}
-                                        placeholder="1"
-                                        className="h-8 text-sm"
-                                        data-testid={`props-image-style-${index}-opacity`}
-                                      />
-                                    </div>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">Opacidad</Label>
+                                          <Input
+                                            type="number"
+                                            min={0}
+                                            max={1}
+                                            step={0.1}
+                                            value={(item.opacity as number) ?? 1}
+                                            onChange={(e) => updateArrayItemField(arrayPath, index, "opacity", parseFloat(e.target.value) || 1)}
+                                            placeholder="1"
+                                            className="h-8 text-sm"
+                                            data-testid={`props-image-style-${index}-opacity`}
+                                          />
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
 
-                                  <div className="grid grid-cols-2 gap-3">
-                                    <div className="space-y-1">
-                                      <Label className="text-xs text-muted-foreground">CSS Filter</Label>
-                                      <Input
-                                        value={(item.filter as string) || ""}
-                                        onChange={(e) => updateArrayItemField(arrayPath, index, "filter", e.target.value)}
-                                        placeholder="grayscale(50%)"
-                                        className="h-8 text-sm"
-                                        data-testid={`props-image-style-${index}-filter`}
-                                      />
+                                  {!isTabsArray && (
+                                    <div className="grid grid-cols-2 gap-3">
+                                      <div className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">CSS Filter</Label>
+                                        <Input
+                                          value={(item.filter as string) || ""}
+                                          onChange={(e) => updateArrayItemField(arrayPath, index, "filter", e.target.value)}
+                                          placeholder="grayscale(50%)"
+                                          className="h-8 text-sm"
+                                          data-testid={`props-image-style-${index}-filter`}
+                                        />
+                                      </div>
+                                      <div className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">Altura</Label>
+                                        <Input
+                                          value={(item.height as string) || ""}
+                                          onChange={(e) => updateArrayItemField(arrayPath, index, "height", e.target.value)}
+                                          placeholder="400px, 20rem..."
+                                          className="h-8 text-sm"
+                                          data-testid={`props-image-style-${index}-height`}
+                                        />
+                                      </div>
                                     </div>
-                                    <div className="space-y-1">
-                                      <Label className="text-xs text-muted-foreground">Altura</Label>
-                                      <Input
-                                        value={(item.height as string) || ""}
-                                        onChange={(e) => updateArrayItemField(arrayPath, index, "height", e.target.value)}
-                                        placeholder="400px, 20rem..."
-                                        className="h-8 text-sm"
-                                        data-testid={`props-image-style-${index}-height`}
-                                      />
-                                    </div>
-                                  </div>
+                                  )}
                                 </div>
                               </CollapsibleContent>
                             </Collapsible>
                           );
                         })}
 
-                        {safeArrayData.length > 0 && safeArrayData.length < MAX_IMAGES && (
+                        {!isTabsArray && safeArrayData.length > 0 && safeArrayData.length < MAX_IMAGES && (
                           <button
                             type="button"
                             onClick={() => {
