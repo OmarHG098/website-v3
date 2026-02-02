@@ -94,27 +94,28 @@ sections:
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
   - type: two_column
+    version: v1.0
     proportions:
-      - 7
       - 5
-    alignment: start
-    left:
-      heading: Why Choose 4Geeks Academy
-      description: Discover a learning experience designed to help you succeed in tech, with support that never ends.
-      bullet_groups:
-        - title: Unlimited 1:1 Mentorship
-          description: Work with industry experts who provide personalized guidance throughout your journey and beyond.
-        - title: Flexible Learning Options
-          description: Balance your schedule with part-time or full-time programs, including evening and weekend classes.
-        - title: Career Support for Life
-          description: Access our career services team and alumni network anytime to stay on track with your goals.
-      bullet_groups_collapsible: false
-    right:
-      image: https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=500&fit=crop
-      image_alt: Team collaboration meeting
-      justify: center
+      - 7
+    background: bg-muted/30
+    alignment: center
     gap: "12"
-    variant: default
+    reverse_on_mobile: true
+    left:
+      image: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop
+      image_alt: Team collaborating on a project
+      justify: center
+    right:
+      heading: Why Choose Us
+      description: We provide comprehensive support for your learning journey from day one to career success.
+      bullets:
+        - text: Personalized mentorship from industry experts
+        - text: Flexible learning schedule that fits your life
+        - text: Real-world projects to build your portfolio
+        - text: Career support that lasts a lifetime
+      bullet_icon: Check
+      font_size: base
   - type: community_support
     version: "1.0"
     heading: A Global Developer Community Supporting Your Growth
