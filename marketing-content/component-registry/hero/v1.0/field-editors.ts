@@ -15,7 +15,6 @@ export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link
 export const fieldEditors: Record<string, EditorType> = {
   // Global - applies to all variants that have this field
   "signup_card.features[].icon": "icon-picker",
-  "image.src": "image-picker",
   
   // Variant-specific - prefixed with variant name
   "productShowcase:left_images[].src": "image-picker",
