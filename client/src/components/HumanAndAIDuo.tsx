@@ -78,18 +78,11 @@ const getIcon = (iconName: string, className?: string, size?: number, color?: st
 export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
   const backgroundClass = data.background || "bg-background";
   
-  // Support both new format (images array) and legacy format (image/image_alt)
-  // Priority: images array > legacy image > default images
-  const images: StyledImageProps[] = (() => {
-    if (data.images && data.images.length > 0) {
-      return data.images;
-    }
-    // Legacy single image format - convert to array
-    if (data.image) {
-      return [{ src: data.image, alt: data.image_alt }];
-    }
-    return defaultStudentImages;
-  })();
+  // Use custom images array if provided, otherwise always show default 4 student images
+  // Note: legacy image/image_alt fields are kept for backward compatibility but don't affect the student images display
+  const images: StyledImageProps[] = data.images && data.images.length > 0 
+    ? data.images 
+    : defaultStudentImages;
 
   return (
     <section 
