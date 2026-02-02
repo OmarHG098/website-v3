@@ -54,11 +54,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
       {/* Background split */}
       <div className="hidden lg:block">
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10"
-          aria-hidden="true"
-        />
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-[80%] bg-muted"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10 rounded-lg"
           aria-hidden="true"
         />
       </div>
@@ -69,19 +65,21 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-4">
           {/* Images above title - aligned left */}
-          {images.length > 0 && (
-            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
-              {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="w-16">
-                  <UniversalImage
-                    id={image.image_id}
-                    alt={image.alt || `Image ${index + 1}`}
-                    className="w-full h-full object-cover object-top rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="flex justify-center">
+            {images.length > 0 && (
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
+                {images.slice(0, 4).map((image, index) => (
+                  <div key={index} className="w-16">
+                    <UniversalImage
+                      id={image.image_id}
+                      alt={image.alt || `Image ${index + 1}`}
+                      className="w-full h-full object-cover object-top rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           {/* Title and description */}
           <div className="text-left">
             <h2 className="text-2xl font-bold text-foreground mb-2" data-testid="text-features-quad-heading">
@@ -112,7 +110,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] min-h-24" data-testid="img-features-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] h-32" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
@@ -147,13 +145,13 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
                 </div>
                 {images.length > 0 && (
-                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] min-h-28" data-testid="img-features-quad-desktop">
+                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card w-[300px] h-36" data-testid="img-features-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
                       <div key={index} className="flex-1">
                         <UniversalImage
                           id={image.image_id}
                           alt={image.alt || `Image ${index + 1}`}
-                          className="w-[35px] h-full object-cover object-top rounded-lg"
+                          className="w-full h-full object-cover object-top rounded-lg"
                         />
                       </div>
                     ))}

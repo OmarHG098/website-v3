@@ -53,9 +53,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc",
-      "lastModified": 1769823243558.1736,
-      "remoteSha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc"
+      "sha": "1af3e25f3d7b1419650ad3e44e80628195f846e5e718f8c400473dc0f4ba1e21",
+      "lastModified": 1770072241976.1392,
+      "remoteSha": "8224fa726db2e33f27c61425e3d8a08a4383cc2b5a642ab5d10295b1b80e59dc",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-02T22:44:01.978Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -653,9 +655,11 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "9883283e75642ffa0bcbd6b14d9a64766563f5fb896dfda1f0bdbc96bea817ad",
-      "lastModified": 1770041243388.399,
-      "remoteSha": "9883283e75642ffa0bcbd6b14d9a64766563f5fb896dfda1f0bdbc96bea817ad"
+      "sha": "88e33f8dc753813fdefe5f3583431294756d2502018933fb1a2d54fc64b91b97",
+      "lastModified": 1770043717896.2664,
+      "remoteSha": "9883283e75642ffa0bcbd6b14d9a64766563f5fb896dfda1f0bdbc96bea817ad",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-02T14:48:37.898Z"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",

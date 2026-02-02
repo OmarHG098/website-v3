@@ -93,6 +93,85 @@ sections:
         title: Learn with the community
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
+  - type: features_quad
+    version: "1.0"
+    variant: laptopEdge
+    heading: Master AI Development Tools
+    description: Learn to build production-ready AI earn to build production-ready AI applications with iearn to build production-ready AI applications with iapplications with industry-standard tools and frameworks.
+    images:
+      - image_id: student_asian
+        alt: Asian student learning to code
+      - image_id: student_latin_male
+        alt: Latino student working on a project
+      - image_id: student_african
+        alt: African student collaborating with team
+      - image_id: student_latina_female
+        alt: Latina student celebrating success
+    cards:
+      - icon: Code
+        title: Hands-On Coding
+        description: Build real AI projects from day one with expert guidance.
+      - icon: Brain
+        title: Deep Learning
+        description: Master neural networks, transformers, and modern AI architectures.
+      - icon: Cloud
+        title: Cloud Deployment
+        description: Deploy AI models to production using AWS, GCP, and Azure.
+      - icon: Rocket
+        title: Fast-Track Career
+        description: Graduate job-ready with a portfolio of AI projects.
+    footer_description: Join the next generation of AI engineers.
+    background: hsl(var(--muted))
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    heading: Why Choose Our AI Engineering Program?
+    description: Get the skills,earn to build production-ready AI applications with iearn to build production-ready AI applications with iearn to build production-ready AI applearn to build production-ready AI applications with iearn to build production-ready AI applications with iications with i support, and job placement assistance you need to launch your career in AI engineering.
+    images:
+      - image_id: student_asian
+        alt: Asian student learning to code
+      - image_id: student-2
+        alt: Student 2
+      - image_id: student-3
+        alt: Student 3
+      - image_id: student-4
+        alt: Student 4
+    cards:
+      - icon: Trophy
+        title: Industry Recognition
+        description: Ranked among the top coding bootcamps by Forbes, Course Report, and Career Karma.
+      - icon: Wallet
+        title: Affordable Tuition
+        description: Among the most affordable tuition of any top-ranked bootcamp, with flexible payment options.
+      - icon: Clock
+        title: Flexible Schedule
+        description: Learn at your own pace with part-time and full-time options to fit your lifestyle.
+      - icon: Users
+        title: Career Support
+        description: Get unlimited 1:1 mentorship and job placement assistance for life.
+    footer_description: Join thousands of graduates who have launched successful tech careers.
+    background: bg-background
+    showOn: desktop
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    compact: true
+    heading: Program Benefits
+    description: Everything you need to succeed in your AI engineering career.
+    cards:
+      - icon: Trophy
+        title: Industry Recognition
+        description: Top-ranked bootcamp
+      - icon: Wallet
+        title: Affordable Tuition
+        description: Flexible payments
+      - icon: Clock
+        title: Flexible Schedule
+        description: Part-time available
+      - icon: Users
+        title: Career Support
+        description: Unlimited mentorship
+    background: bg-muted/30
   - type: two_column
     version: v1.0
     proportions:

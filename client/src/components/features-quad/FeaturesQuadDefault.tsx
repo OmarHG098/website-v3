@@ -98,7 +98,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[280px] min-h-24" data-testid="img-features-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[300px] h-32" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
@@ -131,7 +131,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[320px] min-h-28" data-testid="img-features-quad-desktop">
+              <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[370px] h-36" data-testid="img-features-quad-desktop">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage

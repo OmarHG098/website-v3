@@ -128,7 +128,6 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
 
   return (
     <section 
-      className="bg-primary/5"
       data-testid="section-syllabus"
     >
       <div className="max-w-6xl mx-auto px-4">
