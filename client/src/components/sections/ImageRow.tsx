@@ -70,25 +70,38 @@ export default function ImageRow({ data }: ImageRowProps) {
               className="contents"
               style={{ display: "contents" }}
             >
-              {images.map((image, index) => (
-                <div
-                  key={image.src || `image-${index}`}
-                  className="flex-1 min-w-0 h-[var(--image-row-height-mobile)] md:h-[var(--image-row-height-desktop)]"
-                  data-testid={`image-row-item-${index}`}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className={`w-full h-full ${roundedClass}`}
+              {images.map((image, index) => {
+                const imageHeight = image.height || undefined;
+                return (
+                  <div
+                    key={image.src || `image-${index}`}
+                    className="flex-1 min-w-0"
                     style={{
-                      objectFit: image.object_fit || "cover",
-                      objectPosition: image.object_position || "center center",
+                      height: imageHeight || `var(--image-row-height-mobile)`,
                     }}
-                    loading="lazy"
-                    data-testid={`img-image-row-${index}`}
-                  />
-                </div>
-              ))}
+                    data-testid={`image-row-item-${index}`}
+                  >
+                    <style>{`
+                      @media (min-width: 768px) {
+                        [data-testid="image-row-item-${index}"] {
+                          height: ${imageHeight || `var(--image-row-height-desktop)`} !important;
+                        }
+                      }
+                    `}</style>
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className={`w-full h-full ${roundedClass}`}
+                      style={{
+                        objectFit: image.object_fit || "cover",
+                        objectPosition: image.object_position || "center center",
+                      }}
+                      loading="lazy"
+                      data-testid={`img-image-row-${index}`}
+                    />
+                  </div>
+                );
+              })}
 
               {highlight && (
                 <div 

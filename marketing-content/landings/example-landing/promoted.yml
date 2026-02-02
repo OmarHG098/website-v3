@@ -132,22 +132,29 @@ sections:
     version: "1.0"
     heading: Ideate and specify what to build next
     subheading: Transform your ideas into actionable tasks seamlessly
-    image_position: right
     tabs:
       - label: Collaborative documents
         description: Work together on specifications and requirements in real-time
         image_id: placeholder_career_guidance
+        src: /attached_assets/community-support-2_1765406601448.webp
+        alt: Community support image
       - label: Inline comments
         description: Add contextual feedback directly where it matters most
         image_id: placeholder_mentorship
+        src: /attached_assets/feliz-empresario-laptop_1765406479465.png
+        alt: Happy professional with laptop
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
+        src: /attached_assets/fernando-funez_1765315920677.jpg
+        alt: Fernando Funez testimonial
+    image_position: right
   - type: image_row
-    version: v1.0
     images:
       - src: /attached_assets/student-1-asian.png
         alt: Asian student learning to code
+        object_fit: cover
+        object_position: center 10%
       - src: /attached_assets/student-2-latin.png
         alt: Latino student working on a project
       - src: /attached_assets/student-3-african.png

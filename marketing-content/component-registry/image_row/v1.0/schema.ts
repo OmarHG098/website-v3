@@ -11,6 +11,7 @@ export const imageRowImageSchema = z.object({
   alt: z.string().describe("Alt text for accessibility"),
   object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional().describe("CSS object-fit property"),
   object_position: z.string().optional().describe("CSS object-position property (e.g., 'center top', '20% 50%')"),
+  height: z.string().optional().describe("Individual image height (e.g., '400px', '20rem'). Overrides global height."),
 });
 
 export const imageRowHighlightSchema = z.object({

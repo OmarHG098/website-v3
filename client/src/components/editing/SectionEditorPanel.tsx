@@ -1701,15 +1701,27 @@ export function SectionEditorPanel({
                                     </div>
                                   </div>
 
-                                  <div className="space-y-1">
-                                    <Label className="text-xs text-muted-foreground">CSS Filter</Label>
-                                    <Input
-                                      value={(item.filter as string) || ""}
-                                      onChange={(e) => updateArrayItemField(arrayPath, index, "filter", e.target.value)}
-                                      placeholder="grayscale(50%) brightness(1.1)"
-                                      className="h-8 text-sm"
-                                      data-testid={`props-image-style-${index}-filter`}
-                                    />
+                                  <div className="grid grid-cols-2 gap-3">
+                                    <div className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">CSS Filter</Label>
+                                      <Input
+                                        value={(item.filter as string) || ""}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, "filter", e.target.value)}
+                                        placeholder="grayscale(50%)"
+                                        className="h-8 text-sm"
+                                        data-testid={`props-image-style-${index}-filter`}
+                                      />
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">Altura</Label>
+                                      <Input
+                                        value={(item.height as string) || ""}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, "height", e.target.value)}
+                                        placeholder="400px, 20rem..."
+                                        className="h-8 text-sm"
+                                        data-testid={`props-image-style-${index}-height`}
+                                      />
+                                    </div>
                                   </div>
                                 </div>
                               </CollapsibleContent>
