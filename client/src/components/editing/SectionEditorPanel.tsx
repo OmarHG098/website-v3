@@ -1558,7 +1558,7 @@ export function SectionEditorPanel({
                       
                       <div className="space-y-2">
                         {safeArrayData.map((item, index) => {
-                          const currentSrc = (item.src as string) || "";
+                          const currentSrc = (item[itemField] as string) || "";
                           const currentAlt = (item.alt as string) || "";
                           const displaySrc = imageRegistry?.images?.[currentSrc]?.src || currentSrc;
 
@@ -1598,7 +1598,7 @@ export function SectionEditorPanel({
                                         setImagePickerTarget({
                                           arrayPath,
                                           index,
-                                          srcField: "src",
+                                          srcField: itemField,
                                           currentSrc,
                                           currentAlt,
                                           tagFilter: variant,
