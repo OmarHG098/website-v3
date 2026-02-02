@@ -93,7 +93,7 @@ export function Banner({ data }: BannerProps) {
           {renderAvatars()}
 
           <h2 
-            className="font-bold mb-4 text-white text-[44px]"
+            className="font-bold mb-4 text-white text-[25px] md:text-[44px]"
             data-testid="text-banner-title"
           >
             {title}
@@ -101,7 +101,7 @@ export function Banner({ data }: BannerProps) {
 
           {description && (
             <p 
-              className="mx-auto mb-8 text-white/85 text-[26px]"
+              className="mx-auto md:mb-8 text-white/85 text-[16px] md:text-[26px]"
               data-testid="text-banner-description"
             >
               {description}

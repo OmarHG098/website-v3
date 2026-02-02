@@ -53,15 +53,17 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
     >
       {/* Background split */}
       <div className="hidden lg:block">
+
         {/* Solid mask to prevent parent background from affecting the color */}
         <div 
           className="absolute right-0 top-0 bottom-0 w-[20%] bg-background rounded-lg"
           aria-hidden="true"
         />
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10 rounded-lg"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/5 rounded-lg"
           aria-hidden="true"
         />
+        
       </div>
       {/* Mobile/tablet full bg */}
       <div className="lg:hidden absolute inset-0 bg-muted" aria-hidden="true" />
