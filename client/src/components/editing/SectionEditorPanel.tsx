@@ -1324,11 +1324,47 @@ export function SectionEditorPanel({
                 }
 
                 if (editorType === "image-with-style-picker") {
+                  const MAX_IMAGES = 4;
+                  const hasImages = safeArrayData.length > 0;
+                  
+                  const initializeDefaultImages = () => {
+                    const defaultImages = [
+                      { src: "", alt: "Student 1", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 2", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 3", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 4", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                    ];
+                    updateArrayField(arrayPath, defaultImages);
+                  };
+
                   return (
                     <div key={fieldPath} className="space-y-3">
-                      <Label className="text-sm font-medium capitalize">
-                        Imágenes
-                      </Label>
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm font-medium">
+                          Imágenes ({safeArrayData.length}/{MAX_IMAGES})
+                        </Label>
+                        {!hasImages && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={initializeDefaultImages}
+                            data-testid="props-image-style-init"
+                          >
+                            <IconPlus className="h-4 w-4 mr-1" />
+                            Inicializar imágenes
+                          </Button>
+                        )}
+                      </div>
+                      
+                      {!hasImages && (
+                        <div className="p-4 border border-dashed rounded-md text-center text-sm text-muted-foreground">
+                          <IconPhoto className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                          <p>Este componente usa imágenes por defecto.</p>
+                          <p>Haz clic en "Inicializar imágenes" para personalizarlas.</p>
+                        </div>
+                      )}
+                      
                       <div className="space-y-2">
                         {safeArrayData.map((item, index) => {
                           const currentSrc = (item.src as string) || "";
@@ -1496,25 +1532,27 @@ export function SectionEditorPanel({
                           );
                         })}
 
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const defaultItem: Record<string, unknown> = {
-                              src: "",
-                              alt: "",
-                              object_fit: "cover",
-                              object_position: "center top",
-                              border_radius: "0.5rem",
-                            };
-                            addArrayItem(arrayPath, defaultItem);
-                          }}
-                          className="w-full py-2 rounded-md border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
-                          data-testid="props-image-style-add"
-                          title="Añadir imagen"
-                        >
-                          <IconPlus className="h-4 w-4" />
-                          Añadir imagen
-                        </button>
+                        {safeArrayData.length > 0 && safeArrayData.length < MAX_IMAGES && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const defaultItem: Record<string, unknown> = {
+                                src: "",
+                                alt: `Student ${safeArrayData.length + 1}`,
+                                object_fit: "cover",
+                                object_position: "center top",
+                                border_radius: "0.5rem",
+                              };
+                              addArrayItem(arrayPath, defaultItem);
+                            }}
+                            className="w-full py-2 rounded-md border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                            data-testid="props-image-style-add"
+                            title="Añadir imagen"
+                          >
+                            <IconPlus className="h-4 w-4" />
+                            Añadir imagen ({safeArrayData.length}/{MAX_IMAGES})
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
