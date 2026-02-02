@@ -132,7 +132,11 @@ function MediaFrame({
         <img
           src={media.src}
           alt={media.alt || ""}
-          className="w-full h-full object-cover"
+          className="w-full h-full"
+          style={{
+            objectFit: media.object_fit || "cover",
+            objectPosition: media.object_position || "center center",
+          }}
           loading="lazy"
         />
       )}

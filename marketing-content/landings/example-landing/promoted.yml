@@ -128,6 +128,70 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: bg-background
+  - type: bullet_tabs_showcase
+    version: "1.0"
+    heading: Ideate and specify what to build next
+    subheading: Transform your ideas into actionable tasks seamlessly
+    image_position: right
+    tabs:
+      - label: Collaborative documents
+        description: Work together on specifications and requirements in real-time
+        image_id: placeholder_career_guidance
+      - label: Inline comments
+        description: Add contextual feedback directly where it matters most
+        image_id: placeholder_mentorship
+      - label: Text-to-issue commands
+        description: Seamlessly move between ideation and execution
+        image_id: placeholder_strategies
+  - type: image_row
+    version: v1.0
+    images:
+      - src: /attached_assets/student-1-asian.png
+        alt: Asian student learning to code
+      - src: /attached_assets/student-2-latin.png
+        alt: Latino student working on a project
+      - src: /attached_assets/student-3-african.png
+        alt: African student collaborating with team
+    height: 20rem
+    gap: lg
+    rounded: true
+  - type: two_column_accordion_card
+    version: "1.0"
+    title: Why Choose Our Program?
+    description: "Learn what makes our bootcamp different:"
+    bullets:
+      - heading: Industry-Ready Skills
+        text: Graduate with a portfolio of real-world projects that demonstrate your abilities to employers.
+      - heading: Career Support
+        text: Access to our job placement team and alumni network to help you land your first role.
+      - heading: Money-Back Guarantee
+        text: If you don't land a job within 6 months, we'll refund your tuition.
+    image: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
+    image_alt: Graduate celebrating success
+    reverse: true
+  - type: value_proof_panel
+    title: Recognized Globally for Excellence
+    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
+    evidence_items:
+      - icon: Trophy
+        title: Top 5 Coding Bootcamps Worldwide
+        source: Newsweek, Forbes, SwitchUp, Course Report
+      - icon: Award
+        title: Best Student Support & Best Value
+        source: Course Report, SwitchUp
+      - icon: Users
+        title: 35,000+ Graduates Across 20+ Countries
+        description: A global community of successful tech professionals
+      - icon: Certificate
+        title: Industry-Recognized Certificates
+        description: Credentials that employers trust and value
+    media:
+      type: image
+      src: /attached_assets/feliz-empresario-laptop_1765406479465.png
+      alt: 4Geeks Academy awards and recognitions
+      aspect_ratio: "4:3"
+      style: rounded
+    background: muted
   - type: ai_learning
     variant: feature-tabs
     badge: Why 4Geeks?

@@ -79,7 +79,11 @@ export default function ImageRow({ data }: ImageRowProps) {
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className={`w-full h-full object-cover ${roundedClass}`}
+                    className={`w-full h-full ${roundedClass}`}
+                    style={{
+                      objectFit: image.object_fit || "cover",
+                      objectPosition: image.object_position || "center center",
+                    }}
                     loading="lazy"
                     data-testid={`img-image-row-${index}`}
                   />

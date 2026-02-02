@@ -18,6 +18,8 @@ interface TwoColumnAccordionCardImageBackgroundData {
   footer?: string;
   image?: string;
   image_alt?: string;
+  image_object_fit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  image_object_position?: string;
   reverse?: boolean;
 }
 
@@ -26,7 +28,7 @@ interface TwoColumnAccordionCardImageBackgroundProps {
 }
 
 export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordionCardImageBackgroundProps) {
-  const { title, description, bullets, footer, image, image_alt, reverse } = data;
+  const { title, description, bullets, footer, image, image_alt, image_object_fit, image_object_position, reverse } = data;
 
   return (
     <section className="" data-testid="section-two-column-accordion-card">
@@ -88,7 +90,11 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
                       <img
                         src={image}
                         alt={image_alt || ""}
-                        className={`w-full h-auto ${reverse ? "rounded-r-lg" : "rounded-l-lg"} shadow-lg object-contain`}
+                        className={`w-full h-auto ${reverse ? "rounded-r-lg" : "rounded-l-lg"} shadow-lg`}
+                        style={{
+                          objectFit: image_object_fit || "contain",
+                          objectPosition: image_object_position || "center center",
+                        }}
                         data-testid="img-two-column-accordion"
                       />
                     </div>

@@ -655,6 +655,8 @@ export const twoColumnAccordionCardSectionSchema = z.object({
   footer: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
+  image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  image_object_position: z.string().optional(),
   reverse: z.boolean().optional(),
 });
 
