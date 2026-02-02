@@ -423,7 +423,7 @@ sections:
     title: Your New Career Starts Here
     subtitle: See what our graduates have to say about their experience
     rating_summary:
-      average: "4.5"
+      average: "4.8"
       count: 1,294
     items:
       - name: Gabriel Salazar
@@ -462,10 +462,10 @@ sections:
         rating: 4
         comment: Transitioning from the music industry into tech was challenging but 4Geeks made it possible. Now I'm performing as a developer and a Mentor, helping others achieve the same dream.
         outcome: +100% salary increase
-    paddingY:
-      desktop: md none
     marginY:
       desktop: none md
+    paddingY:
+      desktop: md none
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))
