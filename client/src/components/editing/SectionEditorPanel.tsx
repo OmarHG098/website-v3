@@ -1115,10 +1115,11 @@ export function SectionEditorPanel({
                   );
                 }
 
-                // Handle simple field paths with image-with-style-picker (e.g., "left.image")
+                // Handle simple field paths with image-with-style-picker (e.g., "left.image" or just "image")
                 if (isSimpleField && editorType === "image-with-style-picker") {
                   const getNestedValue = (path: string, defaultValue: unknown = "") => {
                     if (!parsedSection) return defaultValue;
+                    if (!path) return defaultValue;
                     const pathParts = path.split(".");
                     let current: unknown = parsedSection;
                     for (const part of pathParts) {
@@ -1130,18 +1131,23 @@ export function SectionEditorPanel({
                   
                   const pathParts = fieldPath.split(".");
                   const parentPath = pathParts.slice(0, -1).join(".");
-                  const side = pathParts[0]; // "left" or "right"
+                  const side = pathParts[0]; // "left" or "right" or the field itself
+                  
+                  // For simple fields like "image" (no parent), use direct field names
+                  // For nested fields like "left.image", use parent prefix
+                  const hasParent = parentPath.length > 0;
+                  const fieldPrefix = hasParent ? `${parentPath}.` : "";
                   
                   const currentValue = getNestedValue(fieldPath, "") as string;
-                  const currentAlt = getNestedValue(`${parentPath}.image_alt`, "") as string;
-                  const currentObjectFit = getNestedValue(`${parentPath}.image_object_fit`, "") as string;
-                  const currentObjectPosition = getNestedValue(`${parentPath}.image_object_position`, "") as string;
-                  const currentMaxWidth = getNestedValue(`${parentPath}.image_max_width`, "") as string;
-                  const currentMaxHeight = getNestedValue(`${parentPath}.image_max_height`, "") as string;
-                  const currentMobileMaxWidth = getNestedValue(`${parentPath}.image_mobile_max_width`, "") as string;
-                  const currentMobileMaxHeight = getNestedValue(`${parentPath}.image_mobile_max_height`, "") as string;
+                  const currentAlt = getNestedValue(`${fieldPrefix}image_alt`, "") as string;
+                  const currentObjectFit = getNestedValue(`${fieldPrefix}image_object_fit`, "") as string;
+                  const currentObjectPosition = getNestedValue(`${fieldPrefix}image_object_position`, "") as string;
+                  const currentMaxWidth = getNestedValue(`${fieldPrefix}image_max_width`, "") as string;
+                  const currentMaxHeight = getNestedValue(`${fieldPrefix}image_max_height`, "") as string;
+                  const currentMobileMaxWidth = getNestedValue(`${fieldPrefix}image_mobile_max_width`, "") as string;
+                  const currentMobileMaxHeight = getNestedValue(`${fieldPrefix}image_mobile_max_height`, "") as string;
                   
-                  const fieldLabel = side === "left" ? "Imagen Izquierda" : side === "right" ? "Imagen Derecha" : fieldPath.split(".").pop() || fieldPath;
+                  const fieldLabel = side === "left" ? "Imagen Izquierda" : side === "right" ? "Imagen Derecha" : side === "image" ? "Imagen" : fieldPath.split(".").pop() || fieldPath;
                   
                   return (
                     <Collapsible key={fieldPath} className="border rounded-md">
@@ -1210,7 +1216,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Alt text</Label>
                               <Input
                                 value={currentAlt}
-                                onChange={(e) => updateProperty(`${parentPath}.image_alt`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_alt`, e.target.value)}
                                 placeholder="Descripción de la imagen"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-alt`}
@@ -1223,7 +1229,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Object Fit</Label>
                               <Select
                                 value={currentObjectFit || "cover"}
-                                onValueChange={(value) => updateProperty(`${parentPath}.image_object_fit`, value)}
+                                onValueChange={(value) => updateProperty(`${fieldPrefix}image_object_fit`, value)}
                               >
                                 <SelectTrigger className="h-8 text-sm" data-testid={`props-image-style-${side}-object-fit`}>
                                   <SelectValue />
@@ -1242,7 +1248,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Posición (X Y)</Label>
                               <Input
                                 value={currentObjectPosition}
-                                onChange={(e) => updateProperty(`${parentPath}.image_object_position`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_object_position`, e.target.value)}
                                 placeholder="center center"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-object-position`}
@@ -1253,7 +1259,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Ancho Máx.</Label>
                               <Input
                                 value={currentMaxWidth}
-                                onChange={(e) => updateProperty(`${parentPath}.image_max_width`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_max_width`, e.target.value)}
                                 placeholder="400px"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-max-width`}
@@ -1264,7 +1270,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Alto Máx.</Label>
                               <Input
                                 value={currentMaxHeight}
-                                onChange={(e) => updateProperty(`${parentPath}.image_max_height`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_max_height`, e.target.value)}
                                 placeholder="300px"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-max-height`}
@@ -1275,7 +1281,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Ancho Móvil Máx.</Label>
                               <Input
                                 value={currentMobileMaxWidth}
-                                onChange={(e) => updateProperty(`${parentPath}.image_mobile_max_width`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_mobile_max_width`, e.target.value)}
                                 placeholder="100%"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-mobile-max-width`}
@@ -1286,7 +1292,7 @@ export function SectionEditorPanel({
                               <Label className="text-xs text-muted-foreground">Alto Móvil Máx.</Label>
                               <Input
                                 value={currentMobileMaxHeight}
-                                onChange={(e) => updateProperty(`${parentPath}.image_mobile_max_height`, e.target.value)}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_mobile_max_height`, e.target.value)}
                                 placeholder="200px"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-mobile-max-height`}

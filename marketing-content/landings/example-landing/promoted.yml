@@ -155,6 +155,7 @@ sections:
         alt: Asian student learning to code
         object_fit: cover
         object_position: center 10%
+        height: 40rem
       - src: /attached_assets/student-2-latin.png
         alt: Latino student working on a project
       - src: /attached_assets/student-3-african.png
@@ -176,6 +177,10 @@ sections:
     image: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
     image_alt: Graduate celebrating success
     reverse: true
+    "":
+      image_object_fit: cover
+      image_max_width: 700px
+      image_max_height: 700px
   - type: value_proof_panel
     title: Recognized Globally for Excellence
     subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
