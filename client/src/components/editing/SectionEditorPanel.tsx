@@ -1323,8 +1323,9 @@ export function SectionEditorPanel({
                 const arrayData = getArrayData();
                 
                 // Skip if the array field doesn't exist in the current section data
+                // EXCEPT for image-with-style-picker which should show even when array is empty (to allow initialization)
                 // This prevents showing editors for fields that don't apply to the current variant
-                if (arrayData === undefined) return null;
+                if (arrayData === undefined && editorType !== "image-with-style-picker") return null;
                 
                 const safeArrayData = Array.isArray(arrayData) ? arrayData : [];
                 
