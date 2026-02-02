@@ -131,9 +131,6 @@ sections:
       - id: "1"
         value: 36%
         title: projected growth rate the next decade
-      - id: "2"
-        value: 87%
-        title: hiring rate for our Data Science graduates
       - id: "3"
         value: $90K+
         title: Average starting salary for data scientists
