@@ -128,16 +128,11 @@ sections:
       - 6
     alignment: center
     left:
-      video: "-2ZvlgDnltc"
-      justify: center
+      video: 4n-ZAUPIxJI
     right:
       heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
       sub_heading: Watch how our platform transforms careers
       description: Discover the future of Miami's tech landscape through the eyes of Mayor Francis Suarez. In an exclusive interview, Mayor Suarez shares invaluable insights into the evolving digital economy, emphasizing the pivotal role of coding skills and the transformative potential of artificial intelligence (AI).
-      bullet_points:
-        - Transform an entire business case into a fully AI-native system, layer by layer.
-        - Integrate AI into real software, connecting intelligent models to users and data.
-        - Use modern AI tools and coding agents to build and ship software faster.
       button:
         text: Start Free Trial
         url: https://youtu.be/4n-ZAUPIxJI
