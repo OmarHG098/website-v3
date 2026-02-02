@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "53183b288560f9419da9fcecd9869def07c418d1",
-  "lastSyncedAt": "2026-02-02T14:07:24.121Z",
+  "lastSyncedCommit": "9ec7b2a50f97fc09834ac4fb41c7f26470223bee",
+  "lastSyncedAt": "2026-02-02T14:27:29.225Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -601,6 +601,21 @@
       "sha": "1f5a62cea8e4381ecc028ee1046f0c05f452f722c9b50e99cdb22419f0dc5afa",
       "lastModified": 1769533048562.4773,
       "remoteSha": "1f5a62cea8e4381ecc028ee1046f0c05f452f722c9b50e99cdb22419f0dc5afa"
+    },
+    "marketing-content/pages/financials/_common.yml": {
+      "sha": "0a20ed628666a4f3abd896728ff4b6e1cae06e8fd144d7088b4fb60376c71687",
+      "lastModified": 1770042447991.278,
+      "remoteSha": "0a20ed628666a4f3abd896728ff4b6e1cae06e8fd144d7088b4fb60376c71687"
+    },
+    "marketing-content/pages/financials/en.yml": {
+      "sha": "21cdf5e20dfe1f542e0813631df2a3c4f2e748ff396486d30679a37a0fc764cc",
+      "lastModified": 1770042448486.2778,
+      "remoteSha": "21cdf5e20dfe1f542e0813631df2a3c4f2e748ff396486d30679a37a0fc764cc"
+    },
+    "marketing-content/pages/financials/es.yml": {
+      "sha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec",
+      "lastModified": 1770042448895.2773,
+      "remoteSha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec"
     },
     "marketing-content/pages/geekforce-career-support/_common.yml": {
       "sha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1",
