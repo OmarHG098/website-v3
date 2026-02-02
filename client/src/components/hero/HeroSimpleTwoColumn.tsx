@@ -33,7 +33,7 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5">
             <img 
-              src="/attached_assets/Rectangle_5_1766029737050.png" 
+              src={image.src}
               alt={image.alt}
               className="w-full h-auto rounded-card shadow-card"
               data-testid="img-hero"

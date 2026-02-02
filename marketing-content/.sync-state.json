@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "57429953ece86e90868c4651159d73cb80f6d490",
-  "lastSyncedAt": "2026-01-31T01:55:13.377Z",
+  "lastSyncedCommit": "53183b288560f9419da9fcecd9869def07c418d1",
+  "lastSyncedAt": "2026-02-02T14:07:24.121Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -363,9 +363,9 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "94a4b4fa83d7631882375bf1f0f10338a0a8098bcaa8602e2666706376160b90",
-      "lastModified": 1765730138154.526,
-      "remoteSha": "94a4b4fa83d7631882375bf1f0f10338a0a8098bcaa8602e2666706376160b90"
+      "sha": "2b712338cf4d5b2b909a0b2317cb35fe37f686638191fa9bee4fc7375f609f87",
+      "lastModified": 1770041242873.3992,
+      "remoteSha": "2b712338cf4d5b2b909a0b2317cb35fe37f686638191fa9bee4fc7375f609f87"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -638,9 +638,9 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "aef4e5b991a6bf476ab859fefe5897faf8ecb150137f34b5db2c550b2e53e1f8",
-      "lastModified": 1769804347879.8323,
-      "remoteSha": "aef4e5b991a6bf476ab859fefe5897faf8ecb150137f34b5db2c550b2e53e1f8"
+      "sha": "9883283e75642ffa0bcbd6b14d9a64766563f5fb896dfda1f0bdbc96bea817ad",
+      "lastModified": 1770041243388.399,
+      "remoteSha": "9883283e75642ffa0bcbd6b14d9a64766563f5fb896dfda1f0bdbc96bea817ad"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
@@ -693,9 +693,9 @@
       "remoteSha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e"
     },
     "marketing-content/pages/outcomes/en.yml": {
-      "sha": "f0ff9620b42d11a6782f0af9abba8e4d3db01cfe0524f83d81e2d5a0ba0cdbd2",
-      "lastModified": 1769804347880.369,
-      "remoteSha": "f0ff9620b42d11a6782f0af9abba8e4d3db01cfe0524f83d81e2d5a0ba0cdbd2"
+      "sha": "df52a5cc5a05deab82bb969b96b1642a3f44f2f00a5e73c71d3609f2c600bbb8",
+      "lastModified": 1770041243819.3987,
+      "remoteSha": "df52a5cc5a05deab82bb969b96b1642a3f44f2f00a5e73c71d3609f2c600bbb8"
     },
     "marketing-content/pages/outcomes/es.yml": {
       "sha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d",
