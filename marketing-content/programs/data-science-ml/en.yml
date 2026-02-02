@@ -421,7 +421,7 @@ sections:
       desktop: none
   - type: testimonials
     title: Your New Career Starts Here
-    subtitle: See what our graduates have to say about their experience
+    subtitle: We’ve helped over a thousand students transition into tech. Here is what they say about their journey.
     rating_summary:
       average: "4.8"
       count: 1,294
