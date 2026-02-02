@@ -136,13 +136,16 @@ sections:
       - label: Collaborative documents
         description: Work together on specifications and requirements in real-time
         image_id: feliz_empresario_laptop
-        height: 100px
       - label: Inline comments
         description: Add contextual feedback directly where it matters most
         image_id: placeholder_mentorship
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: placeholder_strategies
+      - label: Text-to-issue commands
+        description: Seamlessly move between ideation and execution
+        image_id: logo_uber
+        alt: Uber logo
     image_position: right
   - type: image_row
     images:
