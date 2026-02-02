@@ -1115,6 +1115,158 @@ export function SectionEditorPanel({
                   );
                 }
 
+                // Handle simple field paths with image-with-style-picker (e.g., "left.image")
+                if (isSimpleField && editorType === "image-with-style-picker") {
+                  const getNestedValue = (path: string, defaultValue: unknown = "") => {
+                    if (!parsedSection) return defaultValue;
+                    const pathParts = path.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return defaultValue;
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return current ?? defaultValue;
+                  };
+                  
+                  const pathParts = fieldPath.split(".");
+                  const parentPath = pathParts.slice(0, -1).join(".");
+                  const side = pathParts[0]; // "left" or "right"
+                  
+                  const currentValue = getNestedValue(fieldPath, "") as string;
+                  const currentAlt = getNestedValue(`${parentPath}.image_alt`, "") as string;
+                  const currentMaxWidth = getNestedValue(`${parentPath}.image_max_width`, "") as string;
+                  const currentMaxHeight = getNestedValue(`${parentPath}.image_max_height`, "") as string;
+                  const currentMobileMaxWidth = getNestedValue(`${parentPath}.image_mobile_max_width`, "") as string;
+                  const currentMobileMaxHeight = getNestedValue(`${parentPath}.image_mobile_max_height`, "") as string;
+                  
+                  const fieldLabel = side === "left" ? "Imagen Izquierda" : side === "right" ? "Imagen Derecha" : fieldPath.split(".").pop() || fieldPath;
+                  
+                  return (
+                    <Collapsible key={fieldPath} className="border rounded-md">
+                      <CollapsibleTrigger asChild>
+                        <button
+                          type="button"
+                          className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                          data-testid={`props-image-style-${side}-trigger`}
+                        >
+                          <div className="w-10 h-10 rounded-md overflow-hidden bg-muted border flex-shrink-0">
+                            {currentValue ? (
+                              <img
+                                src={currentValue}
+                                alt={currentAlt || fieldLabel}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                              </div>
+                            )}
+                          </div>
+                          <span className="flex-1 text-left text-sm font-medium">
+                            {fieldLabel}
+                          </span>
+                          <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                        </button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="p-3 pt-0 space-y-3 border-t">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setImagePickerTarget({
+                                  fieldPath,
+                                  label: fieldLabel,
+                                  currentSrc: currentValue,
+                                  currentAlt,
+                                  tagFilter: variant,
+                                });
+                                setImagePickerOpen(true);
+                              }}
+                              className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                              data-testid={`props-image-style-${side}-picker`}
+                              title="Cambiar imagen"
+                            >
+                              {currentValue ? (
+                                <>
+                                  <img
+                                    src={currentValue}
+                                    alt={currentAlt}
+                                    className="w-full h-full object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <IconPhoto className="h-5 w-5 text-white" />
+                                  </div>
+                                </>
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                                </div>
+                              )}
+                            </button>
+                            <div className="flex-1 space-y-1">
+                              <Label className="text-xs text-muted-foreground">Alt text</Label>
+                              <Input
+                                value={currentAlt}
+                                onChange={(e) => updateProperty(`${parentPath}.image_alt`, e.target.value)}
+                                placeholder="Descripción de la imagen"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-alt`}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Ancho Máx.</Label>
+                              <Input
+                                value={currentMaxWidth}
+                                onChange={(e) => updateProperty(`${parentPath}.image_max_width`, e.target.value)}
+                                placeholder="400px"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-max-width`}
+                              />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Alto Máx.</Label>
+                              <Input
+                                value={currentMaxHeight}
+                                onChange={(e) => updateProperty(`${parentPath}.image_max_height`, e.target.value)}
+                                placeholder="300px"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-max-height`}
+                              />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Ancho Móvil Máx.</Label>
+                              <Input
+                                value={currentMobileMaxWidth}
+                                onChange={(e) => updateProperty(`${parentPath}.image_mobile_max_width`, e.target.value)}
+                                placeholder="100%"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-mobile-max-width`}
+                              />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Alto Móvil Máx.</Label>
+                              <Input
+                                value={currentMobileMaxHeight}
+                                onChange={(e) => updateProperty(`${parentPath}.image_mobile_max_height`, e.target.value)}
+                                placeholder="200px"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-mobile-max-height`}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  );
+                }
+
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
                 const match = fieldPath.match(/^([\w.]+)\[\]\.(\w+)$/);
