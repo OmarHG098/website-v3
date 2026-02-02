@@ -187,8 +187,9 @@ sections:
       - heading: Tailor-made career support
         text: Receive customized advice, guidance, and training tailored to your unique profile and specific job offers.
     footer: Join thousands of graduates now working at top tech companies.
-    image: https://4geeksacademy.com/static/48d83e1ce148aa046ad83ad8d2eabc1c/d85f4/miami-people.webp
+    image: /attached_assets/caracas-graduates_1765387638222.png
     image_alt: Student working on AI project
+    image_object_fit: cover
     paddingY:
       desktop: lg none
   - type: split_cards
