@@ -19,6 +19,8 @@ sections:
     image:
       src: /attached_assets/outcomes_1765562850573.png
       alt: Student outcomes growth chart
+    marginY:
+      desktop: md none
   - type: vertical_bars_cards
     version: "1.0"
     title: Hired Success Metrics
@@ -86,7 +88,7 @@ sections:
     marginY:
       desktop: none md
     paddingY:
-      desktop: lg md
+      desktop: lg
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
@@ -123,10 +125,10 @@ sections:
     marginY:
       desktop: none
     paddingY:
-      desktop: md none
+      desktop: sm none
   - type: value_proof_panel
     title: Recognized Globally for Excellence
-    subtitle: We don't just say we deliver, recognition from trusted sources proves our worth.
+    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
     evidence_items:
       - icon: Trophy
         title: Top 5 Coding Bootcamps Worldwide
@@ -142,11 +144,12 @@ sections:
         description: Credentials that employers trust and value
     media:
       type: image
-      src: /attached_assets/awards-collage.webp
-      alt: 4Geeks Academy awards and recognitions
+      src: /attached_assets/caracas-graduates_1765387638222.png
+      alt: Students collaborating in classroom
       aspect_ratio: "4:3"
       style: rounded
-    background: hsl(var(--card))
+    background: bg-muted/30
+    stacked_header: true
   - type: awards_marquee
     version: v1.0
     speed: 40
