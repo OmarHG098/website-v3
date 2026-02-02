@@ -1,0 +1,108 @@
+slug: financials
+template: default
+title: financials
+meta:
+  robots: index, follow
+  priority: 0.8
+  change_frequency: weekly
+  page_title: financials | 4Geeks Academy
+  description: financials - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /financials
+schema:
+  include:
+    - organization
+    - website
+sections:
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    title: in Tech, Your Way
+    subtitle: for the AI Era
+    welcome_text: Welcome to
+    brand_mark:
+      prefix: Finance Your
+      highlight: Future
+      suffix: ":"
+      color: chart-1
+    description: We offer several ways to fund your education, so you can focus on building your career without worrying about the cost. There’s an option to fit every need.
+    bullets:
+      - text: Flexible payment plans.
+      - text: Affordable loans.
+      - text: Scholarships.
+    video:
+      url: /attached_assets/ai-engineering_1765593572918.mp4
+      ratio: "9:16"
+      muted: true
+      loop: true
+    form: {}
+    trust_bar:
+      rating: "4.5"
+      review_count: Based on 5149+ reviews
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+    paddingY:
+      desktop: none
+    marginY:
+      desktop: none
+  - type: syllabus
+    title: Launch your tech career, with payment plans that fit your budget
+    subtitle: Explore our financing paths — from low monthly payments to income-based plans — and choose the option that works for you.
+    modules:
+      - title: Pay Upfront. Save 10%
+        description: Pay tuition upfront and save 10%.
+      - title: Pay in Installments. Interest-Free over 6 months
+        description: Pay the regular tuition cost in interest-free installments. Spread tuition across 6 months.
+      - title: Income-Based Payments
+        description: If you prefer to pay only after you land a job, we offer an income-based loan option through Edly that lets you start paying once you’re earning at least $35K per year, adjusts your monthly payments to your income, pauses payments during unemployment or underemployment, and is cosigner-friendly.
+      - title: Payment Plans & Loans
+        description: We partner with trusted providers to offer simple, accessible financing options tailored to your needs, including Ascent Funding with 3 to 5-year loan terms, interest rates based on your credit profile, the option to defer payments up to 9 months after graduation, possible inclusion of living expenses, and benefits like cosigner release and a 1% auto-pay discount; Climb Credit, which offers 3 to 5-year loans with fixed monthly payments that may start as low as $160+ depending on the loan and credit score, with no prepayment penalties; and TFC Tuition, which provides custom payment plans from 1 to 3 years and is a great option for students with limited or low credit thanks to a low entry barrier, easy approval, and competitive interest rates.
+      - title: Scholarships
+        description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
+    paddingY:
+      desktop: none lg
+  - type: comparison_table
+    version: "1.0"
+    title: Financing benefits and requirements at a glance
+    subtitle: See how our approach stacks up against typical alternatives
+    columns:
+      - name: Option
+      - name: Pay in Full
+        highlight: true
+      - name: Monthly Plans (TFC)
+      - name: Loans (Ascent/ Climb)
+      - name: Income-Based (Edly)
+    rows:
+      - feature: 1:1 Support
+        values:
+          - Unlimited
+          - Limited
+        feature_description: Get personalized guidance whenever you need it
+      - feature: Guarantee
+        values:
+          - "Yes"
+          - "No"
+        feature_description: Money back if not satisfied
+      - feature: Pricing
+        values:
+          - Flexible
+          - Fixed
+    footer_note: "* Based on industry research"
+    marginY:
+      desktop: none md
+  - type: why_learn_ai
+    variant: laptop-edge
+    title: Need extra confidence? Add a Job Guarantee
+    subtitle: You will never be alone!
+    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a full tuition refund. The job guarantee can also be financed.
+    cta:
+      text: More info here
+      url: /signup
+      variant: primary
+    marginY:
+      desktop: md none
