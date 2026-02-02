@@ -20,6 +20,8 @@ export const valueProofPanelMediaSchema = z.object({
   alt: z.string().optional(),
   aspect_ratio: z.enum(["1:1", "4:3", "16:9", "3:4"]).optional(),
   style: z.enum(["rounded", "organic", "circle"]).optional(),
+  object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  object_position: z.string().optional(),
 });
 
 export const valueProofPanelSectionSchema = z.object({

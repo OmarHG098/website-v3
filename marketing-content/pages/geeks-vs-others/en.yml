@@ -25,7 +25,7 @@ sections:
       alt: Students coding together at a table with laptops
     paddingY:
       desktop: lg
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    background: hsl(210 100% 50% / 0.05)
   - type: comparison_table
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
@@ -114,13 +114,21 @@ sections:
           iso: ES
         contributor: Software Engineer
         description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
-  - type: two_column
+  - type: features_quad
     version: "1.0"
-    variant: benefitCards
-    background: bg-muted/30
-    title: Making Tech Careers Accessible
-    subtitle: "Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry:"
-    benefit_items:
+    variant: default
+    heading: Making Tech Careers Accessible
+    description: Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry.
+    images:
+      - image_id: student_latina_female
+        alt: Latina student celebrating success
+      - image_id: student_african
+        alt: African student collaborating with team
+      - image_id: student_latin_male
+        alt: Latino student working on a project
+      - image_id: student_asian
+        alt: Asian student learning to code
+    cards:
       - icon: CurrencyDollar
         title: Affordable Tuition
         description: Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes).
@@ -133,13 +141,6 @@ sections:
       - icon: School
         title: Scholarships Available
         description: Full and partial scholarships available for eligible students.
-    cta_button:
-      text: See financing options
-      url: /en/financials
-      variant: primary
-    right:
-      image: /attached_assets/reservation-es_1764814854635.webp
-      image_alt: Woman working on laptop
   - type: features_grid
     version: "1.0"
     variant: stats-cards
@@ -153,6 +154,8 @@ sections:
         title: Average time to get hired
       - value: 55%
         title: Salary increase after graduation
+    marginY:
+      desktop: lg none
   - type: split_cards
     variant: primary-left
     background: muted
@@ -214,10 +217,12 @@ sections:
         description: Credentials that employers trust and value
     media:
       type: image
-      src: /attached_assets/community-support-2_1765406601448.webp
-      alt: 4Geeks Academy community and support
+      src: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
+      alt: Students collaborating in classroom
       aspect_ratio: "4:3"
       style: rounded
+    background: bg-muted/30
+    stacked_header: true
   - type: testimonials
     version: v1.0
     title: What Our Students Say

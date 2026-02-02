@@ -29,6 +29,8 @@ export const twoColumnColumnSchema = z.object({
   video_width: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
+  image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  image_object_position: z.string().optional(),
   image_max_width: z.string().optional(),
   image_max_height: z.string().optional(),
   image_mobile_max_width: z.string().optional(),

@@ -386,6 +386,10 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               src={column.image} 
               alt={column.image_alt || "Section image"}
               className="rounded-md w-full h-auto"
+              style={{
+                objectFit: (column.image_object_fit as React.CSSProperties["objectFit"]) || "cover",
+                objectPosition: column.image_object_position || "center center",
+              }}
               loading="lazy"
               data-testid="img-two-column"
             />

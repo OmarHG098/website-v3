@@ -46,6 +46,7 @@ interface UniversalImageProps extends ImageRef {
   onError?: () => void;
   useSolidCard?: boolean;
   bordered?: boolean;
+  style?: React.CSSProperties;
 }
 
 const ASPECT_RATIOS: Record<string, number> = {
@@ -67,6 +68,7 @@ export function UniversalImage({
   onError,
   useSolidCard = false,
   bordered = false,
+  style,
 }: UniversalImageProps) {
   const { registry, loading: registryLoading } = useImageRegistry();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -150,9 +152,14 @@ export function UniversalImage({
         loading={loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
+        className={`w-full h-full transition-opacity duration-300 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
+        style={{
+          objectFit: style?.objectFit || "cover",
+          objectPosition: style?.objectPosition || "center center",
+          ...style,
+        }}
         data-testid={`img-${id}`}
       />
     </div>

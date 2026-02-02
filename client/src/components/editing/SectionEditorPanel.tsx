@@ -15,6 +15,8 @@ import {
   IconArrowBackUp,
   IconArrowForwardUp,
   IconPhoto,
+  IconChevronDown,
+  IconTrash,
 } from "@tabler/icons-react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { getIcon } from "@/lib/icons";
@@ -22,6 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ColorPicker } from "@/components/ui/color-picker";
 import {
   Dialog,
@@ -465,7 +469,7 @@ export function SectionEditorPanel({
 
   // Update a specific field in an array item (supports nested paths like "signup_card.features")
   const updateArrayItemField = useCallback(
-    (arrayPath: string, index: number, field: string, value: string) => {
+    (arrayPath: string, index: number, field: string, value: string | number) => {
       try {
         const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
         if (!parsed || typeof parsed !== "object") return;
@@ -607,6 +611,51 @@ export function SectionEditorPanel({
         }
       } catch (error) {
         console.error("Error adding array item:", error);
+      }
+    },
+    [yamlContent, onPreviewChange, pushUndoState],
+  );
+
+  // Remove an item from an array field
+  const removeArrayItem = useCallback(
+    (arrayPath: string, indexToRemove: number) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
+
+        const pathParts = arrayPath.split(".");
+        let current: Record<string, unknown> = parsed;
+        
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const part = pathParts[i];
+          if (!current[part] || typeof current[part] !== "object") return;
+          current = current[part] as Record<string, unknown>;
+        }
+        
+        const arrayField = pathParts[pathParts.length - 1];
+        const array = current[arrayField] as Record<string, unknown>[] | undefined;
+        
+        if (!Array.isArray(array) || indexToRemove < 0 || indexToRemove >= array.length) return;
+
+        array.splice(indexToRemove, 1);
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error removing array item:", error);
       }
     },
     [yamlContent, onPreviewChange, pushUndoState],
@@ -1066,6 +1115,148 @@ export function SectionEditorPanel({
                   );
                 }
 
+                // Handle simple field paths with image-with-style-picker (e.g., "left.image" or just "image")
+                if (isSimpleField && editorType === "image-with-style-picker") {
+                  const getNestedValue = (path: string, defaultValue: unknown = "") => {
+                    if (!parsedSection) return defaultValue;
+                    if (!path) return defaultValue;
+                    const pathParts = path.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return defaultValue;
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return current ?? defaultValue;
+                  };
+                  
+                  const pathParts = fieldPath.split(".");
+                  const parentPath = pathParts.slice(0, -1).join(".");
+                  const side = pathParts[0]; // "left" or "right" or the field itself
+                  
+                  // For simple fields like "image" (no parent), use direct field names
+                  // For nested fields like "left.image", use parent prefix
+                  const hasParent = parentPath.length > 0;
+                  const fieldPrefix = hasParent ? `${parentPath}.` : "";
+                  
+                  const currentValue = getNestedValue(fieldPath, "") as string;
+                  const currentAlt = getNestedValue(`${fieldPrefix}image_alt`, "") as string;
+                  const currentObjectFit = getNestedValue(`${fieldPrefix}image_object_fit`, "") as string;
+                  const currentObjectPosition = getNestedValue(`${fieldPrefix}image_object_position`, "") as string;
+                  
+                  const fieldLabel = side === "left" ? "Imagen Izquierda" : side === "right" ? "Imagen Derecha" : side === "image" ? "Imagen" : fieldPath.split(".").pop() || fieldPath;
+                  
+                  return (
+                    <Collapsible key={fieldPath} className="border rounded-md">
+                      <CollapsibleTrigger asChild>
+                        <button
+                          type="button"
+                          className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                          data-testid={`props-image-style-${side}-trigger`}
+                        >
+                          <div className="w-10 h-10 rounded-md overflow-hidden bg-muted border flex-shrink-0">
+                            {currentValue ? (
+                              <img
+                                src={currentValue}
+                                alt={currentAlt || fieldLabel}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                              </div>
+                            )}
+                          </div>
+                          <span className="flex-1 text-left text-sm font-medium">
+                            {fieldLabel}
+                          </span>
+                          <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                        </button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="p-3 pt-0 space-y-3 border-t">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setImagePickerTarget({
+                                  fieldPath,
+                                  label: fieldLabel,
+                                  currentSrc: currentValue,
+                                  currentAlt,
+                                  tagFilter: variant,
+                                });
+                                setImagePickerOpen(true);
+                              }}
+                              className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                              data-testid={`props-image-style-${side}-picker`}
+                              title="Cambiar imagen"
+                            >
+                              {currentValue ? (
+                                <>
+                                  <img
+                                    src={currentValue}
+                                    alt={currentAlt}
+                                    className="w-full h-full object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <IconPhoto className="h-5 w-5 text-white" />
+                                  </div>
+                                </>
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                                </div>
+                              )}
+                            </button>
+                            <div className="flex-1 space-y-1">
+                              <Label className="text-xs text-muted-foreground">Alt text</Label>
+                              <Input
+                                value={currentAlt}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_alt`, e.target.value)}
+                                placeholder="Descripción de la imagen"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-alt`}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Object Fit</Label>
+                              <Select
+                                value={currentObjectFit || "cover"}
+                                onValueChange={(value) => updateProperty(`${fieldPrefix}image_object_fit`, value)}
+                              >
+                                <SelectTrigger className="h-8 text-sm" data-testid={`props-image-style-${side}-object-fit`}>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="cover">Cover (recorta)</SelectItem>
+                                  <SelectItem value="contain">Contain (completa)</SelectItem>
+                                  <SelectItem value="fill">Fill (estirar)</SelectItem>
+                                  <SelectItem value="none">None (original)</SelectItem>
+                                  <SelectItem value="scale-down">Scale Down</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Posición (X Y)</Label>
+                              <Input
+                                value={currentObjectPosition}
+                                onChange={(e) => updateProperty(`${fieldPrefix}image_object_position`, e.target.value)}
+                                placeholder="center center"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-object-position`}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  );
+                }
+
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
                 const match = fieldPath.match(/^([\w.]+)\[\]\.(\w+)$/);
@@ -1090,8 +1281,9 @@ export function SectionEditorPanel({
                 const arrayData = getArrayData();
                 
                 // Skip if the array field doesn't exist in the current section data
+                // EXCEPT for image-with-style-picker which should show even when array is empty (to allow initialization)
                 // This prevents showing editors for fields that don't apply to the current variant
-                if (arrayData === undefined) return null;
+                if (arrayData === undefined && editorType !== "image-with-style-picker") return null;
                 
                 const safeArrayData = Array.isArray(arrayData) ? arrayData : [];
                 
@@ -1269,6 +1461,270 @@ export function SectionEditorPanel({
                         >
                           <IconPlus className="h-5 w-5 text-muted-foreground" />
                         </button>
+                      </div>
+                    </div>
+                  );
+                }
+
+                if (editorType === "image-with-style-picker") {
+                  const MAX_IMAGES = 4;
+                  const hasImages = safeArrayData.length > 0;
+                  
+                  // Detect if this is a "tabs" array (bullet_tabs_showcase) which has limited styling options
+                  // vs a regular "images" array which has full styling options
+                  const isTabsArray = arrayPath === "tabs" || arrayPath.endsWith(".tabs");
+                  
+                  // For tabs: use image_object_fit/image_object_position (schema naming)
+                  // For images: use object_fit/object_position
+                  const objectFitField = isTabsArray ? "image_object_fit" : "object_fit";
+                  const objectPositionField = isTabsArray ? "image_object_position" : "object_position";
+                  
+                  const initializeDefaultImages = () => {
+                    const defaultImages = [
+                      { src: "", alt: "Student 1", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 2", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 3", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                      { src: "", alt: "Student 4", object_fit: "cover", object_position: "center top", border_radius: "0.5rem" },
+                    ];
+                    updateArrayField(arrayPath, defaultImages);
+                  };
+
+                  return (
+                    <div key={fieldPath} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm font-medium">
+                          {isTabsArray ? `Imágenes de Tabs (${safeArrayData.length})` : `Imágenes (${safeArrayData.length}/${MAX_IMAGES})`}
+                        </Label>
+                        {!hasImages && !isTabsArray && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={initializeDefaultImages}
+                            data-testid="props-image-style-init"
+                          >
+                            <IconPlus className="h-4 w-4 mr-1" />
+                            Inicializar imágenes
+                          </Button>
+                        )}
+                      </div>
+                      
+                      {!hasImages && !isTabsArray && (
+                        <div className="p-4 border border-dashed rounded-md text-center text-sm text-muted-foreground">
+                          <IconPhoto className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                          <p>Este componente usa imágenes por defecto.</p>
+                          <p>Haz clic en "Inicializar imágenes" para personalizarlas.</p>
+                        </div>
+                      )}
+                      
+                      <div className="space-y-2">
+                        {safeArrayData.map((item, index) => {
+                          const currentSrc = (item[itemField] as string) || "";
+                          const currentAlt = (item.alt as string) || "";
+                          const displaySrc = imageRegistry?.images?.[currentSrc]?.src || currentSrc;
+
+                          return (
+                            <Collapsible key={index} className="border rounded-md">
+                              <CollapsibleTrigger asChild>
+                                <button
+                                  type="button"
+                                  className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                                  data-testid={`props-image-style-${index}-trigger`}
+                                >
+                                  <div className="w-10 h-10 rounded-md overflow-hidden bg-muted border flex-shrink-0">
+                                    {currentSrc ? (
+                                      <img
+                                        src={displaySrc}
+                                        alt={currentAlt || `Imagen ${index + 1}`}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center">
+                                        <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                                      </div>
+                                    )}
+                                  </div>
+                                  <span className="flex-1 text-left text-sm font-medium">
+                                    Imagen {index + 1}
+                                  </span>
+                                  <IconChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                                </button>
+                              </CollapsibleTrigger>
+                              <CollapsibleContent>
+                                <div className="p-3 pt-0 space-y-3 border-t">
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setImagePickerTarget({
+                                          arrayPath,
+                                          index,
+                                          srcField: itemField,
+                                          currentSrc,
+                                          currentAlt,
+                                          tagFilter: variant,
+                                        });
+                                        setImagePickerOpen(true);
+                                      }}
+                                      className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                                      data-testid={`props-image-style-${index}-picker`}
+                                      title="Cambiar imagen"
+                                    >
+                                      {currentSrc ? (
+                                        <>
+                                          <img
+                                            src={displaySrc}
+                                            alt={currentAlt}
+                                            className="w-full h-full object-cover"
+                                          />
+                                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <IconPhoto className="h-5 w-5 text-white" />
+                                          </div>
+                                        </>
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                          <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                                        </div>
+                                      )}
+                                    </button>
+                                    <div className="flex-1 space-y-1">
+                                      <Label className="text-xs text-muted-foreground">Alt text</Label>
+                                      <Input
+                                        value={currentAlt}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, "alt", e.target.value)}
+                                        placeholder="Descripción de la imagen"
+                                        className="h-8 text-sm"
+                                        data-testid={`props-image-style-${index}-alt`}
+                                      />
+                                    </div>
+                                    {!isTabsArray && (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeArrayItem(arrayPath, index)}
+                                        className="text-muted-foreground hover:text-destructive"
+                                        data-testid={`props-image-style-${index}-delete`}
+                                        title="Eliminar imagen"
+                                      >
+                                        <IconTrash className="h-4 w-4" />
+                                      </Button>
+                                    )}
+                                  </div>
+
+                                  <div className="grid grid-cols-2 gap-3">
+                                    <div className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">Object Fit</Label>
+                                      <Select
+                                        value={(item[objectFitField] as string) || "cover"}
+                                        onValueChange={(value) => updateArrayItemField(arrayPath, index, objectFitField, value)}
+                                      >
+                                        <SelectTrigger className="h-8 text-sm" data-testid={`props-image-style-${index}-object-fit`}>
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="cover">Cover</SelectItem>
+                                          <SelectItem value="contain">Contain</SelectItem>
+                                          <SelectItem value="fill">Fill</SelectItem>
+                                          <SelectItem value="none">None</SelectItem>
+                                          <SelectItem value="scale-down">Scale Down</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+
+                                    <div className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">Object Position</Label>
+                                      <Input
+                                        value={(item[objectPositionField] as string) || "center top"}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, objectPositionField, e.target.value)}
+                                        placeholder="center top"
+                                        className="h-8 text-sm"
+                                        data-testid={`props-image-style-${index}-object-position`}
+                                      />
+                                    </div>
+
+                                    {!isTabsArray && (
+                                      <>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">Border Radius</Label>
+                                          <Input
+                                            value={(item.border_radius as string) || "0.5rem"}
+                                            onChange={(e) => updateArrayItemField(arrayPath, index, "border_radius", e.target.value)}
+                                            placeholder="0.5rem"
+                                            className="h-8 text-sm"
+                                            data-testid={`props-image-style-${index}-border-radius`}
+                                          />
+                                        </div>
+
+                                        <div className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">Opacidad</Label>
+                                          <Input
+                                            type="number"
+                                            min={0}
+                                            max={1}
+                                            step={0.1}
+                                            value={(item.opacity as number) ?? 1}
+                                            onChange={(e) => updateArrayItemField(arrayPath, index, "opacity", parseFloat(e.target.value) || 1)}
+                                            placeholder="1"
+                                            className="h-8 text-sm"
+                                            data-testid={`props-image-style-${index}-opacity`}
+                                          />
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+
+                                  {!isTabsArray && (
+                                    <div className="grid grid-cols-2 gap-3">
+                                      <div className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">CSS Filter</Label>
+                                        <Input
+                                          value={(item.filter as string) || ""}
+                                          onChange={(e) => updateArrayItemField(arrayPath, index, "filter", e.target.value)}
+                                          placeholder="grayscale(50%)"
+                                          className="h-8 text-sm"
+                                          data-testid={`props-image-style-${index}-filter`}
+                                        />
+                                      </div>
+                                      <div className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">Altura</Label>
+                                        <Input
+                                          value={(item.height as string) || ""}
+                                          onChange={(e) => updateArrayItemField(arrayPath, index, "height", e.target.value)}
+                                          placeholder="400px, 20rem..."
+                                          className="h-8 text-sm"
+                                          data-testid={`props-image-style-${index}-height`}
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </CollapsibleContent>
+                            </Collapsible>
+                          );
+                        })}
+
+                        {!isTabsArray && safeArrayData.length > 0 && safeArrayData.length < MAX_IMAGES && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const defaultItem: Record<string, unknown> = {
+                                src: "",
+                                alt: `Student ${safeArrayData.length + 1}`,
+                                object_fit: "cover",
+                                object_position: "center top",
+                                border_radius: "0.5rem",
+                              };
+                              addArrayItem(arrayPath, defaultItem);
+                            }}
+                            className="w-full py-2 rounded-md border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                            data-testid="props-image-style-add"
+                            title="Añadir imagen"
+                          >
+                            <IconPlus className="h-4 w-4" />
+                            Añadir imagen ({safeArrayData.length}/{MAX_IMAGES})
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
