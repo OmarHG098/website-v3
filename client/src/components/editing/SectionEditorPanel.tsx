@@ -1134,6 +1134,8 @@ export function SectionEditorPanel({
                   
                   const currentValue = getNestedValue(fieldPath, "") as string;
                   const currentAlt = getNestedValue(`${parentPath}.image_alt`, "") as string;
+                  const currentObjectFit = getNestedValue(`${parentPath}.image_object_fit`, "") as string;
+                  const currentObjectPosition = getNestedValue(`${parentPath}.image_object_position`, "") as string;
                   const currentMaxWidth = getNestedValue(`${parentPath}.image_max_width`, "") as string;
                   const currentMaxHeight = getNestedValue(`${parentPath}.image_max_height`, "") as string;
                   const currentMobileMaxWidth = getNestedValue(`${parentPath}.image_mobile_max_width`, "") as string;
@@ -1217,6 +1219,36 @@ export function SectionEditorPanel({
                           </div>
 
                           <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Object Fit</Label>
+                              <Select
+                                value={currentObjectFit || "cover"}
+                                onValueChange={(value) => updateProperty(`${parentPath}.image_object_fit`, value)}
+                              >
+                                <SelectTrigger className="h-8 text-sm" data-testid={`props-image-style-${side}-object-fit`}>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="cover">Cover (recorta)</SelectItem>
+                                  <SelectItem value="contain">Contain (completa)</SelectItem>
+                                  <SelectItem value="fill">Fill (estirar)</SelectItem>
+                                  <SelectItem value="none">None (original)</SelectItem>
+                                  <SelectItem value="scale-down">Scale Down</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Posición (X Y)</Label>
+                              <Input
+                                value={currentObjectPosition}
+                                onChange={(e) => updateProperty(`${parentPath}.image_object_position`, e.target.value)}
+                                placeholder="center center"
+                                className="h-8 text-sm"
+                                data-testid={`props-image-style-${side}-object-position`}
+                              />
+                            </div>
+
                             <div className="space-y-1">
                               <Label className="text-xs text-muted-foreground">Ancho Máx.</Label>
                               <Input

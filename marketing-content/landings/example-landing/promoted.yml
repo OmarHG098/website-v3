@@ -124,18 +124,18 @@ sections:
         description: Learning alongside others is more fun and helps you progress faster. Join our active community.
     video_url: https://www.youtube.com/watch?v=6m1Jyya7eCc
   - type: two_column
-    version: v1.0
     proportions:
       - 5
       - 7
     background: bg-muted/30
     alignment: center
-    gap: "12"
-    reverse_on_mobile: true
     left:
-      image: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop
+      image: /attached_assets/fernando-funez_1765315920677.jpg
       image_alt: Team collaborating on a project
+      image_max_width: 400px
+      image_max_height: 400px
       justify: center
+      image_object_fit: contain
     right:
       heading: Why Choose Us
       description: We provide comprehensive support for your learning journey from day one to career success.
@@ -146,6 +146,8 @@ sections:
         - text: Career support that lasts a lifetime
       bullet_icon: Check
       font_size: base
+    reverse_on_mobile: true
+    gap: "12"
   - type: community_support
     version: "1.0"
     heading: A Global Developer Community Supporting Your Growth
