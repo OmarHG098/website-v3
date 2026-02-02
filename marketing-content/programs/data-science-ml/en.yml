@@ -132,10 +132,10 @@ sections:
         value: 36%
         title: projected growth rate the next decade
       - id: "2"
-        value: 150%
-        title: Average salary increase after graduation
+        value: 87%
+        title: hiring rate for our Data Science graduates
       - id: "3"
-        value: $80K+
+        value: $90K+
         title: Average starting salary for data scientists
   - type: syllabus
     variant: program-modules
