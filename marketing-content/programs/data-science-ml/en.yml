@@ -49,31 +49,28 @@ sections:
       thumbnail: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop
       alt: Data Science program introduction
     signup_card:
-      title: Apply to the Data Science Program
-      description: Start your journey to becoming a Data Scientist
+      title: Get the Full Syllabus
+      description: Access the full curriculum, schedule and everything else you need to know.
       cta_button:
-        text: Apply Now
+        text: Send me the Curriculum
         url: /en/apply
         variant: primary
       login_link:
         text: Already a student? Login here.
         url: /login
       features:
-        - icon: book
-          text: Readings and videos
-          count: 50+
-        - icon: code
-          text: Interactive Exercises
-          count: 100+
-        - icon: IconDeviceDesktop
-          text: Real Projects
-          count: "10"
-        - icon: robot
-          text: AI-Powered Feedback
         - icon: calendar
-          text: Live Sessions Weekly
-        - icon: users
-          text: 1:1 Mentorship
+          text: 16-Week Intensive Program
+        - icon: IconBriefcase
+          text: Employment-First Curriculum
+        - icon: IconRobot
+          text: AI-Powered Learning & Feedback
+        - icon: IconUsers
+          text: 7:1 Student-to-Instructor Ratio
+        - icon: IconUserCheck
+          text: Unlimited 1:1 Mentorship
+        - icon: book
+          text: Production-Grade Portfolio
     paddingY:
       desktop: md
     marginY:
