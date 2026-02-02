@@ -7,6 +7,8 @@ export const bulletTabSchema = z.object({
   label: z.string(),
   description: z.string().optional(),
   image_id: z.string(),
+  image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  image_object_position: z.string().optional(),
 });
 
 export const bulletTabsShowcaseSectionSchema = z.object({

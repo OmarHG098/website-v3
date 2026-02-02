@@ -61,6 +61,11 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
     </div>
   );
 
+  const imageStyle = activeTab.image_object_fit || activeTab.image_object_position ? {
+    objectFit: activeTab.image_object_fit || "cover",
+    objectPosition: activeTab.image_object_position || "center center",
+  } as React.CSSProperties : undefined;
+
   const imageContent = (
     <div className="relative flex justify-center items-center">
       {isWithoutBorder ? (
@@ -70,6 +75,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
             preset="full"
             className="w-full h-auto rounded-lg shadow-lg"
             alt={activeTab.label}
+            style={imageStyle}
           />
         </div>
       ) : (
@@ -83,6 +89,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
               preset="full"
               className="w-full h-auto rounded-l-lg shadow-lg"
               alt={activeTab.label}
+              style={imageStyle}
             />
           </div>
         </div>

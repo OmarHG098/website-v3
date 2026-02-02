@@ -65,7 +65,8 @@ sections:
       - title: Scholarships
         description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
     paddingY:
-      desktop: none lg
+      desktop: lg
+    background: hsl(210 100% 50% / 0.05)
   - type: comparison_table
     version: "1.0"
     title: Financing benefits and requirements at a glance

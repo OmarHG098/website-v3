@@ -130,6 +130,28 @@ export function FeaturesGridHighlight({ data }: FeaturesGridHighlightProps) {
             <HighlightCard key={item.id || index} item={item} iconColor={item.icon_color || data.icon_color} />
           ))}
         </div>
+
+        {(data.footer_link || data.footer_note) && (
+          <div className="text-center mt-8">
+            {data.footer_link && (
+              <a 
+                href={data.footer_link.url}
+                className="text-foreground underline font-medium italic"
+                data-testid="link-features-grid-footer"
+              >
+                {data.footer_link.text}
+              </a>
+            )}
+            {data.footer_note && (
+              <p 
+                className="text-sm text-muted-foreground mt-1"
+                data-testid="text-features-grid-footer-note"
+              >
+                {data.footer_note}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

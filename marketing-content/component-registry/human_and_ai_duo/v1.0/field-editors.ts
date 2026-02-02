@@ -1,5 +1,5 @@
 /**
- * Field Editor Configuration for Two Column Accordion Card Component
+ * Field Editor Configuration for HumanAndAIDuo Component
  * 
  * Defines which fields in this component should use special editors
  * in the Props tab of the section editor panel.
@@ -10,5 +10,5 @@
 export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-with-style-picker" | "link-picker";
 
 export const fieldEditors: Record<string, EditorType> = {
-  "image": "image-with-style-picker",
+  "images[].src": "image-with-style-picker",
 };

@@ -1,31 +1,48 @@
 import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
-import type { ComponentType } from "react";
+import type { ComponentType, CSSProperties } from "react";
 import rigobotAvatar from "@assets/rigo-avatar_1763181725290.png";
 import { getCustomIcon } from "@/components/custom-icons";
 import student1 from "@assets/student-1-asian.png";
 import student2 from "@assets/student-2-latin.png";
 import student3 from "@assets/student-3-african.png";
 import student4 from "@assets/student-4-lady-latin.png";
+import type { HumanAndAIDuoSection } from "@shared/schema";
 
-const studentImages = [
+// Image type for styling
+interface StyledImageProps {
+  src: string;
+  alt?: string;
+  object_fit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  object_position?: string;
+  width?: string;
+  height?: string;
+  max_width?: string;
+  max_height?: string;
+  border_radius?: string;
+  opacity?: number;
+  filter?: string;
+}
+
+const defaultStudentImages: StyledImageProps[] = [
   { src: student1, alt: "Student 1" },
   { src: student2, alt: "Student 2" },
   { src: student3, alt: "Student 3" },
   { src: student4, alt: "Student 4" },
 ];
 
-interface BulletItem {
-  text: string;
-  icon?: string;
-}
-
-interface BulletGroup {
-  title: string;
-  description?: string;
-  image?: string;
-  icon?: string;
-  bullets?: BulletItem[];
+function getImageStyle(image: StyledImageProps): CSSProperties {
+  return {
+    objectFit: image.object_fit || "cover",
+    objectPosition: image.object_position || "center top",
+    width: image.width || "100%",
+    height: image.height || "100%",
+    maxWidth: image.max_width,
+    maxHeight: image.max_height,
+    borderRadius: image.border_radius || "0.5rem",
+    opacity: image.opacity,
+    filter: image.filter,
+  };
 }
 
 interface HumanAndAIDuoData {
@@ -33,8 +50,11 @@ interface HumanAndAIDuoData {
   version?: string;
   heading: string;
   description: string;
-  bullet_groups: BulletGroup[];
+  bullet_groups: HumanAndAIDuoSection["bullet_groups"];
   footer_description?: string;
+  // New format: array of images with CSS styling
+  images?: StyledImageProps[];
+  // Legacy format: single image (backward compatible)
   image?: string;
   image_alt?: string;
   background?: string;
@@ -57,6 +77,12 @@ const getIcon = (iconName: string, className?: string, size?: number, color?: st
 
 export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
   const backgroundClass = data.background || "bg-background";
+  
+  // Use custom images array if provided, otherwise always show default 4 student images
+  // Note: legacy image/image_alt fields are kept for backward compatibility but don't affect the student images display
+  const images: StyledImageProps[] = data.images && data.images.length > 0 
+    ? data.images 
+    : defaultStudentImages;
 
   return (
     <section 
@@ -75,12 +101,12 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
             </p>
           </div>
           <div className="flex justify-center gap-3 w-full" data-testid="img-students-mobile">
-            {studentImages.map((image, index) => (
+            {images.map((image, index) => (
               <div key={index} className="flex-1 h-36">
                 <img
                   src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover object-top rounded-lg"
+                  alt={image.alt || `Image ${index + 1}`}
+                  style={getImageStyle(image)}
                   loading="lazy"
                 />
               </div>
@@ -130,12 +156,12 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
             <div className="col-span-5 flex gap-3" data-testid="img-students-tablet">
-              {studentImages.map((image, index) => (
+              {images.map((image, index) => (
                 <div key={index} className="flex-1 h-40">
                   <img
                     src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover object-top rounded-lg"
+                    alt={image.alt || `Image ${index + 1}`}
+                    style={getImageStyle(image)}
                     loading="lazy"
                   />
                 </div>
@@ -186,12 +212,12 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
             </div>
             <div className="col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-students-desktop">
-              {studentImages.map((image, index) => (
+              {images.map((image, index) => (
                 <div key={index} className="flex-1 h-44">
                   <img
                     src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover object-top rounded-lg"
+                    alt={image.alt || `Image ${index + 1}`}
+                    style={getImageStyle(image)}
                     loading="lazy"
                   />
                 </div>

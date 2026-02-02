@@ -563,6 +563,10 @@ export const humanAndAIDuoBulletGroupSchema = z.object({
   bullets: z.array(humanAndAIDuoBulletSchema).optional(),
 });
 
+// Image with CSS styling properties - reuse from common schema
+export { imageWithStyleSchema } from "../marketing-content/component-registry/_common/schema";
+export type ImageWithStyle = import("../marketing-content/component-registry/_common/schema").ImageWithStyle;
+
 export const humanAndAIDuoSectionSchema = z.object({
   type: z.literal("human_and_ai_duo"),
   version: z.string().optional(),
@@ -570,6 +574,21 @@ export const humanAndAIDuoSectionSchema = z.object({
   description: z.string(),
   bullet_groups: z.array(humanAndAIDuoBulletGroupSchema),
   footer_description: z.string().optional(),
+  // New: array of images with CSS styling
+  images: z.array(z.object({
+    src: z.string(),
+    alt: z.string().optional(),
+    object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+    object_position: z.string().optional(),
+    width: z.string().optional(),
+    height: z.string().optional(),
+    max_width: z.string().optional(),
+    max_height: z.string().optional(),
+    border_radius: z.string().optional(),
+    opacity: z.number().min(0).max(1).optional(),
+    filter: z.string().optional(),
+  })).optional(),
+  // Legacy: single image (backward compatible)
   image: z.string().optional(),
   image_alt: z.string().optional(),
   background: z.string().optional(),
@@ -636,6 +655,8 @@ export const twoColumnAccordionCardSectionSchema = z.object({
   footer: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
+  image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  image_object_position: z.string().optional(),
   reverse: z.boolean().optional(),
 });
 
