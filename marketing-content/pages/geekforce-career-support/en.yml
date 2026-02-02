@@ -179,3 +179,15 @@ sections:
   - type: testimonials_slide
     title: The Stories Behind the Stats
     description: Discover how our graduates transformed their careers
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - career-support
+    marginY:
+      desktop: none md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
+    paddingY:
+      desktop: md none
