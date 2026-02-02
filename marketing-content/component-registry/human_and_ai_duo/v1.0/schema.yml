@@ -2,7 +2,7 @@ name: Human and AI Duo
 version: "1.0"
 component: HumanAndAIDuo
 file: client/src/components/HumanAndAIDuo.tsx
-description: Displays human mentorship and AI assistant benefits side by side with collapsible bullet groups and optional image
+description: Displays human mentorship and AI assistant benefits side by side with collapsible bullet groups and customizable images with CSS styling
 when_to_use: |
   Use for showcasing the combination of human mentors and AI-powered tools
   (like Rigobot). Perfect for support pages, learning pages, or any section
@@ -54,16 +54,65 @@ props:
     required: false
     description: Optional italic footer text below the bullet groups
     example: Together, human mentorship and AI-powered tools accelerate your learning.
-  image:
-    type: string
+  images:
+    type: array
     required: false
-    description: Optional side image URL
-    example: /attached_assets/support-image.png
-  image_alt:
-    type: string
-    required: false
-    description: Alt text for the side image
-    example: Woman working on laptop
+    description: Array of images with CSS styling properties. If not provided, default student images are used.
+    items:
+      src:
+        type: string
+        required: true
+        description: Image URL or path
+      alt:
+        type: string
+        required: false
+        description: Alt text for accessibility
+      object_fit:
+        type: enum
+        required: false
+        values: [cover, contain, fill, none, scale-down]
+        default: cover
+        description: CSS object-fit property
+      object_position:
+        type: string
+        required: false
+        default: "center top"
+        description: CSS object-position (e.g., "center top", "50% 20%", "left center")
+        example: "center 20%"
+      width:
+        type: string
+        required: false
+        description: CSS width value
+        example: "100%"
+      height:
+        type: string
+        required: false
+        description: CSS height value
+        example: "100%"
+      max_width:
+        type: string
+        required: false
+        description: CSS max-width value
+      max_height:
+        type: string
+        required: false
+        description: CSS max-height value
+      border_radius:
+        type: string
+        required: false
+        default: "0.5rem"
+        description: CSS border-radius value
+        example: "8px"
+      opacity:
+        type: number
+        required: false
+        description: CSS opacity (0 to 1)
+        example: 0.9
+      filter:
+        type: string
+        required: false
+        description: CSS filter property
+        example: "grayscale(100%)"
   background:
     type: string
     required: false

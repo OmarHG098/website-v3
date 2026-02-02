@@ -52,6 +52,23 @@ export const imageSchema = z.object({
 
 export type ImageDef = z.infer<typeof imageSchema>;
 
+// Image with CSS properties - for editable image positioning and styling
+export const imageWithStyleSchema = z.object({
+  src: z.string(),
+  alt: z.string().optional(),
+  object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  object_position: z.string().optional(), // e.g., "center top", "50% 20%", "left center"
+  width: z.string().optional(), // CSS width value
+  height: z.string().optional(), // CSS height value
+  max_width: z.string().optional(),
+  max_height: z.string().optional(),
+  border_radius: z.string().optional(), // e.g., "8px", "1rem", "50%"
+  opacity: z.number().min(0).max(1).optional(),
+  filter: z.string().optional(), // e.g., "grayscale(100%)", "brightness(1.2)"
+});
+
+export type ImageWithStyle = z.infer<typeof imageWithStyleSchema>;
+
 // Lead Form field config
 export const leadFormFieldConfigSchema = z.object({
   visible: z.boolean().optional(),
