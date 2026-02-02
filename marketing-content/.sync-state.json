@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "303e907ab19950361d58222f901826fddb012b2d",
-  "lastSyncedAt": "2026-02-02T16:11:34.006Z",
+  "lastSyncedCommit": "50e2b808a4a86cc0d4a817656130efa908ede519",
+  "lastSyncedAt": "2026-02-02T16:23:50.299Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -608,9 +608,9 @@
       "remoteSha": "0a20ed628666a4f3abd896728ff4b6e1cae06e8fd144d7088b4fb60376c71687"
     },
     "marketing-content/pages/financials/en.yml": {
-      "sha": "21cdf5e20dfe1f542e0813631df2a3c4f2e748ff396486d30679a37a0fc764cc",
-      "lastModified": 1770048460748.615,
-      "remoteSha": "21cdf5e20dfe1f542e0813631df2a3c4f2e748ff396486d30679a37a0fc764cc"
+      "sha": "2329868f1820f0b91d9aaa0de6d4db8ae3e3dc4759331836cebf844125c35ba7",
+      "lastModified": 1770049430042.9722,
+      "remoteSha": "2329868f1820f0b91d9aaa0de6d4db8ae3e3dc4759331836cebf844125c35ba7"
     },
     "marketing-content/pages/financials/es.yml": {
       "sha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec",
