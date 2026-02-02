@@ -148,6 +148,7 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
     media,
     background,
     reverse_layout = false,
+    stacked_header = false,
   } = data;
 
   const backgroundClass = background === "muted" 
@@ -165,26 +166,48 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
       data-testid="section-value-proof-panel"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+        {/* Stacked Header - Full width above both columns */}
+        {stacked_header && (
+          <div className="mb-10 md:mb-12 text-center">
+            <h2 
+              className="text-h2 text-foreground mb-4"
+              data-testid="text-value-proof-title"
+            >
+              {title}
+            </h2>
+            {subtitle && (
+              <p 
+                className="text-lg text-muted-foreground max-w-2xl mx-auto"
+                data-testid="text-value-proof-subtitle"
+              >
+                {subtitle}
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 ${stacked_header ? "items-center" : "items-start"}`}>
           {/* Content Column */}
           <div className={`col-span-1 ${media ? "md:col-span-7" : "md:col-span-12"} ${contentOrder}`}>
-            {/* Header */}
-            <div className="mb-8">
-              <h2 
-                className="text-h2 text-foreground mb-4"
-                data-testid="text-value-proof-title"
-              >
-                {title}
-              </h2>
-              {subtitle && (
-                <p 
-                  className="text-lg text-muted-foreground max-w-xl"
-                  data-testid="text-value-proof-subtitle"
+            {/* Header - only shown when not stacked */}
+            {!stacked_header && (
+              <div className="mb-8">
+                <h2 
+                  className="text-h2 text-foreground mb-4"
+                  data-testid="text-value-proof-title"
                 >
-                  {subtitle}
-                </p>
-              )}
-            </div>
+                  {title}
+                </h2>
+                {subtitle && (
+                  <p 
+                    className="text-lg text-muted-foreground max-w-xl"
+                    data-testid="text-value-proof-subtitle"
+                  >
+                    {subtitle}
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Evidence Items */}
             <div className="space-y-2">
@@ -202,10 +225,10 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
             </div>
           </div>
 
-          {/* Media Column */}
+          {/* Media Column - centered when stacked_header is true */}
           {media && (
             <div className={`col-span-1 md:col-span-5 ${mediaOrder}`}>
-              <div className="sticky top-8 z-50">
+              <div className={stacked_header ? "" : "sticky top-8 z-50"}>
                 <MediaFrame media={media} style={media.style} />
               </div>
             </div>

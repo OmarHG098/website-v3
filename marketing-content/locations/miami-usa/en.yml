@@ -1,3 +1,47 @@
+slug: miami-usa
+name: Miami
+city: Miami
+country: United States
+country_code: US
+latitude: 25.7617
+longitude: -80.1918
+region: usa-canada
+default_language: en
+timezone: America/New_York
+visibility: listed
+phone: +1 786-416-6640
+address: 1395 Brickell Ave, Miami, FL 33131
+available_programs:
+  - full-stack
+context:
+  when_to_use: For Miami-area visitors or those interested in tech opportunities in South Florida's growing tech ecosystem.
+  target_audience: Local Miami residents, Latin American immigrants seeking tech careers in the US, and professionals in South Florida's diverse industries.
+  goals:
+    - Highlight Miami's emerging tech hub status
+    - Emphasize bilingual (English/Spanish) support
+    - Showcase local employer partnerships and networking opportunities
+    - Address the vibrant, multicultural tech community
+catalog:
+  admission_advisors:
+    - name: Admissions Team
+      email: admissions@4geeks.com
+      calendar_url: https://calendly.com/4geeks-admissions
+      languages:
+        - en
+        - es
+schema:
+  include:
+    - organization
+    - website
+  overrides:
+    organization:
+      address:
+        "@type": PostalAddress
+        streetAddress: 1395 Brickell Ave
+        addressLocality: Miami
+        addressRegion: FL
+        postalCode: "33131"
+        addressCountry: US
 meta:
   page_title: 4Geeks Academy Miami | Coding Bootcamp in Florida
   description: Join 4Geeks Miami coding bootcamp. Learn Full Stack Development, AI, or Data Science with unlimited mentorship and job guarantee.
@@ -11,11 +55,11 @@ meta:
     - /en/miami
 sections:
   - type: hero
-    variant: singleColumn
     version: "1.0"
+    variant: singleColumn
+    title: 4Geeks Launch an AI-Ready Tech Career in Miami
+    subtitle: Master the Skills of the AI Era and Build a Future-Proof Career in 20 Weeks. Our programs are taught online or in person with live support.
     badge: Miami Campus
-    title: 4Geeks Academy Miami
-    subtitle: Florida's top-rated coding bootcamp with unlimited mentorship, career support, and a global community of developers.
     cta_buttons:
       - text: Apply Now
         url: /apply?location=miami-usa
@@ -23,30 +67,255 @@ sections:
       - text: Download Syllabus
         url: /syllabus
         variant: outline
-  - type: features_grid
-    version: "1.0"
-    title: Why Choose Miami?
+    marginY:
+      desktop: none lg
+  - type: awards_marquee
+    version: v1.0
+    speed: 40
+    gradient: true
+    gradientWidth: 100
     items:
-      - icon: Building
-        title: Prime Location
-        description: Located in the heart of Brickell, Miami's financial district.
-      - icon: Users
-        title: Tech Community
-        description: Access to Miami's thriving tech startup ecosystem.
-      - icon: Globe
-        title: International Hub
-        description: Connect with a diverse, multicultural community of learners.
-      - icon: Briefcase
-        title: Job Opportunities
-        description: Strong hiring demand from local and remote tech companies.
-  - type: programs_list
+      - id: switchup-2025
+        logo: /attached_assets/switchup_1765590146414.webp
+        alt: SwitchUp - Best Coding Bootcamps 2025
+        logoHeight: h-12 md:h-14
+      - id: course-report-2024
+        logo: /attached_assets/course-report_1765590146414.webp
+        alt: Course Report - Best Coding Bootcamp 2024
+        logoHeight: h-12 md:h-14
+      - id: tech-hub
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        alt: South Florida Tech Hub
+        logoHeight: h-12 md:h-14
+      - id: ebootcamp
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        alt: eBootcamp Top
+        logoHeight: h-12 md:h-14
+      - id: premios-tecnologia
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        alt: Premios Tecnologia Siglo XXI
+        logoHeight: h-12 md:h-14
+      - id: newsweek
+        logo: /attached_assets/newsweek_1764709608255.webp
+        alt: Newsweek
+        logoHeight: h-12 md:h-14
+      - id: reviews-coursereport
+        logo: /attached_assets/reviews_1765549549051.png
+        alt: 4.9 on Course Report Reviews
+        logoHeight: h-12 md:h-14
+      - id: excelencia-educativa
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        alt: Excelencia Educativa - Institutional Quality
+        logoHeight: h-12 md:h-14
+    marginY:
+      desktop: lg none
+  - type: banner
     version: "1.0"
-    title: Programs Available in Miami
-    filter_by_location: miami-usa
+    logo: /attached_assets/rigobot-logo_1764707022198.webp
+    avatars:
+      - https://randomuser.me/api/portraits/women/1.jpg
+      - https://randomuser.me/api/portraits/men/2.jpg
+      - https://randomuser.me/api/portraits/women/3.jpg
+      - https://randomuser.me/api/portraits/men/4.jpg
+    title: Miami Coding Bootcamp at the Center of South Florida’s Tech Ecosystem
+    description: Miami is one of the fastest-growing tech hubs in the U.S., and 4Geeks Academy is at the center of it. As a leading coding bootcamp in Miami, we’ve helped hundreds of students launch tech careers at startups, agencies, and global companies like Microsoft and Meta. With flexible schedules, expert instructors, and a strong local presence, we’re here to help you succeed in South Florida’s tech industry.
+    background: gradient
+    marginY:
+      desktop: lg none
+  - type: two_column
+    proportions:
+      - 6
+      - 6
+    alignment: center
+    left:
+      video: "-2ZvlgDnltc"
+      justify: center
+    right:
+      heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
+      sub_heading: Watch how our platform transforms careers
+      description: Discover the future of Miami's tech landscape through the eyes of Mayor Francis Suarez. In an exclusive interview, Mayor Suarez shares invaluable insights into the evolving digital economy, emphasizing the pivotal role of coding skills and the transformative potential of artificial intelligence (AI).
+      bullet_points:
+        - Transform an entire business case into a fully AI-native system, layer by layer.
+        - Integrate AI into real software, connecting intelligent models to users and data.
+        - Use modern AI tools and coding agents to build and ship software faster.
+      button:
+        text: Start Free Trial
+        url: https://youtu.be/4n-ZAUPIxJI
+        variant: primary
+        icon: Rocket
+    gap: "8"
+    paddingY:
+      desktop: none lg
+  - type: human_and_ai_duo
+    version: "1.0"
+    heading: Our AI-powered features make all the difference!
+    description: Through years of research and experience, we've perfected the strategies and tools to ensure your constant and efficient progress. To optimize your learning curve and empower you to tackle challenges with confidence, we've now incorporated the power of AI
+    bullet_groups:
+      - title: "Learnpack, our interactive learning software, provides:"
+        image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANMAAADuCAMAAACUPcKYAAAAwFBMVEUABBr///8Al88AAAAAABgAABkAABUAmtMAABIAntgAABQAAA8AABEAAAzT09UAAAoAAAYAcp7k5OUAYYiJio319fUAh7rp6eqnp6rMzM6amp6vr7J8fIGTk5fDw8VXV144OUJOT1bb29wAVHcASWlvcHUZGigAj8UAhrkADyMAf69GR09hYWctLjiYmJw2N0AAOVQAITcALUYhIi65ubwAO1cAbZgPECEAGzAAWX4AZo5dXmR/f4MAS2usrK8jJC+tfPmiAAATAElEQVR4nM1da0PbOg9OqyRNm5aU2xhw2Lj1wICdMcZlG7v8/3914pS2sSRbduJQ9OH98J6R+EklWY8ky1HvFeT0YHb9FD9dz95vvMbros7fsHtUAEzSJErSCUBxtNv5GzvHdAQQRyuJAY66fmXHmO4LSCJdEpjcd/vSTjGdHmu/0eq3Oj7t8rUdYtqdwZhBpGQMsw7NqjtMBzA1IFIyhYPO3twVpg8RMSRsVtGHjt7dDaata0itiJSkcL3Vyds7wfQP5CIiJTn808XrO8D0HsAJkRKA9+EXEBzT/r+s/zZJDP/uh15CYEx7H2HkgUjJCD7uhV1EWEw7MPFEpGQCO0FXERLToYch6QJwGHAd4TBtfPYyJF1i+ByOhoTCtHsDWWNESjK4CRUuBcJ0BIV1xVOwRkqVFKFYSBBM9xN7IJTB7PRU3ojjQCwkAKaSUVgDoRi+VNTCIWBKg7CQ1pgsjGIuNZ/2IRYC2zAspC0mO6Mge89/slm1ZyHtMH14sn/4FE5QjODgHxN4asdC2mCSDIRf3OkXcR9ryUJaYJIcmVGJHOKNViykMSaJUVj30B1hO4tasZCGmPa/2RVIinUc4vcYvjVkIY0wiSsC+CM9Q/oqUXMW0gSTxChy+OXyGAc+3IyF+GOSLJx1Whsnz0yA4JC3aMJCfDFJjCKBlPrvclOaFFyA4BAuNWAhfpjEHZONrV+C9in336RdO2rAQrwwSYxiBM/07ffF4pdNWEWSoivTlwqC6T63f9IY/lIt2dCihvKfUP8sRsHqa4w9WIgzJolRsJsk1dURnFAPYqh/1MWHhThiEr8lG8ywuppzzmKloEZxZyFumA4E/81WlO6nhnWypULJVqu/c2MhLphE3wQF1Xab009gSp3F3nMoFiJjEvcQbrOXnD7rLDb+hmEhIiZpr2eDMgdFyjhn8ScICxEwSTEZm8I/NBkSXh1j9L9cwiWBhVgxibEz93iPfCznLLZOHMIlOwuxYBIZRcZ86D2vfGwCBXUWpUtqx0LMmCRGsUjboT8SDQk/hXEW0tYR2VmICZOYM+BiN0dD0oVzFuUW34KF8JhEm+A+U+PCRunKiA6LoZiFhXCYREZB03YtCxsA/5FV3I+bshAGk7S5sLu5tyHhZzLOwmGXY1kIwXSfCZ+HS9s1rxAupdQk4iyckrYZicsQJlGNuZ+7VYWw/mjqLBweTVmIhklkFJxZ+u1IVpkwzsJBBTALqWMStwXOfbY0JPIG6iwcivk6C1lhErdvLm0XwJB0SSAn9uGUtK35rQWmXSnM4qL8QIaEX0SdhUNzTLm/LBTwBdO+6L9j4r8dSFwzyeAj+XwOSdsC9uuYDoXPwG0DYQ1JF8ZZ7LrUuA9XmO7t32DE+O/ghoSEyT04JG3hfoHp1Lo8Lm3XiSHpwm2m92KNG05fMMU2+Azt68yQdEmZzVCqcafJHNOO5Wfi2H+XhqRLRqmfFC4pvhD1ds2QuORn14akC+MsNuw1btgtMZl/JqZV5hUMCS+COgvrZy1/qKhnWiRD+17JkHSJISWf1qL+MfSiDR4zl8V4PUPShXEWlnAJNqIDDhOXtntdQ9KFcRbGPB0cRDMm6GX89+sbki4T+IWdhSFcmsyiY7I5MWm7tRgSEsZZsOFSehw9oZ2ZS9uty5B0iSHGzoILl5KnCEFiaN86DUmXFL5gZ8HUkZCNMP573YakSwbP2FnYa9xM2u4tGJIuBWHbtiwKk7Z7G4aEhDqL02ODddBo9e0Yki4l48DO4j270vQvhnTzlgxJl5Tw7hsut1TMMKa3+SPNJb9Gi2XDoewzxjRzOD+3JikAK9+MNXyaRrmXC3ZrkRyecV7p0OQkaF7tD7w9VBlc40Bn79poJ1wS/r835vtG8IXWSvdta2TK+7u/5F60V5MUvnGNLFZMqrpEoqNyn25yoi68xBDxHW8CJtU4SMjT1kexw657ic29HhKmqkZAcyvH3uc5w0rC0Kfl1BAZExvT9z58W+d2BdQkyp3GBxNfWjjM1uXYpzTLt/8ZUk9MfB3yPYjl/Q5kAjNMgU6vFQXyxsR3OO28+nbFBA17N/M8RANMyi7JsYvdf16VUjFBw2oFTTBVeT5aHrxxnKTQXrigoaYpzTCpxx4TFzjX5s6FCxoO6hbdFJPqPrghWWbldcICIMKQ2d5hrnne5piqtAZxgR3zEC5o+ICL720w8Z3dHTp2LmjY+EIimXaY1PAo2sLSFQ9hgobTE8aEW2KqGmuJs+iEhxRMHwHvaltjKh/BnKjbC81DmKCh1Dt+zSEwsV21WycBeUjOhJlrwBSQhzBBw7owVV62/XY1YnI8a8REdkN/MWQa1okJRS2+EkNsO7K6LkwteIgl07BuTCrB1ICHJFy/6JvBVJXgfHkIEzS8LUzePIQJGt4eJi8ewgYNbxFTyUMix3NqbNDwNjE58ZAyaHA+m/8mMFXje23P4hqu3zwmxUOMjj1lUjfrwTT1HGVjSjDFkHrOuTCsOQCm7NhvJTw7FYMGRvhOgRCYVKupr2x80R17LAcNjBzzW14QTE3mKGnZHpeggYppySEwRdBo4NDhYo6CW9BAZDc17OFBMCXQbDjZgSrfT5jcp4vsfTOFkEtMBr/oCqrhdLySh7gGDUgOzPHjsvFDOG8iCVPDdpLdZoisB1qXrTefW6bvm/jiprL/1x4Oz/s5tq7bJxnjtjP/HIXNveqSg5IgpaMwozTt4nLkXUm4SgRXwAkqO+vonqF9qQHFZwR6UHEdzeMtjpyyhcSjcZ7nGeOAuFJee8EhYimjAhaSt0ablg8r7h7Ozx9uv3MP5Bpe2snWR+zsMoC7s8erdxcXF5eb2w8TKFrAigv4frZ5MRwOBwP1P+8eH4B4V+bESwuhLWgTuH3slwsY9EsZqIVcnRVNaw7l3np2OZw/60UGw8HmHfGwXMNLQyGEfwLnF8P6EubAHr822pNy2O4P0NMqWJcP5HmNOBGVPzgxUyEiS6hWcXXu39UKtxcUkBEVO6XDU0hV3Yhovor+duTXpQHbxqep570jqNiRPh6ygWdxWBG9LKM0BPdSCjxKj3t3jo2Znf/lKHvPqH6ai4heluHs2q2/0osMLwgqdv6Xg5C2LDdE1SruHD1g8eD0QIUKZfDYyaKS4C6LHB7euSEaDLYdQ6g4c3pgheo3QsV1x9nlEF1O5oFouPnJNSqER4PHc0LFdceZBR9IdUfUH17eOddP4k+OD12gOkOoRqaOACKn13pA4IFoUCq+uyeHbfefaYlK5zq5E7nCqecKkdu7B4MfXu0zcOEHSaHql6g0HSrkTAw61lciunRFNNyMvehV+t1L9RavIaiETAwapTSGW1dE/eHVV8+waPK79ugyCnZVxEH/B74w0nC4olfNIKn/Uy9EFw/eUXnNnAYXv7/ebTOBrCMqE7lCBV8fROod/hH5ypMPrqAYZRA9evxW2zoq5oSw6iPLtH/igWj4mDfqEt1cYoqqrxnD1ytnEytR6YOTcdofZbgyuLty/mTDq+/N8hRLTOXP9PJ/jUri4Y5qsI2ai+uZGD3D5Yfo4rZp89kK0+bqZ87hd9951ypRaYdVYhi/kCu9Gu+FSDnWxulWFpPSIXdnUaL6qTm2FOB559dHzdb8EA1/tklhGjCV0emnTec1KFRaji6ZAOSNf6Ph1adWCT8TJk9nUaJ6/GTSfy9E/eE7HKwmnlpoxqScxYO7szCi8kM06J/jHmKAGz9QBFNa1LaTHM7cnYXaTwiqkR+ikvUh3lnuDr51QYwJ/p0d1zfJKfx0dxYq3PxeRzVS+uuOSLE+3ZDmIb+hX8IRUxWJahns2MtZaKj8EDGsL4OTipqZTrc7YVrUY7RBuCncXXoE7xWqkTciyvpWfVetdA+WjFXLhGRezkKh+gqeiAjrq58a9uwdMGFCkZqfs1Co/BT2MdWXHcO0lryxD3aUMNWJnT4gCYqfHqvkcu9GoawPle9a+YgYtNyqltP2dBbuiAjrwz0Ze55RxZI/zf1ejB6nFVo9nYWT0GB1gtO7B77x+ZLnLvZcyPR83a+67WbOWWBHRMPHia5XY9zT43ADApbiDMdGeDrVnladnMAPH2dhF8L6yElap4vjsWR3Q4RJOTldAfe1EWKQu7N7OyLM+shZG4dZvqwAF8PiaZ2HoDmL7z5bj0EG/d/6gukcS4crKgyYrubLG1zWH5DCtZ4tOaqTtNJZuCaFTYgw66PjRhoY0kKWBjVMUXpeV0B9mtq4dBbNfyoarJKZCI0MaSFxvlC+n+iXxrc86XcHFPDDZ1+tC2F9pMm0qSEtl77YoYZ3hOmisex6Ew2MGjkLxfq0YJWWEIghxblqRhk762K6LNYMSPaJjM/X3lY5C19EmPXRw5/YkOICoocf29tntwVMHGGt0stKzcm8S10Bda1I4dbLWZSGFKF8ND7HQQypUL0oqrNF9bT8pp01EdfTF6/KNQx3juFYV8Ctk3p4NvZJBSrWp9cN8BQiYkhVqnGV0h8ONh8wqITMUi0l+7r61mrbQH9EFFCvYDqnAjHri2kxGBsSTQmXMTyyj+SJmXlbKth57Q9pLooooH4PWuxUNyCsj3b4EEMi2ThmbWrmLTebOIKz2t8OqFkRBdTLfnIqkLC+KZm7QQwJUvSplA7Rs/aTGT9DOoLf9TUxZjXGhzf0K16EugFmfYRPUEOa4P1PhR7cCSs4MM36hlvN1BmzIhN/9QZJS90Asz7CJ6ghZSROMVZuYMM4k30S6+pDVZdOZtZvbjU4C8z6mMk82JAo+TRXbtRMduPs/Bglh5gMIlFA/V4Frm5QakxRD1aZs/vYkGiSwFa5qWbnm+84yJEKM2ZFFFBPLxFngTQmhhFu/COGNAWUzCk/y9RcuanuOLDdRQHRprYkEpsxCnh6rWeTa7/28J2mMdz4QtxZTpNu9hLo/C4K650hMdxdCGaVAZ6Wq5vDclXY9TKH1rAh0UqKUAJN457D3S5j9KEYs6L7v/61K+3BisscWqOGhLc5sQS6vNtFyD9Dpu911Kxi+IzbprT0krJyvdbHtCRhQ4qV4iNDepzYS6CrO3iku5JiTM2pWdE7BPT0Ugr1n4AbJoMNie4EYi+BdleSeKdVhjdQalbU3vcNV/xy58KxIdHwXm3UdvaO7rSS7x4rkEelZsXciXfINIFzU02xIdGcjdxLQO8e64m3ThODpWbFXGKBB9UzfIIxJJxbKw1pbE+DJdwdcUqE/NkIzvtoO8dmRRVw96buv7kTA9iQaMFE7m4z3eXXk+9cnMD20G5WzKVeq/QS5RPUkJg9Vuxus9252BPvxiRZFGpWjALeJ+qfcINKsCHRAqSijpIhWe/GrBZgv8M0Ld+qKyAxqymNeEqtZs4cU0PC4TctGGJJYCzdYapEuOIVR7bUrBJmVN8p7fpFhsRE8bIhud0123O4s+zTppAW4G7/Q4INie6xA9GQ3O8E7okXupDIlpoVd8tuTfCN55QVy/3WXnc3KxHuCykj24HdrBLuNvsXwYZEU53lR0qEwozvHdtKhCteYUTIJzIrowIiQ2JS0sNLyZCa3IXeE694JZEtV59gFBAfSMNhv8vBhaZ31vcsd5bNhUS2xKyoAmJDIimuSoslQ/pmPRRnxSQe0i4ApxGxWaXwXFdAZEg0xVVVBayIpCMGIibDnWW1T0apKFKcYhXjoS/E9FfgqgAV7rZOX0xS1ZFEtsSsypi5UhVkSEwfDA2KsXC3LTfAJLKQAke2xKxKbnP4B30akuLiUm1IErdpHC6YJBZCnTFZXg74sBMOv5ncDRbXQQhumCQWQiJbuxoxzcJc1UUXzChaYxJZCIlszatkKjlMiYF8NfdxKc6YcIafCIlsDdoEMdljHQyJ3voeBJPEQlJSc2Jbqckey1TCI/xHXud+vTBJLIREttis6B7rYEgGRhEKk8hCICW8brVmpi1JNiQjowiHSWIhNLJdmFXp8ckeayhf1j+SkVGExCSxEBLZzs1qOiU9wfJ5GRujCItJYiHTKfFs/XPSu42KUYzYGUVgTBILKXcgHJziyi7fB6A/xM4ogmOSWAiNbIkhCQfPWoyPa4xJYiG4aKAbknSC04FRdIJJYCGJqfNNPsHpxCi6wSSxEBrZ9l2qLo6MoitM0s3JOU5E2vsAKhEyg6+ASWIhemQrG5I7o+gQU8VCLOusRbYuhhRiAGMATCULmdhQ5fPI1sWQJkFm3wXBJLEQFdmKfQC+jMIsgTAJLCSGWylZ7M0ozBIKk8RCuDmLGmhvRmGWcJja3J3ehFGYJSQmsRZikGaMwixhMUkshJOmjMIsgTGVLATPBrRLbCm9NZXgmPwG1nYykLoDTBILWUkrRmGWTjC5ncBqySjM0g2mkoVEQh4ygairieFdYZJYSHtGYZbuMNlYSAhGYZYOMRlZSNzxSPdOMVUsBJtVgs9aBpeOMVUzlPUqbihGYZbOMfV2jwqASZpESToBKI46NKQX6R5TKRvvZ9dP8dP17KDzqxGU/A/C4sf8d3CVvAAAAABJRU5ErkJggg==
+        bullets:
+          - text: There are hundreds of interactive exercises to help you master and retain skills.
+            icon: CircleCheck
+          - text: Automated tests to help track your progress.
+            icon: Bug
+          - text: Structured practice.
+            icon: Settings
+      - title: "Meet Rigobot, our AI coding assistant:"
+        bullets:
+          - text: Instant tutoring as you code.
+            icon: Message
+          - text: Skill evaluations to track your progress.
+            icon: ChartBar
+          - text: Expert bug fixing assistance.
+            icon: Code
+    footer_description: Experience the difference our AI-powered features make. Our tried-and-tested approach keeps you engaged, motivated, and on the fast track to achieving your coding goals!
+    image: /attached_assets/Group_6685_(1)_1765300162049.png
+    image_alt: Woman working on laptop in cafe
+    background: hsl(210 100% 50% / 0.05)
+  - type: two_column_accordion_card
+    variant: image_background
+    version: "1.0"
+    title: Get everything you need to succeed
+    description: "Our comprehensive program prepares you for the future of technology:"
+    bullets:
+      - heading: 1:1 Mentoring on demand
+        text: Get 1:1 support for all your coding needs. Our expert mentors are available online or in-person, ready to help you from day one to forever.
+      - heading: High availability
+        text: Never get stuck with a coding problem. Our dedicated instructors will respond within 30 minutes or less.
+      - heading: Code-Centric Education
+        text: We exclusively teach code, ensuring a focused and in-depth learning experience.
+      - heading: Tailor-made career support
+        text: Receive customized advice, guidance, and training tailored to your unique profile and specific job offers.
+    footer: Join thousands of graduates now working at top tech companies.
+    image: https://4geeksacademy.com/static/48d83e1ce148aa046ad83ad8d2eabc1c/d85f4/miami-people.webp
+    image_alt: Student working on AI project
+    paddingY:
+      desktop: lg none
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: The Confidence of a Job Guarantee
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      badge: Results-Backed Promise
+    secondary:
+      benefits:
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
+    background: hsl(var(--secondary))
+  - type: testimonials_slide
+    version: "1.0"
+    title: Real Careers Start Here — Just Ask Our Students
+    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
+    testimonials:
+      - name: Loretta Simpson
+        img: /assets/testimonial-1.jpg
+        status: Graduated
+        country:
+          name: United States
+          iso: US
+        contributor: Full Stack Developer
+        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
+        achievement: Hired at top tech company
+      - name: Carlos Martinez
+        img: /assets/testimonial-2.jpg
+        status: Graduated
+        country:
+          name: Spain
+          iso: ES
+        contributor: Software Engineer
+        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+  - type: why_learn_ai
+    variant: laptop-edge
+    title: Why Miami Is a Smart Place to Launch Your Tech Career
+    subtitle: Software Development as You Know It Will Cease to Exist
+    description: Miami is one of the fastest growing tech ecosystems in the world. Join the number 1 part-time Coding Bootcamp in Miami and become part of the best place to learn to code in Florida. Career Support and Mentorship for our students is for life. Located in Brickell and 5 mins away from the Metro Mover (subway station). Our place is full of amenities, and close to everything. We have parking (free for students and members of the community), and we have a great terrace! Brickell is one of the most active areas in the city. The office is opened 24/7 during the week and on Saturday we host our famous 'Coding Weekends' when students and other developers gather to code all day with mentors, pizzas and drinks on the house!
+  - type: mentorship
+    version: v1.0
+    title: Mentorship & Support
+    subtitle: You're never alone in your learning journey
+    cards:
+      - icon: user
+        title: 1-on-1 Mentorship
+        description: Weekly sessions with experienced developers who guide you through challenges and help you grow professionally.
+      - icon: users
+        title: Career Coaching
+        description: Dedicated career coaches help you build your resume, prepare for interviews, and connect with hiring partners.
+      - icon: headset
+        title: 24/7 Community Support
+        description: Join our Slack community of students and alumni. Get help anytime from peers who understand your journey.
+  - type: mentorship
+    version: v1.0
+    title: Mentorship & Support
+    subtitle: You're never alone in your learning journey
+    cards:
+      - icon: user
+        title: 1-on-1 Mentorship
+        description: Weekly sessions with experienced developers who guide you through challenges and help you grow professionally.
+      - icon: users
+        title: Career Coaching
+        description: Dedicated career coaches help you build your resume, prepare for interviews, and connect with hiring partners.
+      - icon: headset
+        title: 24/7 Community Support
+        description: Join our Slack community of students and alumni. Get help anytime from peers who understand your journey.
   - type: testimonials
     version: "1.0"
     title: Miami Graduate Success Stories
     filter_by_location: miami-usa
+    marginY:
+      desktop: none lg
+  - type: testimonials
+    version: v1.0
+    title: What Our Students Say
+    subtitle: Real stories from graduates who transformed their careers
+    rating_summary:
+      average: "4.9"
+      count: 2,847
+    items:
+      - name: Maria Rodriguez
+        role: Software Engineer
+        company: Google
+        rating: 5
+        comment: This program changed my life. I went from zero coding experience to landing my dream job in 6 months.
+        outcome: Hired in 4 months
+      - name: James Chen
+        role: Full Stack Developer
+        company: Spotify
+        rating: 5
+        comment: The mentorship was incredible. Having unlimited access to senior developers made all the difference.
+        outcome: 3x salary increase
+      - name: Sarah Williams
+        role: Frontend Developer
+        company: Meta
+        rating: 5
+        comment: The AI-powered learning tools helped me understand complex concepts faster than any other course I've tried.
+        outcome: Career change at 35
+      - name: Carlos Mendez
+        role: Backend Engineer
+        company: Amazon
+        rating: 4
+        comment: Practical projects and real-world scenarios prepared me better than my computer science degree.
+        outcome: Remote work achieved
+      - name: Emily Thompson
+        role: DevOps Engineer
+        company: Netflix
+        rating: 5
+        comment: The career support team helped me negotiate a 50% higher salary than I expected.
+        outcome: 50% salary boost
+      - name: David Kim
+        role: Tech Lead
+        company: Uber
+        rating: 5
+        comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
+        outcome: Promoted in 1 year
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - certification
+      - job-guarantee
+    marginY:
+      desktop: lg none
   - type: cta_banner
     version: "1.0"
     title: Ready to Start Your Tech Career in Miami?

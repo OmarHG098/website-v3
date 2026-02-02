@@ -233,6 +233,7 @@ export {
 export type {
   NumberedStepsDefaultSection,
   NumberedStepsBubbleTextSection,
+  NumberedStepsVerticalCardsSection,
 } from "../marketing-content/component-registry/numbered_steps/v1.0/schema";
 
 // ============================================
@@ -714,6 +715,37 @@ export const sectionLayoutSchema = z.object({
 export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
 
 // ============================================
+// Feature Quad Section
+// ============================================
+export const featureQuadCardSchema = z.object({
+  icon: z.string(),
+  title: z.string(),
+  description: z.string(),
+});
+
+export const featureQuadImageSchema = z.object({
+  image_id: z.string(),
+  alt: z.string().optional(),
+});
+
+export const featureQuadSectionSchema = z.object({
+  type: z.literal("features_quad"),
+  version: z.string().optional(),
+  variant: z.enum(["default", "laptopEdge"]).optional(),
+  compact: z.boolean().optional(),
+  heading: z.string(),
+  description: z.string(),
+  images: z.array(featureQuadImageSchema).optional(),
+  cards: z.array(featureQuadCardSchema),
+  footer_description: z.string().optional(),
+  background: z.string().optional(),
+});
+
+export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;
+export type FeatureQuadImage = z.infer<typeof featureQuadImageSchema>;
+export type FeatureQuadSection = z.infer<typeof featureQuadSectionSchema>;
+
+// ============================================
 // FAQ Editor Section (specialized for FAQ page template only)
 // ============================================
 export const faqEditorSectionSchema = z.object({
@@ -770,6 +802,7 @@ const baseSectionSchema = z.union([
   bentoCardsSectionSchema,
   bannerSectionSchema,
   imageRowSectionSchema,
+  featureQuadSectionSchema,
 ]);
 
 // Combined section schema with layout fields

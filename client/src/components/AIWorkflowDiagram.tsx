@@ -70,6 +70,7 @@ function TechIcon({ icon, className }: { icon: TechNode["icon"]; className?: str
 
 interface AIWorkflowDiagramProps {
   className?: string;
+  centerLabel?: string;
 }
 
 function TechNodeComponent({ 
@@ -158,7 +159,7 @@ function TechNodeComponent({
   );
 }
 
-export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
+export function AIWorkflowDiagram({ className, centerLabel = "AI Engineering" }: AIWorkflowDiagramProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [hoveredLine, setHoveredLine] = useState<string | null>(null);
   const [isCenterHovered, setIsCenterHovered] = useState(false);
@@ -386,7 +387,7 @@ export function AIWorkflowDiagram({ className }: AIWorkflowDiagramProps) {
               )}
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              AI Engineering
+              {centerLabel}
             </span>
           </div>
         </div>

@@ -113,30 +113,30 @@ sections:
     variant: detailed
     title: Our Job Guarantee is Available for Our Top Tech Programs
     subtitle: Choose your career path. Master the skills and get hired.
-    columns: 3
-    collapsible_mobile: true
     items:
       - id: fullstack
+        icon: CodeWindow
         category: Full Stack
         title: Full Stack Development with AI
         description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
-        icon: CodeWindow
         link_url: "#"
         link_text: Read More
       - id: datascience
+        icon: RocketOff
         category: With Python
         title: Data Science and Machine Learning with AI
         description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
-        icon: Monitor
         link_url: "#"
         link_text: Read More
       - id: cybersecurity
+        icon: Security
         category: For Windows & Linux
         title: Cybersecurity
         description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
-        icon: Security
         link_url: "#"
         link_text: Read More
+    columns: 3
+    collapsible_mobile: true
     marginY:
       desktop: md
   - type: numbered_steps

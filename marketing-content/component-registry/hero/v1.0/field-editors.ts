@@ -21,4 +21,5 @@ export const fieldEditors: Record<string, EditorType> = {
   "productShowcase:right_images[].src": "image-picker",
   "showcase:left_images[].src": "image-picker",
   "showcase:right_images[].src": "image-picker",
+  "simpleTwoColumn:image.src": "image-picker",
 };

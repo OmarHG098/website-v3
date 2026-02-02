@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
+import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
 
 function getIcon(iconName: string, className?: string, color?: string) {
   const CustomIcon = getCustomIcon(iconName);
@@ -53,19 +54,21 @@ function DetailedCard({
       >
         <div className="flex-1">
           {item.category && (
-            <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-              {item.category}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                {item.category}
+              </span>
+              {!hasImage && item.icon && (
+                <span className="w-4 h-4 md:w-5 md:h-6 flex-shrink-0 text-primary">
+                  {getIcon(item.icon, "w-full h-full", "hsl(var(--primary))")}
+                </span>
+              )}
+            </div>
           )}
           <h3 className={`text-lg md:text-xl font-bold text-foreground ${item.category ? 'mt-1' : ''}`}>
             {item.title}
           </h3>
         </div>
-        {!hasImage && item.icon && (
-          <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
-            {getIcon(item.icon, "w-full h-full", iconColor)}
-          </div>
-        )}
         {collapsible && (
           <TablerIcons.IconChevronDown 
             className={`md:hidden w-5 h-5 text-muted-foreground transition-transform flex-shrink-0 self-start mt-1 ml-2 ${isOpen ? 'rotate-180' : ''}`}
@@ -157,6 +160,12 @@ export function FeaturesGridDetailed({ data }: FeaturesGridDetailedProps) {
             />
           ))}
         </div>
+
+        {data.show_workflow_diagram && (
+          <div className="mt-8 mx-auto w-[50%]">
+            <AIWorkflowDiagram centerLabel={data.workflow_diagram_label} />
+          </div>
+        )}
       </div>
     </section>
   );

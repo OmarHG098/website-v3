@@ -414,6 +414,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
 
 function BenefitCardsVariant({ data }: TwoColumnProps) {
   const backgroundClass = data.background || "bg-muted/30";
+  const stackedHeader = data.stacked_header === true;
   
   return (
     <section 
@@ -421,15 +422,31 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
       data-testid="section-two-column-benefit-cards"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Left Column: Title + Subtitle + Benefit Cards + CTA */}
-          <div className="flex flex-col">
+        {/* Stacked header: Title and subtitle above both columns */}
+        {stackedHeader && (data.title || data.subtitle) && (
+          <div className="mb-8">
             {data.title && (
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-title">
                 {data.title}
               </h2>
             )}
             {data.subtitle && (
+              <p className="text-muted-foreground" data-testid="text-benefit-cards-subtitle">
+                {data.subtitle}
+              </p>
+            )}
+          </div>
+        )}
+        
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${stackedHeader ? 'items-center' : ''}`}>
+          {/* Left Column: Title + Subtitle (if not stacked) + Benefit Cards + CTA */}
+          <div className="flex flex-col">
+            {!stackedHeader && data.title && (
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-benefit-cards-title">
+                {data.title}
+              </h2>
+            )}
+            {!stackedHeader && data.subtitle && (
               <p className="text-muted-foreground mb-8" data-testid="text-benefit-cards-subtitle">
                 {data.subtitle}
               </p>
@@ -473,7 +490,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
             )}
           </div>
           
-          {/* Right Column: Image */}
+          {/* Right Column: Image (centered vertically when stacked) */}
           {data.right?.image && (
             <div className="flex items-center justify-center">
               <img 
