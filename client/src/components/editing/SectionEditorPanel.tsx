@@ -1142,10 +1142,6 @@ export function SectionEditorPanel({
                   const currentAlt = getNestedValue(`${fieldPrefix}image_alt`, "") as string;
                   const currentObjectFit = getNestedValue(`${fieldPrefix}image_object_fit`, "") as string;
                   const currentObjectPosition = getNestedValue(`${fieldPrefix}image_object_position`, "") as string;
-                  const currentMaxWidth = getNestedValue(`${fieldPrefix}image_max_width`, "") as string;
-                  const currentMaxHeight = getNestedValue(`${fieldPrefix}image_max_height`, "") as string;
-                  const currentMobileMaxWidth = getNestedValue(`${fieldPrefix}image_mobile_max_width`, "") as string;
-                  const currentMobileMaxHeight = getNestedValue(`${fieldPrefix}image_mobile_max_height`, "") as string;
                   
                   const fieldLabel = side === "left" ? "Imagen Izquierda" : side === "right" ? "Imagen Derecha" : side === "image" ? "Imagen" : fieldPath.split(".").pop() || fieldPath;
                   
@@ -1252,50 +1248,6 @@ export function SectionEditorPanel({
                                 placeholder="center center"
                                 className="h-8 text-sm"
                                 data-testid={`props-image-style-${side}-object-position`}
-                              />
-                            </div>
-
-                            <div className="space-y-1">
-                              <Label className="text-xs text-muted-foreground">Ancho Máx.</Label>
-                              <Input
-                                value={currentMaxWidth}
-                                onChange={(e) => updateProperty(`${fieldPrefix}image_max_width`, e.target.value)}
-                                placeholder="400px"
-                                className="h-8 text-sm"
-                                data-testid={`props-image-style-${side}-max-width`}
-                              />
-                            </div>
-
-                            <div className="space-y-1">
-                              <Label className="text-xs text-muted-foreground">Alto Máx.</Label>
-                              <Input
-                                value={currentMaxHeight}
-                                onChange={(e) => updateProperty(`${fieldPrefix}image_max_height`, e.target.value)}
-                                placeholder="300px"
-                                className="h-8 text-sm"
-                                data-testid={`props-image-style-${side}-max-height`}
-                              />
-                            </div>
-
-                            <div className="space-y-1">
-                              <Label className="text-xs text-muted-foreground">Ancho Móvil Máx.</Label>
-                              <Input
-                                value={currentMobileMaxWidth}
-                                onChange={(e) => updateProperty(`${fieldPrefix}image_mobile_max_width`, e.target.value)}
-                                placeholder="100%"
-                                className="h-8 text-sm"
-                                data-testid={`props-image-style-${side}-mobile-max-width`}
-                              />
-                            </div>
-
-                            <div className="space-y-1">
-                              <Label className="text-xs text-muted-foreground">Alto Móvil Máx.</Label>
-                              <Input
-                                value={currentMobileMaxHeight}
-                                onChange={(e) => updateProperty(`${fieldPrefix}image_mobile_max_height`, e.target.value)}
-                                placeholder="200px"
-                                className="h-8 text-sm"
-                                data-testid={`props-image-style-${side}-mobile-max-height`}
                               />
                             </div>
                           </div>
