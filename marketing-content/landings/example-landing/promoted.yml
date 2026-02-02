@@ -132,10 +132,11 @@ sections:
     left:
       image: /attached_assets/fernando-funez_1765315920677.jpg
       image_alt: Team collaborating on a project
-      image_max_width: 400px
-      image_max_height: 400px
+      image_object_fit: none
+      image_object_position: 50% 10%
+      image_max_width: 500px
+      image_max_height: 500px
       justify: center
-      image_object_fit: contain
     right:
       heading: Why Choose Us
       description: We provide comprehensive support for your learning journey from day one to career success.
