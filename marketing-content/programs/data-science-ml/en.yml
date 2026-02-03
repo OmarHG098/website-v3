@@ -49,31 +49,28 @@ sections:
       thumbnail: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop
       alt: Data Science program introduction
     signup_card:
-      title: Apply to the Data Science Program
-      description: Start your journey to becoming a Data Scientist
+      title: Get the Full Syllabus
+      description: Access the full curriculum, schedule and everything else you need to know.
       cta_button:
-        text: Apply Now
+        text: Send me the Curriculum
         url: /en/apply
         variant: primary
       login_link:
         text: Already a student? Login here.
         url: /login
       features:
-        - icon: book
-          text: Readings and videos
-          count: 50+
-        - icon: code
-          text: Interactive Exercises
-          count: 100+
-        - icon: IconDeviceDesktop
-          text: Real Projects
-          count: "10"
-        - icon: robot
-          text: AI-Powered Feedback
         - icon: calendar
-          text: Live Sessions Weekly
-        - icon: users
-          text: 1:1 Mentorship
+          text: 16-Week Intensive Program
+        - icon: IconBriefcase
+          text: Employment-First Curriculum
+        - icon: IconRobot
+          text: AI-Powered Learning & Feedback
+        - icon: IconUsers
+          text: 7:1 Student-to-Instructor Ratio
+        - icon: IconUserCheck
+          text: Unlimited 1:1 Mentorship
+        - icon: book
+          text: Production-Grade Portfolio
     paddingY:
       desktop: md
     marginY:
@@ -131,11 +128,8 @@ sections:
       - id: "1"
         value: 36%
         title: projected growth rate the next decade
-      - id: "2"
-        value: 150%
-        title: Average salary increase after graduation
       - id: "3"
-        value: $80K+
+        value: $90K+
         title: Average starting salary for data scientists
   - type: syllabus
     variant: program-modules
@@ -213,51 +207,41 @@ sections:
       desktop: md none
     paddingY:
       desktop: md
-  - type: projects
-    title: Learn by Building Real-Life Projects
-    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    compact: true
+    heading: Program Benefits
+    description: Everything you need to succeed in your AI engineering career.
+    cards:
+      - icon: Trophy
+        title: Industry Recognition
+        description: Top-ranked bootcamp
+      - icon: Wallet
+        title: Affordable Tuition
+        description: Flexible payments
+      - icon: Clock
+        title: Flexible Schedule
+        description: Part-time available
+      - icon: Users
+        title: Career Support
+        description: Unlimited mentorship
+    background: bg-muted/30
+  - type: features_grid
+    variant: highlight
+    title: Why Choose 4Geeks Academy?
+    subtitle: Explore the features that set us apart and empower your tech journey.
     items:
-      - title: ML web app using Flask tutorial
-        description: Learn how to train and optimize a machine learning model, build a Flask web app to interact with it, and deploy the full application on Render. This hands-on project walks you through data exploration, model creation, app development, and cloud deployment step by step.
-        image: flask-render
-        tags:
-          - DATA SCIENCE
-          - SCIKIT-LEARN
-          - MACHINE LEARNING
-          - RENDER
-          - TENSORFLOW
-          - KERAS
-        duration: 1 HOURS
-        date: 8/2/2023
-        difficulty: easy
-      - title: ML web app using Streamlit tutorial
-        description: Use Streamlit to build an interactive web application that integrates a machine learning model. This will allow users to input data, make predictions, and visualize results in a user-friendly interface.
-        image: streamlit-render
-        tags:
-          - DATA SCIENCE
-          - MACHINE LEARNING
-        duration: 1 HOURS
-        date: 16/1/2023
-        difficulty: medium
-      - title: Machine Learning Final Project
-        description: "Learn to build your own end-to-end Machine Learning project: define a real-world problem, collect and process data, train and optimize a model, and deploy a web app to showcase it. Work collaboratively, apply your skills, and present your solution like a pro!"
-        image: ml-final-project
-        tags:
-          - HEROKU.COM
-          - DATA SCIENCE
-          - SQL
-          - SEABORN
-          - STREAMLIT
-          - SCIKIT-LEARN
-          - MATPLOTLIB
-          - WEB SCRAPING
-          - MACHINE LEARNING
-          - RENDER
-        duration: 2 HOURS
-        date: 16/1/2023
-        difficulty: hard
-    paddingY:
-      desktop: md
+      - icon: Star
+        title: Global Learnersjnldfg blsdfbglisd bfglsdbfglb sdflgbsdflgsbf
+      - icon: Users
+        value: 10K+
+        title: Global Learners Supported
+      - icon: Award
+        value: 5★
+        title: Average Program Rating
+    columns: 3
+    icon_color: "#0097CD"
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -310,7 +294,7 @@ sections:
     paddingY:
       desktop: md none
   - type: certificate
-    title: Certificate & Career Network
+    title: Career Outcomes
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
     benefits:
       - text: "Data Scientist: $80K–$130K"
@@ -324,21 +308,20 @@ sections:
     stats:
       - value: 84%
         label: Hiring rate
-        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        description: Graduate with the skills, credentials, and professional profile employers are actively hiring for.
         benefits:
-          - text: Dedicated career coaching from day one
-          - text: Resume and LinkedIn profile optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: Certificate recognized by the Florida Department of Education
+          - text: Real-world data projects focused on analysis, insights, and decision-making
+          - text: Hands-on experience building and evaluating predictive machine learning models
+          - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        description: Land your first role within 3–6 months of graduation. With our structured 3-step career development process, your skills turn into job offers fast.
         benefits:
-          - text: Job search strategy and planning
-          - text: Salary negotiation coaching
-          - text: Lifetime career support access
-          - text: Alumni network with 10,000+ professionals
-      - value: 150%
+          - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
+          - text: Practice for technical and behavioral interviews
+          - text: Execute a personalized job-search strategy with access to relevant hiring networks
+      - value: 55%
         label: Average salary increase
         description: Our graduates see an average 150% salary increase after transitioning into data science and machine learning roles. The investment pays for itself.
         benefits:
@@ -356,10 +339,10 @@ sections:
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
     useSolidCard: true
-    background: hsl(var(--muted))
     paddingY:
       mobile: lg
       desktop: lg
+    background: hsl(var(--muted))
   - type: pricing
     version: "1.0"
     variant: product
@@ -397,7 +380,7 @@ sections:
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
-    subtitle: Explore how 4Geeks Academy propels graduates into thriving tech careers.
+    subtitle: Our graduates are hired by leading companies worldwide
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -427,9 +410,9 @@ sections:
       desktop: none
   - type: testimonials
     title: Your New Career Starts Here
-    subtitle: See what our graduates have to say about their experience
+    subtitle: 4,000+ graduates and 1,000+ verified reviews prove our programs deliver life-changing results.
     rating_summary:
-      average: "4.5"
+      average: "4.8"
       count: 1,294
     items:
       - name: Gabriel Salazar
@@ -468,10 +451,10 @@ sections:
         rating: 4
         comment: Transitioning from the music industry into tech was challenging but 4Geeks made it possible. Now I'm performing as a developer and a Mentor, helping others achieve the same dream.
         outcome: +100% salary increase
-    paddingY:
-      desktop: md none
     marginY:
       desktop: none md
+    paddingY:
+      desktop: md none
   - type: faq
     version: "1.0"
     background: hsl(var(--muted))

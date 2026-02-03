@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn, BenefitItem } from "@shared/schema";
 import type { ComponentType, CSSProperties } from "react";
-import VideoPlayer from "./VideoPlayer";
+import { UniversalVideo } from "./UniversalVideo";
 import { Link } from "wouter";
 
 export type { TwoColumnSectionType };
@@ -404,10 +404,10 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
               maxWidth: "100%"
             }}
           >
-            <VideoPlayer
-              videoId={column.video}
-              title="Video"
-              ratio={column.video_height ? undefined : "16:9"}
+            <UniversalVideo
+              url={column.video}
+              ratio={column.video_ratio || "16:9"}
+              preview_image_url={column.video_preview_image}
             />
           </div>
         </div>

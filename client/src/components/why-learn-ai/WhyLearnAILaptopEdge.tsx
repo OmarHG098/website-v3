@@ -1,71 +1,159 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { WhyLearnAISection as WhyLearnAISectionType } from "@shared/schema";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+
+const MOBILE_CHAR_LIMIT = 150;
+
+function truncateAtWordBoundary(text: string, limit: number): string {
+  if (text.length <= limit) return text;
+  const truncated = text.slice(0, limit);
+  const lastSpaceIndex = truncated.lastIndexOf(' ');
+  if (lastSpaceIndex === -1) return truncated;
+  return truncated.slice(0, lastSpaceIndex);
+}
 
 interface WhyLearnAILaptopEdgeProps {
   data: WhyLearnAISectionType;
 }
 
 export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const description = data.description || "";
+
   return (
     <section 
       className="relative overflow-hidden"
       data-testid="section-why-learn-ai"
     >
-      <div>
+      {/* Background - hidden on mobile */}
+      <div className="hidden md:block">
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10"
-          aria-hidden="true"
-        />
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-[80%] bg-muted"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10 rounded-lg"
           aria-hidden="true"
         />
       </div>
       
+      {/* Mobile full bg */}
+      <div className="md:hidden absolute inset-0 bg-muted" aria-hidden="true" />
 
-        <div className="relative max-w-6xl mx-auto px-4 py-4">
-          <div className="grid lg:grid-cols-9 gap-8 items-center py-16">
-            <div className="col-span-7">
-              <h2 
-                className="text-h2 mb-4 text-foreground"
-                data-testid="text-why-learn-title"
+      {/* ===== MOBILE LAYOUT ===== */}
+      <div className="md:hidden relative px-4 py-8">
+        <h2 
+          className="text-2xl font-bold mb-3 text-foreground"
+          data-testid="text-why-learn-title-mobile"
+        >
+          {data.title}
+        </h2>
+
+        <h3 
+          className="text-base font-bold mb-4 text-primary"
+          data-testid="text-why-learn-subtitle-mobile"
+        >
+          {data.subtitle}
+        </h3>
+
+        <p 
+          className="text-sm text-muted-foreground mb-6 leading-relaxed"
+          data-testid="text-why-learn-description-mobile"
+        >
+          {description.length > MOBILE_CHAR_LIMIT && !isExpanded ? (
+            <>
+              {truncateAtWordBoundary(description, MOBILE_CHAR_LIMIT)}...{' '}
+              <button
+                onClick={() => setIsExpanded(true)}
+                className="text-sm font-medium text-primary underline"
+                data-testid="button-see-more"
               >
-                {data.title}
-              </h2>
-
-              <h3 
-                className="text-body font-bold mb-6 text-foreground"
-                data-testid="text-why-learn-subtitle"
-              >
-                {data.subtitle}
-              </h3>
-
-              <p 
-                className="text-body text-muted-foreground mb-8 leading-relaxed"
-                data-testid="text-why-learn-description"
-              >
-                {data.description}
-              </p>
-
-              {data.cta && (
-                <Button
-                  variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
-                  asChild
-                  data-testid="button-why-learn-cta"
-                >
-                  <a href={data.cta.url}>{data.cta.text}</a>
-                </Button>
+                see more
+              </button>
+            </>
+          ) : (
+            <>
+              {description}
+              {description.length > MOBILE_CHAR_LIMIT && (
+                <>
+                  {' '}
+                  <button
+                    onClick={() => setIsExpanded(false)}
+                    className="text-sm font-medium text-primary underline"
+                    data-testid="button-see-less"
+                  >
+                    see less
+                  </button>
+                </>
               )}
-            </div>
-          </div>
+            </>
+          )}
+        </p>
+
+        {data.cta && (
+          <Button
+            variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+            asChild
+            className="mb-6"
+            data-testid="button-why-learn-cta-mobile"
+          >
+            <a href={data.cta.url}>{data.cta.text}</a>
+          </Button>
+        )}
+
+        {/* Laptop image centered below content */}
+        <div className="flex justify-center">
+          <img 
+            src={laptopCodeEditor}
+            alt="Code editor on laptop"
+            className="w-[90%] max-w-[400px] h-auto object-contain"
+            loading="lazy"
+            data-testid="img-why-learn-ai-mobile"
+          />
+        </div>
       </div>
 
-      <div className="absolute right-[-250px] top-0 bottom-0 w-1/2 flex items-center pointer-events-none">
+      {/* ===== DESKTOP LAYOUT ===== */}
+      <div className="hidden md:block relative max-w-6xl mx-auto px-4 py-4">
+        <div className="grid grid-cols-9 gap-8 items-center py-16">
+          <div className="col-span-7 max-w-full">
+            <h2 
+              className="text-h2 mb-4 text-foreground"
+              data-testid="text-why-learn-title"
+            >
+              {data.title}
+            </h2>
+
+            <h3 
+              className="text-body font-bold mb-6 text-primary"
+              data-testid="text-why-learn-subtitle"
+            >
+              {data.subtitle}
+            </h3>
+
+            <p 
+              className="text-body text-muted-foreground mb-8 leading-relaxed"
+              data-testid="text-why-learn-description"
+            >
+              {data.description}
+            </p>
+
+            {data.cta && (
+              <Button
+                variant={data.cta.variant === "primary" ? "default" : data.cta.variant === "outline" ? "outline" : "secondary"}
+                asChild
+                data-testid="button-why-learn-cta"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Laptop image - hidden on mobile only, visible from md */}
+      <div className="hidden md:flex absolute md:right-[-480px] lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
-          className="w-[100%] max-w-none h-auto object-contain object-left"
+          className="w-[90%] max-w-none h-auto object-contain object-left"
           loading="lazy"
           data-testid="img-why-learn-ai"
         />

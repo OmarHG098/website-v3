@@ -10,7 +10,7 @@
  * Example: "productShowcase:left_images[].src" only applies to productShowcase variant
  */
 
-export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
+export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-picker:logo" | "link-picker" | "text-input";
 
 export const fieldEditors: Record<string, EditorType> = {
   // Global - applies to all variants that have this field
@@ -19,6 +19,8 @@ export const fieldEditors: Record<string, EditorType> = {
   // Variant-specific - prefixed with variant name
   "productShowcase:left_images[].src": "image-picker",
   "productShowcase:right_images[].src": "image-picker",
+  "productShowcase:marquee.items[].logo": "image-picker:logo",
+  "productShowcase:marquee.items[].logoHeight": "text-input",
   "showcase:left_images[].src": "image-picker",
   "showcase:right_images[].src": "image-picker",
   "simpleTwoColumn:image.src": "image-picker",

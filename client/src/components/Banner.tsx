@@ -1,7 +1,18 @@
+import { useState } from "react";
 import type { BannerSection as BannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 
 import rigo_avatar_1763181725290 from "@assets/rigo-avatar_1763181725290.png";
+
+const MOBILE_CHAR_LIMIT = 150;
+
+function truncateAtWordBoundary(text: string, limit: number): string {
+  if (text.length <= limit) return text;
+  const truncated = text.slice(0, limit);
+  const lastSpaceIndex = truncated.lastIndexOf(' ');
+  if (lastSpaceIndex === -1) return truncated;
+  return truncated.slice(0, lastSpaceIndex);
+}
 
 interface BannerProps {
   data: BannerSectionType;
@@ -9,6 +20,7 @@ interface BannerProps {
 
 export function Banner({ data }: BannerProps) {
   const { logo, avatars, title, description, cta, background = "gradient" } = data;
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const getBackgroundStyle = () => {
     switch (background) {
@@ -93,19 +105,56 @@ export function Banner({ data }: BannerProps) {
           {renderAvatars()}
 
           <h2 
-            className="font-bold mb-4 text-white text-[44px]"
+            className="font-bold mb-4 text-white text-[30px] lg:text-[44px]"
             data-testid="text-banner-title"
           >
             {title}
           </h2>
 
           {description && (
-            <p 
-              className="mx-auto mb-8 text-white/85 text-[26px]"
-              data-testid="text-banner-description"
-            >
-              {description}
-            </p>
+            <>
+              {/* Mobile: truncated with see more/less */}
+              <p 
+                className="md:hidden mx-auto text-white/85 text-[16px]"
+                data-testid="text-banner-description-mobile"
+              >
+                {description.length > MOBILE_CHAR_LIMIT && !isExpanded ? (
+                  <>
+                    {truncateAtWordBoundary(description, MOBILE_CHAR_LIMIT)}...{' '}
+                    <button
+                      onClick={() => setIsExpanded(true)}
+                      className="text-sm font-medium text-white underline"
+                      data-testid="button-see-more"
+                    >
+                      see more
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {description}
+                    {description.length > MOBILE_CHAR_LIMIT && (
+                      <>
+                        {' '}
+                        <button
+                          onClick={() => setIsExpanded(false)}
+                          className="text-sm font-medium text-white underline"
+                          data-testid="button-see-less"
+                        >
+                          see less
+                        </button>
+                      </>
+                    )}
+                  </>
+                )}
+              </p>
+              {/* Desktop: full text */}
+              <p 
+                className="hidden md:block mx-auto lg:mb-8 text-white/85 text-[20px] lg:text-[26px]"
+                data-testid="text-banner-description"
+              >
+                {description}
+              </p>
+            </>
           )}
 
           {cta && (

@@ -8,6 +8,7 @@ import student2 from "@assets/student-2-latin.png";
 import student3 from "@assets/student-3-african.png";
 import student4 from "@assets/student-4-lady-latin.png";
 import type { HumanAndAIDuoSection } from "@shared/schema";
+import { UniversalVideo } from "./UniversalVideo";
 
 // Image type for styling
 interface StyledImageProps {
@@ -58,6 +59,9 @@ interface HumanAndAIDuoData {
   image?: string;
   image_alt?: string;
   background?: string;
+  // Video option - when provided, replaces images with video
+  video?: string;
+  video_preview_image?: string;
 }
 
 interface HumanAndAIDuoProps {
@@ -77,12 +81,43 @@ const getIcon = (iconName: string, className?: string, size?: number, color?: st
 
 export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
   const backgroundClass = data.background || "bg-background";
+  const hasVideo = !!data.video;
   
   // Use custom images array if provided, otherwise always show default 4 student images
   // Note: legacy image/image_alt fields are kept for backward compatibility but don't affect the student images display
   const images: StyledImageProps[] = data.images && data.images.length > 0 
     ? data.images 
     : defaultStudentImages;
+
+  const renderMedia = (containerClass: string, testId: string) => {
+    if (hasVideo) {
+      return (
+        <div className="flex justify-end">
+          <div className={`max-w-[400px] ${containerClass}`} data-testid={testId}>
+            <UniversalVideo
+              url={data.video!}
+              ratio="2.39:1"
+              preview_image_url={data.video_preview_image}
+            />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className={containerClass} data-testid={testId}>
+        {images.map((image, index) => (
+          <div key={index} className="flex-1 h-full">
+            <img
+              src={image.src}
+              alt={image.alt || `Image ${index + 1}`}
+              style={getImageStyle(image)}
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section 
@@ -100,18 +135,10 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               {data.description}
             </p>
           </div>
-          <div className="flex justify-center gap-3 w-full" data-testid="img-students-mobile">
-            {images.map((image, index) => (
-              <div key={index} className="flex-1 h-36">
-                <img
-                  src={image.src}
-                  alt={image.alt || `Image ${index + 1}`}
-                  style={getImageStyle(image)}
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
+          {renderMedia(
+            hasVideo ? "w-full" : "flex justify-center gap-3 w-full h-36",
+            "img-students-mobile"
+          )}
           <Card className="p-0 overflow-hidden" data-testid="card-info-container-mobile">
             <div className="divide-y divide-border">
               {data.bullet_groups.map((group, groupIndex) => (
@@ -155,17 +182,11 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
-            <div className="col-span-5 flex gap-3" data-testid="img-students-tablet">
-              {images.map((image, index) => (
-                <div key={index} className="flex-1 h-40">
-                  <img
-                    src={image.src}
-                    alt={image.alt || `Image ${index + 1}`}
-                    style={getImageStyle(image)}
-                    loading="lazy"
-                  />
-                </div>
-              ))}
+            <div className="col-span-5">
+              {renderMedia(
+                hasVideo ? "w-full" : "flex gap-3 h-40",
+                "img-students-tablet"
+              )}
             </div>
           </div>
           <Card className="p-0 overflow-hidden hover:shadow-md transition-shadow duration-200" data-testid="card-info-container-tablet">
@@ -205,23 +226,17 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
         {/* ===== DESKTOP LAYOUT (lg+, Notion-like layout) ===== */}
         <div className="hidden lg:block space-y-8">
           <div className="grid grid-cols-12 gap-8 items-start">
-            <div className="col-span-7 text-left">
-              <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-human-ai-heading">
+            <div className={`${hasVideo ? "col-span-7" : "col-span-7"}`}>
+              <h2 className="text-4xl font-bold text-foreground mb-4 w-full" data-testid="text-human-ai-heading">
                 {data.heading}
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+              <p className="text-lg text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
-            <div className="col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card" data-testid="img-students-desktop">
-              {images.map((image, index) => (
-                <div key={index} className="flex-1 h-44">
-                  <img
-                    src={image.src}
-                    alt={image.alt || `Image ${index + 1}`}
-                    style={getImageStyle(image)}
-                    loading="lazy"
-                  />
-                </div>
-              ))}
+            <div className={`${hasVideo ? "col-span-5" : "col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card h-44"}`}>
+              {renderMedia(
+                hasVideo ? "w-full" : "flex gap-4 h-full w-full",
+                "img-students-desktop"
+              )}
             </div>
           </div>
           <Card className="p-0 overflow-hidden hover:shadow-md transition-shadow duration-200" data-testid="card-info-container">

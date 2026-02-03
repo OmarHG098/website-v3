@@ -2,40 +2,59 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import { Button } from "@/components/ui/button";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+
+function getButtonVariant(variant?: string): "default" | "secondary" | "outline" | "ghost" | "destructive" {
+  const validVariants = ["default", "secondary", "outline", "ghost", "destructive"];
+  if (variant && validVariants.includes(variant)) {
+    return variant as "default" | "secondary" | "outline" | "ghost" | "destructive";
+  }
+  if (variant === "primary") return "default";
+  return "default";
+}
 
 interface FeaturesQuadLaptopEdgeProps {
   data: FeatureQuadSection;
 }
 
-function CompactCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+function CompactCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
   const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const hasTitle = !!card.title;
+  const hasDescription = !!card.description;
+  const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
+  
   return (
     <div 
-      className="flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm"
+      className={`flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm ${hasOnlyOne ? "justify-center" : ""}`}
       data-testid={`features-quad-card-compact-${index}`}
     >
       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={16} />}
       </div>
-      <span className="text-sm font-medium text-foreground">{card.title}</span>
+      {hasTitle && <span className="text-sm font-medium text-foreground">{card.title}</span>}
+      {!hasTitle && hasDescription && <span className="text-sm text-muted-foreground">{card.description}</span>}
     </div>
   );
 }
 
-function FullCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+function FullCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
   const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const hasTitle = !!card.title;
+  const hasDescription = !!card.description;
+  const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
+  
   return (
     <div 
-      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
+      className={`flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm ${hasOnlyOne ? "items-center" : ""}`}
       data-testid={`features-quad-card-${index}`}
     >
       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={24} />}
       </div>
-      <div className="flex flex-col">
-        <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
-        <p className="text-sm text-muted-foreground">{card.description}</p>
+      <div className={`flex flex-col ${hasOnlyOne ? "justify-center" : ""}`}>
+        {hasTitle && <h3 className={`font-semibold text-foreground ${hasDescription ? "mb-1" : ""}`}>{card.title}</h3>}
+        {hasDescription && <p className="text-sm text-muted-foreground">{card.description}</p>}
       </div>
     </div>
   );
@@ -53,14 +72,17 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
     >
       {/* Background split */}
       <div className="hidden lg:block">
+
+        {/* Solid mask to prevent parent background from affecting the color */}
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-background rounded-lg"
           aria-hidden="true"
         />
         <div 
-          className="absolute left-0 top-0 bottom-0 w-[80%] bg-muted"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/5 rounded-lg"
           aria-hidden="true"
         />
+        
       </div>
       {/* Mobile/tablet full bg */}
       <div className="lg:hidden absolute inset-0 bg-muted" aria-hidden="true" />
@@ -69,19 +91,25 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-4">
           {/* Images above title - aligned left */}
-          {images.length > 0 && (
-            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
-              {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="w-16">
-                  <UniversalImage
-                    id={image.image_id}
-                    alt={image.alt || `Image ${index + 1}`}
-                    className="w-full h-full object-cover object-top rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="flex justify-center">
+            {images.length > 0 && (
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
+                {images.slice(0, 4).map((image, index) => (
+                  <div key={index} className="w-16">
+                    <UniversalImage
+                      id={image.image_id}
+                      alt={image.alt || `Image ${index + 1}`}
+                      className="w-full h-full rounded-lg"
+                      style={{
+                        objectFit: image.object_fit || "cover",
+                        objectPosition: image.object_position || "top",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           {/* Title and description */}
           <div className="text-left">
             <h2 className="text-2xl font-bold text-foreground mb-2" data-testid="text-features-quad-heading">
@@ -90,6 +118,16 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
             <p className="text-sm text-muted-foreground leading-relaxed">
               {data.description}
             </p>
+            {data.cta && (
+              <Button
+                variant={getButtonVariant(data.cta.variant)}
+                asChild
+                className="mt-4"
+                data-testid="button-features-quad-cta-mobile"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
           </div>
           {/* Cards stacked vertically - always compact on mobile */}
           <div className="grid grid-cols-1 gap-2" data-testid="cards-features-quad-mobile">
@@ -110,15 +148,29 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                 {data.heading}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+              {data.cta && (
+                <Button
+                  variant={getButtonVariant(data.cta.variant)}
+                  asChild
+                  className="mt-4"
+                  data-testid="button-features-quad-cta-tablet"
+                >
+                  <a href={data.cta.url}>{data.cta.text}</a>
+                </Button>
+              )}
             </div>
             {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] min-h-24" data-testid="img-features-quad-tablet">
+              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] h-32" data-testid="img-features-quad-tablet">
                 {images.slice(0, 4).map((image, index) => (
                   <div key={index} className="flex-1">
                     <UniversalImage
                       id={image.image_id}
                       alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full object-cover object-top rounded-lg"
+                      className="w-full h-full rounded-lg"
+                      style={{
+                        objectFit: image.object_fit || "cover",
+                        objectPosition: image.object_position || "top",
+                      }}
                     />
                   </div>
                 ))}
@@ -145,15 +197,29 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                     {data.heading}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+                  {data.cta && (
+                    <Button
+                      variant={getButtonVariant(data.cta.variant)}
+                      asChild
+                      className="mt-4"
+                      data-testid="button-features-quad-cta-desktop"
+                    >
+                      <a href={data.cta.url}>{data.cta.text}</a>
+                    </Button>
+                  )}
                 </div>
                 {images.length > 0 && (
-                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card max-w-[400px] min-h-28" data-testid="img-features-quad-desktop">
+                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card w-[300px] h-36" data-testid="img-features-quad-desktop">
                     {images.slice(0, 4).map((image, index) => (
                       <div key={index} className="flex-1">
                         <UniversalImage
                           id={image.image_id}
                           alt={image.alt || `Image ${index + 1}`}
-                          className="w-[35px] h-full object-cover object-top rounded-lg"
+                          className="w-full h-full rounded-lg"
+                          style={{
+                            objectFit: image.object_fit || "cover",
+                            objectPosition: image.object_position || "top",
+                          }}
                         />
                       </div>
                     ))}

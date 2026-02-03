@@ -80,7 +80,7 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
         </div>
       ) : (
         <div
-          className="relative bg-primary/30 rounded-2xl py-14 pl-4 flex justify-end min-h-[300px] md:min-h-[400px] min-w-full"
+          className="relative bg-primary/30 rounded-2xl py-14 pl-4 flex justify-end items-center min-h-[300px] md:min-h-[400px] min-w-full"
           data-testid="bullet-tabs-image-container"
         >
           <div key={activeIndex} className="animate-in fade-in duration-300 w-[90%]">
@@ -120,13 +120,13 @@ export function BulletTabsShowcase({ data }: BulletTabsShowcaseProps) {
             )}
           </div>
         )}
-        <div className={`grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 ${
-          image_position === "left" ? "lg:grid-cols-[3fr_2fr]" : ""
+        <div className={`grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8 md:gap-12 ${
+          image_position === "left" ? "md:grid-cols-[3fr_2fr]" : ""
         }`}>
           {image_position === "left" ? (
             <>
-              <div className="lg:col-start-1">{imageContent}</div>
-              <div className="lg:col-start-2">{textContent}</div>
+              <div className="md:col-start-1">{imageContent}</div>
+              <div className="md:col-start-2">{textContent}</div>
             </>
           ) : (
             <>

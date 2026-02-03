@@ -592,6 +592,9 @@ export const humanAndAIDuoSectionSchema = z.object({
   image: z.string().optional(),
   image_alt: z.string().optional(),
   background: z.string().optional(),
+  // Video option - when provided, replaces images with video
+  video: z.string().optional(),
+  video_preview_image: z.string().optional(),
 });
 
 export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
@@ -740,13 +743,21 @@ export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
 // ============================================
 export const featureQuadCardSchema = z.object({
   icon: z.string(),
-  title: z.string(),
-  description: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export const featureQuadImageSchema = z.object({
   image_id: z.string(),
   alt: z.string().optional(),
+  object_position: z.string().optional(),
+  object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+});
+
+export const featureQuadCtaSchema = z.object({
+  text: z.string(),
+  url: z.string(),
+  variant: z.enum(["primary", "secondary", "outline"]).optional(),
 });
 
 export const featureQuadSectionSchema = z.object({
@@ -754,8 +765,9 @@ export const featureQuadSectionSchema = z.object({
   version: z.string().optional(),
   variant: z.enum(["default", "laptopEdge"]).optional(),
   compact: z.boolean().optional(),
-  heading: z.string(),
-  description: z.string(),
+  heading: z.string().optional(),
+  description: z.string().optional(),
+  cta: featureQuadCtaSchema.optional(),
   images: z.array(featureQuadImageSchema).optional(),
   cards: z.array(featureQuadCardSchema),
   footer_description: z.string().optional(),

@@ -24,14 +24,13 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
   
   return (
     <section 
-      className={`${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
 
         
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5">
+        <div className="grid md:grid-cols-12 gap-4 lg:gap-12 items-start flex items-center">
+          <div className="hidden md:block md:col-span-4 lg:col-span-5">
             <img 
               src={image.src}
               alt={image.alt}
@@ -40,9 +39,9 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
             />
           </div>
 
-          <div className="lg:col-span-7 text-center lg:text-left">
+          <div className="md:col-span-7 lg:col-span-7 text-center md:text-left">
             <h1 
-              className="text-h1 mb-4 text-foreground text-center lg:text-left"
+              className="text-h1 mb-4 text-foreground text-center md:text-left"
               data-testid="text-hero-title"
             >
               {data.title}
@@ -65,7 +64,7 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
             )}
 
             {data.cta_buttons && data.cta_buttons.length > 0 && (
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                 {data.cta_buttons.map((button, index) => (
                   <Button
                     key={index}
@@ -82,6 +81,14 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
                 ))}
               </div>
             )}
+            <div className="md:hidden lg:col-span-5 mt-5">
+              <img 
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-auto rounded-card shadow-card"
+                data-testid="img-hero"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -24,7 +24,8 @@ export const benefitItemSchema = z.object({
 
 export const twoColumnColumnSchema = z.object({
   video: z.string().optional(),
-  video_height: z.string().optional(),
+  video_ratio: z.string().optional(),
+  video_preview_image: z.string().optional(),
   video_width: z.string().optional(),
   image: z.string().optional(),
   image_alt: z.string().optional(),
