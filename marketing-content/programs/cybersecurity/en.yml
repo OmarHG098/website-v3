@@ -31,19 +31,19 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +2,500 students enrolled
     bullet_points:
+      - Work with real-world cyber threats and security defenses
       - Master network security fundamentals and threat detection
       - Learn penetration testing with industry-standard tools
-      - Build incident response and digital forensics skills
       - Prepare for EJPT and CEH certifications
     tutors:
-      - name: Security Expert
+      - name: Daniela Maisi
         role: Main Instructor
-        image: https://randomuser.me/api/portraits/men/10.jpg
+        image: https://avatars.githubusercontent.com/u/16064310?v=4
       - name: Rigo
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Become the cybersecurity professional companies can't wait to hire. Our 16-week intensive program combines hands-on labs with personalized mentorship to prepare you for roles with $70K-$130K starting salaries.
+    description: Our 16-week intensive program combines hands-on labs and personalized mentorship to prepare you for high-impact security roles across industries.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
@@ -124,25 +124,24 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Cybersecurity Specialists Are in High Demand
-    subtitle: The numbers don't lie—cybersecurity is the future
-    description: With millions of unfilled positions and rapid job growth, there's never been a better time to enter this field. Our program prepares you for immediate impact.
+    title: Demand for Cybersecurity Specialists Is Soaring
+    subtitle: Launch a career in one of the world’s fastest-growing and essential tech sectors.
+    description: With a significant global talent gap and record-breaking investment in defense, the opportunity for skilled professionals is unprecedented. Our program provides the technical skills and hands-on experience to step directly into these high-paying roles.
     background: bg-muted/30
     items:
       - id: "1"
-        value: 3.5M+
-        title: Unfilled cybersecurity positions globally
+        value: 4.8M
+        title: Unfilled cybersecurity roles worldwide
       - id: "2"
-        value: 35%
-        title: Job growth projected through 2032
+        value: 41%
+        title: Projected job growth, outpacing most sectors
       - id: "3"
-        value: "16"
-        title: Weeks to launch your security career
+        value: $520B
+        title: Global spending on cybersecurity this year
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: What You'll Learn in the Cybersecurity Program
-    program_description: Master the complete cybersecurity stack from network security to penetration testing. Build real-world defensive and offensive skills using industry-standard tools that employers are looking for.
+    program_title: Cybersecurity Program Overview
+    program_description: Master the complete cybersecurity stack from network security to penetration testing. Build real-world defensive and offensive skills using the industry-standard tools employers are looking for.
     tech_logos:
       - name: Linux
         icon: linux
@@ -247,7 +246,6 @@ sections:
     paddingY:
       desktop: md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -286,14 +284,14 @@ sections:
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Book 1-on-1 sessions with expert mentors at your pace
-          - text: Learn LIVE with instructors in coding sessions and workshops
-          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
-          - text: Access Slack channels for security support, job boards, and career advice
+          - text: Lifelong access to 1:1 mentorship sessions
+          - text: 7:1 student–teacher ratio for personalized guidance
+          - text: Peer collaboration through Slack channels and weekly check-ins
+          - text: Dedicated Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
         cta:
           text: Start learning now!
-          url: /en/apply
+          url: /apply
           variant: primary
     paddingY:
       desktop: md
@@ -311,13 +309,13 @@ sections:
       program_name: Cybersecurity Specialist
     stats:
       - value: 84%
-        label: Hiring rate
-        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        label: Hiring Rate
+        description: Graduate with the skills and global certifications that top-tier employers are actively seeking in 2026.
         benefits:
-          - text: Dedicated career coaching from day one
-          - text: Resume and LinkedIn profile optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: CompTIA Security+ Exam Readiness
+          - text: eJPT (Junior Penetration Tester) Prep
+          - text: CEH (Certified Ethical Hacker) Pathway
+          - text: Real-world labs with Nmap & Metasploit
       - value: 3-6 months
         label: Time to get hired
         description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
@@ -349,36 +347,39 @@ sections:
   - type: pricing
     version: "1.0"
     variant: product
-    title: Get access to all of our learning database, courses, and services
-    subtitle: Master cybersecurity skills with unlimited practice and expert guidance.
+    title: Tuition & Financing Options
+    subtitle: Investing in your career matters. We make it easier with multiple ways to fund your enrollment.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $349
+    financing_amount: $299
     tech_icons:
-      - linux
       - python
-      - terminal
-      - server
-      - shield
+      - tensorflow
+      - pandas
+      - numpy
+      - sql
       - git
-    features_title: Access hundreds of exercises, projects, and tutorials in the most wanted security technologies
+      - jupyter
+      - api
+    static_icons: true
+    features_title: Choose the option that fits you best.
     features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world security projects.
-      - icon: cloud
-        text: Thousands of cloud-based security challenges (no setup needed).
-      - icon: RigobotIconTiny
-        text: You will never be stuck or alone again, our AI knows who you are, reads your code and gives you live feedback as you code.
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school by the Florida Department of Education.
+      - icon: IconCheck
+        text: Standard tuition is $10,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
+      - icon: IconCheck
+        text: Finance your tuition through Climb, Fortify, or Lumion with 24, 36, 48, or 60-month plans.
+      - icon: IconCheck
+        text: 2–3 merit-based scholarships available per cohort for highly qualified applicants.
+      - icon: IconCheck
+        text: Enroll with a Job Guarantee for added confidence. Get hired within 9 months of graduation or your money back.
     cta:
       text: Get plan
       url: /en/apply
       variant: primary
+    marginY:
+      desktop: none md
     paddingY:
-      desktop: md
+      desktop: lg md
   - type: whos_hiring
     version: "1.0"
     variant: carousel
@@ -405,8 +406,8 @@ sections:
     paddingY:
       desktop: md
   - type: testimonials
-    title: Your New Career Starts Here
-    subtitle: See what our graduates have to say about their experience
+    title: Real Students. Real Careers.
+    subtitle: 4,000+ graduates and 1,200+ verified reviews prove our programs deliver life-changing results.
     rating_summary:
       average: "4.5"
       count: 1,294
@@ -463,11 +464,11 @@ sections:
       desktop: md
   - type: cta_banner
     version: "1.0"
-    title: Ready to Defend the Digital World?
-    subtitle: Join thousands of graduates who have launched successful careers in cybersecurity with 4Geeks.
+    title: Ready to Launch Your Cybersecurity Career?
+    subtitle: Join thousands of graduates who have launched successful tech careers with 4Geeks.
     background: primary
     buttons:
-      - text: Start Learning Now
+      - text: Apply Now
         url: /en/apply
         variant: secondary
       - text: Talk to an Advisor

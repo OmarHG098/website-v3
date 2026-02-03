@@ -7,8 +7,8 @@ yaml: |
     subtitle: "See how our approach stacks up against typical alternatives"
     columns:
       - name: "Feature"
-      - name: "Our Brand"
         highlight: true
+      - name: "Our Brand"
       - name: "Others"
     rows:
       - feature: "1:1 Support"

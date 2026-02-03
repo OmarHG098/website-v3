@@ -1328,22 +1328,6 @@ export function SectionEditorPanel({
                             </button>
                           );
                         })}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const defaultItem: Record<string, unknown> = {
-                              [itemField]: "IconBook",
-                              text: "New feature",
-                              count: "0",
-                            };
-                            addArrayItem(arrayPath, defaultItem);
-                          }}
-                          className="flex items-center justify-center w-10 h-10 rounded border border-dashed border-muted-foreground/50 bg-transparent hover:bg-muted/30 hover:border-muted-foreground transition-colors"
-                          data-testid={`props-icon-${arrayFieldLabel}-add`}
-                          title="Add new item"
-                        >
-                          <IconPlus className="h-5 w-5 text-muted-foreground" />
-                        </button>
                       </div>
                     </div>
                   );

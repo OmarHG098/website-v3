@@ -10,7 +10,9 @@ function getIcon(iconName: string, className?: string, color?: string) {
     return <CustomIcon width="100%" height="100%" color={color} className={className} />;
   }
   
-  const IconComponent = TablerIcons[`Icon${iconName}` as keyof typeof TablerIcons] as ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  // Handle both "IconRocket" and "Rocket" formats
+  const tablerName = iconName.startsWith("Icon") ? iconName : `Icon${iconName}`;
+  const IconComponent = TablerIcons[tablerName as keyof typeof TablerIcons] as ComponentType<{ className?: string; style?: React.CSSProperties }>;
   if (IconComponent) {
     const style = color ? { color } : undefined;
     return <IconComponent className={className || "w-full h-full text-primary"} style={style} />;

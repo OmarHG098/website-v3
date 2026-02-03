@@ -173,6 +173,7 @@ const CTABannerSection = lazy(() => import("./CTABannerSection").then(m => ({ de
 const ProjectShowcase = lazy(() => import("@/components/ProjectShowcase").then(m => ({ default: m.ProjectShowcase })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const ComparisonTable = lazy(() => import("@/components/ComparisonTable").then(m => ({ default: m.ComparisonTable })));
+const GeeksVsOthersComparison = lazy(() => import("@/components/GeeksVsOthersComparison").then(m => ({ default: m.GeeksVsOthersComparison })));
 const AwardsRow = lazy(() => import("@/components/AwardsRow"));
 const HorizontalBars = lazy(() => import("@/components/HorizontalBars").then(m => ({ default: m.HorizontalBars })));
 const VerticalBarsCards = lazy(() => import("@/components/VerticalBarsCards").then(m => ({ default: m.VerticalBarsCards })));
@@ -202,23 +203,14 @@ import { emitContentUpdated } from "@/lib/contentEvents";
 import { useEditModeOptional, type PreviewBreakpoint } from "@/contexts/EditModeContext";
 
 // Check if a section should be visible based on showOn and current preview breakpoint
-// In edit mode, respects previewBreakpoint; in production, always returns true (CSS handles visibility)
+// In edit mode: always show all sections (visibility alert is shown instead of hiding)
+// In production: CSS handles visibility
 function shouldShowSection(showOn: ShowOn | undefined, previewBreakpoint: PreviewBreakpoint | undefined, isEditMode: boolean): boolean {
-  // If not in edit mode or no previewBreakpoint, always show (CSS will handle responsive visibility)
-  if (!isEditMode || !previewBreakpoint) return true;
+  // In edit mode, always show all sections (EditableSection will display visibility alerts)
+  if (isEditMode) return true;
   
-  // In edit mode, filter based on previewBreakpoint
-  const effectiveShowOn = showOn || 'all';
-  
-  switch (effectiveShowOn) {
-    case 'mobile':
-      return previewBreakpoint === 'mobile';
-    case 'desktop':
-      return previewBreakpoint === 'desktop';
-    case 'all':
-    default:
-      return true;
-  }
+  // In production, always return true - CSS classes handle responsive visibility
+  return true;
 }
 
 // Loading fallback for lazy sections
@@ -431,6 +423,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><About data={section as Parameters<typeof About>[0]["data"]} /></LazySection>;
     case "comparison_table":
       return <LazySection key={index}><ComparisonTable data={section as Parameters<typeof ComparisonTable>[0]["data"]} /></LazySection>;
+    case "geeks_vs_others_comparison":
+      return <LazySection key={index}><GeeksVsOthersComparison data={section as Parameters<typeof GeeksVsOthersComparison>[0]["data"]} /></LazySection>;
     case "awards_row":
       return <LazySection key={index}><AwardsRow data={section as Parameters<typeof AwardsRow>[0]["data"]} /></LazySection>;
     case "horizontal_bars":

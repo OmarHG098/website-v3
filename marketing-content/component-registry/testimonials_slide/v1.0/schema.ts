@@ -21,6 +21,7 @@ export const testimonialsSlideSectionSchema = z.object({
   title: z.string(),
   description: z.string(),
   background: z.string().optional(),
+  testimonials: z.array(testimonialsSlideTestimonialSchema).optional(),
 });
 
 export type TestimonialsSlideTestimonial = z.infer<typeof testimonialsSlideTestimonialSchema>;

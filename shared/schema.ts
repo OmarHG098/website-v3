@@ -353,6 +353,18 @@ export {
 } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
 
 // ============================================
+// Re-export Geeks vs Others Comparison Schemas from Component Registry
+// ============================================
+export {
+  geeksVsOthersColumnSchema,
+  geeksVsOthersRowSchema,
+  geeksVsOthersComparisonSectionSchema,
+  type GeeksVsOthersColumn,
+  type GeeksVsOthersRow,
+  type GeeksVsOthersComparisonSection,
+} from "../marketing-content/component-registry/geeks_vs_others_comparison/v1.0/schema";
+
+// ============================================
 // Re-export Bento Cards Schemas from Component Registry
 // ============================================
 export {
@@ -689,6 +701,7 @@ import { testimonialsSlideSectionSchema } from "../marketing-content/component-r
 import { ctaBannerSectionSchema } from "../marketing-content/component-registry/cta_banner/v1.0/schema";
 import { projectShowcaseSectionSchema, projectsShowcaseSectionSchema } from "../marketing-content/component-registry/project_showcase/v1.0/schema";
 import { comparisonTableSectionSchema } from "../marketing-content/component-registry/comparison_table/v1.0/schema";
+import { geeksVsOthersComparisonSectionSchema } from "../marketing-content/component-registry/geeks_vs_others_comparison/v1.0/schema";
 import { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab } from "../marketing-content/component-registry/bullet_tabs_showcase/v1.0/schema";
 export { bulletTabsShowcaseSectionSchema, type BulletTabsShowcaseSection, type BulletTab };
 import { graduatesStatsSectionSchema, graduatesFeaturedImageSchema, type GraduatesStatsSection, type GraduatesStatItem, type GraduatesCollageImage, type GraduatesFeaturedImage, type GraduatesStatsAsymmetric } from "../marketing-content/component-registry/graduates_stats/v1.0/schema";
@@ -815,6 +828,7 @@ const baseSectionSchema = z.union([
   projectsShowcaseSectionSchema,
   aboutSectionSchema,
   comparisonTableSectionSchema,
+  geeksVsOthersComparisonSectionSchema,
   statsSectionSchema,
 
   horizontalBarsSectionSchema,

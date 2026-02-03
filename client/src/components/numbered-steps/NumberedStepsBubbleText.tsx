@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { NumberedStepsBubbleTextSection } from "@shared/schema";
+import { Card, CardContent } from "@/components/ui/card";
+import { IconChevronDown } from "@tabler/icons-react";
 
 interface StepNumberProps {
   index: number;
@@ -29,10 +31,15 @@ interface NumberedStepsBubbleTextProps {
 
 export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) {
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [expandedCard, setExpandedCard] = useState<number | null>(0);
   const steps = data.steps || [];
 
   const handleStepInteraction = (index: number) => {
     setActiveStep(index);
+  };
+
+  const toggleCard = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
   };
 
   const getActiveContent = () => {
@@ -68,53 +75,80 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           </p>
         )}
 
-        {/* Mobile: Vertical layout */}
-        <div className="md:hidden space-y-6">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center"
-              data-testid={`numbered-step-mobile-${index + 1}`}
-            >
-              <button
-                onClick={() => handleStepInteraction(index)}
-                aria-label={step.title || `Step ${index + 1}`}
-                aria-expanded={activeStep === index}
-                className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                  activeStep === index
-                    ? "scale-105"
-                    : "hover:scale-102"
-                }`}
-                data-testid={`button-numbered-step-${index + 1}`}
-              >
-                <StepNumber index={index} size="sm" />
-                {step.title && (
-                  <h3 className="text-base font-semibold text-foreground leading-tight">
-                    {step.title}
-                  </h3>
-                )}
-              </button>
-              {activeStep === index && step.bullets && (
-                <div className="mt-4 p-4 w-full animate-in fade-in slide-in-from-top-2 duration-300">
-                  <ul className="space-y-2">
-                    {step.bullets.map((bullet, bulletIndex) => (
-                      <li
-                        key={bulletIndex}
-                        className="flex gap-2 items-start text-sm text-muted-foreground"
+        {/* Mobile & Tablet: Vertical cards layout */}
+        <div className="lg:hidden">
+          <div className="relative max-w-2xl mx-auto">
+            {steps.map((step, index) => {
+              const isLast = index === steps.length - 1;
+              const number = String(index + 1).padStart(2, '0');
+
+              return (
+                <div
+                  key={index}
+                  className="flex gap-4 md:gap-6"
+                  data-testid={`numbered-step-mobile-${index + 1}`}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg border-2 border-primary bg-primary/10 flex items-center justify-center flex-shrink-0 relative z-10">
+                      <span className="text-lg md:text-xl font-bold text-primary">{number}</span>
+                    </div>
+                    {!isLast && (
+                      <div className="w-0.5 flex-1 bg-primary/30 my-2" />
+                    )}
+                  </div>
+                  <Card className={`flex-1 w-full ${isLast ? 'mb-0' : 'mb-4'}`}>
+                    <CardContent className="!p-4">
+                      <button
+                        onClick={() => toggleCard(index)}
+                        className="flex items-center justify-between w-full text-left"
+                        aria-expanded={expandedCard === index}
+                        data-testid={`button-toggle-step-${index + 1}`}
                       >
-                        <span className="text-foreground flex-shrink-0 mt-0.5">•</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        {step.title && (
+                          <h3 className="text-lg font-semibold text-foreground">
+                            {step.title}
+                          </h3>
+                        )}
+                        <IconChevronDown 
+                          className={`w-5 h-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
+                            expandedCard === index ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+
+                      <div className={`overflow-hidden transition-all duration-300 ${
+                        expandedCard === index ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'
+                      }`}>
+                        {step.text && (
+                          <p className="text-muted-foreground">
+                            {step.text}
+                          </p>
+                        )}
+
+                        {step.bullets && step.bullets.length > 0 && (
+                          <ul className="space-y-2 mt-3">
+                            {step.bullets.map((bullet, bulletIndex) => (
+                              <li
+                                key={bulletIndex}
+                                className="flex gap-2 items-start text-base text-muted-foreground"
+                              >
+                                <span className="text-primary flex-shrink-0 mt-0.5">•</span>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         {/* Desktop: CSS Grid Triangle layout with connectors */}
-        <div className="hidden md:block relative">
+        <div className="hidden lg:block relative">
           {/* SVG Curved Connector Lines - Dotted */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
