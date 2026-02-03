@@ -246,7 +246,6 @@ sections:
     paddingY:
       desktop: md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
     title: Why Learn with 4Geeks?
@@ -285,14 +284,14 @@ sections:
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Book 1-on-1 sessions with expert mentors at your pace
-          - text: Learn LIVE with instructors in coding sessions and workshops
-          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
-          - text: Access Slack channels for security support, job boards, and career advice
+          - text: Lifelong access to 1:1 mentorship sessions
+          - text: 7:1 student–teacher ratio for personalized guidance
+          - text: Peer collaboration through Slack channels and weekly check-ins
+          - text: Dedicated Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
         cta:
           text: Start learning now!
-          url: /en/apply
+          url: /apply
           variant: primary
     paddingY:
       desktop: md
