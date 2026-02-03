@@ -31,19 +31,19 @@ sections:
         - https://randomuser.me/api/portraits/men/4.jpg
       count: +2,500 students enrolled
     bullet_points:
+      - Work with real-world cyber threats and security defenses
       - Master network security fundamentals and threat detection
       - Learn penetration testing with industry-standard tools
-      - Build incident response and digital forensics skills
       - Prepare for EJPT and CEH certifications
     tutors:
-      - name: Security Expert
+      - name: Daniela Maisi
         role: Main Instructor
         image: https://randomuser.me/api/portraits/men/10.jpg
       - name: Rigo
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Become the cybersecurity professional companies can't wait to hire. Our 16-week intensive program combines hands-on labs with personalized mentorship to prepare you for roles with $70K-$130K starting salaries.
+    description: Our 16-week intensive program combines hands-on labs and personalized mentorship to prepare you for high-impact security roles across industries.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
