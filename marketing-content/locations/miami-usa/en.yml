@@ -142,6 +142,28 @@ sections:
     paddingY:
       desktop: none lg
   - type: human_and_ai_duo
+    version: v1.0
+    heading: Learn with AI-Powered Support
+    description: Through years of research and experience, we've perfected the strategies and tools to ensure your constant and efficient progress. To optimize your learning curve and empower you to tackle challenges with confidence, we've now incorporated the power of AI
+    bullet_groups:
+      - title: AI-Powered Learning
+        description: Get instant answers and code feedback 24/7 with Rigobot.
+        icon: Robot
+        bullets:
+          - text: Instant code reviews and suggestions
+          - text: Personalized learning recommendations
+          - text: Available around the clock
+      - title: Human Mentorship
+        description: Connect with experienced developers for deeper guidance.
+        icon: Users
+        bullets:
+          - text: One-on-one mentoring sessions
+          - text: Career advice and portfolio reviews
+          - text: Real-world project feedback
+    footer_description: Join thousands of students who have accelerated their learning with our hybrid support system.
+    background: bg-muted/30
+    video: https://youtu.be/4n-ZAUPIxJI
+  - type: human_and_ai_duo
     version: "1.0"
     heading: Our AI-powered features make all the difference!
     description: Through years of research and experience, we've perfected the strategies and tools to ensure your constant and efficient progress. To optimize your learning curve and empower you to tackle challenges with confidence, we've now incorporated the power of AI
