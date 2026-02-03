@@ -124,9 +124,9 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Cybersecurity Specialists Are in High Demand
+    title: Demand for Cybersecurity Specialists is Soaring
     subtitle: Secure your future in one of the world’s fastest-growing and most essential tech sectors.
-    description: With a global talent gap and record-breaking investment in defense, the opportunity for skilled professionals is unprecedented. Our program provides the technical mastery and hands-on experience to step directly into these high-value roles.
+    description: With a significant global talent gap and record-breaking investment in defense, the opportunity for skilled professionals is unprecedented. Our program provides the technical mastery and hands-on experience to step directly into these high-value roles.
     background: bg-muted/30
     items:
       - id: "1"
@@ -139,10 +139,9 @@ sections:
         value: $520B
         title: Global spending on cybersecurity this year
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: What You'll Learn in the Cybersecurity Program
-    program_description: Master the complete cybersecurity stack from network security to penetration testing. Build real-world defensive and offensive skills using industry-standard tools that employers are looking for.
+    program_title: Cybersecurity Program Overview
+    program_description: Master the complete cybersecurity stack from network security to penetration testing. Build real-world defensive and offensive skills using the industry-standard tools employers are looking for.
     tech_logos:
       - name: Linux
         icon: linux
