@@ -31,7 +31,7 @@ sections:
       - text: Affordable loans.
       - text: Scholarships.
     video:
-      url: /attached_assets/ai-engineering_1765593572918.mp4
+      url: https://media.videoask.com/transcoded/7edaca78-55de-4e83-b084-c256ebafbce6/video.mp4?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZWRpYV9pZCI6IjdlZGFjYTc4LTU1ZGUtNGU4My1iMDg0LWMyNTZlYmFmYmNlNiIsImV4cCI6MTc3MDQ3NDg0NX0.LWSDjkCor5QxpVCnAS3yjxjSHlniteRoaT16OWdhF0ZQqwUUEZpWQ7i2Bp9l03h_Tp4BKZDVdK1HyuKrq7cKQwFNgtgOEp4TONTP6xv-1_5OjQ87_haEgZlwJCeH4tfgn7hFbdvYNhUzT54hCv3vH9MUMlwdKRRBp9TJqbL7xg-9qbGphU1foHVI81s5__DbYQepRROjGgTOpwJGNIPQbUy6JFgD9lODe7pRoLRMyH2eq_KIRdP28JfrXO0TrtpYym9X6XTb-a68wS6CnA7DJ9nAvePLRhJvLCghmzcrGJgXTy3TPul4pPqTrygghrw0xZ7i7YBPWYAyQT5vDaQY_yjf-RIVsxE0Hwmf3i2vptc_HRAxUXJqPwai68eRuhS-MzP-ZK7O9ceMN1TSKy5LPkU77JjCK8XlPtuU0NPq8KAmORw6kVm0wJtBD6i1TmxVgWNCVZvc6lmli-2gh3bVruKvML_-5i-ZLoFH2Humk_nrKYwrK0NF4N3DFh9dwrh87Ns-Ebu71etgtHzPIUJU0OJz5zfbg45YuslmyDzexbkt93PUlUlI7T2aoueiuxEhJghLyzhhliP9AEtw9Mt2RFwMnObcWaAw5HBrKWWkda1hwlVMxhtwG7WvdRgGQFiFzQ3BmNfOOhOtthARWVtyGFiSK9Q0f_9NaMPunZMMYGI
       ratio: "9:16"
       muted: true
       loop: true
@@ -65,7 +65,7 @@ sections:
       - title: Scholarships
         description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
     paddingY:
-      desktop: md none
+      desktop: md lg
     background: hsl(210 100% 50% / 0.05)
     marginY:
       desktop: none lg
@@ -81,36 +81,47 @@ sections:
       - name: Loans (Ascent/ Climb)
       - name: Income-Based (Edly)
     rows:
-      - feature: 1:1 Support
+      - feature: Discount
         values:
-          - Unlimited
-          - Limited
-        feature_description: Get personalized guidance whenever you need it
-      - feature: Guarantee
-        values:
-          - "Yes"
+          - 10% off
           - "No"
-        feature_description: Money back if not satisfied
-      - feature: Pricing
+          - "No"
+          - "No"
+      - feature: Credit Check
         values:
-          - Flexible
-          - Fixed
-    footer_note: "* Based on industry research"
+          - "No"
+          - Low Barrier
+          - Required
+          - Required
+      - feature: Defer Payments
+        values:
+          - "No"
+          - "No"
+          - "Yes"
+          - "Yes"
+      - feature: Pay Once Hired
+        values:
+          - "No"
+          - "No"
+          - "No"
+          - "Yes"
     marginY:
       desktop: lg md
+    paddingY:
+      desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
     title: Need extra confidence? Add a Job Guarantee
     subtitle: You will never be alone!
-    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a full tuition refund. The job guarantee can also be financed.
+    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a  full tuition refund. The job guarantee can also be financed.
     cta:
       text: More info here
       url: /signup
       variant: primary
     marginY:
-      desktop: md lg
+      desktop: md
     paddingY:
-      desktop: none md
+      desktop: none sm
   - type: testimonials
     version: v1.0
     title: What Our Students Say
@@ -169,33 +180,10 @@ sections:
       - value: 3-6 Months
         title: Average time to get hired
     marginY:
-      desktop: lg none
+      desktop: lg
     paddingY:
       desktop: none lg
-  - type: testimonials_slide
-    version: "1.0"
-    title: Real Careers Start Here — Just Ask Our Students
-    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
-    testimonials:
-      - name: Loretta Simpson
-        img: /assets/testimonial-1.jpg
-        status: Graduated
-        country:
-          name: United States
-          iso: US
-        contributor: Full Stack Developer
-        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
-        achievement: Hired at top tech company
-      - name: Carlos Martinez
-        img: /assets/testimonial-2.jpg
-        status: Graduated
-        country:
-          name: Spain
-          iso: ES
-        contributor: Software Engineer
-        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
-    paddingY:
-      desktop: none
+    background: hsl(var(--secondary))
   - type: pricing
     version: "1.0"
     variant: product
@@ -231,6 +219,8 @@ sections:
       text: Apply Now
       url: /apply
       variant: primary
+    marginY:
+      desktop: lg none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
@@ -244,3 +234,5 @@ sections:
   - type: footer
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.
+    paddingY:
+      desktop: none md
