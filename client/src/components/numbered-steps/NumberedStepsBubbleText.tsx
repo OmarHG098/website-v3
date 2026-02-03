@@ -69,7 +69,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
         )}
 
         {/* Mobile: Vertical layout */}
-        <div className="md:hidden space-y-6">
+        <div className="lg:hidden space-y-6">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -114,7 +114,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
         </div>
 
         {/* Desktop: CSS Grid Triangle layout with connectors */}
-        <div className="hidden md:block relative">
+        <div className="hidden lg:block relative">
           {/* SVG Curved Connector Lines - Dotted */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
