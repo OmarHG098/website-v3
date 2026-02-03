@@ -1,17 +1,5 @@
 import type { ComparisonTableSection } from "@shared/schema";
-import { 
-  IconCheck, 
-  IconX, 
-  IconBriefcase, 
-  IconUsers, 
-  IconSparkles, 
-  IconMessageCircle, 
-  IconBook, 
-  IconTrendingUp, 
-  IconWorld, 
-  IconDeviceDesktop, 
-  IconSchool 
-} from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import {
   Accordion,
   AccordionContent,
@@ -23,28 +11,14 @@ interface ComparisonTableProps {
   data: ComparisonTableSection;
 }
 
-const featureIcons: Record<string, typeof IconBriefcase> = {
-  "Career Support": IconBriefcase,
-  "Teacher: Student Ratio": IconUsers,
-  "AI-Powered Feedback": IconSparkles,
-  "1-on-1 Mentoring": IconMessageCircle,
-  "Curriculum": IconBook,
-  "% Hiring Rate": IconTrendingUp,
-  "Community": IconWorld,
-  "Class Format": IconDeviceDesktop,
-  "Previous Knowledge": IconSchool,
-};
-
 function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: boolean }) {
-  if (value === "yes" || value === "Yes" || value === "✓") {
-    return (
-      <IconCheck className="w-6 h-6 text-primary mx-auto" />
-    );
+  const lowerValue = value.toLowerCase();
+  
+  if (lowerValue === "yes" || lowerValue === "true" || value === "✓" || value === "check") {
+    return <IconCheck className="w-6 h-6 text-primary mx-auto" />;
   }
-  if (value === "no" || value === "No" || value === "✗") {
-    return (
-      <IconX className="w-6 h-6 text-muted-foreground mx-auto" />
-    );
+  if (lowerValue === "no" || lowerValue === "false" || value === "✗" || value === "x") {
+    return <IconX className="w-6 h-6 text-muted-foreground mx-auto" />;
   }
   
   if (isHighlighted) {
@@ -61,6 +35,7 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
 
 export function ComparisonTable({ data }: ComparisonTableProps) {
   const highlightIndex = data.columns.findIndex(col => col.highlight);
+  const columnCount = data.columns.length;
 
   return (
     <section
@@ -86,10 +61,11 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
         )}
 
         <div className="hidden md:block">
-          {/* Premium comparison table */}
           <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5" data-testid="table-comparison">
-            {/* Header row */}
-            <div className="grid grid-cols-3">
+            <div 
+              className="grid"
+              style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
+            >
               {data.columns.map((column, colIndex) => {
                 const isFeatureCol = colIndex === 0;
                 const isHighlighted = column.highlight;
@@ -107,60 +83,46 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     data-testid={`th-column-${colIndex}`}
                   >
                     <span>{column.name}</span>
-                    {isHighlighted && (
-                      <span className="block text-xs opacity-90 mt-1 font-medium">Our Approach</span>
-                    )}
                   </div>
                 );
               })}
             </div>
-            {/* Table body */}
-            {data.rows.map((row, rowIndex) => {
-              const FeatureIcon = featureIcons[row.feature];
-              
-              return (
-                <div
-                  key={rowIndex}
-                  className={`grid grid-cols-3 transition-colors hover:bg-primary/5 ${
-                    rowIndex % 2 === 0 ? "bg-card" : "bg-muted/30"
-                  }`}
-                  data-testid={`tr-row-${rowIndex}`}
-                >
-                  {/* Feature name - left aligned with icon */}
-                  <div className="py-5 px-6 font-medium text-foreground text-left flex items-start gap-2">
-                    {FeatureIcon && (
-                      <FeatureIcon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    )}
-                    <div>
-                      <span>{row.feature}</span>
-                      {row.feature_description && (
-                        <p className="text-sm text-muted-foreground font-normal mt-1">
-                          {row.feature_description}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  {/* Values */}
-                  {row.values.map((value, valIndex) => {
-                    const isHighlightedCol = valIndex === highlightIndex - 1;
-                    
-                    return (
-                      <div
-                        key={valIndex}
-                        className={`py-5 px-6 text-center flex items-center justify-center ${
-                          isHighlightedCol
-                            ? "bg-primary/5 font-semibold text-foreground"
-                            : "text-muted-foreground font-normal"
-                        }`}
-                        data-testid={`td-value-${rowIndex}-${valIndex}`}
-                      >
-                        <CellValue value={value} isHighlighted={isHighlightedCol} />
-                      </div>
-                    );
-                  })}
+            {data.rows.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                className={`grid transition-colors hover:bg-primary/5 ${
+                  rowIndex % 2 === 0 ? "bg-card" : "bg-muted/30"
+                }`}
+                style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
+                data-testid={`tr-row-${rowIndex}`}
+              >
+                <div className="py-5 px-6 font-medium text-foreground text-left">
+                  <span>{row.feature}</span>
+                  {row.feature_description && (
+                    <p className="text-sm text-muted-foreground font-normal mt-1">
+                      {row.feature_description}
+                    </p>
+                  )}
                 </div>
-              );
-            })}
+                {row.values.map((value, valIndex) => {
+                  const isHighlightedCol = valIndex === highlightIndex - 1;
+                  
+                  return (
+                    <div
+                      key={valIndex}
+                      className={`py-5 px-6 text-center flex items-center justify-center ${
+                        isHighlightedCol
+                          ? "bg-primary/5 font-semibold text-foreground"
+                          : "text-muted-foreground font-normal"
+                      }`}
+                      data-testid={`td-value-${rowIndex}-${valIndex}`}
+                    >
+                      <CellValue value={value} isHighlighted={isHighlightedCol} />
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -170,7 +132,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <AccordionItem
                 key={rowIndex}
                 value={`row-${rowIndex}`}
-                className="rounded-card shadow-sm px-6 [&]:border-0 bg-card transition-colors duration-200 active:scale-[0.99] data-[state=open]:bg-primary/5 data-[state=open]:shadow-card"
+                className="rounded-card shadow-sm px-6 [&]:border-0 bg-card transition-colors duration-200 data-[state=open]:bg-primary/5 data-[state=open]:shadow-card"
                 data-testid={`accordion-comparison-${rowIndex}`}
               >
                 <AccordionTrigger className="hover:no-underline py-4 min-h-[56px] [&>svg]:w-5 [&>svg]:h-5">
@@ -179,34 +141,33 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="pt-4 pb-6">
-                  <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-stretch">
-                    {/* 4Geeks Academy side - highlighted with checkmark */}
-                    <div className="bg-primary/5 rounded-card p-6 border-l-[3px] border-primary shadow-sm">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="bg-primary/10 rounded-full p-1">
-                          <IconCheck className="w-5 h-5 text-primary" />
-                        </span>
-                        <p className="text-xs text-primary font-semibold">
-                          {data.columns[1]?.name || "4Geeks Academy"}
-                        </p>
-                      </div>
-                      <p className="text-base font-bold text-foreground mt-2">
-                        <CellValue value={row.values[0]} />
-                      </p>
-                    </div>
-                    {/* VS divider */}
-                    <div className="flex items-center justify-center px-2">
-                      <span className="text-xs font-semibold text-muted-foreground uppercase">vs</span>
-                    </div>
-                    {/* Competitors side */}
-                    <div className="bg-muted/30 rounded-card p-6">
-                      <span className="inline-block px-2 py-0.5 bg-muted text-xs rounded-md text-muted-foreground font-medium mb-2">
-                        {(data.columns[2]?.name || "Industry Average").replace(" / Competitors", "")}
-                      </span>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        <CellValue value={row.values[1]} />
-                      </p>
-                    </div>
+                  <div className="flex flex-col gap-3">
+                    {row.values.map((value, valIndex) => {
+                      const columnName = data.columns[valIndex + 1]?.name || `Column ${valIndex + 2}`;
+                      const isHighlightedCol = valIndex === highlightIndex - 1;
+                      
+                      return (
+                        <div 
+                          key={valIndex}
+                          className={`rounded-card p-4 ${
+                            isHighlightedCol 
+                              ? "bg-primary/5 border-l-[3px] border-primary" 
+                              : "bg-muted/30"
+                          }`}
+                        >
+                          <p className={`text-xs font-semibold mb-1 ${
+                            isHighlightedCol ? "text-primary" : "text-muted-foreground"
+                          }`}>
+                            {columnName}
+                          </p>
+                          <p className={`text-sm ${
+                            isHighlightedCol ? "font-bold text-foreground" : "text-muted-foreground"
+                          }`}>
+                            <CellValue value={value} isHighlighted={isHighlightedCol} />
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </AccordionContent>
               </AccordionItem>
