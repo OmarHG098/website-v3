@@ -166,27 +166,6 @@ sections:
           - text: Expert bug fixing assistance.
             icon: Code
     footer_description: Experience the difference our AI-powered features make. Our tried-and-tested approach keeps you engaged, motivated, and on the fast track to achieving your coding goals!
-    images:
-      - src: /attached_assets/student-1-asian.png
-        alt: Asian student learning to code
-        object_fit: cover
-        object_position: 50% 20%
-        border_radius: 0.5rem
-      - src: ""
-        alt: Student 2
-        object_fit: cover
-        object_position: center top
-        border_radius: 0.5rem
-      - src: ""
-        alt: Student 3
-        object_fit: cover
-        object_position: center top
-        border_radius: 0.5rem
-      - src: ""
-        alt: Student 4
-        object_fit: cover
-        object_position: center top
-        border_radius: 0.5rem
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: hsl(210 100% 50% / 0.05)

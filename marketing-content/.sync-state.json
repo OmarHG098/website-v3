@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "af68607318721999b3c37fd3ee47702e5a6d407d",
-  "lastSyncedAt": "2026-02-03T14:46:19.411Z",
+  "lastSyncedCommit": "d5ea3e229cb77d56e78fd1e86c7853d5b89b0459",
+  "lastSyncedAt": "2026-02-03T15:28:36.059Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -363,11 +363,9 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "e14d831b36ff67742fa52219ec31fb3a436a1e26b8099ed380879c1abf99af69",
-      "lastModified": 1770130739997.0657,
-      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T14:58:59.998Z"
+      "sha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
+      "lastModified": 1770132514392.3135,
+      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -655,11 +653,9 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "ab532bb8f678a172a803a509322f53e4306bf8aa7b88f3954c837c00ef2c3b78",
-      "lastModified": 1770131260997.152,
-      "remoteSha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T15:07:40.999Z"
+      "sha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c",
+      "lastModified": 1770132514888.313,
+      "remoteSha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
@@ -702,11 +698,9 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "a2a4767edd8088ca6a6582014952aef291e55501fc4722f97d4706e121b4607a",
-      "lastModified": 1770132245896.6338,
-      "remoteSha": "539666a50e0d2ddc55177357a2d234be70b338e014459d5cc9f150440d90a05a",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T15:24:05.900Z"
+      "sha": "539666a50e0d2ddc55177357a2d234be70b338e014459d5cc9f150440d90a05a",
+      "lastModified": 1770132515300.3125,
+      "remoteSha": "539666a50e0d2ddc55177357a2d234be70b338e014459d5cc9f150440d90a05a"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
@@ -774,9 +768,9 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "0f4c676fb13955f1a80dd622c7f69c039374037bf33ad7343a34e72b58152170",
-      "lastModified": 1770128653326.9368,
-      "remoteSha": "0f4c676fb13955f1a80dd622c7f69c039374037bf33ad7343a34e72b58152170"
+      "sha": "5e3604ad83f0c14a5d3bb385f71ba48b55dca81370b5d4bf62dc9b4afdb45f55",
+      "lastModified": 1770132515730.3118,
+      "remoteSha": "5e3604ad83f0c14a5d3bb385f71ba48b55dca81370b5d4bf62dc9b4afdb45f55"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
