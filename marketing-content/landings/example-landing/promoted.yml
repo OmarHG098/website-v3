@@ -145,8 +145,8 @@ sections:
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: logo_uber
-        alt: Uber logo
     image_position: right
+    showOn: mobile
   - type: image_row
     images:
       - src: /attached_assets/student-1-asian.png

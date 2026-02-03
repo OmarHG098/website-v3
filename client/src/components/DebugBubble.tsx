@@ -389,6 +389,9 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
+  // Check if we're inside an iframe (e.g., mobile preview)
+  const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+  
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
   const editMode = useEditModeOptional();
@@ -1156,6 +1159,11 @@ export function DebugBubble() {
     "latam": "Latin America",
     "europe": "Europe",
   };
+
+  // Don't render if we're inside an iframe (e.g., mobile preview)
+  if (isInIframe) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
