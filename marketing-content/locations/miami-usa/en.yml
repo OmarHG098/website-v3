@@ -249,6 +249,9 @@ sections:
     title: Why Miami Is a Smart Place to Launch Your Tech Career
     subtitle: Software Development as You Know It Will Cease to Exist
     description: Miami is one of the fastest growing tech ecosystems in the world. Join the number 1 part-time Coding Bootcamp in Miami and become part of the best place to learn to code in Florida. Career Support and Mentorship for our students is for life. Located in Brickell and 5 mins away from the Metro Mover (subway station). Our place is full of amenities, and close to everything. We have parking (free for students and members of the community), and we have a great terrace! Brickell is one of the most active areas in the city. The office is opened 24/7 during the week and on Saturday we host our famous 'Coding Weekends' when students and other developers gather to code all day with mentors, pizzas and drinks on the house!
+    background: hsl(var(--secondary))
+    paddingY:
+      desktop: none
   - type: mentorship
     version: v1.0
     title: Mentorship & Support

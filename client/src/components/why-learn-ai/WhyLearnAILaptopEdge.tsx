@@ -29,11 +29,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
       {/* Background - hidden on mobile */}
       <div className="hidden md:block">
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10"
-          aria-hidden="true"
-        />
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-[80%] bg-muted"
+          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10 rounded-lg"
           aria-hidden="true"
         />
       </div>
@@ -117,7 +113,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
       {/* ===== DESKTOP LAYOUT ===== */}
       <div className="hidden md:block relative max-w-6xl mx-auto px-4 py-4">
         <div className="grid lg:grid-cols-9 gap-8 items-center py-16">
-          <div className="col-span-7 lg:col-span-6">
+          <div className="col-span-7 md:col-span-6 max-w-[700px]">
             <h2 
               className="text-h2 mb-4 text-foreground"
               data-testid="text-why-learn-title"
@@ -152,12 +148,12 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
         </div>
       </div>
 
-      {/* Laptop image - desktop only, moves right on larger screens */}
-      <div className="hidden md:flex absolute md:right-[-350px] lg:right-[-300px] xl:right-[-250px] top-0 bottom-0 w-1/2 items-center pointer-events-none">
+      {/* Laptop image - desktop only, same size as FeaturesQuad */}
+      <div className="hidden lg:flex absolute lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
-          className="w-[100%] max-w-none h-auto object-contain object-left"
+          className="w-[90%] max-w-none h-auto object-contain object-left"
           loading="lazy"
           data-testid="img-why-learn-ai"
         />
