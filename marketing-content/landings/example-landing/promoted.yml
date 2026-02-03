@@ -221,10 +221,8 @@ sections:
     variant: highlight
     title: Key Features
     subtitle: Discover what makes us different
-    columns: 3
-    icon_color: "#0097CD"
     items:
-      - icon: Star
+      - icon: IconFilter
         value: 100%
         title: Satisfaction Rate
       - icon: Users
@@ -233,6 +231,8 @@ sections:
       - icon: Award
         value: 5★
         title: Average Rating
+    columns: 3
+    icon_color: "#0097CD"
   - type: two_column
     proportions:
       - 5

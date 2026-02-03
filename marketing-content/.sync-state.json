@@ -53,10 +53,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "0e25be74be797a7f7bb315589569d9f043f5db59a8fc61c816167ba4b227d5cc",
-      "lastModified": 1770131449392.9138,
+      "sha": "c344e6fd589817508d0b72d471064c6fb613d6f1068744262fe74a558d78c7f9",
+      "lastModified": 1770131868357.6707,
       "remoteSha": "eb0473ecea7797f26a7586206be1ef2aa1e8fc672b57450efa88339dabc59444",
-      "modifiedAt": "2026-02-03T15:10:49.395Z"
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-03T15:17:48.360Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
