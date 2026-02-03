@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { NumberedStepsBubbleTextSection } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
+import { IconChevronDown } from "@tabler/icons-react";
 
 interface StepNumberProps {
   index: number;
@@ -30,10 +31,15 @@ interface NumberedStepsBubbleTextProps {
 
 export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) {
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [expandedCard, setExpandedCard] = useState<number | null>(0);
   const steps = data.steps || [];
 
   const handleStepInteraction = (index: number) => {
     setActiveStep(index);
+  };
+
+  const toggleCard = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
   };
 
   const getActiveContent = () => {
@@ -90,35 +96,49 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
                       <div className="w-0.5 flex-1 bg-primary/30 my-2" />
                     )}
                   </div>
-
-                  <Card className={`flex-1 ${isLast ? 'mb-0' : 'mb-4'}`}>
-                    <CardContent className="p-5 md:p-6">
-                      <div className="flex-1">
+                  <Card className={`flex-1 w-full ${isLast ? 'mb-0' : 'mb-4'}`}>
+                    <CardContent className="!p-4">
+                      <button
+                        onClick={() => toggleCard(index)}
+                        className="flex items-center justify-between w-full text-left"
+                        aria-expanded={expandedCard === index}
+                        data-testid={`button-toggle-step-${index + 1}`}
+                      >
                         {step.title && (
                           <h3 className="text-lg font-semibold text-foreground">
                             {step.title}
                           </h3>
                         )}
+                        <IconChevronDown 
+                          className={`w-5 h-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
+                            expandedCard === index ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+
+                      <div className={`overflow-hidden transition-all duration-300 ${
+                        expandedCard === index ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'
+                      }`}>
                         {step.text && (
-                          <p className="text-muted-foreground mt-1">
+                          <p className="text-muted-foreground">
                             {step.text}
                           </p>
                         )}
-                      </div>
 
-                      {step.bullets && step.bullets.length > 0 && (
-                        <ul className="space-y-2 mt-4">
-                          {step.bullets.map((bullet, bulletIndex) => (
-                            <li
-                              key={bulletIndex}
-                              className="flex gap-2 items-start text-base text-muted-foreground"
-                            >
-                              <span className="text-primary flex-shrink-0 mt-0.5">•</span>
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                        {step.bullets && step.bullets.length > 0 && (
+                          <ul className="space-y-2 mt-3">
+                            {step.bullets.map((bullet, bulletIndex) => (
+                              <li
+                                key={bulletIndex}
+                                className="flex gap-2 items-start text-base text-muted-foreground"
+                              >
+                                <span className="text-primary flex-shrink-0 mt-0.5">•</span>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
