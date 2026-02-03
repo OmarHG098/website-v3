@@ -210,18 +210,6 @@ sections:
     image_object_fit: cover
     paddingY:
       desktop: lg none
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: The Confidence of a Job Guarantee
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
-      badge: Results-Backed Promise
-    secondary:
-      benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-    background: hsl(var(--secondary))
   - type: testimonials_slide
     version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students
@@ -244,6 +232,18 @@ sections:
           iso: ES
         contributor: Software Engineer
         description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: The Confidence of a Job Guarantee
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      badge: Results-Backed Promise
+    secondary:
+      benefits:
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
+    background: hsl(var(--secondary))
   - type: why_learn_ai
     variant: laptop-edge
     title: Why Miami Is a Smart Place to Launch Your Tech Career

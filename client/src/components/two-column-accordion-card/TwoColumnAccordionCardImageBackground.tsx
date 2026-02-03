@@ -34,7 +34,7 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
     <section className="" data-testid="section-two-column-accordion-card">
       <div className="max-w-6xl mx-auto px-4">
         <Card className="overflow-hidden shadow-sm">
-          <CardContent className="p-0">
+          <CardContent className="!p-0 md:p-card">
             <div className={`grid grid-cols-1 md:grid-cols-12 md:min-h-[580px] ${reverse ? "md:flex-row-reverse" : ""}`}>
               <div className={`col-span-1 md:col-span-7 p-6 md:p-10 flex flex-col justify-center ${reverse ? "md:order-2" : "md:order-1"}`}>
                 {title && (
@@ -59,7 +59,7 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
                   <Accordion type="single" collapsible defaultValue="item-0" className="w-full" data-testid="accordion-bullets">
                     {bullets.map((bullet, index) => (
                       <AccordionItem key={index} value={`item-${index}`}>
-                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
+                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-2">
                           {bullet.heading}
                         </AccordionTrigger>
                         <AccordionContent className="text-muted-foreground">
@@ -83,10 +83,10 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
               {image && (
                 <div className={`col-span-1 md:col-span-5 flex items-center ${reverse ? "md:order-1 justify-start" : "md:order-2 justify-end"}`}>
                   <div 
-                    className={`relative bg-primary/30 rounded-2xl py-14 ${reverse ? "pr-4 pl-0" : "pl-4 pr-0"} flex items-center ${reverse ? "justify-start" : "justify-end"} min-h-[300px] md:min-h-[400px] w-full`}
+                    className={`relative bg-primary/30 rounded-2xl pt-14 md:py-14 ${reverse ? "md:pr-4 pl-0" : "pl-0 md:pl-4 pr-0"} flex items-center ${reverse ? "justify-start" : "justify-end"} min-h-[200px] md:min-h-[400px] w-full`}
                     data-testid="img-two-column-accordion-background"
                   >
-                    <div className="w-[90%] flex items-center">
+                    <div className="w-full md:w-[90%] flex items-center justify-end">
                       <img
                         src={image}
                         alt={image_alt || ""}

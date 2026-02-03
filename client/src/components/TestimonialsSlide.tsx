@@ -156,7 +156,7 @@ function MasonryCard({
   return (
     <div 
       className={cn(
-        "bg-muted/30 border border-border/50 rounded-[0.8rem] p-4 shadow-sm",
+        "bg-muted/30 border max-w- border-border/50 rounded-[0.8rem] p-4 shadow-sm",
         config.minHeight
       )}
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
@@ -243,7 +243,7 @@ function createMasonryColumns(testimonials: TestimonialsSlideTestimonial[]): Mas
 
 function MasonryColumnComponent({ column }: { column: MasonryColumn }) {
   return (
-    <div className="flex flex-col gap-4 w-[280px] flex-shrink-0 mx-2">
+    <div className="flex flex-col gap-4 w-[200px] md:w-[280px] flex-shrink-0 mx-2">
       {column.cards.map((card, index) => (
         <MasonryCard 
           key={index} 
@@ -318,7 +318,7 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
       
       <div className="relative">
         {/* Mobile height constraint - limits visible content on mobile */}
-        <div className="overflow-hidden h-[400px] md:h-auto">
+        <div className="overflow-hidden h-[550px] md:h-[400px] md:h-auto">
           <div
             className={cn(
               prefersReducedMotion && "overflow-x-auto"
