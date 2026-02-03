@@ -46,3 +46,19 @@ props:
     type: string
     required: false
     description: Background CSS class (e.g., "bg-muted/30")
+  video:
+    type: string
+    required: false
+    description: Video URL (YouTube, Vimeo, or local). When provided, replaces images with video.
+    example: "https://www.youtube.com/watch?v=MBXqEnhodx0"
+  video_preview_image:
+    type: string
+    required: false
+    description: Custom preview/thumbnail image URL for the video
+    example: "/attached_assets/video-preview.jpg"
+  video_ratio:
+    type: string
+    required: false
+    default: "16:9"
+    description: Aspect ratio for the video (e.g., "16:9", "2.39:1", "4:3")
+    example: "16:9"

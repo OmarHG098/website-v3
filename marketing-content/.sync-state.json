@@ -53,9 +53,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "387a4efd18898a87af3672792979eacf73cde3d2622c6a3b2f83ff9db3e69c85",
-      "lastModified": 1770155020842.2842,
-      "remoteSha": "387a4efd18898a87af3672792979eacf73cde3d2622c6a3b2f83ff9db3e69c85"
+      "sha": "915954625148152bffdd388bc6de795319a3632858fb78d5ad431df59454525f",
+      "lastModified": 1770157846809.045,
+      "remoteSha": "387a4efd18898a87af3672792979eacf73cde3d2622c6a3b2f83ff9db3e69c85",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T22:30:46.811Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -363,9 +365,11 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
-      "lastModified": 1770129973622.822,
-      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7"
+      "sha": "1956b84035ac8ace6b35d687a747069dc723c75b069e064868262a4d8935ad5a",
+      "lastModified": 1770158026940.8936,
+      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T22:33:46.942Z"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",

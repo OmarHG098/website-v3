@@ -171,6 +171,7 @@ sections:
     background: hsl(210 100% 50% / 0.05)
     video: https://www.youtube.com/watch?v=6m1Jyya7eCc
     video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
+    video_ratio: "16:9"
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
