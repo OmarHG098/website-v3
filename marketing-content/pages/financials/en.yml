@@ -47,7 +47,7 @@ sections:
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY:
-      desktop: none
+      desktop: none md
     marginY:
       desktop: none
   - type: syllabus
@@ -65,8 +65,10 @@ sections:
       - title: Scholarships
         description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
     paddingY:
-      desktop: lg
+      desktop: md none
     background: hsl(210 100% 50% / 0.05)
+    marginY:
+      desktop: none lg
   - type: comparison_table
     version: "1.0"
     title: Financing benefits and requirements at a glance
@@ -95,7 +97,7 @@ sections:
           - Fixed
     footer_note: "* Based on industry research"
     marginY:
-      desktop: none md
+      desktop: lg md
   - type: why_learn_ai
     variant: laptop-edge
     title: Need extra confidence? Add a Job Guarantee
@@ -106,4 +108,139 @@ sections:
       url: /signup
       variant: primary
     marginY:
-      desktop: md none
+      desktop: md lg
+    paddingY:
+      desktop: none md
+  - type: testimonials
+    version: v1.0
+    title: What Our Students Say
+    subtitle: Real stories from graduates who transformed their careers
+    rating_summary:
+      average: "4.9"
+      count: 2,847
+    items:
+      - name: Maria Rodriguez
+        role: Software Engineer
+        company: Google
+        rating: 5
+        comment: This program changed my life. I went from zero coding experience to landing my dream job in 6 months.
+        outcome: Hired in 4 months
+      - name: James Chen
+        role: Full Stack Developer
+        company: Spotify
+        rating: 5
+        comment: The mentorship was incredible. Having unlimited access to senior developers made all the difference.
+        outcome: 3x salary increase
+      - name: Sarah Williams
+        role: Frontend Developer
+        company: Meta
+        rating: 5
+        comment: The AI-powered learning tools helped me understand complex concepts faster than any other course I've tried.
+        outcome: Career change at 35
+      - name: Carlos Mendez
+        role: Backend Engineer
+        company: Amazon
+        rating: 4
+        comment: Practical projects and real-world scenarios prepared me better than my computer science degree.
+        outcome: Remote work achieved
+      - name: Emily Thompson
+        role: DevOps Engineer
+        company: Netflix
+        rating: 5
+        comment: The career support team helped me negotiate a 50% higher salary than I expected.
+        outcome: 50% salary boost
+      - name: David Kim
+        role: Tech Lead
+        company: Uber
+        rating: 5
+        comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
+        outcome: Promoted in 1 year
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Affordable tech education with proven results
+    subtitle: The talent shortage is your opportunity
+    description: Our programs offer the highest value at the lowest investment in tech education. That's why Forbes recognized us in 2024 as the Best Online Full-Stack Bootcamp and Best Online Data Science Bootcamp for Students on a Budget.
+    items:
+      - value: 84%
+        title: Job placement rate
+      - value: 55%
+        title: Salary increase after graduation
+      - value: 3-6 Months
+        title: Average time to get hired
+    marginY:
+      desktop: lg none
+    paddingY:
+      desktop: none lg
+  - type: testimonials_slide
+    version: "1.0"
+    title: Real Careers Start Here — Just Ask Our Students
+    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
+    testimonials:
+      - name: Loretta Simpson
+        img: /assets/testimonial-1.jpg
+        status: Graduated
+        country:
+          name: United States
+          iso: US
+        contributor: Full Stack Developer
+        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
+        achievement: Hired at top tech company
+      - name: Carlos Martinez
+        img: /assets/testimonial-2.jpg
+        status: Graduated
+        country:
+          name: Spain
+          iso: ES
+        contributor: Software Engineer
+        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+    paddingY:
+      desktop: none
+  - type: pricing
+    version: "1.0"
+    variant: product
+    title: Finance Your Investment
+    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    discount_text: "Full Payment Discount: Save 10% with upfront payment."
+    financing_text: "Credit-Based Financing: starting below"
+    financing_amount: $299
+    tech_icons:
+      - html
+      - css
+      - javascript
+      - react
+      - python
+      - nodejs
+      - git
+      - bootstrap
+      - api
+      - settings
+    features_title: Access hundreds of exercises, projects tutorials and courses
+    features:
+      - icon: certificate
+        text: Build your portfolio with hundreds of real-world projects.
+      - icon: cloud
+        text: Thousands of cloud-based coding challenges (no setup needed).
+      - text: AI-powered feedback as you code.
+        icon: RigobotIconTiny
+      - icon: certificate
+        text: Course certificates
+      - icon: certificate
+        text: Earn certificates from a USA certified school.
+    cta:
+      text: Apply Now
+      url: /apply
+      variant: primary
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - price
+      - certification
+    marginY:
+      desktop: lg none
+    paddingY:
+      desktop: none md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
