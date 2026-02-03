@@ -5,7 +5,6 @@ import type {
   HeroApplyFormProductShowcase,
 } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
-import { AwardsMarquee } from "@/components/AwardsMarquee";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
@@ -38,7 +37,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const video = fullData.video ?? null;
   const image = fullData.image ?? null;
   const marquee = fullData.marquee ?? null;
-  const awardsMarquee = fullData.awards_marquee ?? null;
   const bullets = fullData.bullets ?? null;
   const leftImages = fullData.left_images ?? null;
   const rightImages = fullData.right_images ?? null;
@@ -378,19 +376,6 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           </div>
         </div>
       </div>
-
-      {awardsMarquee && awardsMarquee.items && awardsMarquee.items.length > 0 && (
-        <div className="relative z-10 mt-8 pb-8">
-          <AwardsMarquee
-            items={awardsMarquee.items}
-            speed={awardsMarquee.speed}
-            gradient={awardsMarquee.gradient}
-            gradientColor={awardsMarquee.gradientColor}
-            gradientWidth={awardsMarquee.gradientWidth}
-            bottom_title={awardsMarquee.bottom_title}
-          />
-        </div>
-      )}
     </section>
   );
 }

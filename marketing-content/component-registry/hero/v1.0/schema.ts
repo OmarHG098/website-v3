@@ -117,15 +117,6 @@ export const heroProductShowcaseSchema = z.object({
   bullets: z.array(bulletItemSchema).nullish(),
   // Embedded marquee renders below description (optional)
   marquee: embeddedMarqueeSchema.nullish(),
-  // Awards marquee renders at the bottom of the hero section
-  awards_marquee: z.object({
-    items: z.array(awardsMarqueeItemSchema),
-    speed: z.number().optional(),
-    gradient: z.boolean().optional(),
-    gradientColor: z.string().optional(),
-    gradientWidth: z.number().optional(),
-    bottom_title: z.string().optional(),
-  }).nullish(),
   video: videoConfigSchema.optional(),
   video_id: z.string().optional(),
   video_ratio: z.string().optional(),

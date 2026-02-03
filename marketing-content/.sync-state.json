@@ -625,9 +625,11 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
-      "lastModified": 1770075394229.8176,
-      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee"
+      "sha": "9935bd433da50872f36d31ec7ab6cc45da04eba6ebbadbcf2c4258edf5878581",
+      "lastModified": 1770082221024.4326,
+      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-03T01:30:21.027Z"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
