@@ -310,7 +310,7 @@ sections:
     stats:
       - value: 84%
         label: Hiring Rate
-        description: Graduate with the skills and global certifications that top-tier employers are actively seeking in 2026.
+        description: Graduate with the skills and global certifications that top-tier companies are actively seeking in 2026.
         benefits:
           - text: CompTIA Security+ Exam Readiness
           - text: eJPT (Junior Penetration Tester) Prep
@@ -334,7 +334,7 @@ sections:
           - text: "Security Engineer: $90K–$130K"
       - value: 5,000+
         label: Hiring Partners
-        description: Our extensive network includes Fortune 500 companies, government agencies, and innovative startups actively seeking security talent.
+        description: Our extensive network includes Fortune 500 companies, government agencies, and innovative startups actively seeking cybersecurity talent.
         benefits:
           - text: Direct referrals to partner companies
           - text: Exclusive job board access
