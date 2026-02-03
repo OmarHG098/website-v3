@@ -317,28 +317,31 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
       </div>
       
       <div className="relative">
-        <div
-          className={cn(
-            prefersReducedMotion && "overflow-x-auto"
-          )}
-          onTouchStart={handleInteractionStart}
-          onTouchEnd={handleInteractionEnd}
-          onMouseEnter={handleInteractionStart}
-          onMouseLeave={handleInteractionEnd}
-        >
-          <Marquee 
-            gradient={false} 
-            speed={25} 
-            play={isPlaying && !prefersReducedMotion}
-            data-testid="marquee-testimonials-slide"
+        {/* Mobile scaling wrapper - scales content to 70% on mobile, 100% on md+ */}
+        <div className="origin-top scale-[0.7] md:scale-100 h-[70%] md:h-auto">
+          <div
+            className={cn(
+              prefersReducedMotion && "overflow-x-auto"
+            )}
+            onTouchStart={handleInteractionStart}
+            onTouchEnd={handleInteractionEnd}
+            onMouseEnter={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
           >
-            <div className="flex items-start py-4">
-              {/* Duplicate columns 3x to ensure seamless loop on ultra-wide screens */}
-              {[...masonryColumns, ...masonryColumns, ...masonryColumns].map((column, index) => (
-                <MasonryColumnComponent key={index} column={column} />
-              ))}
-            </div>
-          </Marquee>
+            <Marquee 
+              gradient={false} 
+              speed={25} 
+              play={isPlaying && !prefersReducedMotion}
+              data-testid="marquee-testimonials-slide"
+            >
+              <div className="flex items-start py-4">
+                {/* Duplicate columns 3x to ensure seamless loop on ultra-wide screens */}
+                {[...masonryColumns, ...masonryColumns, ...masonryColumns].map((column, index) => (
+                  <MasonryColumnComponent key={index} column={column} />
+                ))}
+              </div>
+            </Marquee>
+          </div>
         </div>
         
         <div 
