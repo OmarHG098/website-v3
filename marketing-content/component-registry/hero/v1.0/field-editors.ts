@@ -17,6 +17,7 @@ export const fieldEditors: Record<string, EditorType> = {
   "signup_card.features[].icon": "icon-picker",
   
   // Variant-specific - prefixed with variant name
+  "productShowcase:image_id": "image-picker",
   "productShowcase:left_images[].src": "image-picker",
   "productShowcase:right_images[].src": "image-picker",
   "productShowcase:marquee.items[].logo": "image-picker:logo",

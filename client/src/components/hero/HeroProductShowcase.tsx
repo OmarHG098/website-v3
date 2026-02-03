@@ -5,6 +5,7 @@ import type {
   HeroApplyFormProductShowcase,
 } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
+import { UniversalImage } from "@/components/UniversalImage";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
@@ -36,6 +37,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
   const subtitle = fullData.subtitle ?? null;
   const video = fullData.video ?? null;
   const image = fullData.image ?? null;
+  const imageId = fullData.image_id ?? null;
+  const imageWidth = fullData.image_width ?? null;
   const marquee = fullData.marquee ?? null;
   const bullets = fullData.bullets ?? null;
   const leftImages = fullData.left_images ?? null;
@@ -367,6 +370,14 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 preview_image_url={video.preview_image_url}
                 withShadowBorder={video.with_shadow_border}
                 className="w-[280px] md:w-full md:max-w-[400px]"
+              />
+            ) : imageId ? (
+              <UniversalImage
+                id={imageId}
+                alt="Hero product"
+                className="rounded-card shadow-card"
+                style={{ width: imageWidth ? `${imageWidth}px` : 'auto', maxWidth: '100%' }}
+                data-testid="img-hero-product"
               />
             ) : image ? (
               <img

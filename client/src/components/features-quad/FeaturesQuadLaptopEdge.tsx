@@ -1,9 +1,8 @@
-import * as TablerIcons from "@tabler/icons-react";
-import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
+import { getIcon } from "@/lib/icons";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
 function getButtonVariant(variant?: string): "default" | "secondary" | "outline" | "ghost" | "destructive" {
@@ -20,7 +19,7 @@ interface FeaturesQuadLaptopEdgeProps {
 }
 
 function CompactCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
-  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const IconComponent = getIcon(card.icon);
   const hasTitle = !!card.title;
   const hasDescription = !!card.description;
   const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
@@ -40,7 +39,7 @@ function CompactCard({ card, index }: { card: { icon: string; title?: string; de
 }
 
 function FullCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
-  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const IconComponent = getIcon(card.icon);
   const hasTitle = !!card.title;
   const hasDescription = !!card.description;
   const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
