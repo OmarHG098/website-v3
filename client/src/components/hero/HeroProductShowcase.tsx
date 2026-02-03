@@ -125,7 +125,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
       )}
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
+        <div className="grid md:grid-cols-5 gap-3 md:gap-16 items-start">
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">
             <div className="text-center md:text-left relative w-full min-w-0 pl-[0px] pr-[0px] mt-[24px] mb-[24px]">
               {welcomeText && (
@@ -174,29 +174,31 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {data.description && (
                 <div className="relative">
-                  <p className="text-body text-foreground mb-0 md:mb-10 max-w-xl leading-relaxed">
+                  <p className="text-body text-foreground mt-2 mb-0 md:mb-10 max-w-xl leading-relaxed">
                     {data.description}
                   </p>
                 </div>
               )}
 
               {bullets && bullets.length > 0 && (
-                <ul className="mt-4 mb-6 space-y-2 max-w-xl" data-testid="hero-bullets">
-                  {bullets.map((bullet, index) => (
-                    <li 
-                      key={index} 
-                      className="flex items-start gap-3 text-foreground"
-                      data-testid={`hero-bullet-${index}`}
-                    >
-                      <IconCheck className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
-                      <span className="text-body leading-relaxed text-left">{bullet.text}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex justify-center md:block">
+                  <ul className="mt-4 md:mb-6 space-y-2 max-w-xl" data-testid="hero-bullets">
+                    {bullets.map((bullet, index) => (
+                      <li 
+                        key={index} 
+                        className="flex items-start gap-3 text-foreground"
+                        data-testid={`hero-bullet-${index}`}
+                      >
+                        <IconCheck className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                        <span className="text-body leading-relaxed text-left">{bullet.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
 
               {marquee && marquee.items && marquee.items.length > 0 && (
-                <div className="w-full max-w-xl mt-6 mb-8 overflow-hidden" data-testid="hero-embedded-marquee">
+                <div className="w-full max-w-xl mt-6 md:mb-8 overflow-hidden" data-testid="hero-embedded-marquee">
                   <Marquee
                     speed={marquee.speed || 40}
                     pauseOnHover={false}
@@ -358,7 +360,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               <UniversalVideo
                 url={video.url}
                 ratio={video.ratio || "16:9"}
-                mobileRatio={video.mobile_ratio}
+                mobileRatio={video.mobile_ratio || "16:11"}
                 muted={video.muted}
                 autoplay={video.autoplay}
                 loop={video.loop}
