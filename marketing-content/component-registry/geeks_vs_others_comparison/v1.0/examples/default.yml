@@ -1,57 +1,46 @@
 type: geeks_vs_others_comparison
 version: "1.0"
-title: Why Choose 4Geeks Academy?
-subtitle: See how we compare to other coding bootcamps and educational programs
+title: Launching Successful Tech Careers in the AI Era
+subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"
 columns:
   - name: Feature
   - name: 4Geeks Academy
     highlight: true
-  - name: Other Bootcamps
+  - name: Industry Average / Competitors
 rows:
   - feature: Career Support
     values:
-      - Lifetime access
-      - 6 months max
-    feature_description: Get personalized career guidance and job placement support
+      - Personalized support for a lifetime
+      - Limited, ending with 1st job
   - feature: "Teacher: Student Ratio"
     values:
       - "1:7"
-      - "1:25+"
-    feature_description: Smaller class sizes mean more personalized attention
+      - 1:10+
   - feature: AI-Powered Feedback
     values:
-      - "yes"
-      - "no"
-    feature_description: Get instant code reviews and learning recommendations from our AI
+      - Personalized to your progress
+      - Generic or non-existent
   - feature: 1-on-1 Mentoring
     values:
-      - Unlimited
-      - Limited
-    feature_description: Schedule mentoring sessions whenever you need help
+      - Unlimited and for a lifetime
+      - Limited sessions
   - feature: Curriculum
     values:
-      - Industry-aligned
-      - Outdated
-    feature_description: Learn the most in-demand technologies used by top companies
+      - Continuously updated to match industry needs
+      - Slow to adapt
   - feature: "% Hiring Rate"
     values:
-      - "90%+"
-      - "~70%"
-    feature_description: Our graduates get hired at top tech companies
+      - ~84% within 6 months
+      - Often Unknown
   - feature: Community
     values:
-      - Global network
-      - Local only
-    feature_description: Join a worldwide community of developers
+      - Strong local & global network
+      - Depends on school
   - feature: Class Format
     values:
-      - Flexible hybrid
-      - Fixed schedule
-    feature_description: Learn at your own pace with live support
+      - Online, in-person
+      - Usually only one format
   - feature: Previous Knowledge
     values:
-      - None required
-      - Often required
-    feature_description: Start from zero - no coding experience needed
-footer_note: "* Based on 2024 graduate outcomes survey and industry benchmarks"
-background: bg-muted/30
+      - None
+      - Entry tests or prior coding experience

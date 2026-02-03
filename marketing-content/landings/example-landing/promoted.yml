@@ -41,6 +41,63 @@ sections:
           placeholder: Enter your work email
       show_terms: false
     image_id: our_story
+  - type: geeks_vs_others_comparison
+    version: "1.0"
+    title: Why Choose 4Geeks Academy?
+    subtitle: See how we compare to other coding bootcamps and educational programs
+    columns:
+      - name: Feature
+      - name: 4Geeks Academy
+        highlight: true
+      - name: Other Bootcamps
+    rows:
+      - feature: Career Support
+        values:
+          - Lifetime access
+          - 6 months max
+        feature_description: Get personalized career guidance and job placement support
+      - feature: "Teacher: Student Ratio"
+        values:
+          - "1:7"
+          - 1:25+
+        feature_description: Smaller class sizes mean more personalized attention
+      - feature: AI-Powered Feedback
+        values:
+          - "yes"
+          - "no"
+        feature_description: Get instant code reviews and learning recommendations from our AI
+      - feature: 1-on-1 Mentoring
+        values:
+          - Unlimited
+          - Limited
+        feature_description: Schedule mentoring sessions whenever you need help
+      - feature: Curriculum
+        values:
+          - Industry-aligned
+          - Outdated
+        feature_description: Learn the most in-demand technologies used by top companies
+      - feature: "% Hiring Rate"
+        values:
+          - 90%+
+          - ~70%
+        feature_description: Our graduates get hired at top tech companies
+      - feature: Community
+        values:
+          - Global network
+          - Local only
+        feature_description: Join a worldwide community of developers
+      - feature: Class Format
+        values:
+          - Flexible hybrid
+          - Fixed schedule
+        feature_description: Learn at your own pace with live support
+      - feature: Previous Knowledge
+        values:
+          - None required
+          - Often required
+        feature_description: Start from zero - no coding experience needed
+    footer_note: "* Based on 2024 graduate outcomes survey and industry benchmarks"
+    background: bg-muted/30
   - type: hero
     variant: course
     title: Work not harder, apply AI at Work
