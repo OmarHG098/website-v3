@@ -113,17 +113,16 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
-    paddingY:
-      desktop: none
     marginY:
       desktop: md lg
+    paddingY:
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: stats-text
     title: Why Data Science now?
     subtitle: Data is the fuel for the AI revolution.
     description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
-    background: bg-muted/30
     items:
       - id: "1"
         value: 36%
@@ -131,6 +130,7 @@ sections:
       - id: "3"
         value: $90K+
         title: Average starting salary for data scientists
+    background: hsl(var(--background))
   - type: syllabus
     variant: program-modules
     program_title: Data Science and Machine Learning Program Overview
@@ -207,41 +207,6 @@ sections:
       desktop: md none
     paddingY:
       desktop: md
-  - type: features_quad
-    version: "1.0"
-    variant: default
-    compact: true
-    heading: Program Benefits
-    description: Everything you need to succeed in your AI engineering career.
-    cards:
-      - icon: Trophy
-        title: Industry Recognition
-        description: Top-ranked bootcamp
-      - icon: Wallet
-        title: Affordable Tuition
-        description: Flexible payments
-      - icon: Clock
-        title: Flexible Schedule
-        description: Part-time available
-      - icon: Users
-        title: Career Support
-        description: Unlimited mentorship
-    background: bg-muted/30
-  - type: features_grid
-    variant: highlight
-    title: Why Choose 4Geeks Academy?
-    subtitle: Explore the features that set us apart and empower your tech journey.
-    items:
-      - icon: Star
-        title: Global Learnersjnldfg blsdfbglisd bfglsdbfglb sdflgbsdflgsbf
-      - icon: Users
-        value: 10K+
-        title: Global Learners Supported
-      - icon: Award
-        value: 5★
-        title: Average Program Rating
-    columns: 3
-    icon_color: "#0097CD"
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -343,6 +308,20 @@ sections:
       mobile: lg
       desktop: lg
     background: hsl(var(--muted))
+  - type: features_grid
+    variant: highlight
+    title: Enroll with a Job Guarantee
+    subtitle: Need extra peace of mind? Add our optional Job Guarantee for added security.
+    items:
+      - icon: Star
+        title: Add the Job Guarantee to your payment plan
+      - icon: Users
+        title: Complete the program and follow the GeekFORCE career process
+      - icon: Award
+        title: Get hired within 9 months of graduation – or your money back
+    columns: 3
+    icon_color: "#0097CD"
+    background: hsl(var(--secondary))
   - type: pricing
     version: "1.0"
     variant: product
@@ -376,7 +355,9 @@ sections:
       url: /en/apply
       variant: primary
     paddingY:
-      desktop: sm md
+      desktop: lg md
+    marginY:
+      desktop: none md
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
@@ -452,7 +433,7 @@ sections:
         comment: Transitioning from the music industry into tech was challenging but 4Geeks made it possible. Now I'm performing as a developer and a Mentor, helping others achieve the same dream.
         outcome: +100% salary increase
     marginY:
-      desktop: none md
+      desktop: md
     paddingY:
       desktop: md none
   - type: faq
