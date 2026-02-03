@@ -170,7 +170,7 @@ export function getIcon(name: string): IconComponent | null {
  */
 export function getAllTablerIconNames(): string[] {
   return Object.keys(TablerIcons).filter(
-    (key) => key.startsWith("Icon") && typeof (TablerIcons as Record<string, unknown>)[key] === "function"
+    (key) => key.startsWith("Icon") && key !== "Icon"
   );
 }
 
