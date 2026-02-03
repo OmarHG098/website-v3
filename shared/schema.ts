@@ -607,6 +607,7 @@ export const humanAndAIDuoSectionSchema = z.object({
   // Video option - when provided, replaces images with video
   video: z.string().optional(),
   video_preview_image: z.string().optional(),
+  video_ratio: z.string().optional(),
 });
 
 export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
