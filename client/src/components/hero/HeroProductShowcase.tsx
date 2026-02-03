@@ -357,7 +357,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
             {video ? (
               <UniversalVideo
                 url={video.url}
-                ratio={video.ratio || "16:9"}
+                ratio={`16:11 md:${video.ratio || "16:9"}`}
                 muted={video.muted}
                 autoplay={video.autoplay}
                 loop={video.loop}

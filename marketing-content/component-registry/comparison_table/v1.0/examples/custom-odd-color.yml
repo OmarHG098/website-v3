@@ -2,12 +2,12 @@ type: comparison_table
 version: "1.0"
 title: Plan Features Comparison
 subtitle: Compare features across different plans
-odd_row_color: bg-muted/30
+odd_row_color: bg-muted/50
 columns:
   - name: Feature
+    highlight: true
   - name: Free
   - name: Pro
-    highlight: true
   - name: Enterprise
 rows:
   - feature: Users

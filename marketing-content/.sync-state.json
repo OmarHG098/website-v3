@@ -626,8 +626,10 @@
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
       "sha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
-      "lastModified": 1770084327674.3875,
-      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee"
+      "lastModified": 1770145205870.3113,
+      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T19:00:05.872Z"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
