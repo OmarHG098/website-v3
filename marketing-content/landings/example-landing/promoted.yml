@@ -33,7 +33,7 @@ sections:
       autoplay: false
       loop: false
       preview_image_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-    image_id: group_original
+    image_id: our_story
   - type: hero
     variant: course
     title: Work not harder, apply AI at Work
@@ -96,28 +96,28 @@ sections:
     marginY:
       desktop: none md
   - type: features_quad
+    variant: laptopEdge
+    compact: true
     heading: What You'll Learn
     description: Gain the skills needed to excel in AI engineering through practical experience.
-    cards:
-      - icon: Code
-        title: Hands-On Coding
-        description: Create real-world projects
-      - icon: Brain
-        title: Deep Learning
-        description: Explore neural networks
-      - icon: Cloud
-        title: Cloud Deployment
-        description: Utilize AWS, GCP, Azure
-      - icon: Rocket
-        title: Fast-Track Career
-        description: Develop a job-ready portfolio
     images:
       - image_id: student-1
         alt: Student 1
       - image_id: student-2
         alt: Student 2
-    compact: true
-    variant: laptopEdge
+    cards:
+      - icon: Code
+        title: Hands-On Coding
+        description: Create real-world projects
+      - icon: IconAdjustmentsStar
+        title: Deep Learning
+        description: Explore neural networks
+      - icon: IconAirBalloon
+        title: Cloud Deployment
+        description: Utilize AWS, GCP, Azure
+      - icon: Rocket
+        title: Fast-Track Career
+        description: Develop a job-ready portfolio
     video: https://www.youtube.com/watch?v=6m1Jyya7eCc
     video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
   - type: human_and_ai_duo
