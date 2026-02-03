@@ -2,6 +2,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import { Button } from "@/components/ui/button";
 
 interface FeaturesQuadDefaultProps {
   data: FeatureQuadSection;
@@ -45,6 +46,16 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
   const images = data.images || [];
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
+  const hasHeading = !!data.heading;
+  const hasDescription = !!data.description;
+  const hasOnlyOne = (hasHeading && !hasDescription) || (!hasHeading && hasDescription);
+  const textAlign = hasOnlyOne ? "text-center" : "text-left";
+
+  const getButtonVariant = (variant?: string) => {
+    if (variant === "primary") return "default";
+    if (variant === "outline") return "outline";
+    return "secondary";
+  };
 
   return (
     <section 
@@ -54,29 +65,47 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
       <div className="max-w-6xl mx-auto px-4">
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-4">
-          {/* Images above title - aligned left */}
+          {/* Images above title - centered when only one text element */}
           {images.length > 0 && (
-            <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20 w-fit" data-testid="img-features-quad-mobile">
-              {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="w-10">
-                  <UniversalImage
-                    id={image.image_id}
-                    alt={image.alt || `Image ${index + 1}`}
-                    className="w-full h-full object-cover object-top rounded-lg"
-                  />
-                </div>
-              ))}
+            <div className={`flex ${hasOnlyOne ? "justify-center" : ""}`}>
+              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20 w-fit" data-testid="img-features-quad-mobile">
+                {images.slice(0, 4).map((image, index) => (
+                  <div key={index} className="w-10">
+                    <UniversalImage
+                      id={image.image_id}
+                      alt={image.alt || `Image ${index + 1}`}
+                      className="w-full h-full object-cover object-top rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {/* Title and description */}
-          <div className="text-left">
-            <h2 className="text-2xl font-bold text-foreground mb-2" data-testid="text-features-quad-heading">
-              {data.heading}
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {data.description}
-            </p>
-          </div>
+          {(hasHeading || hasDescription) && (
+            <div className={textAlign}>
+              {hasHeading && (
+                <h2 className="text-2xl font-bold text-foreground mb-2" data-testid="text-features-quad-heading">
+                  {data.heading}
+                </h2>
+              )}
+              {hasDescription && (
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {data.description}
+                </p>
+              )}
+              {data.cta && (
+                <Button
+                  variant={getButtonVariant(data.cta.variant)}
+                  asChild
+                  className="mt-4"
+                  data-testid="button-features-quad-cta-mobile"
+                >
+                  <a href={data.cta.url}>{data.cta.text}</a>
+                </Button>
+              )}
+            </div>
+          )}
           {/* Cards stacked vertically - always compact on mobile */}
           <div className="grid grid-cols-1 gap-2" data-testid="cards-features-quad-mobile">
             {data.cards.map((card, index) => (
@@ -90,12 +119,26 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className="flex gap-6 items-stretch">
-            <div className="flex-1 text-left">
-              <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
-                {data.heading}
-              </h2>
-              <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+          <div className={`flex gap-6 items-stretch ${hasOnlyOne && images.length === 0 ? "justify-center" : ""}`}>
+            <div className={`flex-1 ${textAlign} ${hasOnlyOne && images.length === 0 ? "flex-initial" : ""}`}>
+              {hasHeading && (
+                <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
+                  {data.heading}
+                </h2>
+              )}
+              {hasDescription && (
+                <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+              )}
+              {data.cta && (
+                <Button
+                  variant={getButtonVariant(data.cta.variant)}
+                  asChild
+                  className="mt-4"
+                  data-testid="button-features-quad-cta-tablet"
+                >
+                  <a href={data.cta.url}>{data.cta.text}</a>
+                </Button>
+              )}
             </div>
             {images.length > 0 && (
               <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[300px] h-32" data-testid="img-features-quad-tablet">
@@ -123,12 +166,26 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== DESKTOP LAYOUT ===== */}
         <div className="hidden lg:block space-y-8">
-          <div className="flex gap-8 items-stretch">
-            <div className="flex-1 text-left">
-              <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
-                {data.heading}
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+          <div className={`flex gap-8 items-stretch ${hasOnlyOne && images.length === 0 ? "justify-center" : ""}`}>
+            <div className={`flex-1 ${textAlign} ${hasOnlyOne && images.length === 0 ? "flex-initial" : ""}`}>
+              {hasHeading && (
+                <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
+                  {data.heading}
+                </h2>
+              )}
+              {hasDescription && (
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+              )}
+              {data.cta && (
+                <Button
+                  variant={getButtonVariant(data.cta.variant)}
+                  asChild
+                  className="mt-4"
+                  data-testid="button-features-quad-cta-desktop"
+                >
+                  <a href={data.cta.url}>{data.cta.text}</a>
+                </Button>
+              )}
             </div>
             {images.length > 0 && (
               <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[370px] h-36" data-testid="img-features-quad-desktop">

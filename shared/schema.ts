@@ -752,13 +752,20 @@ export const featureQuadImageSchema = z.object({
   alt: z.string().optional(),
 });
 
+export const featureQuadCtaSchema = z.object({
+  text: z.string(),
+  url: z.string(),
+  variant: z.enum(["primary", "secondary", "outline"]).optional(),
+});
+
 export const featureQuadSectionSchema = z.object({
   type: z.literal("features_quad"),
   version: z.string().optional(),
   variant: z.enum(["default", "laptopEdge"]).optional(),
   compact: z.boolean().optional(),
-  heading: z.string(),
-  description: z.string(),
+  heading: z.string().optional(),
+  description: z.string().optional(),
+  cta: featureQuadCtaSchema.optional(),
   images: z.array(featureQuadImageSchema).optional(),
   cards: z.array(featureQuadCardSchema),
   footer_description: z.string().optional(),

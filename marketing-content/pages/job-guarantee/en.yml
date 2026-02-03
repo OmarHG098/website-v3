@@ -144,21 +144,18 @@ sections:
     subtitle: Choose your career path. Master the skills and get hired.
     items:
       - id: fullstack
-        icon: CodeWindow
         category: Full Stack
         title: Full Stack Development with AI
         description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
         link_url: "#"
         link_text: Read More
       - id: datascience
-        icon: RocketOff
         category: With Python
         title: Data Science and Machine Learning with AI
         description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
         link_url: "#"
         link_text: Read More
       - id: cybersecurity
-        icon: Security
         category: For Windows & Linux
         title: Cybersecurity
         description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
@@ -182,19 +179,28 @@ sections:
         icon: ClipboardCheck
       - text: Receive the full refund within 30 days.
         icon: CashBanknote
-  - type: split_cards
-    variant: primary-left
-    primary_width: narrow
-    primary:
-      heading: How the Refund Works
-      description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition."
-      badge: Results-Backed Promise
-    secondary:
-      benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-    background: muted
+  - type: numbered_steps
+    version: "1.0"
+    variant: bubbleText
+    title: Get Hired with Our 3-Step Career Development Process
+    description: Once you've mastered the technical skills, our structured process helps you build a lasting career in tech.
+    steps:
+      - icon: Optimization
+        title: Profile Optimization
+        text: You were not hired into a qualifying role within 9 months of graduation.
+      - icon: Interview
+        title: Interview Preparation
+        bullets:
+          - Gain confidence with mock technical and behavioral interviews.
+          - Practice coding and problem-solving with auto-graded exercises.
+          - Develop tailored strategies for upcoming interviews.
+      - icon: JobSearch
+        title: Strategic Job Search
+        bullets:
+          - Create a personalized job search plan aligned with your goals.
+          - Navigate AI-driven hiring platforms, from resume scanners to automated interviews.
+          - Connect with our extensive network of global hiring partners.
+    background: bg-background
   - type: features_grid
     version: "1.0"
     variant: cardHeader
