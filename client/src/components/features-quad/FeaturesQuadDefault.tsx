@@ -8,34 +8,43 @@ interface FeaturesQuadDefaultProps {
   data: FeatureQuadSection;
 }
 
-function CompactCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+function CompactCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
   const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const hasTitle = !!card.title;
+  const hasDescription = !!card.description;
+  const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
+  
   return (
     <div 
-      className="flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm"
+      className={`flex items-center gap-3 p-3 bg-card rounded-lg shadow-sm ${hasOnlyOne ? "justify-center" : ""}`}
       data-testid={`features-quad-card-compact-${index}`}
     >
       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={16} />}
       </div>
-      <span className="text-sm font-medium text-foreground">{card.title}</span>
+      {hasTitle && <span className="text-sm font-medium text-foreground">{card.title}</span>}
+      {!hasTitle && hasDescription && <span className="text-sm text-muted-foreground">{card.description}</span>}
     </div>
   );
 }
 
-function FullCard({ card, index }: { card: { icon: string; title: string; description: string }; index: number }) {
+function FullCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
   const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const hasTitle = !!card.title;
+  const hasDescription = !!card.description;
+  const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
+  
   return (
     <div 
-      className="flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm"
+      className={`flex items-start gap-4 p-4 bg-card rounded-lg shadow-sm ${hasOnlyOne ? "items-center" : ""}`}
       data-testid={`features-quad-card-${index}`}
     >
       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
         {IconComponent && <IconComponent className="text-primary" size={24} />}
       </div>
-      <div className="flex flex-col">
-        <h3 className="font-semibold text-foreground mb-1">{card.title}</h3>
-        <p className="text-sm text-muted-foreground">{card.description}</p>
+      <div className={`flex flex-col ${hasOnlyOne ? "justify-center" : ""}`}>
+        {hasTitle && <h3 className={`font-semibold text-foreground ${hasDescription ? "mb-1" : ""}`}>{card.title}</h3>}
+        {hasDescription && <p className="text-sm text-muted-foreground">{card.description}</p>}
       </div>
     </div>
   );

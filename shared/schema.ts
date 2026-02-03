@@ -743,8 +743,8 @@ export type SectionLayout = z.infer<typeof sectionLayoutSchema>;
 // ============================================
 export const featureQuadCardSchema = z.object({
   icon: z.string(),
-  title: z.string(),
-  description: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export const featureQuadImageSchema = z.object({
