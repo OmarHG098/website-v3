@@ -1400,6 +1400,153 @@ export function SectionEditorPanel({
                 }
 
                 if (editorType === "image-picker") {
+                  // Check if this is a logo picker for marquee items (needs collapsible with logoHeight)
+                  const isLogoMarquee = arrayPath === "marquee.items" && editorType === "image-picker" && 
+                    allFieldEditors && Object.keys(allFieldEditors).some(key => 
+                      key.includes("marquee.items[].logoHeight")
+                    );
+                  
+                  if (isLogoMarquee) {
+                    // Use collapsible sections for logo marquee items
+                    return (
+                      <div key={fieldPath} className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <Label className="text-sm font-medium">
+                            Marquee Logos ({safeArrayData.length})
+                          </Label>
+                        </div>
+                        <div className="space-y-2">
+                          {safeArrayData.map((item, index) => {
+                            const currentValue = (item[itemField] as string) || "";
+                            const altValue = (item.alt as string) || "";
+                            const logoHeight = (item.logoHeight as string) || "";
+                            const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
+
+                            return (
+                              <Collapsible key={index} className="border rounded-md">
+                                <CollapsibleTrigger asChild>
+                                  <button
+                                    type="button"
+                                    className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                                    data-testid={`props-logo-marquee-${index}-trigger`}
+                                  >
+                                    <div className="w-10 h-10 rounded-md overflow-hidden bg-muted border flex-shrink-0">
+                                      {currentValue ? (
+                                        <img
+                                          src={displaySrc}
+                                          alt={altValue || `Logo ${index + 1}`}
+                                          className="w-full h-full object-contain p-1"
+                                        />
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                          <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                                        </div>
+                                      )}
+                                    </div>
+                                    <span className="flex-1 text-left text-sm font-medium">
+                                      {altValue || `Logo ${index + 1}`}
+                                    </span>
+                                    <IconChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                                  </button>
+                                </CollapsibleTrigger>
+                                <CollapsibleContent>
+                                  <div className="p-3 pt-0 space-y-3 border-t">
+                                    <div className="flex items-center gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setImagePickerTarget({
+                                            arrayPath,
+                                            index,
+                                            srcField: itemField,
+                                            currentSrc: currentValue,
+                                            currentAlt: altValue,
+                                            tagFilter: "logo",
+                                          });
+                                          setImagePickerOpen(true);
+                                        }}
+                                        className="relative w-16 h-16 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                                        data-testid={`props-logo-marquee-${index}-picker`}
+                                        title="Change logo"
+                                      >
+                                        {currentValue ? (
+                                          <>
+                                            <img
+                                              src={displaySrc}
+                                              alt={altValue}
+                                              className="w-full h-full object-contain p-1"
+                                            />
+                                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                              <IconPhoto className="h-5 w-5 text-white" />
+                                            </div>
+                                          </>
+                                        ) : (
+                                          <div className="w-full h-full flex items-center justify-center">
+                                            <IconPhoto className="h-6 w-6 text-muted-foreground" />
+                                          </div>
+                                        )}
+                                      </button>
+                                      <div className="flex-1 space-y-1">
+                                        <Label className="text-xs text-muted-foreground">Alt text</Label>
+                                        <Input
+                                          value={altValue}
+                                          onChange={(e) => updateArrayItemField(arrayPath, index, "alt", e.target.value)}
+                                          placeholder="Logo description"
+                                          className="h-8 text-sm"
+                                          data-testid={`props-logo-marquee-${index}-alt`}
+                                        />
+                                      </div>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeArrayItem(arrayPath, index)}
+                                        className="text-muted-foreground hover:text-destructive"
+                                        data-testid={`props-logo-marquee-${index}-delete`}
+                                        title="Remove logo"
+                                      >
+                                        <IconTrash className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">Logo Height (CSS classes)</Label>
+                                      <Input
+                                        value={logoHeight}
+                                        onChange={(e) => updateArrayItemField(arrayPath, index, "logoHeight", e.target.value)}
+                                        placeholder="h-10 md:h-14"
+                                        className="h-8 text-sm"
+                                        data-testid={`props-logo-marquee-${index}-height`}
+                                      />
+                                    </div>
+                                  </div>
+                                </CollapsibleContent>
+                              </Collapsible>
+                            );
+                          })}
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const defaultItem: Record<string, unknown> = {
+                                [itemField]: "",
+                                alt: "",
+                                logoHeight: "h-10 md:h-14",
+                              };
+                              addArrayItem(arrayPath, defaultItem);
+                            }}
+                            className="w-full"
+                            data-testid="props-logo-marquee-add"
+                          >
+                            <IconPlus className="h-4 w-4 mr-1" />
+                            Add Logo
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  }
+                  
+                  // Default image-picker behavior (simple thumbnails)
                   return (
                     <div key={fieldPath} className="space-y-2">
                       <Label className="text-sm font-medium capitalize">
