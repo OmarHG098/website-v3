@@ -130,7 +130,7 @@ sections:
       - 6
     alignment: center
     left:
-      video: 4n-ZAUPIxJI
+      video: https://youtu.be/4n-ZAUPIxJI
     right:
       heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
       sub_heading: Watch how our platform transforms careers
@@ -169,6 +169,8 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: hsl(210 100% 50% / 0.05)
+    video: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
