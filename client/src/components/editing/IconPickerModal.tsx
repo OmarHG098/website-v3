@@ -7,7 +7,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { IconSearch, IconQuestionMark, IconLoader2 } from "@tabler/icons-react";
 import { getIcon, getAllIconNames, getIconDisplayName, isCustomIcon } from "@/lib/icons";
 
@@ -19,7 +18,8 @@ interface IconPickerModalProps {
   itemLabel?: string;
 }
 
-const ICONS_PER_PAGE = 60;
+const INITIAL_ICONS = 200;
+const ICONS_PER_LOAD = 60;
 
 const allIconNames = getAllIconNames();
 
@@ -31,9 +31,8 @@ export function IconPickerModal({
   itemLabel,
 }: IconPickerModalProps) {
   const [search, setSearch] = useState("");
-  const [visibleCount, setVisibleCount] = useState(ICONS_PER_PAGE);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_ICONS);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const loadMoreRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const filteredIcons = useMemo(() => {
@@ -53,12 +52,12 @@ export function IconPickerModal({
   const hasMore = visibleCount < filteredIcons.length;
 
   useEffect(() => {
-    setVisibleCount(ICONS_PER_PAGE);
+    setVisibleCount(INITIAL_ICONS);
   }, [search]);
 
   useEffect(() => {
     if (!open) {
-      setVisibleCount(ICONS_PER_PAGE);
+      setVisibleCount(INITIAL_ICONS);
       setSearch("");
     }
   }, [open]);
@@ -67,32 +66,19 @@ export function IconPickerModal({
     if (!hasMore || isLoadingMore) return;
     
     setIsLoadingMore(true);
-    setTimeout(() => {
-      setVisibleCount((prev) => Math.min(prev + ICONS_PER_PAGE, filteredIcons.length));
+    requestAnimationFrame(() => {
+      setVisibleCount((prev) => Math.min(prev + ICONS_PER_LOAD, filteredIcons.length));
       setIsLoadingMore(false);
-    }, 100);
+    });
   }, [hasMore, isLoadingMore, filteredIcons.length]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting && hasMore && !isLoadingMore) {
-          loadMore();
-        }
-      },
-      { threshold: 0.1, rootMargin: "100px" }
-    );
-
-    const currentRef = loadMoreRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    const scrollBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
+    
+    if (scrollBottom < 100 && hasMore && !isLoadingMore) {
+      loadMore();
     }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
   }, [hasMore, isLoadingMore, loadMore]);
 
   const handleSelect = (iconName: string) => {
@@ -134,7 +120,11 @@ export function IconPickerModal({
           />
         </div>
 
-        <ScrollArea className="h-[350px] border rounded-md" ref={scrollContainerRef}>
+        <div 
+          ref={scrollContainerRef}
+          className="h-[350px] border rounded-md overflow-y-auto"
+          onScroll={handleScroll}
+        >
           <div className="grid grid-cols-6 gap-1 p-2">
             {visibleIcons.map((iconName) => {
               const isSelected = currentValue === iconName;
@@ -159,10 +149,7 @@ export function IconPickerModal({
           </div>
           
           {hasMore && (
-            <div 
-              ref={loadMoreRef} 
-              className="flex items-center justify-center py-4"
-            >
+            <div className="flex items-center justify-center py-4">
               {isLoadingMore ? (
                 <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
               ) : (
@@ -178,7 +165,7 @@ export function IconPickerModal({
               No se encontraron iconos
             </div>
           )}
-        </ScrollArea>
+        </div>
 
         <p className="text-xs text-muted-foreground">
           Mostrando {visibleIcons.length} de {filteredIcons.length} iconos
