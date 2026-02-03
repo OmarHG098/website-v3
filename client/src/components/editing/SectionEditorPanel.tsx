@@ -1400,11 +1400,10 @@ export function SectionEditorPanel({
                 }
 
                 if (editorType === "image-picker") {
-                  // Check if this is a logo picker for marquee items (needs collapsible with logoHeight)
-                  const isLogoMarquee = arrayPath === "marquee.items" && editorType === "image-picker" && 
-                    allFieldEditors && Object.keys(allFieldEditors).some(key => 
-                      key.includes("marquee.items[].logoHeight")
-                    );
+                  // Check if this is a logo picker for items with logoHeight (works for hero marquee, awards_marquee, etc.)
+                  // Detects if items have "logo" field and any item has "logoHeight" defined
+                  const isLogoMarquee = itemField === "logo" && 
+                    safeArrayData.some((item) => "logoHeight" in item || "logo" in item);
                   
                   if (isLogoMarquee) {
                     // Use collapsible sections for logo marquee items

@@ -11,4 +11,5 @@ export type EditorType = string;
 
 export const fieldEditors: Record<string, EditorType> = {
   "items[].logo": "image-picker:logo",
+  "items[].logoHeight": "text-input",
 };
