@@ -148,8 +148,8 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
         </div>
       </div>
 
-      {/* Laptop image - desktop only, same size as FeaturesQuad */}
-      <div className="hidden lg:flex absolute lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
+      {/* Laptop image - hidden on mobile only, visible from md */}
+      <div className="hidden md:flex absolute md:right-[-450px] lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
