@@ -23,6 +23,7 @@ export const comparisonTableSectionSchema = z.object({
   rows: z.array(comparisonTableRowSchema),
   background: z.string().optional(),
   footer_note: z.string().optional(),
+  first_column_muted: z.boolean().optional(),
 });
 
 export type ComparisonTableColumn = z.infer<typeof comparisonTableColumnSchema>;

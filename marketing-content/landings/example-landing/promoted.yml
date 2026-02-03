@@ -147,6 +147,31 @@ sections:
         image_id: logo_uber
         alt: Uber logo
     image_position: right
+  - type: comparison_table
+    version: "1.0"
+    title: How We Compare
+    subtitle: See how our approach stacks up against typical alternatives
+    columns:
+      - name: Feature
+      - name: Our Brand
+      - name: Others
+      - name: O
+    rows:
+      - feature: 1:1 Support
+        values:
+          - Unlimited
+          - Limited
+        feature_description: Get personalized guidance whenever you need it
+      - feature: Guarantee
+        values:
+          - "Yes"
+          - "No"
+        feature_description: Money back if not satisfied
+      - feature: Pricing
+        values:
+          - Flexible
+          - Fixed
+    footer_note: "* Based on industry research"
   - type: image_row
     images:
       - src: /attached_assets/student-1-asian.png

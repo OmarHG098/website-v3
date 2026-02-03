@@ -36,6 +36,7 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
 export function ComparisonTable({ data }: ComparisonTableProps) {
   const highlightIndex = data.columns.findIndex(col => col.highlight);
   const columnCount = data.columns.length;
+  const firstColumnMuted = data.first_column_muted ?? false;
 
   return (
     <section
@@ -69,6 +70,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               {data.columns.map((column, colIndex) => {
                 const isFeatureCol = colIndex === 0;
                 const isHighlighted = column.highlight;
+                const isLastCol = colIndex === columnCount - 1;
                 
                 return (
                   <div
@@ -76,9 +78,15 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                     className={`py-6 px-6 font-semibold text-body ${
                       isFeatureCol ? "text-left" : "text-center"
                     } ${
-                      isHighlighted
-                        ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md"
-                        : "bg-muted text-foreground"
+                      !isLastCol ? "border-r border-border/50" : ""
+                    } ${
+                      firstColumnMuted && isFeatureCol
+                        ? "bg-muted/50 text-muted-foreground"
+                        : isHighlighted
+                          ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md"
+                          : firstColumnMuted
+                            ? "bg-card text-foreground"
+                            : "bg-muted text-foreground"
                     }`}
                     data-testid={`th-column-${colIndex}`}
                   >
@@ -91,12 +99,14 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <div
                 key={rowIndex}
                 className={`grid transition-colors hover:bg-primary/5 ${
-                  rowIndex % 2 === 0 ? "bg-card" : "bg-muted/30"
+                  rowIndex % 2 === 0 ? "bg-card" : "bg-primary/5"
                 }`}
                 style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
                 data-testid={`tr-row-${rowIndex}`}
               >
-                <div className="py-5 px-6 font-medium text-foreground text-left">
+                <div className={`py-5 px-6 font-medium text-left border-r border-border/50 ${
+                  firstColumnMuted ? "bg-muted/50 text-muted-foreground" : "text-foreground"
+                }`}>
                   <span>{row.feature}</span>
                   {row.feature_description && (
                     <p className="text-sm text-muted-foreground font-normal mt-1">
@@ -106,11 +116,14 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 </div>
                 {row.values.map((value, valIndex) => {
                   const isHighlightedCol = valIndex === highlightIndex - 1;
+                  const isLastCol = valIndex === row.values.length - 1;
                   
                   return (
                     <div
                       key={valIndex}
                       className={`py-5 px-6 text-center flex items-center justify-center ${
+                        !isLastCol ? "border-r border-border/50" : ""
+                      } ${
                         isHighlightedCol
                           ? "bg-primary/5 font-semibold text-foreground"
                           : "text-muted-foreground font-normal"
@@ -152,7 +165,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                           className={`rounded-card p-4 ${
                             isHighlightedCol 
                               ? "bg-primary/5 border-l-[3px] border-primary" 
-                              : "bg-muted/30"
+                              : "bg-card"
                           }`}
                         >
                           <p className={`text-xs font-semibold mb-1 ${
