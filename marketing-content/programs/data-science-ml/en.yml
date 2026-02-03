@@ -20,7 +20,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: course
-    title: Data Science and Machine Learning with AI
+    title: Data Science and Machine Learning
     title_highlight: Data Science
     subtitle: Master the skills powering the AI revolution. Learn to analyze data and build models that drive real-world decisions.
     students_enrolled:
