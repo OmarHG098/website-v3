@@ -70,7 +70,7 @@ sections:
         - icon: IconUserCheck
           text: Unlimited 1:1 Mentorship
         - icon: book
-          text: Production-Grade Portfolio
+          text: Real-World DS & ML Portfolio
     paddingY:
       desktop: md
     marginY:
