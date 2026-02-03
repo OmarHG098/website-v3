@@ -145,7 +145,6 @@ sections:
       - label: Text-to-issue commands
         description: Seamlessly move between ideation and execution
         image_id: logo_uber
-        alt: Uber logo
     image_position: right
   - type: comparison_table
     version: "1.0"
