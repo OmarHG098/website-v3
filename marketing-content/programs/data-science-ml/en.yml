@@ -325,8 +325,8 @@ sections:
   - type: pricing
     version: "1.0"
     variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
+    title: Tuition & Financing Options
+    subtitle: Investing in your career should never be a problem. That's why we offer multiple ways to fund your enrollment.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $299
@@ -354,10 +354,10 @@ sections:
       text: Get plan
       url: /en/apply
       variant: primary
-    paddingY:
-      desktop: lg md
     marginY:
       desktop: none md
+    paddingY:
+      desktop: lg md
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
