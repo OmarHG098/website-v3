@@ -750,6 +750,8 @@ export const featureQuadCardSchema = z.object({
 export const featureQuadImageSchema = z.object({
   image_id: z.string(),
   alt: z.string().optional(),
+  object_position: z.string().optional(),
+  object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
 });
 
 export const featureQuadCtaSchema = z.object({

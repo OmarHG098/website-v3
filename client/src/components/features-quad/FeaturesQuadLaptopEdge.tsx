@@ -89,7 +89,11 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                     <UniversalImage
                       id={image.image_id}
                       alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full object-cover object-top rounded-lg"
+                      className="w-full h-full rounded-lg"
+                      style={{
+                        objectFit: image.object_fit || "cover",
+                        objectPosition: image.object_position || "top",
+                      }}
                     />
                   </div>
                 ))}
@@ -132,7 +136,11 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                     <UniversalImage
                       id={image.image_id}
                       alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full object-cover object-top rounded-lg"
+                      className="w-full h-full rounded-lg"
+                      style={{
+                        objectFit: image.object_fit || "cover",
+                        objectPosition: image.object_position || "top",
+                      }}
                     />
                   </div>
                 ))}
@@ -167,7 +175,11 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                         <UniversalImage
                           id={image.image_id}
                           alt={image.alt || `Image ${index + 1}`}
-                          className="w-full h-full object-cover object-top rounded-lg"
+                          className="w-full h-full rounded-lg"
+                          style={{
+                            objectFit: image.object_fit || "cover",
+                            objectPosition: image.object_position || "top",
+                          }}
                         />
                       </div>
                     ))}
