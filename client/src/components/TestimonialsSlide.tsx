@@ -317,8 +317,8 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
       </div>
       
       <div className="relative">
-        {/* Mobile scaling wrapper - scales content to 70% on mobile, 100% on md+ */}
-        <div className="origin-top scale-[0.7] md:scale-100 h-[70%] md:h-auto">
+        {/* Mobile scaling wrapper - scales to 70% on mobile with negative margin to remove whitespace */}
+        <div className="origin-top scale-[0.7] md:scale-100 -mb-[30%] md:mb-0">
           <div
             className={cn(
               prefersReducedMotion && "overflow-x-auto"
@@ -334,13 +334,13 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
               play={isPlaying && !prefersReducedMotion}
               data-testid="marquee-testimonials-slide"
             >
-              <div className="flex items-start py-4">
-                {/* Duplicate columns 3x to ensure seamless loop on ultra-wide screens */}
-                {[...masonryColumns, ...masonryColumns, ...masonryColumns].map((column, index) => (
-                  <MasonryColumnComponent key={index} column={column} />
-                ))}
-              </div>
-            </Marquee>
+            <div className="flex items-start py-4">
+              {/* Duplicate columns 3x to ensure seamless loop on ultra-wide screens */}
+              {[...masonryColumns, ...masonryColumns, ...masonryColumns].map((column, index) => (
+                <MasonryColumnComponent key={index} column={column} />
+              ))}
+            </div>
+          </Marquee>
           </div>
         </div>
         
