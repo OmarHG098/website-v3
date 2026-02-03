@@ -144,35 +144,7 @@ sections:
         title: Fast-Track Career
         description: Follow our career team's guidance
     footer_description: Join the next generation of AI engineers.
-  - type: features_quad
-    version: "1.0"
-    variant: default
-    heading: Who's Eligible?
-    description: "You'll qualify for the Job Guarantee if you:"
-    images:
-      - image_id: student_asian
-        alt: Asian student learning to code
-      - image_id: student_latin_male
-        alt: Latino student working on a project
-      - image_id: student_african
-        alt: African student collaborating with team
-      - image_id: student_latina_female
-        alt: Latina student celebrating success
-    cards:
-      - icon: Check
-        title: "1."
-        description: Have U.S. work authorization
-      - icon: Check
-        title: "2."
-        description: Pass our logic test
-      - icon: Check
-        title: "3."
-        description: Complete all coursework and projects
-      - icon: Check
-        title: "4."
-        description: Follow our career team's guidance
-    footer_description: Join thousands of graduates who have launched successful tech careers.
-    background: hsl(var(--secondary))
+    background: hsl(var(--muted))
   - type: numbered_steps
     version: "1.0"
     title: How the Refund Works
