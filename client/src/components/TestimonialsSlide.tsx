@@ -20,6 +20,7 @@ export interface TestimonialsSlideData {
   title: string;
   description: string;
   background?: string;
+  testimonials?: TestimonialsSlideTestimonial[];
 }
 
 interface TestimonialsSlideProps {
@@ -294,7 +295,10 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
     }, 500);
   }, [prefersReducedMotion]);
 
-  const masonryColumns = createMasonryColumns(DEFAULT_TESTIMONIALS);
+  const testimonials = data.testimonials && data.testimonials.length > 0 
+    ? data.testimonials 
+    : DEFAULT_TESTIMONIALS;
+  const masonryColumns = createMasonryColumns(testimonials);
 
   return (
     <section 
