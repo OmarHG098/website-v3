@@ -222,10 +222,10 @@ sections:
     title: Key Features
     subtitle: Discover what makes us different
     items:
-      - icon: IconFilter
+      - icon: IconAdjustmentsSpark
         value: 100%
         title: Satisfaction Rate
-      - icon: Users
+      - icon: IconAffiliateFilled
         value: 10K+
         title: Active Users
       - icon: Award
