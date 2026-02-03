@@ -165,11 +165,21 @@ export function getIcon(name: string): IconComponent | null {
 }
 
 /**
+ * Get all Tabler icon names dynamically from the library.
+ * This provides access to ALL 5000+ Tabler icons.
+ */
+export function getAllTablerIconNames(): string[] {
+  return Object.keys(TablerIcons).filter(
+    (key) => key.startsWith("Icon") && key !== "Icon"
+  );
+}
+
+/**
  * Get all available icon names for the picker.
- * Returns custom icons first, then Tabler icons.
+ * Returns custom icons first, then ALL Tabler icons.
  */
 export function getAllIconNames(): string[] {
-  return [...CUSTOM_ICON_NAMES, ...TABLER_ICON_NAMES];
+  return [...CUSTOM_ICON_NAMES, ...getAllTablerIconNames()];
 }
 
 /**

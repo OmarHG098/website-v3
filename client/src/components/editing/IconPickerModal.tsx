@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,8 +7,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { IconSearch, IconQuestionMark } from "@tabler/icons-react";
+import { IconSearch, IconQuestionMark, IconLoader2 } from "@tabler/icons-react";
 import { getIcon, getAllIconNames, getIconDisplayName, isCustomIcon } from "@/lib/icons";
 
 interface IconPickerModalProps {
@@ -19,7 +18,9 @@ interface IconPickerModalProps {
   itemLabel?: string;
 }
 
-// Get all icons once at module load
+const INITIAL_ICONS = 200;
+const ICONS_PER_LOAD = 60;
+
 const allIconNames = getAllIconNames();
 
 export function IconPickerModal({
@@ -30,6 +31,9 @@ export function IconPickerModal({
   itemLabel,
 }: IconPickerModalProps) {
   const [search, setSearch] = useState("");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_ICONS);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const filteredIcons = useMemo(() => {
     if (!search.trim()) {
@@ -40,6 +44,42 @@ export function IconPickerModal({
       name.toLowerCase().includes(searchLower)
     );
   }, [search]);
+
+  const visibleIcons = useMemo(() => {
+    return filteredIcons.slice(0, visibleCount);
+  }, [filteredIcons, visibleCount]);
+
+  const hasMore = visibleCount < filteredIcons.length;
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_ICONS);
+  }, [search]);
+
+  useEffect(() => {
+    if (!open) {
+      setVisibleCount(INITIAL_ICONS);
+      setSearch("");
+    }
+  }, [open]);
+
+  const loadMore = useCallback(() => {
+    if (!hasMore || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    requestAnimationFrame(() => {
+      setVisibleCount((prev) => Math.min(prev + ICONS_PER_LOAD, filteredIcons.length));
+      setIsLoadingMore(false);
+    });
+  }, [hasMore, isLoadingMore, filteredIcons.length]);
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    const scrollBottom = target.scrollHeight - target.scrollTop - target.clientHeight;
+    
+    if (scrollBottom < 100 && hasMore && !isLoadingMore) {
+      loadMore();
+    }
+  }, [hasMore, isLoadingMore, loadMore]);
 
   const handleSelect = (iconName: string) => {
     onSelect(iconName);
@@ -59,19 +99,19 @@ export function IconPickerModal({
         <DialogHeader>
           <DialogTitle>
             {currentValue && itemLabel 
-              ? `Replacing ${currentValue.replace("Icon", "")} for ${itemLabel}`
-              : "Select Icon"
+              ? `Reemplazando ${currentValue.replace("Icon", "")} para ${itemLabel}`
+              : "Seleccionar Icono"
             }
           </DialogTitle>
           <DialogDescription>
-            Choose an icon from the list below
+            Elige un icono de la lista
           </DialogDescription>
         </DialogHeader>
 
         <div className="relative">
           <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search icons..."
+            placeholder="Buscar iconos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-9"
@@ -80,9 +120,13 @@ export function IconPickerModal({
           />
         </div>
 
-        <ScrollArea className="h-[300px] border rounded-md">
+        <div 
+          ref={scrollContainerRef}
+          className="h-[350px] border rounded-md overflow-y-auto"
+          onScroll={handleScroll}
+        >
           <div className="grid grid-cols-6 gap-1 p-2">
-            {filteredIcons.map((iconName) => {
+            {visibleIcons.map((iconName) => {
               const isSelected = currentValue === iconName;
               const isCustom = isCustomIcon(iconName);
               return (
@@ -95,7 +139,7 @@ export function IconPickerModal({
                       ? "bg-primary text-primary-foreground"
                       : "hover:bg-muted"
                   } ${isCustom ? "ring-1 ring-primary/30" : ""}`}
-                  title={`${getIconDisplayName(iconName)}${isCustom ? " (custom)" : ""}`}
+                  title={`${getIconDisplayName(iconName)}${isCustom ? " (personalizado)" : ""}`}
                   data-testid={`icon-option-${iconName}`}
                 >
                   {renderIcon(iconName)}
@@ -103,16 +147,30 @@ export function IconPickerModal({
               );
             })}
           </div>
-          {filteredIcons.length === 0 && (
-            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-              No icons found
+          
+          {hasMore && (
+            <div className="flex items-center justify-center py-4">
+              {isLoadingMore ? (
+                <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+              ) : (
+                <span className="text-xs text-muted-foreground">
+                  Desplázate para cargar más...
+                </span>
+              )}
             </div>
           )}
-        </ScrollArea>
+          
+          {filteredIcons.length === 0 && (
+            <div className="flex items-center justify-center h-full text-muted-foreground text-sm py-8">
+              No se encontraron iconos
+            </div>
+          )}
+        </div>
 
         <p className="text-xs text-muted-foreground">
-          Showing {filteredIcons.length} of {allIconNames.length} icons.
-          {search && " Clear search to see all."}
+          Mostrando {visibleIcons.length} de {filteredIcons.length} iconos
+          {filteredIcons.length !== allIconNames.length && ` (${allIconNames.length} total)`}.
+          {search && " Limpia la búsqueda para ver todos."}
         </p>
       </DialogContent>
     </Dialog>

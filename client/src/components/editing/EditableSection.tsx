@@ -659,27 +659,32 @@ export function EditableSection({ children, section, index, sectionType, content
         </Popover>
       </div>
       
-      {/* Visibility indicator - below toolbar, only shown for restricted visibility */}
+      {/* Visibility badge - subtle indicator for sections with restricted visibility */}
       {(() => {
         const showOn = (section as SectionLayout).showOn || 'all';
         if (showOn === 'all') return null;
         
-        const isDesktopVisible = showOn === 'desktop';
-        const isMobileVisible = showOn === 'mobile';
+        const isDesktopOnly = showOn === 'desktop';
+        const isMobileOnly = showOn === 'mobile';
         
         return (
           <div 
-            className={`
-              absolute top-14 right-2 z-30 
-              flex items-center gap-0.5 px-1.5 py-1 bg-muted/90 backdrop-blur-sm rounded text-xs
-              transition-opacity duration-150
-              ${isEditorOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
-            `}
-            title={`Visible on ${showOn} only`}
+            className="absolute top-12 left-2 z-30 flex items-center gap-1.5 px-2 py-1 bg-amber-500/90 text-amber-950 text-xs font-medium rounded"
+            title={isDesktopOnly ? "This section is only displayed on desktop" : "This section is only displayed on mobile"}
             data-testid={`badge-visibility-${index}`}
           >
-            <IconDeviceDesktop className={`h-3.5 w-3.5 ${isDesktopVisible ? 'text-foreground' : 'text-muted-foreground/40'}`} />
-            <IconDeviceMobile className={`h-3.5 w-3.5 ${isMobileVisible ? 'text-foreground' : 'text-muted-foreground/40'}`} />
+            {isDesktopOnly && (
+              <>
+                <IconDeviceDesktop className="h-3.5 w-3.5" />
+                <span>Desktop only</span>
+              </>
+            )}
+            {isMobileOnly && (
+              <>
+                <IconDeviceMobile className="h-3.5 w-3.5" />
+                <span>Mobile only</span>
+              </>
+            )}
           </div>
         );
       })()}

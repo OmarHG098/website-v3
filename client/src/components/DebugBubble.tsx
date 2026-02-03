@@ -389,6 +389,10 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
+  // Check if we should hide the debug bubble (via URL param for embedded previews)
+  const shouldHide = typeof window !== "undefined" && 
+    new URLSearchParams(window.location.search).get("hide_debug") === "true";
+  
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
   const editMode = useEditModeOptional();
@@ -1156,6 +1160,11 @@ export function DebugBubble() {
     "latam": "Latin America",
     "europe": "Europe",
   };
+
+  // Don't render if hide_debug param is set (for embedded previews)
+  if (shouldHide) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-4 left-4 z-50" data-testid="debug-bubble">
