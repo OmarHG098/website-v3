@@ -38,7 +38,7 @@ sections:
     tutors:
       - name: Daniela Maisi
         role: Main Instructor
-        image: https://randomuser.me/api/portraits/men/10.jpg
+        image: https://avatars.githubusercontent.com/u/16064310?v=4
       - name: Rigo
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
