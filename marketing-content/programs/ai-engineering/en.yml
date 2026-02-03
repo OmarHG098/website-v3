@@ -273,7 +273,7 @@ sections:
   - type: ai_learning
     variant: feature-tabs
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
+    title: How You’ll Learn at 4Geeks
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
@@ -379,7 +379,7 @@ sections:
     version: "1.0"
     variant: product
     title: Tuition & Financing Options
-    subtitle: Investing in your career should never be a problem. That's why we offer multiple ways to fund your enrollment.
+    subtitle: Investing in your career matters. We make it easier with multiple ways to fund your enrollment.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
     financing_amount: $349
