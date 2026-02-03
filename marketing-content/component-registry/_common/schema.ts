@@ -35,6 +35,7 @@ export type CtaButton = z.infer<typeof ctaButtonSchema>;
 export const videoConfigSchema = z.object({
   url: z.string(),
   ratio: z.string().optional(),
+  mobile_ratio: z.string().optional(),
   muted: z.boolean().optional(),
   autoplay: z.boolean().optional(),
   loop: z.boolean().optional(),

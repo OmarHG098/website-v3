@@ -2,7 +2,17 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import { Button } from "@/components/ui/button";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+
+function getButtonVariant(variant?: string): "default" | "secondary" | "outline" | "ghost" | "destructive" {
+  const validVariants = ["default", "secondary", "outline", "ghost", "destructive"];
+  if (variant && validVariants.includes(variant)) {
+    return variant as "default" | "secondary" | "outline" | "ghost" | "destructive";
+  }
+  if (variant === "primary") return "default";
+  return "default";
+}
 
 interface FeaturesQuadLaptopEdgeProps {
   data: FeatureQuadSection;
@@ -108,6 +118,16 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
             <p className="text-sm text-muted-foreground leading-relaxed">
               {data.description}
             </p>
+            {data.cta && (
+              <Button
+                variant={getButtonVariant(data.cta.variant)}
+                asChild
+                className="mt-4"
+                data-testid="button-features-quad-cta-mobile"
+              >
+                <a href={data.cta.url}>{data.cta.text}</a>
+              </Button>
+            )}
           </div>
           {/* Cards stacked vertically - always compact on mobile */}
           <div className="grid grid-cols-1 gap-2" data-testid="cards-features-quad-mobile">
@@ -128,6 +148,16 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                 {data.heading}
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed">{data.description}</p>
+              {data.cta && (
+                <Button
+                  variant={getButtonVariant(data.cta.variant)}
+                  asChild
+                  className="mt-4"
+                  data-testid="button-features-quad-cta-tablet"
+                >
+                  <a href={data.cta.url}>{data.cta.text}</a>
+                </Button>
+              )}
             </div>
             {images.length > 0 && (
               <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] h-32" data-testid="img-features-quad-tablet">
@@ -167,6 +197,16 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                     {data.heading}
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{data.description}</p>
+                  {data.cta && (
+                    <Button
+                      variant={getButtonVariant(data.cta.variant)}
+                      asChild
+                      className="mt-4"
+                      data-testid="button-features-quad-cta-desktop"
+                    >
+                      <a href={data.cta.url}>{data.cta.text}</a>
+                    </Button>
+                  )}
                 </div>
                 {images.length > 0 && (
                   <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card w-[300px] h-36" data-testid="img-features-quad-desktop">

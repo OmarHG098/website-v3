@@ -20,6 +20,7 @@ export interface TestimonialsSlideData {
   title: string;
   description: string;
   background?: string;
+  testimonials?: TestimonialsSlideTestimonial[];
 }
 
 interface TestimonialsSlideProps {
@@ -139,9 +140,9 @@ const DEFAULT_TESTIMONIALS: TestimonialsSlideTestimonial[] = [
 ];
 
 const sizeConfig: Record<CardSize, { lineClamp: string; minHeight: string }> = {
-  small: { lineClamp: "line-clamp-2", minHeight: "min-h-[140px]" },
-  medium: { lineClamp: "line-clamp-4", minHeight: "min-h-[180px]" },
-  large: { lineClamp: "line-clamp-6", minHeight: "min-h-[220px]" }
+  small: { lineClamp: "line-clamp-3 md:line-clamp-2", minHeight: "min-h-[140px]" },
+  medium: { lineClamp: "line-clamp-5 md:line-clamp-4", minHeight: "min-h-[180px]" },
+  large: { lineClamp: "line-clamp-7 md:line-clamp-6", minHeight: "min-h-[220px]" }
 };
 
 function MasonryCard({ 
@@ -243,7 +244,7 @@ function createMasonryColumns(testimonials: TestimonialsSlideTestimonial[]): Mas
 
 function MasonryColumnComponent({ column }: { column: MasonryColumn }) {
   return (
-    <div className="flex flex-col gap-4 w-[200px] md:w-[280px] flex-shrink-0 mx-2">
+    <div className="flex flex-col gap-4 w-[280px] flex-shrink-0 mx-2">
       {column.cards.map((card, index) => (
         <MasonryCard 
           key={index} 
@@ -294,7 +295,10 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
     }, 500);
   }, [prefersReducedMotion]);
 
-  const masonryColumns = createMasonryColumns(DEFAULT_TESTIMONIALS);
+  const testimonials = data.testimonials && data.testimonials.length > 0 
+    ? data.testimonials 
+    : DEFAULT_TESTIMONIALS;
+  const masonryColumns = createMasonryColumns(testimonials);
 
   return (
     <section 

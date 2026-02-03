@@ -19,6 +19,7 @@ interface UniversalVideoProps extends Omit<VideoConfig, 'with_shadow_border'> {
   withShadowBorder?: boolean;
   useSolidCard?: boolean;
   bordered?: boolean;
+  mobileRatio?: string;
 }
 
 const isLocalVideo = (url: string): boolean => {
@@ -70,6 +71,7 @@ const parseRatioValue = (ratio?: string): number => {
 export function UniversalVideo({
   url,
   ratio = "16:9",
+  mobileRatio,
   muted = true,
   autoplay = false,
   loop = true,
@@ -80,9 +82,16 @@ export function UniversalVideo({
   bordered = false,
 }: UniversalVideoProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [videoId] = useState(() => `video-${Math.random().toString(36).substr(2, 9)}`);
   const aspectRatio = parseRatio(ratio);
+  const mobileAspectRatio = mobileRatio ? parseRatio(mobileRatio) : null;
   const ratioValue = parseRatioValue(ratio);
   const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
+  
+  const responsiveStyles = mobileAspectRatio ? `
+    #${videoId} { padding-top: ${mobileAspectRatio.paddingTop}; }
+    @media (min-width: 768px) { #${videoId} { padding-top: ${aspectRatio.paddingTop}; } }
+  ` : null;
 
   const isYouTube = isYouTubeUrl(url);
   const youtubeId = isYouTube ? extractYouTubeId(url) : null;
@@ -96,12 +105,15 @@ export function UniversalVideo({
   const renderPreview = () => {
     if (thumbnailUrl) {
       return (
-        <div 
-          className={`relative overflow-hidden rounded-lg cursor-pointer group ${borderClasses} ${className}`}
-          style={aspectRatio}
-          onClick={handleClick}
-          data-testid="video-preview"
-        >
+        <>
+          {responsiveStyles && <style>{responsiveStyles}</style>}
+          <div 
+            id={mobileAspectRatio ? videoId : undefined}
+            className={`relative overflow-hidden rounded-lg cursor-pointer group ${borderClasses} ${className}`}
+            style={mobileAspectRatio ? undefined : aspectRatio}
+            onClick={handleClick}
+            data-testid="video-preview"
+          >
           <img
             src={thumbnailUrl}
             alt="Video preview"
@@ -119,16 +131,20 @@ export function UniversalVideo({
             </div>
           </div>
         </div>
+        </>
       );
     }
 
     return (
-      <div 
-        className={`relative overflow-hidden rounded-lg cursor-pointer group bg-muted ${borderClasses} ${className}`}
-        style={aspectRatio}
-        onClick={handleClick}
-        data-testid="video-placeholder"
-      >
+      <>
+        {responsiveStyles && <style>{responsiveStyles}</style>}
+        <div 
+          id={mobileAspectRatio ? videoId : undefined}
+          className={`relative overflow-hidden rounded-lg cursor-pointer group bg-muted ${borderClasses} ${className}`}
+          style={mobileAspectRatio ? undefined : aspectRatio}
+          onClick={handleClick}
+          data-testid="video-placeholder"
+        >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
           <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/80 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
             <IconPlayerPlayFilled className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" />
@@ -138,6 +154,7 @@ export function UniversalVideo({
           </p>
         </div>
       </div>
+      </>
     );
   };
 
@@ -183,20 +200,24 @@ export function UniversalVideo({
 
   const renderInlineVideo = () => {
     return (
-      <div 
-        className={`relative overflow-hidden rounded-lg ${borderClasses} ${className}`}
-        style={aspectRatio}
-        data-testid="video-inline"
-      >
-        <video
-          src={url}
-          autoPlay
-          loop={loop}
-          muted={muted}
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+      <>
+        {responsiveStyles && <style>{responsiveStyles}</style>}
+        <div 
+          id={mobileAspectRatio ? videoId : undefined}
+          className={`relative overflow-hidden rounded-lg ${borderClasses} ${className}`}
+          style={mobileAspectRatio ? undefined : aspectRatio}
+          data-testid="video-inline"
+        >
+          <video
+            src={url}
+            autoPlay
+            loop={loop}
+            muted={muted}
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
+      </>
     );
   };
 
