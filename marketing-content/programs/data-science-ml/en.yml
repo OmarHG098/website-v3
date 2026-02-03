@@ -208,10 +208,9 @@ sections:
     paddingY:
       desktop: md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
+    title: How You’ll Learn at 4Geeks
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
@@ -322,6 +321,7 @@ sections:
     columns: 3
     icon_color: "#0097CD"
     background: hsl(var(--secondary))
+    showOn: mobile
   - type: pricing
     version: "1.0"
     variant: product
