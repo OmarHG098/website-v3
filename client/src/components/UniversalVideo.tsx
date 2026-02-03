@@ -51,13 +51,13 @@ const getYouTubeThumbnail = (videoId: string): string => {
   return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 };
 
-const parseRatio = (ratio?: string): { paddingTop: string; height: number } => {
-  if (!ratio) return { paddingTop: "56.25%", height: 0 };
+const parseRatio = (ratio?: string): { paddingTop: string } => {
+  if (!ratio) return { paddingTop: "56.25%" };
   const [w, h] = ratio.split(":").map(Number);
   if (w && h) {
-    return { paddingTop: `${(h / w) * 100}%`, height: 0 };
+    return { paddingTop: `${(h / w) * 100}%` };
   }
-  return { paddingTop: "56.25%", height: 0 };
+  return { paddingTop: "56.25%" };
 };
 
 const parseRatioValue = (ratio?: string): number => {
