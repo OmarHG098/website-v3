@@ -281,12 +281,11 @@ sections:
           - text: Direct introductions to hiring partners
       - value: 3-6 months
         label: Time to get hired
-        description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
+        description: Land your first role within 3–6 months of graduation. With our structured 3-step career development process, your skills turn into job offers fast.
         benefits:
-          - text: Job search strategy and planning
-          - text: Salary negotiation coaching
-          - text: Lifetime career support access
-          - text: Alumni network with 10,000+ professionals
+          - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
+          - text: Practice for technical and behavioral interviews
+          - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 150%
         label: Average salary increase
         description: Our graduates see an average 150% salary increase after transitioning into data science and machine learning roles. The investment pays for itself.
@@ -305,10 +304,10 @@ sections:
           - text: Companies include Google, Meta, Amazon, startups
     certificate_position: right
     useSolidCard: true
-    background: hsl(var(--muted))
     paddingY:
       mobile: lg
       desktop: lg
+    background: hsl(var(--muted))
   - type: pricing
     version: "1.0"
     variant: product
