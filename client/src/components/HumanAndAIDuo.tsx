@@ -93,10 +93,10 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
     if (hasVideo) {
       return (
         <div className="flex justify-end">
-          <div className={`max-w-[350px] ${containerClass}`} data-testid={testId}>
+          <div className={`max-w-[400px] ${containerClass}`} data-testid={testId}>
             <UniversalVideo
               url={data.video!}
-              ratio="2:1"
+              ratio="2.39:1"
               preview_image_url={data.video_preview_image}
             />
           </div>
@@ -226,13 +226,13 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
         {/* ===== DESKTOP LAYOUT (lg+, Notion-like layout) ===== */}
         <div className="hidden lg:block space-y-8">
           <div className="grid grid-cols-12 gap-8 items-start">
-            <div className={`${hasVideo ? "col-span-8" : "col-span-7"}`}>
+            <div className={`${hasVideo ? "col-span-7" : "col-span-7"}`}>
               <h2 className="text-4xl font-bold text-foreground mb-4 w-full" data-testid="text-human-ai-heading">
                 {data.heading}
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">{data.description}</p>
             </div>
-            <div className={`${hasVideo ? "col-span-4" : "col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card h-44"}`}>
+            <div className={`${hasVideo ? "col-span-5" : "col-span-5 flex items-start gap-4 bg-primary/5 p-4 rounded-card h-44"}`}>
               {renderMedia(
                 hasVideo ? "w-full" : "flex gap-4 h-full w-full",
                 "img-students-desktop"

@@ -363,9 +363,11 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134",
-      "lastModified": 1770075719690.759,
-      "remoteSha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134"
+      "sha": "0e668d5a742ea15e1b0bc96d68e4e93d89a3f8a7366bd5d5be1ca7d376b8d10d",
+      "lastModified": 1770080544302.0566,
+      "remoteSha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T01:02:24.304Z"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
