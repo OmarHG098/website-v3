@@ -207,6 +207,41 @@ sections:
       desktop: md none
     paddingY:
       desktop: md
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    compact: true
+    heading: Program Benefits
+    description: Everything you need to succeed in your AI engineering career.
+    cards:
+      - icon: Trophy
+        title: Industry Recognition
+        description: Top-ranked bootcamp
+      - icon: Wallet
+        title: Affordable Tuition
+        description: Flexible payments
+      - icon: Clock
+        title: Flexible Schedule
+        description: Part-time available
+      - icon: Users
+        title: Career Support
+        description: Unlimited mentorship
+    background: bg-muted/30
+  - type: features_grid
+    variant: highlight
+    title: Why Choose 4Geeks Academy?
+    subtitle: Explore the features that set us apart and empower your tech journey.
+    items:
+      - icon: Star
+        title: Global Learnersjnldfg blsdfbglisd bfglsdbfglb sdflgbsdflgsbf
+      - icon: Users
+        value: 10K+
+        title: Global Learners Supported
+      - icon: Award
+        value: 5★
+        title: Average Program Rating
+    columns: 3
+    icon_color: "#0097CD"
   - type: ai_learning
     version: "1.0"
     variant: feature-tabs
@@ -286,7 +321,7 @@ sections:
           - text: Optimize your resume, portfolio, and online profiles to attract recruiters and pass AI-based screening
           - text: Practice for technical and behavioral interviews
           - text: Execute a personalized job-search strategy with access to relevant hiring networks
-      - value: 150%
+      - value: 55%
         label: Average salary increase
         description: Our graduates see an average 150% salary increase after transitioning into data science and machine learning roles. The investment pays for itself.
         benefits:
