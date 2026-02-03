@@ -129,13 +129,13 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
           <div className="md:col-span-3 flex flex-col items-center md:items-start justify-start min-w-0">
             <div className="text-center md:text-left relative w-full min-w-0 pl-[0px] pr-[0px] mt-[24px] mb-[24px]">
               {welcomeText && (
-                <p className="text-body text-muted-foreground mb-4">
+                <p className="text-4xl text-muted-foreground">
                   {welcomeText}
                 </p>
               )}
 
               {data.brand_mark && (
-                <h1 className="font-heading text-h1 tracking-tight mb-3">
+                <h1 className="font-heading text-h1 tracking-tight">
                   {data.brand_mark.prefix && (
                     <span className="text-foreground">
                       {data.brand_mark.prefix}{" "}
@@ -157,7 +157,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                 </h1>
               )}
               <h2 
-                className="text-4xl lg:text-5xl font-medium mb-2 text-foreground"
+                className="text-4xl lg:text-5xl font-medium text-foreground"
                 data-testid="text-hero-title"
               >
                 {data.title}
@@ -165,7 +165,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
 
               {subtitle && (
                 <p
-                  className="text-body text-muted-foreground mb-8 max-w-xl leading-relaxed"
+                  className="text-4xl text-muted-foreground mb-8 max-w-xl leading-relaxed"
                   data-testid="text-hero-subtitle"
                 >
                   {subtitle}

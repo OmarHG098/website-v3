@@ -25,9 +25,6 @@ sections:
       suffix: ":"
       color: chart-5
     description: Get unlimited 1:1 career support tailored to your goals, background, and experience—for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
-    video:
-      url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-      ratio: "3:4"
     marquee:
       items:
         - id: switchup-2025
@@ -53,6 +50,9 @@ sections:
       speed: 40
       gradient: true
       gradientWidth: 50
+    video:
+      url: https://www.youtube.com/watch?v=-2ZvlgDnltc
+      ratio: "3:4"
     paddingY:
       desktop: none
   - type: bullet_tabs_showcase
