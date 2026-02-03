@@ -389,8 +389,9 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
-  // Check if we're inside an iframe (e.g., mobile preview)
-  const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+  // Check if we should hide the debug bubble (via URL param for embedded previews)
+  const shouldHide = typeof window !== "undefined" && 
+    new URLSearchParams(window.location.search).get("hide_debug") === "true";
   
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
@@ -1160,8 +1161,8 @@ export function DebugBubble() {
     "europe": "Europe",
   };
 
-  // Don't render if we're inside an iframe (e.g., mobile preview)
-  if (isInIframe) {
+  // Don't render if hide_debug param is set (for embedded previews)
+  if (shouldHide) {
     return null;
   }
 
