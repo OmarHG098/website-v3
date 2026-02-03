@@ -659,7 +659,7 @@ export function EditableSection({ children, section, index, sectionType, content
         </Popover>
       </div>
       
-      {/* Visibility alert banner - shown prominently for sections with restricted visibility */}
+      {/* Visibility badge - subtle indicator for sections with restricted visibility */}
       {(() => {
         const showOn = (section as SectionLayout).showOn || 'all';
         if (showOn === 'all') return null;
@@ -669,19 +669,20 @@ export function EditableSection({ children, section, index, sectionType, content
         
         return (
           <div 
-            className="absolute top-12 left-0 right-0 z-30 flex items-center justify-center gap-2 px-3 py-2 bg-amber-500/90 text-amber-950 text-sm font-medium"
-            data-testid={`alert-visibility-${index}`}
+            className="absolute top-12 left-2 z-30 flex items-center gap-1.5 px-2 py-1 bg-amber-500/90 text-amber-950 text-xs font-medium rounded"
+            title={isDesktopOnly ? "This section is only displayed on desktop" : "This section is only displayed on mobile"}
+            data-testid={`badge-visibility-${index}`}
           >
             {isDesktopOnly && (
               <>
-                <IconDeviceDesktop className="h-4 w-4" />
-                <span>This section is only displayed on desktop</span>
+                <IconDeviceDesktop className="h-3.5 w-3.5" />
+                <span>Desktop only</span>
               </>
             )}
             {isMobileOnly && (
               <>
-                <IconDeviceMobile className="h-4 w-4" />
-                <span>This section is only displayed on mobile</span>
+                <IconDeviceMobile className="h-3.5 w-3.5" />
+                <span>Mobile only</span>
               </>
             )}
           </div>
