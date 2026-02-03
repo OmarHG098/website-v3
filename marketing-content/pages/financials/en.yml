@@ -31,8 +31,8 @@ sections:
       - text: Affordable loans.
       - text: Scholarships.
     video:
-      url: https://media.videoask.com/transcoded/7edaca78-55de-4e83-b084-c256ebafbce6/video.mp4?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZWRpYV9pZCI6IjdlZGFjYTc4LTU1ZGUtNGU4My1iMDg0LWMyNTZlYmFmYmNlNiIsImV4cCI6MTc3MDQ3NDg0NX0.LWSDjkCor5QxpVCnAS3yjxjSHlniteRoaT16OWdhF0ZQqwUUEZpWQ7i2Bp9l03h_Tp4BKZDVdK1HyuKrq7cKQwFNgtgOEp4TONTP6xv-1_5OjQ87_haEgZlwJCeH4tfgn7hFbdvYNhUzT54hCv3vH9MUMlwdKRRBp9TJqbL7xg-9qbGphU1foHVI81s5__DbYQepRROjGgTOpwJGNIPQbUy6JFgD9lODe7pRoLRMyH2eq_KIRdP28JfrXO0TrtpYym9X6XTb-a68wS6CnA7DJ9nAvePLRhJvLCghmzcrGJgXTy3TPul4pPqTrygghrw0xZ7i7YBPWYAyQT5vDaQY_yjf-RIVsxE0Hwmf3i2vptc_HRAxUXJqPwai68eRuhS-MzP-ZK7O9ceMN1TSKy5LPkU77JjCK8XlPtuU0NPq8KAmORw6kVm0wJtBD6i1TmxVgWNCVZvc6lmli-2gh3bVruKvML_-5i-ZLoFH2Humk_nrKYwrK0NF4N3DFh9dwrh87Ns-Ebu71etgtHzPIUJU0OJz5zfbg45YuslmyDzexbkt93PUlUlI7T2aoueiuxEhJghLyzhhliP9AEtw9Mt2RFwMnObcWaAw5HBrKWWkda1hwlVMxhtwG7WvdRgGQFiFzQ3BmNfOOhOtthARWVtyGFiSK9Q0f_9NaMPunZMMYGI
-      ratio: "9:16"
+      url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
+      ratio: "5:10"
       muted: true
       loop: true
     form: {}
@@ -47,9 +47,9 @@ sections:
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY:
-      desktop: none md
+      desktop: none lg
     marginY:
-      desktop: none
+      desktop: none md
   - type: syllabus
     title: Launch your tech career, with payment plans that fit your budget
     subtitle: Explore our financing paths — from low monthly payments to income-based plans — and choose the option that works for you.
