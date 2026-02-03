@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { NumberedStepsBubbleTextSection } from "@shared/schema";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface StepNumberProps {
   index: number;
@@ -68,49 +69,62 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           </p>
         )}
 
-        {/* Mobile: Vertical layout */}
-        <div className="lg:hidden space-y-6">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center"
-              data-testid={`numbered-step-mobile-${index + 1}`}
-            >
-              <button
-                onClick={() => handleStepInteraction(index)}
-                aria-label={step.title || `Step ${index + 1}`}
-                aria-expanded={activeStep === index}
-                className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                  activeStep === index
-                    ? "scale-105"
-                    : "hover:scale-102"
-                }`}
-                data-testid={`button-numbered-step-${index + 1}`}
-              >
-                <StepNumber index={index} size="sm" />
-                {step.title && (
-                  <h3 className="text-base font-semibold text-foreground leading-tight">
-                    {step.title}
-                  </h3>
-                )}
-              </button>
-              {activeStep === index && step.bullets && (
-                <div className="mt-4 p-4 w-full animate-in fade-in slide-in-from-top-2 duration-300">
-                  <ul className="space-y-2">
-                    {step.bullets.map((bullet, bulletIndex) => (
-                      <li
-                        key={bulletIndex}
-                        className="flex gap-2 items-start text-sm text-muted-foreground"
-                      >
-                        <span className="text-foreground flex-shrink-0 mt-0.5">•</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+        {/* Mobile & Tablet: Vertical cards layout */}
+        <div className="lg:hidden">
+          <div className="relative max-w-2xl mx-auto">
+            {steps.map((step, index) => {
+              const isLast = index === steps.length - 1;
+              const number = String(index + 1).padStart(2, '0');
+
+              return (
+                <div
+                  key={index}
+                  className="flex gap-4 md:gap-6"
+                  data-testid={`numbered-step-mobile-${index + 1}`}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg border-2 border-primary bg-primary/10 flex items-center justify-center flex-shrink-0 relative z-10">
+                      <span className="text-lg md:text-xl font-bold text-primary">{number}</span>
+                    </div>
+                    {!isLast && (
+                      <div className="w-0.5 flex-1 bg-primary/30 my-2" />
+                    )}
+                  </div>
+
+                  <Card className={`flex-1 ${isLast ? 'mb-0' : 'mb-4'}`}>
+                    <CardContent className="p-5 md:p-6">
+                      <div className="flex-1">
+                        {step.title && (
+                          <h3 className="text-lg font-semibold text-foreground">
+                            {step.title}
+                          </h3>
+                        )}
+                        {step.text && (
+                          <p className="text-muted-foreground mt-1">
+                            {step.text}
+                          </p>
+                        )}
+                      </div>
+
+                      {step.bullets && step.bullets.length > 0 && (
+                        <ul className="space-y-2 mt-4">
+                          {step.bullets.map((bullet, bulletIndex) => (
+                            <li
+                              key={bulletIndex}
+                              className="flex gap-2 items-start text-base text-muted-foreground"
+                            >
+                              <span className="text-primary flex-shrink-0 mt-0.5">•</span>
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </CardContent>
+                  </Card>
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         {/* Desktop: CSS Grid Triangle layout with connectors */}
