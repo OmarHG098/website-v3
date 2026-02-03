@@ -296,7 +296,7 @@ sections:
     paddingY:
       desktop: md
   - type: certificate
-    title: Certificate & Industry Certifications
+    title: Industry Certifications and Career Outcomes
     description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Our program prepares you for:"
     benefits:
       - text: EJPT (eLearnSecurity Junior Penetration Tester)
@@ -326,12 +326,12 @@ sections:
           - text: Alumni network with 10,000+ professionals
       - value: $85K+
         label: Average starting salary
-        description: Cybersecurity professionals command premium salaries due to high demand and specialized skills. The investment pays for itself.
+        description: A career in cybersecurity isn't just a new job—it’s a new life trajectory. With an average salary jump of 55%, our graduates unlock a level of stability and growth that few other industries can offer.
         benefits:
-          - text: "Security Analyst: $70K–$95K"
-          - text: "Penetration Tester: $80K–$110K"
-          - text: "SOC Analyst: $65K–$90K"
-          - text: "Security Engineer: $90K–$130K"
+          - text: "Cybersecurity Analyst: $75K–$120K"
+          - text: "Penetration Tester: $90K–$150K"
+          - text: "Security Engineer: $100K–$165K"
+          - text: "Incident Responder: $85K–$140K"
       - value: 5,000+
         label: Hiring Partners
         description: Our extensive network includes Fortune 500 companies, government agencies, and innovative startups actively seeking cybersecurity talent.
