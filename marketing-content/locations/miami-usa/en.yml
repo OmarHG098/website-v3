@@ -122,48 +122,25 @@ sections:
     background: gradient
     marginY:
       desktop: lg none
-  - type: human_and_ai_duo
-    version: v1.0
-    heading: Learn with AI-Powered Support
-    description: Learning  best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey.
-    bullet_groups:
-      - title: AI-Powered Learning
-        description: Get instant answers and code feedback 24/7 with Rigobot.
-        icon: Robot
-        bullets:
-          - text: Instant code reviews and suggestions
-          - text: Personalized learning recommendations
-          - text: Available around the clock
-      - title: Human Mentorship
-        description: Connect with experienced developers for deeper guidance.
-        icon: Users
-        bullets:
-          - text: One-on-one mentoring sessions
-          - text: Career advice and portfolio reviews
-          - text: Real-world project feedback
-    footer_description: Join thousands of students who have accelerated their learning with our hybrid support system.
-    background: bg-muted/30
-    video: https://youtu.be/4n-ZAUPIxJI
-  - type: human_and_ai_duo
-    version: "1.0"
-    heading: "Human + AI: The Perfect Support Duo"
-    description: Learning works best when human expertise and AI support come together. At 4Geeks, you'll have access to unlimited 1:1 mentorship plus AI-guided feedback from Rigobot, so every step is tailored to your learning journey.
-    bullet_groups:
-      - title: "Our Team of Expert Mentors:"
-        image: https://randomuser.me/api/portraits/men/10.jpg
-        bullets:
-          - text: Provides personalized guidance on coding challenges and best practices
-          - text: Offers live troubleshooting and debugging support
-          - text: Expert bug fixing assistance
-          - text: Shares industry insights, career advice, and learning strategies
-      - title: "Rigobot + Learnpack:"
-        bullets:
-          - text: Provides instant feedback and tutoring while you code
-          - text: Tracks your skills and progress
-          - text: Helps with debugging and problem-solving tasks
-          - text: Hundreds of hands-on coding exercises and structured practice on Learnpack
-    footer_description: Together, human mentorship and AI-powered tools accelerate your learning, keep you engaged, and empower you to tackle challenges with confidence.
-    background: bg-background
+  - type: two_column
+    proportions:
+      - 6
+      - 6
+    alignment: center
+    left:
+      video: 4n-ZAUPIxJI
+    right:
+      heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
+      sub_heading: Watch how our platform transforms careers
+      description: Discover the future of Miami's tech landscape through the eyes of Mayor Francis Suarez. In an exclusive interview, Mayor Suarez shares invaluable insights into the evolving digital economy, emphasizing the pivotal role of coding skills and the transformative potential of artificial intelligence (AI).
+      button:
+        text: Start Free Trial
+        url: https://youtu.be/4n-ZAUPIxJI
+        variant: primary
+        icon: Rocket
+    gap: "8"
+    paddingY:
+      desktop: none lg
   - type: human_and_ai_duo
     version: "1.0"
     heading: Our AI-powered features make all the difference!
@@ -210,6 +187,18 @@ sections:
     image_object_fit: cover
     paddingY:
       desktop: lg none
+  - type: split_cards
+    variant: primary-left
+    primary:
+      heading: The Confidence of a Job Guarantee
+      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      badge: Results-Backed Promise
+    secondary:
+      benefits:
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
+    background: hsl(var(--secondary))
   - type: testimonials_slide
     version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students
@@ -232,26 +221,11 @@ sections:
           iso: ES
         contributor: Software Engineer
         description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: The Confidence of a Job Guarantee
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
-      badge: Results-Backed Promise
-    secondary:
-      benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-    background: hsl(var(--secondary))
   - type: why_learn_ai
     variant: laptop-edge
     title: Why Miami Is a Smart Place to Launch Your Tech Career
     subtitle: Software Development as You Know It Will Cease to Exist
     description: Miami is one of the fastest growing tech ecosystems in the world. Join the number 1 part-time Coding Bootcamp in Miami and become part of the best place to learn to code in Florida. Career Support and Mentorship for our students is for life. Located in Brickell and 5 mins away from the Metro Mover (subway station). Our place is full of amenities, and close to everything. We have parking (free for students and members of the community), and we have a great terrace! Brickell is one of the most active areas in the city. The office is opened 24/7 during the week and on Saturday we host our famous 'Coding Weekends' when students and other developers gather to code all day with mentors, pizzas and drinks on the house!
-    background: hsl(var(--secondary))
-    paddingY:
-      desktop: none
   - type: mentorship
     version: v1.0
     title: Mentorship & Support

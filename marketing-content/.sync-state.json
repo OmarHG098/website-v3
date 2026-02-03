@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "bf15911cbfde3435aa827fa4491fa77f134ecc92",
-  "lastSyncedAt": "2026-02-02T23:42:01.388Z",
+  "lastSyncedCommit": "e23e54ac629ec98417c3399eff69be09e2142d71",
+  "lastSyncedAt": "2026-02-03T04:54:22.939Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -53,10 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "e8350dcdf6cfa4e578082c81d15e5d96c6ede6c8913d949d961608f5096bd591",
-      "lastModified": 1770091498104.3804,
-      "remoteSha": "eb0473ecea7797f26a7586206be1ef2aa1e8fc672b57450efa88339dabc59444",
-      "modifiedAt": "2026-02-03T04:04:58.106Z"
+      "sha": "eb0473ecea7797f26a7586206be1ef2aa1e8fc672b57450efa88339dabc59444",
+      "lastModified": 1770094462204.5044,
+      "remoteSha": "eb0473ecea7797f26a7586206be1ef2aa1e8fc672b57450efa88339dabc59444"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -364,11 +363,9 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "c322c103370205fef8f0f8b3967c4b4cd919dd8747e316d7eb75167f2f6d5d49",
-      "lastModified": 1770092303769.5977,
-      "remoteSha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T04:18:23.771Z"
+      "sha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134",
+      "lastModified": 1770094462640.504,
+      "remoteSha": "8c2a0c8d61c63237cc8a44fb952587ce0eb1fa89a298c745f9477a2b7ec3a134"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -611,9 +608,9 @@
       "remoteSha": "0a20ed628666a4f3abd896728ff4b6e1cae06e8fd144d7088b4fb60376c71687"
     },
     "marketing-content/pages/financials/en.yml": {
-      "sha": "2329868f1820f0b91d9aaa0de6d4db8ae3e3dc4759331836cebf844125c35ba7",
-      "lastModified": 1770075394229.588,
-      "remoteSha": "2329868f1820f0b91d9aaa0de6d4db8ae3e3dc4759331836cebf844125c35ba7"
+      "sha": "e9bb982843119ec2fe52b89bac705682d70aca15def109e4cbf5e4e946f9625a",
+      "lastModified": 1770094307050.6545,
+      "remoteSha": "e9bb982843119ec2fe52b89bac705682d70aca15def109e4cbf5e4e946f9625a"
     },
     "marketing-content/pages/financials/es.yml": {
       "sha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec",
@@ -628,9 +625,7 @@
     "marketing-content/pages/geekforce-career-support/en.yml": {
       "sha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
       "lastModified": 1770084327674.3875,
-      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T02:05:27.676Z"
+      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -643,9 +638,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "b1bece2c36450dd7b7cb6189bc850cbd83899227015e2e4a203e328d8727cf83",
-      "lastModified": 1770075720171.7585,
-      "remoteSha": "b1bece2c36450dd7b7cb6189bc850cbd83899227015e2e4a203e328d8727cf83"
+      "sha": "8a89c9b0b4ecea0750f7c626b6eabddcf477798778904b07d451d038b771a2ad",
+      "lastModified": 1770094307558.654,
+      "remoteSha": "8a89c9b0b4ecea0750f7c626b6eabddcf477798778904b07d451d038b771a2ad"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "9f6fdf9dfe26772aefa7d6d68397d69eb0fe8ee8d88cb6d4c631f4997ff0440b",
