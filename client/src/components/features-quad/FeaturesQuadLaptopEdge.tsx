@@ -2,6 +2,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
@@ -64,6 +65,22 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
   const images = data.images || [];
+  const hasVideo = !!data.video;
+  const hasMedia = hasVideo || images.length > 0;
+
+  const renderMedia = (widthClass: string, testId: string) => {
+    if (!hasVideo) return null;
+    const aspectRatio = data.video_ratio || "16:9";
+    return (
+      <div className={`${widthClass} rounded-card overflow-hidden`} data-testid={testId}>
+        <UniversalVideo
+          url={data.video!}
+          preview_image_url={data.video_preview_image}
+          ratio={aspectRatio}
+        />
+      </div>
+    );
+  };
 
   return (
     <section 
@@ -90,24 +107,28 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
       <div className="relative max-w-6xl mx-auto px-4 py-14">
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-4">
-          {/* Images above title - aligned left */}
+          {/* Media above title - aligned left */}
           <div className="flex justify-center">
-            {images.length > 0 && (
-              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="w-16">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full rounded-lg"
-                      style={{
-                        objectFit: image.object_fit || "cover",
-                        objectPosition: image.object_position || "top",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+            {hasMedia && (
+              hasVideo ? (
+                renderMedia("w-full max-w-[280px]", "video-features-quad-mobile")
+              ) : (
+                <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-[180px] w-64 w-fit" data-testid="img-features-quad-mobile">
+                  {images.slice(0, 4).map((image, index) => (
+                    <div key={index} className="w-16">
+                      <UniversalImage
+                        id={image.image_id}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-full rounded-lg"
+                        style={{
+                          objectFit: image.object_fit || "cover",
+                          objectPosition: image.object_position || "top",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </div>
           {/* Title and description */}
@@ -159,22 +180,26 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                 </Button>
               )}
             </div>
-            {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] h-32" data-testid="img-features-quad-tablet">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="flex-1">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full rounded-lg"
-                      style={{
-                        objectFit: image.object_fit || "cover",
-                        objectPosition: image.object_position || "top",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+            {hasMedia && (
+              hasVideo ? (
+                renderMedia("w-[300px]", "video-features-quad-tablet")
+              ) : (
+                <div className="flex items-stretch gap-3 bg-primary/5 w-[300px] p-3 rounded-card max-h-[200px] h-32" data-testid="img-features-quad-tablet">
+                  {images.slice(0, 4).map((image, index) => (
+                    <div key={index} className="flex-1">
+                      <UniversalImage
+                        id={image.image_id}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-full rounded-lg"
+                        style={{
+                          objectFit: image.object_fit || "cover",
+                          objectPosition: image.object_position || "top",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </div>
           <div className="grid grid-cols-2 gap-4" data-testid="cards-features-quad-tablet">
@@ -208,22 +233,26 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                     </Button>
                   )}
                 </div>
-                {images.length > 0 && (
-                  <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card w-[300px] h-36" data-testid="img-features-quad-desktop">
-                    {images.slice(0, 4).map((image, index) => (
-                      <div key={index} className="flex-1">
-                        <UniversalImage
-                          id={image.image_id}
-                          alt={image.alt || `Image ${index + 1}`}
-                          className="w-full h-full rounded-lg"
-                          style={{
-                            objectFit: image.object_fit || "cover",
-                            objectPosition: image.object_position || "top",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                {hasMedia && (
+                  hasVideo ? (
+                    renderMedia("w-[300px]", "video-features-quad-desktop")
+                  ) : (
+                    <div className="flex items-stretch gap-3 bg-primary/5 p-4 rounded-card w-[300px] h-36" data-testid="img-features-quad-desktop">
+                      {images.slice(0, 4).map((image, index) => (
+                        <div key={index} className="flex-1">
+                          <UniversalImage
+                            id={image.image_id}
+                            alt={image.alt || `Image ${index + 1}`}
+                            className="w-full h-full rounded-lg"
+                            style={{
+                              objectFit: image.object_fit || "cover",
+                              objectPosition: image.object_position || "top",
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )
                 )}
               </div>
                 <div className="grid grid-cols-2 gap-4" data-testid="cards-features-quad-desktop">

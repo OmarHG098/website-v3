@@ -78,26 +78,30 @@ sections:
     marginY:
       desktop: none md
   - type: features_quad
-    version: "1.0"
-    variant: default
-    compact: true
-    heading: Program Benefits
-    description: Everything you need to succeed in your AI engineering career.
+    heading: What You'll Learn
+    description: Gain the skills needed to excel in AI engineering through practical experience.
     cards:
-      - icon: Trophy
-        title: Industry Recognition
-        description: Top-ranked bootcamp
-      - icon: Wallet
-        title: Affordable Tuition
-        description: Flexible payments
-      - icon: Clock
-        title: Flexible Schedule
-        description: Part-time available
-      - icon: Users
-        title: Career Support
-        description: Unlimited mentorship
-    background: bg-muted/30
-    video: https://www.youtube.com/watch?v=MBXqEnhodx0
+      - icon: Code
+        title: Hands-On Coding
+        description: Create real-world projects
+      - icon: Brain
+        title: Deep Learning
+        description: Explore neural networks
+      - icon: Cloud
+        title: Cloud Deployment
+        description: Utilize AWS, GCP, Azure
+      - icon: Rocket
+        title: Fast-Track Career
+        description: Develop a job-ready portfolio
+    images:
+      - image_id: student-1
+        alt: Student 1
+      - image_id: student-2
+        alt: Student 2
+    compact: true
+    variant: laptopEdge
+    video: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
@@ -149,6 +153,9 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: bg-background
+    video: https://youtu.be/4n-ZAUPIxJI
+    video_ratio: "16:9"
+    video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
   - type: bullet_tabs_showcase
     version: "1.0"
     heading: Ideate and specify what to build next
