@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "4f1ab6b27aae96d0b63f6c066a1f29a5d209c0ac",
-  "lastSyncedAt": "2026-02-03T14:30:05.036Z",
+  "lastSyncedCommit": "af68607318721999b3c37fd3ee47702e5a6d407d",
+  "lastSyncedAt": "2026-02-03T14:46:19.411Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -363,9 +363,11 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
-      "lastModified": 1770128651885.9348,
-      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7"
+      "sha": "e14d831b36ff67742fa52219ec31fb3a436a1e26b8099ed380879c1abf99af69",
+      "lastModified": 1770130739997.0657,
+      "remoteSha": "ab3d503c001c11bf52a07cc8ad8628f548521b60b995c53d4bbd7b248c85cdb7",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T14:58:59.998Z"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -653,9 +655,11 @@
       "remoteSha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e"
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
-      "sha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c",
-      "lastModified": 1770094784672.192,
-      "remoteSha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c"
+      "sha": "ab532bb8f678a172a803a509322f53e4306bf8aa7b88f3954c837c00ef2c3b78",
+      "lastModified": 1770131260997.152,
+      "remoteSha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T15:07:40.999Z"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
@@ -698,9 +702,11 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "9b59b5adbfa643d90c51c57a7233b991e052907928f03ca2b15dbcc4b64f6116",
-      "lastModified": 1770129004743.1184,
-      "remoteSha": "9b59b5adbfa643d90c51c57a7233b991e052907928f03ca2b15dbcc4b64f6116"
+      "sha": "a2a4767edd8088ca6a6582014952aef291e55501fc4722f97d4706e121b4607a",
+      "lastModified": 1770132245896.6338,
+      "remoteSha": "539666a50e0d2ddc55177357a2d234be70b338e014459d5cc9f150440d90a05a",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-03T15:24:05.900Z"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
