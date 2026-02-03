@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "ca9ed224742305d32f8fda730ee116c32bd4f52e",
-  "lastSyncedAt": "2026-02-03T19:39:33.274Z",
+  "lastSyncedCommit": "571fce67c94e4b5399f0af08d7112089086d7979",
+  "lastSyncedAt": "2026-02-03T19:54:50.899Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -609,7 +609,7 @@
     },
     "marketing-content/pages/financials/en.yml": {
       "sha": "e9bb982843119ec2fe52b89bac705682d70aca15def109e4cbf5e4e946f9625a",
-      "lastModified": 1770094307050.6545,
+      "lastModified": 1770148489950.9648,
       "remoteSha": "e9bb982843119ec2fe52b89bac705682d70aca15def109e4cbf5e4e946f9625a"
     },
     "marketing-content/pages/financials/es.yml": {
@@ -638,9 +638,9 @@
       "remoteSha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b"
     },
     "marketing-content/pages/geekpal-support/en.yml": {
-      "sha": "8a89c9b0b4ecea0750f7c626b6eabddcf477798778904b07d451d038b771a2ad",
-      "lastModified": 1770094307558.654,
-      "remoteSha": "8a89c9b0b4ecea0750f7c626b6eabddcf477798778904b07d451d038b771a2ad"
+      "sha": "b4d32b59d4b618da88a1c434248203e9726a065ee8f4f4e53f1c0591fba03446",
+      "lastModified": 1770148490462.9644,
+      "remoteSha": "b4d32b59d4b618da88a1c434248203e9726a065ee8f4f4e53f1c0591fba03446"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
       "sha": "9f6fdf9dfe26772aefa7d6d68397d69eb0fe8ee8d88cb6d4c631f4997ff0440b",
