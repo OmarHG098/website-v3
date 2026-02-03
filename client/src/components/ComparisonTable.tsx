@@ -67,7 +67,7 @@ function TableContent({
                 !isLastCol ? "border-r border-border/50" : ""
               } ${
                 firstColumnMuted && isFeatureCol
-                  ? "bg-muted/50 text-muted-foreground border-b border-border/50"
+                  ? "bg-muted/50 text-muted-foreground"
                   : isHighlighted
                     ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md"
                     : firstColumnMuted
@@ -92,7 +92,7 @@ function TableContent({
             data-testid={`tr-row-${rowIndex}`}
           >
             <div className={`py-5 px-6 font-medium text-left border-r border-border/50 ${
-              !isLastRow ? "border-b border-border/50" : ""
+              firstColumnMuted && !isLastRow ? "border-b border-border/50" : ""
             } ${
               firstColumnMuted ? "bg-muted/50 text-muted-foreground" : rowIndex % 2 === 0 ? "bg-card text-foreground" : `${oddRowColor} text-foreground`
             }`}>
