@@ -85,29 +85,65 @@ sections:
         col_start: 1
         row_start: 3
     background: bg-muted/30
-  - type: two_column
-    proportions:
-      - 8
-      - 4
-    background: bg-primary/5
-    left:
-      heading: Who's Eligible?
-      sub_heading: "You'll qualify for the Job Guarantee if you:"
-      description: "*Conditions apply depending on your country or U.S. state"
-      button:
-        text: Apply
-        url: "#apply"
-        variant: primary
-      bullets:
-        - text: Have U.S. work authorization
-        - text: Pass our logic test
-        - text: Complete all coursework and projects
-        - text: Follow our career team's guidance
-      font_size: lg
-    right:
-      image: /attached_assets/reservation-es_1764814854635.webp
-      image_alt: Woman working on laptop
-      image_max_width: 420px
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: Our Job Guarantee is Available for Our Top Tech Programs
+    subtitle: Choose your career path. Master the skills and get hired.
+    items:
+      - id: fullstack
+        icon: CodeWindow
+        category: Full Stack
+        title: Full Stack Development with AI
+        description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
+        link_url: "#"
+        link_text: Read More
+      - id: datascience
+        icon: RocketOff
+        category: With Python
+        title: Data Science and Machine Learning with AI
+        description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
+        link_url: "#"
+        link_text: Read More
+      - id: cybersecurity
+        icon: Security
+        category: For Windows & Linux
+        title: Cybersecurity
+        description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
+        link_url: "#"
+        link_text: Read More
+    columns: 3
+    collapsible_mobile: true
+    marginY:
+      desktop: md
+  - type: features_quad
+    version: "1.0"
+    variant: laptopEdge
+    heading: Who's Eligible?
+    description: "You'll qualify for the Job Guarantee if you:"
+    images:
+      - image_id: student_asian
+        alt: Asian student learning to code
+      - image_id: student_latin_male
+        alt: Latino student working on a project
+      - image_id: student_african
+        alt: African student collaborating with team
+      - image_id: student_latina_female
+        alt: Latina student celebrating success
+    cards:
+      - icon: Code
+        title: Hands-On Coding
+        description: Have U.S. work authorization
+      - icon: Brain
+        title: Deep Learning
+        description: Pass our logic test
+      - icon: Cloud
+        title: Cloud Deployment
+        description: Complete all coursework and projects
+      - icon: Rocket
+        title: Fast-Track Career
+        description: Follow our career team's guidance
+    footer_description: Join the next generation of AI engineers.
   - type: features_quad
     version: "1.0"
     variant: default
@@ -136,35 +172,7 @@ sections:
         title: "4."
         description: Follow our career team's guidance
     footer_description: Join thousands of graduates who have launched successful tech careers.
-    background: bg-background
-  - type: features_grid
-    version: "1.0"
-    variant: detailed
-    title: Our Job Guarantee is Available for Our Top Tech Programs
-    subtitle: Choose your career path. Master the skills and get hired.
-    items:
-      - id: fullstack
-        category: Full Stack
-        title: Full Stack Development with AI
-        description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
-        link_url: "#"
-        link_text: Read More
-      - id: datascience
-        category: With Python
-        title: Data Science and Machine Learning with AI
-        description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
-        link_url: "#"
-        link_text: Read More
-      - id: cybersecurity
-        category: For Windows & Linux
-        title: Cybersecurity
-        description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
-        link_url: "#"
-        link_text: Read More
-    columns: 3
-    collapsible_mobile: true
-    marginY:
-      desktop: md
+    background: hsl(var(--secondary))
   - type: numbered_steps
     version: "1.0"
     title: How the Refund Works
@@ -182,12 +190,12 @@ sections:
   - type: numbered_steps
     version: "1.0"
     variant: bubbleText
-    title: Get Hired with Our 3-Step Career Development Process
-    description: Once you've mastered the technical skills, our structured process helps you build a lasting career in tech.
+    title: How the Refund Works
+    description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition."
     steps:
       - icon: Optimization
-        title: Profile Optimization
         text: You were not hired into a qualifying role within 9 months of graduation.
+        title: Profile Optimization
       - icon: Interview
         title: Interview Preparation
         bullets:
