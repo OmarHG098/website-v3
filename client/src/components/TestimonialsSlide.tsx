@@ -317,8 +317,9 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
       </div>
       
       <div className="relative">
-        {/* Mobile scaling wrapper - scales to 70% on mobile with negative margin to remove whitespace */}
-        <div className="origin-top scale-[0.7] md:scale-100 -mb-[30%] md:mb-0">
+        {/* Mobile scaling wrapper - fixed height container with scale transform */}
+        <div className="overflow-hidden h-[400px] md:h-auto">
+          <div className="origin-top scale-[0.7] md:scale-100">
           <div
             className={cn(
               prefersReducedMotion && "overflow-x-auto"
@@ -341,6 +342,7 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
               ))}
             </div>
           </Marquee>
+            </div>
           </div>
         </div>
         
