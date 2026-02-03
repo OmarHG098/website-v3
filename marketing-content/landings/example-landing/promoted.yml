@@ -17,31 +17,22 @@ schema:
     - website
 sections:
   - type: hero
-    version: "1.0"
     variant: productShowcase
-    title: Career Development
-    subtitle: for the AI Era
+    title: Career Development for the AI Era
+    subtitle: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
     welcome_text: Welcome to
-    image:
-      src: placeholder_mentorship
-      alt: aa
     brand_mark:
       prefix: Geek
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 career support designed for your unique profile and goals—for life. From resume and portfolio building to interviews and AI-driven hiring platforms.
-    form: {}
-    trust_bar:
-      rating: "4.5"
-      review_count: Based on 5149+ reviews
-      review_logos:
-        - name: Google
-          logo: /attached_assets/google_1765590146414.webp
-        - name: Course Report
-          logo: /attached_assets/course-report_1765590146414.webp
-        - name: SwitchUp
-          logo: /attached_assets/switchup_1765590146414.webp
+    video:
+      url: https://www.youtube.com/watch?v=-2ZvlgDnltc
+      ratio: "3:4"
+      muted: false
+      autoplay: false
+      loop: false
+      preview_image_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
   - type: hero
     variant: course
     title: Work not harder, apply AI at Work

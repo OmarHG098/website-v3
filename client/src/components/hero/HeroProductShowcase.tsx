@@ -375,7 +375,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               <UniversalImage
                 id={imageId}
                 alt="Hero product"
-                className="rounded-card shadow-card"
+                className="rounded-card shadow-card mt-8"
                 style={{ width: imageWidth ? `${imageWidth}px` : 'auto', maxWidth: '100%' }}
                 data-testid="img-hero-product"
               />

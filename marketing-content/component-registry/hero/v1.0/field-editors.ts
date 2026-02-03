@@ -18,6 +18,7 @@ export const fieldEditors: Record<string, EditorType> = {
   
   // Variant-specific - prefixed with variant name
   "productShowcase:image_id": "image-picker",
+  "productShowcase:image_width": "text-input",
   "productShowcase:left_images[].src": "image-picker",
   "productShowcase:right_images[].src": "image-picker",
   "productShowcase:marquee.items[].logo": "image-picker:logo",
