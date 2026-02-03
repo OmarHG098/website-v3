@@ -222,7 +222,7 @@ sections:
     title: Key Features
     subtitle: Discover what makes us different
     items:
-      - icon: IconAdjustmentsSpark
+      - icon: IconAdjustmentsStar
         value: 100%
         title: Satisfaction Rate
       - icon: IconAffiliateFilled
@@ -233,6 +233,7 @@ sections:
         title: Average Rating
     columns: 3
     icon_color: "#0097CD"
+    showOn: mobile
   - type: two_column
     proportions:
       - 5

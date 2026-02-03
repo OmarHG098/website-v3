@@ -202,23 +202,14 @@ import { emitContentUpdated } from "@/lib/contentEvents";
 import { useEditModeOptional, type PreviewBreakpoint } from "@/contexts/EditModeContext";
 
 // Check if a section should be visible based on showOn and current preview breakpoint
-// In edit mode, respects previewBreakpoint; in production, always returns true (CSS handles visibility)
+// In edit mode: always show all sections (visibility alert is shown instead of hiding)
+// In production: CSS handles visibility
 function shouldShowSection(showOn: ShowOn | undefined, previewBreakpoint: PreviewBreakpoint | undefined, isEditMode: boolean): boolean {
-  // If not in edit mode or no previewBreakpoint, always show (CSS will handle responsive visibility)
-  if (!isEditMode || !previewBreakpoint) return true;
+  // In edit mode, always show all sections (EditableSection will display visibility alerts)
+  if (isEditMode) return true;
   
-  // In edit mode, filter based on previewBreakpoint
-  const effectiveShowOn = showOn || 'all';
-  
-  switch (effectiveShowOn) {
-    case 'mobile':
-      return previewBreakpoint === 'mobile';
-    case 'desktop':
-      return previewBreakpoint === 'desktop';
-    case 'all':
-    default:
-      return true;
-  }
+  // In production, always return true - CSS classes handle responsive visibility
+  return true;
 }
 
 // Loading fallback for lazy sections
