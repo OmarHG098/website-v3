@@ -26,7 +26,7 @@ sections:
     paddingY:
       desktop: lg
     background: hsl(210 100% 50% / 0.05)
-  - type: comparison_table
+  - type: geeks_vs_others_comparison
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
     subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"

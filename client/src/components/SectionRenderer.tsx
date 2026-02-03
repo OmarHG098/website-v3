@@ -173,6 +173,7 @@ const CTABannerSection = lazy(() => import("./CTABannerSection").then(m => ({ de
 const ProjectShowcase = lazy(() => import("@/components/ProjectShowcase").then(m => ({ default: m.ProjectShowcase })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const ComparisonTable = lazy(() => import("@/components/ComparisonTable").then(m => ({ default: m.ComparisonTable })));
+const GeeksVsOthersComparison = lazy(() => import("@/components/GeeksVsOthersComparison").then(m => ({ default: m.GeeksVsOthersComparison })));
 const AwardsRow = lazy(() => import("@/components/AwardsRow"));
 const HorizontalBars = lazy(() => import("@/components/HorizontalBars").then(m => ({ default: m.HorizontalBars })));
 const VerticalBarsCards = lazy(() => import("@/components/VerticalBarsCards").then(m => ({ default: m.VerticalBarsCards })));
@@ -431,6 +432,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><About data={section as Parameters<typeof About>[0]["data"]} /></LazySection>;
     case "comparison_table":
       return <LazySection key={index}><ComparisonTable data={section as Parameters<typeof ComparisonTable>[0]["data"]} /></LazySection>;
+    case "geeks_vs_others_comparison":
+      return <LazySection key={index}><GeeksVsOthersComparison data={section as Parameters<typeof GeeksVsOthersComparison>[0]["data"]} /></LazySection>;
     case "awards_row":
       return <LazySection key={index}><AwardsRow data={section as Parameters<typeof AwardsRow>[0]["data"]} /></LazySection>;
     case "horizontal_bars":
