@@ -125,19 +125,19 @@ sections:
     version: "1.0"
     variant: stats-text
     title: Cybersecurity Specialists Are in High Demand
-    subtitle: The numbers don't lie—cybersecurity is the future
-    description: With millions of unfilled positions and rapid job growth, there's never been a better time to enter this field. Our program prepares you for immediate impact.
+    subtitle: Secure your future in one of the world’s fastest-growing and most essential tech sectors.
+    description: With a global talent gap and record-breaking investment in defense, the opportunity for skilled professionals is unprecedented. Our program provides the technical mastery and hands-on experience to step directly into these high-value roles.
     background: bg-muted/30
     items:
       - id: "1"
-        value: 3.5M+
-        title: Unfilled cybersecurity positions globally
+        value: 4.8M
+        title: Unfilled cybersecurity roles worldwide
       - id: "2"
-        value: 35%
-        title: Job growth projected through 2032
+        value: 41%
+        title: Projected job growth, outpacing most sectors
       - id: "3"
-        value: "16"
-        title: Weeks to launch your security career
+        value: $520B
+        title: Global spending on cybersecurity this year
   - type: syllabus
     version: "1.0"
     variant: program-modules
