@@ -28,11 +28,12 @@ sections:
       color: chart-5
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-      ratio: "3:4"
+      ratio: "16:9"
       muted: false
       autoplay: false
       loop: false
       preview_image_url: https://www.youtube.com/watch?v=-2ZvlgDnltc
+    image_id: group_original
   - type: hero
     variant: course
     title: Work not harder, apply AI at Work
