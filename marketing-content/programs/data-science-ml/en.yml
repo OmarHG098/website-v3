@@ -321,21 +321,6 @@ sections:
     columns: 3
     icon_color: "#0097CD"
     background: hsl(var(--secondary))
-    showOn: mobile
-  - type: features_grid
-    variant: highlight
-    title: Enroll with a Job Guarantee
-    subtitle: Need extra peace of mind? Add our optional Job Guarantee for added security.
-    items:
-      - icon: Star
-        title: Add the Job Guarantee to your payment plan
-      - icon: Users
-        title: Complete the program and follow the GeekFORCE career process
-      - icon: Award
-        title: Get hired within 9 months of graduation – or your money back
-    columns: 3
-    icon_color: "#0097CD"
-    background: hsl(var(--secondary))
   - type: pricing
     version: "1.0"
     variant: product
