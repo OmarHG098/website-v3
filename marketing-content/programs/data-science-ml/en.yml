@@ -321,7 +321,6 @@ sections:
     columns: 3
     icon_color: "#0097CD"
     background: hsl(var(--secondary))
-    showOn: mobile
   - type: pricing
     version: "1.0"
     variant: product

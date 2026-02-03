@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "571fce67c94e4b5399f0af08d7112089086d7979",
-  "lastSyncedAt": "2026-02-03T19:54:50.899Z",
+  "lastSyncedCommit": "97f555dbdc55ddbe094bc3ca38ca2b8ca266bebf",
+  "lastSyncedAt": "2026-02-03T20:36:02.674Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -753,9 +753,9 @@
       "remoteSha": "dc8aaeadafdb3036d27c562a2d255afb1412fcbf901f186ddc78fc634ba3c056"
     },
     "marketing-content/programs/cybersecurity/en.yml": {
-      "sha": "d94fe8e968797edb06fa2df66bf33c2b1e6fa51f0d62292b5bc828f7424d6bdb",
-      "lastModified": 1770147572378.906,
-      "remoteSha": "d94fe8e968797edb06fa2df66bf33c2b1e6fa51f0d62292b5bc828f7424d6bdb"
+      "sha": "365eb637d9892597ba9b8448eb6a63785b8ff0bde1cd913fb36594b3e7cca110",
+      "lastModified": 1770150962359.0134,
+      "remoteSha": "365eb637d9892597ba9b8448eb6a63785b8ff0bde1cd913fb36594b3e7cca110"
     },
     "marketing-content/programs/cybersecurity/es.yml": {
       "sha": "9c24d1986f3cf238ec3167e278e64ca80ba5e7fdd5a14d7cfd10c2b78a2ca748",
