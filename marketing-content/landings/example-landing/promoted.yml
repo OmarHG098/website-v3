@@ -161,6 +161,7 @@ sections:
         values:
           - Unlimited
           - Limited
+          - dd
         feature_description: Get personalized guidance whenever you need it
       - feature: Guarantee
         values:

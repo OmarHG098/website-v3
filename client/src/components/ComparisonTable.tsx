@@ -98,14 +98,12 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             {data.rows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className={`grid transition-colors hover:bg-primary/5 ${
-                  rowIndex % 2 === 0 ? "bg-card" : "bg-primary/5"
-                }`}
+                className="grid transition-colors"
                 style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
                 data-testid={`tr-row-${rowIndex}`}
               >
                 <div className={`py-5 px-6 font-medium text-left border-r border-border/50 ${
-                  firstColumnMuted ? "bg-muted/50 text-muted-foreground" : "text-foreground"
+                  firstColumnMuted ? "bg-muted/50 text-muted-foreground" : rowIndex % 2 === 0 ? "bg-card text-foreground" : "bg-primary/5 text-foreground"
                 }`}>
                   <span>{row.feature}</span>
                   {row.feature_description && (
@@ -117,15 +115,16 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 {row.values.map((value, valIndex) => {
                   const isHighlightedCol = valIndex === highlightIndex - 1;
                   const isLastCol = valIndex === row.values.length - 1;
+                  const rowBg = rowIndex % 2 === 0 ? "bg-card" : "bg-primary/5";
                   
                   return (
                     <div
                       key={valIndex}
                       className={`py-5 px-6 text-center flex items-center justify-center ${
                         !isLastCol ? "border-r border-border/50" : ""
-                      } ${
+                      } ${rowBg} ${
                         isHighlightedCol
-                          ? "bg-primary/5 font-semibold text-foreground"
+                          ? "font-semibold text-foreground"
                           : "text-muted-foreground font-normal"
                       }`}
                       data-testid={`td-value-${rowIndex}-${valIndex}`}
