@@ -69,6 +69,8 @@ sections:
         variant: outline
     marginY:
       desktop: none lg
+    paddingY:
+      desktop: md none
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -305,16 +307,21 @@ sections:
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
   - type: faq
-    version: v1.0
     title: Frequently Asked Questions
     related_features:
       - certification
       - job-guarantee
     marginY:
       desktop: lg none
+    background: hsl(var(--muted))
+    paddingY:
+      desktop: md lg
   - type: cta_banner
     version: "1.0"
     title: Ready to Start Your Tech Career in Miami?
     subtitle: Join our next cohort and transform your future.
     cta_text: Apply Now
     cta_url: /apply?location=miami-usa
+    background: hsl(var(--primary))
+    paddingY:
+      desktop: md
