@@ -309,13 +309,13 @@ sections:
       program_name: Cybersecurity Specialist
     stats:
       - value: 84%
-        label: Hiring rate
-        description: 84% of our graduates land a tech job within 6 months. Our career services team works with you until you're hired.
+        label: Hiring Rate
+        description: Graduate with the skills and global certifications that top-tier employers are actively seeking in 2026.
         benefits:
-          - text: Dedicated career coaching from day one
-          - text: Resume and LinkedIn profile optimization
-          - text: Mock interviews with industry professionals
-          - text: Direct introductions to hiring partners
+          - text: CompTIA Security+ Exam Readiness
+          - text: eJPT (Junior Penetration Tester) Prep
+          - text: CEH (Certified Ethical Hacker) Pathway
+          - text: Real-world labs with Nmap & Metasploit
       - value: 3-6 months
         label: Time to get hired
         description: Most graduates secure their first role within 3-6 months of completing the program. We provide ongoing support until you land your dream job.
