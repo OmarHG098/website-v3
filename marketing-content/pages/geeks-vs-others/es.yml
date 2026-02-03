@@ -21,7 +21,7 @@ sections:
       src: "/attached_assets/unsplash_QckxruozjRg_1765395521123.png"
       alt: "Estudiantes programando juntos en una mesa con laptops"
 
-  - type: geeks_vs_others_comparison
+  - type: comparison_table
     version: "1.0"
     title: "Lanzando Carreras Tech Exitosas en la Era de la IA"
     subtitle: "Ayudar a estudiantes a construir carreras tech duraderas es nuestra misión. Desde un syllabus alineado con la industria hasta un sistema de apoyo de por vida, así es como superamos a la competencia:"

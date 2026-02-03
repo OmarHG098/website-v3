@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "d5ea3e229cb77d56e78fd1e86c7853d5b89b0459",
-  "lastSyncedAt": "2026-02-03T15:28:36.059Z",
+  "lastSyncedCommit": "ca9ed224742305d32f8fda730ee116c32bd4f52e",
+  "lastSyncedAt": "2026-02-03T19:38:37.377Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -53,11 +53,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "13b14d052a6e13a8dbdb05a29edf58ce820157ceb28eecc79631f3077c36cacc",
-      "lastModified": 1770143840552.6875,
-      "remoteSha": "eb0473ecea7797f26a7586206be1ef2aa1e8fc672b57450efa88339dabc59444",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T18:37:20.555Z"
+      "sha": "387a4efd18898a87af3672792979eacf73cde3d2622c6a3b2f83ff9db3e69c85",
+      "lastModified": 1770147515815.9646,
+      "remoteSha": "387a4efd18898a87af3672792979eacf73cde3d2622c6a3b2f83ff9db3e69c85"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -627,9 +625,7 @@
     "marketing-content/pages/geekforce-career-support/en.yml": {
       "sha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
       "lastModified": 1770145205870.3113,
-      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-03T19:00:05.872Z"
+      "remoteSha": "5d80486ff5f201623af2108554a25490a62ad8c0360f59689482ad974068a8ee"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -658,12 +654,12 @@
     },
     "marketing-content/pages/geeks-vs-others/en.yml": {
       "sha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c",
-      "lastModified": 1770132514888.313,
+      "lastModified": 1770147516368.9639,
       "remoteSha": "2c0b89d07b8a6ad1a423787d5dcb986af9b4dccc7d7bee07d413df017093172c"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
       "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
-      "lastModified": 1769533048562.4773,
+      "lastModified": 1770147516978.9634,
       "remoteSha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4"
     },
     "marketing-content/pages/graduates-and-projects/_common.yml": {
