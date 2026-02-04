@@ -85,7 +85,7 @@ export interface DropdownProps {
 
 function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
   return (
-    <div className="p-6">
+    <div className="p-6 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="mb-6">
           {dropdown.title && (
@@ -143,7 +143,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-full max-w-4xl p-6">
+    <div className="w-full max-w-4xl p-6 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-4 mb-6 pb-4 border-b">
           {IconComponent && (
@@ -194,7 +194,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="p-4">
+    <div className="p-4 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-3 mb-4 pb-4 border-b">
           {IconComponent && (
@@ -236,7 +236,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-full max-w-xl p-4">
+    <div className="w-full max-w-xl p-4 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-3 mb-4 pb-4 border-b">
           {IconComponent && (
