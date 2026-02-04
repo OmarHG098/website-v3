@@ -345,7 +345,7 @@ function EditableCardItem({
         </button>
       )}
       
-      <div className="mb-3">
+      <div className="mb-3 ml-8">
         <EditableIcon
           value={item.icon}
           onChange={(icon) => onUpdate({ icon })}
@@ -426,7 +426,7 @@ function SortableCardItem({
         <div
           {...attributes}
           {...listeners}
-          className="absolute top-4 left-16 p-1 rounded-md bg-background/80 border border-border text-muted-foreground opacity-0 group-hover/card:opacity-100 hover:bg-muted cursor-grab active:cursor-grabbing z-10"
+          className="absolute top-4 left-4 p-1 rounded-md bg-background/80 border border-border text-muted-foreground opacity-0 group-hover/card:opacity-100 hover:bg-muted cursor-grab active:cursor-grabbing z-10"
           data-testid={`editable-card-${index}-drag-handle`}
         >
           <GripVertical className="h-4 w-4" />
