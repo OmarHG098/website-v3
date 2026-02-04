@@ -22,7 +22,7 @@ sections:
     variant: course
     title: Become a Cybersecurity Specialist
     title_highlight: Cybersecurity Specialist
-    subtitle: Defend systems, respond to threats, and launch a high-paying security career in 16 weeks.
+    subtitle: Defend systems, respond to threats, and launch a high-paying cybersecurity career in 16 weeks.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
@@ -43,7 +43,7 @@ sections:
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Your tutors:"
-    description: Our 16-week intensive program combines hands-on labs and personalized mentorship to prepare you for high-impact security roles across industries.
+    description: Our intensive part-time program combines hands-on labs and personalized mentorship to prepare you for high-impact security roles in any industry.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
