@@ -13,8 +13,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: Proven Outcomes That Launch Tech Careers
-    subtitle: At 4Geeks, success is a track record. Our students launch successful tech careers across AI engineering, data science, and cybersecurity, and the data proves it.
+    title: Real Hiring Outcomes, Backed by Data
+    subtitle: We measure success by real results. Our graduates get hired in AI engineering, data science, and cybersecurity—and the outcomes are backed by verified data.
     badge: 4Geeks Academy Outcomes Report
     image:
       src: /attached_assets/outcomes_1765562850573.png
@@ -71,7 +71,7 @@ sections:
       desktop: none md
   - type: stats
     version: "1.0"
-    title: Career Outcomes by the Numbers
+    title: Career Outcomes
     subtitle: Real results from our graduates across different regions
     background: hsl(210 100% 50% / 0.05)
     items:
@@ -92,7 +92,7 @@ sections:
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
-    subtitle: Explore the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
+    subtitle: Explore the distribution of our students across age group, gender, and nationality. Our community is diverse and global, with students from various countries and backgrounds .
     background: hsl(var(--background))
     charts:
       - title: Age
