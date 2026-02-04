@@ -1,4 +1,4 @@
-import type { GeeksVsOthersComparisonSection } from "@shared/schema";
+import type { ComparisonTableSection } from "@shared/schema";
 import { 
   IconCheck, 
   IconX, 
@@ -19,8 +19,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-interface GeeksVsOthersComparisonProps {
-  data: GeeksVsOthersComparisonSection;
+interface ComparisonTableProps {
+  data: ComparisonTableSection;
 }
 
 const featureIcons: Record<string, typeof IconBriefcase> = {
@@ -46,7 +46,7 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
       <IconX className="w-6 h-6 text-muted-foreground mx-auto" />
     );
   }
-  
+
   if (isHighlighted) {
     return (
       <span className="flex items-center justify-center gap-2">
@@ -55,17 +55,17 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
       </span>
     );
   }
-  
+
   return <span>{value}</span>;
 }
 
-export function GeeksVsOthersComparison({ data }: GeeksVsOthersComparisonProps) {
+export function GeeksVsOthersComparison({ data }: ComparisonTableProps) {
   const highlightIndex = data.columns.findIndex(col => col.highlight);
 
   return (
     <section
       className={`${data.background || "bg-background"}`}
-      data-testid="section-geeks-vs-others-comparison"
+      data-testid="section-comparison-table"
     >
       <div className="max-w-6xl mx-auto px-4">
         {data.title && (
@@ -93,7 +93,7 @@ export function GeeksVsOthersComparison({ data }: GeeksVsOthersComparisonProps) 
               {data.columns.map((column, colIndex) => {
                 const isFeatureCol = colIndex === 0;
                 const isHighlighted = column.highlight;
-                
+
                 return (
                   <div
                     key={colIndex}
@@ -117,7 +117,7 @@ export function GeeksVsOthersComparison({ data }: GeeksVsOthersComparisonProps) 
             {/* Table body */}
             {data.rows.map((row, rowIndex) => {
               const FeatureIcon = featureIcons[row.feature];
-              
+
               return (
                 <div
                   key={rowIndex}
@@ -143,7 +143,7 @@ export function GeeksVsOthersComparison({ data }: GeeksVsOthersComparisonProps) 
                   {/* Values */}
                   {row.values.map((value, valIndex) => {
                     const isHighlightedCol = valIndex === highlightIndex - 1;
-                    
+
                     return (
                       <div
                         key={valIndex}
