@@ -317,10 +317,11 @@ export default function MenuEditor() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/menus", menuName] });
       queryClient.invalidateQueries({ queryKey: ["/api/menus"] });
+      queryClient.refetchQueries({ queryKey: ["/api/menus", menuName] });
       setHasChanges(false);
       toast({
         title: "Menu saved",
-        description: "Your changes have been saved successfully.",
+        description: "Changes saved! Refresh the homepage to see updates in the navbar.",
       });
     },
     onError: (error) => {
