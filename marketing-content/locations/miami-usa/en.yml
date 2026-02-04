@@ -170,7 +170,8 @@ sections:
     image_alt: Woman working on laptop in cafe
     background: hsl(210 100% 50% / 0.05)
     video: https://www.youtube.com/watch?v=6m1Jyya7eCc
-    video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
+    video_preview_image: https://i.postimg.cc/N0rk7Pk3/ai-mentor.png
+    video_ratio: 1.8:1
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
