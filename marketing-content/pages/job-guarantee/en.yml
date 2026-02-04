@@ -96,10 +96,10 @@ sections:
     title: Programs Covered by the Job Guarantee
     subtitle: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
     items:
-      - id: fullstack
-        category: Full Stack
-        title: Full Stack Development with AI
-        description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
+      - id: aiengineering
+        category: AI Engineering
+        title: AI Engineering
+        description: Design, build, and deploy complete AI systems. Learn modern engineering workflows and develop production-ready AI applications used in real-world environments.
         link_url: "#"
         link_text: Read More
       - id: datascience
