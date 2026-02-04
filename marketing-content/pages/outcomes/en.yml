@@ -127,7 +127,7 @@ sections:
     paddingY:
       desktop: sm none
   - type: value_proof_panel
-    title: Recognized Globally for Excellence
+    title: Globally Recognized
     subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
     evidence_items:
       - icon: Trophy
