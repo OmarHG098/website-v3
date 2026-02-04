@@ -14,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { SitemapSearch } from "./SitemapSearch";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   code: Code,
@@ -148,16 +149,11 @@ function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, 
             </div>
             <div className="space-y-1">
               <Label className="text-xs">URL</Label>
-              <div className="relative">
-                <IconLink className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                <Input
-                  value={tempHref}
-                  onChange={(e) => setTempHref(e.target.value)}
-                  placeholder="/page-url"
-                  className="h-8 text-sm pl-7"
-                  data-testid={`${testIdPrefix}-href-input`}
-                />
-              </div>
+              <SitemapSearch
+                value={tempHref}
+                onChange={(url) => setTempHref(url)}
+                testId={`${testIdPrefix}-href`}
+              />
             </div>
             <Button size="sm" className="w-full h-8" onClick={handleSave} data-testid={`${testIdPrefix}-save`}>
               Save
@@ -315,9 +311,6 @@ function EditableCardItem({
   onDelete: () => void;
   isReadOnlyStructure?: boolean;
 }) {
-  const [isEditingHref, setIsEditingHref] = useState(false);
-  const [tempHref, setTempHref] = useState(item.href);
-
   return (
     <div className="group/card relative block rounded-lg p-3 border border-transparent hover:border-border">
       {!isReadOnlyStructure && (
@@ -361,43 +354,13 @@ function EditableCardItem({
         testId={`editable-card-${index}-cta`}
       />
       
-      <Popover open={isEditingHref} onOpenChange={(open) => {
-        if (open) setTempHref(item.href);
-        setIsEditingHref(open);
-      }}>
-        <PopoverTrigger asChild>
-          <button 
-            className="mt-2 flex items-center gap-1 text-xs text-muted-foreground hover:text-primary"
-            data-testid={`editable-card-${index}-href-trigger`}
-          >
-            <IconLink className="h-3 w-3" />
-            {item.href || "/page-url"}
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="w-64 p-2" align="start">
-          <div className="flex gap-2">
-            <Input
-              value={tempHref}
-              onChange={(e) => setTempHref(e.target.value)}
-              placeholder="/page-url"
-              className="h-8 text-sm"
-              autoFocus
-              data-testid={`editable-card-${index}-href-input`}
-            />
-            <Button 
-              size="sm" 
-              className="h-8" 
-              onClick={() => {
-                onUpdate({ href: tempHref });
-                setIsEditingHref(false);
-              }}
-              data-testid={`editable-card-${index}-href-save`}
-            >
-              Save
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
+      <div className="mt-2">
+        <SitemapSearch
+          value={item.href}
+          onChange={(href) => onUpdate({ href })}
+          testId={`editable-card-${index}-href`}
+        />
+      </div>
     </div>
   );
 }

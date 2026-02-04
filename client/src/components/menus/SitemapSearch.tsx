@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IconSearch, IconLink, IconExternalLink, IconCheck } from "@tabler/icons-react";
+import { Search, Link, ExternalLink, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,11 +29,14 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customUrl, setCustomUrl] = useState(value);
 
+  useEffect(() => {
+    setCustomUrl(value);
+  }, [value]);
+
   const { data: sitemapUrls = [], isLoading } = useQuery<SitemapEntry[]>({
     queryKey: ["/api/sitemap-urls"],
   });
 
-  // Filter URLs based on search query
   const filteredUrls = useMemo(() => {
     if (!searchQuery.trim()) return sitemapUrls;
     const query = searchQuery.toLowerCase();
@@ -44,7 +47,6 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
     );
   }, [sitemapUrls, searchQuery]);
 
-  // Check if current value is from sitemap or custom
   const isCurrentValueInSitemap = useMemo(() => {
     return sitemapUrls.some((entry) => entry.loc === value);
   }, [sitemapUrls, value]);
@@ -70,17 +72,17 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
       <PopoverTrigger asChild>
         <button
           className={cn(
-            "group inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-md transition-colors max-w-full",
+            "group inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded-md transition-colors max-w-full hover-elevate",
             value
-              ? "text-primary/80 bg-primary/5 hover:bg-primary/10"
-              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              ? "text-primary/80 bg-primary/5"
+              : "text-muted-foreground"
           )}
           data-testid={testId}
         >
           {isExternal ? (
-            <IconExternalLink className="h-3 w-3 flex-shrink-0" />
+            <ExternalLink className="h-3 w-3 flex-shrink-0" />
           ) : (
-            <IconLink className="h-3 w-3 flex-shrink-0" />
+            <Link className="h-3 w-3 flex-shrink-0" />
           )}
           <span className="truncate">{displayValue}</span>
         </button>
@@ -88,7 +90,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
       <PopoverContent className="w-80 p-0" align="start">
         <div className="p-2 border-b">
           <div className="relative">
-            <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               value={searchQuery}
               onChange={(e) => {
@@ -129,7 +131,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
             </div>
             <button
               onClick={() => setIsCustomMode(false)}
-              className="text-xs text-muted-foreground hover:text-foreground"
+              className="text-xs text-muted-foreground hover-elevate px-1 py-0.5 rounded"
             >
               Back to search
             </button>
@@ -152,7 +154,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                       key={entry.loc}
                       onClick={() => handleSelect(entry.loc)}
                       className={cn(
-                        "w-full text-left px-2 py-1.5 rounded-md text-sm hover:bg-muted flex items-start gap-2 group",
+                        "w-full text-left px-2 py-1.5 rounded-md text-sm hover-elevate flex items-start gap-2 group",
                         value === entry.loc && "bg-primary/10"
                       )}
                       data-testid={`${testId}-option-${index}`}
@@ -166,7 +168,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                         </div>
                       </div>
                       {value === entry.loc && (
-                        <IconCheck className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                       )}
                     </button>
                   ))}
@@ -180,10 +182,10 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                   setIsCustomMode(true);
                   setCustomUrl(value);
                 }}
-                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm text-muted-foreground hover-elevate"
                 data-testid={`${testId}-custom-toggle`}
               >
-                <IconExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-4 w-4" />
                 <span>Use custom URL</span>
                 {!isCurrentValueInSitemap && value && (
                   <span className="ml-auto text-xs text-primary">(current)</span>
