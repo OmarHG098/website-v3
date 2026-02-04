@@ -191,7 +191,7 @@ sections:
     image_alt: Student working on AI project
     image_object_fit: cover
     paddingY:
-      desktop: lg none
+      desktop: md none
   - type: split_cards
     variant: primary-left
     primary:
@@ -311,3 +311,12 @@ sections:
     background: hsl(var(--primary))
     paddingY:
       desktop: md
+    marginY:
+      desktop: none
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
+    marginY:
+      desktop: none
+    paddingY:
+      desktop: none
