@@ -148,7 +148,6 @@ sections:
       alt: Students collaborating in classroom
       aspect_ratio: "4:3"
       style: rounded
-    background: bg-muted/30
     stacked_header: true
   - type: awards_marquee
     version: v1.0
@@ -256,6 +255,7 @@ sections:
         outcome: Promoted in 1 year
     paddingY:
       desktop: none lg
+    background: hsl(210 100% 50% / 0.05)
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
