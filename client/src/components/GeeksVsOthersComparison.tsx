@@ -59,7 +59,7 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
   return <span>{value}</span>;
 }
 
-export function GeeksVsOthersComparison({ data }: ComparisonTableProps) {
+export function ComparisonTable({ data }: ComparisonTableProps) {
   const highlightIndex = data.columns.findIndex(col => col.highlight);
 
   return (
@@ -127,9 +127,9 @@ export function GeeksVsOthersComparison({ data }: ComparisonTableProps) {
                   data-testid={`tr-row-${rowIndex}`}
                 >
                   {/* Feature name - left aligned with icon */}
-                  <div className="py-5 px-6 font-medium text-foreground text-left flex items-start gap-2">
+                  <div className="py-5 px-6 font-medium text-foreground text-left flex items-center gap-2">
                     {FeatureIcon && (
-                      <FeatureIcon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <FeatureIcon className="w-4 h-4 text-primary flex-shrink-0" />
                     )}
                     <div>
                       <span>{row.feature}</span>
