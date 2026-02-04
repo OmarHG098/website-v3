@@ -129,7 +129,7 @@ export function GeeksVsOthersComparison({ data }: ComparisonTableProps) {
                   {/* Feature name - left aligned with icon */}
                   <div className="py-5 px-6 font-medium text-foreground text-left flex items-center gap-2">
                     {FeatureIcon && (
-                      <FeatureIcon className="w-4 h-4 text-primary flex-shrink-0" />
+                      <FeatureIcon className="w-4 h-4 text-primary flex items-center" />
                     )}
                     <div>
                       <span>{row.feature}</span>
