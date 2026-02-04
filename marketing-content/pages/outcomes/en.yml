@@ -211,8 +211,8 @@ sections:
     image_alt: Student working on AI project
   - type: testimonials
     version: v1.0
-    title: What Our Students Say
-    subtitle: Real stories from graduates who transformed their careers
+    title: Real career results
+    subtitle: Alumni share how they landed roles, advanced their careers, and increased their earning power.
     rating_summary:
       average: "4.9"
       count: 2,847
