@@ -192,20 +192,6 @@ sections:
       desktop: md
     marginY:
       desktop: none sm
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Making Tech Careers Accessible
-      description: Tech careers should be open to everyone. At 4Geeks, we remove financial barriers by offering affordable tuition, flexible financing options, and access to scholarships. Our goal is to ensure that cost is never the reason someone cannot pursue a career in technology.
-      badge: Accessible Education
-    secondary:
-      benefits:
-        - text: Financing options starting below $299/month
-        - text: Full and partial scholarships (location-based)
-        - text: Tuition recognized by Forbes as budget-friendly
-    background: hsl(var(--secondary))
-    paddingY:
-      desktop: none
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
@@ -219,7 +205,7 @@ sections:
       - heading: AI-Powered Learning & Feedback
         text: 24/7 personalized feedback that helps students learn faster and more effectively.
       - heading: Global Hiring Partner Network
-        text: Thousands of companies worldwide that actively recruit 4Geeks graduates.
+        text: Hundreds of companies worldwide that actively recruit 4Geeks graduates.
     footer: Support built for long-term careers — not just first jobs.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
