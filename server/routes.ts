@@ -886,7 +886,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Menus API - list all menu files
+  // Menus API - list all menu files (excludes translation files like .es.yml)
   app.get("/api/menus", (_req, res) => {
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");
     
@@ -895,7 +895,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const files = fs.readdirSync(menusDir).filter(f => f.endsWith(".yml") || f.endsWith(".yaml"));
+    // Filter for .yml/.yaml files, excluding translation files (e.g., main-navbar.es.yml)
+    const translationPattern = /\.[a-z]{2}\.(yml|yaml)$/;
+    const files = fs.readdirSync(menusDir)
+      .filter(f => (f.endsWith(".yml") || f.endsWith(".yaml")) && !translationPattern.test(f));
+    
     const menus = files.map(file => {
       const name = file.replace(/\.(yml|yaml)$/, "");
       return { name, file };

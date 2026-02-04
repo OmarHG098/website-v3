@@ -32,7 +32,6 @@ navbar:
           text: ¿No sabes qué programa te conviene más? Mira nuestra comparación de programas
           linkText: aquí
           href: /es/comparacion-de-programas
-
     - label: POR QUÉ 4GEEKS
       href: /es/por-que-4geeks
       component: Dropdown
@@ -78,7 +77,6 @@ navbar:
                 href: /es/testimonios
               - label: Talento
                 href: /es/talento
-
     - label: LA ACADEMIA
       href: /es/la-academia
       component: Dropdown
@@ -100,7 +98,6 @@ navbar:
             href: /es/prensa
           - label: Blog
             href: /es/blog
-
     - label: CAMPUS
       href: /es/campus
       component: Dropdown
@@ -154,7 +151,6 @@ navbar:
                 href: /es/campus/ciudad-de-mexico
               - label: Caracas, Venezuela
                 href: /es/campus/caracas
-
     - label: PRÓXIMAS FECHAS
       href: /es/proximas-fechas
       component: SimpleLink

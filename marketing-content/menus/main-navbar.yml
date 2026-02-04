@@ -11,17 +11,17 @@ navbar:
           - title: Full Stack with AI
             description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
             cta: View program
-            href: /full-stack-development
+            href: /en/career-programs/full-stack
             icon: code
           - title: Data Science and Machine Learning with AI
             description: Master AI-powered data analysis with Python. Build intelligent models using cutting-edge Machine Learning and AI techniques to solve real-world problems.
             cta: View program
-            href: /data-science-machine-learning
+            href: /en/career-programs/data-science-ml
             icon: chart
           - title: Cybersecurity
             description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
             cta: View program
-            href: /cybersecurity
+            href: /en/career-programs/cybersecurity
             icon: shield
           - title: Applied AI
             description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
@@ -32,7 +32,6 @@ navbar:
           text: Unsure which program fits you best? See our program comparison
           linkText: here
           href: /program-comparison
-
     - label: WHY 4GEEKS
       href: /why-4geeks
       component: Dropdown
@@ -78,7 +77,6 @@ navbar:
                 href: /testimonials
               - label: Talent
                 href: /talent
-
     - label: THE ACADEMY
       href: /the-academy
       component: Dropdown
@@ -100,7 +98,6 @@ navbar:
             href: /press
           - label: Blog
             href: /blog
-
     - label: CAMPUS
       href: /campus
       component: Dropdown
@@ -154,7 +151,6 @@ navbar:
                 href: /campus/mexico-city
               - label: Caracas, Venezuela
                 href: /campus/caracas
-
     - label: UPCOMING DATES
       href: /upcoming-dates
       component: SimpleLink
