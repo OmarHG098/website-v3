@@ -185,7 +185,7 @@ function SortableMenuItemEditor({
       </CardHeader>
       {isExpanded && (
         <CardContent className="pt-0 pb-4 px-4 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor={`label-${index}`}>Label</Label>
               <Input
@@ -210,38 +210,38 @@ function SortableMenuItemEditor({
                 />
               </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor={`component-${index}`}>Component Type</Label>
-            <Select
-              value={item.component}
-              onValueChange={(value) => {
-                const updatedItem = { ...item, component: value };
-                if (value === "Dropdown" && !item.dropdown) {
-                  updatedItem.dropdown = {
-                    type: "simple-list",
-                    title: item.label,
-                    description: "",
-                    items: [],
-                  };
-                }
-                onUpdate(index, updatedItem);
-              }}
-            >
-              <SelectTrigger data-testid={`select-component-${index}`}>
-                <SelectValue placeholder="Select component type" />
-              </SelectTrigger>
-              <SelectContent>
-                {componentOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    <div className="flex items-center gap-2">
-                      <IconCode className="h-4 w-4" />
-                      {opt.label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="space-y-2">
+              <Label htmlFor={`component-${index}`}>Component</Label>
+              <Select
+                value={item.component}
+                onValueChange={(value) => {
+                  const updatedItem = { ...item, component: value };
+                  if (value === "Dropdown" && !item.dropdown) {
+                    updatedItem.dropdown = {
+                      type: "simple-list",
+                      title: item.label,
+                      description: "",
+                      items: [],
+                    };
+                  }
+                  onUpdate(index, updatedItem);
+                }}
+              >
+                <SelectTrigger data-testid={`select-component-${index}`}>
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {componentOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      <div className="flex items-center gap-2">
+                        <IconCode className="h-4 w-4" />
+                        {opt.label}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           {item.component === "Dropdown" && item.dropdown && (
             <div className="border-t pt-4 mt-4">
