@@ -103,15 +103,15 @@ sections:
         link_url: "#"
         link_text: Read More
       - id: datascience
-        category: With Python
-        title: Data Science and Machine Learning with AI
-        description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
+        category: Data Science & ML
+        title: Data Science and Machine Learning
+        description: Work with real datasets to analyze data, build predictive models, and apply machine learning techniques used by modern data teams.
         link_url: "#"
         link_text: Read More
       - id: cybersecurity
-        category: For Windows & Linux
+        category: Cybersecurity
         title: Cybersecurity
-        description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
+        description: Develop the skills to identify threats, secure systems, and support security operations aligned with industry standards.
         link_url: "#"
         link_text: Read More
     columns: 3
