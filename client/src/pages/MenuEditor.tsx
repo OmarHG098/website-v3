@@ -38,6 +38,23 @@ import {
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Navbar, type NavbarConfig } from "@/components/menus";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface MenuItemData {
   label: string;
@@ -95,7 +112,8 @@ const dropdownTypes = [
   { value: "grouped-list", label: "Grouped List" },
 ];
 
-function MenuItemEditor({
+function SortableMenuItemEditor({
+  id,
   item,
   index,
   onUpdate,
@@ -103,6 +121,7 @@ function MenuItemEditor({
   isExpanded,
   onToggleExpand,
 }: {
+  id: string;
   item: MenuItemData;
   index: number;
   onUpdate: (index: number, item: MenuItemData) => void;
@@ -110,11 +129,33 @@ function MenuItemEditor({
   isExpanded: boolean;
   onToggleExpand: (index: number) => void;
 }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
   return (
-    <Card className="mb-2">
+    <Card ref={setNodeRef} style={style} className="mb-2">
       <CardHeader className="py-3 px-4">
         <div className="flex items-center gap-2">
-          <IconGripVertical className="h-4 w-4 text-muted-foreground cursor-move" />
+          <button
+            className="touch-none cursor-grab active:cursor-grabbing"
+            {...attributes}
+            {...listeners}
+            data-testid={`button-drag-item-${index}`}
+          >
+            <IconGripVertical className="h-4 w-4 text-muted-foreground" />
+          </button>
           <button
             onClick={() => onToggleExpand(index)}
             className="flex items-center gap-2 flex-1 text-left"
@@ -379,6 +420,27 @@ export default function MenuEditor() {
     setExpandedItems(newExpanded);
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!menuData || !over || active.id === over.id) return;
+
+    const oldIndex = menuData.navbar.items.findIndex((_, i) => `item-${i}` === active.id);
+    const newIndex = menuData.navbar.items.findIndex((_, i) => `item-${i}` === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      const newItems = arrayMove(menuData.navbar.items, oldIndex, newIndex);
+      setMenuData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
+      setHasChanges(true);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -475,17 +537,29 @@ export default function MenuEditor() {
           </div>
 
           <ScrollArea className="h-[calc(100vh-200px)]">
-            {menuData.navbar.items.map((item, index) => (
-              <MenuItemEditor
-                key={index}
-                item={item}
-                index={index}
-                onUpdate={handleUpdateItem}
-                onDelete={(idx) => setConfirmDeleteIndex(idx)}
-                isExpanded={expandedItems.has(index)}
-                onToggleExpand={toggleExpand}
-              />
-            ))}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={menuData.navbar.items.map((_, i) => `item-${i}`)}
+                strategy={verticalListSortingStrategy}
+              >
+                {menuData.navbar.items.map((item, index) => (
+                  <SortableMenuItemEditor
+                    key={`item-${index}`}
+                    id={`item-${index}`}
+                    item={item}
+                    index={index}
+                    onUpdate={handleUpdateItem}
+                    onDelete={(idx) => setConfirmDeleteIndex(idx)}
+                    isExpanded={expandedItems.has(index)}
+                    onToggleExpand={toggleExpand}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
             {menuData.navbar.items.length === 0 && (
               <div className="text-center py-12">
                 <IconMenu2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
