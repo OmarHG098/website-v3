@@ -60,9 +60,17 @@ interface HumanAndAIDuoData {
   image_alt?: string;
   background?: string;
   // Video option - when provided, replaces images with video
-  video?: string;
-  video_preview_image?: string;
-  video_ratio?: string;
+  video?: {
+    url: string;
+    ratio?: string;
+    mobile_ratio?: string;
+    width?: string;
+    muted?: boolean;
+    autoplay?: boolean;
+    loop?: boolean;
+    preview_image_url?: string;
+    with_shadow_border?: boolean;
+  };
 }
 
 interface HumanAndAIDuoProps {
@@ -82,7 +90,7 @@ const getIcon = (iconName: string, className?: string, size?: number, color?: st
 
 export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
   const backgroundClass = data.background || "bg-background";
-  const hasVideo = !!data.video;
+  const hasVideo = !!data.video?.url;
   
   // Use custom images array if provided, otherwise always show default 4 student images
   // Note: legacy image/image_alt fields are kept for backward compatibility but don't affect the student images display
@@ -91,14 +99,19 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
     : defaultStudentImages;
 
   const renderMedia = (containerClass: string, testId: string) => {
-    if (hasVideo) {
+    if (hasVideo && data.video) {
+      const videoWidth = data.video.width || "400px";
       return (
         <div className="flex justify-end">
-          <div className={`max-w-[400px] ${containerClass}`} data-testid={testId}>
+          <div 
+            className={containerClass} 
+            style={{ maxWidth: videoWidth }}
+            data-testid={testId}
+          >
             <UniversalVideo
-              url={data.video!}
-              ratio={data.video_ratio || "2.39:1"}
-              preview_image_url={data.video_preview_image}
+              url={data.video.url}
+              ratio={data.video.ratio || "2.39:1"}
+              preview_image_url={data.video.preview_image_url}
             />
           </div>
         </div>

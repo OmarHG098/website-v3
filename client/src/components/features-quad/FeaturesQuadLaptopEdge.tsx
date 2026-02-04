@@ -64,17 +64,22 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
   const images = data.images || [];
-  const hasVideo = !!data.video;
+  const hasVideo = !!data.video?.url;
   const hasMedia = hasVideo || images.length > 0;
 
   const renderMedia = (widthClass: string, testId: string) => {
-    if (!hasVideo) return null;
-    const aspectRatio = data.video_ratio || "16:9";
+    if (!hasVideo || !data.video) return null;
+    const aspectRatio = data.video.ratio || "16:9";
+    const videoWidth = data.video.width;
     return (
-      <div className={`${widthClass} rounded-card overflow-hidden`} data-testid={testId}>
+      <div 
+        className={`${widthClass} rounded-card overflow-hidden`} 
+        style={videoWidth ? { width: videoWidth } : undefined}
+        data-testid={testId}
+      >
         <UniversalVideo
-          url={data.video!}
-          preview_image_url={data.video_preview_image}
+          url={data.video.url}
+          preview_image_url={data.video.preview_image_url}
           ratio={aspectRatio}
         />
       </div>
