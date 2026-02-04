@@ -59,7 +59,7 @@ export function TwoColumnAccordionCardDefault({ data }: TwoColumnAccordionCardDe
                   <Accordion type="single" collapsible defaultValue="item-0" className="w-full" data-testid="accordion-bullets">
                     {bullets.map((bullet, index) => (
                       <AccordionItem key={index} value={`item-${index}`}>
-                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
+                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-2 md:py-4">
                           {bullet.heading}
                         </AccordionTrigger>
                         <AccordionContent className="text-muted-foreground">

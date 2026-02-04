@@ -36,6 +36,7 @@ export const videoConfigSchema = z.object({
   url: z.string(),
   ratio: z.string().optional(),
   mobile_ratio: z.string().optional(),
+  width: z.string().optional(), // CSS width value e.g., "400px", "100%"
   muted: z.boolean().optional(),
   autoplay: z.boolean().optional(),
   loop: z.boolean().optional(),
