@@ -2,12 +2,14 @@ import { useParams, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import yaml from "js-yaml";
+import CodeMirror from "@uiw/react-codemirror";
+import { yaml as yamlLang } from "@codemirror/lang-yaml";
+import { oneDark } from "@codemirror/theme-one-dark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -658,13 +660,15 @@ export default function MenuEditor() {
                 <span className="text-xs text-destructive">Invalid YAML</span>
               )}
             </div>
-            <Textarea
-              value={yamlSource}
-              onChange={(e) => handleYamlEdit(e.target.value)}
-              className="flex-1 font-mono text-sm resize-none"
-              placeholder="YAML content..."
-              data-testid="textarea-yaml-source"
-            />
+            <div className="flex-1 overflow-hidden rounded-md border" data-testid="codemirror-yaml-source">
+              <CodeMirror
+                value={yamlSource}
+                height="100%"
+                extensions={[yamlLang()]}
+                theme={oneDark}
+                onChange={(value) => handleYamlEdit(value)}
+              />
+            </div>
           </div>
         </SheetContent>
       </Sheet>
