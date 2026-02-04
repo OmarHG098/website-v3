@@ -194,7 +194,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-80 p-4">
+    <div className="p-4">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-3 mb-4 pb-4 border-b">
           {IconComponent && (
@@ -320,7 +320,7 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       case "columns":
         return "w-[800px]";
       case "simple-list":
-        return "w-[400px]";
+        return "w-72";
       case "grouped-list":
         return "w-[550px]";
       default:
