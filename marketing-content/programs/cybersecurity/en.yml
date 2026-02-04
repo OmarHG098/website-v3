@@ -461,7 +461,7 @@ sections:
   - type: cta_banner
     version: "1.0"
     title: Ready to Launch Your Cybersecurity Career?
-    subtitle: Join thousands of graduates who have launched successful tech careers with 4Geeks.
+    subtitle: Join thousands of graduates who switched into tech with 4Geeks.
     background: primary
     buttons:
       - text: Apply Now
