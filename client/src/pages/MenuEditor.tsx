@@ -133,14 +133,16 @@ function SortableMenuItemEditor({
   onDelete,
   isExpanded,
   onToggleExpand,
+  isReadOnlyStructure = false,
 }: {
   id: string;
   item: MenuItemData;
   index: number;
   onUpdate: (index: number, item: MenuItemData) => void;
-  onDelete: (index: number) => void;
+  onDelete?: (index: number) => void;
   isExpanded: boolean;
   onToggleExpand: (index: number) => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const {
     attributes,
@@ -161,14 +163,18 @@ function SortableMenuItemEditor({
     <Card ref={setNodeRef} style={style} className="mb-2">
       <CardHeader className="py-3 px-4">
         <div className="flex items-center gap-2">
-          <button
-            className="touch-none cursor-grab active:cursor-grabbing"
-            {...attributes}
-            {...listeners}
-            data-testid={`button-drag-item-${index}`}
-          >
-            <IconGripVertical className="h-4 w-4 text-muted-foreground" />
-          </button>
+          {!isReadOnlyStructure ? (
+            <button
+              className="touch-none cursor-grab active:cursor-grabbing"
+              {...attributes}
+              {...listeners}
+              data-testid={`button-drag-item-${index}`}
+            >
+              <IconGripVertical className="h-4 w-4 text-muted-foreground" />
+            </button>
+          ) : (
+            <IconGripVertical className="h-4 w-4 text-muted-foreground/30" />
+          )}
           <button
             onClick={() => onToggleExpand(index)}
             className="flex items-center gap-2 flex-1 text-left"
@@ -185,15 +191,17 @@ function SortableMenuItemEditor({
           <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
             {item.component}
           </span>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onDelete(index)}
-            className="h-8 w-8 text-destructive hover:text-destructive"
-            data-testid={`button-delete-item-${index}`}
-          >
-            <IconTrash className="h-4 w-4" />
-          </Button>
+          {onDelete && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onDelete(index)}
+              className="h-8 w-8 text-destructive hover:text-destructive"
+              data-testid={`button-delete-item-${index}`}
+            >
+              <IconTrash className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </CardHeader>
       {isExpanded && (
@@ -241,6 +249,7 @@ function SortableMenuItemEditor({
                   }
                   onUpdate(index, updatedItem);
                 }}
+                disabled={isReadOnlyStructure}
               >
                 <SelectTrigger data-testid={`select-component-${index}`}>
                   <SelectValue placeholder="Type" />
@@ -275,7 +284,7 @@ function SortableMenuItemEditor({
                     dropdown: { ...currentDropdown, type: value },
                   });
                 }}
-                disabled={item.component !== "Dropdown"}
+                disabled={item.component !== "Dropdown" || isReadOnlyStructure}
               >
                 <SelectTrigger data-testid={`select-dropdown-type-${index}`}>
                   <SelectValue />
@@ -305,6 +314,7 @@ function SortableMenuItemEditor({
                     dropdown: updatedDropdown as any,
                   })
                 }
+                isReadOnlyStructure={isReadOnlyStructure}
               />
             </div>
           )}
@@ -320,6 +330,8 @@ export default function MenuEditor() {
   const { toast } = useToast();
   const menuName = params.menuName || "";
 
+  const [locale, setLocale] = useState<string>("en");
+  const [pendingLocaleSwitch, setPendingLocaleSwitch] = useState<string | null>(null);
   const [yamlSource, setYamlSource] = useState<string>("");
   const [yamlError, setYamlError] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
@@ -328,6 +340,8 @@ export default function MenuEditor() {
   const [previewRedirectUrl, setPreviewRedirectUrl] = useState<string | null>(null);
   const [showSourceSidebar, setShowSourceSidebar] = useState(false);
   const [originalYaml, setOriginalYaml] = useState<string>("");
+  
+  const isEnglish = locale === "en";
 
   const parsedResult = useMemo<{ data: MenuData | null; error: string | null }>(() => {
     if (!yamlSource) return { data: null, error: null };
@@ -373,8 +387,13 @@ export default function MenuEditor() {
     }
   };
 
-  const { data, isLoading, error } = useQuery<MenuResponse>({
-    queryKey: ["/api/menus", menuName],
+  const { data, isLoading, error, refetch } = useQuery<MenuResponse>({
+    queryKey: ["/api/menus", menuName, locale],
+    queryFn: async () => {
+      const response = await fetch(`/api/menus/${menuName}?locale=${locale}`);
+      if (!response.ok) throw new Error("Failed to load menu");
+      return response.json();
+    },
     enabled: !!menuName,
   });
 
@@ -391,21 +410,44 @@ export default function MenuEditor() {
       setHasChanges(false);
     }
   }, [data]);
+  
+  const handleLocaleSwitch = (newLocale: string) => {
+    if (newLocale === locale) return;
+    
+    if (hasChanges) {
+      setPendingLocaleSwitch(newLocale);
+    } else {
+      setLocale(newLocale);
+    }
+  };
+  
+  const confirmLocaleSwitch = () => {
+    if (pendingLocaleSwitch) {
+      setLocale(pendingLocaleSwitch);
+      setPendingLocaleSwitch(null);
+      setHasChanges(false);
+    }
+  };
 
   const saveMutation = useMutation({
     mutationFn: async (yamlContent: string) => {
       const parsedData = yaml.load(yamlContent) as MenuData;
-      return apiRequest("POST", `/api/menus/${menuName}`, { data: parsedData });
+      return apiRequest("POST", `/api/menus/${menuName}?locale=${locale}`, { data: parsedData });
     },
-    onSuccess: () => {
+    onSuccess: (response: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/menus", menuName] });
       queryClient.invalidateQueries({ queryKey: ["/api/menus"] });
-      queryClient.refetchQueries({ queryKey: ["/api/menus", menuName] });
+      refetch();
       setOriginalYaml(yamlSource);
       setHasChanges(false);
+      
+      const syncMessage = response.syncResults && Object.keys(response.syncResults).length > 0
+        ? ` Translation files synced: ${Object.keys(response.syncResults).join(", ")}`
+        : "";
+      
       toast({
         title: "Menu saved",
-        description: "Changes saved! Refresh the homepage to see updates in the navbar.",
+        description: `Changes saved!${syncMessage} Refresh the homepage to see updates in the navbar.`,
       });
     },
     onError: (error) => {
@@ -525,7 +567,33 @@ export default function MenuEditor() {
               <p className="text-sm text-muted-foreground">Menu Editor</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center border rounded-md overflow-hidden">
+              <button
+                type="button"
+                onClick={() => handleLocaleSwitch("en")}
+                className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                  locale === "en"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-transparent text-muted-foreground hover:bg-muted"
+                }`}
+                data-testid="button-locale-en"
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLocaleSwitch("es")}
+                className={`px-3 py-1.5 text-sm font-medium border-l transition-colors ${
+                  locale === "es"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-transparent text-muted-foreground hover:bg-muted"
+                }`}
+                data-testid="button-locale-es"
+              >
+                ES
+              </button>
+            </div>
             {hasChanges && (
               <span className="text-xs text-amber-600 dark:text-amber-400">
                 Unsaved changes
@@ -592,15 +660,17 @@ export default function MenuEditor() {
                 <h2 className="text-sm font-medium text-muted-foreground">
                   Menu Items ({menuData.navbar.items.length})
                 </h2>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleAddItem}
-                  data-testid="button-add-item"
-                >
-                  <IconPlus className="h-4 w-4 mr-2" />
-                  Add Item
-                </Button>
+                {isEnglish && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleAddItem}
+                    data-testid="button-add-item"
+                  >
+                    <IconPlus className="h-4 w-4 mr-2" />
+                    Add Item
+                  </Button>
+                )}
               </div>
 
               <ScrollArea className="h-[calc(100vh-200px)]">
@@ -620,14 +690,15 @@ export default function MenuEditor() {
                         item={item}
                         index={index}
                         onUpdate={handleUpdateItem}
-                        onDelete={(idx) => setConfirmDeleteIndex(idx)}
+                        onDelete={isEnglish ? (idx) => setConfirmDeleteIndex(idx) : undefined}
                         isExpanded={expandedItems.has(index)}
                         onToggleExpand={toggleExpand}
+                        isReadOnlyStructure={!isEnglish}
                       />
                     ))}
                   </SortableContext>
                 </DndContext>
-                {menuData.navbar.items.length === 0 && (
+                {menuData.navbar.items.length === 0 && isEnglish && (
                   <div className="text-center py-12">
                     <IconMenu2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                     <p className="text-muted-foreground mb-4">No menu items yet</p>
@@ -723,6 +794,29 @@ export default function MenuEditor() {
             >
               <IconExternalLink className="h-4 w-4 mr-2" />
               Follow Link
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={pendingLocaleSwitch !== null} onOpenChange={() => setPendingLocaleSwitch(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Switch Language?</DialogTitle>
+            <DialogDescription>
+              You have unsaved changes. Switching languages will discard your changes.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPendingLocaleSwitch(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={confirmLocaleSwitch}
+              data-testid="button-confirm-locale-switch"
+            >
+              Discard Changes
             </Button>
           </DialogFooter>
         </DialogContent>

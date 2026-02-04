@@ -885,15 +885,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ menus });
   });
 
-  // Menus API - get a specific menu file
+  // Menus API - get a specific menu file (with optional locale)
   app.get("/api/menus/:name", (req, res) => {
     const { name } = req.params;
+    const locale = req.query.locale as string | undefined;
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");
     
+    // Build filename based on locale (e.g., main-navbar.es.yml for Spanish)
+    const fileBaseName = locale && locale !== "en" ? `${name}.${locale}` : name;
+    
     // Try both .yml and .yaml extensions
-    let filePath = path.join(menusDir, `${name}.yml`);
+    let filePath = path.join(menusDir, `${fileBaseName}.yml`);
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(menusDir, `${name}.yaml`);
+      filePath = path.join(menusDir, `${fileBaseName}.yaml`);
     }
     
     if (!fs.existsSync(filePath)) {
@@ -904,16 +908,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const content = fs.readFileSync(filePath, "utf-8");
       const data = yaml.load(content);
-      res.json({ name, data });
+      res.json({ name, locale: locale || "en", data });
     } catch (error) {
       console.error(`Error loading menu ${name}:`, error);
       res.status(500).json({ error: "Failed to parse menu file" });
     }
   });
 
-  // Menus API - save a menu file
+  // Menus API - save a menu file (with optional locale and sync for English)
   app.post("/api/menus/:name", (req, res) => {
     const { name } = req.params;
+    const locale = req.query.locale as string | undefined;
     const { data } = req.body;
     
     if (!data) {
@@ -922,16 +927,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    const isEnglish = !locale || locale === "en";
+    
+    // Build filename based on locale
+    const fileBaseName = isEnglish ? name : `${name}.${locale}`;
     
     // Try both .yml and .yaml extensions to find existing file
-    let filePath = path.join(menusDir, `${name}.yml`);
+    let filePath = path.join(menusDir, `${fileBaseName}.yml`);
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(menusDir, `${name}.yaml`);
+      filePath = path.join(menusDir, `${fileBaseName}.yaml`);
     }
     
     // If neither exists, default to .yml
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(menusDir, `${name}.yml`);
+      filePath = path.join(menusDir, `${fileBaseName}.yml`);
     }
     
     try {
@@ -942,12 +951,190 @@ export async function registerRoutes(app: Express): Promise<Server> {
         sortKeys: false,
       });
       fs.writeFileSync(filePath, yamlContent, "utf-8");
-      res.json({ success: true, name });
+      
+      // If saving English (master), sync structural changes to translation files
+      const syncResults: Record<string, string> = {};
+      if (isEnglish) {
+        const translationLocales = ["es"]; // Add more locales as needed
+        
+        for (const targetLocale of translationLocales) {
+          const translationFileName = `${name}.${targetLocale}.yml`;
+          const translationFilePath = path.join(menusDir, translationFileName);
+          
+          if (fs.existsSync(translationFilePath)) {
+            try {
+              const translationContent = fs.readFileSync(translationFilePath, "utf-8");
+              const translationData = yaml.load(translationContent) as any;
+              
+              // Sync structure from English to translation
+              const syncedData = syncMenuStructure(data, translationData);
+              
+              const syncedYaml = yaml.dump(syncedData, {
+                indent: 2,
+                lineWidth: -1,
+                noRefs: true,
+                sortKeys: false,
+              });
+              fs.writeFileSync(translationFilePath, syncedYaml, "utf-8");
+              syncResults[targetLocale] = "synced";
+            } catch (syncError) {
+              console.error(`Error syncing to ${targetLocale}:`, syncError);
+              syncResults[targetLocale] = "error";
+            }
+          }
+        }
+      }
+      
+      res.json({ success: true, name, locale: locale || "en", syncResults });
     } catch (error) {
       console.error(`Error saving menu ${name}:`, error);
       res.status(500).json({ error: "Failed to save menu file" });
     }
   });
+  
+  // Helper function to sync menu structure from English (master) to translation
+  function syncMenuStructure(master: any, translation: any): any {
+    if (!master?.navbar?.items || !translation?.navbar?.items) {
+      return translation;
+    }
+    
+    const masterItems = master.navbar.items;
+    const translationItems = translation.navbar.items;
+    const syncedItems: any[] = [];
+    
+    for (let i = 0; i < masterItems.length; i++) {
+      const masterItem = masterItems[i];
+      const existingTranslation = translationItems[i];
+      
+      if (existingTranslation) {
+        // Keep translation text, sync structure
+        const syncedItem = syncMenuItem(masterItem, existingTranslation);
+        syncedItems.push(syncedItem);
+      } else {
+        // New item - add with [TRANSLATE] placeholders
+        const newItem = createTranslationPlaceholder(masterItem);
+        syncedItems.push(newItem);
+      }
+    }
+    
+    return { navbar: { items: syncedItems } };
+  }
+  
+  function syncMenuItem(master: any, translation: any): any {
+    const result: any = {
+      label: translation.label || `[TRANSLATE] ${master.label}`,
+      href: translation.href || master.href,
+      component: master.component,
+    };
+    
+    if (master.dropdown) {
+      result.dropdown = syncDropdown(master.dropdown, translation.dropdown || {});
+    }
+    
+    return result;
+  }
+  
+  function syncDropdown(master: any, translation: any): any {
+    const result: any = {
+      type: master.type,
+      title: translation.title || `[TRANSLATE] ${master.title}`,
+      description: translation.description || `[TRANSLATE] ${master.description}`,
+    };
+    
+    if (master.icon) result.icon = master.icon;
+    
+    // Sync items array (for cards and simple-list types)
+    if (master.items) {
+      result.items = master.items.map((masterItem: any, idx: number) => {
+        const transItem = translation.items?.[idx] || {};
+        return syncDropdownItem(masterItem, transItem);
+      });
+    }
+    
+    // Sync columns (for columns type)
+    if (master.columns) {
+      result.columns = master.columns.map((masterCol: any, idx: number) => {
+        const transCol = translation.columns?.[idx] || {};
+        return {
+          title: transCol.title || `[TRANSLATE] ${masterCol.title}`,
+          items: masterCol.items.map((masterItem: any, itemIdx: number) => {
+            const transItem = transCol.items?.[itemIdx] || {};
+            return {
+              label: transItem.label || `[TRANSLATE] ${masterItem.label}`,
+              href: transItem.href || masterItem.href,
+            };
+          }),
+        };
+      });
+    }
+    
+    // Sync groups (for grouped-list type)
+    if (master.groups) {
+      result.groups = master.groups.map((masterGroup: any, idx: number) => {
+        const transGroup = translation.groups?.[idx] || {};
+        return {
+          title: transGroup.title || `[TRANSLATE] ${masterGroup.title}`,
+          items: masterGroup.items.map((masterItem: any, itemIdx: number) => {
+            const transItem = transGroup.items?.[itemIdx] || {};
+            return {
+              label: transItem.label || `[TRANSLATE] ${masterItem.label}`,
+              href: transItem.href || masterItem.href,
+            };
+          }),
+        };
+      });
+    }
+    
+    // Sync footer
+    if (master.footer) {
+      result.footer = {
+        text: translation.footer?.text || `[TRANSLATE] ${master.footer.text}`,
+        linkText: translation.footer?.linkText || `[TRANSLATE] ${master.footer.linkText}`,
+        href: translation.footer?.href || master.footer.href,
+      };
+    }
+    
+    return result;
+  }
+  
+  function syncDropdownItem(master: any, translation: any): any {
+    const result: any = {};
+    
+    if (master.title !== undefined) {
+      result.title = translation.title || `[TRANSLATE] ${master.title}`;
+    }
+    if (master.label !== undefined) {
+      result.label = translation.label || `[TRANSLATE] ${master.label}`;
+    }
+    if (master.description !== undefined) {
+      result.description = translation.description || `[TRANSLATE] ${master.description}`;
+    }
+    if (master.cta !== undefined) {
+      result.cta = translation.cta || `[TRANSLATE] ${master.cta}`;
+    }
+    if (master.href !== undefined) {
+      result.href = translation.href || master.href;
+    }
+    if (master.icon !== undefined) {
+      result.icon = master.icon;
+    }
+    
+    return result;
+  }
+  
+  function createTranslationPlaceholder(master: any): any {
+    const result: any = {
+      label: `[TRANSLATE] ${master.label}`,
+      href: master.href,
+      component: master.component,
+    };
+    
+    if (master.dropdown) {
+      result.dropdown = syncDropdown(master.dropdown, {});
+    }
+    
+    return result;
+  }
 
   // Clear redirect cache (for debug tools)
   app.post("/api/debug/clear-redirect-cache", (req, res) => {

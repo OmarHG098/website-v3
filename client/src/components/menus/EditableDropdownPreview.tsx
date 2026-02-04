@@ -98,9 +98,10 @@ interface EditableLinkItemProps {
   onHrefChange: (href: string) => void;
   onDelete: () => void;
   testIdPrefix: string;
+  isReadOnlyStructure?: boolean;
 }
 
-function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, testIdPrefix }: EditableLinkItemProps) {
+function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, testIdPrefix, isReadOnlyStructure = false }: EditableLinkItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempLabel, setTempLabel] = useState(label);
   const [tempHref, setTempHref] = useState(href);
@@ -164,13 +165,15 @@ function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, 
           </div>
         </PopoverContent>
       </Popover>
-      <button
-        onClick={onDelete}
-        className="p-1 rounded-md text-destructive opacity-0 group-hover/item:opacity-100 transition-opacity"
-        data-testid={`${testIdPrefix}-delete`}
-      >
-        <IconTrash className="h-3 w-3" />
-      </button>
+      {!isReadOnlyStructure && (
+        <button
+          onClick={onDelete}
+          className="p-1 rounded-md text-destructive opacity-0 group-hover/item:opacity-100 transition-opacity"
+          data-testid={`${testIdPrefix}-delete`}
+        >
+          <IconTrash className="h-3 w-3" />
+        </button>
+      )}
     </div>
   );
 }
@@ -296,6 +299,7 @@ type DropdownData = CardsDropdownData | ColumnsDropdownData | SimpleListDropdown
 interface EditableDropdownPreviewProps {
   dropdown: DropdownData;
   onChange: (dropdown: DropdownData) => void;
+  isReadOnlyStructure?: boolean;
 }
 
 function EditableCardItem({
@@ -303,24 +307,28 @@ function EditableCardItem({
   index,
   onUpdate,
   onDelete,
+  isReadOnlyStructure = false,
 }: {
   item: CardItem;
   index: number;
   onUpdate: (updates: Partial<CardItem>) => void;
   onDelete: () => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const [isEditingHref, setIsEditingHref] = useState(false);
   const [tempHref, setTempHref] = useState(item.href);
 
   return (
     <div className="group/card relative block rounded-lg p-3 border border-transparent hover:border-border">
-      <button
-        onClick={onDelete}
-        className="absolute top-1 right-1 p-1 rounded-md bg-destructive/10 text-destructive opacity-0 group-hover/card:opacity-100 transition-opacity"
-        data-testid={`editable-card-${index}-delete`}
-      >
-        <IconTrash className="h-3 w-3" />
-      </button>
+      {!isReadOnlyStructure && (
+        <button
+          onClick={onDelete}
+          className="absolute top-1 right-1 p-1 rounded-md bg-destructive/10 text-destructive opacity-0 group-hover/card:opacity-100 transition-opacity"
+          data-testid={`editable-card-${index}-delete`}
+        >
+          <IconTrash className="h-3 w-3" />
+        </button>
+      )}
       
       <div className="mb-3">
         <EditableIcon
@@ -396,10 +404,12 @@ function EditableCardItem({
 
 function EditableCardsPreview({ 
   dropdown, 
-  onChange 
+  onChange,
+  isReadOnlyStructure = false
 }: { 
   dropdown: CardsDropdownData; 
   onChange: (dropdown: CardsDropdownData) => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const items = dropdown.items || [];
 
@@ -454,17 +464,20 @@ function EditableCardsPreview({
             index={index}
             onUpdate={(updates) => updateItem(index, updates)}
             onDelete={() => deleteItem(index)}
+            isReadOnlyStructure={isReadOnlyStructure}
           />
         ))}
         
-        <button
-          onClick={addItem}
-          className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[200px]"
-          data-testid="editable-cards-add"
-        >
-          <IconPlus className="h-8 w-8 text-muted-foreground mb-2" />
-          <span className="text-sm text-muted-foreground">Add Card</span>
-        </button>
+        {!isReadOnlyStructure && (
+          <button
+            onClick={addItem}
+            className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[200px]"
+            data-testid="editable-cards-add"
+          >
+            <IconPlus className="h-8 w-8 text-muted-foreground mb-2" />
+            <span className="text-sm text-muted-foreground">Add Card</span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -473,9 +486,11 @@ function EditableCardsPreview({
 function EditableSimpleListPreview({
   dropdown,
   onChange,
+  isReadOnlyStructure = false,
 }: {
   dropdown: SimpleListDropdownData;
   onChange: (dropdown: SimpleListDropdownData) => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const items = dropdown.items || [];
 
@@ -533,19 +548,22 @@ function EditableSimpleListPreview({
               onHrefChange={(href) => updateItem(index, { href })}
               onDelete={() => deleteItem(index)}
               testIdPrefix={`editable-simple-list-item-${index}`}
+              isReadOnlyStructure={isReadOnlyStructure}
             />
           </li>
         ))}
       </ul>
       
-      <button
-        onClick={addItem}
-        className="w-full mt-2 flex items-center justify-center gap-2 px-3 py-2 rounded-md border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm text-muted-foreground"
-        data-testid="editable-simple-list-add"
-      >
-        <IconPlus className="h-4 w-4" />
-        Add Item
-      </button>
+      {!isReadOnlyStructure && (
+        <button
+          onClick={addItem}
+          className="w-full mt-2 flex items-center justify-center gap-2 px-3 py-2 rounded-md border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors text-sm text-muted-foreground"
+          data-testid="editable-simple-list-add"
+        >
+          <IconPlus className="h-4 w-4" />
+          Add Item
+        </button>
+      )}
     </div>
   );
 }
@@ -553,9 +571,11 @@ function EditableSimpleListPreview({
 function EditableColumnsPreview({
   dropdown,
   onChange,
+  isReadOnlyStructure = false,
 }: {
   dropdown: ColumnsDropdownData;
   onChange: (dropdown: ColumnsDropdownData) => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const columns = dropdown.columns || [];
 
@@ -636,13 +656,15 @@ function EditableColumnsPreview({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
         {columns.map((column, colIndex) => (
           <div key={colIndex} className="group/col relative">
-            <button
-              onClick={() => deleteColumn(colIndex)}
-              className="absolute -top-2 -right-2 p-1 rounded-md bg-destructive/10 text-destructive opacity-0 group-hover/col:opacity-100 transition-opacity z-10"
-              data-testid={`editable-column-${colIndex}-delete`}
-            >
-              <IconTrash className="h-3 w-3" />
-            </button>
+            {!isReadOnlyStructure && (
+              <button
+                onClick={() => deleteColumn(colIndex)}
+                className="absolute -top-2 -right-2 p-1 rounded-md bg-destructive/10 text-destructive opacity-0 group-hover/col:opacity-100 transition-opacity z-10"
+                data-testid={`editable-column-${colIndex}-delete`}
+              >
+                <IconTrash className="h-3 w-3" />
+              </button>
+            )}
             
             <EditableText
               value={column.title}
@@ -662,31 +684,36 @@ function EditableColumnsPreview({
                     onHrefChange={(href) => updateColumnItem(colIndex, itemIndex, { href })}
                     onDelete={() => deleteColumnItem(colIndex, itemIndex)}
                     testIdPrefix={`editable-column-${colIndex}-item-${itemIndex}`}
+                    isReadOnlyStructure={isReadOnlyStructure}
                   />
                 </li>
               ))}
-              <li>
-                <button
-                  onClick={() => addColumnItem(colIndex)}
-                  className="flex items-center gap-1 text-sm text-muted-foreground/50 hover:text-primary"
-                  data-testid={`editable-column-${colIndex}-add-item`}
-                >
-                  <IconPlus className="h-3 w-3" />
-                  Add item
-                </button>
-              </li>
+              {!isReadOnlyStructure && (
+                <li>
+                  <button
+                    onClick={() => addColumnItem(colIndex)}
+                    className="flex items-center gap-1 text-sm text-muted-foreground/50 hover:text-primary"
+                    data-testid={`editable-column-${colIndex}-add-item`}
+                  >
+                    <IconPlus className="h-3 w-3" />
+                    Add item
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         ))}
         
-        <button
-          onClick={addColumn}
-          className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[120px]"
-          data-testid="editable-columns-add-column"
-        >
-          <IconPlus className="h-6 w-6 text-muted-foreground mb-1" />
-          <span className="text-xs text-muted-foreground">Add Column</span>
-        </button>
+        {!isReadOnlyStructure && (
+          <button
+            onClick={addColumn}
+            className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[120px]"
+            data-testid="editable-columns-add-column"
+          >
+            <IconPlus className="h-6 w-6 text-muted-foreground mb-1" />
+            <span className="text-xs text-muted-foreground">Add Column</span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -695,9 +722,11 @@ function EditableColumnsPreview({
 function EditableGroupedListPreview({
   dropdown,
   onChange,
+  isReadOnlyStructure = false,
 }: {
   dropdown: GroupedListDropdownData;
   onChange: (dropdown: GroupedListDropdownData) => void;
+  isReadOnlyStructure?: boolean;
 }) {
   const groups = dropdown.groups || [];
   const [activeGroup, setActiveGroup] = useState(0);
@@ -797,23 +826,27 @@ function EditableGroupedListPreview({
                   testId={`editable-group-${index}-title`}
                 />
               </button>
-              <button
-                onClick={() => deleteGroup(index)}
-                className="absolute right-0 p-1 text-destructive opacity-0 group-hover/tab:opacity-100"
-                data-testid={`editable-group-${index}-delete`}
-              >
-                <IconTrash className="h-3 w-3" />
-              </button>
+              {!isReadOnlyStructure && (
+                <button
+                  onClick={() => deleteGroup(index)}
+                  className="absolute right-0 p-1 text-destructive opacity-0 group-hover/tab:opacity-100"
+                  data-testid={`editable-group-${index}-delete`}
+                >
+                  <IconTrash className="h-3 w-3" />
+                </button>
+              )}
             </div>
           ))}
-          <button
-            onClick={addGroup}
-            className="w-full flex items-center justify-center gap-1 px-3 py-2 text-xs text-muted-foreground border-2 border-dashed border-muted-foreground/30 rounded-md hover:border-primary/50"
-            data-testid="editable-grouped-list-add-group"
-          >
-            <IconPlus className="h-3 w-3" />
-            Add
-          </button>
+          {!isReadOnlyStructure && (
+            <button
+              onClick={addGroup}
+              className="w-full flex items-center justify-center gap-1 px-3 py-2 text-xs text-muted-foreground border-2 border-dashed border-muted-foreground/30 rounded-md hover:border-primary/50"
+              data-testid="editable-grouped-list-add-group"
+            >
+              <IconPlus className="h-3 w-3" />
+              Add
+            </button>
+          )}
         </div>
         
         <div className="flex-1">
@@ -828,16 +861,19 @@ function EditableGroupedListPreview({
                   onHrefChange={(href) => updateGroupItem(activeGroup, index, { href })}
                   onDelete={() => deleteGroupItem(activeGroup, index)}
                   testIdPrefix={`editable-group-${activeGroup}-item-${index}`}
+                  isReadOnlyStructure={isReadOnlyStructure}
                 />
               ))}
-              <button
-                onClick={() => addGroupItem(activeGroup)}
-                className="flex items-center gap-1 py-1.5 text-sm text-muted-foreground/50 hover:text-primary"
-                data-testid={`editable-group-${activeGroup}-add-item`}
-              >
-                <IconPlus className="h-3 w-3" />
-                Add item
-              </button>
+              {!isReadOnlyStructure && (
+                <button
+                  onClick={() => addGroupItem(activeGroup)}
+                  className="flex items-center gap-1 py-1.5 text-sm text-muted-foreground/50 hover:text-primary"
+                  data-testid={`editable-group-${activeGroup}-add-item`}
+                >
+                  <IconPlus className="h-3 w-3" />
+                  Add item
+                </button>
+              )}
             </div>
           ) : (
             <div className="text-center text-sm text-muted-foreground py-8">
@@ -850,13 +886,14 @@ function EditableGroupedListPreview({
   );
 }
 
-export function EditableDropdownPreview({ dropdown, onChange }: EditableDropdownPreviewProps) {
+export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructure = false }: EditableDropdownPreviewProps) {
   switch (dropdown.type) {
     case "cards":
       return (
         <EditableCardsPreview
           dropdown={dropdown}
           onChange={onChange as (d: CardsDropdownData) => void}
+          isReadOnlyStructure={isReadOnlyStructure}
         />
       );
     case "simple-list":
@@ -864,6 +901,7 @@ export function EditableDropdownPreview({ dropdown, onChange }: EditableDropdown
         <EditableSimpleListPreview
           dropdown={dropdown}
           onChange={onChange as (d: SimpleListDropdownData) => void}
+          isReadOnlyStructure={isReadOnlyStructure}
         />
       );
     case "columns":
@@ -871,6 +909,7 @@ export function EditableDropdownPreview({ dropdown, onChange }: EditableDropdown
         <EditableColumnsPreview
           dropdown={dropdown}
           onChange={onChange as (d: ColumnsDropdownData) => void}
+          isReadOnlyStructure={isReadOnlyStructure}
         />
       );
     case "grouped-list":
@@ -878,6 +917,7 @@ export function EditableDropdownPreview({ dropdown, onChange }: EditableDropdown
         <EditableGroupedListPreview
           dropdown={dropdown}
           onChange={onChange as (d: GroupedListDropdownData) => void}
+          isReadOnlyStructure={isReadOnlyStructure}
         />
       );
     default:
