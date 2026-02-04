@@ -26,7 +26,7 @@ sections:
     version: "1.0"
     variant: simpleTwoColumn
     title: Get into tech with our Job Guarantee
-    subtitle: Your success is our mission. Get hired within 9 months of graduation, or we'll refund 100% of your tuition. Conditions apply.
+    subtitle: Get hired within 9 months of graduation, or we'll refund 100% of your tuition.* Conditions apply.
     image:
       src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
       alt: Students collaborating in a tech workspace
