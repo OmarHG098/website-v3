@@ -644,31 +644,29 @@ export default function MenuEditor() {
       </main>
 
       <Sheet open={showSourceSidebar} onOpenChange={setShowSourceSidebar}>
-        <SheetContent className="w-[600px] sm:max-w-[600px] flex flex-col">
-          <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
+        <SheetContent className="w-[600px] sm:max-w-[600px] flex flex-col p-0">
+          <div className="px-4 pt-4 pb-2 flex items-center justify-between border-b">
+            <div className="flex items-center gap-2">
               <IconFileCode className="h-5 w-5 text-primary" />
-              YAML Source
-            </SheetTitle>
-          </SheetHeader>
-          <div className="flex-1 mt-4 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
+              <span className="font-semibold">YAML Source</span>
+            </div>
+            <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">
-                Edit YAML directly - changes sync to visual editor
+                Edit YAML directly
               </span>
               {yamlError && (
                 <span className="text-xs text-destructive">Invalid YAML</span>
               )}
             </div>
-            <div className="flex-1 overflow-hidden rounded-md border" data-testid="codemirror-yaml-source">
-              <CodeMirror
-                value={yamlSource}
-                height="100%"
-                extensions={[yamlLang()]}
-                theme={oneDark}
-                onChange={(value) => handleYamlEdit(value)}
-              />
-            </div>
+          </div>
+          <div className="flex-1 overflow-hidden" data-testid="codemirror-yaml-source">
+            <CodeMirror
+              value={yamlSource}
+              height="calc(100vh - 80px)"
+              extensions={[yamlLang()]}
+              theme={oneDark}
+              onChange={(value) => handleYamlEdit(value)}
+            />
           </div>
         </SheetContent>
       </Sheet>
