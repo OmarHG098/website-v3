@@ -127,8 +127,8 @@ sections:
     paddingY:
       desktop: sm none
   - type: value_proof_panel
-    title: Globally Recognized
-    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
+    title: Globally Recognized for Real Outcomes
+    subtitle: Independent organizations recognize 4Geeks for graduate results, the quality of our programs and career support.
     evidence_items:
       - icon: Trophy
         title: Top 5 Coding Bootcamps Worldwide
@@ -209,18 +209,18 @@ sections:
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
-    title: Why Students Get Results with Us
-    description: "We don’t just teach skills, we make sure you can turn them into a career. Every 4Geeks student gets:"
+    title: Why Our Graduates Consistently Get Hired
+    description: Strong outcomes come from how we teach, support, and place students into tech roles.
     bullets:
-      - heading: GeekFORCE Career Support (for life)
-        text: Unlimited 1:1 career mentorship, interview training, resume/portfolio coaching, and expert job search strategies.
-      - heading: GeekPAL Mentorship (for life)
-        text: Unlimited coding help from real human mentors for life
-      - heading: AI-Powered Support
-        text: 24/7 personalized coding feedback and career development tools.
-      - heading: 5,000+ Hiring Partners
-        text: A global network of companies that trust and hire 4Geeks graduates.
-    footer: Support that lasts a lifetime, not just through graduation.
+      - heading: GeekFORCE Lifelong Career Support
+        text: Unlimited 1:1 career mentorship, interview prep, and resume and portfolio coaching — designed around today’s AI-driven hiring processes.
+      - heading: GeekPAL Lifelong Technical Mentorship
+        text: Unlimited access to human mentors who help students keep progressing and build real-world confidence.
+      - heading: AI-Powered Learning & Feedback
+        text: 24/7 personalized feedback that helps students learn faster and more effectively.
+      - heading: Global Hiring Partner Network
+        text: Thousands of companies worldwide that actively recruit 4Geeks graduates.
+    footer: Support built for long-term careers — not just first jobs.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
   - type: testimonials
@@ -269,32 +269,6 @@ sections:
         outcome: Promoted in 1 year
     paddingY:
       desktop: none lg
-  - type: two_column
-    proportions:
-      - 5
-      - 7
-    alignment: center
-    left:
-      image: https://4geeksacademy.com/static/48d83e1ce148aa046ad83ad8d2eabc1c/d85f4/miami-people.webp
-      image_alt: Happy businesswoman with laptop
-      justify: center
-    right:
-      heading: The Confidence of a Job Guarantee
-      sub_heading: "We can do this because:"
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
-      button:
-        text: Learn More
-        url: /en/job-guarantee
-        variant: primary
-      bullets:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-      bullets_visible: 1
-      text_align: left
-    gap: "12"
-    marginY:
-      desktop: none md
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
