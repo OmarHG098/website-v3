@@ -38,7 +38,7 @@ import {
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Navbar, type NavbarConfig } from "@/components/menus";
+import { Navbar, type NavbarConfig, EditableDropdownPreview } from "@/components/menus";
 import {
   DndContext,
   closestCenter,
@@ -247,12 +247,35 @@ function SortableMenuItemEditor({
               <Label>Dropdown Type</Label>
               <Select
                 value={item.dropdown?.type || "simple-list"}
-                onValueChange={(value) =>
-                  onUpdate(index, {
-                    ...item,
-                    dropdown: { ...item.dropdown!, type: value },
-                  })
-                }
+                onValueChange={(value) => {
+                  const baseDropdown = {
+                    type: value,
+                    title: item.dropdown?.title || item.label,
+                    description: item.dropdown?.description || "",
+                    icon: item.dropdown?.icon,
+                  };
+                  let newDropdown: any = baseDropdown;
+                  switch (value) {
+                    case "cards":
+                      newDropdown = { ...baseDropdown, items: item.dropdown?.type === "cards" ? (item.dropdown as any).items : [] };
+                      break;
+                    case "simple-list":
+                      newDropdown = { ...baseDropdown, items: item.dropdown?.type === "simple-list" ? (item.dropdown as any).items : [] };
+                      break;
+                    case "columns":
+                      newDropdown = { ...baseDropdown, columns: item.dropdown?.type === "columns" ? (item.dropdown as any).columns : [] };
+                      break;
+                    case "grouped-list":
+                      newDropdown = { 
+                        ...baseDropdown, 
+                        groups: item.dropdown?.type === "grouped-list" 
+                          ? (item.dropdown as any).groups 
+                          : [{ title: "Group 1", items: [] }] 
+                      };
+                      break;
+                  }
+                  onUpdate(index, { ...item, dropdown: newDropdown });
+                }}
                 disabled={item.component !== "Dropdown"}
               >
                 <SelectTrigger data-testid={`select-dropdown-type-${index}`}>
@@ -272,58 +295,18 @@ function SortableMenuItemEditor({
             <div className="border-t pt-4 mt-4">
               <div className="flex items-center gap-2 mb-4">
                 <IconChevronDown className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium text-sm">Dropdown Configuration</span>
+                <span className="font-medium text-sm">Dropdown Preview</span>
+                <span className="text-xs text-muted-foreground">(Click elements to edit)</span>
               </div>
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="space-y-2">
-                  <Label>Title</Label>
-                  <Input
-                    value={item.dropdown.title || ""}
-                    onChange={(e) =>
-                      onUpdate(index, {
-                        ...item,
-                        dropdown: { ...item.dropdown!, title: e.target.value },
-                      })
-                    }
-                    placeholder="Dropdown title"
-                    data-testid={`input-dropdown-title-${index}`}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Description</Label>
-                  <Input
-                    value={item.dropdown.description || ""}
-                    onChange={(e) =>
-                      onUpdate(index, {
-                        ...item,
-                        dropdown: { ...item.dropdown!, description: e.target.value },
-                      })
-                    }
-                    placeholder="Dropdown description"
-                    data-testid={`input-dropdown-description-${index}`}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Icon</Label>
-                  <Input
-                    value={item.dropdown.icon || ""}
-                    onChange={(e) =>
-                      onUpdate(index, {
-                        ...item,
-                        dropdown: { ...item.dropdown!, icon: e.target.value },
-                      })
-                    }
-                    placeholder="icon-name"
-                    data-testid={`input-dropdown-icon-${index}`}
-                  />
-                </div>
-              </div>
-              <div className="p-3 bg-muted/50 rounded-md">
-                <p className="text-xs text-muted-foreground">
-                  For complex dropdown items (cards, columns, groups), edit the YAML file directly for now.
-                  Full visual editing coming soon.
-                </p>
-              </div>
+              <EditableDropdownPreview
+                dropdown={item.dropdown as any}
+                onChange={(updatedDropdown) =>
+                  onUpdate(index, {
+                    ...item,
+                    dropdown: updatedDropdown as any,
+                  })
+                }
+              />
             </div>
           )}
         </CardContent>

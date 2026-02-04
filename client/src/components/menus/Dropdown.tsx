@@ -105,7 +105,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
               key={index}
               href={item.href}
               className="block hover-elevate rounded-lg p-2 -m-2"
-              data-testid={`dropdown-card-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-card-${(item.title || "card").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {IconComponent && (
                 <div className="mb-3 w-12 h-12 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -175,7 +175,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
                   <a
                     href={item.href}
                     className="flex items-center gap-1 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
-                    data-testid={`dropdown-column-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    data-testid={`dropdown-column-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     {item.label}
                     <ChevronRight className="w-3 h-3" />
@@ -219,7 +219,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
             <a
               href={item.href}
               className="flex items-center justify-between px-2 py-2 rounded-md text-sm text-foreground hover-elevate"
-              data-testid={`dropdown-list-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-list-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {item.label}
               <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -266,7 +266,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
                   ? "text-foreground bg-muted toggle-elevated"
                   : "text-muted-foreground"
               }`}
-              data-testid={`dropdown-group-tab-${group.title.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-group-tab-${(group.title || "group").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {group.title}
             </button>
@@ -280,7 +280,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
                 key={index}
                 href={item.href}
                 className="flex items-center gap-1 py-1.5 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
-                data-testid={`dropdown-group-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`dropdown-group-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {item.label}
                 <ChevronRight className="w-3 h-3" />
