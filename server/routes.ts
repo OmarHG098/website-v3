@@ -819,8 +819,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Public sitemap URLs endpoint for menu editor
   app.get("/api/sitemap-urls", (req, res) => {
+    const locale = req.query.locale as string | undefined;
     const urls = getSitemapUrls();
-    res.json(urls);
+    
+    if (locale) {
+      const langPrefixes = ["/en/", "/es/", "/fr/", "/de/", "/pt/", "/it/"];
+      const filteredUrls = urls.filter((entry) => {
+        const path = entry.loc.replace(/^https?:\/\/[^/]+/, "");
+        const matchesLocale = path.startsWith(`/${locale}/`);
+        const isNeutral = !langPrefixes.some((prefix) => path.startsWith(prefix));
+        return matchesLocale || isNeutral;
+      });
+      res.json(filteredUrls);
+    } else {
+      res.json(urls);
+    }
   });
 
   // Clear sitemap cache (requires token validation)
