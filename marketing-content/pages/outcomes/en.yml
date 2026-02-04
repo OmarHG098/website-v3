@@ -211,7 +211,7 @@ sections:
     reverse: true
   - type: testimonials
     version: v1.0
-    title: Real career results
+    title: Real Career Results
     subtitle: Alumni share how they landed roles, advanced their careers, and increased their earning power.
     rating_summary:
       average: "4.9"
