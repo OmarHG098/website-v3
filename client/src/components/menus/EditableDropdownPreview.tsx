@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building } from "lucide-react";
+import { ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building, GripVertical } from "lucide-react";
 import {
   IconPencil,
   IconPlus,
@@ -15,6 +15,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { SitemapSearch } from "./SitemapSearch";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   code: Code,
@@ -371,6 +388,62 @@ function EditableCardItem({
   );
 }
 
+function SortableCardItem({
+  id,
+  item,
+  index,
+  onUpdate,
+  onDelete,
+  isReadOnlyStructure = false,
+  locale = "en",
+}: {
+  id: string;
+  item: CardItem;
+  index: number;
+  onUpdate: (updates: Partial<CardItem>) => void;
+  onDelete: () => void;
+  isReadOnlyStructure?: boolean;
+  locale?: string;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="relative">
+      {!isReadOnlyStructure && (
+        <div
+          {...attributes}
+          {...listeners}
+          className="absolute top-1 left-1 p-1 rounded-md bg-muted/50 text-muted-foreground opacity-0 group-hover/card:opacity-100 hover:bg-muted cursor-grab active:cursor-grabbing z-10"
+          data-testid={`editable-card-${index}-drag-handle`}
+        >
+          <GripVertical className="h-3 w-3" />
+        </div>
+      )}
+      <EditableCardItem
+        item={item}
+        index={index}
+        onUpdate={onUpdate}
+        onDelete={onDelete}
+        isReadOnlyStructure={isReadOnlyStructure}
+        locale={locale}
+      />
+    </div>
+  );
+}
+
 function EditableCardsPreview({ 
   dropdown, 
   onChange,
@@ -383,6 +456,29 @@ function EditableCardsPreview({
   locale?: string;
 }) {
   const items = dropdown.items || [];
+  const itemIds = items.map((_, index) => `card-${index}`);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      const oldIndex = itemIds.indexOf(active.id as string);
+      const newIndex = itemIds.indexOf(over.id as string);
+      const newItems = arrayMove(items, oldIndex, newIndex);
+      onChange({ ...dropdown, items: newItems });
+    }
+  };
 
   const updateItem = (index: number, updates: Partial<CardItem>) => {
     const newItems = [...items];
@@ -427,30 +523,39 @@ function EditableCardsPreview({
         />
       </div>
       
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {items.map((item, index) => (
-          <EditableCardItem
-            key={index}
-            item={item}
-            index={index}
-            onUpdate={(updates) => updateItem(index, updates)}
-            onDelete={() => deleteItem(index)}
-            isReadOnlyStructure={isReadOnlyStructure}
-            locale={locale}
-          />
-        ))}
-        
-        {!isReadOnlyStructure && (
-          <button
-            onClick={addItem}
-            className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[200px]"
-            data-testid="editable-cards-add"
-          >
-            <IconPlus className="h-8 w-8 text-muted-foreground mb-2" />
-            <span className="text-sm text-muted-foreground">Add Card</span>
-          </button>
-        )}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext items={itemIds} strategy={rectSortingStrategy}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {items.map((item, index) => (
+              <SortableCardItem
+                key={`card-${index}`}
+                id={`card-${index}`}
+                item={item}
+                index={index}
+                onUpdate={(updates) => updateItem(index, updates)}
+                onDelete={() => deleteItem(index)}
+                isReadOnlyStructure={isReadOnlyStructure}
+                locale={locale}
+              />
+            ))}
+            
+            {!isReadOnlyStructure && (
+              <button
+                onClick={addItem}
+                className="flex flex-col items-center justify-center rounded-lg p-4 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/5 transition-colors min-h-[200px]"
+                data-testid="editable-cards-add"
+              >
+                <IconPlus className="h-8 w-8 text-muted-foreground mb-2" />
+                <span className="text-sm text-muted-foreground">Add Card</span>
+              </button>
+            )}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }
