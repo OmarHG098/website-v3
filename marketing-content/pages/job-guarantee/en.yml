@@ -147,10 +147,9 @@ sections:
       - icon: IconArrowGuideFilled
         title: Career Cooperation
         description: Follow our career team's guidance
-    footer_description: Join the next generation of AI engineers.
     background: hsl(var(--muted))
     marginY:
-      desktop: none
+      desktop: none md
     paddingY:
       desktop: none
   - type: numbered_steps
