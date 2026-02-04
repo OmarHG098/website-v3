@@ -185,7 +185,7 @@ function SortableMenuItemEditor({
       </CardHeader>
       {isExpanded && (
         <CardContent className="pt-0 pb-4 px-4 space-y-4">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label htmlFor={`label-${index}`}>Label</Label>
               <Input
@@ -242,6 +242,30 @@ function SortableMenuItemEditor({
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-2">
+              <Label>Dropdown Type</Label>
+              <Select
+                value={item.dropdown?.type || "simple-list"}
+                onValueChange={(value) =>
+                  onUpdate(index, {
+                    ...item,
+                    dropdown: { ...item.dropdown!, type: value },
+                  })
+                }
+                disabled={item.component !== "Dropdown"}
+              >
+                <SelectTrigger data-testid={`select-dropdown-type-${index}`}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {dropdownTypes.map((dt) => (
+                    <SelectItem key={dt.value} value={dt.value}>
+                      {dt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           {item.component === "Dropdown" && item.dropdown && (
             <div className="border-t pt-4 mt-4">
@@ -249,29 +273,34 @@ function SortableMenuItemEditor({
                 <IconChevronDown className="h-4 w-4 text-muted-foreground" />
                 <span className="font-medium text-sm">Dropdown Configuration</span>
               </div>
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-3 gap-4 mb-4">
                 <div className="space-y-2">
-                  <Label>Dropdown Type</Label>
-                  <Select
-                    value={item.dropdown.type}
-                    onValueChange={(value) =>
+                  <Label>Title</Label>
+                  <Input
+                    value={item.dropdown.title || ""}
+                    onChange={(e) =>
                       onUpdate(index, {
                         ...item,
-                        dropdown: { ...item.dropdown!, type: value },
+                        dropdown: { ...item.dropdown!, title: e.target.value },
                       })
                     }
-                  >
-                    <SelectTrigger data-testid={`select-dropdown-type-${index}`}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {dropdownTypes.map((dt) => (
-                        <SelectItem key={dt.value} value={dt.value}>
-                          {dt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    placeholder="Dropdown title"
+                    data-testid={`input-dropdown-title-${index}`}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Description</Label>
+                  <Input
+                    value={item.dropdown.description || ""}
+                    onChange={(e) =>
+                      onUpdate(index, {
+                        ...item,
+                        dropdown: { ...item.dropdown!, description: e.target.value },
+                      })
+                    }
+                    placeholder="Dropdown description"
+                    data-testid={`input-dropdown-description-${index}`}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Icon</Label>
@@ -288,35 +317,7 @@ function SortableMenuItemEditor({
                   />
                 </div>
               </div>
-              <div className="space-y-2 mb-4">
-                <Label>Dropdown Title</Label>
-                <Input
-                  value={item.dropdown.title || ""}
-                  onChange={(e) =>
-                    onUpdate(index, {
-                      ...item,
-                      dropdown: { ...item.dropdown!, title: e.target.value },
-                    })
-                  }
-                  placeholder="Dropdown title"
-                  data-testid={`input-dropdown-title-${index}`}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Dropdown Description</Label>
-                <Input
-                  value={item.dropdown.description || ""}
-                  onChange={(e) =>
-                    onUpdate(index, {
-                      ...item,
-                      dropdown: { ...item.dropdown!, description: e.target.value },
-                    })
-                  }
-                  placeholder="Dropdown description"
-                  data-testid={`input-dropdown-description-${index}`}
-                />
-              </div>
-              <div className="mt-4 p-3 bg-muted/50 rounded-md">
+              <div className="p-3 bg-muted/50 rounded-md">
                 <p className="text-xs text-muted-foreground">
                   For complex dropdown items (cards, columns, groups), edit the YAML file directly for now.
                   Full visual editing coming soon.
