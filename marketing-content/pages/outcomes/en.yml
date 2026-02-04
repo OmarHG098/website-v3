@@ -209,6 +209,7 @@ sections:
     footer: Support built for long-term careers — not just first jobs.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
+    reverse: true
   - type: testimonials
     version: v1.0
     title: Real career results
