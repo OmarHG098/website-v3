@@ -5,6 +5,7 @@ const ComponentShowcase = lazy(() => import("@/pages/ComponentShowcase"));
 const ComponentPreview = lazy(() => import("@/pages/ComponentPreview"));
 const ExperimentEditor = lazy(() => import("@/pages/ExperimentEditor"));
 const MediaGallery = lazy(() => import("@/pages/MediaGallery"));
+const MenuEditor = lazy(() => import("@/pages/MenuEditor"));
 const MoleculesShowcase = lazy(() => import("@/pages/MoleculesShowcase"));
 const PrivatePreview = lazy(() => import("@/pages/PrivatePreview"));
 const PrivateRedirects = lazy(() => import("@/pages/PrivateRedirects"));
@@ -35,6 +36,7 @@ export default function PrivateRouter() {
         <Route path="/private/component-showcase/:componentType/preview" component={ComponentPreview} />
         <Route path="/private/redirects" component={PrivateRedirects} />
         <Route path="/private/media-gallery" component={MediaGallery} />
+        <Route path="/private/menu-editor/:menuName" component={MenuEditor} />
         <Route path="/private/molecules-showcase" component={MoleculesShowcase} />
         <Route path="/private/preview/:contentType/:slug" component={PrivatePreview} />
         <Route path="/private/:contentType/:contentSlug/experiment/:experimentSlug" component={ExperimentEditor} />

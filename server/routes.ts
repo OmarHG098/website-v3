@@ -911,6 +911,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Menus API - save a menu file
+  app.post("/api/menus/:name", (req, res) => {
+    const { name } = req.params;
+    const { data } = req.body;
+    
+    if (!data) {
+      res.status(400).json({ error: "Missing data in request body" });
+      return;
+    }
+    
+    const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    
+    // Try both .yml and .yaml extensions to find existing file
+    let filePath = path.join(menusDir, `${name}.yml`);
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${name}.yaml`);
+    }
+    
+    // If neither exists, default to .yml
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${name}.yml`);
+    }
+    
+    try {
+      const yamlContent = yaml.dump(data, {
+        indent: 2,
+        lineWidth: -1,
+        noRefs: true,
+        sortKeys: false,
+      });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+      res.json({ success: true, name });
+    } catch (error) {
+      console.error(`Error saving menu ${name}:`, error);
+      res.status(500).json({ error: "Failed to save menu file" });
+    }
+  });
+
   // Clear redirect cache (for debug tools)
   app.post("/api/debug/clear-redirect-cache", (req, res) => {
     clearRedirectCache();
