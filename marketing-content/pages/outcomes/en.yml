@@ -92,7 +92,7 @@ sections:
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
-    subtitle: Explore the distribution of our students across age group, gender, and nationality. Our community is diverse and global, with students from various countries and backgrounds .
+    subtitle: A snapshot of who our students are by age, gender, and region.
     background: hsl(var(--background))
     charts:
       - title: Age
