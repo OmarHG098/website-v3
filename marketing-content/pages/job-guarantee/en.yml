@@ -159,14 +159,14 @@ sections:
     description: "We've made it simple: if you complete all the required steps, and you don't land a qualifying job within 9 months after graduation, we'll refund 100% of your tuition."
     steps:
       - icon: Optimization
-        text: You were not hired into any qualifying role or relevant employment position within 9 months of graduation.
-        title: Profile Optimization
+        text: Notify us that you weren't hired into any qualifying role within 9 months of graduation.
+        title: Notification
       - icon: Interview
         text: Our team thoroughly verifies that you have successfully completed all Job Guarantee requirements.
-        title: Interview Preparation
+        title: Verification
       - icon: JobSearch
-        text: You will receive your full refund in its entirety within 30 days from the date your refund request is approved.
-        title: Strategic Job Search
+        text: You will receive your full refund within 30 days from the date your request is approved.
+        title: Full Refund
   - type: features_grid
     version: "1.0"
     variant: cardHeader
