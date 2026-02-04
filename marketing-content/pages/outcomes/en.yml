@@ -71,7 +71,7 @@ sections:
       desktop: none md
   - type: stats
     version: "1.0"
-    title: Outcomes by the Numbers
+    title: Career Outcomes by the Numbers
     subtitle: Real results from our graduates across different regions
     background: hsl(210 100% 50% / 0.05)
     items:
@@ -92,7 +92,7 @@ sections:
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
-    subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
+    subtitle: Explore the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
     background: hsl(var(--background))
     charts:
       - title: Age
