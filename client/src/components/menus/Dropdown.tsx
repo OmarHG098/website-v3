@@ -366,14 +366,14 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
             onMouseLeave={handleMouseLeave}
           >
             <div 
-              className={`bg-card border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+              className={`bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
             >
               {renderDropdownContent()}
             </div>
           </div>
         ) : (
           <div 
-            className={`absolute top-full left-0 z-50 mt-1 bg-card border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+            className={`absolute top-full left-0 z-50 mt-1 bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
