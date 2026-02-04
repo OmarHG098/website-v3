@@ -31,8 +31,8 @@ sections:
       - text: Affordable loans.
       - text: Scholarships.
     video:
-      url: /attached_assets/ai-engineering_1765593572918.mp4
-      ratio: "9:16"
+      url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
+      ratio: "5:10"
       muted: true
       loop: true
     form: {}
@@ -47,9 +47,9 @@ sections:
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY:
-      desktop: none md
+      desktop: none lg
     marginY:
-      desktop: none
+      desktop: none md
   - type: syllabus
     title: Launch your tech career, with payment plans that fit your budget
     subtitle: Explore our financing paths — from low monthly payments to income-based plans — and choose the option that works for you.
@@ -65,7 +65,7 @@ sections:
       - title: Scholarships
         description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
     paddingY:
-      desktop: md none
+      desktop: md lg
     background: hsl(210 100% 50% / 0.05)
     marginY:
       desktop: none lg
@@ -81,36 +81,47 @@ sections:
       - name: Loans (Ascent/ Climb)
       - name: Income-Based (Edly)
     rows:
-      - feature: 1:1 Support
+      - feature: Discount
         values:
-          - Unlimited
-          - Limited
-        feature_description: Get personalized guidance whenever you need it
-      - feature: Guarantee
-        values:
-          - "Yes"
+          - 10% off
           - "No"
-        feature_description: Money back if not satisfied
-      - feature: Pricing
+          - "No"
+          - "No"
+      - feature: Credit Check
         values:
-          - Flexible
-          - Fixed
-    footer_note: "* Based on industry research"
+          - "No"
+          - Low Barrier
+          - Required
+          - Required
+      - feature: Defer Payments
+        values:
+          - "No"
+          - "No"
+          - "Yes"
+          - "Yes"
+      - feature: Pay Once Hired
+        values:
+          - "No"
+          - "No"
+          - "No"
+          - "Yes"
     marginY:
       desktop: lg md
+    paddingY:
+      desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
     title: Need extra confidence? Add a Job Guarantee
     subtitle: You will never be alone!
-    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a full tuition refund. The job guarantee can also be financed.
+    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a  full tuition refund. The job guarantee can also be financed.
     cta:
       text: More info here
       url: /signup
       variant: primary
     marginY:
-      desktop: md lg
+      desktop: md
     paddingY:
-      desktop: none md
+      desktop: none sm
   - type: testimonials
     version: v1.0
     title: What Our Students Say
@@ -169,33 +180,10 @@ sections:
       - value: 3-6 Months
         title: Average time to get hired
     marginY:
-      desktop: lg none
+      desktop: lg
     paddingY:
       desktop: none lg
-  - type: testimonials_slide
-    version: "1.0"
-    title: Real Careers Start Here — Just Ask Our Students
-    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
-    testimonials:
-      - name: Loretta Simpson
-        img: /assets/testimonial-1.jpg
-        status: Graduated
-        country:
-          name: United States
-          iso: US
-        contributor: Full Stack Developer
-        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
-        achievement: Hired at top tech company
-      - name: Carlos Martinez
-        img: /assets/testimonial-2.jpg
-        status: Graduated
-        country:
-          name: Spain
-          iso: ES
-        contributor: Software Engineer
-        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
-    paddingY:
-      desktop: none
+    background: hsl(var(--secondary))
   - type: pricing
     version: "1.0"
     variant: product
@@ -231,6 +219,8 @@ sections:
       text: Apply Now
       url: /apply
       variant: primary
+    marginY:
+      desktop: lg none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
@@ -244,3 +234,5 @@ sections:
   - type: footer
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.
+    paddingY:
+      desktop: none md
