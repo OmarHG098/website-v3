@@ -170,18 +170,18 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: cardHeader
-    heading: Why We Have the Confidence to Offer a Job Guarantee
-    description: Our goal is more than teaching skills - we're here to launch successful tech careers. With an industry-aligned curriculum, hands-on teaching methodology and personalized career support, we have a proven track record of preparing students for the tech job market.
+    heading: Why Our Job Guarantee Works
+    description: The Job Guarantee is based on real outcomes and a hiring-focused model. Our programs, teaching approach, and career support are designed around how people actually get hired in today’s tech job market. Over the years, we’ve helped more than 3,500 graduates launch their tech careers across roles and industries.
     image: /attached_assets/comunity-support_1765908983485.png
     image_alt: 4Geeks Academy community support
     background: bg-primary/5
     cards:
       - icon: BriefcaseFilled
-        text: Our program's effectiveness is backed by strong placement rates
+        text: Consistent hiring outcomes across our graduate community
       - icon: BrandStackshare
-        text: The tech industry continues to grow with high demand for talent
+        text: Strong and ongoing demand for skilled tech professionals
       - icon: ChalkboardTeacher
-        text: We believe in our teaching approach and your commitment to succeed
+        text: Structured training paired with hands-on, ongoing career support
   - type: faq
     version: "1.0"
     title: Frequently Asked Questions about the Job Guarantee
