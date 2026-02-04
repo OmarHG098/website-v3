@@ -71,8 +71,8 @@ sections:
       desktop: none md
   - type: stats
     version: "1.0"
-    title: Career Outcomes
-    subtitle: Real results from our graduates across different regions
+    title: Hiring Results Across Regions
+    subtitle: Our graduates get hired and increase their salaries in multiple job markets.
     background: hsl(210 100% 50% / 0.05)
     items:
       - value: 84%
