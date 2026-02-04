@@ -59,7 +59,7 @@ function CellValue({ value, isHighlighted }: { value: string; isHighlighted?: bo
   return <span>{value}</span>;
 }
 
-export function ComparisonTable({ data }: ComparisonTableProps) {
+export function GeeksVsOthersComparison({ data }: ComparisonTableProps) {
   const highlightIndex = data.columns.findIndex(col => col.highlight);
 
   return (
