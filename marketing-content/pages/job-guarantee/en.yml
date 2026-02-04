@@ -26,7 +26,7 @@ sections:
     version: "1.0"
     variant: simpleTwoColumn
     title: Get into tech with our Job Guarantee
-    subtitle: Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.
+    subtitle: Your success is our mission. Get hired within 9 months of graduation, or we'll refund 100% of your tuition. Conditions apply.
     image:
       src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
       alt: Students collaborating in a tech workspace
@@ -37,15 +37,14 @@ sections:
       - text: Download Details
         url: "#syllabus"
         variant: outline
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
     paddingY:
       desktop: lg none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
   - type: graduates_stats
     version: v1.0
     variant: fullBleed
-    heading: Does the Job Guarantee deliver results you can count on?
-    subheading: Yes, and we've got the numbers to back it up. These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. We don't just teach you how to code, we help you build a career you're proud of.
-    image_borderer: true
+    heading: Results That Back Our Job Guarantee
+    subheading: "These numbers reflect real graduates and real hires. Our Job Guarantee is built around one outcome: succesfully launching your tech career."
     stats:
       - value: "84"
         unit: "%"
@@ -88,13 +87,14 @@ sections:
         col_start: 1
         row_start: 3
     background: bg-muted/30
+    image_bordered: true
     paddingY:
       desktop: none
   - type: features_grid
     version: "1.0"
     variant: detailed
-    title: Our Job Guarantee is Available for Our Top Tech Programs
-    subtitle: Choose your career path. Master the skills and get hired.
+    title: Programs Covered by the Job Guarantee
+    subtitle: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
     items:
       - id: fullstack
         category: Full Stack
