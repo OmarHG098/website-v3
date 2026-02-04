@@ -40,6 +40,8 @@ sections:
     background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
     paddingY:
       desktop: lg none
+    marginY:
+      desktop: none md
   - type: graduates_stats
     version: v1.0
     variant: fullBleed
@@ -136,17 +138,13 @@ sections:
         object_position: 50% 25%
     cards:
       - icon: IconBriefcaseFilled
-        title: Work Authorization
-        description: Have U.S. work authorization
+        title: Have U.S. work authorization
       - icon: IconCircleDashedCheck
-        title: Program Completion
-        description: Complete all coursework and projects
+        title: Complete all coursework and projects
       - icon: IconBrain
-        title: Logic Assessment
-        description: Pass our logic test
+        title: Pass our logic test
       - icon: IconArrowGuideFilled
-        title: Job Search Preparation
-        description: Follow our career team's guidance
+        title: Follow our career development process
     background: hsl(var(--muted))
     marginY:
       desktop: none md
