@@ -37,6 +37,9 @@ sections:
       - text: Download Details
         url: "#syllabus"
         variant: outline
+    paddingY:
+      desktop: lg none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
   - type: graduates_stats
     version: v1.0
     variant: fullBleed
@@ -85,6 +88,8 @@ sections:
         col_start: 1
         row_start: 3
     background: bg-muted/30
+    paddingY:
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: detailed
@@ -163,7 +168,6 @@ sections:
       - icon: JobSearch
         text: You will receive your full refund in its entirety within 30 days from the date your refund request is approved.
         title: Strategic Job Search
-    background: bg-background
   - type: features_grid
     version: "1.0"
     variant: cardHeader
