@@ -124,6 +124,8 @@ export const heroProductShowcaseSchema = z.object({
     src: z.string(),
     alt: z.string(),
   }).nullish(),
+  image_id: z.string().optional(),
+  image_width: z.number().optional(),
   // NOTE: Background image is only displayed on screens >= 1280px width.
   // On smaller screens, a gradient fallback is shown instead for better mobile experience.
   background_image: z.object({

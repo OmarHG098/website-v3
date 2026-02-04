@@ -1065,6 +1065,14 @@ export function SectionEditorPanel({
                   
                   const currentValue = getSimpleFieldValue();
                   const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  // For fields ending in _id, look up the actual image URL from the registry
+                  const isIdField = fieldPath.endsWith("_id");
+                  const displaySrc = isIdField 
+                    ? (imageRegistry?.images?.[currentValue]?.src || currentValue)
+                    : currentValue;
+                  const displayLabel = isIdField 
+                    ? currentValue // Show the ID as the label for ID fields
+                    : (currentValue.split("/").pop() || currentValue);
                   
                   return (
                     <div key={fieldPath} className="space-y-2">
@@ -1091,7 +1099,7 @@ export function SectionEditorPanel({
                           {currentValue ? (
                             <>
                               <img
-                                src={currentValue}
+                                src={displaySrc}
                                 alt={fieldLabel}
                                 className="w-full h-full object-cover"
                               />
@@ -1107,7 +1115,7 @@ export function SectionEditorPanel({
                         </button>
                         {currentValue && (
                           <span className="text-xs text-muted-foreground truncate max-w-[150px]">
-                            {currentValue.split("/").pop()}
+                            {displayLabel}
                           </span>
                         )}
                       </div>

@@ -41,9 +41,9 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
         </div>
 
         {/* Content Column (Center) */}
-        <div className="z-10 text-center px-4">
+        <div className="z-10 text-center md:px-4">
           <h1 
-            className="text-h1 mb-6 whitespace-nowrap"
+            className="text-5xl md:text-h1 mb-6 md:whitespace-nowrap"
             data-testid="text-hero-title"
           >
             {data.title}

@@ -129,7 +129,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
             </h3>
 
             <p 
-              className="text-body text-muted-foreground mb-8 leading-relaxed"
+              className="text-body text-muted-foreground mb-8 lg:me-4 leading-relaxed"
               data-testid="text-why-learn-description"
             >
               {data.description}

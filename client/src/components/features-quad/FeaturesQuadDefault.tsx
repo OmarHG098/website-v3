@@ -1,15 +1,15 @@
-import * as TablerIcons from "@tabler/icons-react";
-import type { ComponentType } from "react";
 import type { FeatureQuadSection } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
+import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
+import { getIcon } from "@/lib/icons";
 
 interface FeaturesQuadDefaultProps {
   data: FeatureQuadSection;
 }
 
 function CompactCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
-  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const IconComponent = getIcon(card.icon);
   const hasTitle = !!card.title;
   const hasDescription = !!card.description;
   const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
@@ -29,7 +29,7 @@ function CompactCard({ card, index }: { card: { icon: string; title?: string; de
 }
 
 function FullCard({ card, index }: { card: { icon: string; title?: string; description?: string }; index: number }) {
-  const IconComponent = (TablerIcons as unknown as Record<string, ComponentType<{ className?: string; size?: number }>>)[`Icon${card.icon}`];
+  const IconComponent = getIcon(card.icon);
   const hasTitle = !!card.title;
   const hasDescription = !!card.description;
   const hasOnlyOne = (hasTitle && !hasDescription) || (!hasTitle && hasDescription);
@@ -53,6 +53,8 @@ function FullCard({ card, index }: { card: { icon: string; title?: string; descr
 export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
   const backgroundClass = data.background || "bg-background";
   const images = data.images || [];
+  const hasVideo = !!data.video;
+  const hasMedia = hasVideo || images.length > 0;
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
   const hasHeading = !!data.heading;
@@ -66,6 +68,37 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
     return "secondary";
   };
 
+  const renderMedia = (containerClass: string, testId: string) => {
+    if (hasVideo) {
+      return (
+        <div className={containerClass} data-testid={testId}>
+          <UniversalVideo
+            url={data.video!}
+            ratio={data.video_ratio || "16:9"}
+            preview_image_url={data.video_preview_image}
+          />
+        </div>
+      );
+    }
+    return (
+      <div className={containerClass} data-testid={testId}>
+        {images.slice(0, 4).map((image, index) => (
+          <div key={index} className="flex-1">
+            <UniversalImage
+              id={image.image_id}
+              alt={image.alt || `Image ${index + 1}`}
+              className="w-full h-full rounded-lg"
+              style={{
+                objectFit: image.object_fit || "cover",
+                objectPosition: image.object_position || "top",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <section 
       className={`py-14 ${backgroundClass}`}
@@ -74,24 +107,28 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
       <div className="max-w-6xl mx-auto px-4">
         {/* ===== MOBILE LAYOUT ===== */}
         <div className="md:hidden space-y-4">
-          {/* Images above title - centered when only one text element */}
-          {images.length > 0 && (
+          {/* Media above title - centered when only one text element */}
+          {hasMedia && (
             <div className={`flex ${hasOnlyOne ? "justify-center" : ""}`}>
-              <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20 w-fit" data-testid="img-features-quad-mobile">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="w-10">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full rounded-lg"
-                      style={{
-                        objectFit: image.object_fit || "cover",
-                        objectPosition: image.object_position || "top",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+              {hasVideo ? (
+                renderMedia("w-full max-w-[300px]", "video-features-quad-mobile")
+              ) : (
+                <div className="flex items-stretch gap-2 bg-primary/5 p-2 rounded-card h-20 w-fit" data-testid="img-features-quad-mobile">
+                  {images.slice(0, 4).map((image, index) => (
+                    <div key={index} className="w-10">
+                      <UniversalImage
+                        id={image.image_id}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-full rounded-lg"
+                        style={{
+                          objectFit: image.object_fit || "cover",
+                          objectPosition: image.object_position || "top",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           {/* Title and description */}
@@ -132,8 +169,8 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== TABLET LAYOUT ===== */}
         <div className="hidden md:block lg:hidden space-y-8">
-          <div className={`flex gap-6 items-stretch ${hasOnlyOne && images.length === 0 ? "justify-center" : ""}`}>
-            <div className={`flex-1 ${textAlign} ${hasOnlyOne && images.length === 0 ? "flex-initial" : ""}`}>
+          <div className={`flex gap-6 items-stretch ${hasOnlyOne && !hasMedia ? "justify-center" : ""}`}>
+            <div className={`flex-1 ${textAlign} ${hasOnlyOne && !hasMedia ? "flex-initial" : ""}`}>
               {hasHeading && (
                 <h2 className="text-3xl font-bold text-foreground mb-3" data-testid="text-features-quad-heading-tablet">
                   {data.heading}
@@ -153,22 +190,26 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
                 </Button>
               )}
             </div>
-            {images.length > 0 && (
-              <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[300px] h-32" data-testid="img-features-quad-tablet">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="flex-1">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full rounded-lg"
-                      style={{
-                        objectFit: image.object_fit || "cover",
-                        objectPosition: image.object_position || "top",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+            {hasMedia && (
+              hasVideo ? (
+                renderMedia("w-[300px]", "video-features-quad-tablet")
+              ) : (
+                <div className="flex items-stretch gap-3 bg-primary/5 p-3 rounded-card w-[300px] h-32" data-testid="img-features-quad-tablet">
+                  {images.slice(0, 4).map((image, index) => (
+                    <div key={index} className="flex-1">
+                      <UniversalImage
+                        id={image.image_id}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-full rounded-lg"
+                        style={{
+                          objectFit: image.object_fit || "cover",
+                          objectPosition: image.object_position || "top",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </div>
           <div className="grid grid-cols-2 gap-4" data-testid="cards-features-quad-tablet">
@@ -183,8 +224,8 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
 
         {/* ===== DESKTOP LAYOUT ===== */}
         <div className="hidden lg:block space-y-8">
-          <div className={`flex gap-8 items-stretch ${hasOnlyOne && images.length === 0 ? "justify-center" : ""}`}>
-            <div className={`flex-1 ${textAlign} ${hasOnlyOne && images.length === 0 ? "flex-initial" : ""}`}>
+          <div className={`flex gap-8 items-stretch ${hasOnlyOne && !hasMedia ? "justify-center" : ""}`}>
+            <div className={`flex-1 ${textAlign} ${hasOnlyOne && !hasMedia ? "flex-initial" : ""}`}>
               {hasHeading && (
                 <h2 className="text-4xl font-bold text-foreground mb-4" data-testid="text-features-quad-heading-desktop">
                   {data.heading}
@@ -204,22 +245,26 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
                 </Button>
               )}
             </div>
-            {images.length > 0 && (
-              <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[370px] h-36" data-testid="img-features-quad-desktop">
-                {images.slice(0, 4).map((image, index) => (
-                  <div key={index} className="flex-1">
-                    <UniversalImage
-                      id={image.image_id}
-                      alt={image.alt || `Image ${index + 1}`}
-                      className="w-full h-full rounded-lg"
-                      style={{
-                        objectFit: image.object_fit || "cover",
-                        objectPosition: image.object_position || "top",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+            {hasMedia && (
+              hasVideo ? (
+                renderMedia("w-[370px]", "video-features-quad-desktop")
+              ) : (
+                <div className="flex items-stretch gap-4 bg-primary/5 p-4 rounded-card w-[370px] h-36" data-testid="img-features-quad-desktop">
+                  {images.slice(0, 4).map((image, index) => (
+                    <div key={index} className="flex-1">
+                      <UniversalImage
+                        id={image.image_id}
+                        alt={image.alt || `Image ${index + 1}`}
+                        className="w-full h-full rounded-lg"
+                        style={{
+                          objectFit: image.object_fit || "cover",
+                          objectPosition: image.object_position || "top",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </div>
           <div className="grid grid-cols-2 gap-6" data-testid="cards-features-quad-desktop">

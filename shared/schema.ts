@@ -607,6 +607,7 @@ export const humanAndAIDuoSectionSchema = z.object({
   // Video option - when provided, replaces images with video
   video: z.string().optional(),
   video_preview_image: z.string().optional(),
+  video_ratio: z.string().optional(),
 });
 
 export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
@@ -785,6 +786,10 @@ export const featureQuadSectionSchema = z.object({
   cards: z.array(featureQuadCardSchema),
   footer_description: z.string().optional(),
   background: z.string().optional(),
+  // Video option - when provided, replaces images with video
+  video: z.string().optional(),
+  video_preview_image: z.string().optional(),
+  video_ratio: z.string().optional(),
 });
 
 export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;

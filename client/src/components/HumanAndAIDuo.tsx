@@ -62,6 +62,7 @@ interface HumanAndAIDuoData {
   // Video option - when provided, replaces images with video
   video?: string;
   video_preview_image?: string;
+  video_ratio?: string;
 }
 
 interface HumanAndAIDuoProps {
@@ -96,7 +97,7 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
           <div className={`max-w-[400px] ${containerClass}`} data-testid={testId}>
             <UniversalVideo
               url={data.video!}
-              ratio="2.39:1"
+              ratio={data.video_ratio || "2.39:1"}
               preview_image_url={data.video_preview_image}
             />
           </div>

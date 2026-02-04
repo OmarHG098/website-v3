@@ -130,7 +130,7 @@ sections:
       - 6
     alignment: center
     left:
-      video: 4n-ZAUPIxJI
+      video: https://youtu.be/4n-ZAUPIxJI
     right:
       heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
       sub_heading: Watch how our platform transforms careers
@@ -169,6 +169,8 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: hsl(210 100% 50% / 0.05)
+    video: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    video_preview_image: https://4geeksacademy.com/images/landing/ai-mentor.jpg
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
@@ -202,27 +204,10 @@ sections:
         - text: Our career support never expires
     background: hsl(var(--secondary))
   - type: testimonials_slide
-    version: "1.0"
     title: Real Careers Start Here — Just Ask Our Students
-    description: Our grads are in high demand, with over 84% hired within six months of finishing the program.
-    testimonials:
-      - name: Loretta Simpson
-        img: /assets/testimonial-1.jpg
-        status: Graduated
-        country:
-          name: United States
-          iso: US
-        contributor: Full Stack Developer
-        description: The career support was incredible. Within 3 months of graduating, I landed my dream job at a tech startup.
-        achievement: Hired at top tech company
-      - name: Carlos Martinez
-        img: /assets/testimonial-2.jpg
-        status: Graduated
-        country:
-          name: Spain
-          iso: ES
-        contributor: Software Engineer
-        description: 4Geeks gave me the skills and confidence to transition from marketing to software development.
+    description: Hear from graduates who turned their aspirations into thriving tech careers through our programs. With unlimited support and real-world projects, their success stories could be yours too.
+    background: bg-sidebar
+    variant: default
   - type: why_learn_ai
     variant: laptop-edge
     title: Why Miami Is a Smart Place to Launch Your Tech Career
