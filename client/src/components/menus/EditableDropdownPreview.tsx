@@ -421,15 +421,15 @@ function SortableCardItem({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="relative">
+    <div ref={setNodeRef} style={style} className="group/card relative">
       {!isReadOnlyStructure && (
         <div
           {...attributes}
           {...listeners}
-          className="absolute top-1 left-1 p-1 rounded-md bg-muted/50 text-muted-foreground opacity-0 group-hover/card:opacity-100 hover:bg-muted cursor-grab active:cursor-grabbing z-10"
+          className="absolute top-4 left-4 p-1 rounded-md bg-background/80 border border-border text-muted-foreground opacity-0 group-hover/card:opacity-100 hover:bg-muted cursor-grab active:cursor-grabbing z-10"
           data-testid={`editable-card-${index}-drag-handle`}
         >
-          <GripVertical className="h-3 w-3" />
+          <GripVertical className="h-4 w-4" />
         </div>
       )}
       <EditableCardItem
