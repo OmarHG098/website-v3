@@ -345,7 +345,7 @@ function EditableCardItem({
         </button>
       )}
       
-      <div className="mb-3 ml-8">
+      <div className="mb-3 transition-all duration-200 group-hover/card:ml-8">
         <EditableIcon
           value={item.icon}
           onChange={(icon) => onUpdate({ icon })}
