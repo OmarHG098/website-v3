@@ -138,14 +138,14 @@ sections:
       - icon: IconBriefcaseFilled
         title: Work Authorization
         description: Have U.S. work authorization
-      - icon: IconBrain
-        title: Logic Assessment
-        description: Pass our logic test
       - icon: IconCircleDashedCheck
         title: Program Completion
         description: Complete all coursework and projects
+      - icon: IconBrain
+        title: Logic Assessment
+        description: Pass our logic test
       - icon: IconArrowGuideFilled
-        title: Career Cooperation
+        title: Job Search Preparation
         description: Follow our career team's guidance
     background: hsl(var(--muted))
     marginY:
