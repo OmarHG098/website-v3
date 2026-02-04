@@ -33,9 +33,11 @@ import {
   IconMenu2,
   IconLink,
   IconCode,
+  IconEye,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { Navbar, type NavbarConfig } from "@/components/menus";
 
 interface MenuItemData {
   label: string;
@@ -442,7 +444,21 @@ export default function MenuEditor() {
       </header>
 
       <main className="container mx-auto px-4 py-6">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+          <Card className="mb-6">
+            <CardHeader className="py-3 px-4">
+              <div className="flex items-center gap-2">
+                <IconEye className="h-4 w-4 text-primary" />
+                <CardTitle className="text-sm font-medium">Live Preview</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="py-4 px-6 bg-background border-t">
+              <div className="flex justify-center">
+                <Navbar config={menuData as NavbarConfig} />
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-muted-foreground">
               Menu Items ({menuData.navbar.items.length})
