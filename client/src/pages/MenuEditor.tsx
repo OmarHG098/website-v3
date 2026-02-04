@@ -1,11 +1,13 @@
 import { useParams, useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import yaml from "js-yaml";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -22,6 +24,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
   IconArrowLeft,
   IconDeviceFloppy,
   IconRefresh,
@@ -35,6 +43,7 @@ import {
   IconCode,
   IconEye,
   IconExternalLink,
+  IconFileCode,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -99,6 +108,7 @@ interface MenuData {
 interface MenuResponse {
   name: string;
   data: MenuData;
+  rawYaml?: string;
 }
 
 const componentOptions = [
@@ -200,13 +210,13 @@ function SortableMenuItemEditor({
             <div className="space-y-2">
               <Label htmlFor={`href-${index}`}>URL</Label>
               <div className="relative">
-                <IconLink className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <IconLink className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id={`href-${index}`}
                   value={item.href}
                   onChange={(e) => onUpdate(index, { ...item, href: e.target.value })}
                   placeholder="/page-url"
-                  className="pl-9"
+                  className="pl-8"
                   data-testid={`input-href-${index}`}
                 />
               </div>
@@ -223,6 +233,8 @@ function SortableMenuItemEditor({
                       title: item.label,
                       description: "",
                       items: [],
+                      columns: [],
+                      groups: [],
                     };
                   }
                   onUpdate(index, updatedItem);
@@ -248,33 +260,18 @@ function SortableMenuItemEditor({
               <Select
                 value={item.dropdown?.type || "simple-list"}
                 onValueChange={(value) => {
-                  const baseDropdown = {
-                    type: value,
-                    title: item.dropdown?.title || item.label,
-                    description: item.dropdown?.description || "",
-                    icon: item.dropdown?.icon,
+                  const currentDropdown = item.dropdown || {
+                    type: "simple-list",
+                    title: item.label,
+                    description: "",
+                    items: [],
+                    columns: [],
+                    groups: [],
                   };
-                  let newDropdown: any = baseDropdown;
-                  switch (value) {
-                    case "cards":
-                      newDropdown = { ...baseDropdown, items: item.dropdown?.type === "cards" ? (item.dropdown as any).items : [] };
-                      break;
-                    case "simple-list":
-                      newDropdown = { ...baseDropdown, items: item.dropdown?.type === "simple-list" ? (item.dropdown as any).items : [] };
-                      break;
-                    case "columns":
-                      newDropdown = { ...baseDropdown, columns: item.dropdown?.type === "columns" ? (item.dropdown as any).columns : [] };
-                      break;
-                    case "grouped-list":
-                      newDropdown = { 
-                        ...baseDropdown, 
-                        groups: item.dropdown?.type === "grouped-list" 
-                          ? (item.dropdown as any).groups 
-                          : [{ title: "Group 1", items: [] }] 
-                      };
-                      break;
-                  }
-                  onUpdate(index, { ...item, dropdown: newDropdown });
+                  onUpdate(index, {
+                    ...item,
+                    dropdown: { ...currentDropdown, type: value },
+                  });
                 }}
                 disabled={item.component !== "Dropdown"}
               >
@@ -321,11 +318,41 @@ export default function MenuEditor() {
   const { toast } = useToast();
   const menuName = params.menuName || "";
 
-  const [menuData, setMenuData] = useState<MenuData | null>(null);
+  const [yamlSource, setYamlSource] = useState<string>("");
+  const [yamlError, setYamlError] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
   const [hasChanges, setHasChanges] = useState(false);
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
   const [previewRedirectUrl, setPreviewRedirectUrl] = useState<string | null>(null);
+  const [showSourceSidebar, setShowSourceSidebar] = useState(false);
+  const [originalYaml, setOriginalYaml] = useState<string>("");
+
+  const menuData = useMemo<MenuData | null>(() => {
+    if (!yamlSource) return null;
+    try {
+      const parsed = yaml.load(yamlSource) as MenuData;
+      setYamlError(null);
+      return parsed;
+    } catch (e) {
+      setYamlError(e instanceof Error ? e.message : "Invalid YAML");
+      return null;
+    }
+  }, [yamlSource]);
+
+  const updateYamlFromData = useCallback((newData: MenuData) => {
+    try {
+      const newYaml = yaml.dump(newData, {
+        indent: 2,
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      setYamlSource(newYaml);
+      setHasChanges(true);
+    } catch (e) {
+      console.error("Failed to serialize YAML:", e);
+    }
+  }, []);
 
   const handlePreviewClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -347,19 +374,28 @@ export default function MenuEditor() {
 
   useEffect(() => {
     if (data?.data) {
-      setMenuData(data.data);
+      const initialYaml = yaml.dump(data.data, {
+        indent: 2,
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+      });
+      setYamlSource(initialYaml);
+      setOriginalYaml(initialYaml);
       setHasChanges(false);
     }
   }, [data]);
 
   const saveMutation = useMutation({
-    mutationFn: async (updatedData: MenuData) => {
-      return apiRequest("POST", `/api/menus/${menuName}`, { data: updatedData });
+    mutationFn: async (yamlContent: string) => {
+      const parsedData = yaml.load(yamlContent) as MenuData;
+      return apiRequest("POST", `/api/menus/${menuName}`, { data: parsedData });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/menus", menuName] });
       queryClient.invalidateQueries({ queryKey: ["/api/menus"] });
       queryClient.refetchQueries({ queryKey: ["/api/menus", menuName] });
+      setOriginalYaml(yamlSource);
       setHasChanges(false);
       toast({
         title: "Menu saved",
@@ -379,15 +415,13 @@ export default function MenuEditor() {
     if (!menuData) return;
     const newItems = [...menuData.navbar.items];
     newItems[index] = updatedItem;
-    setMenuData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
-    setHasChanges(true);
+    updateYamlFromData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
   };
 
   const handleDeleteItem = (index: number) => {
     if (!menuData) return;
     const newItems = menuData.navbar.items.filter((_, i) => i !== index);
-    setMenuData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
-    setHasChanges(true);
+    updateYamlFromData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
     setConfirmDeleteIndex(null);
   };
 
@@ -399,14 +433,18 @@ export default function MenuEditor() {
       component: "SimpleLink",
     };
     const newItems = [...menuData.navbar.items, newItem];
-    setMenuData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
+    updateYamlFromData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
     setExpandedItems(new Set([...Array.from(expandedItems), newItems.length - 1]));
-    setHasChanges(true);
   };
 
   const handleSave = () => {
-    if (!menuData) return;
-    saveMutation.mutate(menuData);
+    if (!yamlSource || yamlError) return;
+    saveMutation.mutate(yamlSource);
+  };
+
+  const handleYamlEdit = (newYaml: string) => {
+    setYamlSource(newYaml);
+    setHasChanges(newYaml !== originalYaml);
   };
 
   const toggleExpand = (index: number) => {
@@ -435,8 +473,7 @@ export default function MenuEditor() {
 
     if (oldIndex !== -1 && newIndex !== -1) {
       const newItems = arrayMove(menuData.navbar.items, oldIndex, newIndex);
-      setMenuData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
-      setHasChanges(true);
+      updateYamlFromData({ ...menuData, navbar: { ...menuData.navbar, items: newItems } });
     }
   };
 
@@ -448,7 +485,7 @@ export default function MenuEditor() {
     );
   }
 
-  if (error || !menuData) {
+  if (error || (!menuData && !yamlError)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -489,8 +526,16 @@ export default function MenuEditor() {
               </span>
             )}
             <Button
+              variant="outline"
+              onClick={() => setShowSourceSidebar(true)}
+              data-testid="button-view-source"
+            >
+              <IconFileCode className="h-4 w-4 mr-2" />
+              View Source
+            </Button>
+            <Button
               onClick={handleSave}
-              disabled={!hasChanges || saveMutation.isPending}
+              disabled={!hasChanges || saveMutation.isPending || !!yamlError}
               data-testid="button-save-menu"
             >
               {saveMutation.isPending ? (
@@ -506,75 +551,119 @@ export default function MenuEditor() {
 
       <main className="container mx-auto px-4 py-6">
         <div className="max-w-5xl mx-auto">
-          <Card className="mb-6">
-            <CardHeader className="py-3 px-4">
-              <div className="flex items-center gap-2">
-                <IconEye className="h-4 w-4 text-primary" />
-                <CardTitle className="text-sm font-medium">Live Preview</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="py-4 px-6 bg-background border-t">
-              <div 
-                className="flex justify-center"
-                onClick={handlePreviewClick}
-              >
-                <Navbar config={menuData as NavbarConfig} />
-              </div>
-            </CardContent>
-          </Card>
+          {yamlError && (
+            <Card className="mb-6 border-destructive">
+              <CardContent className="py-4">
+                <div className="flex items-center gap-2 text-destructive">
+                  <IconCode className="h-5 w-5" />
+                  <span className="font-medium">YAML Error</span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2 font-mono">{yamlError}</p>
+              </CardContent>
+            </Card>
+          )}
 
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-medium text-muted-foreground">
-              Menu Items ({menuData.navbar.items.length})
-            </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleAddItem}
-              data-testid="button-add-item"
-            >
-              <IconPlus className="h-4 w-4 mr-2" />
-              Add Item
-            </Button>
-          </div>
+          {menuData && (
+            <>
+              <Card className="mb-6">
+                <CardHeader className="py-3 px-4">
+                  <div className="flex items-center gap-2">
+                    <IconEye className="h-4 w-4 text-primary" />
+                    <CardTitle className="text-sm font-medium">Live Preview</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="py-4 px-6 bg-background border-t">
+                  <div 
+                    className="flex justify-center"
+                    onClick={handlePreviewClick}
+                  >
+                    <Navbar config={menuData as NavbarConfig} />
+                  </div>
+                </CardContent>
+              </Card>
 
-          <ScrollArea className="h-[calc(100vh-200px)]">
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={menuData.navbar.items.map((_, i) => `item-${i}`)}
-                strategy={verticalListSortingStrategy}
-              >
-                {menuData.navbar.items.map((item, index) => (
-                  <SortableMenuItemEditor
-                    key={`item-${index}`}
-                    id={`item-${index}`}
-                    item={item}
-                    index={index}
-                    onUpdate={handleUpdateItem}
-                    onDelete={(idx) => setConfirmDeleteIndex(idx)}
-                    isExpanded={expandedItems.has(index)}
-                    onToggleExpand={toggleExpand}
-                  />
-                ))}
-              </SortableContext>
-            </DndContext>
-            {menuData.navbar.items.length === 0 && (
-              <div className="text-center py-12">
-                <IconMenu2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground mb-4">No menu items yet</p>
-                <Button onClick={handleAddItem} data-testid="button-add-first-item">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-medium text-muted-foreground">
+                  Menu Items ({menuData.navbar.items.length})
+                </h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAddItem}
+                  data-testid="button-add-item"
+                >
                   <IconPlus className="h-4 w-4 mr-2" />
-                  Add First Item
+                  Add Item
                 </Button>
               </div>
-            )}
-          </ScrollArea>
+
+              <ScrollArea className="h-[calc(100vh-200px)]">
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={handleDragEnd}
+                >
+                  <SortableContext
+                    items={menuData.navbar.items.map((_, i) => `item-${i}`)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {menuData.navbar.items.map((item, index) => (
+                      <SortableMenuItemEditor
+                        key={`item-${index}`}
+                        id={`item-${index}`}
+                        item={item}
+                        index={index}
+                        onUpdate={handleUpdateItem}
+                        onDelete={(idx) => setConfirmDeleteIndex(idx)}
+                        isExpanded={expandedItems.has(index)}
+                        onToggleExpand={toggleExpand}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+                {menuData.navbar.items.length === 0 && (
+                  <div className="text-center py-12">
+                    <IconMenu2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <p className="text-muted-foreground mb-4">No menu items yet</p>
+                    <Button onClick={handleAddItem} data-testid="button-add-first-item">
+                      <IconPlus className="h-4 w-4 mr-2" />
+                      Add First Item
+                    </Button>
+                  </div>
+                )}
+              </ScrollArea>
+            </>
+          )}
         </div>
       </main>
+
+      <Sheet open={showSourceSidebar} onOpenChange={setShowSourceSidebar}>
+        <SheetContent className="w-[600px] sm:max-w-[600px] flex flex-col">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <IconFileCode className="h-5 w-5 text-primary" />
+              YAML Source
+            </SheetTitle>
+          </SheetHeader>
+          <div className="flex-1 mt-4 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">
+                Edit YAML directly - changes sync to visual editor
+              </span>
+              {yamlError && (
+                <span className="text-xs text-destructive">Invalid YAML</span>
+              )}
+            </div>
+            <Textarea
+              value={yamlSource}
+              onChange={(e) => handleYamlEdit(e.target.value)}
+              className="flex-1 font-mono text-sm resize-none"
+              placeholder="YAML content..."
+              data-testid="textarea-yaml-source"
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <Dialog open={confirmDeleteIndex !== null} onOpenChange={() => setConfirmDeleteIndex(null)}>
         <DialogContent>
