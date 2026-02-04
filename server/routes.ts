@@ -817,6 +817,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(urls);
   });
 
+  // Public sitemap URLs endpoint for menu editor
+  app.get("/api/sitemap-urls", (req, res) => {
+    const urls = getSitemapUrls();
+    res.json(urls);
+  });
+
   // Clear sitemap cache (requires token validation)
   app.post("/api/debug/clear-sitemap-cache", async (req, res) => {
     try {
