@@ -134,6 +134,7 @@ function SortableMenuItemEditor({
   isExpanded,
   onToggleExpand,
   isReadOnlyStructure = false,
+  locale = "en",
 }: {
   id: string;
   item: MenuItemData;
@@ -143,6 +144,7 @@ function SortableMenuItemEditor({
   isExpanded: boolean;
   onToggleExpand: (index: number) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   const {
     attributes,
@@ -315,6 +317,7 @@ function SortableMenuItemEditor({
                   })
                 }
                 isReadOnlyStructure={isReadOnlyStructure}
+                locale={locale}
               />
             </div>
           )}
@@ -694,6 +697,7 @@ export default function MenuEditor() {
                         isExpanded={expandedItems.has(index)}
                         onToggleExpand={toggleExpand}
                         isReadOnlyStructure={!isEnglish}
+                        locale={locale}
                       />
                     ))}
                   </SortableContext>

@@ -100,9 +100,10 @@ interface EditableLinkItemProps {
   onDelete: () => void;
   testIdPrefix: string;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }
 
-function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, testIdPrefix, isReadOnlyStructure = false }: EditableLinkItemProps) {
+function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, testIdPrefix, isReadOnlyStructure = false, locale = "en" }: EditableLinkItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempLabel, setTempLabel] = useState(label);
   const [tempHref, setTempHref] = useState(href);
@@ -152,6 +153,7 @@ function EditableLinkItem({ label, href, onLabelChange, onHrefChange, onDelete, 
               <SitemapSearch
                 value={tempHref}
                 onChange={(url) => setTempHref(url)}
+                locale={locale}
                 testId={`${testIdPrefix}-href`}
               />
             </div>
@@ -296,6 +298,7 @@ interface EditableDropdownPreviewProps {
   dropdown: DropdownData;
   onChange: (dropdown: DropdownData) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }
 
 function EditableCardItem({
@@ -304,12 +307,14 @@ function EditableCardItem({
   onUpdate,
   onDelete,
   isReadOnlyStructure = false,
+  locale = "en",
 }: {
   item: CardItem;
   index: number;
   onUpdate: (updates: Partial<CardItem>) => void;
   onDelete: () => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   return (
     <div className="group/card relative block rounded-lg p-3 border border-transparent hover:border-border">
@@ -359,6 +364,7 @@ function EditableCardItem({
           value={item.href}
           onChange={(href) => onUpdate({ href })}
           testId={`editable-card-${index}-href`}
+          locale={locale}
         />
       </div>
     </div>
@@ -368,11 +374,13 @@ function EditableCardItem({
 function EditableCardsPreview({ 
   dropdown, 
   onChange,
-  isReadOnlyStructure = false
+  isReadOnlyStructure = false,
+  locale = "en",
 }: { 
   dropdown: CardsDropdownData; 
   onChange: (dropdown: CardsDropdownData) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   const items = dropdown.items || [];
 
@@ -428,6 +436,7 @@ function EditableCardsPreview({
             onUpdate={(updates) => updateItem(index, updates)}
             onDelete={() => deleteItem(index)}
             isReadOnlyStructure={isReadOnlyStructure}
+            locale={locale}
           />
         ))}
         
@@ -450,10 +459,12 @@ function EditableSimpleListPreview({
   dropdown,
   onChange,
   isReadOnlyStructure = false,
+  locale = "en",
 }: {
   dropdown: SimpleListDropdownData;
   onChange: (dropdown: SimpleListDropdownData) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   const items = dropdown.items || [];
 
@@ -512,6 +523,7 @@ function EditableSimpleListPreview({
               onDelete={() => deleteItem(index)}
               testIdPrefix={`editable-simple-list-item-${index}`}
               isReadOnlyStructure={isReadOnlyStructure}
+              locale={locale}
             />
           </li>
         ))}
@@ -535,10 +547,12 @@ function EditableColumnsPreview({
   dropdown,
   onChange,
   isReadOnlyStructure = false,
+  locale = "en",
 }: {
   dropdown: ColumnsDropdownData;
   onChange: (dropdown: ColumnsDropdownData) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   const columns = dropdown.columns || [];
 
@@ -648,6 +662,7 @@ function EditableColumnsPreview({
                     onDelete={() => deleteColumnItem(colIndex, itemIndex)}
                     testIdPrefix={`editable-column-${colIndex}-item-${itemIndex}`}
                     isReadOnlyStructure={isReadOnlyStructure}
+                    locale={locale}
                   />
                 </li>
               ))}
@@ -686,10 +701,12 @@ function EditableGroupedListPreview({
   dropdown,
   onChange,
   isReadOnlyStructure = false,
+  locale = "en",
 }: {
   dropdown: GroupedListDropdownData;
   onChange: (dropdown: GroupedListDropdownData) => void;
   isReadOnlyStructure?: boolean;
+  locale?: string;
 }) {
   const groups = dropdown.groups || [];
   const [activeGroup, setActiveGroup] = useState(0);
@@ -825,6 +842,7 @@ function EditableGroupedListPreview({
                   onDelete={() => deleteGroupItem(activeGroup, index)}
                   testIdPrefix={`editable-group-${activeGroup}-item-${index}`}
                   isReadOnlyStructure={isReadOnlyStructure}
+                  locale={locale}
                 />
               ))}
               {!isReadOnlyStructure && (
@@ -849,7 +867,7 @@ function EditableGroupedListPreview({
   );
 }
 
-export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructure = false }: EditableDropdownPreviewProps) {
+export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructure = false, locale = "en" }: EditableDropdownPreviewProps) {
   switch (dropdown.type) {
     case "cards":
       return (
@@ -857,6 +875,7 @@ export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructur
           dropdown={dropdown}
           onChange={onChange as (d: CardsDropdownData) => void}
           isReadOnlyStructure={isReadOnlyStructure}
+          locale={locale}
         />
       );
     case "simple-list":
@@ -865,6 +884,7 @@ export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructur
           dropdown={dropdown}
           onChange={onChange as (d: SimpleListDropdownData) => void}
           isReadOnlyStructure={isReadOnlyStructure}
+          locale={locale}
         />
       );
     case "columns":
@@ -873,6 +893,7 @@ export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructur
           dropdown={dropdown}
           onChange={onChange as (d: ColumnsDropdownData) => void}
           isReadOnlyStructure={isReadOnlyStructure}
+          locale={locale}
         />
       );
     case "grouped-list":
@@ -881,6 +902,7 @@ export function EditableDropdownPreview({ dropdown, onChange, isReadOnlyStructur
           dropdown={dropdown}
           onChange={onChange as (d: GroupedListDropdownData) => void}
           isReadOnlyStructure={isReadOnlyStructure}
+          locale={locale}
         />
       );
     default:

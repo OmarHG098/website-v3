@@ -30,9 +30,19 @@ interface SitemapSearchProps {
   onChange: (value: string) => void;
   placeholder?: string;
   testId?: string;
+  locale?: string;
 }
 
-export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId }: SitemapSearchProps) {
+function isLanguageNeutralPath(path: string): boolean {
+  const langPrefixes = ["/en/", "/es/", "/fr/", "/de/", "/pt/", "/it/"];
+  return !langPrefixes.some((prefix) => path.startsWith(prefix));
+}
+
+function matchesLocale(path: string, locale: string): boolean {
+  return path.startsWith(`/${locale}/`);
+}
+
+export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId, locale = "en" }: SitemapSearchProps) {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCustomMode, setIsCustomMode] = useState(false);
@@ -46,15 +56,22 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
     queryKey: ["/api/sitemap-urls"],
   });
 
+  const localeFilteredUrls = useMemo(() => {
+    return sitemapUrls.filter((entry) => {
+      const path = extractPath(entry.loc);
+      return matchesLocale(path, locale) || isLanguageNeutralPath(path);
+    });
+  }, [sitemapUrls, locale]);
+
   const filteredUrls = useMemo(() => {
-    if (!searchQuery.trim()) return sitemapUrls;
+    if (!searchQuery.trim()) return localeFilteredUrls;
     const query = searchQuery.toLowerCase();
-    return sitemapUrls.filter(
+    return localeFilteredUrls.filter(
       (entry) =>
         entry.loc.toLowerCase().includes(query) ||
         entry.label.toLowerCase().includes(query)
     );
-  }, [sitemapUrls, searchQuery]);
+  }, [localeFilteredUrls, searchQuery]);
 
   const isCurrentValueInSitemap = useMemo(() => {
     return sitemapUrls.some((entry) => extractPath(entry.loc) === value);
