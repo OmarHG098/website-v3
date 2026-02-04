@@ -244,3 +244,5 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
     </section>
   );
 }
+
+export { ComparisonTable as GeeksVsOthersComparison };

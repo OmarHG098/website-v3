@@ -173,7 +173,7 @@ const CTABannerSection = lazy(() => import("./CTABannerSection").then(m => ({ de
 const ProjectShowcase = lazy(() => import("@/components/ProjectShowcase").then(m => ({ default: m.ProjectShowcase })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const ComparisonTable = lazy(() => import("@/components/ComparisonTable").then(m => ({ default: m.ComparisonTable })));
-const GeeksVsOthersComparison = lazy(() => import("@/components/GeeksVsOthersComparison").then(m => ({ default: m.GeeksVsOthersComparison })));
+const GeeksVsOthersComparison = lazy(() => import("@/components/ComparisonTable").then(m => ({ default: m.GeeksVsOthersComparison })));
 const AwardsRow = lazy(() => import("@/components/AwardsRow"));
 const HorizontalBars = lazy(() => import("@/components/HorizontalBars").then(m => ({ default: m.HorizontalBars })));
 const VerticalBarsCards = lazy(() => import("@/components/VerticalBarsCards").then(m => ({ default: m.VerticalBarsCards })));
