@@ -16,6 +16,15 @@ interface SitemapEntry {
   label: string;
 }
 
+function extractPath(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname;
+  } catch {
+    return url;
+  }
+}
+
 interface SitemapSearchProps {
   value: string;
   onChange: (value: string) => void;
@@ -48,7 +57,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
   }, [sitemapUrls, searchQuery]);
 
   const isCurrentValueInSitemap = useMemo(() => {
-    return sitemapUrls.some((entry) => entry.loc === value);
+    return sitemapUrls.some((entry) => extractPath(entry.loc) === value);
   }, [sitemapUrls, value]);
 
   const handleSelect = (url: string) => {
@@ -152,10 +161,10 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                   {filteredUrls.map((entry, index) => (
                     <button
                       key={entry.loc}
-                      onClick={() => handleSelect(entry.loc)}
+                      onClick={() => handleSelect(extractPath(entry.loc))}
                       className={cn(
                         "w-full text-left px-2 py-1.5 rounded-md text-sm hover-elevate flex items-start gap-2 group",
-                        value === entry.loc && "bg-primary/10"
+                        value === extractPath(entry.loc) && "bg-primary/10"
                       )}
                       data-testid={`${testId}-option-${index}`}
                     >
@@ -164,10 +173,10 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                           {entry.label}
                         </div>
                         <div className="text-xs text-muted-foreground truncate">
-                          {entry.loc}
+                          {extractPath(entry.loc)}
                         </div>
                       </div>
-                      {value === entry.loc && (
+                      {value === extractPath(entry.loc) && (
                         <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                       )}
                     </button>
