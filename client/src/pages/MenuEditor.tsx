@@ -327,17 +327,21 @@ export default function MenuEditor() {
   const [showSourceSidebar, setShowSourceSidebar] = useState(false);
   const [originalYaml, setOriginalYaml] = useState<string>("");
 
-  const menuData = useMemo<MenuData | null>(() => {
-    if (!yamlSource) return null;
+  const parsedResult = useMemo<{ data: MenuData | null; error: string | null }>(() => {
+    if (!yamlSource) return { data: null, error: null };
     try {
       const parsed = yaml.load(yamlSource) as MenuData;
-      setYamlError(null);
-      return parsed;
+      return { data: parsed, error: null };
     } catch (e) {
-      setYamlError(e instanceof Error ? e.message : "Invalid YAML");
-      return null;
+      return { data: null, error: e instanceof Error ? e.message : "Invalid YAML" };
     }
   }, [yamlSource]);
+
+  const menuData = parsedResult.data;
+
+  useEffect(() => {
+    setYamlError(parsedResult.error);
+  }, [parsedResult.error]);
 
   const updateYamlFromData = useCallback((newData: MenuData) => {
     try {
