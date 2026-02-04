@@ -112,7 +112,7 @@ sections:
     columns: 3
     collapsible_mobile: true
     marginY:
-      desktop: md
+      desktop: md lg
   - type: features_quad
     version: "1.0"
     variant: laptopEdge
@@ -144,6 +144,10 @@ sections:
         description: Follow our career team's guidance
     footer_description: Join the next generation of AI engineers.
     background: hsl(var(--muted))
+    marginY:
+      desktop: none
+    paddingY:
+      desktop: none
   - type: numbered_steps
     version: "1.0"
     variant: bubbleText
@@ -184,3 +188,8 @@ sections:
       desktop: none
     marginY:
       desktop: lg none
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
+    paddingY:
+      desktop: md none
