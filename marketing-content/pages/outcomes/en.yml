@@ -13,7 +13,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: Real Hiring Outcomes, Backed by Data
+    title: Real Career Outcomes, Backed by Data
     subtitle: We measure success by real results. Our graduates get hired in AI engineering, data science, and cybersecurity—and the outcomes are backed by verified data.
     badge: 4Geeks Academy Outcomes Report
     image:
@@ -23,8 +23,8 @@ sections:
       desktop: md none
   - type: vertical_bars_cards
     version: "1.0"
-    title: Hiring Metrics
-    subtitle: Compare our students' career outcomes across recent years
+    title: Hiring Results, Year After Year
+    subtitle: How our graduates perform in the job market—based on verified outcomes from recent cohorts.
     metrics:
       - title: Job Placement Rate
         unit: Graduates hired within 6 months
