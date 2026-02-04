@@ -49,7 +49,7 @@ sections:
           logoHeight: h-8 md:h-12
       speed: 40
       gradient: true
-      gradientWidth: 50
+      gradientWidth: 60
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
