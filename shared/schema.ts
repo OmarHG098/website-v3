@@ -605,9 +605,17 @@ export const humanAndAIDuoSectionSchema = z.object({
   image_alt: z.string().optional(),
   background: z.string().optional(),
   // Video option - when provided, replaces images with video
-  video: z.string().optional(),
-  video_preview_image: z.string().optional(),
-  video_ratio: z.string().optional(),
+  video: z.object({
+    url: z.string(),
+    ratio: z.string().optional(),
+    mobile_ratio: z.string().optional(),
+    width: z.string().optional(),
+    muted: z.boolean().optional(),
+    autoplay: z.boolean().optional(),
+    loop: z.boolean().optional(),
+    preview_image_url: z.string().optional(),
+    with_shadow_border: z.boolean().optional(),
+  }).optional(),
 });
 
 export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
@@ -787,9 +795,17 @@ export const featureQuadSectionSchema = z.object({
   footer_description: z.string().optional(),
   background: z.string().optional(),
   // Video option - when provided, replaces images with video
-  video: z.string().optional(),
-  video_preview_image: z.string().optional(),
-  video_ratio: z.string().optional(),
+  video: z.object({
+    url: z.string(),
+    ratio: z.string().optional(),
+    mobile_ratio: z.string().optional(),
+    width: z.string().optional(),
+    muted: z.boolean().optional(),
+    autoplay: z.boolean().optional(),
+    loop: z.boolean().optional(),
+    preview_image_url: z.string().optional(),
+    with_shadow_border: z.boolean().optional(),
+  }).optional(),
 });
 
 export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;
