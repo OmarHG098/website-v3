@@ -43,13 +43,11 @@ import {
   IconMenu2,
   IconLink,
   IconCode,
-  IconEye,
-  IconExternalLink,
   IconFileCode,
 } from "@tabler/icons-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Navbar, type NavbarConfig, EditableDropdownPreview } from "@/components/menus";
+import { EditableDropdownPreview } from "@/components/menus";
 import {
   DndContext,
   closestCenter,
@@ -340,7 +338,6 @@ export default function MenuEditor() {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
   const [hasChanges, setHasChanges] = useState(false);
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
-  const [previewRedirectUrl, setPreviewRedirectUrl] = useState<string | null>(null);
   const [showSourceSidebar, setShowSourceSidebar] = useState(false);
   const [originalYaml, setOriginalYaml] = useState<string>("");
   
@@ -376,19 +373,6 @@ export default function MenuEditor() {
       console.error("Failed to serialize YAML:", e);
     }
   }, []);
-
-  const handlePreviewClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const anchor = target.closest("a");
-    if (anchor) {
-      e.preventDefault();
-      e.stopPropagation();
-      const href = anchor.getAttribute("href");
-      if (href) {
-        setPreviewRedirectUrl(href);
-      }
-    }
-  };
 
   const { data, isLoading, error, refetch } = useQuery<MenuResponse>({
     queryKey: ["/api/menus", menuName, locale],
@@ -654,23 +638,6 @@ export default function MenuEditor() {
 
           {menuData && (
             <>
-              <Card className="mb-6">
-                <CardHeader className="py-3 px-4">
-                  <div className="flex items-center gap-2">
-                    <IconEye className="h-4 w-4 text-primary" />
-                    <CardTitle className="text-sm font-medium">Live Preview</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="py-4 px-6 bg-background border-t">
-                  <div 
-                    className="flex justify-center"
-                    onClick={handlePreviewClick}
-                  >
-                    <Navbar config={menuData as NavbarConfig} />
-                  </div>
-                </CardContent>
-              </Card>
-
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-medium text-muted-foreground">
                   Menu Items ({menuData.navbar.items.length})
@@ -776,40 +743,6 @@ export default function MenuEditor() {
               data-testid="button-confirm-delete"
             >
               Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={previewRedirectUrl !== null} onOpenChange={() => setPreviewRedirectUrl(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <IconExternalLink className="h-5 w-5 text-primary" />
-              Navigation Preview
-            </DialogTitle>
-            <DialogDescription className="pt-2">
-              The user will be redirected to:
-              <code className="block mt-2 p-2 bg-muted rounded-md text-sm font-mono break-all">
-                {previewRedirectUrl}
-              </code>
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setPreviewRedirectUrl(null)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                if (previewRedirectUrl) {
-                  window.open(previewRedirectUrl, "_blank");
-                }
-                setPreviewRedirectUrl(null);
-              }}
-              data-testid="button-follow-link"
-            >
-              <IconExternalLink className="h-4 w-4 mr-2" />
-              Follow Link
             </Button>
           </DialogFooter>
         </DialogContent>
