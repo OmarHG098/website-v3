@@ -142,16 +142,6 @@ function HighlightSlideshow({
     };
   };
 
-  const getTextAnimationStyle = (delaySeconds: number): React.CSSProperties => {
-    if (isEditMode) return {};
-    const isActiveAndVisible = isVisible && currentSlide !== undefined;
-    return {
-      opacity: isActiveAndVisible ? 1 : 0,
-      transform: isActiveAndVisible ? "translateY(0)" : "translateY(12px)",
-      transition: `opacity 0.4s ease-out ${delaySeconds}s, transform 0.4s ease-out ${delaySeconds}s`,
-    };
-  };
-
   return (
     <div 
       className={`${className} relative overflow-hidden`}
