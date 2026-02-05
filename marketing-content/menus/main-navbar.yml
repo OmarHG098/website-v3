@@ -8,11 +8,11 @@ navbar:
         title: Programs
         description: From beginner to job-ready in record time. Train in today's most in-demand tech fields and launch a lasting career.
         items:
-          - title: Full Stack with AI
-            description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
+          - title: Applied AI
+            description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
             cta: View program
-            href: /en/career-programs/full-stack
-            icon: code
+            href: /applied-ai
+            icon: brain
           - title: Data Science and Machine Learning with AI
             description: Master AI-powered data analysis with Python. Build intelligent models using cutting-edge Machine Learning and AI techniques to solve real-world problems.
             cta: View program
@@ -23,11 +23,11 @@ navbar:
             cta: View program
             href: /en/career-programs/cybersecurity
             icon: shield
-          - title: Applied AI
-            description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
+          - title: Full Stack with AI
+            description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
             cta: View program
-            href: /applied-ai
-            icon: brain
+            href: /en/career-programs/full-stack
+            icon: code
         footer:
           text: Unsure which program fits you best? See our program comparison
           linkText: here

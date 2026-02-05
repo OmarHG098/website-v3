@@ -12,7 +12,7 @@ navbar:
             description: Conviértete en desarrollador Full Stack usando herramientas de IA como Cursor y Vercel v0. Domina las habilidades de IA más demandadas y consigue trabajo como desarrollador.
             cta: Ver programa
             href: /es/desarrollo-full-stack
-            icon: code
+            icon: brain
           - title: Ciencia de Datos y Machine Learning con IA
             description: Domina el análisis de datos potenciado por IA con Python. Construye modelos inteligentes usando técnicas de vanguardia en Machine Learning e IA para resolver problemas reales.
             cta: Ver programa
@@ -27,7 +27,7 @@ navbar:
             description: Explora en detalle la inteligencia artificial y cómo aplicarla en diferentes industrias, roles y tu trabajo. ¡Maximiza tu productividad en solo 6 semanas!
             cta: Ver programa
             href: /es/ia-aplicada
-            icon: brain
+            icon: code
         footer:
           text: ¿No sabes qué programa te conviene más? Mira nuestra comparación de programas
           linkText: aquí

@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "a92d55d1cd8f94a6132951a9cdc1f2f0f339972e",
-  "lastSyncedAt": "2026-02-04T00:31:12.781Z",
+  "lastSyncedCommit": "16ab2d2a72281cf72b3f6912848839e715a9e265",
+  "lastSyncedAt": "2026-02-04T23:59:55.681Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -553,9 +553,9 @@
       "remoteSha": "3593c000c1eb0c13ae773ad1773099ea0f9bd57f5ffbde8f85d9444a07870bbf"
     },
     "marketing-content/menus/main-navbar.yml": {
-      "sha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f",
-      "lastModified": 1769653727552.8105,
-      "remoteSha": "cd557b4bdefcd5cc2dd10e6d2cbd17fcddf992eb7fcd50a3fc7a19af7fa8ee3f"
+      "sha": "9077aa7504e818af54246b626429d2afff34d1d73a14813eb46ede6f6e3bf2ba",
+      "lastModified": 1770249562791.7183,
+      "remoteSha": "9077aa7504e818af54246b626429d2afff34d1d73a14813eb46ede6f6e3bf2ba"
     },
     "marketing-content/pages/apply/_common.yml": {
       "sha": "d8a47ce1eb05054953608c0f860e7b692b52e9a4368f90fed0a35f57a93cf7f3",
@@ -811,6 +811,11 @@
       "sha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2",
       "lastModified": 1765547794557.8657,
       "remoteSha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2"
+    },
+    "marketing-content/menus/main-navbar.es.yml": {
+      "sha": "0eeb7cb4c13823aaaadb4efb780ca6276b0c1f3887c42a91639ac81add672301",
+      "lastModified": 1770249562795.7183,
+      "remoteSha": "0eeb7cb4c13823aaaadb4efb780ca6276b0c1f3887c42a91639ac81add672301"
     }
   }
 }
