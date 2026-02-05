@@ -125,7 +125,7 @@ sections:
     marginY:
       desktop: none
     paddingY:
-      desktop: sm none
+      desktop: sm md
   - type: value_proof_panel
     title: Recognized Globally for Excellence
     subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
@@ -148,7 +148,6 @@ sections:
       alt: Students collaborating in classroom
       aspect_ratio: "4:3"
       style: rounded
-    background: bg-muted/30
     stacked_header: true
   - type: awards_marquee
     version: v1.0
@@ -203,9 +202,9 @@ sections:
         - text: Financing options starting below $299/month
         - text: Full and partial scholarships (location-based)
         - text: Tuition recognized by Forbes as budget-friendly
-    background: hsl(var(--secondary))
     paddingY:
-      desktop: none
+      desktop: none md
+    background: hsl(var(--muted))
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
@@ -223,6 +222,9 @@ sections:
     footer: Support that lasts a lifetime, not just through graduation.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
+    paddingY:
+      desktop: md
+    background: hsl(var(--secondary))
   - type: testimonials
     version: v1.0
     title: What Our Students Say

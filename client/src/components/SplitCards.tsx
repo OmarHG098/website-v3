@@ -214,7 +214,6 @@ export const SplitCards = memo(function SplitCards({
 
   return (
     <section 
-      className={`py-16 md:py-20 ${backgroundClass}`}
       data-testid="section-split-cards"
     >
       <div className="max-w-6xl mx-auto px-4">
