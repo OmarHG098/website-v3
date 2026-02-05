@@ -169,11 +169,9 @@ sections:
     image: /attached_assets/Group_6685_(1)_1765300162049.png
     image_alt: Woman working on laptop in cafe
     background: hsl(210 100% 50% / 0.05)
-    video:
-      url: https://www.youtube.com/watch?v=6m1Jyya7eCc
-      ratio: "16:10"
-      width: 300px
-      preview_image_url: https://4geeksacademy.com/images/landing/ai-mentor.jpg
+    video: https://www.youtube.com/watch?v=6m1Jyya7eCc
+    video_preview_image: https://i.postimg.cc/N0rk7Pk3/ai-mentor.png
+    video_ratio: 1.8:1
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"

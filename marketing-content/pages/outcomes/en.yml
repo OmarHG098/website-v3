@@ -125,7 +125,7 @@ sections:
     marginY:
       desktop: none
     paddingY:
-      desktop: sm md
+      desktop: sm none
   - type: value_proof_panel
     title: Globally Recognized for Real Outcomes
     subtitle: Independent organizations recognize 4Geeks for graduate results, the quality of our programs and career support.
