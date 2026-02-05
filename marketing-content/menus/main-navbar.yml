@@ -18,7 +18,6 @@ navbar:
             cta: View program
             href: /en/career-programs/data-science-ml
             icon: chart
-
           - title: Cybersecurity
             description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
             cta: View program
@@ -45,27 +44,37 @@ navbar:
           - title: Support
             items:
               - label: Mentors and teachers
-                href: /en/geekpal-support
+                href: /mentors-teachers
               - label: Career Support
-                href: /en/geekforce-career-support
+                href: /career-support
+              - label: Online Platform
+                href: /online-platform
+              - label: Rigobot
+                href: /rigobot
+              - label: LearnPack
+                href: /learnpack
           - title: Validation
             items:
               - label: Awards
-                href: /en/awards
+                href: /awards
               - label: Outcomes
-                href: /en/outcomes
+                href: /outcomes
               - label: 4Geeks Vs Others
-                href: /en/geeks-vs-others
+                href: /4geeks-vs-others
           - title: Pricing
             items:
               - label: Financing
-                href: /en/financials
+                href: /financing
+              - label: Scholarships
+                href: /scholarships
               - label: Job Guarantee
-                href: /en/job-guarantee
+                href: /job-guarantee
           - title: Our Students
             items:
               - label: Alumni & Projects
-                href: /en/graduates-and-projects
+                href: /alumni-projects
+              - label: Testimonials
+                href: /testimonials
               - label: Talent
                 href: /talent
     - label: THE ACADEMY
