@@ -60,17 +60,31 @@ function FullCard({ card, index }: { card: { icon: string; title?: string; descr
   );
 }
 
+// Normalize video config - handles both legacy string format and new object format
+function normalizeVideo(
+  video: string | { url: string; ratio?: string; preview_image_url?: string; width?: string } | undefined,
+  videoRatio?: string,
+  videoPreviewImage?: string
+): { url: string; ratio?: string; preview_image_url?: string; width?: string } | null {
+  if (!video) return null;
+  if (typeof video === "string") {
+    return { url: video, ratio: videoRatio, preview_image_url: videoPreviewImage };
+  }
+  return video;
+}
+
 export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
   const images = data.images || [];
-  const hasVideo = !!data.video?.url;
+  const videoConfig = normalizeVideo(data.video, data.video_ratio, data.video_preview_image);
+  const hasVideo = !!videoConfig?.url;
   const hasMedia = hasVideo || images.length > 0;
 
   const renderMedia = (widthClass: string, testId: string) => {
-    if (!hasVideo || !data.video) return null;
-    const aspectRatio = data.video.ratio || "16:9";
-    const videoWidth = data.video.width;
+    if (!hasVideo || !videoConfig) return null;
+    const aspectRatio = videoConfig.ratio || "16:9";
+    const videoWidth = videoConfig.width;
     return (
       <div 
         className={`${widthClass} rounded-card overflow-hidden`} 
@@ -78,8 +92,8 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
         data-testid={testId}
       >
         <UniversalVideo
-          url={data.video.url}
-          preview_image_url={data.video.preview_image_url}
+          url={videoConfig.url}
+          preview_image_url={videoConfig.preview_image_url}
           ratio={aspectRatio}
         />
       </div>
