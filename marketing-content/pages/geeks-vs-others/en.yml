@@ -40,7 +40,7 @@ sections:
     rows:
       - feature: Career Support
         values:
-          - Personalized, lifelong career guidance
+          - Personalized, lifelong guidance
           - Limited or short-term support
       - feature: Teacher-to-Student Ratio
         values:
@@ -52,11 +52,11 @@ sections:
           - Rarely available
       - feature: 1-on-1 Mentoring
         values:
-          - Unlimited, ongoing mentorship
+          - Unlimited, lifelong access
           - Mostly limited sessions
       - feature: Curriculum
         values:
-          - Continuously updated to match industry needs
+          - Continuously updated to match market needs
           - Updates vary by provider
       - feature: Hiring Rate
         values:
