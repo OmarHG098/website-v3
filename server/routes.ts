@@ -817,6 +817,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(urls);
   });
 
+  // Public sitemap URLs endpoint for menu editor
+  app.get("/api/sitemap-urls", (req, res) => {
+    const locale = req.query.locale as string | undefined;
+    const urls = getSitemapUrls();
+    
+    if (locale) {
+      const langPrefixes = ["/en/", "/es/", "/fr/", "/de/", "/pt/", "/it/"];
+      const filteredUrls = urls.filter((entry) => {
+        const path = entry.loc.replace(/^https?:\/\/[^/]+/, "");
+        const matchesLocale = path.startsWith(`/${locale}/`);
+        const isNeutral = !langPrefixes.some((prefix) => path.startsWith(prefix));
+        return matchesLocale || isNeutral;
+      });
+      res.json(filteredUrls);
+    } else {
+      res.json(urls);
+    }
+  });
+
   // Clear sitemap cache (requires token validation)
   app.post("/api/debug/clear-sitemap-cache", async (req, res) => {
     try {
@@ -867,7 +886,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Menus API - list all menu files
+  // Menus API - list all menu files (excludes translation files like .es.yml)
   app.get("/api/menus", (_req, res) => {
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");
     
@@ -876,7 +895,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const files = fs.readdirSync(menusDir).filter(f => f.endsWith(".yml") || f.endsWith(".yaml"));
+    // Filter for .yml/.yaml files, excluding translation files (e.g., main-navbar.es.yml)
+    const translationPattern = /\.[a-z]{2}\.(yml|yaml)$/;
+    const files = fs.readdirSync(menusDir)
+      .filter(f => (f.endsWith(".yml") || f.endsWith(".yaml")) && !translationPattern.test(f));
+    
     const menus = files.map(file => {
       const name = file.replace(/\.(yml|yaml)$/, "");
       return { name, file };
@@ -885,15 +908,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ menus });
   });
 
-  // Menus API - get a specific menu file
+  // Menus API - get a specific menu file (with optional locale)
   app.get("/api/menus/:name", (req, res) => {
     const { name } = req.params;
+    const locale = req.query.locale as string | undefined;
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");
     
+    // Build filename based on locale (e.g., main-navbar.es.yml for Spanish)
+    const fileBaseName = locale && locale !== "en" ? `${name}.${locale}` : name;
+    
     // Try both .yml and .yaml extensions
-    let filePath = path.join(menusDir, `${name}.yml`);
+    let filePath = path.join(menusDir, `${fileBaseName}.yml`);
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(menusDir, `${name}.yaml`);
+      filePath = path.join(menusDir, `${fileBaseName}.yaml`);
     }
     
     if (!fs.existsSync(filePath)) {
@@ -904,12 +931,382 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const content = fs.readFileSync(filePath, "utf-8");
       const data = yaml.load(content);
-      res.json({ name, data });
+      res.json({ name, locale: locale || "en", data });
     } catch (error) {
       console.error(`Error loading menu ${name}:`, error);
       res.status(500).json({ error: "Failed to parse menu file" });
     }
   });
+
+  // DEPRECATED: Old menu save endpoint - redirect to new separated endpoints
+  // Use PUT /api/menus/:name/structure for structural changes (English only, propagates to translations)
+  // Use PUT /api/menus/:name/translations?locale=xx for text-only changes
+  app.post("/api/menus/:name", (req, res) => {
+    res.status(410).json({ 
+      error: "This endpoint is deprecated. Use the separated endpoints instead.",
+      alternatives: {
+        structure: "PUT /api/menus/:name/structure - For structural changes (English only, propagates to translations)",
+        translations: "PUT /api/menus/:name/translations?locale=xx - For text-only changes"
+      }
+    });
+  });
+  
+  // Helper function to sync menu structure from English (master) to translation
+  function syncMenuStructure(master: any, translation: any): any {
+    if (!master?.navbar?.items || !translation?.navbar?.items) {
+      return translation;
+    }
+    
+    const masterItems = master.navbar.items;
+    const translationItems = translation.navbar.items;
+    const syncedItems: any[] = [];
+    
+    for (let i = 0; i < masterItems.length; i++) {
+      const masterItem = masterItems[i];
+      const existingTranslation = translationItems[i];
+      
+      if (existingTranslation) {
+        // Keep translation text, sync structure
+        const syncedItem = syncMenuItem(masterItem, existingTranslation);
+        syncedItems.push(syncedItem);
+      } else {
+        // New item - add with [TRANSLATE] placeholders
+        const newItem = createTranslationPlaceholder(masterItem);
+        syncedItems.push(newItem);
+      }
+    }
+    
+    return { navbar: { items: syncedItems } };
+  }
+  
+  function syncMenuItem(master: any, translation: any): any {
+    const result: any = {
+      // TEXT field - from translation
+      label: translation.label || `[TRANSLATE] ${master.label}`,
+      // STRUCTURE fields - ALWAYS from master
+      href: master.href,
+      component: master.component,
+    };
+    
+    if (master.dropdown) {
+      result.dropdown = syncDropdown(master.dropdown, translation.dropdown || {});
+    }
+    
+    return result;
+  }
+  
+  function syncDropdown(master: any, translation: any): any {
+    const result: any = {
+      type: master.type,
+      title: translation.title || `[TRANSLATE] ${master.title}`,
+      description: translation.description || `[TRANSLATE] ${master.description}`,
+    };
+    
+    if (master.icon) result.icon = master.icon;
+    
+    // Sync items array (for cards and simple-list types)
+    if (master.items) {
+      result.items = master.items.map((masterItem: any, idx: number) => {
+        const transItem = translation.items?.[idx] || {};
+        return syncDropdownItem(masterItem, transItem);
+      });
+    }
+    
+    // Sync columns (for columns type)
+    if (master.columns) {
+      result.columns = master.columns.map((masterCol: any, idx: number) => {
+        const transCol = translation.columns?.[idx] || {};
+        return {
+          title: transCol.title || `[TRANSLATE] ${masterCol.title}`,
+          items: masterCol.items.map((masterItem: any, itemIdx: number) => {
+            const transItem = transCol.items?.[itemIdx] || {};
+            return {
+              // TEXT field - from translation
+              label: transItem.label || `[TRANSLATE] ${masterItem.label}`,
+              // STRUCTURE field - ALWAYS from master
+              href: masterItem.href,
+            };
+          }),
+        };
+      });
+    }
+    
+    // Sync groups (for grouped-list type)
+    if (master.groups) {
+      result.groups = master.groups.map((masterGroup: any, idx: number) => {
+        const transGroup = translation.groups?.[idx] || {};
+        return {
+          // TEXT field - from translation
+          title: transGroup.title || `[TRANSLATE] ${masterGroup.title}`,
+          items: masterGroup.items.map((masterItem: any, itemIdx: number) => {
+            const transItem = transGroup.items?.[itemIdx] || {};
+            return {
+              // TEXT field - from translation
+              label: transItem.label || `[TRANSLATE] ${masterItem.label}`,
+              // STRUCTURE field - ALWAYS from master
+              href: masterItem.href,
+            };
+          }),
+        };
+      });
+    }
+    
+    // Sync footer
+    if (master.footer) {
+      result.footer = {
+        // TEXT fields - from translation
+        text: translation.footer?.text || `[TRANSLATE] ${master.footer.text}`,
+        linkText: translation.footer?.linkText || `[TRANSLATE] ${master.footer.linkText}`,
+        // STRUCTURE field - ALWAYS from master
+        href: master.footer.href,
+      };
+    }
+    
+    return result;
+  }
+  
+  function syncDropdownItem(master: any, translation: any): any {
+    const result: any = {};
+    
+    // TEXT fields - from translation if provided
+    if (master.title !== undefined) {
+      result.title = translation.title || `[TRANSLATE] ${master.title}`;
+    }
+    if (master.label !== undefined) {
+      result.label = translation.label || `[TRANSLATE] ${master.label}`;
+    }
+    if (master.description !== undefined) {
+      result.description = translation.description || `[TRANSLATE] ${master.description}`;
+    }
+    if (master.cta !== undefined) {
+      result.cta = translation.cta || `[TRANSLATE] ${master.cta}`;
+    }
+    // STRUCTURE field - ALWAYS from master
+    if (master.href !== undefined) {
+      result.href = master.href;
+    }
+    if (master.icon !== undefined) {
+      result.icon = master.icon;
+    }
+    
+    return result;
+  }
+  
+  function createTranslationPlaceholder(master: any): any {
+    const result: any = {
+      label: `[TRANSLATE] ${master.label}`,
+      href: master.href,
+      component: master.component,
+    };
+    
+    if (master.dropdown) {
+      result.dropdown = syncDropdown(master.dropdown, {});
+    }
+    
+    return result;
+  }
+
+  // Structure endpoint - Only for English, propagates to all translation files
+  // Used for: reordering items, adding/deleting items, changing icons, changing hrefs
+  app.put("/api/menus/:name/structure", (req, res) => {
+    const { name } = req.params;
+    const { data } = req.body;
+    
+    if (!data) {
+      res.status(400).json({ error: "Missing data in request body" });
+      return;
+    }
+    
+    const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    
+    // Structure changes can ONLY be made to English (master) file
+    let filePath = path.join(menusDir, `${name}.yml`);
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${name}.yaml`);
+    }
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${name}.yml`);
+    }
+    
+    try {
+      const yamlContent = yaml.dump(data, {
+        indent: 2,
+        lineWidth: -1,
+        noRefs: true,
+        sortKeys: false,
+      });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+      
+      // Always sync structural changes to ALL translation files
+      const syncResults: Record<string, string> = {};
+      const translationLocales = ["es", "fr", "de", "pt", "it"]; // All supported locales
+      
+      for (const targetLocale of translationLocales) {
+        const translationFileName = `${name}.${targetLocale}.yml`;
+        const translationFilePath = path.join(menusDir, translationFileName);
+        
+        if (fs.existsSync(translationFilePath)) {
+          try {
+            const translationContent = fs.readFileSync(translationFilePath, "utf-8");
+            const translationData = yaml.load(translationContent) as any;
+            
+            // Sync structure from English to translation, preserving existing translations
+            const syncedData = syncMenuStructure(data, translationData);
+            
+            const syncedYaml = yaml.dump(syncedData, {
+              indent: 2,
+              lineWidth: -1,
+              noRefs: true,
+              sortKeys: false,
+            });
+            fs.writeFileSync(translationFilePath, syncedYaml, "utf-8");
+            syncResults[targetLocale] = "synced";
+          } catch (syncError) {
+            console.error(`Error syncing structure to ${targetLocale}:`, syncError);
+            syncResults[targetLocale] = "error";
+          }
+        }
+      }
+      
+      res.json({ 
+        success: true, 
+        name, 
+        endpoint: "structure",
+        syncResults,
+        message: "Structure updated in English and synced to all translations"
+      });
+    } catch (error) {
+      console.error(`Error saving menu structure ${name}:`, error);
+      res.status(500).json({ error: "Failed to save menu structure" });
+    }
+  });
+
+  // Translations endpoint - For any locale, only updates text fields
+  // Used for: updating title, description, label, cta text
+  // CANNOT modify structure (item count, order, icons, hrefs)
+  app.put("/api/menus/:name/translations", (req, res) => {
+    const { name } = req.params;
+    const locale = req.query.locale as string;
+    const { data } = req.body;
+    
+    if (!data) {
+      res.status(400).json({ error: "Missing data in request body" });
+      return;
+    }
+    
+    if (!locale) {
+      res.status(400).json({ error: "Locale query parameter is required" });
+      return;
+    }
+    
+    const menusDir = path.join(process.cwd(), "marketing-content", "menus");
+    const isEnglish = locale === "en";
+    
+    // Build filename based on locale
+    const fileBaseName = isEnglish ? name : `${name}.${locale}`;
+    
+    let filePath = path.join(menusDir, `${fileBaseName}.yml`);
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${fileBaseName}.yaml`);
+    }
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(menusDir, `${fileBaseName}.yml`);
+    }
+    
+    // Translations endpoint is for TEXT-ONLY changes in ANY locale (including English)
+    // For structure changes (href, icon, add/delete), use the /structure endpoint instead
+    const masterFilePath = path.join(menusDir, `${name}.yml`);
+    if (!fs.existsSync(masterFilePath)) {
+      res.status(400).json({ error: "English master file not found. Cannot update translations." });
+      return;
+    }
+    
+    let dataToSave = data;
+    
+    try {
+      const masterContent = fs.readFileSync(masterFilePath, "utf-8");
+      const masterData = yaml.load(masterContent) as any;
+      
+      // ENFORCE: Strict text-only merge for ALL locales (including English)
+      // Structure is ALWAYS from master - only text fields come from submitted data
+      dataToSave = mergeTextOnlyFromTranslation(masterData, data);
+    } catch (e) {
+      console.error("Error syncing translation to master structure:", e);
+      res.status(500).json({ error: "Failed to sync translation with master structure" });
+      return;
+    }
+    
+    try {
+      const yamlContent = yaml.dump(dataToSave, {
+        indent: 2,
+        lineWidth: -1,
+        noRefs: true,
+        sortKeys: false,
+      });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+      
+      res.json({ 
+        success: true, 
+        name, 
+        locale,
+        endpoint: "translations",
+        message: isEnglish ? "English text updated" : `${locale} translations updated`
+      });
+    } catch (error) {
+      console.error(`Error saving menu translations ${name}:`, error);
+      res.status(500).json({ error: "Failed to save menu translations" });
+    }
+  });
+
+  // STRICT text-only merge: Deep-clone master, overlay ONLY text fields from translation
+  // Text fields: label, title, description, cta, text, linkText
+  // ALL other fields preserved from master (including unknown/extra keys)
+  const TEXT_FIELDS = new Set(['label', 'title', 'description', 'cta', 'text', 'linkText']);
+  
+  function mergeTextOnlyFromTranslation(master: any, translation: any): any {
+    if (!master?.navbar?.items) {
+      throw new Error("Master file is missing navbar.items structure");
+    }
+    
+    // Deep clone master to preserve ALL structure
+    const result = JSON.parse(JSON.stringify(master));
+    
+    // Overlay text fields from translation onto the cloned master (starting at root)
+    if (translation) {
+      overlayTextFieldsOnObject(result, translation);
+    }
+    
+    return result;
+  }
+  
+  function overlayTextFieldsOnItems(masterItems: any[], translationItems: any[]): void {
+    for (let i = 0; i < masterItems.length && i < translationItems.length; i++) {
+      overlayTextFieldsOnObject(masterItems[i], translationItems[i]);
+    }
+  }
+  
+  function overlayTextFieldsOnObject(master: any, translation: any): void {
+    if (!master || !translation || typeof master !== 'object' || typeof translation !== 'object') {
+      return;
+    }
+    
+    // Overlay text fields from translation onto master
+    for (const key of Object.keys(master)) {
+      if (TEXT_FIELDS.has(key) && translation[key] !== undefined) {
+        // This is a text field - take value from translation
+        master[key] = translation[key];
+      } else if (Array.isArray(master[key]) && Array.isArray(translation[key])) {
+        // Recursively process arrays (items, columns, groups, etc.)
+        for (let i = 0; i < master[key].length && i < translation[key].length; i++) {
+          overlayTextFieldsOnObject(master[key][i], translation[key][i]);
+        }
+      } else if (typeof master[key] === 'object' && master[key] !== null && translation[key]) {
+        // Recursively process nested objects (dropdown, footer, etc.)
+        overlayTextFieldsOnObject(master[key], translation[key]);
+      }
+      // All other fields (href, icon, component, type, etc.) stay from master
+    }
+  }
 
   // Clear redirect cache (for debug tools)
   app.post("/api/debug/clear-redirect-cache", (req, res) => {

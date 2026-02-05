@@ -8,31 +8,30 @@ navbar:
         title: Programs
         description: From beginner to job-ready in record time. Train in today's most in-demand tech fields and launch a lasting career.
         items:
-          - title: Full Stack with AI
-            description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
+          - title: AI Engineering
+            description: Transform an entire business case into a fully AI-native system, layer by layer. Integrate AI into real software, connecting intelligent models to users and data.
             cta: View program
-            href: /full-stack-development
-            icon: code
+            href: /en/career-programs/ai-engineering
+            icon: brain
           - title: Data Science and Machine Learning with AI
             description: Master AI-powered data analysis with Python. Build intelligent models using cutting-edge Machine Learning and AI techniques to solve real-world problems.
             cta: View program
-            href: /data-science-machine-learning
+            href: /en/career-programs/data-science-ml
             icon: chart
           - title: Cybersecurity
             description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
             cta: View program
-            href: /cybersecurity
+            href: /en/career-programs/cybersecurity
             icon: shield
-          - title: Applied AI
-            description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
+          - title: Full Stack with AI
+            description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
             cta: View program
-            href: /applied-ai
-            icon: brain
+            href: /en/career-programs/full-stack
+            icon: code
         footer:
           text: Unsure which program fits you best? See our program comparison
           linkText: here
           href: /program-comparison
-
     - label: WHY 4GEEKS
       href: /why-4geeks
       component: Dropdown
@@ -45,9 +44,9 @@ navbar:
           - title: Support
             items:
               - label: Mentors and teachers
-                href: /mentors-teachers
+                href: /en/geekpal-support
               - label: Career Support
-                href: /career-support
+                href: /en/geekforce-career-support
               - label: Online Platform
                 href: /online-platform
               - label: Rigobot
@@ -57,28 +56,27 @@ navbar:
           - title: Validation
             items:
               - label: Awards
-                href: /awards
+                href: /en/awards
               - label: Outcomes
-                href: /outcomes
+                href: /en/outcomes
               - label: 4Geeks Vs Others
-                href: /4geeks-vs-others
+                href: /en/geeks-vs-others
           - title: Pricing
             items:
               - label: Financing
-                href: /financing
+                href: /en/financials
               - label: Scholarships
-                href: /scholarships
+                href: /en/scholarships
               - label: Job Guarantee
-                href: /job-guarantee
+                href: /en/job-guarantee
           - title: Our Students
             items:
               - label: Alumni & Projects
-                href: /alumni-projects
+                href: /en/graduates-and-projects
               - label: Testimonials
                 href: /testimonials
               - label: Talent
-                href: /talent
-
+                href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
     - label: THE ACADEMY
       href: /the-academy
       component: Dropdown
@@ -100,7 +98,6 @@ navbar:
             href: /press
           - label: Blog
             href: /blog
-
     - label: CAMPUS
       href: /campus
       component: Dropdown
@@ -113,7 +110,7 @@ navbar:
           - title: US & CANADA
             items:
               - label: Miami, USA
-                href: /campus/miami
+                href: /en/location/miami-usa
               - label: New York, USA
                 href: /campus/nyc
               - label: Dallas, USA
@@ -154,7 +151,6 @@ navbar:
                 href: /campus/mexico-city
               - label: Caracas, Venezuela
                 href: /campus/caracas
-
     - label: UPCOMING DATES
       href: /upcoming-dates
       component: SimpleLink

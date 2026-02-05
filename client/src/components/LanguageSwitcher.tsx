@@ -15,8 +15,11 @@ const languages = [
   { code: 'es', name: 'Español' }
 ];
 
-function getLocalizedPath(currentPath: string, targetLang: string): string | null {
-  const fromLang = currentPath.startsWith('/es/') ? 'es' : 'en';
+function getLocalizedPath(currentPath: string, targetLang: string): string {
+  // Handle root path and language root paths
+  if (currentPath === '/' || currentPath === '/en/' || currentPath === '/es/' || currentPath === '/en' || currentPath === '/es') {
+    return `/${targetLang}/`;
+  }
   
   // Handle /en/:slug or /es/:slug pattern
   const enMatch = currentPath.match(/^\/en\/(.+)$/);
@@ -24,7 +27,6 @@ function getLocalizedPath(currentPath: string, targetLang: string): string | nul
   
   if (enMatch && targetLang === 'es') {
     const slug = enMatch[1];
-    // Check if this slug has a detail path (e.g., /en/career-programs/ai-engineering)
     const parts = slug.split('/');
     if (parts.length > 1) {
       const baseSlug = parts[0];
@@ -38,7 +40,6 @@ function getLocalizedPath(currentPath: string, targetLang: string): string | nul
   
   if (esMatch && targetLang === 'en') {
     const slug = esMatch[1];
-    // Check if this slug has a detail path
     const parts = slug.split('/');
     if (parts.length > 1) {
       const baseSlug = parts[0];
@@ -50,7 +51,8 @@ function getLocalizedPath(currentPath: string, targetLang: string): string | nul
     return `/en/${translatedSlug}`;
   }
   
-  return null;
+  // Fallback: just add language prefix
+  return `/${targetLang}/`;
 }
 
 export default function LanguageSwitcher() {
@@ -62,9 +64,7 @@ export default function LanguageSwitcher() {
     document.documentElement.lang = lng;
     
     const localizedPath = getLocalizedPath(location, lng);
-    if (localizedPath) {
-      setLocation(localizedPath);
-    }
+    setLocation(localizedPath);
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];

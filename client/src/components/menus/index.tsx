@@ -1,5 +1,6 @@
 export { SimpleLink, type SimpleLinkProps } from "./SimpleLink";
 export { Dropdown, type DropdownProps } from "./Dropdown";
+export { EditableDropdownPreview } from "./EditableDropdownPreview";
 
 import { SimpleLink, type SimpleLinkProps } from "./SimpleLink";
 import { Dropdown, type DropdownProps } from "./Dropdown";

@@ -13,8 +13,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: Proven Outcomes That Launch Tech Careers
-    subtitle: At 4Geeks, success isn't a promise — it's a track record. Our students launch successful tech careers across AI-powered coding, data science, and cybersecurity, and the numbers prove it.
+    title: Real Career Outcomes, Backed by Data
+    subtitle: We measure success by real results. Our graduates get hired in AI engineering, data science, and cybersecurity—and the outcomes are backed by verified data.
     badge: 4Geeks Academy Outcomes Report
     image:
       src: /attached_assets/outcomes_1765562850573.png
@@ -23,12 +23,12 @@ sections:
       desktop: md none
   - type: vertical_bars_cards
     version: "1.0"
-    title: Hired Success Metrics
-    subtitle: Track our students' career outcomes across recent years
+    title: Hiring Results, Year After Year
+    subtitle: How our graduates perform in the job market—based on verified outcomes from recent cohorts.
     metrics:
       - title: Job Placement Rate
         unit: Graduates hired within 6 months
-        description: Our job placement rate consistently remains above 80%, demonstrating the effectiveness of our career support program. We track employment outcomes for up to 6 months after graduation, ensuring accurate and reliable data. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+        description: Our job placement rate stays consistently above 80%, reflecting a hiring-focused program and hands-on career support. We track outcomes for up to nine months after graduation to keep the data accurate and comparable across cohorts.
         years:
           - year: "2023"
             value: 86
@@ -41,7 +41,7 @@ sections:
             displayValue: 82%
       - title: Average Salary Increase
         unit: Compared to pre-bootcamp salary
-        description: Graduates see significant salary improvements after completing our program. This increase reflects the high market demand for tech skills and the quality of training our students receive. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        description: Graduates earn significantly more after completing the program. This reflects both market demand for tech talent and the practical, job-ready skills students build during the bootcamp.
         years:
           - year: "2023"
             value: 12500
@@ -54,7 +54,7 @@ sections:
             displayValue: $15.8k
       - title: Days to First Job
         unit: Average time from graduation to offer
-        description: Our students are getting hired faster than ever. With personalized career coaching and an extensive employer network, we help graduates land their first tech role in record time. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
+        description: Graduates are landing roles faster each year. With personalized coaching and employer connections, we help students move from graduation to their first offer quickly.
         years:
           - year: "2023"
             value: 52
@@ -71,8 +71,8 @@ sections:
       desktop: none md
   - type: stats
     version: "1.0"
-    title: Outcomes by the Numbers
-    subtitle: Real results from our graduates across different regions
+    title: Hiring Outcomes Across Regions
+    subtitle: Our graduates get hired and increase their salaries in multiple job markets.
     background: hsl(210 100% 50% / 0.05)
     items:
       - value: 84%
@@ -92,7 +92,7 @@ sections:
   - type: pie_charts
     version: "1.0"
     title: Our Student Body at a Glance
-    subtitle: These charts show the distribution of our students across different age groups, gender, and nationalities. Our community is diverse and global, with students from various backgrounds and regions.
+    subtitle: A snapshot of who our students are by age, gender, and region.
     background: hsl(var(--background))
     charts:
       - title: Age
@@ -127,8 +127,8 @@ sections:
     paddingY:
       desktop: sm md
   - type: value_proof_panel
-    title: Recognized Globally for Excellence
-    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
+    title: Globally Recognized for Real Outcomes
+    subtitle: Independent organizations recognize 4Geeks for graduate results, the quality of our programs and career support.
     evidence_items:
       - icon: Trophy
         title: Top 5 Coding Bootcamps Worldwide
@@ -191,44 +191,28 @@ sections:
       desktop: md
     marginY:
       desktop: none sm
-  - type: split_cards
-    variant: primary-left
-    primary:
-      heading: Making Tech Careers Accessible
-      description: Tech careers should be open to everyone. At 4Geeks, we remove financial barriers by offering affordable tuition, flexible financing options, and access to scholarships. Our goal is to ensure that cost is never the reason someone cannot pursue a career in technology.
-      badge: Accessible Education
-    secondary:
-      benefits:
-        - text: Financing options starting below $299/month
-        - text: Full and partial scholarships (location-based)
-        - text: Tuition recognized by Forbes as budget-friendly
-    paddingY:
-      desktop: none md
-    background: hsl(var(--muted))
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
-    title: Why Students Get Results with Us
-    description: "We don’t just teach skills, we make sure you can turn them into a career. Every 4Geeks student gets:"
+    title: Why Our Graduates Consistently Get Hired
+    description: Strong outcomes come from how we teach, support, and place students into tech roles.
     bullets:
-      - heading: GeekFORCE Career Support (for life)
-        text: Unlimited 1:1 career mentorship, interview training, resume/portfolio coaching, and expert job search strategies.
-      - heading: GeekPAL Mentorship (for life)
-        text: Unlimited coding help from real human mentors for life
-      - heading: AI-Powered Support
-        text: 24/7 personalized coding feedback and career development tools.
-      - heading: 5,000+ Hiring Partners
-        text: A global network of companies that trust and hire 4Geeks graduates.
-    footer: Support that lasts a lifetime, not just through graduation.
+      - heading: GeekFORCE Lifelong Career Support
+        text: Unlimited 1:1 career mentorship, interview prep, and resume and portfolio coaching — designed around today’s AI-driven hiring processes.
+      - heading: GeekPAL Lifelong Technical Mentorship
+        text: Unlimited access to human mentors who help students keep progressing and build real-world confidence.
+      - heading: AI-Powered Learning & Feedback
+        text: 24/7 personalized feedback that helps students learn faster and more effectively.
+      - heading: Global Hiring Partner Network
+        text: Hundreds of companies worldwide that actively recruit 4Geeks graduates.
+    footer: Support built for long-term careers — not just first jobs.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
-    paddingY:
-      desktop: md
-    background: hsl(var(--secondary))
+    reverse: true
   - type: testimonials
     version: v1.0
-    title: What Our Students Say
-    subtitle: Real stories from graduates who transformed their careers
+    title: Real Career Results
+    subtitle: Alumni share how they landed roles, advanced their careers, and increased their earning power.
     rating_summary:
       average: "4.9"
       count: 2,847
@@ -271,32 +255,7 @@ sections:
         outcome: Promoted in 1 year
     paddingY:
       desktop: none lg
-  - type: two_column
-    proportions:
-      - 5
-      - 7
-    alignment: center
-    left:
-      image: https://4geeksacademy.com/static/48d83e1ce148aa046ad83ad8d2eabc1c/d85f4/miami-people.webp
-      image_alt: Happy businesswoman with laptop
-      justify: center
-    right:
-      heading: The Confidence of a Job Guarantee
-      sub_heading: "We can do this because:"
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
-      button:
-        text: Learn More
-        url: /en/job-guarantee
-        variant: primary
-      bullets:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-      bullets_visible: 1
-      text_align: left
-    gap: "12"
-    marginY:
-      desktop: none md
+    background: hsl(210 100% 50% / 0.05)
   - type: faq
     version: v1.0
     title: Frequently Asked Questions

@@ -49,7 +49,7 @@ sections:
           logoHeight: h-8 md:h-12
       speed: 40
       gradient: true
-      gradientWidth: 50
+      gradientWidth: 60
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "3:4"
@@ -190,4 +190,4 @@ sections:
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.
     paddingY:
-      desktop: md none
+      desktop: md 10px

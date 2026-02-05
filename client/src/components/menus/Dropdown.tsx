@@ -85,7 +85,7 @@ export interface DropdownProps {
 
 function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
   return (
-    <div className="p-6">
+    <div className="p-6 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="mb-6">
           {dropdown.title && (
@@ -105,7 +105,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
               key={index}
               href={item.href}
               className="block hover-elevate rounded-lg p-2 -m-2"
-              data-testid={`dropdown-card-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-card-${(item.title || "card").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {IconComponent && (
                 <div className="mb-3 w-12 h-12 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -143,7 +143,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-full max-w-4xl p-6">
+    <div className="w-full max-w-4xl p-6 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-4 mb-6 pb-4 border-b">
           {IconComponent && (
@@ -175,7 +175,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
                   <a
                     href={item.href}
                     className="flex items-center gap-1 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
-                    data-testid={`dropdown-column-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    data-testid={`dropdown-column-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     {item.label}
                     <ChevronRight className="w-3 h-3" />
@@ -194,7 +194,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-80 p-4">
+    <div className="p-4 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-3 mb-4 pb-4 border-b">
           {IconComponent && (
@@ -219,7 +219,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
             <a
               href={item.href}
               className="flex items-center justify-between px-2 py-2 rounded-md text-sm text-foreground hover-elevate"
-              data-testid={`dropdown-list-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-list-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {item.label}
               <ChevronRight className="w-4 h-4 text-muted-foreground" />
@@ -236,7 +236,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
-    <div className="w-full max-w-xl p-4">
+    <div className="w-full max-w-xl p-4 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
         <div className="flex items-start gap-3 mb-4 pb-4 border-b">
           {IconComponent && (
@@ -266,7 +266,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
                   ? "text-foreground bg-muted toggle-elevated"
                   : "text-muted-foreground"
               }`}
-              data-testid={`dropdown-group-tab-${group.title.toLowerCase().replace(/\s+/g, "-")}`}
+              data-testid={`dropdown-group-tab-${(group.title || "group").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {group.title}
             </button>
@@ -280,7 +280,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
                 key={index}
                 href={item.href}
                 className="flex items-center gap-1 py-1.5 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
-                data-testid={`dropdown-group-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`dropdown-group-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {item.label}
                 <ChevronRight className="w-3 h-3" />
@@ -320,7 +320,7 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       case "columns":
         return "w-[800px]";
       case "simple-list":
-        return "w-[400px]";
+        return "w-72";
       case "grouped-list":
         return "w-[550px]";
       default:
@@ -366,14 +366,14 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
             onMouseLeave={handleMouseLeave}
           >
             <div 
-              className={`bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+              className={`bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
             >
               {renderDropdownContent()}
             </div>
           </div>
         ) : (
           <div 
-            className={`absolute top-full left-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+            className={`absolute top-full left-0 z-50 mt-1 bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
