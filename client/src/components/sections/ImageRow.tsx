@@ -121,13 +121,13 @@ function HighlightSlideshow({
             >
               <p 
                 className="text-body mb-4 font-light"
-                style={isActive ? getTextAnimationStyle(0.15) : {}}
+                style={isActive ? getTextAnimationStyle(1.15) : {}}
               >
                 {slide.heading}
               </p>
               <p 
                 className="text-h2 leading-tight"
-                style={isActive ? getTextAnimationStyle(0.35) : {}}
+                style={isActive ? getTextAnimationStyle(1.35) : {}}
               >
                 {slide.text}
               </p>
