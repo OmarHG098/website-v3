@@ -165,7 +165,7 @@ sections:
     description: With 84% of our graduates hired within six months, their stories show how hands-on learning, personalized mentorship, and career support launch careers in tech.
   - type: whos_hiring
     variant: carousel
-    pretitle: Customer Stories
+    pretitle: Job Placement
     title: Our Alumni Work at Top Global Companies
     subtitle: Thrive in tech with our worldwide network of hiring partners.
     logos:
