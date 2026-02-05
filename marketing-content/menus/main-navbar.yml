@@ -8,10 +8,10 @@ navbar:
         title: Programs
         description: From beginner to job-ready in record time. Train in today's most in-demand tech fields and launch a lasting career.
         items:
-          - title: Applied AI
-            description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
+          - title: AI Engineering
+            description: Transform an entire business case into a fully AI-native system, layer by layer. Integrate AI into real software, connecting intelligent models to users and data.
             cta: View program
-            href: /applied-ai
+            href: /en/career-programs/ai-engineering
             icon: brain
           - title: Data Science and Machine Learning with AI
             description: Master AI-powered data analysis with Python. Build intelligent models using cutting-edge Machine Learning and AI techniques to solve real-world problems.
