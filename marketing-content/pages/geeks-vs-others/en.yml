@@ -82,18 +82,15 @@ sections:
     variant: image_background
     version: "1.0"
     title: Hyperpersonalized Learning & Support That Lasts a Lifetime
-    description: Most bootcamps give you limited mentorship hours and leave you once you're hired. At 4Geeks, we built an entire support system around personalization.
+    description: At 4Geeks, we built an entire support system around personalization. And unlike most other programs, it doesn’t end with your first job.
     bullets:
       - heading: Unlimited 1:1 Mentorship
-        text: Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role, our mentors are always just a message away.
-      - heading: AI-Powered Feedback
-        text: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
+        text: Access personalized guidance whenever you need it. From debugging code to preparing for senior roles, our mentors support your learning and growth at every stage.
+      - heading: AI-Powered Learning & Feedback
+        text: Rigobot + LearnPack optimize your learning through personalization, providing instant feedback, guiding you to solve problems efficiently, and tracking your skill development.
       - heading: Lifelong Career Support
-        text: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing r
-    footer: Over 10,000 graduates have launched new careers with us.
-    image: /attached_assets/Group-original_1765419144159.webp
-    image_alt: Student learning with mentor support
-    reverse: true
+        text: GeekFORCE is designed to get you hired and keep advancing your career. From landing your first role to leveling up, you can access career coaching whenever you need it.
+    footer: More than 10,000 graduates have launched successful tech careers with 4Geeks.
   - type: testimonials_slide
     title: Real Careers Start Here — Just Ask Our Students
     description: Our graduates are transforming their lives through tech. With over 84% hired within six months of completing the program, their success stories speak for themselves.
