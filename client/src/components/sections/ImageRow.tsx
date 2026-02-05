@@ -1,3 +1,5 @@
+import { useState, useEffect, useRef } from "react";
+import { useEditMode } from "@/contexts/EditModeContext";
 import type { ImageRowSection } from "../../../../marketing-content/component-registry/image_row/v1.0/schema";
 
 interface ImageRowProps {
@@ -29,6 +31,33 @@ export default function ImageRow({ data }: ImageRowProps) {
     background,
   } = data;
 
+  const { isEditMode } = useEditMode();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isEditMode) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isEditMode]);
+
   const gapClass = GAP_CLASSES[gap] || GAP_CLASSES.md;
   const roundedClass = rounded ? "rounded-lg" : "";
   const highlightWidth = highlight?.width || 2;
@@ -40,13 +69,25 @@ export default function ImageRow({ data }: ImageRowProps) {
     ? BACKGROUND_CLASSES[background] || ""
     : "";
 
+  const getAnimationStyle = (index: number) => {
+    if (isEditMode) return {};
+    return {
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? "translateY(0)" : "translateY(24px)",
+      transition: `opacity 0.5s ease-out ${index * 0.12}s, transform 0.5s ease-out ${index * 0.12}s`,
+    };
+  };
+
+  const highlightIndex = images.length;
+
   return (
-    <section className={sectionBgClass} data-testid="section-image-row">
+    <section ref={sectionRef} className={sectionBgClass} data-testid="section-image-row">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
           {highlight && (
             <div 
               className={`${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card flex flex-col justify-center md:hidden`}
+              style={getAnimationStyle(0)}
               data-testid="image-row-highlight-mobile"
             >
               <p className="text-body mb-4 font-light">
@@ -78,6 +119,7 @@ export default function ImageRow({ data }: ImageRowProps) {
                     className="flex-1 min-w-0"
                     style={{
                       height: imageHeight || `var(--image-row-height-mobile)`,
+                      ...getAnimationStyle(index),
                     }}
                     data-testid={`image-row-item-${index}`}
                   >
@@ -106,7 +148,7 @@ export default function ImageRow({ data }: ImageRowProps) {
               {highlight && (
                 <div 
                   className={`hidden md:flex ${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card flex-col justify-center h-[var(--image-row-height-desktop)]`}
-                  style={{ flex: highlightWidth }}
+                  style={{ flex: highlightWidth, ...getAnimationStyle(highlightIndex) }}
                   data-testid="image-row-highlight-desktop"
                 >
                   <p className="text-body mb-4 font-light">
