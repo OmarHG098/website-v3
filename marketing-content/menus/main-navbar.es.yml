@@ -1,7 +1,7 @@
 navbar:
   items:
     - label: PROGRAMAS
-      href: /programs
+      href: /es/programas
       component: Dropdown
       dropdown:
         type: cards
@@ -11,29 +11,29 @@ navbar:
           - title: Full Stack con IA
             description: Conviértete en desarrollador Full Stack usando herramientas de IA como Cursor y Vercel v0. Domina las habilidades de IA más demandadas y consigue trabajo como desarrollador.
             cta: Ver programa
-            href: /applied-ai
+            href: /es/desarrollo-full-stack
             icon: brain
           - title: Ciencia de Datos y Machine Learning con IA
             description: Domina el análisis de datos potenciado por IA con Python. Construye modelos inteligentes usando técnicas de vanguardia en Machine Learning e IA para resolver problemas reales.
             cta: Ver programa
-            href: /en/career-programs/data-science-ml
+            href: /es/ciencia-de-datos-machine-learning
             icon: chart
           - title: Ciberseguridad
             description: Conviértete en especialista en ciberseguridad, preparado para identificar y mitigar vulnerabilidades de sistemas, alineado con ISO y otros estándares.
             cta: Ver programa
-            href: /en/career-programs/full-stack
-            icon: code
+            href: /es/ciberseguridad
+            icon: shield
           - title: IA Aplicada
             description: Explora en detalle la inteligencia artificial y cómo aplicarla en diferentes industrias, roles y tu trabajo. ¡Maximiza tu productividad en solo 6 semanas!
             cta: Ver programa
-            href: /en/career-programs/cybersecurity
-            icon: shield
+            href: /es/ia-aplicada
+            icon: code
         footer:
           text: ¿No sabes qué programa te conviene más? Mira nuestra comparación de programas
           linkText: aquí
-          href: /program-comparison
+          href: /es/comparacion-de-programas
     - label: POR QUÉ 4GEEKS
-      href: /why-4geeks
+      href: /es/por-que-4geeks
       component: Dropdown
       dropdown:
         type: columns
@@ -44,31 +44,41 @@ navbar:
           - title: Apoyo
             items:
               - label: Mentores y profesores
-                href: /en/geekpal-support
+                href: /es/mentores-profesores
               - label: Apoyo Profesional
-                href: /en/geekforce-career-support
+                href: /es/apoyo-profesional
+              - label: Plataforma Online
+                href: /es/plataforma-online
+              - label: Rigobot
+                href: /es/rigobot
+              - label: LearnPack
+                href: /es/learnpack
           - title: Validación
             items:
               - label: Premios
-                href: /en/awards
+                href: /es/premios
               - label: Resultados
-                href: /en/outcomes
+                href: /es/resultados
               - label: 4Geeks Vs Otros
-                href: /en/geeks-vs-others
+                href: /es/4geeks-vs-otros
           - title: Precios
             items:
               - label: Financiamiento
-                href: /en/financials
+                href: /es/financiamiento
               - label: Becas
-                href: /en/job-guarantee
+                href: /es/becas
+              - label: Garantía de Empleo
+                href: /es/garantia-de-empleo
           - title: Nuestros Estudiantes
             items:
               - label: Egresados y Proyectos
-                href: /en/graduates-and-projects
+                href: /es/egresados-proyectos
               - label: Testimonios
-                href: https://www.notion.so/4geeksacademy/Talent-Pipeline-4Geeks-Academy-ef91aba17f9c4964bf7972396d190bdf
+                href: /es/testimonios
+              - label: Talento
+                href: /es/talento
     - label: LA ACADEMIA
-      href: /the-academy
+      href: /es/la-academia
       component: Dropdown
       dropdown:
         type: simple-list
@@ -77,19 +87,19 @@ navbar:
         icon: graduation-cap
         items:
           - label: Contrata a nuestros egresados
-            href: /hire-alumni
+            href: /es/contratar-egresados
           - label: Asóciate con 4Geeks
-            href: /partner
+            href: /es/asociate
           - label: Trabaja con nosotros
-            href: /work-with-us
+            href: /es/trabaja-con-nosotros
           - label: Quiénes somos
-            href: /who-we-are
+            href: /es/quienes-somos
           - label: Prensa
-            href: /press
+            href: /es/prensa
           - label: Blog
-            href: /blog
+            href: /es/blog
     - label: CAMPUS
-      href: /campus
+      href: /es/campus
       component: Dropdown
       dropdown:
         type: grouped-list
@@ -100,47 +110,47 @@ navbar:
           - title: EE.UU. Y CANADÁ
             items:
               - label: Miami, EE.UU.
-                href: /campus/miami
+                href: /es/campus/miami
               - label: Nueva York, EE.UU.
-                href: /campus/nyc
+                href: /es/campus/nyc
               - label: Dallas, EE.UU.
-                href: /campus/dallas
+                href: /es/campus/dallas
               - label: Toronto, Canadá
-                href: /campus/toronto
+                href: /es/campus/toronto
               - label: Atlanta, EE.UU.
-                href: /campus/atlanta
+                href: /es/campus/atlanta
               - label: Austin, EE.UU.
-                href: /campus/austin
+                href: /es/campus/austin
               - label: Chicago, EE.UU.
-                href: /campus/chicago
+                href: /es/campus/chicago
               - label: Houston, EE.UU.
-                href: /campus/houston
+                href: /es/campus/houston
               - label: Los Ángeles, EE.UU.
-                href: /campus/los-angeles
+                href: /es/campus/los-angeles
               - label: Remoto, EE.UU.
-                href: /campus/remote
+                href: /es/campus/remoto
           - title: EUROPA
             items:
               - label: Madrid, España
-                href: /campus/madrid
+                href: /es/campus/madrid
               - label: Barcelona, España
-                href: /campus/barcelona
+                href: /es/campus/barcelona
               - label: Valencia, España
-                href: /campus/valencia
+                href: /es/campus/valencia
               - label: Málaga, España
-                href: /campus/malaga
+                href: /es/campus/malaga
               - label: Berlín, Alemania
-                href: /campus/berlin
+                href: /es/campus/berlin
           - title: LATAM
             items:
               - label: Santiago, Chile
-                href: /campus/santiago
+                href: /es/campus/santiago
               - label: Bogotá, Colombia
-                href: /campus/bogota
+                href: /es/campus/bogota
               - label: Ciudad de México, México
-                href: /campus/mexico-city
+                href: /es/campus/ciudad-de-mexico
               - label: Caracas, Venezuela
-                href: /campus/caracas
+                href: /es/campus/caracas
     - label: PRÓXIMAS FECHAS
-      href: /upcoming-dates
+      href: /es/proximas-fechas
       component: SimpleLink
