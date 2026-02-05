@@ -40,70 +40,88 @@ function HighlightSlideshow({
   style = {},
 }: HighlightSlideshowProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
   const goToSlide = useCallback((index: number) => {
-    if (index === currentSlide || isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentSlide(index);
-      setIsTransitioning(false);
-    }, 300);
-  }, [currentSlide, isTransitioning]);
+    if (index === currentSlide) return;
+    setCurrentSlide(index);
+  }, [currentSlide]);
 
   const nextSlide = useCallback(() => {
-    const next = (currentSlide + 1) % slides.length;
-    goToSlide(next);
-  }, [currentSlide, slides.length, goToSlide]);
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, [slides.length]);
 
   useEffect(() => {
-    if (isEditMode || slides.length <= 1 || !isVisible) return;
+    clearTimer();
+    
+    if (isEditMode || slides.length <= 1 || !isVisible) {
+      return;
+    }
 
     timerRef.current = setInterval(nextSlide, autoplayInterval);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [isEditMode, slides.length, autoplayInterval, nextSlide, isVisible]);
+    
+    return clearTimer;
+  }, [isEditMode, slides.length, autoplayInterval, nextSlide, isVisible, clearTimer]);
 
-  const slide = slides[currentSlide];
   const hasMultipleSlides = slides.length > 1;
 
-  const getTextAnimationStyle = (delay: number) => {
+  const getContainerAnimationStyle = () => {
     if (isEditMode) return {};
     return {
-      opacity: isVisible && !isTransitioning ? 1 : 0,
-      transform: isVisible && !isTransitioning ? "translateY(0)" : "translateY(12px)",
-      transition: `opacity 0.4s ease-out ${delay}s, transform 0.4s ease-out ${delay}s`,
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? "translateY(0)" : "translateY(24px)",
+      transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
     };
   };
 
   return (
     <div 
-      className={`${className} relative`}
-      style={style}
+      className={`${className} relative overflow-hidden`}
+      style={{ ...style, ...getContainerAnimationStyle() }}
       data-testid="image-row-highlight"
     >
-      <div className="flex flex-col justify-center h-full">
-        <p 
-          className="text-body mb-4 font-light"
-          style={getTextAnimationStyle(0.1)}
-        >
-          {slide?.heading}
-        </p>
-        <p 
-          className="text-h2 leading-tight"
-          style={getTextAnimationStyle(0.25)}
-        >
-          {slide?.text}
-        </p>
+      <div className="relative flex-1 min-h-0">
+        {slides.map((slide, index) => {
+          const isActive = index === currentSlide;
+          const slideStyle: React.CSSProperties = isEditMode 
+            ? { display: isActive ? "block" : "none" }
+            : {
+                position: index === 0 ? "relative" : "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                opacity: isActive ? 1 : 0,
+                transition: "opacity 0.5s ease-in-out",
+                pointerEvents: isActive ? "auto" : "none",
+              };
+
+          return (
+            <div
+              key={index}
+              className="flex flex-col justify-center"
+              style={slideStyle}
+              data-testid={`slide-content-${index}`}
+            >
+              <p className="text-body mb-4 font-light">
+                {slide.heading}
+              </p>
+              <p className="text-h2 leading-tight">
+                {slide.text}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {hasMultipleSlides && showIndicators && (
-        <div 
-          className="absolute bottom-4 left-0 right-0 flex justify-center gap-2"
-          style={getTextAnimationStyle(0.4)}
-        >
+        <div className="flex justify-center gap-2 mt-6">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -111,7 +129,7 @@ function HighlightSlideshow({
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentSlide 
                   ? "bg-current opacity-100 scale-125" 
-                  : "bg-current opacity-40 hover:opacity-60"
+                  : "bg-current opacity-40"
               }`}
               aria-label={`Go to slide ${index + 1}`}
               data-testid={`slide-indicator-${index}`}
@@ -205,7 +223,6 @@ export default function ImageRow({ data }: ImageRowProps) {
               isEditMode={isEditMode}
               isVisible={isVisible}
               className={`${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card md:hidden`}
-              style={getAnimationStyle(0)}
             />
           )}
 
@@ -262,7 +279,7 @@ export default function ImageRow({ data }: ImageRowProps) {
                   showIndicators={showIndicators}
                   isEditMode={isEditMode}
                   isVisible={isVisible}
-                  className={`hidden md:flex ${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card h-[var(--image-row-height-desktop)]`}
+                  className={`hidden md:flex ${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card flex-col h-[var(--image-row-height-desktop)]`}
                   style={{ flex: highlightWidth, ...getAnimationStyle(highlightIndex) }}
                 />
               )}
