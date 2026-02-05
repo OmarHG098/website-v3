@@ -18,16 +18,16 @@ navbar:
             cta: View program
             href: /en/career-programs/data-science-ml
             icon: chart
-          - title: Cybersecurity
-            description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
-            cta: View program
-            href: /en/career-programs/cybersecurity
-            icon: shield
           - title: Full Stack with AI
             description: Become a Full Stack developer using AI tools like Cursor and Vercel v0. Master in-demand AI skills and land a job as a developer.
             cta: View program
             href: /en/career-programs/full-stack
             icon: code
+          - title: Cybersecurity
+            description: Become a cybersecurity specialist, equipped to identify and mitigate system vulnerabilities, aligned with ISO and other standards.
+            cta: View program
+            href: /en/career-programs/cybersecurity
+            icon: shield
         footer:
           text: Unsure which program fits you best? See our program comparison
           linkText: here
@@ -47,12 +47,6 @@ navbar:
                 href: /en/geekpal-support
               - label: Career Support
                 href: /en/geekforce-career-support
-              - label: Online Platform
-                href: /online-platform
-              - label: Rigobot
-                href: /rigobot
-              - label: LearnPack
-                href: /learnpack
           - title: Validation
             items:
               - label: Awards
@@ -65,18 +59,14 @@ navbar:
             items:
               - label: Financing
                 href: /en/financials
-              - label: Scholarships
-                href: /scholarships
               - label: Job Guarantee
-                href: /job-guarantee
+                href: /en/job-guarantee
           - title: Our Students
             items:
               - label: Alumni & Projects
-                href: /alumni-projects
-              - label: Testimonials
-                href: /testimonials
+                href: /en/graduates-and-projects
               - label: Talent
-                href: /talent
+                href: https://www.notion.so/4geeksacademy/Talent-Pipeline-4Geeks-Academy-ef91aba17f9c4964bf7972396d190bdf
     - label: THE ACADEMY
       href: /the-academy
       component: Dropdown
