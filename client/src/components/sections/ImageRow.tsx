@@ -20,6 +20,67 @@ const BACKGROUND_CLASSES: Record<string, string> = {
   background: "bg-background text-foreground",
 };
 
+interface TypewriterTextProps {
+  text: string;
+  startDelayMs: number;
+  charDelayMs?: number;
+  isActive: boolean;
+  isEditMode: boolean;
+  className?: string;
+}
+
+function TypewriterText({ 
+  text, 
+  startDelayMs, 
+  charDelayMs = 30, 
+  isActive, 
+  isEditMode,
+  className = "" 
+}: TypewriterTextProps) {
+  const [visibleChars, setVisibleChars] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const startTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (startTimerRef.current) clearTimeout(startTimerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    if (isEditMode || !isActive) {
+      setVisibleChars(isEditMode ? text.length : 0);
+      return;
+    }
+
+    setVisibleChars(0);
+
+    startTimerRef.current = setTimeout(() => {
+      let currentChar = 0;
+      timerRef.current = setInterval(() => {
+        currentChar++;
+        setVisibleChars(currentChar);
+        if (currentChar >= text.length) {
+          if (timerRef.current) clearInterval(timerRef.current);
+        }
+      }, charDelayMs);
+    }, startDelayMs);
+
+    return () => {
+      if (startTimerRef.current) clearTimeout(startTimerRef.current);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [text, startDelayMs, charDelayMs, isActive, isEditMode]);
+
+  if (isEditMode) {
+    return <span className={className}>{text}</span>;
+  }
+
+  return (
+    <span className={className}>
+      <span>{text.slice(0, visibleChars)}</span>
+      <span style={{ opacity: 0 }}>{text.slice(visibleChars)}</span>
+    </span>
+  );
+}
+
 interface HighlightSlideshowProps {
   slides: ImageRowSlide[];
   autoplayInterval: number;
@@ -112,6 +173,9 @@ function HighlightSlideshow({
                 pointerEvents: isActive ? "auto" : "none",
               };
 
+          const headingDuration = slide.heading.length * 30;
+          const textStartDelay = 650 + headingDuration + 400;
+
           return (
             <div
               key={index}
@@ -119,17 +183,23 @@ function HighlightSlideshow({
               style={slideStyle}
               data-testid={`slide-content-${index}`}
             >
-              <p 
-                className="text-body mb-4 font-light"
-                style={isActive ? getTextAnimationStyle(0.65) : {}}
-              >
-                {slide.heading}
+              <p className="text-body mb-4 font-light">
+                <TypewriterText
+                  text={slide.heading}
+                  startDelayMs={650}
+                  charDelayMs={30}
+                  isActive={isActive && isVisible}
+                  isEditMode={isEditMode}
+                />
               </p>
-              <p 
-                className="text-h2 leading-tight"
-                style={isActive ? getTextAnimationStyle(0.85) : {}}
-              >
-                {slide.text}
+              <p className="text-h2 leading-tight">
+                <TypewriterText
+                  text={slide.text}
+                  startDelayMs={textStartDelay}
+                  charDelayMs={25}
+                  isActive={isActive && isVisible}
+                  isEditMode={isEditMode}
+                />
               </p>
             </div>
           );
