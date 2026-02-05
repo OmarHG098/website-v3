@@ -38,7 +38,7 @@ export function FeaturesGridStatsTextCard({
   const cardAnimationStyle: React.CSSProperties = {
     opacity: isVisible ? 1 : 0,
     transform: isVisible ? "translateX(0)" : "translateX(40px)",
-    transition: "opacity 0.6s ease-out, transform 0.6s ease-out",
+    transition: "opacity 0.6s ease-out 0.8s, transform 0.6s ease-out 0.8s",
   };
 
   return (
