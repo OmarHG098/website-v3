@@ -46,6 +46,12 @@ export const videoConfigSchema = z.object({
 
 export type VideoConfig = z.infer<typeof videoConfigSchema>;
 
+// Backward compatible video input - accepts string URL or full object
+// Use normalizeVideoConfig() helper to convert to VideoConfig
+export const videoInputSchema = z.union([z.string(), videoConfigSchema]);
+
+export type VideoInput = z.infer<typeof videoInputSchema>;
+
 // Image reference - used in hero, features_grid, etc.
 export const imageSchema = z.object({
   src: z.string(),
