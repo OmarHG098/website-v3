@@ -1,7 +1,4 @@
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { IconUser } from "@tabler/icons-react";
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query";
@@ -58,13 +55,6 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
-          <Button variant="ghost" size="icon" data-testid="button-profile">
-            <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                <IconUser className="h-4 w-4" />
-              </AvatarFallback>
-            </Avatar>
-          </Button>
         </div>
       </div>
     </header>
