@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
-import type { ImageRowSection } from "../../../../marketing-content/component-registry/image_row/v1.0/schema";
+import type { ImageRowSection, ImageRowSlide } from "../../../../marketing-content/component-registry/image_row/v1.0/schema";
 
 interface ImageRowProps {
   data: ImageRowSection;
@@ -19,6 +19,109 @@ const BACKGROUND_CLASSES: Record<string, string> = {
   card: "bg-card text-card-foreground",
   background: "bg-background text-foreground",
 };
+
+interface HighlightSlideshowProps {
+  slides: ImageRowSlide[];
+  autoplayInterval: number;
+  showIndicators: boolean;
+  isEditMode: boolean;
+  isVisible: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+function HighlightSlideshow({ 
+  slides, 
+  autoplayInterval, 
+  showIndicators, 
+  isEditMode,
+  isVisible,
+  className = "",
+  style = {},
+}: HighlightSlideshowProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const goToSlide = useCallback((index: number) => {
+    if (index === currentSlide || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setIsTransitioning(false);
+    }, 300);
+  }, [currentSlide, isTransitioning]);
+
+  const nextSlide = useCallback(() => {
+    const next = (currentSlide + 1) % slides.length;
+    goToSlide(next);
+  }, [currentSlide, slides.length, goToSlide]);
+
+  useEffect(() => {
+    if (isEditMode || slides.length <= 1 || !isVisible) return;
+
+    timerRef.current = setInterval(nextSlide, autoplayInterval);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isEditMode, slides.length, autoplayInterval, nextSlide, isVisible]);
+
+  const slide = slides[currentSlide];
+  const hasMultipleSlides = slides.length > 1;
+
+  const getTextAnimationStyle = (delay: number) => {
+    if (isEditMode) return {};
+    return {
+      opacity: isVisible && !isTransitioning ? 1 : 0,
+      transform: isVisible && !isTransitioning ? "translateY(0)" : "translateY(12px)",
+      transition: `opacity 0.4s ease-out ${delay}s, transform 0.4s ease-out ${delay}s`,
+    };
+  };
+
+  return (
+    <div 
+      className={`${className} relative`}
+      style={style}
+      data-testid="image-row-highlight"
+    >
+      <div className="flex flex-col justify-center h-full">
+        <p 
+          className="text-body mb-4 font-light"
+          style={getTextAnimationStyle(0.1)}
+        >
+          {slide?.heading}
+        </p>
+        <p 
+          className="text-h2 leading-tight"
+          style={getTextAnimationStyle(0.25)}
+        >
+          {slide?.text}
+        </p>
+      </div>
+
+      {hasMultipleSlides && showIndicators && (
+        <div 
+          className="absolute bottom-4 left-0 right-0 flex justify-center gap-2"
+          style={getTextAnimationStyle(0.4)}
+        >
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? "bg-current opacity-100 scale-125" 
+                  : "bg-current opacity-40 hover:opacity-60"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              data-testid={`slide-indicator-${index}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ImageRow({ data }: ImageRowProps) {
   const {
@@ -81,23 +184,29 @@ export default function ImageRow({ data }: ImageRowProps) {
 
   const highlightIndex = images.length;
 
+  const slides: ImageRowSlide[] = highlight?.slides?.length 
+    ? highlight.slides 
+    : highlight?.heading && highlight?.text 
+      ? [{ heading: highlight.heading, text: highlight.text }]
+      : [];
+
+  const autoplayInterval = highlight?.autoplay_interval || 5000;
+  const showIndicators = highlight?.show_indicators !== false;
+
   return (
     <section ref={sectionRef} className={sectionBgClass} data-testid="section-image-row">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4 max-w-7xl mx-auto">
-          {highlight && (
-            <div 
-              className={`${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card flex flex-col justify-center md:hidden`}
+          {slides.length > 0 && (
+            <HighlightSlideshow
+              slides={slides}
+              autoplayInterval={autoplayInterval}
+              showIndicators={showIndicators}
+              isEditMode={isEditMode}
+              isVisible={isVisible}
+              className={`${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card md:hidden`}
               style={getAnimationStyle(0)}
-              data-testid="image-row-highlight-mobile"
-            >
-              <p className="text-body mb-4 font-light">
-                {highlight.heading}
-              </p>
-              <p className="text-h2 leading-tight">
-                {highlight.text}
-              </p>
-            </div>
+            />
           )}
 
           <div 
@@ -146,19 +255,16 @@ export default function ImageRow({ data }: ImageRowProps) {
                 );
               })}
 
-              {highlight && (
-                <div 
-                  className={`hidden md:flex ${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card flex-col justify-center h-[var(--image-row-height-desktop)]`}
+              {slides.length > 0 && (
+                <HighlightSlideshow
+                  slides={slides}
+                  autoplayInterval={autoplayInterval}
+                  showIndicators={showIndicators}
+                  isEditMode={isEditMode}
+                  isVisible={isVisible}
+                  className={`hidden md:flex ${highlightBg} px-6 py-8 md:px-8 md:py-12 rounded-card h-[var(--image-row-height-desktop)]`}
                   style={{ flex: highlightWidth, ...getAnimationStyle(highlightIndex) }}
-                  data-testid="image-row-highlight-desktop"
-                >
-                  <p className="text-body mb-4 font-light">
-                    {highlight.heading}
-                  </p>
-                  <p className="text-h2 leading-tight">
-                    {highlight.text}
-                  </p>
-                </div>
+                />
               )}
             </div>
           </div>

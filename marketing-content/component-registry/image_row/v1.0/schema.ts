@@ -14,11 +14,20 @@ export const imageRowImageSchema = z.object({
   height: z.string().optional().describe("Individual image height (e.g., '400px', '20rem'). Overrides global height."),
 });
 
-export const imageRowHighlightSchema = z.object({
+export const imageRowSlideSchema = z.object({
   heading: z.string().describe("Small heading text above main message"),
   text: z.string().describe("Main message text"),
+});
+
+export const imageRowHighlightSchema = z.object({
+  // Support both single heading/text (backward compat) and slides array
+  heading: z.string().optional().describe("Small heading text (for single slide mode)"),
+  text: z.string().optional().describe("Main message text (for single slide mode)"),
+  slides: z.array(imageRowSlideSchema).optional().describe("Array of slides for multi-slide mode"),
   background: z.enum(["primary", "accent", "muted", "card"]).optional().describe("Background color theme"),
   width: z.number().optional().describe("Relative width compared to images (default: 2)"),
+  autoplay_interval: z.number().optional().describe("Auto-rotation interval in milliseconds (default: 5000)"),
+  show_indicators: z.boolean().optional().describe("Show slide indicator dots (default: true for multi-slide)"),
 });
 
 export const imageRowSectionSchema = z.object({
@@ -33,5 +42,6 @@ export const imageRowSectionSchema = z.object({
 });
 
 export type ImageRowImage = z.infer<typeof imageRowImageSchema>;
+export type ImageRowSlide = z.infer<typeof imageRowSlideSchema>;
 export type ImageRowHighlight = z.infer<typeof imageRowHighlightSchema>;
 export type ImageRowSection = z.infer<typeof imageRowSectionSchema>;
