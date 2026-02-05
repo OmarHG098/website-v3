@@ -8,7 +8,7 @@ navbar:
         title: Programs
         description: From beginner to job-ready in record time. Train in today's most in-demand tech fields and launch a lasting career.
         items:
-          - title: Applied AI
+          - title: AI Engineering
             description: Explore in detail artificial intelligence and how to apply it in different industries, roles, and your work. Maximize your productivity in just 6 weeks!
             cta: View program
             href: /applied-ai
@@ -44,9 +44,9 @@ navbar:
           - title: Support
             items:
               - label: Mentors and teachers
-                href: /mentors-teachers
+                href: /en/geekpal-support
               - label: Career Support
-                href: /career-support
+                href: /en/geekforce-career-support
               - label: Online Platform
                 href: /online-platform
               - label: Rigobot
@@ -56,15 +56,15 @@ navbar:
           - title: Validation
             items:
               - label: Awards
-                href: /awards
+                href: /en/awards
               - label: Outcomes
-                href: /outcomes
+                href: /en/outcomes
               - label: 4Geeks Vs Others
-                href: /4geeks-vs-others
+                href: /en/geeks-vs-others
           - title: Pricing
             items:
               - label: Financing
-                href: /financing
+                href: /en/financials
               - label: Scholarships
                 href: /scholarships
               - label: Job Guarantee

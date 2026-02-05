@@ -435,7 +435,15 @@ export default function MenuEditor() {
   const saveMutation = useMutation({
     mutationFn: async (yamlContent: string) => {
       const parsedData = yaml.load(yamlContent) as MenuData;
-      return apiRequest("POST", `/api/menus/${menuName}?locale=${locale}`, { data: parsedData });
+      
+      // Use different endpoints based on locale:
+      // - English: structure endpoint (propagates to all translations)
+      // - Other locales: translations endpoint (text-only changes)
+      if (isEnglish) {
+        return apiRequest("PUT", `/api/menus/${menuName}/structure`, { data: parsedData });
+      } else {
+        return apiRequest("PUT", `/api/menus/${menuName}/translations?locale=${locale}`, { data: parsedData });
+      }
     },
     onSuccess: (response: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/menus", menuName] });
@@ -445,12 +453,16 @@ export default function MenuEditor() {
       setHasChanges(false);
       
       const syncMessage = response.syncResults && Object.keys(response.syncResults).length > 0
-        ? ` Translation files synced: ${Object.keys(response.syncResults).join(", ")}`
+        ? ` Synced to: ${Object.keys(response.syncResults).join(", ")}`
         : "";
+      
+      const endpointMessage = isEnglish 
+        ? `Structure saved and synced to translations.${syncMessage}`
+        : `${locale.toUpperCase()} translations saved.`;
       
       toast({
         title: "Menu saved",
-        description: `Changes saved!${syncMessage} Refresh the homepage to see updates in the navbar.`,
+        description: `${endpointMessage} Refresh the homepage to see updates.`,
       });
     },
     onError: (error) => {
