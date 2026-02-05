@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "16ab2d2a72281cf72b3f6912848839e715a9e265",
-  "lastSyncedAt": "2026-02-05T00:22:37.526Z",
+  "lastSyncedCommit": "e88bb9f955764477cdbf005b5a42b8f6d0d07307",
+  "lastSyncedAt": "2026-02-05T15:08:00.955Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -553,14 +553,14 @@
       "remoteSha": "3593c000c1eb0c13ae773ad1773099ea0f9bd57f5ffbde8f85d9444a07870bbf"
     },
     "marketing-content/menus/main-navbar.es.yml": {
-      "sha": "0eeb7cb4c13823aaaadb4efb780ca6276b0c1f3887c42a91639ac81add672301",
-      "lastModified": 1770250867898.541,
-      "remoteSha": "0eeb7cb4c13823aaaadb4efb780ca6276b0c1f3887c42a91639ac81add672301"
+      "sha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b",
+      "lastModified": 1770304079693.7527,
+      "remoteSha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b"
     },
     "marketing-content/menus/main-navbar.yml": {
-      "sha": "9077aa7504e818af54246b626429d2afff34d1d73a14813eb46ede6f6e3bf2ba",
-      "lastModified": 1770250954959.4626,
-      "remoteSha": "9077aa7504e818af54246b626429d2afff34d1d73a14813eb46ede6f6e3bf2ba"
+      "sha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7",
+      "lastModified": 1770304080041.7522,
+      "remoteSha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7"
     },
     "marketing-content/pages/apply/_common.yml": {
       "sha": "d8a47ce1eb05054953608c0f860e7b692b52e9a4368f90fed0a35f57a93cf7f3",
@@ -726,6 +726,16 @@
       "sha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4",
       "lastModified": 1769618234802.1636,
       "remoteSha": "2ded928ddaa147ca4f4e1a6da9ce0cbf1425ebea3349511fd13ab273b35d89e4"
+    },
+    "marketing-content/pages/scholarships/_common.yml": {
+      "sha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0",
+      "lastModified": 1770304080339.7517,
+      "remoteSha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0"
+    },
+    "marketing-content/pages/scholarships/es.yml": {
+      "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
+      "lastModified": 1770304080691.7515,
+      "remoteSha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741"
     },
     "marketing-content/programs/ai-engineering/en.yml": {
       "sha": "1f60a66bea756b498b1d56e58d232405cdc571ea631c2b1d1bd0e1660b6032d8",
