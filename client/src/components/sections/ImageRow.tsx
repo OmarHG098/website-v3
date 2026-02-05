@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useEditMode } from "@/contexts/EditModeContext";
+import { useEditModeOptional } from "@/contexts/EditModeContext";
 import type { ImageRowSection } from "../../../../marketing-content/component-registry/image_row/v1.0/schema";
 
 interface ImageRowProps {
@@ -31,7 +31,8 @@ export default function ImageRow({ data }: ImageRowProps) {
     background,
   } = data;
 
-  const { isEditMode } = useEditMode();
+  const editModeContext = useEditModeOptional();
+  const isEditMode = editModeContext?.isEditMode ?? false;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
