@@ -47,16 +47,16 @@ function AnimatedValue({ value, animate, animationDelay }: AnimatedValueProps) {
   const targetNum1 = parseNumericValue(num1);
   const targetNum2 = num2 ? parseNumericValue(num2) : null;
   
-  const [displayNum1, setDisplayNum1] = useState(animate ? 0 : targetNum1);
-  const [displayNum2, setDisplayNum2] = useState(animate ? 0 : (targetNum2 ?? 0));
-  const [hasStarted, setHasStarted] = useState(!animate);
+  const [displayNum1, setDisplayNum1] = useState(0);
+  const [displayNum2, setDisplayNum2] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const animationRef = useRef<number | null>(null);
   
   useEffect(() => {
-    if (!animate || hasStarted) return;
+    if (!animate || hasAnimated) return;
     
     const startTimer = setTimeout(() => {
-      setHasStarted(true);
+      setHasAnimated(true);
       const duration = 1500;
       const startTime = performance.now();
       
@@ -84,7 +84,7 @@ function AnimatedValue({ value, animate, animationDelay }: AnimatedValueProps) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animate, hasStarted, targetNum1, targetNum2, animationDelay]);
+  }, [animate, hasAnimated, targetNum1, targetNum2, animationDelay]);
 
   return (
     <>
