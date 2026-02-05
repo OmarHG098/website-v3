@@ -35,6 +35,54 @@ interface AnimatedValueProps {
   animationDelay: number;
 }
 
+function useCountUp(target: number, duration: number, shouldAnimate: boolean, delay: number = 0): number {
+  const [current, setCurrent] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const hasStartedRef = useRef(false);
+
+  useEffect(() => {
+    if (!shouldAnimate) {
+      return;
+    }
+
+    if (hasStartedRef.current) {
+      return;
+    }
+
+    const delayTimer = setTimeout(() => {
+      hasStartedRef.current = true;
+      setCurrent(0);
+      startTimeRef.current = null;
+
+      const animate = (timestamp: number) => {
+        if (startTimeRef.current === null) {
+          startTimeRef.current = timestamp;
+        }
+        const elapsed = timestamp - startTimeRef.current;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCurrent(eased * target);
+
+        if (progress < 1) {
+          rafRef.current = requestAnimationFrame(animate);
+        }
+      };
+
+      rafRef.current = requestAnimationFrame(animate);
+    }, delay);
+
+    return () => {
+      clearTimeout(delayTimer);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [shouldAnimate, target, duration, delay]);
+
+  return current;
+}
+
 function AnimatedValue({ value, animate, animationDelay }: AnimatedValueProps) {
   const match = value.match(/^(~)?(\$?)([0-9.,]+)([A-Za-z%x]+)?(-)?(\$?)([0-9.,]+)?([A-Za-z%x]+)?$/);
   
@@ -47,54 +95,18 @@ function AnimatedValue({ value, animate, animationDelay }: AnimatedValueProps) {
   const targetNum1 = parseNumericValue(num1);
   const targetNum2 = num2 ? parseNumericValue(num2) : null;
   
-  const [displayNum1, setDisplayNum1] = useState(0);
-  const [displayNum2, setDisplayNum2] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const animationRef = useRef<number | null>(null);
-  
-  useEffect(() => {
-    if (!animate || hasAnimated) return;
-    
-    const startTimer = setTimeout(() => {
-      setHasAnimated(true);
-      const duration = 1500;
-      const startTime = performance.now();
-      
-      const tick = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        
-        setDisplayNum1(eased * targetNum1);
-        if (targetNum2 !== null) {
-          setDisplayNum2(eased * targetNum2);
-        }
-        
-        if (progress < 1) {
-          animationRef.current = requestAnimationFrame(tick);
-        }
-      };
-      
-      animationRef.current = requestAnimationFrame(tick);
-    }, animationDelay);
-    
-    return () => {
-      clearTimeout(startTimer);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [animate, hasAnimated, targetNum1, targetNum2, animationDelay]);
+  const count1 = useCountUp(targetNum1, 1500, animate, animationDelay);
+  const count2 = useCountUp(targetNum2 ?? 0, 1500, animate && targetNum2 !== null, animationDelay);
 
   return (
     <>
       {tilde && <span>{tilde}</span>}
       {prefix1 && <span>{prefix1}</span>}
-      <span>{formatNumber(displayNum1, num1)}</span>
+      <span>{formatNumber(count1, num1)}</span>
       {unit1 && <span>{unit1}</span>}
       {separator && <span>{separator}</span>}
       {prefix2 && <span>{prefix2}</span>}
-      {targetNum2 !== null && <span>{formatNumber(displayNum2, num2!)}</span>}
+      {targetNum2 !== null && <span>{formatNumber(count2, num2!)}</span>}
       {unit2 && <span>{unit2}</span>}
     </>
   );
