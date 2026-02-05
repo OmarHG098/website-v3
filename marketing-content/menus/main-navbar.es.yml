@@ -1,39 +1,39 @@
 navbar:
   items:
     - label: PROGRAMAS
-      href: /es/programas
+      href: /programs
       component: Dropdown
       dropdown:
         type: cards
         title: Programas
         description: De principiante a listo para trabajar en tiempo récord. Entrénate en los campos tecnológicos más demandados y lanza una carrera duradera.
         items:
-          - title: Full Stack con IA
-            description: Conviértete en desarrollador Full Stack usando herramientas de IA como Cursor y Vercel v0. Domina las habilidades de IA más demandadas y consigue trabajo como desarrollador.
+          - title: Ingeniería en Inteligencia Artificial
+            description: Explora en detalle la inteligencia artificial y cómo aplicarla en diferentes industrias, roles y tu trabajo. ¡Maximiza tu productividad en solo 6 semanas!
             cta: Ver programa
-            href: /es/desarrollo-full-stack
+            href: /en/career-programs/ai-engineering
             icon: brain
           - title: Ciencia de Datos y Machine Learning con IA
             description: Domina el análisis de datos potenciado por IA con Python. Construye modelos inteligentes usando técnicas de vanguardia en Machine Learning e IA para resolver problemas reales.
             cta: Ver programa
-            href: /es/ciencia-de-datos-machine-learning
+            href: /en/career-programs/data-science-ml
             icon: chart
           - title: Ciberseguridad
             description: Conviértete en especialista en ciberseguridad, preparado para identificar y mitigar vulnerabilidades de sistemas, alineado con ISO y otros estándares.
             cta: Ver programa
-            href: /es/ciberseguridad
+            href: /en/career-programs/cybersecurity
             icon: shield
-          - title: IA Aplicada
-            description: Explora en detalle la inteligencia artificial y cómo aplicarla en diferentes industrias, roles y tu trabajo. ¡Maximiza tu productividad en solo 6 semanas!
+          - title: Full Stack con IA
+            description: Conviértete en desarrollador Full Stack usando herramientas de IA como Cursor y Vercel v0. Domina las habilidades de IA más demandadas y consigue trabajo como desarrollador.
             cta: Ver programa
-            href: /es/ia-aplicada
+            href: /en/career-programs/full-stack
             icon: code
         footer:
           text: ¿No sabes qué programa te conviene más? Mira nuestra comparación de programas
           linkText: aquí
-          href: /es/comparacion-de-programas
+          href: /program-comparison
     - label: POR QUÉ 4GEEKS
-      href: /es/por-que-4geeks
+      href: /why-4geeks
       component: Dropdown
       dropdown:
         type: columns
@@ -44,41 +44,41 @@ navbar:
           - title: Apoyo
             items:
               - label: Mentores y profesores
-                href: /es/mentores-profesores
+                href: /en/geekpal-support
               - label: Apoyo Profesional
-                href: /es/apoyo-profesional
+                href: /en/geekforce-career-support
               - label: Plataforma Online
-                href: /es/plataforma-online
+                href: /online-platform
               - label: Rigobot
-                href: /es/rigobot
+                href: /rigobot
               - label: LearnPack
-                href: /es/learnpack
+                href: /learnpack
           - title: Validación
             items:
               - label: Premios
-                href: /es/premios
+                href: /en/awards
               - label: Resultados
-                href: /es/resultados
+                href: /en/outcomes
               - label: 4Geeks Vs Otros
-                href: /es/4geeks-vs-otros
+                href: /en/geeks-vs-others
           - title: Precios
             items:
               - label: Financiamiento
-                href: /es/financiamiento
+                href: /en/financials
               - label: Becas
-                href: /es/becas
+                href: /en/scholarships
               - label: Garantía de Empleo
-                href: /es/garantia-de-empleo
+                href: /en/job-guarantee
           - title: Nuestros Estudiantes
             items:
               - label: Egresados y Proyectos
-                href: /es/egresados-proyectos
+                href: /en/graduates-and-projects
               - label: Testimonios
-                href: /es/testimonios
+                href: /testimonials
               - label: Talento
-                href: /es/talento
+                href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
     - label: LA ACADEMIA
-      href: /es/la-academia
+      href: /the-academy
       component: Dropdown
       dropdown:
         type: simple-list
@@ -87,19 +87,19 @@ navbar:
         icon: graduation-cap
         items:
           - label: Contrata a nuestros egresados
-            href: /es/contratar-egresados
+            href: /hire-alumni
           - label: Asóciate con 4Geeks
-            href: /es/asociate
+            href: /partner
           - label: Trabaja con nosotros
-            href: /es/trabaja-con-nosotros
+            href: /work-with-us
           - label: Quiénes somos
-            href: /es/quienes-somos
+            href: /who-we-are
           - label: Prensa
-            href: /es/prensa
+            href: /press
           - label: Blog
-            href: /es/blog
+            href: /blog
     - label: CAMPUS
-      href: /es/campus
+      href: /campus
       component: Dropdown
       dropdown:
         type: grouped-list
@@ -110,47 +110,47 @@ navbar:
           - title: EE.UU. Y CANADÁ
             items:
               - label: Miami, EE.UU.
-                href: /es/campus/miami
+                href: /en/location/miami-usa
               - label: Nueva York, EE.UU.
-                href: /es/campus/nyc
+                href: /campus/nyc
               - label: Dallas, EE.UU.
-                href: /es/campus/dallas
+                href: /campus/dallas
               - label: Toronto, Canadá
-                href: /es/campus/toronto
+                href: /campus/toronto
               - label: Atlanta, EE.UU.
-                href: /es/campus/atlanta
+                href: /campus/atlanta
               - label: Austin, EE.UU.
-                href: /es/campus/austin
+                href: /campus/austin
               - label: Chicago, EE.UU.
-                href: /es/campus/chicago
+                href: /campus/chicago
               - label: Houston, EE.UU.
-                href: /es/campus/houston
+                href: /campus/houston
               - label: Los Ángeles, EE.UU.
-                href: /es/campus/los-angeles
+                href: /campus/los-angeles
               - label: Remoto, EE.UU.
-                href: /es/campus/remoto
+                href: /campus/remote
           - title: EUROPA
             items:
               - label: Madrid, España
-                href: /es/campus/madrid
+                href: /campus/madrid
               - label: Barcelona, España
-                href: /es/campus/barcelona
+                href: /campus/barcelona
               - label: Valencia, España
-                href: /es/campus/valencia
+                href: /campus/valencia
               - label: Málaga, España
-                href: /es/campus/malaga
+                href: /campus/malaga
               - label: Berlín, Alemania
-                href: /es/campus/berlin
+                href: /campus/berlin
           - title: LATAM
             items:
               - label: Santiago, Chile
-                href: /es/campus/santiago
+                href: /campus/santiago
               - label: Bogotá, Colombia
-                href: /es/campus/bogota
+                href: /campus/bogota
               - label: Ciudad de México, México
-                href: /es/campus/ciudad-de-mexico
+                href: /campus/mexico-city
               - label: Caracas, Venezuela
-                href: /es/campus/caracas
+                href: /campus/caracas
     - label: PRÓXIMAS FECHAS
-      href: /es/proximas-fechas
+      href: /upcoming-dates
       component: SimpleLink
