@@ -24,7 +24,7 @@ sections:
       prefix: Conviértete en
       highlight: Ingeniero de IA
       color: primary
-    description: Aprende a desarrollar, integrar y desplegar soluciones de IA que las empresas ya están contratando — en solo 24 semanas, con mentorías 1:1 ilimitadas.
+    description: Aprende a desarrollar, integrar y desplegar soluciones de IA que las empresas ya están contratando — en solo 24 semanas.
     form:
       variant: stacked
       conversion_name: student_application
@@ -90,7 +90,11 @@ sections:
       prefix: Conviértete en
       highlight: Ingeniero de IA
       color: primary
-    description: Aprende a desarrollar, integrar y desplegar soluciones de IA que las empresas ya están contratando — en solo 24 semanas, con mentorías 1:1 ilimitadas.
+    description: Aprende a desarrollar, integrar y desplegar soluciones de IA que las empresas ya están contratando — en solo 24 semanas.
+    bullets:
+      - text: Aprende las habilidades en ingeniería de IA que hoy buscan las empresas tecnológicas.
+      - text: Accede a mentorías 1:1 ilimitadas y a una comunidad profesional de por vida.
+      - text: Fórmate en grupos reducidos, con acompañamiento continuo incluso después de graduarte.
     video:
       url: https://www.youtube.com/shorts/sSxJnelPJT8
       ratio: "9:16"
@@ -351,7 +355,33 @@ sections:
       desktop: none
     paddingY:
       mobile: lg none
-      desktop: lg none
+      desktop: lg md
+  - type: award_badges
+    version: v1.0
+    variant: detailed
+    showBorder: false
+    items:
+      - id: coursereport-detailed
+        alt: Course Report - Best Coding Bootcamp
+        logo: /images/awards/course-report.svg
+        logoHeight: h-16
+        description: Reconocido como uno de los mejores bootcamps de programación a nivel mundial
+        link: https://www.coursereport.com
+        linkText: Read reviews
+      - id: switchup-detailed
+        alt: SwitchUp - Top Bootcamp
+        logo: /images/awards/switchup.svg
+        logoHeight: h-16
+        description: El bootcamp mejor valorado, basado en reseñas verificadas de alumnos
+        link: https://www.switchup.org
+        linkText: See rankings
+      - id: careerkarma-detailed
+        alt: Career Karma - Best Value
+        logo: /images/awards/career-karma.svg
+        logoHeight: h-16
+        description: La mejor inversión para quienes empiezan de cero o buscan un cambio de carrera.
+        link: https://careerkarma.com
+        linkText: Learn more
   - type: ai_learning
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué aprender Ingeniería de IA con 4Geeks?
@@ -451,51 +481,6 @@ sections:
       mobile: lg
       desktop: lg
     background: hsl(var(--muted))
-  - type: pricing
-    version: "1.0"
-    variant: product
-    title: Financia tu inversión
-    subtitle: Tu futuro en tech está a tu alcance.
-    discount_text: "Descuento por pago completo: ahorra 10% pagando por adelantado."
-    financing_text: "Financiamiento con crédito: desde"
-    financing_amount: $349
-    tech_icons:
-      - openai
-      - claude
-      - python
-      - pandas
-      - numpy
-      - scikitlearn
-      - pytorch
-      - matplotlib
-      - react
-      - nextjs
-      - tailwindcss
-      - nodejs
-      - vercel
-      - supabase
-      - git
-      - github
-      - postman
-      - n8n
-    features_title: Ofrecemos varias formas de financiar tu inscripción. Elige la opción que mejor te funcione.
-    features:
-      - icon: IconCheck
-        text: Matrícula regular $14,999. Paga por adelantado y obtén 10% de descuento, o distribuye pagos sin intereses en 6 meses.
-      - icon: IconCheck
-        text: Financia tu matrícula con Climb, Fortify o Lumion. Planes de 24, 36, 48 o 60 meses.
-      - icon: IconCheck
-        text: 2–3 becas parciales por cohorte para candidatos altamente calificados.
-        use_rigobot_icon: true
-      - icon: IconCheck
-        text: Inscríbete con Garantía de empleo. Consigue trabajo en 9 meses tras graduarte o te devolvemos el dinero.
-    cta:
-      text: Obtener más info
-      url: "#hero-form"
-      variant: primary
-    paddingY:
-      mobile: lg none
-      desktop: lg none
   - type: whos_hiring
     variant: carousel
     title: Confiado por líderes innovadores
@@ -582,6 +567,31 @@ sections:
         rating: 5
         comment: Excelente contenido y gran apoyo de mentores. Ahora trabajo en IA de vanguardia.
         outcome: +100% aumento salarial
+  - type: numbered_steps
+    version: "1.0"
+    variant: bubbleText
+    title: Nuestro proceso de admisión
+    description: Postular no significa inscribirse automáticamente. Evaluamos cada perfil para asegurar que este programa sea el adecuado para ti.
+    steps:
+      - icon: Application
+        title: Aplicación al programa
+        bullets:
+          - Completa el formulario inicial para iniciar tu proceso de admisión.
+          - Revisamos tu perfil, experiencia y objetivos profesionales.
+          - Buscamos personas comprometidas con una transformación real en su carrera.
+      - icon: Interview
+        title: Entrevista telefónica
+        bullets:
+          - Tendrás una conversación con nuestro equipo académico o de admisiones.
+          - Evaluamos tu motivación, disponibilidad y encaje con el programa.
+          - No es un examen técnico, es una conversación para entender si este es el momento adecuado para ti.
+      - icon: Decision
+        title: Selección y próximos pasos
+        bullets:
+          - Si tu perfil encaja, te compartimos la información completa para avanzar.
+          - Recibirás orientación clara sobre fechas, inversión y expectativas.
+          - Si no es el mejor momento, te recomendamos alternativas para tu crecimiento profesional.
+    background: bg-background
   - type: cta_banner
     version: "1.0"
     title: ¿Listo para convertirte en Ingeniero de IA?
