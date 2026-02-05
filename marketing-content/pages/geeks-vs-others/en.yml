@@ -91,9 +91,45 @@ sections:
       - heading: Lifelong Career Support
         text: GeekFORCE is designed to get you hired and keep advancing your career. From landing your first role to leveling up, you can access career coaching whenever you need it.
     footer: More than 10,000 graduates have launched successful tech careers with 4Geeks.
-  - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: With 84% of our graduates hired within six months, their stories show how hands-on learning, personalized mentorship, and career support launch careers in tech.
+  - type: features_grid
+    version: "1.0"
+    variant: stats-cards
+    title: Graduate Success by the Numbers
+    subtitle: Our alumni are landing jobs, increasing salaries, and launching tech careers worldwide.
+    use_card: true
+    items:
+      - value: 84%
+        title: Job placement rate
+      - value: 3-6 months
+        title: Average time to get hired
+      - value: 55%
+        title: Salary increase after graduation
+    marginY:
+      desktop: lg none
+  - type: value_proof_panel
+    title: Recognized Globally for Excellence
+    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
+    evidence_items:
+      - icon: Trophy
+        title: Top 5 Coding Bootcamps Worldwide
+        source: Newsweek, Forbes, SwitchUp, Course Report
+      - icon: Award
+        title: Best Student Support & Best Value
+        source: Course Report, SwitchUp
+      - icon: Users
+        title: 35,000+ Graduates Across 20+ Countries
+        description: A global community of successful tech professionals
+      - icon: Certificate
+        title: Industry-Recognized Certificates
+        description: Credentials that employers trust and value
+    media:
+      type: image
+      src: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
+      alt: Students collaborating in classroom
+      aspect_ratio: "4:3"
+      style: rounded
+    background: bg-muted/30
+    stacked_header: true
   - type: features_quad
     version: "1.0"
     variant: default
@@ -112,21 +148,6 @@ sections:
       - icon: School
         title: Scholarships Available
         description: Partial scholarships are available for eligible students.
-  - type: features_grid
-    version: "1.0"
-    variant: stats-cards
-    title: Graduate Success by the Numbers
-    subtitle: Our alumni are landing jobs, increasing salaries, and launching tech careers worldwide.
-    use_card: true
-    items:
-      - value: 84%
-        title: Job placement rate
-      - value: 3-6 months
-        title: Average time to get hired
-      - value: 55%
-        title: Salary increase after graduation
-    marginY:
-      desktop: lg none
   - type: split_cards
     variant: primary-left
     primary:
@@ -139,12 +160,14 @@ sections:
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
     background: muted
+  - type: testimonials_slide
+    title: Real Careers Start Here — Just Ask Our Students
+    description: With 84% of our graduates hired within six months, their stories show how hands-on learning, personalized mentorship, and career support launch careers in tech.
   - type: whos_hiring
-    version: v1.0
     variant: carousel
     pretitle: Customer Stories
-    title: Trusted by the world's most innovative companies
-    subtitle: See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth.
+    title: Our Alumni Work at Top Global Companies
+    subtitle: Our programs, mentorship, and career support launch students into thriving tech careers.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -170,76 +193,6 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-  - type: value_proof_panel
-    title: Recognized Globally for Excellence
-    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
-    evidence_items:
-      - icon: Trophy
-        title: Top 5 Coding Bootcamps Worldwide
-        source: Newsweek, Forbes, SwitchUp, Course Report
-      - icon: Award
-        title: Best Student Support & Best Value
-        source: Course Report, SwitchUp
-      - icon: Users
-        title: 35,000+ Graduates Across 20+ Countries
-        description: A global community of successful tech professionals
-      - icon: Certificate
-        title: Industry-Recognized Certificates
-        description: Credentials that employers trust and value
-    media:
-      type: image
-      src: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
-      alt: Students collaborating in classroom
-      aspect_ratio: "4:3"
-      style: rounded
-    background: bg-muted/30
-    stacked_header: true
-  - type: testimonials
-    version: v1.0
-    title: What Our Students Say
-    subtitle: Real stories from graduates who transformed their careers
-    rating_summary:
-      average: "4.9"
-      count: 2,847
-    items:
-      - name: Maria Rodriguez
-        role: Software Engineer
-        company: Google
-        rating: 5
-        comment: This program changed my life. I went from zero coding experience to landing my dream job in 6 months.
-        outcome: Hired in 4 months
-      - name: James Chen
-        role: Full Stack Developer
-        company: Spotify
-        rating: 5
-        comment: The mentorship was incredible. Having unlimited access to senior developers made all the difference.
-        outcome: 3x salary increase
-      - name: Sarah Williams
-        role: Frontend Developer
-        company: Meta
-        rating: 5
-        comment: The AI-powered learning tools helped me understand complex concepts faster than any other course I've tried.
-        outcome: Career change at 35
-      - name: Carlos Mendez
-        role: Backend Engineer
-        company: Amazon
-        rating: 4
-        comment: Practical projects and real-world scenarios prepared me better than my computer science degree.
-        outcome: Remote work achieved
-      - name: Emily Thompson
-        role: DevOps Engineer
-        company: Netflix
-        rating: 5
-        comment: The career support team helped me negotiate a 50% higher salary than I expected.
-        outcome: 50% salary boost
-      - name: David Kim
-        role: Tech Lead
-        company: Uber
-        rating: 5
-        comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
-        outcome: Promoted in 1 year
-    marginY:
-      desktop: none lg
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
