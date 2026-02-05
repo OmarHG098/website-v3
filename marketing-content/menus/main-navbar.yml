@@ -110,7 +110,7 @@ navbar:
           - title: US & CANADA
             items:
               - label: Miami, USA
-                href: /campus/miami
+                href: /en/location/miami-usa
               - label: New York, USA
                 href: /campus/nyc
               - label: Dallas, USA
