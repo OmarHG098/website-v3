@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "e88bb9f955764477cdbf005b5a42b8f6d0d07307",
-  "lastSyncedAt": "2026-02-05T15:08:00.955Z",
+  "lastSyncedCommit": "3b2648097c444c93d3249d9098bd11a959a9a663",
+  "lastSyncedAt": "2026-02-05T15:34:09.768Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -33,9 +33,19 @@
       "remoteSha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e"
     },
     "marketing-content/landings/ai-engineering-es/promoted.yml": {
-      "sha": "07573d73968d8be1402451f07d60931b7a973f3b34a41e85984d9a560af88614",
-      "lastModified": 1767901867138.2693,
-      "remoteSha": "07573d73968d8be1402451f07d60931b7a973f3b34a41e85984d9a560af88614"
+      "sha": "a944894f28fe1da56ebb6a73bf8b3f7a3eba7bdb24d059b05576717b892a6b12",
+      "lastModified": 1770305648511.3962,
+      "remoteSha": "a944894f28fe1da56ebb6a73bf8b3f7a3eba7bdb24d059b05576717b892a6b12"
+    },
+    "marketing-content/landings/ai-engineering-spain/_common.yml": {
+      "sha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed",
+      "lastModified": 1770305648863.396,
+      "remoteSha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed"
+    },
+    "marketing-content/landings/ai-engineering-spain/promoted.yml": {
+      "sha": "70b49ca5670e8250ea2320b33cf2b92881d2e1bb71ae82fc0549203bd5159b91",
+      "lastModified": 1770305649187.3958,
+      "remoteSha": "70b49ca5670e8250ea2320b33cf2b92881d2e1bb71ae82fc0549203bd5159b91"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
@@ -731,6 +741,11 @@
       "sha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0",
       "lastModified": 1770304080339.7517,
       "remoteSha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0"
+    },
+    "marketing-content/pages/scholarships/en.yml": {
+      "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
+      "lastModified": 1770305649536.3955,
+      "remoteSha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741"
     },
     "marketing-content/pages/scholarships/es.yml": {
       "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
