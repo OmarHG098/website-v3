@@ -44,9 +44,9 @@ navbar:
           - title: Support
             items:
               - label: Mentors and teachers
-                href: /mentors-teachers
+                href: /en/geekpal-support
               - label: Career Support
-                href: /career-support
+                href: /en/geekforce-career-support
               - label: Online Platform
                 href: /online-platform
               - label: Rigobot
@@ -56,27 +56,27 @@ navbar:
           - title: Validation
             items:
               - label: Awards
-                href: /awards
+                href: /en/awards
               - label: Outcomes
-                href: /outcomes
+                href: /en/outcomes
               - label: 4Geeks Vs Others
-                href: /4geeks-vs-others
+                href: /en/geeks-vs-others
           - title: Pricing
             items:
               - label: Financing
-                href: /financing
+                href: /en/financials
               - label: Scholarships
-                href: /scholarships
+                href: /en/scholarships
               - label: Job Guarantee
-                href: /job-guarantee
+                href: /en/job-guarantee
           - title: Our Students
             items:
               - label: Alumni & Projects
-                href: /alumni-projects
+                href: /en/graduates-and-projects
               - label: Testimonials
                 href: /testimonials
               - label: Talent
-                href: /talent
+                href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
     - label: THE ACADEMY
       href: /the-academy
       component: Dropdown
