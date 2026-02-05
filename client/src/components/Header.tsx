@@ -7,11 +7,17 @@ import { Navbar, type NavbarConfig } from "@/components/menus";
 import logo from "@assets/4geeks-devs-logo_1763162063433.png";
 
 export default function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const locale = i18n.language || 'en';
 
   const { data: menuResponse, isLoading } = useQuery<{ name: string; data: NavbarConfig }>({
-    queryKey: ["/api/menus", "main-navbar"],
+    queryKey: ["/api/menus", "main-navbar", locale],
+    queryFn: async () => {
+      const response = await fetch(`/api/menus/main-navbar?locale=${locale}`);
+      if (!response.ok) throw new Error("Failed to load menu");
+      return response.json();
+    },
   });
   
   const menuConfig = menuResponse?.data;
