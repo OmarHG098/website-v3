@@ -362,26 +362,24 @@ sections:
     showBorder: false
     items:
       - id: coursereport-detailed
-        alt: Course Report - Best Coding Bootcamp
-        logo: /images/awards/course-report.svg
+        alt: Course Report Badge 2025
+        logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         logoHeight: h-16
         description: Reconocido como uno de los mejores bootcamps de programación a nivel mundial
         link: https://www.coursereport.com
-        linkText: Read reviews
+        linkText: Leer reviews
       - id: switchup-detailed
-        alt: SwitchUp - Top Bootcamp
-        logo: /images/awards/switchup.svg
+        alt: SwitchUp logo
+        logo: /attached_assets/switchup_1765590146414.webp
         logoHeight: h-16
         description: El bootcamp mejor valorado, basado en reseñas verificadas de alumnos
         link: https://www.switchup.org
-        linkText: See rankings
-      - id: careerkarma-detailed
-        alt: Career Karma - Best Value
-        logo: /images/awards/career-karma.svg
+        linkText: Ver rankings
+      - id: excelencia-educativa
+        alt: Excelencia Educativa award
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-16
-        description: La mejor inversión para quienes empiezan de cero o buscan un cambio de carrera.
-        link: https://careerkarma.com
-        linkText: Learn more
+        description: La mejor inversión para quienes empiezan de cero o buscan un cambio de carrera
   - type: ai_learning
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué aprender Ingeniería de IA con 4Geeks?
