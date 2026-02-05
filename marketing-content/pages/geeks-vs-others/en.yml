@@ -31,7 +31,7 @@ sections:
   - type: comparison_table
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
-    subtitle: We're built to launch successful tech careers. From an industry-aligned, future-proof curric
+    subtitle: "We're built to prepare you for success. From an industry-aligned, future-proof curriculum to lifelong mentorship and career support, here’s how 4Geeks stands out:"
     columns:
       - name: Feature
       - name: 4Geeks Academy
@@ -73,7 +73,7 @@ sections:
       - feature: Prior Experience
         values:
           - No experience required
-          - Some require prior skills or assessments
+          - Most require prior skills or assessments
     marginY:
       desktop: none md
     paddingY:
