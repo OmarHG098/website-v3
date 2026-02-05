@@ -17,15 +17,15 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: 4Geeks Academy vs Other Bootcamps
-    subtitle: Discover why 4Geeks Academy is different. Our AI-integrated curriculum, hands-on projects, and personalized mentorship help students launch high-demand, future-proof tech careers—no prior experience needed. With lifetime mentorship and career support, we make sure you keep thriving long after graduation.
+    title: 4Geeks Academy vs Other Programs
+    subtitle: See why our graduates succeed in tech. From AI-powered learning and hands-on projects to personalized mentorship and lifetime career support, everything we do is designed to help you launch a thriving career.
     badge: Why 4Geeks Stands Out
     image:
       src: /attached_assets/unsplash_QckxruozjRg_1765395521123.png
       alt: Students coding together at a table with laptops
+    background: hsl(210 100% 50% / 0.05)
     paddingY:
       desktop: lg
-    background: hsl(210 100% 50% / 0.05)
     marginY:
       desktop: none md
   - type: comparison_table
