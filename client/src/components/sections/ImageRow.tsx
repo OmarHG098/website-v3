@@ -81,6 +81,16 @@ function HighlightSlideshow({
     };
   };
 
+  const getTextAnimationStyle = (delaySeconds: number): React.CSSProperties => {
+    if (isEditMode) return {};
+    const isActiveAndVisible = isVisible && currentSlide !== undefined;
+    return {
+      opacity: isActiveAndVisible ? 1 : 0,
+      transform: isActiveAndVisible ? "translateY(0)" : "translateY(12px)",
+      transition: `opacity 0.4s ease-out ${delaySeconds}s, transform 0.4s ease-out ${delaySeconds}s`,
+    };
+  };
+
   return (
     <div 
       className={`${className} relative overflow-hidden`}
@@ -109,10 +119,16 @@ function HighlightSlideshow({
               style={slideStyle}
               data-testid={`slide-content-${index}`}
             >
-              <p className="text-body mb-4 font-light">
+              <p 
+                className="text-body mb-4 font-light"
+                style={isActive ? getTextAnimationStyle(0.15) : {}}
+              >
                 {slide.heading}
               </p>
-              <p className="text-h2 leading-tight">
+              <p 
+                className="text-h2 leading-tight"
+                style={isActive ? getTextAnimationStyle(0.35) : {}}
+              >
                 {slide.text}
               </p>
             </div>
