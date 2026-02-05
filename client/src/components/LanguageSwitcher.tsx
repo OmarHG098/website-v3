@@ -16,11 +16,16 @@ const languages = [
 ];
 
 function getLocalizedPath(currentPath: string, targetLang: string): string | null {
-  const fromLang = currentPath.startsWith('/es/') ? 'es' : 'en';
-  
   // Handle /en/:slug or /es/:slug pattern
   const enMatch = currentPath.match(/^\/en\/(.+)$/);
   const esMatch = currentPath.match(/^\/es\/(.+)$/);
+  
+  // Handle legacy /landing/:slug pattern (no locale prefix)
+  const legacyLandingMatch = currentPath.match(/^\/landing\/(.+)$/);
+  if (legacyLandingMatch) {
+    const slug = legacyLandingMatch[1];
+    return `/${targetLang}/landing/${slug}`;
+  }
   
   if (enMatch && targetLang === 'es') {
     const slug = enMatch[1];
