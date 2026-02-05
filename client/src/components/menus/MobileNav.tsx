@@ -20,14 +20,19 @@ interface MobileNavProps {
   config: NavbarConfig;
 }
 
-function MobileNavItem({ item, onNavigate }: { item: NavbarItem; onNavigate: () => void }) {
-  const [isOpen, setIsOpen] = useState(false);
+interface MobileNavItemProps {
+  item: NavbarItem;
+  onNavigate: () => void;
+  isOpen: boolean;
+  onToggle: () => void;
+}
 
+function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProps) {
   if (item.component === "Dropdown" && item.dropdown) {
     const dropdown = item.dropdown;
 
     return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Collapsible open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger className="flex w-full items-center justify-between py-3 px-2 text-base font-medium text-foreground hover-elevate rounded-md">
           <span>{item.label}</span>
           <IconChevronDown 
@@ -141,10 +146,16 @@ function MobileNavItem({ item, onNavigate }: { item: NavbarItem; onNavigate: () 
 }
 
 export function MobileNav({ config }: MobileNavProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [openItemIndex, setOpenItemIndex] = useState<number | null>(null);
 
   const handleNavigate = () => {
-    setIsOpen(false);
+    setIsSheetOpen(false);
+    setOpenItemIndex(null);
+  };
+
+  const handleToggle = (index: number) => {
+    setOpenItemIndex(openItemIndex === index ? null : index);
   };
 
   if (!config?.navbar?.items) {
@@ -152,7 +163,7 @@ export function MobileNav({ config }: MobileNavProps) {
   }
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -170,7 +181,13 @@ export function MobileNav({ config }: MobileNavProps) {
         </VisuallyHidden>
         <nav className="flex flex-col mt-8" data-testid="mobile-nav">
           {config.navbar.items.map((item, index) => (
-            <MobileNavItem key={index} item={item} onNavigate={handleNavigate} />
+            <MobileNavItem 
+              key={index} 
+              item={item} 
+              onNavigate={handleNavigate}
+              isOpen={openItemIndex === index}
+              onToggle={() => handleToggle(index)}
+            />
           ))}
         </nav>
       </SheetContent>
