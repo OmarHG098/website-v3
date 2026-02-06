@@ -63,10 +63,10 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "lastModified": 1770387839199.7195,
+      "sha": "fe42bcd7046a1d8562002d24afb81216a0a2d70d0dc90ede39cff142860a1a0d",
+      "lastModified": 1770388889017.5623,
       "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "modifiedAt": "2026-02-06T14:23:59.201Z"
+      "modifiedAt": "2026-02-06T14:41:29.020Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -714,9 +714,11 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da",
-      "lastModified": 1770308152109.822,
-      "remoteSha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da"
+      "sha": "d9aa4a0ce1bc51199142f286039fdae6a42d2da7ae27b2eab90ec78f98952081",
+      "lastModified": 1770388525094.9636,
+      "remoteSha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-06T14:35:25.096Z"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",

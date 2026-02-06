@@ -72,5 +72,12 @@
     { "id": "primary-foreground", "label": "On Primary", "cssVar": "--primary-foreground" },
     { "id": "secondary-foreground", "label": "On Secondary", "cssVar": "--secondary-foreground" },
     { "id": "primary", "label": "Primary", "cssVar": "--primary" }
+  ],
+  "fontSizes": [
+    { "id": "xs", "label": "Extra Small", "value": "0.75rem", "tailwind": "text-xs" },
+    { "id": "sm", "label": "Small", "value": "0.875rem", "tailwind": "text-sm" },
+    { "id": "base", "label": "Normal", "value": "1rem", "tailwind": "text-base" },
+    { "id": "lg", "label": "Large", "value": "1.125rem", "tailwind": "text-lg" },
+    { "id": "xl", "label": "Extra Large", "value": "1.25rem", "tailwind": "text-xl" }
   ]
 }

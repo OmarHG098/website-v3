@@ -26,7 +26,7 @@ sections:
     version: "1.0"
     variant: simpleTwoColumn
     title: Get into tech with our Job Guarantee
-    subtitle: Built to give you extra confidence as you invest in your career. Get hired within 9 months of graduation, or we'll refund 100% of your tuition. *Conditions apply.
+    subtitle: "<b>Built to give you</b> extra<span style=\"color: hsl(var(--primary));\"> confidence as you invest in your career. Get hired within 9 months of gradua</span>tion, or we'll refund 100% of your tuition.&nbsp;&nbsp;<div><a href=\"/en/career-programs/ai-engineering\" style=\"font-size: 0.875rem;\">*Conditions apply.</a></div>"
     image:
       src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
       alt: Students collaborating in a tech workspace
