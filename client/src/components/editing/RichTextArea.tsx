@@ -9,6 +9,7 @@ import {
   IconLoader2,
   IconSearch,
   IconExternalLink,
+  IconTextSize,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,8 +28,16 @@ interface ThemeColor {
   value?: string;
 }
 
+interface ThemeFontSize {
+  id: string;
+  label: string;
+  value: string;
+  tailwind: string;
+}
+
 interface ThemeConfig {
   text?: ThemeColor[];
+  fontSizes?: ThemeFontSize[];
 }
 
 interface SitemapEntry {
@@ -160,6 +169,71 @@ function applyTextColor(
   savedRangeRef.current = null;
 }
 
+function applyFontSize(
+  sizeValue: string,
+  editableRef: React.RefObject<HTMLDivElement | null>,
+  savedRangeRef: React.MutableRefObject<Range | null>,
+  onChange: (html: string) => void
+) {
+  if (!editableRef.current) return;
+  const sel = window.getSelection();
+  if (!sel) return;
+  if (savedRangeRef.current) {
+    try {
+      sel.removeAllRanges();
+      sel.addRange(savedRangeRef.current);
+    } catch {
+      savedRangeRef.current = null;
+      return;
+    }
+  }
+  if (sel.rangeCount === 0) return;
+  const range = sel.getRangeAt(0);
+  if (range.collapsed) return;
+
+  let node: Node | null = range.commonAncestorContainer;
+  if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+  if (node?.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === "SPAN") {
+    const spanEl = node as HTMLSpanElement;
+    const wholeSpanRange = document.createRange();
+    wholeSpanRange.selectNodeContents(spanEl);
+    const sameStart = range.compareBoundaryPoints(Range.START_TO_START, wholeSpanRange) === 0;
+    const sameEnd = range.compareBoundaryPoints(Range.END_TO_END, wholeSpanRange) === 0;
+    if (sameStart && sameEnd) {
+      spanEl.style.fontSize = sizeValue;
+      onChange(editableRef.current!.innerHTML);
+      savedRangeRef.current = null;
+      return;
+    }
+  }
+
+  const span = document.createElement("span");
+  span.style.fontSize = sizeValue;
+
+  const fragment = range.extractContents();
+  const spans: HTMLSpanElement[] = [];
+  const walk = (n: Node) => {
+    if (n.nodeType === Node.ELEMENT_NODE && (n as Element).tagName === "SPAN") {
+      spans.push(n as HTMLSpanElement);
+    }
+    n.childNodes.forEach(walk);
+  };
+  fragment.childNodes.forEach(walk);
+  for (const s of spans) {
+    const hasFontSize = !!s.style.fontSize;
+    if (hasFontSize) {
+      s.style.fontSize = "";
+      if (!s.style.cssText.trim()) s.removeAttribute("style");
+    }
+  }
+
+  span.appendChild(fragment);
+  range.insertNode(span);
+
+  onChange(editableRef.current!.innerHTML);
+  savedRangeRef.current = null;
+}
+
 export function RichTextArea({
   value,
   onChange,
@@ -174,6 +248,7 @@ export function RichTextArea({
   const savedSelectionRef = useRef<Range | null>(null);
   const savedLinkSelectionRef = useRef<Range | null>(null);
   const [colorOpen, setColorOpen] = useState(false);
+  const [fontSizeOpen, setFontSizeOpen] = useState(false);
   const [linkHoverPopover, setLinkHoverPopover] = useState<{
     anchor: HTMLAnchorElement;
     rect: DOMRect;
@@ -224,6 +299,7 @@ export function RichTextArea({
   }, [sitemapUrls, linkSearchQuery]);
 
   const textColors = theme?.text ?? [];
+  const fontSizes = theme?.fontSizes ?? [];
 
   // Sync value only once on mount (parent should use key to remount when section/field changes)
   useEffect(() => {
@@ -311,6 +387,16 @@ export function RichTextArea({
       editableRef.current?.focus();
       applyTextColor(cssVar, editableRef, savedSelectionRef, onChange);
       setColorOpen(false);
+    },
+    [onChange],
+  );
+
+  const handleFontSizeSelect = useCallback(
+    (sizeValue: string) => {
+      if (!sizeValue) return;
+      editableRef.current?.focus();
+      applyFontSize(sizeValue, editableRef, savedSelectionRef, onChange);
+      setFontSizeOpen(false);
     },
     [onChange],
   );
@@ -534,6 +620,49 @@ export function RichTextArea({
                     />
                   );
                 })}
+              </div>
+            )}
+          </PopoverContent>
+        </Popover>
+
+        <Popover open={fontSizeOpen} onOpenChange={setFontSizeOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onMouseDown={(e) => e.preventDefault()}
+              title="Font size"
+              data-testid={testId ? `${testId}-fontsize-trigger` : undefined}
+            >
+              <IconTextSize className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-1 z-[10000]" align="start">
+            {themeLoading ? (
+              <div className="flex items-center justify-center h-12 w-32">
+                <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              <div className="flex flex-col gap-0.5">
+                {fontSizes.map((size) => (
+                  <button
+                    key={size.id}
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      handleFontSizeSelect(size.value);
+                    }}
+                    className="flex items-center justify-between gap-4 px-3 py-1.5 rounded-md text-left hover:bg-muted/50 transition-colors"
+                    data-testid={testId ? `${testId}-fontsize-${size.id}` : undefined}
+                  >
+                    <span style={{ fontSize: size.value }} className="text-foreground">
+                      {size.label}
+                    </span>
+                    <span className="text-xs text-muted-foreground">{size.tailwind}</span>
+                  </button>
+                ))}
               </div>
             )}
           </PopoverContent>
