@@ -714,11 +714,11 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "d9aa4a0ce1bc51199142f286039fdae6a42d2da7ae27b2eab90ec78f98952081",
-      "lastModified": 1770388525094.9636,
+      "sha": "46417944d09aae59fe5addf8a8708b90c7365d0920e26db83217daad5dfd1c50",
+      "lastModified": 1770389178377.2312,
       "remoteSha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-06T14:35:25.096Z"
+      "modifiedAt": "2026-02-06T14:46:18.380Z"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
@@ -801,9 +801,11 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
-      "lastModified": 1770308152112.1099,
-      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3"
+      "sha": "aa1049ac48768a38098cae1d69761dac3644ad8df093c3e66a50fbe4a9e42525",
+      "lastModified": 1770391556771.5796,
+      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-06T15:25:56.776Z"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",

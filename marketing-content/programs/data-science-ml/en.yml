@@ -122,7 +122,8 @@ sections:
     variant: stats-text
     title: Why Data Science now?
     subtitle: Data is the fuel for the AI revolution.
-    description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
+    description: "As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence<span style=\"font-size: 0.875rem;\"> </span><span style=\"font-size: 1rem;\"><span>has</span> <span><span><span>never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.</span></span></span></span><span style=\"font-size: 1.25rem;\"><span style=\"font-size: 0.875rem;\"><span></span></span></span>"
+    background: hsl(var(--background))
     items:
       - id: "1"
         value: 36%
@@ -130,7 +131,6 @@ sections:
       - id: "3"
         value: $90K+
         title: Average starting salary for data scientists
-    background: hsl(var(--background))
   - type: syllabus
     variant: program-modules
     program_title: Data Science and Machine Learning Program Overview

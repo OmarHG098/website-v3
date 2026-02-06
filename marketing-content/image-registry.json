@@ -902,6 +902,61 @@
         "diversity"
       ],
       "usage_count": 1
+    },
+    "logo_coursereport_best_bootcamp_2025": {
+      "src": "/attached_assets/CourseReport-best-bootcamp_-2025_1770392145137.png",
+      "alt": "CourseReport Best European Bootcamp 2025",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "award",
+        "bootcamp"
+      ],
+      "usage_count": 0
+    },
+    "logo_european_excellence_education": {
+      "src": "/attached_assets/european-excellence-education-ealde_1_1770392145138.png",
+      "alt": "European Excellence Education",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "award",
+        "certification"
+      ],
+      "usage_count": 0
+    },
+    "logo_financial_magazine": {
+      "src": "/attached_assets/Financial-Magazine_1770392145138.png",
+      "alt": "Financial Magazine - Actualidad Económica & Centros de Formación",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "media",
+        "press"
+      ],
+      "usage_count": 0
+    },
+    "logo_premios_excelencia_educativa": {
+      "src": "/attached_assets/premios-excelencia-educativa-17_1770392145139.png",
+      "alt": "17 Premios Excelencia Educativa",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "award",
+        "certification"
+      ],
+      "usage_count": 0
+    },
+    "logo_switchup_best_bootcamps_2025": {
+      "src": "/attached_assets/switchup-best-bootcamps-2025_1770392145139.png",
+      "alt": "SwitchUp Best Bootcamps 2025",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "award",
+        "bootcamp"
+      ],
+      "usage_count": 0
     }
   }
 }
