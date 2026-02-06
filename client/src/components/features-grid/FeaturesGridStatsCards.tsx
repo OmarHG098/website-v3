@@ -1,5 +1,6 @@
 import type { FeaturesGridStatsCardsSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
+import { RichTextContent } from "@/components/ui/rich-text-content";
 
 interface FeaturesGridStatsCardsProps {
   data: FeaturesGridStatsCardsSection;
@@ -47,12 +48,11 @@ export function FeaturesGridStatsCards({ data }: FeaturesGridStatsCardsProps) {
               </p>
             )}
             {data.description && (
-              <p 
-                className="text-body text-muted-foreground leading-relaxed"
+              <RichTextContent
+                html={data.description}
+                className="text-base text-muted-foreground leading-relaxed"
                 data-testid="text-stats-cards-description"
-              >
-                {data.description}
-              </p>
+              />
             )}
           </div>
         </div>

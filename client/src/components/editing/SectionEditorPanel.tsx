@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ColorPicker } from "@/components/ui/color-picker";
@@ -44,6 +45,7 @@ import {
 } from "@/lib/field-editor-registry";
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
+import { RichTextArea } from "./RichTextArea";
 import type { Section, ImageRegistry } from "@shared/schema";
 import { IconSearch } from "@tabler/icons-react";
 import CodeMirror from "@uiw/react-codemirror";
@@ -1262,6 +1264,38 @@ export function SectionEditorPanel({
                         </div>
                       </CollapsibleContent>
                     </Collapsible>
+                  );
+                }
+
+                // Handle simple field paths with rich-text (e.g., "subtitle", "description")
+                if (isSimpleField && editorType === "rich-text-editor") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">
+                        {fieldLabel.replace(/_/g, " ")}
+                      </Label>
+                      <RichTextArea
+                        key={`${sectionIndex}-${fieldPath}`}
+                        value={currentValue}
+                        onChange={(html) => updateProperty(fieldPath, html)}
+                        placeholder={`Edit ${fieldLabel.replace(/_/g, " ")}…`}
+                        minHeight="120px"
+                        locale={locale}
+                        data-testid={`props-rich-text-${fieldLabel}`}
+                      />
+                    </div>
                   );
                 }
 
