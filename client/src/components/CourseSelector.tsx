@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import type { CourseSelectorSection, CourseItem } from "@shared/schema";
 import { getIcon } from "@/lib/icons";
 import {
@@ -80,6 +80,15 @@ function CourseContent({
   colorVar: string;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [isClamped, setIsClamped] = useState(false);
+  const descRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = descRef.current;
+    if (el) {
+      setIsClamped(el.scrollHeight > el.clientHeight);
+    }
+  }, [course.description, expanded]);
 
   return (
     <div className="flex flex-col h-full gap-4 relative z-10">
@@ -133,6 +142,7 @@ function CourseContent({
 
       <div className="relative mt-2 md:mt-0">
         <p
+          ref={descRef}
           className={`text-sm md:text-base text-muted-foreground leading-relaxed ${
             !expanded ? "line-clamp-5 md:line-clamp-none" : ""
           }`}
@@ -140,7 +150,7 @@ function CourseContent({
         >
           {course.description}
         </p>
-        {!expanded && (
+        {!expanded && isClamped && (
           <button
             type="button"
             onClick={() => setExpanded(true)}
