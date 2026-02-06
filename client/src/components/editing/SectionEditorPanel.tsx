@@ -194,6 +194,7 @@ export function SectionEditorPanel({
     // Common
     currentSrc: string;
     currentAlt: string;
+    currentRegistryId?: string;
     // Optional tag filter (e.g., "logo" to show only logos)
     tagFilter?: string;
   } | null>(null);
@@ -1740,6 +1741,7 @@ export function SectionEditorPanel({
                             size="sm"
                             onClick={() => {
                               const defaultItem: Record<string, unknown> = {
+                                id: "",
                                 [itemField]: "",
                                 alt: "",
                                 logoHeight: "h-10 md:h-14",
@@ -2184,14 +2186,13 @@ export function SectionEditorPanel({
                     type="button"
                     onClick={() => {
                       if (imagePickerTarget) {
-                        // For fields ending in _id (like image_id), save the registry ID
-                        // Otherwise save the full path
                         const fieldName = imagePickerTarget.srcField || imagePickerTarget.fieldPath || "";
                         const isIdField = fieldName.endsWith("_id");
                         setImagePickerTarget({
                           ...imagePickerTarget,
                           currentSrc: isIdField ? id : img.src,
                           currentAlt: img.alt,
+                          currentRegistryId: id,
                         });
                       }
                     }}
@@ -2336,14 +2337,17 @@ export function SectionEditorPanel({
                       // Simple field - update directly
                       updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
                     } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
-                      // Array field - update both src and alt in a single operation
+                      const updates: Record<string, string> = {
+                        [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
+                        alt: imagePickerTarget.currentAlt,
+                      };
+                      if (imagePickerTarget.currentRegistryId) {
+                        updates.id = imagePickerTarget.currentRegistryId.replace(/_/g, "-");
+                      }
                       updateArrayItemFields(
                         imagePickerTarget.arrayPath,
                         imagePickerTarget.index,
-                        {
-                          [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
-                          alt: imagePickerTarget.currentAlt,
-                        },
+                        updates,
                       );
                     }
                   }
