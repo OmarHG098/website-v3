@@ -142,7 +142,7 @@ sections:
         price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/cyber-security
-        course_background: primary
+        course_background: hsl(var(--accent))
       - name: UX/UI Design
         duration: 4 months part-time
         title: UX/UI Design
