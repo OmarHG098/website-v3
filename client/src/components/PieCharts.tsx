@@ -278,11 +278,12 @@ function SinglePieChart({
                 />
               </svg>
               <div
-                className="absolute text-xs whitespace-nowrap"
+                className="absolute text-xs"
                 style={{
                   left: isRightSide ? endX + 12 : endX - 12,
                   top: endY,
                   transform: isRightSide ? `translateY(-50%)` : `translate(-100%, -50%)`,
+                  maxWidth: 80,
                 }}
               >
                 <div className="font-medium text-foreground">{slice.label}</div>
