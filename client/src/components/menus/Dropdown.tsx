@@ -349,14 +349,14 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <a
-        href={href}
-        className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover-elevate rounded-md transition-colors"
+      <button
+        type="button"
+        className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover-elevate rounded-md transition-colors no-default-hover-elevate no-default-active-elevate"
         data-testid={`nav-dropdown-${label.toLowerCase().replace(/\s+/g, "-")}`}
       >
         {label}
         <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-      </a>
+      </button>
       
       {isOpen && (
         isWideDropdown ? (
