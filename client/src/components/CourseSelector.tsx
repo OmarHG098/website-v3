@@ -5,7 +5,8 @@ import {
   IconArrowRight,
   IconClock,
   IconCircleCheck,
-  IconCheck
+  IconCheck,
+  IconChevronDown,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -49,7 +50,6 @@ function CourseBadgeItem({
       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs md:text-base font-medium"
       style={{
         backgroundColor: `hsl(${colorVar} / 0.3)`,
-        // color: `hsl(${colorVar})`,
       }}
       data-testid="badge-course"
     >
@@ -79,6 +79,8 @@ function CourseContent({
   course: CourseItem;
   colorVar: string;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <div className="flex flex-col h-full gap-4 relative z-10">
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -129,14 +131,29 @@ function CourseContent({
         ))}
       </div>
 
-      <p
-        className="tex md:text-base text-muted-foreground leading-relaxed flex-1 mt-2 md:mt-0"
-        data-testid="text-description"
-      >
-        {course.description}
-      </p>
+      <div className="relative mt-2 md:mt-0">
+        <p
+          className={`text-sm md:text-base text-muted-foreground leading-relaxed ${
+            !expanded ? "line-clamp-5 md:line-clamp-none" : ""
+          }`}
+          data-testid="text-description"
+        >
+          {course.description}
+        </p>
+        {!expanded && (
+          <button
+            type="button"
+            onClick={() => setExpanded(true)}
+            className="md:hidden mt-1 text-sm font-medium text-primary inline-flex items-center gap-0.5"
+            data-testid="button-see-more"
+          >
+            See more
+            <IconChevronDown className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
 
-      <div className="flex items-end justify-between flex-wrap gap-4 mt-auto pt-1 md:pt-4">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mt-auto pt-1 md:pt-4">
         <div>
           <div className="flex items-baseline" data-testid="container-pricing">
             {course.original_price && (
@@ -164,8 +181,8 @@ function CourseContent({
             </p>
           )}
         </div>
-        <a href={course.cta_url} data-testid="link-cta">
-          <Button variant="outline" className="gap-2">
+        <a href={course.cta_url} className="w-full md:w-auto" data-testid="link-cta">
+          <Button variant="outline" className="gap-2 w-full md:w-auto">
             {course.cta_text}
             <IconArrowRight className="w-4 h-4" />
           </Button>
@@ -211,7 +228,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                 className="text-lg text-muted-foreground max-w-2xl mx-auto"
                 data-testid="text-subheading"
               >
-                {data.subheading} d
+                {data.subheading}
               </p>
             )}
           </div>
@@ -221,7 +238,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           className="rounded-lg border overflow-hidden flex flex-col md:flex-row min-h-[420px]"
           data-testid="card-course-selector"
         >
-          <div className="md:w-[280px] lg:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-border bg-card flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible">
+          <div className="md:w-[280px] lg:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-border bg-card flex flex-col">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
               return (
@@ -230,9 +247,9 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                   key={index}
                   onClick={() => handleTabClick(index)}
                   className={`
-                    relative text-left px-5 py-4 -2 transition-colors duration-200
-                    flex items-center justify-between gap-2 whitespace-nowrap md:whitespace-normal
-                    min-w-[160px] md:min-w-0 w-full
+                    relative text-left px-5 py-4 transition-colors duration-200
+                    flex items-center justify-between gap-2
+                    w-full
                     ${
                       isActive
                         ? "font-semibold text-foreground bg-muted"
@@ -243,13 +260,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                 >
                   {isActive && (
                     <span
-                      className="absolute left-0 top-0 bottom-0 w-[2px] rounded-r-full hidden md:block"
-                      style={{ backgroundColor: `hsl(${colorVar})` }}
-                    />
-                  )}
-                  {isActive && (
-                    <span
-                      className="absolute left-0 right-0 bottom-0 h-[3px] rounded-t-full md:hidden"
+                      className="absolute left-0 top-0 bottom-0 w-[2px] rounded-r-full"
                       style={{ backgroundColor: `hsl(${colorVar})` }}
                     />
                   )}
@@ -265,10 +276,16 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           <div className="flex-1 p-4 md:p-8 lg:p-10 relative overflow-hidden transition-all duration-500">
             <div className="absolute inset-0 bg-card" />
             <div
-              className="absolute inset-0 transition-all duration-500 md:border-l"
+              className="absolute inset-0 transition-all duration-500 md:hidden"
+              style={{
+                background: `linear-gradient(150deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 70%, transparent 90%)`,
+              }}
+            />
+            <div
+              className="absolute inset-0 transition-all duration-500 hidden md:block md:border-l-[3px]"
               style={{
                 background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
-                borderLeftColor: `hsl(${colorVar})`,
+                borderColor: `hsl(${colorVar})`,
               }}
             />
             {activeCourse && (
