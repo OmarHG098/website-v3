@@ -22,9 +22,9 @@ sections:
     title: Construye sistemas reales, listos para producción.
     brand_mark:
       prefix: Conviértete en
-      highlight: Ingeniero de IA
+      highlight: Ingeniero IA
       color: primary
-    description: En solo 24 semanas, adquiere las habilidades para desarrollar, integrar y desplegar soluciones de IA, acompañado por mentoría 1:1 ilimitada y una comunidad profesional activa.
+    description: Aprende a desarrollar, integrar y desplegar soluciones de IA en 24 semanas con mentoría 1:1 ilimitada y una comunidad profesional que acompaña tu crecimiento profesional.
     form:
       variant: stacked
       conversion_name: student_application
@@ -77,16 +77,20 @@ sections:
       mobile: none
       desktop: none
     background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-    showOn: desktop
+    showOn: mobile
   - type: hero
     version: "1.0"
     variant: productShowcase
     title: Construye sistemas reales, listos para producción.
     brand_mark:
       prefix: Conviértete en
-      highlight: Ingeniero de IA
+      highlight: Ingeniero IA
       color: primary
-    description: En solo 24 semanas, adquiere las habilidades para desarrollar, integrar y desplegar soluciones de IA, acompañado por mentoría 1:1 ilimitada y una comunidad profesional activa.
+    description: 24 semanas para desarrollar, integrar y desplegar soluciones de IA.
+    bullets:
+      - text: Accede a mentorías 1:1 ilimitada y a una comunidad profesional activa.
+      - text: Aprende habilidades en ingeniería de IA alineadas al mercado actual.
+      - text: Grupos reducidos y acompañamiento continuo, incluso después de graduarte.
     video:
       url: https://www.youtube.com/shorts/sSxJnelPJT8
       ratio: "9:16"
@@ -99,7 +103,6 @@ sections:
       mobile: none
       desktop: none
     background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-    showOn: mobile
   - type: sticky_cta
     version: "1.0"
     heading: ¿Listo para empezar tu carrera en tech?
@@ -511,7 +514,7 @@ sections:
     version: "1.0"
     variant: verticalCards
     title: Nuestro proceso de admisión
-    description: "Trabajamos con un proceso de admisión selectivo.La postulación no implica una inscripción automática: evaluamos cada aplicación para asegurar un alto nivel de compromiso y una adecuada alineación con el enfoque del programa."
+    description: "Trabajamos con un proceso de admisión selectivo. La postulación no garantiza la inscripción: evaluamos cada aplicación para asegurar compromiso y alineación con el programa.."
     description_link:
       text: Conditions Apply.
       url: /terms
@@ -520,7 +523,7 @@ sections:
         title: Aplicación al programa
         bullets:
           - Completas el formulario inicial para iniciar tu postulación.
-          - Revisamos tu perfil, experiencia y objetivos profesionales para entender si el programa es adecuado para ti.
+          - Te contactaremos por WhatsApp para conversar y analizar tu perfil, experiencia y objetivos profesionales.
       - icon: UserCheck
         title: Evaluación del perfil
         bullets:
@@ -534,6 +537,7 @@ sections:
     background: bg-muted/30
     bullet_icon: Check
     bullet_icon_color: text-primary
+    showOn: mobile
   - type: testimonials
     title: Resultados reales de graduados reales
     subtitle: Únete a miles que han transformado sus carreras
