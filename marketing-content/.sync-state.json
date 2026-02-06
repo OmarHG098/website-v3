@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "ba1703e1eb2ea85cdf136166e19a2e9c68838db6",
-  "lastSyncedAt": "2026-02-06T14:20:34.611Z",
+  "lastSyncedCommit": "286a8684078dfbf92f1d3b3651acfe3d42e3d84f",
+  "lastSyncedAt": "2026-02-06T15:47:03.367Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -63,10 +63,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "fe42bcd7046a1d8562002d24afb81216a0a2d70d0dc90ede39cff142860a1a0d",
-      "lastModified": 1770388889017.5623,
-      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "modifiedAt": "2026-02-06T14:41:29.020Z"
+      "sha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
+      "lastModified": 1770392822011.1768,
+      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -714,11 +713,9 @@
       "remoteSha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c"
     },
     "marketing-content/pages/job-guarantee/en.yml": {
-      "sha": "46417944d09aae59fe5addf8a8708b90c7365d0920e26db83217daad5dfd1c50",
-      "lastModified": 1770389178377.2312,
-      "remoteSha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-06T14:46:18.380Z"
+      "sha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da",
+      "lastModified": 1770392822599.1763,
+      "remoteSha": "820c9ad8749896e38ebfb1cce918bfbe0bdd8304fa702140ed49b1facb8613da"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
       "sha": "8386bc104181ff5cf0649098da041dccb6e3a0b2f0fb55a56aa243db53b3770e",
@@ -801,11 +798,9 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "7d9f37baa61519316f6172334d18efc296d7a2a0499502ed9263ebd0899f9478",
-      "lastModified": 1770392728813.2803,
-      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-06T15:45:28.815Z"
+      "sha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
+      "lastModified": 1770392823046.1758,
+      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",

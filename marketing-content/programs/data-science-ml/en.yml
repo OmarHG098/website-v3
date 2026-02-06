@@ -75,19 +75,6 @@ sections:
       desktop: md
     marginY:
       desktop: none
-  - type: award_badges
-    version: v1.0
-    variant: detailed
-    showBorder: false
-    items:
-      - id: coursereport-detailed
-        alt: Financial Magazine - Actualidad Económica & Centros de Formación
-        logo: /attached_assets/Financial-Magazine_1770392145138.png
-        logoHeight: h-16
-      - id: switchup-detailed
-        alt: SwitchUp - Top Bootcamp
-        logo: /images/awards/switchup.svg
-        logoHeight: h-16
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -126,10 +113,6 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
-      - id: logo-kpmg
-        logo: /attached_assets/kpmg-logo1_1764720019827.png
-        alt: KPMG logo
-        logoHeight: h-10 md:h-14
     marginY:
       desktop: md lg
     paddingY:
@@ -139,8 +122,7 @@ sections:
     variant: stats-text
     title: Why Data Science now?
     subtitle: Data is the fuel for the AI revolution.
-    description: "As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence<span style=\"font-size: 0.875rem;\"> </span><span style=\"font-size: 1rem;\"><span>has</span> <span><span><span>never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.</span></span></span></span><span style=\"font-size: 1.25rem;\"><span style=\"font-size: 0.875rem;\"><span></span></span></span>"
-    background: hsl(var(--background))
+    description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
     items:
       - id: "1"
         value: 36%
@@ -148,6 +130,7 @@ sections:
       - id: "3"
         value: $90K+
         title: Average starting salary for data scientists
+    background: hsl(var(--background))
   - type: syllabus
     variant: program-modules
     program_title: Data Science and Machine Learning Program Overview
