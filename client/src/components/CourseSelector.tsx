@@ -276,13 +276,14 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           <div className="flex-1 p-4 md:p-8 lg:p-10 relative overflow-hidden transition-all duration-500">
             <div className="absolute inset-0 bg-card" />
             <div
-              className="absolute inset-0 transition-all duration-500 md:hidden"
+              className="absolute inset-0 transition-all duration-500 md:hidden border-t"
               style={{
                 background: `linear-gradient(150deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 70%, transparent 90%)`,
+                borderColor: `hsl(${colorVar})`,
               }}
             />
             <div
-              className="absolute inset-0 transition-all duration-500 hidden md:block md:border-l-[3px]"
+              className="absolute inset-0 transition-all duration-500 hidden md:block border-l"
               style={{
                 background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
                 borderColor: `hsl(${colorVar})`,

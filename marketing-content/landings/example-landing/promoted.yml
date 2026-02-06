@@ -130,7 +130,6 @@ sections:
     background: bg-background
   - type: course_selector
     version: "1.0"
-    heading: Choose Your Career Path
     courses:
       - name: Cyber Security
         duration: 6 months part-time
