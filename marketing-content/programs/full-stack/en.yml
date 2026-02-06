@@ -1,16 +1,24 @@
 slug: full-stack
 title: Full Stack Developer
 meta:
-  page_title: Full Stack Developer Career Program | 4Geeks
-  description: Become a Full Stack Developer with unlimited 1:1 mentorship, career guidance, and hands-on projects. Launch a career with $65K+ starting salaries.
   robots: index, follow
   og_image: /images/programs/full-stack-og.jpg
   priority: 0.9
   change_frequency: weekly
+  page_title: Full Stack Developer Career Program | 4Geeks
+  description: Become a Full Stack Developer with unlimited 1:1 mentorship, career guidance, and hands-on projects. Launch a career with $65K+ starting salaries.
   redirects:
     - /bootcamp/full-stack
     - /programs/fullstack-developer
     - /coding-bootcamp/full-stack
+context:
+  when_to_use: For visitors interested in becoming web developers, learning both frontend and backend technologies, or transitioning into software development careers.
+  target_audience: Career changers, recent graduates, and professionals looking to break into tech with comprehensive web development skills.
+  goals:
+    - Highlight the practical, project-based learning approach
+    - Emphasize job-ready skills and career outcomes
+    - Showcase the full-stack technology coverage (HTML, CSS, JavaScript, React, Python, SQL)
+    - Address concerns about learning curve and time commitment
 schema:
   include:
     - organization
@@ -60,15 +68,13 @@ sections:
         text: Already a student? Login here.
         url: /login
       features:
-        - icon: book
-          text: Readings and videos
-          count: 40+
+        - icon: IconCalendar
+          text: 20-Week Track
+        - icon: IconCalendarBolt
+          text: 12-Week Track
         - icon: code
           text: Interactive Exercises
           count: 100+
-        - icon: briefcase
-          text: Real Projects
-          count: "10"
         - icon: robot
           text: AI-Powered Feedback
         - icon: calendar
@@ -245,10 +251,9 @@ sections:
     paddingY:
       desktop: md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
     badge: Why 4Geeks?
-    title: Why Learn with 4Geeks?
+    title: How You’ll Learn at 4Geeks
     description: Move faster and stay motivated with our AI-driven tools and hyperpersonalized teaching method.
     features:
       - icon: Robot
@@ -256,10 +261,10 @@ sections:
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Get instant feedback from Rigobot, our custom AI tutor
-          - text: Gives advice adjusted to your skill level and progress
-          - text: Helps with debugging and problem-solving tasks
-          - text: Access hundreds of interactive coding exercises on Learnpack, our educational platform
+          - text: Instant feedback from Rigobot, our custom AI tutor
+          - text: Advice adjusted to your skill level and progress
+          - text: 24/7 help with debugging and problem-solving
+          - text: Hundreds of interactive coding exercises and tests
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: Start learning now!
@@ -284,15 +289,17 @@ sections:
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: Book 1-on-1 sessions with expert mentors at your pace
-          - text: Learn LIVE with instructors in coding sessions and workshops
-          - text: Engage with peers through Slack, feedback tools, and weekly check-ins
-          - text: Access Slack channels for coding support, job boards, and career advice
+          - text: Lifelong access to 1:1 mentorship sessions
+          - text: 7:1 student–teacher ratio for personalized guidance
+          - text: Peer collaboration through Slack channels and weekly check-ins
+          - text: Dedicated Slack channels for coding support, job boards, and career advice
         image_id: mentoring_zoom_call
         cta:
           text: Start learning now!
           url: /apply
           variant: primary
+    marginY:
+      desktop: md none
     paddingY:
       desktop: md
   - type: certificate
@@ -460,7 +467,8 @@ sections:
   - type: faq
     version: "1.0"
     title: Frequently Asked Questions
-    related_features: ["full-stack"]
+    related_features:
+      - full-stack
     cta:
       text: Still have questions?
       button_text: Talk to an Advisor
