@@ -142,27 +142,26 @@ sections:
     speed: 40
     gradient: true
     gradientWidth: 500
-    bottom_title: Reconocidos, mejor valorados y recomendados
     items:
-      - id: switchup-2025
-        alt: SwitchUp - Mejores Bootcamps de Programación 2025
-        logo: /attached_assets/switchup_1765590146414.webp
+      - id: logo-switchup-best-bootcamps-2025
+        alt: SwitchUp Best Bootcamps 2025
+        logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
         logoHeight: h-10 md:h-16
       - id: excelencia-educativa
         alt: Excelencia Educativa - Calidad Institucional en Educación Online
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-10 md:h-16
-      - id: course-report-2024
-        alt: Course Report - Mejor Bootcamp de Programación 2024
+      - id: course-report-badge
+        alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         logoHeight: h-10 md:h-16
       - id: tech-hub
         alt: South Florida Tech Hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         logoHeight: h-10 md:h-16
-      - id: ebootcamp
-        alt: eBootcamp Top
-        logo: /attached_assets/ebootcamp-top_1765549056325.png
+      - id: logo-ebootcamp-top-2025
+        alt: ebootcamp Top Bootcamp Programación 2025
+        logo: /attached_assets/ebootcamp-top_1_1770392737758.png
         logoHeight: h-10 md:h-16
       - id: premios-tecnologia
         alt: Premios Tecnologia Siglo XXI
@@ -184,6 +183,22 @@ sections:
         alt: Fortune - Mejor Empresa de Educación
         logo: /attached_assets/fortune-logo_1764709618095.webp
         logoHeight: h-10 md:h-16
+      - id: logo-coursereport-best-bootcamp-2025
+        alt: CourseReport Best European Bootcamp 2025
+        logo: /attached_assets/CourseReport-best-bootcamp_-2025_1770392145137.png
+        logoHeight: h-10 md:h-14
+      - id: logo-european-excellence-education
+        alt: European Excellence Education
+        logo: /attached_assets/european-excellence-education-ealde_1_1770392145138.png
+        logoHeight: h-10 md:h-14
+      - id: logo-forbes-advisor-2025
+        logo: /attached_assets/Forbes-Advisor_1770392260031.png
+        alt: Forbes Advisor Best of 2025 - Best for lifetime career support
+        logoHeight: h-10 md:h-14
+      - id: logo-premios-excelencia-educativa
+        logo: /attached_assets/premios-excelencia-educativa-17_1770392145139.png
+        alt: 17 Premios Excelencia Educativa
+        logoHeight: h-10 md:h-14
     marginY:
       mobile: md none
       desktop: md none
@@ -365,21 +380,21 @@ sections:
         alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         logoHeight: h-16
-        description: Reconocido como uno de los mejores bootcamps de programación a nivel mundial
+        description: Reconocida como una de las mejores escuelas tecnológicas a nivel mundial
         link: https://www.coursereport.com
         linkText: Leer reviews
-      - id: switchup-detailed
-        alt: SwitchUp logo
-        logo: /attached_assets/switchup_1765590146414.webp
-        logoHeight: h-16
-        description: El bootcamp mejor valorado, basado en reseñas verificadas de alumnos
-        link: https://www.switchup.org
-        linkText: Ver rankings
-      - id: excelencia-educativa
-        alt: Excelencia Educativa award
-        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+      - id: logo-premios-excelencia-educativa
+        alt: 17 Premios Excelencia Educativa
+        logo: /attached_assets/premios-excelencia-educativa-17_1770392145139.png
         logoHeight: h-16
         description: La mejor inversión para quienes empiezan de cero o buscan un cambio de carrera
+      - id: logo-switchup-best-bootcamps-2025
+        alt: SwitchUp Best Bootcamps 2025
+        logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
+        logoHeight: h-16
+        description: La escuela tecnológica mejor valorada, en base a reseñas verificadas de alumnos
+        link: https://www.switchup.org
+        linkText: Leer reviews
   - type: ai_learning
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué aprender Ingeniería de IA con 4Geeks?
@@ -464,7 +479,7 @@ sections:
           - text: "AI Integration Specialist (RAG, APIs, vector DBs): 40.000 € - 60.000 €"
       - value: 5,000+
         label: Socios de contratación
-        description: Accede a nuestra red de más de 5,000 socios que buscan talento en IA. Obtén ofertas exclusivas y referidos prioritarios.
+        description: Accede a nuestra red de más de 5.000 socios que buscan talento en IA. Obtén ofertas exclusivas y referidos prioritarios.
         benefits:
           - text: Acceso exclusivo a bolsa de empleo
           - text: Referidos prioritarios a empresas socias
@@ -582,7 +597,7 @@ sections:
         bullets:
           - Tendrás una conversación con nuestro equipo académico o de admisiones.
           - Evaluamos tu motivación, disponibilidad y encaje con el programa.
-          - No es un examen técnico, es una conversación para entender si este es el momento adecuado para ti.
+          - No es un examen técnico, es una conversación para entender si encajas en el perfil que buscamos y si este es el momento adecuado para ti.
       - icon: Decision
         title: Selección y próximos pasos
         bullets:
