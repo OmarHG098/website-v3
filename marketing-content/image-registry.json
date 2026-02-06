@@ -957,6 +957,28 @@
         "bootcamp"
       ],
       "usage_count": 0
+    },
+    "logo_forbes_advisor_2025": {
+      "src": "/attached_assets/Forbes-Advisor_1770392260031.png",
+      "alt": "Forbes Advisor Best of 2025 - Best for lifetime career support",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "award",
+        "media"
+      ],
+      "usage_count": 0
+    },
+    "logo_licensed_by_florida": {
+      "src": "/attached_assets/Licensed-by-Florida_1770392260032.png",
+      "alt": "Licensed by the State of Florida",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "certification",
+        "license"
+      ],
+      "usage_count": 0
     }
   }
 }
