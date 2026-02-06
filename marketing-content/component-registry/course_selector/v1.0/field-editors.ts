@@ -5,5 +5,4 @@ export const fieldEditors: Record<string, EditorType> = {
   "courses[].badges[].icon": "icon-picker",
   "courses[].tags[].icon": "icon-picker",
   "courses[].cta_url": "link-picker",
-  "background": "color-picker",
 };

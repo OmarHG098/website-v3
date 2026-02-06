@@ -63,7 +63,8 @@
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },
     { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
     { "id": "accent", "label": "Accent", "cssVar": "--accent" },
-    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" }
+    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" },
+    { "id": "secondary-foreground", "label": "Secondary", "cssVar": "--secondary-foreground" }
   ],
   "text": [
     { "id": "foreground", "label": "Default", "cssVar": "--foreground" },

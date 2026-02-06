@@ -1,8 +1,14 @@
 import { useState, useMemo, useCallback } from "react";
 import type { CourseSelectorSection, CourseItem } from "@shared/schema";
 import { getIcon } from "@/lib/icons";
-import { IconArrowRight, IconClock, IconCircleCheck } from "@tabler/icons-react";
+import {
+  IconArrowRight,
+  IconClock,
+  IconCircleCheck,
+  IconCheck
+} from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const COLOR_MAP: Record<string, string> = {
   primary: "var(--primary)",
@@ -18,7 +24,9 @@ const COLOR_MAP: Record<string, string> = {
 function resolveColorVar(color: string | undefined): string {
   if (!color) return "var(--primary)";
   if (COLOR_MAP[color]) return COLOR_MAP[color];
-  if (color.startsWith("var(") || color.startsWith("hsl(") || color.startsWith("#")) return color;
+  if (color.startsWith("hsl(") && color.endsWith(")"))
+    return color.slice(4, -1);
+  if (color.startsWith("var(") || color.startsWith("#")) return color;
   return "var(--primary)";
 }
 
@@ -26,14 +34,22 @@ interface CourseSelectorProps {
   data: CourseSelectorSection;
 }
 
-function CourseBadgeItem({ icon, text, colorVar }: { icon: string; text: string; colorVar: string }) {
+function CourseBadgeItem({
+  icon,
+  text,
+  colorVar,
+}: {
+  icon: string;
+  text: string;
+  colorVar: string;
+}) {
   const IconComp = getIcon(icon);
   return (
     <span
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium"
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs md:text-base font-medium"
       style={{
-        backgroundColor: `hsl(${colorVar} / 0.2)`,
-        color: `hsl(${colorVar})`,
+        backgroundColor: `hsl(${colorVar} / 0.3)`,
+        // color: `hsl(${colorVar})`,
       }}
       data-testid="badge-course"
     >
@@ -47,7 +63,7 @@ function CourseTagItem({ icon, text }: { icon: string; text: string }) {
   const IconComp = getIcon(icon);
   return (
     <span
-      className="inline-flex items-center gap-1.5 text-sm text-muted-foreground"
+      className="inline-flex items-center gap-1.5 text-sm"
       data-testid="tag-course"
     >
       {IconComp && <IconComp className="w-4 h-4" />}
@@ -56,66 +72,97 @@ function CourseTagItem({ icon, text }: { icon: string; text: string }) {
   );
 }
 
-function CourseContent({ course, colorVar }: { course: CourseItem; colorVar: string }) {
+function CourseContent({
+  course,
+  colorVar,
+}: {
+  course: CourseItem;
+  colorVar: string;
+}) {
   return (
     <div className="flex flex-col h-full gap-4 relative z-10">
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground" data-testid="text-duration">
+        <span
+          className="inline-flex items-center gap-1.5 text-sm md:text-base text-muted-foreground"
+          data-testid="text-duration"
+        >
           <IconClock className="w-4 h-4" />
           {course.duration}
         </span>
         {course.label && (
           <span
-            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border border-border bg-background"
+            style={{
+              backgroundColor: `hsl(${colorVar} / 0.15)`,
+            }}
+            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border border-border bg-background "
             data-testid="badge-label"
           >
-            <IconCircleCheck className="w-3.5 h-3.5 text-green-600" />
+            <IconCheck className="w-3.5 h-3.5" />
             {course.label}
           </span>
         )}
       </div>
 
-      <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight" data-testid="text-course-title">
+      <h3
+        className="text-3xl md:text-4xl font-bold text-foreground leading-tight"
+        data-testid="text-course-title"
+      >
         {course.title}
       </h3>
 
       {course.subtitle && (
-        <p className="text-base text-muted-foreground" data-testid="text-subtitle">
+        <p className="text-xl" data-testid="text-subtitle">
           {course.subtitle}
         </p>
       )}
+      <div className="flex items-center flex-wrap gap-2" data-testid="container-badges-tags">
+        {course.badges && course.badges.map((badge, i) => (
+          <CourseBadgeItem
+            key={`badge-${i}`}
+            icon={badge.icon}
+            text={badge.text}
+            colorVar={colorVar}
+          />
+        ))}
+        {course.tags && course.tags.map((tag, i) => (
+          <CourseTagItem key={`tag-${i}`} icon={tag.icon} text={tag.text} />
+        ))}
+      </div>
 
-      {course.badges && course.badges.length > 0 && (
-        <div className="flex items-center flex-wrap gap-2" data-testid="container-badges">
-          {course.badges.map((badge, i) => (
-            <CourseBadgeItem key={i} icon={badge.icon} text={badge.text} colorVar={colorVar} />
-          ))}
-        </div>
-      )}
-
-      {course.tags && course.tags.length > 0 && (
-        <div className="flex items-center flex-wrap gap-3" data-testid="container-tags">
-          {course.tags.map((tag, i) => (
-            <CourseTagItem key={i} icon={tag.icon} text={tag.text} />
-          ))}
-        </div>
-      )}
-
-      <p className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1" data-testid="text-description">
+      <p
+        className="tex md:text-base text-muted-foreground leading-relaxed flex-1 mt-2 md:mt-0"
+        data-testid="text-description"
+      >
         {course.description}
       </p>
 
-      <div className="flex items-center justify-between flex-wrap gap-4 mt-auto pt-4">
-        <div className="flex items-baseline gap-2" data-testid="container-pricing">
-          {course.original_price && (
-            <span className="text-base text-muted-foreground line-through" data-testid="text-original-price">
-              {course.original_price}
+      <div className="flex items-end justify-between flex-wrap gap-4 mt-auto pt-1 md:pt-4">
+        <div>
+          <div className="flex items-baseline" data-testid="container-pricing">
+            {course.original_price && (
+              <span
+                className="text-base text-muted-foreground line-through me-2"
+                data-testid="text-original-price"
+              >
+                {course.original_price}
+              </span>
+            )}
+            <span
+              className="text-4xl font-bold text-foreground"
+              data-testid="text-price"
+            >
+              {course.price}
             </span>
+            <span className="text-base text-muted-foreground">/mo</span>
+          </div>
+          {course.price_info && (
+            <p
+              className="text-base text-muted-foreground"
+              data-testid="text-price-info"
+            >
+              {course.price_info}
+            </p>
           )}
-          <span className="text-3xl font-bold text-foreground" data-testid="text-price">
-            {course.price}
-          </span>
-          <span className="text-base text-muted-foreground">/mo</span>
         </div>
         <a href={course.cta_url} data-testid="link-cta">
           <Button variant="outline" className="gap-2">
@@ -124,12 +171,6 @@ function CourseContent({ course, colorVar }: { course: CourseItem; colorVar: str
           </Button>
         </a>
       </div>
-
-      {course.price_info && (
-        <p className="text-xs text-muted-foreground -mt-2" data-testid="text-price-info">
-          {course.price_info}
-        </p>
-      )}
     </div>
   );
 }
@@ -150,48 +191,59 @@ export function CourseSelector({ data }: CourseSelectorProps) {
   if (!courses || courses.length === 0) return null;
 
   return (
-    <section className="w-full py-12 md:py-16" data-testid="section-course-selector">
+    <section
+      className="w-full py-12 md:py-16"
+      data-testid="section-course-selector"
+    >
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         {(data.heading || data.subheading) && (
           <div className="text-center mb-8 md:mb-12">
             {data.heading && (
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3" data-testid="text-heading">
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-3"
+                data-testid="text-heading"
+              >
                 {data.heading}
               </h2>
             )}
             {data.subheading && (
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-subheading">
-                {data.subheading}
+              <p
+                className="text-lg text-muted-foreground max-w-2xl mx-auto"
+                data-testid="text-subheading"
+              >
+                {data.subheading} d
               </p>
             )}
           </div>
         )}
 
         <div
-          className="rounded-[0.8rem] border border-border bg-card overflow-hidden flex flex-col md:flex-row min-h-[420px]"
+          className="rounded-lg border overflow-hidden flex flex-col md:flex-row min-h-[420px]"
           data-testid="card-course-selector"
         >
           <div className="md:w-[280px] lg:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-border bg-card flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
               return (
-                <button
+                <Button
+                  variant="ghost"
                   key={index}
                   onClick={() => handleTabClick(index)}
                   className={`
-                    relative text-left px-5 py-4 transition-colors duration-200
+                    relative text-left px-5 py-4 -2 transition-colors duration-200
                     flex items-center justify-between gap-2 whitespace-nowrap md:whitespace-normal
                     min-w-[160px] md:min-w-0 w-full
-                    ${isActive
-                      ? "font-semibold text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                    ${
+                      isActive
+                        ? "font-semibold text-foreground bg-muted"
+                        : "text-muted-foreground hover:text-foreground"
                     }
                   `}
                   data-testid={`button-tab-${index}`}
                 >
                   {isActive && (
                     <span
-                      className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full hidden md:block"
+                      className="absolute left-0 top-0 bottom-0 w-[2px] rounded-r-full hidden md:block"
                       style={{ backgroundColor: `hsl(${colorVar})` }}
                     />
                   )}
@@ -201,22 +253,22 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                       style={{ backgroundColor: `hsl(${colorVar})` }}
                     />
                   )}
-                  <span className="text-sm md:text-base">{course.name}</span>
+                  <span className="text-sm md:text-lg">{course.name}</span>
                   {isActive && (
                     <IconArrowRight className="w-4 h-4 shrink-0 hidden md:block" />
                   )}
-                </button>
+                </Button>
               );
             })}
           </div>
 
-          <div
-            className="flex-1 p-6 md:p-8 lg:p-10 relative overflow-hidden transition-all duration-500"
-          >
+          <div className="flex-1 p-4 md:p-8 lg:p-10 relative overflow-hidden transition-all duration-500">
+            <div className="absolute inset-0 bg-card" />
             <div
-              className="absolute inset-0 transition-all duration-500"
+              className="absolute inset-0 transition-all duration-500 md:border-l"
               style={{
-                background: `linear-gradient(135deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 100%)`,
+                background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
+                borderLeftColor: `hsl(${colorVar})`,
               }}
             />
             {activeCourse && (
