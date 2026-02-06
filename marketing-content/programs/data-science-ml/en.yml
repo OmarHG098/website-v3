@@ -75,6 +75,19 @@ sections:
       desktop: md
     marginY:
       desktop: none
+  - type: award_badges
+    version: v1.0
+    variant: detailed
+    showBorder: false
+    items:
+      - id: coursereport-detailed
+        alt: Financial Magazine - Actualidad Económica & Centros de Formación
+        logo: /attached_assets/Financial-Magazine_1770392145138.png
+        logoHeight: h-16
+      - id: switchup-detailed
+        alt: SwitchUp - Top Bootcamp
+        logo: /images/awards/switchup.svg
+        logoHeight: h-16
   - type: awards_marquee
     version: v1.0
     speed: 40

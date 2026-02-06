@@ -801,11 +801,11 @@
       "remoteSha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e"
     },
     "marketing-content/programs/data-science-ml/en.yml": {
-      "sha": "aa1049ac48768a38098cae1d69761dac3644ad8df093c3e66a50fbe4a9e42525",
-      "lastModified": 1770391556771.5796,
+      "sha": "61aab1835e103610d7ac233ea30b52a3745bf35e2e316c55b48451a9780d9275",
+      "lastModified": 1770392611157.4106,
       "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-06T15:25:56.776Z"
+      "modifiedAt": "2026-02-06T15:43:31.161Z"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
