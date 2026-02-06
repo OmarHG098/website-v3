@@ -7,8 +7,10 @@
  * EditorType options: "icon-picker" | "color-picker" | "image-picker" | "image-with-style-picker" | "link-picker"
  */
 
-export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-with-style-picker" | "link-picker";
+export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-with-style-picker" | "link-picker" | "rich-text-editor";
 
 export const fieldEditors: Record<string, EditorType> = {
   "items[].icon": "icon-picker",
+  "stats-text:description": "rich-text-editor",
+  "stats-cards:description": "rich-text-editor",
 };
