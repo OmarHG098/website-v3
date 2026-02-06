@@ -60,9 +60,21 @@ interface HumanAndAIDuoData {
   image_alt?: string;
   background?: string;
   // Video option - when provided, replaces images with video
-  video?: string;
-  video_preview_image?: string;
+  // Accepts either string URL (legacy) or full config object
+  video?: string | {
+    url: string;
+    ratio?: string;
+    mobile_ratio?: string;
+    width?: string;
+    muted?: boolean;
+    autoplay?: boolean;
+    loop?: boolean;
+    preview_image_url?: string;
+    with_shadow_border?: boolean;
+  };
+  // Legacy fields for backward compatibility (used when video is a string)
   video_ratio?: string;
+  video_preview_image?: string;
 }
 
 interface HumanAndAIDuoProps {
@@ -80,9 +92,23 @@ const getIcon = (iconName: string, className?: string, size?: number, color?: st
   return IconComponent ? <IconComponent className={className} size={size || 20} color={color} /> : null;
 };
 
+// Normalize video config - handles both legacy string format and new object format
+function normalizeVideo(
+  video: string | { url: string; ratio?: string; preview_image_url?: string; width?: string } | undefined,
+  videoRatio?: string,
+  videoPreviewImage?: string
+): { url: string; ratio?: string; preview_image_url?: string; width?: string } | null {
+  if (!video) return null;
+  if (typeof video === "string") {
+    return { url: video, ratio: videoRatio, preview_image_url: videoPreviewImage };
+  }
+  return video;
+}
+
 export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
   const backgroundClass = data.background || "bg-background";
-  const hasVideo = !!data.video;
+  const videoConfig = normalizeVideo(data.video, data.video_ratio, data.video_preview_image);
+  const hasVideo = !!videoConfig?.url;
   
   // Use custom images array if provided, otherwise always show default 4 student images
   // Note: legacy image/image_alt fields are kept for backward compatibility but don't affect the student images display
@@ -91,14 +117,19 @@ export function HumanAndAIDuo({ data }: HumanAndAIDuoProps) {
     : defaultStudentImages;
 
   const renderMedia = (containerClass: string, testId: string) => {
-    if (hasVideo) {
+    if (hasVideo && videoConfig) {
+      const videoWidth = videoConfig.width || "400px";
       return (
         <div className="flex justify-end">
-          <div className={`max-w-[400px] ${containerClass}`} data-testid={testId}>
+          <div 
+            className={containerClass} 
+            style={{ maxWidth: videoWidth }}
+            data-testid={testId}
+          >
             <UniversalVideo
-              url={data.video!}
-              ratio={data.video_ratio || "2.39:1"}
-              preview_image_url={data.video_preview_image}
+              url={videoConfig.url}
+              ratio={videoConfig.ratio || "2.39:1"}
+              preview_image_url={videoConfig.preview_image_url}
             />
           </div>
         </div>

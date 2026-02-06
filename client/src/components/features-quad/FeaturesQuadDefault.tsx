@@ -50,10 +50,24 @@ function FullCard({ card, index }: { card: { icon: string; title?: string; descr
   );
 }
 
+// Normalize video config - handles both legacy string format and new object format
+function normalizeVideo(
+  video: string | { url: string; ratio?: string; preview_image_url?: string; width?: string } | undefined,
+  videoRatio?: string,
+  videoPreviewImage?: string
+): { url: string; ratio?: string; preview_image_url?: string; width?: string } | null {
+  if (!video) return null;
+  if (typeof video === "string") {
+    return { url: video, ratio: videoRatio, preview_image_url: videoPreviewImage };
+  }
+  return video;
+}
+
 export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
   const backgroundClass = data.background || "bg-background";
   const images = data.images || [];
-  const hasVideo = !!data.video;
+  const videoConfig = normalizeVideo(data.video, data.video_ratio, data.video_preview_image);
+  const hasVideo = !!videoConfig?.url;
   const hasMedia = hasVideo || images.length > 0;
   const isCompact = data.compact === true;
   const CardComponent = isCompact ? CompactCard : FullCard;
@@ -69,13 +83,18 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
   };
 
   const renderMedia = (containerClass: string, testId: string) => {
-    if (hasVideo) {
+    if (hasVideo && videoConfig) {
+      const videoWidth = videoConfig.width;
       return (
-        <div className={containerClass} data-testid={testId}>
+        <div 
+          className={containerClass} 
+          style={videoWidth ? { width: videoWidth } : undefined}
+          data-testid={testId}
+        >
           <UniversalVideo
-            url={data.video!}
-            ratio={data.video_ratio || "16:9"}
-            preview_image_url={data.video_preview_image}
+            url={videoConfig.url}
+            ratio={videoConfig.ratio || "16:9"}
+            preview_image_url={videoConfig.preview_image_url}
           />
         </div>
       );

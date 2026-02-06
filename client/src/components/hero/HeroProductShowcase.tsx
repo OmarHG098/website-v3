@@ -207,7 +207,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                     pauseOnHover={false}
                     gradient={marquee.gradient ?? true}
                     gradientColor={marquee.gradientColor}
-                    gradientWidth={marquee.gradientWidth || 50}
+                    gradientWidth={marquee.gradientWidth || 60}
                     autoFill={true}
                   >
                     {marquee.items.map((item, index) => (

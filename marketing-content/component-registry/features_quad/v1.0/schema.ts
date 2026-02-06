@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { videoConfigSchema } from "../../_common/schema";
 
 export const componentMeta = {
   displayName: "Features Quad",
@@ -27,6 +28,7 @@ export const featureQuadSectionSchema = z.object({
   cards: z.array(featureQuadCardSchema).min(4).max(4).describe("Array of exactly 4 feature cards"),
   footer_description: z.string().optional().describe("Optional footer text (italic)"),
   background: z.string().optional().describe("Background CSS class (e.g., 'bg-muted/30')"),
+  video: videoConfigSchema.optional().describe("Video configuration - when provided, replaces images with video"),
 });
 
 export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;

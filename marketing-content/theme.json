@@ -63,12 +63,14 @@
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },
     { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
     { "id": "accent", "label": "Accent", "cssVar": "--accent" },
-    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" }
+    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" },
+    { "id": "secondary-foreground", "label": "Secondary", "cssVar": "--secondary-foreground" }
   ],
   "text": [
     { "id": "foreground", "label": "Default", "cssVar": "--foreground" },
     { "id": "muted-foreground", "label": "Muted", "cssVar": "--muted-foreground" },
     { "id": "primary-foreground", "label": "On Primary", "cssVar": "--primary-foreground" },
-    { "id": "secondary-foreground", "label": "On Secondary", "cssVar": "--secondary-foreground" }
+    { "id": "secondary-foreground", "label": "On Secondary", "cssVar": "--secondary-foreground" },
+    { "id": "primary", "label": "Primary", "cssVar": "--primary" }
   ]
 }

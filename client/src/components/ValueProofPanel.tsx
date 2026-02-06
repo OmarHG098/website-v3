@@ -166,7 +166,6 @@ export const ValueProofPanel = memo(function ValueProofPanel({ data }: ValueProo
 
   return (
     <section 
-      className={`py-16 md:py-20 ${backgroundClass}`}
       data-testid="section-value-proof-panel"
     >
       <div className="max-w-6xl mx-auto px-4">

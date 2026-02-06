@@ -37,6 +37,10 @@ export const numberedStepsBubbleTextSectionSchema = z.object({
   variant: z.literal("bubbleText"),
   title: z.string().optional(),
   description: z.string().optional(),
+  description_link: z.object({
+    text: z.string(),
+    url: z.string(),
+  }).optional(),
   steps: z.array(numberedStepsStepSchema),
   background: z.string().optional(),
 });
