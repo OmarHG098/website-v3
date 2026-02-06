@@ -126,6 +126,10 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         logoHeight: h-14 md:h-16
+      - id: logo-kpmg
+        logo: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG logo
+        logoHeight: h-10 md:h-14
     marginY:
       desktop: md lg
     paddingY:
