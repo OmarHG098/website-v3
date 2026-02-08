@@ -17,6 +17,7 @@ export const courseTagSchema = z.object({
 
 export const courseItemSchema = z.object({
   name: z.string().describe("Tab label shown in the left panel"),
+  icon: z.string().optional().describe("Optional Tabler icon name shown left of the course title (e.g., 'Bolt', 'Brain', 'Code')"),
   duration: z.string().describe("Duration text (e.g., '4 months part-time')"),
   label: z.string().optional().describe("Optional small badge shown next to duration (e.g., 'Updated in 2025')"),
   title: z.string().describe("Course title displayed prominently"),
@@ -29,12 +30,14 @@ export const courseItemSchema = z.object({
   price_info: z.string().optional().describe("Additional pricing info (e.g., 'with TripleTen Installments')"),
   cta_text: z.string().describe("CTA button text"),
   cta_url: z.string().describe("CTA button URL"),
-  course_background: z.string().optional().describe("Semantic background color for gradient and badges (e.g., 'primary', 'accent', 'muted')"),
+  course_background: z.string().optional().describe("Background color for default variant gradient and badges (uses courses color picker)"),
+  solid_background: z.string().optional().describe("Background color for solid variant flat fill and active tab (uses accent color picker)"),
 });
 
 export const courseSelectorSectionSchema = z.object({
   type: z.literal("course_selector"),
   version: z.string().optional().default("1.0"),
+  variant: z.enum(["default", "solid"]).optional().default("default").describe("Visual variant: 'default' uses gradient background, 'solid' uses flat fill with edge-to-edge tabs"),
   heading: z.string().optional().describe("Optional section heading above the card"),
   subheading: z.string().optional().describe("Optional section subheading"),
   courses: z.array(courseItemSchema).min(1).describe("Array of course items, each rendered as a selectable tab"),

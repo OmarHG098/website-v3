@@ -69,7 +69,7 @@ function CourseBadgeItem({
     <span
       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs md:text-base font-medium"
       style={{
-        backgroundColor: hslColor(resolved, 1.2),
+        backgroundColor: hslColor(resolved, 1),
       }}
       data-testid="badge-course"
     >
@@ -135,7 +135,7 @@ function CourseContent({
       </div>
 
       <h3
-        className="text-3xl md:text-4xl font-bold text-foreground leading-tight"
+        className="text-3xl md:text-4xl font-bold text-foreground leading-tight flex items-center"
         data-testid="text-course-title"
       >
         {course.title}
@@ -160,7 +160,7 @@ function CourseContent({
         ))}
       </div>
 
-      <div className="relative mt-2 md:mt-0">
+      <div className="relative mt-2 md:mt-0 md:me-28 lg:me-40">
         <p
           ref={descRef}
           className={`text-sm md:text-base text-muted-foreground leading-relaxed ${
@@ -268,7 +268,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           className="rounded-2xl border overflow-hidden flex flex-col md:flex-row min-h-[420px]"
           data-testid="card-course-selector"
         >
-          <div className="md:w-[280px] lg:w-[300px] shrink-0 bg-card flex flex-col">
+          <div className="md:w-[280px] lg:w-[360px] shrink-0 bg-card flex flex-col">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
               return (
@@ -288,7 +288,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                   `}
                   style={{
                     borderLeft: isActive
-                      ? `2px solid ${hslColor(resolved, 2.5)}`
+                      ? `2px solid ${hslColor(resolved, 1.5)}`
                       : ""
                   }}
                   data-testid={`button-tab-${index}`}
@@ -312,10 +312,11 @@ export function CourseSelector({ data }: CourseSelectorProps) {
               }}
             />
             <div
-              className="absolute inset-0 transition-all duration-500 hidden md:block"
+              className="absolute inset-0 transition-all duration-500 hidden md:block border-t-8"
               style={{
-                backgroundColor: hslColor(resolved, 1),
-                borderColor: hslColor(resolved, 2.5),
+                background: `linear-gradient(180deg, ${hslColor(resolved, 0.5)} 0%, ${hslColor(resolved, 0.15)} 90%, transparent 100%)`,
+                // backgroundColor: hslColor(resolved, 1),
+                borderColor: hslColor(resolved, 1),
               }}
             />
             {activeCourse && (

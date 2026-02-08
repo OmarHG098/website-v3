@@ -74,9 +74,9 @@
     { "id": "primary", "label": "Primary", "cssVar": "--primary" }
   ],
   "courses": [
-    { "id": "primary", "label": "Primary", "value": "hsl(var(--primary) / 0.2)" },
-    { "id": "primary-soft", "label": "Primary Soft", "value": "hsl(var(--primary) / 0.15)" },
-    { "id": "primary-light", "label": "Primary Light", "value": "hsl(var(--primary) / 0.1)" },
+    { "id": "primary", "label": "Primary", "value": "hsl(var(--primary) / 0.4)" },
+    { "id": "primary-soft", "label": "Primary Soft", "value": "hsl(var(--primary) / 0.3)" },
+    { "id": "primary-light", "label": "Primary Light", "value": "hsl(var(--primary) / 0.2)" },
     { "id": "muted", "label": "Muted", "cssVar": "--muted-foreground" },
     { "id": "muted-soft", "label": "Muted Soft", "value": "hsl(var(--muted-foreground) / 0.7)" }
   ],
