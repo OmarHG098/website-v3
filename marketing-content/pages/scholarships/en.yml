@@ -230,13 +230,22 @@ sections:
     reverse_on_mobile: true
     gap: "12"
     marginY:
-      desktop: none lg
+      desktop: none xl
   - type: why_learn_ai
     variant: laptop-edge
     title: Our mission is to make high-quality coding education affordable.
     subtitle: Software Development as You Know It Will Cease to Exist
     description: n the past, 68% of the people applying to 4Geeks Academy could not enroll due to financial reasons. We concentrated our efforts on lowering the financial barriers by finding partners and sponsors who shared our vision. Today, thanks to our joint efforts, 80% of our students receive some form of financial support, making top-quality coding education accessible to a wider audience.
-    bullets:
-      - text: To be a premier school for coding education, enriching the futures of our students.
-      - text: To secure job placement for our graduates immediately after program completion.
-      - text: To make high-quality education accessible to anyone eager to embark on a coding career.
+    background: hsl(var(--muted))
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - scholarships
+      - job-guarantee
+      - online-platform
+    paddingY:
+      desktop: lg md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
