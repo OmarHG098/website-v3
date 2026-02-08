@@ -98,7 +98,7 @@ sections:
         price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/ai-automation
-        course_background: hsl(var(--primary) / 0.4)
+        course_background: hsl(var(hsl(var(--primary) / 0.15)))
       - name: AI and Machine Learning
         duration: 9 months part-time
         label: Updated in 2025
@@ -112,7 +112,7 @@ sections:
         price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/ai-machine-learning
-        course_background: hsl(var(--primary))
+        course_background: hsl(var(--primary) / 0.2)
       - name: BI Analytics
         duration: 4 months part-time
         label: Updated in 2025
@@ -129,7 +129,7 @@ sections:
         price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/bi-analytics
-        course_background: hsl(var(--secondary-foreground))
+        course_background: hsl(var(--primary) / 0.5)
       - name: Full Stack Development
         duration: 9 months part-time
         title: Full Stack Software Development
@@ -144,7 +144,7 @@ sections:
         original_price: $588
         cta_text: Discover program
         cta_url: /en/full-stack
-        course_background: hsl(var(--accent))
+        course_background: hsl(var(--primary) / 0.1)
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"

@@ -25,8 +25,8 @@ const COLOR_MAP: Record<string, string> = {
 function resolveColorVar(color: string | undefined): string {
   if (!color) return "var(--primary)";
   if (COLOR_MAP[color]) return COLOR_MAP[color];
-  const hslVarMatch = color.match(/^hsl\((var\(--[^)]+\))(?:\s*\/\s*[\d.]+)?\)$/);
-  if (hslVarMatch) return hslVarMatch[1];
+  // const hslVarMatch = color.match(/^hsl\((var\(--[^)]+\))(?:\s*\/\s*[\d.]+)?\)$/);
+  // if (hslVarMatch) return hslVarMatch[1];
   if (color.startsWith("hsl(") && color.endsWith(")"))
     return color.slice(4, -1);
   if (color.startsWith("var(") || color.startsWith("#")) return color;
@@ -298,7 +298,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
               className="absolute inset-0 transition-all duration-500 hidden md:block"
               style={{
                 // background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
-                backgroundColor: `hsl(${colorVar} / 0.12)`,
+                backgroundColor: `hsl(${colorVar})`,
                 borderColor: `hsl(${colorVar})`,
               }}
             />
