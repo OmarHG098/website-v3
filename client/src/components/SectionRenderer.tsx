@@ -193,7 +193,7 @@ const BentoCards = lazy(() => import("@/components/bento-cards/BentoCards").then
 const Banner = lazy(() => import("@/components/Banner").then(m => ({ default: m.Banner })));
 const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ default: m.FaqEditor })));
 const ImageRow = lazy(() => import("@/components/sections/ImageRow"));
-const CourseSelector = lazy(() => import("@/components/CourseSelector").then(m => ({ default: m.CourseSelector })));
+const CourseSelector = lazy(() => import("@/components/course-selector/CourseSelector").then(m => ({ default: m.CourseSelector })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
