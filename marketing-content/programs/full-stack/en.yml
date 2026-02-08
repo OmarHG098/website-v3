@@ -82,7 +82,7 @@ sections:
         - icon: users
           text: 1:1 Mentorship
     paddingY:
-      desktop: md
+      desktop: md lg
     marginY:
       desktop: none
   - type: awards_marquee
@@ -147,6 +147,8 @@ sections:
         title: Average starting salary for graduates
     marginY:
       desktop: none md
+    paddingY:
+      desktop: none
   - type: syllabus
     version: "1.0"
     variant: program-modules
@@ -253,7 +255,7 @@ sections:
         date: 01/03/2023
         difficulty: hard
     paddingY:
-      desktop: md
+      desktop: md sm
   - type: ai_learning
     variant: feature-tabs
     badge: Why 4Geeks?
@@ -354,7 +356,7 @@ sections:
     useSolidCard: true
     marginY:
       mobile: none
-      desktop: none
+      desktop: none md
     paddingY:
       mobile: lg
       desktop: lg
@@ -393,6 +395,8 @@ sections:
       variant: primary
     paddingY:
       desktop: md
+    marginY:
+      desktop: none md
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
