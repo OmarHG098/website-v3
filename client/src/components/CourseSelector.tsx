@@ -22,15 +22,33 @@ const COLOR_MAP: Record<string, string> = {
   sidebar: "var(--sidebar-background)",
 };
 
-function resolveColorVar(color: string | undefined): string {
-  if (!color) return "var(--primary)";
-  if (COLOR_MAP[color]) return COLOR_MAP[color];
-  // const hslVarMatch = color.match(/^hsl\((var\(--[^)]+\))(?:\s*\/\s*[\d.]+)?\)$/);
-  // if (hslVarMatch) return hslVarMatch[1];
-  if (color.startsWith("hsl(") && color.endsWith(")"))
-    return color.slice(4, -1);
-  if (color.startsWith("var(") || color.startsWith("#")) return color;
-  return "var(--primary)";
+interface ResolvedColor {
+  base: string;
+  opacity: number;
+}
+
+function resolveColorVar(color: string | undefined): ResolvedColor {
+  const defaultColor: ResolvedColor = { base: "var(--primary)", opacity: 1 };
+  if (!color) return defaultColor;
+  if (COLOR_MAP[color]) return { base: COLOR_MAP[color], opacity: 1 };
+  const hslVarMatch = color.match(/^hsl\((var\(--[^)]+\))(?:\s*\/\s*([\d.]+))?\)$/);
+  if (hslVarMatch) {
+    return { base: hslVarMatch[1], opacity: hslVarMatch[2] ? parseFloat(hslVarMatch[2]) : 1 };
+  }
+  if (color.startsWith("hsl(") && color.endsWith(")")) {
+    return { base: color.slice(4, -1), opacity: 1 };
+  }
+  if (color.startsWith("var(") || color.startsWith("#")) return { base: color, opacity: 1 };
+  return defaultColor;
+}
+
+function hslColor(resolved: ResolvedColor, opacityMultiplier: number = 1): string {
+  const finalOpacity = Math.min(resolved.opacity * opacityMultiplier, 1);
+  return `hsl(${resolved.base} / ${finalOpacity})`;
+}
+
+function hslColorRaw(resolved: ResolvedColor): string {
+  return `hsl(${resolved.base})`;
 }
 
 interface CourseSelectorProps {
@@ -40,18 +58,18 @@ interface CourseSelectorProps {
 function CourseBadgeItem({
   icon,
   text,
-  colorVar,
+  resolved,
 }: {
   icon: string;
   text: string;
-  colorVar: string;
+  resolved: ResolvedColor;
 }) {
   const IconComp = getIcon(icon);
   return (
     <span
       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs md:text-base font-medium"
       style={{
-        backgroundColor: `hsl(${colorVar} / 0.3)`,
+        backgroundColor: hslColor(resolved, 1.2),
       }}
       data-testid="badge-course"
     >
@@ -76,10 +94,10 @@ function CourseTagItem({ icon, text }: { icon: string; text: string }) {
 
 function CourseContent({
   course,
-  colorVar,
+  resolved,
 }: {
   course: CourseItem;
-  colorVar: string;
+  resolved: ResolvedColor;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
@@ -105,7 +123,7 @@ function CourseContent({
         {course.label && (
           <span
             style={{
-              backgroundColor: `hsl(${colorVar} / 0.15)`,
+              backgroundColor: hslColor(resolved, 0.8),
             }}
             className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border border-border bg-background "
             data-testid="badge-label"
@@ -134,7 +152,7 @@ function CourseContent({
             key={`badge-${i}`}
             icon={badge.icon}
             text={badge.text}
-            colorVar={colorVar}
+            resolved={resolved}
           />
         ))}
         {course.tags && course.tags.map((tag, i) => (
@@ -209,10 +227,9 @@ export function CourseSelector({ data }: CourseSelectorProps) {
   const courses = data.courses;
   const activeCourse = courses[activeIndex];
 
-  const colorVar = useMemo(() => {
+  const resolved = useMemo(() => {
     return resolveColorVar(activeCourse?.course_background);
   }, [activeCourse?.course_background]);
-  console.log(colorVar);
 
   const handleTabClick = useCallback((index: number) => {
     setActiveIndex(index);
@@ -271,7 +288,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                   `}
                   style={{
                     borderLeft: isActive
-                      ? `2px solid hsl(${colorVar} / 0.5)`
+                      ? `2px solid ${hslColor(resolved, 2.5)}`
                       : ""
                   }}
                   data-testid={`button-tab-${index}`}
@@ -290,20 +307,19 @@ export function CourseSelector({ data }: CourseSelectorProps) {
             <div
               className="absolute inset-0 transition-all duration-500 md:hidden border-t"
               style={{
-                background: `linear-gradient(150deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 70%, transparent 90%)`,
-                borderColor: `hsl(${colorVar})`,
+                background: `linear-gradient(150deg, ${hslColor(resolved, 0.6)} 0%, ${hslColor(resolved, 0.2)} 70%, transparent 90%)`,
+                borderColor: hslColor(resolved, 2.5),
               }}
             />
             <div
               className="absolute inset-0 transition-all duration-500 hidden md:block"
               style={{
-                // background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
-                backgroundColor: `hsl(${colorVar})`,
-                borderColor: `hsl(${colorVar})`,
+                backgroundColor: hslColor(resolved, 1),
+                borderColor: hslColor(resolved, 2.5),
               }}
             />
             {activeCourse && (
-              <CourseContent course={activeCourse} colorVar={colorVar} />
+              <CourseContent course={activeCourse} resolved={resolved} />
             )}
           </div>
         </div>
