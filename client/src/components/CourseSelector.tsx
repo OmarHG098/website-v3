@@ -95,9 +95,11 @@ function CourseTagItem({ icon, text }: { icon: string; text: string }) {
 function CourseContent({
   course,
   resolved,
+  variant = "default",
 }: {
   course: CourseItem;
   resolved: ResolvedColor;
+  variant?: "default" | "solid";
 }) {
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
@@ -135,9 +137,13 @@ function CourseContent({
       </div>
 
       <h3
-        className="text-3xl md:text-4xl font-bold text-foreground leading-tight flex items-center"
+        className="text-3xl md:text-4xl font-bold text-foreground leading-tight flex items-center gap-3"
         data-testid="text-course-title"
       >
+        {course.icon && (() => {
+          const TitleIcon = getIcon(course.icon);
+          return TitleIcon ? <TitleIcon className="w-8 h-8 md:w-10 md:h-10 shrink-0" /> : null;
+        })()}
         {course.title}
       </h3>
 
@@ -226,10 +232,15 @@ export function CourseSelector({ data }: CourseSelectorProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const courses = data.courses;
   const activeCourse = courses[activeIndex];
+  const variant = data.variant || "default";
+  const isSolid = variant === "solid";
 
   const resolved = useMemo(() => {
+    if (isSolid) {
+      return resolveColorVar(activeCourse?.solid_background);
+    }
     return resolveColorVar(activeCourse?.course_background);
-  }, [activeCourse?.course_background]);
+  }, [activeCourse?.course_background, activeCourse?.solid_background, isSolid]);
 
   const handleTabClick = useCallback((index: number) => {
     setActiveIndex(index);
@@ -271,6 +282,34 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           <div className="md:w-[280px] lg:w-[360px] shrink-0 bg-card flex flex-col">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
+
+              if (isSolid) {
+                const tabResolved = resolveColorVar(course.solid_background);
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleTabClick(index)}
+                    className={`
+                      relative text-left px-5 py-4 transition-colors duration-200
+                      flex items-center justify-between gap-2
+                      ${isActive
+                        ? "font-semibold text-foreground"
+                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                      }
+                    `}
+                    style={isActive ? {
+                      backgroundColor: hslColorRaw(tabResolved),
+                    } : undefined}
+                    data-testid={`button-tab-${index}`}
+                  >
+                    <span className="text-sm md:text-lg">{course.name}</span>
+                    {isActive && (
+                      <IconArrowRight className="w-4 h-4 shrink-0 hidden md:block" />
+                    )}
+                  </button>
+                );
+              }
+
               return (
                 <Button
                   variant="ghost"
@@ -279,11 +318,9 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                   className={`
                     relative text-left px-5 py-4 m-2 transition-colors duration-200
                     flex items-center justify-between gap-2 rounded-xl
-                    
-                    ${
-                      isActive
-                        ? "font-semibold text-foreground bg-gray-100"
-                        : "text-muted-foreground hover:text-foreground"
+                    ${isActive
+                      ? "font-semibold text-foreground bg-gray-100"
+                      : "text-muted-foreground hover:text-foreground"
                     }
                   `}
                   style={{
@@ -303,24 +340,34 @@ export function CourseSelector({ data }: CourseSelectorProps) {
           </div>
 
           <div className="flex-1 p-4 md:p-8 lg:p-10 relative overflow-hidden transition-all duration-500">
-            <div className="absolute inset-0 bg-card" />
-            <div
-              className="absolute inset-0 transition-all duration-500 md:hidden border-t"
-              style={{
-                background: `linear-gradient(150deg, ${hslColor(resolved, 0.6)} 0%, ${hslColor(resolved, 0.2)} 70%, transparent 90%)`,
-                borderColor: hslColor(resolved, 2.5),
-              }}
-            />
-            <div
-              className="absolute inset-0 transition-all duration-500 hidden md:block border-t-8"
-              style={{
-                background: `linear-gradient(180deg, ${hslColor(resolved, 0.5)} 0%, ${hslColor(resolved, 0.15)} 90%, transparent 100%)`,
-                // backgroundColor: hslColor(resolved, 1),
-                borderColor: hslColor(resolved, 1),
-              }}
-            />
+            {isSolid ? (
+              <div
+                className="absolute inset-0 transition-all duration-500"
+                style={{
+                  backgroundColor: hslColorRaw(resolved),
+                }}
+              />
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-card" />
+                <div
+                  className="absolute inset-0 transition-all duration-500 md:hidden border-t"
+                  style={{
+                    background: `linear-gradient(150deg, ${hslColor(resolved, 0.6)} 0%, ${hslColor(resolved, 0.2)} 70%, transparent 90%)`,
+                    borderColor: hslColor(resolved, 2.5),
+                  }}
+                />
+                <div
+                  className="absolute inset-0 transition-all duration-500 hidden md:block border-t-8"
+                  style={{
+                    background: `linear-gradient(180deg, ${hslColor(resolved, 0.5)} 0%, ${hslColor(resolved, 0.15)} 90%, transparent 100%)`,
+                    borderColor: hslColor(resolved, 1),
+                  }}
+                />
+              </>
+            )}
             {activeCourse && (
-              <CourseContent course={activeCourse} resolved={resolved} />
+              <CourseContent course={activeCourse} resolved={resolved} variant={variant} />
             )}
           </div>
         </div>
