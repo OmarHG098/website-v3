@@ -210,6 +210,7 @@ export function CourseSelector({ data }: CourseSelectorProps) {
   const colorVar = useMemo(() => {
     return resolveColorVar(activeCourse?.course_background);
   }, [activeCourse?.course_background]);
+  console.log(colorVar);
 
   const handleTabClick = useCallback((index: number) => {
     setActiveIndex(index);
@@ -245,10 +246,10 @@ export function CourseSelector({ data }: CourseSelectorProps) {
         )}
 
         <div
-          className="rounded-lg border overflow-hidden flex flex-col md:flex-row min-h-[420px]"
+          className="rounded-2xl border overflow-hidden flex flex-col md:flex-row min-h-[420px]"
           data-testid="card-course-selector"
         >
-          <div className="md:w-[280px] lg:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-border bg-card flex flex-col">
+          <div className="md:w-[280px] lg:w-[300px] shrink-0 bg-card flex flex-col">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
               return (
@@ -257,23 +258,22 @@ export function CourseSelector({ data }: CourseSelectorProps) {
                   key={index}
                   onClick={() => handleTabClick(index)}
                   className={`
-                    relative text-left px-5 py-4 transition-colors duration-200
-                    flex items-center justify-between gap-2
-                    w-full
+                    relative text-left px-5 py-4 m-2 transition-colors duration-200
+                    flex items-center justify-between gap-2 rounded-xl
+                    
                     ${
                       isActive
-                        ? "font-semibold text-foreground bg-muted"
+                        ? "font-semibold text-foreground bg-gray-100"
                         : "text-muted-foreground hover:text-foreground"
                     }
                   `}
+                  style={{
+                    borderLeft: isActive
+                      ? `2px solid hsl(${colorVar} / 0.5)`
+                      : ""
+                  }}
                   data-testid={`button-tab-${index}`}
                 >
-                  {isActive && (
-                    <span
-                      className="absolute left-0 top-0 bottom-0 w-[2px] rounded-r-full"
-                      style={{ backgroundColor: `hsl(${colorVar})` }}
-                    />
-                  )}
                   <span className="text-sm md:text-lg">{course.name}</span>
                   {isActive && (
                     <IconArrowRight className="w-4 h-4 shrink-0 hidden md:block" />
@@ -293,9 +293,10 @@ export function CourseSelector({ data }: CourseSelectorProps) {
               }}
             />
             <div
-              className="absolute inset-0 transition-all duration-500 hidden md:block border-l"
+              className="absolute inset-0 transition-all duration-500 hidden md:block"
               style={{
-                background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
+                // background: `linear-gradient(110deg, hsl(${colorVar} / 0.12) 0%, hsl(${colorVar} / 0.04) 50%, transparent 90%)`,
+                backgroundColor: `hsl(${colorVar} / 0.12)`,
                 borderColor: `hsl(${colorVar})`,
               }}
             />
