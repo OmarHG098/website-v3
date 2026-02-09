@@ -1133,6 +1133,7 @@ export function SectionEditorPanel({
                   comment_color: "Color de comentario",
                   excerpt_color: "Color de extracto",
                   star_color: "Color de estrellas",
+                  linkedin_color: "Color de LinkedIn",
                   link_color: "Color de enlace",
                   avatar: "Foto de perfil",
                   logo: "Logo",

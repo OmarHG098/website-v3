@@ -13,6 +13,7 @@ export const fieldEditors: Record<string, EditorType> = {
   "items[].role_color": "color-picker",
   "items[].comment_color": "color-picker",
   "items[].star_color": "color-picker",
+  "items[].linkedin_color": "color-picker",
   "items[].avatar": "image-picker",
   "items[].linkedin_url": "link-picker",
   "items[].media.url": "link-picker",

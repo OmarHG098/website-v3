@@ -33,6 +33,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const defaultRoleColor = data.default_role_color;
   const defaultCommentColor = data.default_comment_color;
   const defaultStarColor = data.default_star_color;
+  const defaultLinkedinColor = data.default_linkedin_color;
   const columns = data.columns || 3;
   const background = data.background;
 
@@ -106,6 +107,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
               defaultRoleColor={defaultRoleColor}
               defaultCommentColor={defaultCommentColor}
               defaultStarColor={defaultStarColor}
+              defaultLinkedinColor={defaultLinkedinColor}
               index={index}
             />
           ))}
@@ -122,6 +124,7 @@ interface TestimonialGridCardProps {
   defaultRoleColor?: string;
   defaultCommentColor?: string;
   defaultStarColor?: string;
+  defaultLinkedinColor?: string;
   index: number;
 }
 
@@ -132,6 +135,7 @@ function TestimonialGridCard({
   defaultRoleColor,
   defaultCommentColor,
   defaultStarColor,
+  defaultLinkedinColor,
   index,
 }: TestimonialGridCardProps) {
   const boxColor = item.box_color || defaultBoxColor;
@@ -139,6 +143,7 @@ function TestimonialGridCard({
   const roleColor = item.role_color || defaultRoleColor;
   const commentColor = item.comment_color || defaultCommentColor;
   const starColor = item.star_color || defaultStarColor;
+  const linkedinColor = item.linkedin_color || defaultLinkedinColor;
   const hasMedia = !!item.media?.url;
   const mediaType = item.media?.type || (item.media?.url && isVideoUrl(item.media.url) ? "video" : "image");
 
@@ -199,6 +204,7 @@ function TestimonialGridCard({
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 text-muted-foreground"
+              style={linkedinColor ? { color: linkedinColor } : undefined}
               data-testid={`link-linkedin-${index}`}
             >
               <IconBrandLinkedin size={20} />

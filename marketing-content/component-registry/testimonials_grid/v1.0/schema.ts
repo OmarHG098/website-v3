@@ -13,6 +13,7 @@ export const testimonialsGridItemSchema = z.object({
   role_color: z.string().optional(),
   comment_color: z.string().optional(),
   star_color: z.string().optional(),
+  linkedin_color: z.string().optional(),
   media: z.object({
     url: z.string(),
     type: z.enum(["image", "video"]).optional(),
@@ -32,6 +33,7 @@ export const testimonialsGridSectionSchema = z.object({
   default_role_color: z.string().optional(),
   default_comment_color: z.string().optional(),
   default_star_color: z.string().optional(),
+  default_linkedin_color: z.string().optional(),
   columns: z.number().optional(),
   items: z.array(testimonialsGridItemSchema).optional(),
   background: z.string().optional(),
