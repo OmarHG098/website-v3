@@ -1001,6 +1001,143 @@
         "bootcamp"
       ],
       "usage_count": 0
+    },
+    "crusa_forte_scholarship": {
+      "src": "/attached_assets/crusa-forte-scholarship_1770606829241.webp",
+      "alt": "CRUSA Forte Scholarship group photo with colorful dome",
+      "focal_point": "center",
+      "tags": [
+        "scholarship",
+        "community",
+        "event",
+        "crusa"
+      ],
+      "usage_count": 0
+    },
+    "miami_old_classroom": {
+      "src": "/attached_assets/miami-old_1770606843360.jpg",
+      "alt": "4Geeks Academy Miami original classroom - Intro to Coding event",
+      "focal_point": "center",
+      "tags": [
+        "miami",
+        "classroom",
+        "campus",
+        "event"
+      ],
+      "usage_count": 0
+    },
+    "miami_old_classroom_2": {
+      "src": "/attached_assets/miami-old2_1770606866999.jpg",
+      "alt": "4Geeks Academy Miami original classroom - coding presentation",
+      "focal_point": "center",
+      "tags": [
+        "miami",
+        "classroom",
+        "campus",
+        "event"
+      ],
+      "usage_count": 0
+    },
+    "miami_people_graduation": {
+      "src": "/attached_assets/miami-people_1770606916405.jpeg",
+      "alt": "4Geeks Academy Miami graduates celebrating with certificates",
+      "focal_point": "center",
+      "tags": [
+        "miami",
+        "graduates",
+        "people",
+        "celebration"
+      ],
+      "usage_count": 0
+    },
+    "miami_city_skyline": {
+      "src": "/attached_assets/miami-loc_1770606947264.jpg",
+      "alt": "Miami city skyline at night with bridge and lights",
+      "focal_point": "center",
+      "tags": [
+        "miami",
+        "city",
+        "location",
+        "skyline"
+      ],
+      "usage_count": 0
+    },
+    "logo_united_way": {
+      "src": "/attached_assets/united_way_mini_1770608055840.PNG",
+      "alt": "United Way logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "nonprofit"
+      ],
+      "usage_count": 0
+    },
+    "logo_cinde": {
+      "src": "/attached_assets/cinde_1770608132364.png",
+      "alt": "CINDE Invest in Costa Rica logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "costa-rica"
+      ],
+      "usage_count": 0
+    },
+    "logo_utec": {
+      "src": "/attached_assets/utec_1770608159144.png",
+      "alt": "UTEC Universidad Tecnológica logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "university"
+      ],
+      "usage_count": 0
+    },
+    "logo_crusa": {
+      "src": "/attached_assets/crusa-logo_1770608198366.webp",
+      "alt": "CRUSA Foundation logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "foundation",
+        "costa-rica"
+      ],
+      "usage_count": 0
+    },
+    "logo_miami_tech_works": {
+      "src": "/attached_assets/miamitech-logo-sidetext_1770608261416.png",
+      "alt": "Miami Tech Works logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "miami"
+      ],
+      "usage_count": 0
+    },
+    "logo_bite_con": {
+      "src": "/attached_assets/bite-con_1770608313051.png",
+      "alt": "BITE-CON logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner",
+        "event"
+      ],
+      "usage_count": 0
+    },
+    "logo_kosmos": {
+      "src": "/attached_assets/kosmos-logo_1770608352885.png",
+      "alt": "Kosmos logo",
+      "focal_point": "center",
+      "tags": [
+        "logo",
+        "partner"
+      ],
+      "usage_count": 0
     }
   }
 }
