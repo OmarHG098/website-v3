@@ -737,6 +737,8 @@ import { imageRowSectionSchema, type ImageRowSection } from "../marketing-conten
 export { imageRowSectionSchema, type ImageRowSection };
 import { courseSelectorSectionSchema, type CourseSelectorSection, type CourseItem, type CourseBadge, type CourseTag } from "../marketing-content/component-registry/course_selector/v1.0/schema";
 export { courseSelectorSectionSchema, type CourseSelectorSection, type CourseItem, type CourseBadge, type CourseTag };
+import { articleSectionSchema, type ArticleSection } from "../marketing-content/component-registry/article/v1.0/schema";
+export { articleSectionSchema, type ArticleSection };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -888,6 +890,7 @@ const baseSectionSchema = z.union([
   imageRowSectionSchema,
   featureQuadSectionSchema,
   courseSelectorSectionSchema,
+  articleSectionSchema,
 ]);
 
 // Combined section schema with layout fields
