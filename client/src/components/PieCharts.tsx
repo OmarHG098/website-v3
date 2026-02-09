@@ -167,9 +167,10 @@ function SinglePieChart({
 
   return (
     <Card 
-      className={`flex flex-col items-center p-6 transition-all duration-300 ease-out cursor-pointer ${
+      className={`flex flex-col items-center p-6 transition-all duration-300 ease-out cursor-pointer overflow-hidden ${
         isOtherHovered ? "opacity-30 duration-150" : "opacity-100"
       }`}
+      style={{ minWidth: containerSize + 48 }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -229,13 +230,11 @@ function SinglePieChart({
           const startX = centerX + startRadius * Math.cos(midRad);
           const startY = centerY + startRadius * Math.sin(midRad);
           
-          // Mid point for the angled line
-          const midRadius = scaledRadius + 18;
+          const midRadius = scaledRadius + 12;
           const midPointX = centerX + midRadius * Math.cos(midRad);
           const midPointY = centerY + midRadius * Math.sin(midRad);
           
-          // End point extends horizontally from the mid point
-          const horizontalExtend = 20;
+          const horizontalExtend = 14;
           const isRightSideCalc = midPointX > centerX;
           const endX = isRightSideCalc ? midPointX + horizontalExtend : midPointX - horizontalExtend;
           const endY = midPointY;
@@ -278,11 +277,12 @@ function SinglePieChart({
                 />
               </svg>
               <div
-                className="absolute text-xs whitespace-nowrap"
+                className="absolute text-xs"
                 style={{
-                  left: isRightSide ? endX + 12 : endX - 12,
+                  left: isRightSide ? endX + 8 : endX - 8,
                   top: endY,
                   transform: isRightSide ? `translateY(-50%)` : `translate(-100%, -50%)`,
+                  maxWidth: 70,
                 }}
               >
                 <div className="font-medium text-foreground">{slice.label}</div>

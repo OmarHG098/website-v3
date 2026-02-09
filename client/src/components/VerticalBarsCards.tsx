@@ -195,7 +195,7 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
 
         {/* Container for both layers */}
         <div className="relative">
-          {/* BASE LAYER: Static cards that never move */}
+          {/* BASE LAYER: Static cards */}
           <div 
             ref={gridRef}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -208,10 +208,10 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                 <Card
                   className={`p-6 h-full transition-opacity ${
                     hoveredIndex === metricIndex
-                      ? "opacity-0 duration-200"  // Fade out when overlay is active
+                      ? "md:opacity-0 md:duration-200 opacity-100"
                       : hoveredIndex !== null
-                        ? "opacity-30 duration-150"  // Fade when another card is hovered
-                        : "opacity-100 duration-0"  // Show instantly when nothing is hovered
+                        ? "md:opacity-30 md:duration-150 opacity-100"
+                        : "opacity-100 duration-0"
                   }`}
                   data-testid={`card-metric-${metricIndex}`}
                 >
@@ -224,14 +224,19 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     </p>
                   )}
                   {renderBars(metric, metricIndex)}
+                  {metric.description && (
+                    <p className="text-sm text-muted-foreground leading-relaxed text-center mt-4 md:hidden">
+                      {metric.description}
+                    </p>
+                  )}
                 </Card>
               </div>
             ))}
           </div>
 
-          {/* OVERLAY LAYER: Absolutely positioned overlays (NO grid wrapper) */}
+          {/* OVERLAY LAYER: Desktop-only hover expansion */}
           <div 
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none hidden md:block"
             style={{ zIndex: 10 }}
           >
             {data.metrics.map((metric, metricIndex) => {
@@ -242,22 +247,17 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
               
               const isFirstCard = metricIndex === 0;
               const isLastCard = metricIndex === data.metrics.length - 1;
-              const isMiddleCard = !isFirstCard && !isLastCard;
               
-              // Calculate expanded width and left position based on card position
               let expandedWidth: number;
               let expandedLeft: number;
               
               if (isFirstCard) {
-                // First card: expand right only
                 expandedWidth = containerWidth - rect.left;
                 expandedLeft = rect.left;
               } else if (isLastCard) {
-                // Last card: expand left only
                 expandedWidth = rect.left + rect.width;
                 expandedLeft = 0;
               } else {
-                // Middle card: expand to both sides (full container width)
                 expandedWidth = containerWidth;
                 expandedLeft = 0;
               }
@@ -272,7 +272,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     ${isHovered ? "shadow-xl z-20 opacity-100" : "opacity-0"}
                   `}
                   style={{
-                    // Fade in instantly, fade out smoothly
                     transition: isHovered 
                       ? "opacity 0ms ease-out, left 300ms ease-out, width 300ms ease-out, height 300ms ease-out, box-shadow 300ms ease-out"
                       : "opacity 200ms ease-out, left 300ms ease-out, width 300ms ease-out, height 300ms ease-out, box-shadow 300ms ease-out",
@@ -285,7 +284,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                   onMouseLeave={() => setHoveredIndex(null)}
                   data-testid={`card-overlay-${metricIndex}`}
                 >
-                  {/* Graph section - always in place */}
                   <div 
                     className="flex flex-col"
                     style={{ width: rect.width - 48 }}
@@ -301,7 +299,6 @@ export function VerticalBarsCards({ data }: VerticalBarsCardsProps) {
                     {renderBars(metric, metricIndex)}
                   </div>
 
-                  {/* Description panel - absolutely positioned, appears after card is fully expanded */}
                   <div 
                     className={`absolute top-6 bottom-6 flex flex-col justify-center pr-6 ease-out ${
                       isHovered 

@@ -405,9 +405,11 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
-  // Check if we should hide the debug bubble (via URL param for embedded previews)
-  const shouldHide = typeof window !== "undefined" && 
-    new URLSearchParams(window.location.search).get("hide_debug") === "true";
+  // Check if we should hide the debug bubble (via URL param or in preview-frame route)
+  const shouldHide = typeof window !== "undefined" && (
+    new URLSearchParams(window.location.search).get("hide_debug") === "true" ||
+    window.location.pathname === "/preview-frame"
+  );
   
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
