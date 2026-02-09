@@ -580,9 +580,11 @@
       "remoteSha": "d8a47ce1eb05054953608c0f860e7b692b52e9a4368f90fed0a35f57a93cf7f3"
     },
     "marketing-content/pages/apply/en.yml": {
-      "sha": "16f7a38e1a3d7d481c5081b2201a830a47f6a8c97d0e1bdb5b0ee9ca8fd257d1",
-      "lastModified": 1766091544528.9539,
-      "remoteSha": "16f7a38e1a3d7d481c5081b2201a830a47f6a8c97d0e1bdb5b0ee9ca8fd257d1"
+      "sha": "fca5e4ed8a4d1d1da81ffac148d43fdd4cc79c5f22835ff8005d9220b7ccadfd",
+      "lastModified": 1770668200152.839,
+      "remoteSha": "16f7a38e1a3d7d481c5081b2201a830a47f6a8c97d0e1bdb5b0ee9ca8fd257d1",
+      "author": "Alejandro Sanchez",
+      "modifiedAt": "2026-02-09T20:16:40.156Z"
     },
     "marketing-content/pages/apply/es.yml": {
       "sha": "5e887f1402e42c8e78f49637ec405b0e83d0aa3ca2bc0ec78c1363cf3f606284",
