@@ -36,6 +36,7 @@ interface FieldConfig {
   visible?: boolean;
   required?: boolean;
   default?: string;
+  default_country?: string; // e.g. "ES", "US" – passed to PhoneInput defaultCountry
   helper_text?: string;
   placeholder?: string;
 }
@@ -316,7 +317,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
   const { data: formOptions } = useQuery<FormOptions>({
     queryKey: ["/api/form-options", locale],
   });
-
   const resolveDefault = (fieldName: string, configDefault?: string): string => {
     if (!configDefault || configDefault !== "auto") {
       return configDefault || "";
@@ -341,7 +341,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
       email: "",
       first_name: resolveDefault("first_name", getFieldConfig("first_name").default),
       last_name: resolveDefault("last_name", getFieldConfig("last_name").default),
-      phone: "",
+      phone: resolveDefault("phone", getFieldConfig("phone").default),
       program: resolveDefault("program", getFieldConfig("program").default),
       region: resolveDefault("region", getFieldConfig("region").default),
       location: resolveDefault("location", getFieldConfig("location").default),
@@ -811,7 +811,11 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                       <PhoneInput
                         value={field.value}
                         onChange={field.onChange}
-                        defaultCountry={(session?.geo?.country_code || "US") as Country}
+                        defaultCountry={
+                          (getFieldConfig("phone").default_country ||
+                            session?.geo?.country_code ||
+                            "US") as Country
+                        }
                         placeholder={getFieldConfig("phone").placeholder || (locale === "es" ? "Teléfono" : "Phone number")}
                         data-testid="input-phone"
                       />

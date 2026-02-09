@@ -2,6 +2,7 @@
  * Syllabus Component Schemas - v1.0
  */
 import { z } from "zod";
+import { ctaButtonSchema } from "../../_common/schema";
 
 export const syllabusModuleSchema = z.object({
   title: z.string(),
@@ -57,6 +58,11 @@ export const syllabusProgramModulesSchema = z.object({
   program_description: z.string().optional(),
   tech_logos: z.array(techLogoSchema).optional(),
   module_cards: z.array(moduleCardSchema),
+  // Optional header block above the syllabus (centered)
+  header: z.string().optional(),
+  subheader: z.string().optional(),
+  description: z.string().optional(), // HTML, use rich-text-editor
+  cta_button: ctaButtonSchema.optional(),
 });
 
 export const syllabusSectionSchema = z.union([
