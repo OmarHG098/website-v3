@@ -15,7 +15,7 @@ export function FooterSection({ data }: FooterSectionProps) {
           className="text-sm text-muted-foreground"
           data-testid="text-copyright"
         >
-          {data.copyright_text}
+          {data.copyright_text?.replace(/\d{4}/, String(new Date().getFullYear()))}
         </p>
       </div>
     </footer>
