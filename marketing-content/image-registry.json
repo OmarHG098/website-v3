@@ -1138,6 +1138,32 @@
         "partner"
       ],
       "usage_count": 0
+    },
+    "academy_header_coding": {
+      "src": "/attached_assets/the-academy-header_1770614327963.png",
+      "alt": "Students coding at computers in a classroom",
+      "focal_point": "center",
+      "tags": [
+        "classroom",
+        "coding",
+        "students",
+        "academy",
+        "header"
+      ],
+      "usage_count": 0
+    },
+    "academy_header_group": {
+      "src": "/attached_assets/the-academy-header_1770614353717.jpg",
+      "alt": "4Geeks Academy students and instructors group photo in classroom",
+      "focal_point": "center",
+      "tags": [
+        "classroom",
+        "group",
+        "students",
+        "academy",
+        "header"
+      ],
+      "usage_count": 0
     }
   }
 }

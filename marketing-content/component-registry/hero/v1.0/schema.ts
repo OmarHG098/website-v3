@@ -89,6 +89,8 @@ export const heroSingleColumnSchema = z.object({
   cta_buttons: z.array(ctaButtonSchema).optional(),
   trust_bar: trustBarSchema.optional(),
   award_badges: z.array(awardBadgeSchema).optional(),
+  image_id: z.string().optional(),
+  image_full_width: z.boolean().optional(),
 }).passthrough();
 
 export const heroShowcaseSchema = z.object({
