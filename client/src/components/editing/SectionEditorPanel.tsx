@@ -1221,11 +1221,45 @@ export function SectionEditorPanel({
                   ...fields.map(f => f.fieldName).filter(fn => fn.includes("color")),
                 ];
 
+                const buildDefaultItem = (): Record<string, unknown> => {
+                  if (arrData.length === 0) return {};
+                  const template: Record<string, unknown> = {};
+                  const sample = arrData[0];
+                  Object.keys(sample).forEach(k => {
+                    const val = sample[k];
+                    if (typeof val === "string") template[k] = "";
+                    else if (typeof val === "number") template[k] = 0;
+                    else if (typeof val === "object" && val !== null && !Array.isArray(val)) {
+                      const nested: Record<string, unknown> = {};
+                      Object.keys(val as Record<string, unknown>).forEach(nk => {
+                        const nv = (val as Record<string, unknown>)[nk];
+                        if (typeof nv === "string") nested[nk] = "";
+                        else if (typeof nv === "number") nested[nk] = 0;
+                      });
+                      template[k] = nested;
+                    }
+                  });
+                  const nameKey = "name" in template ? "name" : "title" in template ? "title" : null;
+                  if (nameKey) template[nameKey] = `Nuevo item ${arrData.length + 1}`;
+                  return template;
+                };
+
                 return (
                   <div key={`grouped-${arrPath}`} className="space-y-3">
-                    <Label className="text-sm font-medium capitalize">
-                      {arrayLabel} ({arrData.length})
-                    </Label>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium capitalize">
+                        {arrayLabel} ({arrData.length})
+                      </Label>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => addArrayItem(arrPath, buildDefaultItem())}
+                        data-testid={`props-grouped-add-${arrPath}`}
+                      >
+                        <IconPlus className="h-4 w-4 mr-1" />
+                        Agregar
+                      </Button>
+                    </div>
                     <div className="space-y-2">
                       {arrData.map((item, index) => {
                         const itemLabel = (item.name as string) || (item.title as string) || (item.label as string) || `Item ${index + 1}`;
@@ -1258,6 +1292,18 @@ export function SectionEditorPanel({
                             </CollapsibleTrigger>
                             <CollapsibleContent>
                               <div className="p-3 pt-0 space-y-3 border-t">
+                                <div className="flex justify-end">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-destructive h-7 px-2 text-xs"
+                                    onClick={() => removeArrayItem(arrPath, index)}
+                                    data-testid={`props-grouped-delete-${arrPath}-${index}`}
+                                  >
+                                    <IconTrash className="h-3.5 w-3.5 mr-1" />
+                                    Eliminar
+                                  </Button>
+                                </div>
                                 {fieldOrder.map((fieldKey) => {
                                   const currentValue = String(getNestedValue(item, fieldKey) ?? "");
                                   const label = fieldLabelMap[fieldKey] || fieldKey.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
