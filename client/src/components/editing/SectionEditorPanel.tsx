@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -378,6 +379,59 @@ export function SectionEditorPanel({
         setParseError(null);
 
         // Trigger live preview
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error updating property:", error);
+      }
+    },
+    [yamlContent, onPreviewChange, pushUndoState],
+  );
+
+  // Update a property with a raw value (e.g. boolean) so YAML dumps natively (layout_reversed: true)
+  const updatePropertyWithValue = useCallback(
+    (key: string, value: unknown) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
+
+        const pathParts = key.split(".");
+        if (pathParts.length === 1) {
+          if (value !== undefined && value !== null && value !== "") {
+            parsed[key] = value;
+          } else {
+            delete parsed[key];
+          }
+        } else {
+          let current: Record<string, unknown> = parsed;
+          for (let i = 0; i < pathParts.length - 1; i++) {
+            const part = pathParts[i];
+            if (!current[part] || typeof current[part] !== "object") {
+              current[part] = {};
+            }
+            current = current[part] as Record<string, unknown>;
+          }
+          const finalKey = pathParts[pathParts.length - 1];
+          if (value !== undefined && value !== null && value !== "") {
+            current[finalKey] = value;
+          } else {
+            delete current[finalKey];
+          }
+        }
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
         if (onPreviewChange) {
           onPreviewChange(parsed as Section);
         }
@@ -1050,9 +1104,417 @@ export function SectionEditorPanel({
               type="background"
               testIdPrefix="props-background"
             />
+            {/* Render top-level (non-array) color-picker field editors */}
+            {Object.entries(configuredFields)
+              .filter(([fieldPath, editorTypeRaw]) => {
+                if (fieldPath.includes("[]")) return false;
+                if (fieldPath === "background") return false;
+                if (fieldPath.startsWith("default_")) return false;
+                const { type: edType } = parseEditorType(editorTypeRaw);
+                return edType === "color-picker";
+              })
+              .map(([fieldPath, editorTypeRaw]) => {
+                const { variant: edVariant } = parseEditorType(editorTypeRaw);
+                const currentValue = parsedSection ? String((parsedSection as Record<string, unknown>)[fieldPath] || "") : "";
+                const fieldLabelMap: Record<string, string> = {
+                  form_background: "Fondo del formulario",
+                  terms_color: "Color de términos y condiciones",
+                  title_color: "Color de título",
+                  subtitle_color: "Color de subtítulo",
+                  text_color: "Color de texto",
+                };
+                const label = fieldLabelMap[fieldPath] || fieldPath.replace(/_/g, " ");
+                return (
+                  <div key={fieldPath} className="mt-3">
+                    <ColorPicker
+                      value={currentValue}
+                      onChange={(value) => updateProperty(fieldPath, value)}
+                      type={(edVariant as "background" | "accent" | "text") || "background"}
+                      label={label}
+                      testIdPrefix={`props-${fieldPath}`}
+                    />
+                  </div>
+                );
+              })}
+            {/* Render grouped array item editors (when multiple field-editors exist for the same array) */}
+            {(() => {
+              const arrayFieldGroups: Record<string, { fieldName: string; editorType: string; variant?: string; fullPath: string }[]> = {};
+              Object.entries(configuredFields).forEach(([fieldPath, editorTypeRaw]) => {
+                const match = fieldPath.match(/^([\w.]+)\[\]\.(.+)$/);
+                if (!match) return;
+                const [, arrPath, fieldName] = match;
+                if (!arrayFieldGroups[arrPath]) arrayFieldGroups[arrPath] = [];
+                const { type: edType, variant: edVariant } = parseEditorType(editorTypeRaw);
+                arrayFieldGroups[arrPath].push({ fieldName, editorType: edType, variant: edVariant, fullPath: fieldPath });
+              });
+
+              const supportedGroupedTypes = new Set(["color-picker", "image-picker", "link-picker"]);
+              const groupedArrayPaths = new Set(
+                Object.entries(arrayFieldGroups)
+                  .filter(([, fields]) => fields.length >= 2 && fields.every(f => supportedGroupedTypes.has(f.editorType)))
+                  .map(([arrPath]) => arrPath)
+              );
+
+              return Array.from(groupedArrayPaths).map((arrPath) => {
+                const fields = arrayFieldGroups[arrPath];
+                const getArrayDataForGroup = () => {
+                  if (!parsedSection) return [];
+                  const pathParts = arrPath.split(".");
+                  let current: unknown = parsedSection;
+                  for (const part of pathParts) {
+                    if (!current || typeof current !== "object") return [];
+                    current = (current as Record<string, unknown>)[part];
+                  }
+                  return Array.isArray(current) ? current as Record<string, unknown>[] : [];
+                };
+                const arrData = getArrayDataForGroup();
+                if (arrData.length === 0) return null;
+
+                const arrayLabel = arrPath.split(".").pop() || arrPath;
+
+                const fieldLabelMap: Record<string, string> = {
+                  name: "Nombre",
+                  title: "Título",
+                  role: "Rol / Cargo",
+                  company: "Empresa",
+                  comment: "Comentario",
+                  excerpt: "Extracto",
+                  rating: "Calificación",
+                  box_color: "Fondo de tarjeta",
+                  name_color: "Color de nombre",
+                  title_color: "Color de título",
+                  role_color: "Color de rol",
+                  comment_color: "Color de comentario",
+                  excerpt_color: "Color de extracto",
+                  star_color: "Color de estrellas",
+                  linkedin_color: "Color de LinkedIn",
+                  link_color: "Color de enlace",
+                  avatar: "Foto de perfil",
+                  logo: "Logo",
+                  linkedin_url: "LinkedIn URL",
+                  link_text: "Texto del enlace",
+                  link_url: "URL del enlace",
+                  "media.url": "Video / Media URL",
+                };
+
+                const hiddenFields = new Set(["type", "media.type", "media.ratio", "ratio"]);
+
+                const getNestedValue = (obj: Record<string, unknown>, path: string): unknown => {
+                  const parts = path.split(".");
+                  let cur: unknown = obj;
+                  for (const p of parts) {
+                    if (!cur || typeof cur !== "object") return undefined;
+                    cur = (cur as Record<string, unknown>)[p];
+                  }
+                  return cur;
+                };
+
+                const updateNestedField = (idx: number, fieldName: string, value: unknown) => {
+                  if (fieldName.includes(".")) {
+                    const parts = fieldName.split(".");
+                    try {
+                      const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+                      if (!parsed || typeof parsed !== "object") return;
+                      pushUndoState(yamlContent);
+                      const arrParts = arrPath.split(".");
+                      let cur: unknown = parsed;
+                      for (const p of arrParts) {
+                        if (!cur || typeof cur !== "object") return;
+                        cur = (cur as Record<string, unknown>)[p];
+                      }
+                      if (!Array.isArray(cur)) return;
+                      let target: unknown = cur[idx];
+                      for (let i = 0; i < parts.length - 1; i++) {
+                        if (!target || typeof target !== "object") return;
+                        if (!(parts[i] in (target as Record<string, unknown>))) {
+                          (target as Record<string, unknown>)[parts[i]] = {};
+                        }
+                        target = (target as Record<string, unknown>)[parts[i]];
+                      }
+                      if (target && typeof target === "object") {
+                        (target as Record<string, unknown>)[parts[parts.length - 1]] = value;
+                      }
+                      const newYaml = yamlParser.dump(parsed, { lineWidth: -1, noRefs: true, quotingType: '"' });
+                      setYamlContent(newYaml);
+                      setHasChanges(true);
+                      setParseError(null);
+                      if (onPreviewChange) onPreviewChange(parsed as Section);
+                    } catch (e) { console.error("Error updating nested field:", e); }
+                  } else {
+                    updateArrayItemField(arrPath, idx, fieldName, value);
+                  }
+                };
+
+                const collectItemKeys = (items: Record<string, unknown>[]): string[] => {
+                  const keySet = new Set<string>();
+                  items.forEach(item => {
+                    const flattenKeys = (obj: Record<string, unknown>, prefix: string) => {
+                      Object.keys(obj).forEach(k => {
+                        const path = prefix ? `${prefix}.${k}` : k;
+                        const val = obj[k];
+                        if (val && typeof val === "object" && !Array.isArray(val)) {
+                          flattenKeys(val as Record<string, unknown>, path);
+                        } else {
+                          keySet.add(path);
+                        }
+                      });
+                    };
+                    flattenKeys(item, "");
+                  });
+                  return Array.from(keySet);
+                };
+
+                const allItemKeys = collectItemKeys(arrData);
+                const configuredFieldNames = new Set(fields.map(f => f.fieldName));
+                const textFields = allItemKeys.filter(k => !configuredFieldNames.has(k) && !hiddenFields.has(k));
+
+                const fieldOrder: string[] = [
+                  ...textFields,
+                  ...fields.map(f => f.fieldName).filter(fn => fn === "avatar"),
+                  ...fields.map(f => f.fieldName).filter(fn => fn !== "avatar" && !fn.includes("color")),
+                  ...fields.map(f => f.fieldName).filter(fn => fn.includes("color")),
+                ];
+
+                const buildDefaultItem = (): Record<string, unknown> => {
+                  if (arrData.length === 0) return {};
+                  const template: Record<string, unknown> = {};
+                  const sample = arrData[0];
+                  Object.keys(sample).forEach(k => {
+                    const val = sample[k];
+                    if (typeof val === "string") template[k] = "";
+                    else if (typeof val === "number") template[k] = 0;
+                    else if (typeof val === "object" && val !== null && !Array.isArray(val)) {
+                      const nested: Record<string, unknown> = {};
+                      Object.keys(val as Record<string, unknown>).forEach(nk => {
+                        const nv = (val as Record<string, unknown>)[nk];
+                        if (typeof nv === "string") nested[nk] = "";
+                        else if (typeof nv === "number") nested[nk] = 0;
+                      });
+                      template[k] = nested;
+                    }
+                  });
+                  const nameKey = "name" in template ? "name" : "title" in template ? "title" : null;
+                  if (nameKey) template[nameKey] = `Nuevo item ${arrData.length + 1}`;
+                  return template;
+                };
+
+                return (
+                  <div key={`grouped-${arrPath}`} className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium capitalize">
+                        {arrayLabel} ({arrData.length})
+                      </Label>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => addArrayItem(arrPath, buildDefaultItem())}
+                        data-testid={`props-grouped-add-${arrPath}`}
+                      >
+                        <IconPlus className="h-4 w-4 mr-1" />
+                        Agregar
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {arrData.map((item, index) => {
+                        const itemLabel = (item.name as string) || (item.title as string) || (item.label as string) || `Item ${index + 1}`;
+                        const avatarSrc = (item.avatar as string) || (item.logo as string) || "";
+                        const displayAvatarSrc = imageRegistry?.images?.[avatarSrc]?.src || avatarSrc;
+                        const isLogo = !item.avatar && !!(item.logo as string);
+
+                        return (
+                          <Collapsible key={index} className="border rounded-md">
+                            <CollapsibleTrigger asChild>
+                              <button
+                                type="button"
+                                className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                                data-testid={`props-grouped-item-${arrPath}-${index}-trigger`}
+                              >
+                                {avatarSrc ? (
+                                  <div className={`w-8 h-8 flex-shrink-0 overflow-hidden border ${isLogo ? "rounded-md bg-background p-1" : "rounded-full bg-muted"}`}>
+                                    <img src={displayAvatarSrc} alt={itemLabel} className={`w-full h-full ${isLogo ? "object-contain" : "object-cover"}`} />
+                                  </div>
+                                ) : (
+                                  <div className="w-8 h-8 rounded-full bg-muted border flex-shrink-0 flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                                    {itemLabel.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+                                  </div>
+                                )}
+                                <span className="flex-1 text-left text-sm font-medium truncate">
+                                  {itemLabel}
+                                </span>
+                                <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                              </button>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <div className="p-3 pt-0 space-y-3 border-t">
+                                <div className="flex justify-end">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-destructive h-7 px-2 text-xs"
+                                    onClick={() => removeArrayItem(arrPath, index)}
+                                    data-testid={`props-grouped-delete-${arrPath}-${index}`}
+                                  >
+                                    <IconTrash className="h-3.5 w-3.5 mr-1" />
+                                    Eliminar
+                                  </Button>
+                                </div>
+                                {fieldOrder.map((fieldKey) => {
+                                  const currentValue = String(getNestedValue(item, fieldKey) ?? "");
+                                  const label = fieldLabelMap[fieldKey] || fieldKey.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+                                  const configuredField = fields.find(f => f.fieldName === fieldKey);
+
+                                  if (configuredField) {
+                                    if (configuredField.editorType === "color-picker") {
+                                      const colorType = (configuredField.variant as ColorPickerVariant) || "accent";
+                                      return (
+                                        <div key={fieldKey} className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">{label}</Label>
+                                          <ColorPicker
+                                            value={currentValue}
+                                            onChange={(value) => updateNestedField(index, fieldKey, value)}
+                                            type={colorType}
+                                            label=" "
+                                            allowNone={true}
+                                            allowCustom={true}
+                                            testIdPrefix={`props-grouped-${fieldKey}-${index}`}
+                                          />
+                                        </div>
+                                      );
+                                    }
+
+                                    if (configuredField.editorType === "image-picker") {
+                                      const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
+                                      return (
+                                        <div key={fieldKey} className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">{label}</Label>
+                                          <div className="flex items-center gap-2">
+                                            <button
+                                              type="button"
+                                              onClick={() => {
+                                                setImagePickerTarget({
+                                                  arrayPath: arrPath,
+                                                  index,
+                                                  srcField: fieldKey,
+                                                  currentSrc: currentValue,
+                                                  currentAlt: (item.name as string) || "",
+                                                  tagFilter: configuredField.variant,
+                                                });
+                                                setImagePickerOpen(true);
+                                              }}
+                                              className="relative w-12 h-12 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                                              data-testid={`props-grouped-image-${fieldKey}-${index}`}
+                                            >
+                                              {currentValue ? (
+                                                <>
+                                                  <img src={displaySrc} alt={label} className="w-full h-full object-cover" />
+                                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <IconPhoto className="h-4 w-4 text-white" />
+                                                  </div>
+                                                </>
+                                              ) : (
+                                                <div className="w-full h-full flex items-center justify-center">
+                                                  <IconPhoto className="h-5 w-5 text-muted-foreground" />
+                                                </div>
+                                              )}
+                                            </button>
+                                            {currentValue && (
+                                              <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                                                {currentValue.split("/").pop() || currentValue}
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+
+                                    if (configuredField.editorType === "link-picker") {
+                                      return (
+                                        <div key={fieldKey} className="space-y-1">
+                                          <Label className="text-xs text-muted-foreground">{label}</Label>
+                                          <Input
+                                            value={currentValue}
+                                            onChange={(e) => updateNestedField(index, fieldKey, e.target.value)}
+                                            placeholder={`https://...`}
+                                            className="h-8 text-sm"
+                                            data-testid={`props-grouped-link-${fieldKey}-${index}`}
+                                          />
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }
+
+                                  const rawValue = getNestedValue(item, fieldKey);
+                                  if (typeof rawValue === "number" || fieldKey === "rating") {
+                                    return (
+                                      <div key={fieldKey} className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">{label}</Label>
+                                        <Input
+                                          type="number"
+                                          value={rawValue !== undefined ? String(rawValue) : ""}
+                                          onChange={(e) => {
+                                            const num = e.target.value === "" ? undefined : Number(e.target.value);
+                                            updateNestedField(index, fieldKey, num);
+                                          }}
+                                          min={0}
+                                          max={fieldKey === "rating" ? 5 : undefined}
+                                          className="h-8 text-sm"
+                                          data-testid={`props-grouped-number-${fieldKey}-${index}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+
+                                  if (fieldKey === "comment" || (typeof rawValue === "string" && rawValue.length > 80)) {
+                                    return (
+                                      <div key={fieldKey} className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">{label}</Label>
+                                        <Textarea
+                                          value={currentValue}
+                                          onChange={(e) => updateNestedField(index, fieldKey, e.target.value)}
+                                          rows={3}
+                                          className="text-sm resize-none"
+                                          data-testid={`props-grouped-text-${fieldKey}-${index}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+
+                                  return (
+                                    <div key={fieldKey} className="space-y-1">
+                                      <Label className="text-xs text-muted-foreground">{label}</Label>
+                                      <Input
+                                        value={currentValue}
+                                        onChange={(e) => updateNestedField(index, fieldKey, e.target.value)}
+                                        className="h-8 text-sm"
+                                        data-testid={`props-grouped-input-${fieldKey}-${index}`}
+                                      />
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              });
+            })()}
             {/* Render array fields with configured editors */}
             {Object.entries(configuredFields).map(
               ([fieldPath, editorTypeRaw]) => {
+                // Skip fields that are already rendered in grouped collapsible items above
+                const groupedSkipMatch = fieldPath.match(/^([\w.]+)\[\]\./);
+                if (groupedSkipMatch) {
+                  const arrPathCheck = groupedSkipMatch[1];
+                  const supportedTypes = new Set(["color-picker", "image-picker", "link-picker"]);
+                  const allForArr = Object.entries(configuredFields).filter(([fp]) => fp.startsWith(`${arrPathCheck}[].`));
+                  const allSupported = allForArr.every(([, et]) => supportedTypes.has(parseEditorType(et).type));
+                  if (allForArr.length >= 2 && allSupported) return null;
+                }
+
                 // Parse editor type with optional variant (e.g., "color-picker:background")
                 const { type: editorType, variant } =
                   parseEditorType(editorTypeRaw);
@@ -1517,6 +1979,37 @@ export function SectionEditorPanel({
                     </div>
                   );
                 }
+
+                // Handle simple field paths with boolean toggle (e.g., "layout_reversed")
+                if (isSimpleField && editorType === "boolean-toggle") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return false;
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return false;
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return current === true || current === "true";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <Label className="text-sm font-medium capitalize">
+                          {fieldLabel.replace(/_/g, " ")}
+                        </Label>
+                        <Switch
+                          checked={currentValue}
+                          onCheckedChange={(checked) => updatePropertyWithValue(fieldPath, checked)}
+                          data-testid={`props-toggle-${fieldLabel}`}
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+
 
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName

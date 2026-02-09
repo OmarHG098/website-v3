@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconCheck, IconBook, IconStarFilled } from "@tabler/icons-react";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { getIcon } from "@/lib/icons";
+import { cn } from "@/lib/utils";
 
 interface HeroCourseProps {
   data: HeroCourseType;
@@ -17,9 +18,14 @@ export function HeroCourse({ data }: HeroCourseProps) {
       data-testid="section-hero"
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12">
-          {/* Left Column */}
-          <div className="space-y-6">
+        <div
+          className={cn(
+            "grid gap-8 lg:gap-12",
+            data.layout_reversed ? "lg:grid-cols-[2fr_3fr]" : "lg:grid-cols-[3fr_2fr]"
+          )}
+        >
+          {/* Content column (left by default, right when reversed) */}
+          <div className={cn("space-y-6", data.layout_reversed && "lg:order-2")}>
             <h1 
               className="text-h1 text-foreground"
               data-testid="text-hero-title"
@@ -152,8 +158,8 @@ export function HeroCourse({ data }: HeroCourseProps) {
             )}
           </div>
           
-          {/* Right Column */}
-          <div className="space-y-4">
+          {/* Media + signup column (right by default, left when reversed) */}
+          <div className={cn("space-y-4", data.layout_reversed && "lg:order-1")}>
             {/* Media */}
             <div className="relative rounded-lg overflow-hidden aspect-video">
               {data.media.type === "video" ? (

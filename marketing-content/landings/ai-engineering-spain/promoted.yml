@@ -78,33 +78,6 @@ sections:
       mobile: none
       desktop: none
     background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-    showOn: desktop
-  - type: hero
-    version: "1.0"
-    variant: productShowcase
-    title: y construye sistemas reales en producción
-    brand_mark:
-      prefix: Conviértete en
-      highlight: Ingeniero de IA
-      color: primary
-    description: Aprende a desarrollar, integrar y desplegar soluciones de IA que las empresas ya están contratando — en solo 24 semanas.
-    bullets:
-      - text: Aprende las habilidades en ingeniería de IA que hoy buscan las empresas tecnológicas.
-      - text: Accede a mentorías 1:1 ilimitadas y a una comunidad profesional de por vida.
-      - text: Fórmate en grupos reducidos, con acompañamiento continuo incluso después de graduarte.
-    video:
-      url: https://www.youtube.com/shorts/sSxJnelPJT8
-      ratio: "9:16"
-      muted: true
-      loop: false
-    paddingY:
-      mobile: md none
-      desktop: lg none
-    marginY:
-      mobile: none
-      desktop: none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-    showOn: mobile
   - type: sticky_cta
     version: "1.0"
     heading: ¿Listo para empezar tu carrera en tech?
@@ -120,15 +93,19 @@ sections:
         email:
           visible: true
           required: true
+          placeholder: Correo electrónico
         first_name:
           visible: true
           required: true
+          placeholder: Nombre
         last_name:
           visible: true
           required: false
+          placeholder: Apellido
         phone:
           visible: true
           required: false
+          placeholder: Número telefónico
         program:
           visible: false
           default: ai-engineering

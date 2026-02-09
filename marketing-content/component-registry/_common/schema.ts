@@ -82,6 +82,7 @@ export const leadFormFieldConfigSchema = z.object({
   visible: z.boolean().optional(),
   required: z.boolean().optional(),
   default: z.string().optional(),
+  default_country: z.string().optional(), // ISO 3166-1 alpha-2 e.g. "ES", "US" – passed to PhoneInput defaultCountry
   helper_text: z.string().optional(),
   placeholder: z.string().optional(),
 });

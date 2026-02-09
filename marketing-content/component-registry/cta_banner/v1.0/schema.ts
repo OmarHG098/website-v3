@@ -30,6 +30,8 @@ export const ctaBannerDefaultSchema = ctaBannerBaseSchema.extend({
 export const ctaBannerFormSchema = ctaBannerBaseSchema.extend({
   variant: z.literal("form"),
   form: leadFormDataSchema,
+  form_background: z.string().optional(),
+  terms_color: z.string().optional(),
 });
 
 // Unified schema supporting both variants

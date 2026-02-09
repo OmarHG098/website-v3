@@ -13,6 +13,6 @@
 export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link-picker";
 
 export const fieldEditors: Record<string, EditorType> = {
-  // No array-based field editors currently configured
-  // The variant picker is handled separately in the Props tab
+  "form_background": "color-picker",
+  "terms_color": "color-picker",
 };

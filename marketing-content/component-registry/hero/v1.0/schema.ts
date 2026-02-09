@@ -219,6 +219,7 @@ export const heroCourseSchema = z.object({
     }).optional(),
     features: z.array(heroCourseFeatureSchema).optional(),
   }),
+  layout_reversed: z.boolean().optional(),
 }).passthrough();
 
 // ApplyFormProductShowcase variant - hero with application form and product showcase
