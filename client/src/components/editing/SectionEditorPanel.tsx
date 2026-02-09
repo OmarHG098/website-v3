@@ -1088,17 +1088,25 @@ export function SectionEditorPanel({
 
                 const fieldLabelMap: Record<string, string> = {
                   name: "Nombre",
+                  title: "Título",
                   role: "Rol / Cargo",
                   company: "Empresa",
                   comment: "Comentario",
+                  excerpt: "Extracto",
                   rating: "Calificación",
                   box_color: "Fondo de tarjeta",
                   name_color: "Color de nombre",
+                  title_color: "Color de título",
                   role_color: "Color de rol",
                   comment_color: "Color de comentario",
+                  excerpt_color: "Color de extracto",
                   star_color: "Color de estrellas",
+                  link_color: "Color de enlace",
                   avatar: "Foto de perfil",
+                  logo: "Logo",
                   linkedin_url: "LinkedIn URL",
+                  link_text: "Texto del enlace",
+                  link_url: "URL del enlace",
                   "media.url": "Video / Media URL",
                 };
 
@@ -1188,8 +1196,9 @@ export function SectionEditorPanel({
                     <div className="space-y-2">
                       {arrData.map((item, index) => {
                         const itemLabel = (item.name as string) || (item.title as string) || (item.label as string) || `Item ${index + 1}`;
-                        const avatarSrc = (item.avatar as string) || "";
+                        const avatarSrc = (item.avatar as string) || (item.logo as string) || "";
                         const displayAvatarSrc = imageRegistry?.images?.[avatarSrc]?.src || avatarSrc;
+                        const isLogo = !item.avatar && !!(item.logo as string);
 
                         return (
                           <Collapsible key={index} className="border rounded-md">
@@ -1200,8 +1209,8 @@ export function SectionEditorPanel({
                                 data-testid={`props-grouped-item-${arrPath}-${index}-trigger`}
                               >
                                 {avatarSrc ? (
-                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-muted border flex-shrink-0">
-                                    <img src={displayAvatarSrc} alt={itemLabel} className="w-full h-full object-cover" />
+                                  <div className={`w-8 h-8 flex-shrink-0 overflow-hidden border ${isLogo ? "rounded-md bg-background p-1" : "rounded-full bg-muted"}`}>
+                                    <img src={displayAvatarSrc} alt={itemLabel} className={`w-full h-full ${isLogo ? "object-contain" : "object-cover"}`} />
                                   </div>
                                 ) : (
                                   <div className="w-8 h-8 rounded-full bg-muted border flex-shrink-0 flex items-center justify-center text-xs font-semibold text-muted-foreground">

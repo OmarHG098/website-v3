@@ -169,6 +169,7 @@ const TwoColumn = lazy(() => import("@/components/TwoColumn").then(m => ({ defau
 const NumberedSteps = lazy(() => import("@/components/NumberedSteps"));
 const TestimonialsSlide = lazy(() => import("@/components/TestimonialsSlide"));
 const TestimonialsGrid = lazy(() => import("@/components/TestimonialsGrid").then(m => ({ default: m.TestimonialsGrid })));
+const PressGrid = lazy(() => import("@/components/PressGrid").then(m => ({ default: m.PressGrid })));
 const ProgramsListSection = lazy(() => import("./ProgramsListSection").then(m => ({ default: m.ProgramsListSection })));
 const CTABannerSection = lazy(() => import("./CTABannerSection").then(m => ({ default: m.CTABannerSection })));
 const ProjectShowcase = lazy(() => import("@/components/ProjectShowcase").then(m => ({ default: m.ProjectShowcase })));
@@ -417,6 +418,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><TestimonialsSlide data={section as Parameters<typeof TestimonialsSlide>[0]["data"]} /></LazySection>;
     case "testimonials_grid":
       return <LazySection key={index}><TestimonialsGrid data={section as Parameters<typeof TestimonialsGrid>[0]["data"]} /></LazySection>;
+    case "press_grid":
+      return <LazySection key={index}><PressGrid data={section as Parameters<typeof PressGrid>[0]["data"]} /></LazySection>;
     case "programs_list":
       return <LazySection key={index}><ProgramsListSection data={section as Parameters<typeof ProgramsListSection>[0]["data"]} /></LazySection>;
     case "cta_banner":
