@@ -1,0 +1,9 @@
+slug: the-academy
+template: default
+title: The Academy
+meta:
+  page_title: The Academy | 4Geeks Academy
+  description: The Academy - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /the-academy
+sections: []
