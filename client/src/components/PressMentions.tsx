@@ -1,11 +1,11 @@
-import type { PressGridSection as PressGridSectionType } from "@shared/schema";
+import type { PressMentionsSection as PressMentionsSectionType } from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 
-interface PressGridProps {
-  data: PressGridSectionType;
+interface PressMentionsProps {
+  data: PressMentionsSectionType;
 }
 
-export function PressGrid({ data }: PressGridProps) {
+export function PressMentions({ data }: PressMentionsProps) {
   const items = data.items || [];
   const title = data.title;
   const subtitle = data.subtitle;
@@ -31,7 +31,7 @@ export function PressGrid({ data }: PressGridProps) {
     <section
       className="py-12 md:py-16"
       style={bgStyle}
-      data-testid="section-press-grid"
+      data-testid="section-press-mentions"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         {(title || subtitle) && (
@@ -40,7 +40,7 @@ export function PressGrid({ data }: PressGridProps) {
               <h2
                 className="text-h2 mb-3 text-foreground"
                 style={data.title_color ? { color: data.title_color } : undefined}
-                data-testid="text-press-grid-title"
+                data-testid="text-press-mentions-title"
               >
                 {title}
               </h2>
@@ -49,7 +49,7 @@ export function PressGrid({ data }: PressGridProps) {
               <p
                 className="text-body text-muted-foreground max-w-2xl mx-auto"
                 style={data.subtitle_color ? { color: data.subtitle_color } : undefined}
-                data-testid="text-press-grid-subtitle"
+                data-testid="text-press-mentions-subtitle"
               >
                 {subtitle}
               </p>
@@ -63,22 +63,22 @@ export function PressGrid({ data }: PressGridProps) {
             columnCount: 1,
             columnGap: "1.25rem",
           }}
-          data-testid="press-grid-container"
+          data-testid="press-mentions-container"
         >
           <style>{`
             @media (min-width: 768px) {
-              [data-testid="press-grid-container"] {
+              [data-testid="press-mentions-container"] {
                 column-count: ${Math.min(columns, 2)} !important;
               }
             }
             @media (min-width: 1024px) {
-              [data-testid="press-grid-container"] {
+              [data-testid="press-mentions-container"] {
                 column-count: ${columns} !important;
               }
             }
           `}</style>
           {items.map((item, index) => (
-            <PressGridCard
+            <PressMentionCard
               key={index}
               item={item}
               defaultBoxColor={defaultBoxColor}
@@ -94,8 +94,8 @@ export function PressGrid({ data }: PressGridProps) {
   );
 }
 
-interface PressGridCardProps {
-  item: NonNullable<PressGridSectionType["items"]>[number];
+interface PressMentionCardProps {
+  item: NonNullable<PressMentionsSectionType["items"]>[number];
   defaultBoxColor: string;
   defaultTitleColor?: string;
   defaultExcerptColor?: string;
@@ -103,14 +103,14 @@ interface PressGridCardProps {
   index: number;
 }
 
-function PressGridCard({
+function PressMentionCard({
   item,
   defaultBoxColor,
   defaultTitleColor,
   defaultExcerptColor,
   defaultLinkColor,
   index,
-}: PressGridCardProps) {
+}: PressMentionCardProps) {
   const boxColor = item.box_color || defaultBoxColor;
   const titleColor = item.title_color || defaultTitleColor;
   const excerptColor = item.excerpt_color || defaultExcerptColor;
@@ -120,7 +120,7 @@ function PressGridCard({
     <div
       className="break-inside-avoid mb-4 md:mb-5 rounded-[0.8rem] overflow-hidden"
       style={{ backgroundColor: boxColor }}
-      data-testid={`card-press-grid-${index}`}
+      data-testid={`card-press-mention-${index}`}
     >
       <div className="p-5 md:p-6 flex flex-col gap-4">
         {item.logo && (
@@ -167,4 +167,4 @@ function PressGridCard({
   );
 }
 
-export default PressGrid;
+export default PressMentions;

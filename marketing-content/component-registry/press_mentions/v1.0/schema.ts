@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const pressGridItemSchema = z.object({
+export const pressMentionItemSchema = z.object({
   logo: z.string().optional(),
   title: z.string(),
   excerpt: z.string(),
@@ -12,8 +12,8 @@ export const pressGridItemSchema = z.object({
   link_color: z.string().optional(),
 });
 
-export const pressGridSectionSchema = z.object({
-  type: z.literal("press_grid"),
+export const pressMentionsSectionSchema = z.object({
+  type: z.literal("press_mentions"),
   version: z.string().optional(),
   title: z.string().optional(),
   subtitle: z.string().optional(),
@@ -24,9 +24,9 @@ export const pressGridSectionSchema = z.object({
   default_excerpt_color: z.string().optional(),
   default_link_color: z.string().optional(),
   columns: z.number().optional(),
-  items: z.array(pressGridItemSchema).optional(),
+  items: z.array(pressMentionItemSchema).optional(),
   background: z.string().optional(),
 });
 
-export type PressGridItem = z.infer<typeof pressGridItemSchema>;
-export type PressGridSection = z.infer<typeof pressGridSectionSchema>;
+export type PressMentionItem = z.infer<typeof pressMentionItemSchema>;
+export type PressMentionsSection = z.infer<typeof pressMentionsSectionSchema>;

@@ -738,8 +738,8 @@ import { applyFormSectionSchema } from "../marketing-content/component-registry/
 import { awardBadgesSectionSchema } from "../marketing-content/component-registry/award_badges/v1.0/schema";
 import { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem } from "../marketing-content/component-registry/awards_marquee/v1.0/schema";
 export { awardsMarqueeSectionSchema, type AwardsMarqueeSection, type AwardsMarqueeItem };
-import { pressGridSectionSchema, type PressGridSection, type PressGridItem } from "../marketing-content/component-registry/press_grid/v1.0/schema";
-export { pressGridSectionSchema, type PressGridSection, type PressGridItem };
+import { pressMentionsSectionSchema, type PressMentionsSection, type PressMentionItem } from "../marketing-content/component-registry/press_mentions/v1.0/schema";
+export { pressMentionsSectionSchema, type PressMentionsSection, type PressMentionItem };
 import { valueProofPanelSectionSchema } from "../marketing-content/component-registry/value_proof_panel/v1.0/schema";
 import { stickyCtaSectionSchema } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
 export { stickyCtaSectionSchema, type StickyCtaSection } from "../marketing-content/component-registry/sticky_cta/v1.0/schema";
@@ -891,7 +891,7 @@ const baseSectionSchema = z.union([
   applyFormSectionSchema,
   awardBadgesSectionSchema,
   awardsMarqueeSectionSchema,
-  pressGridSectionSchema,
+  pressMentionsSectionSchema,
   humanAndAIDuoSectionSchema,
   communitySupportSectionSchema,
   twoColumnAccordionCardSectionSchema,

@@ -95,7 +95,9 @@ export function UniversalImage({
   }
 
   const imageEntry = registry.images[id];
-  if (!imageEntry) {
+  const isDirectPath = !imageEntry && (id.startsWith("/") || id.startsWith("http://") || id.startsWith("https://") || id.startsWith("data:"));
+
+  if (!imageEntry && !isDirectPath) {
     console.warn(`Image not found in registry: ${id}`);
     return (
       <div 
@@ -112,8 +114,8 @@ export function UniversalImage({
     ? ASPECT_RATIOS[presetConfig.aspect_ratio] 
     : undefined;
 
-  const finalAlt = altOverride || imageEntry.alt;
-  const src = imageEntry.src;
+  const finalAlt = altOverride || (imageEntry ? imageEntry.alt : id);
+  const src = imageEntry ? imageEntry.src : id;
 
   const containerStyle: React.CSSProperties = aspectRatio
     ? { aspectRatio: aspectRatio.toString() }
