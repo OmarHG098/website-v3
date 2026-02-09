@@ -87,7 +87,7 @@ navbar:
         icon: graduation-cap
         items:
           - label: Contrata a nuestros egresados
-            href: /hire-alumni
+            href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
           - label: Asóciate con 4Geeks
             href: /partner
           - label: Trabaja con nosotros

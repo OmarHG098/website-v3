@@ -410,7 +410,7 @@ sections:
           - text: Construye tu currículum y portafolio listos para IA
           - text: Prepárate para entrevistas y negociación salarial
           - text: Sigue creciendo con acceso de por vida al apoyo de carrera
-        video_url: https://youtu.be/-2ZvlgDnltc
+        video_url: https://www.youtube.com/shorts/8ELYdTsuA1A?autoplay=1&mute=1&playsinline=1
         cta:
           text: Empieza a aprender ahora
           url: "#hero-form"
@@ -496,8 +496,8 @@ sections:
     background: hsl(var(--muted))
   - type: whos_hiring
     variant: carousel
-    title: Confiado por líderes innovadores
-    subtitle: Nuestros graduados son contratados por las mejores empresas.
+    title: Empresas líderes confían en nuestro talento
+    subtitle: Nuestros graduados trabajan en compañías de referencia del sector tecnológico.
     logos:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
@@ -537,7 +537,7 @@ sections:
         description: |-
           Estás dispuesto a asumir un compromiso serio con tu formación:
           dedicar entre 20 y 24 horas a la semana durante 24 semanas, combinando clases en vivo y trabajo práctico.
-        image_id: placeholder_career_guidance
+        image_id: group_original
       - label: Enfoque profesional
         description: |-
           Buscas resultados reales en tu carrera:
@@ -548,6 +548,9 @@ sections:
           Valoras una estructura clara:
           prefieres avanzar con hitos definidos, mentores expertos y una cohorte que te impulse a seguir avanzando.
         image_id: placeholder_strategies
+        image_object_fit: cover
+        alt: Strategies placeholder
+        id: placeholder-strategies
     image_position: right
     marginY:
       mobile: xl lg
