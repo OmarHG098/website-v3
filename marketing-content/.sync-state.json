@@ -63,9 +63,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "lastModified": 1770677594293.3298,
-      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3"
+      "sha": "aaf2aeda392666729f3650a415d787ca1e9c686dcdab17f76cacf652f3ce81fc",
+      "lastModified": 1770678361844.4705,
+      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-09T23:06:01.854Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
