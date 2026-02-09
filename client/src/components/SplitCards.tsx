@@ -137,7 +137,6 @@ export const SplitCards = memo(function SplitCards({
 
   const isPrimaryRight = variant === "primary-right";
 
-  // text
   // Width ratios for lg breakpoint: narrow = 2fr/3fr, default = 3fr/1fr, wide = 4fr/1fr
   const getLgGridTemplate = () => {
     const width = primary_width || "default";
@@ -200,7 +199,23 @@ export const SplitCards = memo(function SplitCards({
     </div>
   );
 
-  const SecondaryCard = (
+  const hasImage = !!secondary.image_id;
+
+  const SecondaryCard = hasImage ? (
+    <div
+      className="rounded-[0.8rem] overflow-hidden min-h-[320px] md:min-h-[360px]"
+      data-testid="card-secondary"
+    >
+      <UniversalImage
+        id={secondary.image_id!}
+        className="w-full h-full"
+        style={{
+          objectFit: secondary.image_style?.objectFit || "cover",
+          objectPosition: secondary.image_style?.objectPosition || "center center",
+        }}
+      />
+    </div>
+  ) : (
     <div 
       className="text-accent-foreground rounded-[0.8rem] p-6 md:p-8 flex flex-col justify-center bg-[#0080ff0d]"
       data-testid="card-secondary"
