@@ -21,7 +21,7 @@ yaml: |
         price_info: "with 4Geeks Installments"
         cta_text: "Discover program"
         cta_url: "/en/ai-automation"
-        solid_background: "accent"
+        course_background: "accent"
 
       - name: "Machine Learning"
         icon: "Brain"
@@ -35,7 +35,7 @@ yaml: |
         original_price: "$588"
         cta_text: "Discover program"
         cta_url: "/en/ai-machine-learning"
-        solid_background: "primary"
+        course_background: "primary"
 
       - name: "Full Stack Dev"
         icon: "Code"
@@ -49,4 +49,4 @@ yaml: |
         original_price: "$588"
         cta_text: "Discover program"
         cta_url: "/en/full-stack"
-        solid_background: "secondary"
+        course_background: "secondary"

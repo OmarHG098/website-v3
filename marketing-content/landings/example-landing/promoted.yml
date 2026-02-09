@@ -97,7 +97,7 @@ sections:
         price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/ai-automation
-        solid_background: accent
+        course_background: hsl(var(--destructive))
       - name: Machine Learning
         icon: Brain
         duration: 9 months part-time
@@ -110,7 +110,7 @@ sections:
         original_price: $588
         cta_text: Discover program
         cta_url: /en/ai-machine-learning
-        solid_background: primary
+        course_background: primary
       - name: Full Stack Dev
         icon: Code
         duration: 9 months part-time
@@ -123,7 +123,7 @@ sections:
         original_price: $588
         cta_text: Discover program
         cta_url: /en/full-stack
-        solid_background: secondary
+        course_background: hsl(var(--accent))
   - type: course_selector
     version: "1.0"
     heading: Explore Our Programs

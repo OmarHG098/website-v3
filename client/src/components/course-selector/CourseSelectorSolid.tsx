@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import type { CourseSelectorSection } from "@shared/schema";
 import { IconArrowRight } from "@tabler/icons-react";
-import { resolveColorVar, hslColorRaw } from "./shared";
+import { resolveColorVar, hslColorRaw, hslColor } from "./shared";
 import { CourseContent } from "./CourseContent";
 
 interface CourseSelectorSolidProps {
@@ -14,8 +14,8 @@ export function CourseSelectorSolid({ data }: CourseSelectorSolidProps) {
   const activeCourse = courses[activeIndex];
 
   const resolved = useMemo(() => {
-    return resolveColorVar(activeCourse?.solid_background);
-  }, [activeCourse?.solid_background]);
+    return resolveColorVar(activeCourse?.course_background);
+  }, [activeCourse?.course_background]);
 
   const handleTabClick = useCallback((index: number) => {
     setActiveIndex(index);
@@ -57,13 +57,13 @@ export function CourseSelectorSolid({ data }: CourseSelectorSolidProps) {
           <div className="md:w-[280px] lg:w-[360px] shrink-0 bg-card flex flex-col">
             {courses.map((course, index) => {
               const isActive = index === activeIndex;
-              const tabResolved = resolveColorVar(course.solid_background);
+              const tabResolved = resolveColorVar(course.course_background);
               return (
                 <button
                   key={index}
                   onClick={() => handleTabClick(index)}
                   className={`
-                    relative text-left px-5 py-4 transition-colors duration-200
+                    relative text-left px-5 py-4 transition-colors duration-200 ms-2 my-2 rounded-s-xl
                     flex items-center justify-between gap-2
                     ${isActive
                       ? "font-semibold text-foreground"
@@ -71,7 +71,7 @@ export function CourseSelectorSolid({ data }: CourseSelectorSolidProps) {
                     }
                   `}
                   style={isActive ? {
-                    backgroundColor: hslColorRaw(tabResolved),
+                    backgroundColor: hslColor(tabResolved, 0.1),
                   } : undefined}
                   data-testid={`button-tab-${index}`}
                 >
@@ -88,7 +88,7 @@ export function CourseSelectorSolid({ data }: CourseSelectorSolidProps) {
             <div
               className="absolute inset-0 transition-all duration-500"
               style={{
-                backgroundColor: hslColorRaw(resolved),
+                backgroundColor: hslColor(resolved, 0.1),
               }}
             />
             {activeCourse && (

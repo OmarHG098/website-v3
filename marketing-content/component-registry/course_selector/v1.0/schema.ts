@@ -30,8 +30,7 @@ export const courseItemSchema = z.object({
   price_info: z.string().optional().describe("Additional pricing info (e.g., 'with TripleTen Installments')"),
   cta_text: z.string().describe("CTA button text"),
   cta_url: z.string().describe("CTA button URL"),
-  course_background: z.string().optional().describe("Background color for default variant gradient and badges (uses courses color picker)"),
-  solid_background: z.string().optional().describe("Background color for solid variant flat fill and active tab (uses accent color picker)"),
+  course_background: z.string().optional().describe("Background color for course cards and badges (uses courses color picker)"),
 });
 
 export const courseSelectorSectionSchema = z.object({
