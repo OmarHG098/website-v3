@@ -27,5 +27,5 @@ sections:
       Unlike traditional bootcamps, we focus on **real-world projects** and **personalized mentorship** to ensure every student succeeds.
 
       Our graduates work at companies like Google, Meta, Amazon, and hundreds of innovative startups around the world.
-    show_toc: false
+    show_toc: true
     max_width: md
