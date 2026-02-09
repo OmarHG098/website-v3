@@ -1,9 +1,13 @@
 import { memo } from "react";
-import type { SplitCardsSection, SplitCardsBenefit, ToolIcon } from "@shared/schema";
+import type {
+  SplitCardsSection,
+  SplitCardsBenefit,
+  ToolIcon,
+} from "@shared/schema";
 import { UniversalImage } from "@/components/UniversalImage";
 import * as TablerIcons from "@tabler/icons-react";
-import { 
-  IconCheck, 
+import {
+  IconCheck,
   IconBrandOpenai,
   IconBrandFigma,
   IconBrandGithub,
@@ -11,7 +15,7 @@ import {
   IconCode,
   IconRobot,
   IconSparkles,
-  type Icon as TablerIconType
+  type Icon as TablerIconType,
 } from "@tabler/icons-react";
 
 interface SplitCardsProps {
@@ -45,13 +49,7 @@ function getToolIcon(iconName?: string): TablerIconType | null {
   return toolIconMap[iconName] || null;
 }
 
-function ToolIconBadge({ 
-  tool, 
-  index 
-}: { 
-  tool: ToolIcon; 
-  index: number;
-}) {
+function ToolIconBadge({ tool, index }: { tool: ToolIcon; index: number }) {
   const size = tool.size || "md";
   const sizeClass = sizeClasses[size];
   const iconSize = iconSizeMap[size];
@@ -90,32 +88,30 @@ function ToolIconBadge({
   );
 }
 
-function BenefitRow({ 
-  benefit, 
+function BenefitRow({
+  benefit,
   index,
-  defaultIcon
-}: { 
-  benefit: SplitCardsBenefit; 
+  defaultIcon,
+}: {
+  benefit: SplitCardsBenefit;
   index: number;
   defaultIcon?: string;
 }) {
   const iconName = benefit.icon || defaultIcon;
   const fullIconName = iconName ? `Icon${iconName}` : null;
-  const IconComponent = fullIconName 
-    ? (TablerIcons as unknown as Record<string, TablerIconType>)[fullIconName] || IconCheck
+  const IconComponent = fullIconName
+    ? (TablerIcons as unknown as Record<string, TablerIconType>)[
+        fullIconName
+      ] || IconCheck
     : IconCheck;
 
   return (
-    <div 
+    <div
       className="flex items-start gap-3 py-3"
       data-testid={`benefit-item-${index}`}
     >
       <div className="flex-shrink-0 mt-0.5">
-        <IconComponent 
-          className="text-primary" 
-          size={20} 
-          stroke={2.5}
-        />
+        <IconComponent className="text-primary" size={20} stroke={2.5} />
       </div>
       <p className="text-foreground font-medium leading-relaxed text-base">
         {benefit.text}
@@ -124,16 +120,15 @@ function BenefitRow({
   );
 }
 
-export const SplitCards = memo(function SplitCards({ 
-  data 
-}: SplitCardsProps) {
+export const SplitCards = memo(function SplitCards({ data }: SplitCardsProps) {
   const { primary, secondary, background, variant, primary_width } = data;
 
-  const backgroundClass = background === "muted" 
-    ? "bg-muted" 
-    : background === "card" 
-      ? "bg-card" 
-      : "bg-background";
+  const backgroundClass =
+    background === "muted"
+      ? "bg-muted"
+      : background === "card"
+        ? "bg-card"
+        : "bg-background";
 
   const isPrimaryRight = variant === "primary-right";
 
@@ -149,7 +144,7 @@ export const SplitCards = memo(function SplitCards({
   };
 
   const PrimaryCard = (
-    <div 
+    <div
       className="relative text-white rounded-[0.8rem] p-8 md:p-10 lg:p-12 overflow-hidden min-h-[320px] md:min-h-[360px]"
       style={{
         background: "linear-gradient(135deg, #366bff 0%, #4aa5ff 100%)",
@@ -158,21 +153,21 @@ export const SplitCards = memo(function SplitCards({
     >
       <div className="relative z-10 max-w-2xl">
         {primary.badge && (
-          <span 
+          <span
             className="inline-block text-sm font-medium text-white/80 mb-3"
             data-testid="text-primary-badge"
           >
             {primary.badge}
           </span>
         )}
-        <h2 
+        <h2
           className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-4"
           data-testid="text-primary-heading"
         >
           {primary.heading}
         </h2>
         {primary.description && (
-          <p 
+          <p
             className="text-white/85 leading-relaxed text-base md:text-lg"
             data-testid="text-primary-description"
           >
@@ -203,35 +198,43 @@ export const SplitCards = memo(function SplitCards({
 
   const SecondaryCard = hasImage ? (
     <div
-      className="rounded-[0.8rem] overflow-hidden min-h-[320px] md:min-h-[360px]"
+      className="relative rounded-[0.8rem] overflow-hidden min-h-[320px] h-full self-stretch"
       data-testid="card-secondary"
     >
-      <UniversalImage
-        id={secondary.image_id!}
-        className="w-full h-full"
-        style={{
-          objectFit: secondary.image_style?.objectFit || "cover",
-          objectPosition: secondary.image_style?.objectPosition || "center center",
-        }}
-      />
+      <div className="h-[300px]">
+        <UniversalImage
+          id={secondary.image_id!}
+          className="w-full h-full"
+          style={{
+            objectFit: secondary.image_style?.objectFit || "cover",
+            objectPosition:
+              secondary.image_style?.objectPosition || "center center",
+          }}
+        />
+      </div>
     </div>
   ) : (
-    <div 
+    <div
       className="text-accent-foreground rounded-[0.8rem] p-6 md:p-8 flex flex-col justify-center bg-[#0080ff0d]"
       data-testid="card-secondary"
     >
       <div className="space-y-1">
-        {secondary.benefits?.map((benefit: SplitCardsBenefit, index: number) => (
-          <BenefitRow key={index} benefit={benefit} index={index} defaultIcon={secondary.bullet_icon} />
-        ))}
+        {secondary.benefits?.map(
+          (benefit: SplitCardsBenefit, index: number) => (
+            <BenefitRow
+              key={index}
+              benefit={benefit}
+              index={index}
+              defaultIcon={secondary.bullet_icon}
+            />
+          ),
+        )}
       </div>
     </div>
   );
 
   return (
-    <section 
-      data-testid="section-split-cards"
-    >
+    <section data-testid="section-split-cards">
       <div className="max-w-6xl mx-auto px-4">
         <style>{`
           @media (min-width: 1024px) {
@@ -240,7 +243,7 @@ export const SplitCards = memo(function SplitCards({
             }
           }
         `}</style>
-        <div 
+        <div
           className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
           data-split-cards-grid
         >

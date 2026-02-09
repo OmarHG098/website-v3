@@ -58,6 +58,8 @@ sections:
         - text: Our curriculum is industry-aligned and AI-ready
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
+      image_id: what_is_4geeks
+      image_object_position: 80% 20%
     background: muted
   - type: features_quad
     version: "1.0"
