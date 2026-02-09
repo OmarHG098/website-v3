@@ -1050,6 +1050,37 @@ export function SectionEditorPanel({
               type="background"
               testIdPrefix="props-background"
             />
+            {/* Render top-level (non-array) color-picker field editors */}
+            {Object.entries(configuredFields)
+              .filter(([fieldPath, editorTypeRaw]) => {
+                if (fieldPath.includes("[]")) return false;
+                if (fieldPath === "background") return false;
+                const { type: edType } = parseEditorType(editorTypeRaw);
+                return edType === "color-picker";
+              })
+              .map(([fieldPath, editorTypeRaw]) => {
+                const { variant: edVariant } = parseEditorType(editorTypeRaw);
+                const currentValue = parsedSection ? String((parsedSection as Record<string, unknown>)[fieldPath] || "") : "";
+                const fieldLabelMap: Record<string, string> = {
+                  form_background: "Fondo del formulario",
+                  terms_color: "Color de términos y condiciones",
+                  title_color: "Color de título",
+                  subtitle_color: "Color de subtítulo",
+                  text_color: "Color de texto",
+                };
+                const label = fieldLabelMap[fieldPath] || fieldPath.replace(/_/g, " ");
+                return (
+                  <div key={fieldPath} className="mt-3">
+                    <ColorPicker
+                      value={currentValue}
+                      onChange={(value) => updateProperty(fieldPath, value)}
+                      type={(edVariant as "background" | "accent" | "text") || "background"}
+                      label={label}
+                      testIdPrefix={`props-${fieldPath}`}
+                    />
+                  </div>
+                );
+              })}
             {/* Render grouped array item editors (when multiple field-editors exist for the same array) */}
             {(() => {
               const arrayFieldGroups: Record<string, { fieldName: string; editorType: string; variant?: string; fullPath: string }[]> = {};

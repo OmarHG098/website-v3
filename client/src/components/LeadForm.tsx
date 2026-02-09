@@ -88,6 +88,7 @@ export interface LeadFormData {
 interface LeadFormProps {
   data: LeadFormData;
   programContext?: string;
+  termsStyle?: React.CSSProperties;
 }
 
 interface FormOptions {
@@ -273,7 +274,7 @@ function ConsentSection({ consent, form, locale, formOptions, sessionLocation }:
   );
 }
 
-export function LeadForm({ data, programContext }: LeadFormProps) {
+export function LeadForm({ data, programContext, termsStyle }: LeadFormProps) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "es" ? "es" : "en";
   const { session } = useSession();
@@ -1055,7 +1056,7 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
           </Button>
 
           {showTerms && (
-            <p className={`text-xs text-center ${data.terms_className || "text-muted-foreground"}`} data-testid="text-terms">
+            <p className={`text-xs text-center ${data.terms_className || "text-muted-foreground"}`} style={termsStyle} data-testid="text-terms">
               {locale === "es" ? "Al registrarte, aceptas los " : "By signing up, you agree to the "}
               <a 
                 href={data.terms_url || "/terms"} 
