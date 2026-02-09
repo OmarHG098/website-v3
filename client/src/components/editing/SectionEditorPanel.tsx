@@ -1050,9 +1050,273 @@ export function SectionEditorPanel({
               type="background"
               testIdPrefix="props-background"
             />
+            {/* Render grouped array item editors (when multiple field-editors exist for the same array) */}
+            {(() => {
+              const arrayFieldGroups: Record<string, { fieldName: string; editorType: string; variant?: string; fullPath: string }[]> = {};
+              Object.entries(configuredFields).forEach(([fieldPath, editorTypeRaw]) => {
+                const match = fieldPath.match(/^([\w.]+)\[\]\.(.+)$/);
+                if (!match) return;
+                const [, arrPath, fieldName] = match;
+                if (!arrayFieldGroups[arrPath]) arrayFieldGroups[arrPath] = [];
+                const { type: edType, variant: edVariant } = parseEditorType(editorTypeRaw);
+                arrayFieldGroups[arrPath].push({ fieldName, editorType: edType, variant: edVariant, fullPath: fieldPath });
+              });
+
+              const supportedGroupedTypes = new Set(["color-picker", "image-picker", "link-picker"]);
+              const groupedArrayPaths = new Set(
+                Object.entries(arrayFieldGroups)
+                  .filter(([, fields]) => fields.length >= 2 && fields.every(f => supportedGroupedTypes.has(f.editorType)))
+                  .map(([arrPath]) => arrPath)
+              );
+
+              return Array.from(groupedArrayPaths).map((arrPath) => {
+                const fields = arrayFieldGroups[arrPath];
+                const getArrayDataForGroup = () => {
+                  if (!parsedSection) return [];
+                  const pathParts = arrPath.split(".");
+                  let current: unknown = parsedSection;
+                  for (const part of pathParts) {
+                    if (!current || typeof current !== "object") return [];
+                    current = (current as Record<string, unknown>)[part];
+                  }
+                  return Array.isArray(current) ? current as Record<string, unknown>[] : [];
+                };
+                const arrData = getArrayDataForGroup();
+                if (arrData.length === 0) return null;
+
+                const arrayLabel = arrPath.split(".").pop() || arrPath;
+
+                const fieldLabelMap: Record<string, string> = {
+                  box_color: "Fondo de tarjeta",
+                  name_color: "Color de nombre",
+                  role_color: "Color de rol",
+                  comment_color: "Color de comentario",
+                  star_color: "Color de estrellas",
+                  avatar: "Foto de perfil",
+                  linkedin_url: "LinkedIn URL",
+                  "media.url": "Media URL",
+                };
+
+                return (
+                  <div key={`grouped-${arrPath}`} className="space-y-3">
+                    <Label className="text-sm font-medium capitalize">
+                      {arrayLabel} ({arrData.length})
+                    </Label>
+                    <div className="space-y-2">
+                      {arrData.map((item, index) => {
+                        const itemLabel = (item.name as string) || (item.title as string) || (item.label as string) || `Item ${index + 1}`;
+                        const avatarSrc = (item.avatar as string) || "";
+                        const displayAvatarSrc = imageRegistry?.images?.[avatarSrc]?.src || avatarSrc;
+
+                        return (
+                          <Collapsible key={index} className="border rounded-md">
+                            <CollapsibleTrigger asChild>
+                              <button
+                                type="button"
+                                className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors"
+                                data-testid={`props-grouped-item-${arrPath}-${index}-trigger`}
+                              >
+                                {avatarSrc ? (
+                                  <div className="w-8 h-8 rounded-full overflow-hidden bg-muted border flex-shrink-0">
+                                    <img src={displayAvatarSrc} alt={itemLabel} className="w-full h-full object-cover" />
+                                  </div>
+                                ) : (
+                                  <div className="w-8 h-8 rounded-full bg-muted border flex-shrink-0 flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                                    {itemLabel.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+                                  </div>
+                                )}
+                                <span className="flex-1 text-left text-sm font-medium truncate">
+                                  {itemLabel}
+                                </span>
+                                <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                              </button>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <div className="p-3 pt-0 space-y-3 border-t">
+                                {fields.map((field) => {
+                                  const getNestedValue = (obj: Record<string, unknown>, path: string): string => {
+                                    const parts = path.split(".");
+                                    let cur: unknown = obj;
+                                    for (const p of parts) {
+                                      if (!cur || typeof cur !== "object") return "";
+                                      cur = (cur as Record<string, unknown>)[p];
+                                    }
+                                    return (cur as string) || "";
+                                  };
+                                  const currentValue = getNestedValue(item, field.fieldName);
+                                  const label = fieldLabelMap[field.fieldName] || field.fieldName.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+                                  if (field.editorType === "color-picker") {
+                                    const colorType = (field.variant as ColorPickerVariant) || "accent";
+                                    return (
+                                      <div key={field.fullPath} className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">{label}</Label>
+                                        <ColorPicker
+                                          value={currentValue}
+                                          onChange={(value) => {
+                                            if (field.fieldName.includes(".")) {
+                                              const parts = field.fieldName.split(".");
+                                              try {
+                                                const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+                                                if (!parsed || typeof parsed !== "object") return;
+                                                pushUndoState(yamlContent);
+                                                const arrParts = arrPath.split(".");
+                                                let cur: unknown = parsed;
+                                                for (const p of arrParts) {
+                                                  if (!cur || typeof cur !== "object") return;
+                                                  cur = (cur as Record<string, unknown>)[p];
+                                                }
+                                                if (!Array.isArray(cur)) return;
+                                                let target: unknown = cur[index];
+                                                for (let i = 0; i < parts.length - 1; i++) {
+                                                  if (!target || typeof target !== "object") return;
+                                                  if (!(parts[i] in (target as Record<string, unknown>))) {
+                                                    (target as Record<string, unknown>)[parts[i]] = {};
+                                                  }
+                                                  target = (target as Record<string, unknown>)[parts[i]];
+                                                }
+                                                if (target && typeof target === "object") {
+                                                  (target as Record<string, unknown>)[parts[parts.length - 1]] = value;
+                                                }
+                                                const newYaml = yamlParser.dump(parsed, { lineWidth: -1, noRefs: true, quotingType: '"' });
+                                                setYamlContent(newYaml);
+                                                setHasChanges(true);
+                                                setParseError(null);
+                                                if (onPreviewChange) onPreviewChange(parsed as Section);
+                                              } catch (e) { console.error("Error updating nested field:", e); }
+                                            } else {
+                                              updateArrayItemField(arrPath, index, field.fieldName, value);
+                                            }
+                                          }}
+                                          type={colorType}
+                                          label=" "
+                                          allowNone={true}
+                                          allowCustom={true}
+                                          testIdPrefix={`props-grouped-${field.fieldName}-${index}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+
+                                  if (field.editorType === "image-picker") {
+                                    const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
+                                    return (
+                                      <div key={field.fullPath} className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">{label}</Label>
+                                        <div className="flex items-center gap-2">
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setImagePickerTarget({
+                                                arrayPath: arrPath,
+                                                index,
+                                                srcField: field.fieldName,
+                                                currentSrc: currentValue,
+                                                currentAlt: (item.name as string) || "",
+                                                tagFilter: field.variant,
+                                              });
+                                              setImagePickerOpen(true);
+                                            }}
+                                            className="relative w-12 h-12 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                                            data-testid={`props-grouped-image-${field.fieldName}-${index}`}
+                                          >
+                                            {currentValue ? (
+                                              <>
+                                                <img src={displaySrc} alt={label} className="w-full h-full object-cover" />
+                                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                  <IconPhoto className="h-4 w-4 text-white" />
+                                                </div>
+                                              </>
+                                            ) : (
+                                              <div className="w-full h-full flex items-center justify-center">
+                                                <IconPhoto className="h-5 w-5 text-muted-foreground" />
+                                              </div>
+                                            )}
+                                          </button>
+                                          {currentValue && (
+                                            <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                                              {currentValue.split("/").pop() || currentValue}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+
+                                  if (field.editorType === "link-picker") {
+                                    return (
+                                      <div key={field.fullPath} className="space-y-1">
+                                        <Label className="text-xs text-muted-foreground">{label}</Label>
+                                        <Input
+                                          value={currentValue}
+                                          onChange={(e) => {
+                                            if (field.fieldName.includes(".")) {
+                                              const parts = field.fieldName.split(".");
+                                              try {
+                                                const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+                                                if (!parsed || typeof parsed !== "object") return;
+                                                pushUndoState(yamlContent);
+                                                const arrParts = arrPath.split(".");
+                                                let cur: unknown = parsed;
+                                                for (const p of arrParts) {
+                                                  if (!cur || typeof cur !== "object") return;
+                                                  cur = (cur as Record<string, unknown>)[p];
+                                                }
+                                                if (!Array.isArray(cur)) return;
+                                                let target: unknown = cur[index];
+                                                for (let i = 0; i < parts.length - 1; i++) {
+                                                  if (!target || typeof target !== "object") return;
+                                                  if (!(parts[i] in (target as Record<string, unknown>))) {
+                                                    (target as Record<string, unknown>)[parts[i]] = {};
+                                                  }
+                                                  target = (target as Record<string, unknown>)[parts[i]];
+                                                }
+                                                if (target && typeof target === "object") {
+                                                  (target as Record<string, unknown>)[parts[parts.length - 1]] = e.target.value;
+                                                }
+                                                const newYaml = yamlParser.dump(parsed, { lineWidth: -1, noRefs: true, quotingType: '"' });
+                                                setYamlContent(newYaml);
+                                                setHasChanges(true);
+                                                setParseError(null);
+                                                if (onPreviewChange) onPreviewChange(parsed as Section);
+                                              } catch (err) { console.error("Error updating nested field:", err); }
+                                            } else {
+                                              updateArrayItemField(arrPath, index, field.fieldName, e.target.value);
+                                            }
+                                          }}
+                                          placeholder={`https://...`}
+                                          className="h-8 text-sm"
+                                          data-testid={`props-grouped-link-${field.fieldName}-${index}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+
+                                  return null;
+                                })}
+                              </div>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              });
+            })()}
             {/* Render array fields with configured editors */}
             {Object.entries(configuredFields).map(
               ([fieldPath, editorTypeRaw]) => {
+                // Skip fields that are already rendered in grouped collapsible items above
+                const groupedSkipMatch = fieldPath.match(/^([\w.]+)\[\]\./);
+                if (groupedSkipMatch) {
+                  const arrPathCheck = groupedSkipMatch[1];
+                  const supportedTypes = new Set(["color-picker", "image-picker", "link-picker"]);
+                  const allForArr = Object.entries(configuredFields).filter(([fp]) => fp.startsWith(`${arrPathCheck}[].`));
+                  const allSupported = allForArr.every(([, et]) => supportedTypes.has(parseEditorType(et).type));
+                  if (allForArr.length >= 2 && allSupported) return null;
+                }
+
                 // Parse editor type with optional variant (e.g., "color-picker:background")
                 const { type: editorType, variant } =
                   parseEditorType(editorTypeRaw);

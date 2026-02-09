@@ -93,6 +93,9 @@ sections:
           url: https://www.youtube.com/watch?v=example
           type: video
           ratio: "16:9"
+        avatar: /attached_assets/1614626903622_1_(1)_1767038293575.png
+        alt: 4Geeks mentors and students in a live online session
+        id: mentoring-zoom-call
       - name: Joshua Bravo
         role: Full Stack Developer
         company: Regcheq
