@@ -259,50 +259,52 @@ export function ApplyFormSection({
                       )}
                     />
 
-                    <div>
-                      <FormLabel className="text-foreground font-medium">
-                        {data.form.region_label || (locale === "es" ? "Selecciona tu región" : "Select your region")}
-                      </FormLabel>
-                      <Select onValueChange={handleRegionChange} value={selectedRegion}>
-                        <SelectTrigger data-testid="select-region" className="mt-2">
-                          <SelectValue placeholder={data.form.region_placeholder || (locale === "es" ? "Selecciona una región" : "Select a region")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {REGION_SLUGS.map((region) => (
-                            <SelectItem key={region} value={region} data-testid={`option-region-${region}`}>
-                              {getRegionLabel(region, locale)}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <FormLabel className="text-foreground font-medium">
+                          {data.form.region_label || (locale === "es" ? "Selecciona tu región" : "Select your region")}
+                        </FormLabel>
+                        <Select onValueChange={handleRegionChange} value={selectedRegion}>
+                          <SelectTrigger data-testid="select-region" className="mt-2">
+                            <SelectValue placeholder={data.form.region_placeholder || (locale === "es" ? "Selecciona una región" : "Select a region")} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {REGION_SLUGS.map((region) => (
+                              <SelectItem key={region} value={region} data-testid={`option-region-${region}`}>
+                                {getRegionLabel(region, locale)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <FormField
-                      control={form.control}
-                      name="location"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-foreground font-medium">
-                            {data.form.location_label}
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger data-testid="select-location">
-                                <SelectValue placeholder={data.form.location_placeholder} />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {filteredLocations.map((location) => (
-                                <SelectItem key={location.id} value={location.id} data-testid={`option-location-${location.id}`}>
-                                  {getLocalizedName(location)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                      <FormField
+                        control={form.control}
+                        name="location"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-foreground font-medium">
+                              {data.form.location_label}
+                            </FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger data-testid="select-location">
+                                  <SelectValue placeholder={data.form.location_placeholder} />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {filteredLocations.map((location) => (
+                                  <SelectItem key={location.id} value={location.id} data-testid={`option-location-${location.id}`}>
+                                    {getLocalizedName(location)}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
