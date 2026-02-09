@@ -59,7 +59,7 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
                   <Accordion type="single" collapsible defaultValue="item-0" className="w-full" data-testid="accordion-bullets">
                     {bullets.map((bullet, index) => (
                       <AccordionItem key={index} value={`item-${index}`}>
-                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-2">
+                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-2 md:py-4">
                           {bullet.heading}
                         </AccordionTrigger>
                         <AccordionContent className="text-muted-foreground">
@@ -83,14 +83,14 @@ export function TwoColumnAccordionCardImageBackground({ data }: TwoColumnAccordi
               {image && (
                 <div className={`col-span-1 md:col-span-5 flex items-center ${reverse ? "md:order-1 justify-start" : "md:order-2 justify-end"}`}>
                   <div 
-                    className={`relative bg-primary/30 rounded-2xl pt-14 md:py-14 ${reverse ? "md:pr-4 pl-0" : "pl-0 md:pl-4 pr-0"} flex items-center ${reverse ? "justify-start" : "justify-end"} min-h-[200px] md:min-h-[400px] w-full`}
+                    className={`relative bg-none md:bg-primary/30 rounded-2xl pt-0 md:py-14 ${reverse ? "md:pr-4 pl-0" : "pl-0 md:pl-4 pr-0"} flex items-center ${reverse ? "justify-start" : "justify-end"} min-h-[200px] md:min-h-[400px] w-full`}
                     data-testid="img-two-column-accordion-background"
                   >
                     <div className="w-full md:w-[90%] flex items-center justify-end">
                       <img
                         src={image}
                         alt={image_alt || ""}
-                        className={`w-full h-auto ${reverse ? "rounded-r-lg" : "rounded-l-lg"} shadow-lg`}
+                        className={`w-full h-auto rounded-lg shadow-lg`}
                         style={{
                           objectFit: image_object_fit || "contain",
                           objectPosition: image_object_position || "center center",

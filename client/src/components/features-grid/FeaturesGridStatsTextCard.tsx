@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { FeaturesGridStatsTextCardSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Card } from "@/components/ui/card";
@@ -14,9 +14,35 @@ export function FeaturesGridStatsTextCard({
   data,
 }: FeaturesGridStatsTextCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const cardAnimationStyle: React.CSSProperties = {
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? "translateX(0)" : "translateX(40px)",
+    transition: "opacity 0.6s ease-out 0.8s, transform 0.6s ease-out 0.8s",
+  };
 
   return (
-    <section className="py-12" data-testid="section-features-grid-stats-text-card">
+    <section ref={sectionRef} className="py-12" data-testid="section-features-grid-stats-text-card">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 md:items-center">
           <div className="flex flex-col gap-4 md:w-[280px] lg:w-[420px] md:flex-shrink-0">
@@ -32,6 +58,8 @@ export function FeaturesGridStatsTextCard({
                     card_color="bg-transparent"
                     size="small"
                     className="text-center"
+                    animate={isVisible}
+                    animationDelay={index * 200}
                     data-testid={`stat-${itemId}`}
                   />
                 );
@@ -50,6 +78,8 @@ export function FeaturesGridStatsTextCard({
                       card_color="bg-transparent"
                       size="small"
                       className="text-center"
+                      animate={isVisible}
+                      animationDelay={400}
                       data-testid={`stat-${itemId}`}
                     />
                   );
@@ -58,7 +88,10 @@ export function FeaturesGridStatsTextCard({
             )}
           </div>
 
-          <Card className={`p-6 md:p-8 order-first md:order-last ${data.card_color || "bg-background"}`}>
+          <Card 
+            className={`p-6 md:p-8 order-first md:order-last ${data.card_color || "bg-background"}`}
+            style={cardAnimationStyle}
+          >
             <div>
               {data.title && (
                 <h2

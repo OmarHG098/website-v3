@@ -1,0 +1,31 @@
+slug: rigobot-ai-coding-mentor
+template: default
+title: rigobot-ai-coding-mentor
+meta:
+  robots: index, follow
+  priority: 0.8
+  change_frequency: weekly
+  page_title: rigobot-ai-coding-mentor | 4Geeks Academy
+  description: rigobot-ai-coding-mentor - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /rigobot-ai-coding-mentor
+schema:
+  include:
+    - organization
+    - website
+sections:
+  - type: article
+    content: |
+      # About Our Programm
+
+      We offer a comprehensive learning experience designed to transform beginners into job-ready professionals.
+
+      Our curriculum is [a asd](asddsa) built by industry experts and updated regularly to reflect the latest trends and technologies.
+
+      ## What Makes Us Different
+
+      Unlike traditional bootcamps, we focus on **real-world projects** and **personalized mentorship** to ensure every student succeeds.
+
+      Our graduates work at companies like Google, Meta, Amazon, and hundreds of innovative startups around the world.
+    show_toc: false
+    max_width: md

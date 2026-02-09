@@ -70,9 +70,16 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
         )}
 
         {data.description && (
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center mb-12">
+        <div className="text-center mb-4">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center mb-3">
             {data.description}
           </p>
+          {data.description_link && (
+            <a className="text-primary hover:underline text-base mt-2" href={data.description_link?.url} target="_blank" rel="noopener noreferrer">
+              {data.description_link?.text}
+            </a>
+          )}
+        </div>
         )}
 
         {/* Mobile & Tablet: Vertical cards layout */}

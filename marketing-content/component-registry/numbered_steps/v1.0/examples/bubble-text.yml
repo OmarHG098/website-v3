@@ -6,6 +6,9 @@ yaml: |
     variant: bubbleText
     title: "Get Hired with Our 3-Step Career Development Process"
     description: "Once you've mastered the technical skills, our structured process helps you build a lasting career in tech."
+    description_link:
+      url: "/job-guarantee"
+      text: "Conditions apply."
     background: "bg-background"
     steps:
       - icon: "Optimization"

@@ -1,66 +1,71 @@
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'wouter';
-import { IconWorld } from '@tabler/icons-react';
-import { Button } from '@/components/ui/button';
+import { useTranslation } from "react-i18next";
+import { useLocation } from "wouter";
+import { IconWorld } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { pageSlugMappings, getTranslatedSlug } from '@shared/slugMappings';
+} from "@/components/ui/dropdown-menu";
+import { pageSlugMappings, getTranslatedSlug } from "@shared/slugMappings";
 
 const languages = [
-  { code: 'en', name: 'English' },
-  { code: 'es', name: 'Español' }
+  { code: "en", name: "English" },
+  { code: "es", name: "Español" },
 ];
 
-function getLocalizedPath(currentPath: string, targetLang: string): string | null {
-  // Handle root path (/, /en/, /es/)
-  if (currentPath === '/' || currentPath === '/en/' || currentPath === '/es/' || currentPath === '/en' || currentPath === '/es') {
-    return targetLang === 'es' ? '/es/' : '/en/';
+function getLocalizedPath(currentPath: string, targetLang: string): string {
+  // Handle root path and language root paths
+  if (
+    currentPath === "/" ||
+    currentPath === "/en/" ||
+    currentPath === "/es/" ||
+    currentPath === "/en" ||
+    currentPath === "/es"
+  ) {
+    return `/${targetLang}/`;
   }
-  
+
   // Handle /en/:slug or /es/:slug pattern
   const enMatch = currentPath.match(/^\/en\/(.+)$/);
   const esMatch = currentPath.match(/^\/es\/(.+)$/);
-  
+
   // Handle legacy /landing/:slug pattern (no locale prefix)
   const legacyLandingMatch = currentPath.match(/^\/landing\/(.+)$/);
   if (legacyLandingMatch) {
     const slug = legacyLandingMatch[1];
     return `/${targetLang}/landing/${slug}`;
   }
-  
-  if (enMatch && targetLang === 'es') {
+
+  if (enMatch && targetLang === "es") {
     const slug = enMatch[1];
-    // Check if this slug has a detail path (e.g., /en/career-programs/ai-engineering)
-    const parts = slug.split('/');
+    const parts = slug.split("/");
     if (parts.length > 1) {
       const baseSlug = parts[0];
-      const detailSlug = parts.slice(1).join('/');
-      const translatedBase = getTranslatedSlug(baseSlug, 'en', 'es');
+      const detailSlug = parts.slice(1).join("/");
+      const translatedBase = getTranslatedSlug(baseSlug, "en", "es");
       return `/es/${translatedBase}/${detailSlug}`;
     }
-    const translatedSlug = getTranslatedSlug(slug, 'en', 'es');
+    const translatedSlug = getTranslatedSlug(slug, "en", "es");
     return `/es/${translatedSlug}`;
   }
-  
-  if (esMatch && targetLang === 'en') {
+
+  if (esMatch && targetLang === "en") {
     const slug = esMatch[1];
-    // Check if this slug has a detail path
-    const parts = slug.split('/');
+    const parts = slug.split("/");
     if (parts.length > 1) {
       const baseSlug = parts[0];
-      const detailSlug = parts.slice(1).join('/');
-      const translatedBase = getTranslatedSlug(baseSlug, 'es', 'en');
+      const detailSlug = parts.slice(1).join("/");
+      const translatedBase = getTranslatedSlug(baseSlug, "es", "en");
       return `/en/${translatedBase}/${detailSlug}`;
     }
-    const translatedSlug = getTranslatedSlug(slug, 'es', 'en');
+    const translatedSlug = getTranslatedSlug(slug, "es", "en");
     return `/en/${translatedSlug}`;
   }
-  
-  return null;
+
+  // Fallback: just add language prefix
+  return `/${targetLang}/`;
 }
 
 export default function LanguageSwitcher() {
@@ -70,23 +75,22 @@ export default function LanguageSwitcher() {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     document.documentElement.lang = lng;
-    
+
     const localizedPath = getLocalizedPath(location, lng);
-    if (localizedPath) {
-      setLocation(localizedPath);
-    }
+    setLocation(localizedPath);
   };
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage =
+    languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           size="icon"
           data-testid="button-language-switcher"
-          aria-label={t('nav.changeLanguage')}
+          aria-label={t("nav.changeLanguage")}
         >
           <IconWorld className="h-5 w-5" />
         </Button>

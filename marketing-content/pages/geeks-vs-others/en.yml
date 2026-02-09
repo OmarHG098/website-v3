@@ -17,21 +17,21 @@ sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: 4Geeks Academy vs Other Bootcamps
-    subtitle: Discover why 4Geeks Academy is different. Our AI-integrated curriculum, hands-on projects, and personalized mentorship help students launch high-demand, future-proof tech careers—no prior experience needed. With lifetime mentorship and career support, we make sure you keep thriving long after graduation.
+    title: 4Geeks Academy vs Other Programs
+    subtitle: See why our graduates succeed in tech. From AI-powered learning and hands-on projects to personalized mentorship and lifetime career support, everything we do is designed to help you launch a thriving career.
     badge: Why 4Geeks Stands Out
     image:
       src: /attached_assets/unsplash_QckxruozjRg_1765395521123.png
       alt: Students coding together at a table with laptops
+    background: hsl(210 100% 50% / 0.05)
     paddingY:
       desktop: lg
-    background: hsl(210 100% 50% / 0.05)
     marginY:
       desktop: none md
   - type: comparison_table
     version: "1.0"
     title: Launching Successful Tech Careers in the AI Era
-    subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"
+    subtitle: "We're built to prepare you for success. From an industry-aligned, future-proof curriculum to lifelong mentorship and career support, here’s how 4Geeks stands out:"
     columns:
       - name: Feature
       - name: 4Geeks Academy
@@ -40,101 +40,63 @@ sections:
     rows:
       - feature: Career Support
         values:
-          - Personalized support for a lifetime
-          - Limited, ending with 1st job
-      - feature: "Teacher: Student Ratio"
+          - Personalized, lifelong guidance
+          - Limited or short-term support
+      - feature: Teacher-to-Student Ratio
         values:
           - "1:7"
-          - 1:10+
+          - Usually 1:10+
       - feature: AI-Powered Feedback
         values:
-          - Personalized to your progress
-          - Generic or non-existent
+          - Personalized to your learning progress
+          - Rarely available
       - feature: 1-on-1 Mentoring
         values:
-          - Unlimited and for a lifetime
-          - Limited sessions
+          - Unlimited, lifelong access
+          - Mostly limited sessions
       - feature: Curriculum
         values:
-          - Continuously updated to match industry needs
-          - Slow to adapt
-      - feature: "% Hiring Rate"
+          - Continuously updated to fit market needs
+          - Updates vary by provider
+      - feature: Hiring Rate
         values:
           - ~84% within 6 months
-          - Often Unknown
+          - Varies; mostly unreported
       - feature: Community
         values:
           - Strong local & global network
           - Depends on school
       - feature: Class Format
         values:
-          - Online, in-person
-          - Usually only one format
-      - feature: Previous Knowledge
+          - Online & in-person options
+          - Usually one format only
+      - feature: Prior Experience
         values:
-          - None
-          - Entry tests or prior coding experience
-    paddingY:
-      desktop: md lg
+          - No experience required
+          - Most require prior skills or assessments
     marginY:
       desktop: none md
+    paddingY:
+      desktop: md lg
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
     title: Hyperpersonalized Learning & Support That Lasts a Lifetime
-    description: Most bootcamps give you limited mentorship hours and leave you once you're hired. At 4Geeks, we built an entire support system around personalization.
+    description: At 4Geeks, we built an entire support system around personalization. And unlike most other programs, it doesn’t end with your first job.
     bullets:
       - heading: Unlimited 1:1 Mentorship
-        text: Get as much personal guidance as you need, for life. From debugging code to preparing for a senior role, our mentors are always just a message away.
-      - heading: AI-Powered Feedback
-        text: Rigobot + LearnPack adapt to your learning style, giving instant feedback, helping you debug faster, and tracking your skill growth over time.
+        text: Access personalized guidance whenever you need it. From debugging code to preparing for senior roles, our mentors support your learning and growth at every stage.
+      - heading: AI-Powered Learning & Feedback
+        text: Rigobot + LearnPack optimize your learning through personalization, providing instant feedback, guiding you to solve problems efficiently, and tracking your skill development.
       - heading: Lifelong Career Support
-        text: GeekFORCE isn't just for your first job. It's personalized career coaching you can tap into again and again, whether changing r
-    footer: Over 10,000 graduates have launched new careers with us.
-    image: /attached_assets/Group-original_1765419144159.webp
-    image_alt: Student learning with mentor support
-    reverse: true
-  - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: Our graduates are transforming their lives through tech. With over 84% hired within six months of completing the program, their success stories speak for themselves.
-    background: bg-sidebar
-    variant: default
-  - type: features_quad
-    version: "1.0"
-    variant: default
-    heading: Making Tech Careers Accessible
-    description: Tech careers change lives, and we believe finances should never hold anyone back. That's why we've built some of the most flexible, student-friendly options in the industry.
-    images:
-      - image_id: student_latina_female
-        alt: Latina student celebrating success
-        object_position: 50%40%
-      - image_id: student_african
-        alt: African student collaborating with team
-        object_position: 50%15%
-      - image_id: student_latin_male
-        alt: Latino student working on a project
-        object_position: 50%40%
-      - image_id: student_asian
-        alt: Asian student learning to code
-        object_position: 40%20%
-    cards:
-      - icon: CurrencyDollar
-        title: Affordable Tuition
-        description: Among the most affordable tuition of any top-ranked bootcamp (recognized by Forbes).
-      - icon: CreditCard
-        title: Flexible Financing
-        description: Financing options start below $299/month, so you can learn without financial stress.
-      - icon: Coin
-        title: Income-Based Payment
-        description: Income-based payment options, where you only pay once you're earning.
-      - icon: School
-        title: Scholarships Available
-        description: Full and partial scholarships available for eligible students.
+        text: GeekFORCE is designed to get you hired and keep advancing your career. From landing your first role to leveling up, you can access career coaching whenever you need it.
+    footer: More than 10,000 graduates have launched successful tech careers with 4Geeks.
+    image: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
   - type: features_grid
     version: "1.0"
     variant: stats-cards
-    title: Results You Can Count On
-    subtitle: Numbers matter — and ours speak for themselves.
+    title: Graduate Success by the Numbers
+    subtitle: Our alumni are landing jobs, increasing salaries, and launching tech careers worldwide.
     use_card: true
     items:
       - value: 84%
@@ -145,24 +107,68 @@ sections:
         title: Salary increase after graduation
     marginY:
       desktop: lg none
+  - type: value_proof_panel
+    title: Recognized Globally for Excellence
+    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
+    evidence_items:
+      - icon: Trophy
+        title: Top 5 Coding Bootcamps Worldwide
+        source: Newsweek, Forbes, SwitchUp, Course Report
+      - icon: Award
+        title: Best Student Support & Best Value
+        source: Course Report, SwitchUp
+      - icon: Users
+        title: 35,000+ Graduates Across 20+ Countries
+        description: A global community of successful tech professionals
+      - icon: Certificate
+        title: Industry-Recognized Certificates
+        description: Credentials that employers trust and value
+    media:
+      type: image
+      src: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
+      alt: Students collaborating in classroom
+      aspect_ratio: "4:3"
+      style: rounded
+    background: bg-muted/30
+    stacked_header: true
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    heading: Making Tech Careers Accessible
+    description: Tech careers can transform lives and finances should never stand in the way. That’s why we offer some of the most flexible, student-friendly payment and scholarship options in the industry.
+    cards:
+      - icon: CurrencyDollar
+        title: Affordable Tuition
+        description: Among the most affordable tuition of any top-ranked program (recognized by Forbes).
+      - icon: CreditCard
+        title: Flexible Financing
+        description: Financing options start below $299/month, so you can learn without financial stress.
+      - icon: Coin
+        title: Income-Based Payment
+        description: Start learning now and only pay once you’re earning in tech.
+      - icon: School
+        title: Scholarships Available
+        description: Partial scholarships are available for eligible students.
   - type: split_cards
     variant: primary-left
-    background: muted
     primary:
+      heading: Your Career – Guaranteed
+      description: "The strongest proof that we believe in our model? We back it with an optional Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
       badge: Results-Backed Promise
-      heading: The Confidence of a Job Guarantee
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
     secondary:
       benefits:
         - text: Our curriculum is industry-aligned and AI-ready
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
+    background: muted
+  - type: testimonials_slide
+    title: Real Careers Start Here — Just Ask Our Students
+    description: With 84% of our graduates hired within six months, their stories show how hands-on learning, personalized mentorship, and career support launch careers in tech.
   - type: whos_hiring
-    version: v1.0
     variant: carousel
-    pretitle: Customer Stories
-    title: Trusted by the world's most innovative companies
-    subtitle: See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth.
+    pretitle: Job Placement
+    title: Our Alumni Work at Top Global Companies
+    subtitle: Thrive in tech with our worldwide network of hiring partners.
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -188,76 +194,8 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-  - type: value_proof_panel
-    title: Recognized Globally for Excellence
-    subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
-    evidence_items:
-      - icon: Trophy
-        title: Top 5 Coding Bootcamps Worldwide
-        source: Newsweek, Forbes, SwitchUp, Course Report
-      - icon: Award
-        title: Best Student Support & Best Value
-        source: Course Report, SwitchUp
-      - icon: Users
-        title: 35,000+ Graduates Across 20+ Countries
-        description: A global community of successful tech professionals
-      - icon: Certificate
-        title: Industry-Recognized Certificates
-        description: Credentials that employers trust and value
-    media:
-      type: image
-      src: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
-      alt: Students collaborating in classroom
-      aspect_ratio: "4:3"
-      style: rounded
-    background: bg-muted/30
-    stacked_header: true
-  - type: testimonials
-    version: v1.0
-    title: What Our Students Say
-    subtitle: Real stories from graduates who transformed their careers
-    rating_summary:
-      average: "4.9"
-      count: 2,847
-    items:
-      - name: Maria Rodriguez
-        role: Software Engineer
-        company: Google
-        rating: 5
-        comment: This program changed my life. I went from zero coding experience to landing my dream job in 6 months.
-        outcome: Hired in 4 months
-      - name: James Chen
-        role: Full Stack Developer
-        company: Spotify
-        rating: 5
-        comment: The mentorship was incredible. Having unlimited access to senior developers made all the difference.
-        outcome: 3x salary increase
-      - name: Sarah Williams
-        role: Frontend Developer
-        company: Meta
-        rating: 5
-        comment: The AI-powered learning tools helped me understand complex concepts faster than any other course I've tried.
-        outcome: Career change at 35
-      - name: Carlos Mendez
-        role: Backend Engineer
-        company: Amazon
-        rating: 4
-        comment: Practical projects and real-world scenarios prepared me better than my computer science degree.
-        outcome: Remote work achieved
-      - name: Emily Thompson
-        role: DevOps Engineer
-        company: Netflix
-        rating: 5
-        comment: The career support team helped me negotiate a 50% higher salary than I expected.
-        outcome: 50% salary boost
-      - name: David Kim
-        role: Tech Lead
-        company: Uber
-        rating: 5
-        comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
-        outcome: Promoted in 1 year
-    marginY:
-      desktop: none lg
+    paddingY:
+      desktop: none md
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
@@ -266,7 +204,7 @@ sections:
       - certification
       - career-support
     paddingY:
-      desktop: none md
+      desktop: md
   - type: footer
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.

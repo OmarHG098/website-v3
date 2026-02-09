@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ColorPicker } from "@/components/ui/color-picker";
@@ -44,6 +45,8 @@ import {
 } from "@/lib/field-editor-registry";
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
+import { RichTextArea } from "./RichTextArea";
+import { MarkdownEditorField } from "./MarkdownEditorField";
 import type { Section, ImageRegistry } from "@shared/schema";
 import { IconSearch } from "@tabler/icons-react";
 import CodeMirror from "@uiw/react-codemirror";
@@ -177,6 +180,7 @@ export function SectionEditorPanel({
     label: string;
     currentIcon: string;
   } | null>(null);
+  const [nestedUpdateFn, setNestedUpdateFn] = useState<((value: string) => void) | null>(null);
 
   // Image picker modal state
   const [imagePickerOpen, setImagePickerOpen] = useState(false);
@@ -191,6 +195,7 @@ export function SectionEditorPanel({
     // Common
     currentSrc: string;
     currentAlt: string;
+    currentRegistryId?: string;
     // Optional tag filter (e.g., "logo" to show only logos)
     tagFilter?: string;
   } | null>(null);
@@ -767,7 +772,11 @@ export function SectionEditorPanel({
   // Handle icon picker selection
   const handleIconSelect = useCallback(
     (iconName: string) => {
-      if (iconPickerTarget) {
+      if (nestedUpdateFn) {
+        nestedUpdateFn(iconName);
+        setNestedUpdateFn(null);
+        setIconPickerTarget(null);
+      } else if (iconPickerTarget) {
         updateArrayItemField(
           iconPickerTarget.arrayField,
           iconPickerTarget.index,
@@ -777,7 +786,7 @@ export function SectionEditorPanel({
         setIconPickerTarget(null);
       }
     },
-    [iconPickerTarget, updateArrayItemField],
+    [iconPickerTarget, nestedUpdateFn, updateArrayItemField],
   );
 
   // Shared save logic - returns true on success
@@ -1265,6 +1274,250 @@ export function SectionEditorPanel({
                   );
                 }
 
+                // Parse field path - supports single level like "features[].icon"
+                // and multi-level nested arrays like "courses[].badges[].icon"
+                const arrayBracketCount = (fieldPath.match(/\[\]/g) || []).length;
+                
+                // Multi-level nested array path (e.g., "courses[].badges[].icon")
+                if (arrayBracketCount > 1) {
+                  const segments = fieldPath.split("[].");
+                  const itemField = segments[segments.length - 1];
+                  const arraySegments = segments.slice(0, -1);
+                  
+                  const getNestedLabel = (item: Record<string, unknown>) =>
+                    (item.title as string) || (item.label as string) || (item.name as string) || (item.text as string) || "";
+                  
+                  type NestedItem = { parentPath: string[]; parentIndices: number[]; parentLabel: string; item: Record<string, unknown>; };
+                  
+                  const collectLeafItems = (): NestedItem[] => {
+                    if (!parsedSection) return [];
+                    const results: NestedItem[] = [];
+                    
+                    const traverse = (
+                      current: unknown,
+                      segIdx: number,
+                      path: string[],
+                      indices: number[],
+                      labelParts: string[],
+                    ) => {
+                      if (segIdx >= arraySegments.length) {
+                        if (current && typeof current === "object" && !Array.isArray(current)) {
+                          results.push({
+                            parentPath: path,
+                            parentIndices: indices,
+                            parentLabel: labelParts.join(" > "),
+                            item: current as Record<string, unknown>,
+                          });
+                        }
+                        return;
+                      }
+                      
+                      const segment = arraySegments[segIdx];
+                      const segParts = segment.split(".");
+                      let obj: unknown = current;
+                      for (const part of segParts) {
+                        if (!obj || typeof obj !== "object") return;
+                        obj = (obj as Record<string, unknown>)[part];
+                      }
+                      
+                      if (!Array.isArray(obj)) return;
+                      
+                      obj.forEach((arrayItem, idx) => {
+                        const label = getNestedLabel(arrayItem as Record<string, unknown>) || `${segParts[segParts.length - 1]} ${idx + 1}`;
+                        traverse(
+                          arrayItem,
+                          segIdx + 1,
+                          [...path, segment],
+                          [...indices, idx],
+                          [...labelParts, label],
+                        );
+                      });
+                    };
+                    
+                    traverse(parsedSection, 0, [], [], []);
+                    return results;
+                  };
+                  
+                  const leafItems = collectLeafItems();
+                  if (leafItems.length === 0 && editorType !== "image-with-style-picker") return null;
+                  
+                  const lastSegmentLabel = arraySegments[arraySegments.length - 1].split(".").pop() || "";
+                  
+                  const updateNestedField = (nestedItem: NestedItem, value: string) => {
+                    try {
+                      const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+                      if (!parsed || typeof parsed !== "object") return;
+                      
+                      pushUndoState(yamlContent);
+                      
+                      let current: unknown = parsed;
+                      for (let i = 0; i < nestedItem.parentPath.length; i++) {
+                        const segParts = nestedItem.parentPath[i].split(".");
+                        for (const part of segParts) {
+                          if (!current || typeof current !== "object") return;
+                          current = (current as Record<string, unknown>)[part];
+                        }
+                        if (!Array.isArray(current)) return;
+                        current = current[nestedItem.parentIndices[i]];
+                      }
+                      
+                      if (!current || typeof current !== "object") return;
+                      (current as Record<string, unknown>)[itemField] = value;
+                      
+                      const newYaml = yamlParser.dump(parsed, { lineWidth: -1, noRefs: true, quotingType: '"' });
+                      setYamlContent(newYaml);
+                      setHasChanges(true);
+                      setParseError(null);
+                      if (onPreviewChange) onPreviewChange(parsed as Section);
+                    } catch (error) {
+                      console.error("Error updating nested array item:", error);
+                    }
+                  };
+                  
+                  if (editorType === "icon-picker") {
+                    const groupedByParent: Record<string, NestedItem[]> = {};
+                    leafItems.forEach((leaf) => {
+                      const topLabel = leaf.parentLabel.split(" > ")[0] || "Items";
+                      if (!groupedByParent[topLabel]) groupedByParent[topLabel] = [];
+                      groupedByParent[topLabel].push(leaf);
+                    });
+                    
+                    return (
+                      <div key={fieldPath} className="space-y-3">
+                        <Label className="text-sm font-medium capitalize">
+                          {lastSegmentLabel} Icons
+                        </Label>
+                        {Object.entries(groupedByParent).map(([groupLabel, items]) => (
+                          <div key={groupLabel} className="space-y-1">
+                            <span className="text-xs text-muted-foreground">{groupLabel}</span>
+                            <div className="flex flex-wrap gap-2">
+                              {items.map((leaf, idx) => {
+                                const currentValue = (leaf.item[itemField] as string) || "";
+                                const leafLabel = leaf.parentLabel.split(" > ").slice(1).join(" > ") || `Item ${idx + 1}`;
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => {
+                                      setIconPickerTarget({
+                                        arrayField: "__nested__",
+                                        index: 0,
+                                        field: itemField,
+                                        label: leaf.parentLabel,
+                                        currentIcon: currentValue,
+                                      });
+                                      setNestedUpdateFn(() => (value: string) => updateNestedField(leaf, value));
+                                      setIconPickerOpen(true);
+                                    }}
+                                    className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                                    data-testid={`props-icon-${lastSegmentLabel}-nested-${idx}`}
+                                    title={`${leafLabel}: ${currentValue || "no icon"}`}
+                                  >
+                                    {renderIconByName(currentValue)}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  
+                  if (editorType === "color-picker") {
+                    const colorType = (variant as ColorPickerVariant) || "accent";
+                    return (
+                      <div key={fieldPath} className="space-y-3">
+                        <Label className="text-sm font-medium capitalize">
+                          {lastSegmentLabel} Colors
+                        </Label>
+                        <div className="space-y-2">
+                          {leafItems.map((leaf, idx) => {
+                            const currentValue = (leaf.item[itemField] as string) || "";
+                            return (
+                              <div key={idx} className="flex items-center gap-2">
+                                <span className="text-sm text-muted-foreground min-w-[80px] truncate">
+                                  {leaf.parentLabel}
+                                </span>
+                                <ColorPicker
+                                  value={currentValue}
+                                  onChange={(value) => updateNestedField(leaf, value)}
+                                  type={colorType}
+                                  label=" "
+                                  allowNone={true}
+                                  allowCustom={true}
+                                  testIdPrefix={`props-color-nested-${idx}`}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  }
+                  
+                  return null;
+                }
+                
+                // Handle simple field paths with rich-text (e.g., "subtitle", "description")
+                if (isSimpleField && editorType === "rich-text-editor") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">
+                        {fieldLabel.replace(/_/g, " ")}
+                      </Label>
+                      <RichTextArea
+                        key={`${sectionIndex}-${fieldPath}`}
+                        value={currentValue}
+                        onChange={(html) => updateProperty(fieldPath, html)}
+                        placeholder={`Edit ${fieldLabel.replace(/_/g, " ")}…`}
+                        minHeight="120px"
+                        locale={locale}
+                        data-testid={`props-rich-text-${fieldLabel}`}
+                      />
+                    </div>
+                  );
+                }
+
+                // Handle simple field paths with markdown editor (e.g., "content")
+                if (isSimpleField && editorType === "markdown") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <MarkdownEditorField
+                        key={`${sectionIndex}-${fieldPath}`}
+                        value={currentValue}
+                        onChange={(md) => updateProperty(fieldPath, md)}
+                        label={fieldLabel.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                        data-testid={`props-markdown-${fieldLabel}`}
+                      />
+                    </div>
+                  );
+                }
+
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
                 const match = fieldPath.match(/^([\w.]+)\[\]\.(\w+)$/);
@@ -1272,7 +1525,6 @@ export function SectionEditorPanel({
 
                 const [, arrayPath, itemField] = match;
                 
-                // Support nested paths by traversing the object
                 const getArrayData = () => {
                   if (!parsedSection) return undefined;
                   const pathParts = arrayPath.split(".");
@@ -1288,14 +1540,10 @@ export function SectionEditorPanel({
                 
                 const arrayData = getArrayData();
                 
-                // Skip if the array field doesn't exist in the current section data
-                // EXCEPT for image-with-style-picker which should show even when array is empty (to allow initialization)
-                // This prevents showing editors for fields that don't apply to the current variant
                 if (arrayData === undefined && editorType !== "image-with-style-picker") return null;
                 
                 const safeArrayData = Array.isArray(arrayData) ? arrayData : [];
                 
-                // For display, use the last part of the path as the label
                 const arrayFieldLabel = arrayPath.split(".").pop() || arrayPath;
 
                 if (editorType === "icon-picker") {
@@ -1379,6 +1627,7 @@ export function SectionEditorPanel({
                                   )
                                 }
                                 type={colorType}
+                                label=" "
                                 allowNone={true}
                                 allowCustom={true}
                                 testIdPrefix={`props-color-${arrayFieldLabel}-${index}`}
@@ -1520,6 +1769,7 @@ export function SectionEditorPanel({
                             size="sm"
                             onClick={() => {
                               const defaultItem: Record<string, unknown> = {
+                                id: "",
                                 [itemField]: "",
                                 alt: "",
                                 logoHeight: "h-10 md:h-14",
@@ -1964,14 +2214,13 @@ export function SectionEditorPanel({
                     type="button"
                     onClick={() => {
                       if (imagePickerTarget) {
-                        // For fields ending in _id (like image_id), save the registry ID
-                        // Otherwise save the full path
                         const fieldName = imagePickerTarget.srcField || imagePickerTarget.fieldPath || "";
                         const isIdField = fieldName.endsWith("_id");
                         setImagePickerTarget({
                           ...imagePickerTarget,
                           currentSrc: isIdField ? id : img.src,
                           currentAlt: img.alt,
+                          currentRegistryId: id,
                         });
                       }
                     }}
@@ -2116,14 +2365,17 @@ export function SectionEditorPanel({
                       // Simple field - update directly
                       updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
                     } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
-                      // Array field - update both src and alt in a single operation
+                      const updates: Record<string, string> = {
+                        [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
+                        alt: imagePickerTarget.currentAlt,
+                      };
+                      if (imagePickerTarget.currentRegistryId) {
+                        updates.id = imagePickerTarget.currentRegistryId.replace(/_/g, "-");
+                      }
                       updateArrayItemFields(
                         imagePickerTarget.arrayPath,
                         imagePickerTarget.index,
-                        {
-                          [imagePickerTarget.srcField]: imagePickerTarget.currentSrc,
-                          alt: imagePickerTarget.currentAlt,
-                        },
+                        updates,
                       );
                     }
                   }

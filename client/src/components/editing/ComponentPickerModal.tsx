@@ -138,6 +138,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   vertical_bars_cards: IconVerticalBars,
   human_and_ai_duo: IconUsers,
   community_support: IconUsers,
+  article: IconBook,
 };
 
 const variantLabels: Record<string, string> = {

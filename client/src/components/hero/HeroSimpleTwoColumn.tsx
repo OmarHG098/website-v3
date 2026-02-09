@@ -1,5 +1,6 @@
 import type { HeroSimpleTwoColumn as HeroSimpleTwoColumnType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
+import { RichTextContent } from "@/components/ui/rich-text-content";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
 
@@ -47,12 +48,11 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
               {data.title}
             </h1>
             {data.subtitle && (
-              <p 
-                className="text-body text-muted-foreground mb-4 leading-relaxed"
+              <RichTextContent
+                html={data.subtitle}
+                className="text-base mb-4 leading-relaxed"
                 data-testid="text-hero-subtitle"
-              >
-                {data.subtitle}
-              </p>
+              />
             )}
             {data.badge && (
               <span 

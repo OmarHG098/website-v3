@@ -3,6 +3,7 @@ import type { FeaturesGridStatsTextSection } from "@shared/schema";
 import { StatCard } from "@/components/StatCard";
 import { Button } from "@/components/ui/button";
 import { IconChevronDown } from "@tabler/icons-react";
+import { RichTextContent } from "@/components/ui/rich-text-content";
 
 interface FeaturesGridStatsTextProps {
   data: FeaturesGridStatsTextSection;
@@ -79,12 +80,17 @@ export function FeaturesGridStatsText({ data }: FeaturesGridStatsTextProps) {
             {data.description && (
               <>
                 <div className="hidden md:block mt-2">
-                  <p
+                  <RichTextContent
+                    html={data.description}
+                    className="text-base text-muted-foreground leading-relaxed"
+                    data-testid="text-stats-text-description"
+                  />
+                  {/* <p
                     className="text-body text-muted-foreground leading-relaxed"
                     data-testid="text-stats-text-description"
                   >
                     {data.description}
-                  </p>
+                  </p> */}
                 </div>
                 <div className="md:hidden">
                   <Button

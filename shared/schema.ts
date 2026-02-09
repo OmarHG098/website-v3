@@ -605,9 +605,24 @@ export const humanAndAIDuoSectionSchema = z.object({
   image_alt: z.string().optional(),
   background: z.string().optional(),
   // Video option - when provided, replaces images with video
-  video: z.string().optional(),
-  video_preview_image: z.string().optional(),
+  // Accepts either string URL (legacy) or full config object
+  video: z.union([
+    z.string(),
+    z.object({
+      url: z.string(),
+      ratio: z.string().optional(),
+      mobile_ratio: z.string().optional(),
+      width: z.string().optional(),
+      muted: z.boolean().optional(),
+      autoplay: z.boolean().optional(),
+      loop: z.boolean().optional(),
+      preview_image_url: z.string().optional(),
+      with_shadow_border: z.boolean().optional(),
+    }),
+  ]).optional(),
+  // Legacy fields for backward compatibility (used when video is a string)
   video_ratio: z.string().optional(),
+  video_preview_image: z.string().optional(),
 });
 
 export type HumanAndAIDuoBullet = z.infer<typeof humanAndAIDuoBulletSchema>;
@@ -720,6 +735,10 @@ import { bannerSectionSchema, type BannerSection } from "../marketing-content/co
 export { bannerSectionSchema, type BannerSection };
 import { imageRowSectionSchema, type ImageRowSection } from "../marketing-content/component-registry/image_row/v1.0/schema";
 export { imageRowSectionSchema, type ImageRowSection };
+import { courseSelectorSectionSchema, type CourseSelectorSection, type CourseItem, type CourseBadge, type CourseTag } from "../marketing-content/component-registry/course_selector/v1.0/schema";
+export { courseSelectorSectionSchema, type CourseSelectorSection, type CourseItem, type CourseBadge, type CourseTag };
+import { articleSectionSchema, type ArticleSection } from "../marketing-content/component-registry/article/v1.0/schema";
+export { articleSectionSchema, type ArticleSection };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -787,9 +806,24 @@ export const featureQuadSectionSchema = z.object({
   footer_description: z.string().optional(),
   background: z.string().optional(),
   // Video option - when provided, replaces images with video
-  video: z.string().optional(),
-  video_preview_image: z.string().optional(),
+  // Accepts either string URL (legacy) or full config object
+  video: z.union([
+    z.string(),
+    z.object({
+      url: z.string(),
+      ratio: z.string().optional(),
+      mobile_ratio: z.string().optional(),
+      width: z.string().optional(),
+      muted: z.boolean().optional(),
+      autoplay: z.boolean().optional(),
+      loop: z.boolean().optional(),
+      preview_image_url: z.string().optional(),
+      with_shadow_border: z.boolean().optional(),
+    }),
+  ]).optional(),
+  // Legacy fields for backward compatibility (used when video is a string)
   video_ratio: z.string().optional(),
+  video_preview_image: z.string().optional(),
 });
 
 export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;
@@ -855,6 +889,8 @@ const baseSectionSchema = z.union([
   bannerSectionSchema,
   imageRowSectionSchema,
   featureQuadSectionSchema,
+  courseSelectorSectionSchema,
+  articleSectionSchema,
 ]);
 
 // Combined section schema with layout fields
