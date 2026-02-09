@@ -24,8 +24,9 @@
     },
     "marketing-content/landings/ai-engineering-en/promoted.yml": {
       "sha": "8f9bae1b482f144cfd67d5323340bdacc6c58fbde34e14822421473bbe88891d",
-      "lastModified": 1769533048561.4033,
-      "remoteSha": "8f9bae1b482f144cfd67d5323340bdacc6c58fbde34e14822421473bbe88891d"
+      "lastModified": 1770663080518.532,
+      "remoteSha": "8f9bae1b482f144cfd67d5323340bdacc6c58fbde34e14822421473bbe88891d",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/landings/ai-engineering-es/_common.yml": {
       "sha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e",
@@ -34,9 +35,9 @@
     },
     "marketing-content/landings/ai-engineering-es/promoted.yml": {
       "sha": "68da5ec50f6114cfcad3a9cc190405c617e51ca25b1320607c2873fa53854ffc",
-      "lastModified": 1770649670273.1562,
+      "lastModified": 1770663080952.5315,
       "remoteSha": "68da5ec50f6114cfcad3a9cc190405c617e51ca25b1320607c2873fa53854ffc",
-      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/landings/ai-engineering-spain/_common.yml": {
       "sha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed",
@@ -44,10 +45,10 @@
       "remoteSha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
-      "sha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
-      "lastModified": 1770649670706.1548,
-      "remoteSha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
-      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+      "sha": "bbffb1b843fbc996be64caf620da23ef727d5748c8ffaf11c27e51e89a9e4801",
+      "lastModified": 1770663081391.5312,
+      "remoteSha": "bbffb1b843fbc996be64caf620da23ef727d5748c8ffaf11c27e51e89a9e4801",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
@@ -65,11 +66,10 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "3b881c7ac2e9f49efe08dd2c3eebf78e4d48cfffb1be868b75f5af284e3a93d6",
-      "lastModified": 1770650992110.435,
+      "sha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
+      "lastModified": 1770663081849.5308,
       "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-09T15:29:52.112Z"
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -377,9 +377,10 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "4aeeba8f41e62e43bccc24a3764ab25523ea4bc3a8b3593ee580cf94e4ac322f",
-      "lastModified": 1770308538682.4775,
-      "remoteSha": "4aeeba8f41e62e43bccc24a3764ab25523ea4bc3a8b3593ee580cf94e4ac322f"
+      "sha": "08028ede23d790088c75cc85372cbe69f499e0c7835ef8edf1f50d2558c1c1ec",
+      "lastModified": 1770663082275.5303,
+      "remoteSha": "08028ede23d790088c75cc85372cbe69f499e0c7835ef8edf1f50d2558c1c1ec",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -567,14 +568,16 @@
       "remoteSha": "3593c000c1eb0c13ae773ad1773099ea0f9bd57f5ffbde8f85d9444a07870bbf"
     },
     "marketing-content/menus/main-navbar.es.yml": {
-      "sha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b",
-      "lastModified": 1770308152008.0964,
-      "remoteSha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b"
+      "sha": "bbe09f2c07bba5baaa8ed9a40b53f2a69c15d7c724dfb882676b355438c1bd41",
+      "lastModified": 1770663082680.5298,
+      "remoteSha": "bbe09f2c07bba5baaa8ed9a40b53f2a69c15d7c724dfb882676b355438c1bd41",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/menus/main-navbar.yml": {
-      "sha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7",
-      "lastModified": 1770308152107.822,
-      "remoteSha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7"
+      "sha": "c69aa143747f3216c3b508523715a8a7efc5efe0a6ed1b90c7536517bfb88f3d",
+      "lastModified": 1770663083107.5293,
+      "remoteSha": "c69aa143747f3216c3b508523715a8a7efc5efe0a6ed1b90c7536517bfb88f3d",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/apply/_common.yml": {
       "sha": "d8a47ce1eb05054953608c0f860e7b692b52e9a4368f90fed0a35f57a93cf7f3",
@@ -642,10 +645,10 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "5116747d0e096af2eabff0eef6009b89dcf90cbde0cb596d8ffd63a27265b048",
-      "lastModified": 1770654257397.4019,
+      "sha": "106bc74dc673d6076504bc7d975c2290c7e8e69eb73cfad1efde6a73dcc3d72b",
+      "lastModified": 1770663083551.5288,
       "remoteSha": "106bc74dc673d6076504bc7d975c2290c7e8e69eb73cfad1efde6a73dcc3d72b",
-      "modifiedAt": "2026-02-09T16:24:17.399Z"
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -704,13 +707,15 @@
     },
     "marketing-content/pages/home/en.yml": {
       "sha": "bd925291d69e6ef5a0a412a29db0495fc07e3de45db2201afb629b1ce4ce1ec9",
-      "lastModified": 1770165071167.9219,
-      "remoteSha": "bd925291d69e6ef5a0a412a29db0495fc07e3de45db2201afb629b1ce4ce1ec9"
+      "lastModified": 1770663084013.5286,
+      "remoteSha": "bd925291d69e6ef5a0a412a29db0495fc07e3de45db2201afb629b1ce4ce1ec9",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/home/es.yml": {
       "sha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
-      "lastModified": 1769652643336.2031,
-      "remoteSha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d"
+      "lastModified": 1770663084474.528,
+      "remoteSha": "83be054a33da686ac3cafad79804a14d0309c1887ac3291dd6f5d772690af74d",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/job-guarantee/_common.yml": {
       "sha": "70819c92de4a783ff5fb47962b24387b8f0ccfd9ad1f630342be113332d7d35c",
@@ -729,8 +734,9 @@
     },
     "marketing-content/pages/outcomes/en.yml": {
       "sha": "45596c1b76976797e287dedb491fed10531054e8ba733e9a90f74b2047ac3979",
-      "lastModified": 1770308539147.477,
-      "remoteSha": "45596c1b76976797e287dedb491fed10531054e8ba733e9a90f74b2047ac3979"
+      "lastModified": 1770663084881.5276,
+      "remoteSha": "45596c1b76976797e287dedb491fed10531054e8ba733e9a90f74b2047ac3979",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/outcomes/es.yml": {
       "sha": "98c4c715af23ee410c420e4dd13cb122d645e55c50716de56b6efd529c7dd04d",
@@ -760,13 +766,15 @@
     },
     "marketing-content/programs/ai-engineering/en.yml": {
       "sha": "1f60a66bea756b498b1d56e58d232405cdc571ea631c2b1d1bd0e1660b6032d8",
-      "lastModified": 1770308152111.5493,
-      "remoteSha": "1f60a66bea756b498b1d56e58d232405cdc571ea631c2b1d1bd0e1660b6032d8"
+      "lastModified": 1770663085884.5266,
+      "remoteSha": "1f60a66bea756b498b1d56e58d232405cdc571ea631c2b1d1bd0e1660b6032d8",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
       "sha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
-      "lastModified": 1769533048564.3936,
-      "remoteSha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4"
+      "lastModified": 1770663086348.5261,
+      "remoteSha": "f2156d34e02356c7696badb36d314721814d496493ed068277ca70bfcf2c15d4",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/ai-for-professionals/_common.yml": {
       "sha": "cd6ef75b6e0719ae5bc0fa822a1c0a11edd73fb259fe6b8869143a37773448c2",
@@ -775,13 +783,15 @@
     },
     "marketing-content/programs/ai-for-professionals/en.yml": {
       "sha": "a3af8c84c425a6ed5e633f38bbce5e49aec5af1261091d205aff5213077eadd2",
-      "lastModified": 1769533048564.3936,
-      "remoteSha": "a3af8c84c425a6ed5e633f38bbce5e49aec5af1261091d205aff5213077eadd2"
+      "lastModified": 1770663086794.5256,
+      "remoteSha": "a3af8c84c425a6ed5e633f38bbce5e49aec5af1261091d205aff5213077eadd2",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/ai-for-professionals/es.yml": {
       "sha": "7234b8eb4aaff85deaac6f850a3fe23dd952b62a5064d12d1c8694fb0a5c5733",
-      "lastModified": 1769533048564.3936,
-      "remoteSha": "7234b8eb4aaff85deaac6f850a3fe23dd952b62a5064d12d1c8694fb0a5c5733"
+      "lastModified": 1770663087203.5251,
+      "remoteSha": "7234b8eb4aaff85deaac6f850a3fe23dd952b62a5064d12d1c8694fb0a5c5733",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/cybersecurity/_common.yml": {
       "sha": "dc8aaeadafdb3036d27c562a2d255afb1412fcbf901f186ddc78fc634ba3c056",
@@ -790,13 +800,15 @@
     },
     "marketing-content/programs/cybersecurity/en.yml": {
       "sha": "4d2876a1b9f51c11a474482ab85843686a741877b15a964614ebe5d8b1b757b9",
-      "lastModified": 1770308152111.831,
-      "remoteSha": "4d2876a1b9f51c11a474482ab85843686a741877b15a964614ebe5d8b1b757b9"
+      "lastModified": 1770663087614.5247,
+      "remoteSha": "4d2876a1b9f51c11a474482ab85843686a741877b15a964614ebe5d8b1b757b9",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/cybersecurity/es.yml": {
       "sha": "9c24d1986f3cf238ec3167e278e64ca80ba5e7fdd5a14d7cfd10c2b78a2ca748",
-      "lastModified": 1769533048565.3936,
-      "remoteSha": "9c24d1986f3cf238ec3167e278e64ca80ba5e7fdd5a14d7cfd10c2b78a2ca748"
+      "lastModified": 1770663088049.5244,
+      "remoteSha": "9c24d1986f3cf238ec3167e278e64ca80ba5e7fdd5a14d7cfd10c2b78a2ca748",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/data-science-ml/_common.yml": {
       "sha": "7bb3754facaea593d5aa30618791a4b3d69e36d46e1b22654255f3e29e3aa56e",
@@ -805,13 +817,15 @@
     },
     "marketing-content/programs/data-science-ml/en.yml": {
       "sha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
-      "lastModified": 1770392823046.1758,
-      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3"
+      "lastModified": 1770663088444.524,
+      "remoteSha": "699831901046a205a9e351500bfbda4628f6c681204b118843cbe82ac6ee11a3",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/data-science-ml/es.yml": {
       "sha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
-      "lastModified": 1769724268593.38,
-      "remoteSha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92"
+      "lastModified": 1770663088872.5234,
+      "remoteSha": "7922e5b641b0238c99e8a374fdca821cc6a778cc883e84ae33d7474a45d99d92",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/full-stack/_common.yml": {
       "sha": "e452dff5af02b1b193448d8c4744da2ca6a31a4a0d32371dd16e464b3d14475c",
@@ -825,14 +839,15 @@
     },
     "marketing-content/programs/full-stack/en.yml": {
       "sha": "1ce1898595b2b5a4223c2dc75e2bb16aaf9d49c3c6f9cc6a23454299445d2984",
-      "lastModified": 1770649672476.1494,
+      "lastModified": 1770663089295.523,
       "remoteSha": "1ce1898595b2b5a4223c2dc75e2bb16aaf9d49c3c6f9cc6a23454299445d2984",
-      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/full-stack/es.yml": {
       "sha": "6ef24045833c040bd6af6feac3b7c9ded248ecb11b7c93c1c65bd00204b106bb",
-      "lastModified": 1769533048565.3936,
-      "remoteSha": "6ef24045833c040bd6af6feac3b7c9ded248ecb11b7c93c1c65bd00204b106bb"
+      "lastModified": 1770663089814.5225,
+      "remoteSha": "6ef24045833c040bd6af6feac3b7c9ded248ecb11b7c93c1c65bd00204b106bb",
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/programs/full-stack/experiments.yml": {
       "sha": "d006cdc4b1a0e8c6af88f37b21b1efb897635cb0a1af131bb883e9985ab70990",
@@ -857,9 +872,9 @@
     },
     "marketing-content/pages/the-academy/en.yml": {
       "sha": "f04bb7ebcee878308adbcf6310c5c69cff2ce8db828e0e5fbbe33cdde3428854",
-      "lastModified": 1770649671741.1516,
+      "lastModified": 1770663085318.527,
       "remoteSha": "f04bb7ebcee878308adbcf6310c5c69cff2ce8db828e0e5fbbe33cdde3428854",
-      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+      "pulledFromCommit": "9a052e718177e68f6c4b76cfc3b47d68ebda5114"
     },
     "marketing-content/pages/the-academy/es.yml": {
       "sha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91",
