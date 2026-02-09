@@ -15,17 +15,17 @@ schema:
     - website
 sections:
   - type: article
-    show_toc: false
-    max_width: md
     content: |
-      # About Our Program
+      # About Our Programm
 
       We offer a comprehensive learning experience designed to transform beginners into job-ready professionals.
 
-      Our curriculum is built by industry experts and updated regularly to reflect the latest trends and technologies.
+      Our curriculum is [a asd](asddsa) built by industry experts and updated regularly to reflect the latest trends and technologies.
 
       ## What Makes Us Different
 
       Unlike traditional bootcamps, we focus on **real-world projects** and **personalized mentorship** to ensure every student succeeds.
 
       Our graduates work at companies like Google, Meta, Amazon, and hundreds of innovative startups around the world.
+    show_toc: false
+    max_width: md
