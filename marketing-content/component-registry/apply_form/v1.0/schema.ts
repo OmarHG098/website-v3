@@ -1,6 +1,6 @@
 /**
  * Apply Form Component Schemas - v1.0
- * Zod schemas for apply form section validation
+ * The form field now uses the LeadForm format directly
  */
 import { z } from "zod";
 
@@ -8,55 +8,86 @@ export const applyFormHeroSchema = z.object({
   title: z.string(),
   subtitle: z.string(),
   note: z.string().optional(),
-}).strict();
+});
 
-export const applyFormFieldsSchema = z.object({
-  program_label: z.string(),
-  program_placeholder: z.string(),
-  region_label: z.string().optional(),
-  region_placeholder: z.string().optional(),
-  location_label: z.string(),
-  location_placeholder: z.string(),
-  first_name_label: z.string(),
-  first_name_placeholder: z.string(),
-  last_name_label: z.string(),
-  last_name_placeholder: z.string(),
-  email_label: z.string(),
-  email_placeholder: z.string(),
-  phone_label: z.string(),
-  phone_placeholder: z.string(),
-  consent_marketing: z.string(),
-  consent_sms: z.string(),
-  submit_text: z.string(),
-  terms_text: z.string(),
-  terms_link_text: z.string(),
-  terms_link_url: z.string(),
-  privacy_text: z.string(),
-  privacy_link_text: z.string(),
-  privacy_link_url: z.string(),
-}).strict();
+const fieldConfigSchema = z.object({
+  visible: z.boolean().optional(),
+  required: z.boolean().optional(),
+  default: z.string().optional(),
+  placeholder: z.string().optional(),
+  helper_text: z.string().optional(),
+}).optional();
+
+const consentSchema = z.object({
+  email: z.boolean().optional(),
+  sms: z.boolean().optional(),
+  whatsapp: z.boolean().optional(),
+  marketing: z.boolean().optional(),
+  marketing_text: z.string().optional(),
+  sms_text: z.string().optional(),
+  sms_usa_only: z.boolean().optional(),
+}).optional();
+
+const turnstileSchema = z.object({
+  enabled: z.boolean().optional(),
+  theme: z.enum(["light", "dark", "auto"]).optional(),
+  size: z.enum(["normal", "compact"]).optional(),
+}).optional();
+
+export const applyFormLeadFormSchema = z.object({
+  variant: z.enum(["stacked", "inline"]).optional(),
+  conversion_name: z.string().optional(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  submit_label: z.string().optional(),
+  tags: z.string().optional(),
+  automations: z.string().optional(),
+  fields: z.object({
+    email: fieldConfigSchema,
+    first_name: fieldConfigSchema,
+    last_name: fieldConfigSchema,
+    phone: fieldConfigSchema,
+    program: fieldConfigSchema,
+    region: fieldConfigSchema,
+    location: fieldConfigSchema,
+    coupon: fieldConfigSchema,
+    comment: fieldConfigSchema,
+  }).optional(),
+  success: z.object({
+    url: z.string().optional(),
+    message: z.string().optional(),
+  }).optional(),
+  terms_url: z.string().optional(),
+  privacy_url: z.string().optional(),
+  consent: consentSchema,
+  show_terms: z.boolean().optional(),
+  className: z.string().optional(),
+  button_className: z.string().optional(),
+  terms_className: z.string().optional(),
+  turnstile: turnstileSchema,
+});
 
 export const applyFormNextStepItemSchema = z.object({
   title: z.string(),
   description: z.string(),
-}).strict();
+});
 
 export const applyFormNextStepsSchema = z.object({
   title: z.string(),
   items: z.array(applyFormNextStepItemSchema),
   closing: z.string(),
-}).strict();
+});
 
 export const applyFormSectionSchema = z.object({
   type: z.literal("apply_form"),
   version: z.string().optional(),
   hero: applyFormHeroSchema,
-  form: applyFormFieldsSchema,
+  form: applyFormLeadFormSchema,
   next_steps: applyFormNextStepsSchema,
-}).strict();
+});
 
 export type ApplyFormHero = z.infer<typeof applyFormHeroSchema>;
-export type ApplyFormFields = z.infer<typeof applyFormFieldsSchema>;
+export type ApplyFormLeadForm = z.infer<typeof applyFormLeadFormSchema>;
 export type ApplyFormNextStepItem = z.infer<typeof applyFormNextStepItemSchema>;
 export type ApplyFormNextSteps = z.infer<typeof applyFormNextStepsSchema>;
 export type ApplyFormSection = z.infer<typeof applyFormSectionSchema>;

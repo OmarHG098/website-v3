@@ -11,27 +11,46 @@ sections:
       subtitle: "You're one step closer to your new career in tech — congratulations! Fill out the form below, and our admissions team will walk you through the next steps."
       note: "(And don't worry — you won't be committing to anything yet, just starting the conversation.)"
     form:
-      program_label: "Please select one program"
-      program_placeholder: "Select a program"
-      location_label: "Select your preferred location"
-      location_placeholder: "Select a location"
-      first_name_label: "First Name"
-      first_name_placeholder: "Enter your first name"
-      last_name_label: "Last Name"
-      last_name_placeholder: "Enter your last name"
-      email_label: "Email"
-      email_placeholder: "Enter your email address"
-      phone_label: "Phone Number"
-      phone_placeholder: "Enter your phone number"
-      consent_marketing: "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We will never share your contact information, and you can easily opt out at any moment."
-      consent_sms: "I agree to receive SMS/text messages about workshops, events, courses, and other marketing materials. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. You may receive up to 4–6 text messages per month."
-      submit_text: "APPLY"
-      terms_text: "By signing up, you agree to the"
-      terms_link_text: "Terms and Conditions"
-      terms_link_url: "/terms-conditions"
-      privacy_text: "and"
-      privacy_link_text: "Privacy Policy"
-      privacy_link_url: "/privacy-policy"
+      variant: stacked
+      conversion_name: student_application
+      submit_label: "APPLY"
+      tags: "apply-page"
+      fields:
+        region:
+          visible: true
+          required: true
+        location:
+          visible: true
+          required: true
+        program:
+          visible: true
+          required: true
+        first_name:
+          visible: true
+          required: true
+          placeholder: "Enter your first name"
+        last_name:
+          visible: true
+          required: true
+          placeholder: "Enter your last name"
+        email:
+          visible: true
+          required: true
+          placeholder: "Enter your email address"
+        phone:
+          visible: true
+          required: true
+          placeholder: "Enter your phone number"
+      consent:
+        marketing: true
+        marketing_text: "I agree to receive information through email, WhatsApp and/or other channels about workshops, events, courses, and other marketing materials. We will never share your contact information, and you can easily opt out at any moment."
+        sms: true
+        sms_usa_only: true
+      show_terms: true
+      terms_url: "/terms-conditions"
+      privacy_url: "/privacy-policy"
+      turnstile:
+        enabled: true
     next_steps:
       title: "What Happens Next?"
       items:

@@ -853,36 +853,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
             )}
 
-            {getFieldConfig("program").visible && (
-              <FormField
-                control={form.control}
-                name="program"
-                rules={{ required: getFieldConfig("program").required ? (locale === "es" ? "Programa requerido" : "Program is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-program">
-                          <SelectValue placeholder={locale === "es" ? "Selecciona un programa" : "Select a program"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {formOptions?.programs.map((program) => (
-                          <SelectItem key={program.slug} value={program.slug}>
-                            {program.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {getFieldConfig("program").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("program").helper_text}</p>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
             {getFieldConfig("region").visible && (
               <FormField
                 control={form.control}
@@ -953,6 +923,36 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                     </Select>
                     {getFieldConfig("location").helper_text && (
                       <p className="text-sm text-muted-foreground">{getFieldConfig("location").helper_text}</p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            {getFieldConfig("program").visible && (
+              <FormField
+                control={form.control}
+                name="program"
+                rules={{ required: getFieldConfig("program").required ? (locale === "es" ? "Programa requerido" : "Program is required") : false }}
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger data-testid="select-program">
+                          <SelectValue placeholder={locale === "es" ? "Selecciona un programa" : "Select a program"} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {formOptions?.programs.map((program) => (
+                          <SelectItem key={program.slug} value={program.slug}>
+                            {program.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {getFieldConfig("program").helper_text && (
+                      <p className="text-sm text-muted-foreground">{getFieldConfig("program").helper_text}</p>
                     )}
                     <FormMessage />
                   </FormItem>
