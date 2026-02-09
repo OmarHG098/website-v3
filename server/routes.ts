@@ -2157,9 +2157,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const exists = fs.existsSync(folderPath);
+    const folderExists = fs.existsSync(folderPath);
     
-    res.json({ available: !exists, slug, type });
+    if (folderExists && type !== 'landing') {
+      const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+      const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+      const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+      const isComplete = hasCommon && hasEn && hasEs;
+      res.json({ available: !isComplete, slug, type });
+    } else {
+      res.json({ available: !folderExists, slug, type });
+    }
   });
 
   // Create new content (location/page/program)
@@ -2245,8 +2253,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if folder already exists
       if (fs.existsSync(folderPath)) {
-        res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
-        return;
+        const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+        const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+        const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+        
+        if (hasCommon && hasEn && hasEs) {
+          res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
+          return;
+        }
       }
 
       // Create folder
