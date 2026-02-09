@@ -2476,10 +2476,20 @@ sections: []
 `;
       }
 
-      // Write files
-      fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
-      fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
-      fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+      // Write only missing files (preserve existing content from partial creation)
+      const createdFiles: string[] = [];
+      if (!fs.existsSync(path.join(folderPath, '_common.yml'))) {
+        fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+        createdFiles.push('_common.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'en.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
+        createdFiles.push('en.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'es.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+        createdFiles.push('es.yml');
+      }
 
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
@@ -2490,7 +2500,8 @@ sections: []
         slugEs: esSlug,
         type,
         folder: `marketing-content/${folderMap[type]}/${enSlug}`,
-        files: ['_common.yml', 'en.yml', 'es.yml'],
+        files: createdFiles.length > 0 ? createdFiles : ['_common.yml', 'en.yml', 'es.yml'],
+        recovered: createdFiles.length > 0 && createdFiles.length < 3,
       });
     } catch (error) {
       console.error("Content create error:", error);
