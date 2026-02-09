@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -378,6 +379,59 @@ export function SectionEditorPanel({
         setParseError(null);
 
         // Trigger live preview
+        if (onPreviewChange) {
+          onPreviewChange(parsed as Section);
+        }
+      } catch (error) {
+        console.error("Error updating property:", error);
+      }
+    },
+    [yamlContent, onPreviewChange, pushUndoState],
+  );
+
+  // Update a property with a raw value (e.g. boolean) so YAML dumps natively (layout_reversed: true)
+  const updatePropertyWithValue = useCallback(
+    (key: string, value: unknown) => {
+      try {
+        const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+        if (!parsed || typeof parsed !== "object") return;
+
+        pushUndoState(yamlContent);
+
+        const pathParts = key.split(".");
+        if (pathParts.length === 1) {
+          if (value !== undefined && value !== null && value !== "") {
+            parsed[key] = value;
+          } else {
+            delete parsed[key];
+          }
+        } else {
+          let current: Record<string, unknown> = parsed;
+          for (let i = 0; i < pathParts.length - 1; i++) {
+            const part = pathParts[i];
+            if (!current[part] || typeof current[part] !== "object") {
+              current[part] = {};
+            }
+            current = current[part] as Record<string, unknown>;
+          }
+          const finalKey = pathParts[pathParts.length - 1];
+          if (value !== undefined && value !== null && value !== "") {
+            current[finalKey] = value;
+          } else {
+            delete current[finalKey];
+          }
+        }
+
+        const newYaml = yamlParser.dump(parsed, {
+          lineWidth: -1,
+          noRefs: true,
+          quotingType: '"',
+        });
+
+        setYamlContent(newYaml);
+        setHasChanges(true);
+        setParseError(null);
+
         if (onPreviewChange) {
           onPreviewChange(parsed as Section);
         }
@@ -1925,6 +1979,37 @@ export function SectionEditorPanel({
                     </div>
                   );
                 }
+
+                // Handle simple field paths with boolean toggle (e.g., "layout_reversed")
+                if (isSimpleField && editorType === "boolean-toggle") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return false;
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return false;
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return current === true || current === "true";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <Label className="text-sm font-medium capitalize">
+                          {fieldLabel.replace(/_/g, " ")}
+                        </Label>
+                        <Switch
+                          checked={currentValue}
+                          onCheckedChange={(checked) => updatePropertyWithValue(fieldPath, checked)}
+                          data-testid={`props-toggle-${fieldLabel}`}
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+
 
                 // Parse field path like "features[].icon" or "signup_card.features[].icon"
                 // Matches: optional.nested.path.arrayName[].fieldName
