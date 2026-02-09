@@ -62,3 +62,8 @@ props:
     default: "16:9"
     description: Aspect ratio for the video (e.g., "16:9", "2.39:1", "4:3")
     example: "16:9"
+  description_with_background:
+    type: boolean
+    required: false
+    description: Whether to display the description with a background color
+    example: false

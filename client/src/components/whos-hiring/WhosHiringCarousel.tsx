@@ -224,6 +224,14 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
               {data.subtitle}
             </p>
           )}
+          {data.description && (
+            <p
+              className="text-body text-muted-foreground max-w-2xl mx-auto"
+              data-testid="text-whos-hiring-description"
+            >
+              {data.description}  
+            </p>
+          )}
         </div>
       </div>
 
