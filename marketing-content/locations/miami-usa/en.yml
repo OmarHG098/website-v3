@@ -57,8 +57,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: 4Geeks Launch an AI-Ready Tech Career in Miami
-    subtitle: Master the Skills of the AI Era and Build a Future-Proof Career in 20 Weeks. Our programs are taught online or in person with live support.
+    title: Launch an AI-Ready Tech Career in Miami
+    subtitle: Train for today’s most in-demand tech roles — including AI Engineering — in one of the country’s fastest-growing tech hubs and home to our global headquarters. Learn online or in person with live instruction, hands-on projects, and personalized career support built for real hiring.
     badge: Miami Campus
     cta_buttons:
       - text: Apply Now
@@ -119,8 +119,8 @@ sections:
       - https://randomuser.me/api/portraits/men/2.jpg
       - https://randomuser.me/api/portraits/women/3.jpg
       - https://randomuser.me/api/portraits/men/4.jpg
-    title: Miami Coding Bootcamp at the Center of South Florida’s Tech Ecosystem
-    description: Miami is one of the fastest-growing tech hubs in the U.S., and 4Geeks Academy is at the center of it. As a leading coding bootcamp in Miami, we’ve helped hundreds of students launch tech careers at startups, agencies, and global companies like Microsoft and Meta. With flexible schedules, expert instructors, and a strong local presence, we’re here to help you succeed in South Florida’s tech industry.
+    title: At the Center of Miami’s Tech Momentum
+    description: Miami is one of the fastest-growing tech hubs in the U.S., and 4Geeks Academy plays a key role in its ecosystem. From our Miami campus, we host hands-on events, tech talks, and hiring-focused meetups that connect students with local employers, alumni, and builders shaping the South Florida tech scene.
     background: gradient
     marginY:
       desktop: lg none
