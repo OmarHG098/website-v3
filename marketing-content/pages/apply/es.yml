@@ -13,8 +13,6 @@ sections:
     form:
       program_label: "Por favor selecciona un programa"
       program_placeholder: "Selecciona un programa"
-      region_label: "Selecciona tu región"
-      region_placeholder: "Selecciona una región"
       location_label: "Selecciona tu ubicación preferida"
       location_placeholder: "Selecciona una ubicación"
       first_name_label: "Nombre"
