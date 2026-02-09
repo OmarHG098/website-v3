@@ -2509,6 +2509,103 @@ sections: []
     }
   });
 
+  app.post("/api/content/delete", async (req, res) => {
+    try {
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          },
+        );
+
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to delete content" });
+          return;
+        }
+      }
+
+      const { type, slug, confirmSlug } = req.body;
+
+      if (!type || !slug || !confirmSlug) {
+        res.status(400).json({ error: "Missing required fields: type, slug, confirmSlug" });
+        return;
+      }
+
+      if (slug !== confirmSlug) {
+        res.status(400).json({ error: "Confirmation slug does not match. Deletion cancelled." });
+        return;
+      }
+
+      const folderMap: Record<string, string> = {
+        location: 'locations',
+        page: 'pages',
+        program: 'programs',
+        landing: 'landings',
+      };
+
+      if (!folderMap[type]) {
+        res.status(400).json({ error: `Invalid type. Must be one of: ${Object.keys(folderMap).join(', ')}` });
+        return;
+      }
+
+      if (!slug || /[\/\\]|\.\./.test(slug) || slug.startsWith('.')) {
+        res.status(400).json({ error: "Invalid slug format" });
+        return;
+      }
+
+      const resolvedSlug = type === 'page' ? getFolderFromSlug(slug, 'en') : slug;
+
+      const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], resolvedSlug);
+
+      if (!fs.existsSync(folderPath)) {
+        res.status(404).json({ error: `Content "${slug}" of type "${type}" not found` });
+        return;
+      }
+
+      const realPath = fs.realpathSync(path.resolve(folderPath));
+      const allowedBase = fs.realpathSync(path.join(process.cwd(), 'marketing-content', folderMap[type]));
+      if (!realPath.startsWith(allowedBase + path.sep)) {
+        res.status(400).json({ error: "Invalid path" });
+        return;
+      }
+
+      fs.rmSync(folderPath, { recursive: true, force: true });
+
+      console.log(`[Content] Deleted ${type}/${slug}`);
+
+      res.json({ success: true, message: `Successfully deleted ${type}/${slug}` });
+    } catch (error) {
+      console.error("Content delete error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // Create new landing page
   app.post("/api/content/create-landing", async (req, res) => {
     try {

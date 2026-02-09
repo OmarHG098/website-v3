@@ -53,11 +53,16 @@ export function CTABannerSection({ data, programContext }: CTABannerSectionProps
             
             {/* Right side: Form */}
             <div 
-              className="flex-1 max-w-md mx-auto lg:mx-0"
+              className="flex-1 max-w-md mx-auto lg:mx-0 rounded-lg"
+              style={data.form_background ? { backgroundColor: data.form_background, padding: '1.5rem' } : undefined}
               data-testid="cta-banner-form"
             >
               {data.form ? (
-                <LeadForm data={data.form} programContext={programContext} />
+                <LeadForm 
+                  data={data.form} 
+                  programContext={programContext} 
+                  termsStyle={data.terms_color ? { color: data.terms_color } : undefined}
+                />
               ) : (
                 <div className="bg-card/10 backdrop-blur-sm rounded-lg p-6 text-center">
                   <p className="text-primary-foreground/70 text-sm">

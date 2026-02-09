@@ -29,6 +29,11 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const title = data.title;
   const subtitle = data.subtitle;
   const defaultBoxColor = data.default_box_color || "hsl(var(--muted))";
+  const defaultNameColor = data.default_name_color;
+  const defaultRoleColor = data.default_role_color;
+  const defaultCommentColor = data.default_comment_color;
+  const defaultStarColor = data.default_star_color;
+  const defaultLinkedinColor = data.default_linkedin_color;
   const columns = data.columns || 3;
   const background = data.background;
 
@@ -55,6 +60,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
             {title && (
               <h2
                 className="text-h2 mb-3 text-foreground"
+                style={data.title_color ? { color: data.title_color } : undefined}
                 data-testid="text-testimonials-grid-title"
               >
                 {title}
@@ -63,6 +69,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
             {subtitle && (
               <p
                 className="text-body text-muted-foreground max-w-2xl mx-auto"
+                style={data.subtitle_color ? { color: data.subtitle_color } : undefined}
                 data-testid="text-testimonials-grid-subtitle"
               >
                 {subtitle}
@@ -96,6 +103,11 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
               key={index}
               item={item}
               defaultBoxColor={defaultBoxColor}
+              defaultNameColor={defaultNameColor}
+              defaultRoleColor={defaultRoleColor}
+              defaultCommentColor={defaultCommentColor}
+              defaultStarColor={defaultStarColor}
+              defaultLinkedinColor={defaultLinkedinColor}
               index={index}
             />
           ))}
@@ -108,11 +120,30 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
 interface TestimonialGridCardProps {
   item: NonNullable<TestimonialsGridSectionType["items"]>[number];
   defaultBoxColor: string;
+  defaultNameColor?: string;
+  defaultRoleColor?: string;
+  defaultCommentColor?: string;
+  defaultStarColor?: string;
+  defaultLinkedinColor?: string;
   index: number;
 }
 
-function TestimonialGridCard({ item, defaultBoxColor, index }: TestimonialGridCardProps) {
+function TestimonialGridCard({
+  item,
+  defaultBoxColor,
+  defaultNameColor,
+  defaultRoleColor,
+  defaultCommentColor,
+  defaultStarColor,
+  defaultLinkedinColor,
+  index,
+}: TestimonialGridCardProps) {
   const boxColor = item.box_color || defaultBoxColor;
+  const nameColor = item.name_color || defaultNameColor;
+  const roleColor = item.role_color || defaultRoleColor;
+  const commentColor = item.comment_color || defaultCommentColor;
+  const starColor = item.star_color || defaultStarColor;
+  const linkedinColor = item.linkedin_color || defaultLinkedinColor;
   const hasMedia = !!item.media?.url;
   const mediaType = item.media?.type || (item.media?.url && isVideoUrl(item.media.url) ? "video" : "image");
 
@@ -151,10 +182,18 @@ function TestimonialGridCard({ item, defaultBoxColor, index }: TestimonialGridCa
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-foreground text-sm truncate" data-testid={`text-name-${index}`}>
+            <p
+              className="font-semibold text-foreground text-sm truncate"
+              style={nameColor ? { color: nameColor } : undefined}
+              data-testid={`text-name-${index}`}
+            >
               {item.name}
             </p>
-            <p className="text-xs text-muted-foreground truncate" data-testid={`text-role-${index}`}>
+            <p
+              className="text-xs text-muted-foreground truncate"
+              style={roleColor ? { color: roleColor } : undefined}
+              data-testid={`text-role-${index}`}
+            >
               {item.role}
               {item.company && ` en ${item.company}`}
             </p>
@@ -165,6 +204,7 @@ function TestimonialGridCard({ item, defaultBoxColor, index }: TestimonialGridCa
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 text-muted-foreground"
+              style={linkedinColor ? { color: linkedinColor } : undefined}
               data-testid={`link-linkedin-${index}`}
             >
               <IconBrandLinkedin size={20} />
@@ -172,7 +212,11 @@ function TestimonialGridCard({ item, defaultBoxColor, index }: TestimonialGridCa
           )}
         </div>
 
-        <p className="text-muted-foreground text-sm leading-relaxed mb-3" data-testid={`text-comment-${index}`}>
+        <p
+          className="text-muted-foreground text-sm leading-relaxed mb-3"
+          style={commentColor ? { color: commentColor } : undefined}
+          data-testid={`text-comment-${index}`}
+        >
           {item.comment}
         </p>
 
@@ -180,7 +224,12 @@ function TestimonialGridCard({ item, defaultBoxColor, index }: TestimonialGridCa
           <div className="flex items-center gap-0.5">
             {Array.from({ length: 5 }).map((_, i) =>
               i < item.rating! ? (
-                <IconStarFilled key={i} className="w-4 h-4 text-yellow-500" />
+                <IconStarFilled
+                  key={i}
+                  className="w-4 h-4 text-yellow-500"
+                  style={starColor ? { color: starColor } : undefined}
+                  data-testid={`icon-star-filled-${index}-${i}`}
+                />
               ) : (
                 <IconStar key={i} className="w-4 h-4 text-foreground/20" />
               ),
