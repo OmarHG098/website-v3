@@ -37,7 +37,7 @@ export function ApplyFormSection({ data }: ApplyFormSectionProps) {
             </Card>
           </div>
 
-          <div className="lg:pt-20">
+          <div>
             <Card className="border-0 bg-muted/30" data-testid="card-next-steps">
               <CardContent className="p-6 md:p-8">
                 <h2 
