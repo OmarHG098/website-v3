@@ -2157,9 +2157,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const exists = fs.existsSync(folderPath);
+    const folderExists = fs.existsSync(folderPath);
     
-    res.json({ available: !exists, slug, type });
+    if (folderExists && type !== 'landing') {
+      const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+      const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+      const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+      const isComplete = hasCommon && hasEn && hasEs;
+      res.json({ available: !isComplete, slug, type });
+    } else {
+      res.json({ available: !folderExists, slug, type });
+    }
   });
 
   // Create new content (location/page/program)
@@ -2245,8 +2253,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if folder already exists
       if (fs.existsSync(folderPath)) {
-        res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
-        return;
+        const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+        const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+        const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+        
+        if (hasCommon && hasEn && hasEs) {
+          res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
+          return;
+        }
       }
 
       // Create folder
@@ -2462,10 +2476,20 @@ sections: []
 `;
       }
 
-      // Write files
-      fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
-      fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
-      fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+      // Write only missing files (preserve existing content from partial creation)
+      const createdFiles: string[] = [];
+      if (!fs.existsSync(path.join(folderPath, '_common.yml'))) {
+        fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+        createdFiles.push('_common.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'en.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
+        createdFiles.push('en.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'es.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+        createdFiles.push('es.yml');
+      }
 
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
@@ -2476,7 +2500,8 @@ sections: []
         slugEs: esSlug,
         type,
         folder: `marketing-content/${folderMap[type]}/${enSlug}`,
-        files: ['_common.yml', 'en.yml', 'es.yml'],
+        files: createdFiles.length > 0 ? createdFiles : ['_common.yml', 'en.yml', 'es.yml'],
+        recovered: createdFiles.length > 0 && createdFiles.length < 3,
       });
     } catch (error) {
       console.error("Content create error:", error);
