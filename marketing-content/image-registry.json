@@ -1164,6 +1164,32 @@
         "header"
       ],
       "usage_count": 0
+    },
+    "student_coding_laptop": {
+      "src": "/attached_assets/Copia_de_Fav_DSC_1146_1770662391553.JPG",
+      "alt": "4Geeks Academy student coding on laptop wearing branded t-shirt",
+      "focal_point": "center",
+      "tags": [
+        "student",
+        "coding",
+        "laptop",
+        "classroom",
+        "photo"
+      ],
+      "usage_count": 0
+    },
+    "students_group_collaboration": {
+      "src": "/attached_assets/00FAV_IMG_8709_1770662394281.jpg",
+      "alt": "Group of 4Geeks Academy students collaborating around laptops",
+      "focal_point": "center",
+      "tags": [
+        "students",
+        "group",
+        "collaboration",
+        "classroom",
+        "photo"
+      ],
+      "usage_count": 0
     }
   }
 }
