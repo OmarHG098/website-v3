@@ -32,9 +32,23 @@ sections:
         variant: outline
         icon: Download
     background: bg-gradient-to-b from-primary/5 to-background
+  - type: banner
+    version: "1.0"
+    logo: /attached_assets/rigobot-logo_1764707022198.webp
+    avatars:
+      - https://randomuser.me/api/portraits/women/1.jpg
+      - https://randomuser.me/api/portraits/men/2.jpg
+      - https://randomuser.me/api/portraits/women/3.jpg
+      - https://randomuser.me/api/portraits/men/4.jpg
+    title: Lorem ipsum dolor sit amet
+    description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
+    cta:
+      text: Learn More
+      url: "#"
+      variant: primary
+    background: gradient
   - type: split_cards
     variant: primary-left
-    primary_width: narrow
     primary:
       heading: Our Mission & Approach
       description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."

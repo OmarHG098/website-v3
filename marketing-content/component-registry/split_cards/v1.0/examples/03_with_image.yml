@@ -1,0 +1,23 @@
+type: split_cards
+variant: primary-left
+primary_width: default
+primary:
+  badge: "Real-World Experience"
+  heading: "Build Projects That Matter"
+  description: "Work on real-world projects during your bootcamp, building a portfolio that showcases your skills to future employers."
+  tool_icons:
+    - icon: BrandGithub
+      size: md
+      position:
+        top: "15%"
+        right: "10%"
+    - icon: Code
+      size: lg
+      position:
+        bottom: "20%"
+        right: "5%"
+secondary:
+  image_id: campus-miami-background
+  image_style:
+    objectFit: cover
+    objectPosition: center center

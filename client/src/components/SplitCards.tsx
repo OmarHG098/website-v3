@@ -156,7 +156,7 @@ export const SplitCards = memo(function SplitCards({
       }}
       data-testid="card-primary"
     >
-      <div className="relative z-10 max-w-md">
+      <div className="relative z-10 max-w-2xl">
         {primary.badge && (
           <span 
             className="inline-block text-sm font-medium text-white/80 mb-3"
@@ -199,13 +199,29 @@ export const SplitCards = memo(function SplitCards({
     </div>
   );
 
-  const SecondaryCard = (
+  const hasImage = !!secondary.image_id;
+
+  const SecondaryCard = hasImage ? (
+    <div
+      className="rounded-[0.8rem] overflow-hidden min-h-[320px] md:min-h-[360px]"
+      data-testid="card-secondary"
+    >
+      <UniversalImage
+        id={secondary.image_id!}
+        className="w-full h-full"
+        style={{
+          objectFit: secondary.image_style?.objectFit || "cover",
+          objectPosition: secondary.image_style?.objectPosition || "center center",
+        }}
+      />
+    </div>
+  ) : (
     <div 
       className="text-accent-foreground rounded-[0.8rem] p-6 md:p-8 flex flex-col justify-center bg-[#0080ff0d]"
       data-testid="card-secondary"
     >
       <div className="space-y-1">
-        {secondary.benefits.map((benefit: SplitCardsBenefit, index: number) => (
+        {secondary.benefits?.map((benefit: SplitCardsBenefit, index: number) => (
           <BenefitRow key={index} benefit={benefit} index={index} defaultIcon={secondary.bullet_icon} />
         ))}
       </div>
