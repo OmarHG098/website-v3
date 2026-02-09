@@ -232,33 +232,6 @@ export function ApplyFormSection({
               <CardContent className="p-6">
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="program"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-foreground font-medium">
-                            {data.form.program_label}
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger data-testid="select-program">
-                                <SelectValue placeholder={data.form.program_placeholder} />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {programs.map((program) => (
-                                <SelectItem key={program.id} value={program.id} data-testid={`option-program-${program.id}`}>
-                                  {getLocalizedName(program)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <FormLabel className="text-foreground font-medium">
@@ -305,6 +278,33 @@ export function ApplyFormSection({
                         )}
                       />
                     </div>
+
+                    <FormField
+                      control={form.control}
+                      name="program"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-foreground font-medium">
+                            {data.form.program_label}
+                          </FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger data-testid="select-program">
+                                <SelectValue placeholder={data.form.program_placeholder} />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {programs.map((program) => (
+                                <SelectItem key={program.id} value={program.id} data-testid={`option-program-${program.id}`}>
+                                  {getLocalizedName(program)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
