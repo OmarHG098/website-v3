@@ -44,10 +44,10 @@
       "remoteSha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
-      "sha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
-      "lastModified": 1770649670706.1548,
-      "remoteSha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
-      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+      "sha": "bbffb1b843fbc996be64caf620da23ef727d5748c8ffaf11c27e51e89a9e4801",
+      "lastModified": 1770669758919.4944,
+      "remoteSha": "bbffb1b843fbc996be64caf620da23ef727d5748c8ffaf11c27e51e89a9e4801",
+      "pulledFromCommit": "7d6b95a55328e7f7bed58b8dd25ce77513a147ea"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
@@ -66,8 +66,9 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
-      "lastModified": 1770392822011.1768,
-      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3"
+      "lastModified": 1770669759293.494,
+      "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
+      "pulledFromCommit": "7d6b95a55328e7f7bed58b8dd25ce77513a147ea"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -375,9 +376,10 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "4aeeba8f41e62e43bccc24a3764ab25523ea4bc3a8b3593ee580cf94e4ac322f",
-      "lastModified": 1770308538682.4775,
-      "remoteSha": "4aeeba8f41e62e43bccc24a3764ab25523ea4bc3a8b3593ee580cf94e4ac322f"
+      "sha": "56f67acfa23e206157ade34730a4431940c6e4bd92c66a1954f917b277ac7490",
+      "lastModified": 1770669759690.4934,
+      "remoteSha": "56f67acfa23e206157ade34730a4431940c6e4bd92c66a1954f917b277ac7490",
+      "pulledFromCommit": "7d6b95a55328e7f7bed58b8dd25ce77513a147ea"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -565,14 +567,16 @@
       "remoteSha": "3593c000c1eb0c13ae773ad1773099ea0f9bd57f5ffbde8f85d9444a07870bbf"
     },
     "marketing-content/menus/main-navbar.es.yml": {
-      "sha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b",
-      "lastModified": 1770308152008.0964,
-      "remoteSha": "d895487420a22e054e3d59d75f3d40267ece19e2fba42b80c99faaaf0a8e332b"
+      "sha": "bbe09f2c07bba5baaa8ed9a40b53f2a69c15d7c724dfb882676b355438c1bd41",
+      "lastModified": 1770669760052.4932,
+      "remoteSha": "bbe09f2c07bba5baaa8ed9a40b53f2a69c15d7c724dfb882676b355438c1bd41",
+      "pulledFromCommit": "7d6b95a55328e7f7bed58b8dd25ce77513a147ea"
     },
     "marketing-content/menus/main-navbar.yml": {
-      "sha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7",
-      "lastModified": 1770308152107.822,
-      "remoteSha": "5f4ceea7e672ca4445cf61a8b7b5d7ab52c1b1168ec492e987269d73dbe16aa7"
+      "sha": "c69aa143747f3216c3b508523715a8a7efc5efe0a6ed1b90c7536517bfb88f3d",
+      "lastModified": 1770669760432.4927,
+      "remoteSha": "c69aa143747f3216c3b508523715a8a7efc5efe0a6ed1b90c7536517bfb88f3d",
+      "pulledFromCommit": "7d6b95a55328e7f7bed58b8dd25ce77513a147ea"
     },
     "marketing-content/pages/apply/_common.yml": {
       "sha": "d8a47ce1eb05054953608c0f860e7b692b52e9a4368f90fed0a35f57a93cf7f3",

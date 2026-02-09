@@ -148,8 +148,8 @@ sections:
   - type: features_grid
     version: "1.0"
     variant: detailed
-    title: Programs Covered by the Job Guarantee
-    subtitle: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
+    title: Tech Programs Designed to Get You Hired
+    subtitle: Enroll in one of our career-focused programs, designed to launch your career in high-demand, high-paying tech roles.
     items:
       - id: aiengineering
         category: AI Engineering
