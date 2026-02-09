@@ -57,8 +57,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: 4Geeks Launch an AI-Ready Tech Career in Miami
-    subtitle: Master the Skills of the AI Era and Build a Future-Proof Career in 20 Weeks. Our programs are taught online or in person with live support.
+    title: Launch an AI-Ready Tech Career in Miami
+    subtitle: Train for today’s most in-demand tech roles — including AI Engineering — in one of the country’s fastest-growing tech hubs and home to our global headquarters. Learn online or in person with live instruction, hands-on projects, and personalized career support built for real hiring.
     badge: Miami Campus
     cta_buttons:
       - text: Apply Now
@@ -119,8 +119,8 @@ sections:
       - https://randomuser.me/api/portraits/men/2.jpg
       - https://randomuser.me/api/portraits/women/3.jpg
       - https://randomuser.me/api/portraits/men/4.jpg
-    title: Miami Coding Bootcamp at the Center of South Florida’s Tech Ecosystem
-    description: Miami is one of the fastest-growing tech hubs in the U.S., and 4Geeks Academy is at the center of it. As a leading coding bootcamp in Miami, we’ve helped hundreds of students launch tech careers at startups, agencies, and global companies like Microsoft and Meta. With flexible schedules, expert instructors, and a strong local presence, we’re here to help you succeed in South Florida’s tech industry.
+    title: At the Center of Miami’s Tech Momentum
+    description: Miami is one of the fastest-growing tech hubs in the U.S., and 4Geeks Academy plays a key role in its ecosystem. From our Miami campus, we host hands-on events, tech talks, and hiring-focused meetups that connect students with local employers, alumni, and builders shaping the South Florida tech scene.
     background: gradient
     marginY:
       desktop: lg none
@@ -132,17 +132,67 @@ sections:
     left:
       video: https://youtu.be/4n-ZAUPIxJI
     right:
-      heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
-      sub_heading: Watch how our platform transforms careers
-      description: Discover the future of Miami's tech landscape through the eyes of Mayor Francis Suarez. In an exclusive interview, Mayor Suarez shares invaluable insights into the evolving digital economy, emphasizing the pivotal role of coding skills and the transformative potential of artificial intelligence (AI).
+      heading: What Miami’s Tech Boom Unlocks for Local Talent
+      sub_heading: Hear directly from Mayor Francis Suarez on why Miami has become one of the fastest-growing tech hubs in the U.S.
+      description: In this conversation with 4Geeks, Mayor Suarez shares advice for people entering tech and explains what’s driving Miami’s job growth — and why software development and AI skills are central to the city’s future.
       button:
-        text: Start Free Trial
+        text: Watch the full interview
         url: https://youtu.be/4n-ZAUPIxJI
         variant: primary
         icon: Rocket
     gap: "8"
+    marginY:
+      desktop: none sm
     paddingY:
       desktop: none lg
+  - type: features_grid
+    version: "1.0"
+    variant: detailed
+    title: Programs Covered by the Job Guarantee
+    subtitle: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
+    items:
+      - id: aiengineering
+        category: AI Engineering
+        title: AI Engineering
+        description: Design, build, and deploy complete AI systems. Learn modern engineering workflows and develop production-ready AI applications used in real-world environments.
+        link_url: "#"
+        link_text: Read More
+      - id: datascience
+        category: Data Science & ML
+        title: Data Science and Machine Learning
+        description: Work with real datasets to analyze data, build predictive models, and apply machine learning techniques used by modern data teams.
+        link_url: "#"
+        link_text: Read More
+      - id: cybersecurity
+        category: Cybersecurity
+        title: Cybersecurity
+        description: Develop the skills to identify threats, secure systems, and support security operations aligned with industry standards.
+        link_url: "#"
+        link_text: Read More
+    columns: 3
+    collapsible_mobile: true
+    marginY:
+      desktop: md lg
+  - type: two_column_accordion_card
+    variant: image_background
+    version: "1.0"
+    title: Get everything you need to succeed
+    description: "Our comprehensive program prepares you for the future of technology:"
+    bullets:
+      - heading: 1:1 Mentoring on demand
+        text: Get 1:1 support for all your coding needs. Our expert mentors are available online or in-person, ready to help you from day one to forever.
+      - heading: High availability
+        text: Never get stuck with a coding problem. Our dedicated instructors will respond within 30 minutes or less.
+      - heading: Code-Centric Education
+        text: We exclusively teach code, ensuring a focused and in-depth learning experience.
+      - heading: Tailor-made career support
+        text: Receive customized advice, guidance, and training tailored to your unique profile and specific job offers.
+    footer: Join thousands of graduates now working at top tech companies.
+    image: /attached_assets/caracas-graduates_1765387638222.png
+    image_alt: Student working on AI project
+    image_object_fit: cover
+    paddingY:
+      desktop: md none
   - type: human_and_ai_duo
     version: "1.0"
     heading: Our AI-powered features make all the difference!
@@ -172,26 +222,11 @@ sections:
     video: https://www.youtube.com/watch?v=6m1Jyya7eCc
     video_preview_image: https://i.postimg.cc/N0rk7Pk3/ai-mentor.png
     video_ratio: 1.8:1
-  - type: two_column_accordion_card
-    variant: image_background
-    version: "1.0"
-    title: Get everything you need to succeed
-    description: "Our comprehensive program prepares you for the future of technology:"
-    bullets:
-      - heading: 1:1 Mentoring on demand
-        text: Get 1:1 support for all your coding needs. Our expert mentors are available online or in-person, ready to help you from day one to forever.
-      - heading: High availability
-        text: Never get stuck with a coding problem. Our dedicated instructors will respond within 30 minutes or less.
-      - heading: Code-Centric Education
-        text: We exclusively teach code, ensuring a focused and in-depth learning experience.
-      - heading: Tailor-made career support
-        text: Receive customized advice, guidance, and training tailored to your unique profile and specific job offers.
-    footer: Join thousands of graduates now working at top tech companies.
-    image: /attached_assets/caracas-graduates_1765387638222.png
-    image_alt: Student working on AI project
-    image_object_fit: cover
-    paddingY:
-      desktop: md none
+  - type: testimonials_slide
+    title: Real Careers Start Here — Just Ask Our Students
+    description: Hear from graduates who turned their aspirations into thriving tech careers through our programs. With unlimited support and real-world projects, their success stories could be yours too.
+    background: bg-sidebar
+    variant: default
   - type: split_cards
     variant: primary-left
     primary:
@@ -204,11 +239,6 @@ sections:
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
     background: hsl(var(--secondary))
-  - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: Hear from graduates who turned their aspirations into thriving tech careers through our programs. With unlimited support and real-world projects, their success stories could be yours too.
-    background: bg-sidebar
-    variant: default
   - type: why_learn_ai
     variant: laptop-edge
     title: Why Miami Is a Smart Place to Launch Your Tech Career
