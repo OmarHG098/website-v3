@@ -1,6 +1,6 @@
 {
   "lastSyncedCommit": "fc12b172b49115594688d8bd0e24ed9b908a5db6",
-  "lastSyncedAt": "2026-02-09T20:51:29.240Z",
+  "lastSyncedAt": "2026-02-09T20:53:42.372Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -373,9 +373,9 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "56f67acfa23e206157ade34730a4431940c6e4bd92c66a1954f917b277ac7490",
-      "lastModified": 1770669759690.4934,
-      "remoteSha": "56f67acfa23e206157ade34730a4431940c6e4bd92c66a1954f917b277ac7490"
+      "sha": "83bfd11eeb792bec70f80af832c25acf5f399ce87a2a974d9e44458cad0406de",
+      "lastModified": 1770670421671.7231,
+      "remoteSha": "83bfd11eeb792bec70f80af832c25acf5f399ce87a2a974d9e44458cad0406de"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
@@ -683,9 +683,9 @@
       "remoteSha": "231e28830319ac57829ca5baf24a597983c8d9051c660ec69200c49ebb91e1db"
     },
     "marketing-content/pages/graduates-and-projects/en.yml": {
-      "sha": "8a88d8fabb1fdde5a672502d1db3ffc254e33da84434ecad6bfcbed5de949086",
-      "lastModified": 1767901902926.2437,
-      "remoteSha": "8a88d8fabb1fdde5a672502d1db3ffc254e33da84434ecad6bfcbed5de949086"
+      "sha": "01fef3aa8d9ec4ba0b58064360c1ff367e63aec6ba78ef8347ce2ab70957662b",
+      "lastModified": 1770670422021.7227,
+      "remoteSha": "01fef3aa8d9ec4ba0b58064360c1ff367e63aec6ba78ef8347ce2ab70957662b"
     },
     "marketing-content/pages/graduates-and-projects/es.yml": {
       "sha": "cc12e3d32ecd569f6fe71d4558f81316ef96dc090a1338128601114c6c953d1f",
