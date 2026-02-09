@@ -149,7 +149,7 @@ sections:
     version: "1.0"
     variant: detailed
     title: Tech Programs Designed to Get You Hired
-    subtitle: Enroll in one of our career-focused programs, designed to launch your career in high-demand, high-paying tech roles.
+    subtitle: Enroll in one of our career-focused programs to launch your career in high-demand, high-paying tech roles.
     items:
       - id: aiengineering
         category: AI Engineering
