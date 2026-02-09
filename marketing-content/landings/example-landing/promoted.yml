@@ -84,18 +84,22 @@ sections:
     default_box_color: hsl(var(--muted))
     columns: 3
     items:
-      - name: James Dugard
-        role: Full Stack Developer
-        comment: Thanks to 4Geeks Academy's bootcamp and their job guarantee program, I was able to change careers and enter the tech industry without a college degree. The mentorship and ongoing support were key, and after graduating they helped me find my first job in tech.
-        rating: 5
-        box_color: hsl(var(--accent))
+      - name: James Dugarddd
+        role: Full Stack Developerr
+        company: LinkedIn
+        comment: Thanks to 4Geeks Academy's bootcamp and fefefetheir job guarantee program, I was able to change careers and enter the tech industry without a college degree. The mentorship and ongoing support were key, and after graduating they helped me find my first job in tech.
+        rating: 4
+        avatar: /attached_assets/1614626903622_1_(1)_1767038293575.png
+        linkedin_url: https://www.linkedin.com/in/luis-miguel-del-valle-149a1a224/
+        box_color: hsl(var(--primary))
+        name_color: hsl(var(--secondary))
+        role_color: hsl(var(--secondary))
+        comment_color: hsl(var(--secondary))
+        star_color: hsl(var(--accent))
         media:
-          url: https://www.youtube.com/watch?v=example
+          url: https://www.youtube.com/watch?v=G6FuWd4wNd8&list=RDG6FuWd4wNd8&start_radio=1
           type: video
           ratio: "16:9"
-        avatar: /attached_assets/1614626903622_1_(1)_1767038293575.png
-        alt: 4Geeks mentors and students in a live online session
-        id: mentoring-zoom-call
       - name: Joshua Bravo
         role: Full Stack Developer
         company: Regcheq

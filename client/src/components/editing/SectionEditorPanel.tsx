@@ -1055,6 +1055,7 @@ export function SectionEditorPanel({
               .filter(([fieldPath, editorTypeRaw]) => {
                 if (fieldPath.includes("[]")) return false;
                 if (fieldPath === "background") return false;
+                if (fieldPath.startsWith("default_")) return false;
                 const { type: edType } = parseEditorType(editorTypeRaw);
                 return edType === "color-picker";
               })
