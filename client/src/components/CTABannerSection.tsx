@@ -28,13 +28,13 @@ export function CTABannerSection({ data, programContext }: CTABannerSectionProps
   if (isFormVariant(data)) {
     return (
       <section 
-        className="px-4 text-primary-foreground"
+        className="px-4"
         data-testid="section-cta-banner"
       >
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12">
             {/* Left side: Message */}
-            <div className="flex-1 text-center lg:text-left mb-6 lg:mb-0">
+            <div className="flex-1 text-center lg:text-left mb-6 lg:mb-0 text-primary-foreground">
               <h2 
                 className="text-primary-foreground mb-4"
                 data-testid="text-cta-banner-title"

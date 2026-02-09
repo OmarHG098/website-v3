@@ -10,12 +10,12 @@
  * Example: "productShowcase:left_images[].src" only applies to productShowcase variant
  */
 
-export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-picker:logo" | "link-picker" | "text-input" | "rich-text-editor";
+export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "image-picker:logo" | "link-picker" | "text-input" | "rich-text-editor" | "boolean-toggle";
 
 export const fieldEditors: Record<string, EditorType> = {
   // Global - applies to all variants that have this field
   "signup_card.features[].icon": "icon-picker",
-  
+
   // Variant-specific - prefixed with variant name
   "productShowcase:image_id": "image-picker",
   "productShowcase:image_width": "text-input",
@@ -27,4 +27,5 @@ export const fieldEditors: Record<string, EditorType> = {
   "showcase:right_images[].src": "image-picker",
   "simpleTwoColumn:image.src": "image-picker",
   "simpleTwoColumn:subtitle": "rich-text-editor",
+  "course:layout_reversed": "boolean-toggle",
 };
