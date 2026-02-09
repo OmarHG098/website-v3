@@ -853,81 +853,85 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
               />
             )}
 
-            {getFieldConfig("region").visible && (
-              <FormField
-                control={form.control}
-                name="region"
-                rules={{ required: getFieldConfig("region").required ? (locale === "es" ? "Región requerida" : "Region is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Región" : "Region"}
-                      {getFieldConfig("region").required && " *"}
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-region">
-                          <SelectValue placeholder={locale === "es" ? "Selecciona una región" : "Select a region"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {formOptions?.regions.map((region) => (
-                          <SelectItem key={region.slug} value={region.slug}>
-                            {region.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {getFieldConfig("region").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("region").helper_text}</p>
+            {(getFieldConfig("region").visible || getFieldConfig("location").visible) && (
+              <div className="grid grid-cols-2 gap-3">
+                {getFieldConfig("region").visible && (
+                  <FormField
+                    control={form.control}
+                    name="region"
+                    rules={{ required: getFieldConfig("region").required ? (locale === "es" ? "Región requerida" : "Region is required") : false }}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {locale === "es" ? "Región" : "Region"}
+                          {getFieldConfig("region").required && " *"}
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-region">
+                              <SelectValue placeholder={locale === "es" ? "Selecciona una región" : "Select a region"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {formOptions?.regions.map((region) => (
+                              <SelectItem key={region.slug} value={region.slug}>
+                                {region.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        {getFieldConfig("region").helper_text && (
+                          <p className="text-sm text-muted-foreground">{getFieldConfig("region").helper_text}</p>
+                        )}
+                        <FormMessage />
+                      </FormItem>
                     )}
-                    <FormMessage />
-                  </FormItem>
+                  />
                 )}
-              />
-            )}
 
-            {getFieldConfig("location").visible && (
-              <FormField
-                control={form.control}
-                name="location"
-                rules={{ required: getFieldConfig("location").required ? (locale === "es" ? "Campus requerido" : "Campus is required") : false }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {locale === "es" ? "Campus" : "Campus Location"}
-                      {getFieldConfig("location").required && " *"}
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-location">
-                          <SelectValue placeholder={locale === "es" ? "Selecciona un campus" : "Select a campus"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {formOptions?.regions.map((region) => {
-                          const regionLocations = filteredLocations.filter(loc => loc.region === region.slug);
-                          if (regionLocations.length === 0) return null;
-                          return (
-                            <SelectGroup key={region.slug}>
-                              <SelectLabel>{region.label}</SelectLabel>
-                              {regionLocations.map((loc) => (
-                                <SelectItem key={loc.slug} value={loc.slug}>
-                                  {loc.name} - {loc.country}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                    {getFieldConfig("location").helper_text && (
-                      <p className="text-sm text-muted-foreground">{getFieldConfig("location").helper_text}</p>
+                {getFieldConfig("location").visible && (
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    rules={{ required: getFieldConfig("location").required ? (locale === "es" ? "Campus requerido" : "Campus is required") : false }}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {locale === "es" ? "Campus" : "Campus Location"}
+                          {getFieldConfig("location").required && " *"}
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-location">
+                              <SelectValue placeholder={locale === "es" ? "Selecciona un campus" : "Select a campus"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {formOptions?.regions.map((region) => {
+                              const regionLocations = filteredLocations.filter(loc => loc.region === region.slug);
+                              if (regionLocations.length === 0) return null;
+                              return (
+                                <SelectGroup key={region.slug}>
+                                  <SelectLabel>{region.label}</SelectLabel>
+                                  {regionLocations.map((loc) => (
+                                    <SelectItem key={loc.slug} value={loc.slug}>
+                                      {loc.name} - {loc.country}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                        {getFieldConfig("location").helper_text && (
+                          <p className="text-sm text-muted-foreground">{getFieldConfig("location").helper_text}</p>
+                        )}
+                        <FormMessage />
+                      </FormItem>
                     )}
-                    <FormMessage />
-                  </FormItem>
+                  />
                 )}
-              />
+              </div>
             )}
 
             {getFieldConfig("program").visible && (

@@ -2675,8 +2675,8 @@ sections: []
   // Lead Form API endpoints
 
   // Get form options (programs and locations for dropdowns)
-  app.get("/api/form-options", (req, res) => {
-    const locale = normalizeLocale(req.query.locale as string);
+  app.get(["/api/form-options", "/api/form-options/:locale"], (req, res) => {
+    const locale = normalizeLocale((req.params as { locale?: string }).locale || req.query.locale as string);
 
     // Get all programs for dropdown
     const programs = listCareerPrograms(locale).map((p) => ({
@@ -2702,15 +2702,16 @@ sections: []
       if (fs.existsSync(locationsPath)) {
         const dirs = fs.readdirSync(locationsPath);
         for (const dir of dirs) {
-          const campusPath = path.join(locationsPath, dir, "campus.yml");
-          if (fs.existsSync(campusPath)) {
+          const commonPath = path.join(locationsPath, dir, "_common.yml");
+          if (fs.existsSync(commonPath)) {
             const campusData = yaml.load(
-              fs.readFileSync(campusPath, "utf8"),
+              fs.readFileSync(commonPath, "utf8"),
             ) as {
               slug: string;
               name: string;
               city: string;
               country: string;
+              country_code?: string;
               region?: string;
               visibility?: string;
             };
