@@ -87,7 +87,7 @@ navbar:
         icon: graduation-cap
         items:
           - label: Hire our alumni
-            href: /hire-alumni
+            href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
           - label: Partner with 4Geeks
             href: /partner
           - label: Work with us
