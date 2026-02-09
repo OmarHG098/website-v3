@@ -18,6 +18,5 @@ primary:
         right: "5%"
 secondary:
   image_id: campus-miami-background
-  image_style:
-    objectFit: cover
-    objectPosition: center center
+  object_fit: cover
+  object_position: center center

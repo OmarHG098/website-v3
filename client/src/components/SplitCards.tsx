@@ -198,20 +198,17 @@ export const SplitCards = memo(function SplitCards({ data }: SplitCardsProps) {
 
   const SecondaryCard = hasImage ? (
     <div
-      className="relative rounded-[0.8rem] overflow-hidden min-h-[320px] h-full self-stretch"
+      className="relative rounded-[0.8rem] overflow-hidden min-h-[320px] md:min-h-[360px]"
       data-testid="card-secondary"
     >
-      <div className="h-[300px]">
-        <UniversalImage
-          id={secondary.image_id!}
-          className="w-full h-full"
-          style={{
-            objectFit: secondary.image_style?.objectFit || "cover",
-            objectPosition:
-              secondary.image_style?.objectPosition || "center center",
-          }}
-        />
-      </div>
+      <UniversalImage
+        id={secondary.image_id!}
+        className="absolute inset-0 w-full h-full"
+        style={{
+          objectFit: secondary.object_fit || "cover",
+          objectPosition: secondary.object_position || "center center",
+        }}
+      />
     </div>
   ) : (
     <div

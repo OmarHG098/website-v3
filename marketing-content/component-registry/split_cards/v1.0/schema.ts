@@ -42,10 +42,8 @@ export const splitCardsSectionSchema = z.object({
     benefits: z.array(splitCardsBenefitSchema).max(5).optional(),
     bullet_icon: z.string().optional(),
     image_id: z.string().optional(),
-    image_style: z.object({
-      objectFit: z.enum(["cover", "contain", "fill", "none"]).optional(),
-      objectPosition: z.string().optional(),
-    }).optional(),
+    object_fit: z.enum(["cover", "contain", "fill", "none"]).optional(),
+    object_position: z.string().optional(),
   }),
   background: z.string().optional(),
 });
