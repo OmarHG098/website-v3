@@ -1,13 +1,21 @@
 - type: testimonials_grid
   title: What Our Students Say
   subtitle: Real stories from graduates who transformed their careers
+  title_color: "hsl(var(--foreground))"
+  subtitle_color: "hsl(var(--muted-foreground))"
   default_box_color: "hsl(var(--muted))"
+  default_name_color: "hsl(var(--foreground))"
+  default_role_color: "hsl(var(--muted-foreground))"
+  default_comment_color: "hsl(var(--muted-foreground))"
+  default_star_color: "hsl(45 93% 47%)"
   columns: 3
+  background: "hsl(var(--background))"
   items:
     - name: James Dugard
       role: Full Stack Developer
       comment: "Thanks to 4Geeks Academy's bootcamp and their job guarantee program, I was able to change careers and enter the tech industry without a college degree. The mentorship and ongoing support were key, and after graduating they helped me find my first job in tech."
       rating: 5
+      avatar: "https://example.com/avatar1.jpg"
       media:
         url: "https://www.youtube.com/watch?v=example"
         type: video
@@ -20,11 +28,14 @@
       rating: 5
       linkedin_url: "https://linkedin.com/in/example"
       box_color: "hsl(200 80% 92%)"
+      name_color: "hsl(200 80% 20%)"
+      comment_color: "hsl(200 60% 30%)"
 
     - name: Ana Romero
       role: Full Stack Developer
       comment: "I wasted no time after graduating from high school and enrolled in 4Geeks Academy. It has been an excellent experience so far. I love their close-knit community that is always there to lend a helping hand."
       rating: 5
+      star_color: "hsl(30 100% 50%)"
 
     - name: Alan Gaston Sosa
       role: Junior JavaScript Developer
@@ -32,6 +43,7 @@
       rating: 5
       linkedin_url: "https://linkedin.com/in/example"
       box_color: "hsl(45 90% 88%)"
+      role_color: "hsl(45 70% 30%)"
 
     - name: Olson Dimache
       role: Senior Software Engineer II
