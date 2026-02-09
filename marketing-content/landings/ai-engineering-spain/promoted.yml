@@ -410,7 +410,7 @@ sections:
           - text: Construye tu currículum y portafolio listos para IA
           - text: Prepárate para entrevistas y negociación salarial
           - text: Sigue creciendo con acceso de por vida al apoyo de carrera
-        video_url: https://www.youtube.com/shorts/8ELYdTsuA1A
+        video_url: https://www.youtube.com/shorts/8ELYdTsuA1A?autoplay=1&mute=1&playsinline=1
         cta:
           text: Empieza a aprender ahora
           url: "#hero-form"
@@ -496,8 +496,8 @@ sections:
     background: hsl(var(--muted))
   - type: whos_hiring
     variant: carousel
-    title: Confiado por líderes innovadores
-    subtitle: Nuestros graduados son contratados por las mejores empresas.
+    title: Empresas líderes confían en nuestro talento
+    subtitle: Nuestros graduados trabajan en compañías de referencia del sector tecnológico.
     logos:
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
