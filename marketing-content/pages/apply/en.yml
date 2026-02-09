@@ -65,8 +65,8 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: Full Stack Development with AI
-    subtitle: Learn at your own pace with AI-powered tools and unlimited mentorship
+    title: Your Future in Tech Starts Here
+    subtitle: You’re one step closer to your new career in tech, congratulations! Fill out the form below, and our admissions team will walk you through the next steps.
     marginY:
       desktop: md none
   - type: apply_form
