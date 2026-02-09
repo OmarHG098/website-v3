@@ -55,11 +55,8 @@ sections:
       terms_url: /terminos-condiciones
       privacy_url: /politica-privacidad
       consent:
-        sms: true
         marketing: true
         marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
-        sms_text: Acepto recibir SMS sobre talleres, eventos, cursos y materiales de marketing. Pueden aplicar cargos por mensaje y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir 4–6 mensajes al mes. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
-        sms_usa_only: true
       show_terms: true
     cta_button:
       text: Descargar programa
@@ -116,7 +113,7 @@ sections:
     form:
       variant: inline
       conversion_name: student_application
-      submit_label: Enviar solicitud
+      submit_label: Aplicar ahora
       tags: website-lead
       automations: strong
       fields:
@@ -137,6 +134,10 @@ sections:
           default: ai-engineering
       success:
         message: ¡Gracias! Nos pondremos en contacto en 24 horas.
+      consent:
+        marketing: true
+        marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
+      show_terms: true
   - type: awards_marquee
     version: "1.0"
     speed: 40
@@ -639,7 +640,6 @@ sections:
       success:
         message: ¡Gracias! Nos pondremos en contacto pronto.
       consent:
-        sms: true
         marketing: true
         marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
       show_terms: true
