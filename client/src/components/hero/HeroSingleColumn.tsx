@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UniversalImage } from "@/components/UniversalImage";
 import * as TablerIcons from "@tabler/icons-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { HeroSingleColumn } from "@shared/schema";
@@ -115,6 +116,18 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
         )}
 
       </div>
+
+      {data.image_id && (
+        <div className={data.image_full_width ? "w-full mt-8" : "max-w-6xl mx-auto px-4 mt-8"}>
+          <UniversalImage
+            id={data.image_id}
+            alt=""
+            className="w-full h-auto object-cover rounded-none"
+            style={data.image_full_width ? undefined : { borderRadius: '0.8rem' }}
+            data-testid="img-hero-single-column"
+          />
+        </div>
+      )}
     </section>
   );
 }
