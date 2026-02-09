@@ -63,11 +63,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "adb9e81796df8cc98b7b086452a97ccf185ad9f527332049a629b40dbabbd530",
-      "lastModified": 1770600190165.786,
+      "sha": "3b881c7ac2e9f49efe08dd2c3eebf78e4d48cfffb1be868b75f5af284e3a93d6",
+      "lastModified": 1770650992110.435,
       "remoteSha": "49edd5a654385639cab229576d1ff686d18edbaf0faf5a34fbe3071604b331a3",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-09T01:23:10.168Z"
+      "modifiedAt": "2026-02-09T15:29:52.112Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",
@@ -640,9 +640,10 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "106bc74dc673d6076504bc7d975c2290c7e8e69eb73cfad1efde6a73dcc3d72b",
-      "lastModified": 1770308152109.432,
-      "remoteSha": "106bc74dc673d6076504bc7d975c2290c7e8e69eb73cfad1efde6a73dcc3d72b"
+      "sha": "5116747d0e096af2eabff0eef6009b89dcf90cbde0cb596d8ffd63a27265b048",
+      "lastModified": 1770654257397.4019,
+      "remoteSha": "106bc74dc673d6076504bc7d975c2290c7e8e69eb73cfad1efde6a73dcc3d72b",
+      "modifiedAt": "2026-02-09T16:24:17.399Z"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
@@ -845,10 +846,10 @@
       "remoteSha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2"
     },
     "marketing-content/pages/the-academy/en.yml": {
-      "sha": "82fb442cf8f74ff86e86957e46647f6d2db5b1526a6f6b9e69bfa760478b1afe",
-      "lastModified": 1770645581331.4702,
+      "sha": "847da122e05c06d0bcc38e993b4a526aa24901791e7c16f09b4e6745c47f4ea1",
+      "lastModified": 1770647741682.8357,
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-09T13:59:41.333Z"
+      "modifiedAt": "2026-02-09T14:35:41.684Z"
     }
   }
 }
