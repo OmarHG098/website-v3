@@ -863,6 +863,12 @@
       "lastModified": 1770649672049.1506,
       "remoteSha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91",
       "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+    },
+    "marketing-content/pages/rigobot-ai-coding-mentor/en.yml": {
+      "sha": "683a58a0fd9725e254479588d0168f8c3201f8dfa33d7bc36038b00b6ed6dbc6",
+      "lastModified": 1770652058167.7732,
+      "author": "Alejandro Sanchez",
+      "modifiedAt": "2026-02-09T15:47:38.169Z"
     }
   }
 }
