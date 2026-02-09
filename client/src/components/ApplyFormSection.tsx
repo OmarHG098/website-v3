@@ -74,6 +74,7 @@ interface ApplyFormSectionProps {
   locations?: Array<{ id: string; name_en: string; name_es: string }>;
   locale?: string;
   preselectedProgram?: string;
+  preselectedLocation?: string;
 }
 
 const applyFormSchema = z.object({

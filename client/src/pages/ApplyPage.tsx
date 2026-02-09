@@ -42,6 +42,7 @@ export default function ApplyPage() {
   
   const searchParams = new URLSearchParams(window.location.search);
   const preselectedProgram = searchParams.get("program") || undefined;
+  const preselectedLocation = searchParams.get("location") || undefined;
 
   const { data: page, isLoading, error, refetch } = useQuery<ApplyPageData>({
     queryKey: ["/api/pages/apply", locale],
@@ -92,6 +93,7 @@ export default function ApplyPage() {
               locations={page.locations}
               locale={locale}
               preselectedProgram={preselectedProgram}
+              preselectedLocation={preselectedLocation}
             />
           );
         }
