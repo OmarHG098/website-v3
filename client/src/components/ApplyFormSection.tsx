@@ -185,29 +185,6 @@ export function ApplyFormSection({
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           <div>
-            <div className="mb-8">
-              <h1 
-                className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-                data-testid="text-apply-title"
-              >
-                {data.hero.title}
-              </h1>
-              <p 
-                className="text-lg text-muted-foreground mb-4"
-                data-testid="text-apply-subtitle"
-              >
-                {data.hero.subtitle}
-              </p>
-              {data.hero.note && (
-                <p 
-                  className="text-sm text-muted-foreground italic"
-                  data-testid="text-apply-note"
-                >
-                  {data.hero.note}
-                </p>
-              )}
-            </div>
-
             <Card className="border shadow-sm" data-testid="card-apply-form">
               <CardContent className="p-6">
                 <Form {...form}>
