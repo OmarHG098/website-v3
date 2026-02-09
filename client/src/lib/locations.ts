@@ -509,3 +509,24 @@ export const getLocationsByRegion = (region: Location['region']): Location[] =>
 
 export const getLocationsByLanguage = (language: 'en' | 'es'): Location[] =>
   locations.filter(loc => loc.default_language === language && loc.visibility === 'listed');
+
+export type RegionSlug = 'usa-canada' | 'europe' | 'latam';
+
+const REGION_LABELS: Record<RegionSlug, { en: string; es: string }> = {
+  'usa-canada': { en: 'US & Canada', es: 'EE.UU. y Canadá' },
+  'europe': { en: 'Europe', es: 'Europa' },
+  'latam': { en: 'Latin America', es: 'Latinoamérica' },
+};
+
+export const REGION_SLUGS: RegionSlug[] = ['usa-canada', 'europe', 'latam'];
+
+export function getRegionLabel(slug: string, locale: string = 'en'): string {
+  const entry = REGION_LABELS[slug as RegionSlug];
+  if (!entry) return slug;
+  return locale === 'es' ? entry.es : entry.en;
+}
+
+export function getRegionForLocation(locationSlug: string): RegionSlug | null {
+  const loc = locations.find(l => l.slug === locationSlug);
+  return (loc?.region as RegionSlug) || null;
+}

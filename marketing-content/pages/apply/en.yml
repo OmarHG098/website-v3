@@ -77,6 +77,8 @@ sections:
     form:
       program_label: Please select one program
       program_placeholder: Select a program
+      region_label: Select your region
+      region_placeholder: Select a region
       location_label: Select your preferred location
       location_placeholder: Select a location
       first_name_label: First Name

@@ -26,6 +26,7 @@ import {
 import { IconCheck, IconMail, IconUser, IconSend } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "@/contexts/SessionContext";
+import { REGION_SLUGS, getRegionLabel, getRegionForLocation } from "@/lib/locations";
 
 interface ApplyFormSectionData {
   type: "apply_form";
@@ -38,6 +39,8 @@ interface ApplyFormSectionData {
   form: {
     program_label: string;
     program_placeholder: string;
+    region_label?: string;
+    region_placeholder?: string;
     location_label: string;
     location_placeholder: string;
     first_name_label: string;
@@ -71,7 +74,7 @@ interface ApplyFormSectionData {
 interface ApplyFormSectionProps {
   data: ApplyFormSectionData;
   programs?: Array<{ id: string; name_en: string; name_es: string }>;
-  locations?: Array<{ id: string; name_en: string; name_es: string }>;
+  locations?: Array<{ id: string; name_en: string; name_es: string; region?: string }>;
   locale?: string;
   preselectedProgram?: string;
   preselectedLocation?: string;
@@ -100,6 +103,7 @@ export function ApplyFormSection({
 }: ApplyFormSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
   const { toast } = useToast();
   const { session } = useSession();
 
@@ -111,6 +115,15 @@ export function ApplyFormSection({
   const resolvedLocation =
     (preselectedLocation && locationIds.has(preselectedLocation) ? preselectedLocation : null) ||
     (session?.location?.slug && locationIds.has(session.location.slug) ? session.location.slug : "") ;
+
+  const rawResolvedRegion = resolvedLocation
+    ? (locations.find(l => l.id === resolvedLocation)?.region || getRegionForLocation(resolvedLocation) || "")
+    : "";
+  const resolvedRegion = (REGION_SLUGS as readonly string[]).includes(rawResolvedRegion) ? rawResolvedRegion : "";
+
+  const filteredLocations = selectedRegion
+    ? locations.filter(l => l.region === selectedRegion || l.region === "online")
+    : locations;
 
   const form = useForm<ApplyFormValues>({
     resolver: zodResolver(applyFormSchema),
@@ -127,10 +140,27 @@ export function ApplyFormSection({
   });
 
   useEffect(() => {
+    if (resolvedRegion && !selectedRegion) {
+      setSelectedRegion(resolvedRegion);
+    }
+  }, [resolvedRegion, selectedRegion]);
+
+  useEffect(() => {
     if (resolvedLocation && !form.getValues("location")) {
       form.setValue("location", resolvedLocation);
     }
   }, [resolvedLocation, form]);
+
+  const handleRegionChange = (region: string) => {
+    setSelectedRegion(region);
+    const currentLocation = form.getValues("location");
+    if (currentLocation) {
+      const loc = locations.find(l => l.id === currentLocation);
+      if (loc && loc.region !== region && loc.region !== "online") {
+        form.setValue("location", "");
+      }
+    }
+  };
 
   const onSubmit = async (values: ApplyFormValues) => {
     setIsSubmitting(true);
@@ -229,6 +259,24 @@ export function ApplyFormSection({
                       )}
                     />
 
+                    <div>
+                      <FormLabel className="text-foreground font-medium">
+                        {data.form.region_label || (locale === "es" ? "Selecciona tu región" : "Select your region")}
+                      </FormLabel>
+                      <Select onValueChange={handleRegionChange} value={selectedRegion}>
+                        <SelectTrigger data-testid="select-region" className="mt-2">
+                          <SelectValue placeholder={data.form.region_placeholder || (locale === "es" ? "Selecciona una región" : "Select a region")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {REGION_SLUGS.map((region) => (
+                            <SelectItem key={region} value={region} data-testid={`option-region-${region}`}>
+                              {getRegionLabel(region, locale)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <FormField
                       control={form.control}
                       name="location"
@@ -244,7 +292,7 @@ export function ApplyFormSection({
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {locations.map((location) => (
+                              {filteredLocations.map((location) => (
                                 <SelectItem key={location.id} value={location.id} data-testid={`option-location-${location.id}`}>
                                   {getLocalizedName(location)}
                                 </SelectItem>

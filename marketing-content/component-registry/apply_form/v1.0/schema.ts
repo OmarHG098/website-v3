@@ -13,6 +13,8 @@ export const applyFormHeroSchema = z.object({
 export const applyFormFieldsSchema = z.object({
   program_label: z.string(),
   program_placeholder: z.string(),
+  region_label: z.string().optional(),
+  region_placeholder: z.string().optional(),
   location_label: z.string(),
   location_placeholder: z.string(),
   first_name_label: z.string(),
