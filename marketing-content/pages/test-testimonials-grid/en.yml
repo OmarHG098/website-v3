@@ -1,0 +1,60 @@
+slug: test-testimonials-grid
+template: default
+title: Test - Testimonials Grid
+meta:
+  robots: noindex, nofollow
+  page_title: Test - Testimonials Grid
+  description: Test page for testimonials grid component
+
+sections:
+  - type: testimonials_grid
+    title: What Our Students Say
+    subtitle: Real stories from graduates who transformed their careers
+    default_box_color: "hsl(var(--muted))"
+    columns: 3
+    items:
+      - name: James Dugard
+        role: Full Stack Developer
+        comment: "Thanks to 4Geeks Academy's bootcamp and their job guarantee program, I was able to change careers and enter the tech industry without a college degree. The mentorship and ongoing support were key, and after graduating they helped me find my first job in tech."
+        rating: 5
+        media:
+          url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          type: video
+          ratio: "16:9"
+
+      - name: Joshua Bravo
+        role: Full Stack Developer
+        company: Regcheq
+        comment: "I used to be a kitchen assistant and accountant, but now I'm a full stack developer at a startup thanks to 4Geeks."
+        rating: 5
+        linkedin_url: "https://linkedin.com/in/example"
+        box_color: "hsl(200 80% 92%)"
+
+      - name: Ana Romero
+        role: Full Stack Developer
+        comment: "I wasted no time after graduating from high school and enrolled in 4Geeks Academy. It has been an excellent experience so far. I love their close-knit community that is always there to lend a helping hand."
+        rating: 5
+
+      - name: Alan Gaston Sosa
+        role: Junior JavaScript Developer
+        comment: "Before joining the academy, I always liked graphic design and photography. While working as a delivery driver, I realized how much I liked technology and the flexibility of these areas, whether remote or on schedule. I recommend and have recommended 4Geeks Academy."
+        rating: 5
+        linkedin_url: "https://linkedin.com/in/example"
+        box_color: "hsl(45 90% 88%)"
+
+      - name: Olson Dimache
+        role: Senior Software Engineer II
+        company: Domino Data Labs
+        comment: "Just give it a try, you'll learn because the 4Geeks system nudges you in that direction. 4Geeks is the best choice for a career change and learning how to program."
+        rating: 5
+        linkedin_url: "https://linkedin.com/in/example"
+
+      - name: Maria Lopez
+        role: Web Developer
+        company: Everwell Parts, Inc.
+        comment: "The program gave me the confidence I needed to transition into tech. The hands-on projects and real-world applications made all the difference."
+        rating: 4
+        box_color: "hsl(200 80% 92%)"
+        media:
+          url: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400"
+          type: image
