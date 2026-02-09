@@ -1,6 +1,12 @@
 import Marquee from "react-fast-marquee";
 import { useState, useEffect } from "react";
 
+function parseLogoHeight(value?: string): number | undefined {
+  if (!value) return undefined;
+  const match = value.match(/^(\d+)/);
+  return match ? parseInt(match[1], 10) : undefined;
+}
+
 export interface AwardsMarqueeItem {
   id: string;
   logo?: string;
@@ -67,7 +73,8 @@ export function AwardsMarquee({
                 <img 
                   src={item.logo} 
                   alt={item.alt}
-                  className={`${item.logoHeight || "h-12 md:h-20"} w-auto object-contain`}
+                  style={{ height: parseLogoHeight(item.logoHeight) || 48 }}
+                  className="w-auto object-contain"
                   loading="lazy"
                 />
               ) : (

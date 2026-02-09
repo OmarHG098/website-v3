@@ -6,6 +6,12 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 
+function parseLogoHeight(value?: string): number | undefined {
+  if (!value) return undefined;
+  const match = value.match(/^(\d+)/);
+  return match ? parseInt(match[1], 10) : undefined;
+}
+
 export interface AwardBadgeItem {
   id: string;
   logo?: string;
@@ -43,7 +49,8 @@ export function AwardBadges({
         <img 
           src={item.logo} 
           alt={item.alt}
-          className={`${item.logoHeight || "h-12 md:h-16"} w-auto object-contain`}
+          style={{ height: parseLogoHeight(item.logoHeight) || 48 }}
+          className="w-auto object-contain"
           loading="lazy"
         />
       ) : (
@@ -65,7 +72,8 @@ export function AwardBadges({
         <img
           src={item.logo}
           alt={item.alt}
-          className={`${item.logoHeight || "h-16"} w-auto object-contain mb-4`}
+          style={{ height: parseLogoHeight(item.logoHeight) || 64 }}
+          className="w-auto object-contain mb-4"
           loading="lazy"
           data-testid={`img-${item.id}`}
         />

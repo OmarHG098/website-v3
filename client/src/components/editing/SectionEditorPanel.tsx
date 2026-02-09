@@ -1744,7 +1744,7 @@ export function SectionEditorPanel({
                                 id: "",
                                 [itemField]: "",
                                 alt: "",
-                                logoHeight: "h-10 md:h-14",
+                                logoHeight: "56px",
                               };
                               addArrayItem(arrayPath, defaultItem);
                             }}
