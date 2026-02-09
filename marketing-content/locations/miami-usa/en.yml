@@ -132,19 +132,19 @@ sections:
     left:
       video: https://youtu.be/4n-ZAUPIxJI
     right:
-      heading: Insights from Mayor Francis Suarez about Miami's Tech Revolution
-      sub_heading: Watch how our platform transforms careers
-      description: Discover the future of Miami's tech landscape through the eyes of Mayor Francis Suarez. In an exclusive interview, Mayor Suarez shares invaluable insights into the evolving digital economy, emphasizing the pivotal role of coding skills and the transformative potential of artificial intelligence (AI).
+      heading: What Miami’s Tech Boom Unlocks for Local Talent
+      sub_heading: Hear directly from Mayor Francis Suarez on why Miami has become one of the fastest-growing tech hubs in the U.S.
+      description: In this conversation with 4Geeks, Mayor Suarez shares advice for people entering tech and explains what’s driving Miami’s job growth — and why software development and AI skills are central to the city’s future.
       button:
-        text: Start Free Trial
+        text: Watch the full interview
         url: https://youtu.be/4n-ZAUPIxJI
         variant: primary
         icon: Rocket
     gap: "8"
-    paddingY:
-      desktop: none lg
     marginY:
       desktop: none sm
+    paddingY:
+      desktop: none lg
   - type: features_grid
     version: "1.0"
     variant: detailed
