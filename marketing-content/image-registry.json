@@ -990,6 +990,17 @@
         "bootcamp"
       ],
       "usage_count": 0
+    },
+    "what_is_4geeks": {
+      "src": "/attached_assets/what-is-4geeks.jpg",
+      "alt": "What is 4Geeks Academy?",
+      "focal_point": "center",
+      "tags": [
+        "about",
+        "education",
+        "bootcamp"
+      ],
+      "usage_count": 0
     }
   }
 }
