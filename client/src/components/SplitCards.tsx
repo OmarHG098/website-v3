@@ -131,7 +131,6 @@ export const SplitCards = memo(function SplitCards({ data }: SplitCardsProps) {
         : "bg-background";
 
   const isPrimaryRight = variant === "primary-right";
-
   // Width ratios for lg breakpoint: narrow = 2fr/3fr, default = 3fr/1fr, wide = 4fr/1fr
   const getLgGridTemplate = () => {
     const width = primary_width || "default";
@@ -198,17 +197,18 @@ export const SplitCards = memo(function SplitCards({ data }: SplitCardsProps) {
 
   const SecondaryCard = hasImage ? (
     <div
-      className="relative rounded-[0.8rem] overflow-hidden min-h-[320px] md:min-h-[360px]"
+      className="flex items-stretch relative rounded-[0.8rem] overflow-hidden h-full self-stretch"
       data-testid="card-secondary"
     >
-      <UniversalImage
-        id={secondary.image_id!}
-        className="absolute inset-0 w-full h-full"
-        style={{
-          objectFit: secondary.object_fit || "cover",
-          objectPosition: secondary.object_position || "center center",
-        }}
-      />
+        <UniversalImage
+          id={secondary.image_id!}
+          className="w-full h-full"
+          style={{
+            objectFit: secondary.image_object_fit || "cover",
+            objectPosition:
+              secondary.image_object_position || "center center",
+          }}
+        />
     </div>
   ) : (
     <div

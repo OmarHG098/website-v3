@@ -32,23 +32,11 @@ sections:
         variant: outline
         icon: Download
     background: bg-gradient-to-b from-primary/5 to-background
-  - type: banner
-    version: "1.0"
-    logo: /attached_assets/rigobot-logo_1764707022198.webp
-    avatars:
-      - https://randomuser.me/api/portraits/women/1.jpg
-      - https://randomuser.me/api/portraits/men/2.jpg
-      - https://randomuser.me/api/portraits/women/3.jpg
-      - https://randomuser.me/api/portraits/men/4.jpg
-    title: Lorem ipsum dolor sit amet
-    description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
-    cta:
-      text: Learn More
-      url: "#"
-      variant: primary
-    background: gradient
+    paddingY:
+      desktop: none md
   - type: split_cards
     variant: primary-left
+    primary_width: narrow
     primary:
       heading: Our Mission & Approach
       description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
@@ -59,57 +47,55 @@ sections:
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
       image_id: what_is_4geeks
-      image_object_position: 80% 20%
+      image_object_fit: cover
+      image_object_position: 60% 100%
     background: muted
   - type: features_quad
     version: "1.0"
     variant: default
-    heading: Why Choose Our AI Engineering Program?
+    heading: What Makes Us Different
     description: Get the skills, support, and job placement assistance you need to launch your career in AI engineering.
     images:
-      - image_id: student-1
-        alt: Student 1
-      - image_id: student-2
-        alt: Student 2
-      - image_id: student-3
-        alt: Student 3
-      - image_id: student-4
-        alt: Student 4
+      - image_id: student_asian
+        alt: Asian student learning to code
+      - image_id: student_latin_male
+        alt: Latino student working on a project
+        object_position: 50% 20%
+      - image_id: student_african
+        alt: African student collaborating with team
+      - image_id: student_latina_female
+        alt: Latina student celebrating success
+        object_position: 50% 20%
     cards:
       - icon: Trophy
-        title: Industry Recognition
-        description: Ranked among the top coding bootcamps by Forbes, Course Report, and Career Karma.
+        title: Career-Focused Programs
+        description: Hands-on, practical, and fast-paced training designed to launch real-world tech careers.
       - icon: Wallet
-        title: Affordable Tuition
-        description: Among the most affordable tuition of any top-ranked bootcamp, with flexible payment options.
+        title: Hyperpersonalized Learning
+        description: Rigobot provides instant 24/7 feedback as you learn, while small classrooms and 1:1 mentorship ensure you get the guidance you need.
       - icon: Clock
-        title: Flexible Schedule
-        description: Learn at your own pace with part-time and full-time options to fit your lifestyle.
+        title: Unlimited Human Mentorship
+        description: Mentors and career coaches provide personalized support whenever you need it—during your program and forever after.
       - icon: Users
-        title: Career Support
-        description: Get unlimited 1:1 mentorship and job placement assistance for life.
-    footer_description: Join thousands of graduates who have launched successful tech careers.
+        title: Future-Ready Skills
+        description: Continuously updated curriculum ensures students learn the latest tools and technologies driving the tech industry.
     background: bg-background
   - type: stats
     version: "1.0"
-    title: Hiring Outcomes Across Regions
-    subtitle: Our graduates get hired and increase their salaries in multiple job markets.
     background: hsl(210 100% 50% / 0.05)
     items:
-      - value: 84%
-        label: of U.S. graduates hired within 6 months
-      - value: +55%
-        label: average U.S. salary increase
-      - value: +233%
-        label: average salary increase in LATAM
-      - value: 85%
-        label: placement rate in Spain
-      - value: 3-6 months
-        label: average time to get hired across all markets
+      - value: "+7000"
+        label: Alumni
+      - value: "8"
+        label: Campuses
+      - value: ~84%
+        label: Hired
+      - value: "4.9"
+        label: Rating
     marginY:
       desktop: none md
     paddingY:
-      desktop: lg
+      desktop: sm
   - type: two_column
     version: v1.0
     proportions:
