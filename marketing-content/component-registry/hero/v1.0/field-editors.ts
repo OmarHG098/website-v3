@@ -28,4 +28,5 @@ export const fieldEditors: Record<string, EditorType> = {
   "simpleTwoColumn:image.src": "image-picker",
   "simpleTwoColumn:subtitle": "rich-text-editor",
   "singleColumn:image_id": "image-picker",
+  "singleColumn:image_width": "text-input",
 };

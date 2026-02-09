@@ -91,6 +91,7 @@ export const heroSingleColumnSchema = z.object({
   award_badges: z.array(awardBadgeSchema).optional(),
   image_id: z.string().optional(),
   image_full_width: z.boolean().optional(),
+  image_width: z.string().optional(),
 }).passthrough();
 
 export const heroShowcaseSchema = z.object({
