@@ -271,7 +271,23 @@ function listTemplatePages(
   return pages;
 }
 
+function detectLanguageFromRequest(req: Request): "en" | "es" {
+  const acceptLang = req.headers["accept-language"] || "";
+  const primary = acceptLang.split(",")[0]?.trim().toLowerCase() || "";
+  if (primary.startsWith("es")) return "es";
+  return "en";
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.get("/apply", (req, res) => {
+    const lang = detectLanguageFromRequest(req);
+    const target = lang === "es" ? "/es/aplica" : "/en/apply";
+    const qs = Object.keys(req.query).length
+      ? "?" + new URLSearchParams(req.query as Record<string, string>).toString()
+      : "";
+    res.redirect(302, target + qs);
+  });
+
   // Apply redirect middleware for 301 redirects from YAML content
   app.use(redirectMiddleware);
 
