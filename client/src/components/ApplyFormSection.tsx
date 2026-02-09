@@ -23,10 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IconCheck, IconMail, IconUser, IconSend } from "@tabler/icons-react";
+import { IconCheck, IconMail, IconUser, IconSend, IconWorld } from "@tabler/icons-react";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "@/contexts/SessionContext";
 import { REGION_SLUGS, getRegionLabel, getRegionForLocation } from "@/lib/locations";
+import * as Flags from "country-flag-icons/react/3x2";
+
+type FlagKey = keyof typeof Flags;
+
+function CountryFlag({ code, className = "w-5 h-3.5 rounded-sm flex-shrink-0" }: { code?: string; className?: string }) {
+  if (!code) return <IconWorld className="w-4 h-4 text-muted-foreground flex-shrink-0" />;
+  const FlagComponent = Flags[code as FlagKey];
+  if (!FlagComponent) return <IconWorld className="w-4 h-4 text-muted-foreground flex-shrink-0" />;
+  return <FlagComponent className={className} />;
+}
 
 interface ApplyFormSectionData {
   type: "apply_form";
@@ -74,7 +84,7 @@ interface ApplyFormSectionData {
 interface ApplyFormSectionProps {
   data: ApplyFormSectionData;
   programs?: Array<{ id: string; name_en: string; name_es: string }>;
-  locations?: Array<{ id: string; name_en: string; name_es: string; region?: string }>;
+  locations?: Array<{ id: string; name_en: string; name_es: string; region?: string; country_code?: string }>;
   locale?: string;
   preselectedProgram?: string;
   preselectedLocation?: string;
@@ -268,7 +278,10 @@ export function ApplyFormSection({
                               <SelectContent>
                                 {filteredLocations.map((location) => (
                                   <SelectItem key={location.id} value={location.id} data-testid={`option-location-${location.id}`}>
-                                    {getLocalizedName(location)}
+                                    <span className="flex items-center gap-2">
+                                      <CountryFlag code={location.country_code} />
+                                      {getLocalizedName(location)}
+                                    </span>
                                   </SelectItem>
                                 ))}
                               </SelectContent>
