@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import { Navbar, type NavbarConfig } from "@/components/menus";
+import { Navbar, MobileNav, type NavbarConfig } from "@/components/menus";
 import logo from "@assets/4geeks-devs-logo_1763162063433.png";
 
 export default function Header() {
@@ -61,6 +61,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
+          {menuConfig && <MobileNav config={menuConfig} />}
         </div>
       </div>
     </header>

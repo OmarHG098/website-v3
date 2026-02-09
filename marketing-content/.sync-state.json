@@ -33,9 +33,10 @@
       "remoteSha": "7b235e59f060fcd4b5f2e28640f79b336323bbb78c8c26a9583db4af5b3cc95e"
     },
     "marketing-content/landings/ai-engineering-es/promoted.yml": {
-      "sha": "a944894f28fe1da56ebb6a73bf8b3f7a3eba7bdb24d059b05576717b892a6b12",
-      "lastModified": 1770308152006.8223,
-      "remoteSha": "a944894f28fe1da56ebb6a73bf8b3f7a3eba7bdb24d059b05576717b892a6b12"
+      "sha": "68da5ec50f6114cfcad3a9cc190405c617e51ca25b1320607c2873fa53854ffc",
+      "lastModified": 1770649670273.1562,
+      "remoteSha": "68da5ec50f6114cfcad3a9cc190405c617e51ca25b1320607c2873fa53854ffc",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
     },
     "marketing-content/landings/ai-engineering-spain/_common.yml": {
       "sha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed",
@@ -43,9 +44,10 @@
       "remoteSha": "a629c58f39ce9f720ca63363e987b5d366ddac689921a13d21d22fd885eb7fed"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
-      "sha": "b0165a063cf0960f13adcb1315e2642f7663a28d90cf7827ef8c69619834f9a7",
-      "lastModified": 1770336086763.3042,
-      "remoteSha": "b0165a063cf0960f13adcb1315e2642f7663a28d90cf7827ef8c69619834f9a7"
+      "sha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
+      "lastModified": 1770649670706.1548,
+      "remoteSha": "097f5f53195f257dad22a832216df077900bfc86b1bc618da42ced19dd385fa2",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
@@ -746,9 +748,10 @@
       "remoteSha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0"
     },
     "marketing-content/pages/scholarships/en.yml": {
-      "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
-      "lastModified": 1770308152111.3809,
-      "remoteSha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741"
+      "sha": "416c31571b59063bba28711683dc03c8618b4b5002b641d8cc156f246f48f58a",
+      "lastModified": 1770649671066.1538,
+      "remoteSha": "416c31571b59063bba28711683dc03c8618b4b5002b641d8cc156f246f48f58a",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
     },
     "marketing-content/pages/scholarships/es.yml": {
       "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
@@ -821,9 +824,10 @@
       "remoteSha": "9ce8ca356f6954b2647a703bccb63963ccc10f5e60790b2cccbfae6146990f24"
     },
     "marketing-content/programs/full-stack/en.yml": {
-      "sha": "8bf800e7722ac48978bea675841f5c51a1ce2aa30d8af59bb3a0b40cd869a9ad",
-      "lastModified": 1770387036320.601,
-      "remoteSha": "8bf800e7722ac48978bea675841f5c51a1ce2aa30d8af59bb3a0b40cd869a9ad"
+      "sha": "1ce1898595b2b5a4223c2dc75e2bb16aaf9d49c3c6f9cc6a23454299445d2984",
+      "lastModified": 1770649672476.1494,
+      "remoteSha": "1ce1898595b2b5a4223c2dc75e2bb16aaf9d49c3c6f9cc6a23454299445d2984",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
     },
     "marketing-content/programs/full-stack/es.yml": {
       "sha": "6ef24045833c040bd6af6feac3b7c9ded248ecb11b7c93c1c65bd00204b106bb",
@@ -845,11 +849,41 @@
       "lastModified": 1765547794557.8657,
       "remoteSha": "9e0e9ef1fcd2f1e463e354778ed0f41d310ce378fb1bc5282a8ca61a2c7cb9b2"
     },
+    "marketing-content/pages/the-academy/_common.yml": {
+      "sha": "cb22fcf85d0d135cb31512702d1a584236c2c4c28a2e300328fc89175af69456",
+      "lastModified": 1770649671430.1526,
+      "remoteSha": "cb22fcf85d0d135cb31512702d1a584236c2c4c28a2e300328fc89175af69456",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+    },
     "marketing-content/pages/the-academy/en.yml": {
-      "sha": "847da122e05c06d0bcc38e993b4a526aa24901791e7c16f09b4e6745c47f4ea1",
-      "lastModified": 1770647741682.8357,
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-09T14:35:41.684Z"
+      "sha": "f04bb7ebcee878308adbcf6310c5c69cff2ce8db828e0e5fbbe33cdde3428854",
+      "lastModified": 1770649671741.1516,
+      "remoteSha": "f04bb7ebcee878308adbcf6310c5c69cff2ce8db828e0e5fbbe33cdde3428854",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+    },
+    "marketing-content/pages/the-academy/es.yml": {
+      "sha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91",
+      "lastModified": 1770649672049.1506,
+      "remoteSha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91",
+      "pulledFromCommit": "ed8d3ba00cca3f857e27c76a191401935cdfe81e"
+    },
+    "marketing-content/pages/rigobot-ai-coding-mentor/en.yml": {
+      "sha": "6d345323dacb3198cdf17bf8b16573e4544a966bb0ced1129427db242586aa05",
+      "lastModified": 1770652904321.1582,
+      "author": "Alejandro Sanchez",
+      "modifiedAt": "2026-02-09T16:01:44.323Z"
+    },
+    "marketing-content/pages/rigobot-ai-coding-mentor/_common.yml": {
+      "sha": "d107d4e95f03ba1deac5411b072c619870ddf0f36016c5e2a78c80fea21970d2",
+      "lastModified": 1770653023670.7893,
+      "remoteSha": "d107d4e95f03ba1deac5411b072c619870ddf0f36016c5e2a78c80fea21970d2",
+      "pulledFromCommit": "5b798c9956c9b9df040f9a35c2ea27162486bd49"
+    },
+    "marketing-content/pages/rigobot-ai-coding-mentor/es.yml": {
+      "sha": "9ca8eb10aed3e448ff200c95cc835ca77fc554c057ef0772a638902545ed036d",
+      "lastModified": 1770653024002.788,
+      "remoteSha": "9ca8eb10aed3e448ff200c95cc835ca77fc554c057ef0772a638902545ed036d",
+      "pulledFromCommit": "5b798c9956c9b9df040f9a35c2ea27162486bd49"
     }
   }
 }

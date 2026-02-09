@@ -46,6 +46,7 @@ import {
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
 import { RichTextArea } from "./RichTextArea";
+import { MarkdownEditorField } from "./MarkdownEditorField";
 import type { Section, ImageRegistry } from "@shared/schema";
 import { IconSearch } from "@tabler/icons-react";
 import CodeMirror from "@uiw/react-codemirror";
@@ -1485,6 +1486,33 @@ export function SectionEditorPanel({
                         minHeight="120px"
                         locale={locale}
                         data-testid={`props-rich-text-${fieldLabel}`}
+                      />
+                    </div>
+                  );
+                }
+
+                // Handle simple field paths with markdown editor (e.g., "content")
+                if (isSimpleField && editorType === "markdown") {
+                  const getSimpleFieldValue = () => {
+                    if (!parsedSection) return "";
+                    const pathParts = fieldPath.split(".");
+                    let current: unknown = parsedSection;
+                    for (const part of pathParts) {
+                      if (!current || typeof current !== "object") return "";
+                      current = (current as Record<string, unknown>)[part];
+                    }
+                    return (current as string) || "";
+                  };
+                  const currentValue = getSimpleFieldValue();
+                  const fieldLabel = fieldPath.split(".").pop() || fieldPath;
+                  return (
+                    <div key={fieldPath} className="space-y-2">
+                      <MarkdownEditorField
+                        key={`${sectionIndex}-${fieldPath}`}
+                        value={currentValue}
+                        onChange={(md) => updateProperty(fieldPath, md)}
+                        label={fieldLabel.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                        data-testid={`props-markdown-${fieldLabel}`}
                       />
                     </div>
                   );

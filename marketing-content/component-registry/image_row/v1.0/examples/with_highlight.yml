@@ -10,10 +10,17 @@ images:
     alt: "Graduate celebrating success"
 
 highlight:
-  heading: "The 'average student' doesn't exist."
-  text: "YOU DO—with your unique strengths, weaknesses and learning style."
+  slides:
+    - heading: "The 'average student' doesn't exist."
+      text: "YOU DO—with your unique strengths, weaknesses and learning style."
+    - heading: "Learning shouldn't be one-size-fits-all."
+      text: "Our AI adapts to how YOU learn best."
+    - heading: "Your success is our mission."
+      text: "Join thousands who transformed their careers with 4Geeks."
   background: primary
   width: 2
+  autoplay_interval: 5000
+  show_indicators: true
 
 height: "31rem"
 mobile_height: "24rem"
