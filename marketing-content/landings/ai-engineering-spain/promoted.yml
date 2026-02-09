@@ -59,7 +59,7 @@ sections:
         marketing: true
         marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
         sms_text: Acepto recibir SMS sobre talleres, eventos, cursos y materiales de marketing. Pueden aplicar cargos por mensaje y datos. Responde STOP para cancelar, HELP para ayuda. Puedes recibir 4–6 mensajes al mes. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
-        sms_usa_only: false
+        sms_usa_only: true
       show_terms: true
     cta_button:
       text: Descargar programa
@@ -218,7 +218,7 @@ sections:
         title: Roles relacionados con IA previstos para 2027
       - value: ~30%
         title: Crecimiento interanual en ofertas de trabajo en IA
-      - value: 30K € - 50K €
+      - value: 30.000€-50.000€
         title: Salario inicial promedio para ingenieros de IA
     marginY:
       mobile: md none
@@ -442,7 +442,7 @@ sections:
       mobile: lg none
       desktop: lg none
   - type: certificate
-    title: Resultados de carrera
+    title: Impacto en tu carrera profesional
     description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Accede a roles bien pagados:"
     benefits:
       - text: "Ingeniero de software IA: $95K–$135K"
@@ -455,7 +455,7 @@ sections:
       program_name: Ingeniería de IA
     stats:
       - value: 84%
-        label: Tasa de contratación
+        label: Tasa de empleabilidad
         description: Gradúate con las habilidades, credenciales y perfil profesional que los empleadores buscan.
         benefits:
           - text: Certificado reconocido por el Departamento de Educación de Florida
@@ -463,28 +463,27 @@ sections:
           - text: Experiencia demostrada con agentes, flujos y sistemas de IA
           - text: Perfil profesional y estrategia de búsqueda optimizados
       - value: 3-6 meses
-        label: Tiempo para conseguir empleo
-        description: La mayoría de los graduados consiguen su primer rol en 3–6 meses. Con nuestro proceso de desarrollo de carrera en 3 pasos, las habilidades técnicas se convierten en ofertas rápido.
+        label: Para encontrar empleo
+        description: La mayoría de nuestros graduados encuentra empleo en 3–6 meses gracias a nuestro proceso de desarrollo profesional.
         benefits:
-          - text: Optimiza tu currículum, portafolio y perfiles para atraer reclutadores y pasar filtros de IA
-          - text: Prepárate con entrevistas técnicas y de comportamiento con problemas reales
-          - text: Ejecuta una estrategia de búsqueda personalizada con acceso a redes de contratación
+          - text: Optimiza tu currículum, portafolio y perfil profesional para atraer recruiters y superar filtros automatizados
+          - text: Prepárate para entrevistas técnicas y de competencias con casos reales
+          - text: Aplica una estrategia de búsqueda personalizada con acceso a redes de empresas contratantes
       - value: 55%
-        label: Aumento salarial promedio
+        label: Aumento salarial medio
         description: Nuestros graduados ven un aumento salarial promedio del 55% al pasar a roles de ingeniería de IA. La inversión se paga sola.
         benefits:
-          - text: "AI Software Engineer: 30.000 € - 40.000 €."
+          - text: "AI Software Engineer: 30.000 € - 40.000 €"
           - text: "AI Full-Stack Engineer: 35.000 € - 50.000 €"
           - text: "Agent / Workflow Automation Engineer: 30.000 € - 45.000 €"
           - text: "AI Integration Specialist (RAG, APIs, vector DBs): 40.000 € - 60.000 €"
       - value: 5,000+
-        label: Socios de contratación
-        description: Accede a nuestra red de más de 5.000 socios que buscan talento en IA. Obtén ofertas exclusivas y referidos prioritarios.
+        label: Empresas que contratan talento
+        description: Accede a nuestra red de más de 5.000 empresas que buscan talento. Recibe ofertas exclusivas y procesos de selección prioritarios.
         benefits:
-          - text: Acceso exclusivo a bolsa de empleo
-          - text: Referidos prioritarios a empresas socias
-          - text: Eventos de networking con responsables de contratación
-          - text: Empresas como Google, Meta, Amazon y startups
+          - text: Acceso exclusivo a nuestra bolsa de empleo
+          - text: Recomendaciones directas a empresas colaboradoras
+          - text: Eventos de networking con recruiters y responsables de selección
     certificate_position: right
     useSolidCard: true
     marginY:
@@ -556,7 +555,7 @@ sections:
       mobile: none
       desktop: none
   - type: testimonials
-    title: Resultados reales de graduados reales
+    title: Graduados que hoy trabajan en tecnología
     subtitle: Únete a miles que han transformado sus carreras
     rating_summary:
       average: "4.7"
@@ -640,9 +639,9 @@ sections:
       success:
         message: ¡Gracias! Nos pondremos en contacto pronto.
       consent:
-        email: true
+        sms: true
         marketing: true
-        marketing_text: Acepto recibir información sobre cursos y promociones
+        marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
       show_terms: true
       button_className: bg-white text-primary hover:bg-white/90 border-white
       terms_className: text-white/80
