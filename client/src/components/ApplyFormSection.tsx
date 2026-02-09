@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -95,7 +95,8 @@ export function ApplyFormSection({
   programs = [], 
   locations = [],
   locale = "en",
-  preselectedProgram 
+  preselectedProgram,
+  preselectedLocation
 }: ApplyFormSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -106,11 +107,16 @@ export function ApplyFormSection({
   const defaultCountry = countryCode as Country;
   const isUS = countryCode === "US";
 
+  const locationIds = new Set(locations.map((l) => l.id));
+  const resolvedLocation =
+    (preselectedLocation && locationIds.has(preselectedLocation) ? preselectedLocation : null) ||
+    (session?.location?.slug && locationIds.has(session.location.slug) ? session.location.slug : "") ;
+
   const form = useForm<ApplyFormValues>({
     resolver: zodResolver(applyFormSchema),
     defaultValues: {
       program: preselectedProgram || "",
-      location: "",
+      location: resolvedLocation,
       firstName: "",
       lastName: "",
       email: "",
@@ -119,6 +125,12 @@ export function ApplyFormSection({
       consentSms: false,
     },
   });
+
+  useEffect(() => {
+    if (resolvedLocation && !form.getValues("location")) {
+      form.setValue("location", resolvedLocation);
+    }
+  }, [resolvedLocation, form]);
 
   const onSubmit = async (values: ApplyFormValues) => {
     setIsSubmitting(true);
@@ -225,7 +237,7 @@ export function ApplyFormSection({
                           <FormLabel className="text-foreground font-medium">
                             {data.form.location_label}
                           </FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger data-testid="select-location">
                                 <SelectValue placeholder={data.form.location_placeholder} />
