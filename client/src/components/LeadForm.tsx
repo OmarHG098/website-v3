@@ -862,10 +862,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                     rules={{ required: getFieldConfig("region").required ? (locale === "es" ? "Región requerida" : "Region is required") : false }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>
-                          {locale === "es" ? "Región" : "Region"}
-                          {getFieldConfig("region").required && " *"}
-                        </FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-region">
@@ -896,10 +892,6 @@ export function LeadForm({ data, programContext }: LeadFormProps) {
                     rules={{ required: getFieldConfig("location").required ? (locale === "es" ? "Campus requerido" : "Campus is required") : false }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>
-                          {locale === "es" ? "Campus" : "Campus Location"}
-                          {getFieldConfig("location").required && " *"}
-                        </FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-location">
