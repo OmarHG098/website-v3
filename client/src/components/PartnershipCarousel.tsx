@@ -234,7 +234,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
         )}
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-          <div className="relative min-h-[400px] md:min-h-[550px] overflow-hidden">
+          <div className="relative min-h-[400px] md:h-[500px] overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-in-out h-full"
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
@@ -242,7 +242,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
               {slides.map((slide, i) => (
                 <div
                   key={i}
-                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[550px]"
+                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[500px]"
                 >
                   <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
                     <UniversalImage
@@ -257,7 +257,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
                       data-testid={`img-partnership-slide-${i}`}
                     />
                   </div>
-                  <div className="flex flex-col justify-center md:col-span-7">
+                  <div className="flex flex-col justify-start md:col-span-7">
                     <SlideContent slide={slide} />
                   </div>
                 </div>
