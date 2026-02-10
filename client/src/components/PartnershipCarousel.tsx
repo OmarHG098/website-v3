@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -234,43 +234,32 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
         )}
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-          <div className="grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[550px]">
-            <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
+          <div className="relative min-h-[400px] md:min-h-[550px] overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-in-out h-full"
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            >
               {slides.map((slide, i) => (
                 <div
                   key={i}
-                  className={cn(
-                    "absolute inset-0 transition-opacity duration-400",
-                    i === activeIndex
-                      ? "opacity-100"
-                      : "opacity-0 pointer-events-none",
-                  )}
+                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[550px]"
                 >
-                  <UniversalImage
-                    id={slide.image_id}
-                    className="w-full h-full"
-                    style={{
-                      objectFit:
-                        (slide.object_fit as React.CSSProperties["objectFit"]) ||
-                        "cover",
-                      objectPosition: slide.object_position || "center",
-                    }}
-                    data-testid={`img-partnership-slide-${i}`}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col justify-center md:col-span-7">
-              {slides.map((slide, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "transition-opacity duration-400",
-                    i === activeIndex ? "opacity-100" : "opacity-0 hidden",
-                  )}
-                >
-                  <SlideContent slide={slide} />
+                  <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
+                    <UniversalImage
+                      id={slide.image_id}
+                      className="w-full h-full"
+                      style={{
+                        objectFit:
+                          (slide.object_fit as React.CSSProperties["objectFit"]) ||
+                          "cover",
+                        objectPosition: slide.object_position || "center",
+                      }}
+                      data-testid={`img-partnership-slide-${i}`}
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center md:col-span-7">
+                    <SlideContent slide={slide} />
+                  </div>
                 </div>
               ))}
             </div>
