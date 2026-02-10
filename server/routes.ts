@@ -3132,8 +3132,11 @@ sections: []
       }
       const applied = applyRegistryChanges(filtered);
       clearImageRegistryCache();
+      const yamlMsg = applied.yamlFilesUpdated.length > 0
+        ? `. Updated paths in ${applied.yamlFilesUpdated.length} YAML file(s)`
+        : "";
       res.json({
-        message: `Applied ${applied.added} new, ${applied.updated} updated`,
+        message: `Applied ${applied.added} new, ${applied.updated} updated${yamlMsg}`,
         ...applied,
       });
     } catch (error: any) {

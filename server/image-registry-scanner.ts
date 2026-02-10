@@ -237,11 +237,41 @@ export function scanImageRegistry(): ScanResult {
   };
 }
 
+function replacePathsInYamlFiles(
+  oldSrc: string,
+  newSrc: string
+): string[] {
+  const updatedFiles: string[] = [];
+
+  function walkDir(dir: string) {
+    if (!fs.existsSync(dir)) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walkDir(fullPath);
+      } else if (entry.name.endsWith(".yml") || entry.name.endsWith(".yaml")) {
+        const content = fs.readFileSync(fullPath, "utf8");
+        if (content.includes(oldSrc)) {
+          const updated = content.split(oldSrc).join(newSrc);
+          fs.writeFileSync(fullPath, updated, "utf8");
+          updatedFiles.push(path.relative(process.cwd(), fullPath));
+        }
+      }
+    }
+  }
+
+  walkDir(MARKETING_CONTENT_DIR);
+  return updatedFiles;
+}
+
 export function applyRegistryChanges(scanResult: ScanResult): {
   added: number;
   updated: number;
+  yamlFilesUpdated: string[];
 } {
   const registry = loadRegistry();
+  const allYamlFilesUpdated: string[] = [];
 
   for (const img of scanResult.newImages) {
     registry.images[img.id] = {
@@ -257,6 +287,8 @@ export function applyRegistryChanges(scanResult: ScanResult): {
     if (registry.images[img.id]) {
       registry.images[img.id].src = img.newSrc;
     }
+    const files = replacePathsInYamlFiles(img.oldSrc, img.newSrc);
+    allYamlFilesUpdated.push(...files);
   }
 
   fs.writeFileSync(REGISTRY_PATH, JSON.stringify(registry, null, 2) + "\n", "utf8");
@@ -264,5 +296,6 @@ export function applyRegistryChanges(scanResult: ScanResult): {
   return {
     added: scanResult.newImages.length,
     updated: scanResult.updatedImages.length,
+    yamlFilesUpdated: Array.from(new Set(allYamlFilesUpdated)),
   };
 }
