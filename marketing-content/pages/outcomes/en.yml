@@ -20,7 +20,10 @@ sections:
       src: /attached_assets/outcomes_1765562850573.png
       alt: Student outcomes growth chart
     marginY:
-      desktop: md none
+      desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    paddingY:
+      desktop: lg none
   - type: vertical_bars_cards
     version: "1.0"
     title: Hiring Results, Year After Year
@@ -158,37 +161,37 @@ sections:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: course-report-2024
         logo: /attached_assets/course-report_1765590146414.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: tech-hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: ebootcamp
         logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: premios-tecnologia
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: reviews-coursereport
         logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: excelencia-educativa
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
     paddingY:
-      desktop: md
+      desktop: md lg
     marginY:
       desktop: none sm
   - type: two_column_accordion_card
@@ -209,6 +212,8 @@ sections:
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
     reverse: true
+    marginY:
+      desktop: none lg
   - type: testimonials
     version: v1.0
     title: Real Career Results
@@ -254,7 +259,7 @@ sections:
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
     paddingY:
-      desktop: none lg
+      desktop: none
     background: hsl(210 100% 50% / 0.05)
   - type: faq
     version: v1.0

@@ -15,9 +15,10 @@ interface ThemeConfig {
   backgrounds: ThemeColor[];
   accents?: ThemeColor[];
   text?: ThemeColor[];
+  courses?: ThemeColor[]
 }
 
-export type ColorPickerType = "background" | "accent" | "text";
+export type ColorPickerType = "background" | "accent" | "text" | "courses";
 
 interface ColorPickerProps {
   value: string;
@@ -55,6 +56,9 @@ export function ColorPicker({
         break;
       case "text":
         themeColors = theme.text || [];
+        break;
+      case "courses":
+        themeColors = theme.courses || [];
         break;
     }
     

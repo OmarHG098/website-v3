@@ -195,8 +195,9 @@ const BentoCards = lazy(() => import("@/components/bento-cards/BentoCards").then
 const Banner = lazy(() => import("@/components/Banner").then(m => ({ default: m.Banner })));
 const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ default: m.FaqEditor })));
 const ImageRow = lazy(() => import("@/components/sections/ImageRow"));
-const CourseSelector = lazy(() => import("@/components/CourseSelector").then(m => ({ default: m.CourseSelector })));
+const CourseSelector = lazy(() => import("@/components/course-selector/CourseSelector").then(m => ({ default: m.CourseSelector })));
 const ArticleSection = lazy(() => import("@/components/Article").then(m => ({ default: m.Article })));
+const PartnershipCarousel = lazy(() => import("@/components/PartnershipCarousel").then(m => ({ default: m.PartnershipCarousel })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -469,6 +470,8 @@ export function renderSection(section: Section, index: number): React.ReactNode 
       return <LazySection key={index}><CourseSelector data={section as Parameters<typeof CourseSelector>[0]["data"]} /></LazySection>;
     case "article":
       return <LazySection key={index}><ArticleSection data={section as Parameters<typeof ArticleSection>[0]["data"]} /></LazySection>;
+    case "partnership_carousel":
+      return <LazySection key={index}><PartnershipCarousel data={section as any} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

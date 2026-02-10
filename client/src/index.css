@@ -63,6 +63,12 @@
 
 /* LIGHT MODE - 4Geeks Brand Colors */
 :root {
+  /* Temporary colors for courses */
+  --color-green: 152 60% 56%;
+  --color-orange: 18 100% 71%;
+  --color-pink: 330 80% 80%;
+  --color-purple: 270 60% 72%;
+    
   /* Brand Colors (from brandbook):
      Black: #00041A | Blue: #0084FF | Yellow: #FFB718
      Dark: #1D1D1F | Light: #FAFAFA | White: #FFFFFF */
@@ -695,6 +701,25 @@
 .prose-preview td { padding: 0.5rem; border-bottom: 1px solid hsl(var(--border)); }
 .prose-preview img { max-width: 100%; border-radius: 0.375rem; margin: 0.75rem 0; }
 .prose-preview strong { font-weight: 600; }
+
+/* Rich-text checkmark bullets */
+.rich-text-bullets ul { list-style: none; padding-left: 0; margin: 0.25rem 0; }
+.rich-text-bullets li { position: relative; padding-left: 1.75rem; margin: 0.25rem 0; }
+.rich-text-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: hsl(var(--primary));
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+}
 
 /* Desktop: switch to desktop values at 768px+ */
 @media (min-width: 768px) {

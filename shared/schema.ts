@@ -752,6 +752,8 @@ import { courseSelectorSectionSchema, type CourseSelectorSection, type CourseIte
 export { courseSelectorSectionSchema, type CourseSelectorSection, type CourseItem, type CourseBadge, type CourseTag };
 import { articleSectionSchema, type ArticleSection } from "../marketing-content/component-registry/article/v1.0/schema";
 export { articleSectionSchema, type ArticleSection };
+import { partnershipCarouselSectionSchema, type PartnershipCarouselSection, type PartnershipSlide } from "../marketing-content/component-registry/partnership_carousel/v1.0/schema";
+export { partnershipCarouselSectionSchema, type PartnershipCarouselSection, type PartnershipSlide };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -818,6 +820,7 @@ export const featureQuadSectionSchema = z.object({
   cards: z.array(featureQuadCardSchema),
   footer_description: z.string().optional(),
   background: z.string().optional(),
+  description_with_background: z.boolean().optional(),
   // Video option - when provided, replaces images with video
   // Accepts either string URL (legacy) or full config object
   video: z.union([
@@ -906,6 +909,7 @@ const baseSectionSchema = z.union([
   featureQuadSectionSchema,
   courseSelectorSectionSchema,
   articleSectionSchema,
+  partnershipCarouselSectionSchema,
 ]);
 
 // Combined section schema with layout fields

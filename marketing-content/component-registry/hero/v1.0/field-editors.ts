@@ -27,5 +27,6 @@ export const fieldEditors: Record<string, EditorType> = {
   "showcase:right_images[].src": "image-picker",
   "simpleTwoColumn:image.src": "image-picker",
   "simpleTwoColumn:subtitle": "rich-text-editor",
+  "singleColumn:image_id": "image-picker",
   "course:layout_reversed": "boolean-toggle",
 };

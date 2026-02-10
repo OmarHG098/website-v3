@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   IconBold,
   IconItalic,
+  IconList,
   IconLink,
   IconLinkOff,
   IconPalette,
@@ -339,6 +340,14 @@ export function RichTextArea({
     [applyCommand],
   );
 
+  const handleBulletList = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      applyCommand("insertUnorderedList");
+    },
+    [applyCommand],
+  );
+
   const handleLinkPopoverOpen = useCallback((open: boolean) => {
     if (open) {
       const sel = window.getSelection();
@@ -466,6 +475,17 @@ export function RichTextArea({
           data-testid={testId ? `${testId}-italic` : undefined}
         >
           <IconItalic className="h-4 w-4" />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onMouseDown={handleBulletList}
+          title="Bullet list"
+          data-testid={testId ? `${testId}-bullet-list` : undefined}
+        >
+          <IconList className="h-4 w-4" />
         </Button>
         <Popover open={linkOpen} onOpenChange={handleLinkPopoverOpen}>
           <PopoverTrigger asChild>
@@ -678,7 +698,7 @@ export function RichTextArea({
           contentEditable
           data-placeholder={placeholder}
           className={cn(
-            "min-h-[120px] px-3 py-2 text-sm outline-none overflow-auto",
+            "min-h-[120px] px-3 py-2 text-sm outline-none overflow-auto rich-text-bullets",
             "focus:ring-2 focus:ring-ring focus:ring-offset-0",
             "empty:before:content-[attr(data-placeholder)] empty:before:text-muted-foreground",
             "[&_a]:underline [&_a]:text-primary [&_a]:cursor-pointer",

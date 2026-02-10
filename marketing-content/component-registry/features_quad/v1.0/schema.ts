@@ -29,6 +29,7 @@ export const featureQuadSectionSchema = z.object({
   footer_description: z.string().optional().describe("Optional footer text (italic)"),
   background: z.string().optional().describe("Background CSS class (e.g., 'bg-muted/30')"),
   video: videoConfigSchema.optional().describe("Video configuration - when provided, replaces images with video"),
+description_with_background: z.boolean().optional().describe("If true, the description and title will have a background color on carousel variant")
 });
 
 export type FeatureQuadCard = z.infer<typeof featureQuadCardSchema>;

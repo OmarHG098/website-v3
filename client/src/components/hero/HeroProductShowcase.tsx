@@ -10,6 +10,12 @@ import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
 
+function parseLogoHeight(value?: string): number | undefined {
+  if (!value) return undefined;
+  const match = value.match(/^(\d+)/);
+  return match ? parseInt(match[1], 10) : undefined;
+}
+
 interface HeroProductShowcaseProps {
   data: HeroProductShowcaseType | HeroApplyFormProductShowcase;
 }
@@ -220,7 +226,8 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                           <img 
                             src={item.logo} 
                             alt={item.alt}
-                            className={`${item.logoHeight || "h-8 md:h-12"} w-auto object-contain`}
+                            style={{ height: parseLogoHeight(item.logoHeight) || 48 }}
+                            className="w-auto object-contain"
                             loading="lazy"
                           />
                         ) : (

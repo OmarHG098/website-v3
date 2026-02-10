@@ -58,7 +58,7 @@ sections:
     version: "1.0"
     variant: singleColumn
     title: Launch an AI-Ready Tech Career in Miami
-    subtitle: Train for today’s most in-demand tech roles — including AI Engineering — in one of the country’s fastest-growing tech hubs and home to our global headquarters. Learn online or in person with live instruction, hands-on projects, and personalized career support built for real hiring.
+    subtitle: Train for today’s most in-demand tech roles, including AI Engineering, in one of the country’s fastest-growing tech hubs and home to our global headquarters. Learn online or in person with live instruction, hands-on projects, and personalized career support built for real hiring.
     badge: Miami Campus
     cta_buttons:
       - text: Apply Now
@@ -80,35 +80,35 @@ sections:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: course-report-2024
         logo: /attached_assets/course-report_1765590146414.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: tech-hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: ebootcamp
         logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: premios-tecnologia
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: reviews-coursereport
         logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: excelencia-educativa
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
     marginY:
       desktop: lg none
   - type: banner
@@ -134,7 +134,7 @@ sections:
     right:
       heading: What Miami’s Tech Boom Unlocks for Local Talent
       sub_heading: Hear directly from Mayor Francis Suarez on why Miami has become one of the fastest-growing tech hubs in the U.S.
-      description: In this conversation with 4Geeks, Mayor Suarez shares advice for people entering tech and explains what’s driving Miami’s job growth — and why software development and AI skills are central to the city’s future.
+      description: Mayor Suarez shares advice for people entering tech and explains what’s driving Miami’s job growth — and why software development and AI skills are central to the city’s future.
       button:
         text: Watch the full interview
         url: https://youtu.be/4n-ZAUPIxJI
@@ -176,7 +176,7 @@ sections:
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
-    title: Everything You Need to Launch a Tech Career
+    title: Everything You Need to Succeed in an AI-Driven Industry
     description: AI-ready training, expert guidance, and long-term support designed for the modern tech landscape.
     bullets:
       - heading: 1:1 Mentorship, Unlimited and for Life
@@ -193,7 +193,7 @@ sections:
     paddingY:
       desktop: md none
   - type: testimonials_slide
-    title: Proven Paths to Tech Careerss
+    title: Proven Paths to Tech Careers
     description: These student journeys show how structured learning, AI-powered support, and expert career coaching lead to real outcomes.
     background: bg-sidebar
   - type: split_cards
@@ -212,8 +212,11 @@ sections:
   - type: why_learn_ai
     variant: laptop-edge
     title: Why Miami Is a Smart Place to Launch Your Tech Career
-    subtitle: Software Development as You Know It Will Cease to Exist
-    description: Miami is one of the fastest growing tech ecosystems in the world. Join the number 1 part-time Coding Bootcamp in Miami and become part of the best place to learn to code in Florida. Career Support and Mentorship for our students is for life. Located in Brickell and 5 mins away from the Metro Mover (subway station). Our place is full of amenities, and close to everything. We have parking (free for students and members of the community), and we have a great terrace! Brickell is one of the most active areas in the city. The office is opened 24/7 during the week and on Saturday we host our famous 'Coding Weekends' when students and other developers gather to code all day with mentors, pizzas and drinks on the house!
+    subtitle: A fast-growing tech ecosystem with real hiring momentum
+    description: |
+      Miami has become one of the fastest-growing tech hubs in the U.S., driven by startup growth, venture capital, and increasing demand for technical talent.
+      • Ranked among the fastest-growing tech job markets in the country   • A top global startup ecosystem with rising venture capital activity   • Strong demand for software, AI, and data skills across industries  
+      Located in Brickell, our Miami campus places you at the center of this ecosystem, with frequent in-person events, networking opportunities, and direct exposure to local employers and hiring partners. You learn alongside a community of peers, alumni, and mentors—while building real connections that support your entry into the tech workforce.
   - type: mentorship
     version: v1.0
     title: Mentorship & Support
@@ -251,7 +254,7 @@ sections:
   - type: testimonials
     version: v1.0
     title: What Our Students Say
-    subtitle: Real stories from graduates who transformed their careers
+    subtitle: Hear directly from graduates who transformed their careers
     rating_summary:
       average: "4.9"
       count: 2,847

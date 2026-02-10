@@ -39,8 +39,11 @@ export const splitCardsSectionSchema = z.object({
     tool_icons: z.array(toolIconSchema).optional(),
   }),
   secondary: z.object({
-    benefits: z.array(splitCardsBenefitSchema).min(1).max(5),
+    benefits: z.array(splitCardsBenefitSchema).max(5).optional(),
     bullet_icon: z.string().optional(),
+    image_id: z.string().optional(),
+    image_object_fit: z.enum(["cover", "contain", "fill", "none"]).optional(),
+    image_object_position: z.string().optional(),
   }),
   background: z.string().optional(),
 });

@@ -1917,6 +1917,68 @@ export function SectionEditorPanel({
                       </div>
                     );
                   }
+
+                  if (editorType === "image-picker") {
+                    const groupedByParent: Record<string, NestedItem[]> = {};
+                    leafItems.forEach((leaf) => {
+                      const topLabel = leaf.parentLabel.split(" > ")[0] || "Items";
+                      if (!groupedByParent[topLabel]) groupedByParent[topLabel] = [];
+                      groupedByParent[topLabel].push(leaf);
+                    });
+
+                    return (
+                      <div key={fieldPath} className="space-y-3">
+                        <Label className="text-sm font-medium capitalize">
+                          {lastSegmentLabel.replace(/_/g, " ")}
+                        </Label>
+                        {Object.entries(groupedByParent).map(([groupLabel, items]) => (
+                          <div key={groupLabel} className="space-y-1">
+                            <span className="text-xs text-muted-foreground">{groupLabel}</span>
+                            <div className="flex flex-wrap gap-2">
+                              {items.map((leaf, idx) => {
+                                const currentValue = (leaf.item[itemField] as string) || "";
+                                const altValue = (leaf.item.alt as string) || "";
+                                const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => {
+                                      setImagePickerTarget({
+                                        arrayPath: "__nested__",
+                                        index: 0,
+                                        srcField: itemField,
+                                        currentSrc: currentValue,
+                                        currentAlt: altValue,
+                                        tagFilter: variant,
+                                      });
+                                      setNestedUpdateFn(() => (value: string) => updateNestedField(leaf, value));
+                                      setImagePickerOpen(true);
+                                    }}
+                                    className="w-12 h-12 rounded-md overflow-hidden bg-muted border border-border hover:border-primary transition-colors flex-shrink-0"
+                                    data-testid={`props-image-${lastSegmentLabel}-nested-${idx}`}
+                                    title={altValue || `Image ${idx + 1}`}
+                                  >
+                                    {currentValue ? (
+                                      <img
+                                        src={displaySrc}
+                                        alt={altValue || `Image ${idx + 1}`}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                                        ?
+                                      </div>
+                                    )}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
                   
                   return null;
                 }
@@ -2265,7 +2327,7 @@ export function SectionEditorPanel({
                                 id: "",
                                 [itemField]: "",
                                 alt: "",
-                                logoHeight: "h-10 md:h-14",
+                                logoHeight: "56px",
                               };
                               addArrayItem(arrayPath, defaultItem);
                             }}
@@ -2813,7 +2875,10 @@ export function SectionEditorPanel({
               variant="destructive"
               onClick={() => {
                 if (imagePickerTarget) {
-                  if (imagePickerTarget.fieldPath) {
+                  if (nestedUpdateFn) {
+                    nestedUpdateFn("");
+                    setNestedUpdateFn(null);
+                  } else if (imagePickerTarget.fieldPath) {
                     // Simple field - clear the value
                     updateProperty(imagePickerTarget.fieldPath, "");
                   } else if (imagePickerTarget.arrayPath && imagePickerTarget.index !== undefined) {
@@ -2854,7 +2919,10 @@ export function SectionEditorPanel({
                 type="button"
                 onClick={() => {
                   if (imagePickerTarget) {
-                    if (imagePickerTarget.fieldPath) {
+                    if (nestedUpdateFn) {
+                      nestedUpdateFn(imagePickerTarget.currentSrc);
+                      setNestedUpdateFn(null);
+                    } else if (imagePickerTarget.fieldPath) {
                       // Simple field - update directly
                       updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
                     } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
