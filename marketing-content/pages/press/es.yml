@@ -1,0 +1,9 @@
+slug: press
+template: default
+title: press
+meta:
+  page_title: press | 4Geeks Academy
+  description: press - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /press
+sections: []
