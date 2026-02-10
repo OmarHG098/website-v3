@@ -1968,6 +1968,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const fullPath = path.join(process.cwd(), normalizedPath);
       
       if (!fs.existsSync(fullPath)) {
+        console.log(`[Content File] 404 for path: ${filePath} (normalized: ${normalizedPath}, full: ${fullPath})`);
         res.status(404).json({ error: "File not found" });
         return;
       }
