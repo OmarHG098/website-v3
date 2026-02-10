@@ -1272,6 +1272,11 @@ export function DebugBubble() {
       if (response.ok) {
         setCacheClearStatus("success");
         setTimeout(() => setCacheClearStatus("idle"), 2000);
+        const freshRes = await fetch("/api/debug/sitemap-urls");
+        if (freshRes.ok) {
+          const freshData = await freshRes.json();
+          setSitemapUrls(freshData);
+        }
       } else {
         console.error("Failed to clear sitemap cache");
         setCacheClearStatus("idle");
