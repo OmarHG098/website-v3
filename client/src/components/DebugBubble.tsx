@@ -1165,85 +1165,57 @@ export function DebugBubble() {
 
   const handleDownloadYml = async (url: SitemapUrl) => {
     const urlPath = new URL(url.loc).pathname;
-    const contentType = getContentTypeFromPath(urlPath);
-    if (!contentType) {
-      toast({ title: "Cannot download", description: "Unrecognized content type", variant: "destructive" });
-      return;
-    }
     const parts = urlPath.split('/').filter(Boolean);
-    const hasLocale = parts[0] === 'en' || parts[0] === 'es' || parts[0] === 'us';
-    const locale = hasLocale ? parts[0] : 'en';
+    const hasLocale = parts[0] === 'en' || parts[0] === 'es';
     const contentParts = hasLocale ? parts.slice(1) : parts;
-    let slug = '';
-    if (contentType === 'landing') {
-      slug = contentParts.slice(1).join('-') || contentParts[contentParts.length - 1];
-    } else if (contentType === 'program') {
-      slug = contentParts[contentParts.length - 1];
-    } else if (contentType === 'location') {
-      slug = contentParts[contentParts.length - 1];
-    } else {
-      const rawSlug = contentParts.join('-') || contentParts[contentParts.length - 1];
-      slug = getFolderFromSlug(rawSlug, locale === 'us' ? 'en' : locale);
-    }
+    const slug = contentParts[contentParts.length - 1];
     if (!slug) {
-      toast({ title: "Cannot download", description: "Could not determine slug", variant: "destructive" });
+      toast({ title: "Cannot download", description: "Could not determine slug from URL", variant: "destructive" });
       return;
     }
     const token = getDebugToken();
     const headers: Record<string, string> = {};
     if (token) headers["Authorization"] = `Token ${token}`;
 
-    const contentFolders = ['pages', 'programs', 'locations', 'landings'];
-    const folderMap: Record<string, string> = { page: 'pages', program: 'programs', location: 'locations', landing: 'landings' };
-    const primaryFolder = folderMap[contentType];
-    const foldersToTry = [primaryFolder, ...contentFolders.filter(f => f !== primaryFolder)];
+    try {
+      const resolveRes = await fetch(`/api/content/resolve-folder?slug=${encodeURIComponent(slug)}`, { headers });
+      if (!resolveRes.ok) {
+        toast({ title: "No YAML found", description: `This page has no YAML content files (code-only route)` });
+        return;
+      }
+      const resolveData = await resolveRes.json();
 
-    let foundFolder = '';
-    let fileList: string[] = [];
-    for (const folder of foldersToTry) {
-      try {
-        const res = await fetch(`/api/content/folder-files?path=marketing-content/${folder}/${slug}`, { headers });
-        if (!res.ok) continue;
-        const data = await res.json();
-        if (data.files && data.files.length > 0) {
-          foundFolder = `marketing-content/${folder}/${slug}`;
-          fileList = data.files;
-          break;
+      const entries: { folder: string; files: string[]; title?: string; contentType: string }[] = resolveData.multiple
+        ? resolveData.matches
+        : [resolveData];
+
+      let downloadedCount = 0;
+      for (const entry of entries) {
+        for (const filename of entry.files) {
+          try {
+            const res = await fetch(`/api/content/file?path=${encodeURIComponent(`${entry.folder}/${filename}`)}`, { headers });
+            if (!res.ok) continue;
+            const text = await res.text();
+            const blob = new Blob([text], { type: 'text/yaml' });
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = entries.length > 1 ? `${entry.contentType}-${slug}-${filename}` : `${slug}-${filename}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+            downloadedCount++;
+          } catch {}
         }
-      } catch {
-        // try next folder
       }
-    }
-
-    if (!foundFolder || fileList.length === 0) {
-      toast({ title: "No files found", description: `No YAML files found for ${slug}`, variant: "destructive" });
-      return;
-    }
-
-    let downloadedCount = 0;
-    for (const filename of fileList) {
-      try {
-        const res = await fetch(`/api/content/file?path=${encodeURIComponent(`${foundFolder}/${filename}`)}`, { headers });
-        if (!res.ok) continue;
-        const text = await res.text();
-        const blob = new Blob([text], { type: 'text/yaml' });
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = `${slug}-${filename}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(blobUrl);
-        downloadedCount++;
-      } catch {
-        // skip
+      if (downloadedCount > 0) {
+        toast({ title: "Download complete", description: `Downloaded ${downloadedCount} YAML file(s) for "${slug}"` });
+      } else {
+        toast({ title: "No files found", description: `No YAML files could be downloaded for "${slug}"`, variant: "destructive" });
       }
-    }
-    if (downloadedCount > 0) {
-      toast({ title: "Download complete", description: `Downloaded ${downloadedCount} YAML file(s) for ${slug}` });
-    } else {
-      toast({ title: "No files found", description: `No YAML files found for ${slug}`, variant: "destructive" });
+    } catch (error) {
+      toast({ title: "Download failed", description: "An error occurred while downloading", variant: "destructive" });
     }
   };
 

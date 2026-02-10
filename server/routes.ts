@@ -22,6 +22,7 @@ import {
   getSitemapUrls,
 } from "./sitemap";
 import { markFileAsModified } from "./sync-state";
+import { contentIndex } from "./content-index";
 import {
   redirectMiddleware,
   getRedirects,
@@ -1960,13 +1961,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(403).json({ error: "Access denied" });
         return;
       }
-      const fullPath = path.join(process.cwd(), normalizedPath);
-      if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
+      const entry = contentIndex.findByPath(normalizedPath);
+      if (!entry) {
         res.status(404).json({ error: "Folder not found" });
         return;
       }
-      const files = fs.readdirSync(fullPath).filter(f => f.endsWith('.yml') || f.endsWith('.yaml'));
-      res.json({ files, folder: normalizedPath });
+      res.json({ files: entry.files, folder: entry.folder });
     } catch (error) {
       console.error("Error listing folder:", error);
       res.status(500).json({ error: "Failed to list folder" });
@@ -1976,26 +1976,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/content/resolve-folder", (req, res) => {
     try {
       const slug = req.query.slug as string;
+      const type = req.query.type as string | undefined;
       if (!slug) {
         res.status(400).json({ error: "slug is required" });
         return;
       }
-      const contentDirs = ['pages', 'programs', 'locations', 'landings'];
-      const baseDir = path.join(process.cwd(), 'marketing-content');
-      for (const dir of contentDirs) {
-        const folderPath = path.join(baseDir, dir, slug);
-        if (fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory()) {
-          const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.yml') || f.endsWith('.yaml'));
-          if (files.length > 0) {
-            res.json({ folder: `marketing-content/${dir}/${slug}`, contentType: dir, files });
-            return;
-          }
-        }
+      const opts = type ? { contentType: type as any } : undefined;
+      const matches = contentIndex.findBySlug(slug, opts);
+      if (matches.length === 0) {
+        res.status(404).json({ error: "No content folder found for this slug" });
+        return;
       }
-      res.status(404).json({ error: "No content folder found for this slug" });
+      if (matches.length === 1) {
+        const entry = matches[0];
+        res.json({ folder: entry.folder, contentType: entry.contentType, files: entry.files, title: entry.title });
+      } else {
+        res.json({
+          multiple: true,
+          matches: matches.map(e => ({ folder: e.folder, contentType: e.contentType, files: e.files, title: e.title })),
+        });
+      }
     } catch (error) {
       console.error("Error resolving folder:", error);
       res.status(500).json({ error: "Failed to resolve folder" });
+    }
+  });
+
+  app.get("/api/content/index", (_req, res) => {
+    try {
+      const entries = contentIndex.listAll();
+      const stats = contentIndex.getStats();
+      res.json({ entries, stats });
+    } catch (error) {
+      console.error("Error listing content index:", error);
+      res.status(500).json({ error: "Failed to list content index" });
+    }
+  });
+
+  app.post("/api/content/index/refresh", (_req, res) => {
+    try {
+      contentIndex.refresh();
+      const stats = contentIndex.getStats();
+      res.json({ refreshed: true, stats });
+    } catch (error) {
+      console.error("Error refreshing content index:", error);
+      res.status(500).json({ error: "Failed to refresh content index" });
     }
   });
 
@@ -2154,9 +2179,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       if (result.success) {
-        // Clear relevant caches
         clearSitemapCache();
         clearRedirectCache();
+        contentIndex.refresh();
 
         // Return success with updated sections for immediate UI update
         // Include warning if GitHub sync failed
@@ -2392,8 +2417,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               markFileAsModified(`marketing-content/${folderMap[type]}/${enSlug}/${file}`);
             }
             
-            // Clear sitemap cache so the new content appears
             clearSitemapCache();
+            contentIndex.refresh();
             
             res.json({ 
               success: true, 
@@ -2550,6 +2575,7 @@ sections: []
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
 
+      contentIndex.refresh();
       res.json({ 
         success: true, 
         slugEn: enSlug,
@@ -2654,6 +2680,7 @@ sections: []
       fs.rmSync(folderPath, { recursive: true, force: true });
 
       console.log(`[Content] Deleted ${type}/${slug}`);
+      contentIndex.refresh();
 
       res.json({ success: true, message: `Successfully deleted ${type}/${slug}` });
     } catch (error) {
@@ -2775,8 +2802,8 @@ sections: []
                 markFileAsModified(`marketing-content/landings/${slug}/${file}`);
               }
               
-              // Clear sitemap cache so the new content appears
               clearSitemapCache();
+              contentIndex.refresh();
               
               res.json({ 
                 success: true, 
@@ -2815,8 +2842,8 @@ sections: []
       fs.writeFileSync(path.join(folderPath, 'promoted.yml'), promotedYml);
       markFileAsModified(`marketing-content/landings/${slug}/promoted.yml`);
 
-      // Clear sitemap cache so the new content appears
       clearSitemapCache();
+      contentIndex.refresh();
 
       res.json({ 
         success: true, 
