@@ -911,6 +911,11 @@
       "sha": "8cb0b5f33277d13b1b8cf8db6bac4a32fc5bba1e2a421fbb35e9133999dcd242",
       "lastModified": 1770649563533.4868,
       "remoteSha": "8cb0b5f33277d13b1b8cf8db6bac4a32fc5bba1e2a421fbb35e9133999dcd242"
+    },
+    "marketing-content/pages/deleteme/en.yml": {
+      "sha": "ea2ce81ea2057a7a691a624eb6194b21de4c93eda5b57a7c7e13ae0509360172",
+      "lastModified": 1770734893851.235,
+      "modifiedAt": "2026-02-10T14:48:13.853Z"
     }
   }
 }

@@ -1,0 +1,9 @@
+slug: deleteme
+template: default
+title: deleteme
+meta:
+  page_title: deleteme | 4Geeks Academy
+  description: deleteme - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /deleteme
+sections: []
