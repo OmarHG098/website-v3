@@ -63,9 +63,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
-      "lastModified": 1770748356611.7444,
-      "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531"
+      "sha": "f7dfccb5bbdf0e58bc258c63211d128a4434f71637fc00764739790b7ebdbe88",
+      "lastModified": 1770764793123.952,
+      "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-10T23:06:33.125Z"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
       "sha": "e6f64c1a84fc98d80eea02840af8408a8d28b4e7c761f489bad5f10e55469198",

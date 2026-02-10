@@ -176,6 +176,148 @@ sections:
         link_text: Leer Artículo
         link_url: https://example.com/article-5
   - type: partnership_carousel
+    variant: split-card
+    version: v1.0
+    heading: Our Global Partnerships
+    subtitle: Collaborating with leading institutions to bring coding education worldwide
+    slides:
+      - image_id: costa_rica_city
+        title: CRUSA Forte Scholarship
+        subtitle: Empowering Costa Rican talent through tech education
+        description: In partnership with Fundación CRUSA, we launched the Forte Scholarship program to train the next generation of software developers in Costa Rica, providing full scholarships to underrepresented communities.
+        stats:
+          - value: 200+
+            label: Scholarships awarded
+          - value: 85%
+            label: Employment rate
+          - value: "12"
+            label: Months program
+        institution_logos:
+          - image_id: costa_rica_city
+            alt: CRUSA Foundation
+            logo_height: 40px
+        press_references:
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            url: https://example.com/article-1
+            source: La Nación
+        cta:
+          text: Learn More
+          url: /en/costa-rica
+          variant: primary
+      - image_id: united_way_event
+        title: United Way Miami Partnership
+        subtitle: Breaking barriers to tech careers in South Florida
+        description: Together with United Way Miami, we provide coding bootcamp scholarships to low-income residents, helping them transition into high-paying tech careers and strengthening the local workforce.
+        stats:
+          - value: 150+
+            label: Students trained
+          - value: 92%
+            label: Completion rate
+        institution_logos:
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+        press_references:
+          - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
+            url: https://example.com/article-2
+            source: Miami Herald
+        cta:
+          text: See Impact
+          url: /en/united-way
+          variant: primary
+      - image_id: uruguay_city
+        title: Uruguay Tech Initiative
+        subtitle: Expanding coding education across Latin America
+        description: Our expansion to Uruguay brings world-class coding education to Montevideo, partnering with local institutions to develop a thriving tech ecosystem in the region.
+        stats:
+          - value: "3"
+            label: Campuses
+          - value: 500+
+            label: Graduates
+        cta:
+          text: Explore Uruguay
+          url: /en/uruguay
+          variant: outline
+    background: hsl(var(--secondary))
+  - type: partnership_carousel
+    variant: split-card
+    vertical_cards: true
+    version: v1.0
+    heading: Our Global Partnerships
+    subtitle: Collaborating with leading institutions to bring coding education worldwide
+    background: hsl(var(--secondary))
+    slides:
+      - image_id: costa_rica_city
+        object_position: 100% 80%
+        title: CRUSA Forte Scholarship
+        subtitle: Empowering Costa Rican talent through tech education
+        description: In collaboration with Forte and Crusa, 4Geeks Academy has partnered with the FORTE model to boost talent development in Costa Rica. This program has trained over 35 students in high-demand digital technologies, focusing on women from areas with high unemployment. Through the program, participants receive free training, enabling them to access better jobs in the 4.0 industry and contribute to the country's economic growth.
+        stats:
+          - value: 200+
+            label: Scholarships awarded
+          - value: 85%
+            label: Employment rate
+          - value: 85%
+            label: Employment rate
+        institution_logos:
+          - image_id: logo_crusa
+            alt: CRUSA Foundation
+            logo_height: 40px
+        press_references:
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            url: https://example.com/article-1
+            source: La Nación
+        cta:
+          text: Learn More
+          url: /en/costa-rica
+          variant: primary
+      - image_id: united_way_event
+        title: United Way Miami Partnership
+        subtitle: Breaking barriers to tech careers in South Florida
+        description: Together with United Way Miami, we provide coding bootcamp scholarships to low-income residents, helping them transition into high-paying tech careers and strengthening the local workforce.
+        stats:
+          - value: 150+
+            label: Students trained
+          - value: 92%
+            label: Completion rate
+        institution_logos:
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+        press_references:
+          - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
+            url: https://example.com/article-2
+            source: Miami Herald
+        cta:
+          text: See Impact
+          url: /en/united-way
+          variant: primary
+      - image_id: uruguay_city
+        object_position: 10% 80%
+        title: Uruguay Tech Initiative
+        subtitle: Expanding coding education across Latin America
+        description: Our expansion to Uruguay brings world-class coding education to Montevideo, partnering with local institutions to develop a thriving tech ecosystem in the region.
+        stats:
+          - value: "3"
+            label: Campuses
+          - value: 500+
+            label: Graduates
+        institution_logos:
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+        press_references:
+          - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
+            url: https://example.com/article-2
+            source: Miami Herald
+        cta:
+          text: Explore Uruguay
+          url: /en/uruguay
+          variant: outline
+  - type: partnership_carousel
     version: v1.0
     heading: Our Global Partnerships
     subtitle: Collaborating with leading institutions to bring coding education worldwide

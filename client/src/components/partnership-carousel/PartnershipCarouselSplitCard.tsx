@@ -17,10 +17,18 @@ interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
 }
 
-function SlideLeftCard({ slide }: { slide: PartnershipSlide }) {
+function SlideLeftCard({
+  slide,
+  verticalCards = false,
+}: {
+  slide: PartnershipSlide;
+  verticalCards?: boolean;
+}) {
   return (
-    <Card className="flex flex-col h-full">
-      <div className="relative overflow-hidden aspect-[16/9] md:aspect-[16/8] rounded-t-[0.8rem]">
+    <Card className={`flex ${verticalCards ? "" : "flex-col"} h-full`}>
+      <div
+        className={`min-h-[430px] relative overflow-hidden aspect-[16/9] md:aspect-[16/6] rounded-t-[0.8rem] ${verticalCards ? "w-[53%]" : ""}`}
+      >
         <UniversalImage
           id={slide.image_id}
           className="w-full h-full"
@@ -51,26 +59,31 @@ function SlideLeftCard({ slide }: { slide: PartnershipSlide }) {
         )}
 
         {slide.stats && slide.stats.length > 0 && (
-          <div
-            className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-auto"
-            data-testid="stats-partnership"
-          >
-            {slide.stats.map((stat, i) => (
-              <Card key={i} className="flex flex-col items-center justify-center p-3">
-                <span
-                  className="text-2xl md:text-3xl font-bold text-primary"
-                  data-testid={`text-stat-value-${i}`}
+          <div className="flex justify-center">
+            <div
+              className={`grid ${slide.stats.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2"} grid-cols-2 gap-3 mt-auto`}
+              data-testid="stats-partnership"
+            >
+              {slide.stats.map((stat, i) => (
+                <Card
+                  key={i}
+                  className="flex flex-col items-center justify-center p-3"
                 >
-                  {stat.value}
-                </span>
-                <span
-                  className="text-xs text-muted-foreground text-center"
-                  data-testid={`text-stat-label-${i}`}
-                >
-                  {stat.label}
-                </span>
-              </Card>
-            ))}
+                  <span
+                    className="text-2xl md:text-3xl font-bold text-primary"
+                    data-testid={`text-stat-value-${i}`}
+                  >
+                    {stat.value}
+                  </span>
+                  <span
+                    className="text-xs text-muted-foreground text-center"
+                    data-testid={`text-stat-label-${i}`}
+                  >
+                    {stat.label}
+                  </span>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
@@ -100,8 +113,10 @@ function SlideLeftCard({ slide }: { slide: PartnershipSlide }) {
 }
 
 function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
-  const hasInstitutions = slide.institution_logos && slide.institution_logos.length > 0;
-  const hasReferences = slide.press_references && slide.press_references.length > 0;
+  const hasInstitutions =
+    slide.institution_logos && slide.institution_logos.length > 0;
+  const hasReferences =
+    slide.press_references && slide.press_references.length > 0;
 
   if (!hasInstitutions && !hasReferences) return null;
 
@@ -115,11 +130,14 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
           >
             Institutions that contributed to this project
           </h4>
-          <div className="grid grid-cols-2 gap-3" data-testid="logos-partnership">
+          <div
+            className="grid grid-cols-4 gap-3"
+            data-testid="logos-partnership"
+          >
             {slide.institution_logos!.map((logo, i) => (
               <Card
                 key={i}
-                className="flex items-center justify-center p-3"
+                className="flex items-center justify-center p-1"
                 data-testid={`card-institution-logo-${i}`}
               >
                 <div
@@ -147,10 +165,7 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
           >
             References
           </h4>
-          <div
-            className="flex flex-col gap-2"
-            data-testid="press-partnership"
-          >
+          <div className="flex flex-col gap-2" data-testid="press-partnership">
             {slide.press_references!.map((ref, i) => (
               <div
                 key={i}
@@ -187,8 +202,56 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
   );
 }
 
-export function PartnershipCarouselSplitCard({ data }: PartnershipCarouselProps) {
-  const { slides, heading, subtitle, autoplay, autoplay_interval } = data;
+function SlideContent({
+  slide,
+  verticalCards = false,
+}: {
+  slide: PartnershipSlide;
+  verticalCards?: boolean;
+}) {
+  const hasRightCard =
+    (slide.institution_logos && slide.institution_logos.length > 0) ||
+    (slide.press_references && slide.press_references.length > 0);
+
+  return (
+    <div
+      className={cn(
+        "grid gap-6",
+        hasRightCard ? "grid-cols-1 md:grid-cols-12" : "grid-cols-1",
+      )}
+    >
+      <div
+        className={
+          hasRightCard
+            ? `${verticalCards ? "md:col-span-9" : "md:col-span-8"}`
+            : ""
+        }
+      >
+        <SlideLeftCard slide={slide} verticalCards={verticalCards} />
+      </div>
+
+      {hasRightCard && (
+        <div
+          className={`${verticalCards ? "md:col-span-3" : "md:col-span-4"}`}
+        >
+          <SlideRightCard slide={slide} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function PartnershipCarouselSplitCard({
+  data,
+}: PartnershipCarouselProps) {
+  const {
+    slides,
+    heading,
+    subtitle,
+    autoplay,
+    autoplay_interval,
+    vertical_cards,
+  } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -201,7 +264,7 @@ export function PartnershipCarouselSplitCard({ data }: PartnershipCarouselProps)
       if (isTransitioning) return;
       setIsTransitioning(true);
       setActiveIndex(((index % totalSlides) + totalSlides) % totalSlides);
-      setTimeout(() => setIsTransitioning(false), 400);
+      setTimeout(() => setIsTransitioning(false), 500);
     },
     [totalSlides, isTransitioning],
   );
@@ -239,14 +302,6 @@ export function PartnershipCarouselSplitCard({ data }: PartnershipCarouselProps)
     isPausedRef.current = false;
   }, []);
 
-  const currentSlide = slides[activeIndex];
-
-  if (!currentSlide) return null;
-
-  const hasRightCard =
-    (currentSlide.institution_logos && currentSlide.institution_logos.length > 0) ||
-    (currentSlide.press_references && currentSlide.press_references.length > 0);
-
   return (
     <section
       className="w-full"
@@ -277,23 +332,25 @@ export function PartnershipCarouselSplitCard({ data }: PartnershipCarouselProps)
           </div>
         )}
 
-        <div
-          className={cn(
-            "grid gap-6",
-            hasRightCard
-              ? "grid-cols-1 md:grid-cols-12"
-              : "grid-cols-1",
-          )}
-        >
-          <div className={hasRightCard ? "md:col-span-8" : ""}>
-            <SlideLeftCard slide={currentSlide} />
+        <div className="relative">
+          <div className="grid grid-cols-1 grid-rows-1">
+            {slides.map((slide, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "col-start-1 row-start-1 transition-all duration-500 ease-in-out",
+                  i === activeIndex
+                    ? "opacity-100 translate-y-0 z-10"
+                    : "opacity-0 translate-y-4 z-0 pointer-events-none",
+                )}
+              >
+                <SlideContent
+                  slide={slide}
+                  verticalCards={vertical_cards}
+                />
+              </div>
+            ))}
           </div>
-
-          {hasRightCard && (
-            <div className="md:col-span-4">
-              <SlideRightCard slide={currentSlide} />
-            </div>
-          )}
         </div>
 
         {totalSlides > 1 && (
