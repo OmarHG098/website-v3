@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -305,6 +305,23 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
   const singleLandingLocation = hasLandingLocations && landingLocations.length === 1 ? landingLocations[0] : null;
   const multipleLandingLocations = hasLandingLocations && landingLocations.length > 1 ? landingLocations : null;
 
+  const { data: formOptions } = useQuery<FormOptions>({
+    queryKey: ["/api/form-options", locale],
+  });
+
+  const landingRegions = useMemo(() => {
+    if (!hasLandingLocations || !formOptions?.locations) return null;
+    const regionSlugs = new Set<string>();
+    for (const locSlug of landingLocations!) {
+      const found = formOptions.locations.find(l => l.slug === locSlug);
+      if (found) regionSlugs.add(found.region);
+    }
+    return regionSlugs.size > 0 ? Array.from(regionSlugs) : null;
+  }, [hasLandingLocations, landingLocations, formOptions?.locations]);
+
+  const singleLandingRegion = landingRegions && landingRegions.length === 1 ? landingRegions[0] : null;
+  const multipleLandingRegions = landingRegions && landingRegions.length > 1 ? landingRegions : null;
+
   const getFieldConfig = (fieldName: keyof NonNullable<LeadFormData["fields"]>): FieldConfig => {
     const defaults: Record<string, FieldConfig> = {
       email: { visible: true, required: true },
@@ -328,12 +345,17 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
       }
     }
 
+    if (fieldName === "region" && hasLandingLocations) {
+      if (singleLandingRegion) {
+        return { ...baseConfig, visible: false, default: singleLandingRegion };
+      }
+      if (multipleLandingRegions) {
+        return { ...baseConfig, visible: true, required: true, default: "" };
+      }
+    }
+
     return baseConfig;
   };
-
-  const { data: formOptions } = useQuery<FormOptions>({
-    queryKey: ["/api/form-options", locale],
-  });
   const resolveDefault = (fieldName: string, configDefault?: string): string => {
     if (!configDefault || configDefault !== "auto") {
       return configDefault || "";
@@ -346,6 +368,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
         if (singleLandingLocation) return singleLandingLocation;
         return sessionLocation?.slug || "";
       case "region":
+        if (singleLandingRegion) return singleLandingRegion;
         return sessionLocation?.region || "";
       case "coupon":
         return utm.coupon || "";
@@ -377,7 +400,9 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
     } else if (sessionLocation && !form.getValues("location")) {
       form.setValue("location", sessionLocation.slug);
     }
-    if (sessionLocation?.region && !form.getValues("region")) {
+    if (singleLandingRegion) {
+      form.setValue("region", singleLandingRegion);
+    } else if (sessionLocation?.region && !form.getValues("region")) {
       form.setValue("region", sessionLocation.region);
     }
     if (utm.coupon && !form.getValues("coupon")) {
@@ -386,7 +411,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
     if (programContext && !form.getValues("program")) {
       form.setValue("program", programContext);
     }
-  }, [sessionLocation, utm, programContext, form, singleLandingLocation]);
+  }, [sessionLocation, utm, programContext, form, singleLandingLocation, singleLandingRegion]);
 
   const submitMutation = useMutation({
     mutationFn: async (values: FormValues) => {
@@ -403,7 +428,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
         sms_consent: consent_sms || false,
         consent_whatsapp: effectiveWhatsappConsent,
         location: singleLandingLocation || values.location || sessionLocation?.slug || resolveDefault("location", getFieldConfig("location").default),
-        region: values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
+        region: singleLandingRegion || values.region || sessionLocation?.region || resolveDefault("region", getFieldConfig("region").default),
         coupon: values.coupon || utm.coupon || resolveDefault("coupon", getFieldConfig("coupon").default),
         program: values.program || programContext || resolveDefault("program", getFieldConfig("program").default),
         language: session.language,
@@ -896,7 +921,10 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {formOptions?.regions.map((region) => (
+                            {(multipleLandingRegions
+                              ? formOptions?.regions.filter(r => multipleLandingRegions.includes(r.slug))
+                              : formOptions?.regions
+                            )?.map((region) => (
                               <SelectItem key={region.slug} value={region.slug}>
                                 {region.label}
                               </SelectItem>
