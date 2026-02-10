@@ -151,28 +151,28 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
   const { slides, heading, subtitle, autoplay, autoplay_interval } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [maxSlideHeight, setMaxSlideHeight] = useState(0);
+  const [maxContentHeight, setMaxContentHeight] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const totalSlides = slides.length;
 
   useEffect(() => {
-    const measureSlides = () => {
+    const measureContent = () => {
       let tallest = 0;
-      slideRefs.current.forEach((el) => {
+      contentRefs.current.forEach((el) => {
         if (el) {
           tallest = Math.max(tallest, el.scrollHeight);
         }
       });
-      if (tallest > 0) setMaxSlideHeight(tallest);
+      if (tallest > 0) setMaxContentHeight(tallest);
     };
 
-    measureSlides();
+    measureContent();
 
-    const observer = new ResizeObserver(measureSlides);
-    slideRefs.current.forEach((el) => {
+    const observer = new ResizeObserver(measureContent);
+    contentRefs.current.forEach((el) => {
       if (el) observer.observe(el);
     });
 
@@ -258,18 +258,17 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
           <div
-            className="relative overflow-hidden transition-[height] duration-500 ease-in-out"
-            style={{ height: maxSlideHeight > 0 ? `${maxSlideHeight}px` : "auto" }}
+            className="relative overflow-hidden"
+            style={{ height: maxContentHeight > 0 ? `${maxContentHeight}px` : "auto" }}
           >
             <div
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex transition-transform duration-500 ease-in-out h-full"
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
               {slides.map((slide, i) => (
                 <div
                   key={i}
-                  ref={(el) => { slideRefs.current[i] = el; }}
-                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12"
+                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 h-full"
                 >
                   <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
                     <UniversalImage
@@ -284,7 +283,10 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
                       data-testid={`img-partnership-slide-${i}`}
                     />
                   </div>
-                  <div className="flex flex-col justify-start md:col-span-7">
+                  <div
+                    ref={(el) => { contentRefs.current[i] = el; }}
+                    className="flex flex-col justify-start md:col-span-7"
+                  >
                     <SlideContent slide={slide} />
                   </div>
                 </div>
