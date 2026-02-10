@@ -10,7 +10,6 @@ import {
   IconDeviceMobile,
   IconDevices,
   IconCheck,
-  IconAlertTriangle,
   IconPlus,
   IconArrowBackUp,
   IconArrowForwardUp,
@@ -1079,45 +1078,19 @@ export function SectionEditorPanel({
             )}
             {/* FAQ related features picker */}
             {sectionType === "faq" && (
-              <>
-                <div 
-                  className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg flex items-start gap-2"
-                  data-testid="alert-faq-edit-warning"
-                >
-                  <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    {locale === "es" 
-                      ? "Los cambios a las FAQs afectarán todas las páginas del sitio que muestran estas preguntas."
-                      : "Changes to FAQs here will affect all pages across the site that display these questions."}
-                  </p>
-                </div>
-                <RelatedFeaturesPicker
-                  value={(parsedSection?.related_features as string[]) || []}
-                  onChange={(value) => updateArrayProperty("related_features", value)}
-                  locale={locale}
-                />
-              </>
+              <RelatedFeaturesPicker
+                value={(parsedSection?.related_features as string[]) || []}
+                onChange={(value) => updateArrayProperty("related_features", value)}
+                locale={locale}
+              />
             )}
             {/* Testimonials related features picker */}
             {(sectionType === "testimonials" || sectionType === "testimonials_grid" || sectionType === "testimonials_slide") && (
-              <>
-                <div 
-                  className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg flex items-start gap-2"
-                  data-testid="alert-testimonials-edit-warning"
-                >
-                  <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    {locale === "es" 
-                      ? "Los cambios a los testimonios afectarán todas las páginas del sitio que muestran estos testimonios."
-                      : "Changes to testimonials here will affect all pages across the site that display these testimonials."}
-                  </p>
-                </div>
-                <TestimonialRelatedFeaturesPicker
-                  value={(parsedSection?.related_features as string[]) || []}
-                  onChange={(value) => updateArrayProperty("related_features", value)}
-                  locale={locale}
-                />
-              </>
+              <TestimonialRelatedFeaturesPicker
+                value={(parsedSection?.related_features as string[]) || []}
+                onChange={(value) => updateArrayProperty("related_features", value)}
+                locale={locale}
+              />
             )}
             
             <ColorPicker
