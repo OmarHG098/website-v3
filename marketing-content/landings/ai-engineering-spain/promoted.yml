@@ -617,8 +617,8 @@ sections:
         phone:
           visible: true
           required: true
-          placeholder: Teléfono
           default_country: ES
+          placeholder: Teléfono
         program:
           visible: false
           default: ai-engineering
@@ -628,7 +628,7 @@ sections:
         marketing: true
         marketing_text: Acepto recibir información por email, WhatsApp y/o otros canales sobre talleres, eventos, cursos y materiales de marketing. Nunca compartiremos tus datos y puedes darte de baja cuando quieras.
       show_terms: true
-      button_className: bg-white text-primary hover:bg-white/90 border-white
+      button_className: bg-primary border-white
       terms_className: text-white/80
     marginY:
       mobile: md none
@@ -636,6 +636,8 @@ sections:
     paddingY:
       mobile: lg
       desktop: lg
+    form_background: hsl(var(--card))
+    terms_color: hsl(var(--primary))
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. Todos los derechos reservados.
