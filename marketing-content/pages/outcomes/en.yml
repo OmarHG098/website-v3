@@ -161,35 +161,35 @@ sections:
       - id: switchup-2025
         logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: course-report-2024
         logo: /attached_assets/course-report_1765590146414.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: tech-hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: ebootcamp
         logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: premios-tecnologia
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: reviews-coursereport
         logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
       - id: excelencia-educativa
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality
-        logoHeight: h-12 md:h-14
+        logoHeight: 56px
     paddingY:
       desktop: md lg
     marginY:

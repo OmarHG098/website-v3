@@ -126,59 +126,59 @@ sections:
       - id: logo-switchup-best-bootcamps-2025
         alt: SwitchUp Best Bootcamps 2025
         logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: excelencia-educativa
         alt: Excelencia Educativa - Calidad Institucional en Educación Online
         logo: /attached_assets/exelencia-educativa-es_1765549347699.png
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: course-report-badge
         alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: tech-hub
         alt: South Florida Tech Hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: logo-ebootcamp-top-2025
         alt: ebootcamp Top Bootcamp Programación 2025
         logo: /attached_assets/ebootcamp-top_1_1770392737758.png
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: premios-tecnologia
         alt: Premios Tecnologia Siglo XXI
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
-        logoHeight: h-10 md:h-20
+        logoHeight: 80px
       - id: newsweek
         alt: Newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: reviews-coursereport
         alt: 4.9 en reseñas de Course Report
         logo: /attached_assets/reviews_1765549549051.png
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: forbes-1
         alt: Forbes - Top Coding Bootcamp
         logo: /attached_assets/forbes-logo-award_1764709625651.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: fortune-1
         alt: Fortune - Mejor Empresa de Educación
         logo: /attached_assets/fortune-logo_1764709618095.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: logo-coursereport-best-bootcamp-2025
         alt: CourseReport Best European Bootcamp 2025
         logo: /attached_assets/CourseReport-best-bootcamp_-2025_1770392145137.png
-        logoHeight: h-10 md:h-14
+        logoHeight: 56px
       - id: logo-european-excellence-education
         alt: European Excellence Education
         logo: /attached_assets/european-excellence-education-ealde_1_1770392145138.png
-        logoHeight: h-10 md:h-14
+        logoHeight: 56px
       - id: logo-forbes-advisor-2025
         logo: /attached_assets/Forbes-Advisor_1770392260031.png
         alt: Forbes Advisor Best of 2025 - Best for lifetime career support
-        logoHeight: h-10 md:h-14
+        logoHeight: 56px
       - id: logo-premios-excelencia-educativa
         logo: /attached_assets/premios-excelencia-educativa-17_1770392145139.png
         alt: 17 Premios Excelencia Educativa
-        logoHeight: h-10 md:h-14
+        logoHeight: 56px
     marginY:
       mobile: md none
       desktop: md none
@@ -359,19 +359,19 @@ sections:
       - id: coursereport-detailed
         alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-        logoHeight: h-16
+        logoHeight: 64px
         description: Reconocida como una de las mejores escuelas tecnológicas a nivel mundial
         link: https://www.coursereport.com
         linkText: Leer reviews
       - id: logo-premios-excelencia-educativa
         alt: 17 Premios Excelencia Educativa
         logo: /attached_assets/premios-excelencia-educativa-17_1770392145139.png
-        logoHeight: h-16
+        logoHeight: 64px
         description: La mejor inversión para quienes empiezan de cero o buscan un cambio de carrera
       - id: logo-switchup-best-bootcamps-2025
         alt: SwitchUp Best Bootcamps 2025
         logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
-        logoHeight: h-16
+        logoHeight: 64px
         description: La escuela tecnológica mejor valorada, en base a reseñas verificadas de alumnos
         link: https://www.switchup.org
         linkText: Leer reviews
@@ -630,7 +630,6 @@ sections:
       show_terms: true
       button_className: bg-primary border-white
       terms_className: text-white/80
-    form_background: hsl(var(--card))
     marginY:
       mobile: md none
       desktop: md none

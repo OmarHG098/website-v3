@@ -149,7 +149,7 @@ sections:
       - id: course-report-badge
         alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: tech-hub
         alt: South Florida Tech Hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
@@ -161,19 +161,19 @@ sections:
       - id: premios-tecnologia
         alt: Premios Tecnologia Siglo XXI
         logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
-        logoHeight: h-10 md:h-20
+        logoHeight: 80px
       - id: newsweek
         alt: Newsweek
         logo: /attached_assets/newsweek_1764709608255.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: reviews-coursereport
         alt: 4.9 en reseñas de Course Report
         logo: /attached_assets/reviews_1765549549051.png
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: forbes-1
         alt: Forbes - Top Coding Bootcamp
         logo: /attached_assets/forbes-logo-award_1764709625651.webp
-        logoHeight: h-10 md:h-16
+        logoHeight: 64px
       - id: fortune-1
         alt: Fortune - Mejor Empresa de Educación
         logo: /attached_assets/fortune-logo_1764709618095.webp

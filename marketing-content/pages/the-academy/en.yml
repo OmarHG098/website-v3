@@ -44,79 +44,64 @@ sections:
         - text: Our curriculum is industry-aligned and AI-ready
         - text: Our mentorship is unlimited and personalized
         - text: Our career support never expires
+      image_id: what_is_4geeks
+      image_object_fit: cover
+      image_object_position: 60% 100%
     background: muted
+    marginY:
+      desktop: md none
   - type: features_quad
     version: "1.0"
-    variant: default
-    heading: Why Choose Our AI Engineering Program?
-    description: Get the skills, support, and job placement assistance you need to launch your career in AI engineering.
-    images:
-      - image_id: student-1
-        alt: Student 1
-      - image_id: student-2
-        alt: Student 2
-      - image_id: student-3
-        alt: Student 3
-      - image_id: student-4
-        alt: Student 4
+    variant: laptopEdge
+    heading: What You'll Learn
+    description: Master the esseessentialessentialessentialessentialntial skills tial skills for AI engineering.tial skills for AI engineering.tial skills for AI engineering.for AI engineering.
     cards:
       - icon: Trophy
-        title: Industry Recognition
-        description: Ranked among the top coding bootcamps by Forbes, Course Report, and Career Karma.
+        title: Career-Focused Programs
+        description: Hands-on, practical, and fast-paced training designed to launch real-world tech careers.
       - icon: Wallet
-        title: Affordable Tuition
-        description: Among the most affordable tuition of any top-ranked bootcamp, with flexible payment options.
+        title: Hyperpersonalized Learning
+        description: Rigobot provides instant 24/7 feedback as youship ensure you get the guidance you need.
       - icon: Clock
-        title: Flexible Schedule
-        description: Learn at your own pace with part-time and full-time options to fit your lifestyle.
+        title: Unlimited Human Mentorship
+        description: Mentors and career coaches provide persoduring your program and forever after.
       - icon: Users
-        title: Career Support
-        description: Get unlimited 1:1 mentorship and job placement assistance for life.
-    footer_description: Join thousands of graduates who have launched successful tech careers.
-    background: bg-background
+        title: Future-Ready Skills
+        description: Continuously updated currict tools and technologies driving the tech industry.
+    background: hsl(var(--secondary))
+    description_with_background: true
   - type: stats
     version: "1.0"
-    title: Hiring Outcomes Across Regions
-    subtitle: Our graduates get hired and increase their salaries in multiple job markets.
     background: hsl(210 100% 50% / 0.05)
     items:
-      - value: 84%
-        label: of U.S. graduates hired within 6 months
-      - value: +55%
-        label: average U.S. salary increase
-      - value: +233%
-        label: average salary increase in LATAM
-      - value: 85%
-        label: placement rate in Spain
-      - value: 3-6 months
-        label: average time to get hired across all markets
+      - value: "+7000"
+        label: Alumni
+      - value: "8"
+        label: Campuses
+      - value: ~84%
+        label: Hired
+      - value: "4.9"
+        label: Rating
     marginY:
       desktop: none md
     paddingY:
-      desktop: lg
+      desktop: sm
   - type: two_column
-    version: v1.0
     proportions:
-      - 5
-      - 7
-    background: bg-muted/30
+      - 4
+      - 8
     alignment: center
-    gap: "12"
-    reverse_on_mobile: true
     left:
-      image: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop
-      image_alt: Team collaborating on a project
-      justify: center
+      image: /attached_assets/crusa-forte-scholarship_1770606829241.webp
+      image_alt: Student coding on laptop
+      image_object_fit: cover
+      image_object_position: 10% 80%
+      justify: end
     right:
-      heading: Why Choose Us
-      description: We provide comprehensive support for your learning journey from day one to career success.
-      bullets:
-        - text: Personalized mentorship from industry experts
-        - text: Flexible learning schedule that fits your life
-        - text: Real-world projects to build your portfolio
-        - text: Career support that lasts a lifetime
-      bullet_icon: Check
-      font_size: base
+      heading: Shaping the Global Tech Ecosystem
+      description: At 4Geeks Academy, we believe collaboration drives real impact. We work with universities, nonprofits, workforce development initiatives, global organizations, and local tech communities to expand access to top tech education and strengthen career pathways. Together, we train and place diverse talent, close the digital skills gap, and build the tech workforce of the future. We’re also active in the community, partnering on hackathons, tech challenges, and industry events that connect talent with opportunity and showcase the skills of our students and graduates.
+      text_align: left
+    gap: "12"
   - type: awards_marquee
     version: v1.0
     speed: 40
@@ -124,43 +109,43 @@ sections:
     gradientWidth: 100
     items:
       - id: switchup-2025
-        logo: /attached_assets/switchup_1765590146414.webp
         alt: SwitchUp - Best Coding Bootcamps 2025
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/switchup_1765590146414.webp
+        logoHeight: 56px
       - id: course-report-2024
-        logo: /attached_assets/course-report_1765590146414.webp
         alt: Course Report - Best Coding Bootcamp 2024
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/course-report_1765590146414.webp
+        logoHeight: 56px
       - id: tech-hub
-        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         alt: South Florida Tech Hub
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        logoHeight: 56px
       - id: ebootcamp
-        logo: /attached_assets/ebootcamp-top_1765549056325.png
         alt: eBootcamp Top
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/ebootcamp-top_1765549056325.png
+        logoHeight: 56px
       - id: premios-tecnologia
-        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
         alt: Premios Tecnologia Siglo XXI
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        logoHeight: 56px
       - id: newsweek
-        logo: /attached_assets/newsweek_1764709608255.webp
         alt: Newsweek
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/newsweek_1764709608255.webp
+        logoHeight: 56px
       - id: reviews-coursereport
-        logo: /attached_assets/reviews_1765549549051.png
         alt: 4.9 on Course Report Reviews
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/reviews_1765549549051.png
+        logoHeight: 56px
       - id: excelencia-educativa
-        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
         alt: Excelencia Educativa - Institutional Quality
-        logoHeight: h-12 md:h-14
+        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        logoHeight: 56px
+    paddingY:
+      desktop: md none
   - type: whos_hiring
-    version: v1.0
     variant: carousel
-    pretitle: Customer Stories
     title: Trusted by the world's most innovative companies
-    subtitle: See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth.
+    description: "Top companies hire 4Geeks graduates, with 84% landing jobs within 6 months of graduation thanks to their skills and our personalized career support. Our grads don’t just get hired—they launch successful careers and consistently earn recognition for their technical expertise and professionalism: I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires ended up becoming a team leader.' - CodeNinjas."
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -186,16 +171,5 @@ sections:
         alt: Neo9
       - src: /attached_assets/jooble_1764720010702.png
         alt: Jooble
-  - type: whos_hiring
-    version: v1.0
-    pretitle: Customer Stories
-    title: Trusted by Industry Leaders
-    logos:
-      - src: /attached_assets/microsoft_1764719829995.png
-        alt: Microsoft
-      - src: /attached_assets/google-developers_1764719904190.png
-        alt: Google Developers
-      - src: /attached_assets/meta-logo_1764719959855.png
-        alt: Meta
-      - src: /attached_assets/uber_1764719999685.png
-        alt: Uber
+    marginY:
+      desktop: lg none
