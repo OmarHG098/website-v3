@@ -13,6 +13,7 @@ export const partnershipStatSchema = z.object({
 export const partnershipLogoSchema = z.object({
   image_id: z.string(),
   alt: z.string().optional(),
+  text: z.string().optional(),
   logo_height: z.string().optional(),
 });
 
@@ -24,8 +25,8 @@ export const partnershipPressRefSchema = z.object({
 
 export const partnershipSlideSchema = z.object({
   image_id: z.string(),
-  image_object_fit: z.enum(["cover", "contain", "fill", "none"]).optional(),
-  image_object_position: z.string().optional(),
+  object_fit: z.enum(["cover", "contain", "fill", "none"]).optional(),
+  object_position: z.string().optional(),
   title: z.string(),
   subtitle: z.string().optional(),
   description: z.string().optional(),

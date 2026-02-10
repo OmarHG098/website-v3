@@ -1,9 +1,16 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { IconChevronLeft, IconChevronRight, IconExternalLink } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconExternalLink,
+} from "@tabler/icons-react";
 import { UniversalImage } from "@/components/UniversalImage";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { PartnershipCarouselSection, PartnershipSlide } from "@shared/schema";
+import type {
+  PartnershipCarouselSection,
+  PartnershipSlide,
+} from "@shared/schema";
 
 interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
@@ -13,59 +20,85 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
   return (
     <div className="flex flex-col justify-center gap-4 p-6 md:p-10 lg:p-12">
       {slide.subtitle && (
-        <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground" data-testid="text-partnership-subtitle">
+        <p
+          className="text-sm font-medium uppercase tracking-wider text-muted-foreground"
+          data-testid="text-partnership-subtitle"
+        >
           {slide.subtitle}
         </p>
       )}
 
-      <h3 className="text-2xl md:text-3xl font-bold text-foreground" data-testid="text-partnership-title">
+      <h3
+        className="text-2xl md:text-3xl font-bold text-foreground"
+        data-testid="text-partnership-title"
+      >
         {slide.title}
       </h3>
 
       {slide.description && (
-        <p className="text-muted-foreground leading-relaxed" data-testid="text-partnership-description">
+        <p
+          className="text-muted-foreground leading-relaxed"
+          data-testid="text-partnership-description"
+        >
           {slide.description}
         </p>
       )}
+      <div className="flex justify-between">
+        {slide.stats && slide.stats.length > 0 && (
+          <div className=" gap-6 mt-2" data-testid="stats-partnership">
+            {slide.stats.map((stat, i) => (
+              <div key={i} className="flex flex-col justify-center">
+                <span
+                  className="text-2xl md:text-3xl font-bold text-primary"
+                  data-testid={`text-stat-value-${i}`}
+                >
+                  {stat.value}
+                </span>
+                <span
+                  className="text-sm text-muted-foreground"
+                  data-testid={`text-stat-label-${i}`}
+                >
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
-      {slide.stats && slide.stats.length > 0 && (
-        <div className="flex flex-wrap gap-6 mt-2" data-testid="stats-partnership">
-          {slide.stats.map((stat, i) => (
-            <div key={i} className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-bold text-foreground" data-testid={`text-stat-value-${i}`}>
-                {stat.value}
-              </span>
-              <span className="text-sm text-muted-foreground" data-testid={`text-stat-label-${i}`}>
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {slide.institution_logos && slide.institution_logos.length > 0 && (
-        <div className="flex flex-wrap items-center gap-4 mt-2" data-testid="logos-partnership">
-          {slide.institution_logos.map((logo, i) => (
+        {slide.institution_logos && slide.institution_logos.length > 0 && (
+          <div
+            className="flex flex-wrap items-center gap-4 mt-2"
+            data-testid="logos-partnership"
+          >
+            {slide.institution_logos.map((logo, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2"
+                style={{ height: logo.logo_height || "40px" }}
+                data-testid={`img-institution-logo-${i}`}
+              >
+                <span>{logo.text}</span>
+                <div className="bg-primary w-[1px] h-full rounded" />
+                <UniversalImage
+                  id={logo.image_id}
+                  alt={logo.alt}
+                  className="h-full w-auto object-contain h-4"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {slide.press_references && slide.press_references.length > 0 && (
+        <div
+          className="flex flex-col gap-2 mt-2"
+          data-testid="press-partnership"
+        >
+          {slide.press_references.map((ref, i) => (
             <div
               key={i}
-              className="flex-shrink-0"
-              style={{ height: logo.logo_height || "40px" }}
-              data-testid={`img-institution-logo-${i}`}
+              className="flex items-start gap-2 text-sm text-muted-foreground"
             >
-              <UniversalImage
-                id={logo.image_id}
-                alt={logo.alt}
-                className="h-full w-auto object-contain"
-              />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {slide.press_references && slide.press_references.length > 0 && (
-        <div className="flex flex-col gap-2 mt-2" data-testid="press-partnership">
-          {slide.press_references.map((ref, i) => (
-            <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
               {ref.url ? (
                 <a
                   href={ref.url}
@@ -74,13 +107,17 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
                   className="underline underline-offset-2 hover-elevate inline-flex items-center gap-1"
                   data-testid={`link-press-ref-${i}`}
                 >
-                  {ref.source && <span className="font-medium">{ref.source}:</span>}
+                  {ref.source && (
+                    <span className="font-medium">{ref.source}:</span>
+                  )}
                   <span>{ref.text}</span>
                   <IconExternalLink className="w-3 h-3 flex-shrink-0" />
                 </a>
               ) : (
                 <span data-testid={`text-press-ref-${i}`}>
-                  {ref.source && <span className="font-medium">{ref.source}: </span>}
+                  {ref.source && (
+                    <span className="font-medium">{ref.source}: </span>
+                  )}
                   {ref.text}
                 </span>
               )}
@@ -93,7 +130,13 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
         <div className="mt-4">
           <a href={slide.cta.url} data-testid="link-partnership-cta">
             <Button
-              variant={slide.cta.variant === "outline" ? "outline" : slide.cta.variant === "secondary" ? "secondary" : "default"}
+              variant={
+                slide.cta.variant === "outline"
+                  ? "outline"
+                  : slide.cta.variant === "secondary"
+                    ? "secondary"
+                    : "default"
+              }
             >
               {slide.cta.text}
             </Button>
@@ -113,15 +156,24 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
 
   const totalSlides = slides.length;
 
-  const goTo = useCallback((index: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setActiveIndex(((index % totalSlides) + totalSlides) % totalSlides);
-    setTimeout(() => setIsTransitioning(false), 400);
-  }, [totalSlides, isTransitioning]);
+  const goTo = useCallback(
+    (index: number) => {
+      if (isTransitioning) return;
+      setIsTransitioning(true);
+      setActiveIndex(((index % totalSlides) + totalSlides) % totalSlides);
+      setTimeout(() => setIsTransitioning(false), 400);
+    },
+    [totalSlides, isTransitioning],
+  );
 
-  const goToPrevious = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
-  const goToNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const goToPrevious = useCallback(
+    () => goTo(activeIndex - 1),
+    [activeIndex, goTo],
+  );
+  const goToNext = useCallback(
+    () => goTo(activeIndex + 1),
+    [activeIndex, goTo],
+  );
 
   useEffect(() => {
     if (!autoplay || totalSlides <= 1) return;
@@ -129,7 +181,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
     const startAutoplay = () => {
       autoplayRef.current = setInterval(() => {
         if (!isPausedRef.current) {
-          setActiveIndex(prev => (prev + 1) % totalSlides);
+          setActiveIndex((prev) => (prev + 1) % totalSlides);
         }
       }, autoplay_interval || 5000);
     };
@@ -140,8 +192,12 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
     };
   }, [autoplay, autoplay_interval, totalSlides]);
 
-  const handlePause = useCallback(() => { isPausedRef.current = true; }, []);
-  const handleResume = useCallback(() => { isPausedRef.current = false; }, []);
+  const handlePause = useCallback(() => {
+    isPausedRef.current = true;
+  }, []);
+  const handleResume = useCallback(() => {
+    isPausedRef.current = false;
+  }, []);
 
   const currentSlide = slides[activeIndex];
 
@@ -159,12 +215,18 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
         {(heading || subtitle) && (
           <div className="text-center mb-10">
             {heading && (
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3" data-testid="text-carousel-heading">
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-3"
+                data-testid="text-carousel-heading"
+              >
                 {heading}
               </h2>
             )}
             {subtitle && (
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-carousel-subtitle">
+              <p
+                className="text-lg text-muted-foreground max-w-2xl mx-auto"
+                data-testid="text-carousel-subtitle"
+              >
                 {subtitle}
               </p>
             )}
@@ -179,15 +241,19 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
                   key={i}
                   className={cn(
                     "absolute inset-0 transition-opacity duration-400",
-                    i === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none"
+                    i === activeIndex
+                      ? "opacity-100"
+                      : "opacity-0 pointer-events-none",
                   )}
                 >
                   <UniversalImage
                     id={slide.image_id}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     style={{
-                      objectFit: (slide.image_object_fit as React.CSSProperties["objectFit"]) || "cover",
-                      objectPosition: slide.image_object_position || "center",
+                      objectFit:
+                        (slide.object_fit as React.CSSProperties["objectFit"]) ||
+                        "cover",
+                      objectPosition: slide.object_position || "center",
                     }}
                     data-testid={`img-partnership-slide-${i}`}
                   />
@@ -201,7 +267,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
                   key={i}
                   className={cn(
                     "transition-opacity duration-400",
-                    i === activeIndex ? "opacity-100" : "opacity-0 hidden"
+                    i === activeIndex ? "opacity-100" : "opacity-0 hidden",
                   )}
                 >
                   <SlideContent slide={slide} />
@@ -223,7 +289,10 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
               <IconChevronLeft className="w-5 h-5" />
             </Button>
 
-            <div className="flex items-center gap-2" data-testid="dots-carousel">
+            <div
+              className="flex items-center gap-2"
+              data-testid="dots-carousel"
+            >
               {slides.map((_, i) => (
                 <button
                   key={i}
@@ -232,7 +301,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
                     "rounded-full transition-all duration-300",
                     i === activeIndex
                       ? "w-8 h-2 bg-primary"
-                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate"
+                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
                   )}
                   data-testid={`button-carousel-dot-${i}`}
                 />
