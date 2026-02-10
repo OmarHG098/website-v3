@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "4492d0558ef555cdd652b77d67a3bc3ecc66cb82",
-  "lastSyncedAt": "2026-02-10T13:59:16.335Z",
+  "lastSyncedCommit": "95ccaae1d7625ae3d2dbef69278ea4fac77b447b",
+  "lastSyncedAt": "2026-02-10T14:11:13.741Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -373,9 +373,9 @@
       "remoteSha": "e4bbf1b8d009bc0bbb759e32d32cca196da3f26de296e55bc2e64f94017fc5f8"
     },
     "marketing-content/locations/miami-usa/en.yml": {
-      "sha": "8243c5de4cbe63a2853ba3c7ff56c7d2028bd7712d365087d335323ff3970d97",
-      "lastModified": 1770731949568.047,
-      "remoteSha": "8243c5de4cbe63a2853ba3c7ff56c7d2028bd7712d365087d335323ff3970d97"
+      "sha": "36db51902d1581334ba6af47c28dfbcccf3d8d7e2edaba308ace06617db1a018",
+      "lastModified": 1770732673342.3438,
+      "remoteSha": "36db51902d1581334ba6af47c28dfbcccf3d8d7e2edaba308ace06617db1a018"
     },
     "marketing-content/locations/miami-usa/es.yml": {
       "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
